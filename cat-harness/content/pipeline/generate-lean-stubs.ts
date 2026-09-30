@@ -7,8 +7,8 @@
  * matching the block kind. Preserves existing docstrings.
  *
  * Usage:
- *   bun run pipeline/generate-lean-stubs.ts <chapter-dir>
- *   bun run pipeline/generate-lean-stubs.ts <chapter-dir> --dry-run
+ *   bun run cat-harness/content/pipeline/generate-lean-stubs.ts <chapter-dir>
+ *   bun run cat-harness/content/pipeline/generate-lean-stubs.ts <chapter-dir> --dry-run
  */
 
 import { folioDir } from "../../schemas/cat-harness.js";
@@ -18,7 +18,7 @@ import { fileURLToPath } from "url";
 import { walkBlocks } from "./qa-utils";
 
 const __filename = fileURLToPath(import.meta.url);
-const REPO_ROOT = resolve(dirname(__filename), "..", "..");
+const INSTANCE_ROOT = resolve(dirname(__filename), "..", "..");
 
 interface Args {
   root: string;
@@ -158,11 +158,11 @@ function generateDeclaration(
 function main() {
   const args = parseArgs(process.argv.slice(2));
   if (!args.root) {
-    console.error("Usage: bun run pipeline/generate-lean-stubs.ts <chapter-dir>");
+    console.error("Usage: bun run cat-harness/content/pipeline/generate-lean-stubs.ts <chapter-dir>");
     process.exit(2);
   }
 
-  const rootPath = join(folioDir(REPO_ROOT),  args.root);
+  const rootPath = join(folioDir(INSTANCE_ROOT),  args.root);
   if (!existsSync(rootPath)) {
     console.error(`Root not found: ${rootPath}`);
     process.exit(2);
@@ -173,7 +173,7 @@ function main() {
 
   for (const block of walkBlocks(rootPath)) {
     if (!block.lean) { continue; }
-    const leanPath = join(folioDir(REPO_ROOT),  block.lean);
+    const leanPath = join(folioDir(INSTANCE_ROOT),  block.lean);
     if (!existsSync(leanPath)) { continue; }
 
     const leanText = readFileSync(leanPath, "utf-8");
@@ -182,7 +182,7 @@ function main() {
       continue;
     }
 
-    const tsPath = join(folioDir(REPO_ROOT),  block.ts);
+    const tsPath = join(folioDir(INSTANCE_ROOT),  block.ts);
     const tsText = readFileSync(tsPath, "utf-8");
     const kind = extractKind(tsText);
     const label = extractLabel(tsText);
@@ -197,13 +197,13 @@ function main() {
     const decl = generateDeclaration(kind, label, title, leanRef);
 
     if (args.dryRun) {
-      console.log(`WOULD GENERATE: ${relative(REPO_ROOT, leanPath)}`);
+      console.log(`WOULD GENERATE: ${relative(INSTANCE_ROOT, leanPath)}`);
       console.log(`  kind=${kind} label=${label} ref=${leanRef ?? "(none)"}`);
       console.log(`  decl preview: ${decl.split("\n").filter(l => l.includes("theorem") || l.includes("def ") || l.includes("class ")).join("; ")}`);
     } else {
       const updated = leanText.trimEnd() + "\n" + decl;
       writeFileSync(leanPath, updated, "utf-8");
-      console.log(`GENERATED: ${relative(REPO_ROOT, leanPath)} (${kind} ${label})`);
+      console.log(`GENERATED: ${relative(INSTANCE_ROOT, leanPath)} (${kind} ${label})`);
     }
     generated++;
   }

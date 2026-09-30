@@ -180,11 +180,22 @@ describe("per-family node schemas (bean rdkm)", () => {
     const { resolveNodeSchemas } = await import("./kind-validator");
     const fams = await resolveNodeSchemas("qa", HARNESS);
     expect(fams.map((f) => f.tag).sort()).toEqual([
-      "block-qa/v1", "folio-detangle-sidecar/v1", "folio-qa-index/v1", "folio-test-run/v1", "kg-qa/v1",
+      "block-qa/v1", "folio-detangle-sidecar/v1", "folio-qa-index/v1", "folio-test-run/v1",
+      // `kg-qa-manifest/v1` joined the `qa` kind on 2026-09-27, from `skills`.
+      // The manifest records the auditor's identity for the `kg-qa/v1` files
+      // beside it, and it used to live in `skills/` — harmless while ONE
+      // instance was audited, a defect once every instance was: `kg-audit.ts`
+      // writes it unconditionally, so that home CREATED a `skills/` directory
+      // holding no skills in each of the six instances that have none. The
+      // registration had to move with the file: a kind claiming a `$schema`
+      // whose files live in another kind's directory is a validator aimed at
+      // nothing. The list grew because the KIND did.
+      "kg-qa-manifest/v1", "kg-qa/v1",
       "qa-results/v1", "qa-witness/v1", "translation-qa/v1", "viewer-nav-qa/v1",
     ]);
     expect(fams.filter((f) => f.state === "unresolvable")).toEqual([]);
     expect(fams.find((f) => f.tag === "kg-qa/v1")?.state).toBe("resolved");
+    expect(fams.find((f) => f.tag === "kg-qa-manifest/v1")?.state).toBe("resolved");
     expect(fams.find((f) => f.tag === "qa-witness/v1")?.state).toBe("shape");
     // Typed since bean `dv8v` (#1168 B6b); it was the untyped example until then.
     expect(fams.find((f) => f.tag === "folio-qa-index/v1")?.state).toBe("resolved");

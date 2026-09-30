@@ -31,6 +31,12 @@ import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
+import {
+  instanceDirectoriesForGraph,
+  instanceDirectoryForGraph,
+  instanceRootsIn,
+} from "../../schemas/cat-harness.js";
+
 /** The repository root — this rule is about every instance, not one. */
 const REPO = resolve(import.meta.dir, "../../..");
 
@@ -111,3 +117,99 @@ describe("a call site that wants ONE directory says so with an accessor that ref
     ).toEqual([]);
   });
 });
+
+/* ─────────── the other half: a PLURAL caller needs a plural accessor ─────────── */
+
+describe("an instance that declares a kind twice is auditable, not a crash", () => {
+  /**
+   * The refusal above is right, and it made a real caller CRASH rather than
+   * report — which is the failure mode this file did not yet cover.
+   *
+   * Measured 2026-09-27: `kg:audit --instance ./large-datasets` never audited
+   * anything. It threw inside `instanceDirectoryForGraph`, called from
+   * `unclaimedSkillContracts`, because that instance declares TWO `schemas`
+   * directories at its own root:
+   *
+   *     large-datasets-schemas → large-datasets/schemas
+   *     large-datasets-sources → large-datasets/sources
+   *
+   * Both are legal; `cat-harness.json` declares `schemas` several times too. So
+   * the singular was simply the wrong question for a caller that wants to scan
+   * every contract directory, and the remedy is the plural accessor rather than
+   * an index — `[0]` here would have hidden one instance's contracts from the
+   * audit and reported a clean run, which is the `dh4f` shape this whole file
+   * exists to prevent.
+   */
+  test("the singular refuses exactly when the plural finds several", () => {
+    const disagreements: string[] = [];
+    for (const inst of instanceRootsIn(REPO)) {
+      const all = instanceDirectoriesForGraph(inst, "schemas");
+      let threw = false;
+      try {
+        instanceDirectoryForGraph(inst, "schemas");
+      } catch {
+        threw = true;
+      }
+      // The invariant that lets a caller choose: refusal and plurality are the
+      // same fact. If they ever came apart, one of the two accessors would be
+      // lying about the declaration.
+      if (threw !== all.length > 1) {
+        disagreements.push(
+          `${relative(REPO, inst) || "."}: plural=${all.length} but singular ${threw ? "threw" : "returned"}`,
+        );
+      }
+    }
+    expect(disagreements).toEqual([]);
+  });
+
+  test("at least one instance really declares a kind twice, so the case above is live", () => {
+    // Anti-vacuity. With no such instance the assertion above holds trivially
+    // and would keep passing after a regression — the shape that let the
+    // original `[0]` survive unnoticed.
+    const plural = instanceRootsIn(REPO).filter(
+      (i) => instanceDirectoriesForGraph(i, "schemas").length > 1,
+    );
+    expect(plural.length, "no instance declares `schemas` twice — the guard above measures nothing").toBeGreaterThan(0);
+  });
+
+  /**
+   * The test that would actually have caught it.
+   *
+   * The two above pin the ACCESSORS; neither would have failed on the real
+   * defect, which was a caller choosing the singular where its question was
+   * plural. No grep finds that — `instanceDirectoryForGraph(root, "schemas")`
+   * is the correct call in several places and wrong in one. Only running the
+   * thing shows it, so this runs the thing.
+   *
+   * `--check` writes nothing, verified: it reports staleness and exits non-zero
+   * on an instance whose sidecars are not committed, which `large-datasets`'s
+   * are not. The assertion is therefore about the CRASH and not the exit code.
+   */
+  test("kg:audit --instance runs on such an instance instead of throwing", async () => {
+    const plural = instanceRootsIn(REPO).find(
+      (i) => instanceDirectoriesForGraph(i, "schemas").length > 1,
+    );
+    expect(plural, "no instance declares `schemas` twice — nothing to run this against").toBeDefined();
+    const rel = `./${relative(REPO, plural!)}`;
+
+    const p = Bun.spawn(
+      ["bun", "run", "cat-harness/scripts/kg-audit.ts", "--instance", rel, "--check"],
+      { cwd: REPO, stdout: "pipe", stderr: "pipe" },
+    );
+    const out = await new Response(p.stdout).text();
+    const err = await new Response(p.stderr).text();
+    await p.exited;
+
+    // The exact throw this regressed on, named so a failure points at the cause
+    // rather than at a non-zero exit that `--check` produces legitimately.
+    expect(
+      err.includes("this call site expects one"),
+      `the audit threw instead of auditing:\n${err.slice(0, 600)}`,
+    ).toBe(false);
+    // And it must have got far enough to report, not merely failed differently.
+    expect(out, `no audit summary in:\n${out.slice(0, 300)}${err.slice(0, 300)}`).toMatch(
+      /Knowledge-graph audit\s+\(\d+ subjects/,
+    );
+  });
+});
+

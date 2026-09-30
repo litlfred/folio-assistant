@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Skills and Tools'
 parent: Skill instructions
 ---
@@ -72,14 +73,27 @@ it files under `<instance>/docs/research-and-analysis/` per
 [`placement`](placement.md), dated, with each project's health measured rather
 than recalled. The first one is `research-and-analysis/prior-art.md`
 (2026-09-23), and the choice it raised is a bean (`b91x`), not a paragraph
-here. Only if a candidate is adopted does it become a Tool node with
-`alternativeTo` and `selection`, below.
+here. Only if a candidate is adopted does it become a Tool node, with the
+`selection` its derived alternatives call for, below.
 
-## Substitutable Tools declare it, and each says how to choose
+## Substitutable Tools are derived, and each says how to choose
 
 A pair like that is **substitutable**: same job, different mechanism, pick one.
-That is declared with `alternativeTo`, and each end then carries `selection` —
-three fields, all required together:
+Nobody declares it. Two Tools are alternatives when they **satisfy a common
+skill AND have the same I/O signature** — the same input names, types and
+required flags, the same outputs, the same `renders` and `maintains`
+(`deriveAlternatives` in `schemas/tool.ts`; #1168, B9a). A shared skill alone
+is not enough: most skills with several Tools have complementary ones, steps
+rather than choices, and their I/O is what tells them apart.
+
+So the discipline moves to the ports. **Type and name a port for what it
+really takes and gives.** A CSV reader and a workbook reader typed `Text`
+would derive as alternatives; `DelimitedTextPath` and `WorkbookPath` keep them
+apart. Two generators whose output is a bare `pages` would too; naming each
+output for what it writes does not.
+
+Each Tool with a derived alternative then carries `selection` —
+three fields, all required together (`check-tools` fails one without it):
 
 | field | answers |
 |---|---|

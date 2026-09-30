@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wwi6
 title: 'INITIATION: uploads/ and library/ are created at initiation, one as state and one not'
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T06:19:54Z
-updated_at: 2026-09-20T08:48:44Z
+updated_at: 2026-09-29T18:14:48Z
 parent: folio-assistant-o3xy
 ---
 
@@ -165,3 +165,9 @@ Two, and the first has been measured:
    `harness.json` instead (`889e003012`), which leaves every property here
    intact. `qmjh` carries the schema distinction that would let a declaration
    say this directly.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

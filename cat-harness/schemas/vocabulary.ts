@@ -37,7 +37,7 @@
  * @conformsTo w3c-skos
  */
 
-import { BOOTSTRAP_TERMS } from "./graph.ts";
+import { BOOTSTRAP_TERMS } from "../../bootstrap-tools/schemas/graph.ts";
 
 /**
  * Which layer owns a term — and therefore which instances must carry it.
@@ -205,13 +205,27 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss: BOOTSTRAP_TERMS.SequenceFlow,
   },
   Tool: {
-    // Harness layer, so its IRI does not move; its DEFINITION is bootstrap's,
-    // because bootstrap/README.md uses the word before anything else loads.
-    gloss: BOOTSTRAP_TERMS.Tool,
+    // The harness's own term. Bootstrap defined it until v3 of its terms; the
+    // owner, 2026-09-29: "no tools in bootstrap". Bootstrap names no program an
+    // Actor runs, so the word belongs to the layer that has Tools.
+    gloss:
+      "A Node Instance describing a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
     seeAlso: "/architecture.html",
   },
   Schema: {
     gloss: "A schema definition, itself a node in the knowledge graph rather than an island beside one.",
+  },
+  ExternalSchema: {
+    gloss:
+      "A published specification this corpus conforms to or reads — BPMN, DMN, ODRL, PROV-O — recorded by name and edition rather than copied in.",
+    seeAlso: "/external-schemas/",
+  },
+  Decision: {
+    // Owner, 2026-09-27: each DMN decision table is its own node, linked to
+    // the gateway that uses it and to the DMN 1.3 standard.
+    gloss:
+      "A DMN decision — a table that computes a gateway's branch from supplied facts, rather than a judgement somebody makes.",
+    seeAlso: "/external-schemas/",
   },
   Capability: {
     gloss: "Something an actor's environment provides — a binary, a service, a credential — probed rather than assumed.",
@@ -240,11 +254,12 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // the declaration is the harness's own object, and `cat:CatHarness`
   // stuttered the layer into the term.
   Harness: {
-    layer: "harness",
-    // Definition from bootstrap, which the owner stated: "a harness is used to
-    // interact with a knowledge graph". Layer and IRI unchanged.
+    // Bootstrap defines it, so bootstrap owns it, IRI included (terms v3,
+    // 2026-09-29). It was harness-layer with bootstrap's definition — a term
+    // published by one layer and minted by another, which the layering rule
+    // forbids. No `seeAlso`: a bootstrap term links to nothing above it.
+    layer: "bootstrap",
     gloss: BOOTSTRAP_TERMS.Harness,
-    seeAlso: "/architecture.html",
   },
   Image: {
     layer: "core",
@@ -409,6 +424,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   isA: { gloss: "A role this one inherits from, statically and everywhere." },
   roleName: { gloss: "The role's own name, as a lane binds it." },
+  mayTakeRole: { gloss: "A declared role this actor may take on: a link to the Role node from `scenarios/roles.json` (#1168 B8)." },
   satisfiesStatement: { gloss: "A requirement statement this node discharges, as `req:<requirement>#<statement key>`." },
   performedBy: { gloss: "The role that performs this activity." },
   implementedBy: { gloss: "The skill that implements this activity." },
@@ -427,6 +443,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // ── Instructions and contracts ───────────────────────────────────────
   hasInstructions: { gloss: "Whether a skill has an instruction body at all." },
   instructionsPath: { gloss: "Where a skill's instruction body lives, relative to the instance root." },
+  readmePath: { gloss: "Where a declared directory's README lives, relative to the instance root: the page a person reads about that directory." },
   instructionLines: { gloss: "How long a skill's instruction body is." },
   hasIOContract: { gloss: "Whether a skill declares input and output schemas." },
   inputSchema: { gloss: "The published schema a skill's input must satisfy." },
@@ -443,6 +460,17 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   maintains: { gloss: "An artefact this tool generates and keeps current." },
   maintainsFrom: { gloss: "The source a maintained artefact is generated from." },
   maintainedBy: { gloss: "The tool that generates and keeps this artefact current." },
+
+  // ── Schemas and the standards a graph conforms to ────────────────────
+  conformsTo: { gloss: "A published specification this node's files are written in, e.g. BPMN 2.0 for a process." },
+  validator: { gloss: "The schema node that runtime-validates a node of this kind." },
+  validatorRef: { gloss: "The `module#Export` a kind names as its validator, where no schema node for it is in this graph." },
+  validatorNotApplicable: { gloss: "Why no runtime validator applies to this kind, and what grades it instead." },
+  authority: { gloss: "The body that publishes a specification, e.g. OMG or W3C." },
+  specVersion: { gloss: "The edition of a specification this corpus is pinned to." },
+  specUse: { gloss: "How the corpus uses a specification: conforms to it, or only reads it." },
+  specUrl: { gloss: "Where a specification is published." },
+  namespace: { gloss: "An XML or RDF namespace a specification defines." },
   canonicalDocument: { gloss: "The document a node's canonical IRI resolves to." },
 
   // ── Process ──────────────────────────────────────────────────────────
@@ -453,6 +481,8 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   from: { gloss: "The node a sequence flow leaves." },
   to: { gloss: "The node a sequence flow arrives at." },
   decisionRef: { gloss: "The DMN table that computes this gateway's branch." },
+  decidedBy: { gloss: "The Decision node whose table computes this gateway's branch." },
+  hitPolicy: { gloss: "How a DMN decision table picks among matching rules, e.g. FIRST or UNIQUE." },
   enforcement: { gloss: "Whether a process's steps are strict or advisory." },
   relaxable: { gloss: "Whether a step may be relaxed by a downstream package." },
   touchesWorkPlan: { gloss: "Whether completing this step performs a work-plan operation." },
@@ -465,6 +495,16 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   sourceCommitAt: { gloss: "When that commit was made." },
   sourceTreeDirty: { gloss: "Whether the working tree had uncommitted changes when the export ran." },
   sourceCommitUnavailable: { gloss: "That the commit could not be determined — never rendered as clean." },
+  // On a PER-LOCALE document only. It is the language of the document's
+  // UNTAGGED strings, not of its content: for `cat-harness.fr.jsonld` the
+  // content is French while this field says English. That is why the term is
+  // minted rather than borrowed from `schema:inLanguage`, and the gloss has to
+  // carry the distinction or a reader resolves the wrong one.
+  //
+  // Arrived with #1410's publishing fix, which declared it in `buildContext()`
+  // and glossed it nowhere — so `ns:check` refused it, exactly as it refused the
+  // staging terms below. Third time this shape: minting a term is two edits.
+  sourceLanguage: { gloss: "The language a locale document's untagged strings are in — its SOURCE language, not the language it was translated into." },
 
   // ── Staging provenance ───────────────────────────────────────────────
   //
@@ -526,5 +566,38 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
  * the base depend on something above it.
  */
 export function termLayer(name: string): TermLayer {
-  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? "harness";
+  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? GRAPH_KIND_TYPE_LAYERS[name] ?? "harness";
 }
+
+/**
+ * Which layer owns each graph kind's TYPE, keyed by the type's local name.
+ *
+ * The ONE table. It was two, and they disagreed (bean `r3gy`, D1): this file
+ * gave every graph kind `harness`, so `termIri("SchemaGraph")` minted a
+ * cat-harness IRI, while `ns-export.ts` kept its own map publishing `schemas`
+ * as bootstrap's. A term published by one layer and minted by another is the
+ * leak the layering rule forbids. `ns-export` now asks {@link termLayer}.
+ *
+ * Bootstrap's rows are the kinds in `BOOTSTRAP_GRAPH_KINDS` (`graph.ts`), plus
+ * `KGraph`, the kind of a Knowledge Graph itself; `graph.test.ts` holds the two
+ * lists together. The `core` rows are the folio's own furniture, which the
+ * owner named as NOT bootstrap: "we shouldnt need voicegraph or librarygrph or
+ * previewgrapjh in bootstrap!!". An absent kind is `harness`, the safe
+ * direction, for the reason given on `termLayer`.
+ */
+export const GRAPH_KIND_TYPE_LAYERS: Readonly<Record<string, TermLayer>> = {
+  KGraph: "bootstrap",
+  SkillGraph: "bootstrap",
+  SchemaGraph: "bootstrap",
+  ScenarioGraph: "bootstrap",
+  ProcessGraph: "bootstrap",
+  ModelGraph: "bootstrap",
+  SwimlaneGlossaryGraph: "bootstrap",
+  VoiceGraph: "core",
+  LibraryGraph: "core",
+  UploadsGraph: "core",
+  TodoGraph: "core",
+  TodoItemsGraph: "core",
+  TodoFeedbackGraph: "core",
+  ReviewVerdictsGraph: "core",
+};

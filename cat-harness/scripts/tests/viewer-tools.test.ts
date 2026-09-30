@@ -9,10 +9,11 @@
  */
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { resolve } from "node:path";
 
 import { instanceRootsIn, declarationPathIn, isPublishedGraphKind } from "../../schemas/cat-harness.js";
 import { tools } from "../../tools/index.js";
+import { viewerPages } from "../viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
@@ -34,18 +35,16 @@ describe("viewer Tools declare what they render", () => {
     expect(renderers.length).toBeGreaterThan(0);
   });
 
-  it("every directory declaring a viewer has a Tool rendering one of its kinds", () => {
-    // Kinds whose viewer is not a cat-harness Tool, each for a stated reason:
-    // fsh-guts is never published (UNPUBLISHED_GRAPH_KINDS), and `catalogue`
-    // and `glossary` are rendered by their own instances' generators
-    // (who-iris, folio-assistant-core), which declare no tools graph yet.
-    const elsewhere = new Set(["catalogue", "glossary"]);
-    const missing = dirs
-      .filter(({ dir }) => dir.coverage?.visualiser !== undefined)
-      .filter(({ dir }) => (dir.graphKinds ?? []).every((k) => isPublishedGraphKind(k)))
-      .filter(({ dir }) => !(dir.graphKinds ?? []).some((k) => rendered.has(k) || elsewhere.has(k)))
-      .map(({ instance, dir }) => `${join(instance).split("/").pop()}/${dir.id}`);
-    expect(missing).toEqual([]);
+  it("every viewer page names a Tool that declares what it renders", () => {
+    // Since #1168 B7a-2b a directory's viewer is read from the pages, and a
+    // page counts only when the Tool it names renders the directory's kind.
+    // A page naming no such Tool would silently never be anybody's viewer.
+    const tracked = Bun.spawnSync(["git", "ls-files", "*.md", "*.html"], { cwd: REPO })
+      .stdout.toString().split("\n").filter(Boolean);
+    const pages = viewerPages(REPO, tracked);
+    expect(pages.length).toBeGreaterThan(0);
+    const ids = new Set(renderers.map((t) => t.id));
+    expect(pages.filter((p) => p.renderedBy === undefined || !ids.has(p.renderedBy)).map((p) => p.page)).toEqual([]);
   });
 
   it("every rendered kind is declared by some directory", () => {

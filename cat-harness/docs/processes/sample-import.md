@@ -11,7 +11,11 @@ nav_exclude: true
 
 `Process_SampleImport` · strict · 7 step(s)
 
-The SDLC for testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store. The owner, 2026-09-20: "this is also a SDLC process to be developed for testing a sample import into a KG (or generally structued data store), issues of data size, retention - what happens if data srouce goes away, copyright." General, not WHO-specific: IRIS is the worked instance, and who-iris/ is what this is exercised on. THE GATES ARE CALLED, NOT COPIED. Size, restrictions, copyright, retention and source loss live once, in materialize-remote.bpmn (bean hpax: "neither has its own copy of the four gates"). This process branches on that call's OUTCOME, so a gate refused there is a refusal here and there is no second copy to drift. WHERE A SAMPLE LANDS depends on whether it is meant to last. The owner, 2026-09-23: "if sample-import is not inteded to be permannet, materliase to fsh-guts". A permanent sample goes to library/ and is kept current by refresh-materialized.bpmn. A trial goes to fsh-guts/: kept, addressable, never published, and never refreshed, because a trial is evidence of what the source looked like when it was tried.
+The SDLC for testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store. The owner, 2026-09-20: "this is also a SDLC process to be developed for testing a sample import into a KG (or generally structued data store), issues of data size, retention - what happens if data srouce goes away, copyright." General, not WHO-specific: IRIS is the worked instance, and who-iris/ is what this is exercised on.
+
+THE GATES ARE CALLED, NOT COPIED. Size, restrictions, copyright, retention and source loss live once, in materialize-remote.bpmn (bean hpax: "neither has its own copy of the four gates"). This process branches on that call's OUTCOME, so a gate refused there is a refusal here and there is no second copy to drift.
+
+WHERE A SAMPLE LANDS depends on whether it is meant to last. The owner, 2026-09-23: "if sample-import is not inteded to be permannet, materliase to fsh-guts". A permanent sample goes to library/ and is kept current by refresh-materialized.bpmn. A trial goes to fsh-guts/: kept, addressable, never published, and never refreshed, because a trial is evidence of what the source looked like when it was tried.
 
 <img src="../assets/img/workflows/sample-import.svg" alt="BPMN diagram: Sample import into a structured data store" style="max-width:100%">
 

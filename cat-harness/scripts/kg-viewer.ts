@@ -294,6 +294,11 @@ export function viewerHtml(
   .link { display: inline-flex; align-items: center; min-height: 28px; background: none;
           border: 0; padding: 0 2px; font: inherit; color: var(--accent); text-align: left;
           cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+  /* A plain link in the detail pane (an IRI that is not a node here, a source
+     commit, a spec URL) had NO colour rule, so the browser drew its default
+     #0000EE on --bg in dark: unreadable (owner, 2026-09-27, on typeIri
+     "ProcessGraph"). The same accent the edges and the header links use. */
+  td a { color: var(--accent); text-underline-offset: 2px; }
   .undeclared { color: var(--warn); }
   .undeclared::after { content: " ⚠"; }
   .note { background: var(--warn-bg); border: 1px solid var(--warn); color: var(--warn);

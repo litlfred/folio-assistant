@@ -9,7 +9,6 @@ description: >-
   CRDM feature development workflow, content authoring review sessions, and
   whenever a staging preview deploys or someone asks to see it.
 capability: review
-package: folio-core
 user_invocable: true
 allowed-tools: Bash(git*) Read Grep Glob mcp__github__pull_request_read mcp__github__issue_read
 ---

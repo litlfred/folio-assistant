@@ -11,7 +11,11 @@ nav_exclude: true
 
 `Process_BoardRelocate` · strict · 5 step(s)
 
-Moving open content to the trashcan from the board, with the reader's confirmation in front of the move and not behind it. You are in this process when the fishbone is used on open content. The confirmation gateway has a real "nothing moved" end state, because a destructive action whose refusal is not drawn is a destructive action somebody performs by accident. The order of the two writes is the content of the diagram. The CONTENT relocates, and only then are its positions dropped and orphans swept — the folio carries what is true, the layout layer carries where it was drawn, and the arrow never runs the other way. Sweeping first would leave the board authoritative over the folio for the length of one step.
+Moving open content to the trashcan from the board, with the reader's confirmation in front of the move and not behind it.
+
+You are in this process when the fishbone is used on open content. The confirmation gateway has a real "nothing moved" end state, because a destructive action whose refusal is not drawn is a destructive action somebody performs by accident.
+
+The order of the two writes is the content of the diagram. The CONTENT relocates, and only then are its positions dropped and orphans swept — the folio carries what is true, the layout layer carries where it was drawn, and the arrow never runs the other way. Sweeping first would leave the board authoritative over the folio for the length of one step.
 
 <img src="../assets/img/workflows/board-relocate.svg" alt="BPMN diagram: Board: relocate content to the trashcan" style="max-width:100%">
 

@@ -19,10 +19,11 @@ import { portableSegment } from "../../schemas/portable-path";
 import { criterionSourceHash } from "./qa-criterion-hash";
 import { maskStringsAndComments, parseStringField } from "./uses-field";
 import {
-  parseLeanRef,
-  leanPackageByName,
-  LEAN_PACKAGES,
-} from "../../schemas/lean-packages";
+  formalStatementHash,
+  listFormalSourceFiles,
+  resolveCanonicalFormal,
+  type FormalTreeCache,
+} from "../../schemas/formal-ref.js";
 import { mkdirSync } from "fs";
 import { dirname } from "path";
 import type {
@@ -36,7 +37,6 @@ import type {
 import { COMPANION_ROLES } from "../../schemas/block-qa";
 import { ALL_BLOCK_BUILDER_ALT, kindForBuilder } from "../../schemas/block-kinds";
 import { QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
-import { leanStatementHash } from "./lean-signature";
 import { findContentRepoRoot } from "./repo-root";
 import { loadBlockModuleSync, type BlockLoadFailure } from "./block-module";
 import { existingBlockQaPath } from "./qa-paths";
@@ -79,7 +79,7 @@ export function hashBlockFiles(
     // (`lean_granularity: "statement"`). `undefined` when the file has
     // no lexable declarations — freshness then falls back to `lean`,
     // which over-invalidates rather than under.
-    const sh = leanStatementHash(paths.lean);
+    const sh = formalStatementHash(paths.lean);
     if (sh) out.lean_statement = sh;
   }
   return out;
@@ -183,7 +183,53 @@ function graftBoundary(repoRoot: string): Set<string> {
   return value;
 }
 
+/**
+ * `<repoRoot>\0<relPath>` -> the answer, and the HEAD it was computed AT.
+ *
+ * ## Why this is cached, with the measurement
+ *
+ * `git log -n 1` costs **20.05 ms** (measured 2026-09-27, bean `sff8`), and
+ * `entry()` in `translation-block-qa.ts` calls this once PER CRITERION, so one
+ * `buildReport` spent ~66 ms of subprocess time re-asking two questions whose
+ * answers do not change. That is a production cost, not a test one: the QA sweep
+ * runs `buildReport` per block per locale, so a sweep over N subjects paid 66N ms
+ * for it. It surfaced as a test that is 4 % of its budget on an idle machine and
+ * was twice seen at 28-41x over it, because PROCESS CREATION is what degrades
+ * under load — the spawns queue behind every other test file's work.
+ *
+ * ## Why it is keyed on HEAD rather than cached for the process lifetime
+ *
+ * The owner's decision of 2026-09-27, and the reason is a failure mode this
+ * repository has twice: a **stale provenance recorded as a fresh verdict** is what
+ * `sfjo` and `rmcf` are both about. `qa-utils.ts` is reachable from the
+ * long-running MCP server, where a commit can land mid-process — and a verdict
+ * stamped with the previous HEAD would be confidently wrong rather than unknown.
+ *
+ * Keying on HEAD is sound because the answer — the last commit that touched a path
+ * — can only change when a new commit lands, which moves HEAD. And it is cheap
+ * because `git rev-parse HEAD` costs **1.96 ms** against that 20.05 ms, so the
+ * probe stays UNCACHED as the invalidation signal and only the expensive half is
+ * memoised: ~66 ms per `buildReport` becomes ~6 ms.
+ *
+ * `GIT_SHA_UNKNOWN` is cached like any other answer. A non-git directory returns it
+ * for every path under one key, which is correct: the question has one answer there.
+ */
+const fileCommitCache = new Map<string, { head: string; sha: string }>();
+
 export function gitFileCommitSha(relPath: string, repoRoot: string): string {
+  // The invalidation probe, deliberately NOT memoised — it is what makes the
+  // memo safe, and at 1.96 ms it is a tenth of what it protects.
+  const head = gitHeadSha(repoRoot);
+  const key = `${repoRoot}\u0000${relPath}`;
+  const hit = fileCommitCache.get(key);
+  if (hit && hit.head === head) return hit.sha;
+  const sha = computeFileCommitSha(relPath, repoRoot);
+  fileCommitCache.set(key, { head, sha });
+  return sha;
+}
+
+/** The uncached body — every `git` call this function ever made lives here. */
+function computeFileCommitSha(relPath: string, repoRoot: string): string {
   try {
     const out = execFileSync(
       "git",
@@ -406,333 +452,64 @@ export function computeCriterionScriptHashes(
   };
 }
 
-// ── Canonical lean.ref resolution (single source of truth) ──────
+// ── Canonical lean.ref resolution — DELEGATED ───────────────────
 //
-// This is THE resolver for `lean.ref` → on-disk Lean file. Every QA
-// consumer — `walkBlocks` (used by qa-sweep), `q-usage-audit`,
-// `qa-agent-write`, and orphan-coverage scans — routes through
-// `resolveCanonicalLean` so the candidate-1 (sibling) → candidate-2
-// (Lake/library tree) resolution can never drift between tools. Do not
-// reimplement this walk anywhere else; pass a `LakeTreeCache` for bulk
-// callers and reuse the same function.
+// The resolver itself moved to `content/pipeline/lean-formal-ref.ts` (the
+// science layer) on the owner ruling of 2026-09-27 that the `lean.ref` grammar
+// is science vocabulary. What is left here is two one-line delegations at the
+// OLD names and arities, because three qou scripts and `src/qa-agent-write.ts`
+// call them and one of them holds a cache across a whole sweep
+// (`scripts/check-base-ring.ts`).
+//
+// The bodies moved verbatim rather than being rewritten in transit: this is
+// THE single source of truth for `lean.ref` -> on-disk file, and a rewrite
+// during a move makes a behaviour change indistinguishable from the move.
 
 /**
- * Per-package basename → first-path index for one Lake root, keyed by
- * the absolute Lake-root path. Bulk callers (walking many blocks) build
- * this once and reuse it so the library tree is scanned a single time
- * rather than once per ref.
+ * Per-package basename → first-path index for one source root, keyed by the
+ * absolute root path. Bulk callers (walking many blocks) build this once and
+ * reuse it so the tree is scanned a single time rather than once per ref.
+ *
+ * Now an alias of core's formalism-neutral {@link FormalTreeCache}. The NAME is
+ * kept because `scripts/check-base-ring.ts` imports the type by it.
  */
-export type LakeTreeCache = Map<string, Map<string, string>>;
-
-/** Walk one Lake root once, indexing `*.lean` basename → absolute path. */
-function buildLakeBasenameMap(absRoot: string): Map<string, string> {
-  const map = new Map<string, string>();
-  try {
-    const stack: string[] = [absRoot];
-    while (stack.length) {
-      const dir = stack.pop()!;
-      for (const e of readdirSync(dir, { withFileTypes: true })) {
-        const full = join(dir, e.name);
-        if (e.isDirectory()) stack.push(full);
-        // First occurrence wins for ambiguous basenames; the common
-        // case (one file per basename) is unambiguous.
-        else if (e.isFile() && e.name.endsWith(".lean") && !map.has(e.name))
-          map.set(e.name, full);
-      }
-    }
-  } catch {
-    /* Lake root missing — empty map */
-  }
-  return map;
-}
-
-/** Fetch (or lazily build + cache) the basename index for a Lake root. */
-function lakeBasenameMap(
-  absRoot: string,
-  cache?: LakeTreeCache,
-): Map<string, string> {
-  if (!cache) return buildLakeBasenameMap(absRoot);
-  let m = cache.get(absRoot);
-  if (!m) {
-    m = buildLakeBasenameMap(absRoot);
-    cache.set(absRoot, m);
-  }
-  return m;
-}
+export type LakeTreeCache = FormalTreeCache;
 
 /**
  * Resolve a content block's package-qualified `lean.ref` URI (e.g.
  * `qou:QOU.FluidDynamics.q_bkm_criterion`) to the **canonical compiled
- * declaration file** under the package's Lake tree, e.g.
- * `<repo>/content/quantum-observable-universe/lean/QOU/FluidDynamics/q_bkm_criterion.lean`.
+ * declaration file** under the package's Lake tree.
  *
- * Tries (a) the direct module-path file, then (b) a basename search
- * under the package Lake root. Returns `undefined` if the ref is absent,
- * malformed, the package is unknown, or no file is found.
+ * Returns `undefined` when the ref is absent or malformed, the package is
+ * unknown, no file is found — **or no formalism layer is installed**. That last
+ * case is new only in its visibility: before the move, an unconfigured
+ * `leanPackageByName` returned `undefined` and produced the same answer with no
+ * way to ask. Callers that can proceed without resolution should now consult
+ * `formalRefResolverConfigured()` and report "not checked" rather than a clean
+ * result — the conflation recorded as qou bean `qou-i2ed`.
  *
- * QA tooling uses this so it scores the canonical (package-compiled)
- * declaration rather than an uncompiled sibling stub: a content block's
- * `<root>.lean` may be a `True := by trivial` placeholder while the real
- * statement lives in the library module named by `lean.ref` (CLAUDE.md
- * §3b-cond — the sibling stub is not the integrity gate).
- *
- * Pass a shared `cache` when resolving many refs (e.g. a corpus sweep)
- * so the Lake tree is scanned once; omit it for single-block callers.
+ * Pass a shared `cache` when resolving many refs so the tree is scanned once.
  */
-/**
- * Does `file` textually declare a top-level `name` (theorem/def/…)?
- *
- * Used to reject the **import-only aggregator** trap: a ref like
- * `qou:QOU.BraidKnot.foo` has module `QOU.BraidKnot`, whose direct
- * module-path `QOU/BraidKnot.lean` is an `import …`-only aggregator that
- * declares nothing. Candidate (a) must not return it — the decl `foo`
- * lives in a leaf file under `QOU/BraidKnot/`. Lenient (comment-blind) on
- * purpose: it only *gates* candidate (a), and a false positive there is no
- * worse than the pre-fix behaviour.
- */
-/** Regex fragment listing every Lean top-level declaration keyword. */
-const _DECL_KW =
-  "theorem|lemma|def|abbrev|instance|structure|class|inductive|opaque|axiom";
-
-/**
- * Does `file` declare **anything at all**, or is it an import-only aggregator?
- *
- * Used to keep the safe fallback from handing back a file that declares
- * nothing. A ref naming a decl that does not exist (e.g. `qou:QOU.Foo` when no
- * `Foo` was ever written) parses with module `QOU`, whose module-path file is
- * the library root — a list of `import` lines. Returning that made every
- * checker audit the import list and **pass**, which is strictly worse than the
- * honest `n/a` an unresolved ref produces. Measured on the qou corpus
- * 2026-08-15: 65 of 1220 blocks resolved this way (bean `qou-cu0a`).
- */
-function fileDeclaresAnything(file: string): boolean {
-  let body: string;
-  try {
-    body = readFileSync(file, "utf-8");
-  } catch {
-    return false;
-  }
-  return new RegExp(`^\\s*(?:noncomputable\\s+|private\\s+|protected\\s+)*(?:${_DECL_KW})\\s`, "mu")
-    .test(body);
-}
-
-function fileDeclaresName(file: string, name: string): boolean {
-  let body: string;
-  try {
-    body = readFileSync(file, "utf-8");
-  } catch {
-    return false;
-  }
-  const short = name.includes(".") ? name.split(".").pop()! : name;
-  const esc = short.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return new RegExp(
-    `\\b(?:theorem|lemma|def|abbrev|instance|structure|class|inductive|opaque|axiom)\\s+(?:[\\w'.\\u00C0-\\uFFFF]*\\.)?${esc}\\b`,
-    "u",
-  ).test(body);
-}
-
-const _DECL_RE =
-  /^(?:@\[[^\]]*\]\s*)*(?:(?:private|protected|scoped|local|noncomputable|partial|unsafe|nonrec)\s+)*(?:theorem|lemma|def|abbrev|instance|structure|class|inductive|opaque|axiom)\s+([A-Za-z_À-￿][^\s:({\[⦃⟨]*)/u;
-const _NS_RE = /^namespace\s+([A-Za-z_À-￿][\w'.À-￿]*)/u;
-const _END_RE = /^end\b/;
-const _SEC_RE = /^section\b/;
-const _SHORT = "|short|";
-
-/**
- * Walk one Lake root once, indexing **fully-qualified declaration name →
- * file** (namespace-aware). This is candidate (c): it resolves a
- * `lean.ref` whose last segment is a *declaration* name whose file
- * basename differs (e.g. `binding_isovector_mirror_from_chiral` living in
- * `BindingIsovectorChiralResidue.lean`) — the case candidates (a) and (b)
- * both miss. Unambiguous short names are also indexed under a sentinel key
- * as a looser fallback. Comment/section aware so a keyword inside `/- … -/`
- * or a `namespace … end` scope is handled correctly.
- */
-function buildLakeDeclMap(absRoot: string): Map<string, string> {
-  const map = new Map<string, string>();
-  const short = new Map<string, string | null>();
-  const files: string[] = [];
-  try {
-    const stack: string[] = [absRoot];
-    while (stack.length) {
-      const dir = stack.pop()!;
-      for (const e of readdirSync(dir, { withFileTypes: true })) {
-        const full = join(dir, e.name);
-        if (e.isDirectory()) stack.push(full);
-        else if (e.isFile() && e.name.endsWith(".lean")) files.push(full);
-      }
-    }
-  } catch {
-    return map;
-  }
-  for (const file of files) {
-    let body: string;
-    try {
-      body = readFileSync(file, "utf-8");
-    } catch {
-      continue;
-    }
-    const nsStack: string[] = [];
-    const openKind: ("ns" | "sec")[] = [];
-    let blockDepth = 0;
-    for (const rawLine of body.split("\n")) {
-      // Strip block comments (`/- … -/`, nesting) and `--` line comments.
-      let line = "";
-      let i = 0;
-      while (i < rawLine.length) {
-        if (blockDepth > 0) {
-          if (rawLine.startsWith("-/", i)) {
-            blockDepth--;
-            i += 2;
-          } else if (rawLine.startsWith("/-", i)) {
-            blockDepth++;
-            i += 2;
-          } else i++;
-        } else if (rawLine.startsWith("/-", i)) {
-          blockDepth++;
-          i += 2;
-        } else if (rawLine.startsWith("--", i)) {
-          break;
-        } else {
-          line += rawLine[i];
-          i++;
-        }
-      }
-      const t = line.trim();
-      if (!t) continue;
-      let m: RegExpMatchArray | null;
-      if ((m = t.match(_NS_RE))) {
-        nsStack.push(m[1]);
-        openKind.push("ns");
-        continue;
-      }
-      if (_SEC_RE.test(t)) {
-        openKind.push("sec");
-        continue;
-      }
-      if (_END_RE.test(t)) {
-        if (openKind.pop() === "ns") nsStack.pop();
-        continue;
-      }
-      if ((m = t.match(_DECL_RE))) {
-        const declName = m[1];
-        const full = [nsStack.join("."), declName].filter(Boolean).join(".");
-        if (!map.has(full)) map.set(full, file);
-        const s = declName.includes(".") ? declName.split(".").pop()! : declName;
-        if (!short.has(s)) short.set(s, file);
-        else if (short.get(s) !== file) short.set(s, null);
-      }
-    }
-  }
-  for (const [k, v] of short) if (v && !map.has(_SHORT + k)) map.set(_SHORT + k, v);
-  return map;
-}
-
-/** Fetch (or lazily build + cache) the decl-name index for a Lake root. */
-function lakeDeclMap(
-  absRoot: string,
-  cache?: LakeTreeCache,
-): Map<string, string> {
-  const key = `${absRoot}|decls`;
-  if (!cache) return buildLakeDeclMap(absRoot);
-  let m = cache.get(key);
-  if (!m) {
-    m = buildLakeDeclMap(absRoot);
-    cache.set(key, m);
-  }
-  return m;
-}
-
 export function resolveCanonicalLean(
   ref: string | undefined,
   repoRoot: string,
   cache?: LakeTreeCache,
 ): string | undefined {
-  if (!ref) return undefined;
-  let parsed: ReturnType<typeof parseLeanRef>;
-  try {
-    parsed = parseLeanRef(ref);
-  } catch {
-    return undefined;
-  }
-  const pkg = leanPackageByName(parsed.package);
-  if (!pkg) return undefined;
-  const lakeRootAbs = resolve(repoRoot, pkg.lakeRoot);
-  // (a) Direct module-path — trust ONLY if the file actually declares the
-  //     decl. This rejects the import-only aggregator (`QOU/BraidKnot.lean`)
-  //     that a module-with-subdirectory shares its name with.
-  const direct = resolve(
-    lakeRootAbs,
-    `${parsed.module.replace(/\./g, "/")}.lean`,
-  );
-  const directExists = existsSync(direct);
-  if (directExists && fileDeclaresName(direct, parsed.name)) return direct;
-  // (b) Basename fallback under the Lake tree.
-  const byBasename = lakeBasenameMap(lakeRootAbs, cache).get(
-    `${parsed.name}.lean`,
-  );
-  if (byBasename) return byBasename;
-  // (c) Fully-qualified decl → file scan (decl-named ref whose file basename
-  //     differs AND whose module path is an aggregator).
-  const declMap = lakeDeclMap(lakeRootAbs, cache);
-  const byDecl = declMap.get(parsed.decl) ?? declMap.get(_SHORT + parsed.name);
-  if (byDecl) return byDecl;
-  // (safe fallback) preserve legacy behaviour: a ref that resolved to the
-  //   direct module-path before the (a)-gate still resolves to it, so no
-  //   previously-resolving ref regresses to `undefined`.
-  //
-  //   EXCEPT when that file declares nothing at all. An import-only aggregator
-  //   carries no statement to audit, so returning it makes every checker pass
-  //   vacuously on a list of `import` lines — strictly worse than the honest
-  //   `n/a` that `undefined` produces, because a false green is indistinguishable
-  //   from a real one. Refs naming a decl that exists nowhere land here (module
-  //   `QOU` → the library root); 65 of 1220 qou blocks did, bean `qou-cu0a`.
-  //   Real single-module files still fall back exactly as before.
-  if (directExists && fileDeclaresAnything(direct)) return direct;
-  return undefined;
+  return resolveCanonicalFormal(ref, repoRoot, cache);
 }
 
 /**
- * Enumerate every `*.lean` file under every configured package's Lake
- * tree (absolute paths). Single source for "what library-tree files
- * exist", consumed by orphan-coverage scans that audit Lean files
- * reachable by **no** block's `lean.ref`. Returns `[]` when no packages
- * are configured (e.g. the framework repo with no content injected).
+ * Enumerate every `*.lean` file under every configured package's Lake tree
+ * (absolute paths). Consumed by orphan-coverage scans that audit Lean files
+ * reachable by **no** block's `lean.ref`.
+ *
+ * Returns `[]` both when no packages are configured and when no formalism layer
+ * is installed. Those are different facts and this signature cannot tell them
+ * apart, so a scan that finds nothing must say which it measured.
  */
 export function listPackageLeanFiles(repoRoot: string): string[] {
-  const out: string[] = [];
-  for (const pkg of LEAN_PACKAGES) {
-    const absRoot = resolve(repoRoot, pkg.lakeRoot);
-    try {
-      const stack: string[] = [absRoot];
-      while (stack.length) {
-        const dir = stack.pop()!;
-        for (const e of readdirSync(dir, { withFileTypes: true })) {
-          // `.lake/` is Lake's BUILD DIRECTORY: vendored third-party sources
-          // (Mathlib, Batteries, …) plus build output. Measured on qou
-          // 2026-08-30: 8,013 of the 10,412 `.lean` files under the Lake root
-          // live there — 77 %. Walking them makes every consumer audit its own
-          // dependencies: the q-usage audit reported `wall-base-ring-minimal`
-          // findings against `.lake/packages/mathlib/Mathlib/Algebra/CharP/*`,
-          // "…and 1474 more".
-          //
-          // This function's own contract is why the exclusion is correct and
-          // not merely convenient: it feeds "orphan-coverage scans that audit
-          // Lean files reachable by NO block's `lean.ref`". A Mathlib file is
-          // not an orphan of this corpus — it is not ours to cover.
-          if (e.isDirectory() && e.name === ".lake") continue;
-          const full = join(dir, e.name);
-          if (e.isDirectory()) stack.push(full);
-          else if (e.isFile() && e.name.endsWith(".lean")) out.push(full);
-        }
-      }
-    } catch {
-      /* Lake root missing — skip this package */
-    }
-  }
-  return out;
+  return listFormalSourceFiles(repoRoot);
 }
-
 
 // ── Block discovery ─────────────────────────────────────────────
 
@@ -1756,9 +1533,28 @@ export function saveQaScriptSidecar(
   // change. That churn is not free: it is indistinguishable, in `git
   // status`, from an actual checker-hash movement.
   //
-  // Everything except the two `last_run_*` fields is content-derived, so
-  // comparing on those alone is the right test: identical hashes mean the
-  // recorded state is already accurate and the timestamp adds nothing.
+  // The comparison is over the CONTENT-derived fields only: the source file,
+  // the three hashes and the extra inputs. Identical there means the recorded
+  // state is already accurate. `last_run_at`, `last_run_sha` and
+  // `engine_version` describe the RUN, not the checker, so on their own they
+  // are not a reason to write.
+  //
+  // `engine_version` was compared too until bean `3ozg` (2026-09-27), and that
+  // kept the churn alive: the committed sidecars carried CI's `bun-1.3.14`, a
+  // local run is `bun-1.3.11`, so every sweep from a different bun rewrote all
+  // 72. `init-folio-qa.test.ts` runs a real sweep, which made `bun test` dirty
+  // the tree and `bun run gates` report "NOT clean" on every branch. No reader
+  // uses a script sidecar's `engine_version` for freshness (`entryIsFresh`
+  // compares hashes), so it is left as a record of the last CONTENT change's
+  // engine rather than the last run's.
+  //
+  // Why this took two beans to find (`rmcf`, then `3ozg`; #1451): the comment
+  // here used to say everything but the two `last_run_*` fields was
+  // content-derived. That was false for `engine_version`, which comes from the
+  // ENVIRONMENT, and it ruled the environment out, so the hunt went looking
+  // for a test alone. Both halves were needed: the WRITER is a test, the
+  // TRIGGER was this term plus an off-pin engine. The pin (`.bun-version`)
+  // and this skip are kept together, on the owner's choice.
   const prev = loadQaScriptSidecar(sidecar.criterion_id, repoRoot);
   if (
     prev &&
@@ -1766,7 +1562,6 @@ export function saveQaScriptSidecar(
     prev.script_hash === sidecar.script_hash &&
     prev.script_commit_sha === sidecar.script_commit_sha &&
     prev.deps_hash === sidecar.deps_hash &&
-    prev.engine_version === sidecar.engine_version &&
     JSON.stringify(prev.extra_inputs ?? []) ===
       JSON.stringify(sidecar.extra_inputs ?? [])
   ) {

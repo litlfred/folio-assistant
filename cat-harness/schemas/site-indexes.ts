@@ -27,6 +27,7 @@ import { z } from "zod";
 
 import { SUMMARY_STATUSES } from "./block-summary.js";
 import { TileCountsSchema } from "./tile-count.js";
+import { BeanIdSchema } from "./tool-types.js";
 
 /** A generated-index envelope: its `$schema` tag and the navbar count. */
 const envelope = <T extends string>(tag: T) => ({
@@ -47,8 +48,8 @@ export const BeanIndexItemSchema = z
     status: z.string(),
     type: z.string(),
     priority: z.string(),
-    /** `""` when the bean has no parent. */
-    parent: z.string(),
+    /** `""` when the bean has no parent; otherwise a typed bean id (#1168 B8). */
+    parent: z.union([z.literal(""), BeanIdSchema]),
     blocking: StringList,
     blockedBy: StringList,
     createdAt: z.string(),
@@ -69,7 +70,7 @@ export const BeanIndexSchema = z
       z
         .object({
           kind: z.enum(["blocked-without-expiry", "blocker-closed", "blocking-unknown"]),
-          bean: z.string(),
+          bean: BeanIdSchema,
           blocks: z.string(),
           detail: z.string(),
         })

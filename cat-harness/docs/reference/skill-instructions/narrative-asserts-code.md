@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Does the prose say what the code does?'
 parent: Skill instructions
 ---
@@ -73,7 +74,7 @@ nothing from you.
 
 For a **proof ↔ Lean** pair, a proof assistant can settle the formal claim
 mechanically, which no other pair kind allows. That work belongs to
-[`proof-narrative-lean-equivalence`](../folio-paper-adapter/proof-narrative-lean-equivalence.md):
+[`proof-narrative-lean-equivalence`](proof-narrative-lean-equivalence.md):
 stub-weakening, overreach, hypothesis mismatch and notation drift. This skill
 states the question for every pair kind, and that one answers it for Lean.
 Nothing Lean-specific goes here (requirement R5), so a pair kind added later

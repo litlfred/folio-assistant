@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Lean File Generation'
 parent: Skill instructions
 ---
@@ -239,6 +240,19 @@ in sync — it is the **author's responsibility** to ensure consistency:
 | `\leanok` in blueprint | Zero `sorry` in the linked Lean declaration |
 | `-- Ref: [key]` before sorry | Citation key `key` in `content/schema/references.ts` |
 | `\cite{key}` in blueprint | Citation key `key` in `content/schema/references.ts` |
+
+**Every row above except the first two is a fact Lean can compute**, and a
+hand-kept copy of a computable fact is a second answer free to disagree with the
+first. `blueprint-driven-formalization` (a methodology node in
+`folio-assistant-sci/methodologies/`) adopts the inversion from the LeanArchitect
+paper: `\uses` and `\leanok` are **inferred** from the declarations, not
+written. Two cautions when doing that here:
+
+- **`\uses` is the FORMAL relation** — fill it from `lean-formal-graph`, never
+  from or into a block's `uses[]`, which is editorial.
+- **`\leanok` is LOCAL.** It says this declaration contains no `sorry`, not
+  that everything it depends on is proved. Report the transitive status as a
+  separate graph query.
 
 ### Blueprint update workflow
 

@@ -5,7 +5,7 @@
     "id": "Process_ContentChangeReview",
     "path": "processes/content-change-review.bpmn"
   },
-  "source_hash": "sha256:3f00e9142ea6883541a20addd0d89759e7e973794b9b8d6d9b4fcce8863e6b1b",
+  "source_hash": "sha256:69f667f805f9d3390ea4f98eea805c5792926e296b1c3c858d5565890656911c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,51 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_DetectScope",
+          "detail": "names skill \"semantic-review-scoping\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_EditContent",
+          "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_EditLogic",
+          "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Iterate",
+          "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_ReviewSlices",
+          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Call_Adjudication",
+          "detail": "names skill \"adjudication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ReviewImpact",
+          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RequestChanges",
+          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RequestChanges",
+          "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RebuildMain",
+          "detail": "names skill \"content-publish\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "pass",
@@ -119,7 +164,7 @@
   },
   "totals": {
     "pass": 16,
-    "fail": 1,
+    "fail": 2,
     "n/a": 7,
     "unknown": 0
   }

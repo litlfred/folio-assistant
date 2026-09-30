@@ -1,11 +1,11 @@
 ---
 # folio-assistant-txut
 title: 'REVIEW VISUALISER: a review/ page per folio showing what changed from main, grouped by the folio/ graph'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-23T06:02:50Z
+updated_at: 2026-09-29T18:14:49Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-jwox
@@ -57,3 +57,9 @@ The list is built with DOM APIs only, so a block label can never become markup.
 - light and dark screenshots were checked, and the button row and branch naming were fixed after looking at them.
 
 **Not here:** renderer choice (d903), heat map (qbfi), comments (423d), outline and minimap (eb4l).
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

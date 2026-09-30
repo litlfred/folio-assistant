@@ -1,0 +1,365 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2504.07199v3",
+ "source": {
+  "file": "2504.07199v3.pdf",
+  "sha256": "a6c42fa7f3f5183f74327bcfd89873786e18a9fde3b48581938664d349e9343b",
+  "bytes": 536183,
+  "pages": 14,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-24T19:21:15Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2504.07199",
+   "version": "3",
+   "primary_class": "cs.CL",
+   "stamp_date": "23 May 2025"
+  },
+  "doi": null,
+  "title": "Tagging for a National Technical Library\u2019s Open-Access Catalog",
+  "authors_raw": "Jennifer D\u2019Souza, Sameer Sadruddin, Holger Israel, Mathias Begoin, and Diana Slawig",
+  "title_lines": [
+   "Tagging for a National Technical Library\u2019s Open-Access Catalog"
+  ],
+  "abstract": "We present SemEval-2025 Task 5: LLMs4Subjects, a shared task on auto- mated subject tagging for scientific and technical records in English and German using the GND taxonomy. Participants developed LLM-based systems to recommend top-k subjects, evaluated through quantitative metrics (precision, recall, F1-score) and qualitative assessments by subject specialists. Results highlight the effectiveness of LLM ensembles, synthetic data generation, and multilingual processing, offering insights into applying LLMs for digital library classification.",
+  "docinfo": {
+   "Producer": "pdfTeX-1.40.25",
+   "Creator": "LaTeX with hyperref",
+   "CreationDate": "D:20250526004238Z"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Background",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Source Dataset",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "How are subject annotations obtained?",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Shared Task Description and Dataset",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Dataset Collections",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Dataset Format and Statistics",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Task Setup",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Shared Task Participant Systems",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Shared Task Leaderboard Results",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Quantitative Evaluations",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Qualitative Evaluations",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "TIBKAT media types",
+   "page": 13,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "TIBKAT Language Distribution",
+   "page": 13,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Additional details about the GND",
+   "page": 13,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Pilot Task",
+   "page": 14,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 876,
+   "n_words": 110
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 4954,
+   "n_words": 733
+  },
+  {
+   "id": "sec-001-background",
+   "number": null,
+   "title": "Background",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 1638,
+   "n_words": 238
+  },
+  {
+   "id": "sec-002-source-dataset",
+   "number": null,
+   "title": "Source Dataset",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 1020,
+   "n_words": 141
+  },
+  {
+   "id": "sec-003-how-are-subject-annotations-obtained",
+   "number": null,
+   "title": "How are subject annotations obtained?",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 1996,
+   "n_words": 252
+  },
+  {
+   "id": "sec-004-shared-task-description-and-dataset",
+   "number": null,
+   "title": "Shared Task Description and Dataset",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 446,
+   "n_words": 66
+  },
+  {
+   "id": "sec-005-dataset-collections",
+   "number": null,
+   "title": "Dataset Collections",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 1507,
+   "n_words": 194
+  },
+  {
+   "id": "sec-006-dataset-format-and-statistics",
+   "number": null,
+   "title": "Dataset Format and Statistics",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 812,
+   "n_words": 90
+  },
+  {
+   "id": "sec-007-task-setup",
+   "number": null,
+   "title": "Task Setup",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 613,
+   "n_words": 87
+  },
+  {
+   "id": "sec-008-shared-task-participant-systems",
+   "number": null,
+   "title": "Shared Task Participant Systems",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 8,
+   "n_chars": 15136,
+   "n_words": 2215
+  },
+  {
+   "id": "sec-009-shared-task-leaderboard-results",
+   "number": null,
+   "title": "Shared Task Leaderboard Results",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 1711,
+   "n_words": 249
+  },
+  {
+   "id": "sec-010-quantitative-evaluations",
+   "number": null,
+   "title": "Quantitative Evaluations",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 2114,
+   "n_words": 304
+  },
+  {
+   "id": "sec-011-qualitative-evaluations",
+   "number": null,
+   "title": "Qualitative Evaluations",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 10,
+   "n_chars": 5054,
+   "n_words": 824
+  },
+  {
+   "id": "sec-012-discussion",
+   "number": null,
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 10,
+   "page_end": 10,
+   "n_chars": 1773,
+   "n_words": 259
+  },
+  {
+   "id": "sec-013-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 10,
+   "page_end": 13,
+   "n_chars": 12499,
+   "n_words": 1679
+  },
+  {
+   "id": "sec-014-tibkat-media-types",
+   "number": null,
+   "title": "TIBKAT media types",
+   "level": 1,
+   "page_start": 13,
+   "page_end": 13,
+   "n_chars": 994,
+   "n_words": 148
+  },
+  {
+   "id": "sec-015-tibkat-language-distribution",
+   "number": null,
+   "title": "TIBKAT Language Distribution",
+   "level": 1,
+   "page_start": 13,
+   "page_end": 13,
+   "n_chars": 770,
+   "n_words": 123
+  },
+  {
+   "id": "sec-016-additional-details-about-the-gnd",
+   "number": null,
+   "title": "Additional details about the GND",
+   "level": 1,
+   "page_start": 13,
+   "page_end": 14,
+   "n_chars": 1711,
+   "n_words": 278
+  },
+  {
+   "id": "sec-017-pilot-task",
+   "number": null,
+   "title": "Pilot Task",
+   "level": 1,
+   "page_start": 14,
+   "page_end": 14,
+   "n_chars": 2066,
+   "n_words": 305
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 18,
+  "toc_inferred_entries": 0,
+  "sections": 19,
+  "chars_total": 57690
+ }
+}

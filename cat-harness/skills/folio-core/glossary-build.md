@@ -21,6 +21,11 @@ namespace, beside every other scheme. The rules (status by provenance,
 verbatim definitions, the slug as `notation`) are in
 [`glossary-terms`](glossary-terms.md).
 
+The paper's scheme is **unordered**: its terms are shown A–Z. A glossary whose
+terms must be read in a logical order declares `ordered: true` and gives each
+term `requires`; see [`glossary-terms`](glossary-terms.md) §"Ordered
+glossaries" — do not sort one of those.
+
 `--check` also fails when the scheme is stale, when two slugs would mint
 one term IRI, or when another document in the directory holds the scheme id.
 A scheme not written yet is reported and does not fail, so a paper that has
@@ -49,6 +54,16 @@ not regenerated since the change keeps a green gate. `glossary.json` and
 | `cd content && bun run pipeline/codemod-refterm.ts <chapter-dir> --write` | Apply backfill to disk |
 | `cd content && bun run validate <paper-dir>` | Includes the five glossary-term validation rules |
 | `cd content && bun run validate <paper-dir> --strict` | Adds `term-mention-coverage` (bare-text mentions) |
+
+**`pipeline/…` above is the FOLIO's own path.** The two glossary scripts moved
+out of the platform on 2026-09-30 (bean `yj6r`): `build-glossary.ts` and
+`codemod-refterm.ts` now live in `folio-assistant-core/scripts/`, beside the
+`schemas/glossary.ts` they read, because walking a paper's blocks is content
+machinery and `cat-harness` may not import upward into the content layer. A
+folio that vendors its own `content/pipeline/` is unaffected — its copy still
+wins. A folio that does not reaches them through the `glossary_check` and
+`codemod` MCP tools, whose resolver searches the folio, then the platform, then
+`folio-assistant-core/scripts/`.
 
 ### Curator web UI (Phase C)
 
@@ -123,8 +138,8 @@ first backfill batch lands, to avoid an avalanche of
 
 - `content-validation` — full authoring contract and agent-facing rules
 - `content/pipeline/validate-defterm.ts` — validator implementation
-- `content/pipeline/build-glossary.ts` — builder implementation
-- `content/pipeline/codemod-refterm.ts` — backfill codemod
+- `folio-assistant-core/scripts/build-glossary.ts` — builder implementation
+- `folio-assistant-core/scripts/codemod-refterm.ts` — backfill codemod
 - `content/pipeline/glossary-candidates.ts` — Phase C proposer
 - `content/pipeline/apply-glossary-curation.ts` — Phase C applier
 - `ui/glossary-curator.html` — curator web UI

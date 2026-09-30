@@ -5,7 +5,7 @@
     "id": "Process_RelatedWork",
     "path": "processes/related-work.bpmn"
   },
-  "source_hash": "sha256:41b3f22e854a4216dbaafa0501eafb96ffc3b1dc251602deb82b46e2f928375b",
+  "source_hash": "sha256:51010909368fa5b17c97ce89dac01bfcbde9bfa85883658282ee1a9a1ecad71c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,27 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_SearchBeans",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_SearchIssues",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Categorize",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Record",
+          "detail": "names skill \"related-work-coordination\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -111,7 +132,7 @@
   },
   "totals": {
     "pass": 11,
-    "fail": 1,
+    "fail": 2,
     "n/a": 12,
     "unknown": 0
   }

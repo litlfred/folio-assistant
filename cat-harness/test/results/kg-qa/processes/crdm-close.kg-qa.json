@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Close",
     "path": "processes/crdm-close.bpmn"
   },
-  "source_hash": "sha256:072a2213157f675ef51ac5fa6b5e93b0b3b81cbc0f91db995697c8553bb2384b",
+  "source_hash": "sha256:21eae59072609b28e635b100967775c885094937de1c95998238c65a7075759a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,15 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Close",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -106,7 +115,7 @@
   },
   "totals": {
     "pass": 12,
-    "fail": 0,
+    "fail": 1,
     "n/a": 12,
     "unknown": 0
   }

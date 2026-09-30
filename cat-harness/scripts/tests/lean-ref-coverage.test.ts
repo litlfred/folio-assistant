@@ -44,7 +44,12 @@ import {
 import { checkWallSide } from "../../content/pipeline/qa-checkers-voice.ts";
 import { checkQUsageArchimedeanInCategoricalChapter } from "../../content/pipeline/qa-checkers-q-usage.ts";
 import { scanOrphanLeanFiles } from "../../content/pipeline/q-usage-audit.ts";
-import { configureLeanPackages } from "../../schemas/lean-packages.ts";
+// From `lean-formal-ref`, not `lean-packages`: importing it installs the Lean
+// formalism layer into core's `formal-ref` injection point, and this suite
+// exercises `resolveCanonicalLean` / `listPackageLeanFiles`, which are now
+// core delegations to that layer. Configuring the package LIST alone leaves
+// every resolution `undefined` — measured: 9 of these tests went red.
+import { configureLeanPackages } from "../../content/pipeline/lean-formal-ref.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..", "..");
 

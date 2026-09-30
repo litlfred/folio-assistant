@@ -20,6 +20,12 @@ package "folio-assistant-sci/library" as pkg_folio_assistant_sci_library <<libra
     inspected_at [1] : string
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
+  class "folio-vector-labels/v1" as folio_assistant_sci_library_folio_vector_labels_v1_folio_vector_labels_v1 <<json: VectorLabelsSidecarSchema>> #f4f4f1 {
+    $schema [1] : 'folio-vector-labels/v1'
+    doc_id [1] : string
+    pages [1] : object[] | null
+    undetermined_reason [0..1] : string
+  }
 }
 
 @enduml

@@ -13,10 +13,23 @@
  * @module scripts/known-skills
  */
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { basename, isAbsolute, join, join as joinPath, relative, resolve } from "node:path";
+import { basename, dirname, isAbsolute, join, join as joinPath, relative, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schemas/cat-harness.js";
+
+/**
+ * The instance this module belongs to — the one that owns the repository-level
+ * agent configuration under `.claude/`.
+ *
+ * Derived from the module's own path and never written down: the same device
+ * `kg-audit.ts` uses for `AUDITOR_ROOT` and `skill-register.ts` for
+ * `INSTANCE_ROOT`. A literal would be the defect this file was extracted to fix,
+ * one directory along.
+ */
+const OWN_INSTANCE = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 import { readRoleGraph, type RoleGraph } from "../schemas/role-graph.js";
+import { orderedDependencies } from "../schemas/harness-config.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
@@ -658,8 +671,39 @@ export function knownSkills(root: string): Set<string> {
   // addition here.
   // Only `.json` here: the `.md` files come through `skillMdDirs()` above, so
   // the deny-list is applied in ONE place rather than two that can disagree.
+  //
+  // AND IT IS READ FOR ONE INSTANCE ONLY. `repoRootFor` here is the REPOSITORY,
+  // so without this guard every nested instance inherited the repository's
+  // agent-level skills as its own. Measured 2026-09-27:
+  //
+  //     knownSkills("./bootstrap")   30, of which 23 came from .claude/skills/local/
+  //     bootstrap's OWN skills        7 — bootstrap-graph-emission,
+  //                                   bootstrap-graph-publication,
+  //                                   bootstrap-kg-navigation, confirm-harness,
+  //                                   discussion, log-message, root-readme
+  //
+  // Those 23 are exactly the `.json` files in `local/`, the only group
+  // `NON_SKILL_GROUPS` admits. They surfaced as `kg-audit --instance` reporting
+  // 23 `skill-in-role-or-process` findings against bootstrap for skills it does
+  // not declare, and as `graph.test.ts`'s "nothing in bootstrap/ names anything
+  // above it" (bean `iwtn`) failing on `smart-base-tools` — a cat-harness skill.
+  //
+  // The direction is DECLARED, not a matter of taste. `needs` records the
+  // layering in the owner's words — *"So bootsteap, cat harness, fa-core, f-a,
+  // from bottom to top"* — with `cat-harness.needs = ["bootstrap"]` and
+  // `bootstrap.needs = []`. So cat-harness inherits bootstrap's skills and
+  // bootstrap inherits NOTHING; reading the repository's `.claude/` into
+  // bootstrap inherited upward, against that chain.
+  //
+  // Attributed to OWN_INSTANCE rather than to the top of the chain because that
+  // is where these skills live: all 23 `local/` names also exist as
+  // `cat-harness/skills/**/<name>.md`, measured. Which means the scan adds NO
+  // name at root in this corpus — redundant today, and kept anyway, because the
+  // deny-list exists so a new group of json-declared skills is picked up
+  // automatically. Redundant is not pointless; a fourth leak of this exact
+  // `repoRootFor` shape is.
   const localRoot = join(repoRootFor(root), ".claude", "skills");
-  if (existsSync(localRoot)) {
+  if (resolve(root) === OWN_INSTANCE && existsSync(localRoot)) {
     for (const g of readdirSync(localRoot, { withFileTypes: true })) {
       if (!g.isDirectory() || NON_SKILL_GROUPS.has(g.name)) continue;
       for (const f of readdirSync(join(localRoot, g.name))) {
@@ -746,4 +790,74 @@ export function workflowFiles(root: string): string[] {
   // overlapping directories this function never chose, and the same file
   // reached twice is a duplicate `@id` downstream either way.
   return [...new Set(out)].sort();
+}
+
+/**
+ * Every servable skill name, with the packages that hold one of that name.
+ *
+ * {@link knownSkills} collapses names into a set, so two packages holding the
+ * same name read as one skill. This keeps them apart, which is what lets
+ * {@link resolveSkillRef} say "ambiguous" instead of picking (#1168 B8).
+ * A package is the declared directory's last segment, e.g. `folio-core`.
+ */
+export function skillIndex(root: string): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  for (const parts of skillMdDirs(root)) {
+    const dir = join(root, ...parts);
+    if (!existsSync(dir)) continue;
+    const pkg = parts[parts.length - 1] ?? "";
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith(".md") || !isSkillMd(join(dir, f))) continue;
+      const name = f.slice(0, -3);
+      const held = out.get(name) ?? [];
+      if (!held.includes(pkg)) held.push(pkg);
+      out.set(name, held);
+    }
+  }
+  return out;
+}
+
+/**
+ * {@link skillIndex} over this instance AND everything it `needs`.
+ *
+ * Resolution follows `needs` downward — the rule `kg-audit.ts` applies to
+ * `<skill ref>` (`resolvableSkills`) and `check-tools.ts` to `satisfies`
+ * (`satisfiableSkills`): a Tool here may satisfy a skill that lives in
+ * `bootstrap`, and "not in my overlay is not does not exist" (`pve3`).
+ * `orderedDependencies` walks the chain, so this adds no second walker.
+ */
+export function resolvableSkillIndex(root: string): Map<string, string[]> {
+  const out = skillIndex(root);
+  for (const dep of orderedDependencies(root)) {
+    for (const [name, pkgs] of skillIndex(dep.rootPath)) {
+      const held = out.get(name) ?? [];
+      for (const p of pkgs) if (!held.includes(p)) held.push(p);
+      out.set(name, held);
+    }
+  }
+  return out;
+}
+
+/** What a skill reference names. */
+export type SkillRefResolution =
+  | { kind: "ok"; name: string; package: string }
+  | { kind: "missing"; ref: string }
+  /** A bare name more than one package holds: qualify it as `package/name`. */
+  | { kind: "ambiguous"; ref: string; packages: string[] };
+
+/**
+ * Resolve `name` or `package/name` against a {@link skillIndex}.
+ *
+ * Owner, 2026-09-30 (*"both; qualify if ambiguous"*): a bare name that more
+ * than one package holds is reported, never resolved to whichever came first.
+ */
+export function resolveSkillRef(ref: string, index: ReadonlyMap<string, readonly string[]>): SkillRefResolution {
+  const slash = ref.indexOf("/");
+  const pkg = slash === -1 ? undefined : ref.slice(0, slash);
+  const name = slash === -1 ? ref : ref.slice(slash + 1);
+  const held = index.get(name) ?? [];
+  if (pkg !== undefined) return held.includes(pkg) ? { kind: "ok", name, package: pkg } : { kind: "missing", ref };
+  if (held.length === 0) return { kind: "missing", ref };
+  if (held.length > 1) return { kind: "ambiguous", ref, packages: [...held].sort() };
+  return { kind: "ok", name, package: held[0]! };
 }

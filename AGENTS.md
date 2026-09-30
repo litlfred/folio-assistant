@@ -135,6 +135,8 @@ bun run readme:sync:check           # ...and fail if any is stale (for CI)
 bun run readme:sections             # list the sections a README can opt into
 bun run readme:audit                # verify the README's links still resolve
 bun run preview:site                # BUILD the docs site locally and look at a page
+bun run bat:sync                    # regenerate the Windows .bat wrapper beside each user-run .sh
+bun run bat:sync:check              # ...and fail if any is missing or stale (for CI)
 ```
 
 **`preview:site` exists because a green gate set is not a rendered page.** On
@@ -215,8 +217,20 @@ cat-harness/scripts/install-beans.sh                 # install the CLI if missin
 beans prime                              # emit work-plan priming for agents
 beans list                               # current open items
 beans create "<title>"                   # open a work-plan item
-beans <id> --status in-progress          # claim an item
+bun run beans:claim <id>                 # claim an item
 ```
+
+**Two things were wrong with the line this replaces**, and the second matters
+more. It read `beans <id> --status in-progress`, which **exits 1 with
+`unknown command`** — measured. And `beans update <id> --status in-progress`,
+the working spelling, is **not how you claim**: it writes no holder note, so
+the claim is invisible to the `already-claimed` check that exists to protect
+it. Measured 2026-09-25: 97 of the 100 non-epic `in-progress` beans on `main`
+record no holder, and `beans:claim` answered "go ahead" for every one of them
+(bean `c3d7`).
+
+`beans update` stays correct for the transitions that are **not** claims —
+closing your own bean, `--body-append`, `--blocked-by`.
 
 **The discipline is in the skill, not here.**
 [`skills/folio-core/todo-manager.md`](cat-harness/skills/folio-core/todo-manager.md) carries
@@ -712,6 +726,23 @@ to spend the words: **do not start the topic.**
   [`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
+- **Adding one is never a one-file change** — `bun run skill:register` performs
+  every derived artefact a skill owes and verifies each one landed;
+  `skill:register:check` is the gate, and it is the only thing that makes the
+  obligation binding. **Each stale artefact names a GENERATED file rather than
+  your skill, so the cause is invisible from the symptom** — which is why the
+  remedy is a command rather than a list. **The discipline is in the skill, not
+  here** —
+  [`skill-registration`](cat-harness/skills/folio-core/skill-registration.md)
+  carries what a skill owes and why the feedback arrives on somebody else's PR,
+  the ONE declaration the command deliberately leaves to you (which package a
+  file belongs to is your assertion, not a derivable fact), why the chain cannot
+  be measured through `bun run gates` (bean `ymsu`: `bun test` runs two of the
+  writers, so gates reports their artefacts current when they are not), why
+  `roles:` keeps coming back, and the two orphan directions the command reports
+  rather than fixes. Seven merges in three days each broke the gate set this way
+  before the command existed, and the list itself was recalled wrong four times
+  before it was measured (beans `v625`, `nfv3`).
 - Shipping a branch — `/prepare-merge [base]` runs the generic recipe plus this
   folio's **content-type-specific** gates (paper → content_validate / qa_sweep /
   proof_status / latex_preflight / lean_build; WHO IG → fhir-validation / QC),

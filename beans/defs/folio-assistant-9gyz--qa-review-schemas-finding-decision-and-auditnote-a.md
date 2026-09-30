@@ -1,10 +1,11 @@
 ---
 # folio-assistant-9gyz
 title: 'QA-review schemas: Finding, Decision and AuditNote are three entities, not one'
-status: in-progress
+status: todo
 type: task
+priority: normal
 created_at: 2026-09-18T20:09:07Z
-updated_at: 2026-09-19T00:41:16Z
+updated_at: 2026-09-29T20:50:34Z
 parent: folio-assistant-1swy
 ---
 
@@ -52,3 +53,9 @@ BPMNs; and the same audit-note step in `crdm-requirements.bpmn`,
 `content-change-review.bpmn` and `draft-to-publication.bpmn`.
 
 _2026-09-19T00:41:16Z_ — Checked 2026-09-19 on main at 17dc1e6 — PARTIAL. Step 1 is landed: schemas/qa-review.ts and schemas/qa-review.test.ts are both on main. The bean records this as 'Step 1' but does not enumerate the later steps, so whether anything remains cannot be determined from here. The bean's owner should say what step 2 is, or close it.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

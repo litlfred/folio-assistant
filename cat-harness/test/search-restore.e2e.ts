@@ -44,8 +44,11 @@ const SEARCH =
   '<label for="search-input" class="search-label"><span class="sr-only">Search folio-assistant</span></label>' +
   '</div><div id="search-results" class="search-results"></div></div>';
 
-/** A preview page: the banner first in the body, as the injector places it. */
+/** A preview page: the banner first in the body, as the injector places it,
+ *  and the search-index stamp a preview build writes — so the notice under
+ *  the field is rendered here, as it is on every page the owner reviews. */
 const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>p</title>
+<meta name="fa-search-index" content="published">
 <style>body { margin: 0; } ${CSS}</style></head><body>${FRAGMENT}
 <div class="side-bar"><div class="site-header"><a class="site-title">folio-assistant</a></div><nav class="site-nav"></nav></div>
 <div class="main"><div class="main-content-wrap"><div class="main-header">${SEARCH}</div>
@@ -101,6 +104,26 @@ for (const width of [1280, 390]) {
       await restore.click();
       await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "navbar");
       await expect(page.locator("#search-input")).toBeVisible();
+    });
+
+    test("the navbar search is ONE row — icon attached, every control the field's height (owner, 2026-09-27)", async ({ page }) => {
+      // Owner: *"search is wonky"* — magnifier, field and Hide search sat at
+      // three heights, and on a preview (this page is one) the notice pulled
+      // both buttons down level with itself rather than with the field.
+      await expect(page.locator(".fa-search-notice")).toBeVisible();
+      const peek = (await page.locator(".fa-search-peek").boundingBox())!;
+      const input = (await page.locator("#search-input").boundingBox())!;
+      const slide = (await page.locator(".fa-search-slide").boundingBox())!;
+      for (const b of [peek, slide]) {
+        expect(Math.abs(b.y - input.y)).toBeLessThanOrEqual(1);
+        expect(Math.abs(b.height - input.height)).toBeLessThanOrEqual(1);
+      }
+      expect(input.height).toBeGreaterThanOrEqual(24);
+      // Attached: the magnifier's right edge IS the field's left edge.
+      expect(Math.abs(peek.x + peek.width - input.x)).toBeLessThanOrEqual(1);
+      // And the notice is under the field, not beside it.
+      const notice = (await page.locator(".fa-search-notice").boundingBox())!;
+      expect(notice.y).toBeGreaterThanOrEqual(input.y + input.height - 1);
     });
 
     test("the hide control says so in words too, and both directions work from the keyboard", async ({ page }) => {

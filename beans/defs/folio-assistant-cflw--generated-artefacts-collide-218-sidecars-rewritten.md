@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cflw
 title: 'Generated artefacts collide: 218 sidecars rewritten by one auditor edit'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T06:19:28Z
-updated_at: 2026-09-19T06:19:44Z
+updated_at: 2026-09-29T20:50:33Z
 parent: folio-assistant-1swy
 ---
 
@@ -29,3 +29,9 @@ RESIDUE, deliberately not fixed here:
 - Whether `docs/assets/qa/` needs to be committed at all is a separate question: it is derived from the sidecars plus the manifest, and the docs site regenerates it at publish time. If it does not need committing, the residual 20 goes to 0 without touching the shared schema. Worth asking before touching the schema.
 
 DONE WHEN: an auditor-only edit changes one file. Currently 21; 1 after the residue above is resolved.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

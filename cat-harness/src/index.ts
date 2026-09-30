@@ -84,14 +84,15 @@ if (args.includes("--check-deps")) {
       "./tools/degradation.js"
     );
     const { kgRoots } = await import("../scripts/known-skills.js");
-    const { fallbackRoleFor } = await import("../scripts/check-fallback-roles.js");
+    const { fallbackRolesBySkill } = await import("../scripts/check-fallback-roles.js");
     const { skills, unreadable } = await loadSkillNeeds(kgRoots(instance));
 
-    // Resolved up front rather than inside the join: the derivation reads
-    // every BPMN in the corpus, and doing it per skill inside a synchronous
-    // predicate is not possible anyway.
-    const human = new Map<string, string[]>();
-    for (const s of skills) human.set(s.id, await fallbackRoleFor(instance, s.id));
+    // ONE pass, not one per skill. The comment this replaces already noticed
+    // that "the derivation reads every BPMN in the corpus" and hoisted the call
+    // out of a synchronous predicate — but still ran it per skill. Measured on
+    // 74 diagrams and 23 skills: 1745.8 ms for one pass against 26016.8 ms for
+    // the loop (bean `sff8`).
+    const human = await fallbackRolesBySkill(instance);
 
     console.log("\nSkills, by what they declared about a missing capability:\n");
     console.log(

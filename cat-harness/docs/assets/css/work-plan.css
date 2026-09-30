@@ -393,6 +393,42 @@ a.fa-workplan-bean-link { text-decoration: underline; text-underline-offset: 0.1
 .fa-workplan-filter-label { color: var(--fa-wp-ink-2); }
 .fa-workplan-filter-value { color: var(--fa-wp-ink); font-weight: 600; }
 
+/* Type filter bar — pill buttons for filtering by bean type */
+.fa-workplan-type-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  grid-column: 1 / -1;
+  margin-bottom: 0.5rem;
+}
+.fa-workplan-type-btn {
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.25rem 0.7rem;
+  border: 1px solid var(--fa-wp-track, rgba(255,255,255,0.15));
+  border-radius: 1rem;
+  background: transparent;
+  color: var(--fa-wp-ink-2);
+  cursor: pointer;
+  text-transform: capitalize;
+  line-height: 1.4;
+}
+.fa-workplan-type-btn:hover {
+  background: var(--fa-wp-track, rgba(255,255,255,0.08));
+  color: var(--fa-wp-ink);
+}
+.fa-workplan-type-btn.is-active {
+  background: var(--fa-wp-ink);
+  color: var(--fa-wp-bg, #0d0d0d);
+  border-color: var(--fa-wp-ink);
+  font-weight: 600;
+}
+.fa-workplan-type-btn:focus-visible {
+  outline: 2px solid var(--fa-wp-ink);
+  outline-offset: 2px;
+}
+
 .fa-workplan-empty,
 .fa-workplan-fallback {
   font-size: 0.85rem;

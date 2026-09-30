@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { siteDirFor } from "../schemas/cat-harness.ts";
@@ -77,11 +77,107 @@ const GUIDE = INDEX.pages["guides/agent-onboarding"];
 /**
  * A nav item with no translation in ANY locale — the fallback case.
  *
- * Named, not counted: `getting-started` is a real page of this site that has
+ * **This fixture was `getting-started`, and it did exactly what its own
+ * docblock promised.** That note read: *"a real page of this site that has
  * never been translated. If it ever is, this test starts failing loudly rather
- * than silently verifying nothing, which is the correct direction to fail in.
+ * than silently verifying nothing, which is the correct direction to fail in."*
+ * On 2026-09-26 bean `t8g3` translated it into six languages and the test
+ * failed. The design was right; only the fixture had expired.
+ *
+ * ## What the illegible failure cost — TWO sessions, independently
+ *
+ * The failure surfaced as `element(s) not found` on a locator, which says
+ * nothing about why. A sibling session paid *"three environments and a bisect
+ * against `origin/main`"* to learn the page had simply been translated; this
+ * one paid a full local e2e run and a comparison against main's latest CI.
+ * Two people paying the same toll for the same missing sentence is the
+ * argument for the assertion in the test below, not the docblock's word for
+ * it — **main's copy of this file promises that sentence and its test body
+ * does not contain one**, which is how a fix gets believed and not made.
+ *
+ * ## Derived, not named
+ *
+ * `HOME` and `GUIDE` above are looked up in the real index; this was the one
+ * of the three still named by hand, which is why it is the one that rotted.
+ * Two cases:
+ *
+ * 1. An indexed page carrying no translations. Preferred, because it is a page
+ *    the generator has actually seen, and it self-heals: the moment such a page
+ *    exists this stops depending on any name at all.
+ * 2. When **every** indexed page is translated — true since `t8g3`, all seven
+ *    of them — no such entry exists. The index only records pages that HAVE
+ *    translations, so "untranslated" then means *absent from the index*, and
+ *    the fixture is a real page of this site the index does not list.
+ *
+ * ## Case 2 is DERIVED now too, because naming it expired twice
+ *
+ * `architecture` was the hand-picked case-2 fixture, chosen over
+ * `agentic-harness` on the reasoning that main's copy wins a merge. Bean `t8g3`
+ * then translated **both** — batch 4 on 2026-09-26 — so the name rotted inside
+ * the same day, for the third time in this fixture's life and the second for the
+ * same reason. A fallback that has to be re-chosen every time the corpus grows
+ * is not a fallback; it is a scheduled failure with a comment on it.
+ *
+ * So case 2 scans the site directory for a real page the index does not list:
+ * top-level, carrying a `title:`, not `nav_exclude: true`, first in sorted order
+ * so two runs agree. `index.md` is excluded because it IS indexed, under the
+ * empty key, and only its filename says otherwise.
+ *
+ * And it THROWS rather than falling back when the corpus has no such page. That
+ * state is real news — every page of the site translated — and it must not reach
+ * the browser half as a locator that mysteriously misses, which is precisely the
+ * illegible failure the two sessions above each paid for once.
  */
-const UNTRANSLATED = { key: "getting-started", url: "/getting-started.html", title: "Getting started" };
+const UNTRANSLATED = ((): { key: string; url: string; title: string } => {
+  const indexed = Object.entries(INDEX.pages).find(
+    ([, v]) => Object.keys(v.translations ?? {}).length === 0,
+  );
+  if (indexed !== undefined) {
+    const [key, v] = indexed;
+    return { key, url: v.sourceUrl, title: v.sourceTitle };
+  }
+  // Case 2. A real page of this site the index does not list — derived, so the
+  // next translation batch cannot expire it.
+  const dir = join(ROOT, SITE);
+  for (const f of readdirSync(dir).sort()) {
+    if (!f.endsWith(".md") || f === "index.md") continue;
+    const key = f.slice(0, -3);
+    if (key in INDEX.pages) continue;
+    const head = readFileSync(join(dir, f), "utf8").slice(0, 2000);
+    if (/^nav_exclude:\s*true\s*$/m.test(head)) continue;
+    // There was a fourth filter here, and it is GONE rather than forgotten.
+    //
+    // It skipped any candidate claiming a non-source locale, because
+    // `crdm-methodology` was absent from the index while declaring
+    // `available_locales: ["en","fr"]` with no `docs/fr/crdm-methodology.md`
+    // behind it — the one candidate that asserted the very thing this fixture
+    // stands for the absence of. Its comment gave the general reason too: the
+    // index is the authority, but a page contradicting it is the wrong page to
+    // reason from, whichever of the two is wrong.
+    //
+    // That reason is DISCHARGED, not waived. #1431 fixed the page — the
+    // generator now derives `available_locales` from the rendered corpus rather
+    // than from `existsSync` on a `.po` — and, more to the point here, added
+    // `check:available-locales`, which fails CI for ANY page claiming a locale
+    // the index does not back. So the contradiction this filter hand-checked on
+    // one page is now impossible corpus-wide, and if it ever recurs the gate
+    // fails before this test runs.
+    //
+    // Keeping the skip would have been the worse outcome: a workaround whose
+    // cause is gone still narrows what the fixture covers, and reads to the next
+    // author as a rule about locales rather than as scar tissue. Bean `9x01`
+    // box 68.
+    const title = /^title:\s*(.+)$/m.exec(head)?.[1].trim().replace(/^["']|["']$/g, "");
+    if (title === undefined || title === "") continue;
+    return { key, url: `/${key}.html`, title };
+  }
+  throw new Error(
+    "no untranslated page left in the corpus: every indexed page has translations AND every " +
+      "top-level page is indexed. That is news about the site, not a broken test — the " +
+      "no-translation fallback now has nothing to stand for, so decide what this test should " +
+      "assert instead rather than re-pointing a fixture.",
+  );
+})();
 
 /** just-the-docs' nav markup, reduced to what the filter touches. */
 function harness(indexIsland: string): string {
@@ -225,13 +321,41 @@ test.describe("the navbar shows the selected locale", () => {
     expect(box.height).toBeGreaterThan(0);
   });
 
+  test("...and the premise of that fixture still holds — it really is untranslated", () => {
+    // Asserted, not assumed. Without this the fallback test below fails with
+    // `element(s) not found`, which is true and tells you nothing: the locator
+    // misses because the JS correctly rewrote the href to a localised URL.
+    // This says what actually happened, so the fix is one line rather than a
+    // bisect. See UNTRANSLATED's docblock — the tripwire has fired once.
+    expect(
+      Object.keys(INDEX.pages),
+      `\`${UNTRANSLATED.key}\` now HAS a translation, so it can no longer stand for the ` +
+        `no-translation case. That is good news about the site and a two-line fix here: ` +
+        `re-point UNTRANSLATED at a page still absent from _data/translations.json.`,
+    ).not.toContain(UNTRANSLATED.key);
+  });
+
   test("a page with no translation falls back to the source language", async ({ page }) => {
+    // THE PREMISE, asserted rather than assumed. When this fixture acquired
+    // translations on 2026-09-26 the test failed as a 10-second locator
+    // timeout on a link that was correctly absent — a true failure wearing the
+    // costume of a broken selector. One sentence is cheaper than that triage.
+    expect(
+      Object.keys(INDEX.pages[UNTRANSLATED.key]?.translations ?? {}),
+      `this test needs a page with NO translation, and \`${UNTRANSLATED.key}\` now has some. ` +
+        "Pick another untranslated page — the derivation above prefers an indexed one.",
+    ).toEqual([]);
     await open(page, ISLAND, "fr");
     const link = page.locator(`${nav} a[href="${UNTRANSLATED.url}"]`);
     await expect(link).toBeVisible();
     await expect(link).toHaveText(UNTRANSLATED.title);
     // Recorded as a deliberate fallback rather than as something overlooked.
     await expect(link).toHaveAttribute("data-fa-translated", "source");
+    // MARKED as the source language (owner, 2026-09-27), so the mix reads as
+    // a fallback: "(EN)" after the title, and `lang` for a screen reader.
+    await expect(link).toHaveAttribute("lang", INDEX.sourceLocale);
+    const tag = await link.evaluate((a) => getComputedStyle(a, "::after").content);
+    expect(tag).toBe(`" (${INDEX.sourceLocale.toUpperCase()})"`);
     // And the fallback is per ITEM: the translated items beside it still are.
     await expect(page.locator(`${nav} a[href="${HOME.translations.fr.url}"]`)).toHaveAttribute(
       "data-fa-translated",
@@ -281,9 +405,77 @@ test.describe("the navbar shows the selected locale", () => {
     await expect(page.locator(`${nav} a[href="${HOME.sourceUrl}"]`)).toBeVisible();
   });
 
+  test("English selected: no item carries the source-language tag", async ({ page }) => {
+    await open(page, ISLAND, "en");
+    await expect(page.locator(`${nav} a[data-fa-source-locale]`)).toHaveCount(0);
+  });
+
   test("nothing remembered: the source language", async ({ page }) => {
     await open(page, ISLAND, null);
     await expect(page.locator(nav)).toHaveAttribute("data-fa-nav-locale", INDEX.sourceLocale);
     await expect(page.locator(`${nav} a[href="${HOME.sourceUrl}"]`)).toBeVisible();
+  });
+});
+
+/**
+ * THE PAGE FOLLOWS THE CHOSEN LANGUAGE — owner, 2026-09-27: *"user selects
+ * locale in icon, then only those pages exist (if translated) otherwise source
+ * language fallback"*. `followRememberedLocale` in `docs-ui.js`.
+ */
+test.describe("the page follows the remembered locale", () => {
+  const PAGE = (lang: string, available: string[]) => `<!doctype html><html><head><meta charset="utf-8">
+<script type="application/json" id="fa-translation-meta">${JSON.stringify({
+    lang,
+    supportedLocales: ["ar", "zh", "en", "fr", "ru", "es"],
+    availableLocales: available,
+  })}</script></head><body><h1>${lang}</h1><script>${JS}<\/script></body></html>`;
+
+  async function serve(page: Page, locale: string | null) {
+    await page.route("http://docs.test/**", (route) => {
+      const u = new URL(route.request().url());
+      const fr = u.pathname.startsWith("/fr/");
+      const lonely = u.pathname.endsWith("/lonely.html");
+      return route.fulfill({
+        contentType: "text/html",
+        body: PAGE(fr ? "fr" : "en", lonely ? [] : ["en", "fr"]),
+      });
+    });
+    await page.addInitScript((loc) => {
+      if (loc === null) localStorage.removeItem("fa-locale");
+      else localStorage.setItem("fa-locale", loc as string);
+    }, locale);
+  }
+
+  test("French remembered: an English page with a French version opens the French one", async ({ page }) => {
+    await serve(page, "fr");
+    await page.goto("http://docs.test/guide.html#part");
+    await page.waitForURL("http://docs.test/fr/guide.html#part");
+  });
+
+  test("French remembered: an English page with NO French version stays English", async ({ page }) => {
+    await serve(page, "fr");
+    await page.goto("http://docs.test/lonely.html");
+    await page.waitForTimeout(300);
+    expect(page.url()).toBe("http://docs.test/lonely.html");
+  });
+
+  test("nothing remembered: a shared French link stays French", async ({ page }) => {
+    await serve(page, null);
+    await page.goto("http://docs.test/fr/guide.html");
+    await page.waitForTimeout(300);
+    expect(page.url()).toBe("http://docs.test/fr/guide.html");
+  });
+
+  test("English remembered: a French page opens the English one", async ({ page }) => {
+    await serve(page, "en");
+    await page.goto("http://docs.test/fr/guide.html");
+    await page.waitForURL("http://docs.test/guide.html");
+  });
+
+  test("?lang= on the URL wins over the remembered choice", async ({ page }) => {
+    await serve(page, "fr");
+    await page.goto("http://docs.test/guide.html?lang=en");
+    await page.waitForTimeout(300);
+    expect(page.url()).toBe("http://docs.test/guide.html?lang=en");
   });
 });

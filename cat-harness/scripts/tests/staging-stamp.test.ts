@@ -15,8 +15,22 @@ import { fileURLToPath } from "node:url";
 import { stagingStamp, stagingFields, STAGING_KEY } from "../staging-stamp.js";
 import { buildDeclarationSchema, buildToolSchema, buildToolTypes } from "../harness-schema-export.js";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { buildExport } from "../kg-export.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
+
+/**
+ * The export, built ONCE at module scope.
+ *
+ * Bean `sff8`. `check:test-budgets` named this test at **4.02 s of a 5000 ms default
+ * budget (80 %)** before it had ever gone red — it was 7th on that list — and it
+ * timed out at **5097 ms** on the next loaded suite run, exactly as ranked. That is
+ * the instrument doing the job it was built for: the name arrived before the failure.
+ *
+ * Same remedy as the five before it: module scope belongs to no test's timeout. Not a
+ * raised budget, which `sff8` rules out because a number decays as the corpus grows.
+ */
+const EXPORTED = await buildExport({});
 
 describe("stagingStamp", () => {
   it("is absent, not fabricated, when there is no build", () => {
@@ -49,9 +63,8 @@ describe("stagingStamp", () => {
 });
 
 describe("the JSON-LD export declares the stamp it carries", () => {
-  it("context-declares-staging: `staging` is a term, with its four fields scoped under it", async () => {
-    const { buildExport } = await import("../kg-export.js");
-    const ctx = (await buildExport({})) as unknown as { "@context": Record<string, unknown> };
+  it("context-declares-staging: `staging` is a term, with its four fields scoped under it", () => {
+    const ctx = EXPORTED as unknown as { "@context": Record<string, unknown> };
     const term = ctx["@context"][STAGING_KEY] as { "@id"?: string; "@context"?: Record<string, unknown> };
     expect(term).toBeDefined();
     expect(typeof term["@id"]).toBe("string");

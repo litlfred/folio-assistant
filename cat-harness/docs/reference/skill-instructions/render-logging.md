@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Render logging'
 parent: Skill instructions
 ---
@@ -210,7 +211,7 @@ is on the publish branch belongs where its subject's absence can be seen.
 
 | | |
 |---|---|
-| the process | [`staging-render-log.bpmn`](../../processes/staging-render-log.bpmn) |
+| the process | [`staging-render-log.bpmn`](../../processes/staging-render-log.html) |
 | the entry shape it specialises | `schemas/log-entry.ts`, `skills/folio-core/activity-log.md` |
 | why the publish branch loses things | bean `plj1`, `scripts/restore-staging.ts` |
 | why a closed PR is not an abandoned branch | bean `w2g5` |

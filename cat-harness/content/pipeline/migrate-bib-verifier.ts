@@ -18,8 +18,8 @@
  * without writing.
  *
  * Usage:
- *   bun run content/pipeline/migrate-bib-verifier.ts          # apply
- *   bun run content/pipeline/migrate-bib-verifier.ts --dry-run
+ *   bun run cat-harness/content/pipeline/migrate-bib-verifier.ts          # apply
+ *   bun run cat-harness/content/pipeline/migrate-bib-verifier.ts --dry-run
  */
 
 import { readFileSync, writeFileSync, existsSync } from "fs";

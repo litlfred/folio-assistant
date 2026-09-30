@@ -1,10 +1,10 @@
 ---
 # folio-assistant-a7t8
 title: ingest-document's 'run the remaining arms' line double-nests the pdf-images output
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-09-22T20:13:04Z
-updated_at: 2026-09-22T20:13:04Z
+updated_at: 2026-09-30T00:27:58Z
 parent: folio-assistant-ahvw
 ---
 
@@ -43,3 +43,5 @@ Same class as the three `'scripts/<name>.py'` CWD-relative paths that module's o
 - [ ] the printed recipe works when copy-pasted, for every arm it names
 - [ ] the two `-o` conventions are reconciled, or each arm's `--help` says which it takes
 - [ ] a test pins it, since this failure mode exits 0
+
+_2026-09-30T00:27:58Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

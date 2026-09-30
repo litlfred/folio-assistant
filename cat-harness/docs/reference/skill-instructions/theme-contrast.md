@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Contrast: measured over the darkest thing that could be there'
 parent: Skill instructions
 ---

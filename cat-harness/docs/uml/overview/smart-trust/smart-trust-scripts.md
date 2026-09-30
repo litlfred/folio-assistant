@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-uml-overview.ts — do not hand-edit
 title: "UML — smart-trust/smart-trust-scripts"
 nav_exclude: true
 ---

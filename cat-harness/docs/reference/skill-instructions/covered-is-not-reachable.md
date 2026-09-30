@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Covered is not reachable'
 parent: Skill instructions
 ---
@@ -47,11 +48,10 @@ Add the node for the mechanism. Then two things not to do:
 
 - **Do not widen an existing node's `satisfies`** to make the gap look closed.
   That makes the graph assert a node does something it does not.
-- **Do not add `alternativeTo`** between the existing nodes and the new one.
-  Export-then-publish-then-serve are complementary steps, not competing arms, and
-  that field's own note warns against deriving the relation from a shared skill.
-  Exactly one pair in this instance is genuinely substitutable, `beans-cli` /
-  `beans-manual`.
+- **Do not give the new node the same I/O as an existing one** unless it
+  really is a substitute. Alternatives are derived from a shared skill plus an
+  identical I/O signature (`deriveAlternatives`), and export-then-publish-then-
+  serve are complementary steps, not competing arms.
 
 ## Two reasons NOT to write `maintains`, both judgements rather than omissions
 
@@ -147,7 +147,7 @@ Authoring the skill is a **design act** — a claim about the platform's capabil
 vocabulary, inherited by every dependent instance — so it goes to the owner rather
 than being decided in passing. Bean `yean` carried the two candidates.
 
-**Settled 2026-09-20:** [`site-presentation-assets`](../theming/site-presentation-assets.md)
+**Settled 2026-09-20:** [`site-presentation-assets`](site-presentation-assets.md)
 was authored, and `themes-css` / `avatars-css` are in the graph satisfying it. The
 resolution is recorded here because the alternative — leaving the gap notice
 standing — is worse than never having written one: an agent that believes a stale
@@ -224,8 +224,8 @@ initiates:
 | a QA sweep axis | **trigger** | the sweep fires it per subject |
 | a schedule or a watcher | **trigger** | time or an event fires it |
 
-`alternativeTo` stays **empty** across them, by the same argument
-`ToolDefinitionSchema` makes about sharing a skill: these are not substitutable
+None of them is an alternative to another, by the same argument
+`deriveAlternatives` makes about sharing a skill: these are not substitutable
 arms, they are different ways the same work gets started.
 
 ### Enumerating the dispatch points is also how you find the ones already built

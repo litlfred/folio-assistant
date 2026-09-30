@@ -238,20 +238,60 @@ export function fallbackUses(root: string, dirs: string[]): FallbackUse[] {
  * should say what it does when there are two.
  */
 export async function fallbackRoleFor(root: string, skill: string): Promise<string[]> {
-  const roles = new Set<string>();
+  return (await fallbackRolesBySkill(root)).get(skill) ?? [];
+}
+
+/**
+ * The same derivation for EVERY skill at once, in one pass over the corpus.
+ *
+ * Bean `sff8`. `fallbackRoleFor` reads every `.bpmn` in the repository and only then
+ * filters by `skill`, so the expensive half is identical on every call. `src/index.ts`
+ * called it once per skill — its own comment there notices that *"the derivation reads
+ * every BPMN in the corpus"* and hoists the call out of a predicate, without removing
+ * the repetition.
+ *
+ * Measured 2026-09-27 on this corpus of 74 diagrams and 23 skills carrying a
+ * degradation declaration:
+ *
+ *     one `fallbackRoleFor` call        1745.8 ms
+ *     the loop over all 23 skills      26016.8 ms
+ *
+ * One pass costs what a single call costs, so this is ~15x off a user-facing
+ * operation rather than a micro-optimisation.
+ *
+ * **It is a single pass, NOT a cache**, and that is the whole reason it is shaped this
+ * way. A cache over parsed models would have to answer when it goes stale — the
+ * question `gitFileCommitSha` needed a HEAD key for — and worse, `loadProcessModel`
+ * threads `seen` through its recursive descent to refuse a call-activity cycle
+ * (`path.includes(node.calledElement)`), so a model cached under one call path and
+ * returned under another could skip a refusal that is the point of the parameter.
+ * 160 call sites, and `normaliseOwnExtensions` mutates the parse tree in place. One
+ * pass per operation has none of that: nothing outlives the call.
+ *
+ * Equivalent to calling `fallbackRoleFor` per skill, not merely similar: the three
+ * conditions (the node's skills, its fulfilment kinds, its `roleRef`) are independent
+ * per node, so testing kinds and `roleRef` once and then attributing to each of the
+ * node's skills selects the same pairs as testing the skill first.
+ */
+export async function fallbackRolesBySkill(root: string): Promise<Map<string, string[]>> {
+  const bySkill = new Map<string, Set<string>>();
   for (const f of workflowFiles(root).filter((x) => x.endsWith(".bpmn"))) {
     const model = await loadProcessModel(f);
     for (const n of [...model.nodes.values()].filter(isActivity)) {
-      if (!(n.skills ?? []).includes(skill)) continue;
       const kinds = fulfilmentKindsForBpmnType(n.type);
       // `undefined` means the BPMN type carries no fulfilment rule — not
       // that anyone may fill it. Treating that as human-fillable would
       // invent a fallback out of a gap in the mapping.
       if (!kinds || kinds.length === 0 || !kinds.every((k) => k === "person")) continue;
-      if (n.roleRef) roles.add(n.roleRef);
+      if (!n.roleRef) continue;
+      for (const skill of n.skills ?? []) {
+        const roles = bySkill.get(skill) ?? new Set<string>();
+        roles.add(n.roleRef);
+        bySkill.set(skill, roles);
+      }
     }
   }
-  return [...roles].sort();
+  return new Map([...bySkill].map(([skill, roles]) => [skill, [...roles].sort()]));
 }
 
 /** The trees a skill's capability refs can live in. */

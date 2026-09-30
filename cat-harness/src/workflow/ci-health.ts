@@ -936,7 +936,37 @@ export interface PagesHealth {
   failure: number;
   /** Queued, in flight, skipped, neutral — not yet a verdict of any kind. */
   unsettled: number;
+  /**
+   * The newest Pages run of any kind, settled or not.
+   *
+   * Routinely still in flight — it was in the run that produced bean `thsz` —
+   * which is exactly why it cannot answer "did the last deployment work?".
+   * {@link PagesHealth.newestSettled} is the one that can.
+   */
   latest?: RunSummary;
+  /**
+   * The newest Pages run that reached a CONCLUSION — and the field that lets a
+   * reader tell coalescing from starvation. Bean `thsz`.
+   *
+   * GitHub Pages has **one deployment per repository**, so every push to the
+   * publish ref cancels the build in flight and the survivor publishes
+   * everything on the ref. A high cancellation share is therefore the normal
+   * shape of a busy hour, and the same share means two opposite things:
+   *
+   * | this run | what the share means |
+   * |---|---|
+   * | `success` | coalescing — the site is current, and the cancellations behind it shipped their content in the survivor |
+   * | `cancelled` | **starvation** — nothing is getting through, and the site is as of the last success |
+   *
+   * The section reported 78 cancelled against 21 succeeded on 2026-09-25 and
+   * its own author read it as a ten-hour outage. It was not one: the newest run
+   * before a quiet period had SUCCEEDED, and the gap was nobody pushing. A
+   * number whose first reader takes the alarming meaning is not neutral
+   * reporting — it is `xom7` pointing the other way.
+   */
+  newestSettled?: RunSummary;
+  /** `created_at` of the newest successful deployment, when there is one. */
+  lastSuccessAt?: string;
 }
 
 /** Reduce the Pages runs the caller fetched. Pure; asks nothing. */
@@ -957,6 +987,14 @@ export function pagesHealth(runs: readonly RunSummary[]): PagesHealth {
     else if (NOT_A_VERDICT.has(r.conclusion ?? "")) h.unsettled++;
     else h.failure++;
   }
+  // Newest-first is how the API returns them, and `find` takes the first match
+  // — so this is the newest run that reached a conclusion, not merely any
+  // settled one. A run still in flight is skipped rather than counted as a
+  // verdict, which is the same rule the tallies above follow.
+  h.newestSettled = pages.find((r) => r.status === "completed");
+  h.lastSuccessAt = pages.find(
+    (r) => r.status === "completed" && r.conclusion === "success",
+  )?.created_at;
   return h;
 }
 
@@ -1218,6 +1256,54 @@ export function renderPages(r: PagesReport): string {
     lines.push(
       `**Not one of ${h.total} deployments succeeded.** The published site is`,
       "whatever the last successful build left, and that is older than this window.",
+      "",
+    );
+  }
+  // WHAT THE SHARE ABOVE MEANS — bean `thsz`.
+  //
+  // The counts alone are ambiguous by a factor that matters, and the ambiguity
+  // is not the reader's fault. GitHub Pages runs ONE deployment per repository,
+  // so every push to the publish ref cancels the build in flight and the
+  // survivor publishes everything on the ref: during a busy hour most builds
+  // are cancelled BY DESIGN and nothing is wrong. During starvation the same
+  // share means nothing is getting through at all.
+  //
+  // So the section answers it rather than leaving the reader to supply an
+  // interpretation — which it did until this, and the first reader to try
+  // supplied the alarming one and nearly reported an outage that was a quiet
+  // afternoon.
+  //
+  // A floor, not a threshold: "did the newest deployment to settle succeed?"
+  // needs no calibration, exactly as `oisv`'s empty-directory check does not.
+  // Nothing here grades the share, and nothing invents a staleness cutoff.
+  if (h.newestSettled === undefined) {
+    if (h.total > 0) {
+      lines.push(
+        "**No deployment in this window has settled yet**, so the share above is",
+        "not a verdict on anything — there is no newest outcome to read it against.",
+        "",
+      );
+    }
+  } else if (h.newestSettled.conclusion === "success") {
+    lines.push(
+      `**The newest deployment to settle SUCCEEDED** (${h.newestSettled.created_at}),`,
+      "so the published site reflects the publish ref as of that build. The",
+      "cancellations above are superseded builds whose content shipped in the one",
+      "that survived them — coalescing, not failure.",
+      "",
+    );
+  } else {
+    // Cancelled, failed, or any other non-success. Named rather than assumed.
+    const since =
+      h.lastSuccessAt === undefined
+        ? "and **no deployment in this window succeeded at all**"
+        : `and the site is as of ${h.lastSuccessAt}`;
+    lines.push(
+      `**The newest deployment to settle did NOT succeed** ` +
+        `(${h.newestSettled.conclusion ?? "no conclusion"}, ${h.newestSettled.created_at}),`,
+      `${since}. If pushes are still arriving, that is starvation rather than`,
+      "coalescing: nothing is reaching the published site. If the ref has simply",
+      "gone quiet, the next push settles it.",
       "",
     );
   }

@@ -7,7 +7,6 @@ description: >-
   stops them drifting, and the normalisation-first rule for any modelling or
   mapping exercise.
 capability: schema
-package: folio-core
 ---
 
 # Vocabulary authority — one fact, one home, N renderings

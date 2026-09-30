@@ -10,13 +10,13 @@
  *   and feed results to this script's `--ingest` mode.
  *
  * Usage (CLI, ingestion mode):
- *   bun run pipeline/lean-compile-audit.ts --ingest <diagnostics.jsonl>
+ *   bun run cat-harness/content/pipeline/lean-compile-audit.ts --ingest <diagnostics.jsonl>
  *
  *   Each line of the JSONL input:
  *     { "file": "<repo-relative-path>", "diagnostics": [...] }
  *
  * Usage (CLI, list mode):
- *   bun run pipeline/lean-compile-audit.ts --list [content-root]
+ *   bun run cat-harness/content/pipeline/lean-compile-audit.ts --list [content-root]
  *
  * Output:
  *   docs/audits/lean-compile-diagnostics.json
@@ -32,8 +32,8 @@ import { hashFile } from "./qa-utils";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 
 const __filename = fileURLToPath(import.meta.url);
-const REPO_ROOT = resolve(dirname(__filename), "..", "..");
-const OUTPUT_PATH = join(REPO_ROOT, siteDirFor(REPO_ROOT), "audits/lean-compile-diagnostics.json");
+const INSTANCE_ROOT = resolve(dirname(__filename), "..", "..");
+const OUTPUT_PATH = join(INSTANCE_ROOT, siteDirFor(INSTANCE_ROOT), "audits/lean-compile-diagnostics.json");
 
 interface DiagnosticEntry {
   line: number;
@@ -75,18 +75,18 @@ const EMPTY_REPORT: DiagnosticsReport = {
  * Hash a `.lean` path with the sidecar SHA convention. Accepts either
  * a repo-relative path (the diagnostics-cache key form) or an absolute
  * path — `resolve` returns an absolute input unchanged and anchors a
- * relative one at `REPO_ROOT`.
+ * relative one at `INSTANCE_ROOT`.
  *
  * Containment + extension guard: the diagnostics cache only ever hashes
  * `.lean` files inside the repo, but `--ingest` keys come from JSONL
- * input. Reject anything that resolves outside `REPO_ROOT` (absolute
+ * input. Reject anything that resolves outside `INSTANCE_ROOT` (absolute
  * paths or `../` traversal) or is not a `.lean` file, so a crafted key
  * cannot read arbitrary files. A rejected path returns `undefined`,
  * which the checker treats as "no SHA → stale" (fail-safe).
  */
 function leanSha(pathOrRelPath: string): string | undefined {
-  const abs = resolve(REPO_ROOT, pathOrRelPath);
-  if (abs !== REPO_ROOT && !abs.startsWith(REPO_ROOT + sep)) return undefined;
+  const abs = resolve(INSTANCE_ROOT, pathOrRelPath);
+  if (abs !== INSTANCE_ROOT && !abs.startsWith(INSTANCE_ROOT + sep)) return undefined;
   if (extname(abs) !== ".lean") return undefined;
   return hashFile(abs);
 }
@@ -123,7 +123,7 @@ function findLeanFilesWithSiblingTs(dir: string): string[] {
       } else if (extname(e) === ".lean") {
         const tsPath = full.replace(/\.lean$/, ".ts");
         if (existsSync(tsPath)) {
-          results.push(relative(REPO_ROOT, full));
+          results.push(relative(INSTANCE_ROOT, full));
         }
       }
     }
@@ -237,21 +237,21 @@ if (args[0] === "--ingest" && args[1]) {
 } else if (args[0] === "--stale") {
   reportStale();
 } else if (args[0] === "--list") {
-  const contentRoot = args[1] || folioDir(REPO_ROOT);
+  const contentRoot = args[1] || folioDir(INSTANCE_ROOT);
   const files = findLeanFilesWithSiblingTs(contentRoot);
   for (const f of files) console.log(f);
   console.log(`\n${files.length} .lean files with .ts siblings`);
 } else {
   console.log(`Usage:
-  bun run pipeline/lean-compile-audit.ts --list [content-root]
+  bun run cat-harness/content/pipeline/lean-compile-audit.ts --list [content-root]
     List all .lean files with .ts siblings
 
-  bun run pipeline/lean-compile-audit.ts --ingest <diagnostics.jsonl>
+  bun run cat-harness/content/pipeline/lean-compile-audit.ts --ingest <diagnostics.jsonl>
     Ingest MCP lean_diagnostic_messages output (JSONL).
     Each entry is stamped with the .lean source's 12-char SHA so the
     proof-lean-compiles checker can detect staleness.
 
-  bun run pipeline/lean-compile-audit.ts --stale
+  bun run cat-harness/content/pipeline/lean-compile-audit.ts --stale
     Report which cached entries are stale (lean_sha != live file),
     missing a SHA (legacy v1), or point at a deleted file. Exit 1 if
     any are unusable. Makes cache staleness visible without re-running

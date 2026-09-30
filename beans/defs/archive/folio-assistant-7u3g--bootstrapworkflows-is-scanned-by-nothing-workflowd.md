@@ -5,8 +5,6 @@ status: scrapped
 type: task
 priority: normal
 created_at: 2026-09-20T14:47:57Z
-updated_at: 2026-09-20T15:26:13Z
-
 updated_at: 2026-09-20T15:32:27Z
 parent: folio-assistant-zzmr
 blocked_by:
@@ -193,6 +191,12 @@ text, with its measurements, is in the commit message.
 - [ ] a guard so a kg directory whose workflows are NOT at `<kgdir>/workflows` is a finding rather than silence — **still open**, and now clearly a separate piece: the silence here came from the DECLARATION, not from the composition, so the guard belongs on "a declared graph directory no consumer reached" rather than on `workflowDirs`
 
 ## Blocked on
+
+- **waits on:** bean `pve3` — both halves of bootstrap, or neither
+- **since:** 2026-09-21
+- **expires:** 2026-09-29 — a REVIEW date, not a takeover date; see the handoff
+- **handoff:** on expiry, check `pve3`'s status and re-derive. If it landed, this unblocks wholly; if it was scrapped, this one is scrapped with it.
+
 
 `pve3` — both halves of bootstrap, or neither. Nothing else.
 

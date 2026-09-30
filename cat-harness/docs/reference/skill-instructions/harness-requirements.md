@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Harness requirements'
 parent: Skill instructions
 ---
@@ -24,7 +25,7 @@ how to read it and what to do before adding to it.
 
 | obligation | declared as | the question it answers |
 |---|---|---|
-| **visualiser** | `coverage.visualiser` on the directory entry | can a person LOOK at this? |
+| **visualiser** | by the PAGE: a viewer Tool (`renders:` its kinds) writes into each page the directories it draws (`<meta name="renders">`); the directory keeps only its `tile:` look (#1168 B7a) | can a person LOOK at this? |
 | **docs** | by the PAGE: `documents:` in its front matter (or its manifest, or `<meta name="documents">` in generated HTML) names the kind or `<instance>/<id>` (#1168 B7c) | can a person READ ABOUT this? |
 | **skill** | by the SKILL: `graph-kinds:` names the kind, or `governs: [<instance>/<id>]` the one directory (#1168 B7b) | is an agent handed something that GOVERNS this? |
 | **serialisations** | `coverage.serialisations` | is each node ADDRESSABLE as json, jsonld and schema.json? |
@@ -245,6 +246,6 @@ Three rules for reading it, the same three every sweep here follows:
 - `bun run check:subgraph-coverage` — the axis; `schemas/cat-harness.ts`
   `owesVisualiser()` — the visualiser obligation, and
   `SubgraphCoverageSchema.serialisations` — the one that takes no waiver
-- [`url-space`](../../../beans/defs/) — bean `o7eq` for where a rendered
+- [`url-space`](https://github.com/litlfred/folio-assistant/tree/main/beans/defs) — bean `o7eq` for where a rendered
   asset is addressed, and why not to compose that URL by hand
 {% endraw %}

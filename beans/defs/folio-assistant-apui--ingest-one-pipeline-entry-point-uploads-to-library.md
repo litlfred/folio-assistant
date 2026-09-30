@@ -1,11 +1,11 @@
 ---
 # folio-assistant-apui
 title: 'INGEST: one pipeline entry point — uploads/ to library/ through a single documented path'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-19T12:31:11Z
+updated_at: 2026-09-29T20:03:12Z
 parent: folio-assistant-slw1
 ---
 
@@ -228,3 +228,9 @@ than gates.
 - Seven of the eight un-ingested uploads (`r8br`'s browser prints) are still
   un-promoted. The path is proven on one; promoting the rest is a corpus
   addition and is the owner's call, not a side effect of fixing a tool.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

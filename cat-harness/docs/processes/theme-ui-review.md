@@ -11,7 +11,15 @@ nav_exclude: true
 
 `Process_ThemeUIReview` · strict (defaulted) · 6 step(s)
 
-Reviewing GRAPHICAL ASSETS AS THEY ARE INGESTED — accessibility, branding, languages — in the context of the website or app design they are for, to determine what the graphical assets and the UI are going to be. AT INGESTION ONLY, by the owner's ruling (bean `9fdi`). 2026-09-23: "theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI". 2026-09-24, asked directly whether that meant ONLY at ingestion: "Yes only at ingestion". This process was post-MVP until then — started by "MVP accepted" and called from `crdm-deliver.bpmn` on the edge out of stakeholder acceptance, reviewing what had already shipped. That call is gone. It is now called from `ingest-theme.bpmn`. WHY THE MOMENT MATTERS. Reviewed after a build, a finding is a defect in something shipped. Reviewed at ingestion, the same finding is a decision about what the assets WILL be, taken while it is still cheap. The question the review asks is unchanged; the object it asks it of moved upstream, and so did the cost of the answer. WHAT DID NOT MOVE. There is still no role-to-theme mapping — theme choice remains an authoring judgement, per note — so nothing here checks a binding. What gets reviewed is the ingested art in its design context.
+Reviewing GRAPHICAL ASSETS AS THEY ARE INGESTED — accessibility, branding, languages — in the context of the website or app design they are for, to determine what the graphical assets and the UI are going to be.
+
+AT INGESTION ONLY, by the owner's ruling (bean `9fdi`). 2026-09-23: "theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI". 2026-09-24, asked directly whether that meant ONLY at ingestion: "Yes only at ingestion".
+
+This process was post-MVP until then — started by "MVP accepted" and called from `crdm-deliver.bpmn` on the edge out of stakeholder acceptance, reviewing what had already shipped. That call is gone. It is now called from `ingest-theme.bpmn`.
+
+WHY THE MOMENT MATTERS. Reviewed after a build, a finding is a defect in something shipped. Reviewed at ingestion, the same finding is a decision about what the assets WILL be, taken while it is still cheap. The question the review asks is unchanged; the object it asks it of moved upstream, and so did the cost of the answer.
+
+WHAT DID NOT MOVE. There is still no role-to-theme mapping — theme choice remains an authoring judgement, per note — so nothing here checks a binding. What gets reviewed is the ingested art in its design context.
 
 <img src="../assets/img/workflows/theme-ui-review.svg" alt="BPMN diagram: Theme and UI review — at ingestion" style="max-width:100%">
 

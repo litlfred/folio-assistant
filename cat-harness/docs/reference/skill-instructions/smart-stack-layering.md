@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'smart-stack-layering'
 parent: Skill instructions
 ---
@@ -145,7 +146,7 @@ outcome that tells you a split is load-bearing rather than descriptive:
 | comment on PR — deployment completed | (deploy) | `cat-harness` |
 
 And the deploy phase as a whole came back **entirely generic** — see
-[`ig-build-pipeline`](../../../fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md)
+[`ig-build-pipeline`](ig-build-pipeline.md)
 §"The deploy phase". The overlay does not reach the deployment end at all,
 which is the strongest evidence for `nsbb`'s base-plus-overlay claim.
 
@@ -161,5 +162,5 @@ non-WHO IG. There is no `layer` field and there should not be one — a second
 place to state it is a second place for it to be wrong.
 
 Conventions for the declaration itself:
-[`directory-conventions`](../folio-core/directory-conventions.md).
+[`directory-conventions`](directory-conventions.md).
 {% endraw %}

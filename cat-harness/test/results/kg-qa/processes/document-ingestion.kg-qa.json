@@ -5,7 +5,7 @@
     "id": "Process_Ingestion",
     "path": "processes/document-ingestion.bpmn"
   },
-  "source_hash": "sha256:18cc60fbd4f4348af1f120493814d7ceafd80112fe7247486432d6c6e793bb98",
+  "source_hash": "sha256:cd0ce2de92a94afdbdba3027104d93119f3b8a392b6c265dc8edb6920a486f2c",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -31,6 +31,15 @@
       "result": "pass",
       "findings": []
     },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "CallActivity_IngestTheme",
+          "detail": "names skill \"theme-art-intake\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
     "decision-ref-resolves": {
       "result": "n/a",
       "findings": []
@@ -52,8 +61,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Place",
+          "detail": "needs skill \"upload-routes\", but its lane's role \"user\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -105,8 +119,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 0,
+    "pass": 15,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

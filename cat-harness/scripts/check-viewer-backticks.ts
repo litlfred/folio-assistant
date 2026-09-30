@@ -46,10 +46,11 @@
  * census: a backtick before the opening (a doc comment, an import) is fine
  * and must stay fine, or the gate becomes something to work around.
  */
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
 import { repoRootFor } from "../schemas/cat-harness.js";
+import { gitFiles } from "../schemas/git-corpus.ts";
 
 /** The line that opens a page template, and the only thing that selects a file. */
 export const PAGE_TEMPLATE_OPENER = /return\s+`<!doctype html>/i;
@@ -78,43 +79,30 @@ export const PAGE_TEMPLATE_OPENER = /return\s+`<!doctype html>/i;
  * on pages nobody ships.
  */
 export function viewerSources(root: string): string[] {
+  // `xd1g`. Measured at the conversion: **890 before, 889 after** — the one it
+  // drops is `cat-harness/schemas/block-qa-schema/dist/index.d.ts`, a
+  // gitignored build artefact. Nothing gained, so a strict narrowing.
+  //
+  // The dot rule stays here rather than in `gitFiles`: git's corpus includes
+  // `.github/` and `.claude/`, so folding one in would change what several
+  // scanners read without saying so.
   const out: string[] = [];
-  const walk = (dir: string): void => {
-    let entries: string[];
+  for (const p of gitFiles(root, (rel) => {
+    if (rel.split("/").some((seg) => seg.startsWith("."))) return false;
+    if (!rel.endsWith(".ts")) return false;
+    return !rel.endsWith(".test.ts") && !rel.endsWith(".e2e.ts");
+  }).files) {
+    let src: string;
     try {
-      entries = readdirSync(dir).sort();
+      src = readFileSync(p, "utf-8");
     } catch {
-      return;
+      continue;
     }
-    for (const e of entries) {
-      // Dot-prefixed on every segment, and `node_modules` because it is not
-      // this repository's code.
-      if (e.startsWith(".") || e === "node_modules") continue;
-      const p = join(dir, e);
-      let st;
-      try {
-        st = statSync(p);
-      } catch {
-        continue;
-      }
-      if (st.isDirectory()) {
-        walk(p);
-        continue;
-      }
-      if (!e.endsWith(".ts")) continue;
-      if (e.endsWith(".test.ts") || e.endsWith(".e2e.ts")) continue;
-      let src: string;
-      try {
-        src = readFileSync(p, "utf-8");
-      } catch {
-        continue;
-      }
-      if (PAGE_TEMPLATE_OPENER.test(src)) out.push(relative(root, p).split(sep).join("/"));
-    }
-  };
-  walk(root);
+    if (PAGE_TEMPLATE_OPENER.test(src)) out.push(relative(root, p).split(sep).join("/"));
+  }
   return out.sort();
 }
+
 export interface StrayBacktick {
   /** 1-based line of the backtick that closed the literal too early. */
   line: number;

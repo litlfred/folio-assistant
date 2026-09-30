@@ -6,7 +6,6 @@ description: >-
   a living guideline shares with a stale QA verdict, and which of guideline
   methodology's rules are fenced rather than shipped.
 capability: quality-assurance
-package: folio-core
 ---
 
 # Evidence review — the same rule, a second instance

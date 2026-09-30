@@ -21,10 +21,10 @@
  *
  * Usage
  * -----
- *   bun run pipeline/latex-overfull-report.ts main.log
- *   bun run pipeline/latex-overfull-report.ts main.log --min 10   # hide < 10pt
- *   bun run pipeline/latex-overfull-report.ts main.log --max 50   # exit 1 if any >= 50pt
- *   bun run pipeline/latex-overfull-report.ts main.log --json
+ *   bun run cat-harness/content/pipeline/latex-overfull-report.ts main.log
+ *   bun run cat-harness/content/pipeline/latex-overfull-report.ts main.log --min 10   # hide < 10pt
+ *   bun run cat-harness/content/pipeline/latex-overfull-report.ts main.log --max 50   # exit 1 if any >= 50pt
+ *   bun run cat-harness/content/pipeline/latex-overfull-report.ts main.log --json
  *
  * Exit code is 0 unless `--max <pt>` is given and some box meets/exceeds it
  * (so it can gate CI at a chosen tolerance without failing on the long tail of

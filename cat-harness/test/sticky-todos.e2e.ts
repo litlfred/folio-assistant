@@ -447,12 +447,17 @@ test("a themed todo renders its backdrop art, the way every other sticky does", 
   // correct. So the STRUCTURE is what is asserted here, not just presence.
   const img = card.locator("picture > img.fa-sticky-art");
   await expect(img).toHaveCount(1);
-  await expect(img).toHaveAttribute("src", "/assets/img/harness/landing-library-card.webp");
+  // THE CROP FOLLOWS THE STICKY'S SHAPE when the todo names no layout —
+  // owner, 2026-09-27 ("theme todos layout should be dynamic", then "board
+  // stickies adapt too"), replacing the square-everywhere rule of 2026-09-24.
+  // Wide → laptop, tall → mobile, near-square → the square card crop.
+  const b = (await card.boundingBox())!;
+  const ratio = b.width / b.height;
+  const want = ratio >= 1.3 ? THEMED_ART.library.laptop : ratio <= 0.8 ? THEMED_ART.library.mobile : THEMED_ART.library.card;
+  await expect(img).toHaveAttribute("src", want);
 
-  // The SQUARE crop on every screen when the todo names no layout — owner,
-  // 2026-09-24: "by default use the square avatar layout". No `<source>`: the
-  // board used to swap in the tall crop below 30rem, so one sticky showed two
-  // different pictures depending on the window.
+  // One `<img>`, no `<source>`: the crop is chosen by the sticky's own shape,
+  // not by a media query on the window.
   await expect(card.locator("picture > source")).toHaveCount(0);
 
   // Decoration behind text that already says everything. A description of the

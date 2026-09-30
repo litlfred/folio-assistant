@@ -1,11 +1,11 @@
 ---
 # folio-assistant-0hi8
 title: 'DEPLOY: a local HTTP server that serves a rendering with its declared media types'
-status: in-progress
+status: todo
 type: feature
 priority: high
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-19T10:04:45Z
+updated_at: 2026-09-29T18:14:47Z
 parent: folio-assistant-5a3l
 ---
 
@@ -149,3 +149,9 @@ LOCAL server would get `.jsonld` wrong. Measured: python3 `mimetypes` and
 `Bun.file().type` both resolve it correctly. The real gap is one row,
 `.schema.json`. Recorded so the next reader does not repeat the
 overstatement.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

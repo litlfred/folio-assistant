@@ -1,0 +1,1614 @@
+{
+  "$schema": "folio-vector-labels/v1",
+  "doc_id": "arxiv-2406.01940v2",
+  "pages": [
+    {
+      "page": 2,
+      "rotation": 0,
+      "drawings": 75,
+      "rasterImagesOnPage": 7,
+      "captionCandidates": [
+        "Figure 1: An overview of PDA trained on FORML4. It is important to note that the goal of PDA is statement autoformalization, and does not include the translation of proof per se (Jiang et al., 2023a). The reason for including proof steps throughout our framework is to enable the compiler to better assess the semantic and logical aspects of autoformalized statements by compiling statements and proof steps together. As illustrated, while the statement passes the compiler as grammatically correct, an error is detected in the proof step, indicating an incorrect autoformalization. This process-level feedback helps PDA refine the autoformalized statement effectively."
+      ],
+      "labels": [
+        {
+          "text": "Work in progress",
+          "bbox": [
+            107.53,
+            27.81,
+            175.91,
+            37.78
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Natural Language",
+          "bbox": [
+            167.14,
+            83.51,
+            222.0,
+            90.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "Formal Language",
+          "bbox": [
+            317.16,
+            83.78,
+            370.44,
+            90.46
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "Lean 4 Compiler",
+          "bbox": [
+            428.51,
+            84.8,
+            471.23,
+            90.29
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Helvetica-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "[Statement]:",
+          "bbox": [
+            113.57,
+            95.32,
+            143.77,
+            100.33
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "[Imported Theorem Env]:",
+          "bbox": [
+            296.16,
+            95.32,
+            355.82,
+            100.33
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold",
+            "Verdana-BoldItalic"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "Given two non-negative real numbers, prove that taking the real number",
+          "bbox": [
+            113.57,
+            100.27,
+            265.4,
+            105.27
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "(...)",
+          "bbox": [
+            296.16,
+            102.47,
+            302.75,
+            106.47
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            3.29
+          ]
+        },
+        {
+          "text": "minimum of the two by considering them as both non-negative real numbers is",
+          "bbox": [
+            113.57,
+            105.21,
+            278.3,
+            110.21
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "lemma coe_mono : Monotone ((↑) : ℝ≥0 →",
+          "bbox": [
+            296.16,
+            109.33,
+            386.56,
+            114.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Menlo-Regular",
+            "Type3 (339 0 R)",
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "the same as taking the minimum of the two by only considering them as both",
+          "bbox": [
+            113.57,
+            110.42,
+            275.25,
+            115.43
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "ℝ) :=",
+          "bbox": [
+            296.16,
+            114.27,
+            308.65,
+            119.38
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Menlo-Regular",
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "real numbers.",
+          "bbox": [
+            113.57,
+            115.37,
+            142.48,
+            120.37
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "fun _ _ => NNReal.coe_le_coe.2",
+          "bbox": [
+            307.75,
+            119.21,
+            375.8,
+            124.22
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "Compiled Feedback",
+          "bbox": [
+            421.48,
+            121.4,
+            481.11,
+            128.07
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "[Proof]:",
+          "bbox": [
+            113.57,
+            128.27,
+            133.58,
+            133.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "1. Given two non-negative real numbers, `x` and `y`:",
+          "bbox": [
+            113.57,
+            132.66,
+            228.19,
+            137.67
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "'severity': 'error',",
+          "bbox": [
+            403.52,
+            133.76,
+            439.39,
+            138.77
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "[Statement]:",
+          "bbox": [
+            296.16,
+            136.24,
+            324.35,
+            140.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "We can consider them as non-negative real numbers;",
+          "bbox": [
+            125.16,
+            137.88,
+            238.04,
+            142.89
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "'pos': {'line': 613, 'column': 3},",
+          "bbox": [
+            403.52,
+            138.71,
+            471.26,
+            143.71
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "theorem coe_min :",
+          "bbox": [
+            296.16,
+            140.9,
+            334.51,
+            145.58
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "We can also consider them as regular real numbers.",
+          "bbox": [
+            125.16,
+            143.1,
+            233.38,
+            148.1
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "'endPos': {'line': 613, 'column': 26},",
+          "bbox": [
+            403.52,
+            143.65,
+            481.32,
+            148.65
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "((min (x : ℝ≥0) y : ℝ) : ℝ) = min (x : ℝ)",
+          "bbox": [
+            306.97,
+            145.85,
+            384.76,
+            150.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Menlo-Regular",
+            "Verdana"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "'data': 'type mismatch",
+          "bbox": [
+            403.52,
+            148.59,
+            449.95,
+            153.6
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "y :=",
+          "bbox": [
+            296.16,
+            150.79,
+            304.68,
+            155.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "2. Since the value order is preserved when viewing a non-negative real number",
+          "bbox": [
+            113.57,
+            153.53,
+            279.1,
+            158.54
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "Monotone.map_min coe_mono has type",
+          "bbox": [
+            415.1,
+            153.53,
+            498.23,
+            158.54
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "as a real number, the order relationship between `x` and `y` remains the same",
+          "bbox": [
+            113.57,
+            158.47,
+            280.96,
+            163.48
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "↑(min ?m.78355 ?m.78356) = min ↑?",
+          "bbox": [
+            415.1,
+            158.47,
+            494.18,
+            163.48
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Type3 (339 0 R)",
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "m.78355 ↑?m.78356 : Prop",
+          "bbox": [
+            403.52,
+            163.42,
+            461.15,
+            168.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Type3 (339 0 R)",
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "whether we view them as non-negative real numbers or real numbers.",
+          "bbox": [
+            113.57,
+            163.69,
+            260.43,
+            168.7
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "[Proof]:",
+          "bbox": [
+            296.16,
+            167.26,
+            313.52,
+            171.93
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "but is expected to have type",
+          "bbox": [
+            415.1,
+            168.36,
+            474.2,
+            173.36
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "NNReal.coe_mono.map_min",
+          "bbox": [
+            306.97,
+            171.93,
+            361.74,
+            176.6
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "min (↑x) y = min (↑x) y : Prop'",
+          "bbox": [
+            415.1,
+            173.3,
+            480.38,
+            178.31
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Type3 (339 0 R)",
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "3. Because this order is preserved, the minimum of `x` and `y` is the same.",
+          "bbox": [
+            113.57,
+            174.13,
+            274.62,
+            179.13
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "Compiler-Guided",
+          "bbox": [
+            425.29,
+            199.65,
+            477.02,
+            206.33
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "Informalization",
+          "bbox": [
+            147.59,
+            203.42,
+            186.64,
+            208.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Helvetica-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "Process-Driven Autoformalization",
+          "bbox": [
+            245.15,
+            204.51,
+            333.44,
+            210.01
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Helvetica-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "Process Annotation",
+          "bbox": [
+            421.21,
+            206.24,
+            481.1,
+            212.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "[Statement & Proof]:",
+          "bbox": [
+            403.52,
+            217.78,
+            452.55,
+            222.79
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "theorem coe_min :",
+          "bbox": [
+            403.52,
+            222.18,
+            444.6,
+            227.18
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "((min (x : ℝ≥0) y : ℝ) : ℝ) = min (x : ℝ)",
+          "bbox": [
+            415.1,
+            226.84,
+            498.45,
+            231.96
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Menlo-Regular",
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "b :=",
+          "bbox": [
+            403.52,
+            231.51,
+            414.23,
+            236.52
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "NNReal.coe_mono.map_min",
+          "bbox": [
+            415.1,
+            236.18,
+            473.78,
+            241.18
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "Successful",
+          "bbox": [
+            426.31,
+            245.32,
+            444.9,
+            249.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Helvetica"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "Compile error",
+          "bbox": [
+            465.3,
+            245.32,
+            488.58,
+            249.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Helvetica"
+          ],
+          "sizes": [
+            3.84
+          ]
+        },
+        {
+          "text": "Verified Formal Language",
+          "bbox": [
+            257.89,
+            248.25,
+            337.18,
+            254.93
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "Mathlib4 Library",
+          "bbox": [
+            143.2,
+            248.8,
+            193.78,
+            255.48
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "[Statement]:",
+          "bbox": [
+            241.8,
+            260.89,
+            272.0,
+            265.9
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "[Statement]:",
+          "bbox": [
+            112.75,
+            261.44,
+            142.95,
+            266.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "theorem coe_min (x y : ℝ≥0) :",
+          "bbox": [
+            241.8,
+            265.56,
+            306.18,
+            270.67
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Menlo-Regular",
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "theorem coe_min (x y : ℝ≥0) :",
+          "bbox": [
+            112.75,
+            266.11,
+            177.13,
+            271.22
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Menlo-Regular",
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "Process-Supervised Verifier",
+          "bbox": [
+            414.82,
+            268.49,
+            487.77,
+            273.98
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Helvetica-Bold"
+          ],
+          "sizes": [
+            5.49
+          ]
+        },
+        {
+          "text": "((min x y : ℝ≥0) : ℝ) = min (x : ℝ) (y : ℝ) :=",
+          "bbox": [
+            253.38,
+            270.23,
+            347.3,
+            275.34
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Menlo-Regular",
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "((min x y : ℝ≥0) : ℝ) = min (x : ℝ) (y : ℝ) :=",
+          "bbox": [
+            124.33,
+            270.77,
+            218.25,
+            275.89
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Menlo-Regular",
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "[Proof]:",
+          "bbox": [
+            241.8,
+            284.78,
+            260.39,
+            289.78
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "[Proof]:",
+          "bbox": [
+            112.75,
+            285.33,
+            131.34,
+            290.33
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana-Bold"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "NNReal.coe_mono.map_min",
+          "bbox": [
+            253.38,
+            289.45,
+            312.06,
+            294.45
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "NNReal.coe_mono.map_min",
+          "bbox": [
+            124.33,
+            289.99,
+            183.01,
+            295.0
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Verdana"
+          ],
+          "sizes": [
+            4.12
+          ]
+        },
+        {
+          "text": "Figure 1: An overview of PDA trained on FORML4. It is important to note that the goal of PDA is",
+          "bbox": [
+            108.0,
+            308.3,
+            504.0,
+            318.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            7.95,
+            9.94
+          ]
+        },
+        {
+          "text": "statement autoformalization, and does not include the translation of proof per se (Jiang et al., 2023a).",
+          "bbox": [
+            108.0,
+            319.29,
+            505.74,
+            329.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.9
+          ]
+        },
+        {
+          "text": "The reason for including proof steps throughout our framework is to enable the compiler to better",
+          "bbox": [
+            107.69,
+            329.95,
+            504.0,
+            340.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "assess the semantic and logical aspects of autoformalized statements by compiling statements and",
+          "bbox": [
+            108.0,
+            340.92,
+            504.0,
+            350.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            10.04
+          ]
+        },
+        {
+          "text": "proof steps together. As illustrated, while the statement passes the compiler as grammatically correct,",
+          "bbox": [
+            108.0,
+            352.01,
+            505.25,
+            362.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "an error is detected in the proof step, indicating an incorrect autoformalization. This process-level",
+          "bbox": [
+            108.0,
+            363.0,
+            504.0,
+            373.06
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.05
+          ]
+        },
+        {
+          "text": "feedback helps PDA refine the autoformalized statement effectively.",
+          "bbox": [
+            108.0,
+            374.03,
+            380.6,
+            383.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "FORML4 is derived from Mathlib 4 theorems, automatically informalized, and then rigorously quality-",
+          "bbox": [
+            108.25,
+            397.64,
+            505.65,
+            407.5
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            7.89,
+            9.86
+          ]
+        },
+        {
+          "text": "checked manually. In addition, we propose a Process-Driven Autoformalization (PDA) framework",
+          "bbox": [
+            108.0,
+            408.41,
+            504.25,
+            418.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.98
+          ]
+        },
+        {
+          "text": "for iterative performance improvement and automated assessment. As illustrated in Figure 1, PDA",
+          "bbox": [
+            108.0,
+            419.45,
+            504.13,
+            429.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.0
+          ]
+        },
+        {
+          "text": "begins with training an autoformalization model on FORML4. The model’s output is then processed",
+          "bbox": [
+            108.0,
+            430.46,
+            504.0,
+            440.39
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            7.94,
+            9.93
+          ]
+        },
+        {
+          "text": "by the Lean 4 Compiler, generating automated feedback. This feedback generates process-level",
+          "bbox": [
+            108.0,
+            441.32,
+            504.0,
+            451.38
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "annotations for the autoformalization output, utilized to train a process-supervised verifier (PSV).",
+          "bbox": [
+            108.0,
+            452.28,
+            505.75,
+            462.34
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "The autoformalization model is then fine-tuned based on the verifier’s feedback. This iterative cycle",
+          "bbox": [
+            107.69,
+            463.33,
+            504.0,
+            473.27
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.94
+          ]
+        },
+        {
+          "text": "enables mutual improvement between autoformalization and verifier models.",
+          "bbox": [
+            108.0,
+            474.27,
+            414.13,
+            484.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "The unique strength of FORML4 lies in its inclusion of both statements and their corresponding",
+          "bbox": [
+            107.69,
+            490.96,
+            504.0,
+            501.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            8.05,
+            10.06
+          ]
+        },
+        {
+          "text": "proofs in natural and formal languages. This approach enables a comprehensive evaluation of model",
+          "bbox": [
+            108.0,
+            502.06,
+            504.0,
+            512.11
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            9.88
+          ]
+        },
+        {
+          "text": "autoformalization outputs, contrasting with existing datasets (Jiang et al., 2023a; Ying et al., 2024a),",
+          "bbox": [
+            108.0,
+            513.15,
+            505.25,
+            523.08
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.93
+          ]
+        },
+        {
+          "text": "which focus solely on statements. There are three key reasons for appending proofs to theorem",
+          "bbox": [
+            107.64,
+            524.01,
+            504.0,
+            534.07
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "statements in FORML4, each contributing to improved data quality, evaluation granularity, and",
+          "bbox": [
+            108.0,
+            534.9,
+            504.0,
+            545.03
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            8.03,
+            10.04
+          ]
+        },
+        {
+          "text": "process-driven enhancement. First, including proofs provides valuable context that aids in the",
+          "bbox": [
+            108.0,
+            545.84,
+            504.0,
+            555.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "generation of higher-quality statements during the dataset construction phase. This context also",
+          "bbox": [
+            108.0,
+            556.89,
+            504.0,
+            566.95
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "serves as a prompt, potentially enhancing the performance of autoformalization models.",
+          "bbox": [
+            108.0,
+            567.92,
+            458.14,
+            577.89
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "More importantly, formal languages offer syntactic rigidity that allows for automatic assessment by",
+          "bbox": [
+            108.0,
+            584.86,
+            504.35,
+            594.82
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.97
+          ]
+        },
+        {
+          "text": "compilers. These compilers deliver detailed feedback on generated proofs, eliminating ambiguity in",
+          "bbox": [
+            108.0,
+            595.84,
+            504.0,
+            605.78
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.94
+          ]
+        },
+        {
+          "text": "formal language generation (Yang et al., 2023a). By utilizing both statements and proofs, FORML4",
+          "bbox": [
+            108.0,
+            606.77,
+            503.75,
+            616.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            7.97,
+            9.97
+          ]
+        },
+        {
+          "text": "facilitates comprehensive feedback from the Lean 4 compiler1, enabling strict assessments of syntax",
+          "bbox": [
+            108.0,
+            616.39,
+            504.25,
+            627.69
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.92
+          ]
+        },
+        {
+          "text": "and semantic integrity in reasoning logic. Lastly, we can leverage the precise feedback naturally",
+          "bbox": [
+            108.0,
+            628.62,
+            504.34,
+            638.68
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "provided by Lean 4 compilers to improve autoformalization. Building on FORML4, our PDA",
+          "bbox": [
+            108.0,
+            639.58,
+            504.13,
+            649.64
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            8.05,
+            10.06
+          ]
+        },
+        {
+          "text": "is distinct from existing informal mathematical reasoning methods that rely heavily on human or",
+          "bbox": [
+            108.0,
+            650.54,
+            504.17,
+            660.6
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "machine annotation (Lightman et al., 2024; Wang et al., 2023a).",
+          "bbox": [
+            108.0,
+            661.57,
+            362.87,
+            671.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Extensive experiments demonstrate that PDA significantly enhances autoformalization in Lean 4,",
+          "bbox": [
+            108.0,
+            678.43,
+            505.25,
+            688.5
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "achieving better results with less training data. When fine-tuned with higher-quality data, PDA",
+          "bbox": [
+            108.0,
+            689.39,
+            504.13,
+            699.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "utilizes this information effectively, leading to further improvements. Our key contributions are:",
+          "bbox": [
+            108.0,
+            700.43,
+            490.34,
+            710.39
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "1Details of the Lean 4 compiler are provided in Appendix I.3.",
+          "bbox": [
+            120.65,
+            721.52,
+            341.65,
+            732.03
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            5.98,
+            8.97
+          ]
+        },
+        {
+          "text": "2",
+          "bbox": [
+            303.51,
+            752.19,
+            308.49,
+            762.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        }
+      ]
+    }
+  ]
+}

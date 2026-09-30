@@ -11,7 +11,7 @@ consulted: true
 # Reading a knowledge graph before you have anything
 
 **This skill assumes a text editor and nothing else.** No MCP server, no
-`skill_fetch`, no `beans`, no build. If those exist they are not yours to rely
+skill-fetching tool, no work-plan store, no build. If those exist they are not yours to rely
 on yet — see [`AGENTS.md`](../AGENTS.md).
 
 That constraint is the reason this skill exists rather than a pointer to the
@@ -32,6 +32,18 @@ reading:
 3. **Ids are stable across a relocation; paths are not.** An override matches
    on an entry's `id`, never its `path`. Matching on path turns one relocated
    graph into two, and every consumer then scans a directory that is not there.
+
+**Two more words you will meet in a declaration.** A field this skill does not
+describe is an **Extension**: a Harness added it, and you ignore it. A Harness's
+own kind of declaration, which requires everything bootstrap's does and adds
+Extensions, is a **Subkind** of bootstrap's: read it as bootstrap's, and it
+still means what it says.
+
+**Versions and addresses.** A declaration may state its `version`
+(MAJOR.MINOR.PATCH) and an `iriBase`. Every identifier it mints is then
+`<iriBase><version>/…`, which pins exactly, and a page meant for a person is
+`<iriBase>v<major>/…`. Bootstrap's own are in its declaration; read them
+there rather than trusting a copy.
 
 ## Do this, in order
 

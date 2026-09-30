@@ -150,3 +150,64 @@ repository's usual rule and the one `vlhk` was opened about.
 both instances are `Process_CRDM`. Neither is `initialize-harness.bpmn`, so
 *"where a harness got to in its initialisation"* still has no answer. See the
 same correction on `supn`.
+
+## DECIDED 2026-09-25 — the status bar is THREADED, not stacked on top
+
+The owner gave this on 2026-09-20 as an answer to `ie9l`'s "who owns the root
+README" question, and it **was lost before it reached either bean** — this
+session was compacted and PR #542 merged without it. `ie9l` closed on the half
+it could see; this half belongs here, because it changes what this bean builds.
+
+Verbatim, and the two sentences are one design:
+
+> human voice is in an included KG asset that user is pointed to to edit. then
+> come the list of initaited harnesses etc. eac asset is associated to a harness
+> instances and placed there. bootstrap at top. work down.
+>
+> it is just the status bar is threaded with each harness listing.
+
+**This is not the dashboard this bean assumed.** The title says *"a status
+dashboard atop the root README"*, and the second sentence says it is not atop
+anything. Read together:
+
+| | what this bean assumed | what the owner decided |
+|---|---|---|
+| where the numbers go | one dashboard block at the top of the README | **interleaved** — each harness's listing carries its own status |
+| what the reader sees first | aggregate counts across all instances | the **human voice**, from an editable KG asset |
+| ordering | unspecified | **bootstrap at top, then work down** the dependency order |
+| who owns the prose | the generator | a **person**, in an asset they are pointed at |
+
+**Four consequences, and the third is the one that bites.**
+
+1. **The human voice is an asset, not a generated section.** So the README is
+   composed of assets rather than written by a generator with holes in it — and
+   the asset is the thing a person is *pointed at*, which means the README has
+   to say where it is. That is `ie9l`'s `agent-instructions` / `instance-readme`
+   asset roles doing a second job.
+2. **Each asset is associated to a harness instance and placed there.** Not
+   collected centrally. An instance's voice lives with the instance, so adding an
+   instance adds its section without editing anything shared.
+3. **Threading means there is no aggregate to render.** A stacked dashboard is
+   one generated region with one marker pair; a threaded one is **N regions,
+   one per instance, each interleaved with authored prose**. `readme-sections.ts`
+   writes a section only where its marker pair already exists — so threading
+   needs a marker pair per instance, and the instance list is exactly what is
+   not known until the root is scanned. That is the real design question this
+   decision opens, and it is not answered here.
+4. **Bootstrap at top, work down** is the dependency order, which
+   `instanceRootsIn` returns sorted alphabetically. So the ordering is a new
+   requirement on that function's consumers, not a property they already have.
+
+**What does NOT change.** `active` vs `static` still needs its definition, and
+the owner's answer on that was separate and also 2026-09-20: option 1, **plus**
+"need to ask user before making active state intiation (part of install for that
+harness) skill + process" — i.e. initiation is a gated step a person approves,
+not something a scan infers. Both Done-when boxes 1 and 3 are untouched by this
+decision.
+
+**Done-when box 2 is superseded** — "The root README opens with a per-instance
+dashboard on active repos only" describes the stacked design. Rewritten below.
+
+- [ ] Each initiated harness's README listing carries its own status inline
+      (threaded), ordered bootstrap-first, with the human voice coming from an
+      instance-associated KG asset the README points the reader at

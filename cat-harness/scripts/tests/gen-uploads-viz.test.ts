@@ -118,7 +118,7 @@ describe("a sidecar is not a queued document", () => {
   // files stood in the table as units "waiting to be ingested", 0 KB each,
   // inflating the headline from 20 to 27 — the one number the page exists for.
   const root = repoRootFor(join(import.meta.dir, "..", ".."));
-  const g = readLibraryGraph(instanceRootsIn(root));
+  const g = readLibraryGraph(instanceRootsIn(root), root);
 
   test("the corpus is readable, so the assertions below are not vacuous", () => {
     expect(g).not.toBeNull();

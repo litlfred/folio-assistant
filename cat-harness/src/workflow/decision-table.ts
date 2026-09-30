@@ -172,6 +172,40 @@ export async function loadDecisionTable(dmnPath: string, decisionId: string): Pr
   };
 }
 
+/** One decision a `.dmn` file declares, as far as a catalogue needs it. */
+export interface DecisionSummary {
+  id: string;
+  name: string;
+  /** The table's hit policy as written (DMN's default, `UNIQUE`, if absent); undefined for non-table logic. */
+  hitPolicy?: string;
+}
+
+/**
+ * Every decision a `.dmn` file declares — id, name, hit policy — WITHOUT
+ * checking that this evaluator can run it.
+ *
+ * Deliberately separate from `loadDecisionTable`. The knowledge-graph export
+ * (owner, 2026-09-27: each decision table is a node) catalogues what the file
+ * SAYS; refusing to list a decision because its hit policy is one this engine
+ * does not evaluate would hide a real artefact from the graph, and that
+ * refusal already has a home: the process loader, at the gateway that uses it.
+ */
+export async function listDecisions(dmnPath: string): Promise<DecisionSummary[]> {
+  const moddle = new DmnModdle();
+  const { rootElement } = await moddle.fromXML(readFileSync(dmnPath, "utf-8"));
+  const defs = rootElement as unknown as ModdleAny;
+  return (defs.drgElement ?? [])
+    .filter((e) => e.$type === "dmn:Decision" && e.id)
+    .map((e) => ({
+      id: e.id!,
+      name: e.name ?? e.id!,
+      hitPolicy:
+        e.decisionLogic?.$type === "dmn:DecisionTable"
+          ? (e.decisionLogic.hitPolicy ?? "UNIQUE").toUpperCase()
+          : undefined,
+    }));
+}
+
 // ── the FEEL subset ──────────────────────────────────────────────
 
 /** Parse a DMN literal: a quoted string, a number, or a boolean. */

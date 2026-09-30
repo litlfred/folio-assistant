@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Lean formal dependency graph'
 parent: Skill instructions
 ---
@@ -22,6 +23,15 @@ have read) is owned by `uses-editorial-review`.
 **Never write formal dependencies into `uses[]`.** They answer different
 questions and diverge legitimately in both directions.
 
+**Where the formal edges come from.** The graph reads
+`docs/audits/lean-atlas-deps.json`, and each entry records its source. A
+`scan` entry is a lexical guess (measured recall 0.63, folio-assistant#1492);
+`atlas` and `elaborated` are elaborated and their type/value split can be
+trusted. To produce elaborated edges, run the science layer's extractor:
+skill `lean-formal-edges` (`folio-assistant-sci/skills/lean/`), CLI
+`folio-assistant-sci/content/pipeline/formal-edges.ts`, MCP tool
+`lean_formal_edges`. It is tooling, so it lives there, not here.
+
 ## Get a graph
 
 ```sh
@@ -33,7 +43,7 @@ If it reports `cache ABSENT — formal graph unavailable`, populate it:
 
 ```sh
 # Preferred: Lean Atlas (elaborated, authoritative)
-scripts/install-lean-atlas.sh          # provisions the Lake require
+cat-harness/scripts/install-lean-atlas.sh          # provisions the Lake require
 lake exe atlas graph-data --output /tmp/atlas.json --pretty
 # → adapt to folio's JSONL, then:
 bun run content/pipeline/lean-atlas-ingest.ts --ingest /tmp/deps.jsonl
@@ -75,6 +85,7 @@ semantic cone propagates over type edges only.
 | Is the narrative leaving a gap? | `uses-formal-coverage` (advisory; most formal-only edges are correct) |
 | Who owns this declaration? | `g.declOwners` / `lean-ref-owns-decl` |
 | What should I review first? | `semantic-review-scoping` |
+| Does a proof use the lemmas it was planned to use? | compare the block's planned predecessors with its **value** edges. A proof that uses none of them is a reason to re-read the *statement* — a proof easier than the intended mathematics is evidence about the statement. Advisory; see `blueprint-driven-formalization` §4 |
 
 ## Declaration ownership
 

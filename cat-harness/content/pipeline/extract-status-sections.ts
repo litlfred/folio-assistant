@@ -21,8 +21,8 @@
  * committed independently. The classifier is shared with the auditor.
  *
  * Usage:
- *   bun run content/pipeline/extract-status-sections.ts --chapter mass-theory          # dry-run
- *   bun run content/pipeline/extract-status-sections.ts --chapter mass-theory --write  # apply
+ *   bun run cat-harness/content/pipeline/extract-status-sections.ts --chapter mass-theory          # dry-run
+ *   bun run cat-harness/content/pipeline/extract-status-sections.ts --chapter mass-theory --write  # apply
  *
  * @module content/pipeline/extract-status-sections
  */

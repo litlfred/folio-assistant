@@ -5,7 +5,7 @@
     "id": "Process_CopyOutMaterialized",
     "path": "processes/copy-out-materialized.bpmn"
   },
-  "source_hash": "sha256:76d36905dd17db67deddb66de47bb88aeae3db4a97f3bfafb50c9abc4f5e01a3",
+  "source_hash": "sha256:9582020cc54e4e7375a9fb8b7ed557fadb221e234fdfba86824dbc46cc5fbdbc",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,31 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_EditDirectly",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ReadSource",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Land",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RecordProvenance",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_VerifySourceUntouched",
+          "detail": "names skill \"copy-out-materialized\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -136,7 +161,7 @@
   },
   "totals": {
     "pass": 13,
-    "fail": 2,
+    "fail": 3,
     "n/a": 9,
     "unknown": 0
   }

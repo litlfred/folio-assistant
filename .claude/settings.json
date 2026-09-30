@@ -21,6 +21,16 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bun run \"$CLAUDE_PROJECT_DIR/cat-harness/scripts/decisions-named-not-asked.ts\""
+          }
+        ]
+      }
     ]
   }
 }

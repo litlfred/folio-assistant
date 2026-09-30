@@ -9,7 +9,11 @@
 
 import { z } from "zod";
 
-import { LEAN_REF_PATTERN, leanPackageByName, parseLeanRef } from "./lean-packages.js";
+import {
+  formalRefPattern,
+  formalRefPatternMessage,
+  resolveFormalRef,
+} from "./formal-ref.js";
 import type { Block } from "./types.js";
 // Leaf module — importing the kind list from `types.js` would be a runtime
 // cycle, and `appliesTo` is built at module init, exactly when that bites.
@@ -120,17 +124,26 @@ const LeanValidationSchema = z.enum([
 ]);
 
 export const LeanRefSchema = z.object({
+  // The shape is the FORMALISM LAYER's, injected through `formal-ref.ts` on the
+  // owner ruling of 2026-09-27 that the `lean.ref` grammar is science
+  // vocabulary. Core validates that the field holds a reference; it does not
+  // know what one looks like.
+  //
+  // `superRefine`, NOT `.regex()`, and this is load-bearing rather than
+  // stylistic: a `z.object({...})` literal is evaluated at MODULE INIT, which
+  // is strictly before any layer can install itself, so `.regex(pattern)`
+  // would freeze whatever pattern existed during import — i.e. the
+  // unconfigured fallback, forever. The refinement callback runs per
+  // `parse()`, so the injected pattern is in place by then. The error message
+  // comes from the layer too, since it doubles as migration guidance in that
+  // layer's own vocabulary.
   ref: z
     .string()
     .min(1, "Lean ref is required")
-    .regex(
-      LEAN_REF_PATTERN,
-      // Error message doubles as migration guidance for agents
-      // rebasing across the `lean.decl` → `lean.ref` URI change.
-      "Lean ref must be \"<package>:<Decl.Path>\" (e.g. \"qou:QOU.Foo\"). " +
-        "If this branch still uses the legacy { decl, file } shape, " +
-        "run `cd content && bun run migrate-lean-refs` to convert it.",
-    ),
+    .superRefine((value, ctx) => {
+      if (formalRefPattern().test(value)) return;
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: formalRefPatternMessage() });
+    }),
   sorryFree: z.boolean().optional(),
   mathlibLinks: z.array(z.string()).optional(),
   validation: LeanValidationSchema.optional(),
@@ -729,20 +742,35 @@ export const CONSTRAINT_RULES: ConstraintRule[] = [
       //     lean/QOU/Torsion/HeckeMassElement.lean per the wire-in note).
       const ref = (block as { lean?: { ref?: string } }).lean?.ref;
       if (ref) {
-        try {
-          const parsed = parseLeanRef(ref);
-          const pkg = leanPackageByName(parsed.package);
-          if (pkg) {
-            // (2) Direct module-path resolution.
-            const modulePath = parsed.module.replace(/\./g, "/");
-            if (ctx.fileExists(`${pkg.lakeRoot}/${modulePath}.lean`)) return null;
-            // (3) Basename fallback under the lake tree.
-            if (ctx.lakeTreeContainsBasename?.(pkg.lakeRoot, `${parsed.name}.lean`)) {
-              return null;
-            }
+        // Resolution is the formalism layer's: it hands back candidate paths
+        // and a basename, and core tries them with its own `fileExists`. An
+        // unresolvable ref and an uninstalled layer both give `undefined`
+        // here, and BOTH fall through to the failure message below — which is
+        // a fail-CLOSED default: with no layer installed this rule reports
+        // "requires Lean formalization" for every `definition` whose
+        // formalisation lives in the library tree. That is the direction
+        // recorded in qou bean `qou-i2ed`, and it is preserved rather than
+        // fixed here, because changing it would change validator verdicts in
+        // the same commit that moves the layer boundary.
+        const res = resolveFormalRef(ref);
+        if (res) {
+          // (2) Candidate paths, in the layer's own priority order, then its
+          //     WEAK candidates. This rule accepted the direct module-path file
+          //     before the layer split and still does, even though that file may
+          //     be an import-only aggregator (the `qou-cu0a` trap) — so the weak
+          //     list is consulted here and by nothing else. Dropping it would be
+          //     a tightening, and tightening a validator in the same commit that
+          //     moves a layer boundary makes the two indistinguishable.
+          for (const candidate of [...res.candidatePaths, ...(res.fallbackPaths ?? [])]) {
+            if (ctx.fileExists(candidate)) return null;
           }
-        } catch {
-          // parseLeanRef threw — fall through to the failure message.
+          // (3) Basename fallback under the package tree.
+          if (
+            res.treeRoot &&
+            ctx.lakeTreeContainsBasename?.(res.treeRoot, res.basename)
+          ) {
+            return null;
+          }
         }
       }
 

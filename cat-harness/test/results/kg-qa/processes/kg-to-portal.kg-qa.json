@@ -5,7 +5,7 @@
     "id": "Process_KgToPortal",
     "path": "processes/kg-to-portal.bpmn"
   },
-  "source_hash": "sha256:f3f46722431b71389d2c1adb9e4762c6a7ce4a8e653f557cce37c687a08a91bd",
+  "source_hash": "sha256:8d4fed7fb7210014059586b9fec8ffaa4530c7f97ecbd250351fd9a6e7669ce8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,43 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "D_Constraints",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "E_Scope",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Select",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Package",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "S_Sign",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "D_Undetermined",
+          "detail": "names skill \"bean-blocking\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Distribute",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "P_Verify",
+          "detail": "names skill \"kg-to-portal\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -147,7 +184,7 @@
   },
   "totals": {
     "pass": 14,
-    "fail": 1,
+    "fail": 2,
     "n/a": 9,
     "unknown": 0
   }

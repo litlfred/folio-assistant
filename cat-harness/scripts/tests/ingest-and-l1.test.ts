@@ -612,13 +612,22 @@ describe("refuse to promote — the gate between the arms and the library", () =
     // uploads/ -> library/ in two commands.
     const base = { rung: "pdf-pages" as const, why: "", steps: [["python3", "pdf-pages.py"]] };
     const armed = withDerivedArms(base, "/tmp/x.pdf", "/stage", "/stage/slug", "/lib");
-    expect(armed.steps).toHaveLength(4);
+    expect(armed.steps).toHaveLength(5);
     expect(armed.steps[1]).toEqual(["python3", expect.stringContaining("pdf-images.py"), "-o", "/stage", "/tmp/x.pdf"]);
-    expect(armed.steps[2]).toEqual(["bun", "run", expect.stringContaining("l1-blocks.ts"), "-o", "/stage/slug"]);
+    // The vector arm — bean `a8wy`. Same two arguments as the raster arm: it
+    // reads the PDF, so it takes the source and the library ROOT.
+    expect(armed.steps[2]).toEqual([
+      "python3",
+      expect.stringContaining("pdf-vector-labels.py"),
+      "-o",
+      "/stage",
+      "/tmp/x.pdf",
+    ]);
+    expect(armed.steps[3]).toEqual(["bun", "run", expect.stringContaining("l1-blocks.ts"), "-o", "/stage/slug"]);
     // The verdict arm — bean `8suc`. It takes the ENTRY directory and the
     // DESTINATION LIBRARY, because the judgement lives in the library and a
     // staging directory does not say which one that is.
-    expect(armed.steps[3]).toEqual([
+    expect(armed.steps[4]).toEqual([
       "bun",
       "run",
       expect.stringContaining("apply-image-verdicts.ts"),

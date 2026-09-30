@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jwox
 title: 'CHANGESET: a block-level diff of the folio/ graph between main and a staging branch — added, removed, modified, moved, renamed'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-22T23:09:51Z
+updated_at: 2026-09-29T18:14:49Z
 parent: folio-assistant-q4jm
 blocked_by:
     - folio-assistant-5xzc
@@ -67,3 +67,9 @@ Claimed 2026-09-22 by branch claude/kind-albattani-0qe9gj (session_017nyJj3Psjvs
 ## Round 3 (2026-09-22)
 
 Once p0za's auto-discovery landed, the `folio-changeset` Tool was declared in `folio-assistant-core/tools/index.ts`, and core declares its `tools/` directory. The one box left is staging emission, which is re-homed to ojcx.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

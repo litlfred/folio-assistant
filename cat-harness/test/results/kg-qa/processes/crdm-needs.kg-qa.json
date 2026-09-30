@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Needs",
     "path": "processes/crdm-needs.bpmn"
   },
-  "source_hash": "sha256:cbe810d1357dd40c1dd1b857a3721f1caa5d593f3f83e9e76c05aad5b1e959aa",
+  "source_hash": "sha256:052196ce36944aef4931d1e9b644337c1a76305fd6d868ac9ffe1a385a878eca",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,23 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Stakeholders",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Synthesise",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "BA_ReviewNeeds",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -106,7 +123,7 @@
   },
   "totals": {
     "pass": 14,
-    "fail": 0,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

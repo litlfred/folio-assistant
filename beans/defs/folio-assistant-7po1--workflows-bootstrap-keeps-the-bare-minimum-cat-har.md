@@ -122,3 +122,54 @@ Also unresolved from the original ask, and cheap next to the above:
 `WORKFLOW_DIR` in `workflow/store.ts` is one of the two hardcoded paths
 `AGENTS.md` names as unavoidable (hot path of every workflow call), so it is a
 deliberate edit rather than a sweep.
+
+## DECIDED 2026-09-25 — code and docs are renamed; the beans are left alone
+
+The owner was asked twice, and the second answer is the one that stands.
+
+**First answer**, 2026-09-20: *"Everything, including beans."* Given against the ~470
+measurement above, and against a recommendation to leave the beans alone. That
+answer was then **lost** — this session was compacted before it reached the
+bean, and PR #542 merged without it. Recording it here so the record shows it
+was given rather than never asked.
+
+**Second answer**, 2026-09-25, after re-measurement: **code + docs; the beans
+stay as historical records.** The re-measurement is why the answer moved, so it
+belongs beside it — read from `origin/main` at `b4600df7ec`:
+
+| where | files | what happens on a rename |
+|---|---|---|
+| `cat-harness/translations/` + `bootstrap/translations/` | **370** | gettext catalogues carrying SOURCE PATH references |
+| `cat-harness/docs/` | 283 | largely generated — regenerate, do not sed |
+| `cat-harness/test/` | 109 | qa sidecars — regenerate and relocate, free |
+| **`beans/`** | **102** | historical records — **NOT renamed, by this decision** |
+| `cat-harness/processes/` | 70 | the directory itself |
+| `cat-harness/scripts/` | 64 | code |
+| `cat-harness/content/` | 45 | code |
+| `cat-harness/skills/` | 31 | prose |
+| everything else | ~62 | code, prose, workflows, glossary |
+| **total** | **1136** | |
+
+**The scope roughly doubled in five days** — 470 to 1136, and the beans from 48
+to 102 — which is the fact that moved the decision. It is still growing, so a
+count quoted from this table is a measurement with a date on it, not a
+property of the repository.
+
+**Why the beans are excluded, in the owner's decision rather than mine.** A bean
+records what was true when it was written. Rewriting 102 of them to say
+`workflows/` makes them describe a tree that did not exist at the time, and this
+repository has already paid for that shape twice in comments that asserted a
+state the tree had moved past (`kg-export.ts`'s "COMMITTED artefact",
+`check-undeclared-files.ts`'s stale cross-reference). The counter-argument — one
+vocabulary everywhere, so no reader ever meets the old word — is real and was
+put; a reader meeting `processes/` in a 2026-09 bean is reading history and
+should see the word history used.
+
+**The 370 translation catalogues are still not ruled on.** They are neither code
+nor history: a `.po` references its source location, so leaving them stale and
+rewriting them mechanically are both wrong, and the right answer is that the
+gettext pipeline regenerates them (epic `bzyu`). Not this bean's call, and not
+blocked on: rename the code, let the pipeline follow.
+
+**Unblocked.** The BLOCKED section above is discharged — the question it named
+has an answer.

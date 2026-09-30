@@ -2,6 +2,9 @@
 layout: default
 title: Skills & roles
 nav_order: 5
+lang: en
+supported_locales: ["ar", "zh", "en", "fr", "ru", "es"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 # Skills & roles

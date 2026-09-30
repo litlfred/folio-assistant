@@ -36,6 +36,7 @@ import { workflowFiles } from "./known-skills.js";
 import { basename, join, relative, resolve } from "node:path";
 import { loadProcessModel, isActivity } from "../src/workflow/process-model.js";
 import { knownSkills } from "./known-skills.js";
+import { repoRootFor } from "../schemas/cat-harness.js";
 
 interface Dangling { file: string; node: string; ref: string }
 interface Coverage { file: string; covered: number; total: number; uncovered: string[] }
@@ -58,7 +59,33 @@ const strict = process.argv.includes("--strict");
  * bootstrap diagram naming a harness skill is a real dangling ref, because
  * bootstrap runs before the harness exists.
  */
-const INSTANCES = [INSTANCE_ROOT, join(INSTANCE_ROOT, "bootstrap")];
+const INSTANCES = [INSTANCE_ROOT, join(repoRootFor(INSTANCE_ROOT), "bootstrap")];
+
+/**
+ * An instance in {@link INSTANCES} that contributed no diagrams.
+ *
+ * **This is the guard that would have caught the defect above on the day it was
+ * introduced.** `bootstrap` was added to `INSTANCES` on 2026-09-19 as
+ * `join(INSTANCE_ROOT, "bootstrap")` — and `INSTANCE_ROOT` is `cat-harness/`
+ * while `bootstrap/` sits at the REPOSITORY root, so the path resolved to a
+ * directory that has never existed. `workflowFiles` returned `[]`, the loop ran
+ * over nothing, and the summary line said *"2 instances"* while reporting the
+ * root's diagram count verbatim.
+ *
+ * So for a year of commits this checker believed it was auditing the FIRST
+ * process a new instance runs, and was auditing a typo. The fix for the path is
+ * one expression; the fix for not noticing is this function. A sweep that
+ * examined nothing has cleared nothing — bean `dh4f`, arriving inside the gate
+ * whose own docblock argues that *"a dangling ref in a diagram this checker
+ * never opens is a broken reference reported as clean"*.
+ *
+ * Reported rather than thrown: an instance legitimately holding no diagram is
+ * possible, and the reader needs to be able to tell that from a path that does
+ * not resolve. So the two are DIFFERENT messages.
+ */
+function emptyInstances(): string[] {
+  return INSTANCES.filter((r) => workflowFiles(r).filter((f) => f.endsWith(".bpmn")).length === 0);
+}
 
 const dangling: Dangling[] = [];
 const coverage: Coverage[] = [];
@@ -179,6 +206,22 @@ for (const file of files) {
 }
 
 console.log(`Workflow skill refs  (${knownCount} skills known across ${INSTANCES.length} instances, ${fileCount} diagrams)\n`);
+
+// The vacuity report, ABOVE the findings rather than below them: an instance
+// that contributed nothing makes every verdict here narrower than the summary
+// line claims, so a reader must meet it before the clean tick.
+const empty = emptyInstances();
+/** The unambiguous half: a listed instance whose path is not there. */
+const absentInstances = empty.filter((r) => !existsSync(r));
+for (const r of empty) {
+  const where = relative(repoRootFor(INSTANCE_ROOT), r) || ".";
+  console.log(
+    existsSync(r)
+      ? `? ${where} is in the instance list and declares no diagram — nothing here was checked for it`
+      : `✗ ${where} is in the instance list and DOES NOT EXIST — its diagrams are unchecked and were reported clean`,
+  );
+}
+if (empty.length > 0) console.log("");
 
 console.log("Coverage — activities naming the skill that implements them");
 for (const c of coverage) {
@@ -323,5 +366,12 @@ if (branches.undeclared.length) {
   }
 }
 
+// A listed instance whose path does not resolve is FATAL, and the empty-but-
+// present case is not. There is no reading of a non-existent directory that
+// makes the verdict above correct, so reporting it without failing would leave
+// exactly the gate that cannot fire — bean `1xhc`, which is how this defect
+// survived from 2026-09-19 in the first place. An instance that exists and
+// holds no diagram is a different fact and stays a report.
+if (absentInstances.length) process.exit(1);
 if (dangling.length || missingDeclared.length || unindexed.length) process.exit(1);
 if (strict && totalUncovered) process.exit(1);

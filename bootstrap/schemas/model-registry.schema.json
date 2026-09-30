@@ -1,13 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://litlfred.github.io/folio-assistant/bootstrap/schemas/model-registry.schema.json",
+  "$id": "https://litlfred.github.io/bootstrap/0.1.0/schemas/model-registry.schema.json",
   "title": "Model Registry",
   "description": "Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.",
   "type": "object",
   "properties": {
     "$schema": {
       "type": "string",
-      "const": "folio-model-registry/v1"
+      "const": "model-registry/1.0.0"
     },
     "models": {
       "type": "array",

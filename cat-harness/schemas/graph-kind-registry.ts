@@ -45,6 +45,7 @@
  * @graphNode schema
  */
 import { termIri } from "./namespaces";
+import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph";
 
 
 // ── Graph kinds ─────────────────────────────────────────────────
@@ -130,10 +131,26 @@ export type GraphLayer = "content" | "context" | "state" | "derived";
  * that used it (beans `dv8v`, `d4lb`) and removed the form, so an untyped
  * family can no longer be registered: it is either typed or it is not listed.
  */
-export type NodeSchemaRef =
+export type NodeSchemaRef = (
   | { validator: string; shape?: never; external?: never }
   | { shape: string; validator?: never; external?: never }
-  | { external: string; validator?: never; shape?: never };
+  | { external: string; validator?: never; shape?: never }
+) & {
+  /**
+   * Files of this family are GENERATOR OUTPUT — a script writes every one, so
+   * nothing in them is authored and a reader must not judge them as prose.
+   *
+   * It says THAT a generator writes the family, never WHICH one: naming the
+   * writer is what the removed `writtenBy` form did, and it made this registry
+   * (a `@general` node) name its dependents (#1168 B6b). A boolean carries the
+   * fact a consumer needs without the edge. Absent means authored or unknown —
+   * never assume generated. `folio-intake/v1` is the case that shows why the
+   * two differ: `writtenBy` named its CONSUMER, and its files are authored.
+   *
+   * Read by `check-reference-direction` to skip generated files (bean `zhg2`).
+   */
+  generated?: true;
+};
 
 /**
  * @general — a node others depend on: it points only at other general nodes,
@@ -534,11 +551,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     nodeSchemas: {
       "folio-voice/v1": { validator: "schemas/voices.ts#VoiceProfileSchema" },
       "folio-voice-skill/v1": { validator: "schemas/voice-skill.ts#VoiceSkillSchema" },
-      "kg-qa-manifest/v1": { validator: "schemas/kg-qa.ts#KgQaManifestSchema" },
       // A synced remote skill's pinned, per-file fixity record (issue #556).
       "folio-remote-skill/v1": { validator: "schemas/skill-package.ts#RemoteSkillRecordSchema" },
     },
-    summary: "Skill packages — the authored instruction bodies an Actor performs a Task from.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    summary: BOOTSTRAP_GRAPH_KINDS["skills"],
   },
   processes: {
     type: termIri("ProcessGraph"),
@@ -555,7 +572,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "its nodes are `.bpmn` and `.dmn` — XML, counted 2026-09-24 as 77 and 9. A Zod schema parses JSON, so one " +
       "here would be a category error; `check:workflows`, `xml-comment-check` and `check-process-documentation` " +
       "grade them instead.",
-    summary: "Executable BPMN processes and the DMN tables their gateways compute from.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    summary: BOOTSTRAP_GRAPH_KINDS["processes"],
   },
   scenarios: {
     type: termIri("ScenarioGraph"),
@@ -569,7 +587,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
     // module#Export resolved by resolveKindValidator. Read by gen-uml-overview.ts to draw the nodes.
     validator: "schemas/role-graph.ts#RoleGraphSchema",
-    summary: "Actors, the Roles they take on, and the User Stories those Roles serve.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    summary: BOOTSTRAP_GRAPH_KINDS["scenarios"],
   },
   // ── What an Actor may do: W3C ODRL 2.2 policies — issue #1180 ──────────
   //
@@ -690,18 +709,18 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-semantic-zoom/v1": { validator: "schemas/semantic-zoom.ts#SemanticZoomSchema" },
       "folio-qa-graph/v1": { shape: "content/pipeline/qa-graph-index.ts#QaGraphIndex" },
       "folio-translation-index/v1": { shape: "content/pipeline/translation-index.ts#TranslationIndex" },
-      "folio-bean-index/v1": { validator: "schemas/site-indexes.ts#BeanIndexSchema" },
-      "folio-translation-status/v1": { validator: "schemas/site-indexes.ts#TranslationStatusSchema" },
-      "folio-schema-graph/v1": { validator: "schemas/site-indexes.ts#SchemaGraphIndexSchema" },
-      "folio-library-index/v1": { validator: "schemas/site-indexes.ts#LibraryIndexSchema" },
+      "folio-bean-index/v1": { validator: "schemas/site-indexes.ts#BeanIndexSchema", generated: true },
+      "folio-translation-status/v1": { validator: "schemas/site-indexes.ts#TranslationStatusSchema", generated: true },
+      "folio-schema-graph/v1": { validator: "schemas/site-indexes.ts#SchemaGraphIndexSchema", generated: true },
+      "folio-library-index/v1": { validator: "schemas/site-indexes.ts#LibraryIndexSchema", generated: true },
       // The per-entry block graph, one file per library entry (bean `7nvr`).
       // Same writer as the index and deliberately a SEPARATE family: the index
       // answers "what entries are there" and this answers "what is in one",
       // and the corpus holds 1715 blocks over ~1 MB against a 44 KB index, so
       // they are fetched at different times by different questions.
-      "folio-library-entry/v1": { validator: "schemas/site-indexes.ts#LibraryEntrySchema" },
-      "folio-voices-index/v1": { validator: "schemas/site-indexes.ts#VoicesIndexSchema" },
-      "folio-graph-projection/v1": { validator: "schemas/site-indexes.ts#FolioGraphProjectionSchema" },
+      "folio-library-entry/v1": { validator: "schemas/site-indexes.ts#LibraryEntrySchema", generated: true },
+      "folio-voices-index/v1": { validator: "schemas/site-indexes.ts#VoicesIndexSchema", generated: true },
+      "folio-graph-projection/v1": { validator: "schemas/site-indexes.ts#FolioGraphProjectionSchema", generated: true },
     },
     summary:
       "Documentation ABOUT the knowledge graph — how the harness works, what its " +
@@ -774,7 +793,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // are not derivable (`prior.get(term)` in the `--write` path).
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "folio-assistant-core:schemas/external-schema.ts#ExternalSchemaSchema",
+    validator: "cat-harness:schemas/external-schema.ts#ExternalSchemaSchema",
     summary:
       "The specifications this instance depends on — one record per specification, pinning the " +
       "EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
@@ -808,7 +827,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
       "folio-source-descriptor/v1": { validator: "large-datasets:schemas/source-descriptor.ts#SourceDescriptorSchema" },
     },
-    summary: "A Subgraph of schema definitions: files that state the shape other files must have.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    summary: BOOTSTRAP_GRAPH_KINDS["schemas"],
   },
   // UML renderings of the declared sub-graphs — one `.puml` and one `.mmd`
   // per named sub-graph and per instance, both written from one model by
@@ -858,6 +878,15 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
       "kg-qa/v1": { validator: "schemas/kg-qa.ts#KgQaReportSchema" },
+      // The auditor's identity for the `kg-qa/v1` files beside it — one per
+      // instance, not one per sidecar, for the reason `KG_QA_MANIFEST_SCHEMA`
+      // gives. Registered under `skills` until 2026-09-27, because the file
+      // lived in `skills/`; it moved to `test/results/` when auditing every
+      // instance made the old home CREATE a skills directory holding no skills,
+      // and this registration had to move with it. A kind claiming a `$schema`
+      // whose files live in another kind's directory is a validator aimed at
+      // nothing.
+      "kg-qa-manifest/v1": { validator: "schemas/kg-qa.ts#KgQaManifestSchema" },
       "block-qa/v1": { validator: "schemas/block-qa-schema/js/index.ts#BlockQaReport" },
       "folio-test-run/v1": { validator: "schemas/test-run.ts#TestRunSchema" },
       "qa-witness/v1": { shape: "content/pipeline/qa-witness.ts#QaWitness" },
@@ -866,7 +895,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // Written inline by two call sites and typed by neither — recorded,
       // not invented. `qa-graph-index.ts` names the tag only to say it is
       // NOT its own (`NOT_TO_BE_CONFUSED_WITH`).
-      "folio-qa-index/v1": { validator: "schemas/site-indexes.ts#QaIndexSchema" },
+      "folio-qa-index/v1": { validator: "schemas/site-indexes.ts#QaIndexSchema", generated: true },
       // The detangle sidecars, in cat-harness
       // qa directory. `detangle` was its own instance until 2026-09-23 and is
       // now a directory of this harness (bean `byql`), so the shape is an
@@ -1030,7 +1059,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "folio-glossary-ledger/v1": { shape: "scripts/glossary-export.ts#Ledger" },
+      "glossary-ledger/1.0.0": { validator: "bootstrap-tools:schemas/glossary-ledger.ts#LedgerSchema" },
     },
     // NOT work. A bean is something somebody is partway through; this is a
     // record that a term exists, true whether or not anybody is doing
@@ -1038,10 +1067,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // decided, and it was right to: "state" alone does not say whether a
     // reader is looking at a queue or at a fact.
     recordsWork: false,
-    summary:
-      "The swimlane glossary's retirement ledger — every concept this instance has ever minted, " +
-      "with the date it was first seen and the date it stopped being derivable. Written by " +
-      "scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    // The harness's detail, formerly in the summary: written by
+    // scripts/glossary-export.ts; the glossary document itself is derived and
+    // not stored here — only the ledger, the one fact that cannot be re-derived.
+    summary: BOOTSTRAP_GRAPH_KINDS["swimlane-glossary"],
   },
   models: {
     type: termIri("ModelGraph"),
@@ -1054,11 +1084,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // that did would be manufacturing its own evidence.
     holds: "context",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "schemas/model-registry.ts#ModelRegistrySchema",
-    summary:
-      "Which languages a model is good at, and whether a human checked. Read when a session opens, " +
-      "as ONE input to the communication-language determination and never as the answer. " +
-      "Declared in bootstrap because an agent reaching for it has not yet loaded the harness.",
+    validator: "bootstrap-tools:schemas/model-registry.ts#ModelRegistrySchema",
+    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
+    // The harness's detail, formerly in the summary: read when a session opens
+    // as ONE input to the communication-language determination and never as
+    // the answer; declared in bootstrap because an agent reaching for it has
+    // not yet loaded the harness.
+    summary: BOOTSTRAP_GRAPH_KINDS["models"],
   },
   beans: {
     type: termIri("BeanGraph"),
@@ -1068,8 +1100,20 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // content.
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
+    // EVERY nested kind's `$schema` family belongs here, not only on the child.
+    // `check:kind-validators` routes a node by the family map of the kind whose
+    // DIRECTORY contains it, and the directory is `beans/` — so a family
+    // declared solely on the child is unmapped the moment a node of it exists.
+    // `folio-workflow-instance/v1` is `workflow-state`'s family and was already
+    // here for exactly this reason; `folio-session-survey/v1` is
+    // `session-survey`'s and was not, because until 2026-09-27 no survey had
+    // ever been published and a map with no nodes cannot be caught failing to
+    // route one (`1xhc`).
     nodeSchemas: {
       "folio-workflow-instance/v1": { shape: "src/workflow/instance.ts#InstanceState" },
+      // Runnable, unlike its neighbour: `SessionSurveySchema` is a Zod schema,
+      // so a published survey is PARSED rather than merely typed.
+      "folio-session-survey/v1": { validator: "schemas/session-survey.ts#SessionSurveySchema" },
     },
     recordsWork: true, // beans (agent), todos (person), workflow-state (a process mid-flight)
     summary:
@@ -1098,6 +1142,33 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "Work items — one Markdown file each, in the layout the `beans` CLI reads. " +
       "Authored and edited by people and agents.",
+  },
+  "session-survey": {
+    type: termIri("SessionSurveyGraph"),
+    renderable: false,
+    // Written BY a running session, for other sessions to read. That makes it
+    // state rather than context: `interaction/` is context because no process
+    // writes it, and this one exists only because a process did.
+    holds: "state",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    nodeSchemas: {
+      // A RUNNABLE validator rather than a `shape`: this is a zod schema, so the
+      // nodes can actually be parsed instead of merely typed. `workflow-state`
+      // next door can only offer a TypeScript shape, which `check:kind-validators`
+      // reports as "not runnable — could not determine".
+      "folio-session-survey/v1": { validator: "schemas/session-survey.ts#SessionSurveySchema" },
+    },
+    schema: "schemas/session-survey.ts",
+    // A survey is a READING of work, not work anybody is partway through. An
+    // agent told this graph is active would arrive looking for something to
+    // pick up and find a finished report — the distinction `recordsWork`'s own
+    // docblock draws against `uploads`.
+    recordsWork: false,
+    summary:
+      "Published surveys of a commit window — one JSON file each, carrying " +
+      "`\"$schema\": \"folio-session-survey/v1\"` and the window's two edge commits, " +
+      "so a later session can compute what it is NOT covered for instead of re-deriving " +
+      "the whole range (bean `6ptx`).",
   },
   "workflow-state": {
     type: termIri("WorkflowStateGraph"),
@@ -1266,6 +1337,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     nodeSchemas: {
       "folio-document-images/v1": { validator: "schemas/document-image.ts#ImagesSidecarSchema" },
       "folio-image-verdicts/v1": { shape: "scripts/apply-image-verdicts.ts#VerdictFile" },
+      // The OTHER layer of the same page — bean `a8wy`. `folio-document-images`
+      // holds what the PDF PLACES; this holds the positioned text of a figure
+      // the PDF DRAWS, for which there is no image object to place. Two
+      // families rather than one because a vector figure has no rectangle to
+      // measure coverage on, no `xref` to dedupe by and no pixel to inspect,
+      // so `role` and `basis` would each mean two things.
+      "folio-vector-labels/v1": { validator: "schemas/vector-labels.ts#VectorLabelsSidecarSchema" },
       // Agent summaries of prose blocks, beside the blocks rather than in
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.

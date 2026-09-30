@@ -59,6 +59,7 @@ import { join, resolve } from "node:path";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { docsPages, documentingPages } from "./docs-declarations.js";
 import { governingSkills, skillGovernance } from "./skill-governance.js";
+import { processIndex, resolveProcess, type ProcessIndex } from "./governing-process.js";
 
 import {
   AGENT_INSTRUCTIONS_ROLE,
@@ -75,6 +76,7 @@ import {
   type CatHarnessDeclaration,
   visualisationsOf,
 } from "../schemas/cat-harness.js";
+import { withViewers } from "./viewer-declarations.js";
 
 /** The three obligations, in the order the owner named them. */
 export const CRITERIA = ["visualiser", "docs", "skill", "serialisations"] as const;
@@ -95,13 +97,61 @@ const ASKS: Record<Criterion, string> = {
 };
 export type Criterion = (typeof CRITERIA)[number];
 
+/**
+ * Criteria asked ONLY of a directory that declares them.
+ *
+ * `CRITERIA` above are OBLIGATIONS: every declared directory owes a
+ * visualiser, documentation, a governing skill and its serialisations, so
+ * silence there is the finding. `coverage.process` is not an obligation —
+ * most directories are not the subject of a BPMN process, and reporting the
+ * twenty-odd that are not would be the wall this file's own header says
+ * somebody switches off.
+ *
+ * So there is exactly one question to ask here, and it is the `unresolvable`
+ * half: somebody DID say, and what they said names no diagram. That is never
+ * a backlog item. It is also the half a reader cannot see from the generated
+ * README alone — the page prints *could not determine*, which is honest and
+ * easy to scroll past.
+ *
+ * Kept as its own list rather than folded into `CRITERIA` with a skip, so the
+ * `ASKS` lookup and the "one missing criterion, one finding" test below both
+ * keep meaning what they say.
+ */
+export const DECLARED_ONLY_CRITERIA = ["process"] as const;
+export type DeclaredOnlyCriterion = (typeof DECLARED_ONLY_CRITERIA)[number];
+export type AnyCriterion = Criterion | DeclaredOnlyCriterion;
+
 export type Severity = "major" | "minor";
+
+/**
+ * WHY a criterion is unmet, and the two answers are not the same kind of thing.
+ *
+ * `undeclared` — nobody has said yet. A backlog item, and the reason this
+ * whole check is advisory (`2krx`): 2 of 22 directories declare a renderer,
+ * and a hard gate on day one is a wall somebody switches off.
+ *
+ * `unresolvable` — somebody DID say, and what they said points at nothing.
+ * That is never a backlog item; it is a wrong declaration, and this file's own
+ * exit comment already said so — *"a declared-but-missing target is already a
+ * defect rather than a backlog item"* — while having no way to act on it,
+ * because both kinds were `major` and `--strict` is all-or-nothing. So the
+ * backlog held the broken pointers hostage, which is how two of them sat in a
+ * green report: `skills` still named the `cat-harness/` path its id carried
+ * before `iwtn` renamed it, and `swimlane-glossary` named `glossary/`. Bean
+ * `bsay`.
+ *
+ * A FIELD rather than a test on `detail`, because a rule that reads prose is a
+ * rule that breaks when the prose is improved — and this repository has paid
+ * for measuring a thing by its wording before.
+ */
+export type Unmet = "undeclared" | "unresolvable";
 
 export interface CoverageFinding {
   instance: string;
   directory: string;
-  criterion: Criterion;
+  criterion: AnyCriterion;
   severity: Severity;
+  unmet: Unmet;
   detail: string;
 }
 
@@ -359,6 +409,24 @@ function trackedFiles(repoRoot: string): string[] {
   return files;
 }
 
+/**
+ * The `.bpmn` index, built at most once per repository per run.
+ *
+ * It reads every diagram in the repository, and `auditAll` calls
+ * `auditInstance` once per instance — sixteen here — so building it inside
+ * the audit would read the corpus sixteen times over. Cached on the repo root
+ * for the same reason `trackedFiles` above is.
+ */
+const processIndexCache = new Map<string, ProcessIndex>();
+function processes(repoRoot: string): ProcessIndex {
+  let idx = processIndexCache.get(repoRoot);
+  if (idx === undefined) {
+    idx = processIndex(repoRoot);
+    processIndexCache.set(repoRoot, idx);
+  }
+  return idx;
+}
+
 /** The roots an instance depends on; none when its graph cannot be resolved. */
 function dependencyRoots(root: string): string[] {
   try {
@@ -373,6 +441,8 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
   let decl: CatHarnessDeclaration | undefined;
   try {
     decl = readDeclaration(root);
+    // Viewers RESOLVED from the pages (#1168 B7a-2b).
+    if (decl) decl = { ...decl, directories: withViewers(decl.directories ?? [], root, repoRoot) };
   } catch (e) {
     return {
       instance,
@@ -467,6 +537,7 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
           directory: dir.id,
           criterion,
           severity: unmetObligation ? "major" : "minor",
+          unmet: "undeclared",
           detail:
             criterion === "serialisations"
               ? `no serialisations declared — every declared directory owes json, jsonld and ` +
@@ -494,6 +565,7 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
           directory: dir.id,
           criterion,
           severity: "major",
+          unmet: "unresolvable",
           detail:
             broken.length === refs.length
               ? `declares ${criterion} "${broken.join('", "')}" and it does not resolve`
@@ -501,6 +573,28 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
                 `"${broken.join('", "')}"`,
         });
       }
+    }
+    // The DECLARED-ONLY criteria. A directory that declares no governing
+    // process is asked nothing — see {@link DECLARED_ONLY_CRITERIA} — so
+    // this loop starts from the declaration rather than from the criterion.
+    for (const criterion of DECLARED_ONLY_CRITERIA) {
+      const declared = dir.coverage?.[criterion];
+      if (declared === undefined) continue;
+      // Resolved by the SAME function the README generator uses, so the page
+      // and this axis cannot disagree about whether the name points at a
+      // diagram. A second resolution here would be a second answer.
+      const resolved = resolveProcess(processes(repoRoot), declared);
+      if (resolved.bpmn !== undefined) continue;
+      findings.push({
+        instance,
+        directory: dir.id,
+        criterion,
+        severity: "major",
+        unmet: "unresolvable",
+        detail:
+          `declares process \`${declared}\` and no instance in this repository declares ` +
+          `\`${declared}.bpmn\` — \`${dir.path}\`'s README says "could not determine" where the diagram should be`,
+      });
     }
   }
 
@@ -626,6 +720,35 @@ if (import.meta.main) {
     process.exit(2);
   }
   console.log(process.argv.includes("--json") ? JSON.stringify(rs, null, 2) : formatReport(rs));
+  // A DECLARATION THAT POINTS AT NOTHING IS FATAL, with no switch — and this
+  // is not a tightening of the advisory, it is the half that was never
+  // advisory in intent. The comment below has always said "a declared-but-
+  // missing target is already a defect rather than a backlog item"; what it
+  // lacked was a way to act on it, since `undeclared` and `unresolvable` were
+  // both `major` and `--strict` fails on either. With the backlog at 20 of 22
+  // that switch cannot be turned on, so the backlog held the broken pointers
+  // hostage and two sat in a green report until bean `bsay`.
+  //
+  // FREE, and only now: both were repaired in the same change, so the count
+  // is zero at the moment of promotion — this repository's rule for every
+  // ratchet, and the only moment it costs nothing.
+  //
+  // It runs BEFORE the `undetermined` exit below on purpose. An instance whose
+  // declaration will not parse is `2`, and a wrong ref inside one that parses
+  // fine is a different repair; reporting the softer one first would hide it.
+  const unresolvable = rs.flatMap((r) => r.findings.filter((f) => f.unmet === "unresolvable"));
+  if (unresolvable.length > 0) {
+    console.error(
+      `\n✗ ${unresolvable.length} declaration(s) name a target that does not resolve.\n` +
+        `  Not a backlog item: somebody DID declare it, and what they declared is wrong.\n` +
+        `  Most often an id was renamed and the ref, which is keyed on the id, was not.\n`,
+    );
+    for (const f of unresolvable) {
+      console.error(`  ${f.instance} / ${f.directory} / ${f.criterion}: ${f.detail}`);
+    }
+    process.exit(1);
+  }
+
   // ADVISORY, by the rule at the top of this file. `--strict` is for the day
   // the minor count is low enough to hold, and for a caller who wants to pin
   // "no MAJOR findings" now — a declared-but-missing target is already a

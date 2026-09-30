@@ -7,12 +7,16 @@ arrangement as [`who-iris/`](../who-iris/) and
 
 ## What is here
 
-One document, and it is the reason this instance exists.
+Four documents and the methods adopted from three of them.
 
 | | |
 |---|---|
-| `library/milnorlink/` | The source text the derived `milnor` skill reads. 64 tracked files. |
-| `library/image-verdicts.json` | The image-role judgements for it — one document's worth, split from the file that used to judge four. |
+| `library/milnorlink/` | The source text the derived `milnor` skill reads. |
+| `library/arxiv-2601.22554v1/` | Zhu, Monticone, Avigad, Welleck (2026), *LeanArchitect: Automating Blueprint Generation for Humans and AI*. |
+| `library/arxiv-2406.01940v2/` | Lu, Wan, et al. (2024), *Process-Driven Autoformalization in Lean 4*. |
+| `library/arxiv-2602.16554v1/` | Ren, Li, Qi (2026), *MerLean: An Agentic Framework for Autoformalization in Quantum Computation*. |
+| `library/image-verdicts.json` | The image-role judgements for all four, each made by opening the image. |
+| `methodologies/` | One node per arXiv paper above — the METHOD each paper presents for Lean formalization, what it measured and did not, and what this platform refuses from it. The Lean skills in `cat-harness/skills/` point here rather than restating them. Bean `h3rw`. |
 
 ## Why it is not in `who-iris/`
 

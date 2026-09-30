@@ -14,10 +14,10 @@
  *   .claude/skills/local/bib-human-review.md
  *
  * Usage:
- *   bun run pipeline/validate-references-human-review.ts            # warn-only report
- *   bun run pipeline/validate-references-human-review.ts --strict   # exit 1 if any non-validated
- *   bun run pipeline/validate-references-human-review.ts --json     # machine-readable summary
- *   bun run pipeline/validate-references-human-review.ts --seed     # list refs that would get a physical-review issue
+ *   bun run cat-harness/content/pipeline/validate-references-human-review.ts            # warn-only report
+ *   bun run cat-harness/content/pipeline/validate-references-human-review.ts --strict   # exit 1 if any non-validated
+ *   bun run cat-harness/content/pipeline/validate-references-human-review.ts --json     # machine-readable summary
+ *   bun run cat-harness/content/pipeline/validate-references-human-review.ts --seed     # list refs that would get a physical-review issue
  *
  * @module content/pipeline/validate-references-human-review
  */

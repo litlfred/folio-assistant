@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Content Validation'
 parent: Skill instructions
 ---
@@ -78,7 +79,7 @@ kind (a numeric bound in a proposition, a constant in a conjecture, a
 calibration value in a definition, a quoted intermediate in a proof,
 etc.), flag it as drift risk and migrate it to `:val[name]`.  The
 `content/pipeline/codemod-val.ts` codemod handles bulk migration.
-See [`witnessed-values.md`](./witnessed-values.md) for full details.
+See [`witnessed-values.md`](witnessed-values.md) for full details.
 
 ### Level 3: LaTeX AST validation
 - Rendered LaTeX parses through unified-latex without errors
@@ -120,7 +121,7 @@ The markdown AST node types used:
 
 ```bash
 # Validate all objects in a paper (schema + constraints + LaTeX AST)
-bun run scripts/run-validate.ts content/<paper>   # after setup-folio-assistant.sh
+bun run cat-harness/content/pipeline/validate.ts content/<paper>   # after setup-folio-assistant.sh
 # (legacy form: cd content && bun run pipeline/validate.ts <paper>/)
 
 # Full build with validation
@@ -143,11 +144,13 @@ cd content && bun run pipeline/validate-tex.ts --json
 # backfilled with `:refterm[…]`.
 cd content && bun run validate <paper> --strict
 
-# Build the glossary index (committed) + LaTeX chapter (gitignored)
-cd content && bun run pipeline/build-glossary.ts <paper>
+# Build the glossary index (committed) + LaTeX chapter (gitignored).
+# The builder moved to the CONTENT layer on 2026-09-30 (bean `yj6r`); a folio
+# that vendors its own `content/pipeline/build-glossary.ts` still uses that copy.
+bun run folio-assistant-core/scripts/build-glossary.ts content/<paper>
 
 # CI gate: non-zero exit on duplicates or out-of-date glossary.json
-cd content && bun run pipeline/build-glossary.ts <paper> --check
+bun run folio-assistant-core/scripts/build-glossary.ts content/<paper> --check
 ```
 
 ## Post-rebase / merge: run the lean-ref migration first

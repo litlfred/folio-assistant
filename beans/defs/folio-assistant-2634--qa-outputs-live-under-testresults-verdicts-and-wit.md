@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2634
 title: QA outputs live under test/results/ — verdicts and witnesses both, by provenance
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T07:11:55Z
-updated_at: 2026-09-19T08:12:02Z
+updated_at: 2026-09-29T20:50:33Z
 parent: folio-assistant-1swy
 ---
 
@@ -369,3 +369,9 @@ Here each of the nine is read on its own terms and fixed on its own terms.
 
 Status reopened; the bean is not done until the risk register above is
 discharged item by item.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

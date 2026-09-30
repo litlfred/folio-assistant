@@ -12,7 +12,7 @@
  * So this answers it in one command:
  *
  * ```sh
- * bun run content/pipeline/verify-block-walk.ts ../qou/content/quantum-observable-universe
+ * bun run cat-harness/content/pipeline/verify-block-walk.ts ../qou/content/quantum-observable-universe
  * ```
  *
  * It prints every disagreement, every block only one mode finds, every block
@@ -39,8 +39,8 @@ import type { BlockLoadFailure } from "./block-module";
 const root = process.argv[2];
 if (!root) {
   console.error(
-    "usage: bun run content/pipeline/verify-block-walk.ts <content-root>\n" +
-      "  e.g. bun run content/pipeline/verify-block-walk.ts ../qou/content/qou",
+    "usage: bun run cat-harness/content/pipeline/verify-block-walk.ts <content-root>\n" +
+      "  e.g. bun run cat-harness/content/pipeline/verify-block-walk.ts ../qou/content/qou",
   );
   process.exit(2);
 }

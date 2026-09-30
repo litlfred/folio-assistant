@@ -46,10 +46,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
 
@@ -60,7 +60,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libmpfr-dev libgmp-dev
 
       - name: Cache cargo + hecke-engine target
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             ~/.cargo/registry
@@ -405,7 +405,7 @@ jobs:
 
       - name: Upload section-story audit JSON
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: section-story-audit
           path: docs/audits/section-story-audit-latest.json

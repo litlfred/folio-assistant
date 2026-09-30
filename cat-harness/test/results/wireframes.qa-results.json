@@ -2,17 +2,17 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-wireframes.ts",
-    "script_hash": "4740b31b3c50"
+    "script_hash": "936d0b488e43"
   },
   "subject": {
     "kind": "corpus",
     "id": "harness-visualiser-wireframes"
   },
-  "updated_at": "2026-09-24T13:15:28.196Z",
+  "updated_at": "2026-09-30T00:42:50.232Z",
   "families": {
     "covered": {
       "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
-      "count": 31,
+      "count": 39,
       "entries": [
         {
           "ref": "cat-harness/docs/beans/index.html",
@@ -23,11 +23,15 @@
           "wireframe": "catalogue"
         },
         {
-          "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/glossary/index.html",
+          "ref": "cat-harness/docs/cat-harness/docs-auto/glossary/swimlane-glossary/index.html",
           "wireframe": "glossary"
         },
         {
           "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/docs/index.html",
+          "wireframe": "docs-index"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/root-docs/index.html",
           "wireframe": "docs-index"
         },
         {
@@ -39,11 +43,23 @@
           "wireframe": "docs-index"
         },
         {
-          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/cat-harness/index.html",
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/fhir-ig-skills/index.html",
+          "wireframe": "skills-index"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/index.html",
+          "wireframe": "skills-index"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-sci-lean-skills/index.html",
           "wireframe": "skills-index"
         },
         {
           "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/large-datasets-skills/index.html",
+          "wireframe": "skills-index"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/skills/index.html",
           "wireframe": "skills-index"
         },
         {
@@ -63,11 +79,15 @@
           "wireframe": "library"
         },
         {
+          "ref": "cat-harness/docs/cat-harness/library/folio-assistant-core/index.html",
+          "wireframe": "library"
+        },
+        {
           "ref": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html",
           "wireframe": "library"
         },
         {
-          "ref": "cat-harness/docs/cat-harness/library/folio-assistant/index.html",
+          "ref": "cat-harness/docs/cat-harness/library/smart-base/index.html",
           "wireframe": "library"
         },
         {
@@ -87,8 +107,20 @@
           "wireframe": "schemas"
         },
         {
-          "ref": "cat-harness/docs/cat-harness/uploads/index.html",
+          "ref": "cat-harness/docs/cat-harness/uploads/cat-harness/index.html",
           "wireframe": "uploads"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/uploads/folio-assistant/index.html",
+          "wireframe": "uploads"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/uploads/who-iris/index.html",
+          "wireframe": "uploads"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/voices/agent-skills/index.html",
+          "wireframe": "voices"
         },
         {
           "ref": "cat-harness/docs/cat-harness/voices/folio-assistant-core/index.html",
@@ -99,7 +131,7 @@
           "wireframe": "voices"
         },
         {
-          "ref": "cat-harness/docs/cat-harness/voices/index.html",
+          "ref": "cat-harness/docs/cat-harness/voices/smart-base/index.html",
           "wireframe": "voices"
         },
         {
@@ -166,5 +198,5 @@
       "entries": []
     }
   },
-  "total": 31
+  "total": 39
 }

@@ -40,6 +40,8 @@ const PNG = Buffer.from(
 /** The REAL backdrop art of the `library` theme, served at its published path. */
 const ART_PATH = "/assets/img/harness/landing-library-card.webp";
 const ART = readFileSync(join(ROOT, SITE, ART_PATH.slice(1)));
+const ART_LAPTOP = "/assets/img/harness/landing-library-laptop.webp";
+const ART_MOBILE = "/assets/img/harness/landing-library-mobile.webp";
 
 const REPLICA = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Glass</title>
 <style>${CSS}</style><style>${THEMES}</style></head><body><main>
@@ -66,7 +68,8 @@ const TODOS = {
     },
     { id: "t-two", summary: "Second thing", comment: "", status: "open", priority: "low", relations: [] },
   ],
-  themeArt: { library: { card: ART_PATH } },
+  // All three crops, so the glass can pick one by the card's shape.
+  themeArt: { library: { card: ART_PATH, laptop: ART_LAPTOP, mobile: ART_MOBILE } },
 };
 const ZOOM = { belowPx: 220, byKind: { todo: { belowPx: 300, because: "a todo needs more room" } } };
 
@@ -82,7 +85,9 @@ test.beforeEach(async ({ page }) => {
       return route.fulfill({ contentType: "application/json", body: JSON.stringify(ZOOM) });
     }
     if (url.pathname === COVER) return route.fulfill({ contentType: "image/png", body: PNG });
-    if (url.pathname === ART_PATH) return route.fulfill({ contentType: "image/webp", body: ART });
+    if (url.pathname === ART_PATH || url.pathname === ART_LAPTOP || url.pathname === ART_MOBILE) {
+      return route.fulfill({ contentType: "image/webp", body: ART });
+    }
     return route.fulfill({ status: 404, body: "not found" });
   });
   await page.goto("http://replica.test/page.html");
@@ -351,5 +356,45 @@ test.describe("a popped-out sticky is the sticky — \"themed square sticky avat
     const plain = page.locator('.fa-glass-asset[data-fa-asset="todo/t-two"]');
     await expect(plain).toBeVisible();
     await expect(plain).not.toHaveAttribute("data-fa-sticky-theme", /./);
+  });
+});
+
+/* ── Owner, 2026-09-27, on the who-iris glass ─────────────────────────────
+ * "lower tooltip should be its own todo. use laptop layout for the existing
+ * todos. it should be faded for legability", then "theme todos layout should
+ * be dynamic in case user resized". */
+test.describe("themed todos on the glass follow their shape, and stay faded on a replica", () => {
+  test("the crop follows the card's shape, and re-picks when it is resized", async ({ page }) => {
+    await popOutSticky(page);
+    const card = page.locator(sticky);
+    const art = card.locator("picture > img.fa-sticky-art");
+    await expect(art).toHaveAttribute("src", ART_PATH); // square: the square crop
+    await card.evaluate((c) => { (c as HTMLElement).style.width = "720px"; (c as HTMLElement).style.height = "300px"; });
+    await expect(art).toHaveAttribute("src", ART_LAPTOP); // wide: laptop
+    await card.evaluate((c) => { (c as HTMLElement).style.width = "260px"; (c as HTMLElement).style.height = "480px"; });
+    await expect(art).toHaveAttribute("src", ART_MOBILE); // tall: mobile
+  });
+
+  test("a page that did not load themes.css gets it from the glass, so the scrim exists", async ({ page }) => {
+    // who-iris loads docs-ui.css alone; without themes.css the scrim variable
+    // is undefined and the art sat unfaded behind the words.
+    await open(page);
+    await expect(page.locator('link[rel="stylesheet"][data-fa-glass-themes-css]')).toHaveCount(1);
+  });
+
+  test("the shelved-items note is a CARD on the glass, and its × dismisses it", async ({ page }) => {
+    await popOutSticky(page);
+    await page.locator(`${sticky} .fa-glass-asset-close`).click();
+    const note = page.locator(".fa-glass-note-card");
+    await expect(note).toBeVisible();
+    await expect(note.locator(".fa-glass-shelved-note")).toContainText("Put your folio away");
+    // No longer a strip in the notes area.
+    await expect(page.locator(".fa-glass-notes .fa-glass-shelved-note")).toHaveCount(0);
+    await note.locator(".fa-glass-asset-close").click();
+    await expect(note).toHaveCount(0);
+    // Dismissed for this count: it does not come back on the next open.
+    await page.click(".fa-glass-handle");
+    await open(page);
+    await expect(page.locator(".fa-glass-note-card")).toHaveCount(0);
   });
 });

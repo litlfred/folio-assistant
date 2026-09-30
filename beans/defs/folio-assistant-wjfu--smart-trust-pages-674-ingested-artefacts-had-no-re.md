@@ -1,11 +1,11 @@
 ---
 # folio-assistant-wjfu
 title: 'SMART-TRUST PAGES: 674 ingested artefacts had no reader-facing surface — a docs graph, generated from index.json'
-status: in-progress
+status: todo
 type: feature
 priority: high
 created_at: 2026-09-21T13:18:01Z
-updated_at: 2026-09-21T13:23:30Z
+updated_at: 2026-09-29T18:14:47Z
 parent: folio-assistant-yj32
 ---
 
@@ -30,3 +30,9 @@ Precedent: `who-iris/scripts/gen-iris-pages.ts` — instance-local generator, st
 
 ## Not verifiable here
 `litlfred.github.io` is 403 policy-denied by this environment's egress proxy, so the published result CANNOT be confirmed from this session. Local generation and the gate are the evidence; seeing it live is the owner's.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

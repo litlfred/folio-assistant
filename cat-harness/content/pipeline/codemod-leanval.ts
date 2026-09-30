@@ -30,9 +30,9 @@
  *
  * Invoke from the repo root (the path the CI workflow uses):
  *
- *   bun run content/pipeline/codemod-leanval.ts              # dry-run, prints diff summary
- *   bun run content/pipeline/codemod-leanval.ts --write      # apply rewrites
- *   bun run content/pipeline/codemod-leanval.ts --check      # CI gate: exit 1 if any
+ *   bun run cat-harness/content/pipeline/codemod-leanval.ts              # dry-run, prints diff summary
+ *   bun run cat-harness/content/pipeline/codemod-leanval.ts --write      # apply rewrites
+ *   bun run cat-harness/content/pipeline/codemod-leanval.ts --check      # CI gate: exit 1 if any
  *                                                            # rewrite would happen
  *
  * ## Idempotency / safety
@@ -284,7 +284,7 @@ function* walkLeanFiles(root: string): Generator<string> {
 
 function usage(): never {
   console.error(
-    "usage: bun run content/pipeline/codemod-leanval.ts [<lean-root>] [--write|--check]",
+    "usage: bun run cat-harness/content/pipeline/codemod-leanval.ts [<lean-root>] [--write|--check]",
   );
   process.exit(2);
 }
@@ -344,7 +344,7 @@ function main(): void {
   if (check && totalRewrites > 0) {
     console.error(
       "\n✗ --check: tagged Lean literals are out of sync with witnesses.\n" +
-        "  Run `bun run content/pipeline/codemod-leanval.ts --write` to refresh.",
+        "  Run `bun run cat-harness/content/pipeline/codemod-leanval.ts --write` to refresh.",
     );
     process.exit(1);
   }

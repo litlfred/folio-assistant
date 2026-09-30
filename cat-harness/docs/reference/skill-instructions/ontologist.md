@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Semantic Ontologist (Ambiguity Detection & Glossary)'
 parent: Skill instructions
 ---

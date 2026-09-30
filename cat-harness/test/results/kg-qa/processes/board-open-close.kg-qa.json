@@ -5,7 +5,7 @@
     "id": "Process_BoardOpenClose",
     "path": "processes/board-open-close.bpmn"
   },
-  "source_hash": "sha256:fe3b41b208a3a5b1f3e8b46333cb327a8f247db793a5b707d9df235ef2780ca2",
+  "source_hash": "sha256:9e41949ebdf1dee72820634d7731400ce3ec8829b5fc8b885b4f8d77110e06e7",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,39 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_RenderAvatars",
+          "detail": "names skill \"board-windows\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Open",
+          "detail": "names skill \"board-windows\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Raise",
+          "detail": "names skill \"board-windows\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Close",
+          "detail": "names skill \"board-windows\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_OfferWayBack",
+          "detail": "names skill \"board-windows\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ResolveThreshold",
+          "detail": "names skill \"board-windows\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_SwapToAvatar",
+          "detail": "names skill \"board-windows\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -106,7 +139,7 @@
   },
   "totals": {
     "pass": 14,
-    "fail": 0,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

@@ -20,7 +20,7 @@
  *
  * Run from repo root:
  *
- *     bun run content/pipeline/conditional-class-banner-audit.ts
+ *     bun run cat-harness/content/pipeline/conditional-class-banner-audit.ts
  *
  * Emits a witness JSON suitable for CI; non-zero exit on any
  * conditional-on-class block missing either component (when run

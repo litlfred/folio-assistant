@@ -1,6 +1,9 @@
 ---
 title: "Tools"
 description: "The Tool nodes this instance declares — how each is installed and invoked, and which skill it satisfies."
+renders:
+  - cat-harness/tools
+rendered-by: tools-viewer
 ---
 <style>
 .tg-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
@@ -25,9 +28,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>101</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>62</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>81</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>107</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>65</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>87</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>23</b><span>reachable over MCP</span></div>
 </div>
 
@@ -37,19 +40,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 81 |
+| <span class="tg-tag tg-shell">shell</span> | 87 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 23 |
 | <span class="tg-tag tg-mcp">mcp</span> | 23 |
 | <span class="tg-tag tg-manual">manual</span> | 6 |
 
 | installation | tools |
 |---|---|
-| `none` | 92 |
+| `none` | 98 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **62** skills named across **101** tools resolve to a
+Yes — all **65** skills named across **107** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -84,6 +87,7 @@ tool advertising a capability the graph cannot locate.
 | `gates-merged`<br>Gates on the merged tree | Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched. | <span class="tg-tag tg-shell">shell</span> | `prepare-merge` | 1 in / 1 out |
 | `github`<br>GitHub | Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none. | <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `coordinate`<br>`pickup`<br>`prepare-merge-auto`<br>`watch` | 3 in / 1 out |
 | `glossary-build`<br>Glossary build | Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change. | <span class="tg-tag tg-shell">shell</span> | `document-intake` | 2 in / 1 out |
+| `headless-render-qc`<br>Headless render QC (Playwright) | Drive a folio's built viewer in headless Chromium and report the blocks whose diagrams, SVGs, LaTeX math or markdown do not render — with `--screenshot` to save the pictures. This is the mechanised half of looking at it: a green gate set is not a rendering. | <span class="tg-tag tg-shell">shell</span> | `rendered-verification` | 1 in / 1 out |
 | `ingest-extended`<br>Ingest, with PDF and image extensions | Ingest a PDF into `library/` — embedded outline, page text, OCR for scans, and image extraction — using PyMuPDF, tesseract and pypdf with Pillow. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
 | `ingest-stdlib`<br>Ingest, standard library only | Ingest an upload into `library/` using only the Python standard library — archive listings, CSV and spreadsheet records, technical file metadata, and the content sniff that routes a file to its rung. | <span class="tg-tag tg-shell">shell</span> | `library-ingestion` | 3 in / 1 out |
 | `kg-audit`<br>Knowledge-graph audit | Audit every join in the actor→role→skill→task sentence and write a committed QA sidecar per node. A printed verdict is gone; a sidecar is what makes "unbound since it was drawn" distinguishable from "broken in the commit under review". | <span class="tg-tag tg-shell">shell</span> | `code-node-review` | 2 in / 2 out |
@@ -129,8 +133,11 @@ tool advertising a capability the graph cannot locate.
 | `skill-list`<br>List skills | Every skill this instance can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `skills-and-tools` | 0 in / 1 out |
 | `stakeholder-map`<br>Stakeholder map | Given the paths a proposed change touches, report which skills change, which roles declare them, and who therefore has a stake in the review. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | `coordinate`<br>`role-model` | 1 in / 1 out |
 | `state-viewer`<br>State graph viewer | Render each declared state graph with a projection as a dashboard page: what the work plan holds, and what state it is in. | <span class="tg-tag tg-shell">shell</span> | `graph-rendering` | 1 in / 1 out |
+| `subgraph-readmes`<br>Directory READMEs from the Knowledge Graph | Write a README for every directory an instance declares, from the declaration and the files themselves: the declared title and description, the Graph Kinds, and one row per file described from the file, with 'used by' only where a diagram records it. Renders the Liquid templates in `tools/templates/readme/`, part of the tools graph, which may include one another with Jekyll-style include tags. Writes only between `<!-- kg:subgraph:begin -->` and `:end`; a README without the markers is left alone and reported. Records every missing title, missing or over-long description, absent directory and unmarked README in `test/results/subgraph-readmes.qa-results.json`. | <span class="tg-tag tg-shell">shell</span> | `docs-generation`<br>`upload-routes` | 1 in / 1 out |
 | `tabular-csv`<br>CSV tabular metadata (STUB) | STUB — not implemented. Would read a delimited text file into CSVW: one table, its columns and their datatypes. A CSV has no sheets and no cells outside the table, so `fac:anchor.sheet` and `fac:anchor.cell` are a determined null rather than an absence. Routing a CSV is not a sniff — it has no magic bytes — and must not become an extension guess (bean `p67i`). | <span class="tg-tag tg-manual">manual</span> | `tabular-metadata` | 1 in / 1 out |
 | `tabular-xlsx`<br>Spreadsheet tabular metadata (STUB) | STUB — not implemented. Would read a workbook into a CSVW TableGroup: one table per sheet, with the location CSVW cannot express (`fac:anchor`, `fac:headerRow`, `fac:extent`) carried as annotations on valid CSVW. A workbook is the case that motivates those terms: tables that do not start at A1, headers that are not row 1, several tables on one sheet. | <span class="tg-tag tg-manual">manual</span> | `tabular-metadata` | 1 in / 1 out |
+| `tex-snippet-validate`<br>TeX snippet validation (AST) | Parse every `tex` snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to `latex-preflight`, which gates a main.tex before a compile, and to `latex-overfull`, which reads a log after one. | <span class="tg-tag tg-shell">shell</span> | `latex-validation` | 5 in / 1 out |
+| `tex-source-audit`<br>TeX-source hazard audit | Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `\|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion. | <span class="tg-tag tg-shell">shell</span> | `latex-validation` | 1 in / 1 out |
 | `themes-css`<br>Theme stylesheet | Render the declared theme nodes into the stylesheet the site serves. The nodes are the source: a colour has one home, and light and dark are two valuations of one token set rather than two hand-kept blocks. | <span class="tg-tag tg-shell">shell</span> | `site-presentation-assets` | 1 in / 1 out |
 | `tool-coverage`<br>Which uncovered skills warrant a Tool? | Triage the skills that have no Tool by EVIDENCE rather than by grep: a serviceTask naming it or an I/O contract puts it in tier A, a userTask only in B, a shell block or a declared script in C, and nothing in D. The answer to "which of these still have their mechanism inlined in their prose". | <span class="tg-tag tg-shell">shell</span> | `code-node-review` | 0 in / 1 out |
 | `tool-schema`<br>Tool node schema | The zod definition of a Tool node — what `defineTool` accepts — and the published JSON Schema generated from it. | <span class="tg-tag tg-shell">shell</span> | `kg-export` | 1 in / 1 out |
@@ -148,6 +155,8 @@ tool advertising a capability the graph cannot locate.
 | `translation-validate`<br>Validate a translation | Check a .po against its .pot — every msgid present, none obsolete, placeholders preserved. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `translation-manager` | 3 in / 1 out |
 | `uml-object-model`<br>Harness object model as PlantUML | Draw the harness object model (Actor, Role, Skill, Process, Task, Todo, Bean, tests, schemas) with every attribute read from the schema behind it. Each relationship names the field that carries it, and the generator refuses to write if that field is gone. | <span class="tg-tag tg-shell">shell</span> | `uml-overview` | 1 in / 1 out |
 | `uml-overview`<br>UML overview per named sub-graph | Draw one UML class diagram per harness and one per named sub-graph it declares, as PlantUML and Mermaid from one model, with every class read from the graph kind's node schema, and render the PlantUML to the SVG each page shows (needs Java; the check does not). A kind with none is drawn as could-not-determine, never as an empty box. | <span class="tg-tag tg-shell">shell</span> | `uml-overview` | 1 in / 1 out |
+| `upload-step-docs`<br>The upload step, from its Tools | Render document ingestion's FIRST step as a reference page, generated from the Tool nodes that implement it: the step, its lane and role, its skill and every Tool whose `satisfies` names that skill, with each Tool's description, installation, invocation, typed ports and selection triple. Everything but the process file's own path is derived — the start event, the activity its single outgoing flow reaches, and that activity's skill — so a step inserted, renamed or re-pointed moves the page rather than staling a literal. Refuses rather than emitting a partial page when the start event flows nowhere or to more than one place, when the first step is not an activity, when it names no skill or several, or when NO Tool satisfies that skill — the last because an empty page reads as a documented absence of mechanism, which is a finding rather than a document. | <span class="tg-tag tg-shell">shell</span> | `docs-generation` | 1 in / 1 out |
+| `upload-url`<br>Where to drop a file — the queue's upload URL | Compose the forge URL a person can drop a file at, from the instance's own declaration: the `uploads` graph's directory, resolved against the ROOT its scope names, expressed relative to the repository, and appended to the origin remote as GitHub's `/upload/<branch>/<path>`. Every failure is NAMED and no URL is guessed — no declaration, no declared `uploads` graph, a declared queue absent from disk, no `origin` remote, and a non-github.com remote each return a reason and a remedy instead. It exists because the obvious composition mints a live 404: the declared path `uploads/` is relative to the INSTANCE and a forge URL needs it relative to the REPOSITORY, so pasting the declared path drops the `cat-harness/` segment. Owner, 2026-09-20, on the hand-written form: "were it to exist, but it doesmt on main!!!!!" | <span class="tg-tag tg-shell">shell</span> | `content-acquisition`<br>`upload-routes` | 1 in / 1 out |
 | `uploads-viewer`<br>Uploads viewer | Render each declared uploads directory's intakes as a page per subject instance. | <span class="tg-tag tg-shell">shell</span> | `graph-rendering` | 1 in / 1 out |
 | `user-auth`<br>Who is asking, and what may they do | User authentication and authorization (issue #1207). Asks GitHub for the caller's login and repository role, maps the role to a gateway actor, and answers from the ODRL policies — for an action, or for a BPMN step. Always states that GitHub's role covers the whole repository, not a sub-graph, node or query path. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | `deployment-auth`<br>`task-authorization` | 6 in / 1 out |
 | `voices-viewer`<br>Voices viewer | Render each declared voices directory as a page per subject instance. | <span class="tg-tag tg-shell">shell</span> | `graph-rendering` | 1 in / 1 out |

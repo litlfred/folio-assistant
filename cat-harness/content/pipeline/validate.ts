@@ -11,7 +11,7 @@
  *   - Flat directory: validates all .ts files as blocks (legacy)
  *
  * Usage:
- *   bun run pipeline/validate.ts [paper-dir-or-objects-dir]
+ *   bun run cat-harness/content/pipeline/validate.ts [paper-dir-or-objects-dir]
  *
  * @module content/pipeline/validate
  */

@@ -14,7 +14,7 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
                   xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_RefreshMaterialized"
                   targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
@@ -83,7 +83,7 @@ never re-fetch">
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Upstream" name="WORKING
 what changed upstream">
-      <bpmn:documentation>Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late.</bpmn:documentation>
+      <bpmn:documentation>Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late. Reachability is asked by `bun run sources:liveness &lt;instance&gt;` against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error (bean 08u4).</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="materialize-remote" />
       </bpmn:extensionElements>
@@ -229,7 +229,7 @@ records against what">
         <dc:Bounds x="200" y="127" width="36" height="36" />
         <bpmndi:BPMNLabel><dc:Bounds x="160" y="168" width="116" height="30" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_Purpose_di" bpmnElement="Gateway_Purpose">
+      <bpmndi:BPMNShape id="Gateway_Purpose_di" bpmnElement="Gateway_Purpose" isMarkerVisible="true">
         <dc:Bounds x="450" y="310" width="50" height="50" />
         <bpmndi:BPMNLabel><dc:Bounds x="410" y="365" width="130" height="30" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -242,7 +242,7 @@ records against what">
       <bpmndi:BPMNShape id="Task_Local_di" bpmnElement="Task_Local">
         <dc:Bounds x="950" y="285" width="190" height="100" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_Both_di" bpmnElement="Gateway_Both">
+      <bpmndi:BPMNShape id="Gateway_Both_di" bpmnElement="Gateway_Both" isMarkerVisible="true">
         <dc:Bounds x="1200" y="310" width="50" height="50" />
         <bpmndi:BPMNLabel><dc:Bounds x="1160" y="365" width="130" height="30" /></bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>

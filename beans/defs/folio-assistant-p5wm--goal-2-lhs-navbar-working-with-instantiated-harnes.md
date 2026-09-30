@@ -64,8 +64,41 @@ day. The withdrawal is recorded in the next section.
   "a standing gate on every step" and then written into the chain's sentence,
   where the stale-path rule reads it as work waiting to happen.
 
+## RE-CHECKED 2026-09-25 — the path above HELD, and that is worth recording
+
+`b5f0` → `603s` → `6lb8` → `supn`, re-derived against the store three days on:
+`b5f0` **todo**, `603s` **in-progress**, `6lb8` **in-progress**, `supn`
+**todo**. All four still open; **nothing withdrawn, nothing added**.
+
+Recorded because a *confirmation* is as much a measurement as a correction,
+and an unrecorded one costs the next session the same re-derivation. This
+milestone's path was rebuilt on 2026-09-22 and has not drifted since, while
+`yg29`'s moved substantially in the same window — so "milestone bodies go
+stale" is not uniform, and a session should check rather than assume either
+way.
+
+A caution for whoever reads the id counts: a crude sweep of this body names 36
+bean ids of which 18 are `completed`, which looks like 50% rot and **is not**.
+The withdrawal table below, and §"The ruling `603s` was waiting for", exist
+precisely to name closed beans and say what happened to them. Correct prose
+about a finished step counts identically to a stale blocker in any grep that
+only matches ids — the measurement error `k59d` warns about, reproduced here
+on purpose so it is not made a third time.
+
 ## Withdrawn from the path, 2026-09-22, with reasons
 
+- **waits on:** the owner — `yj32`, `6lb8`, `v1hw`, `jbx2`, `h32d`, `g196`, plus three items needing a look at a deployed page
+- **since:** 2026-09-20
+- **expires:** 2026-09-29 — a REVIEW date, not a takeover date; see the handoff
+- **handoff:** on expiry, re-raise the list with the owner rather than deciding any of it. A milestone's critical path going stale is exactly what `k59d` was opened to catch.
+
+
+`yj32` (*"i wanted bootsrap/ harness/ etc as todos, not landing page info"*,
+and what the writable store is), `6lb8` (the board's persistence — a position
+is state, and `todos/` is committed, so two sessions moving one note is a
+merge conflict in a generated file), `v1hw` and `jbx2` (which write path),
+`h32d`, `g196`. Plus three that need somebody to LOOK at a deployed page:
+`alox`, `rptk` and `o3xy` as a class.
 Re-verified with `bun run check:stale-paths` on `main` (193 open beans), which
 reported this milestone's chain as routing through four finished beans, and
 then bean by bean against the store. `k59d` predicted this class and its last

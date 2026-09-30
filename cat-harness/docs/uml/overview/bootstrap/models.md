@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-uml-overview.ts — do not hand-edit
 title: "UML — bootstrap/models"
 nav_exclude: true
 ---
@@ -54,7 +55,7 @@ classDiagram
     }
     class bootstrap_models_ModelRegistry["ModelRegistry"] {
       <<json: ModelRegistrySchema>>
-      $schema [1] 'folio-model-registry/v1'
+      $schema [1] 'model-registry/1.0.0'
       models [0..*] Model[]
     }
   }

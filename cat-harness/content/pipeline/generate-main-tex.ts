@@ -15,7 +15,7 @@
  * generateStandaloneAppendixTex().
  *
  * Usage:
- *   bun run pipeline/generate-main-tex.ts <paper.ts> [--preamble preamble.tex] [--out main.tex] [--chapters-dir chapters/]
+ *   bun run cat-harness/content/pipeline/generate-main-tex.ts <paper.ts> [--preamble preamble.tex] [--out main.tex] [--chapters-dir chapters/]
  *
  * @module content/pipeline/generate-main-tex
  */

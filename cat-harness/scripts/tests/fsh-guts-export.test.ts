@@ -23,6 +23,20 @@ import { writeDeclaration } from "../../test/support/instance-fixture.js";
 const ROOT = resolve(import.meta.dir, "../..");
 
 /**
+ * The main graph, built ONCE at module scope.
+ *
+ * Bean `sff8`. This was `await buildExport()` inside the test body and measured
+ * **4.77 s of a 5000 ms default budget** — 95 %, the highest exposure in the
+ * repository after the four that have already timed out. `check:test-budgets` named
+ * it rather than a red run finding it, which is the whole point of that tool.
+ *
+ * Same remedy as `activity-log`, `kg-export` and `skill-coverage`: module scope
+ * belongs to no test's timeout. Not a raised budget, which `sff8` rules out because
+ * a number decays as the corpus grows.
+ */
+const MAIN_EXPORT = await buildExport();
+
+/**
  * A throwaway instance that declares a trashcan.
  *
  * A REPOSITORY holding an instance, which is the live shape: `fsh-guts/` is
@@ -97,12 +111,12 @@ describe("the real corpus", () => {
 });
 
 describe("reachable BY NAME, and by no edge", () => {
-  test("the main graph still does not mention fsh-guts at all", async () => {
+  test("the main graph still does not mention fsh-guts at all", () => {
     // The converse of the strip test, and the property this whole document
     // depends on: it exists so the content stays reachable DELIBERATELY. If
     // the main graph ever linked here, a crawler would arrive and the strip
     // would have been undone by the thing built on top of it.
-    const main = await buildExport();
+    const main = MAIN_EXPORT;
     expect(JSON.stringify(main)).not.toContain("fsh-guts");
   });
 

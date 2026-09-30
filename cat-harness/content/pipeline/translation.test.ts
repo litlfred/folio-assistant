@@ -11,8 +11,13 @@ import {
   extractMarkdown,
   extractFromManifest,
   formatPot,
+  isTranslatable,
 } from "./pot-extract";
 import { parsePo, injectMarkdown } from "./po-inject";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
+import { publishedPairs } from "./derive-po.ts";
+import { siteRoot, sourceLocale, supportedLocales } from "./translation-index.ts";
 
 // ── cleanMarkdownText ───────────────────────────────────────────
 
@@ -27,6 +32,55 @@ describe("cleanMarkdownText", () => {
 
   test("strips italic markers (underscore)", () => {
     expect(cleanMarkdownText("_italic text_")).toBe("italic text");
+  });
+
+  // ── bean `o29r`: CommonMark's intraword rule ──────────────────
+  //
+  // `_` cannot OPEN emphasis after an alphanumeric, nor CLOSE before one. The
+  // regex had no such guard, so ANY TWO underscores in one string paired up and
+  // both were deleted. One subscript alone was safe, because the pattern needs a
+  // second `_` to close on — so TWO is the threshold, and two is the ordinary
+  // case in mathematical prose.
+  //
+  // Measured over the real corpora, current extractor against the same one with
+  // only that line changed: 229 corrupted msgids of 46306 here, 13251 of 211139
+  // in `litlfred/qou`. Each case below is a shape taken from those, not invented.
+
+  test("a LaTeX subscript survives, alone or beside another", () => {
+    // `$a_1$` alone already passed before the fix; the pair is the regression.
+    expect(cleanMarkdownText("$a_1$")).toBe("$a_1$");
+    expect(cleanMarkdownText("$a_1$ and $b_2$")).toBe("$a_1$ and $b_2$");
+    expect(cleanMarkdownText("x_1 y_2")).toBe("x_1 y_2");
+  });
+
+  test("a subscripted LaTeX command is not turned into a different expression", () => {
+    // The case that sets the severity. Losing these underscores does not flatten
+    // a subscript, it rewrites the mathematics: `\sum{\lambdai}` is not valid
+    // LaTeX, so the msgid cannot be reconstructed by a translator who knows the
+    // convention.
+    expect(cleanMarkdownText("weighted by $w_\\lambda = dq$")).toBe("weighted by $w_\\lambda = dq$");
+    expect(cleanMarkdownText("the subspace $G^+ = \\sum_{\\lambda_i}$")).toBe(
+      "the subspace $G^+ = \\sum_{\\lambda_i}$",
+    );
+  });
+
+  test("a snake_case identifier is not a word with emphasis inside it", () => {
+    // Not a maths-only concern: this shape broke BPMN ids in this repo's own
+    // `prov-qaqc` page, where `Process_CodeChangeReview/Task_ClaimBean` extracted
+    // as `ProcessCodeChangeReview/TaskClaimBean` — a msgid no translator can
+    // round-trip.
+    expect(cleanMarkdownText("snake_case_name stays")).toBe("snake_case_name stays");
+    expect(cleanMarkdownText("perform-task for Process_CodeChangeReview/Task_ClaimBean")).toBe(
+      "perform-task for Process_CodeChangeReview/Task_ClaimBean",
+    );
+  });
+
+  test("real emphasis is still stripped, including two spans in one string", () => {
+    // The guard must not buy subscript safety by giving up emphasis. Without
+    // this, deleting the emphasis branch outright would pass every case above.
+    expect(cleanMarkdownText("say _this_ and _that_")).toBe("say this and that");
+    expect(cleanMarkdownText("a _multi word_ span")).toBe("a multi word span");
+    expect(cleanMarkdownText("(_parenthesised_)")).toBe("(parenthesised)");
   });
 
   test("replaces links with link text", () => {
@@ -74,6 +128,202 @@ describe("cleanMarkdownText", () => {
 });
 
 // ── extractMarkdown ─────────────────────────────────────────────
+
+// ── bean `3mo4`: a code span WRAPPED in emphasis ──────────────────
+//
+// The code span was removed before emphasis was stripped, so the emphasis pair
+// was left with nothing between its markers. `MD_BOLD_RE` requires `[^*]+`
+// there, so it did not match and the asterisks survived into the msgid — noise
+// the translator is asked to reproduce, and part of the catalogue key. The
+// repair tokenises code spans the way Liquid expressions were already
+// tokenised, so emphasis sees something opaque rather than nothing.
+//
+// The four rows the bean tabulated are pinned below, plus a fifth it did not
+// list and the case that proves the fix cannot reach inside a code span.
+
+describe("cleanMarkdownText — emphasis around a code span (bean `3mo4`)", () => {
+  test("bold wrapping a code span leaves no asterisks", () => {
+    // Was `"**** — fail if x"`. Now identical to the bare-code-span row below,
+    // which is the point: one construct, one answer.
+    expect(cleanMarkdownText("**`clarity-defn-single`** — fail if x")).toBe("— fail if x");
+  });
+
+  test("italic wrapping a code span leaves no asterisks", () => {
+    // Not in the bean's table — found while reproducing it. Was `"** trailing"`.
+    expect(cleanMarkdownText("*`italic-code`* trailing")).toBe("trailing");
+  });
+
+  test("bold around ordinary text is unaffected", () => {
+    expect(cleanMarkdownText("**bold** — fail if x")).toBe("bold — fail if x");
+  });
+
+  test("a bare code span is unaffected", () => {
+    expect(cleanMarkdownText("`code` — fail if x")).toBe("— fail if x");
+  });
+
+  test("the construct TWICE in one string — and the double space is deliberate", () => {
+    // The bean asked for this row's spacing to be fixed as well. It is not, on
+    // purpose. The double space is not specific to this defect — removing ANY
+    // code span leaves one — and 8188 of this instance's 46780 msgids already
+    // contain a double space. Collapsing would rewrite 17.5 % of the corpus and
+    // obsolete that many catalogue entries, which is a reformatting decision for
+    // the owner rather than part of a bug fix. Pinned as it is so the choice is
+    // visible rather than forgotten.
+    expect(cleanMarkdownText("**`a`** and **`b`** both")).toBe("and  both");
+  });
+
+  test("TWO bold runs, the first wrapping a code span, left the markers asymmetric", () => {
+    // The shape the bean did not have, and 19 of the 209 msgids this changed. It
+    // needs two emphasis runs to reproduce, which is why this fixture is the real
+    // line rather than a constructed one: my first attempt used a single run and
+    // produced identical output before and after, so it pinned nothing while its
+    // comment claimed to pin the defect. Taken verbatim from
+    // `docs/reference/skill-instructions/kg-navigation.md:70`.
+    //
+    // Emptying the FIRST run to `****` let `MD_BOLD_RE` start one character late
+    // and pair its opening `**` with the SECOND run's closing one, so it consumed
+    // the text between and left a single `*` at the front and `**` before the
+    // comma. Measured before the fix:
+    //   "* — every servable skill with its one-line summary**,"
+    const real = "**`skill_list`** — every servable skill **with its one-line summary**,";
+    expect(cleanMarkdownText(real)).toBe("— every servable skill with its one-line summary,");
+  });
+
+  test("a glob INSIDE a code span is never reached by the emphasis regexes", () => {
+    // Why the repair tokenises rather than reordering. Stripping emphasis first
+    // would point `MD_BOLD_RE` at the inside of code spans, where
+    // `content/**/*.lean` lives. A token containing no `*` is unreachable by
+    // construction — a property, not a case that happens to pass.
+    //
+    // This passes on the OLD code too, and that is expected rather than a
+    // weakness: the old order removed the span whole, so the glob was safe there
+    // as well. It guards the repair that was NOT chosen — reordering the regexes —
+    // which is the one a later reader is most likely to reach for.
+    expect(cleanMarkdownText("see `content/**/*.lean` glob")).toBe("see  glob");
+    expect(cleanMarkdownText("`a/**/b` and `c/**/d`")).toBe("and");
+  });
+
+  test("over the REAL corpus: no msgid carries a run of four asterisks", () => {
+    // Measured before the fix: 190 did, across 660 files and 46780 msgids, and
+    // the defect had already reached the translations — a translator copied the
+    // asterisks into `es/skills.md` and `ru/architecture.md`.
+    //
+    // Asserted as ZERO rather than as a reduction, and separately from the 95
+    // msgids that carry `**` WITHOUT `****`: those are prose emphasis spanning a
+    // construct boundary, a different question that this must not touch.
+    const root = resolve(import.meta.dir, "..", "..");
+    const docs = siteRoot(root);
+    expect(docs).toBeDefined();
+    const files: string[] = [];
+    const walk = (d: string): void => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        const p = join(d, e.name);
+        if (e.isDirectory()) {
+          if (!e.name.startsWith("_")) walk(p);
+        } else if (e.name.endsWith(".md")) files.push(p);
+      }
+    };
+    walk(docs!);
+    let msgids = 0;
+    const offenders: string[] = [];
+    for (const f of files) {
+      for (const e of extractMarkdown(readFileSync(f, "utf-8"), relative(docs!, f))) {
+        msgids++;
+        if (/\*{4}/.test(e.msgid)) offenders.push(`${relative(docs!, f)}:${e.line}`);
+      }
+    }
+    expect(offenders).toEqual([]);
+    // Anti-vacuity: a walk that found nothing would satisfy the line above.
+    expect(files.length).toBeGreaterThan(500);
+    expect(msgids).toBeGreaterThan(40000);
+  });
+});
+
+// ── bean `6b8u`: one ideograph is a word ──────────────────────────
+//
+// The owner's decision of 2026-09-27, on the MERITS. `MD_MIN_TEXT_LETTERS` is a
+// count and a count is not script-neutral: `是` and `否` are the complete words
+// "yes" and "no", while `y` and `n` are abbreviations. Over 660 files / 46 800
+// msgids the rule admits exactly those two strings, four times each, in yes/no
+// cells of three zh comparison tables.
+//
+// The alignment non-claim is pinned too, because it is the thing a later reader
+// is most likely to get wrong: this does NOT improve alignment and must not be
+// cited as if it did.
+
+describe("isTranslatable — a single ideograph is a word (bean `6b8u`)", () => {
+  test("a lone Han character is translatable", () => {
+    expect(isTranslatable("是")).toBe(true);
+    expect(isTranslatable("否")).toBe(true);
+  });
+
+  test("a lone Latin letter is still NOT translatable", () => {
+    // The asymmetry is the decision, not an oversight: `y` abbreviates a word,
+    // `是` is one. A rule that admitted both would admit every stray initial.
+    expect(isTranslatable("y")).toBe(false);
+    expect(isTranslatable("n")).toBe(false);
+    expect(isTranslatable("a")).toBe(false);
+  });
+
+  test("two Latin letters remain the threshold", () => {
+    expect(isTranslatable("no")).toBe(true);
+    expect(isTranslatable("нет")).toBe(true);
+  });
+
+  test("Hiragana, Katakana and Hangul count too, not only Han", () => {
+    // The decision was about the property rather than about `是`/`否`, so the
+    // other scripts where one character is a word are included. A vocabulary of
+    // two characters would be a rule expressed as a backlog.
+    expect(isTranslatable("ひ")).toBe(true);
+    expect(isTranslatable("ア")).toBe(true);
+    expect(isTranslatable("한")).toBe(true);
+  });
+
+  test("still nothing translatable in a letterless string", () => {
+    // The guard the threshold exists for in the first place.
+    expect(isTranslatable(", ")).toBe(false);
+    expect(isTranslatable("")).toBe(false);
+    expect(isTranslatable("42 — 7")).toBe(false);
+  });
+
+  test("it admits EXACTLY the eight cells measured, and no more", () => {
+    // Anti-scope-creep, over the real corpus. If a later change widens the rule,
+    // this is where the widening shows up rather than in a msgid count nobody
+    // reads. Counted over table cells, which is where the bean found the defect.
+    const root = resolve(import.meta.dir, "..", "..");
+    const docs = siteRoot(root);
+    expect(docs).toBeDefined();
+    const files: string[] = [];
+    const walk = (d: string): void => {
+      for (const e of readdirSync(d, { withFileTypes: true })) {
+        const p = join(d, e.name);
+        if (e.isDirectory()) {
+          if (!e.name.startsWith("_")) walk(p);
+        } else if (e.name.endsWith(".md")) files.push(p);
+      }
+    };
+    walk(docs!);
+    const twoLetters = (t: string): boolean => {
+      let n = 0;
+      for (const c of t) if (/\p{L}/u.test(c) && ++n >= 2) return true;
+      return false;
+    };
+    const admitted = new Map<string, number>();
+    for (const f of files) {
+      for (const raw of readFileSync(f, "utf-8").split("\n")) {
+        const t = raw.trim();
+        if (!t.startsWith("|") || !t.endsWith("|")) continue;
+        for (const cell of t.slice(1, -1).split("|")) {
+          const m = cleanMarkdownText(cell.trim());
+          // Admitted by the new rule and rejected by the old one.
+          if (m && !twoLetters(m) && isTranslatable(m)) admitted.set(m, (admitted.get(m) ?? 0) + 1);
+        }
+      }
+    }
+    expect([...admitted.keys()].sort()).toEqual(["否", "是"]);
+    expect([...admitted.values()].reduce((a, b) => a + b, 0)).toBe(8);
+  });
+});
 
 describe("extractMarkdown", () => {
   test("extracts headings", () => {
@@ -236,10 +486,25 @@ describe("extractMarkdown", () => {
     expect(msgids).toContain("After.");
   });
 
-  test("skips short strings (< 3 chars)", () => {
+  test("skips strings with fewer than two LETTERS, not fewer than three characters", () => {
+    // Changed 2026-09-26, bean `6b8u`. The old rule was `text.length >= 3`, which
+    // made translatability a property of the locale's script: `否` ("no") is one
+    // character and was dropped where `non` and `нет` were kept, and an Arabic
+    // cell's `"، و"` was kept where the English `", "` it translates was not.
+    //
+    // `OK` is the case that moved. It is two characters, so the old rule dropped
+    // it — and it is a word with real translations (`Vale`, `Хорошо`), so dropping
+    // it was wrong in the same direction as the rest of the defect.
     const entries = extractMarkdown("OK\n\nReal content here.\n", "test.md");
-    expect(entries.length).toBe(1);
-    expect(entries[0].msgid).toBe("Real content here.");
+    expect(entries.map((e) => e.msgid)).toEqual(["OK", "Real content here."]);
+  });
+
+  test("a string with no letters is never translatable", () => {
+    // What the threshold is actually FOR: skipping things that are not prose.
+    // The old rule let 432 letterless msgids into this corpus's catalogues,
+    // because it counted characters and punctuation is characters.
+    const entries = extractMarkdown("| ... | — | 1.2.3 | Real words here |\n", "test.md");
+    expect(entries.map((e) => e.msgid)).toEqual(["Real words here"]);
   });
 });
 
@@ -270,7 +535,7 @@ describe("extractFromManifest", () => {
 describe("formatPot", () => {
   test("formats valid POT with header", () => {
     const pot = formatPot(
-      [{ source: "test.md", line: 1, msgid: "Hello world" }],
+      [{ source: "test.md", line: 1, msgid: "Hello world" , kind: "paragraph" }],
       { projectName: "test-folio" }
     );
     expect(pot).toContain('msgid "Hello world"');
@@ -281,8 +546,8 @@ describe("formatPot", () => {
 
   test("deduplicates entries with same msgid", () => {
     const pot = formatPot([
-      { source: "a.md", line: 1, msgid: "Same text" },
-      { source: "b.md", line: 5, msgid: "Same text" },
+      { source: "a.md", line: 1, msgid: "Same text" , kind: "paragraph" },
+      { source: "b.md", line: 5, msgid: "Same text" , kind: "paragraph" },
     ]);
     // Should appear once as msgid, but with two #: references
     const matches = pot.match(/msgid "Same text"/g);
@@ -293,7 +558,7 @@ describe("formatPot", () => {
 
   test("adds python-brace-format flag for Liquid vars", () => {
     const pot = formatPot([
-      { source: "t.md", line: 1, msgid: "Count: {lqd_count}" },
+      { source: "t.md", line: 1, msgid: "Count: {lqd_count}" , kind: "paragraph" },
     ]);
     expect(pot).toContain("#, python-brace-format");
   });
@@ -413,6 +678,121 @@ describe("injectMarkdown", () => {
     );
     expect(result.stats.translatedSpans).toBe(1);
     expect(result.stats.untranslatedSpans).toBe(1);
+  });
+});
+
+// ── The blank line is part of the document (bean `rmor`) ────────
+//
+// Every test in the block above asserts with `toContain`, and that is exactly
+// why this defect lived: `toContain` cannot see a blank line that is gone. The
+// final filter read `outLines.filter((line) => line !== "")` under a comment
+// saying it removed blank lines "introduced by paragraph collapse", and it
+// removed every empty line in the document. `src/tools/translation.ts` writes
+// the result to disk, so `translation_inject` could not produce a usable page
+// for any document with more than one block.
+//
+// Structure is asserted here rather than substrings, in both directions: the
+// blanks must survive, AND the paragraph must still collapse. A fix that
+// preserved blank lines by not collapsing at all would satisfy the first and
+// silently remove the feature.
+
+describe("injectMarkdown preserves document structure", () => {
+  test("the author's blank lines survive — all three of them", () => {
+    // The bean's own fixture, byte for byte. Measured before the fix: 3 blank
+    // lines in, 0 out; the heading ran into the paragraph, the paragraph into
+    // the list, and the trailing paragraph was absorbed by the list.
+    const source = "# Title\n\nFirst paragraph here.\n\n- item one\n- item two\n\nSecond paragraph here.";
+    const result = injectMarkdown(source, new Map([["Title", "Titre"]]));
+    const blanks = (s: string): number => s.split("\n").filter((l) => l.trim() === "").length;
+    expect(blanks(source)).toBe(3);
+    expect(blanks(result.translated)).toBe(3);
+    // And the whole document, so nothing else moved either.
+    expect(result.translated).toBe(
+      "# Titre\n\nFirst paragraph here.\n\n- item one\n- item two\n\nSecond paragraph here.",
+    );
+  });
+
+  test("a wrapped paragraph STILL collapses to one line", () => {
+    // The other half of the falsifier. Preserving blank lines by not collapsing
+    // would pass the test above and remove the feature.
+    const source = "A sentence that was\nhard wrapped across\nthree source lines.";
+    const result = injectMarkdown(
+      source,
+      new Map([["A sentence that was hard wrapped across three source lines.", "Une phrase repliée."]]),
+    );
+    expect(result.translated).toBe("Une phrase repliée.");
+    expect(result.translated.split("\n")).toHaveLength(1);
+    expect(result.changed).toBe(true);
+  });
+
+  test("collapsing a multi-line continuation leaves no blank line inside the list", () => {
+    // The second defect the same mechanism caused, and the two INTERACTED in a way
+    // worth writing down: blanking put a blank line inside the list, and the global
+    // filter then swept it away. So the list damage was MASKED by the blank-line
+    // destruction, and fixing only the filter would have exposed it.
+    //
+    // Measured on this exact fixture with blanking kept and the global filter
+    // removed: `"- an item\nsuite traduite\n\n- second item"` — a blank line inside
+    // the list, which makes the list LOOSE and changes how every item renders.
+    //
+    // **This test does not discriminate against the old code as a whole**, and
+    // saying so is the point: with both defects present the final output matches,
+    // because the second hid the first. What it guards is a future "fix" that makes
+    // the filter precise while still emptying lines — the obvious half-repair.
+    const source = "- an item\n  continued line one\n  continued line two\n- second item";
+    const result = injectMarkdown(
+      source,
+      new Map([["continued line one continued line two", "suite traduite"]]),
+    );
+    expect(result.translated).toBe("- an item\nsuite traduite\n- second item");
+    expect(result.translated).not.toContain("\n\n");
+  });
+
+  test("a document with NO translation is returned unchanged, byte for byte", () => {
+    // The cheapest guard against the whole class: if nothing is translated,
+    // nothing may move.
+    const source = "# Heading\n\nA paragraph.\n\n- one\n- two\n\n\nDouble blank above.\n";
+    const result = injectMarkdown(source, new Map());
+    expect(result.translated).toBe(source);
+    expect(result.changed).toBe(false);
+  });
+
+  test("over the REAL corpus: injection never changes the blank-line count", () => {
+    // 62 (catalogue, source) pairs in this instance. A fixture proves the
+    // mechanism; only the corpus says whether any real page trips it. Measured
+    // before the fix: the old filter would have destroyed 3,871 blank lines
+    // across these same pairs.
+    const root = resolve(import.meta.dir, "..", "..");
+    const docs = siteRoot(root);
+    expect(docs).toBeDefined();
+    const { pages, locales } = publishedPairs(docs!, supportedLocales(root), sourceLocale(root), {
+      instanceRoot: root,
+    });
+    const blanks = (s: string): number => s.split("\n").filter((l) => l.trim() === "").length;
+    let pairs = 0;
+    let collapsed = 0;
+    for (const page of pages) {
+      const srcFile = join(docs!, `${page}.md`);
+      if (!existsSync(srcFile)) continue;
+      const source = readFileSync(srcFile, "utf-8");
+      for (const locale of locales) {
+        // A catalogue path MIRRORS the page path — the owner's decision of
+        // 2026-09-27 on bean `9rnf`. This composed a basename when it was
+        // written, with a comment recording that as an open question; the
+        // question is answered, so the test follows rather than keeping a
+        // convention the code no longer uses.
+        const po = join(root, "translations", locale, `${page}.po`);
+        if (!existsSync(po)) continue;
+        pairs++;
+        const result = injectMarkdown(source, parsePo(readFileSync(po, "utf-8")));
+        expect(blanks(result.translated)).toBe(blanks(source));
+        if (result.translated.split("\n").length < source.split("\n").length) collapsed++;
+      }
+    }
+    // Anti-vacuity, both ways: the loop must have run, and it must have actually
+    // collapsed something on every pair rather than passing by doing nothing.
+    expect(pairs).toBeGreaterThanOrEqual(60);
+    expect(collapsed).toBe(pairs);
   });
 });
 

@@ -89,9 +89,41 @@ export const INSTANCE_NAMES = /^(INSTANCE_ROOT|instanceRoot)$/;
  */
 export const AMBIGUOUS_NAMES = /^(PLATFORM|platformRoot|platformDir)$/;
 
-/** `const NAME = resolve(import.meta.dir, "..", "..")` and its `join`/`__dirname` spellings. */
-const ASCENT =
-  /(?:const|let)\s+(\w+)\s*=\s*(?:resolve|join)\(\s*(?:import\.meta\.dir|__dirname)\s*,\s*([^)]*)\)/g;
+/**
+ * Every spelling of the BASE that means "the directory holding this file".
+ *
+ * **It was two spellings until 2026-09-27, and that made the ✓ false.**
+ * `import.meta.dir` and `__dirname` are the Bun and CJS forms; the portable-ESM
+ * `dirname(fileURLToPath(import.meta.url))` and its CJS twin `dirname(__filename)`
+ * are just as common here, and an ascent written either way was not an ascent as
+ * far as this check could tell. Measured on `main` at `e6404bc80de`, where the
+ * check reported **429** ascents and *"✓ every name that claims an anchor lands
+ * on it"*: extending the base takes it to **504**, so **75** ascents were invisible,
+ * and **9** of those were FINDINGS — `REPO_ROOT`/`REPO` landing on `cat-harness/`,
+ * which is an INSTANCE root. (A first pass here said 25 rather than 75. That count
+ * came from a probe over only the files declaring an anchor-NAMED const, while the
+ * check reads all 1465 and matches every name — the narrower population was the
+ * measurement's, not the defect's.)
+ *
+ * All nine were name-wrong rather than depth-wrong, so all nine are pure renames;
+ * `gen-docs-pages.ts` proved it by calling `repoRootFor(REPO_ROOT)` on its own
+ * anchor, which only makes sense if its author knew the value was an instance root.
+ *
+ * **This is the check's own defect class turned on itself.** An ENUMERATION that
+ * has to be edited when a new spelling appears is one that will be wrong — the
+ * `6tkl` argument, applied to the matcher instead of to the corpus. Unlike a
+ * corpus there is no filesystem to ask: a base is a syntactic form, so the list
+ * stays a list. What replaces the missing guarantee is a test PER SPELLING in
+ * `anchor-names.test.ts`, so adding a form to this alternation without adding its
+ * case is what fails, rather than a silent ✓ two months later.
+ */
+const ASCENT_BASE = String.raw`(?:import\.meta\.dir|__dirname|dirname\(\s*(?:fileURLToPath\(\s*import\.meta\.url\s*\)|__filename)\s*\))`;
+
+/** `const NAME = resolve(<base>, "..", "..")`, in its `resolve` and `join` spellings. */
+const ASCENT = new RegExp(
+  String.raw`(?:const|let)\s+(\w+)\s*=\s*(?:resolve|join)\(\s*${ASCENT_BASE}\s*,\s*([^)]*)\)`,
+  "g",
+);
 
 /**
  * Is this match inside a string literal rather than being code?

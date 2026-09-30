@@ -24,7 +24,8 @@
  * - exit 1 — the merge conflicts (files listed), or a gate fails on the
  *   merged tree: this branch needs the base merged in and regenerated;
  * - exit 2 — COULD NOT DETERMINE (the base could not be fetched, the worktree
- *   could not be built). Never reported as clean.
+ *   could not be built, or the worktree's corpus is distorted — see the
+ *   `node_modules` guard below, bean `qook`). Never reported as clean.
  *
  * The working copy is never touched: the merge happens in a temporary worktree
  * that is removed on every path out, including failure.
@@ -42,11 +43,32 @@ import { existsSync, mkdtempSync, rmSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, join, resolve } from "node:path";
 
+import { diffReadings, readTree, type TreeReading } from "./gate-tree-guard.ts";
+
 const REPO = resolve(import.meta.dir, "..", "..");
 
 function git(args: string[], cwd = REPO): { ok: boolean; out: string } {
   const r = spawnSync("git", args, { cwd, encoding: "utf-8" });
   return { ok: r.status === 0, out: `${r.stdout ?? ""}${r.stderr ?? ""}`.trim() };
+}
+
+/**
+ * Did a gate write to the tree while it was being judged?
+ *
+ * Three inputs, two answers, and the third input is why this is a function
+ * rather than an inline `&&`: if EITHER reading could not be taken, the honest
+ * answer is `false` — "no mutation was observed" — and NOT "no mutation
+ * happened". The caller then falls through to the ordinary failure message,
+ * which is the safe direction: it tells a reader to look at their own branch
+ * rather than blaming a writing gate this script never actually saw.
+ *
+ * Reporting an unobserved mutation as observed would be the worse error. It
+ * would send somebody hunting a writer that may not exist, and `ymsu` is hard
+ * enough to see without false sightings of it.
+ */
+export function mutatedDuring(before: TreeReading, after: TreeReading): boolean {
+  if (!before.ok || !after.ok) return false;
+  return diffReadings(before.entries, after.entries).length > 0;
 }
 
 /** The base branch: `--base <name>`, else `main`. */
@@ -127,11 +149,54 @@ function main(): number {
       }
     } else {
       symlinkSync(join(REPO, "node_modules"), join(wt, "node_modules"), "dir");
+      // The symlink must be INVISIBLE to git, and for five days it was not.
+      //
+      // Bean `qook`. `.gitignore` read `node_modules/`, and git's trailing
+      // slash means DIRECTORY ONLY. A symlink is not a directory, so
+      // `git ls-files --others --exclude-standard` returned it and
+      // `gitCorpus` handed every consumer one phantom entry. On commit
+      // `0d3c49c8` that was 13667 paths here against 13666 in a real
+      // checkout — and `kg:detangle:check` went from "29 pinned current" to
+      // five files STALE. This script then reported two unrelated branches'
+      // merged trees defective when no real checkout of either was.
+      //
+      // So the environment is verified before the sweep, not assumed. A
+      // distorted corpus is COULD NOT DETERMINE (exit 2), never a red: a
+      // false refusal from a tool whose job is to refuse teaches everyone to
+      // stop running it, and then it is not there for the merge it exists for.
+      const ignored = git(["check-ignore", "-q", "node_modules"], wt);
+      if (!ignored.ok) {
+        console.error(
+          "::error::check:merged: the `node_modules` symlink is NOT ignored in the worktree, " +
+            "so every corpus-derived gate would measure one phantom entry — COULD NOT DETERMINE.\n" +
+            "Bean `qook`: `.gitignore` must ignore `node_modules` with NO trailing slash, or git " +
+            "treats the pattern as directory-only and the symlink leaks into `git ls-files --others`.",
+        );
+        return 2;
+      }
     }
 
     console.log("  running `bun run gates` on the merged tree…\n");
+    // The merge worktree is freshly built and therefore clean. Reading it
+    // before and after is what lets the two non-zero cases below be told
+    // apart, and it is a question only THIS script can answer cheaply: it
+    // owns the worktree, so it needs no parsing of the runner's output.
+    const before = readTree(wt);
     const gates = spawnSync("bun", ["run", "gates"], { cwd: wt, stdio: "inherit" });
     if (gates.status !== 0) {
+      // `gates` exits 1 for two different things, and the advice differs. The
+      // exit code is NOT the discriminator and must not be made one: #1363
+      // made the mutation case FATAL ON PURPOSE, to force `ymsu` clause 1
+      // rather than let a gate go on writing to the tree it is judged on.
+      // Softening it to exit 2 would defeat the guard where it is working.
+      if (mutatedDuring(before, readTree(wt))) {
+        console.error(`\n✗ a gate CHANGED the merged tree while the gates were judging it — bean \`ymsu\`.`);
+        console.error(`This is NOT a stale artefact on your branch, and there is nothing here to regenerate:`);
+        console.error(`every gate may well have passed. The verdicts after the write describe a tree that`);
+        console.error(`was repaired mid-run, so the run cannot say whether the COMMITTED state is good.`);
+        console.error(`The defect is the writing gate, not this branch. See \`ymsu\` clause 1.`);
+        return 1;
+      }
       console.error(`\n✗ the MERGED tree fails the gates, though this branch may pass alone.`);
       console.error(`Merge the base into the branch, regenerate what the failing gates name, run \`bun run gates\`, push.`);
       return 1;

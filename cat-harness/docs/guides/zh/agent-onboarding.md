@@ -19,7 +19,7 @@ available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 
 你是一个刚刚被引入使用 folio-assistant 的代码仓库的 LLM 代理。本页面是你的入职指引：你正在面对什么、第一步该做什么，以及在何处查阅资料。
 
-有关技能、角色和能力的*架构*，请阅读[技能与角色](../skills.html)。本页面则是其实操版本。
+有关技能、角色和能力的*架构*，请阅读[技能与角色](../../skills.html)。本页面则是其实操版本。
 
 1. TOC
 {:toc}
@@ -61,9 +61,9 @@ bun run src/index.ts --check-deps      # what this environment can do
 | `skills/folio-core/` | 内容无关：协调、监视器（watchers）、QA、渲染、参考书目 |
 | `skills/folio-paper-adapter/` | 论文：Lean、LaTeX、证明、模拟器 |
 | `skills/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
-| [技能模式参考](../reference/skills/) | 每项技能生成的输入/输出契约 |
-| [技能指令](../reference/skill-instructions/) | 生成的完整指令主体 |
-| [技能与角色](../skills.html) | 技能、角色与能力如何组合 |
+| [技能模式参考](../../reference/skills/) | 每项技能生成的输入/输出契约 |
+| [技能指令](../../reference/skill-instructions/) | 生成的完整指令主体 |
+| [技能与角色](../../skills.html) | 技能、角色与能力如何组合 |
 
 两个 `reference/` 目录都是**自动生成的** — 绝不要手动编辑它们。请使用 `bun run scripts/gen-schema-docs.ts` 和 `bun run scripts/gen-skill-docs.ts` 重新生成。
 
@@ -148,8 +148,8 @@ bun run content/pipeline/qa-staleness.ts content/<paper>
 | 问题 | 解答 |
 |---|---|
 | 项目命令、约定 | `AGENTS.md`（代理通用的单一真实来源） |
-| 某个技能的作用 | `skills/**/`，或生成的[指令主体](../reference/skill-instructions/) |
-| 技能的类型化契约 | [技能模式参考](../reference/skills/) |
+| 某个技能的作用 | `skills/**/`，或生成的[指令主体](../../reference/skill-instructions/) |
+| 技能的类型化契约 | [技能模式参考](../../reference/skills/) |
 | QA 判据的含义 | `content/pipeline/qa-criteria-registry.ts` — 其中的描述即为规范 |
 | 内容块模式 | `schemas/types.ts` |
 | QA 附属文件模式 | `schemas/block-qa.ts` |

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-06e3
 title: 'docs-auto: a handler at cat-harness/docs-auto/<auto-doc-type>/<path> that derives documentation for a sub-graph — and the authoring rule that the author must summarise what it indexes'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-20T20:54:07Z
-updated_at: 2026-09-21T10:28:48Z
+updated_at: 2026-09-29T20:03:12Z
 parent: folio-assistant-0lmb
 ---
 
@@ -453,3 +453,9 @@ generated. After: 65 authored rather than 76, and the evidence page is
 `architecture/cat-harness-minimum.md`, 4,635 words, which somebody actually
 wrote. The check was passing the harness on documentation nobody authored, and
 neither the check nor anything else could have known.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

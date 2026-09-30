@@ -2,6 +2,8 @@
 layout: default
 title: Contributing
 nav_order: 10
+supported_locales: ["ar", "zh", "en", "fr", "ru", "es"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 # Contributing

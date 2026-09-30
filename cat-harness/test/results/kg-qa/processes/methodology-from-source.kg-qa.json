@@ -5,7 +5,7 @@
     "id": "Process_MethodologyFromSource",
     "path": "processes/methodology-from-source.bpmn"
   },
-  "source_hash": "sha256:121122a56a043884f7dfcdb674e1bca5a7578ac1c74c236f416f44803c503db5",
+  "source_hash": "sha256:7242e7553d961df22f80a5d47441c1511526ca8c7581edcb8c3a40b7d904a786",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,31 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_Origin",
+          "detail": "names skill \"adopt-methodology-from-source\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Render",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Place",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Integrate",
+          "detail": "names skill \"adopt-methodology-from-source\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Tools",
+          "detail": "names skill \"adopt-methodology-from-source\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -111,7 +136,7 @@
   },
   "totals": {
     "pass": 14,
-    "fail": 1,
+    "fail": 2,
     "n/a": 9,
     "unknown": 0
   }

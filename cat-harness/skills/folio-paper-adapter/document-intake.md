@@ -128,15 +128,15 @@ per [`bib-qa.md §Batch intake pipeline`](../folio-core/bib-qa.md#batch-intake-p
 Convert raw format to `extracted-text.md`:
 
 **For PDFs, always start with
-[`scripts/pdf-extract.py`](../../scripts/pdf-extract.py)** — do not reach for a
+[`cat-harness/scripts/pdf-extract.py`](../../scripts/pdf-extract.py)** — do not reach for a
 Python PDF library directly. It walks a fallback ladder (`pdftotext` → `pypdf` →
 `pdfminer.six` → a zero-dependency content-stream extractor → OCR) and, when it
 cannot read a file, **tells you which rung failed and why** instead of returning
 an empty string:
 
 ```bash
-python3 scripts/pdf-extract.py FILE.pdf -o extracted-text.md
-python3 scripts/pdf-extract.py FILE.pdf --diagnose   # structure only
+python3 cat-harness/scripts/pdf-extract.py FILE.pdf -o extracted-text.md
+python3 cat-harness/scripts/pdf-extract.py FILE.pdf --diagnose   # structure only
 ```
 
 Exit `0` = text; **exit `2` = no text layer (a scan)**; exit `3` = a parser
@@ -157,14 +157,14 @@ Two failure modes it exists to prevent, both observed in practice:
 
 | Format | Extraction method |
 |--------|-------------------|
-| PDF (text) | `scripts/pdf-extract.py` (ladder; `pdftotext` when available) |
-| PDF (scan) | `scripts/pdf-extract.py` → exit 2, then `scripts/pdf-ocr.py` (Tesseract) or Claude vision |
+| PDF (text) | `cat-harness/scripts/pdf-extract.py` (ladder; `pdftotext` when available) |
+| PDF (scan) | `cat-harness/scripts/pdf-extract.py` → exit 2, then `cat-harness/scripts/pdf-ocr.py` (Tesseract) or Claude vision |
 | LaTeX | Direct parse (strip preamble) |
 | HTML | Readability + turndown |
 | DOCX | Pandoc → markdown |
 | Images | Claude vision API |
-| PDF (tables/figures) | `scripts/pdf-tables.py` → `tables.json` (see Stage 3) |
-| PDF (sections) | `scripts/pdf-structure.py` → `structure.json` + `sections/*.md` (see Stage 3) |
+| PDF (tables/figures) | `cat-harness/scripts/pdf-tables.py` → `tables.json` (see Stage 3) |
+| PDF (sections) | `cat-harness/scripts/pdf-structure.py` → `structure.json` + `sections/*.md` (see Stage 3) |
 
 For scanned documents the script's OCR rung fires automatically **if**
 `tesseract` and `pdftoppm` are installed (`apt-get install -y tesseract-ocr
@@ -189,14 +189,14 @@ the corpus-grep checklist reads.
 
 | script | writes | notes |
 |---|---|---|
-| [`scripts/pdf-structure.py`](../../scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (title, authors, arXiv/DOI from the page-1 stamp), TOC from the PDF outline or inferred from heading patterns, per-section text split |
-| [`scripts/pdf-ocr.py`](../../scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
-| [`scripts/extract-candidates.py`](../../scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
+| [`cat-harness/scripts/pdf-structure.py`](../../scripts/pdf-structure.py) | `library/<doc-id>/structure.json` + `sections/NN-slug.md` | metadata (title, authors, arXiv/DOI from the page-1 stamp), TOC from the PDF outline or inferred from heading patterns, per-section text split |
+| [`cat-harness/scripts/pdf-ocr.py`](../../scripts/pdf-ocr.py) | `library/<doc-id>/ocr/page-NNN.txt` | `pdftoppm -r 300 -png` then `tesseract`; per-page cache; script auto-detected via Tesseract's own OSD |
+| [`cat-harness/scripts/extract-candidates.py`](../../scripts/extract-candidates.py) | `library/<doc-id>/candidates.json` | pure regex, imports no PDF library; **proposals, never content** — nothing here writes to `content/` and nothing here creates Lean |
 
 ```bash
-python3 scripts/pdf-ocr.py FILE.pdf --outdir library/<doc-id>/   # only if scanned
-python3 scripts/pdf-structure.py FILE.pdf --outdir library --ocr
-python3 scripts/extract-candidates.py library/<doc-id>/
+python3 cat-harness/scripts/pdf-ocr.py FILE.pdf --outdir library/<doc-id>/   # only if scanned
+python3 cat-harness/scripts/pdf-structure.py FILE.pdf --outdir library --ocr
+python3 cat-harness/scripts/extract-candidates.py library/<doc-id>/
 ```
 
 Three things about how they fit together, each of which has already cost
@@ -218,7 +218,7 @@ someone time:
   `pdf-structure.py` prefers PyMuPDF (better text on maths, real outlines) and
   falls back to `pypdf`; the Dockerfile ships `pypdf` only, deliberately, so the
   image stays BSD-licensed against PyMuPDF's AGPL. Check with
-  `python3 scripts/pdf-ocr.py --check`.
+  `python3 cat-harness/scripts/pdf-ocr.py --check`.
 
 #### For academic papers:
 Same as paper-importer Phase 2 — detect theorem/definition/lemma
@@ -267,7 +267,7 @@ qualified `normativeLevel`.
 > for prose folios, and `normative-statements` is where the recommendation
 > grammar belongs.
 
-#### Tables and figures — run `scripts/pdf-tables.py`
+#### Tables and figures — run `cat-harness/scripts/pdf-tables.py`
 
 Text extraction destroys tables. A GRADE evidence table or a boxed
 recommendation comes out of Stage 2 as a run of prose that reads exactly like
@@ -275,8 +275,8 @@ prose, and nothing downstream can recover that it was a grid — which matters
 most for precisely the guideline documents this skill exists to process.
 
 ```bash
-python3 scripts/pdf-tables.py FILE.pdf -o uploads/<document-id>/
-python3 scripts/pdf-tables.py --check     # which backends are installed
+python3 cat-harness/scripts/pdf-tables.py FILE.pdf -o uploads/<document-id>/
+python3 cat-harness/scripts/pdf-tables.py --check     # which backends are installed
 ```
 
 Writes `tables.json` (`pdf-tables/v1`) beside `structure.json`, with each

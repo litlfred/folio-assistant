@@ -39,8 +39,9 @@ import {
   RequirementStatementFields,
   refineRequirement,
   refineStatement,
-} from "./requirement.ts";
+} from "../../bootstrap-tools/schemas/requirement.ts";
 import { NETWORK_REACHES } from "./cat-harness";
+import { SkillNameSchema } from "./tool-types.js";
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
 
@@ -83,9 +84,24 @@ export const DegradationStrategySchema = z.enum(["fail", "warn", "skip", "fallba
  * hook — `.claude/settings.json` accepted the entry and the generated skill
  * registry refused it. That is the right order (the gate caught it) and it is
  * still a gap: the hook was live and unrepresentable at the same time.
+ *
+ * **It grew again on 2026-09-26, exactly as predicted above, and `Stop` is the
+ * addition.** `interaction-modality` §4.1's three enforcement layers are each
+ * keyed on the agent CHOOSING to ask — a tool call, or a rendered schema — and
+ * the failure the owner named twice that day routes around all three: a closing
+ * paragraph of an ordinary turn that lists open decisions by name with none of
+ * their terms. No tool is called, so `PreToolUse` cannot see it; the turn is
+ * over, so nothing later can. `Stop` is the only point at which that paragraph
+ * exists and the turn has not yet been handed back.
+ *
+ * The paragraph above described the symptom precisely — live and
+ * unrepresentable — and that is what happened: the hook ran and the registry
+ * refused it. Worth keeping as evidence that the prediction was load-bearing
+ * rather than decorative.
  */
 export const HookEventSchema = z.enum([
   "SessionStart", "PreToolUse", "PostToolUse", "PreCommit", "PostCommit", "UserPromptSubmit",
+  "Stop",
 ]);
 export const IdentitySourceSchema = z.enum([
   "git-config", "github-oauth", "google-oauth", "env-var", "bearer-token", "default",
@@ -212,23 +228,10 @@ export const SkillDefinitionSchema = z.object({
   id: z.string().min(1),
   name: z.string().min(1),
   description: z.string(),
-  /**
-   * RETIRED 2026-09-20 (bean `y1w9`) — optional, and read by nothing.
-   *
-   * Required until today, which is why making it optional is part of the
-   * retirement rather than a separate tidy: removing the 23 declarations
-   * without this makes `skill()` throw on every definition.
-   *
-   * Record: `fsh-guts/retired/skill-definition-roles.md`. Short version — it
-   * mixed an HTTP access tier (`owner`, `collaborator`, and `reader`, which
-   * is not even a `UserRole`) with BPMN roles, and `src/core/rbac.ts` never
-   * consulted it: routes hardcoded `hasRole(req, "collaborator")` (they name an
-   * ODRL action since issue #1207). A field
-   * that reads as enforcement and enforces nothing is worse than an absent
-   * one. Reinstating it means writing the consumer first, and deciding which
-   * of the two vocabularies it speaks.
-   */
-  roles: z.array(z.string()).optional(),
+  // NO `roles` (bean `y1w9`, deleted in #1168 B8). A skill naming the roles that
+  // use it is the inverse of `RoleDef.skills`, and it was read by nothing. The
+  // record, and the rule for bringing it back (write the consumer first):
+  // `fsh-guts/retired/skill-definition-roles.md`.
   requiredCapabilities: z.array(SkillCapabilityRefSchema),
   dependsOn: z.array(SkillDependencySchema).optional(),
   allowedTools: z.array(z.string()).optional(),
@@ -278,7 +281,7 @@ export const RequirementStatementRefSchema = z
 
 /*
  * BUILT ON THE BOOTSTRAP BASE (issue #1164, owner: "1 + 2"). The base in
- * `bootstrap/schemas/requirement.schema.json` (Zod source: `cat-harness/schemas/requirement.ts`) is what every harness gets — the
+ * `bootstrap/schemas/requirement.schema.json` (Zod source: `bootstrap-tools/schemas/requirement.ts`) is what every harness gets — the
  * statement, its level, the functional and non-functional fields. Neither
  * lists what satisfies a statement: that pointer is held by the satisfier
  * (`satisfies:`, above). The base's refinements are re-applied, because a
@@ -301,7 +304,7 @@ export const SkillPackageRefSchema = z.object({
   repo: z.string(),
   path: z.string(),
   ref: z.string(),
-  skills: z.array(z.string()),
+  skills: z.array(SkillNameSchema),
 });
 
 export const HookCommandSchema = z.object({
@@ -340,7 +343,7 @@ export const SkillPackageManifestSchema = z.object({
   name: z.string().min(1),
   version: z.string(),
   description: z.string(),
-  skills: z.array(z.string()),
+  skills: z.array(SkillNameSchema),
   docker: DockerRequirementsSchema,
   providesCapabilities: z.array(z.string()).optional(),
   requiresCapabilities: z.array(z.string()).optional(),
@@ -415,7 +418,7 @@ export const RemotePackageRefSchema = z.object({
     description: z.string(),
     docker: DockerRequirementsSchema,
     providesCapabilities: z.array(z.string()).optional(),
-    skills: z.array(z.string()),
+    skills: z.array(SkillNameSchema),
     lifecycleStages: z.array(LifecycleStageSchema).optional(),
   }),
 }).superRefine((w, ctx) => {
@@ -443,7 +446,7 @@ export const RemotePackageRefSchema = z.object({
  */
 export const RemoteSkillRecordSchema = z.object({
   $schema: z.literal("folio-remote-skill/v1"),
-  skill: z.string().min(1),
+  skill: SkillNameSchema,
   package: z.string().min(1),
   repo: z.string().url(),
   ref: z.string().regex(/^[0-9a-f]{40}$/, "a synced skill is pinned to a full commit SHA"),

@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Issue",
     "path": "processes/crdm-issue-linking.bpmn"
   },
-  "source_hash": "sha256:f2f19975e210b7ac03ac60321b4ca386967adcf1b6e1bb4962868cccdd6ea21b",
+  "source_hash": "sha256:8b0d85705f806dfd7fdee7620e82221d92494a262ab89ee48bfdab599310ead4",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,23 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_ScanIssues",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_AskCreate",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_LinkIssue",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -106,7 +123,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 0,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

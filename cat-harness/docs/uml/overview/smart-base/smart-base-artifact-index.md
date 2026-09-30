@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-uml-overview.ts — do not hand-edit
 title: "UML — smart-base/smart-base-artifact-index"
 nav_exclude: true
 ---

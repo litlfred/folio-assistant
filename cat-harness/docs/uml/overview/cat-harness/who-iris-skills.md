@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-uml-overview.ts — do not hand-edit
 title: "UML — cat-harness/who-iris-skills"
 nav_exclude: true
 ---

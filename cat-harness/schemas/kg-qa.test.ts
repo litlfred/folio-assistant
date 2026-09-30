@@ -19,7 +19,7 @@ import {
   KG_SUBJECT_GRAPH_KINDS,
   KG_SUBJECT_KINDS,
 } from "./kg-qa";
-import { defaultGraphKinds, repoRootFor } from "./cat-harness.js";
+import { defaultGraphKinds, kgQaHomeFor, repoRootFor } from "./cat-harness.js";
 
 describe("the criteria registry", () => {
   test("ids are unique", () => {
@@ -43,6 +43,22 @@ describe("the criteria registry", () => {
     // — `actedUpon`, `judgementOnly`, `<folio:no-skill reason>` — what is left
     // is a missing join. Still not `critical`: nothing dangles.
     expect(KG_CRITERIA_BY_ID["activity-names-skill"]!.severity).toBe("major");
+  });
+
+  test("`activity-skill-has-tool` is minor, so the backlog cannot gate", () => {
+    // The grade IS the design. Measured 2026-09-26: 99 distinct activity-named
+    // skills, 32 with a Tool, 67 without — 314 located findings across 71
+    // process sidecars. `kg:audit:check` gates `critical` and `:strict` adds
+    // `major`, so `minor` reports without gating; raising it would redden
+    // every sibling branch for a corpus-wide gap its author never touched,
+    // which is the "check that cries wolf is a check somebody switches off"
+    // failure. `check:tools` already ruled that a skill with no Tool is not an
+    // error, because plenty of skills are pure judgement.
+    expect(KG_CRITERIA_BY_ID["activity-skill-has-tool"]!.severity).toBe("minor");
+    // And it is about a PROCESS, because the located form is its whole reason
+    // for existing: `check:tools` has the corpus count already and cannot say
+    // which activity hands a performer a skill whose mechanism is prose.
+    expect(KG_CRITERIA_BY_ID["activity-skill-has-tool"]!.applies).toEqual(["process"]);
   });
 
   test("`call-activity-resolves` is not critical — an outward call is not a defect", () => {
@@ -289,5 +305,33 @@ describe("KG_SUBJECT_GRAPH_KINDS — the bridge to the graph-kind registry", () 
         expect(KG_SUBJECT_GRAPH_KINDS[s], `criterion ${c.id} applies to "${s}", which names no graph`).toBeTruthy();
       }
     }
+  });
+});
+
+describe("where an instance's verdicts live (kgQaHomeFor)", () => {
+  // Bean r3gy, decision 2 (owner, 2026-09-29): bootstrap's verdicts are harness
+  // output ABOUT bootstrap, so they live in cat-harness, not in bootstrap.
+  const repo = repoRootFor(join(import.meta.dir, ".."));
+  const harness = join(repo, "cat-harness");
+  const bootstrap = join(repo, "bootstrap");
+
+  test("an instance that declares a qa directory keeps its own", () => {
+    expect(kgQaHomeFor(harness)).toEqual({ root: join(harness, "test", "results"), by: "own" });
+  });
+
+  test("bootstrap declares none, and is hosted beside the host's own tree", () => {
+    const home = kgQaHomeFor(bootstrap, harness);
+    expect(home).toEqual({ root: join(harness, "test", "results", "bootstrap"), by: "hosted" });
+    // Beside, never inside: the host's orphan sweep walks only its own kg-qa/.
+    expect(home.root.startsWith(join(harness, KG_QA_RESULTS_DIR))).toBe(false);
+    expect(existsSync(join(home.root, "kg-qa.manifest.json"))).toBe(true);
+  });
+
+  test("with no host, an instance without a qa directory falls back to the convention", () => {
+    expect(kgQaHomeFor(bootstrap).by).toBe("convention");
+  });
+
+  test("nothing audits bootstrap inside bootstrap any more", () => {
+    expect(existsSync(join(bootstrap, "test"))).toBe(false);
   });
 });

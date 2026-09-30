@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+<bpmn:definitions xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
  xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
@@ -161,7 +161,7 @@ The loop back through "root-cause the failure" is the point of drawing this at a
       <bpmn:outgoing>f4</bpmn:outgoing>
     </bpmn:task>
 
-    <bpmn:task id="Task_RunGates" name="Run the platform&#39;s own gates">
+    <bpmn:task id="Task_RunGates" name="Run the platform's own gates">
       <bpmn:documentation>
         Before pushing, not after CI says so. `bun test` passing is NOT the
         gates passing: measured 2026-09-19, a green unit suite sat beside a

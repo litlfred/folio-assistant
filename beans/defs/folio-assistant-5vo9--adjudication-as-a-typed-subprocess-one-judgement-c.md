@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5vo9
 title: 'ADJUDICATION AS A TYPED SUBPROCESS: one judgement contract, reusable in every BPMN'
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-23T06:15:42Z
-updated_at: 2026-09-23T07:30:16Z
+updated_at: 2026-09-29T20:50:32Z
 parent: folio-assistant-ahvw
 ---
 
@@ -196,3 +196,9 @@ Measured before writing anything, and it shrinks this bean substantially:
 
 **So the genuinely missing piece is the data contract**, not the markers. A
 bean that had assumed otherwise would have rebuilt three working mechanisms.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

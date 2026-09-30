@@ -443,22 +443,6 @@ export function formatAge(minutes: number): string {
  */
 export const STAGING_WARN_BYTES = 500 * MB;
 
-/**
- * Three-quarters of the documented Pages ceiling.
- *
- * UNCHANGED by the 100 → 500 MB move, and the gap between them is now 250 MB
- * rather than 650 MB. That is deliberate: `critical` is a property of the
- * PLATFORM (a Pages build over 1 GB does not publish) while the warning point
- * is a property of this repository's working style, so only one of them moves
- * when the retention policy does.
- *
- * At this point the previews alone occupy most of the budget the main site
- * also has to fit inside, and the next deploy is the one that fails outright.
- * `critical` rather than `major` because something is about to be LOST: a
- * Pages build that exceeds the limit does not publish, so the site stops
- * updating.
- */
-export const STAGING_CRITICAL_BYTES = 750 * MB;
 
 /**
  * How recently a branch must have been committed to for its preview to count
@@ -541,16 +525,6 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
       "See STAGING_WARN_BYTES for the per-page addressing sources and bean `xxku` for the " +
       "flushable-container framing.",
   },
-  {
-    metric: "staging-total-bytes",
-    value: STAGING_CRITICAL_BYTES,
-    unit: "bytes",
-    severity: "critical",
-    basis:
-      "Three-quarters of GitHub's documented 1 GB Pages limit. Past here the previews occupy most " +
-      "of the budget the main site must also fit inside, and the next deploy is the one that fails " +
-      "to publish — so something is about to be lost, which is what `critical` means on this scale.",
-  },
 ];
 
 /**
@@ -566,8 +540,9 @@ const STAGING_SIZE_THRESHOLDS: HealthThreshold[] = [
 export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
   const id = "staging-preview-size";
   const summary =
-    "The review previews under `STAGING/` on the publish branch have grown past what a " +
-    "GitHub Pages site can carry alongside the main site.";
+    "How much of the publish branch the review previews occupy, against the owner's budget for " +
+    "them. It MEASURES and makes no claim about publishing: whether the served site is accepted " +
+    "by GitHub is `pages-publish-health`'s subject, and bean `qj9a` is why the two are apart.";
   if (ctx.staging.state === "unknown") {
     return unknownResult(id, summary, STAGING_SIZE_THRESHOLDS, ctx.staging.reason);
   }
@@ -579,26 +554,18 @@ export function stagingSizeCheck(ctx: HealthContext): HealthCheckResult {
   ];
   const findings: HealthFinding[] = [];
 
-  // Deliberately ordered critical-first and `else`-chained: one breach, not
-  // two. A total over 750 MB is also over 100 MB, and reporting both would
-  // make the count of findings a function of how many thresholds happen to be
-  // declared rather than of what is wrong.
-  if (total > STAGING_CRITICAL_BYTES) {
-    findings.push({
-      metric: "staging-total-bytes",
-      severity: "critical",
-      summary:
-        `${ev.previews.length} staging preview(s) total ${formatBytes(total)}, past three-quarters ` +
-        `of GitHub's 1 GB Pages limit — the main site shares that budget.`,
-      action:
-        "Ask which previews are still under review, then have the owner add `staging:cleanup` to the " +
-        "OPEN PRs whose previews are finished with — the label is read from the " +
-        "`pull_request_target: closed` payload, so it works only while the PR can still close with it " +
-        "attached (bean `7umv`). A preview whose PR is already closed is removed by a " +
-        "`feature-staging.yml` dispatch instead; `staging-preview-orphans` lists those with the exact " +
-        "inputs. Do not remove any preview without one of the two.",
-    });
-  } else if (total > STAGING_WARN_BYTES) {
+  // ONE THRESHOLD, since bean `qj9a` split this check. There used to be a
+  // second at 750 MB whose whole justification was a publish consequence —
+  // "the next deploy is the one that fails to publish" — and nothing in this
+  // repository can observe GitHub's enforcement. That argument, and the
+  // documented-ceiling number it rested on, moved to `pages-publish-health`,
+  // which owns the serving question. A threshold belongs with its argument.
+  //
+  // What remains is the owner's own number, and it is a BUDGET rather than a
+  // cliff: 500 MB, set 2026-09-20 ("set stagfing to 500mb. drain if branches
+  // merged"). Being over it is worth telling a person about whatever GitHub
+  // does.
+  if (total > STAGING_WARN_BYTES) {
     findings.push({
       metric: "staging-total-bytes",
       severity: "major",
@@ -1107,6 +1074,11 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
       "a claim with no PR and no branch has announced nothing to anybody. **This check computes only " +
       "the offline half** — time since `updated_at` — so its count is an UPPER BOUND on quiet claims " +
       "and must be read as one: a bean here may have an open PR this sweep cannot see. " +
+      "**THE UPPER BOUND IS NOW CLOSABLE** — `scripts/check-quiet-claim-liveness.ts` (bean `omki`) " +
+      "supplies the network half, and this check stays offline on purpose: `bun run health` must not " +
+      "need a token or a reachable API to say anything. Measured 2026-09-25 on this store, 55 quiet " +
+      "claims resolved to 10 live and 45 genuinely quiet — so the over-count is real and is about " +
+      "a fifth of the number. Read the two together; neither replaces the other. " +
       "72 hours because a claim is meant to become visible at the FIRST commit " +
       "(`continual-progress` invariant 1), sessions are container-scoped and reclaimed, and three days " +
       "spans a weekend without firing on one. It is deliberately far below the 14-day abandonment " +
@@ -1156,6 +1128,104 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
  * records that it was considered and rejected. AGENTS.md: *"never delete ANY
  * bean, including your own"*.
  */
+/**
+ * The four populations `bean-store` computes over `in-progress` beans, as a
+ * pure function of the evidence and a clock.
+ *
+ * **Extracted so a second consumer cannot disagree with the check.**
+ * `bean-quiet-claims`' own `basis` calls its count an UPPER BOUND, because it
+ * has only the offline half of the question — time since `updated_at`. The
+ * network half (an open pull request naming the bean, an unmerged branch
+ * touching its file) is supplied by `scripts/check-quiet-claim-liveness.ts`,
+ * which needs exactly this list as its input. Re-deriving "which claims are
+ * quiet" there would give two definitions of quiet free to drift, and the one
+ * a reader met first would be the one with no threshold `basis` behind it.
+ *
+ * The comments inside came with the code and are load-bearing: `thux`'s
+ * parenthood rule, and why `quietButParenting` is reported rather than
+ * silently subtracted.
+ */
+export function claimPopulations(
+  beans: BeanEvidence[],
+  now: Date,
+): {
+  claimed: BeanEvidence[];
+  stale: { bean: BeanEvidence; age: number }[];
+  quiet: { bean: BeanEvidence; hours: number }[];
+  quietButParenting: BeanEvidence[];
+} {
+    const claimed = beans.filter((b) => b.status === "in-progress" || b.status === "in_progress");
+    const stale = claimed
+      .map((b) => ({ bean: b, age: daysBetween(now, b.updatedAt) }))
+      .filter((x): x is { bean: BeanEvidence; age: number } => x.age !== undefined && x.age > BEAN_STALE_DAYS);
+    // Quiet, not abandoned — see BEAN_QUIET_HOURS. The already-stale ones are
+    // excluded so one bean does not produce two findings saying the same thing
+    // at two timescales; the 14-day finding is the stronger claim and wins.
+    //
+    // AN EPIC IS ALIVE THROUGH ITS CHILDREN — bean `thux`, measured 2026-09-23.
+    //
+    // This check reads one signal, `updated_at` on the bean's own file, and for
+    // a task that is the right signal. For an EPIC it is the wrong one: an epic
+    // is worked by its children, and nothing touches the parent's file while
+    // they move. So an epic accrued quiet hours for doing exactly what an epic
+    // does, and the finding had no action a person could take — refreshing it
+    // means editing a file for no reason, which is `o5qj`'s shape one check
+    // over.
+    //
+    // Measured on the real store the day this landed: of 39 quiet claims, FIVE
+    // were epics with children carrying a live signal — `1xhc` with 8 of them
+    // while reported quiet for 100 hours, `ahvw` with 8, `1swy` and `0lmb` with
+    // 2 each, `8jt6` with 1. `bzyu` was the one epic genuinely quiet (8 open
+    // children, none live) and it still reports, which is the discrimination
+    // this exists for.
+    //
+    // A CHILD IS "MOVING" BY THE SAME CLOCK, and deliberately so. The network
+    // signals — an open pull request naming the bean, an unmerged branch
+    // touching it — are the ones this check has never had and still does not:
+    // `bean-quiet-claims`' own basis calls its count an UPPER BOUND for exactly
+    // that reason, and that sentence stays true. What is removed here is only
+    // the part answerable from the store itself.
+    //
+    // KEYED ON PARENTHOOD, NOT ON `type: epic`. The relation is what carries the
+    // argument — a bean worked through its children is quiet for a reason,
+    // whatever it calls itself — and `type` is a label a bean sets about itself
+    // while `parent` is a fact another bean asserts about it. Keying on the
+    // label would also have to decide what `feature` means, which this check has
+    // no business ruling on. Measured consequence: the network sweep that
+    // motivated this found FIVE epics with live children, and this store-local
+    // rule excuses EIGHT claimed beans. The two numbers answer different
+    // questions and neither corrects the other — network liveness of a child
+    // against a child's file having moved.
+    const movedRecently = (b: BeanEvidence): boolean => {
+      const h = hoursBetween(now, b.updatedAt);
+      return h !== undefined && h <= BEAN_QUIET_HOURS;
+    };
+    const liveChildren = new Set(
+      beans.filter((b) => b.parent !== undefined && movedRecently(b)).map((b) => b.parent!),
+    );
+    const quiet = claimed
+      .map((b) => ({ bean: b, hours: hoursBetween(now, b.updatedAt) }))
+      .filter(
+        (x): x is { bean: BeanEvidence; hours: number } =>
+          x.hours !== undefined &&
+          x.hours > BEAN_QUIET_HOURS &&
+          !stale.some((s) => s.bean.id === x.bean.id) &&
+          !liveChildren.has(x.bean.id),
+      );
+    // REPORTED, NEVER SILENTLY SUBTRACTED. Without this, "no claim went quiet"
+    // and "the quiet ones were all parents of moving work" read identically —
+    // `dh4f`, and the same argument `bean-duplicate-title-groups-adjudicated`
+    // makes above. It counts CLAIMED beans only, so it is a subset of the
+    // denominator the finding already prints.
+    const quietButParenting = claimed.filter(
+      (b) =>
+        liveChildren.has(b.id) &&
+        !stale.some((s) => s.bean.id === b.id) &&
+        (hoursBetween(now, b.updatedAt) ?? 0) > BEAN_QUIET_HOURS,
+    );
+  return { claimed, stale, quiet, quietButParenting };
+}
+
 export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const id = "bean-store";
   const summary =
@@ -1208,75 +1278,7 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
   const decisionRecords = beans.filter((b) => b.consideredOptions !== undefined);
   const thin = decisionRecords.filter((b) => (b.consideredOptions ?? 0) < 2);
   const rendered = beans.filter((b) => b.renderedDecision === true);
-  const claimed = beans.filter((b) => b.status === "in-progress" || b.status === "in_progress");
-  const stale = claimed
-    .map((b) => ({ bean: b, age: daysBetween(ctx.now, b.updatedAt) }))
-    .filter((x): x is { bean: BeanEvidence; age: number } => x.age !== undefined && x.age > BEAN_STALE_DAYS);
-  // Quiet, not abandoned — see BEAN_QUIET_HOURS. The already-stale ones are
-  // excluded so one bean does not produce two findings saying the same thing
-  // at two timescales; the 14-day finding is the stronger claim and wins.
-  //
-  // AN EPIC IS ALIVE THROUGH ITS CHILDREN — bean `thux`, measured 2026-09-23.
-  //
-  // This check reads one signal, `updated_at` on the bean's own file, and for
-  // a task that is the right signal. For an EPIC it is the wrong one: an epic
-  // is worked by its children, and nothing touches the parent's file while
-  // they move. So an epic accrued quiet hours for doing exactly what an epic
-  // does, and the finding had no action a person could take — refreshing it
-  // means editing a file for no reason, which is `o5qj`'s shape one check
-  // over.
-  //
-  // Measured on the real store the day this landed: of 39 quiet claims, FIVE
-  // were epics with children carrying a live signal — `1xhc` with 8 of them
-  // while reported quiet for 100 hours, `ahvw` with 8, `1swy` and `0lmb` with
-  // 2 each, `8jt6` with 1. `bzyu` was the one epic genuinely quiet (8 open
-  // children, none live) and it still reports, which is the discrimination
-  // this exists for.
-  //
-  // A CHILD IS "MOVING" BY THE SAME CLOCK, and deliberately so. The network
-  // signals — an open pull request naming the bean, an unmerged branch
-  // touching it — are the ones this check has never had and still does not:
-  // `bean-quiet-claims`' own basis calls its count an UPPER BOUND for exactly
-  // that reason, and that sentence stays true. What is removed here is only
-  // the part answerable from the store itself.
-  //
-  // KEYED ON PARENTHOOD, NOT ON `type: epic`. The relation is what carries the
-  // argument — a bean worked through its children is quiet for a reason,
-  // whatever it calls itself — and `type` is a label a bean sets about itself
-  // while `parent` is a fact another bean asserts about it. Keying on the
-  // label would also have to decide what `feature` means, which this check has
-  // no business ruling on. Measured consequence: the network sweep that
-  // motivated this found FIVE epics with live children, and this store-local
-  // rule excuses EIGHT claimed beans. The two numbers answer different
-  // questions and neither corrects the other — network liveness of a child
-  // against a child's file having moved.
-  const movedRecently = (b: BeanEvidence): boolean => {
-    const h = hoursBetween(ctx.now, b.updatedAt);
-    return h !== undefined && h <= BEAN_QUIET_HOURS;
-  };
-  const liveChildren = new Set(
-    beans.filter((b) => b.parent !== undefined && movedRecently(b)).map((b) => b.parent!),
-  );
-  const quiet = claimed
-    .map((b) => ({ bean: b, hours: hoursBetween(ctx.now, b.updatedAt) }))
-    .filter(
-      (x): x is { bean: BeanEvidence; hours: number } =>
-        x.hours !== undefined &&
-        x.hours > BEAN_QUIET_HOURS &&
-        !stale.some((s) => s.bean.id === x.bean.id) &&
-        !liveChildren.has(x.bean.id),
-    );
-  // REPORTED, NEVER SILENTLY SUBTRACTED. Without this, "no claim went quiet"
-  // and "the quiet ones were all parents of moving work" read identically —
-  // `dh4f`, and the same argument `bean-duplicate-title-groups-adjudicated`
-  // makes above. It counts CLAIMED beans only, so it is a subset of the
-  // denominator the finding already prints.
-  const quietButParenting = claimed.filter(
-    (b) =>
-      liveChildren.has(b.id) &&
-      !stale.some((s) => s.bean.id === b.id) &&
-      (hoursBetween(ctx.now, b.updatedAt) ?? 0) > BEAN_QUIET_HOURS,
-  );
+  const { claimed, stale, quiet, quietButParenting } = claimPopulations(beans, ctx.now);
 
   // A CLAIM THAT ITS OWN CRITERIA SAY IS FINISHED — bean `fkjo`.
   //
@@ -1499,6 +1501,114 @@ const TODO_THRESHOLDS: HealthThreshold[] = [
  * the alternative is adding it on the day it is already too late, which is the
  * whole of bean `xom7`.
  */
+/**
+ * How many instruments this repository has for OBSERVING its published site.
+ *
+ * Bean `qj9a` split this out of `staging-preview-size`, which had been carrying
+ * a threshold whose entire justification was a publish consequence — *"the next
+ * deploy is the one that fails to publish, so something is about to be lost"* —
+ * over a question nothing here can answer. Rewording that basis fixed the
+ * sentence; this check is what stops the sentence drifting back, because the
+ * claim now has nowhere to live except a check that must first establish it can
+ * see.
+ *
+ * ## Its subject is the INSTRUMENT, not the site — and that is forced
+ *
+ * The obvious design is a check whose subject is "is the published site
+ * healthy", reporting `unknown` until something can look. **That would break the
+ * whole health family**, and the mechanism is {@link healthVerdict}: one
+ * `unknown` takes the ENTIRE report to `unknown`, which leaves the tracking
+ * issue untouched and exits 2. `health-check.yml`'s own comment says what that
+ * is worth — *"the whole verdict goes to `unknown` — correctly, and uselessly"*.
+ * A permanently blind check would therefore make the daily sweep permanently
+ * useless, and every other check's verdict unreadable behind it.
+ *
+ * So the subject is narrowed to something DETERMINABLE: does an instrument
+ * exist? That is answerable today (it does not), so this reports a `finding`
+ * with an action, and it never reports `unknown` about its own subject. The
+ * reframing is not a dodge — it is the more useful question, because it
+ * ratchets toward the probe instead of restating a gap.
+ *
+ * ## Measured 2026-09-26 — every route refused
+ *
+ * | route | result |
+ * |---|---|
+ * | `GET https://litlfred.github.io/folio-assistant/` | `connect_rejected`, egress policy |
+ * | the same for a `STAGING/<slug>/` page | `connect_rejected` |
+ * | `GET /repos/:o/:r/pages` | every field `null` |
+ * | `GET /repos/:o/:r/pages/builds` | "not permitted through this proxy" |
+ * | `actions/workflows/pages-build-deployment/runs` | `total_count` absent |
+ *
+ * **And a green deploy is not an observation.** `docs-site.yml` going green
+ * proves the push to `gh-pages` succeeded; serving is GitHub's side of the
+ * line. That distinction is the one `qj9a` got wrong before it measured, and it
+ * is why "CI is green" cannot be counted as an instrument here.
+ */
+export const PAGES_INSTRUMENTS_REQUIRED = 1;
+
+export const PAGES_PUBLISH_THRESHOLDS: HealthThreshold[] = [
+  {
+    metric: "pages-serving-instruments",
+    value: PAGES_INSTRUMENTS_REQUIRED,
+    unit: "count",
+    severity: "major",
+    basis:
+      "ONE is the floor, not a calibration: a claim about the published site needs at least one way " +
+      "to look at it, and zero ways is the state bean `qj9a` measured. `major` rather than " +
+      "`critical` because nothing is being lost — GitHub's documented 1 GB Pages limit was exceeded " +
+      "continuously from 2026-09-23 (1.46 GB) to at least 2026-09-26 (2.67 GB served, measured off " +
+      "`origin/gh-pages`) with every deploy succeeding, so if the ceiling is enforced at all it is " +
+      "not enforced as a hard refusal on push. WHETHER IT IS ENFORCED REMAINS UNKNOWN and is exactly " +
+      "what an instrument would settle; until one exists, no check here may say a publish is about " +
+      "to fail. `critical` on this scale means something is about to be lost, and asserting that " +
+      "again without an instrument is the defect this check was split out to prevent.",
+  },
+];
+
+export function pagesPublishHealthCheck(_ctx: HealthContext): HealthCheckResult {
+  const id = "pages-publish-health";
+  const summary =
+    "Whether this repository can OBSERVE its own published site. It deliberately does not judge " +
+    "the site — see this module's note on why a check whose subject is unobservable would take " +
+    "the whole report to `unknown`, correctly and uselessly.";
+
+  // Zero, and a LITERAL rather than a probe, deliberately. A probe that tries
+  // the network and fails would report `unknown` — the state this check exists
+  // to avoid — and would make a daily sweep depend on an egress policy it
+  // cannot influence. When an instrument lands it registers itself here, and
+  // the count becomes a fact about the repository rather than about one run's
+  // connectivity.
+  const instruments = 0;
+  const measurements: HealthMeasurement[] = [
+    {
+      metric: "pages-serving-instruments",
+      value: instruments,
+      unit: "count",
+      command: "none registered — see PAGES_PUBLISH_THRESHOLDS",
+    },
+  ];
+  const findings: HealthFinding[] =
+    instruments >= PAGES_INSTRUMENTS_REQUIRED
+      ? []
+      : [
+          {
+            metric: "pages-serving-instruments",
+            severity: "major",
+            summary:
+              "Nothing in this repository can observe the published site, so no check may claim a " +
+              "publish is failing or about to fail.",
+            action:
+              "Build the probe, and build it in CI rather than here: every route from an agent's " +
+              "container is refused by egress policy, so it cannot be written or tested locally. It " +
+              "needs to fetch the published site and record HTTP status and served size, then " +
+              "register itself as the instrument this check counts. Until then, a person opening " +
+              "the site is the only observation available, and `staging-preview-size` reports the " +
+              "owner's budget without claiming anything about serving.",
+          },
+        ];
+  return settle(id, summary, PAGES_PUBLISH_THRESHOLDS, measurements, findings);
+}
+
 export function todoStoreCheck(ctx: HealthContext): HealthCheckResult {
   const id = "todo-store";
   const summary = "The human todo store: how many items are open, and whether any have gone stale.";
@@ -1558,8 +1668,17 @@ export const HEALTH_CHECKS: readonly {
 }[] = [
   {
     id: "staging-preview-size",
-    summary: "Total size of the `STAGING/` review previews on the publish branch (owner's 100 MB warning).",
+    summary:
+      "Total size of the `STAGING/` review previews on the publish branch, against the owner's " +
+      "budget. Measurement only — the serving question is `pages-publish-health`.",
     run: stagingSizeCheck,
+  },
+  {
+    id: "pages-publish-health",
+    summary:
+      "Whether anything here can observe the published site. Split from `staging-preview-size` " +
+      "(bean `qj9a`) so a claim about publishing has to establish it can see first.",
+    run: pagesPublishHealthCheck,
   },
   {
     id: "staging-preview-orphans",

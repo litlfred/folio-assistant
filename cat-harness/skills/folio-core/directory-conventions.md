@@ -30,6 +30,19 @@ forces the harness to claim one it does not have.
 So the general object is **an instance with directories, each holding a
 graph**. `folio` is one graph kind among several.
 
+## Node Kinds are declared: `nodeSchemas` (owner, 2026-09-29)
+
+An instance lists every `$schema` value its files carry, and the published
+schema that defines it, in its declaration's **`nodeSchemas`** — a path
+relative to the declaration, or an IRI for a published standard. It is
+bootstrap's field (`KnowledgeGraphDeclarationSchema` in `graph.ts`), so a
+reader with nothing installed can go from a file's `$schema` to its Node
+Schema without knowing any harness. The graph-kind registry's `nodeSchemas`
+is a different, harness-side table: it maps a tag to a TypeScript `validator`
+or `shape`, which only a harness can run. `graph.test.ts` fails on a bootstrap
+file whose `$schema` is not declared, and on a declared local schema that does
+not fix that very tag.
+
 ## The graph kinds
 
 The vocabulary is **open**, and split across two layers.
@@ -115,6 +128,7 @@ decides it.
 | `models` | **bootstrap** | which languages a model is good at, and whether a human checked (`models/models.json`). `context`: READ when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is precisely what the validation state exists to distrust. In BOOTSTRAP because an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer. One INPUT to the [`communication-language`](communication-language.md) determination, never the answer. | no |
 | `bean-defs` | **harness** | work items — one Markdown file each, in the layout the `beans` CLI reads. Authored by people and agents. | no |
 | `workflow-state` | **harness** | running BPMN instances — one JSON each, `"$schema": "folio-workflow-instance/v1"`. Owned by the interpreter, never hand-edited. | no |
+| `session-survey` | **harness** | published surveys of a commit window — one JSON each, `"$schema": "folio-session-survey/v1"`. Bean `6ptx`: eight sessions surveyed the same ~2435-commit window in one minute and that day produced ONE authored commit. Each records the window's **two edge commits**, so a later session computes the uncovered delta (`bun run survey:owed`) instead of re-deriving the range — staleness decidable rather than guessed, and an unreachable upper edge reads as *unusable*, never as covered. `state` because a running session writes it; `recordsWork: false` because a survey is a READING of work, not work anybody is partway through. | no |
 | `todos` | **harness** | human actors' outstanding work as a whole (`todos/`); its inner nodes are declared by `todos/todos.json` | no |
 | `boards` | **harness** | boards — one file each, `"$schema": "folio-board/v1"`. A board is a **diagram OF** a folio, not a container of one: it declares what it shows, and a folio with no board is complete. The semantic half of the OMG split the owner named — *"treat it like OMG specs and BPMN layout. relationship first, visualiztion alter."* | no |
 | `board-positions` | **harness** | where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The **Diagram Interchange** half: it points at notes and is never pointed back at, which is why a note carries no `x`, `y`, `board` or `position`. `state` rather than `content`, because a running process writes it every time somebody moves a note. | no |
@@ -651,6 +665,48 @@ What is still true and worth reading off it: its `cat-harness` id points at
 declares nothing it does not have. A `library` entry appears in `who-iris`'s
 declaration only when the corpus moves there, because a declared-but-absent
 directory makes every consumer scan nothing and report a clean run over it.
+
+## Authoring an entry — the checklist
+
+The rules are argued elsewhere in this skill and its neighbours; this is the
+list to run down when you add or edit a `directories[]` entry, with where each
+one is argued.
+
+1. **`id`, `path`, `graphKinds`** — required. Refer to the entry by `id`
+   everywhere else; **ids are stable, paths are not** (§"Declare what exists",
+   §"Inheritance"). Pick each kind by what a process does with it
+   ([`content-context-and-state-graphs`](content-context-and-state-graphs.md)).
+2. **`title`** — a short noun phrase a reader would put on a tab. It is the
+   directory README's heading; absent, the heading falls back to the id and
+   `subgraph-readmes` records a `no-title` finding.
+3. **`description`** — one or two sentences **for a reader**: what the
+   directory holds and what it is for, **60 words at most**
+   (`DESCRIPTION_WORDS`, finding `long-description`). It is printed under the
+   README heading. History, rulings, measurements and argument go in a
+   `_description_comment` on the same entry (the `_<field>_comment` convention
+   the entries already use) — `_` keys are annotations every loader drops
+   (§"Node schemas, one per `$schema` family").
+4. **Declare only what exists**, or say why not with `absent: { reason }`.
+5. **`coverage`** — the `skill` that governs it, the `docs` that say what it is
+   for, the `visualiser` that renders it; an opt-out carries its reason
+   (`SubgraphCoverageSchema`). Without a skill the directory is unreachable
+   by an agent even where a person can read it.
+6. **The files inside declare what they are** — front matter, a `$schema`, a
+   leading comment — never an extension or a location
+   (§"A sub-sub-graph", §"Every other marker"). The README's "what it is"
+   column reads exactly that, so a file that says nothing shows as a gap.
+7. **Generated or authored — say which, in the file.** A generated file
+   carries the markers of the region it owns
+   ([`readme-sections`](readme-sections.md)) or a header naming the command
+   that wrote it, is never hand-edited, and has a `--check` twin in CI.
+8. **A missing fact is a QA finding, never a blank or a guess** — the three
+   states of §"Three states, as everywhere else here". Record it in a
+   committed sidecar under `test/results/`; do not fill it with a plausible
+   default.
+9. **Then regenerate**: `bun run readme:subgraphs` renders the directory's
+   README from this entry ([`liquid-templates`](liquid-templates.md)), and
+   `bun run kg:export` publishes the entry as a Directory node
+   ([`kg-export`](kg-export.md)).
 
 ## Naming — a self-identifying declaration, stub-named artefacts (STRICT)
 

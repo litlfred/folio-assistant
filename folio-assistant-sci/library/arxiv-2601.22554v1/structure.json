@@ -1,0 +1,333 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2601.22554v1",
+ "source": {
+  "file": "2601.22554v1.pdf",
+  "sha256": "d5f16d242082321870bd0a478043f7e0dc3c21b81d5e451ac4391b4f37107978",
+  "bytes": 2039315,
+  "pages": 15,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-29T21:41:01Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2601.22554",
+   "version": "1",
+   "primary_class": "cs.LO",
+   "stamp_date": "30 Jan 2026"
+  },
+  "doi": null,
+  "title": "LeanArchitect LeanArchitect",
+  "authors_raw": "Automating Blueprint Generation for Humans and AI",
+  "title_lines": [
+   "LeanArchitect",
+   "LeanArchitect"
+  ],
+  "abstract": "Large-scale formalization projects in Lean rely on blueprints: structured dependency graphs linking informal mathematical exposition to formal declarations. While blueprints are central to human collaboration, existing tooling treats the informal (LATEX) and formal (Lean) components as largely decoupled artifacts, leading to maintenance overhead and limiting integration with AI automation. We present LeanArchitect, a Lean package for extracting, managing, and exporting blueprint data directly from Lean code. LeanArchitect introduces a declarative annotation mechanism that associates formal declarations with blueprint metadata, automatically infers dependency information, and generates LATEX blueprint content synchronized with the Lean development. This design eliminates duplication between formal and informal representations and eases fine-grained progress tracking for both human contributors and AI-based theorem provers. We demonstrate the practicality of LeanArchitect through the automated conversion of several large existing blueprint-driven projects, and through a human\u2013AI collaboration case study formalizing a multivariate Taylor theorem. Our results show that LeanArchitect improves maintainability, exposes latent inconsistencies in existing blueprints, and provides an effective interface for integrating AI tools into real-world formalization workflows. arXiv:2601.22554v1 [cs.LO] 30 Jan 2026",
+  "docinfo": {
+   "Title": "LeanArchitect: Automating Blueprint Generation for Humans and AI",
+   "Author": "Thomas Zhu; Pietro Monticone; Jeremy Avigad; Sean Welleck",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:57610bf)"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 2,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Methods",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Overview",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Blueprint Attribute",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Environment Extension",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "LaTeX Export",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Project Management Using LeanArchitect",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Case Studies",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "PrimeNumberTheoremAnd",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Converting Existing Projects to LeanArchitect Format",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Blueprint-Based Autoformalization",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Limitations",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Technical Details",
+   "page": 11,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Example",
+   "page": 11,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Implementation",
+   "page": 12,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 1637,
+   "n_words": 202
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 2943,
+   "n_words": 385
+  },
+  {
+   "id": "sec-001-related-work",
+   "number": null,
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 2624,
+   "n_words": 363
+  },
+  {
+   "id": "sec-002-methods",
+   "number": null,
+   "title": "Methods",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-003-overview",
+   "number": null,
+   "title": "Overview",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 684,
+   "n_words": 97
+  },
+  {
+   "id": "sec-004-environment-extension",
+   "number": null,
+   "title": "Environment Extension",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 370,
+   "n_words": 50
+  },
+  {
+   "id": "sec-005-blueprint-attribute",
+   "number": null,
+   "title": "Blueprint Attribute",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 5,
+   "n_chars": 2642,
+   "n_words": 370
+  },
+  {
+   "id": "sec-006-latex-export",
+   "number": null,
+   "title": "LaTeX Export",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1063,
+   "n_words": 146
+  },
+  {
+   "id": "sec-007-project-management-using-leanarchitect",
+   "number": null,
+   "title": "Project Management Using LeanArchitect",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1094,
+   "n_words": 165
+  },
+  {
+   "id": "sec-008-case-studies",
+   "number": null,
+   "title": "Case Studies",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 19,
+   "n_words": 3
+  },
+  {
+   "id": "sec-009-primenumbertheoremand",
+   "number": null,
+   "title": "PrimeNumberTheoremAnd",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 2459,
+   "n_words": 337
+  },
+  {
+   "id": "sec-010-converting-existing-projects-to-leanarchitect-fo",
+   "number": null,
+   "title": "Converting Existing Projects to LeanArchitect Format",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 1506,
+   "n_words": 219
+  },
+  {
+   "id": "sec-011-blueprint-based-autoformalization",
+   "number": null,
+   "title": "Blueprint-Based Autoformalization",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 9,
+   "n_chars": 4339,
+   "n_words": 707
+  },
+  {
+   "id": "sec-012-limitations",
+   "number": null,
+   "title": "Limitations",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 11,
+   "n_chars": 8884,
+   "n_words": 1083
+  },
+  {
+   "id": "sec-013-technical-details",
+   "number": null,
+   "title": "Technical Details",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-014-example",
+   "number": null,
+   "title": "Example",
+   "level": 2,
+   "page_start": 11,
+   "page_end": 13,
+   "n_chars": 1564,
+   "n_words": 286
+  },
+  {
+   "id": "sec-015-implementation",
+   "number": null,
+   "title": "Implementation",
+   "level": 2,
+   "page_start": 13,
+   "page_end": 15,
+   "n_chars": 8687,
+   "n_words": 1401
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 16,
+  "toc_inferred_entries": 0,
+  "sections": 17,
+  "chars_total": 40521
+ }
+}

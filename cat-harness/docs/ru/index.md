@@ -1,12 +1,7 @@
 ---
 layout: default
-title: "Главная (RU)"
+title: Ассистент фолио
 lang: ru
-# `lang` above is what makes this a translation -- nothing reads `fr` out of
-# the path. `nav_exclude` keeps it out of the statically built nav, and
-# `mountNavLocale` (docs/assets/js/docs-ui.js) puts it back in place of its
-# source when this locale is selected. There is no `nav_order`: it stands
-# where its source stands. skills/folio-core/translation-manager.md
 nav_exclude: true
 translation_status: unverified
 translation_source: index.md
@@ -96,7 +91,7 @@ folio-assistant **расширяем** — каждый тип контента 
 | **Руководства по реализации ВОЗ SMART Guidelines** | Ресурсы FHIR L3, FSH, выходные данные IG Publisher | [`authoring-who-smart-guidelines`](../content-types.html#who-smart-implementation-guides-l3) |
 | **Другие** | Расширяемость — добавьте новый адаптер + пакет навыков | [Добавление типа контента](../guides/new-content-type.html) |
 
-Сквозной жизненный цикл [`content-lifecycle`](../content-types.html#the-content-lifecycle)
+Сквозной пакет [`content-lifecycle`](../content-types.html#the-content-lifecycle)
 (планирование → написание → валидация → рецензирование → тестирование → публикация → обратная связь → вывод из эксплуатации)
 применим ко всем типам контента.
 [Процесс публикации](../publication-workflow.html) моделирует его должным образом —
@@ -109,33 +104,52 @@ folio-assistant **расширяем** — каждый тип контента 
 - **[Начало работы](../getting-started.html)** — подключите MCP-сервер к вашей LLM и запустите свой первый навык.
 - **[Руководство: Написание статьи с помощью folio-assistant](../guides/writing-a-paper.html)** — пошаговое руководство под управлением LLM с имитацией сессии чата.
 - **[Типы контента](../content-types.html)** — формализм каждого предметного домена создания контента.
-- **[Процесс публикации](../publication-workflow.html)** — диаграммы дорожек BPMN процессов редактирования и публикации.
+- **[Процесс публикации](../publication-workflow.html)** — диаграммы дорожек BPMN процессов редактирования и публикации: этап валидации HCI, кто что рецензирует и общий план работ.
 - **[Онбординг агента](../guides/agent-onboarding.html)** — вводный инструктаж для LLM-агента, подключенного к фолио: первые шаги, поиск навыков, объектная модель контента, вспомогательные QA-файлы.
 - **[Навыки и роли](../skills.html)** — описание каждого навыка и роли и их совместная работа с LLM.
 - **[Справочник схем навыков](../reference/skills/)** — сгенерированные контракты входных и выходных данных для каждого навыка.
 - **[Справочник по TypeScript API](../api/)** — объектная модель контента (`Block`, `Chapter`, `Paper`, строители, ограничения Zod).
 - **[Архитектура](../architecture.html)** — адаптеры, MCP-сервер, RBAC, блочная модель.
+- **[The KGraph](../kgraph.html)** — таксономия подграфов, направление ссылок и распределение работы между репозиториями.
+- **[The Harness](../harness.html)** — инстанцирование, обход зависимостей и обязательства при оснащении каталога.
+
+Два навыка стоит прочитать до страниц выше, поскольку все остальное опирается на них: [`getting-started`](../reference/skill-instructions/getting-started.html) определяет маршрут того, что вы на самом деле пытаетесь сделать, а [`placement`](../reference/skill-instructions/placement.html) определяет, где должен находиться новый узел, прежде чем вы его создадите.
 
 ## Карта документации
 
 ```mermaid
 flowchart TD
-    Главная --> Уст[Установка]
-    Главная --> Начало[Начало работы]
-    Уст --> Начало
-    Начало --> Рук[Руководство: написание статьи]
-    Начало --> ТК[Типы контента]
-    ТК --> Навыки[Навыки и роли]
-    ТК --> ПП["Процесс публикации<br/>(BPMN с дорожками)"]
-    ТК --> Гайды[Руководства по созданию]
-    Гайды --> Статья[Статьи: Lean + LaTeX]
-    Гайды --> DAK[WHO SMART DAK / L2]
-    Гайды --> IG[WHO SMART IG / L3 FHIR]
-    Гайды --> Новый[Добавить тип контента]
-    Навыки --> Справ[Справочник схем]
-    ТК --> Справ
-    Справ --> API[Справочник TypeScript API]
-    Главная --> Арх[Архитектура]
+    Home[Главная] --> Install[Установка]
+    Home --> GS[Начало работы]
+    Install --> GS
+    GS --> Tut[Руководство: написание статьи]
+    GS --> CT[Типы контента]
+    CT --> Skills[Навыки и роли]
+    CT --> WF["Процесс публикации<br/>(BPMN с дорожками)"]
+    CT --> Guides[Руководства по созданию]
+    Guides --> Paper["Статьи: Lean + LaTeX"]
+    Guides --> DAK[WHO SMART DAK / L2]
+    Guides --> IG[WHO SMART IG / L3 FHIR]
+    Guides --> New[Добавить тип контента]
+    Skills --> Ref[Справочник схем]
+    CT --> Ref
+    Ref --> API[Справочник TypeScript API]
+    Home --> Arch[Архитектура]
+
+    click Skills "skills.html" "Skills & roles"
+    click WF "publication-workflow.html" "Publication workflow (BPMN)"
+    click Install "installation.html" "Installation"
+    click GS "getting-started.html" "Getting started"
+    click Tut "guides/writing-a-paper.html" "Tutorial: writing a paper"
+    click CT "content-types.html" "Content types"
+    click Guides "guides/" "Authoring guides"
+    click Paper "guides/writing-a-paper.html" "Papers: Lean + LaTeX"
+    click DAK "guides/who-smart-dak.html" "WHO SMART DAK (L2)"
+    click IG "guides/who-smart-ig.html" "WHO SMART IG (L3 FHIR)"
+    click New "guides/new-content-type.html" "Add a content type"
+    click Ref "reference/skills/" "Skill schema reference"
+    click API "api/" "TypeScript API reference"
+    click Arch "architecture.html" "Architecture"
 ```
 
 > Узлы карты кликабельны на сайте документации.

@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-uml-overview.ts — do not hand-edit
 title: "UML — cat-harness/docs"
 nav_exclude: true
 ---
@@ -102,7 +103,7 @@ classDiagram
       status [1] string
       type [1] string
       priority [1] string
-      parent [1] string
+      parent [1] '' | string
       blocking [0..*] string[]
       blockedBy [0..*] string[]
       createdAt [1] string

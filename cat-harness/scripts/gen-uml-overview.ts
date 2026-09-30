@@ -47,6 +47,8 @@
  * @covers uml
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+
+import { gitCorpus } from "../schemas/git-corpus.ts";
 import { dirname, join, relative, resolve } from "node:path";
 import type { z } from "zod";
 
@@ -57,7 +59,7 @@ import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-regist
 import { readUmlPalette } from "./uml-palette.js";
 import { bothViews, gridLinks, renderSvgs, safeId, sha256, svgStamp, views, type RenderJob } from "./plantuml-render.js";
 import { detangleResultsDir } from "../schemas/detangle-sidecar.js";
-import { schemasViewPuml } from "./gen-object-model-uml.js";
+import { glossaryLinksMd, schemasViewPuml } from "./gen-object-model-uml.js";
 import { resolveKindValidator, resolveNodeSchemas, type NodeSchemaResolution } from "../schemas/kind-validator.js";
 
 const HARNESS = resolve(import.meta.dir, "..");
@@ -285,8 +287,37 @@ function tagsUnder(dir: string): Set<string> {
 }
 
 /** The JSON files under `dir`, grouped by the `$schema` tag each carries. */
+/**
+ * The `$schema`-tagged JSON nodes under {@link dir}, by tag.
+ *
+ * **Asked of git, not of the disk** — the fourth scanner in this repository to
+ * need that said out loud, and the third to need it on one day (bean `rsi6`,
+ * after `ramz` and `xd1g`). A bare walk descends into any untracked subtree a
+ * declared directory happens to contain, and a publishable package's
+ * `node_modules/` holds thousands of `.json` files with `$schema` tags that
+ * are facts about other projects.
+ *
+ * The `statSync` in the fallback is guarded because a DANGLING SYMLINK threw
+ * `ENOENT` here and killed the whole generator, which then produced no
+ * overview at all rather than an overview missing one file.
+ */
 function filesByTag(dir: string): Map<string, string[]> {
   const out = new Map<string, string[]>();
+  const record = (p: string): void => {
+    try {
+      const tag = (JSON.parse(readFileSync(p, "utf8")) as { $schema?: unknown })?.$schema;
+      if (typeof tag === "string") out.set(tag, [...(out.get(tag) ?? []), p]);
+    } catch {
+      // not a node
+    }
+  };
+
+  const listed = gitCorpus(dir, ["*.json"]);
+  if (listed !== undefined) {
+    for (const p of listed) record(p);
+    return out;
+  }
+
   const walkDir = (d: string): void => {
     let entries: string[];
     try {
@@ -296,7 +327,13 @@ function filesByTag(dir: string): Map<string, string[]> {
     }
     for (const e of entries) {
       const p = join(d, e);
-      if (statSync(p).isDirectory()) walkDir(p);
+      let isDir: boolean;
+      try {
+        isDir = statSync(p).isDirectory();
+      } catch {
+        continue; // dangling symlink: not readable is not a reason to stop
+      }
+      if (isDir) walkDir(p);
       else if (p.endsWith(".json")) {
         try {
           const tag = (JSON.parse(readFileSync(p, "utf8")) as { $schema?: unknown })?.$schema;
@@ -559,6 +596,12 @@ function page(opts: {
   const L = [
     "---",
     "layout: default",
+    // Says it is generated, so a consumer reads a declaration rather than
+    // inferring one from `docs/uml/`. The two copies this script writes --
+    // `uml/overview/` and `docs/uml/overview/` -- are the same pages, and
+    // 195 of them were reporting to `check:reference-direction` as authored
+    // prose naming instances above this one (2026-09-24).
+    "generated: scripts/gen-uml-overview.ts — do not hand-edit",
     `title: "UML — ${opts.title}"`,
     // Menu: the index and one entry per harness. The ~85 sub-graph pages stay
     // out of it and are reached from their harness page, because a menu that
@@ -672,6 +715,7 @@ async function build(): Promise<Map<string, string>> {
   const index = [
     "---",
     "layout: default",
+    "generated: scripts/gen-uml-overview.ts — do not hand-edit",
     `title: "${NAV_PARENT}"`,
     // After the numbered top-level pages (the highest is 14 today): a
     // reference, not a first read.
@@ -683,11 +727,13 @@ async function build(): Promise<Map<string, string>> {
     "",
     "## The harness schemas",
     "",
-    "Schema, Role, Actor, Skill, User Story, Process, Task and Test, each box read from the schema behind it; the stereotype names which. Colours are the five families in `uml.css`.",
+    "Schema, Role, Actor, Skill, Voice, User Story, Process, Task and Test, each box read from the schema behind it; the stereotype names which. Colours are the five families in `uml.css`. Every arrow runs from the dependent to the general node: a Task realises the Skill it implements, a Voice and a User Story point at their Role, and a Test Run is checked against its Skill's input and output schemas.",
+    "",
+    glossaryLinksMd(),
     "",
     `**Source:** [PlantUML](${REPO_URL}/blob/main/${relative(REPO, SCHEMAS_PUML)}) · the full model, with Bean and Todo, is [below](#the-full-object-model).`,
     "",
-    ...views("/assets/img/uml/harness-schemas.svg", "UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships."),
+    ...views("/assets/img/uml/harness-schemas.svg", "UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, Voice, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships."),
     "",
     "## The full object model",
     "",

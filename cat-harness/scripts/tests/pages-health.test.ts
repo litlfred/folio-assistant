@@ -526,3 +526,129 @@ describe("renderPages — what it refuses to say", () => {
     expect(out).toMatch(/Window:.*100 recent run/);
   });
 });
+
+describe("coalescing or starvation — bean `thsz`", () => {
+  // The counts alone are ambiguous by a factor that matters. GitHub Pages runs
+  // ONE deployment per repository, so every push to the publish ref cancels the
+  // build in flight and the survivor publishes everything on the ref: during a
+  // busy hour most builds are cancelled BY DESIGN. The same share, when nothing
+  // is getting through, means the site is frozen.
+  //
+  // This section was measured leading its own author wrong: 78 cancelled
+  // against 21 succeeded read as a ten-hour outage, and the newest run before
+  // the quiet period had SUCCEEDED. The gap was nobody pushing.
+  const ok = (over: Partial<PagesReport> = {}): PagesReport => ({
+    health: { total: 10, success: 2, cancelled: 8, failure: 0, unsettled: 0 },
+    publishBranch: "gh-pages",
+    supersedes: [],
+    ...over,
+  });
+
+  test("newestSettled skips a run still in flight", () => {
+    // `latest` is `pages[0]`, which is routinely unsettled — it was in the run
+    // that produced this bean. Reading the newest outcome off it would answer
+    // "in progress" to a question that has an answer one row down.
+    const h = pagesHealth([
+      pages({ status: "in_progress", conclusion: null as unknown as string }),
+      pages({ conclusion: "cancelled", created_at: "2026-09-25T16:29:05Z" }),
+      pages({ conclusion: "success", created_at: "2026-09-25T16:10:26Z" }),
+    ]);
+    expect(h.latest?.status).toBe("in_progress");
+    expect(h.newestSettled?.conclusion).toBe("cancelled");
+    expect(h.lastSuccessAt).toBe("2026-09-25T16:10:26Z");
+  });
+
+  test("an unsettled run is never the last success, even if it claims one", () => {
+    // A surviving mutation found this untested: dropping the `completed` guard
+    // from `lastSuccessAt` changed nothing any test could see.
+    //
+    // The guard is not dead code, it is this module's standing rule — the
+    // tallies check `status !== "completed"` FIRST, so a conclusion on a run
+    // that has not settled is not a verdict. Applying that rule here and
+    // nowhere else would let a half-reported run set the "site is as of" time,
+    // which is the one number in the section a reader acts on.
+    const h = pagesHealth([
+      pages({ status: "in_progress", conclusion: "success", created_at: "2026-09-25T17:00:00Z" }),
+      pages({ conclusion: "success", created_at: "2026-09-25T16:10:26Z" }),
+    ]);
+    expect(h.lastSuccessAt).toBe("2026-09-25T16:10:26Z");
+    expect(h.success).toBe(1); // the in-flight one is unsettled, not a success
+    expect(h.unsettled).toBe(1);
+  });
+
+  test("a newest-settled SUCCESS says the share was coalescing", () => {
+    // The case that nearly produced a false outage report. Eight cancellations
+    // behind a green newest run are superseded builds whose content shipped in
+    // the survivor.
+    const out = renderPages(
+      ok({
+        health: {
+          total: 10, success: 2, cancelled: 8, failure: 0, unsettled: 0,
+          newestSettled: { name: PAGES_WORKFLOW, status: "completed", conclusion: "success", created_at: "2026-09-25T04:57:05Z" },
+          lastSuccessAt: "2026-09-25T04:57:05Z",
+        },
+      }),
+    );
+    expect(out).toContain("newest deployment to settle SUCCEEDED");
+    expect(out).toContain("coalescing, not failure");
+    expect(out).not.toContain("starvation rather than");
+  });
+
+  test("a newest-settled CANCELLATION names starvation and how far behind", () => {
+    const out = renderPages(
+      ok({
+        health: {
+          total: 10, success: 2, cancelled: 8, failure: 0, unsettled: 0,
+          newestSettled: { name: PAGES_WORKFLOW, status: "completed", conclusion: "cancelled", created_at: "2026-09-25T16:29:05Z" },
+          lastSuccessAt: "2026-09-25T16:10:26Z",
+        },
+      }),
+    );
+    expect(out).toContain("did NOT succeed");
+    expect(out).toContain("starvation");
+    // How far behind, so the reader can judge without another query.
+    expect(out).toContain("2026-09-25T16:10:26Z");
+  });
+
+  test("...and when nothing ever succeeded it says so rather than naming a time", () => {
+    // `lastSuccessAt` undefined is not "as of undefined". The stronger claim is
+    // available and is the one a reader needs.
+    const out = renderPages(
+      ok({
+        health: {
+          total: 10, success: 0, cancelled: 10, failure: 0, unsettled: 0,
+          newestSettled: { name: PAGES_WORKFLOW, status: "completed", conclusion: "cancelled", created_at: "2026-09-25T16:29:05Z" },
+        },
+      }),
+    );
+    expect(out).toContain("no deployment in this window succeeded at all");
+    expect(out).not.toMatch(/site is as of undefined/);
+  });
+
+  test("nothing settled yet is its own answer, not a verdict either way", () => {
+    // Deployments happened and none has concluded. Reading the share against
+    // no outcome is what this whole section exists to stop.
+    const out = renderPages(
+      ok({ health: { total: 3, success: 0, cancelled: 0, failure: 0, unsettled: 3 } }),
+    );
+    expect(out).toContain("has settled yet");
+    expect(out).toContain("not a verdict");
+    expect(out).not.toContain("SUCCEEDED");
+  });
+
+  test("it still grades no share and invents no staleness cutoff", () => {
+    // The `6xaz` refusal is not relaxed by any of the above. The new sentence
+    // is a FLOOR — did the newest settle green — which needs no calibration.
+    const out = renderPages(
+      ok({
+        health: {
+          total: 100, success: 21, cancelled: 78, failure: 0, unsettled: 1,
+          newestSettled: { name: PAGES_WORKFLOW, status: "completed", conclusion: "cancelled", created_at: "2026-09-25T16:29:05Z" },
+          lastSuccessAt: "2026-09-25T16:10:26Z",
+        },
+      }),
+    );
+    expect(out).not.toMatch(/\d+%/);
+    expect(out).not.toMatch(/more than \d+ (minutes|hours)|stale for \d+/);
+  });
+});

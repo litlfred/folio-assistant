@@ -98,7 +98,9 @@ export function buildEntry(o: {
     ...(o.branch ? { branch: o.branch } : {}),
     ...(o.commit ? { commit: o.commit } : {}),
     ...(o.run ? { run: o.run } : {}),
-    process: "staging-render-log",
+    // The BPMN element id `staging-render-log.bpmn` declares, not the file stem
+    // (#1168 B8, owner 2026-09-30: a process is referred to by its element id).
+    process: "Process_RenderLog",
     // The log IS the capture. An entry written here is kept by definition —
     // unlike the activity log, where `capture` decides whether an entry
     // reaches git at all and `unknown` must never be read as `on`.
@@ -134,7 +136,7 @@ const USAGE =
   `       \`summary\` is required; the rest are optional. Build it with jq, never\n` +
   `       by string concatenation:\n` +
   `         jq -n --arg s "$SUMMARY" --arg r "$REASON" '{summary:$s, reason:$r}' \\\n` +
-  `           | bun run render-log.ts --dir DIR --event removed ...\n` +
+  `           | bun run cat-harness/scripts/render-log.ts --dir DIR --event removed ...\n` +
   `\n` +
   `       render-log.ts --dir DIR --read [--day YYYY-MM-DD]`;
 

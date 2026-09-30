@@ -22,7 +22,7 @@ import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { absoluteRemote, claimOnDefaultBranch, exitCodeFor } from "../claim-bean.js";
+import { absoluteRemote, claimOnDefaultBranch, describe as describeOutcome, exitCodeFor } from "../claim-bean.js";
 
 const ID = ["-c", "user.name=t", "-c", "user.email=t@t"];
 
@@ -152,6 +152,71 @@ describe("claiming on the default branch", () => {
     expect(o.state).toBe("pushed");
     git(work, "fetch", "-q", "origin", "main");
     expect(git(work, "rev-list", "--count", "origin/main").trim()).toBe(after1);
+  });
+
+  // ── `in-progress`, nobody recorded — bean `c3d7` ──────────────────────
+  //
+  // THE ARM NEITHER TEST ABOVE REACHES. Both build their `in-progress` state by
+  // calling the tool, which writes a `Claimed by <branch>` note — so neither
+  // ever produces the state the real store is almost entirely made of. Measured
+  // on `origin/main` 2026-09-25: 97 of the 100 non-epic `in-progress` beans
+  // record no holder, because `todo-manager.md` and `session-intent.md` still
+  // route a claim through `beans update`, which writes no note.
+  //
+  // Until `c3d7` that arm returned `pushed`, so the guard against claim-stomping
+  // said "✓ claimed — every session can see it now" for 97 % of the beans it was
+  // guarding, having pushed nothing.
+
+  test("in-progress with NO recorded holder is its own state, not a claim", () => {
+    // Authored directly, the way `beans update <id> --status in-progress`
+    // leaves it — not by calling the tool, which is the whole point.
+    const { work } = repoWith({ eeee: bean("eeee", "in-progress") });
+    git(work, "fetch", "-q", "origin", "main");
+    const before = git(work, "rev-list", "--count", "origin/main").trim();
+
+    const o = claimOnDefaultBranch("eeee", "claude/feature", { repo: work });
+    expect(o.state).toBe("held-unknown");
+
+    git(work, "fetch", "-q", "origin", "main");
+    expect(git(work, "rev-list", "--count", "origin/main").trim()).toBe(before);
+  });
+
+  test("...and it is NEVER reported as a successful claim", () => {
+    // The defect was the SENTENCE as much as the state: a past-tense claim of a
+    // push that did not happen. `already-closed` and `already-claimed` are both
+    // refusals a reader can act on; this one must not read as either a success
+    // or a determined refusal.
+    const { work } = repoWith({ ffff: bean("ffff", "in-progress") });
+    const o = claimOnDefaultBranch("ffff", "claude/feature", { repo: work });
+    const said = describeOutcome(o, "ffff");
+    expect(said).not.toMatch(/every session can see it now/);
+    expect(said).not.toMatch(/^claimed /);
+    // It says what it could not determine, and names what to do instead.
+    expect(said).toMatch(/NOBODY RECORDED A HOLDER/);
+    expect(said).toMatch(/open PR list/);
+  });
+
+  test("its exit code is neither 'carry on' nor 'remote unreadable'", () => {
+    // Not 0: `already-claimed` uses 0 because it tells the caller to pick
+    // another item, and this one cannot tell them even that.
+    // Not 2: the default branch was read fine — what is unknown is WHO holds
+    // the bean, and collapsing the two makes a readable remote look unreadable.
+    const { work } = repoWith({ gggg: bean("gggg", "in-progress") });
+    const o = claimOnDefaultBranch("gggg", "claude/feature", { repo: work });
+    expect(exitCodeFor(o)).toBe(4);
+    expect(exitCodeFor(o)).not.toBe(0);
+    expect(exitCodeFor(o)).not.toBe(2);
+  });
+
+  test("a holder that IS us still claims — the two cases stay apart", () => {
+    // The cost of the split, checked rather than assumed. Folding them together
+    // was wrong; keeping them apart must not break idempotency, which is the
+    // case that made somebody fold them in the first place.
+    const { work } = repoWith({ hhhh: bean("hhhh") });
+    claimOnDefaultBranch("hhhh", "claude/feature", { repo: work });
+    const o = claimOnDefaultBranch("hhhh", "claude/feature", { repo: work });
+    expect(o.state).toBe("pushed");
+    expect(exitCodeFor(o)).toBe(0);
   });
 
   test("a REJECTED push falls back loudly — exit 3, branch untouched, worktree cleaned", () => {

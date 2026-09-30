@@ -509,9 +509,15 @@ ${o.contentType === "paper" ? "\n# Lean build artifacts\n.lake/\n*.olean\n\n# Ra
  * `folio-staging.yml` (bean `ojcx`). Without it a folio in its own repository
  * gets no STAGING build, and a reviewer has no "after" to compare.
  *
- * **A document folio gets it ON**, building with the platform's
- * `build-document-site.ts` (bean `fyu2`). That command was rehearsed end to
- * end on a folio this function scaffolds: site, ChangeSet and banner.
+ * **A document folio gets it ON**, building with
+ * `folio-assistant-core/scripts/build-document-site.ts` (bean `fyu2`). That
+ * command was rehearsed end to end on a folio this function scaffolds: site,
+ * ChangeSet and banner. The path is `folio-assistant-core/` rather than
+ * `cat-harness/` as of bean `yj6r`, 2026-09-30: rendering a folio to a site is
+ * CONTENT machinery, and the script reads core's `schemas/changeset.ts`. The
+ * string here is the invocation a scaffolded folio's staging workflow carries,
+ * so it is instance-relative and moves with the file — `init-folio.test.ts`
+ * pins it for exactly that reason.
  *
  * **A paper folio gets it OFF**: dispatch-only, with a build step that
  * refuses. A paper builds through `publish.yml` (LaTeX, a folio-supplied
@@ -522,7 +528,7 @@ ${o.contentType === "paper" ? "\n# Lean build artifacts\n.lake/\n*.olean\n\n# Ra
 function stagingWorkflow(assistant: string, contentType: InitFolioOptions["contentType"]): string {
   const on = contentType === "document";
   const build = on
-    ? `bun run ${assistant}/cat-harness/scripts/build-document-site.ts --out _site`
+    ? `bun run ${assistant}/folio-assistant-core/scripts/build-document-site.ts --out _site`
     : `echo "::error::set build_command in .github/workflows/staging.yml to build this folio''s site" && exit 1`;
   const header = on
     ? `# The site is built by the platform's build-document-site.ts: one page per

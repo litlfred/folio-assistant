@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-23T19:19:45Z
-updated_at: 2026-09-23T19:44:11Z
+updated_at: 2026-09-27T05:53:39Z
 parent: folio-assistant-88mg
 ---
 
@@ -61,3 +61,74 @@ About 130 in all. Each is either an example naming a Harness above bootstrap (re
 **Initiator → Bootstrapping Agent** (owner, 2026-09-23, asked "what about 'boot strapping agents'" and chose the rename). The Role's name, its id (`bootstrapping-agent`), the diagram lanes (`Lane_BootstrappingAgent`) and the precondition `told-it-is-a-bootstrapping-agent` are renamed in bootstrap, bootstrap-tools and the platform code and tests that name them. The glossary ledger retires `role/initiator` on 2026-09-23 rather than rewriting it. History in beans and retired files is unchanged.
 
 **Ruling 4 (`model-registry.ts` against FR-7):** the owner answered *"cat-harness/tools like renderer. zod is in cat-harness"*. The Zod source now lives in `cat-harness/schemas/model-registry.ts`, beside `check-model-languages`, which reads it. bootstrap keeps the data (`models/models.json`) and a generated `schemas/model-registry.schema.json`. A new test enforces FR-7: no file in `bootstrap/` is a program. The PENDING list is now **empty**, so all four rulings are applied, and ruling 1's rename is staged in bean `12s9`.
+
+
+## 2026-09-27 — box 1 is SATISFIED, this bean is stale, and the extraction question has an answer
+
+Measured against MAIN GOAL #1 as the owner put it: *can `bootstrap/` be moved to
+its own repo and be self-contained?*
+
+### Box 1 — "no file in `bootstrap/` names anything above it" — SATISFIED
+
+`cat-harness/schemas/graph.test.ts` asserts `found` equals `PENDING`, and
+**`PENDING` is now the empty array**. 25 pass, 0 fail. So the ~130 mentions this
+bean was opened for are GONE, and the box should be checked.
+
+**One caveat, because an empty-expected assertion is where vacuity hides.** The
+walk skips `translations`: `if (f !== "translations") walk(p)`. That is **15 of
+38 files** unscanned. I checked the excluded set by hand — zero occurrences of
+`folio-assistant`, `cat-harness` or `agentic-harness` across all 15 `.pot`
+files. So the CLAIM holds for all 38; the TEST earns it for 23. The skip is
+defensible (a `.pot` is extracted FROM the `.bpmn`, so a leak there would be
+derived rather than authored) but the test is named for a stronger property than
+it checks.
+
+### Box 2 cites a path that no longer exists
+
+It names `bootstrap-tools/schemas/graph.test.ts`. **`bootstrap-tools/` is gone**
+— the file is `cat-harness/schemas/graph.test.ts`. A Done-when pointing at a
+path nobody can open is a Done-when a later reader cannot verify.
+
+### The extraction answer: YES as a READ artefact, NO as a maintained one
+
+`bootstrap/` is **38 files and ZERO TypeScript** — 15 `.pot`, 10 `.json`, 9
+`.md`, 3 `.bpmn`, 1 `.jsonld`. There are no imports to sever. That is by design
+and the design is recorded: `gen-bootstrap-schemas.ts` quotes the owner,
+2026-09-20 — *"bootstrap should not know zod at all"* — and `bootstrap/README.md`
+promises a Bootstrapping Agent *"no harness, no server, no tools and no work
+plan."*
+
+Self-containment is **declared, not inferred**: `bootstrap.json` carries
+`needs: []`, and its own comment draws the distinction that matters — *"An EMPTY
+list is an assertion that this instance sits on nothing — the floor — while an
+ABSENT one means nobody has said."* All 7 declared directories exist, so no
+`dh4f`.
+
+**The blocker is that 20 of 38 files are OUTPUTS of tooling above it:**
+
+| | files | generator |
+|---|---|---|
+| authored | **18** | — |
+| `schemas/*.schema.json` | 5 | `cat-harness/scripts/gen-bootstrap-schemas.ts` |
+| `translations/**/*.pot` | 15 | `translate-bpmn --extract` |
+
+**53% of bootstrap is generated.** A standalone repo can HOLD all 38 and cannot
+REGENERATE or VALIDATE any of the 20 — by design, since the generators must not
+move down. Separately, **97 TypeScript files outside `bootstrap/` reference it**;
+those are consumers and validators, which is the correct direction and not a
+blocker.
+
+So the extraction shape is forced rather than chosen: the bootstrap repo is a
+**publication target** — 18 authored files live there, two generators stay
+upstream and push the other 20 in. That satisfies "self-contained" in the sense
+its own README promises, *a file you read, not something you run*, and cannot
+satisfy "self-maintaining" without reversing a ruling the owner has given twice.
+
+### Not done here
+
+Checking the two boxes, because closing a bean is `bean-coordination`'s
+evidence-not-authorship question and box 2 needs its path corrected first by
+whoever owns that wording. Widening the leak test to cover `translations/` is
+also left: it would pass today, so it is a guard-strengthening change rather
+than a fix, and it belongs with the owner's view on whether derived files are in
+scope for the claim.

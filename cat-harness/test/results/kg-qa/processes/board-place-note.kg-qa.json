@@ -5,7 +5,7 @@
     "id": "Process_BoardPlaceNote",
     "path": "processes/board-place-note.bpmn"
   },
-  "source_hash": "sha256:12839593c496fc3c21d359491809520c2745cc602cbd9be23fedba8e5fa7e180",
+  "source_hash": "sha256:003446643158950fcc1efb6598575a18b850eab8d834ac90bf64d20b05769fb8",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,23 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_CreateNote",
+          "detail": "names skill \"board-diagram-interchange\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Place",
+          "detail": "names skill \"board-diagram-interchange\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_SweepOrphans",
+          "detail": "names skill \"board-diagram-interchange\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -119,7 +136,7 @@
   },
   "totals": {
     "pass": 13,
-    "fail": 1,
+    "fail": 2,
     "n/a": 10,
     "unknown": 0
   }

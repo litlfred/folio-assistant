@@ -43,16 +43,18 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-skos
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
 import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer, termIri } from "../schemas/namespaces.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
+import { gitFiles } from "../schemas/git-corpus.ts";
 import {
   CLASS_GLOSSES,
   PROPERTY_GLOSSES,
   TERM_LAYERS,
+  termLayer,
   type TermGloss,
   type TermLayer,
 } from "../schemas/vocabulary.js";
@@ -133,62 +135,34 @@ export function mintedTermsFromSource(root = ROOT): Set<string> {
   // 94 hand-written template literals became this single call, which is also
   // what makes the scan a scan for one pattern rather than for four.
   const pat = /\btermIri\(\s*"([A-Za-z][A-Za-z0-9_]*)"\s*\)/g;
-  const walk = (dir: string): void => {
-    for (const e of readdirSync(dir, { withFileTypes: true })) {
-      if (e.name === "node_modules" || e.name.startsWith(".")) continue;
-      const p = join(dir, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith(".ts") && !e.name.endsWith(".test.ts")) {
-        // COMMENTS ARE STRIPPED FIRST, and this is not fussiness: the first
-        // version scanned raw source and reported `Name` as an undefined
-        // term, matched from THIS function's own comment describing the
-        // pattern it looks for. A scanner that reads its own documentation as
-        // data will do it again the next time somebody writes an example, and
-        // a phantom term in a completeness check is worse than none — it is a
-        // finding nobody can act on.
-        const src = readFileSync(p, "utf-8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
-        for (const m of src.matchAll(pat)) out.add(m[1]!);
-      }
-    }
-  };
-  walk(root);
+  // `xd1g`. Measured at the conversion: **936 before, 935 after** — the one it
+  // drops is a gitignored `dist/index.d.ts`, and a generated declaration file
+  // minting a term would be a term nobody wrote. Nothing gained.
+  for (const p of gitFiles(root, (rel) =>
+    rel.endsWith(".ts") && !rel.endsWith(".test.ts") && !rel.split("/").some((s) => s.startsWith(".")),
+  ).files) {
+    // COMMENTS ARE STRIPPED FIRST, and this is not fussiness: the first
+    // version scanned raw source and reported `Name` as an undefined term,
+    // matched from THIS function's own comment describing the pattern it looks
+    // for. A scanner that reads its own documentation as data will do it again
+    // the next time somebody writes an example, and a phantom term in a
+    // completeness check is worse than none — it is a finding nobody can act
+    // on.
+    const src = readFileSync(p, "utf-8").replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+    for (const m of src.matchAll(pat)) out.add(m[1]!);
+  }
   return out;
 }
 
-/**
- * Which layer each declared graph kind belongs to.
- *
- * Keyed by the DECLARATION's kind name, not the class name, because that is
- * what `BASE_GRAPH_KINDS` is keyed by and translating between the two in a
- * second place is how they drift.
- *
- * A kind absent from this map is `harness` — the middle. That default is
- * deliberate and is the safe direction: a term wrongly called harness is
- * merely carried by an instance that did not need it, while a term wrongly
- * called bootstrap makes the base layer depend on something above it, which
- * is the one thing the direction rule forbids.
- */
-const GRAPH_KIND_LAYERS: Readonly<Record<string, TermLayer>> = {
-  "cat-harness": "bootstrap",
-  schemas: "bootstrap",
-  // Everything the owner named as NOT bootstrap, plus the rest of the folio's
-  // own furniture: "we shouldnt need voicegraph or librarygrph or
-  // previewgrapjh in bootstrap!!"
-  voices: "core",
-  library: "core",
-  uploads: "core",
-  todos: "core",
-  "todo-items": "core",
-  "todo-feedback": "core",
-  "review-verdicts": "core",
-};
+// The layer table lives in `vocabulary.ts` (`GRAPH_KIND_TYPE_LAYERS`), read
+// through `termLayer` — the same answer `termIri` mints the type's IRI from.
 
 /** The graph kinds' own summaries — read, never restated. */
 export function graphKindTerms(): Map<string, TermGloss> {
   const out = new Map<string, TermGloss>();
-  for (const [name, def] of Object.entries(BASE_GRAPH_KINDS)) {
+  for (const def of Object.values(BASE_GRAPH_KINDS)) {
     const local = def.type.includes("#") ? def.type.split("#")[1] : undefined;
-    if (local && def.summary) out.set(local, { gloss: def.summary, layer: GRAPH_KIND_LAYERS[name] ?? "harness" });
+    if (local && def.summary) out.set(local, { gloss: def.summary, layer: termLayer(local) });
   }
   return out;
 }

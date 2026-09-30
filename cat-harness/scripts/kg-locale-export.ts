@@ -109,8 +109,8 @@ import { basename, join, relative, resolve } from "node:path";
 
 import { parsePo } from "../content/pipeline/po-inject.js";
 import { readHarnessConfig } from "../schemas/harness-config.js";
-import { repoRootFor, resolveDirectories } from "../schemas/cat-harness.js";
-import { buildExport, exportIdentity } from "./kg-export.js";
+import { localeDirIn, repoRootFor, translationsHomeFor } from "../schemas/cat-harness.js";
+import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "./kg-export.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -161,23 +161,33 @@ export function isIri(s: string): boolean {
  * Resolved from the declaration rather than spelled, because two copies of
  * this join is how a check passes over a directory the writer never used.
  */
+export function translationsHome(instanceRoot: string): ReturnType<typeof translationsHomeFor> {
+  // `ROOT` is this script's own instance and therefore the HOST when
+  // `--instance` names another: bootstrap's templates live in cat-harness's
+  // corpus under `<locale>/bootstrap/`. The host is a DEPENDENT, not a
+  // dependency — bootstrap declares `needs: []` — so it cannot be derived from
+  // `--instance` and is supplied here instead.
+  return translationsHomeFor(instanceRoot, ROOT);
+}
+
+/** The directory whose children are locales. Reporting still names one path. */
 export function translationsRootFor(instanceRoot: string): string {
-  const d = resolveDirectories([{ name: "(local)", root: instanceRoot, own: true }]).find((x) =>
-    x.graphKinds.includes("translation-sources"),
-  );
-  // declared-path-literal: the base case for an instance that declares
-  // nothing. Reading a declaration to learn the fallback for having no
-  // declaration cannot be done; `DEFAULT_DIRECTORIES` supplies this same
-  // convention, and `translate-bpmn.ts` falls back identically.
-  return d?.absPath ?? join(instanceRoot, "translations");
+  return translationsHome(instanceRoot).root;
 }
 
 /** Every locale directory under the instance's translations root. */
 export function knownLocales(instanceRoot: string): string[] {
-  const dir = translationsRootFor(instanceRoot);
-  if (!existsSync(dir)) return [];
-  return readdirSync(dir, { withFileTypes: true })
+  const home = translationsHome(instanceRoot);
+  if (!existsSync(home.root)) return [];
+  return readdirSync(home.root, { withFileTypes: true })
     .filter((e) => e.isDirectory())
+    // A hosted instance's locale set is a SUBSET of its host's: a locale the
+    // host translates but which carries nothing for this instance is not this
+    // instance's locale. Filtering on the scope directory rather than on the
+    // host's locale list is what keeps the two apart — otherwise bootstrap
+    // would claim every locale cat-harness has, and a per-locale document would
+    // be emitted for each over an empty catalogue.
+    .filter((e) => home.scope.length === 0 || existsSync(localeDirIn(home, e.name)))
     .map((e) => e.name)
     .sort();
 }
@@ -227,7 +237,7 @@ export function projectedStems(instanceRoot: string): Set<string> {
  * exact distinction the report below exists to make.
  */
 export function catalogueFor(instanceRoot: string, locale: string): Map<string, string> {
-  const dir = join(translationsRootFor(instanceRoot), locale);
+  const dir = localeDirIn(translationsHome(instanceRoot), locale);
   const stems = projectedStems(instanceRoot);
   const out = new Map<string, string>();
   const walk = (d: string): void => {
@@ -375,6 +385,23 @@ export interface LocaleBuild {
   readonly coreProblems: string[];
   /** Node `@id`s that differ between the core and any locale. UNDETERMINED is a finding. */
   readonly idDrift: string[];
+  /**
+   * Root-level fields of an emitted locale document that its own `@context`
+   * does not declare — `<locale>: <field>`, one entry each.
+   *
+   * The same question {@link undeclaredRootTerms} is fatal for in
+   * `kg-export.ts`, asked here because that guard structurally cannot see
+   * these documents: it runs against the core at the point the core is
+   * written, and a locale document is assembled in this file afterwards.
+   *
+   * `lvw0` is why it exists rather than why it is a good idea. `sourceLanguage`
+   * was written to this root and declared nowhere, and the first thing that
+   * noticed was `publish:verify` on the built site — after the export had
+   * been called clean, and with the deploy skipped as a result. A guard that
+   * covers one of two writers reports the covered one and says nothing about
+   * the other, which is indistinguishable from a pass.
+   */
+  readonly rootUndeclared: string[];
 }
 
 export async function buildLocaleExports(opts: {
@@ -384,10 +411,22 @@ export async function buildLocaleExports(opts: {
 } = {}): Promise<LocaleBuild> {
   const instanceRoot = resolve(opts.instanceRoot ?? ROOT);
   const id = exportIdentity({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot });
-  const core = (await buildExport({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot })) as unknown as Record<
-    string,
-    unknown
-  >;
+  // `publishedDocument`, NOT the raw export — these documents are PUBLISHED,
+  // so they carry what the core publishes and not what it computes. The four
+  // fields it strips (`undeclaredTerms`, `undeclaredSchemaModules`,
+  // `danglingLinks`, `problems`) are a QA reviewer's findings, relocated to
+  // `test/results/` by the owner's 2026-09-19 rule, and their `@context`
+  // terms were removed WITH them.
+  //
+  // `lvw0`: this read the raw export until 2026-09-26, so every locale
+  // document re-published four fields the context no longer declares, a
+  // JSON-LD processor dropped all four, and `publish:verify` refused the
+  // documents — 16 of its 20 findings, and the deploy skipped with them. The
+  // core was correct throughout: `kg-export.ts` was the function's only
+  // caller, so the projection existed and this path went around it.
+  const core = publishedDocument(
+    await buildExport({ baseUrl: opts.baseUrl, instanceRoot: opts.instanceRoot }),
+  ) as unknown as Record<string, unknown>;
   // `config.translation.defaultLocale`, NOT `config.defaultLocale` — `tsc`
   // caught the second spelling, and it would have been the `dh4f` shape: a
   // read of a field that is not there, reporting the fallback as if it had
@@ -406,6 +445,7 @@ export async function buildLocaleExports(opts: {
   const reports: LocaleReport[] = [];
   const docs = new Map<string, Record<string, unknown>>();
   const idDrift: string[] = [];
+  const rootUndeclared: string[] = [];
 
   for (const locale of locales) {
     const catalogue = catalogueFor(instanceRoot, locale);
@@ -424,9 +464,17 @@ export async function buildLocaleExports(opts: {
         idDrift.push(`${locale}: ${String(nid)}`);
       }
     }
+
+    // Against the document's OWN `@context`, not the core's — they are the
+    // same object today, and asserting that identity is not this check's job.
+    // If the walk ever stops copying the context verbatim, a document checked
+    // against a context it does not carry is checked against nothing.
+    for (const t of undeclaredRootTerms(doc, (doc["@context"] ?? {}) as Record<string, unknown>)) {
+      rootUndeclared.push(`${locale}: ${t}`);
+    }
   }
 
-  return { stub: id.stub, sourceLanguage, locales: reports, docs, coreProblems, idDrift };
+  return { stub: id.stub, sourceLanguage, locales: reports, docs, coreProblems, idDrift, rootUndeclared };
 }
 
 /** `<stub>.<locale>.jsonld`, beside the core document. */
@@ -452,6 +500,18 @@ if (import.meta.main) {
   if (build.locales.length === 0) {
     // `6tkl`: a per-locale build over no locales asserts nothing, and
     // reporting it clean would be a pass over an empty set.
+    //
+    // This briefly granted a DETERMINED EMPTY to an instance that declares no
+    // `translation-sources`, and that was the wrong fix — reverted the same
+    // day. The premise was that such an instance has nothing to export; the
+    // actual state was that its templates had MOVED and this script was
+    // looking in the wrong place. `translationsHomeFor` resolves the hosted
+    // case now, so the empty this guards is once again the only empty there is.
+    //
+    // `code-quality-gates.yml` states the policy for the sibling generator and
+    // it reads the same way: "a folio with no translations is a real state, and
+    // this generator is not the thing that gets to decide the absence means
+    // 'nothing to report'."
     console.error(
       `\nNo locale directories under ${relative(repoRootFor(ROOT), translationsRootFor(resolve(instanceRoot ?? ROOT)))} — refusing to call that clean.`,
     );
@@ -468,8 +528,14 @@ if (import.meta.main) {
 
   for (const p of build.coreProblems) console.error(`  CORE REFERENCES A TRANSLATION: ${p}`);
   for (const d of build.idDrift) console.error(`  @id DRIFT: ${d}`);
+  for (const t of build.rootUndeclared) {
+    console.error(`  ROOT FIELD NOT IN THE @context, so a JSON-LD processor drops it: ${t}`);
+  }
+  if (build.rootUndeclared.length > 0) {
+    console.error("  Declare each in `buildContext` — see the DOCUMENT ROOT section there.");
+  }
 
-  const bad = build.coreProblems.length + build.idDrift.length;
+  const bad = build.coreProblems.length + build.idDrift.length + build.rootUndeclared.length;
   if (check) {
     if (bad === 0) {
       console.log(

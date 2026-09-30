@@ -111,6 +111,7 @@ import { join, relative, resolve } from "node:path";
 import { declarationPathIn } from "../schemas/cat-harness.js";
 
 import { parse as parseYaml, stringify as stringifyYaml } from "yaml";
+import { isDirectoryReadme } from "../schemas/kg-node.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -432,6 +433,10 @@ function filesUnder(dir: string, prefix = ""): string[] {
     // Jekyll ignores dotfiles, and so does this: `docs/.gitkeep` carries the
     // overlay's own documentation and must not become a published page.
     if (e.name.startsWith(".")) continue;
+    // A layer's own README describes the SOURCE directory (written by
+    // `subgraph-readmes`); it is not a page of the site. Two layers each
+    // carrying one would otherwise collide on `README.md`.
+    if (!prefix && !e.isDirectory() && isDirectoryReadme(e.name)) continue;
     const rel = prefix ? `${prefix}/${e.name}` : e.name;
     if (e.isDirectory()) out.push(...filesUnder(dir, rel));
     else out.push(rel);

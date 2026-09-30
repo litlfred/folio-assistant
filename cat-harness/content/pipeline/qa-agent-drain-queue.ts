@@ -10,7 +10,7 @@
  * so a fleet of sub-agents can each claim one batch, audit it, and
  * commit its own work to its own branch.
  *
- *   bun run content/pipeline/qa-agent-drain-queue.ts \
+ *   bun run cat-harness/content/pipeline/qa-agent-drain-queue.ts \
  *     content/quantum-observable-universe [--batch-size 25] \
  *     [--out build/qa-agent-drain-queue.json]
  *

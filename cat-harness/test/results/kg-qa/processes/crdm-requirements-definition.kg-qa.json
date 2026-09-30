@@ -5,7 +5,7 @@
     "id": "Process_CRDM_Requirements",
     "path": "processes/crdm-requirements-definition.bpmn"
   },
-  "source_hash": "sha256:8fdb28b2a33ba113f2cb4479e5837211d39d6813293717329f7b640dc795ff31",
+  "source_hash": "sha256:b47f48136d85b9123b0fa79eb7ed3595df3decfec3f08dac3e1467beabbb0fdc",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,27 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_MapWorkflow",
+          "detail": "names skill \"bpmn-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_DefineReqs",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_CompareOptions",
+          "detail": "names skill \"decision-comparison\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "BA_ReviewReqs",
+          "detail": "names skill \"crdm-requirements-workflow\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -111,7 +132,7 @@
   },
   "totals": {
     "pass": 13,
-    "fail": 1,
+    "fail": 2,
     "n/a": 10,
     "unknown": 0
   }

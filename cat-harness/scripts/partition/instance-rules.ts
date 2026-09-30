@@ -48,13 +48,43 @@ import type { PartitionSpec, PermittedEdge, Rule } from "./engine.js";
  */
 export type Repo = "harness" | "core" | "sci" | "kg" | "base" | "test";
 
-/** Display names, in dependency order (most depended-upon first). */
-export const REPOS: Array<{ id: Repo; name: string }> = [
-  { id: "harness", name: "agentic-harness" },
-  { id: "core", name: "folio-assist-core" },
-  { id: "sci", name: "folio-asst-sci" },
+/**
+ * Target repository names, in dependency order (most depended-upon first).
+ *
+ * ## `name` is the TARGET REPO; `instance` is where it is staged today
+ *
+ * These are two different facts and were one string until 2026-09-26, which
+ * is how they drifted. `name` is what the repository will be called when
+ * #223 cuts it. `instance` is the directory staging it in this pre-split
+ * checkout, and it must equal that directory's own declared `name` — the
+ * declaration is the source of truth, so `instance` is a POINTER to it, not
+ * a second copy. `partition-names.test.ts` holds them equal.
+ *
+ * `kg` carries no `instance` ON PURPOSE. `smart-kg` is a Phase III target
+ * for WHO L1 document and KG schemas that this checkout does not hold, so it
+ * has 0 modules. That is a target not yet staged, NOT a `dh4f`
+ * declared-but-absent defect, and the two must not be conflated: the first is
+ * a plan, the second is a consumer scanning nothing and reporting a clean run.
+ * `undefined` says "no instance yet"; it never means "the instance is missing".
+ *
+ * ## Why three of these were renamed
+ *
+ * `folio-assist-core` and `folio-asst-sci` were ABBREVIATIONS of the declared
+ * names — no decision behind "asst", just terser — and `agentic-harness`
+ * predates the owner's rename of the harness to `cat-harness`, which the
+ * declaration, the directory and `AGENTS.md` all already carry. Only the
+ * architecture docs and this table still said the old thing.
+ *
+ * The docs page `/agentic-harness.html` is NOT this name and was not touched:
+ * it documents the agent-user interaction model, which is a concept rather
+ * than a repository, and its slug is a published URL.
+ */
+export const REPOS: Array<{ id: Repo; name: string; instance?: string }> = [
+  { id: "harness", name: "cat-harness", instance: "cat-harness" },
+  { id: "core", name: "folio-assistant-core", instance: "folio-assistant-core" },
+  { id: "sci", name: "folio-assistant-sci", instance: "folio-assistant-sci" },
   { id: "kg", name: "smart-kg" },
-  { id: "base", name: "smart-base" },
+  { id: "base", name: "smart-base", instance: "smart-base" },
   { id: "test", name: "(test material)" },
 ];
 
@@ -139,6 +169,8 @@ export const RULES: Rule[] = [
       "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
       "scripts/generate-registry.ts",        // scans skills/ → SkillRegistry
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
+      "scripts/gen-skill-commands.ts",       // user_invocable skills → .claude/commands pointers (bean `j6t3`)
+      "scripts/gen-upload-step-docs.ts",     // a process step's Tools → docs; both graphs are harness concepts
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       // HARNESS: the review page is rendered surface, which the harness owns
@@ -154,6 +186,29 @@ export const RULES: Rule[] = [
       "scripts/block-screenshots.ts",    // pictures of changed visual blocks, compared in Chromium (bean `0rxe`)
       "scripts/publish-main-site.ts",    // a folio's main site at the publish root: the before side (bean `5uuf`)
       "scripts/repo-partition.ts",           // this tool; platform meta
+      // HARNESS, by the same test as `check-ci-health.ts` above: its subject is
+      // this checkout's own ENVIRONMENT — whether a nested `node_modules` or a
+      // symlinked root makes a tool answer a question about the repository from
+      // something the repository does not contain (bean `3vc1`). It reads no
+      // folio material and no content schema; it imports `node:fs` and
+      // `node:path` and nothing else, so it cannot drag a folio in. `gates.ts`
+      // is its only caller and is itself harness, so the edge runs
+      // harness -> harness.
+      "scripts/check-environment.ts",
+      // HARNESS, by the same test again: its subject is a TEST RUN's timings and
+      // the budgets this repository's own test files declare — harness meta, not
+      // any folio's content. It reads a junit report and `.test.ts` sources, and
+      // imports `node:fs`, `node:path` and `typescript` (for the AST) and nothing
+      // else, so it cannot drag a folio in. Bean `sff8`.
+      "scripts/check-test-budgets.ts",
+      // The prose half of the same arrow this tool measures for imports, and
+      // harness for the same reason `repo-partition.ts` is: its subject is
+      // which INSTANCE a file belongs to and what that instance declares it
+      // needs, which is platform meta. It reads no folio material, and its
+      // rule (`schemas/reference-direction.ts`) consumes `layer-direction.ts`
+      // — the module this tool already shares — so both axes are classified
+      // by the same test and answer to the same declaration (bean `zhg2`).
+      "scripts/check-reference-direction.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
       // this repository's own Jekyll templates and the baseurl its site is
@@ -362,6 +417,19 @@ export const RULES: Rule[] = [
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
       "schemas/dependency-order.ts",         // the ONE resolve-then-walk: flatten, ancestors, conflicts (bean `a1lq`)
       "schemas/layer-direction.ts",          // the ONE wrong-direction verdict, shared with kg-detangle (bean `j79e`)
+      // "what files does this REPOSITORY contain", asked of git rather than of
+      // the disk (beans `rsi6`, `xd1g`). Harness by its subject: the corpus it
+      // reports is a checkout's, and its whole point is that a folio's material
+      // and a machine's untracked residue are not the same set.
+      //
+      // It sat under `scripts/` until 2026-09-26 and moved here on the owner's
+      // ruling that a SKILL must not know about a script, and that a script
+      // belongs to `tools`. `kg-detangle.ts` is a skill-directory node and
+      // needs this rule, so leaving it in `scripts/` would have minted the
+      // first `skills/` -> `scripts/` edge in the repository (measured: zero
+      // such edges). Its neighbour above is the precedent rather than an
+      // analogy -- the same shape, shared by the same two callers.
+      "schemas/git-corpus.ts",
       "schemas/detangle.ts",                 // the detangle criterion — folded in from its own instance (bean `byql`)
       "schemas/detangle-sidecar.ts",         // what a detangle measurement pins (bean `byql`)
       "schemas/node-kind.ts",                // node kinds declare their parents; composed by that walk (bean `a1lq`)
@@ -441,6 +509,50 @@ export const RULES: Rule[] = [
       // `harness.json` for the directories, DERIVES the nesting from their
       // declared paths, and has nothing to say about any folio's content.
       "scripts/check-subgraphs.ts",
+      // How many scripts enumerate the filesystem, and how many ask git what
+      // the corpus is (bean `xd1g`). Harness for `check-subgraphs.ts`' reason
+      // and more plainly still: its whole subject is this repository's own
+      // `scripts/` directory read through `gitCorpus`, and it cannot express
+      // an opinion about a folio because it never looks at one.
+      "scripts/root-scan-census.ts",
+      // Does a generator's COMMITTED OUTPUT change when gitignored content is
+      // present (bean `qrlc`)? Harness by the same route as the census above:
+      // its subjects are derived from this repository's own `package.json`
+      // scripts, it compares them with `git status`, and it never opens a
+      // folio's content — it only asks whether running a writer produced
+      // different bytes.
+      "scripts/detect-live-corpus.ts",
+      // Whether a translated page's links survived being one directory
+      // deeper than the page they were translated from (bean `ahab`).
+      // Harness for `check-subgraphs.ts`' reason and by the same route — it
+      // consumes that tool's report and resolves the site root from the
+      // declaration, so it knows which directories publish a site and
+      // nothing at all about what any folio put in them.
+      "scripts/check-translated-link-depth.ts",
+      // Whether a page's `available_locales` names a locale a reader can
+      // actually read it in (bean `9x01`). Harness by the same route as the two
+      // above: it resolves the site root from the declaration, builds the
+      // translation index from what the pages themselves declare (`lang` and
+      // `translation_source`), and compares a page's claim with that index. The
+      // CLAIM is structural — "is this readable in French" — so it says nothing
+      // about what any folio wrote in French.
+      "scripts/check-available-locales.ts",
+      // Whether a gate that may be red BY DECISION sits last in its job, so the
+      // set it masks is empty (bean `cpss`). Harness for the plainest reason in
+      // this block: its subject is `.github/workflows/`, the harness's own CI
+      // definition, and it reads no folio content of any kind.
+      "scripts/check-red-gate-is-last.ts",
+      // Whether every workflow installs the Bun that `.bun-version` names
+      // (bean `3ozg`). Harness for the same reason as the line above: its
+      // subject is `.github/workflows/` plus one repo-root pin file, and it
+      // reads no folio content.
+      "scripts/check-bun-pin.ts",
+      // The shared "a gate that examined nothing must refuse" decision (bean
+      // `iym1`). Harness because it is a helper for the harness's own gates and
+      // reads nothing at all: it is handed a list of what a caller looked at and
+      // returns a message. It has no corpus of its own, which is why it can be
+      // tested over a CONSTRUCTED empty one while the gates it serves cannot.
+      "scripts/vacuity-refusal.ts",
       // Whether each methodology's cited `origin` resolves to an ingested
       // source. Harness for the same reason as the two above: it reads the
       // declaration for the `methodology` and `library` graphs and fans out
@@ -454,6 +566,12 @@ export const RULES: Rule[] = [
       // and it runs across EVERY instance in the repository rather than for
       // one folio.
       "scripts/check-layout-norms.ts",
+      // Whether a rendered workflow diagram shows an XML character reference
+      // as literal text (bean `li5y`). Harness for the same reason as the
+      // layout norm above: its input is this instance's own process diagrams
+      // under `workflows/`, it reads no folio content of any kind, and what it
+      // judges is the harness's own published SVGs.
+      "scripts/check-rendered-labels.ts",
       // Issue #1023. Both read every instance's declaration (visualisers) or
       // every declared library (manifests), and hold no folio's content: the
       // same reason as the layout norm above.
@@ -481,6 +599,22 @@ export const RULES: Rule[] = [
     triaged: true,
     exact: [
       "scripts/audit-wiring.ts",             // Python .witness.json buckets
+      // 🟧 OWNER RULING 2026-09-27, verbatim: "field sits on shared kinds
+      //    (remark, example, algorithm, simulator), so the grammar genuinely
+      //    is vocabulary that goes tp f-a-sci" — reversing the inference the
+      //    core triage block below applied FIVE times (see its header, now
+      //    corrected). A `lean` field on a shared kind does not make the
+      //    grammar core; it makes that field on those kinds part of the
+      //    science vocabulary.
+      //
+      //    These two move FREE: MEASURED, reassigning them adds ZERO
+      //    wrong-direction edges. The other two the ruling reaches
+      //    (`schemas/lean-packages.ts`, `content/pipeline/lean-signature.ts`)
+      //    cost SIX core -> sci edges and are held pending the owner's call on
+      //    how core is to carry a formal reference it does not own. qou bean
+      //    `qou-7ko6`.
+      "content/pipeline/lean-lexer.ts",   // comment stripping, declaration splitting
+      "content/pipeline/witness-address.ts", // where a witness lives; is one there
       "scripts/audit-wiring-migrate.ts",     // stamps auditOnly on witness JSON
       "scripts/check-duplicate-decls.ts",    // one Lake tree, two declarations
       "scripts/check-mirror-drift.ts",       // .lean sibling vs library decl
@@ -611,10 +745,11 @@ export const RULES: Rule[] = [
       // which it calls: a generator that lived elsewhere would be a second
       // place deciding what a harness row contains, which is the defect.
       "scripts/gen-navbar-include.ts",
-      // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
-      // reason the others here do not have: bootstrap must hold no executable
-      // code, so the generator cannot live beside what it generates.
-      "scripts/gen-bootstrap-schemas.ts",
+      // gen-bootstrap-schemas and bootstrap-schema-page moved to the sibling
+      // instance `bootstrap-tools/` (bean `xsqm`), outside this partition.
+      // A README per declared directory, from the declaration. Core beside
+      // `readme-sections`, whose file description and 'used by' it reuses.
+      "scripts/subgraph-readmes.ts",
       "scripts/check-docs-populated.ts",     // every harness owes one populated doc page
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
@@ -636,10 +771,17 @@ export const RULES: Rule[] = [
       "scripts/gen-external-schemas-viz.ts",
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
-      "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
+      // The three materialisation modules that stood here — `check-materialized-fixity.ts`
+      // (materialized bytes vs their recorded digest, the read-only rule enforced),
+      // `backfill-materialized-fixity.ts` (records the baseline digest that check reads)
+      // and `cache-index.ts` (what is materialized, how big, how old, what could go —
+      // bean `54rk`) — are GONE FROM THIS LIST because they are gone from this
+      // instance. Bean `yj6r` moved them to `folio-assistant-core/scripts/`, where
+      // `schemas/materialization.ts` already lived. The classification did not change;
+      // the DIRECTORY caught up with it, so the fact is now carried by location rather
+      // than by a rule, and an `exact` entry naming a path this scan can no longer see
+      // would be a rule that fires on nothing while reading as an adjudication.
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
-      "scripts/backfill-materialized-fixity.ts", // records the baseline digest that check reads
-      "scripts/cache-index.ts",              // what is materialized, how big, how old, what could go — derived from the same walk (bean `54rk`)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
@@ -773,6 +915,17 @@ export const RULES: Rule[] = [
       "scripts/check-agent-entry-links.ts",
       "scripts/check-command-paths.ts",
       "scripts/check-anchor-names.ts",
+      // Bean `fx5r`. Harness by subject: its table names FORGE fields whose
+      // served value goes stale, and a folio has no forge. It imports nothing
+      // but `node:fs` and `node:path`, and the advice it sweeps is this
+      // platform's skills and workflows.
+      "scripts/check-stale-field-advice.ts",
+      // Bean `e8m3`. Harness by subject: it reads the declared `bean-defs` graph
+      // and the work plan is the harness's own, not any folio's content.
+      "scripts/check-bean-archive.ts",
+      // Bean `6ptx`. Harness by subject: a survey is of THIS repository's own
+      // commit history and work plan, which no folio has as content.
+      "scripts/survey.ts",
       // Its subject is the harness's OWN declaration filename — which file
       // names an instance — so it is harness by subject as well as by
       // dependency: it imports `schemas/cat-harness.js` for the constant and
@@ -808,6 +961,11 @@ export const RULES: Rule[] = [
       // authors.
       "scripts/bean-store-read.ts",
       "scripts/check-bean-bodies.ts",
+      // Same half again: it reads the declared `bean-defs` graph and asks
+      // whether a bean claiming a block carries the four fields that make the
+      // block readable — what it waits on, since, expires, handoff. Nothing in
+      // it is about any folio's subject matter; a folio has no beans to block.
+      "scripts/check-bean-blocks.ts",
       "scripts/check-bean-front-matter.ts",
       "scripts/check-stale-paths.ts",
       "scripts/check-bean-issue-links.ts",
@@ -834,6 +992,12 @@ export const RULES: Rule[] = [
       // its subject twice over: it reads THIS repository's workflows,
       // and what it runs are the harness's own generators.
       "scripts/check-ci-invocations.ts",
+      // Builds every package this REPOSITORY publishes to npm (bean `rsi6`).
+      // Harness by its subject: the thing it builds is this repository's own
+      // shipped artefact, and a folio publishes prose and proofs rather than
+      // a package. Its neighbour above reads the workflows; this one reads
+      // what the workflows were failing to build.
+      "scripts/check-published-packages.ts",
       // Which `.github/workflows/*.yml` carry a BPMN diagram — bean `7yvd`.
       // Harness by its subject: it reads THIS REPOSITORY's CI processes and
       // its knowledge graph, and a folio has neither of those as content.
@@ -897,6 +1061,9 @@ export const RULES: Rule[] = [
       // HARNESS's own declarations and need no folio to have anything to do.
       "src/tools/degradation.ts",
       "src/tools/skill-fetch.ts",
+      // The person-facing half of the same skills (bean `j6t3`): each
+      // `user_invocable` skill as an MCP prompt. Harness for skill-fetch's reason.
+      "src/tools/skill-prompts.ts",
       "src/tools/preferences.ts",
       "src/tools/beans-prime.ts",
       "src/tools/workflow.ts",
@@ -950,16 +1117,23 @@ export const RULES: Rule[] = [
       // is harness machinery, and none imports the content vocabulary.
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
-      // Issue #1164: bootstrap schemas name no outside concept, and a filed
-      // requirement is a valid one with no name used twice. Harness
-      // machinery over the harness's own declarations; neither imports the
-      // content vocabulary.
-      "scripts/check-bootstrap-concepts.ts",
+      // Issue #1164: a filed requirement is a valid one with no name used
+      // twice. Harness machinery over the harness's own declarations; it does
+      // not import the content vocabulary. (Its sibling check-bootstrap-concepts
+      // moved to `bootstrap-tools/`, bean `xsqm`.)
       "scripts/check-requirements.ts",
       // Bean `95ir`: declared-but-absent is reported by a scanner, never
       // dropped. Harness machinery over declarations; imports only node:fs.
       "scripts/lib/declared-presence.ts",
       "scripts/kg-audit.ts",
+      // The same audit over every declared instance rather than the root alone
+      // (bean `bjzs`). Harness layer for exactly the reason `kg-audit.ts` is —
+      // it spawns that audit and imports only `instanceRootsIn`, so its subject
+      // is the instance declarations, never the content vocabulary. Assigned
+      // here in the same change that added it: `unassigned` is what the tool's
+      // own report says not to read as clean, and four scripts sat that way
+      // until somebody looked.
+      "scripts/kg-audit-all.ts",
       // WHICH audits reach which kind of node (bean `xutg`). Harness machinery
       // for the same reason `kg-audit.ts` is: its subject is the graph-kind
       // registry and the gate set, not the content vocabulary. Beside the audit
@@ -1036,16 +1210,10 @@ export const RULES: Rule[] = [
       // edge `namespaces.ts` was extracted to remove. Measured on first run:
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
-      // bootstrap's Zod (owner, 2026-09-24: "Validate/zod in cat-harness. Graph
-      // and Subgraph too"). Moved in from the retired `bootstrap-tools`
-      // instance; `vocabulary.ts` above reads BOOTSTRAP_TERMS from `graph.ts`,
-      // so a core placement is a wrong-direction edge.
-      "schemas/graph.ts",
-      "schemas/discussion.ts",
+      // bootstrap's own Zod (graph, discussion, requirement) moved down to
+      // `bootstrap-tools/` (owner, 2026-09-29, bean `xsqm`), outside this
+      // partition. What stays is the harness's reading of it.
       "schemas/bootstrap-graph.ts",
-      // The Requirement bootstrap publishes (issue #1164); `skill-package.ts`
-      // builds the harness Requirement on it, so core would be an edge downward.
-      "schemas/requirement.ts",
       // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
       // adjudication's codes against, and the loader `namespaces.ts` sits
       // beside. Needed to RUN a process, so harness — the same test as the
@@ -1077,6 +1245,9 @@ export const RULES: Rule[] = [
       //    survives the "describes a process" test.
       "schemas/memory.ts",
       "schemas/carried-note.ts",
+      // The BPMN process element id (#1168 B8): a leaf `carried-note`'s
+      // TaskRef and the log / invocation records all reference.
+      "schemas/process-element-id.ts",
       // Same argument as `memory.ts`, one step along: a waiver is a permission
       // a PERSON gives an AGENT about a gate in this repository's process. It
       // is declared over the same directory as agent memory and it fails the
@@ -1174,8 +1345,11 @@ export const RULES: Rule[] = [
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
+      "scripts/check-quiet-claim-liveness.ts", // the work plan's own state against the remote (bean `omki`)
       "scripts/skill-governance.ts",        // which skill governs a directory, read from the skills (#1168 B7b)
       "scripts/docs-declarations.ts",       // which page documents a directory, read from the pages (#1168 B7c)
+      "scripts/viewer-declarations.ts",     // which viewer page draws a directory, read from the pages (#1168 B7a-2)
+      "scripts/governing-process.ts",       // which BPMN process governs a directory, read from `coverage.process`
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/ingest-ig-menu.ts",        // a FHIR IG's own navigation, read from its sushi-config (bean `0818`)
       "scripts/check-code-accounting.ts", // the two questions about a code file, kept apart (bean `ylj7`)
@@ -1187,9 +1361,13 @@ export const RULES: Rule[] = [
       "scripts/check-module-scope-resolution.ts", // no module scope resolves the folio dir (bean `1hkj`)
       "scripts/check-python-deps.ts",       // the repo's own toolchain
       "scripts/check-workflow-paths.ts",    // every workflow script path resolves (bean `52dz`)
+      "scripts/check-usage-paths.ts",       // a script's usage string names the script
       "scripts/render-pipeline.ts",         // WHICH renders run and in what order, read from the declarations
       "scripts/render-selection.ts",        // WHICH of them must re-run against a seed, and why (bean `9c34`). Harness machinery: it computes a decision and writes no page, so it belongs beside the pipeline rather than with the renderers
       "scripts/gates.ts",                   // the gate runner itself
+      "scripts/gate-tree-guard.ts",         // ...and which gate changed the tree under it (bean `ymsu`). Harness for the same reason the runner is: it asks a question only the runner is positioned to ask, since no gate can observe what another gate did
+      "scripts/decisions-named-not-asked.ts", // the `Stop` layer of `interaction-modality` §4.1 (bean `ahvw`). Harness: it reads a transcript and enforces how a QUESTION is put, which no content type varies
+      "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the six artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
       "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld
@@ -1197,6 +1375,7 @@ export const RULES: Rule[] = [
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
       "scripts/strip-preview-seo.ts",       // the preview site build
+      "scripts/set-html-lang.ts",           // ...and the served language on its `<html>` (bean `zru7`). Beside the SEO strip for the same reason: a pass over the EMITTED tree, coupling to no content type and to no theme file
       "scripts/staging-banner.ts",          // ...and its banner (bean `g196`)
       "scripts/html-comments.ts",           // the one "is this inside a comment" scan the banner's body-finder and the folio mount's marker check share (bean `ur84`)
       "scripts/folio-mount.ts",             // the fragment that carries the reader's folio onto a library page — machinery, not a content model (bean `jpjt`)
@@ -1227,7 +1406,7 @@ export const RULES: Rule[] = [
   //    BEFORE the domain rules because first match wins: the `lean` keyword
   //    would otherwise claim a module the generic content model depends on.
   //
-  //    The test applied is not "does the name mention Lean" but "would core
+  //    The test applied WAS not "does the name mention Lean" but "would core
   //    compile and function without the science layer installed". For
   //    `lean-packages.ts` it would not: `BlockBase` carries an optional `lean`
   //    field in `schemas/types.ts`, `schemas/constraints.ts` validates its
@@ -1235,6 +1414,47 @@ export const RULES: Rule[] = [
   //    kinds by design — the document profile forbids its USE rather than its
   //    existence. So the grammar belongs wherever the field does. Only the
   //    package list is a property of a folio, and that is injected.
+  //
+  //    🟧 THAT TEST IS OVERRULED (owner, 2026-09-27), and it is the premise
+  //    rather than the reasoning that was rejected. Verbatim: "field sits on
+  //    shared kinds (remark, example, algorithm, simulator), so the grammar
+  //    genuinely is vocabulary that goes tp f-a-sci", following
+  //    "f-a-sci __should__ have scehams for math/science papers". A `lean`
+  //    field appearing on a shared kind does NOT make the grammar core; it
+  //    makes that field on those kinds part of the science vocabulary.
+  //
+  //    The test was applied FIVE times in this block ("Same test again",
+  //    "Same test a third time"), so the ruling reached four entries, not one.
+  //    Two moved to the sci block above and cost NOTHING. The other two --
+  //    `schemas/lean-packages.ts` and `content/pipeline/lean-signature.ts` --
+  //    cost SIX core -> sci edges, measured twice (at `.folio-assistant-pin`
+  //    and on current `main`, so not a pin artifact):
+  //      schemas/constraints.ts          -> lean-packages
+  //      adapters/mcp-server/server.ts   -> lean-packages
+  //      adapters/document/resolver.ts   -> lean-packages
+  //      adapters/manifest-entries.ts    -> lean-packages
+  //      content/pipeline/qa-utils.ts    -> lean-packages
+  //      content/pipeline/qa-utils.ts    -> lean-signature
+  //
+  //    🟩 PAID. All six are gone and both modules are now `sci` (they fall
+  //    there on the `lean` keyword rule below, so they need no entry at all).
+  //    `schemas/formal-ref.ts` is the injection point core reaches instead --
+  //    the third instance of the `references-registry-di` / `value-registry-di`
+  //    pattern -- and `content/pipeline/lean-formal-ref.ts` is the sci-side
+  //    implementation, which is where the resolution bodies moved verbatim from
+  //    `qa-utils.ts`. `BlockBase` is UNCHANGED: core still carries a field
+  //    named `lean`, it simply no longer knows the grammar of its `ref`. The
+  //    earlier note here said the ruling "changes `BlockBase`, so it is the
+  //    owner's call" -- that was wrong, and the whole cost was five call sites,
+  //    one of which dissolved by deleting a helper. qou bean `qou-7ko6`.
+  //
+  //    NOTE: NINE core modules import `lean-packages`, not six. The other
+  //    three -- `export-json.ts`, `conjectural-propagation-audit.ts`,
+  //    `conditional-class-banner-audit.ts` -- are composition roots
+  //    (`import.meta.main`), and `engine.ts` exempts a composition root from
+  //    the direction rule while still counting its edge in `totalEdges`. So a
+  //    reader who greps importers finds nine; re-measure with `--edges`, and
+  //    do not read six as an undercount.
   {
     repo: "core",
     triaged: true,
@@ -1256,25 +1476,6 @@ export const RULES: Rule[] = [
       // is subject matter, which is what its own comment says. This is one
       // module whose NAME collides with it.
       "content/pipeline/validate-simulator.ts",
-      "schemas/lean-packages.ts",           // the `lean.ref` grammar + the DI registry
-      // Statement-level hashing for `.lean` files, by the same test: the
-      // `lean_granularity: "statement"` field is on `QaCriterionDefinition` in
-      // core, and `qa-utils` consults it on every freshness check. The
-      // grammar belongs wherever the field does.
-      "content/pipeline/lean-signature.ts",
-      // The Lean LEXER — comment stripping and declaration splitting — which
-      // `lean-signature.ts` is built on. Same test again: finding a
-      // declaration in a file is grammar; what you then DO with it (Atlas
-      // ingestion, triviality probing, coverage tables) is the science layer.
-      "content/pipeline/lean-lexer.ts",
-      // Where a witness lives and whether one is there. Same test a third
-      // time: `export-json.ts` is the GENERIC exporter and emits `witnessed`
-      // for every block carrying a `lean` field, so hashing the file and
-      // looking for the sibling travels with the field. Producing and
-      // invalidating witnesses stays in `scripts/lean-witness.ts`, which is
-      // sci. Named for `witness`, which the sci keyword rule would otherwise
-      // claim — hence the explicit entry.
-      "content/pipeline/witness-address.ts",
       // The QA sidecar PROJECTION — the families (`block`, `translation`,
       // `script`, `kg`), their states and freshness, read by `gen-docs-pages`
       // to publish one file per (subject, family). Nothing in it is science:
@@ -1395,7 +1596,9 @@ export const RULES: Rule[] = [
       // rule when it arrived.
       //
       // BASE rather than core, although its subject is content and
-      // `check-artifact-index.ts` below is core on exactly that reasoning. The
+      // `check-artifact-index.ts` was core on exactly that reasoning — it has since
+      // MOVED to `folio-assistant-core/scripts/` under bean `yj6r`, so no rule in
+      // this file adjudicates it any more; see the note where its entry stood. The
       // difference is the import: this one reads `content/pipeline/fsh-cone.ts`
       // to compare against what that tool extracts, and `fsh-cone` is base by
       // the keyword rule underneath. Calling this core would buy the one thing
@@ -1411,23 +1614,93 @@ export const RULES: Rule[] = [
   },
 
   // ── folio-assist-core: the generic document model and its pipeline
+  //
+  // The `content/pipeline/` prefix below classifies that whole directory as
+  // core, which is why `check:partition` has always read 0 for it. Bean `yj6r`
+  // acted on that classification for the GLOSSARY cluster: `build-glossary.ts`,
+  // `codemod-refterm.ts` and their three tests now live in
+  // `folio-assistant-core/scripts/`. Nothing was removed from the prefix — a
+  // prefix stops matching a path that is no longer under it — but the fact is
+  // recorded here because the next reader will count `content/pipeline/` and
+  // find two files missing from a directory this rule claims in full.
+  //
+  // What the move BOUGHT is not a change of classification: it was already
+  // core. It removed the three imports reaching UP out of `cat-harness/` into
+  // `folio-assistant-core/schemas/glossary.ts` and `scripts/glossary-page.ts`,
+  // which this scan cannot see at all (its root is `cat-harness/`, so an edge
+  // leaving it is not resolved and not counted). That blindness is the whole
+  // subject of `yj6r`, and it is why a green `check:partition` was never
+  // evidence about this cluster either way.
   {
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: [
-      // CORE: renders a DOCUMENT folio to a site through the document
-      // pipeline's own `buildDocumentMarkdown` (content/pipeline, core). Its
-      // subject is a folio's content, not the harness (bean `fyu2`).
-      "scripts/build-document-site.ts",
+      // `scripts/build-document-site.ts` STOOD HERE and is GONE as of bean
+      // `yj6r`, 2026-09-30: it now lives in `folio-assistant-core/scripts/`
+      // beside the `schemas/changeset.ts` its test reads, so the classification
+      // is carried by location. Reasoning kept: it renders a DOCUMENT folio to
+      // a site through the document pipeline's own `buildDocumentMarkdown`
+      // (content/pipeline, core), and its subject is a folio's content, not the
+      // harness (bean `fyu2`). The `gen-review-page.ts` entry above still names
+      // it as a core caller reaching DOWN into the harness, which is now true
+      // by location as well as by rule.
       "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/render-order.ts", "src/tools/translation.ts",
       "src/tools/preview.ts", "src/qa-agent-write.ts",
-      // The voice-graph validator. It resolves each rule's citation into
-      // `library/` — a FOLIO's reference library — and `schemas/voices.ts`,
-      // which it reads, is core by the `schemas/` prefix. Arrived from `main`
-      // and fell through every prefix.
-      "scripts/check-voices.ts",
+      // `scripts/check-voices.ts` STOOD HERE and is GONE as of bean `yj6r`,
+      // 2026-09-30: it now lives in `folio-assistant-core/scripts/` beside the
+      // `schemas/library-ref.ts` it resolves citations through, so the
+      // classification is carried by location rather than by this list. The
+      // reasoning is kept because the next reader will ask why the voice-graph
+      // validator is not adjudicated — it resolves each rule's citation into
+      // `library/`, a FOLIO's reference library, and `schemas/voices.ts`, which
+      // it reads, is core by the `schemas/` prefix. It arrived from `main` and
+      // fell through every prefix, which is why it needed an exact entry at all.
+      // CORE, by the same test and for the same stated reason: the subject is
+      // CONTENT. It asks whether a change publishes a TRANSLATED PAGE with no
+      // `.po` beside it, so both sides of the question are a folio's material —
+      // the page under the site root and the catalogue under `translations/`,
+      // which is core by its own prefix above.
+      //
+      // It reads `buildTranslationIndex`/`siteRoot` from
+      // `content/pipeline/translation-index.ts` and `catalogueFor`/`fileForUrl`
+      // from `content/pipeline/translation-drift.ts`, both core by the
+      // `content/pipeline/` prefix.
+      //
+      // **Its second clause is RETRACTED, 2026-09-27.** It read "calling it harness
+      // would buy a wrong-direction edge for nothing". Measured: reclassifying such
+      // a script to `harness` leaves `Wrong-direction edges: 0`, because this file
+      // has a `#!` line and `import.meta.main`, so `isCompositionRoot` holds and the
+      // direction rule exempts its edges by design. The CONCLUSION stands and the
+      // subject argument above it is untouched — only the layering reason was
+      // wrong, and a right answer resting on a wrong reason is one the next entry
+      // copies, which is exactly what happened to the `check-bun-runtime.ts` entry
+      // above before it was falsified.
+      "scripts/check-translation-catalogue.ts",
+      // Whether the Bun RUNNING HERE is the one `.bun-version` pins, and how many
+      // committed script sidecars a sweep in this container will therefore rewrite
+      // (bean `3ozg`). CORE ON SUBJECT ALONE: what it measures and reports is the
+      // sidecar corpus under `content/pipeline/script-sidecars/`, core by the
+      // `content/pipeline/` prefix, and it reads `SCRIPT_SIDECAR_DIR` from
+      // `content/pipeline/qa-utils.ts` to find it.
+      //
+      // The tension is worth naming rather than smoothing over: its REASON is the
+      // harness's runtime, which is why `check-bun-pin.ts` is harness. Its SUBJECT
+      // is what it counts, and that is core's. Subject decides.
+      //
+      // **AND THE LAYERING ARGUMENT DOES NOT DECIDE IT — measured, because a first
+      // draft of this comment claimed it did.** That draft read "calling it harness
+      // would buy a wrong-direction edge for nothing", copied from the
+      // `check-translation-catalogue.ts` entry below. Falsified by reclassifying
+      // this module to `harness` and re-running: `Wrong-direction edges: 0` and
+      // rc=0, exactly as under `core`. The reason is `isCompositionRoot` — true for
+      // any source with a `#!` line or `import.meta.main` — whose edges the
+      // direction rule exempts by design. Every executable `scripts/check-*.ts`
+      // here qualifies, this one and `check-translation-catalogue.ts` included, so
+      // for a script in this block the direction rule is SILENT and cannot be
+      // evidence for either repo. Subject is the only criterion that discriminates.
+      "scripts/check-bun-runtime.ts",
       // Its other half: the rules are cited, AND the instruction body beside
       // them does not restate them uncited (bean `n8br`). Core for the same
       // reason — its subject is a voice, which is content an instance derived,
@@ -1453,8 +1726,13 @@ export const RULES: Rule[] = [
       // it harness would buy a wrong-direction edge into `schemas/` for
       // nothing. Its sibling `scripts/ingest-ig-artifacts.ts` writes the same
       // graph from the same schema and is core on the same reasoning.
-      "scripts/check-artifact-index.ts",
-      "scripts/ingest-ig-artifacts.ts",
+      //
+      // Both are GONE FROM THIS LIST as of bean `yj6r`, for the reason given on the
+      // materialisation trio above: they now live in `folio-assistant-core/scripts/`
+      // beside the schema they read, so the classification is carried by location.
+      // The reasoning is kept here rather than only in the commit because the next
+      // reader of this rule set will ask why an IG tool is not adjudicated, and
+      // "it is, by where it sits" is the answer.
       // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else.
       // A script is not automatically tooling-side: this one operates
       // exclusively on core data, and calling it harness bought two
@@ -1517,11 +1795,17 @@ export const RULES: Rule[] = [
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
       "scripts/l1-blocks.ts",               // staged entry → manifest + blocks/, the arm between the two
-      // Same test as the three above: it reads a CONTAINER a folio was
-      // given — a zip, a PDF, a saved page — and writes a
-      // `folio-extraction/v1` record beside it. Core material, and its
-      // schema (`folio-assistant-core/schemas/extraction.ts`) is core too.
-      "scripts/extract-assets.ts",          // container → extraction record, metadata by default
+      // `scripts/extract-assets.ts` STOOD HERE and is GONE as of bean `yj6r`,
+      // 2026-09-30, for the reason the materialisation trio above gives: it now
+      // lives in `folio-assistant-core/scripts/` beside the
+      // `schemas/extraction.ts` it reads, so the classification is carried by
+      // location. Its reasoning is kept rather than deleted with the entry,
+      // because the next reader will ask why a container-extraction tool is not
+      // adjudicated and "it is, by where it sits" is the answer: same test as
+      // the three above — it reads a CONTAINER a folio was given (a zip, a PDF,
+      // a saved page) and writes a `folio-extraction/v1` record beside it. Core
+      // material, and its schema is core too. A rule naming a path its own scan
+      // can no longer see fires on nothing while reading as an adjudication.
       "scripts/narratives.ts",              // the narrative review queue
       // Same test, same answer: it reads `library/<bib-slug>/blocks/` and
       // writes `summaries.json` beside them, a folio's own material, through

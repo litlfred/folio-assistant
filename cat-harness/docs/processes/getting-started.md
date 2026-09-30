@@ -11,7 +11,15 @@ nav_exclude: true
 
 `Process_GettingStarted` · strict · 12 step(s)
 
-folio-assistant — getting started: from "create a folio" to a live site. "Create a folio" is five different requests. Gateway_Intent computes which one from decisions/folio-intent.dmn rather than letting the agent assume, and `ask` is one of the outcomes the table can return. Gateway_Live applies the same construction to publication, with `unknown` kept distinct from `not-yet`. Source of truth: this file. The SVG under docs/assets/img/workflows/ is generated from it by `bun run render:bpmn` — never hand-edit the SVG.
+folio-assistant — getting started: from "create a folio" to a live site.
+
+"Create a folio" is five different requests. Gateway_Intent computes which one
+from decisions/folio-intent.dmn rather than letting the agent assume, and `ask`
+is one of the outcomes the table can return. Gateway_Live applies the same
+construction to publication, with `unknown` kept distinct from `not-yet`.
+
+Source of truth: this file. The SVG under docs/assets/img/workflows/ is
+generated from it by `bun run render:bpmn` — never hand-edit the SVG.
 
 <img src="../assets/img/workflows/getting-started.svg" alt="BPMN diagram: Getting started" style="max-width:100%">
 

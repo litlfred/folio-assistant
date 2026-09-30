@@ -182,7 +182,7 @@ function defaultCloud(layout: string): unknown {
 }
 
 const stickies = readLandingStickies(ROOT).map((st) => {
-  const theme = themeById(st.theme);
+  const theme = themeById(st.theme.themeId);
   const resolved = theme ? resolveThemeBackdrop(theme, decl?.images) : undefined;
   const art: Record<string, unknown> = {};
   if (resolved && resolved.art.size > 0) {
@@ -207,7 +207,8 @@ const stickies = readLandingStickies(ROOT).map((st) => {
     id: st.id,
     summary: st.summary,
     comment: st.comment,
-    theme: st.theme,
+    // The ID, not the reference: `stickies.json` is read by the browser.
+    theme: st.theme.themeId,
     // WHICH LAYER contributed this card. Carried through to the data file rather
     // than left in the node, because the board is composed and "which layer put
     // this here" is the first question anyone debugging it asks — and the answer

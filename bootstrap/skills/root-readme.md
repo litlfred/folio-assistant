@@ -32,7 +32,7 @@ is the act that brings the instance into being. A `context` asset that does not
 exist yet has to come from somewhere, and *"never written by a process"* cannot
 mean *"never created"* without leaving every instance without one.
 
-The harness states this too, in `content-context-and-state-graphs`. If you find
+The harness states this too, in its own skill on context and state. If you find
 the two disagreeing, the harness's skill is the source of truth and this file
 is the copy that drifted.
 
@@ -49,7 +49,7 @@ Two things, and **no more**:
 
 Write nothing else. You do not know what this repository is for, what it will
 hold, or who is writing it; a paragraph guessing at that is a paragraph its
-author has to delete. The harness's own `readme_sync` fills the rest, in marker
+author has to delete. The harness's own README tool fills the rest, in marker
 pairs, once it is installed.
 
 **Say which locations, when there is more than one.** *"Installed"* over three
@@ -63,7 +63,7 @@ authored content in order to state a fact that belongs in a generated region,
 which is a bad trade in every case and an unrecoverable one in some.
 
 Add the link and the status **inside a marker pair** instead, so the harness's
-`readme_sync` owns that region from then on and the rest of the file stays the
+README tool owns that region from then on and the rest of the file stays the
 author's. If you cannot tell whether an existing file is authored or a
 leftover, it is authored: that is the assumption whose failure mode is a
 duplicated sentence rather than a lost page.

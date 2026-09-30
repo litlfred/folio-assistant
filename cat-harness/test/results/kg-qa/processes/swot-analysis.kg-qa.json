@@ -5,7 +5,7 @@
     "id": "Process_SwotAnalysis",
     "path": "processes/swot-analysis.bpmn"
   },
-  "source_hash": "sha256:84972d1e43f33eeab069ef7b2d39e949d3343d8d2e92d8048fb3dd0fc79fd609",
+  "source_hash": "sha256:b42d21a5ad25d669a60749ff08ab6c2f231ebdebd52569ad8b42799e03ffec64",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,39 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_FrameSubject",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ScanExternal",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ScanInternal",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_GroupReview",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_RecordAmbiguous",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Cross",
+          "detail": "names skill \"swot-analysis\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_HandOff",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -131,7 +164,7 @@
   },
   "totals": {
     "pass": 13,
-    "fail": 1,
+    "fail": 2,
     "n/a": 10,
     "unknown": 0
   }

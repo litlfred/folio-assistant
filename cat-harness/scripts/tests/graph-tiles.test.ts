@@ -21,7 +21,7 @@ import { SubgraphCoverageSchema, visualisationsOf } from "../../schemas/cat-harn
 const dir = (id: string, coverage?: unknown, theme?: string): TiledDirectory => ({
   id,
   ...(coverage === undefined ? {} : { coverage: SubgraphCoverageSchema.parse(coverage) }),
-  ...(theme === undefined ? {} : { theme }),
+  ...(theme === undefined ? {} : { theme: { themeId: theme } }),
 });
 
 describe("a bare string still parses — the widening is additive", () => {
@@ -140,7 +140,7 @@ describe("visibility and theme default, and may be overridden", () => {
     // that states nothing is complete, and absent means the instance's.
     expect(graphTiles([dir("x", { visualiser: "a.html" }, "library")])[0]?.theme).toBe("library");
     expect(
-      graphTiles([dir("x", { visualiser: [{ ref: "a.html", theme: "own" }] }, "library")])[0]?.theme,
+      graphTiles([dir("x", { visualiser: [{ ref: "a.html", theme: { themeId: "own" } }] }, "library")])[0]?.theme,
     ).toBe("own");
     expect(graphTiles([dir("x", { visualiser: "a.html" })])[0]?.theme).toBeUndefined();
   });
@@ -172,8 +172,9 @@ describe("a live projection with no declaration is a FINDING — `flh4`'s third 
   test("the finding names the repair, not the symptom", () => {
     const [f] = tileFindings("cat-harness", dirs, published);
     expect(f).toContain("beans");
-    expect(f).toContain("coverage.visualiser");
-    expect(f).toContain("Declare it");
+    // The repair since #1168 B7a: the generator names the directory in the page.
+    expect(f).toContain("withRenders");
+    expect(f).toContain("name the directory in the page");
   });
 });
 
@@ -391,3 +392,25 @@ describe("a page's declared ref names the directory that declared it", () => {
     expect([...directoryByVisualisationRef([dir("undeclared")])]).toEqual([]);
   });
 });
+
+describe("one tile per page (#1168 B7a-2b)", () => {
+  // Viewers are read from the pages, and one page may draw several
+  // directories. The tile goes to the instance's own directory first.
+  const shared = "docs/processes/index.md";
+  const tiles = graphTiles([
+    { id: "smart-base-processes", scope: "repository", coverage: { visualiser: shared } },
+    { id: "processes", coverage: { visualiser: shared } },
+    { id: "core-processes", scope: "repository", coverage: { visualiser: shared } },
+    { id: "tools", coverage: { visualiser: "docs/tools/index.md" } },
+  ]);
+
+  test("a page shared by several directories gets one tile", () => {
+    expect(tiles.filter((t) => t.ref === shared)).toHaveLength(1);
+    expect(tiles).toHaveLength(2);
+  });
+
+  test("and it is the instance's own directory's tile", () => {
+    expect(tiles.find((t) => t.ref === shared)?.directory).toBe("processes");
+  });
+});
+

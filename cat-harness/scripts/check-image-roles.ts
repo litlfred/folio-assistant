@@ -64,10 +64,11 @@
  * @covers cat-harness — the `role` keys it grades are on the instance DECLARATIONS, and the
  *   question is whether each is read by anything that can reach it
  */
-import { readFileSync, readdirSync, statSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { readFileSync } from "node:fs";
+import { relative, resolve } from "node:path";
 
 import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
+import { gitFiles } from "../schemas/git-corpus.ts";
 /* NO `folio-graph-kind` IMPORT IS NEEDED HERE, and that is recent: until #840
    `readDeclaration` THREW on this repository's own declaration unless the
    caller had imported core's registration for its side effect. #840 moved the
@@ -233,32 +234,25 @@ export function judge(
   };
 }
 
-/** Every `.ts` under a root, skipping dependencies and generated output. */
+/**
+ * Every `.ts` GIT accounts for, minus `docs/`, which this check does not read.
+ *
+ * `xd1g`. The old skip set named `_kg` explicitly — somebody had already been
+ * bitten by that exact directory and patched it by name, which is the shape
+ * `biz4` records costing a session (233 nodes read as 1443). `_kg` and `dist`
+ * are gitignored, so git excludes them by rule and neither needs naming;
+ * `docs` is tracked and stays listed, because not reading it is a decision.
+ *
+ * Measured at the conversion: **1294 before, 1294 after**.
+ */
 function sources(root: string): string[] {
-  const out: string[] = [];
-  const skip = new Set(["node_modules", "docs", ".git", "dist", "_kg"]);
-  const walk = (dir: string): void => {
-    let entries: string[];
-    try {
-      entries = readdirSync(dir);
-    } catch {
-      return;
-    }
-    for (const e of entries) {
-      if (e.startsWith(".") || skip.has(e)) continue;
-      const p = join(dir, e);
-      let s;
-      try {
-        s = statSync(p);
-      } catch {
-        continue;
-      }
-      if (s.isDirectory()) walk(p);
-      else if (e.endsWith(".ts") && !e.endsWith(".d.ts")) out.push(p);
-    }
-  };
-  walk(root);
-  return out;
+  return gitFiles(
+    root,
+    (rel) =>
+      rel.endsWith(".ts") &&
+      !rel.endsWith(".d.ts") &&
+      !rel.split("/").some((s) => s.startsWith(".") || s === "docs"),
+  ).files;
 }
 
 export function run(repoRoot: string): {

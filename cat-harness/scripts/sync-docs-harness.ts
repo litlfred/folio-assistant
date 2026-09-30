@@ -32,13 +32,16 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 
 import { dirname, join, relative, resolve } from "node:path";
 
 import { detectRepoUrl } from "../content/pipeline/readme-toc.js";
-import { instanceDeclarationFilename, readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
+import { instanceDeclarationFilename, instanceRootsIn, readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
+import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
 import { graphTiles, withTileCounts } from "./graph-tiles.js";
 import { readTileCounts, type TileCount } from "../schemas/tile-count.js";
+import { gitTopLevelDirs } from "../schemas/git-corpus.ts";
 import { harnessTiles, instanceDirs } from "./harness-tiles.js";
 import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
+import { withViewers } from "./viewer-declarations.js";
 
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -238,10 +241,18 @@ function scanTileCounts(assetsDir: string): Map<string, TileCount> {
 }
 
 const links = siteLinks(decl, repoUrl);
-const instanceNames = readdirSync(REPO_ROOT, { withFileTypes: true })
-  .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
-  .map((d) => d.name)
-  .sort();
+// ASKED OF GIT (bean `qrlc`). The hand-written filter below admitted **26**
+// top-level names on this container and `_kg` was the first: a gitignored
+// directory of knowledge-graph exports that a clean checkout does not have.
+// Git's answer is 24 — it drops `_kg` and `test-results`, both gitignored,
+// and gains nothing.
+//
+// Latent today, and by a DIFFERENT mechanism from `xd1g`'s eleven: the
+// committed output carries 0 mentions of `_kg` because a later predicate
+// drops anything without a declaration. The walk was contaminated and the
+// artefact was not — which is luck a reader cannot see from the walk, and
+// the argument for asking git here rather than trusting the filter behind.
+const instanceNames = gitTopLevelDirs(REPO_ROOT).names;
 const allHarnesses = harnessTiles(REPO_ROOT, ROOT, instanceNames);
 
 /**
@@ -427,7 +438,7 @@ const payload = {
    * and says where it shows, never two registries free to disagree about what
    * a tile is. The navbar and the board filter this by `surfaces`. */
   tiles: withTileCounts(
-    graphTiles(decl?.directories ?? [], relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
+    graphTiles(withViewers(decl?.directories ?? [], ROOT), relative(REPO_ROOT, join(ROOT, siteDirFor(ROOT)))),
     scanTileCounts(join(ROOT, siteDirFor(ROOT), "assets")),
   ),
   harnesses: allHarnesses,
@@ -452,6 +463,22 @@ const payload = {
    * look like navigation.
    */
   navbar: navbarRow(allHarnesses, decl?.name, links),
+  /**
+   * EVERY INSTANCE'S VERSION, and its release addresses where it declares an
+   * `iriBase` — so a page writes `{{ site.data.harness.releases.bootstrap.version }}`
+   * and never a number that goes stale on the next bump (owner, 2026-09-29:
+   * "make variables of version available to minimize drift"). `agent` is
+   * `<iriBase><version>/`, for identifiers; `human` is `<iriBase>v<major>/`,
+   * for pages. Read from the declarations, so a bump is one edit.
+   */
+  releases: Object.fromEntries(
+    instanceRootsIn(REPO_ROOT).flatMap((root) => {
+      const d = readDeclaration(root);
+      if (!d) return [];
+      const r = releaseIris(d);
+      return [[d.name, { version: d.version ?? "", major: r?.major ?? null, agent: r?.agent ?? "", human: r?.human ?? "" }]];
+    }).sort(([a], [b]) => String(a).localeCompare(String(b))),
+  ),
   config,
 };
 const next = `${JSON.stringify(payload, null, 2)}\n`;

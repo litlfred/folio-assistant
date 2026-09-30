@@ -5,7 +5,7 @@
     "id": "Process_BoardRelocate",
     "path": "processes/board-relocate.bpmn"
   },
-  "source_hash": "sha256:8031822fa26e393e2b836768cba6d0c8083de3e6796b6fb425216fc70506d1a9",
+  "source_hash": "sha256:fe7b532f700f23d216b9ac4b974ceb91dee713199fd2718d9315bccf8fe37042",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,31 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_AskConfirm",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Cancel",
+          "detail": "names skill \"board-windows\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_MoveContent",
+          "detail": "names skill \"board-diagram-interchange\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_UpdateLayer",
+          "detail": "names skill \"board-diagram-interchange\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ReportMove",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -106,7 +131,7 @@
   },
   "totals": {
     "pass": 14,
-    "fail": 0,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

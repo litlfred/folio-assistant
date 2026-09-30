@@ -100,7 +100,7 @@ export function extractBpmn(xml: string, sourcePath: string): PotEntry[] {
     // an id as a label, and translating it would be nonsense.
     if (/^[A-Za-z_][A-Za-z0-9_]*$/.test(msgid) && /_/.test(msgid)) return;
     seen.add(msgid);
-    entries.push({ source: sourcePath, line: lineAt(xml, index), msgid, comment });
+    entries.push({ source: sourcePath, line: lineAt(xml, index), msgid, kind: "bpmn-label", comment });
   };
 
   for (const m of xml.matchAll(NAMED)) {

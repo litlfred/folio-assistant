@@ -45,6 +45,25 @@ import { isPublishedSkill, siteDirFor } from "../../schemas/cat-harness.ts";
 import { ownElementPattern } from "../../schemas/namespaces.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
+
+/**
+ * The exported graph, built ONCE at module scope.
+ *
+ * Bean `sff8`. This was `await buildExport(...)` inside the test body and timed out
+ * at **5312 ms** in a loaded full-suite run — the FOURTH test in this family to do
+ * so, and the one that appeared immediately after the previous three were fixed.
+ *
+ * It is the same remedy as `activity-log.test.ts` and `kg-export.test.ts`: module
+ * scope belongs to no test's timeout. Not a raised budget, which `sff8` rules out
+ * because a number decays as the corpus grows.
+ *
+ * Worth knowing rather than repeating: fixing one of these has twice surfaced the
+ * next, because the population is every test whose own work approaches the default
+ * 5000 ms while inheriting it silently — ~50 of them at half the budget under load.
+ * `bun run check:test-budgets` now NAMES them, so the next one need not be found by a red
+ * run on somebody's machine.
+ */
+const EXPORTED = await buildExport({ baseUrl: "https://example.invalid/fa" });
 const PUBLISHED = join(ROOT, siteDirFor(ROOT), "reference/skill-instructions");
 
 /**
@@ -91,8 +110,8 @@ describe("skill coverage", () => {
     expect(discovered.length).toBeGreaterThan(0);
   });
 
-  test("every resolvable skill is a node in the exported graph", async () => {
-    const doc = await buildExport({ baseUrl: "https://example.invalid/fa" });
+  test("every resolvable skill is a node in the exported graph", () => {
+    const doc = EXPORTED;
     const nodes = new Set(
       (doc["@graph"] as Array<Record<string, unknown>>)
         .filter((n) => String(n["@type"]).endsWith("Skill"))

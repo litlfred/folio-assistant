@@ -1,6 +1,9 @@
 ---
 title: "External schemas"
 description: "The specifications this repository depends on — the edition of each, what would move if one bumped, and the terms it actually branches on."
+renders:
+  - cat-harness/external-schemas
+rendered-by: external-schemas-viewer
 ---
 <style>
 .xs-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
@@ -24,9 +27,9 @@ So each record answers three questions — **which edition**, **what here
 depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
-<div class="xs-stat"><b>16</b><span>specifications</span></div>
-<div class="xs-stat"><b>98</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>183</b><span>declared uses</span></div>
+<div class="xs-stat"><b>17</b><span>specifications</span></div>
+<div class="xs-stat"><b>100</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>191</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -38,6 +41,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[HL7 FHIR](#hl7-fhir)**<br>`hl7-fhir` | HL7 | [unpinned](https://hl7.org/fhir/) | `reads` — this repository parses documents written in it |
 | **[Business Process Model and Notation (BPMN)](#omg-bpmn-2.0)**<br>`omg-bpmn-2.0` | OMG | [2.0](https://www.omg.org/spec/BPMN/2.0/) | `conforms` — this repository's artefacts are valid against it |
 | **[Diagram Definition (DD)](#omg-dd-1.0)**<br>`omg-dd-1.0` | OMG | [1.0](https://www.omg.org/spec/DD/1.0/) | `conforms` — this repository's artefacts are valid against it |
+| **[Decision Model and Notation (DMN)](#omg-dmn-1.3)**<br>`omg-dmn-1.3` | OMG | [1.3](https://www.omg.org/spec/DMN/1.3/) | `conforms` — this repository's artefacts are valid against it |
 | **[Schema.org](#schema-org)**<br>`schema-org` | other | [unpinned](https://schema.org/) | `conforms` — this repository's artefacts are valid against it |
 | **[SPAR Ontologies: DoCO, DEO and CiTO](#spar-doco-deo-cito)**<br>`spar-doco-deo-cito` | other | [unpinned](http://www.sparontologies.net/) | `conforms` — this repository's artefacts are valid against it |
 | **[Metadata Vocabulary for Tabular Data](#w3c-csvw)**<br>`w3c-csvw` | W3C | [2015-12-17](https://www.w3.org/TR/tabular-metadata/) | `conforms` — this repository's artefacts are valid against it |
@@ -64,7 +68,7 @@ Every declaration names a record on this page.
 
 ## Namespaces the corpus uses against the ones it declares
 
-Read from the BPMN and DMN files themselves — **4** namespace IRI(s)
+Read from the BPMN and DMN files themselves — **6** namespace IRI(s)
 are in use. Derived rather than listed, so a diagram that adopts a new
 vocabulary shows up here instead of going unnoticed.
 
@@ -183,7 +187,7 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | `bootstrap/processes/*.bpmn (3)` | `xmlns` binding |
-| `cat-harness/processes/*.bpmn (69)` | `xmlns` binding |
+| `cat-harness/processes/*.bpmn (70)` | `xmlns` binding |
 | `cat-harness/scripts/render-bpmn.ts` | `@conformsTo` tag |
 | `cat-harness/src/workflow/process-model.ts` | `@conformsTo` tag |
 | `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
@@ -234,10 +238,31 @@ a subset of the edition rather than a transcription of it.
 | user | declared by |
 |---|---|
 | `bootstrap/processes/*.bpmn (3)` | `xmlns` binding |
-| `cat-harness/processes/*.bpmn (69)` | `xmlns` binding |
+| `cat-harness/processes/*.bpmn (70)` | `xmlns` binding |
 | `cat-harness/scripts/render-bpmn.ts` | `@conformsTo` tag |
 | `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
+
+**No operative terms.** This repository conforms to the specification
+without branching on any of its terms, so none is materialised into the
+graph. That is a determined zero, not an unfilled field.
+
+### Decision Model and Notation (DMN) {#omg-dmn-1.3}
+
+`omg-dmn-1.3` — OMG, edition [1.3](https://www.omg.org/spec/DMN/1.3/) — `conforms`, meaning this repository's artefacts are valid against it.
+
+**Namespaces.**
+
+- `https://www.omg.org/spec/DMN/20191111/MODEL/`
+- `https://www.omg.org/spec/DMN/20191111/DMNDI/`
+
+**Note.** The decision tables under processes/decisions/ that BPMN gateways compute from. Added 2026-09-27 when the knowledge graph began linking each process graph to the standards its files declare; until then the DMN namespaces went unregistered because namespacesInUse read only the top of processes/.
+
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| `cat-harness/processes/decisions/*.dmn (9)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
@@ -377,7 +402,6 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/scripts/code-lists.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/glossary-export.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
-| `folio-glossary-ledger/v1 nodes` | through the module that types it (`cat-harness/scripts/glossary-export.ts`) |
 
 **Operative terms (3).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -454,7 +478,6 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/scripts/glossary-export.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/kg-export.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
-| `folio-glossary-ledger/v1 nodes` | through the module that types it (`cat-harness/scripts/glossary-export.ts`) |
 
 **Operative terms (5).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -484,9 +507,8 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/schemas/vocabulary.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/glossary-export.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
-| `folio-glossary-ledger/v1 nodes` | through the module that types it (`cat-harness/scripts/glossary-export.ts`) |
 
-**Operative terms (14).** The terms this repository acts on —
+**Operative terms (16).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
 a subset of the edition rather than a transcription of it.
 
@@ -495,12 +517,14 @@ a subset of the edition rather than a transcription of it.
 | `skos:Collection` | A glossary's `members` (folio-glossary/v1): external concepts this folio lists without copying them, emitted by folio-assistant-core/schemas/glossary.ts#toSkos. |
 | `skos:Concept` | A MEANING, and the authoritative object for one. Minted per declared ROLE, never per lane name — 85 lane names resolve to 36 roles, so a concept per name would mint 85 terms for 36 meanings. |
 | `skos:ConceptScheme` | The glossary document IS the scheme; there is no separate `…#scheme` IRI, because that would name a set that already has a name and would not dereference (`blv9`). |
+| `skos:OrderedCollection` | derived from the corpus; what this repository does with it is not yet described |
 | `skos:altLabel` | The other names one concept is drawn under. `build-pipeline` is labelled ten ways across the corpus; nine are altLabels, which is what makes "Reviewer / SME" findable as "Reviewer" rather than a rival entry. |
 | `skos:broader` | A glossary term's `broader`: a local term id or an external IRI, emitted as a link (folio-glossary/v1). |
 | `skos:changeNote` | Retirement. A term whose defining role is gone is deprecated and dated in the ledger, never deleted — a derived document has no memory, so the ledger is what makes "reported and never deleted" implementable. |
 | `skos:definition` | What the term MEANS, taken from the role's authored `description` — one author, one place to fix. Absent by design on a lane whose performer varies, which is honest rather than indistinguishable from a lane nobody bound. |
 | `skos:inScheme` | Binds a concept to its instance's glossary document. Each concept's `inScheme` names that document's own published URL, so a preview that publishes the graph without the glossary serves a 404ing scheme IRI — which `check:invocation-parity` refuses. |
 | `skos:member` | The external concept IRIs of a glossary's `members` Collection. |
+| `skos:memberList` | derived from the corpus; what this repository does with it is not yet described |
 | `skos:notation` | The CODE. `TermGloss`'s prefixed name (`cat:FshGutsNode`) already WAS this, which is why the "coded glossary" requirement was satisfied by data that existed rather than by new authoring. |
 | `skos:note` | The status of a glossary term that is not `authored` (`candidate`, or `could-not-extract` with its reason), so a SKOS-only reader can tell it is not a curated definition (bean `lqo9`). |
 | `skos:prefLabel` | The one name a concept is published under. AUTHORITATIVE for a concept's name — where a node is both a resource and a concept, `dcterms:title` is the derived copy and this is the source. |

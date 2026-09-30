@@ -30,8 +30,8 @@
  *
  * Usage:
  *
- *   bun run pipeline/codemod-val.ts <paper-or-chapter-dir>            # dry-run
- *   bun run pipeline/codemod-val.ts <paper-or-chapter-dir> --write    # apply
+ *   bun run cat-harness/content/pipeline/codemod-val.ts <paper-or-chapter-dir>            # dry-run
+ *   bun run cat-harness/content/pipeline/codemod-val.ts <paper-or-chapter-dir> --write    # apply
  *
  * Mdast-based; no regex over raw markdown source.
  *

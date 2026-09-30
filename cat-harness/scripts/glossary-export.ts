@@ -123,7 +123,9 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-skos
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../../bootstrap-tools/schemas/glossary-ledger.ts";
+import { tagCompatible } from "../../bootstrap-tools/schemas/release-iri.ts";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 import { NS_PREFIXES, ownElementPattern, termIri } from "../schemas/namespaces.js";
@@ -132,6 +134,7 @@ import { repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 import { exportIdentity, makeIri } from "./kg-export.js";
 import { codeListDirs, loadCodeLists } from "../schemas/code-list.js";
+import { gitFiles } from "../schemas/git-corpus.ts";
 import { buildCodeListsDoc } from "./code-lists.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -145,7 +148,7 @@ export const GLOSSARY_DIR = "glossary";
 /** The ledger's filename — the one non-derivable fact this module stores. */
 export const LEDGER_FILENAME = "glossary-ledger.json";
 /** Tagged so the file declares what it is, per the directory conventions. */
-export const LEDGER_SCHEMA = "folio-glossary-ledger/v1";
+export { LEDGER_SCHEMA } from "../../bootstrap-tools/schemas/glossary-ledger.ts";
 
 // ── The corpus ──────────────────────────────────────────────────
 
@@ -170,24 +173,13 @@ export interface LaneOccurrence {
   readonly activities: number;
 }
 
+/**
+ * Every `.bpmn` diagram git accounts for, outside dot directories.
+ *
+ * `xd1g`. Measured at the conversion: **74 before, 74 after**.
+ */
 function bpmnFiles(root: string): string[] {
-  const out: string[] = [];
-  const walk = (dir: string): void => {
-    let entries;
-    try {
-      entries = readdirSync(dir, { withFileTypes: true });
-    } catch {
-      return;
-    }
-    for (const e of entries) {
-      if (e.name.startsWith(".") || e.name === "node_modules") continue;
-      const p = join(dir, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith(".bpmn")) out.push(p);
-    }
-  };
-  walk(root);
-  return out.sort();
+  return gitFiles(root, (rel) => rel.endsWith(".bpmn") && !rel.split("/").some((s) => s.startsWith("."))).files;
 }
 
 /**
@@ -280,10 +272,10 @@ export function readLedger(instanceRoot: string, stub: string): Ledger {
   // A ledger that is not one is REFUSED rather than replaced. Overwriting it
   // would delete every retirement record in the file — the one thing this
   // module exists to keep — on the strength of a parse this code got wrong.
-  if (raw.$schema !== LEDGER_SCHEMA) {
+  if (raw.$schema !== LEGACY_LEDGER_SCHEMA && !tagCompatible(raw.$schema, LEDGER_SCHEMA_NAME, 1)) {
     throw new Error(`${p}: expected "$schema": "${LEDGER_SCHEMA}", found ${JSON.stringify(raw.$schema)}`);
   }
-  return raw;
+  return { ...raw, $schema: LEDGER_SCHEMA };
 }
 
 // ── The document ────────────────────────────────────────────────

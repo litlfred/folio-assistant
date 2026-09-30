@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Deep document research'
 parent: Skill instructions
 ---
@@ -96,11 +97,11 @@ search*. Those are different, and only the first is a fact about the folio.
 
 ## See also
 
-- [`doc-researcher`](../methodologies/doc-researcher.md) — the method, what it
+- [`doc-researcher`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/methodologies/doc-researcher.md) — the method, what it
   measured, and where this rendering stops.
 - `library-ingestion`, `document-intake` — how the corpus this reads gets
   there.
-- [`literature-search`](../../cat-harness/skills/folio-core/literature-search.md)
+- [`literature-search`](literature-search.md)
   — searching for sources not yet held, which is the other direction.
 {% endraw %}
 

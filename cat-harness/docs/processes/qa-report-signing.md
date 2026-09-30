@@ -11,7 +11,11 @@ nav_exclude: true
 
 `Process_QaReportSigning` · strict · 5 step(s)
 
-Attesting a QA report: build the test run, work out what the performer can actually reach, and sign — over the API where that is available, or as release authority where it is not. You are in this process when a report needs to become evidence somebody else can rely on. The reach resolution before the gateway is the point: the route is CHOSEN from what the signer can do, not assumed, and the process records which route signed it so a reader of the attestation can tell. A signature whose route is unrecorded is a signature whose weight cannot be judged later, which is why that step is drawn rather than left implicit.
+Attesting a QA report: build the test run, work out what the performer can actually reach, and sign — over the API where that is available, or as release authority where it is not.
+
+You are in this process when a report needs to become evidence somebody else can rely on. The reach resolution before the gateway is the point: the route is CHOSEN from what the signer can do, not assumed, and the process records which route signed it so a reader of the attestation can tell.
+
+A signature whose route is unrecorded is a signature whose weight cannot be judged later, which is why that step is drawn rather than left implicit.
 
 <img src="../assets/img/workflows/qa-report-signing.svg" alt="BPMN diagram: QA report signing" style="max-width:100%">
 

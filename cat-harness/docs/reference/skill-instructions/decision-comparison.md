@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'The comparison goes BEFORE the question, not inside the options'
 parent: Skill instructions
 ---

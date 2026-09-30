@@ -12,9 +12,9 @@
  * version metadata is the point.
  *
  * Usage:
- *   bun run content/pipeline/refactor-strategy.ts --lean 4.24.0
- *   bun run content/pipeline/refactor-strategy.ts --lean 4.24.0 --applicable
- *   bun run content/pipeline/refactor-strategy.ts --json
+ *   bun run cat-harness/content/pipeline/refactor-strategy.ts --lean 4.24.0
+ *   bun run cat-harness/content/pipeline/refactor-strategy.ts --lean 4.24.0 --applicable
+ *   bun run cat-harness/content/pipeline/refactor-strategy.ts --json
  *
  * @module content/pipeline/refactor-strategy
  */

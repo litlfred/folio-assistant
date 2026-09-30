@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'The platform''s own gates'
 parent: Skill instructions
 ---
@@ -294,6 +295,27 @@ own output when it fails.
 
 ---
 
+## ...and a green gate set is not a CLEAN RUN
+
+`bun run gates` snapshots the tree before the first gate and after every one, so
+every gate can pass and the run still exit 1:
+
+```
+✗ every gate passed, and the run is NOT clean — 1 gate(s) changed the tree.
+```
+
+The gates after the mutation were handed the repaired tree, so their verdicts
+describe a state you have not committed. **The discipline is in the skill, not
+here** — [`gate-tree-mutation`](gate-tree-mutation.md) carries the two causes, the
+one command that tells them apart, and the question that settles the second: does
+the churning field describe the **subject** the artefact is about, or the **run**
+that produced it? Only the first is a reason to write. Bean `3ozg` is its worked
+example — an `engine_version` counted as substantive rewrote 72 committed sidecars
+on every branch — and the skill also carries why discarding such a churn is a
+workaround whose habit is the defect.
+
+---
+
 ## Three things this skill will not do for you
 
 **It does not replace reading the failure.** The runner names the failing
@@ -333,6 +355,7 @@ renamed or restructured and the reader needs fixing — not the gate list.
 | [`continual-progress`](continual-progress.md) | commit early, open the PR at the first commit — this is the step before the push |
 | [`prepare-merge`](prepare-merge.md) | the pre-merge recipe, which runs these plus content-type gates |
 | [`ci-health`](ci-health.md) | whether the workflows themselves are working — a different question |
+| [`gate-tree-mutation`](gate-tree-mutation.md) | reading `NOT clean` — a green gate set over a tree a gate repaired |
 {% endraw %}
 
 ## Processes that run this skill
@@ -340,5 +363,5 @@ renamed or restructured and the reader needs fixing — not the gate list.
 | process | step(s) that name it |
 |---|---|
 | [Code change and review](../../processes/code-change-review.html) | Run the platform's own gates |
-| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Lean: no bare&#10;`import Mathlib` (HARD); Python: unused and&#10;wildcard imports (HARD); TypeScript: tests, lint, types,&#10;and ~30 repository gates (HARD); End-to-end +&#10;accessibility (HARD); Rust wildcard imports&#10;(WARN-ONLY); Dependency advisories&#10;(WARN-ONLY) |
+| [The gates a change must pass before it can merge](../../processes/code-quality-gates.html) | Lean: no bare `import Mathlib` (HARD); Python: unused and wildcard imports (HARD); TypeScript: lint, types and tests (HARD); End-to-end + accessibility (HARD); Rust wildcard imports (WARN-ONLY); Dependency advisories (WARN-ONLY); Repository gates (HARD); Skill-registration chain (UNMASKED) |
 

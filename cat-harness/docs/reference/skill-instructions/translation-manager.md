@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'Translation manager'
 parent: Skill instructions
 ---
@@ -23,7 +24,7 @@ rendering.
 ## Reference
 
 The authoritative documentation is
-[`docs/translation-support.md`](../../docs/translation-support.md). Read it
+[`docs/translation-support.md`](../../translation-support.html). Read it
 before using this skill. This file is the operational checklist, not the
 architecture.
 
@@ -615,7 +616,7 @@ The WHO `smart-base` repository defines the formal actor
 `SGAuthoring.Skills.ReviewTranslations`.
 
 Follow the principle in
-[`smart-base-tools.md`](../authoring-who-smart-guidelines/smart-base-tools.md):
+[`smart-base-tools.md`](smart-base-tools.md):
 **load it; never vendor it.** The translation subsystem is invoked from the
 smart-base checkout, not copied.
 

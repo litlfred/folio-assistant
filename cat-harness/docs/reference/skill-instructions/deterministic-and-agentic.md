@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: 'The deterministic-to-agentic spectrum'
 parent: Skill instructions
 ---
@@ -121,7 +122,7 @@ outside it now support the premise, **second-hand**: cited by the ingested
 source, not themselves ingested, so each is an attribution to check rather than
 a result this repository holds (`literature-search` §"Never fill the gap with
 recall"). Provenance for all three is
-[`hybrid-llm-deterministic`](../../methodologies/hybrid-llm-deterministic.md):
+[`hybrid-llm-deterministic`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/hybrid-llm-deterministic.md):
 
 - LLMs **can be distracted by irrelevant context** — Shi et al., ICML 2023.
 - Accuracy **drops on low-probability inputs even for deterministic tasks** —
@@ -275,6 +276,6 @@ consulted it; `workflow_gate` only answers agents that ask.
   where `cat-harness.processes:judgement` came from.
 - [`bpmn-processes`](bpmn-processes.md) — strict vs advisory, the four steps no
   package may relax, and the commit-boundary gate.
-- [`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)
+- [`content-context-and-state-graphs`](content-context-and-state-graphs.md)
   — the layer that makes "a controlled overlay of context" a thing you can name.
 {% endraw %}

@@ -14,7 +14,6 @@
  */
 
 import type { Block, Section, SectionRef } from "../schemas/types.js";
-import { parseLeanRef, type ParsedLeanRef } from "../schemas/lean-packages.js";
 
 /**
  * Is this `sections[]` entry a bare reference to a section file, rather than
@@ -72,17 +71,17 @@ export const blockExamples = (b: Block) => ("examples" in b ? b.examples : undef
 export const blockTex = (b: Block) => ("tex" in b ? b.tex : undefined);
 export const blockCaption = (b: Block) => ("caption" in b ? b.caption : undefined);
 
-/**
- * Parse a block's `lean.ref` URI; returns `undefined` on a missing or
- * malformed ref, so callers degrade to sibling-only resolution rather than
- * throwing.
- */
-export function tryParseLeanRef(blk: Block): ParsedLeanRef | undefined {
-  const ref = blockLean(blk)?.ref;
-  if (typeof ref !== "string" || ref.length === 0) return undefined;
-  try {
-    return parseLeanRef(ref);
-  } catch {
-    return undefined;
-  }
-}
+// `tryParseLeanRef` lived here and is GONE, not moved.
+//
+// It returned a `ParsedLeanRef` — package, decl, module, bare name — and both
+// resolvers immediately turned that into file paths with a decl-prefix walk of
+// their own. Every part of it is the formalism layer's vocabulary, which core no
+// longer holds (owner ruling 2026-09-27: the `lean.ref` grammar is science
+// vocabulary). Both call sites now ask `schemas/formal-ref.ts` for candidate
+// PATHS instead, so the parse never crosses the boundary and there is nothing
+// left for this helper to hand back.
+//
+// Its purpose — one copy of a shape decision, per this module's own header —
+// is served better by the resolver than by a shared parse: the two resolvers
+// had duplicated the path walk even while sharing the parse, which is the
+// divergence this file was created to stop.

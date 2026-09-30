@@ -76,6 +76,10 @@ import {
   siteDirFor,
 } from "../schemas/cat-harness.js";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { withRenders } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "folio-viewer";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
@@ -160,7 +164,13 @@ export function readFolioGraph(roots: string[], repo?: string): FolioGraph | nul
         g.nodes.push({
           id: String(raw.id ?? basename(name, ".json")),
           summary: String(raw.summary ?? ""),
-          theme: raw.theme == null ? null : String(raw.theme),
+          // A ThemeRef `{instance?, themeId}` since #1168 B8; the page shows the id.
+          theme:
+            raw.theme == null
+              ? null
+              : typeof raw.theme === "object"
+                ? String((raw.theme as { themeId?: unknown }).themeId ?? "")
+                : String(raw.theme),
           anchor: anchor?.kind ? `${anchor.kind}:${anchor.page ?? ""}` : null,
           declaredIn: raw.declaredIn == null ? null : String(raw.declaredIn),
           links: Array.isArray(raw.links)
@@ -329,7 +339,11 @@ if (import.meta.main) {
 
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
-  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref, mount));
+  // The page says which directories it draws (#1168 B7a-2).
+  emitPage(nav)(
+    join(pageDir, "index.html"),
+    withRenders(viewerHtml(dataHref, mount), g.directories.filter((d) => d.present).map((d) => d.dir), VIEWER_TOOL),
+  );
 
   const absent = g.directories.filter((d) => !d.present).length;
   console.log(

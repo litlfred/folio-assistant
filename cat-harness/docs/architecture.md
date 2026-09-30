@@ -3,6 +3,9 @@ layout: default
 title: Architecture
 nav_order: 9
 has_children: true
+lang: en
+supported_locales: ["ar", "zh", "en", "fr", "ru", "es"]
+available_locales: ["ar", "zh", "en", "fr", "ru", "es"]
 ---
 
 # Architecture

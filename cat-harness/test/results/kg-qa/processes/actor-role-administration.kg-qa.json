@@ -5,7 +5,7 @@
     "id": "Process_ActorRoleAdministration",
     "path": "processes/actor-role-administration.bpmn"
   },
-  "source_hash": "sha256:427d44f8c92000fb6cf806832fa5f18a43d16f1239b471dc641edc5722ea5b34",
+  "source_hash": "sha256:ff373e3cb70f602fe84bc003347820bd1581bdf2a3b85cc5cd281329f7163ec0",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,15 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_RetireActor",
+          "detail": "names skill \"deletion-requires-confirmation\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -119,7 +128,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 1,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

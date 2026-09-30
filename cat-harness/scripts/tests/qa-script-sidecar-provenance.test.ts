@@ -98,10 +98,36 @@ describe("saveQaScriptSidecar", () => {
     ]);
   });
 
-  test("DOES rewrite when the engine version changes", () => {
+  test("does NOT rewrite when only the engine version differs (bean 3ozg)", () => {
+    // This asserted the opposite until 2026-09-27. A different bun is a
+    // different RUN, not a different checker, and treating it as a change
+    // meant every sweep from a machine whose bun differed from CI's rewrote
+    // all 72 committed sidecars. That included the one `bun test` performs,
+    // which kept `bun run gates` reporting "NOT clean" everywhere.
     saveQaScriptSidecar(base(), root);
-    saveQaScriptSidecar({ ...base(), engine_version: "bun-9.9.9" }, root);
-    expect(loadQaScriptSidecar("test-criterion", root)?.engine_version).toBe("bun-9.9.9");
+    const p = scriptSidecarPath("test-criterion", root);
+    const before = readFileSync(p, "utf-8");
+    const old = new Date(Date.now() - 60_000);
+    utimesSync(p, old, old);
+    const mtimeBefore = statSync(p).mtimeMs;
+
+    saveQaScriptSidecar(
+      { ...base(), engine_version: "bun-9.9.9", last_run_at: "2026-09-27T05:00:00.000Z", last_run_sha: "deadbeef" },
+      root,
+    );
+
+    expect(readFileSync(p, "utf-8")).toBe(before);
+    expect(statSync(p).mtimeMs).toBe(mtimeBefore);
+  });
+
+  test("a CONTENT change still records the engine it ran under", () => {
+    // The engine is not a reason to write, but when a real change does write,
+    // the new sidecar carries the engine of that run, not a stale one.
+    saveQaScriptSidecar(base(), root);
+    saveQaScriptSidecar({ ...base(), script_hash: "cccccccccccc", engine_version: "bun-9.9.9" }, root);
+    const got = loadQaScriptSidecar("test-criterion", root);
+    expect(got?.script_hash).toBe("cccccccccccc");
+    expect(got?.engine_version).toBe("bun-9.9.9");
   });
 
   test("treats absent and empty extra_inputs as the same", () => {

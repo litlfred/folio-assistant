@@ -17,6 +17,12 @@ have read to follow this block?* It is authored content — a deliberate
 judgement about narrative order — and it is maintained by agents and
 humans, not generated.
 
+**The same relation exists at term scale**: a glossary term's `requires`,
+and a schema term's `uses` in bootstrap's `graph.schema.json`, say what a
+reader must know before the definition. Same discipline — AUTHORED, never
+inferred, with a text matcher kept only as a guard that list and prose agree
+([`glossary-terms`](glossary-terms.md) §"Ordered glossaries").
+
 It is **not** the formal dependency graph. What a proof actually
 invokes is machine-derived from `lean.ref` (see
 `content/pipeline/content-graph.ts`). The two relations are different

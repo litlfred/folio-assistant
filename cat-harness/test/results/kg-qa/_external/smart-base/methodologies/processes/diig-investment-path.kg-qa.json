@@ -5,7 +5,7 @@
     "id": "Process_DIIG",
     "path": "../smart-base/methodologies/processes/diig-investment-path.bpmn"
   },
-  "source_hash": "sha256:370452ffe7ee402d26b550a0efa4b9d8732ce21ba30e5db48a459d0e95aac522",
+  "source_hash": "sha256:68983a41b59e438c7d6d13bfc3d118a0798ba0489f23ca17e6405a26c081230d",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,47 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_FormTeam",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_MapCurrentState",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_PrioritizeBottlenecks",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_DetermineInterventions",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_PlanImplementation",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_LinkEnterpriseArchitecture",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_DevelopBudget",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_MonitorAndUseData",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_ValueProposition",
+          "detail": "names skill \"methodology-adoption\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -106,7 +147,7 @@
   },
   "totals": {
     "pass": 14,
-    "fail": 0,
+    "fail": 1,
     "n/a": 10,
     "unknown": 0
   }

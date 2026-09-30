@@ -5,7 +5,7 @@
     "id": "Process_SessionStateMachine",
     "path": "processes/session-state-machine.bpmn"
   },
-  "source_hash": "sha256:3847d73f08cd3d93d6eed94f14486e8af7aa604b55b0d515a873995a88bfc6d0",
+  "source_hash": "sha256:f92086023e89976b85611b22118cba384a6d0d353f2d3dec488992c0c72473be",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -30,6 +30,35 @@
     "skill-servable": {
       "result": "pass",
       "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "A_IdentifyActor",
+          "detail": "names skill \"session-context\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_AskWhoIsActing",
+          "detail": "names skill \"interaction-modality\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_OpenSession",
+          "detail": "names skill \"session-context\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_Touch",
+          "detail": "names skill \"session-context\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_UpdateSession",
+          "detail": "names skill \"session-context\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "A_CloseSession",
+          "detail": "names skill \"session-context\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
     },
     "decision-ref-resolves": {
       "result": "n/a",
@@ -106,7 +135,7 @@
   },
   "totals": {
     "pass": 15,
-    "fail": 0,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

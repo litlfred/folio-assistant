@@ -86,7 +86,37 @@ describe("the gates come from the workflow, not from a list", () => {
     // So a local failure and a CI failure are findable by the same string.
     const g = loadGates(ROOT).find((x) => x.command === "bun run ns:check");
     expect(g?.step).toBe("namespace vocabulary is complete");
-    expect(g?.job).toBe("typescript");
+    // `gates`, not `typescript`, since bean `om30` split the job: `typescript`
+    // is lint + typecheck + `bun test`, and every repository gate moved to a
+    // sibling job with no `needs`, so a red test no longer stops them being
+    // asked. The job is asserted rather than left loose because it is half of
+    // what makes a failure findable — the Actions UI groups by it.
+    expect(g?.job).toBe("gates");
+  });
+
+  test("every browser-free job contributes, so a split cannot silently shrink the set", () => {
+    // The regression this guards is specific and was live for one commit while
+    // `om30` was implemented: `FAST_JOBS` named only `typescript`, so moving 43
+    // steps into `gates` dropped them from `bun run gates` entirely — 154 gates
+    // to 6 — while the runner still printed a confident pass over what was
+    // left. A subset of the gate set is not the gate set.
+    //
+    // It asserted `toEqual(new Set(["typescript", "gates"]))` until the fast
+    // set became derived, and that spelling was the SAME drift one layer out:
+    // a literal list of jobs, which fails when a job legitimately JOINS. It
+    // did — `dependency-advisories` runs a `bun` gate and needs no browser, so
+    // it belonged all along and the literal had been excluding it.
+    //
+    // So the property is asserted instead of the membership: the jobs that
+    // carry the bulk are present, the one that installs Chromium is not, and
+    // the total is nowhere near the 6 the regression produced. Growth passes,
+    // shrinkage fails.
+    const gates = loadGates(ROOT);
+    const jobs = new Set(gates.map((g) => g.job));
+    expect(jobs.has("typescript")).toBe(true);
+    expect(jobs.has("gates")).toBe(true);
+    expect(jobs.has("e2e")).toBe(false);
+    expect(gates.length).toBeGreaterThan(100);
   });
 });
 

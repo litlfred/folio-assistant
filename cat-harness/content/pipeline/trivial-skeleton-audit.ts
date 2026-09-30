@@ -23,7 +23,7 @@
  *   `docs/audits/2026-05-08-trivial-skeleton-audit.json`
  *
  * Usage (from repo root):
- *   bun run content/pipeline/trivial-skeleton-audit.ts
+ *   bun run cat-harness/content/pipeline/trivial-skeleton-audit.ts
  */
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { join, dirname } from "node:path";

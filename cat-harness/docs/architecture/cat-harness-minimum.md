@@ -30,8 +30,8 @@ harness, and each layer gains a Tools sibling:
 flowchart TD
     AH["<b>cat-harness</b><br/>workflow state · guardrails<br/><i>not self-documenting</i><br/>one tool: beans"]
     AHT["<b>cat-harness-tools</b><br/>beans CLI Tool node"]
-    C["<b>folio-assist-core</b><br/>justthedocs pipeline · webpage<br/><i>self-documenting</i>"]
-    CT["<b>folio-assist-core-tools</b><br/>BPMN/DMN/Todo renderers"]
+    C["<b>folio-assistant-core</b><br/>justthedocs pipeline · webpage<br/><i>self-documenting</i>"]
+    CT["<b>folio-assistant-core-tools</b><br/>BPMN/DMN/Todo renderers"]
     FA["<b>folio-assistant</b><br/>(what remains today)"]
 
     AHT --> AH
@@ -54,7 +54,7 @@ This is the load-bearing sentence in the revision, and it is worth converting
 into a test rather than a slogan.
 
 **The harness cannot render a website.** The just-the-docs pipeline, the
-`webpage` content type, and every renderer belong to `folio-assist-core`. So
+`webpage` content type, and every renderer belong to `folio-assistant-core`. So
 the harness cannot document itself *as a folio* — its documentation is prose
 files an agent reads, not pages a reader browses.
 
@@ -66,7 +66,7 @@ Applied honestly it removes a great deal from the 16:13 list. The webpage
 content type, the sticky-note Todo rendering, the QR code, dark/light mode, the
 six UN languages, the audit-sidecar iconography, "links to edit in GitHub" —
 all of these are **things a reader sees**, so all of them are
-`folio-assist-core` or `folio-assist-core-tools`, not the minimum harness.
+`folio-assistant-core` or `folio-assistant-core-tools`, not the minimum harness.
 
 What survives in the harness is the part with no pixels: **schemas, process
 definitions, and skills that tell an agent how to behave.**
@@ -392,14 +392,14 @@ Measured on `main` at `d8632b6`: **18 top-level pages, 8 guides, 20 BPMN
 processes, 115 skills across 9 packages.**
 
 Legend — **AH** `cat-harness` · **AHT** `cat-harness-tools` ·
-**C** `folio-assist-core` · **CT** `folio-assist-core-tools` ·
-**S** `folio-asst-sci` · **W** `smart-base`/`smart-kg` · **FA** stays put
+**C** `folio-assistant-core` · **CT** `folio-assistant-core-tools` ·
+**S** `folio-assistant-sci` · **W** `smart-base`/`smart-kg` · **FA** stays put
 
 ### Top-level pages (`docs/*.md`)
 
 | page | lines | → | reasoning |
 |---|---:|---|---|
-| `agentic-harness.md` | 349 | **AH** + **C** | **Splits.** The interaction model, session lifecycle and request classification are harness; the published *page* is core. This is the clearest example of the whole exercise: the content is harness, the rendering is core. |
+| `cat-harness.md` | 349 | **AH** + **C** | **Splits.** The interaction model, session lifecycle and request classification are harness; the published *page* is core. This is the clearest example of the whole exercise: the content is harness, the rendering is core. |
 | `crdm-methodology.md` | 768 | **AH** | Feature-request process, explicit at 16:16. Largest single doc. |
 | `beans-and-todos.md` | 169 | **AH** | Workflow state, explicit at 16:28. |
 | `accessibility.md` | 219 | **AH** + **C** | **Splits.** User modalities are harness (how to talk to a person); dark/light, QR, contrast are core UI. |
@@ -485,7 +485,7 @@ lacks is 14:48's timeout and handoff. I would add
 knows what it is inheriting.
 
 **4. The rendering is core's, the state is the harness's.** Sticky-note styling,
-drag/resize, and the metadata for position belong in `folio-assist-core-tools`;
+drag/resize, and the metadata for position belong in `folio-assistant-core-tools`;
 the Todo schema stays in the harness. This is the 16:28 rule applied
 consistently, and it is what keeps a headless agent able to read and write
 Todos with no renderer present.
@@ -493,7 +493,7 @@ Todos with no renderer present.
 ## Decided: 17 stays, and the forge is isolated at the Tool layer
 
 Settled 2026-09-18 by the repository owner. **All 17 skills stay in
-`agentic-harness`. There is no sixth repository.**
+`cat-harness`. There is no sixth repository.**
 
 The proposal was to split the four PR-choreography skills —
 `prepare-merge-auto`, `pickup`, `watch`, `coordinate` — into an
@@ -533,7 +533,7 @@ find-the-right-one problem that motivated it.
 
 ### No MCP in the harness — but the harness knows how to emit one
 
-**`agentic-harness` assumes no MCP server.** Everything it needs is files in
+**`cat-harness` assumes no MCP server.** Everything it needs is files in
 declared directories, readable with a filesystem and `<name>.json`
 alone. `ToolDefinition.invoke` carries `mcp` as **one optional arm** beside
 `shell` and `container`, and the harness relies on `shell`; a Tool whose only
@@ -601,7 +601,7 @@ governs this?" question, which is the one a flat list answers worst.
 
 **The grouping is not implemented here.** This repo is pre-split and its `kg`
 id points at `skills/`, flat. The layout above is the target for
-`agentic-harness`, recorded so the split does not land as a flat dump of 17.
+`cat-harness`, recorded so the split does not land as a flat dump of 17.
 
 ## What is deliberately not here
 

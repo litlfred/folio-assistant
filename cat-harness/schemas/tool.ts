@@ -42,6 +42,8 @@
  */
 import { z } from "zod";
 
+import { SkillNameSchema } from "./tool-types.js";
+
 /** A lowercase, hyphenated id. It is also the MCP tool name stem. */
 const ToolId = z
   .string()
@@ -310,36 +312,15 @@ export const ToolDefinitionSchema = z
       outputs: z.array(ToolPortSchema),
     }),
     /** Skills this Tool can satisfy. One skill may have several Tools. */
-    satisfies: z.array(z.string().min(1)).min(1, "a Tool must satisfy at least one skill"),
+    satisfies: z.array(SkillNameSchema).min(1, "a Tool must satisfy at least one skill"),
+    // No `alternativeTo` (#1168, B9a). Which Tools are alternatives is DERIVED
+    // — see `deriveAlternatives` below — so no Tool names another. Owner,
+    // 2026-09-30: *"why tools need alternativeTo? skills and tools are
+    // associated, the alternatives should be derivable"*.
     /**
-     * Other Tools that do the SAME job by a different mechanism.
-     *
-     * ## Why this is declared and not derived from `satisfies`
-     *
-     * Deriving it was the first design, and measurement refuted it. Sharing a
-     * skill does NOT make two Tools substitutable: measured 2026-09-20, 12 of
-     * this instance's 25 skills carry more than one Tool, and nearly all are
-     * COMPLEMENTARY — `workflow-list`, `-start`, `-next`, `-gate` and
-     * `-complete` are five steps of `process-state`, not five ways to perform
-     * it, and the five translation tools are the same shape. Exactly one pair,
-     * `beans-cli` / `beans-manual`, is genuinely substitutable.
-     *
-     * So a rule keyed on "shares a skill" would demand comparative prose on
-     * twelve skills with nothing to compare, and an author obliged to write it
-     * would write noise. Substitutability is a judgement about mechanism, and
-     * judgements get declared.
-     *
-     * ## Symmetric, and checked
-     *
-     * If A names B and B does not name A, a reader arriving at B never learns
-     * a choice exists — which is the whole failure this field prevents, half
-     * the time. `scripts/check-tools.ts` verifies both that each id resolves
-     * and that the relation is mutual.
-     */
-    alternativeTo: z.array(ToolId).optional(),
-    /**
-     * Why to reach for this one. REQUIRED once `alternativeTo` is non-empty —
-     * see {@link ToolSelectionSchema}, and the refinement below.
+     * Why to reach for this one. REQUIRED when the Tool has a derived
+     * alternative ({@link deriveAlternatives}); `check-tools` enforces it,
+     * since whether a Tool has one is a fact about the whole set.
      */
     selection: ToolSelectionSchema.optional(),
     requires: ToolRequiresSchema.optional(),
@@ -379,23 +360,7 @@ export const ToolDefinitionSchema = z
         "is not that case: the harness calls it directly, and it is the projection source.",
       path: ["invoke"],
     },
-  )
-  // A declared alternative without a reason to choose between them is the
-  // defect this pair of fields exists to remove, half-fixed: the reader now
-  // knows a choice exists and still cannot make it. Enforced here rather than
-  // in `check-tools` because it needs nothing outside the node.
-  .refine((t) => (t.alternativeTo?.length ?? 0) === 0 || t.selection !== undefined, {
-    message:
-      "a Tool that names an alternative must carry `selection` — otherwise a reader " +
-      "learns a choice exists without learning how to make it",
-    path: ["selection"],
-  })
-  // Self-reference would satisfy the symmetry check trivially and tell a
-  // reader nothing.
-  .refine((t) => !(t.alternativeTo ?? []).includes(t.id), {
-    message: "a Tool cannot be an alternative to itself",
-    path: ["alternativeTo"],
-  });
+  );
 
 export type ToolDefinition = z.infer<typeof ToolDefinitionSchema>;
 export type ToolInput = z.infer<typeof ToolInputSchema>;
@@ -410,4 +375,68 @@ export type ToolPort = z.infer<typeof ToolPortSchema>;
  */
 export function defineTool(t: ToolDefinition): ToolDefinition {
   return ToolDefinitionSchema.parse(t);
+}
+
+// ─── Alternatives, derived ───────────────────────────────────────────────────
+
+/**
+ * What a Tool IS, as far as substituting one for another goes: its full I/O
+ * signature and the things it renders and maintains. Two Tools with the same
+ * signature take the same inputs, produce the same outputs, and act on the
+ * same artefacts — they differ only in mechanism.
+ */
+export function toolSignature(t: Pick<ToolDefinition, "io" | "renders" | "maintains">): string {
+  return JSON.stringify({
+    in: t.io.inputs.map((i) => [i.name, i.schema, i.required ?? false]).sort(),
+    out: t.io.outputs.map((o) => [o.name, o.schema]).sort(),
+    renders: [...(t.renders ?? [])].sort(),
+    maintains: (t.maintains ?? []).map((m) => JSON.stringify(m)).sort(),
+  });
+}
+
+/**
+ * The Tools that do the same job by a different mechanism, derived rather
+ * than declared (#1168, B9a).
+ *
+ * Two Tools are alternatives iff they satisfy a common skill AND have the same
+ * {@link toolSignature}, and that signature is not empty.
+ *
+ * Sharing a skill is not enough, and the declared field existed because of
+ * that: measured 2026-09-20, most skills with several Tools have COMPLEMENTARY
+ * ones — `workflow-start` and `workflow-next` are two steps of one skill, not
+ * two ways to do one step. What separates them is the signature: steps take
+ * and give different things. Measured 2026-09-30 over 118 Tools, the rule
+ * recovers every pair that had been declared by hand and nothing else, once
+ * three Tools whose inputs were typed more loosely than what they read were
+ * given the precise type.
+ *
+ * An empty signature is excluded because it says nothing: two Tools that
+ * declare no ports would otherwise be interchangeable by default.
+ *
+ * Symmetric by construction, so there is nothing to keep in step.
+ */
+export function deriveAlternatives(tools: readonly ToolDefinition[]): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  const sig = new Map(tools.map((t) => [t.id, toolSignature(t)]));
+  for (const a of tools) {
+    if (a.io.inputs.length + a.io.outputs.length === 0) continue;
+    const alts = tools
+      .filter((b) => b.id !== a.id && sig.get(b.id) === sig.get(a.id) && b.satisfies.some((s) => a.satisfies.includes(s)))
+      .map((b) => b.id)
+      .sort();
+    if (alts.length > 0) out.set(a.id, alts);
+  }
+  return out;
+}
+
+/**
+ * Tools with a derived alternative and no `selection` — a choice a reader can
+ * see and cannot make. A fact about the whole set, so `check-tools` asks it
+ * here rather than the schema asking it of one node.
+ */
+export function alternativesWithoutSelection(tools: readonly ToolDefinition[]): Array<{ tool: string; alternatives: string[] }> {
+  const alts = deriveAlternatives(tools);
+  return tools
+    .filter((t) => alts.has(t.id) && t.selection === undefined)
+    .map((t) => ({ tool: t.id, alternatives: alts.get(t.id)! }));
 }

@@ -30,9 +30,9 @@
  * pipeline** — fixed input (`processes/`), fixed output
  * (`docs/assets/img/workflows/`), and a `--check` staleness gate CI runs. This
  * file is the **library** — arbitrary inputs, exported functions, sub-process
- * plane handling — and is what WHO DAK content goes through. `render-bpmn.ts`
- * imports {@link chromiumExecutable} from here rather than keeping a second
- * copy of the probe.
+ * plane handling — and is what WHO DAK content goes through. Both take
+ * {@link chromiumExecutable} from bootstrap-tools' renderer, which owns the
+ * drawing (bean `xsqm`), rather than keeping a second copy of the probe.
  *
  * They are not merged because their contracts differ: applying
  * {@link keepPrimaryPlane} to the docs sources could change committed SVGs and
@@ -45,6 +45,7 @@
  */
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
+import { chromiumExecutable } from "../../bootstrap-tools/scripts/render-bpmn.ts";
 import { basename, join } from "path";
 
 /** The bundled viewer, injected into the page — no network fetch. */
@@ -79,22 +80,11 @@ export interface RenderResult {
 }
 
 /**
- * Chromium's location, when the bundled download is not what is installed.
- *
- * Same probe as `dak-pdf.ts` — this container ships a different build number
- * than the installed playwright expects, and re-downloading is blocked.
+ * Chromium's location, when the bundled download is not what is installed —
+ * one copy, in bootstrap-tools' renderer (bean `xsqm`), re-exported here for
+ * the callers that import it from this module.
  */
-export function chromiumExecutable(): string | undefined {
-  const base = process.env.PLAYWRIGHT_BROWSERS_PATH;
-  if (!base || !existsSync(base)) return undefined;
-  for (const dir of readdirSync(base).sort().reverse()) {
-    for (const rel of ["chrome-linux/chrome", "chrome-linux/headless_shell", "chrome-linux64/chrome"]) {
-      const p = join(base, dir, rel);
-      if (existsSync(p)) return p;
-    }
-  }
-  return undefined;
-}
+export { chromiumExecutable };
 
 /**
  * Render every diagram in every given BPMN file.

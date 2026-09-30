@@ -38,6 +38,8 @@
  * @graphNode schema
  */
 import { z } from "zod";
+import { SkillNameSchema } from "./tool-types.js";
+import { ProcessElementIdSchema } from "./process-element-id.js";
 
 /** Whether the run was allowed, and if not, why not. */
 export const InvocationOutcomeSchema = z.enum([
@@ -73,7 +75,7 @@ export const InvocationAuthoritySchema = z.object({
 /** Where in a process the run sits. Absent outside any process. */
 export const InvocationContextSchema = z.object({
   /** `ProcessModel.id` — which diagram. */
-  process: z.string().min(1),
+  process: ProcessElementIdSchema,
   /** BPMN node id — which task. */
   task: z.string().min(1),
   /** The running instance under `beans/workflows/`, when there is one. */
@@ -91,7 +93,7 @@ export const ToolInvocationSchema = z.object({
    * because a Tool may satisfy several skills and WHICH ONE was being exercised
    * is the thing an audit cannot reconstruct afterwards.
    */
-  skill: z.string().min(1),
+  skill: SkillNameSchema,
   by: InvocationAuthoritySchema,
   context: InvocationContextSchema.optional(),
   /** Parsed, type-checked input values — never the raw request. */

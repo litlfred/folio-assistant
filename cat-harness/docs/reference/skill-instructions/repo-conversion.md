@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
 title: '/repo-conversion'
 parent: Skill instructions
 ---
@@ -12,9 +13,9 @@ parent: Skill instructions
 {% raw %}
 # /repo-conversion — folio-assistant over a repo that already has a life
 
-Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn),
+Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html),
 `Task_ScanRepo` and `Task_ConfirmImport` (non-relaxable).
-Scanner: `bun run scripts/scan-repo-content.ts`.
+Scanner: `bun run cat-harness/scripts/scan-repo-content.ts`.
 
 ## 0. The one rule
 
@@ -30,8 +31,8 @@ and a content package may not declare it away.
 ## 1. Scan — read-only, and honest about its limits
 
 ```sh
-bun run scripts/scan-repo-content.ts            # human-readable report
-bun run scripts/scan-repo-content.ts --json     # same, as facts
+bun run cat-harness/scripts/scan-repo-content.ts            # human-readable report
+bun run cat-harness/scripts/scan-repo-content.ts --json     # same, as facts
 ```
 
 It walks the working tree (respecting `.gitignore`) and sorts what it finds into
@@ -85,7 +86,7 @@ preference; a broken relative link in somebody's README is a defect.
 
 ## 3. Dispatch the ingestion
 
-Ingestion proper is [`document-intake`](../folio-paper-adapter/document-intake.md)
+Ingestion proper is [`document-intake`](document-intake.md)
 and `processes/document-ingestion.bpmn`. What this skill decides is *how
 much parallelism*, and it is a question for the author because it spends their
 tokens:

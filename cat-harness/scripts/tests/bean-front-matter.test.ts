@@ -18,7 +18,14 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { checkBeanFrontMatter, reconcile } from "../check-bean-front-matter.ts";
+import {
+  MECHANICAL_KEYS,
+  checkBeanFrontMatter,
+  classifyDuplicate,
+  duplicatedKeys,
+  mechanicalWinner,
+  reconcile,
+} from "../check-bean-front-matter.ts";
 import { readBeanFiles } from "../bean-store-read.ts";
 import { readdirSync } from "node:fs";
 
@@ -149,13 +156,16 @@ describe("check-bean-front-matter", () => {
   test("the baseline is reported stale when its bean is absent", () => {
     const root = storeWith({ "folio-assistant-aaaa--ok.md": GOOD_FRONT_MATTER });
     try {
-      // Both baselined ids are absent from this fixture, so both are stale —
-      // which is how a repaired bean gets its entry removed rather than
-      // silently excusing a fresh defect under the same id.
-      expect(checkBeanFrontMatter(root).staleBaseline).toEqual([
-        "folio-assistant-1hvo",
-        "folio-assistant-7u3g",
-      ]);
+      // The baselined id is absent from this fixture, so it is stale — which is
+      // how a repaired bean gets its entry removed rather than silently
+      // excusing a fresh defect under the same id.
+      //
+      // ONE id, not two, since 2026-09-27: `7u3g`'s duplicate was `updated_at`,
+      // which the FIELD settles rather than the owner (bean `kfkh`), so it was
+      // collapsed to the later write and left the baseline. This expectation
+      // mirrors `DUPLICATE_KEY_BASELINE`, so shrinking that set is meant to
+      // fail here — and did, in the same change.
+      expect(checkBeanFrontMatter(root).staleBaseline).toEqual(["folio-assistant-1hvo"]);
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
@@ -401,5 +411,64 @@ describe("t6s7 — the reconciliation is not a tautology", () => {
     expect(complaint).toContain("3 .md file(s)");
     expect(complaint).toContain("1 bean(s)");
     expect(complaint).toContain("1 skipped");
+  });
+});
+
+describe("who can settle a duplicated front-matter key (bean `kfkh`)", () => {
+  test("same value twice is collapsible — nothing is lost", () => {
+    expect(classifyDuplicate("title", ["'A'", "'A'"])).toBe("collapsible");
+    expect(classifyDuplicate("updated_at", ["2026-01-01T00:00:00Z", "2026-01-01T00:00:00Z"])).toBe("collapsible");
+  });
+
+  test("two different TITLES are the owner's — choosing is an editorial act", () => {
+    // 1hvo, the real one: `…cat-harness/theming/ subgraph…` against
+    // `…cat-harness theming subgraph…`. Neither is derivable from the other.
+    expect(classifyDuplicate("title", ["'a/b/ subgraph'", "'a b subgraph'"])).toBe("authored");
+    expect(mechanicalWinner("title", ["'x'", "'y'"])).toBeUndefined();
+  });
+
+  test("two different `updated_at`s are NOT the owner's — the field settles it", () => {
+    // THE POINT OF THIS BLOCK, and the refinement kfkh's two-way split misses.
+    // 7u3g, the real one: 15:26:13Z against 15:32:27Z. `beans update` bumps this
+    // on every change, so two values are two writes and the later IS the state.
+    // Leaving it in the owner's queue is a question nobody needs to answer.
+    const vs = ["2026-09-20T15:26:13Z", "2026-09-20T15:32:27Z"];
+    expect(classifyDuplicate("updated_at", vs)).toBe("mechanical");
+    expect(mechanicalWinner("updated_at", vs)).toBe("2026-09-20T15:32:27Z");
+  });
+
+  test("`created_at` goes the OTHER way — creation is immutable, so the earlier is it", () => {
+    const vs = ["2026-09-20T15:26:13Z", "2026-09-20T15:32:27Z"];
+    expect(classifyDuplicate("created_at", vs)).toBe("mechanical");
+    expect(mechanicalWinner("created_at", vs)).toBe("2026-09-20T15:26:13Z");
+    // Not a symmetry to assume: the two mechanical keys have opposite rules,
+    // which is why the rule is recorded per key rather than inferred.
+    expect(MECHANICAL_KEYS.created_at).toBe("earlier");
+    expect(MECHANICAL_KEYS.updated_at).toBe("later");
+  });
+
+  test("status, type, priority and parent are authored, not mechanical", () => {
+    for (const k of ["status", "type", "priority", "parent"]) {
+      expect(classifyDuplicate(k, ["a", "b"])).toBe("authored");
+    }
+  });
+
+  test("the key scan reads the RAW block, because the block does not parse", () => {
+    // A YAML parse is unavailable by construction — a duplicate key is why we
+    // are here. Continuations must not be mistaken for keys.
+    const fm = [
+      "# folio-assistant-x",
+      "title: one",
+      "status: todo",
+      "title: two",
+      "body: |",
+      "  indented: not a key",
+      "- listitem: also not",
+    ].join("\n");
+    expect(duplicatedKeys(fm)).toEqual([{ key: "title", values: ["one", "two"] }]);
+  });
+
+  test("a block with no duplicate yields none — the scan is not vacuous", () => {
+    expect(duplicatedKeys("title: one\nstatus: todo")).toEqual([]);
   });
 });

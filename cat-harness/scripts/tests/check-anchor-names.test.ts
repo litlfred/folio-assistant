@@ -110,3 +110,55 @@ describe("a quoted example of an ascent is not an ascent", () => {
     expect(r.findings).toEqual([]);
   });
 });
+
+describe("every spelling of the base is matched", () => {
+  // WHY THIS BLOCK EXISTS. Until 2026-09-27 the base alternation was
+  // `import.meta.dir|__dirname` only, so an ascent written in either
+  // `dirname()` spelling was not an ascent as far as the check was concerned.
+  // On `main` at `e6404bc80de` that hid 75 ascents, 9 of them findings —
+  // `REPO_ROOT`/`REPO` landing on `cat-harness/` — while the check printed
+  // "every name that claims an anchor lands on it".
+  //
+  // The alternation is an ENUMERATION and cannot stop being one: a base is a
+  // syntactic form, so there is no filesystem to ask the way `instanceDirs`
+  // asks it. A case PER SPELLING is what stands in for the guarantee — drop a
+  // form from the alternation and its case goes red here, rather than the
+  // check going quietly green over a seventh of its subject.
+  const BASES = [
+    ["import.meta.dir", "import.meta.dir"],
+    ["__dirname", "__dirname"],
+    ["dirname(fileURLToPath(import.meta.url))", "portable ESM"],
+    ["dirname(__filename)", "CJS via __filename"],
+  ] as const;
+
+  test.each(BASES)("resolve(%s, ...) is an ascent — %s", (base) => {
+    const r = checkAnchorNames(fixture(`const REPO_ROOT = resolve(${base}, "..", "..");\n`));
+    expect(r.ascents).toBe(1);
+    expect(r.findings).toHaveLength(1);
+    expect(r.findings[0]!.detail).toContain("rename it to `INSTANCE_ROOT`");
+  });
+
+  test.each(BASES)("join(%s, ...) is an ascent too — %s", (base) => {
+    const r = checkAnchorNames(fixture(`const REPO_ROOT = join(${base}, "..", "..");\n`));
+    expect(r.ascents).toBe(1);
+    expect(r.findings).toHaveLength(1);
+  });
+
+  test("a correctly-named anchor in a dirname() spelling stays clean", () => {
+    // The point is coverage, not a new source of findings: extending the base
+    // must not make a truthful name red.
+    const r = checkAnchorNames(
+      fixture('const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");\n'),
+    );
+    expect(r.ascents).toBe(1);
+    expect(r.findings).toEqual([]);
+  });
+
+  test("whitespace inside the dirname() call does not hide the ascent", () => {
+    const r = checkAnchorNames(
+      fixture('const REPO_ROOT = resolve( dirname( fileURLToPath( import.meta.url ) ) , "..", "..");\n'),
+    );
+    expect(r.ascents).toBe(1);
+    expect(r.findings).toHaveLength(1);
+  });
+});

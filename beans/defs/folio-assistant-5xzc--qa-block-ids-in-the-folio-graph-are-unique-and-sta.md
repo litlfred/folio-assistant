@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5xzc
 title: 'QA: block ids in the folio/ graph are unique and stable across render, move and re-ingest — the precondition every review view keys on'
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T21:02:54Z
-updated_at: 2026-09-22T21:32:13Z
+updated_at: 2026-09-29T18:14:49Z
 parent: folio-assistant-q4jm
 ---
 
@@ -60,3 +60,9 @@ Claimed 2026-09-22 by branch claude/kind-albattani-0qe9gj (session_017nyJj3Psjvs
 - **`id-reingest-stable` moved to xtpc.** A criterion with no ingest to check would sweep `n/a` everywhere, and that reads as coverage.
 - **Schema placement.** The owner asked for core. But BlockBase itself still lives in `cat-harness/schemas`, and splitting one field from the type it belongs to would put a block's shape in two layers. It moves when the content model moves to core.
 - **No sweep has run over a real folio.** There is none in this repo (roast R7). The first folio sweep will show what the collision count really is.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

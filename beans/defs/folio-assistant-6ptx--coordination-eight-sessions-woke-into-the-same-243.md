@@ -1,11 +1,12 @@
 ---
 # folio-assistant-6ptx
 title: 'COORDINATION: eight sessions woke into the same 2435-commit gap and all eight re-surveyed it independently'
-status: todo
+status: completed
 type: bug
-parent: folio-assistant-ahvw
+priority: normal
 created_at: 2026-09-25T15:44:18Z
-updated_at: 2026-09-25T15:44:18Z
+updated_at: 2026-09-26T17:32:56Z
+parent: folio-assistant-ahvw
 ---
 
 
@@ -134,7 +135,129 @@ by instruments whose answers were already stale when read.
 
 ## Done when
 
-- [ ] The owner picks a shape (or rules that duplicated surveys are acceptable).
-- [ ] `goal-review` says what to do when the API shows siblings mid-survey.
-- [ ] A session arriving into a large gap can find out, before sweeping,
-      whether the sweep already exists.
+- [x] The owner picked 2026-09-26: **option 1, publish the survey.**
+- [x] `goal-review` gains §"Read the published survey before deriving one" — the
+      four states and what each one means you owe. NOT the same as detecting live
+      siblings, which is still unsolved and is noted below.
+- [x] A session arriving into a large gap can find out, before sweeping, whether
+      the sweep already exists: `bun run survey:owed`, answering in four states
+      with the uncovered delta computed from the recorded edge commits.
+
+
+## Sharper instance, 2026-09-26: redundant FIXING, not just redundant surveying
+
+The entry above measured eight sessions re-surveying the same gap. Today the
+same shape produced two pull requests that are **byte-identical**.
+
+| | |
+|---|---|
+| **#1376** | *"Unbreak main: #1365's seven skills landed without their derived artefacts"* — 27 files |
+| **#1383** | *"main's gate set: 7 of 153 failing → 2. One skill landed without its siblings, again"* — 27 files |
+
+Measured with `git diff` between the two heads, not inferred from the titles:
+**26 files in common, 25 of them identical**, one differing. #1376 carries one
+extra bean; #1383 carries one extra health report. Two sessions, two branches,
+two PRs, one fix.
+
+And they were not alone. **Five open PRs were converging on the same red
+`main`** at 07:00Z — #1376, #1383, #1381 (the 25 uncatalogued translations),
+#1363 (the gates tree guard) and #1372 (which had ported three of main's
+failures into itself). A sixth, #1364, is the one that actually landed and
+turned main green at 07:19Z.
+
+## Why the existing claim mechanism does not catch this
+
+`bean-coordination` says **claim before you work**, and that is sound for work
+that HAS a bean. None of this work did at the moment it started: each session
+saw a red gate on `main` and reacted. Reactive repair has no id to claim, so
+the protocol has nothing to bind to — the claim is not weak here, it is
+*absent*.
+
+That is a different gap from the one above and wants a different answer. A
+survey is wasteful; a duplicated fix is wasteful **and** produces a merge
+conflict for whichever session loses, which is a second cost the first entry
+does not measure.
+
+## Not proposing the remedy here
+
+Several are plausible — a claim keyed on the failing GATE rather than on a
+bean, a "who is already on main's red?" question in the session-start sweep,
+or nothing at all on the grounds that duplicated repair is cheaper than
+coordination. Choosing between them is the owner's, and this bean is where the
+evidence belongs, not the decision.
+
+
+## Settled 2026-09-26 — option 1, and the edge commits are the whole design
+
+The owner chose **publish the survey**. Shipped as `bun run survey:owed` /
+`survey:publish`, with `beans/surveys/` declared in the bean graph and a new
+`session-survey` graph kind (`holds: "state"` — written BY a running session,
+unlike `interaction/` which is `context` because no process writes it;
+`recordsWork: false` — a survey is a READING of work, not work anybody is
+partway through, which is the distinction that kind's own docblock draws
+against `uploads`).
+
+### Why the two edge commits, and not a timestamp
+
+A published survey is only safe to reuse if **staleness is decidable**. So the
+schema makes `from` and `to` REQUIRED and refuses anything but a full
+40-character object name: a ref is a moving target, and `origin/main` recorded
+as an upper edge names a different commit tomorrow. A survey whose window
+cannot be pinned is `fx5r` with a wider blast radius, because a sibling would
+trust it *instead of* looking.
+
+A reader computes `to..origin/main` — the part it is NOT covered for. Measured
+on this repository's real history: a survey ending five first-parent steps back
+leaves a **21-commit** delta, not five, because `rev-list A..B` counts the
+reachable set and merges bring more in. The tool reports the reachable set,
+which is the right answer to "what have I not read"; my own expectation of
+"five" was wrong and is recorded here because the next reader will expect it too.
+
+### Four states, and the dangerous one is falsified
+
+| state | behaviour |
+|---|---|
+| none published | determined empty, not an error |
+| covered | read it |
+| delta | survey only `to..HEAD` |
+| **unusable** | upper edge unreachable — survey everything |
+
+The fourth is the one that would do real damage if it collapsed into "covered":
+a sibling would skip the sweep on the strength of a survey of a history that no
+longer exists. Falsified by planting a survey whose `to` is all-`d`s: reports
+UNUSABLE, exit 0, tells the caller to survey the whole window.
+
+Also falsified: the **furthest-along** survey wins rather than the most recently
+taken, because dates do not order commits and a later survey of an older window
+covers less. Eight tests in `cat-harness/scripts/tests/survey.test.ts`, against
+scratch repositories with real commits — mocking `merge-base --is-ancestor`
+would have tested the mock.
+
+### What it deliberately is not
+
+Not a claim on the window (option 2) and not a division of axes between
+sessions (option 3, which needs a live channel that does not exist). It is an
+artefact: one session writes what it found, a later one decides whether that
+still covers its question.
+
+`goal-review` gains a "read the published survey before deriving one" section
+ahead of its tools list, with the four states and the `name=!reason` form for an
+axis deliberately NOT covered — a first-class answer, because a survey of four
+of six axes that records only the four reads as a complete one, which is `1xhc`.
+
+### Still open, and NOT closed by this
+
+`survey:owed` tells a session whether a sweep it needs **already exists**. It
+does not tell it that seven siblings are sweeping **right now** — the live
+detection this bean opened with. Nothing published yet means nothing to read,
+so the first session into a gap still pays full price and the saving starts with
+the second. Live sibling detection would need option 2 or 3, and the owner chose
+neither.
+
+### Not claimed
+
+That this would have prevented the specific day measured. Seven of those eight
+sessions had nothing published to read, so the first one still pays full price;
+the saving starts with the second. And the parentless bean that turned `main`
+red at 15:38 is not addressed here at all — that is a different defect and the
+`check:bean-parents` gate already owns it.

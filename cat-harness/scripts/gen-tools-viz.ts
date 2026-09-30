@@ -46,10 +46,14 @@
  *   bun run cat-harness/scripts/gen-tools-viz.ts --check
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { join, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
+import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "tools-viewer";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 /** The graph kind this renders. A KIND, never a path. */
@@ -161,25 +165,12 @@ function instanceDeclarations(repo: string): string[] {
   return out;
 }
 
-/** Where the page goes, read from the declaration that renders it. */
+/**
+ * Where the page goes: the declared directory's own name (#1168 B7a-2b,
+ * `conventionalPage`). Never a literal — `site-dir-single-answer` refuses one.
+ */
 export function pageRelPath(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
-  };
-  for (const e of d.directories ?? []) {
-    if (!(e.graphKinds ?? []).includes(KIND)) continue;
-    const v = e.coverage?.visualiser;
-    for (const one of Array.isArray(v) ? v : [v]) {
-      const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
-      if (!ref) continue;
-      const rel = relative(baseDocs(repo), resolve(repo, ref));
-      if (rel.startsWith("..") || rel === "") return undefined;
-      return rel;
-    }
-  }
-  return undefined;
+  return conventionalPage(join(repo, "cat-harness"), KIND);
 }
 
 /** The base docs layer — the same answer `compose-docs.ts` uses. */
@@ -322,6 +313,11 @@ export function page(rows: readonly ToolRow[], known: ReadonlySet<string>): stri
   return b.join("\n").trimEnd() + "\n";
 }
 
+/** The page as committed: {@link page} plus the directories it draws (#1168 B7a-2). */
+export function publishedPage(rows: Parameters<typeof page>[0], known: Parameters<typeof page>[1], repo = REPO): string {
+  return withRendersFrontMatter(page(rows, known), handledDirectories(repo, join(repo, "cat-harness"), KIND), VIEWER_TOOL);
+}
+
 if (import.meta.main) {
   const check = process.argv.includes("--check");
   const { tools } = (await import("../tools/index.js")) as { tools: () => unknown[] };
@@ -337,7 +333,7 @@ if (import.meta.main) {
     console.error(`::error::gen-tools-viz: no visualiser declared for graph kind '${KIND}'`);
     process.exit(1);
   }
-  const rendered = page(rows, skillIds(REPO));
+  const rendered = publishedPage(rows, skillIds(REPO));
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {

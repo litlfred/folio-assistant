@@ -6,8 +6,8 @@
  * and adds `cites: [...]` to the builder call if not already present.
  *
  * Usage:
- *   bun run pipeline/migrate-cites.ts          # dry run
- *   bun run pipeline/migrate-cites.ts --write  # actually modify files
+ *   bun run cat-harness/content/pipeline/migrate-cites.ts          # dry run
+ *   bun run cat-harness/content/pipeline/migrate-cites.ts --write  # actually modify files
  *
  * @module content/pipeline/migrate-cites
  */

@@ -69,10 +69,11 @@
  *   bun run cat-harness/scripts/check-lane-documentation.ts
  *   bun run cat-harness/scripts/check-lane-documentation.ts --json
  */
-import { readFileSync, readdirSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { readFileSync } from "node:fs";
+import { relative, resolve } from "node:path";
 
 import { buildQaResult, writeQaResult } from "./qa-results.js";
+import { gitFiles } from "../schemas/git-corpus.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO = resolve(INSTANCE_ROOT, "..");
@@ -168,24 +169,13 @@ export interface LaneReport {
   readonly orphans: OrphanActivity[];
 }
 
+/**
+ * Every `.bpmn` diagram git accounts for, outside dot directories.
+ *
+ * `xd1g`. Measured at the conversion: **74 before, 74 after**.
+ */
 function bpmnFiles(root: string): string[] {
-  const out: string[] = [];
-  const walk = (dir: string): void => {
-    let entries;
-    try {
-      entries = readdirSync(dir, { withFileTypes: true });
-    } catch {
-      return;
-    }
-    for (const e of entries) {
-      if (e.name.startsWith(".") || e.name === "node_modules") continue;
-      const p = join(dir, e.name);
-      if (e.isDirectory()) walk(p);
-      else if (e.name.endsWith(".bpmn")) out.push(p);
-    }
-  };
-  walk(root);
-  return out.sort();
+  return gitFiles(root, (rel) => rel.endsWith(".bpmn") && !rel.split("/").some((s) => s.startsWith("."))).files;
 }
 
 /**

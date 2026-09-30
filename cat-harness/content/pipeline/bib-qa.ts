@@ -12,10 +12,10 @@
  * Output: writes `bib-qa.json` (consumed by bib-qa.html)
  *
  * Usage:
- *   bun run pipeline/bib-qa.ts                   # fast, no network
- *   bun run pipeline/bib-qa.ts --check-urls      # also verify URLs resolve
- *   bun run pipeline/bib-qa.ts --ci              # exit non-zero on metadata failures
- *   bun run pipeline/bib-qa.ts --out /tmp/x.json # custom output path
+ *   bun run cat-harness/content/pipeline/bib-qa.ts                   # fast, no network
+ *   bun run cat-harness/content/pipeline/bib-qa.ts --check-urls      # also verify URLs resolve
+ *   bun run cat-harness/content/pipeline/bib-qa.ts --ci              # exit non-zero on metadata failures
+ *   bun run cat-harness/content/pipeline/bib-qa.ts --out /tmp/x.json # custom output path
  *
  * @module content/pipeline/bib-qa
  */

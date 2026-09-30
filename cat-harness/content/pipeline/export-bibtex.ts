@@ -6,8 +6,8 @@
  * and writes `references.bib` in the repo root for LaTeX consumption.
  *
  * Usage:
- *   bun run pipeline/export-bibtex.ts
- *   bun run pipeline/export-bibtex.ts --out /path/to/references.bib
+ *   bun run cat-harness/content/pipeline/export-bibtex.ts
+ *   bun run cat-harness/content/pipeline/export-bibtex.ts --out /path/to/references.bib
  *
  * @module content/pipeline/export-bibtex
  */
