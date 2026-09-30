@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-reference-direction.ts",
-    "script_hash": "b7e3d03922c0"
+    "script_hash": "a53a56c05f44"
   },
   "subject": {
     "kind": "reference-direction",
     "id": "instances"
   },
-  "updated_at": "2026-09-30T16:28:19.388Z",
+  "updated_at": "2026-09-30T10:07:20.470Z",
   "families": {
     "instances-undeclared": {
       "summary": "An instance that declares no `needs`, so nothing about its layer is known and every reference from it is `undetermined`. `[]` is the floor; absent is nobody-has-said, and collapsing the two would make an undeclared instance look either tangled or spotless.",
@@ -17,14 +17,10 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 87,
+      "count": 77,
       "entries": [
         {
           "file": "cat-harness/content/docs/kgraph/what-is-declared-today.md",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/content/pipeline/pot-extract.ts",
           "names": 2
         },
         {
@@ -57,7 +53,7 @@
         },
         {
           "file": "cat-harness/docs/external-schemas/index.md",
-          "names": 2
+          "names": 3
         },
         {
           "file": "cat-harness/docs/fr/publication-workflow.md",
@@ -68,10 +64,6 @@
           "names": 5
         },
         {
-          "file": "cat-harness/docs/lsi/index.md",
-          "names": 9
-        },
-        {
           "file": "cat-harness/docs/processes/copy-out-materialized.md",
           "names": 2
         },
@@ -80,27 +72,11 @@
           "names": 2
         },
         {
-          "file": "cat-harness/docs/proposals/cmsl-external-directories-2026-09-30.md",
-          "names": 7
-        },
-        {
           "file": "cat-harness/docs/proposals/declaration-gap.md",
           "names": 7
         },
         {
           "file": "cat-harness/docs/proposals/instance-versioning.md",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/docs/proposals/lsi-applicability.md",
-          "names": 4
-        },
-        {
-          "file": "cat-harness/docs/proposals/lsi-epic-filing-2026-09-29.md",
-          "names": 3
-        },
-        {
-          "file": "cat-harness/docs/proposals/lsi-who-iris-2026-09-29.md",
           "names": 2
         },
         {
@@ -142,14 +118,6 @@
         {
           "file": "cat-harness/docs/zh/publication-workflow.md",
           "names": 3
-        },
-        {
-          "file": "cat-harness/folio/README.md",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/schemas/binary-release.ts",
-          "names": 2
         },
         {
           "file": "cat-harness/schemas/kg-qa.ts",
@@ -220,10 +188,6 @@
           "names": 2
         },
         {
-          "file": "cat-harness/scripts/gen-object-model-uml.ts",
-          "names": 2
-        },
-        {
           "file": "cat-harness/scripts/gen-schema-docs.ts",
           "names": 2
         },
@@ -260,10 +224,6 @@
           "names": 2
         },
         {
-          "file": "cat-harness/scripts/init-folio.ts",
-          "names": 2
-        },
-        {
           "file": "cat-harness/scripts/kg-audit.ts",
           "names": 8
         },
@@ -284,10 +244,6 @@
           "names": 3
         },
         {
-          "file": "cat-harness/scripts/skill-packages.ts",
-          "names": 2
-        },
-        {
           "file": "cat-harness/scripts/skill-register.ts",
           "names": 3
         },
@@ -300,8 +256,8 @@
           "names": 2
         },
         {
-          "file": "cat-harness/skills/kg/graph-management/kg-detangle.ts",
-          "names": 4
+          "file": "cat-harness/skills/library/library-core/asset-extraction.md",
+          "names": 2
         },
         {
           "file": "cat-harness/skills/kg/kg-core/instance-kinds.md",
@@ -316,6 +272,10 @@
           "names": 2
         },
         {
+          "file": "cat-harness/skills/library/library-core/library-ingestion.md",
+          "names": 2
+        },
+        {
           "file": "cat-harness/skills/kg/kg-core/placement.md",
           "names": 2
         },
@@ -324,15 +284,11 @@
           "names": 2
         },
         {
+          "file": "cat-harness/skills/kg/graph-management/kg-detangle.ts",
+          "names": 4
+        },
+        {
           "file": "cat-harness/skills/kg/kg-navigation/package-manifest.json",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/skills/library/library-core/asset-extraction.md",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/skills/library/library-core/library-ingestion.md",
           "names": 2
         },
         {
@@ -342,6 +298,10 @@
         {
           "file": "cat-harness/src/docs/declaration-claims.ts",
           "names": 3
+        },
+        {
+          "file": "cat-harness/src/tools/skill-fetch.ts",
+          "names": 2
         },
         {
           "file": "cat-harness/tools/index.ts",
@@ -494,11 +454,11 @@
           "names": 4
         },
         {
-          "file": "cat-harness/skills/folio-core/harness-tiles.md",
+          "file": "cat-harness/skills/kg/kg-core/directory-conventions.md",
           "names": 2
         },
         {
-          "file": "cat-harness/skills/kg/kg-core/directory-conventions.md",
+          "file": "cat-harness/skills/folio-core/harness-tiles.md",
           "names": 2
         },
         {
@@ -574,18 +534,18 @@
       "entries": [
         {
           "instances": 17,
-          "occurrences": 5540,
+          "occurrences": 5214,
           "allowed": 0,
-          "wrongDirection": 1394,
-          "wrongDirectionFiles": 328,
-          "exempt": 1095,
-          "namesRepository": 2048,
-          "undetermined": 1003,
+          "wrongDirection": 1232,
+          "wrongDirectionFiles": 277,
+          "exempt": 1011,
+          "namesRepository": 1989,
+          "undetermined": 982,
           "pendingFiles": 47,
-          "pendingOccurrences": 470
+          "pendingOccurrences": 461
         }
       ]
     }
   },
-  "total": 135
+  "total": 125
 }
