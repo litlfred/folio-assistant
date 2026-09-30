@@ -65,8 +65,7 @@ Technology Co.; 2014.(http://oversea.cnki.net/kns55/brief/result.aspx?dbPrefix=C
 accessed 11 November 2014).
 18.	 International Clinical Trials Registry Platform (ICTRP) [website]. Geneva: World Health 
 Organization; 2014 (http://www.who.int/ictrp/en/, accessed 11 November 2014).
-19.	 ClinicalTrials.gov [website]. Maryland: U.S. National Institutes of Health; 2014 (https://clini­
-caltrials.gov/, accessed 11 November 2014).
+19.	 ClinicalTrials.gov [website]. Maryland: U.S. National Institutes of Health; 2014 (https://clinicaltrials.gov/, accessed 11 November 2014).
 20.	 Moher D, Liberati A, Tetzlaff J, Altman DG; PRISMA Group. Preferred reporting 
 items for systematic reviews and meta-analyses: the PRISMA statement. PLoS Med. 
 2009;6(7):e1000097. doi: http://dx.doi.org/10.1371/journal.pmed.1000097 PMID: 19621072
@@ -88,8 +87,7 @@ Canadian Agency for Drugs and Technologies in Health; 2012 (http://www.cadth.ca/
 media/pdf/QAT_final.pdf, accessed 11 November 2014).
 WHO handbook for guideline development
 108
-26.	 Viswanathan MBN, Berkman ND, Dryden DM, Hartling L. Assessing risk of bias and con­
-founding in observational studies of interventions or exposures: further development of 
+26.	 Viswanathan MBN, Berkman ND, Dryden DM, Hartling L. Assessing risk of bias and confounding in observational studies of interventions or exposures: further development of 
 the RTI Item Bank. Rockville (MD): Agency for Healthcare Research and Quality (US); 2013 
 (http://www.ncbi.nlm.nih.gov/books/NBK154461/, accessed 11 November 2014).
 27.	 Guidelines Review Committee (GRC) [intranet site: available to WHO staff only]. Geneva: 
@@ -110,27 +108,20 @@ a focus on health equity. PLoS Med. 2012;9(10):e1001333. doi: http://dx.doi.org/
 journal.pmed.1001333 PMID: 23222917
 This chapter describes the steps involved in assessing the evidence gathered 
 in the systematic review. Specifically, it explains how to quantify, for each 
-key question (in PICO format), the risk of bias in the outcomes of the indi­
-vidual studies found; how to determine the quality of the evidence for each 
+key question (in PICO format), the risk of bias in the outcomes of the individual studies found; how to determine the quality of the evidence for each 
 outcome relevant to decision-making across included studies and, finally, 
-how to assess the quality of the evidence for all outcomes needed to formu­
-late a recommendation. Chapter 10 will explain how the GDG will then use 
+how to assess the quality of the evidence for all outcomes needed to formulate a recommendation. Chapter 10 will explain how the GDG will then use 
 the entire body of evidence identified through the systematic review and 
-other sources, including the assessments of its quality, to formulate recom­
-mendations. In this chapter and the next, we focus on key questions and 
-evidence pertaining to interventions. WHO staff can find additional guid­
-ance on key questions related to diagnosis and diagnostic tests on the GRC 
+other sources, including the assessments of its quality, to formulate recommendations. In this chapter and the next, we focus on key questions and 
+evidence pertaining to interventions. WHO staff can find additional guidance on key questions related to diagnosis and diagnostic tests on the GRC 
 intranet site (1).
 WHO uses the Grading of Recommendations Assessment, Development 
 and Evaluation (GRADE) approach to assess the quality of a body of evidence, 
 and to develop and report recommendations. The GRADE working group 
 began its work in 2000 with the goal of developing a common, sensible and 
-transparent approach to grading the quality of evidence in support of rec­
-ommendations in health care and assessing the strength of the recommen­
-dations. Currently many national and international guideline development 
+transparent approach to grading the quality of evidence in support of recommendations in health care and assessing the strength of the recommendations. Currently many national and international guideline development 
 groups, including WHO, use the GRADE approach. The GRADE working 
-group continues to develop new methods, update and evolve existing meth­
-ods, and monitor and evaluate the quality and utility of its approaches. As 
+group continues to develop new methods, update and evolve existing methods, and monitor and evaluate the quality and utility of its approaches. As 
 such, the methods continue to evolve as the evidence underpinning the 
 approaches grows and experience with the methods expands.
 Detailed information on GRADE is available to WHO staff on the WHO 

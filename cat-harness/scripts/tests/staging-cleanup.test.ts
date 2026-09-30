@@ -109,7 +109,7 @@ describe("the guard", () => {
   });
 
   it("refuses a slug that is a path, or that carries anything the slug pipeline cannot produce", () => {
-    expect(guard?.run).toContain('""|.|..)');
+    expect(guard?.run).toContain('""|.|..|_retired)');
     expect(guard?.run).toContain("*[!A-Za-z0-9._-]*)");
   });
 
@@ -233,7 +233,7 @@ describe("the preflight's verdicts", () => {
   });
 
   it("refuses a slug that is a path or carries an impossible character, before asking anything", () => {
-    for (const bad of ["", ".", "..", "../../etc", "a/b", "a b", "a;rm -rf /", "*"]) {
+    for (const bad of ["", ".", "..", "_retired", "../../etc", "a/b", "a b", "a;rm -rf /", "*"]) {
       expect(slugProblem(bad)).toBeDefined();
       expect(preflight(bad, { state: "ok", value: [] }, branches(), NOW).decision).toBe("refuse-unknown");
     }

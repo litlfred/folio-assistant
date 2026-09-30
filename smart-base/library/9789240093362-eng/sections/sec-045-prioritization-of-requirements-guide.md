@@ -16,12 +16,10 @@ requirement should be documented in a separate row with each of the following co
 What to note
 Description
 Requirement ID
-This could be a running number list so the team can ensure that they are referring to the same func­
-tional requirement when discussing requirements. 
+This could be a running number list so the team can ensure that they are referring to the same functional requirement when discussing requirements. 
 Requirement 
 description
-Describe the requirement here, e.g. “Provide SMS reminders for visits”; “Use open standards to pro­
-mote interoperability”; “Allow users to find features in two clicks or less”; “Operate offline”.
+Describe the requirement here, e.g. “Provide SMS reminders for visits”; “Use open standards to promote interoperability”; “Allow users to find features in two clicks or less”; “Operate offline”.
 Type of 
 requirement
 Is this requirement a functional requirement or a non-functional requirement?
@@ -46,8 +44,7 @@ requirement dictated by national-level ministry personnel?
 •	 Is this requirement required for interoperability or reporting of indicators?
 •	 Is this requirement required so that the PCPOSS complies to national laws and regulations?
 Comments
-Note any additional information relevant to the requirement here. This is to ensure effective commu­
-nication and have a consistent understanding as the requirements are discussed and validated among 
+Note any additional information relevant to the requirement here. This is to ensure effective communication and have a consistent understanding as the requirements are discussed and validated among 
 multiple stakeholders.
 Introduction
 How to use 

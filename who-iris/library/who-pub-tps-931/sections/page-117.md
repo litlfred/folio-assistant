@@ -10,7 +10,7 @@ source_sha256: ecc88eee99756755
 text_source: ocr
 granularity: page
 ---
-WHO Editorial Style Manval
+WHO Editorial Style Manual
 
 Alphabetical list by local/other names
 
@@ -41,7 +41,7 @@ Azerbaidzhan Azerbaijan* Djakarta Jakarta
 Druk-yul Bhutan*
 Bagdad Baghdad
 Bahrein Bahrain* Eesti Estonia*
-Bale Basel Eire Treland*
+Bale Basel Eire Ireland*
 Bangi Bangui Erevan, Erivan Yerevan
 Basle Basel Er Riad Riyadh
 Bayrut Beirut Esthonia Estonia*

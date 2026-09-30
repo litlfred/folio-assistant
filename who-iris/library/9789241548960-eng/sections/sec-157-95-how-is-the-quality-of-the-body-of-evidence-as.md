@@ -13,8 +13,7 @@ GRADE categorizes the quality of the evidence as high, moderate, low or
 very low (Table 9.2). These quality ratings apply to the body of evidence for 
 each outcome assessed for each key question and not to individual studies. A 
 judgement on the risk of bias of each individual study included in the body 
-of evidence is needed, however, to assess the quality domain of study limita­
-tions (see Section 9.5.1.1).
+of evidence is needed, however, to assess the quality domain of study limitations (see Section 9.5.1.1).
 For key questions that address interventions (6–8), the starting point 
 or baseline for rating the quality of the evidence is always the study design, 
 broadly classified into two types:
@@ -26,15 +25,13 @@ time-series analyses, cohort and case−control studies, cross-sectional
 studies and other types of studies, such as case series and case reports.
 Although RCTs are the preferred source of evidence for measuring the 
 effects of interventions, in many instances guideline developers must rely on 
-information from nonrandomized trials or observational studies. This is par­
-ticularly so when the guideline developers evaluate the potential harms of an 
+information from nonrandomized trials or observational studies. This is particularly so when the guideline developers evaluate the potential harms of an 
 intervention and the feasibility of implementing it in a real-world setting, or 
 Chapter 9 
 Evidence assessment
 113
 the barriers and facilitators to doing so. Thus, relevant data can be obtained 
-from both RCTs and observational studies, and each type of evidence com­
-plements the other. Generally speaking, meta-analyses should not be used to 
+from both RCTs and observational studies, and each type of evidence complements the other. Generally speaking, meta-analyses should not be used to 
 pool estimates of effect from studies having different study designs. Rather, 
 the results for the various types of studies should be presented separately and 
 then synthesized across study designs in a narrative manner, with a focus on 
