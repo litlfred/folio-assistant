@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 519,
+      "count": 523,
       "unit": "beans"
     }
   },
@@ -489,14 +489,14 @@
     {
       "id": "folio-assistant-2c2b",
       "title": "CI WATCH IS TWO-STATE: cancelled read as failure and reported a green main red — bun run ci:watch, three states with undetermined never collapsing",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T14:56:30Z",
-      "updatedAt": "2026-09-30T14:56:30Z",
+      "updatedAt": "2026-09-30T19:43:02Z",
       "preview": "Issue #1624. Owner asked for this as a repo tool rather than session-local\nscratch tooling, 2026-09-30.\n\n## The defect, measured\n\nAn agent's CI poll folded `cancelled` into the failure set and reported **`main`\nred** on `3d2c7fbe869`, whose every hard gate had passed:\n\n```\nsuccess   Repository gates (hard)\nsuccess   TypeScript — tests, lint, types (hard)\nsuccess   End-to-end + accessibility (hard)",
       "file": "beans/defs/folio-assistant-2c2b--ci-watch-is-two-state-cancelled-read-as-failure-an.md"
     },
@@ -811,14 +811,14 @@
     {
       "id": "folio-assistant-3r47",
       "title": "Drop the per-kind graph classes (KGraph, SkillGraph, VoiceGraph, …): a directory is a Subgraph holding GraphKind individuals",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-xsqm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:04:38Z",
-      "updatedAt": "2026-09-30T10:04:38Z",
+      "updatedAt": "2026-09-30T19:12:28Z",
       "preview": "## The ruling, owner 2026-09-30\n\nAsked *\"KGraph needs better name? CatHarness? … what is bootstrap's? consistent? why not just CatHarness? why need graph?\"*, then chose **\"Drop per-kind classes\"** over renaming.\n\n## Why (measured 2026-09-30)\n\n- bootstrap has no class per kind: a kind is a word (`skills`, `processes`) and one `bootstrap:GraphKind` individual, `bootstrap:graphKind/<kind>`; a declare",
       "file": "beans/defs/folio-assistant-3r47--drop-the-per-kind-graph-classes-kgraph-skillgraph.md"
     },
@@ -1107,12 +1107,12 @@
       "title": "A CONFLICTED PR CREATES NO pull_request RUN, and g62s's headUnjudged cannot see it — the one absent-run case that needs no glob evaluation",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T14:07:18Z",
-      "updatedAt": "2026-09-30T18:23:03Z",
+      "updatedAt": "2026-09-30T18:25:48Z",
       "preview": "## The incident, measured\n\nPR #1589, 2026-09-30. `Repository gates (hard)` failed on `86e403cdfdd`. I\nfixed the cause (`readme:subgraphs`, two stale directory READMEs), pushed twice,\nand **no `Code-quality gates` run was ever created for either new head.** The\nPR went on showing a red from a superseded commit.\n\nThe cause was not the queue and not a path filter. The PR was\n**`mergeable_state: \"dirt",
       "file": "beans/defs/folio-assistant-52cz--a-conflicted-pr-creates-no-pull-request-run-and-g6.md"
     },
@@ -1353,6 +1353,20 @@
       "updatedAt": "2026-09-27T16:50:03Z",
       "preview": "## What was measured\n\n`kg:validate` resolves declared directories from ONE instance root, so a sidecar\nin a nested instance is refused rather than validated. Measured 2026-09-27, from\nthe repository root:\n\n    bun run cat-harness/scripts/kg-validate.ts cat-harness/test/results/kg-qa/processes/adjudication.kg-qa.json\n      ✓ … [qa]\n\n    bun run cat-harness/scripts/kg-validate.ts bootstrap/test/resu",
       "file": "beans/defs/folio-assistant-676g--kgvalidate-cannot-own-a-nested-instances-path-so-1.md"
+    },
+    {
+      "id": "folio-assistant-68k7",
+      "title": "resolveDirectories climbs the checkout's PARENT: is that intended for the ROOT instance?",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T19:48:10Z",
+      "updatedAt": "2026-09-30T19:48:28Z",
+      "preview": "**Owner ruling, 2026-09-30: leave open until the call site is named.**\n\n## Why this is its own bean\n\nIt was Box 3 of `8zsb`, and **`8zsb` is `completed`**. A completed bean's\nunchecked box is not reachable by `beans list`, so the question was on its way\nto being invisible — which is `8zsb`'s own lesson (*a finding needs somewhere\nto live that nobody has to already know about*) turned on the bean t",
+      "file": "beans/defs/folio-assistant-68k7--resolvedirectories-climbs-the-checkouts-parent-is.md"
     },
     {
       "id": "folio-assistant-6b8u",
@@ -1961,14 +1975,14 @@
     {
       "id": "folio-assistant-8zsb",
       "title": "bun test reads the CHECKOUT PATH: 2 tests fail in any worktree not named folio-assistant",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T17:53:09Z",
-      "updatedAt": "2026-09-30T19:00:17Z",
+      "updatedAt": "2026-09-30T19:49:03Z",
       "preview": "## What was measured\n\n`bun test` on `origin/main` `da684477383`, run four times, varying **only the\ndirectory the checkout sits in**. Same commit, same `node_modules`, same\ncommand.\n\n| checkout path | basename | parent | result |\n|---|---|---|---|\n| `/home/user/folio-assistant` | `folio-assistant` | `/home/user` | pass |\n| `/tmp/probe-main/folio-assistant` | `folio-assistant` | `/tmp/probe-main` |",
       "file": "beans/defs/folio-assistant-8zsb--bun-test-reads-the-checkout-path-2-tests-fail-in-a.md"
     },
@@ -2559,6 +2573,20 @@
       "updatedAt": "2026-09-30T15:20:46Z",
       "preview": "Found 2026-09-30 while fixing the `maxBuffer` class (this branch, `claude/magical-dijkstra-19yvml`).\n\n`manifests()` in `cat-harness/scripts/check-published-packages.ts`:\n\n```ts\nconst r = spawnSync(\"git\", [\"ls-files\", \"-z\", \"--\", glob], { ... });\nif (r.error !== undefined || r.status !== 0) return [];\n```\n\n**`[]` means \"git looked and there are none\".** It is returned here for\n\"git could not answer",
       "file": "beans/defs/folio-assistant-bnuy--published-packages-an-unanswerable-git-reads-as-no.md"
+    },
+    {
+      "id": "folio-assistant-bp43",
+      "title": "render:bpmn:check is permanently red: two renderers own bootstrap/processes/ and disagree",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T18:57:28Z",
+      "updatedAt": "2026-09-30T19:10:53Z",
+      "preview": "`main` has been red on **End-to-end + accessibility (hard)** since at least\n`de4a49ecfbe` (2026-09-30). The failing step is `render:bpmn:check`, and it\ncannot go green on its own.\n\n## What is actually true\n\nThere are **two** `render-bpmn.ts`, and they overlap on three files while\ndisagreeing about their contents.\n\n| renderer | files its `--check` reports | writes the generated-by note |\n|---|---|-",
+      "file": "beans/defs/folio-assistant-bp43--renderbpmncheck-is-permanently-red-two-renderers-o.md"
     },
     {
       "id": "folio-assistant-bqrg",
@@ -3219,6 +3247,20 @@
       "updatedAt": "2026-09-22T11:55:45Z",
       "preview": "Issue #877. The eight PDFs are in `litlfred/qou` as https://github.com/litlfred/qou/commit/a3d2266a1b08018af5f8f88c222c1e7b45e6a36c — a mathematics repository, which is not their home.\n\n**`deletion-requires-confirmation` governs and this is not the agent's call.** What follows is the report the skill requires: what would go, with sizes, and the evidence that nothing would be lost. Nothing has been",
       "file": "beans/defs/folio-assistant-fgkb--smart-base-clear-qouuploads-once-the-bytes-have-a.md"
+    },
+    {
+      "id": "folio-assistant-fhov",
+      "title": "ci:watch reports PASS on a THIN check set: 1 of 11 checks looks identical to all green",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T19:07:23Z",
+      "updatedAt": "2026-09-30T19:48:42Z",
+      "preview": "Found by the tool's own author, one session after building it, while using it\nto decide a merge. That is the interesting part: `check-verdict.ts` was written\nthis session **specifically** to stop CI state being misread, and it handled\nthe zero case on purpose while leaving the one case wide open.\n\n## Measured\n\nPR #1671, head `a3e27f6b0e1`, 2026-09-30:\n\n```\n$ bun run ci:watch a3e27f6b0e1\n19:05:47  ",
+      "file": "beans/defs/folio-assistant-fhov--ciwatch-reports-pass-on-a-thin-check-set-1-of-11-c.md"
     },
     {
       "id": "folio-assistant-fjwi",
@@ -4641,7 +4683,7 @@
     {
       "id": "folio-assistant-oi1y",
       "title": "STANDALONE PAGES JEKYLL COPIES THROUGH HAVE NO NAVIGATION: 33 published pages (23 wireframes + 10 bootstrap) carry no rail and no way out",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -5443,14 +5485,14 @@
     {
       "id": "folio-assistant-s8nu",
       "title": "Four orphan-selectors now exist for one question — orphanSubjectPages should be the only one",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T05:33:00Z",
-      "updatedAt": "2026-09-30T14:53:06Z",
+      "updatedAt": "2026-09-30T19:48:18Z",
       "preview": "Recorded after `ankg` was fixed on main while this branch was fixing it too —\nso the count below is measured against main, not against a plan.\n\n## The four\n\n| selector | where | how it decides |\n|---|---|---|\n| `prunableStickies` | `ensure-landing-sticky.ts` | the candidate parses as the thing it writes |\n| `OWNED` | `who-iris/scripts/gen-iris-pages.ts` (#607) | a regex over FILE NAMES this genera",
       "file": "beans/defs/folio-assistant-s8nu--three-orphan-pruners-now-exist-for-one-problem-vie.md"
     },
@@ -5499,7 +5541,7 @@
     {
       "id": "folio-assistant-sjic",
       "title": "ONE NAVBAR FOR EVERY FOLIO: combine the folio-assistant sidebar and the who-iris rail into a single component — fixed top, scrollable KG stack, fixed bottom",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -5707,6 +5749,20 @@
       "updatedAt": "2026-09-29T20:52:41Z",
       "preview": "Measured 2026-09-26. `main` is RED on `translation-drift`, independently of\nanything else, and it is the SECOND of two unrelated breakages on `main` this\nmorning.\n\n## The failure, and that it is `main`'s\n\n```\n(fail) the real corpus — and the gate can actually fail > no NEW drift, and\n       nothing unreadable\nExpected 0, Received 27\n   error ar/accessibility: published with no `.po` catalogue and ",
       "file": "beans/defs/folio-assistant-tbdg--main-is-red-on-translation-drift-1374-published-27.md"
+    },
+    {
+      "id": "folio-assistant-tbdl",
+      "title": "Jekyll pages' navbar shows no open-document index — only the injected rail supplies documentIndex",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T11:23:09Z",
+      "updatedAt": "2026-09-30T11:23:09Z",
+      "preview": "Found closing `sjic`, 2026-09-29/30, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq.\n\nThe owner's spec (in `sjic`): *\"when a document or other indexed object is opened, the document index/idices are shown in a navbar tab/menu.\"*\n\n## Measured\n\n- `NavbarModel.documentIndex` has ONE supplier: `harness-rail.ts:118`, which calls `documentIndexOf(html)` on a finished page. So mounted an",
+      "file": "beans/defs/folio-assistant-tbdl--jekyll-pages-navbar-shows-no-open-document-index-o.md"
     },
     {
       "id": "folio-assistant-tc95",
