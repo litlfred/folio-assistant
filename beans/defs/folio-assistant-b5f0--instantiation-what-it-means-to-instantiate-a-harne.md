@@ -122,7 +122,7 @@ Measured on `initialize-harness.bpmn`:
     folio:bean   0      ✗
     folio:tool   0
 
-`skills/workflow/bpmn-processes.md:30` requires **both**: the skill that
+`skills/process/workflow/bpmn-processes.md:30` requires **both**: the skill that
 implements a step, and `<folio:bean>` *"where it touches the work plan"*. The
 owner's own description of initiation is *"create UI/start workflow beans
 todos"* — it touches the work plan by definition, and carries no bean marker.

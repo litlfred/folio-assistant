@@ -352,6 +352,9 @@ which is `p11x`'s question (#1580 now prints 3 of 19 instances reached and
 names the 16 it misses) and `0lj4`'s, arriving for a third time from a third
 extractor.
 
+## OWNER RULING, 2026-09-30: MOVE the four large-datasets processes out of cat-harness
+
+Asked in session https://claude.ai/code/session_01SiFEMuTciyB681XP5WfcbB. The four processes are `copy-out-materialized`, `materialize-remote`, `refresh-materialized` and `sample-import`. Every step of each names a skill that exists only in `large-datasets`, while cat-harness depends only on `bootstrap`, so their 25 references run the wrong way. **The owner chose: move them into `large-datasets`**, which declares its own `processes` directory. The alternative, leaving them and recording the edges, was declined. Implementation follows in its own PR.
 
 ## The 25 `bpmn-skill` refs fixed: the four processes moved to large-datasets, 2026-09-30
 

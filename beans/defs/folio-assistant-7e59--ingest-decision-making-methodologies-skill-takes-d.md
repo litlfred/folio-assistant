@@ -37,7 +37,7 @@ when-to-use criteria."*
 
 ## What landed with it, and what did not
 
-`cat-harness/skills/folio-core/decision-methodology-selector.md` is on `main`.
+`cat-harness/skills/process/process-core/decision-methodology-selector.md` is on `main`.
 Four things that should have accompanied it did not, and each was its own red
 gate:
 

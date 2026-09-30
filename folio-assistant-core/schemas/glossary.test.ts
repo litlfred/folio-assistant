@@ -34,6 +34,8 @@ import {
   type AssetType,
 } from "../scripts/glossary-extract.ts";
 import { instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.ts";
+
+const REPO_ROOT_FOR_NS = resolve(import.meta.dir, "../..");
 import { parseFrontMatter } from "../../cat-harness/schemas/front-matter.ts";
 import { discoverTools } from "../../cat-harness/tools/discover.ts";
 
@@ -121,8 +123,11 @@ describe("this repository", () => {
 
   test("core's terms live in core's namespace", () => {
     const core = c.glossaries.find((s) => s.instance === "folio-assistant-core")!;
-    expect(core.ns).toBe(instanceNs("folio-assistant-core"));
-    expect(core.ns).toBe("https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#");
+    // Its declaration now carries an iriBase (bean yn2k), so the namespace is
+    // read through it, as every other instance's is below.
+    const decl = readDeclaration(join(REPO_ROOT_FOR_NS, "folio-assistant-core"))!;
+    expect(core.ns).toBe(instanceNs(decl.name, decl.stub, decl));
+    expect(core.ns).toBe("https://litlfred.github.io/folio-assistant-core/0.1.0/ns#");
   });
 
   test("the page lists every term once, and SKOS is published for every scheme", () => {

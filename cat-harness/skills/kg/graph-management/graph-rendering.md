@@ -19,7 +19,7 @@ math proofs/lean etc"*.
 This skill is the general part. It says what any drawing of a graph owes its
 reader. The per-graph skills say how one generator meets it:
 [`uml-overview`](../kg-core/uml-overview.md) for schemas,
-[`bpmn-authoring`](../../workflow/bpmn-authoring.md) for processes, and
+[`bpmn-authoring`](../../process/workflow/bpmn-authoring.md) for processes, and
 [`content-graph`](../../folio-core/content-graph.md) for a paper's blocks.
 
 A drawing is how a person READS a graph. [`graph-detanglement`](graph-detanglement.md)

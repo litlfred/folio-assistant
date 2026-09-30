@@ -612,7 +612,7 @@ se **heredan** (`viewer` → `reviewer` → `author` → `admin`). Lo que un act
 **hacer** no es una propiedad de su rol: es una regla ODRL en `policies/`, y
 antes de cada tarea el ejecutor BPMN verifica que el actor esté autenticado,
 sea elegible para el rol del carril, esté autorizado por la política y tenga permitido manipular el
-contenido ([`task-authorization`](../../skills/folio-core/task-authorization.md),
+contenido ([`task-authorization`](../../skills/process/process-core/task-authorization.md),
 incidencia #1207).
 
 ### Personas

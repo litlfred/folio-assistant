@@ -120,7 +120,7 @@ carriles BPMN, con los roles, la puerta de validación HCI y el plan de trabajo 
 - **[Referencia del esquema de habilidades](../reference/skills/)** — contratos de entrada/salida generados para cada habilidad.
 - **[Referencia de la API de TypeScript](../api/)** — el modelo de objetos de contenido (`Block`, `Chapter`, `Paper`, builders, restricciones Zod).
 - **[Arquitectura](../architecture.html)** — adaptadores, servidor MCP, RBAC, el modelo de bloques.
-- **[The KGraph](../kgraph.html)** — la taxonomía de subgrafos, en qué sentido van las referencias y cómo dividen el trabajo los repositorios.
+- **[El grafo de conocimiento](../knowledge-graph.html)** — la taxonomía de subgrafos, en qué sentido van las referencias y cómo dividen el trabajo los repositorios.
 - **[The Harness](../harness.html)** — la instanciación, el recorrido de dependencias y a qué obliga incorporar un directorio al arnés.
 
 Vale la pena leer dos habilidades antes que las páginas anteriores, porque todo lo demás
