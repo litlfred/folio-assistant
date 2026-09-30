@@ -6,7 +6,6 @@ description: >-
   the same thing in different words, near-duplicates, outlier clusters, and a
   proposed home for unfiled work. Every output is a proposal; LSI never writes
   a relation.
-capability: architecture
 graph-kinds:
   - library
   - skills
