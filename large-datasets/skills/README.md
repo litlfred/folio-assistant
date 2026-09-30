@@ -1,7 +1,7 @@
 <!-- kg:subgraph:begin -->
 # large-datasets-skills
 
-The instructions for working with large datasets: one [Skill](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#skill) per file.
+The instructions for working with large datasets: one [Skill](../../bootstrap/schemas/README.md#skill) per file.
 
 Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `large-datasets-skills`, holding `skills`.
 
