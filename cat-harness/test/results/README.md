@@ -11,6 +11,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`avatar-coverage.qa-results.json`](avatar-coverage.qa-results.json) | data |  |
 | [`crdm-detect-eval.test-run.json`](crdm-detect-eval.test-run.json) | data |  |
 | [`harness-state.qa-results.json`](harness-state.qa-results.json) | data |  |
+| [`kg-export.bootstrap-tools.qa-results.json`](kg-export.bootstrap-tools.qa-results.json) | data |  |
 | [`kg-export.bootstrap.qa-results.json`](kg-export.bootstrap.qa-results.json) | data |  |
 | [`kg-export.qa-results.json`](kg-export.qa-results.json) | data |  |
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |

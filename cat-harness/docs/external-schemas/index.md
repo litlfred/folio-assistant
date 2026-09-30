@@ -425,8 +425,8 @@ a subset of the edition rather than a transcription of it.
 
 | user | declared by |
 |---|---|
+| `bootstrap-tools/scripts/gen-bootstrap-graph.ts` | `@conformsTo` tag |
 | `cat-harness/schemas/jsonld.ts` | `@conformsTo` tag |
-| `cat-harness/scripts/gen-bootstrap-graph.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/kg-export.ts` | `@conformsTo` tag |
 
 **Operative terms (3).** The terms this repository acts on —
