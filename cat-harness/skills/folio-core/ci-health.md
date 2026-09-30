@@ -50,6 +50,28 @@ manifest the platform does not carry, or a computation step needing a directory
 only a folio has. A red you caused by running something that was never meant to
 run here is worse than the stale verdict you were trying to clear.
 
+## For ONE commit, zero checks is not a pass
+
+`check:ci-health` reads workflows across history. When the question is **one
+commit** (may I merge this PR, must I fix it, or do I not yet know?), the
+tool is `bun run ci:watch <sha>` or `ci:watch --pr <n>`. It answers in three
+states, and `undetermined` has its own exit code, never 0.
+
+The trap it exists for arrives as good news. **A conflicted pull request gets
+no `pull_request` run at all.** GitHub checks out `refs/pull/N/merge`, which
+it does not build for a head that conflicts. So the notification that "every
+check suite completed and none failed" can be true of **zero suites**. "No
+suite failed" over nothing that ran is not green, and neither is a partial set
+(a push-triggered job finished, the PR's gate workflow never registered).
+Before reading an event as a pass, ask the head's merge state. A merge ref
+that exists can still have been built for an EARLIER head (GitHub leaves the
+old one in place when a new head conflicts), so the ref must have been built
+from the current head.
+
+Owner ruling 2026-09-30, bean `52cz`: this is written here so that an agent
+reading PR events **without** the tool knows it too. The tool enforces it
+(`verdictForCommit`, `mergeStateForHead`); this paragraph is for the reader.
+
 ## The report answers about the default branch — and Pages is not on it
 
 **A Pages build outcome is not repository state.** It is a fact GitHub holds

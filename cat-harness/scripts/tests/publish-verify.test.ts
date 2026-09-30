@@ -18,7 +18,7 @@ import { buildGlossary } from "../glossary-export";
 import { buildVocabulary } from "../ns-export";
 import { codeListDirs, loadCodeLists } from "../../schemas/code-list";
 import { buildCodeListsDoc } from "../code-lists";
-import { HTML_UNIQUE_IDS, JSONLD_EXPAND, declaredBase, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
+import { HTML_UNIQUE_IDS, JSONLD_EXPAND, SEARCH_INDEX, SEARCH_INDEX_PATH, VERIFIERS, declaredBase, expandFindings, isOurs, localLoader, verify } from "../publish-verify";
 
 const site = (files: Record<string, unknown>): string => {
   const dir = mkdtempSync(join(tmpdir(), "publish-verify-"));
@@ -94,6 +94,58 @@ describe("the unique-id verifier — bean uknu", () => {
   });
   // The scanner's own edge cases (code samples, script bodies, quote styles)
   // are `duplicate-ids.test.ts`'s; this file owns only the verifier around it.
+});
+
+describe("the search-index verifier — bean fq5u", () => {
+  const boxed = '<!doctype html><html><body><input id="search-input" type="text"></body></html>';
+  const entry = (relUrl: string) => ({ doc: "d", title: "t", content: "c", url: `/base${relUrl}`, relUrl });
+  const run = (files: Record<string, unknown>, searchIndex?: "built" | "borrowed") =>
+    verify(site(files), [SEARCH_INDEX], { bases: [], ...(searchIndex ? { searchIndex } : {}) });
+
+  test("an index covering every search-box page passes", async () => {
+    const { exit } = await run({ "a.html": boxed, "b/index.html": boxed, [SEARCH_INDEX_PATH]: { 0: entry("/a.html"), 1: entry("/b/#h"), 2: entry("/b/") } });
+    expect(exit).toBe(0);
+  });
+
+  test("MISSING, EMPTY and NOT JSON each fail — the defect that would have shipped green", async () => {
+    for (const idx of [undefined, {}, "not json"]) {
+      const files: Record<string, unknown> = { "a.html": boxed };
+      if (idx !== undefined) files[SEARCH_INDEX_PATH] = idx;
+      const { exit, results } = await run(files);
+      expect(exit).toBe(1);
+      expect(results[0]!.findings).toHaveLength(1);
+    }
+  });
+
+  test("an indexed page that is not in the tree is a finding", async () => {
+    const { exit, results } = await run({ "a.html": boxed, [SEARCH_INDEX_PATH]: { 0: entry("/a.html"), 1: entry("/gone.html") } });
+    expect(exit).toBe(1);
+    expect(results[0]!.findings.map((f) => f.detail)).toEqual(["indexes /gone.html, which is not in the tree"]);
+  });
+
+  test("an index far below the search-box page count is truncated", async () => {
+    const files: Record<string, unknown> = { [SEARCH_INDEX_PATH]: { 0: entry("/p0.html") } };
+    for (let i = 0; i < 4; i++) files[`p${i}.html`] = boxed;
+    const { exit, results } = await run(files);
+    expect(exit).toBe(1);
+    expect(results[0]!.findings[0]!.detail).toContain("below the 0.5 floor");
+  });
+
+  test("BORROWED (a staging preview): a declared-empty index is presence and parsing only", async () => {
+    expect((await run({ "a.html": boxed, [SEARCH_INDEX_PATH]: {} }, "borrowed")).exit).toBe(0);
+    expect((await run({ "a.html": boxed }, "borrowed")).exit).toBe(1);
+  });
+
+  test("a tree with no search box is COULD NOT TELL, never a pass", async () => {
+    const { exit, results } = await run({ "a.html": "<p>x</p>" });
+    expect(exit).toBe(2);
+    expect(results[0]!.couldNotTell).toBeDefined();
+  });
+
+  test("it is in the deploy set and names the downstream Tool it judges", () => {
+    expect(VERIFIERS).toContain(SEARCH_INDEX);
+    expect(SEARCH_INDEX.tool).toBe("site-search-index");
+  });
 });
 
 describe("the documents this platform actually publishes", () => {

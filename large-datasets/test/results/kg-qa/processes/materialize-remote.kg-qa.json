@@ -5,19 +5,29 @@
     "id": "Process_MaterializeRemote",
     "path": "processes/materialize-remote.bpmn"
   },
-  "source_hash": "sha256:9441deead01e405397e1729440cbfd2b648489b89eb8d607186586a9ee4cf4d4",
+  "source_hash": "sha256:5f6c3164ceec0674a0272e3f33144e2afa92ce82dd4a006717dfa4bdb871d532",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
       "findings": []
     },
     "raci-single-accountable": {
-      "result": "n/a",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
+        }
+      ]
     },
     "raci-accountable-not-consulted": {
-      "result": "n/a",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
+        }
+      ]
     },
     "convention-ref-resolves": {
       "result": "n/a",
@@ -89,39 +99,37 @@
       "findings": []
     },
     "lane-binds-role": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
+        }
+      ]
     },
     "variable-performer-declared-alone": {
       "result": "n/a",
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "unknown",
+      "findings": [
+        {
+          "where": "—",
+          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "fail",
+      "result": "unknown",
       "findings": [
         {
-          "where": "Task_Restrictions",
-          "detail": "\"RESTRICTIONS unknown is an answer, not a green light\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
-        },
-        {
-          "where": "Task_Copyright",
-          "detail": "\"COPYRIGHT per bitstream, and for the derived work\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
-        },
-        {
-          "where": "Task_Retention",
-          "detail": "\"RETENTION what expires this copy\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
-        },
-        {
-          "where": "Task_SourceLoss",
-          "detail": "\"SOURCE LOSS what survives if the origin goes\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
+          "where": "—",
+          "detail": "no role graph declared at scenarios/roles.json, so this instance holds no role DEFINITIONS. Role references are still resolved — see `role-ref-resolves` — against the 52 role(s) reachable through this instance's `needs`; what cannot be judged here is what those roles CARRY, which needs the definition rather than the name."
         }
       ]
     },
@@ -167,9 +175,9 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 2,
-    "n/a": 9,
-    "unknown": 0
+    "pass": 12,
+    "fail": 1,
+    "n/a": 7,
+    "unknown": 5
   }
 }

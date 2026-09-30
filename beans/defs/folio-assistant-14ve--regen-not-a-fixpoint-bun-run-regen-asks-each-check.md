@@ -1,11 +1,11 @@
 ---
 # folio-assistant-14ve
 title: 'REGEN NOT A FIXPOINT: bun run regen asks each check once, so a check asked before its input''s writer runs reports current and stays stale'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-29T23:42:28Z
-updated_at: 2026-09-30T08:28:41Z
+updated_at: 2026-09-30T21:25:46Z
 parent: folio-assistant-1xhc
 ---
 
@@ -37,3 +37,5 @@ readme:subgraphs), 0 unrepaired`, yet the next `bun run gates` failed
 `bun run audit:coverage` once fixed both. Consistent with an ORDER
 dependence: audit-coverage was asked before the later writers changed the
 files it counts, so one pass is not a fixpoint.
+
+_2026-09-30T21:25:46Z_ — Claimed by claude/magical-archimedes-4qkfxp-regen — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

@@ -12,13 +12,13 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 109 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 3 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 111 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 4 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 125 terms and is 82 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 128 terms and is 84 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">125</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">128</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -76,6 +76,13 @@ BPMN diagram rendering <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Render each process diagram to SVG for the documentation site. The .bpmn file is the source of truth; the picture is generated from it, so a diagram and its image cannot disagree.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#bpmn-render</code></a></p>
+</dd>
+<dt id="cat-harness--kg-tools--lsi-index" data-fa-state="extracted" data-fa-gloss="">
+Build the Latent Semantic Indexing index of a prose graph <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Build the per-graph LSI index sidecar for every declared prose graph (or the one named): input fingerprint, parameters, dimension summaries, nearest neighbours and near-duplicate findings, never the vectors. Records each run's outcome and input fingerprint, success or failure, as a <code>folio-tool-run/v1</code> record.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#lsi-index</code></a></p>
 </dd>
 </dl>
 
@@ -705,6 +712,13 @@ Sign off a translation <span class="fa-gloss-status">candidate, extracted</span>
 <p>Record a translation as official — who signed off, when, and the hash of the source it was signed against, so a later source edit is detectable.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#translation-signoff</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--site-search-index" data-fa-state="extracted" data-fa-gloss="">
+Site search index <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The just-the-docs search index, <code>assets/js/search-data.json</code>, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#site-search-index</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--schema-docs" data-fa-state="extracted" data-fa-gloss="">
 Skill contract reference <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -732,6 +746,13 @@ Stage a branch's preview <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>Publish a branch's built site to <code>STAGING/&lt;slug&gt;/</code> on the publish branch, so a reviewer compares a rendered before and after rather than a description of one. Stamps the commit SHA, and removes the preview when its pull request closes.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#feature-staging</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-tools--build-ig-site" data-fa-state="extracted" data-fa-gloss="">
+Stage one IG as its own just-the-docs Jekyll site <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Turn an IG source repository into ONE Jekyll source for just-the-docs, as the IG Publisher builds one IG per site: <code>input/pagecontent</code> pages with title, parent and order from <code>sushi-config.yaml</code> <code>pages:</code>, the files the Publisher resolves <code>&#123;% include %}</code> against, images, <code>_data/fhir.json</code> from <a href="#fhir-harness--kg-tools--ig-site-data"><code>ig-site-data</code></a>, and a <code>_config.yml</code>. The pages render unchanged, <code>&#123;&#123; site.data.fhir.* }}</code> included (bean <code>bamf</code>, owner's choice of one site per IG).</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#build-ig-site</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--stakeholder-map" data-fa-state="extracted" data-fa-gloss="">
 Stakeholder map <span class="fa-gloss-status">candidate, extracted</span>

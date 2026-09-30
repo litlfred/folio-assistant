@@ -5,6 +5,7 @@
   "repository": "litlfred/cat-harness",
   "livesAt": { "repository": "litlfred/folio-assistant", "path": "cat-harness" },
   "version": "0.1.0",
+  "iriBase": "https://litlfred.github.io/cat-harness/",
   "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs. Owner, 2026-09-21: \"harnesses should list the names (they should be named in schmeas, e.g. cat-boostrap should be named 'Boostrap', f-a => Folio Assistant, cat-harness => C@T Harness)\". `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against. Bean t3n8. THIS ONE WAS WRONG RATHER THAN ABSENT: it declared `title: \"folio-assistant\"`, the ROOT instance's name, so two instances carried one title and `disambiguate()` correctly qualified this tab to \"folio-assistant (cat-harness)\" — the label the owner reported. The disambiguator behaved as designed; the declaration was the defect.",
   "title": "C@T Harness",
   "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
@@ -953,6 +954,16 @@
       "description": "The `fhir-harness` instance's instruction bodies -- the FHIR IG layer's two packages, `fhir-ig-base` (build pipeline, publisher fork and reduction, Jekyll render) and `fhir-client` (client operations, SMART launch). Declared here for the reason `bootstrap-skills` above gives, and the id is deliberately the SAME one `fhir-harness/fhir-harness.json` uses for the same directory: where a sibling instance's id does not collide with one of this instance's own, reusing it keeps one name on one directory. Measured 2026-09-27 (bean `3x2o`): `fhir-client-operations.md` and `smart-launch.md` were committed under `docs/reference/skill-instructions/` and produced by NO source, so they were orphans no re-run could refresh -- 280 committed against 278 produced -- while the four `fhir-ig-base` bodies had never been published at all.",
       "graphKinds": [
         "skills"
+      ]
+    },
+    {
+      "id": "large-datasets-processes",
+      "path": "large-datasets/processes/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The `large-datasets` subgraph's BPMN -- `materialize-remote`, `refresh-materialized`, `copy-out-materialized` and `sample-import`, moved out of cat-harness/processes/ on 2026-09-30 (bean `cjvs`, issue #1605) because their steps name skills cat-harness cannot reach. Declared in large-datasets.json as that instance's own `processes` graph, and here as well, repository-scoped, for the reason `folio-assistant-core-processes` is: the consumers that scan for diagrams run from this root, and `workflowDirs` resolves only from a DECLARED directory (bean `g43o`).",
+      "graphKinds": [
+        "processes"
       ]
     },
     {

@@ -77,7 +77,7 @@ describe("stripSeo", () => {
   test("a folio's own JSON-LD is content and is never touched", () => {
     const graph =
       '<script type="application/ld+json">\n' +
-      '{"@context":{"cat":"https://litlfred.github.io/folio-assistant/cat-harness/ns#"},' +
+      '{"@context":{"cat":"https://litlfred.github.io/cat-harness/0.1.0/ns#"},' +
       '"@graph":[{"@id":"cat:skill/x","@type":"cat:Skill"}]}</script>';
     const { html, removed } = stripSeo(graph);
     expect(removed.jsonLd).toBe(0);

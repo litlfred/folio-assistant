@@ -411,7 +411,7 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 194,
+      "count": 195,
       "unit": "modules"
     },
     {
@@ -1099,17 +1099,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 7
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 6
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 3
+          "value": 4
         }
       ],
       "visualisations": [
@@ -1120,6 +1120,10 @@
         {
           "kind": "code",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "processes",
+          "path": "/processes/"
         },
         {
           "kind": "qa",
@@ -1622,7 +1626,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 51
+          "value": 52
         },
         {
           "id": "kinds",
@@ -2087,9 +2091,9 @@
     },
     "cat-harness": {
       "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
+      "major": 0,
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/",
+      "human": "https://litlfred.github.io/cat-harness/v0/"
     },
     "fhir-harness": {
       "version": "0.1.0",
@@ -2105,9 +2109,9 @@
     },
     "folio-assistant-core": {
       "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
+      "major": 0,
+      "agent": "https://litlfred.github.io/folio-assistant-core/0.1.0/",
+      "human": "https://litlfred.github.io/folio-assistant-core/v0/"
     },
     "folio-assistant-sci": {
       "version": "0.1.0",
@@ -2840,7 +2844,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: large-datasets-schemas, large-datasets-sources, large-datasets-skills, large-datasets-scr…"
+            "summary": "7: large-datasets-schemas, large-datasets-sources, large-datasets-skills, large-datasets-pro…"
           },
           {
             "key": "needs",
@@ -3065,6 +3069,10 @@
             "summary": "{ repository, path }"
           },
           {
+            "key": "iriBase",
+            "summary": "https://litlfred.github.io/folio-assistant-core/"
+          },
+          {
             "key": "directories",
             "summary": "11: core-schemas, folios, glossary, voices, core-tools, core-scripts, core-library, core-meth…"
           },
@@ -3135,12 +3143,16 @@
             "summary": "https://litlfred.github.io/folio-assistant"
           },
           {
+            "key": "iriBase",
+            "summary": "https://litlfred.github.io/cat-harness/"
+          },
+          {
             "key": "publication",
             "summary": "{ host }"
           },
           {
             "key": "directories",
-            "summary": "49: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "50: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",
