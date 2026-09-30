@@ -30,13 +30,21 @@ package "cat-harness/skills" as pkg_cat_harness_skills <<skills>> {
     title [1] : string
     description [1] : string
   }
+  class "Directory" as cat_harness_skills_skill_topics_v1_Directory <<json: SkillTopicsSchema>> #e8f0ee {
+    id [1] : string
+    path [1] : string
+    dependents [1] : string
+    graphKinds [1..*] : string[]
+  }
   class "skill-topics/v1" as cat_harness_skills_skill_topics_v1_skill_topics_v1 <<json: SkillTopicsSchema>> #e8f0ee {
     $schema [1] : 'skill-topics/v1'
     _comment [0..1] : string
     topics [0..*] : Topic[]
+    directories [0..*] : Directory[]
   }
 }
 
 cat_harness_skills_folio_remote_skill_v1_folio_remote_skill_v1 *-- "1..*" cat_harness_skills_folio_remote_skill_v1_File : files
 cat_harness_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" cat_harness_skills_skill_topics_v1_Topic : topics
+cat_harness_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" cat_harness_skills_skill_topics_v1_Directory : directories
 @enduml

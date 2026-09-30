@@ -285,6 +285,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Placement](placement.html) | `placement` | — | **One question, answered before the first file exists:** |
 | [Managing a schema](schema-management.html) | `schema-management` | — | **This skill does not restate where schemas live or how they are laid out.** |
 | [Adding a](skill-registration.html) | `skill-registration` | — | One command, before you commit: |
+| [Skill voice review](skill-voice-review.html) | `skill-voice-review` | — |  |
 | [Surprise to corpus](surprise-to-corpus.html) | `surprise-to-corpus` | — | > Skill id: `surprise-to-corpus` · Package: `folio-core` |
 | [UML overview: generated from declarations and schemas, never drawn](uml-overview.html) | `uml-overview` | — | **Every UML diagram here is generated.** Nothing in a class box is typed by |
 | [Vocabulary authority](vocabulary-authority.html) | `vocabulary-authority` | — | > Skill id: `vocabulary-authority` · Package: `folio-core` |
