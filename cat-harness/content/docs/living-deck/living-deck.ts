@@ -2,7 +2,7 @@ import { webpage } from "../../../schemas/webpage.ts";
 
 export default webpage({
   slug: "living-deck",
-  title: "Living deck — KG and folio-assistant",
+  title: "Harnessed Knowledge Graph Overview",
   navOrder: 14,
   nodes: [
     { id: "overview", block: "overview" },

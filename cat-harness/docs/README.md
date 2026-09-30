@@ -30,7 +30,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`installation.md`](installation.md) | Installation |  |
 | [`kg-navigation.md`](kg-navigation.md) | kg-navigation |  |
 | [`kgraph.md`](kgraph.md) | The KGraph |  |
-| [`living-deck.md`](living-deck.md) | Living deck — KG and folio-assistant |  |
+| [`living-deck.md`](living-deck.md) | Harnessed [Knowledge Graph](../../bootstrap/schemas/README.md#knowledge-graph) Overview |  |
 | [`managing-agent-context.md`](managing-agent-context.md) | Managing agent context |  |
 | [`platform.md`](platform.md) | "What the platform does, and how its processes, roles, tasks and skills fit together." |  |
 | [`publication-workflow.md`](publication-workflow.md) | Publication workflow |  |
