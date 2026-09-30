@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 518,
+      "count": 520,
       "unit": "beans"
     }
   },
@@ -1663,6 +1663,20 @@
       "updatedAt": "2026-09-24T11:55:19Z",
       "preview": "Found 2026-09-24 while working `wg7r`. `publish-verify`'s `isOurs` counts a JSON-LD document as ours only when its `@context` names our content context or binds one of our namespaces. `<stub>-code-lists.jsonld` (glossary-export) binds only `skos`, `dcterms`, `owl` and `rdf`, so the verifier counts it **out of scope (not ours)**, even though its `@id` sits under our published base and we author eve",
       "file": "beans/defs/folio-assistant-7h1c--publish-verify-scope-misses-our-own-skos-code-list.md"
+    },
+    {
+      "id": "folio-assistant-7h3u",
+      "title": "smart-trust replica wears folio-assistant's chrome, not the WHO IG's branding",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T20:04:11Z",
+      "updatedAt": "2026-09-30T20:26:11Z",
+      "preview": "**Owner, 2026-09-30:** *\"does not make css/branding/style of\nworldhealthorganization.github.io/smart-trust from\ngithub.com/worldhealthorganization/smart-trust\"*\n\nObserved at <https://litlfred.github.io/folio-assistant/smart-trust/>: dark\nbackground, folio-assistant's left rail and its purple **▾ Folio** handle. The\npublished WHO IG it replicates uses the HL7 IG-publisher template with WHO\nbranding",
+      "file": "beans/defs/folio-assistant-7h3u--smart-trust-replica-wears-folio-assistants-chrome.md"
     },
     {
       "id": "folio-assistant-7mog",
@@ -4851,6 +4865,20 @@
       "file": "beans/defs/folio-assistant-pgzn--kgaudit-instance-crashes-the-root-instances-reporo.md"
     },
     {
+      "id": "folio-assistant-pnn5",
+      "title": "v8n5 Done-when #2 promised coverage 'the day instance #2 declares a theme' — that day came and nothing compares",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T21:24:19Z",
+      "updatedAt": "2026-09-30T21:24:41Z",
+      "preview": "Found 2026-09-30 by becoming instance #2. Bean `7h3u` declared\n`smart-trust/themes/`, which took the themes set from 1 to 2 — and that is the\ncondition `check-navbar-consistency.ts` said would close a gap.\n\n## What the check promises at set size ≤ 1\n\n```\nNOTE: `v8n5`'s Done-when #2 — a surface must not fall back to the\n      platform default for an instance that declares its own theme —\n      is r",
+      "file": "beans/defs/folio-assistant-pnn5--v8n5-done-when-2-promised-coverage-the-day-instanc.md"
+    },
+    {
       "id": "folio-assistant-pomp",
       "title": "A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'",
       "status": "in-progress",
@@ -5317,14 +5345,14 @@
     {
       "id": "folio-assistant-rqao",
       "title": "ACTORS LIVE IN A CLAUDE-SPECIFIC, UNDECLARED DIRECTORY: .claude/skills/actors (and capabilities/, requirements/) → an agent-generic declared graph",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:19:40Z",
-      "updatedAt": "2026-09-30T19:55:31Z",
+      "updatedAt": "2026-09-30T21:54:28Z",
       "preview": "Owner, 2026-09-30: 'why .claude/skills/actors/*.json? need generic'.\n\n## Commit archaeology\n- 05e72abe92 (2026-03-24, 'Add agent skills framework'): 16 actor definitions created in .claude/skills/actors/, beside .claude/skills/capabilities/ (14), requirements/ (5) and local/ — the framework began as a Claude Code skill tree.\n- 571d208db8 (2026-09-18): BPMN/DMN moved INTO the declared kg graph and ",
       "file": "beans/defs/folio-assistant-rqao--actors-live-in-a-claude-specific-undeclared-direct.md"
     },

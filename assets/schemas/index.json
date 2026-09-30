@@ -30119,6 +30119,35 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/theme-by-ref.ts#OwnedWebpageTheme",
+      "name": "OwnedWebpageTheme",
+      "module": "cat-harness/schemas/theme-by-ref.ts",
+      "kind": "interface",
+      "doc": "One instance-declared WEBPAGE theme, with the instance that owns it.",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "theme",
+          "type": "Extract<ResolvedTheme, { kind: \"webpage\" }>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/theme.ts#ResolvedTheme"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/theme-by-ref.ts#StickyThemeConflict",
       "name": "StickyThemeConflict",
       "module": "cat-harness/schemas/theme-by-ref.ts",
@@ -46644,6 +46673,14 @@
     },
     {
       "from": "cat-harness/schemas/theme-by-ref.ts#OwnedStickyTheme",
+      "to": "cat-harness/schemas/theme.ts#ResolvedTheme",
+      "via": "theme",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/theme-by-ref.ts#OwnedWebpageTheme",
       "to": "cat-harness/schemas/theme.ts#ResolvedTheme",
       "via": "theme",
       "kind": "field",
