@@ -13,7 +13,8 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { bootstrapRoot, discussionDocuments, discussionIds, isFailure, run } from "./validate-bootstrap.ts";
+import { bootstrapRoot, discussionDocuments, discussionIds, isFailure, run, validateFile } from "./validate-bootstrap.ts";
+import { GraphExportSchema } from "../schemas/graph-export.ts";
 
 const REAL = bootstrapRoot();
 const trees: string[] = [];
@@ -95,5 +96,22 @@ describe("a valid and an invalid fixture", () => {
     const root = tree(validModels);
     writeFileSync(join(root, "schemas", "discussion.input.schema.json"), "{}");
     expect(() => discussionIds(root)).toThrow();
+  });
+
+  test("the built graph is judged too — and a build that throws is a failure, not a skip", () => {
+    const real = run(bootstrapRoot()).find((r) => r.target.label === "Knowledge Graph (built)");
+    expect(real?.verdict).toBe("valid");
+    const broken = validateFile({
+      label: "Knowledge Graph (built)",
+      path: "/nowhere/bootstrap.jsonld",
+      schema: GraphExportSchema,
+      required: true,
+      build: () => {
+        throw new Error("no declaration");
+      },
+    });
+    expect(isFailure(broken)).toBe(true);
+    const wrongShape = validateFile({ label: "g", path: "/x", schema: GraphExportSchema, required: true, build: () => ({}) });
+    expect(wrongShape.verdict).toBe("invalid");
   });
 });

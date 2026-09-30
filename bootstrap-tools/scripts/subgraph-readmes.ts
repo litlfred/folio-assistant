@@ -96,26 +96,15 @@ import {
 import { BOOTSTRAP_TERMS } from "../schemas/graph.ts";
 import { releaseIris } from "../schemas/release-iri.ts";
 import { gitFiles } from "./git-files.ts";
-import { describe as describeFile, usedByIndex } from "./readme-graph-sections.ts";
+import { describe as describeFile, linkTarget, usedByIndex } from "./readme-graph-sections.ts";
 import { bootstrapTermTargets, linkTerms } from "./term-links.ts";
 
 /**
- * A relative path as a markdown link DESTINATION: every segment
- * percent-encoded, parentheses included.
- *
- * A file name is not a URL. `PIIS2589750021000388 (2).pdf` arrived through the
- * GitHub web UI's upload on 2026-09-30, and written verbatim into `](...)` its
- * space ended the destination, so the uploads README linked nowhere and the
- * blocking `subgraph-readmes` test went red on main. `encodeURIComponent`
- * handles the space but leaves `(` and `)` alone, and an unbalanced one ends a
- * CommonMark destination just as surely, so both are encoded here too.
+ * A relative path as a markdown link DESTINATION. Defined beside the
+ * `kg:files` section in `readme-graph-sections.ts`, which writes the same kind
+ * of link and which this module already imports; re-exported here for callers.
  */
-export function linkTarget(path: string): string {
-  return path
-    .split("/")
-    .map((seg) => encodeURIComponent(seg).replace(/\(/g, "%28").replace(/\)/g, "%29"))
-    .join("/");
-}
+export { linkTarget };
 
 /** The Liquid templates this writer renders: `subgraph.liquid`, which includes `files.liquid`. */
 export const TEMPLATES = join(import.meta.dir, "templates", "readme");
