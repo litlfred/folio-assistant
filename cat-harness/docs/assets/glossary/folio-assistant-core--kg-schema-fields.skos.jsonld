@@ -1895,6 +1895,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.termschema.iri",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermSchema.iri"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The concept's IRI when its defining vocabulary already mints one. The glossary then DESCRIBES that concept — its labels, translations, order — rather than minting a second IRI for the same term. Owner, 2026-09-30 (bean `xsqm`, \"one SKOS\", option A): bootstrap's terms are `<bootstrap>/ns#Node`, not also `…ns#glossary/terms/node`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.iri",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.termschema.isdefinedby",
       "@type": "skos:Concept",
       "skos:inScheme": {
