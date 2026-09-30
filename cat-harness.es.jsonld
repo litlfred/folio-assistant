@@ -297,10 +297,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T20:18:58.059Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/3aa79179021ed43d86b7898d363b324c033545a3",
-  "sourceCommitSha": "3aa79179021ed43d86b7898d363b324c033545a3",
-  "sourceCommitAt": "2026-09-30T22:15:11+02:00",
+  "generatedAt": "2026-09-30T20:26:39.403Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9d7f3eb2ce2bdd0d89dbdee65fabfff1dcce18b3",
+  "sourceCommitSha": "9d7f3eb2ce2bdd0d89dbdee65fabfff1dcce18b3",
+  "sourceCommitAt": "2026-09-30T22:24:06+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -308,7 +308,7 @@
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 28,
+    "SkillPackage": 29,
     "Decision": 9,
     "Process": 72,
     "SequenceFlow": 941,
@@ -1247,22 +1247,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swot-analysis",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "swot-analysis",
-      "title": "Running a SWOT scan",
-      "description": "Running a SWOT situation analysis — the four activities of `swot-analysis.bpmn`, what each step must produce, and the one thing the technique must never be used for. The method itself lives in the `methodology` graph and is not repeated here.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/swot-analysis.md",
-      "instructionLines": 78,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/technical-documentation",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "technical-documentation",
@@ -1850,21 +1834,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swimlane-glossary",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "swimlane-glossary",
-      "title": "Swimlane Glossary Skill",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/swimlane-glossary.md",
-      "instructionLines": 177,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-witness",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "qa-witness",
@@ -1976,22 +1945,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-methodology-selector",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "decision-methodology-selector",
-      "title": "Decision methodology selector",
-      "description": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/decision-methodology-selector.md",
-      "instructionLines": 167,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ci-health",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "ci-health",
@@ -2018,22 +1971,6 @@
       ],
       "instructionsPath": "skills/folio-core/adjudication.md",
       "instructionLines": 266,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/methodology-adoption",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "methodology-adoption",
-      "title": "Adopting a methodology, and choosing between them",
-      "description": "How a named external methodology enters the knowledge graph, and how an agent picks which one applies. Read before following a judgement method, before adopting a new one, and before writing a house method instead of adopting one.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/methodology-adoption.md",
-      "instructionLines": 233,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2209,38 +2146,6 @@
       ],
       "instructionsPath": "skills/folio-core/activity-log.md",
       "instructionLines": 230,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/role-model",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "role-model",
-      "title": "Roles are swimlanes",
-      "description": "Actors, roles and skills — who performs a BPMN task, under which swimlane, with which skills. How a role's skill set is resolved through `inherits` and through a subprocess call chain, how a lane binds to a declared role, and how `kg:audit` finds a dangling skill, lane, role or decision.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 669,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "task-authorization",
-      "title": "Task authorization — four questions before every task",
-      "description": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict since 2026-09-24, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/task-authorization.md",
-      "instructionLines": 347,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4036,6 +3941,101 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swot-analysis",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "swot-analysis",
+      "title": "Running a SWOT scan",
+      "description": "Running a SWOT situation analysis — the four activities of `swot-analysis.bpmn`, what each step must produce, and the one thing the technique must never be used for. The method itself lives in the `methodology` graph and is not repeated here.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/swot-analysis.md",
+      "instructionLines": 78,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swimlane-glossary",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "swimlane-glossary",
+      "title": "Swimlane Glossary Skill",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/swimlane-glossary.md",
+      "instructionLines": 177,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-methodology-selector",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "decision-methodology-selector",
+      "title": "Decision methodology selector",
+      "description": "Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/decision-methodology-selector.md",
+      "instructionLines": 167,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/methodology-adoption",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "methodology-adoption",
+      "title": "Adopting a methodology, and choosing between them",
+      "description": "How a named external methodology enters the knowledge graph, and how an agent picks which one applies. Read before following a judgement method, before adopting a new one, and before writing a house method instead of adopting one.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/methodology-adoption.md",
+      "instructionLines": 233,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/role-model",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "role-model",
+      "title": "Roles are swimlanes",
+      "description": "Actors, roles and skills — who performs a BPMN task, under which swimlane, with which skills. How a role's skill set is resolved through `inherits` and through a subprocess call chain, how a lane binds to a declared role, and how `kg:audit` finds a dangling skill, lane, role or decision.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/role-model.md",
+      "instructionLines": 669,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "task-authorization",
+      "title": "Task authorization — four questions before every task",
+      "description": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict since 2026-09-24, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/task-authorization.md",
+      "instructionLines": 347,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "raci",
@@ -4044,8 +4044,218 @@
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/raci"
       ],
-      "instructionsPath": "skills/raci/raci.md",
+      "instructionsPath": "skills/process/raci/raci.md",
       "instructionLines": 124,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-epic-planning",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "release-epic-planning",
+      "title": "Release epic planning",
+      "description": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/release-epic-planning.md",
+      "instructionLines": 147,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dmn-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "dmn-authoring",
+      "title": "dmn-authoring",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/dmn-authoring.md",
+      "instructionLines": 70,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/skills/dmn-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/skills/dmn-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/process-state",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "process-state",
+      "title": "Process state — the task you are in, inside the process you are running",
+      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/process-state.md",
+      "instructionLines": 237,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-review-process",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "code-review-process",
+      "title": "Code review process — from PR to release approval",
+      "description": "Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/code-review-process.md",
+      "instructionLines": 73,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-state-machine",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "session-state-machine",
+      "title": "Playing a state machine",
+      "description": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `cat-harness.processes:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/session-state-machine.md",
+      "instructionLines": 130,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-processes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "bpmn-processes",
+      "title": "Processes are BPMN, and the diagrams are executable",
+      "description": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/bpmn-processes.md",
+      "instructionLines": 230,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "bpmn-authoring",
+      "title": "bpmn-authoring",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/bpmn-authoring.md",
+      "instructionLines": 87,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-lifecycle",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "release-lifecycle",
+      "title": "Release lifecycle — process and policy",
+      "description": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/release-lifecycle.md",
+      "instructionLines": 115,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/workflow-state",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "workflow-state",
+      "title": "State in a running process",
+      "description": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be one answer rather than two.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/workflow-state.md",
+      "instructionLines": 128,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-freshness",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "branch-freshness",
+      "title": "Branch freshness — stay current with main",
+      "description": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/branch-freshness.md",
+      "instructionLines": 112,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deterministic-and-agentic",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "deterministic-and-agentic",
+      "title": "The deterministic-to-agentic spectrum",
+      "description": "Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository already uses to sit at different points on it, the four axes an answer has to name, what is measured today, and the three research questions — which are open, and marked as open.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/deterministic-and-agentic.md",
+      "instructionLines": 278,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-context",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "session-context",
+      "title": "Session context",
+      "description": "What a state machine tracks across a session, as against one process instance. What the record carries, why `actor` is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/session-context.md",
+      "instructionLines": 144,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "specification-compiled-agents",
+      "title": "Specification-compiled agents",
+      "description": "When a diagram already says what the process is, the model should not be planning it. The two gaps between this repository's engine and a compiled control plane — typed node contracts and per-node context scope — what to do before either exists, and the three things not to adopt with the method.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/specification-compiled-agents.md",
+      "instructionLines": 114,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4490,216 +4700,6 @@
       ],
       "instructionsPath": "skills/ui/ui-core/html-rendering-qc.md",
       "instructionLines": 100,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-epic-planning",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "release-epic-planning",
-      "title": "Release epic planning",
-      "description": "Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/release-epic-planning.md",
-      "instructionLines": 147,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dmn-authoring",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "dmn-authoring",
-      "title": "dmn-authoring",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/dmn-authoring.md",
-      "instructionLines": 70,
-      "inputSchema": "https://litlfred.github.io/folio-assistant/skills/dmn-authoring/input.schema.json",
-      "outputSchema": "https://litlfred.github.io/folio-assistant/skills/dmn-authoring/output.schema.json",
-      "hasInstructions": true,
-      "hasIOContract": true,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/process-state",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "process-state",
-      "title": "Process state — the task you are in, inside the process you are running",
-      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/process-state.md",
-      "instructionLines": 237,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-review-process",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "code-review-process",
-      "title": "Code review process — from PR to release approval",
-      "description": "Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/code-review-process.md",
-      "instructionLines": 73,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-state-machine",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "session-state-machine",
-      "title": "Playing a state machine",
-      "description": "An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the `cat-harness.processes:judgement` marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/session-state-machine.md",
-      "instructionLines": 130,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-processes",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "bpmn-processes",
-      "title": "Processes are BPMN, and the diagrams are executable",
-      "description": "Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/bpmn-processes.md",
-      "instructionLines": 230,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-authoring",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "bpmn-authoring",
-      "title": "bpmn-authoring",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/bpmn-authoring.md",
-      "instructionLines": 87,
-      "inputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/input.schema.json",
-      "outputSchema": "https://litlfred.github.io/folio-assistant/skills/bpmn-authoring/output.schema.json",
-      "hasInstructions": true,
-      "hasIOContract": true,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-lifecycle",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "release-lifecycle",
-      "title": "Release lifecycle — process and policy",
-      "description": "Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/release-lifecycle.md",
-      "instructionLines": 115,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/workflow-state",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "workflow-state",
-      "title": "State in a running process",
-      "description": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be one answer rather than two.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/workflow-state.md",
-      "instructionLines": 128,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-freshness",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "branch-freshness",
-      "title": "Branch freshness — stay current with main",
-      "description": "Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/branch-freshness.md",
-      "instructionLines": 112,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deterministic-and-agentic",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "deterministic-and-agentic",
-      "title": "The deterministic-to-agentic spectrum",
-      "description": "Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository already uses to sit at different points on it, the four axes an answer has to name, what is measured today, and the three research questions — which are open, and marked as open.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/deterministic-and-agentic.md",
-      "instructionLines": 278,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-context",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "session-context",
-      "title": "Session context",
-      "description": "What a state machine tracks across a session, as against one process instance. What the record carries, why `actor` is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/session-context.md",
-      "instructionLines": 144,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "specification-compiled-agents",
-      "title": "Specification-compiled agents",
-      "description": "When a diagram already says what the process is, the model should not be planning it. The two gaps between this repository's engine and a compiled control plane — typed node contracts and per-node context scope — what to do before either exists, and the three things not to adopt with the method.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow"
-      ],
-      "instructionsPath": "skills/workflow/specification-compiled-agents.md",
-      "instructionLines": 114,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6228,7 +6228,6 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/coordinate",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/covered-is-not-reachable",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-audit",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-methodology-selector",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/delivery-summary",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deployment-auth",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/detangler-integration-watcher",
@@ -6253,7 +6252,6 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/mcp-contract",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/mcp-projection",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/md-authoring",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/methodology-adoption",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/milnor-exposition-standard",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/narrative-asserts-code",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/one-voice-audit",
@@ -6275,15 +6273,11 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/rendered-verification",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-comments",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/review-heatmap",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/role-model",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-accuracy",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-intent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skills-and-tools",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/staging-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swarm-management",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swimlane-glossary",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swot-analysis",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/technical-documentation",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/test-engineer",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/todo-manager",
@@ -6520,15 +6514,62 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/process-core",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "process-core",
+      "version": "0.1.0",
+      "description": "The process model's supporting knowledge: the role model and task authorization, the swimlane glossary, and how a methodology is chosen and adopted (decision-methodology-selector, methodology-adoption, swot-analysis). Moved out of folio-core into the process topic (bean 9umr, owner ruling 2026-09-30); workflow (BPMN/DMN authoring and the engine's state) and raci are its siblings in the same topic.",
+      "path": "skills/process/process-core",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/decision-methodology-selector",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/methodology-adoption",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/role-model",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swimlane-glossary",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/swot-analysis",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/task-authorization"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/raci",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
       "name": "raci",
       "version": "0.1.0",
       "description": "RACI — involvement over the processes and roles this repository already declares. Three declared edge kinds (accountable, consulted, informed) over BPMN activities and `roles.json` entries, NOT a new party registry. R is deliberately absent because a lane already declares it. RELOCATED 2026-09-22 from `methodologies/raci/` on the owner's \"dont bury sub-graph assets\", which brought it into skill QA for the first time (bean `lps0`).",
-      "path": "skills/raci",
+      "path": "skills/process/raci",
       "hasManifest": true,
       "declaresSkill": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/raci"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "workflow",
+      "version": "0.1.0",
+      "description": "BPMN navigation and workflow management: how a process is authored, where an instance keeps its position, and which store answers which question. Split out of folio-core, which held 97 skills — a package that holds everything is one nobody can be pointed at.",
+      "path": "skills/process/workflow",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-processes",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-freshness",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-review-process",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deterministic-and-agentic",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dmn-authoring",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/process-state",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-epic-planning",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-lifecycle",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-context",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-state-machine",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/workflow-state"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -6627,33 +6668,6 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/theme-ui-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/ui-accessibility",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/wireframe-design-review"
-      ],
-      "providesCapability": [],
-      "requiresCapability": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/workflow",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
-      "name": "workflow",
-      "version": "0.1.0",
-      "description": "BPMN navigation and workflow management: how a process is authored, where an instance keeps its position, and which store answers which question. Split out of folio-core, which held 97 skills — a package that holds everything is one nobody can be pointed at.",
-      "path": "skills/workflow",
-      "hasManifest": true,
-      "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-authoring",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bpmn-processes",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/branch-freshness",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/code-review-process",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deterministic-and-agentic",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/dmn-authoring",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/process-state",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-epic-planning",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/release-lifecycle",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-context",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/session-state-machine",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/specification-compiled-agents",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/workflow-state"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -44981,7 +44995,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
       ],
-      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here: it is WHO guideline method, and since 2026-09-24 (bean `wg7r`) it is the `grade` skill in `skills/authoring-who-smart-guidelines/` with its vocabularies as code lists — the owner: \"needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\". RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/crdm/`, RACI's to `skills/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
+      "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here: it is WHO guideline method, and since 2026-09-24 (bean `wg7r`) it is the `grade` skill in `skills/authoring-who-smart-guidelines/` with its vocabularies as code lists — the owner: \"needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\". RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/crdm/`, RACI's to `skills/process/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
       "readmePath": "methodologies/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/methodologies"
     },
