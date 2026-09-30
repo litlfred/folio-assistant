@@ -36,4 +36,13 @@ writeQaResult already refuses to restamp unchanged findings (ymsu). The collisio
 
 ## Done when
 - [x] line-level measurement recorded
-- [ ] owner decides which fix, if any
+- [x] owner decides which fix: "remove volatile fields" (2026-09-30)
+- [x] part 1: qa-results carry no updated_at (#1714)
+- [ ] part 2: subdirectory file counts in generated READMEs — OPEN, owner chose "decide later" (2026-09-30)
+
+## Part 2 — open, deliberately
+
+The `N files` count per subdirectory in generated directory READMEs (`beans/README.md`: 76 conflicts in the sample, every one on that line) is rendered by `litlfred/bootstrap-tools` (a submodule since 2026-09-30), and is an intended feature (owner, 2026-09-29: large instances show a count instead of listing every file). Options put to the owner: round to a band (`1,000+ files`), drop the count, keep exact counts. Owner: decide later. Not a blocker for #1714.
+
+## Found in passing
+`cat-harness/test/results/kg-export.@litlfred/folio-assistant.qa-results.json` is an orphan: unwritten since 2026-09-23, producer path pre-split `scripts/kg-export.ts`; the exporter now names the host's sidecar `kg-export`. Left in place — deleting needs the owner.
