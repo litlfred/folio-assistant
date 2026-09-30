@@ -18,19 +18,16 @@ summary of that declaration in the guideline (see Table 6.1 and Fig. 6.1). Thi
 includes all members of the GDG, individuals who prepare systematic reviews 
 and evidence profiles, guideline methodologists, the technical writer and any 
 other expert who participates in the process in an individual capacity.
-Observers at GDG meetings, including persons representing a govern­
-mental or nongovernmental organization (rather than present in an individual 
+Observers at GDG meetings, including persons representing a governmental or nongovernmental organization (rather than present in an individual 
 capacity) do not need to complete a declaration of interests form. Observers’ 
 affiliations as representatives of an organization should be made transparent.
 Box 6.1.	
 Overview of the process for identifying, managing and 
 reporting secondary interests
-1. All potential external contributors to guideline development complete the stand­
-ard WHO declaration of interests form before invitations to participate in a guideline 
+1. All potential external contributors to guideline development complete the standard WHO declaration of interests form before invitations to participate in a guideline 
 development group (GDG) or attend a meeting are finalized and before contracts are 
 issued. Potential contributors should submit a curriculum vitae also.
-2. The responsible technical officer, in consultation with the director of their depart­
-ment and with input from the steering group, assesses the declaration of interests and 
+2. The responsible technical officer, in consultation with the director of their department and with input from the steering group, assesses the declaration of interests and 
 curriculum vitae and determines if a conflict of interest exists.
 3. Conflicts of interest are assessed for severity (risk of adversely affecting the guideline 
 development process) and a management plan is formulated.
@@ -53,8 +50,7 @@ Who assesses
 the DOI?
 Management of COI
 Comments
-Steering group, includ­
-ing RTO
+Steering group, including RTO
 As required by 
 WHO staff rules
 WHO staff
@@ -69,12 +65,10 @@ RTO and their
 director, with 
 input from CRE as 
 needed
-According to the pro­
-cesses outlined in this 
+According to the processes outlined in this 
 chapter
 Chair must be free of all 
-financial COI, and free of non­
-financial interests to the extent 
+financial COI, and free of nonfinancial interests to the extent 
 possible.
 External review group
 Yes if they are 
@@ -89,8 +83,7 @@ CRE as needed
 By interpretation of 
 their comments in the 
 context of their COI
-These individuals or organiza­
-tions may be conflicted. Their 
+These individuals or organizations may be conflicted. Their 
 DOI form (if they represent 
 themselves as an individual) or 
 institutional affiliation (when 
@@ -103,8 +96,7 @@ Yes
 Steering group 
 with input from 
 the CRE as needed
-According to the pro­
-cesses outlined in this 
+According to the processes outlined in this 
 chapter
 The systematic review team 
 members should have no 
@@ -117,8 +109,7 @@ Yes
 Steering group 
 with input from 
 the CRE as needed
-According to the pro­
-cesses outlined in this 
+According to the processes outlined in this 
 chapter
 The methodologist should have 
 no financial or nonfinancial COI.
@@ -130,8 +121,7 @@ their comments in
 the context of their 
 affiliation(s)
 The role and interests of 
-representatives of organiza­
-tions must be made clear at 
+representatives of organizations must be made clear at 
 GDG meetings if the observers 
 participate in any way in the 
 discussions.

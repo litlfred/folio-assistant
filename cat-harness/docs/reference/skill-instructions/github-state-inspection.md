@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Reading GitHub state — resolve the ref, do not compose the URL
 
-> Skill id: `github-state-inspection` · Capability: `review` · Package: `folio-core`
+> Skill id: `github-state-inspection` · Package: `folio-core`
 
 Every question of the form *"is it published?"*, *"why is this 404?"*, *"did
 that deploy?"* has an authoritative answer in a **ref**, and a misleading one

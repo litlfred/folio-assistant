@@ -13,8 +13,7 @@ and contain an indication of their strength and of the quality of the evidence
 on which they are based. Outcomes should generally not be mentioned in 
 the recommendation to avoid the impression that only single outcomes are 
 relevant or were considered.
-The language of each recommendation is critically important. Wherever pos­
-sible, it should be consistent across all recommendations in a guideline, which 
+The language of each recommendation is critically important. Wherever possible, it should be consistent across all recommendations in a guideline, which 
 should be written in the active voice. GRADE recommends using terms or phrases 
 Chapter 10 
 Developing recommendations
@@ -29,9 +28,7 @@ instance, “we recommend against intervention X…” is the preferred wording.
 A recommendation should include a justification as to why it is strong 
 or conditional and why it is for or against a given intervention. It should also 
 contain a set of remarks explaining the conditions and context in which the 
-recommendation applies and the points to bear in mind regarding imple­
-mentation. The quality of the underlying body of evidence (high, moderate, 
+recommendation applies and the points to bear in mind regarding implementation. The quality of the underlying body of evidence (high, moderate, 
 low or very low) should be specified. Each recommendation should be linked 
-to a summary of the evidence (e.g. a published systematic review or the sys­
-tematic review in an online annex), the GRADE evidence profiles and the 
+to a summary of the evidence (e.g. a published systematic review or the systematic review in an online annex), the GRADE evidence profiles and the 
 evidence-to-decision tables.

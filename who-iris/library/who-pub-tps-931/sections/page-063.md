@@ -10,7 +10,7 @@ source_sha256: ecc88eee99756755
 text_source: ocr
 granularity: page
 ---
-WHO Editorial Style Manval
+WHO Editorial Style Manual
 
 associated. A roman prefix may be added: “v-” for viral, “N-” for
 nuclear and “c-” for the gene’s cellular counterpart (proto-oncogene).

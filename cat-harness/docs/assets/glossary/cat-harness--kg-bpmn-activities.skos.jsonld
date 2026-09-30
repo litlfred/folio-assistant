@@ -5766,7 +5766,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has never existed, and is not `proof-triage` (that one triages proofs). Left uncovered until the skill is written. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead."
+          "@value": "See ingest-l1-completeness-gate.bpmn. Skill-backed by `library-ingestion` (2026-09-30, bean 7bg9): its section \"What a complete L1 entry holds\" names `check:l1-complete` as the gate and states its three results. Until then this step named `paper-relevance-triage`, which never existed, and was left uncovered rather than bound to a guess. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead."
         }
       ],
       "skos:notation": "CallActivity_Gate",
@@ -5831,6 +5831,26 @@
       ],
       "skos:notation": "Task_Detect",
       "dcterms:source": "cat-harness/processes/document-ingestion.bpmn#Task_Detect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_ingestion.task_licence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Establish the licence from the upload alone [document-intake]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "EARLY, by the owner's ruling on bean 7bg9 (2026-09-20): before any derivation, because library/ is holds: content and anything derived first is committed, so refusing it later is a deletion nobody may take unasked. This step sees only the upload itself — the licence recorded in its intake.json (the same stated / unknown record a library manifest carries) and whether a LICENSE file sits beside it. It never infers a licence from extracted text. The verdict is stated, unknown, or UNDETERMINED, and undetermined is never reported as cleared: the pipeline proceeds and says so, because a licence that only extraction can reveal is a later check's to find."
+        }
+      ],
+      "skos:notation": "Task_Licence",
+      "dcterms:source": "cat-harness/processes/document-ingestion.bpmn#Task_Licence",
       "skos:note": "candidate"
     },
     {

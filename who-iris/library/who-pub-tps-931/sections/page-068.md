@@ -53,7 +53,7 @@ society:
 
 “Research scientists often neglect their wives and children.”
 
-“Tris a great secret of doctors, known only by their wives ... that most
+“It is a great secret of doctors, known only by their wives ... that most
 things get better by themselves.”
 
 63

@@ -218,7 +218,7 @@ jobs:
           # `/` is not in the permitted class, so the output is always a single
           # segment; the whole hazard is the two spellings refused here.
           case "$SLUG" in
-            ""|.|..)
+            ""|.|..|_retired)
               echo "::error::staging slug resolved to '$SLUG', which names no preview. Refusing."
               exit 1
               ;;
@@ -763,6 +763,7 @@ jobs:
           PR_BODY: ${{ github.event.pull_request.body }}
           # Raw branch name — the slug is sanitised, the branch is not.
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
         shell: bash
         run: |
           PR="${{ github.event.pull_request.number || 'n/a' }}"
@@ -823,6 +824,35 @@ jobs:
             --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --main-site "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
             $MAIN_PAGES_ARG
+
+          # The preview's own record — bean `6pfo`, owner's option A (2026-09-30):
+          # written at DEPLOY time, the only moment that knows the PR and the
+          # issue, onto the publish branch beside the preview, so it lands at
+          # STAGING/<slug>/staging-preview.json. `staging-record.ts` holds the
+          # rules (`schemas/staging-preview.ts`); this is a thin caller.
+          #
+          # The record already published for this preview is copied in FIRST,
+          # from the gh-pages fetch above: `create` keeps its `builtAt` (when
+          # the preview first appeared) and refuses to overwrite a RETIRED
+          # record. If `create` fails — a corrupt record is refused, never
+          # treated as absent — the copied original stays in the site, so the
+          # deploy cannot silently replace it; the failure is an annotation,
+          # not a blocked preview.
+          RECORD=./_site/staging-preview.json
+          git show "FETCH_HEAD:STAGING/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
+            || rm -f "$RECORD"
+          PR_ARG=""
+          if [ "$PR" != "n/a" ]; then PR_ARG="--pr $PR"; fi
+          # shellcheck disable=SC2086  # PR_ARG is a deliberate two-token flag or empty
+          bun run cat-harness/scripts/staging-record.ts create \
+            --out "$RECORD" \
+            --slug "$STAGING_SLUG" \
+            --branch "$STAGING_BRANCH" \
+            --commit "${GITHUB_SHA:0:7}" \
+            $PR_ARG \
+            ${ISSUE:+--issue "$ISSUE"} \
+            --host "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
+            || echo "::error title=staging-preview record::not written for STAGING/${STAGING_SLUG} — see the log above; any published record was kept as it was"
 
       # The branch's KG, published beside the branch's site, so the graph a
       # reviewer inspects is the one this PR produces rather than main's. The
@@ -1076,7 +1106,9 @@ jobs:
           # EVERY open PR's preview. That is `plj1` exactly, and it is worth
           # four lines to make it unreachable rather than merely unlikely.
           case "$STAGING_SLUG" in
-            ""|.|..|*/*)
+            ""|.|..|*/*|_retired)
+              # `_retired` is the retired-record store (bean `6pfo`), not a
+              # preview; deploying over it would replace every retired record.
               echo "::error::staging slug '$STAGING_SLUG' is not one safe path segment. Refusing to deploy."
               exit 1
               ;;
@@ -1325,7 +1357,7 @@ jobs:
           # `git add -A` on the result. See the comment there for the two
           # measured invariants and the one they do not cover.
           case "$SLUG" in
-            ""|.|..)
+            ""|.|..|_retired)
               echo "::error::staging slug resolved to '$SLUG', which names no preview. Refusing."
               exit 1
               ;;
@@ -1370,6 +1402,21 @@ jobs:
         run: |
           SLUG="$STAGING_SLUG"
           if [ -d "pages/STAGING/$SLUG" ]; then
+            # Retire the preview's record BEFORE the preview goes (bean `6pfo`,
+            # piece 2): the record outlives the preview as a RETIRED state in
+            # STAGING/_retired/, never deleted with it. Retiring twice keeps the
+            # first retirement (`staging-record.ts`). A missing live record is
+            # a preview staged before 6pfo — nothing to retire, said so.
+            REC="pages/STAGING/$SLUG/staging-preview.json"
+            if [ -f "$REC" ]; then
+              mkdir -p pages/STAGING/_retired
+              [ -f "pages/STAGING/_retired/$SLUG.json" ] || cp "$REC" "pages/STAGING/_retired/$SLUG.json"
+              bun run source/cat-harness/scripts/staging-record.ts retire \
+                --out "pages/STAGING/_retired/$SLUG.json" --reason "removed on PR #${{ github.event.pull_request.number }} close; confirmed by: $CLEANUP_REASON" \
+                || echo "::error title=staging-preview record::could not retire STAGING/$SLUG — the preview is removed, its record copy kept as it was"
+            else
+              echo "No staging-preview record in STAGING/$SLUG (staged before bean 6pfo) — nothing to retire."
+            fi
             rm -rf "pages/STAGING/$SLUG"
             # ONE COMMIT for the removal and its record, deliberately. A
             # separate log push can fail on its own and leave a preview that
@@ -1406,6 +1453,8 @@ jobs:
             git -C pages config user.name 'github-actions[bot]'
             git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
             git -C pages add -A "STAGING/$SLUG" _render-log
+            # Only when it exists: a pathspec that matches nothing fails `git add`.
+            if [ -d pages/STAGING/_retired ]; then git -C pages add -A STAGING/_retired; fi
             git -C pages commit -m "staging(cleanup): remove STAGING/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
             # Same race as the deploy above, and the same reason a queue is not
             # enough: five other workflows push to `gh-pages` without joining
@@ -1595,7 +1644,7 @@ jobs:
           # `.` and `..` are spelled entirely out of permitted characters and
           # neither names a preview, so they are refused by name.
           case "$SLUG" in
-            ""|.|..)
+            ""|.|..|_retired)
               echo "::error::cleanup_slug must name one STAGING/<slug> directory, not a path."
               exit 1
               ;;
@@ -1663,6 +1712,21 @@ jobs:
           echo "Removing STAGING/$CLEANUP_SLUG"
           du -sh "STAGING/$CLEANUP_SLUG" || true
           find "STAGING/$CLEANUP_SLUG" -type f | wc -l
+          # Retire the preview's record BEFORE the preview goes (bean `6pfo`,
+          # piece 2): the record outlives the preview as a RETIRED state in
+          # STAGING/_retired/, never deleted with it. Retiring twice keeps the
+          # first retirement (`staging-record.ts`). A missing live record is
+          # a preview staged before 6pfo — nothing to retire, said so.
+          REC="STAGING/$CLEANUP_SLUG/staging-preview.json"
+          if [ -f "$REC" ]; then
+            mkdir -p STAGING/_retired
+            [ -f "STAGING/_retired/$CLEANUP_SLUG.json" ] || cp "$REC" "STAGING/_retired/$CLEANUP_SLUG.json"
+            bun run ../source/cat-harness/scripts/staging-record.ts retire \
+              --out "STAGING/_retired/$CLEANUP_SLUG.json" --reason "removed by dispatch from $DISPATCHED_BY" \
+              || echo "::error title=staging-preview record::could not retire STAGING/$CLEANUP_SLUG — the preview is removed, its record copy kept as it was"
+          else
+            echo "No staging-preview record in STAGING/$CLEANUP_SLUG (staged before bean 6pfo) — nothing to retire."
+          fi
           rm -rf -- "STAGING/$CLEANUP_SLUG"
           # The record rides in the SAME commit as the removal, so a preview
           # cannot vanish without an entry saying who dispatched it and why.
@@ -1689,6 +1753,8 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A "STAGING/$CLEANUP_SLUG" _render-log
+          # Only when it exists: a pathspec that matches nothing fails `git add`.
+          if [ -d STAGING/_retired ]; then git add -A STAGING/_retired; fi
           git commit \
             -m "staging(cleanup): remove STAGING/$CLEANUP_SLUG (dispatched)" \
             -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in cat-harness/scripts/staging-cleanup-preflight.ts." \

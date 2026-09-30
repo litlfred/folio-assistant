@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Vocabulary authority — one fact, one home, N renderings
 
-> Skill id: `vocabulary-authority` · Capability: `schema` · Package: `folio-core`
+> Skill id: `vocabulary-authority` · Package: `folio-core`
 
 ## The rule
 
