@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-30T14:13:37Z
-updated_at: 2026-09-30T14:13:37Z
+updated_at: 2026-09-30T14:20:53Z
 parent: folio-assistant-1xhc
 ---
 
@@ -107,3 +107,48 @@ bun test (both test files)   41 pass, 0 fail
 Converting any of the other 62. That is the sweep above, and doing it
 piecemeal while the class is unmeasured is how a count reads as improvement
 while the subject moves — which is `tqv4`, one corpus over.
+
+
+## The denominator, supplied by the census — and `tqv4` has been fixed
+
+`root-scan-census:check` went red on this branch, correctly: making two scripts
+git-aware changes their classification. Regenerating it produced the number the
+open box above asked for, so it no longer has to be guessed.
+
+**On `main`, 2026-09-30:**
+
+```
+root-scan census — 69 enumerating script(s), 14 ask git.
+  scope: bootstrap-tools 0, cat-harness 66, fhir-harness 0,
+         folio-assistant-core 2, large-datasets 0, smart-trust 0, who-iris 1
+         (the rest: no scripts/)
+  seeded AT a root constant: 1; of those, not git-aware: 1
+    · folio-assistant-core/scripts/check-artifact-index.ts
+```
+
+**55 of 69 do not ask git.** That is the class's denominator, and it is a
+FLOOR by the census's own statement — both filters are syntactic, the loose one
+over-counts and the tight one under-counts, and the gap between them is the
+finding rather than either number.
+
+Three are now known to have reached a worktree (eslint via `vpek`, and the two
+fixed here). **Whether any of the other 52 do is still not determined**, and
+`gitAware: false` is not the same question — a script that walks one declared
+directory never reaches `.claude/` and is fine as it is. The question is
+narrower: **which of them walk from a root that contains `.claude/`?**
+
+### Two things this measurement settles that were open elsewhere
+
+**`tqv4` has been fixed, by another session, while this was being written.**
+That bean's whole subject was that `root-scan-census` was instance-scoped, so
+scripts moved up into `folio-assistant-core/` were counted nowhere, and its
+headline family read `0 of 0` while the repository's only instance of the shape
+sat outside the scan. The output above reports **per-instance scope across all
+17**, and the family now names
+`folio-assistant-core/scripts/check-artifact-index.ts` — exactly the file
+`tqv4` measured as invisible. The count also moved 65 → **69**, which is the
+scope widening rather than four new scanners.
+
+**The census is now the right instrument for the sweep**, which it was not when
+this bean was opened: an instance-scoped census could not have answered a
+question about the whole checkout.
