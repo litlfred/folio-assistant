@@ -1,11 +1,11 @@
 ---
 # folio-assistant-v8n5
 title: 'HARNESS THEMING: the who-iris board tile, navbar and stickies render on the IRIS theme, not only its pages'
-status: todo
+status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-30T08:43:50Z
-updated_at: 2026-09-30T08:43:50Z
+updated_at: 2026-09-30T11:02:54Z
 parent: folio-assistant-yg29
 ---
 
@@ -23,3 +23,5 @@ An instance-declared theme has to be resolvable wherever a surface names a theme
 - [ ] A test fails if the surface falls back to the platform default for an instance that declares its own theme
 - [ ] `check:voices`, `iris:pages:check` and the SC 1.4.1 rule from `j66n` (state carried by word as well as colour) still hold
 - [ ] Checked on a rendered build, `preview:site` **plus** the `mount-instance-docs.ts` step (see `yg29` §"A correction worth keeping"), not inferred from generator output
+
+_2026-09-30T11:02:54Z_ — Claimed by claude/magical-archimedes-4qkfxp-v8n5 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
