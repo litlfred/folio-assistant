@@ -753,6 +753,66 @@ export function themeCssVars(theme: ResolvedTheme): string {
 }
 
 /**
+ * A WEBPAGE theme's roles, as the custom properties the docs site already reads.
+ *
+ * Bean `7h3u`, on the owner's 2026-09-30 ruling to wire instance webpage themes
+ * at the PLATFORM layer so every ingested IG gets one, rather than in one
+ * instance's page generator.
+ *
+ * ## Why this is not {@link themeCssVars} with a different prefix
+ *
+ * That function emits `--fa-sticky-*`, and `gen-themes-css.ts` says why in its
+ * own words: *"A `webpage` theme shares the geometry but not this stylesheet:
+ * its CSS is the site's, not the note board's. Adding it here would emit sticky
+ * properties for a surface that has no stickies."* Renaming the prefix would
+ * have produced `--fa-page-surface` and so on — correct-looking, and read by
+ * NOTHING, because the site's stylesheet does not use those names.
+ *
+ * ## The names are chosen by MEASUREMENT, not by symmetry
+ *
+ * `docs-ui.css` carries 33 `var(--x, #literal)` sites, and its own header says
+ * why they are all fallbacks today:
+ *
+ * > just-the-docs is Sass and defines NONE of `--sidebar-color`,
+ * > `--border-color` or `--link-color`, so every one of those resolves to its
+ * > literal fallback, always.
+ *
+ * So those three names are **already read and never defined** — declaring them
+ * is the one intervention that changes what the page paints without touching a
+ * rule. Measured 2026-09-30: `--link-color` 18 sites, `--sidebar-color` 9,
+ * `--border-color` 2.
+ *
+ * | site variable | role | why |
+ * |---|---|---|
+ * | `--sidebar-color` | `accent` | The LHS nav is the surface the owner asked to KEEP on the left while taking WHO's styling, and in the source that chrome is `--navbar-bg-color`. |
+ * | `--link-color` | `accent` | Links carry the brand hue on the IG too. |
+ * | `--border-color` | `edge` | `edge` is documented as *"Border and rule colour"*; this is the site's name for the same thing. |
+ *
+ * `surface` and `ink` are deliberately **not** emitted. The site has no
+ * undefined variable for page background or body text — those are just-the-docs'
+ * compiled Sass — so declaring a name nothing reads would be the
+ * correct-looking-and-inert failure this function exists to avoid. They stay in
+ * the theme, where a later change that DOES make the site consume them can pick
+ * them up.
+ *
+ * ## What this therefore does and does not do
+ *
+ * It rethemes the surfaces **this site owns**. It does not retheme
+ * just-the-docs' own compiled chrome, and no amount of custom properties can
+ * until that Sass is taught to read them — which is the *"106 hardcoded hex
+ * colours against 22 custom properties"* problem this module's own header
+ * records, and a separate job from this one.
+ */
+export function pageThemeCssVars(theme: ResolvedTheme): string {
+  const p = theme.palette;
+  return [
+    `--sidebar-color: ${p.accent};`,
+    `--link-color: ${p.accent};`,
+    `--border-color: ${p.edge};`,
+  ].join("\n  ");
+}
+
+/**
  * The minimal shape of a declared image this module needs.
  *
  * **Structural on purpose, rather than importing `KgImage`.** `theme.ts` imports

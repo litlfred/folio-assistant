@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rqao
 title: 'ACTORS LIVE IN A CLAUDE-SPECIFIC, UNDECLARED DIRECTORY: .claude/skills/actors (and capabilities/, requirements/) → an agent-generic declared graph'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T08:19:40Z
-updated_at: 2026-09-30T19:55:31Z
+updated_at: 2026-09-30T21:58:28Z
 parent: folio-assistant-tr05
 ---
 
@@ -39,3 +39,18 @@ They are not recast as skills: the role model keeps an actor's capabilities (env
 
 ## Owner decision 2026-09-30
 Actors move BESIDE roles.json: cat-harness/scenarios/ (the declared kg directory holding roles.json and stories.json). Capabilities/requirements each decided separately.
+
+## Owner, 2026-09-30 (sharp-einstein session): split .claude/skills/local + conventions BY THEME across harnesses
+- WHO SMART/FHIR (l2-dak-authoring, l3-fhir-authoring, fhir-validation, ig-publication, terminology-management, smart-base-tools) → fhir-harness / smart-base
+- content lifecycle (content-plan/-author/-review/-feedback/-test/-validate/-publish, quality-control, normative-statements) and document (document-authoring/-structure/-publishing) → folio-assistant-core
+- math (latex-authoring, lean-formalization, proof-verification) → folio-assistant-sci
+- bpmn-authoring, dmn-authoring, conventions/ → cat-harness
+- the three .md (two kg stubs + language-trap-agent-audit slash command) stay in .claude/
+Wrong-direction process refs (a lower layer naming a higher layer's skill) are reported as findings, not hidden.
+
+## Done (2026-09-30, sharp-einstein)
+Actors and capabilities moved on main (101d198, 01193660). This change finishes the last box — .claude/ keeps only Claude-specific content:
+- 23 JSON SkillDefinitions split by theme into each owner's skills/skill-definitions/ (smart-base 2, fhir-harness 4, folio-assistant-core 12, folio-assistant-sci 3, cat-harness 2); smart-base and folio-assistant-sci declare the new directory.
+- conventions/ → cat-harness/skills/conventions/.
+- schemas/skill-definitions-dir.ts: skillDefinitionDirs(), conventionsDir(); readers: generate-registry, validate-skills, kg-audit (local skills + conventions), fsh-guts generate-docs, conventions.test; known-skills NON_SKILL_GROUPS += skill-definitions.
+- Left in .claude/skills/: hooks/, interaction-modality/ (stub), local/*.md (two kg stubs + the language-trap-agent-audit slash command).
