@@ -6,12 +6,11 @@ description: >-
   share, why the adjudication LEADS the criterion while the checker's entry is
   kept beneath it, and the dispensation that records the reason — scoped to a
   version, never precedent.
-capability: review
 ---
 
 # Adjudication — judgement, when the mechanism ran out of facts
 
-> Skill id: `adjudication` · Capability: `review` · Package: `folio-core`
+> Skill id: `adjudication` · Package: `folio-core`
 
 ## Why this exists
 

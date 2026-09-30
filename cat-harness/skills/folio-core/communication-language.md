@@ -6,7 +6,6 @@ description: >-
   a model's own languages are never the answer, the boundary between speaking
   to the person and writing durable artefacts, where the determination is
   recorded so a sibling session does not re-ask, and when to re-ask.
-capability: interaction
 ---
 
 # The language you communicate in

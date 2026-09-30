@@ -5,12 +5,11 @@ description: >-
   Lean proof's dependencies, a detangle partition) so the picture is derived,
   checkable and readable. Ten rules learned on the UML overview, which engine
   to lay a graph out with and why, and how each graph kind here applies them.
-capability: architecture
 ---
 
 # Graph rendering: one set of rules for every drawn graph
 
-> Skill id: `graph-rendering` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `graph-rendering` · Package: `graph-management`
 
 This repository draws graphs in at least six places, and until this skill each
 one followed its own conventions. Owner, 2026-09-23 (issue #1137): *"make

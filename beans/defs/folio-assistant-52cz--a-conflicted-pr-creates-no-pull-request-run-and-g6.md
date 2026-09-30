@@ -1,0 +1,84 @@
+---
+# folio-assistant-52cz
+title: A CONFLICTED PR CREATES NO pull_request RUN, and g62s's headUnjudged cannot see it — the one absent-run case that needs no glob evaluation
+status: todo
+type: task
+created_at: 2026-09-30T14:07:18Z
+parent: folio-assistant-1xhc
+updated_at: 2026-09-30T14:07:18Z
+---
+
+## The incident, measured
+
+PR #1589, 2026-09-30. `Repository gates (hard)` failed on `86e403cdfdd`. I
+fixed the cause (`readme:subgraphs`, two stale directory READMEs), pushed twice,
+and **no `Code-quality gates` run was ever created for either new head.** The
+PR went on showing a red from a superseded commit.
+
+The cause was not the queue and not a path filter. The PR was
+**`mergeable_state: "dirty"`**, and GitHub creates no `pull_request` workflow
+run for a conflicted PR, because there is no merge commit to test. Merging main
+and pushing produced run `36726432307` within seconds — which is the
+falsification: the conflict was the only thing suppressing run creation.
+
+**Two signals actively read as fine while this held:**
+
+1. Nine `Code-quality gates` runs were `in_progress` for SIBLING branches in
+   the same two minutes, so the workflow was plainly firing — just not here.
+2. The harness `check_suite.completed` notice said *"No third-party check suite
+   on the PR's head_sha is still running or failed."* That is **true**, and it
+   reads like green. **Absence of a run and success of a run are not
+   distinguishable from it.**
+
+## Why `g62s` cannot catch it, and why this case is the cheap one
+
+Bean `g62s` built exactly this detector — `headUnjudged`, *"no run for the head
+was ever created"* — and recorded it as **inert here**: of 36 workflows,
+`pushTriggerOf` returns `true` for **0**, and the four `undefined` (filtered)
+ones include `code-quality-gates.yml`. It then declined the "third thing",
+evaluating `paths` / `paths-ignore` globs against the head commit's files,
+as a scope decision for the owner rather than an afternoon — because getting
+glob semantics subtly wrong reintroduces the false fires the design refuses.
+That reasoning is sound and this bean does not reopen it.
+
+**But this case is a different mechanism and needs none of it.** `g62s`
+reasoned about **push** triggers and their path filters. The trigger that
+produced no run here is `pull_request`, declared with **no `paths:` filter at
+all** — its own `on:` block says so, and says why: *"The TypeScript job is the
+gate for the whole repo, and a filter is how a gate stops covering the file that
+broke it."*
+
+So for a pull request there is nothing to evaluate. One fact already in hand
+explains the absent run completely:
+
+> `mergeable_state == "dirty"` ⇒ no `pull_request` run will be created for this
+> head, and the newest run's conclusion describes a commit nobody is testing.
+
+That is the same field bean `h2s9` is already about — it reads `unknown` as
+"could not be read" when it means "not computed yet". `dirty` is the third
+value, and it is not ambiguous.
+
+## Done when
+
+1. A PR whose `mergeable_state` is `dirty` is reported as **conflicted, CI not
+   running** rather than as its newest run's conclusion. Distinct from `unknown`
+   (not computed — `h2s9`) and from red.
+2. `headUnjudged`, or whatever reports it, distinguishes three absent-run causes
+   rather than one silence: a filtered trigger that owed no run (`g62s`'s
+   conservative case, still silent), a conflicted PR (this bean, decidable), and
+   a run that was never created for an unknown reason (a finding).
+3. Falsified before shipping: a PR made conflicted is reported as conflicted and
+   NOT as green; the same PR resolved is reported on its real run. Plant, fire,
+   restore, pass.
+4. The `check_suite.completed` reading — that "no suite failed" over zero suites
+   is not a pass — is written down wherever an agent is told how to read PR
+   events. **Prompted, not written unasked**: this bean records the finding, and
+   whether it becomes corpus guidance is the owner's call
+   (`surprise-to-corpus`).
+
+## What this does NOT claim
+
+That `g62s` was wrong, or that its inertness is a defect to fix by loosening
+`pushTriggerOf`. Its own measurement shows loosening produces a false fire on
+`jsonld-gen-check.yml`. The claim is narrower: **one absent-run cause is exactly
+decidable today**, and it is the one that cost a real PR two wasted pushes.

@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Domain fencing — keeping one folio's rules out of everybody's platform
 
-> Skill id: `domain-fencing` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `domain-fencing` · Package: `graph-management`
 
 Detangling a repository and detangling a *rule set* are the same practice. A
 platform accumulates rules that were true of one folio, and they are harder to

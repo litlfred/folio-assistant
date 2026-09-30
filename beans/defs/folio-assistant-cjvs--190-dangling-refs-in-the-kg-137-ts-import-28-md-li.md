@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-09-30T11:10:02Z
+updated_at: 2026-09-30T13:58:20Z
 parent: folio-assistant-vke6
 ---
 
@@ -55,12 +55,12 @@ ref:  ../../methodologies/dmn.md
 
 ## Done when
 
-- [ ] The 137 `ts-import` entries are split into scanner limitation vs genuinely
+- [x] The 137 `ts-import` entries are split into scanner limitation vs genuinely
       unresolvable — the first is a fix to the scanner, the second to the code,
       and reporting them as one number hides which.
 - [x] `kg:detangle` says whether its wrong-direction count is over all edges or
       only the resolving ones. Today a reader cannot tell.
-- [ ] The 28 `md-link` and 25 `bpmn-skill` entries are each fixed or recorded
+- [x] The 28 `md-link` and 25 `bpmn-skill` entries are each fixed or recorded
       with a reason.
 
 ## Not claimed
@@ -214,10 +214,10 @@ into it.
       only the resolving ones. **It is over the resolving ones**, and
       `kg:detangle:direction` states the excluded dangling total with its
       per-extractor breakdown before it states its count. (#1580)
-- [ ] The 28 `md-link` and 25 `bpmn-skill` entries are each fixed or recorded
-      with a reason. Untouched by either PR, and neither says anything about
-      them — they may be the genuine rot the `ts-import` bucket turned out not
-      to be.
+- [x] The 28 `md-link` and 25 `bpmn-skill` entries are each fixed or recorded
+      with a reason. **Answer: 0 broken** — 22 are same-instance targets outside
+      `SCAN`, and 29 run from cat-harness to an instance that depends on it,
+      held for the owner. See "Box 3 answered" below. (#1606)
 
 ### One number to reconcile, recorded rather than smoothed
 
@@ -226,3 +226,35 @@ body, from the same run. Neither this triage nor that PR depends on which is
 right — both use the *dangling* counts, which agree — but a measurement that
 appears twice with two values is exactly the thing this bean exists to
 distrust, so it is written down rather than quietly picked.
+
+## Box 3 answered, 2026-09-30 — 0 broken; 29 point the WRONG direction across instances
+
+Measured on main @ 12052fb8adf with `bun run kg:detangle --json` (read-only: the tree was clean after). Counts now: ts-import 149, md-link 28, bpmn-skill 25.
+
+**No md-link and no bpmn-skill entry is broken.** Every one names a file that exists. They dangle because the target is outside `SCAN` (kg-detangle.ts:79). They split into two buckets with opposite meanings:
+
+| bucket | count | entries | verdict |
+|---|---|---|---|
+| same instance, target outside SCAN | 22 md-link | cat-harness skills → `cat-harness/methodologies/` (8), `docs/` (6), `content/docs/` (2); root `AGENTS.md` (3), root `memory/` (1); bootstrap skills → `bootstrap/README.md`, `bootstrap/AGENTS.md` (3) | **recorded, not a defect.** Scope, not rot. |
+| **cross-instance, platform → a DEPENDENT** | **4 md-link + 25 bpmn-skill** | see below | **wrong direction, held for the owner** |
+
+The cross-instance entries all run from **cat-harness**, which declares only `bootstrap` as a dependency, to instances that sit ABOVE it (`large-datasets` and `fhir-harness` each need `folio-assistant-core`):
+
+- **25 bpmn-skill**: four cat-harness processes invoke skills that live only in `large-datasets/skills/`:
+  - `copy-out-materialized.bpmn` (5) → `copy-out-materialized`
+  - `materialize-remote.bpmn` (10) → `materialize-remote`
+  - `refresh-materialized.bpmn` (8) → `materialize-remote`
+  - `sample-import.bpmn` (2) → `materialize-remote`
+
+  A cat-harness checkout without large-datasets carries four processes whose every activity points at a skill it cannot load.
+- **4 md-link**:
+  - `dak-preprocessing.md` → `fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md`
+  - `smart-stack-layering.md` → `fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md`
+  - `sample-import.md` → `large-datasets/skills/materialize-remote.md`
+  - `todo-review.md` → `large-datasets/skills/copy-out-materialized.md`
+
+**Why no count caught them:** `bpmn-skill` has authority `recorded`, not `enforced` (kg-detangle.ts:246). And the edges never became edges at all, because their targets are outside SCAN. So the wrong-direction count is 0 among edges that were never built. This is the same exposure the ts-import triage above named, and it is **realised** here, not hypothetical.
+
+**Not fixed here**, because the obvious fix is a split decision: move the four processes into `large-datasets`, which then needs a declared `processes` directory that the workflow engine and `kg:audit` load. Put to the owner 2026-09-30.
+
+**Box 3:** every md-link and bpmn-skill entry is recorded with a reason. The wrong-direction 29 wait on the owner's ruling.

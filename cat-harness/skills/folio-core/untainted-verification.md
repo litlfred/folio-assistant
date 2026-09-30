@@ -5,12 +5,11 @@ description: >-
   checker and an adjudicator are dispatched with controlled context, the three
   rules that make it a measurement rather than a ritual, and the third state
   that lets it gate at all.
-capability: quality-assurance
 ---
 
 # Untainted verification — the producer never writes the verdict
 
-> Skill id: `untainted-verification` · Capability: `quality-assurance` · Package: `folio-core`
+> Skill id: `untainted-verification` · Package: `folio-core`
 
 A secret scan, a schema validation, a back-translation and a systematic
 literature search differ in what they read and in what counts as a finding.

@@ -5,14 +5,13 @@ description: >-
   extraction and injection, TranslationNode manifests as KG nodes,
   official vs unofficial translations, staleness tracking, sign-off workflow,
   automatic badge rendering, and the poSources fallback resolution chain.
-capability: translation
 graph-kinds:
   - translation-sources
 ---
 
 # Translation manager
 
-> Skill id: `translation-manager` · Capability: `translation` · Package:
+> Skill id: `translation-manager` · Package:
 > `folio-core`
 
 Manage the translation lifecycle for folio content. This skill covers the full

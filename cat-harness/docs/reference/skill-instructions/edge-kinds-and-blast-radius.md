@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Edge kinds and blast radius
 
-> Skill id: `edge-kinds-and-blast-radius` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `edge-kinds-and-blast-radius` · Package: `graph-management`
 
 These rules were first written for a formal-mathematics corpus — Lean
 declarations, propositions, proof terms. Each one below is the domain-free form,

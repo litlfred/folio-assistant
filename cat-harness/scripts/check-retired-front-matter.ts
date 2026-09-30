@@ -107,6 +107,16 @@ export const RETIRED: Retired[] = [
       "package membership is the directory and the package manifest, and " +
       "`skill:register:check` already holds those two to agreement (#1168 B8).",
   },
+  {
+    key: "capability",
+    scope: "skill markdown",
+    record: "retired/skill-capability-front-matter.md",
+    because:
+      "19 topic tags, read by nothing, and none of the seven values a Capability id — so " +
+      "renaming it `requiresCapability` would have been false. A skill's placement is the " +
+      "roles that carry it (`Role.skills`) and its package; a real Capability goes in the " +
+      "package's `requiresCapabilities` (#1168 B9d).",
+  },
 ];
 
 /**

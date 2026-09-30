@@ -5,12 +5,11 @@ description: >-
   the appraising party from the drafting party, what recurring surveillance in
   a living guideline shares with a stale QA verdict, and which of guideline
   methodology's rules are fenced rather than shipped.
-capability: quality-assurance
 ---
 
 # Evidence review — the same rule, a second instance
 
-> Skill id: `evidence-review` · Capability: `quality-assurance` · Package: `folio-core`
+> Skill id: `evidence-review` · Package: `folio-core`
 
 This skill exists to demonstrate a claim rather than to assert it.
 [`untainted-verification`](untainted-verification.md) states a discipline and
