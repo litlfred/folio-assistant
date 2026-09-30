@@ -87,14 +87,16 @@ describe("tag shapes", () => {
     expect(t.identities).toHaveLength(2);
   });
 
-  test("references point at any node kind, including unregistered ones", () => {
-    // The kind vocabulary is an open registry; a closed enum here would refuse
-    // a reference to a kind a downstream instance added.
+  test("references point at a declared node kind, and an undeclared one is refused", () => {
+    // Closed since #1168 B9c (owner, 2026-09-30: "Enum anyway"): a typo in
+    // `kind` used to parse and name nothing. The cost — a downstream kind must
+    // be added to KG_NODE_KINDS first — is taken deliberately.
     const t = TodoTagsSchema.parse({
-      references: [{ kind: "skill", id: "todo-review" }, { kind: "some-future-kind", id: "x", note: "why" }],
+      references: [{ kind: "skill", id: "todo-review" }, { kind: "bean", id: "x", note: "why" }],
     });
     expect(t.references).toHaveLength(2);
     expect(t.references[1].note).toBe("why");
+    expect(TodoTagsSchema.safeParse({ references: [{ kind: "some-future-kind", id: "x" }] }).success).toBe(false);
   });
 
   test("a todo file declares what it is", () => {

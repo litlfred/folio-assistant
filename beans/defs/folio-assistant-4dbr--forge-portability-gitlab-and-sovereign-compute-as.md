@@ -3,9 +3,10 @@
 title: 'Forge portability: GitLab and sovereign-compute as additional Tool nodes, not a sixth repo'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-18T18:46:11Z
-updated_at: 2026-09-18T18:46:11Z
-parent: folio-assistant-vke6
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-5a3l
 ---
 
 
@@ -69,3 +70,6 @@ be installed). Both are already decided and recorded; neither is exercised.
 
 **Not urgent.** Nothing is broken. This is a portability claim the repo now
 makes in its architecture documentation and has not yet tested.
+
+
+_2026-09-29_ — **Re-parented `vke6` → `5a3l`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Forge portability (GitLab, sovereign compute) is a deployment topology; the bean itself rejects the sixth-repo reading that put it under SPLIT.

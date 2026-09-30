@@ -231,6 +231,18 @@ export const RULES: Rule[] = [
       // re-run to prove the registration still resolves without it rather
       // than assumed to.
       "scripts/check-image-roles.ts",
+      // HARNESS on the same argument as `check-image-roles` above: its two
+      // subjects are this repository's own `<instance>.json` declarations and
+      // its own client (`docs/assets/js/docs-ui.js`). It opens no folio
+      // content — the declarations it reads are the harness's, and the glyph
+      // registries it compares are the harness's own furniture.
+      "scripts/check-navbar-consistency.ts",
+      // HARNESS for the same reason: it asks the runtime's own question
+      // through `schemas/theme-by-ref.ts` over this repository's declared
+      // instances. The THEMES it loads are an instance's subject matter,
+      // but this script reads no folio content — it validates a graph
+      // against a schema the harness owns.
+      "scripts/check-instance-themes.ts",
       // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
       // LEAF so `state-visualizer.ts` can be a call site without importing
       // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one
@@ -1160,6 +1172,14 @@ export const RULES: Rule[] = [
       // it complements rather than duplicates — that one judges the nodes it
       // covers, this one measures what is covered at all.
       "scripts/audit-coverage.ts",
+      // LSI over the declared prose graphs, and the epic-filing proposal it
+      // drives (bean `ansc`). Harness for the same reason as the audit: its
+      // subjects are the declarations and the work plan, and the engine it
+      // imports (`content/pipeline/lsi.ts`) is linear algebra over any text.
+      "scripts/lsi.ts",
+      "scripts/lsi-epics.ts",
+      "scripts/gen-lsi-viz.ts",
+      "scripts/check-soft-hyphens.ts",
       // The four state/context graphs nothing judged (bean `h1wq`). Harness for
       // the same reason as the two above: its subjects are the harness's own
       // bookkeeping — the health report, the work plan, interaction preferences,
@@ -1676,6 +1696,9 @@ export const RULES: Rule[] = [
       // by location as well as by rule.
       "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/render-order.ts", "src/tools/translation.ts",
       "src/tools/preview.ts", "src/qa-agent-write.ts",
+      // `lsi_query` (bean `ansc`): registered beside the README and render
+      // tools as a generic MCP tool, for the same reason — no block kind.
+      "src/tools/lsi-query.ts",
       // `scripts/check-voices.ts` STOOD HERE and is GONE as of bean `yj6r`,
       // 2026-09-30: it now lives in `folio-assistant-core/scripts/` beside the
       // `schemas/library-ref.ts` it resolves citations through, so the

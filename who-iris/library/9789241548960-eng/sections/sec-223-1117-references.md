@@ -9,12 +9,10 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 1.	
-Khangura S, Konnyu K, Cushman R, Grimshaw J, Moher D. Evidence summaries: the evolu­
-tion of a rapid review approach. Syst Rev. 2012;1(1):10.
+Khangura S, Konnyu K, Cushman R, Grimshaw J, Moher D. Evidence summaries: the evolution of a rapid review approach. Syst Rev. 2012;1(1):10.
 2.	
 Watt A, Cameron A, Sturm L, Lathlean T, Babidge W, Blamey S, et al. Rapid reviews versus 
-full systematic reviews: an inventory of current methods and practice in health technol­
-ogy assessment. Int J Technol Assess Health Care. 2008;24(2):133–9. doi: http://dx.doi.
+full systematic reviews: an inventory of current methods and practice in health technology assessment. Int J Technol Assess Health Care. 2008;24(2):133–9. doi: http://dx.doi.
 org/10.1017/S0266462308080185 PMID: 18400114
 3.	
 Ganann R, Ciliska D, Thomas H. Expediting systematic reviews: methods and implications 
@@ -33,8 +31,7 @@ Emergency Response Framework (ERF). Geneva: World Health Organization; 2013. (ht
 www.who.int/hac/about/erf/en/, accessed 12 November 2014).
 7.	
 Personal protective equipment in the context of filovirus disease outbreak. [Rapid 
-advice guideline]. Geneva: World Health Organization; 2014 (http://apps.who.int/iris/bit­
-stream/10665/137410/1/WHO_EVD_Guidance_PPE_14.1_eng.pdf?ua=1&ua=1, accessed 25 
+advice guideline]. Geneva: World Health Organization; 2014 (http://apps.who.int/iris/bitstream/10665/137410/1/WHO_EVD_Guidance_PPE_14.1_eng.pdf?ua=1&ua=1, accessed 25 
 November 20140.
 8.	
 Moher D, Liberati A, Tetzlaff J, Altman DG; The PRISMA Group. Preferred Reporting 

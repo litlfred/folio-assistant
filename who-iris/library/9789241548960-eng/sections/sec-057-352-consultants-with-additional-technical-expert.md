@@ -8,8 +8,7 @@ pages: 45-45
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-Additional commissioned experts are sometimes involved in the develop­
-ment of a guideline. These individuals have expertise in other essential areas, 
+Additional commissioned experts are sometimes involved in the development of a guideline. These individuals have expertise in other essential areas, 
 such as decision analysis (modelling), economics or epidemiology. They 
 may play a variety of roles in the guideline development process and may be 
 invited to attend and present at GDG meetings. They do not contribute to the 

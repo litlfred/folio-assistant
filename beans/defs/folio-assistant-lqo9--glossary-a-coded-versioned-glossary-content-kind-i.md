@@ -1,13 +1,13 @@
 ---
 # folio-assistant-lqo9
 title: 'GLOSSARY: a coded, versioned glossary content kind in core, a defined-terms index in docs/ from every KG asset, translatable — roast first'
-status: todo
+status: completed
 type: feature
 priority: normal
 tags:
     - roast
 created_at: 2026-09-20T18:03:45Z
-updated_at: 2026-09-29T20:03:11Z
+updated_at: 2026-09-30T12:41:47Z
 parent: folio-assistant-0lmb
 ---
 
@@ -256,7 +256,7 @@ one quarter of it. Recorded there.
 - [x] `glossary` exists as a content kind in core with optional `notation` and scheme-level version fields, validated by schema — **named something other than `GlossaryEntry`**, which is taken twice (2026-09-23: `folio-glossary/v1`, `Term`/`Glossary` in `folio-assistant-core/schemas/glossary.ts`; the harness's kind renamed `swimlane-glossary`)
 - [x] The docs/ rendering carries a defined-terms index built from KG assets, with extracted-vs-authored distinguished (2026-09-24, piece 1 as posed: 2,421 `candidate` terms from skills, Tools, BPMN activities, DMN decisions and schema fields, shown apart from the 7 authored ones; see "PIECE 1 AS POSED SHIPPED" below)
 - [x] Labels and definitions are extracted to `.pot` like BPMN labels (2026-09-24, owner: *"Authored terms only"*: 14 msgids from the 7 authored terms, one template per locale under `translations/<locale>/glossary/`, gated by `glossary:pot:check`; see "TRANSLATION AND RULING 2 SHIPPED" below)
-- [ ] ... and render per locale (next step: needs the glossary page to read the `.po`, which is a change to `glossary-page.ts`)
+- [x] ... and render per locale (2026-09-30, child bean `c592`: `glossary-page.ts` reads each locale's `.po`, writes `docs/<locale>/glossary/index.md` for ar/es/fr/ru/zh with the page chrome translated through `glossary-page.po`, and emits multilingual SKOS labels; drafted translations marked UNOFFICIAL, `translation:drift` passes)
 - [x] Ruling 2: the paper `build-glossary.ts` converges on SKOS (2026-09-24, owner: *"Converge on SKOS"*): it writes a `folio-glossary/v1` scheme into the paper instance's glossary directory, and the page picks it up through `collect()`
 - [x] The standards choice above is recorded as a decision (or overturned with reasons) — and either way `skos:` stops being a bound prefix that nothing emits (SKOS adopted; slice 1 took it 0 → 135, slice 2 adds 48 more concepts)
 
@@ -896,3 +896,8 @@ sub-instance, and scheme IRIs are unique across instances.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+
+## Closed 2026-09-30 — every Done-when item ticked
+The last one, per-locale rendering, landed as child `c592` on branch claude/brave-hawking-511rrx (PR #1483). Its other two children (`ftu0`, `x5o1`) are completed too, which is what `check:bean-rollup` flagged: a `todo` over three closed children. Open follow-up outside this bean: `c1lo` (translated pages render `<html lang="en-US">`, no `dir="rtl"`).

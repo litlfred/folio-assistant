@@ -106,12 +106,29 @@ export const ExternalIdentitySchema = z.object({
 export type ExternalIdentity = z.infer<typeof ExternalIdentitySchema>;
 
 /**
+ * The node kinds a {@link KgRef} may name: every kind the exported graph mints
+ * an IRI for (`kg-export.ts`'s `makeIri(doc, "<kind>", …)` — a test holds the
+ * two in step), plus the nodes the harness holds outside that export — among
+ * them `agent`, the subagent a memory entry is scoped to.
+ *
+ * CLOSED, by the owner's decision (2026-09-30, #1168 B9c: "Enum anyway"),
+ * weighed against the cost this doc used to name: a downstream instance that
+ * adds a node kind cannot reference it until the kind is added HERE. That is
+ * the price of `skil` failing to parse, and it is paid deliberately — the
+ * platform, not the folio, is where a node kind is declared.
+ */
+export const KG_NODE_KINDS = [
+  "agent", "asset", "bean", "block", "capability", "decision", "directory", "package",
+  "process", "requirement", "role", "schema", "skill", "todo", "tool",
+  "user-story", "voice",
+] as const;
+export type KgNodeKind = (typeof KG_NODE_KINDS)[number];
+
+/**
  * A reference to any other node of the knowledge graph.
  *
- * `kind` is a string rather than an enum because graph kinds are an open
- * registry, and a closed list here would refuse a reference to a kind a
- * downstream instance added — the one thing a general-purpose reference must
- * not do.
+ * `kind` is one of {@link KG_NODE_KINDS}. It was an open string until #1168
+ * B9c, so a typo (`skil`) parsed and named nothing.
  *
  * It is deliberately NOT a place to re-express a tag. A `references` entry
  * naming a role says "see also"; the `roles` tag says "this is outstanding in
@@ -119,7 +136,7 @@ export type ExternalIdentity = z.infer<typeof ExternalIdentitySchema>;
  */
 export const KgRefSchema = z.object({
   /** The node kind — `skill`, `requirement`, `block`, `process`, … */
-  kind: z.string().min(1),
+  kind: z.enum(KG_NODE_KINDS),
   /** The node's id within that kind. */
   id: z.string().min(1),
   /** Why it is referenced, when that is not obvious from the pair. */

@@ -13,7 +13,7 @@ package "smart-base/voices" as pkg_smart_base_voices <<voices>> {
     title [1] : string
     instance [0..1] : string
     libraryId [0..1] : string
-    kgRef [0..1] : string
+    path [0..1] : string
     url [0..1] : string<uri>
     year [0..1] : integer
   }

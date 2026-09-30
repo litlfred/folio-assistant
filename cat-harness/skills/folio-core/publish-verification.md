@@ -5,7 +5,6 @@ description: >-
   publication manager whenever any step after the publish button fails —
   the verifier set, how to add a verifier, what is in scope, and how the
   publication manager triages the one alert.
-capability: review
 ---
 
 # Publish verification, and the one alert

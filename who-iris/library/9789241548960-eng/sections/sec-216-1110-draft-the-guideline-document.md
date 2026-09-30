@@ -8,9 +8,7 @@ pages: 164-164
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-The process and resources needed to draft the final rapid advice guideline doc­
-ument are essentially the same as for standard guidelines. The writer should 
-be identified early and in most situations this will be the responsible techni­
-cal officer or other member(s) of the steering group. If an external contractor 
+The process and resources needed to draft the final rapid advice guideline document are essentially the same as for standard guidelines. The writer should 
+be identified early and in most situations this will be the responsible technical officer or other member(s) of the steering group. If an external contractor 
 is used, he or she should be identified near the beginning of the guideline 
 development process and they must be involved in all stages of the process.

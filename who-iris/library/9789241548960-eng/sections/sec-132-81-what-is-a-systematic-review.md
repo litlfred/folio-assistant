@@ -13,8 +13,7 @@ systematic and explicit methods to identify, select, and critically appraise
 relevant research, and to extract and analyse data from the studies that are 
 included in the review” (1). If conducted properly, systematic reviews reduce 
 the risk of bias and improve the reliability and accuracy of conclusions based 
-on evidence. Systematic reviews should underpin all WHO recommenda­
-tions on the efficacy, effectiveness, and harms of interventions; the use of 
+on evidence. Systematic reviews should underpin all WHO recommendations on the efficacy, effectiveness, and harms of interventions; the use of 
 diagnostic tests; exposure limits or safety thresholds for various substances; 
 and all other topics for which WHO issues recommendations.
 The characteristics of a systematic review are:
@@ -25,8 +24,7 @@ explicit, transparent and reproducible methods;
 ■■
 pre-defined eligibility criteria for included studies;
 ■■
-a comprehensive and systematic search for all studies that meet eligi­
-bility criteria;
+a comprehensive and systematic search for all studies that meet eligibility criteria;
 ■■
 an assessment of the risk of bias of the included studies;
 ■■

@@ -8,8 +8,7 @@ pages: 148-148
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-Guidelines are indicated when there is uncertainty about what to do in a spe­
-cific situation. Rapid advice guidelines are no different. WHO staff may be 
+Guidelines are indicated when there is uncertainty about what to do in a specific situation. Rapid advice guidelines are no different. WHO staff may be 
 uncertain about what advice to provide, or there may be uncertainty in the 
 field, with different players having different viewpoints and approaches. The 
 question here is how quickly the uncertainty needs to be addressed.

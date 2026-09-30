@@ -26,14 +26,12 @@ sources of bias) in the analysis of a rigorous observational study is likely
 to have resulted in an underestimate of an apparent treatment effect or an 
 overestimate of the effect, if no effect was observed. In such situations, the 
 quality of the evidence for the relevant outcome can be upgraded by one 
-level. For example, if only sicker patients receive an experimental interven­
-tion or exposure, yet they still fare better, the actual effect of the intervention 
+level. For example, if only sicker patients receive an experimental intervention or exposure, yet they still fare better, the actual effect of the intervention 
 or exposure is likely to be even greater than the data suggest.
 9.5.2.3 Magnitude of the effect
 When a body of evidence from observational studies yields large or very 
 large, precise and consistent estimates of the magnitude of a treatment or 
-exposure effect, one can have greater confidence in the results. In such situ­
-ations, the observational study design is unlikely to explain the apparent 
+exposure effect, one can have greater confidence in the results. In such situations, the observational study design is unlikely to explain the apparent 
 benefit or harm in its entirety. The larger the magnitude of an effect, the 
 stronger the evidence becomes.
 Decisions to upgrade the quality of the evidence because of large or very 
@@ -43,8 +41,7 @@ one should rarely upgrade the quality of the evidence on the basis of a large
 effect when the confidence interval overlaps substantially with effects below 
 WHO handbook for guideline development
 120
-the threshold of clinical importance. One is more likely to upgrade the qual­
-ity of the evidence because of a large or very large effect when:
+the threshold of clinical importance. One is more likely to upgrade the quality of the evidence because of a large or very large effect when:
 ■■
 the effect is rapid;
 ■■
@@ -54,8 +51,6 @@ the previous trajectory over time of an outcome is reversed; or
 ■■
 the large magnitude of an effect is supported by indirect evidence.
 The final assessment of the quality of the evidence for each outcome is 
-determined by considering how the three factors covered in this section con­
-tribute to the overall certainty of the effect estimate (Fig. 9.1). A body of evi­
-dence from observational studies for which no reason to downgrade exists 
+determined by considering how the three factors covered in this section contribute to the overall certainty of the effect estimate (Fig. 9.1). A body of evidence from observational studies for which no reason to downgrade exists 
 can be upgraded by one or two levels, depending on the overall assessment 
 of the other factors described above.

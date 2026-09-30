@@ -1,10 +1,11 @@
 ---
 # folio-assistant-zmm2
 title: 'B9d (#1168): rename voice source kgRef → path, skill front matter capability: → requiresCapability'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-30T10:54:25Z
-updated_at: 2026-09-30T12:51:45Z
+updated_at: 2026-09-30T14:29:18Z
 parent: folio-assistant-tr05
 ---
 
@@ -14,4 +15,14 @@ Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); 
 - [ ] both renamed across the corpus, readers updated
 - [ ] old names recorded as retired and rejected
 
-_2026-09-30T12:51:45Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## 2026-09-30 progress
+- [x] voice source kgRef → path (37 voice files, schema, readers, tests). An old kgRef now fails the exactly-one refinement.
+- [ ] skill front matter capability: — BLOCKED on owner. Its values (review, architecture, quality-assurance…) are categories, not Capability ids, and nothing reads it; requiresCapability would assert something false. Options: retire (B8a precedent), rename to e.g. area, keep.
+
+
+
+## Done
+- kgRef → path: #1593.
+- capability: RETIRED (owner 2026-09-30, after the deeper analysis) rather than renamed: record fsh-guts/retired/skill-capability-front-matter.md; 5 role-less skills added to roles; smart-base became requiresCapabilities.
