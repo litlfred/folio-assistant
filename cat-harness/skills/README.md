@@ -12,7 +12,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`authoring-who-smart-guidelines/`](authoring-who-smart-guidelines/) | 15 files | |
 | [`content-lifecycle/`](content-lifecycle/) | 11 files | |
 | [`crdm/`](crdm/) | 7 files | |
-| [`folio-core/`](folio-core/) | 127 files | |
+| [`folio-core/`](folio-core/) | 109 files | |
 | [`folio-document-adapter/`](folio-document-adapter/) | 6 files | |
 | [`folio-paper-adapter/`](folio-paper-adapter/) | 66 files | |
 | [`framework/`](framework/) | 1 file | |
@@ -27,6 +27,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`scientific-visualization/`](scientific-visualization/) | 21 files | |
 | [`security/`](security/) | 4 files | |
 | [`spec-kit/`](spec-kit/) | 2 files | |
-| [`theming/`](theming/) | 9 files | |
+| [`ui/`](ui/) | 28 files | |
 | [`workflow/`](workflow/) | 14 files | |
 <!-- kg:subgraph:end -->

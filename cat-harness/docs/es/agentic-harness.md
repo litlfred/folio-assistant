@@ -401,7 +401,7 @@ con sus fuentes autorizadas.
 | Autoría de contenido (paper) | habilidades authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
 | Autoría de contenido (document) | habilidades folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
 | Ciclo de vida de contenido | habilidades content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
-| Ingesta de documentos | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
+| Ingesta de documentos | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Despacho y coordinación | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Tipos de contenido y adaptadores | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
 | Autoría de diagramas BPMN | habilidad `bpmn-authoring` | [`skills/folio-core/`](../../skills/folio-core/) |

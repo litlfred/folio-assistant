@@ -353,7 +353,7 @@ jobs:
       # type for `.jsonld` and serves it as octet-stream; `.json` is the only
       # way to get a correct `Content-Type` out of this host at all. The
       # `.jsonld` stays canonical — it is what every `@id` names — so this is
-      # an alias, not a rename. See `skills/folio-core/serving-renderings.md`.
+      # an alias, not a rename. See `skills/ui/ui-core/serving-renderings.md`.
       #
       # No --base-url: the declaration's canonicalUrl is correct for main,
       # and a foreign instance declaring none falls back to it — see

@@ -307,7 +307,7 @@ Owner, same day: **"not the WHOLE thing"**, and *"what's defined in that KG
 harness"*. So the diagram draws the page's scope narrowed by the **module
 filter**, and above `DIA_MAX` (40) declarations it **refuses and says how to
 get a picture** — pick a module. Drawing 812 labelled boxes is exactly the
-hairball [`kg-viewer`](../../folio-core/kg-viewer.md) measured at 1111 nodes; that rule is
+hairball [`kg-viewer`](../../ui/ui-core/kg-viewer.md) measured at 1111 nodes; that rule is
 applied here rather than argued with.
 
 ### One hop of context, because counting an edge is not showing it
