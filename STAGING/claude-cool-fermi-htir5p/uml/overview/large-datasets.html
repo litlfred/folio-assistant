@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790802672">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/docs-ui.css?v=1790804457">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/narrow-viewport.css?v=1790802672">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/narrow-viewport.css?v=1790804457">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790802672">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/work-plan.css?v=1790804457">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790802672">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/themes.css?v=1790804457">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/uml.css?v=1790802672">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/uml.css?v=1790804457">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790802672">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/css/avatars.css?v=1790804457">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790802672" defer></script>
+<script src="/folio-assistant/STAGING/claude-cool-fermi-htir5p/assets/js/docs-ui.js?v=1790804457" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -868,6 +868,16 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td> </td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">large-datasets/large-datasets-processes</code></td>
+      <td><code class="language-plaintext highlighter-rouge">large-datasets/processes</code></td>
+      <td>processes</td>
+      <td><code class="language-plaintext highlighter-rouge">ext: omg-bpmn-2.0</code></td>
+      <td><em>not measured</em></td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">large-datasets/large-datasets-scripts</code></td>
       <td><code class="language-plaintext highlighter-rouge">large-datasets/scripts</code></td>
       <td>code</td>
@@ -914,6 +924,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <li><a href="large-datasets/large-datasets-schemas.html">large-datasets/large-datasets-schemas</a></li>
   <li><a href="large-datasets/large-datasets-sources.html">large-datasets/large-datasets-sources</a></li>
   <li><a href="large-datasets/large-datasets-skills.html">large-datasets/large-datasets-skills</a></li>
+  <li><a href="large-datasets/large-datasets-processes.html">large-datasets/large-datasets-processes</a></li>
   <li><a href="large-datasets/large-datasets-scripts.html">large-datasets/large-datasets-scripts</a></li>
   <li><a href="large-datasets/large-datasets-id-lookup.html">large-datasets/large-datasets-id-lookup</a></li>
   <li><a href="large-datasets/qa.html">large-datasets/qa</a></li>
@@ -966,6 +977,33 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       &lt;&lt;could not determine&gt;&gt;
     }
   }
+  namespace large_datasets__large_datasets_processes {
+    class large_datasets_large_datasets_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
+      &lt;&lt;ext: omg-bpmn-2.0&gt;&gt;
+      bpmn:callActivity [0..*] element
+      bpmn:collaboration [0..*] element
+      bpmn:definitions [0..*] element
+      bpmn:documentation [0..*] element
+      bpmn:endEvent [0..*] element
+      bpmn:exclusiveGateway [0..*] element
+      bpmn:extensionElements [0..*] element
+      bpmn:flowNodeRef [0..*] element
+      bpmn:import [0..*] element
+      bpmn:incoming [0..*] element
+      bpmn:lane [0..*] element
+      bpmn:laneSet [0..*] element
+      bpmn:outgoing [0..*] element
+      bpmn:parallelGateway [0..*] element
+      bpmn:participant [0..*] element
+      bpmn:process [0..*] element
+      bpmn:sequenceFlow [0..*] element
+      bpmn:serviceTask [0..*] element
+      bpmn:startEvent [0..*] element
+      bpmn:task [0..*] element
+      bpmn:timerEventDefinition [0..*] element
+      bpmn:userTask [0..*] element
+    }
+  }
   namespace large_datasets__large_datasets_scripts {
     class n_large_datasets_large_datasets_scripts_code["code: no node schema"] {
       &lt;&lt;could not determine&gt;&gt;
@@ -1009,6 +1047,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   cssClass "large_datasets_large_datasets_sources_folio_source_descriptor_v1_folio_source_descriptor_v1" fa_uml_kind_schemas
   cssClass "n_large_datasets_large_datasets_skills_skills" fa_uml_kind_skills
   cssClass "n_large_datasets_large_datasets_skills_skills" fa_uml_undetermined
+  cssClass "large_datasets_large_datasets_processes_omg_bpmn_2_0" fa_uml_kind_processes
   cssClass "n_large_datasets_large_datasets_scripts_code" fa_uml_kind_code
   cssClass "n_large_datasets_large_datasets_scripts_code" fa_uml_undetermined
   cssClass "n_large_datasets_large_datasets_id_lookup_code" fa_uml_kind_code
