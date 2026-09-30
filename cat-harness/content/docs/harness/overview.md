@@ -1,6 +1,6 @@
-A **Harness** is the layer that makes a [KGraph](kgraph.html) usable: it
+A **Harness** is the layer that makes a [Knowledge Graph](knowledge-graph.html) usable: it
 renders the graph, serves an interface over it, and supplies the Skills,
-Workflows and Tools an Agent works the graph with. The KGraph says what is
+Workflows and Tools an Agent works the graph with. The Knowledge Graph says what is
 true; the Harness is how anybody reaches it.
 
 A checkout holds several. They stack, bottom to top — `bootstrap`, then

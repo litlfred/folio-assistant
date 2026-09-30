@@ -138,7 +138,7 @@ owner chose *"Split per asset type"* (2026-09-24) when extraction took the
 single page to 1.4 MB; the budgets are what keeps that choice true.
 
 The harness's swimlane-role terms (`swimlane-glossary`, the
-[`swimlane-glossary`](../../folio-core/swimlane-glossary.md) skill) are one more source the page
+[`swimlane-glossary`](../../process/process-core/swimlane-glossary.md) skill) are one more source the page
 links to, not copies of.
 
 ## Extracted terms (bean `lqo9`, piece 1)

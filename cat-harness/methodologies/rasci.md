@@ -112,5 +112,5 @@ a process that has not opted in, a `supportive` is a **reported breach** —
 neither coerced to a neighbouring letter nor silently dropped. That refusal is
 what makes this a choice rather than a spelling rule; `check:raci` and the
 `raci-involvement-vocabulary` QA criterion carry it, and the skill
-[`skills/raci/raci.md`](../skills/raci/raci.md) holds the platform overlay both
+[`skills/process/raci/raci.md`](../skills/process/raci/raci.md) holds the platform overlay both
 vocabularies share.

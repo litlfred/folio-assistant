@@ -25,9 +25,9 @@ _This page is generated from [`content/docs/harness/`](https://github.com/litlfr
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/harness/overview.md){: .fa-node-edit title="Edit content/docs/harness/overview.md" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
-A **Harness** is the layer that makes a [KGraph](kgraph.html) usable: it
+A **Harness** is the layer that makes a [Knowledge Graph](knowledge-graph.html) usable: it
 renders the graph, serves an interface over it, and supplies the Skills,
-Workflows and Tools an Agent works the graph with. The KGraph says what is
+Workflows and Tools an Agent works the graph with. The Knowledge Graph says what is
 true; the Harness is how anybody reaches it.
 
 A checkout holds several. They stack, bottom to top — `bootstrap`, then
@@ -71,7 +71,7 @@ the declarations alone.
 A Harness **MUST** own the visualisation published at `<baseurl>/<stub>`. The
 stem every published artefact is named with is computed in exactly one place —
 `artefactStub`, which returns the declared `stub` when there is one and the
-`name` otherwise — so the site build, the KGraph export and any future artefact
+`name` otherwise — so the site build, the Knowledge Graph export and any future artefact
 cannot disagree about what an instance is called.
 
 > **The stub is intended to be free of the definition's name.** A Harness
@@ -117,7 +117,7 @@ a path breaks the moment a directory moves.
 ### Three relations, and they are not interchangeable
 
 Between repositories — as opposed to between layers in one checkout — the
-[KGraph page](kgraph.html#repositories) sets out three relations, and a fourth, **associated**, needs no order at all. Each has its
+[Knowledge Graph page](knowledge-graph.html#repositories) sets out three relations, and a fourth, **associated**, needs no order at all. Each has its
 own carrier here:
 
 | relation | runs | carried by |
@@ -304,7 +304,7 @@ this page disagree, **the Skill wins and this page is wrong**.
 
 | question | where it is answered |
 |---|---|
-| What the KGraph is, and which way its references run | [The KGraph](kgraph.html) |
+| What the Knowledge Graph is, and which way its references run | [The Knowledge Graph](knowledge-graph.html) |
 | How an instance declares its directories, and every graph kind | [`directory-conventions`](reference/skill-instructions/directory-conventions.html) |
 | What a visualiser owes a declared directory | [Subgraph viewers](subgraph-viewers.html) |
 | What a Skill states and what a Tool supplies | [`skills-and-tools`](reference/skill-instructions/skills-and-tools.html) |

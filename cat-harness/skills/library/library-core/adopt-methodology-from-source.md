@@ -12,7 +12,7 @@ description: >
 
 # Adopt a methodology from a source document
 
-The adoption **rules** are [`methodology-adoption`](../../folio-core/methodology-adoption.md). This skill is the **operating order** for applying them when somebody shares a document and asks for its method to be used. The owner, 2026-09-23: *"update 'methodology source/paper' process to describe general process of what you are doing"*.
+The adoption **rules** are [`methodology-adoption`](../../process/process-core/methodology-adoption.md). This skill is the **operating order** for applying them when somebody shares a document and asks for its method to be used. The owner, 2026-09-23: *"update 'methodology source/paper' process to describe general process of what you are doing"*.
 
 **Worked case:** WireGen (arXiv:2312.07755) became [`methodologies/wiregen`](../../../methodologies/wiregen.md). Issue #1023.
 
