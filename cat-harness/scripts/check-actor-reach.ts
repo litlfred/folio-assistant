@@ -22,7 +22,6 @@
  * @covers scenarios
  */
 
-import { join } from "node:path";
 
 import {
   effectiveReach,
@@ -32,6 +31,7 @@ import {
 } from "../schemas/actor-reach";
 import { readActors, type LoadedActor } from "../schemas/role-graph";
 import { instanceRootFor, readDeclaration, repoRootFor } from "../schemas/cat-harness";
+import { actorsDir } from "../schemas/role-graph.ts";
 
 // THE REPOSITORY root, asked for rather than taken from the working directory.
 // `.claude/` is agent-tool configuration at the top of the checkout, not a
@@ -43,7 +43,7 @@ import { instanceRootFor, readDeclaration, repoRootFor } from "../schemas/cat-ha
 // is not there returns `[]` — so the check reported "EXAMINED NOTHING" over 27
 // actors that were sitting one level up.
 const root = repoRootFor(instanceRootFor(import.meta.dir));
-const ACTOR_DIR = join(root, ".claude", "skills", "actors");
+const ACTOR_DIR = actorsDir(root) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })();
 
 export interface ReachReport {
   actors: LoadedActor[];

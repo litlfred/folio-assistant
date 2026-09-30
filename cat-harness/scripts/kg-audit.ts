@@ -61,6 +61,7 @@ import { tools, toolsOf } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
 import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
+import { VOICE_REVIEW_CRITERION, evaluateVoiceReviews, readVoiceReviews, skillVoices } from "./skill-voice-review.js";
 import { claimsEntry, judgePair, rootScripts } from "./pair-claims.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
@@ -122,6 +123,7 @@ import { VERIFIERS } from "./publish-verify.ts";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
+import { actorsDir, capabilitiesDir } from "../schemas/role-graph.ts";
 
 const ENGINE_VERSION = "1";
 
@@ -253,8 +255,14 @@ const SCENARIO_DIR = ownDirectoryById(root, "scenarios", "scenarios");
 const POLICY_DIR = ownDirectoryById(root, "policies", "policies");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
-const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
-const CAPABILITY_DIR = join(repoRootFor(root), ".claude", "skills", "capabilities");
+// The actor registry's declared home (bean rqao). kg-audit runs over ANY
+// instance, fixtures included, where the platform may declare no `scenarios`
+// graph: that is "no actor registry here", which `readActors` answers with an
+// empty list and the actor criteria then report on. It was the same before the
+// move, when the probed `.claude/skills/actors` simply did not exist.
+const ACTOR_DIR = actorsDir(repoRootFor(root)) ?? "";
+// Declared home inside `scenarios` (bean rqao); "" when there is none, as for ACTOR_DIR.
+const CAPABILITY_DIR = capabilitiesDir(repoRootFor(root)) ?? "";
 const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
 // declared-path-literal: the convention fallback, at the call site. Same
 // reasoning as `WORKFLOW_DIR`. A Tool node carries NO path of its own — the
@@ -2690,6 +2698,21 @@ if (!check) {
     r.criteria["prose-claims-resolve"] = claimsEntry(pairs.flatMap((p) => judgePair(repoRoot, p, scripts)));
     r.totals = tally(r.criteria);
     if (attestations.length) r.pair_attestations = attestations;
+  }
+}
+
+// ── Skills reviewed against the voices that judge skills (bean `rkqp`).
+//
+// The same shape as the pairs above: it READS the previous sidecar, because a
+// review is carried across runs, so it runs before the write loop too.
+{
+  const voices = skillVoices(resolve(root, ".."));
+  for (const r of reports) {
+    if (r.subject.kind !== "skill" || !r.subject.path) continue;
+    const { entry: e, reviews } = evaluateVoiceReviews(join(root, r.subject.path), readVoiceReviews(sidecarPath(r)), voices);
+    r.criteria[VOICE_REVIEW_CRITERION] = e;
+    r.totals = tally(r.criteria);
+    if (reviews.length) r.voice_reviews = reviews;
   }
 }
 

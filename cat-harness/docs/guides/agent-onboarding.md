@@ -211,7 +211,7 @@ Watching a sibling PR: `/watch <pr|branch>`.
 | What a QA criterion means | `content/pipeline/qa-criteria-registry.ts` — descriptions are the spec |
 | The block schema | `schemas/types.ts` |
 | The QA sidecar schema | `schemas/block-qa.ts` |
-| What this environment can do | `.claude/skills/capabilities/*.json`, `--check-deps` |
+| What this environment can do | `cat-harness/scenarios/capabilities/*.json`, `--check-deps` |
 | Lean tooling roadmap | [Lean tooling proposal](https://github.com/litlfred/folio-assistant/issues/198) |
 
 ## 10. Habits that keep you out of trouble

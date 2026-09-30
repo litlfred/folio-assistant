@@ -247,7 +247,7 @@ export function memoryForRoles(entries: readonly MemoryNode[], roles: readonly s
  * and `AGENTS.md` puts knowledge in the lane. That move needs the three
  * memory-carrying subagents to be declared actors with roles, and **none of
  * them is declared at all** — measured 2026-09-19 against
- * `.claude/skills/actors/`, which holds 24 participants and not one of them.
+ * `cat-harness/scenarios/actors/`, which holds 24 participants and not one of them.
  *
  * So this exists to make the duplication *expressible* before the role
  * question is settled: an entry references the agents it reaches, and **one

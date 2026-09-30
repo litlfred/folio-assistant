@@ -26,11 +26,30 @@ export const SkillTopicSchema = z
   })
   .strict();
 
+/**
+ * An INSTANCE directory declared from inside `skills/` (bean `cmsl`, owner
+ * 2026-09-30): `voices/`, or folio-assistant-sci's `lean/`. The resolver in
+ * `cat-harness.ts` promotes each to a directory of the instance, exactly as if
+ * `<instance>.json` declared it. Only the fields that resolver needs are
+ * required here — this module depends on zod alone (see above), so the full
+ * `ContentDirectorySchema` stays in `cat-harness.ts` and the rest passes through.
+ */
+export const SkillsDirectoryEntrySchema = z
+  .object({
+    id: z.string().min(1),
+    path: z.string().min(1),
+    dependents: z.string().min(1),
+    graphKinds: z.array(z.string().min(1)).min(1),
+  })
+  .passthrough();
+
 export const SkillTopicsSchema = z
   .object({
     $schema: z.literal(SKILL_TOPICS_TAG),
     _comment: z.string().optional(),
     topics: z.array(SkillTopicSchema),
+    /** One node, two lists: the instance directories declared from within. */
+    directories: z.array(SkillsDirectoryEntrySchema).optional(),
   })
   .strict();
 
