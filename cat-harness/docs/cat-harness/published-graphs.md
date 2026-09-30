@@ -343,7 +343,6 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 The same viewers the navbar and the board show, by title.
 
 - [fsh-guts]({{ '/fsh-guts/' | relative_url }}) — declared on `fsh-guts`
-- [Latent semantic indexes]({{ '/lsi/' | relative_url }}) — declared on `qa`
 
 ---
 

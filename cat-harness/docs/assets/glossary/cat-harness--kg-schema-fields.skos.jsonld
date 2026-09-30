@@ -5864,6 +5864,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.summaries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectory.summaries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.summaries",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.theme",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5956,6 +5975,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.summaries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.summaries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the agent summary drain may draft summaries for a `library` directory's prose blocks (bean `x80s`). Absent means `drain`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.summaries",
       "skos:note": "candidate"
     },
     {

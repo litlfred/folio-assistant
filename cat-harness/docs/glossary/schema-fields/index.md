@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1482 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1484 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1649 terms and is 894 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1651 terms and is 895 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1649</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1651</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1963,6 +1963,13 @@ ContentDirectory.readOnlyBasis <span class="fa-gloss-status">candidate, extracte
 <p>Why — required whenever &#123;@link readOnly} is declared, either value. See the schema field.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.readOnlyBasis</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.summaries" data-fa-state="extracted" data-fa-gloss="">
+ContentDirectory.summaries <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.summaries</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.theme" data-fa-state="extracted" data-fa-gloss="">
 ContentDirectory.theme <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1997,6 +2004,13 @@ ContentDirectoryShape.readOnlyBasis <span class="fa-gloss-status">candidate, ext
 <dd>
 <p>WHY, and required whenever `readOnly` is declared — either value.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectoryshape.summaries" data-fa-state="extracted" data-fa-gloss="">
+ContentDirectoryShape.summaries <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whether the agent summary drain may draft summaries for a `library` directory's prose blocks (bean `x80s`). Absent means `drain`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.summaries</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectoryshape.theme" data-fa-state="extracted" data-fa-gloss="">
 ContentDirectoryShape.theme <span class="fa-gloss-status">candidate, extracted</span>

@@ -2162,6 +2162,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.summaries",
+      "prefLabel": "ContentDirectory.summaries",
+      "definition": "Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.summaries",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.theme",
       "prefLabel": "ContentDirectory.theme",
       "definition": "Which theme this subgraph renders on — one answer for every surface that renders it (navbar section, board panel, sticky).",
@@ -2194,6 +2201,13 @@
       "prefLabel": "ContentDirectoryShape.readOnlyBasis",
       "definition": "WHY, and required whenever `readOnly` is declared — either value.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.summaries",
+      "prefLabel": "ContentDirectoryShape.summaries",
+      "definition": "Whether the agent summary drain may draft summaries for a `library` directory's prose blocks (bean `x80s`). Absent means `drain`.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.summaries",
       "status": "candidate"
     },
     {

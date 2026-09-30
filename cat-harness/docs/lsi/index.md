@@ -105,14 +105,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.30 | bean, session, graph, kind, branch, instance, page, agent | *(none)* |
+| 1 | 46.26 | bean, session, graph, kind, branch, instance, page, agent | *(none)* |
 | 2 | 27.70 | bias, studies, study, effect, statistical, causation, validity, causal | bean, instance, harness, directory, node, graph, kind, session |
 | 3 | 22.21 | proof, lean, watcher, slot, blocks, project, witness, chapter | harness, node, bean, instance, page, directory, actor, process |
 | 4 | 19.45 | dpi, color, grayscale, matplotlib, images, raster, pdf, fonts | session, prs, queue, branch, sibling, commits, coordination, beans |
 | 5 | 18.50 | dpi, color, grayscale, session, matplotlib, contrast, raster, eps | lean, proof, declaration, glossary, mathlib, theorem, sorry, chapter |
 | 6 | 16.77 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, consider, solutions, description, correlation |
 | 7 | 16.13 | lean, mathlib, mcp, sorry, proof, search, bean, lake | watcher, slot, backlog, voice, ledger, queue, nesting, idle |
-| 8 | 15.29 | mathlib, lean, sorry, lake, subdirectory, mcp, nesting, oleans | slot, forward, major, edges, criterion, reader, section, band |
+| 8 | 15.29 | mathlib, lean, sorry, subdirectory, lake, mcp, nesting, oleans | slot, forward, major, edges, criterion, reader, section, band |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
