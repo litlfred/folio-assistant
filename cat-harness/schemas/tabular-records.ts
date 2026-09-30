@@ -68,7 +68,10 @@ export const TabularRecordsSchema = z
     $schema: z.literal(TABULAR_RECORDS_SCHEMA_ID),
     "@id": z.string().min(1),
     source: z.record(z.string(), z.unknown()),
-    format: z.enum(["xlsx", "ods", "csv"]),
+    // `fixed-width`: a published text table such as NIST's CODATA allascii,
+    // parsed by `codata-ingest` (bean uyp8). Named for what it is rather than
+    // passed off as CSV, which it is not.
+    format: z.enum(["xlsx", "ods", "csv", "fixed-width"]),
     sheets: z.array(TabularSheetSchema),
     n_sheets: z.number().int().nonnegative(),
     /** Every distinct header across every sheet — what a grep lands in. */
