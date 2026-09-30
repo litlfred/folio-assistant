@@ -3,8 +3,8 @@
  */
 import { describe, expect, test } from "bun:test";
 
-import { DublinCoreRecordSchema, dcValues } from "../../../folio-assistant-core/schemas/dublin-core.js";
-import { IntakeSchema } from "../../schemas/intake.js";
+import { DublinCoreRecordSchema, dcValues } from "../../schemas/dublin-core.js";
+import { IntakeSchema } from "../../../cat-harness/schemas/intake.js";
 import { recordFileName, uploadRecords } from "./intake-records.js";
 
 const base = {

@@ -60,8 +60,8 @@
  *
  * @module adapters/document/intake-records
  */
-import { DUBLIN_CORE_SCHEMA_TAG, DublinCoreRecordSchema, type DublinCoreRecord } from "../../../folio-assistant-core/schemas/dublin-core.js";
-import { INTAKE_SCHEMA_TAG, IntakeSchema, type Intake } from "../../schemas/intake.js";
+import { DUBLIN_CORE_SCHEMA_TAG, DublinCoreRecordSchema, type DublinCoreRecord } from "../../schemas/dublin-core.js";
+import { INTAKE_SCHEMA_TAG, IntakeSchema, type Intake } from "../../../cat-harness/schemas/intake.js";
 
 export interface UploadDescription {
   docId: string;

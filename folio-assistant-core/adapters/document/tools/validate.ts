@@ -16,11 +16,11 @@ import { existsSync, readdirSync } from "fs";
 import { join, basename } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { REPO_ROOT, folioDirOf } from "../paths.js";
-import { checkFolioProfile, formatProfileCheck } from "../../../content/pipeline/profile-check.js";
+import { checkFolioProfile, formatProfileCheck } from "../../../../cat-harness/content/pipeline/profile-check.js";
 import {
   readBlockManifest,
   readUnlabelledBlockManifest,
-} from "../../../content/pipeline/qa-utils.js";
+} from "../../../../cat-harness/content/pipeline/qa-utils.js";
 import { resolvePipelineScript } from "./_pipeline.js";
 // Note: paths are resolved from the document adapter's paths module.
 
