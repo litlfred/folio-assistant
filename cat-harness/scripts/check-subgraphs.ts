@@ -271,6 +271,15 @@ function linkTargets(raw: string): string[] {
  * this resolve", free to disagree — and the count below would then be
  * measuring something other than what the scan measured.
  */
+/** A link destination as a path: percent-decoded, or unchanged if the escapes are malformed. */
+export function decodeLinkTarget(target: string): string {
+  try {
+    return decodeURIComponent(target);
+  } catch {
+    return target;
+  }
+}
+
 function resolveInTree(abs: string): string | undefined {
   if (existsSync(abs)) return abs;
   if (abs.endsWith(".html")) {
@@ -308,7 +317,7 @@ export function overDeepLinks(
     if (!link.target.startsWith("../")) continue;
     const repaired = link.target.slice("../".length);
     if (repaired.length === 0) continue;
-    const abs = resolve(root, dirname(link.from), repaired);
+    const abs = resolve(root, dirname(link.from), decodeLinkTarget(repaired));
     if (resolveInTree(abs) !== undefined) out.push({ ...link, repaired });
   }
   return out;
@@ -384,7 +393,10 @@ export function scanSubgraphs(root: string = ROOT): SubgraphReport {
       }
       for (const target of linkTargets(text)) {
         // `resolveInTree` carries the `.html` → `.md` rule and its reasoning.
-        const resolved = resolveInTree(resolve(dirname(file), target));
+        // A link destination is a URL: `%20`, `%28`, `%40` name the file's own
+        // characters (`linkTarget` in subgraph-readmes writes them), so decode
+        // before asking the filesystem. Malformed escapes stay as written.
+        const resolved = resolveInTree(resolve(dirname(file), decodeLinkTarget(target)));
         if (resolved === undefined) {
           // A renderable graph addresses the PUBLISHED tree, not this one.
           const renderable = owner.graphKinds.some((g) => isRenderable(g));
