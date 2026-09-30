@@ -5,7 +5,6 @@ description: >-
   label, a definition and a source, kept as a node and published as SKOS.
   Use when a diagram, a schema or a script needs a fixed set of values
   (adjudication answers, namespace IRIs) instead of strings in code.
-capability: authoring
 graph-kinds:
   - code-list
 ---
