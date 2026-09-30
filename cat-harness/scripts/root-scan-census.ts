@@ -239,8 +239,7 @@ export function censusRepository(repo: string): { rows: ScanRow[]; scope: Instan
 }
 
 function comparable(r: QaResult): string {
-  const { updated_at: _when, ...rest } = r;
-  return JSON.stringify(rest);
+  return JSON.stringify(r);
 }
 
 function sidecarState(fresh: QaResult): "absent" | "stale" | "current" {
