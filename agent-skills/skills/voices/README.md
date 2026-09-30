@@ -8,5 +8,5 @@ Part of [agent-skills](../../README.md) 0.1.0, declared as `voices`, holding `vo
 | file | what it is | used by |
 |---|---|---|
 | [`agent-skill-authoring/`](agent-skill-authoring/) | 1 file | |
-| [`vendors/`](vendors/) | 1 file | |
+| [`vendors/`](vendors/) | 2 files | |
 <!-- kg:subgraph:end -->
