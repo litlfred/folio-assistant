@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-09-30T11:04:09Z
+updated_at: 2026-09-30T13:38:24Z
 parent: folio-assistant-zzmr
 ---
 
@@ -92,3 +92,8 @@ The relation is the reverse of a dependency: the platform READS its dependents' 
 
 ## 2026-09-30 — the analysis the owner asked for
 Owner: 'analyze and characterize the 23 externals. why? options for relocation/changing arrow directions? schema issues/location issues?' — written up as cat-harness/docs/proposals/cmsl-external-directories-2026-09-30.md. In short: 24 entries in THREE groups — 7 checkout-level state graphs at the repo root that nothing else declares (a location issue, not duplication); 16 content graphs of instances that all depend on cat-harness (an arrow issue: the platform names its dependents; 5 ids and 4 dependents values already drifted); 1 directory only cat-harness declares (folio-assistant-sci/skills/lean/ — an ownership defect in folio-assistant-sci). Recommendation A: the CHECKOUT (root instance) aggregates — it needs every instance and declares the root state; corpus-wide tools resolve kinds over its dependency overlay; cat-harness declares only its own subtree. Awaiting the owner's pick.
+
+
+
+## Owner, 2026-09-30 (round 3): option A — the checkout aggregates
+In the three steps of the proposal: (1) folio-assistant-sci declares its own `skills/lean/`; (2) the root instance declares the checkout-level state (ids unchanged); (3) an overlay helper, the call-site switch, the mirrors removed, and a check against re-mirroring. The falsifier (a split checkout sees less) is to be confirmed before step 3.

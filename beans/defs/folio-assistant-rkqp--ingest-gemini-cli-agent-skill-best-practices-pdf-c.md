@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-30T12:03:52Z
+updated_at: 2026-09-30T13:38:24Z
 parent: folio-assistant-slw1
 ---
 
@@ -166,3 +166,8 @@ Measured before building: structure.json is pdf-structure/v1 (cat-harness/schema
 Also measured: image-descriptions accepts a determined empty images.json, and a notebook with image outputs can record images: null with its reason (the sidecar's own third state). Put to the owner as blocker 2 of this round.
 
 _2026-09-30T10:39:35Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+
+## Owner, 2026-09-30 (round 3): vendors — the beans.json pattern
+`skills/voices/voices.json` declares `vendors/`, and `skills/voices/vendors/vendors.json` declares each `<id>/`. Both are ContentDirectory entries, like `beans/beans.json`. Notebook shape: the owner asked about combining A and B; the follow-up is below.
