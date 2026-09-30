@@ -510,13 +510,13 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "one projected criterion about what a Tool can be made to DO rather than whether it is wired up.",
   },
   {
-    id: "tool-alternative-resolves",
+    id: "tool-alternative-selectable",
     applies: ["tool"],
     scope: "instance",
     severity: "major",
     summary:
-      "An `alternativeTo` names a Tool that does not exist, or the relation is not symmetric — a choice " +
-      "the agent cannot find, or can find from only one side. `n/a` for a Tool declaring no alternative, " +
+      "A Tool has a derived alternative (a shared skill and the same I/O signature, #1168 B9a) and no " +
+      "`selection` — a choice the agent can see and cannot make. `n/a` for a Tool with no alternative, " +
       "which is most of them.",
   },
   {
