@@ -67,12 +67,12 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join, dirname, extname, resolve, sep } from "path";
 import { hashFile, walkBlocks } from "./qa-utils";
 import { findContentRepoRoot } from "./repo-root";
-import { parseLeanRef, refToDecl } from "./content-graph";
+import { parseLeanRef, refToDecl, summarizeSources, type FormalSource } from "./content-graph";
 
 const OUTPUT_REL = "docs/audits/lean-atlas-deps.json";
 
 /** Provenance of a cache entry. See the module doc for confidence. */
-export type DepSource = "atlas" | "scan";
+export type DepSource = "atlas" | "elaborated" | "scan";
 
 interface DeclEntry {
   /** Statement-level dependencies (fully-qualified decl names). */
@@ -91,7 +91,7 @@ interface DepsCache {
   $schema: "lean-atlas-deps/v1";
   generated_at: string;
   /** `mixed` when entries from both sources coexist. */
-  source: DepSource | "mixed";
+  source: FormalSource;
   decls: Record<string, DeclEntry>;
 }
 
@@ -119,9 +119,7 @@ function loadCache(repoRoot: string): DepsCache {
 function saveCache(repoRoot: string, cache: DepsCache): void {
   const p = outputPath(repoRoot);
   mkdirSync(dirname(p), { recursive: true });
-  const sources = new Set(Object.values(cache.decls).map((d) => d.source));
-  cache.source =
-    sources.size > 1 ? "mixed" : ((sources.values().next().value ?? "scan") as DepSource);
+  cache.source = summarizeSources(Object.values(cache.decls).map((d) => d.source));
   cache.generated_at = new Date().toISOString();
   cache.$schema = "lean-atlas-deps/v1";
   writeFileSync(p, JSON.stringify(cache, null, 2) + "\n");
@@ -174,7 +172,7 @@ function listMode(repoRoot: string, root: string): void {
   console.log(`\n${n} blocks with a resolvable .lean`);
 }
 
-function ingestMode(repoRoot: string, jsonlPath: string): void {
+export function ingestMode(repoRoot: string, jsonlPath: string, source: "atlas" | "elaborated" = "atlas"): void {
   const cache = loadCache(repoRoot);
   const lines = readFileSync(jsonlPath, "utf-8").trim().split("\n");
   let n = 0;
@@ -192,13 +190,13 @@ function ingestMode(repoRoot: string, jsonlPath: string): void {
       value_deps: rec.value_deps ?? [],
       lean_path: rec.lean_path,
       lean_sha: rec.lean_path ? leanSha(repoRoot, rec.lean_path) : undefined,
-      source: "atlas",
+      source,
       checked_at: new Date().toISOString(),
     };
     n++;
   }
   saveCache(repoRoot, cache);
-  console.log(`Ingested ${n} declarations from ${jsonlPath} (source: atlas)`);
+  console.log(`Ingested ${n} declarations from ${jsonlPath} (source: ${source})`);
   console.log(`Wrote ${outputPath(repoRoot)} — ${Object.keys(cache.decls).length} decls tracked`);
 }
 
@@ -330,10 +328,20 @@ function staleMode(repoRoot: string): void {
 if (import.meta.main) {
   const args = process.argv.slice(2);
   const repoRoot = findContentRepoRoot();
-  const positional = args.find((a, i) => !a.startsWith("--") && !args[i - 1]?.startsWith("--ingest"));
+  const positional = args.find(
+    (a, i) => !a.startsWith("--") && !args[i - 1]?.startsWith("--ingest") && args[i - 1] !== "--source",
+  );
   const root = positional ? join(repoRoot, positional) : folioDir(repoRoot);
 
-  if (args[0] === "--ingest" && args[1]) ingestMode(repoRoot, args[1]);
+  // `--source elaborated` marks records from folio-assistant-sci's formal-edge
+  // extractor; the default stays `atlas` so existing callers are unchanged.
+  const si = args.indexOf("--source");
+  const src = si >= 0 ? args[si + 1] : "atlas";
+  if (src !== "atlas" && src !== "elaborated") {
+    console.error(`--source must be "atlas" or "elaborated", not ${JSON.stringify(src)}`);
+    process.exit(2);
+  }
+  if (args[0] === "--ingest" && args[1]) ingestMode(repoRoot, args[1], src);
   else if (args[0] === "--scan") scanMode(repoRoot, root);
   else if (args[0] === "--stale") staleMode(repoRoot);
   else if (args[0] === "--list") listMode(repoRoot, root);
@@ -341,7 +349,10 @@ if (import.meta.main) {
     console.log(`Formal dependency-graph ingest -> ${OUTPUT_REL}
 
   --list [root]        List blocks with a resolvable .lean
-  --ingest <jsonl>     Ingest Lean Atlas output (authoritative).
+  --ingest <jsonl> [--source atlas|elaborated]
+                       Ingest elaborated output (authoritative): Lean Atlas
+                       (default) or folio-assistant-sci's formal-edge
+                       extractor (--source elaborated).
                        One decl per line:
                          {"decl":"...","type_deps":[],"value_deps":[],"lean_path":"..."}
   --scan [root]        Fallback extractor — no Lean toolchain needed.

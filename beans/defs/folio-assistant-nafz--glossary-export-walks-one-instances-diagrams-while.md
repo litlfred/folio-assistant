@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nafz
 title: glossary-export walks ONE instance's diagrams while translate-bpmn walks the dependents' too
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-23T21:14:17Z
-updated_at: 2026-09-23T21:15:20Z
+updated_at: 2026-09-30T00:33:54Z
 parent: folio-assistant-slw1
 ---
 
@@ -87,3 +87,5 @@ longer exists. A comment is not a fix either way.
 - [ ] the DANGLING wording says which corpus it walked
 - [ ] `translate-bpmn` and `glossary-export` agree, or the reason they differ is
       written on both
+
+_2026-09-30T00:33:54Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

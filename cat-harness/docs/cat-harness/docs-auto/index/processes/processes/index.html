@@ -275,7 +275,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ig-incremental-build.bpmn"><code>Incremental IG build</code></a><br><span class="p">cat-harness/processes/ig-incremental-build.bpmn</span></td>
-  <td>One change — a PR push or a push to main — through the incremental IG build of docs/proposals/ig-incremental-build.md: restore the derived state, compute the change's dependency cone, compile and validate only the cone…<div class="f"><span class="k">activities</span> 19</div><div class="f"><span class="k">lanes</span> FHIR modeller / PR author (person + authoring agent) · Work plan — beans (shared by humans and agents) · Incremental build (system) · Publisher + validator services (JVM) · PR reviewer / QC reviewer · Publication manager — deploy and seed</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l3-fhir-authoring, quality-control, todo-manager</div></td>
+  <td>One change — a PR push or a push to main — through the incremental IG build proposed in issue #199: restore the derived state, compute the change's dependency cone, compile and validate only the cone against the warm va…<div class="f"><span class="k">activities</span> 19</div><div class="f"><span class="k">lanes</span> FHIR modeller / PR author (person + authoring agent) · Work plan — beans (shared by humans and agents) · Incremental build (system) · Publisher + validator services (JVM) · PR reviewer / QC reviewer · Publication manager — deploy and seed</div><div class="f"><span class="k">skills</span> content-publish, fhir-validation, ig-publication, l3-fhir-authoring, quality-control, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-build-l1-kg.bpmn"><code>Ingestion subprocess — build the L1 knowledge graph</code></a><br><span class="p">cat-harness/processes/ingest-build-l1-kg.bpmn</span></td>
@@ -355,7 +355,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/repository-health-watch.bpmn"><code>Is the repository itself healthy?</code></a><br><span class="p">cat-harness/processes/repository-health-watch.bpmn</span></td>
-  <td>THE SAME SHAPE AS <code>ci-health</code>, ONE LEVEL OUT.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Scheduled log sweep</div><div class="f"><span class="k">skills</span> ci-health, deletion-requires-confirmation</div></td>
+  <td>THE SAME SHAPE AS `ci-health`, ONE LEVEL OUT.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Scheduled log sweep</div><div class="f"><span class="k">skills</span> ci-health, deletion-requires-confirmation</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-code.bpmn"><code>Code node review</code></a><br><span class="p">cat-harness/processes/review-code.bpmn</span></td>
@@ -379,7 +379,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/staging-render-log.bpmn"><code>Render log — the publish branch keeps its own history</code></a><br><span class="p">cat-harness/processes/staging-render-log.bpmn</span></td>
-  <td>Every change to the publish branch appends an entry to <code>_render-log/&lt;day&gt;.jsonl</code>.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> render-logging</div></td>
+  <td>Every change to the publish branch appends an entry to `_render-log/&lt;day&gt;.jsonl`.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> render-logging</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/swot-analysis.bpmn"><code>SWOT situation analysis</code></a><br><span class="p">cat-harness/processes/swot-analysis.bpmn</span></td>
