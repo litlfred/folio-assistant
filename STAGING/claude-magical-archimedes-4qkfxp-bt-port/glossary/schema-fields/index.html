@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/docs-ui.css?v=1790765741">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/docs-ui.css?v=1790766172">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/narrow-viewport.css?v=1790765741">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/narrow-viewport.css?v=1790766172">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/work-plan.css?v=1790765741">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/work-plan.css?v=1790766172">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/themes.css?v=1790765741">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/themes.css?v=1790766172">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/uml.css?v=1790765741">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/uml.css?v=1790766172">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/avatars.css?v=1790765741">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/css/avatars.css?v=1790766172">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/js/docs-ui.js?v=1790765741" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/js/docs-ui.js?v=1790766172" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -804,13 +804,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p>Candidate terms extracted from every schema field with a doc comment: <code class="language-plaintext highlighter-rouge">&lt;Declaration&gt;.&lt;field&gt;</code> as the label, the comment’s first paragraph as the definition. Each is the asset’s own text, verbatim and not curated, and carries the badge “candidate, extracted”. A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/glossary/">glossary index</a>.</p>
 
-<p>From: bootstrap-tools 25 (<a href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld">SKOS</a>) · cat-harness 1456 (<a href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld">SKOS</a>) · folio-assistant-core 152 (<a href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld">SKOS</a>) · large-datasets 18 (<a href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld">SKOS</a>).</p>
+<p>From: bootstrap-tools 25 (<a href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld">SKOS</a>) · cat-harness 1456 (<a href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld">SKOS</a>) · folio-assistant-core 154 (<a href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld">SKOS</a>) · large-datasets 18 (<a href="/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld">SKOS</a>).</p>
 
-<p><strong>Size:</strong> this page holds 1651 terms and is 897 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.</p>
+<p><strong>Size:</strong> this page holds 1653 terms and is 898 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.</p>
 
 <p><label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem" /></p>
-<p aria-live="polite"><span id="fa-gloss-n">1651</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1653</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 <h2 id="letter-A">
@@ -2046,6 +2046,13 @@ CatalogueNodeSchema.flavour <span class="fa-gloss-status">candidate, extracted</
 <p>The source system's own word for this node — `community`, `collection`, `set`, `prefix`. Display and provenance only; nothing branches on it.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/catalogue.ts"><code>folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.flavour</code></a></p>
 </dd>
+<dt id="folio-assistant-core--kg-schema-fields--catalogue.cataloguenodeschema.handle" data-fa-state="extracted" data-fa-gloss="">
+CatalogueNodeSchema.handle <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The node's Handle, where the source mints one — PREFERRED over any host URL for resolution (&#123;@link resolvableIri}). Recorded only when read off the source; never derived for a node that shows none (a DSpace community or collection has a Handle upstream, but none is recorded here until one is read).</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/catalogue.ts"><code>folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.handle</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-schema-fields--catalogue.cataloguenodeschema.libraryid" data-fa-state="extracted" data-fa-gloss="">
 CatalogueNodeSchema.libraryId <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2073,6 +2080,13 @@ CatalogueSchema.sizeBasis <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>How the numbers above were arrived at. A denominator with no provenance is a denominator nobody can check.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/catalogue.ts"><code>folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.sizeBasis</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--catalogue.catalogueschema.sourceloss" data-fa-state="extracted" data-fa-gloss="">
+CatalogueSchema.sourceLoss <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What survives if the SOURCE goes away, stated per node kind — not only for bytes already copied (bean `08u4`). The `sourceLoss` GATE is asked only of a materialization; a referenced node never meets it, so without this the answer for 10 of 13 nodes was silence.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/catalogue.ts"><code>folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.sourceLoss</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--catalogue.catalogueschema.system" data-fa-state="extracted" data-fa-gloss="">
 CatalogueSchema.system <span class="fa-gloss-status">candidate, extracted</span>
@@ -12110,7 +12124,7 @@ VizVisibility.stars <span class="fa-gloss-status">candidate, extracted</span>
 VoiceApplicabilitySchema.processes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>BPMN process ids, as `&lt;bpmn:process id&gt;` spells them — `Process_CrdmRequirements`, not a filename. Resolved against the diagrams the `cat-harness` graph carries, so a typo is a dangling reference rather than a voice that quietly never activates.</p>
+<p>BPMN process ids, as `&lt;bpmn:process id&gt;` spells them — `Process_CRDM_Requirements`, not a filename (#1168, B8: the element id, as `calledElement` uses it). Resolved against the loaded diagrams by `process-refs.test.ts`, so a typo is a dangling reference rather than a voice that quietly never activates.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceApplicabilitySchema.processes</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voiceapplicabilityschema.roles" data-fa-state="extracted" data-fa-gloss="">
