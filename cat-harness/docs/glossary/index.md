@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`
 title: Glossary
 nav_order: 90
 has_children: true
@@ -9,13 +10,13 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2645 terms: **29 authored** in 3 glossaries, on this page, and **2616 extracted** from knowledge-graph assets in 19 generated schemes, one page per asset type, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2649 terms: **29 authored** in 3 glossaries, on this page, and **2620 extracted** from knowledge-graph assets in 19 generated schemes, one page per asset type, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>29</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2616</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2620</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
@@ -28,11 +29,11 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <thead><tr><th>page</th><th>holds</th><th>terms</th><th>size</th></tr></thead>
 <tbody>
 <tr><td>this page</td><td>authored terms, counts and sources</td><td>29</td><td>41 KB</td></tr>
-<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>289</td><td>208 KB</td></tr>
-<tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>120</td><td>77 KB</td></tr>
-<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>549</td><td>422 KB</td></tr>
+<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>290</td><td>207 KB</td></tr>
+<tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>122</td><td>79 KB</td></tr>
+<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>550</td><td>421 KB</td></tr>
 <tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>7 KB</td></tr>
-<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1649</td><td>903 KB</td></tr>
+<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1649</td><td>896 KB</td></tr>
 </tbody></table></div>
 
 **Size:** this page holds 29 terms and is 41 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
@@ -87,7 +88,7 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <span class="fa-gloss-n">6.</span> Node Instance
 </dt>
 <dd>
-<p>A Node that names its Node Kind, in <code>$schema</code> or front matter, and satisfies that kind's Node Schema.</p>
+<p>A Node that names its Node Kind, in `$schema` or front matter, and satisfies that kind's Node Schema.</p>
 <p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node">Node</a>, <a href="#bootstrap--terms--node-kind">Node Kind</a>, <a href="#bootstrap--terms--node-schema">Node Schema</a></p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/NodeInstance">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/NodeInstance</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/NodeInstance</code></a></p>
 </dd>
@@ -103,7 +104,7 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <span class="fa-gloss-n">8.</span> Declaration
 </dt>
 <dd>
-<p>A JSON document, <code>&lt;name&gt;.json</code>, that gives a name and lists directory entries and file entries.</p>
+<p>A JSON document, `&lt;name&gt;.json`, that gives a name and lists directory entries and file entries.</p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Declaration</code></a></p>
 </dd>
 <dt id="bootstrap--terms--extension" data-fa-state="authored" data-fa-gloss="">
@@ -126,7 +127,7 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <span class="fa-gloss-n">11.</span> Asset
 </dt>
 <dd>
-<p>A file entry of a Declaration: one file about the repository itself, whose <code>role</code> field says what it is for.</p>
+<p>A file entry of a Declaration: one file about the repository itself, whose `role` field says what it is for.</p>
 <p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a></p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/asset</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Asset">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Asset</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Asset</code></a></p>
 </dd>
@@ -142,7 +143,7 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <span class="fa-gloss-n">13.</span> Dependency
 </dt>
 <dd>
-<p>A Declaration's <code>needs</code> entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back.</p>
+<p>A Declaration's `needs` entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back.</p>
 <p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a>, <a href="#bootstrap--terms--knowledge-graph">Knowledge Graph</a>, <a href="#bootstrap--terms--reference">Reference</a>, <a href="#bootstrap--terms--node-instance">Node Instance</a></p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/dependency</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Dependency">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Dependency</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Dependency</code></a></p>
 </dd>
@@ -322,13 +323,13 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>bootstrap-tools</td><td>—</td><td>—</td><td>—</td><td>—</td><td>25 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>cat-harness</td><td>271 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>105 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>520 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1454 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>272 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>107 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>521 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1454 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>6 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>152 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>18 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>289</strong></td><td><strong>120</strong></td><td><strong>549</strong></td><td><strong>9</strong></td><td><strong>1649</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>290</strong></td><td><strong>122</strong></td><td><strong>550</strong></td><td><strong>9</strong></td><td><strong>1649</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">

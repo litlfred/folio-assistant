@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xd1g
 title: 11 root-rooted scans have no gitignore awareness — ramz's sibling audit, answered
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-25T16:21:48Z
-updated_at: 2026-09-27T11:01:10Z
+updated_at: 2026-09-27T16:36:36Z
 parent: folio-assistant-ahvw
 ---
 
@@ -761,4 +761,3 @@ My own test asserted `swept > 0`, true only because this container has build
 residue a clean checkout does not. **This bean's defect, in the test guarding
 the fix for it.** Reproduced by moving `dist/` aside; fixed so the suite passes
 both with the residue and without.
-

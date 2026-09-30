@@ -5,7 +5,7 @@
  * about the MEASUREMENT being honest rather than about a verdict.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -84,5 +84,61 @@ describe("root-scan census", () => {
     const rows = census(resolve(import.meta.dir, ".."));
     expect(rows.length).toBeGreaterThan(20);
     expect(rows.some((r) => r.gitAware)).toBe(true);
+  });
+});
+
+/**
+ * `qrlc` — the git-helper roster is DERIVED, not listed.
+ *
+ * This census has now had the same defect twice: a scanner that was fixed fell
+ * out of the population instead of moving to its good side, so the headline
+ * got worse as the corpus improved.
+ *
+ *   1. The first time, `ENUMERATES` matched only bare walks, and a conversion
+ *      removes the `readdirSync` it keyed on. Fixed by admitting the git
+ *      spellings — as a HARDCODED list.
+ *   2. The second time, that list went stale the hour it was written:
+ *      `gitTopLevelDirs` was added, three scanners were converted to call it,
+ *      and the census read 66/10 before and **65/10** after. The three had
+ *      left the denominator and the git-aware count had not moved.
+ *
+ * Both are one class — a roster kept by hand beside the thing it tracks — and
+ * it is the same class as the dead `SKILLS_CATEGORIES` key and the stale
+ * `coverage.visualiser` refs. The repair is to stop keeping the roster.
+ */
+describe("the git-helper roster is derived from git-corpus.ts", () => {
+  test("EVERY exported helper is recognised as git-aware", () => {
+    // The regression test for defect 2, written against the real module so a
+    // helper added tomorrow is covered without anybody editing this file.
+    const src = readFileSync(resolve(import.meta.dir, "../../schemas/git-corpus.ts"), "utf-8");
+    const helpers = [...src.matchAll(/^export function (\w+)/gm)].map((m) => m[1]!);
+    expect(helpers.length).toBeGreaterThan(3);
+
+    const { dir, cleanup } = repo(
+      Object.fromEntries(
+        helpers.map((h, i) => [`scripts/uses-${i}.ts`, `const ROOT = "x";\n${h}(ROOT);\n`]),
+      ),
+    );
+    const rows = census(join(dir, "scripts"));
+    expect(rows).toHaveLength(helpers.length);
+    const notRecognised = rows.filter((r) => !r.gitAware).map((r) => r.file);
+    expect(notRecognised).toEqual([]);
+    cleanup();
+  });
+
+  test("a converted scanner MOVES to the good side rather than leaving", () => {
+    // Stated as the invariant rather than as a count, because a count is what
+    // went stale. Converting must not shrink the population.
+    const bare = { "scripts/s.ts": 'const ROOT = "x";\nreaddirSync(ROOT);\n' };
+    const converted = { "scripts/s.ts": 'const ROOT = "x";\ngitTopLevelDirs(ROOT);\n' };
+    const a = repo(bare);
+    const b = repo(converted);
+    const before = census(join(a.dir, "scripts"));
+    const after = census(join(b.dir, "scripts"));
+    expect(after).toHaveLength(before.length);
+    expect(before[0]?.gitAware).toBe(false);
+    expect(after[0]?.gitAware).toBe(true);
+    a.cleanup();
+    b.cleanup();
   });
 });
