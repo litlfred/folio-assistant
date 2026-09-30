@@ -23,7 +23,7 @@ import { join } from "node:path";
 import { describe, expect, test } from "bun:test";
 
 import { DocumentContentAdapter } from "../../adapters/document/index.ts";
-import { GitHelper } from "../../src/core/git.ts";
+import { GitHelper } from "../../../cat-harness/src/core/git.ts";
 
 // A real adapter over a scratch root, so this exercises the SHIPPED method
 // rather than a stub of it.
