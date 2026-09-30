@@ -8,7 +8,7 @@
     "kind": "corpus",
     "id": "library-source-licences"
   },
-  "updated_at": "2026-09-30T11:16:39.790Z",
+  "updated_at": "2026-09-30T15:26:14.185Z",
   "families": {
     "malformed": {
       "summary": "A licence record that claims something it cannot back. This is the only family that fails the check.",
@@ -17,7 +17,7 @@
     },
     "not-recorded": {
       "summary": "No licence recorded at all: nobody has looked yet. Reported, not gated; the field is new.",
-      "count": 34,
+      "count": 35,
       "entries": [
         {
           "entry": "agent-skills/library/agent-skill-best-practices---gemini-cli"
@@ -83,6 +83,9 @@
           "entry": "cat-harness/library/gurel-tat-2017-swot-analysis"
         },
         {
+          "entry": "cat-harness/library/kg-folio-asst-2026-09-30"
+        },
+        {
           "entry": "cat-harness/library/sammut-bonnici-galea-2015-swot-analysis"
         },
         {
@@ -125,8 +128,24 @@
     },
     "stated": {
       "summary": "The licence is known, and the record says where it is stated.",
-      "count": 0,
-      "entries": []
+      "count": 3,
+      "entries": [
+        {
+          "entry": "cat-harness/library/omg-2013-bpmn-2-0-2",
+          "id": "LicenseRef-OMG-Specification",
+          "basis": "The specification's own permission notice, PDF page 2: a fully-paid, non-exclusive, non-transferable licence to use, copy and distribute the specification, on condition (2) that copies are for informational purposes and \"will not be copied or posted on any network computer or broadcast in any media\". Hence this entry records the source and holds none of its text (issue #1614)."
+        },
+        {
+          "entry": "cat-harness/library/omg-2024-dmn-1-5",
+          "id": "LicenseRef-OMG-Specification",
+          "basis": "The specification's own permission notice, PDF page 2: a fully-paid, non-exclusive, non-transferable licence to use, copy and distribute the specification, on condition (2) that copies are for informational purposes and \"will not be copied or posted on any network computer or broadcast in any media\". Hence this entry records the source and holds none of its text (issue #1614)."
+        },
+        {
+          "entry": "smart-base/library/mehl-2021-who-smart-guidelines",
+          "id": "CC-BY-3.0-IGO",
+          "basis": "The article's own footer, p. e215: \"Copyright © 2021 World Health Organization; licensee Elsevier. This is an Open Access article published under the CC BY 3.0 IGO license.\""
+        }
+      ]
     },
     "unknown": {
       "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
@@ -155,5 +174,5 @@
       ]
     }
   },
-  "total": 38
+  "total": 42
 }

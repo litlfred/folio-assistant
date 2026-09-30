@@ -18,6 +18,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`arxiv-2607.14456v1/`](arxiv-2607.14456v1/README.md) | 104 files | |
 | [`dusengumuremyi-2026-ai-mediated-raci/`](dusengumuremyi-2026-ai-mediated-raci/README.md) | 29 files | |
 | [`gurel-tat-2017-swot-analysis/`](gurel-tat-2017-swot-analysis/README.md) | 61 files | |
-| [`kg-folio-asst-2026-09-30/`](kg-folio-asst-2026-09-30/README.md) | 62 files | |
+| [`kg-folio-asst-2026-09-30/`](kg-folio-asst-2026-09-30/README.md) | 98 files | |
+| [`omg-2013-bpmn-2-0-2/`](omg-2013-bpmn-2-0-2/README.md) | 4 files | |
+| [`omg-2024-dmn-1-5/`](omg-2024-dmn-1-5/README.md) | 4 files | |
 | [`sammut-bonnici-galea-2015-swot-analysis/`](sammut-bonnici-galea-2015-swot-analysis/README.md) | 34 files | |
 <!-- kg:subgraph:end -->

@@ -16,7 +16,9 @@ alike: **how can I reliably author, review and adjudicate faster?** and **how am
 I verifiable?** *Test data* sits beside every level.
 
 **Sources:** [FHIR content — the five layers](fhir-content.html#the-three-layers);
-`smart-base/library/9789240093362-eng` §1.2 (WHO's own list of the five layers).
+`smart-base/library/mehl-2021-who-smart-guidelines` (the primary source, Lancet
+Digital Health 2021); `smart-base/library/9789240093362-eng` §1.2 (WHO's handbook
+restating them).
 
 > **Misaligned (fixed on this branch):** the docs said SMART Guidelines "names
 > three layers". It names five. The page now lists all five and says why

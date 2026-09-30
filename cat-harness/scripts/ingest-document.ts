@@ -200,7 +200,7 @@ export function libraryChoice(argv: string[]): string | undefined {
 
 /** Which rung a document needs, and the evidence that chose it. */
 export interface Plan {
-  rung: "archive" | "tabular" | "slides" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
+  rung: "archive" | "tabular" | "slides" | "referenced" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
@@ -251,6 +251,14 @@ export function withDerivedArms(
   // raster layer to recover and no vector labels to read). So it takes the two
   // arms that read what the rung wrote, and not the two that read a PDF.
   // Measured on the #1614 deck, not assumed: bean `scfh`.
+  // A RECORDED source holds no text, so there is nothing for the paged arms to
+  // read; its only derived artefact is the manifest (bean `scfh`).
+  if (plan.rung === "referenced") {
+    return {
+      ...plan,
+      steps: [...plan.steps, ["bun", "run", tsHelper("../content/pipeline/gen-library-jsonld.ts"), "--entry", staging]],
+    };
+  }
   if (plan.rung === "slides") {
     return {
       ...plan,
@@ -735,7 +743,7 @@ if (import.meta.main) {
   // was boolean; `--library who-iris` breaks it, because `who-iris` does not
   // start with `--` and would be ingested as a filename — producing "who-iris:
   // not there" while the real argument sat untouched two places along.
-  const takesValue = new Set(["--library"]);
+  const takesValue = new Set(["--library", "--reference"]);
   let pdf: string | undefined;
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
@@ -803,8 +811,18 @@ if (import.meta.main) {
   // (bean `8suc`). The refusal it may raise was already required to come
   // before the arms ran, so nothing about the ordering guarantee changes.
   const destination = libraryRoot(INSTANCE_ROOT, chosenLibrary);
+  // `--reference IDENTITY.json`: record the source and hold none of its text
+  // (bean `scfh`). Chosen by the caller, never inferred: whether a licence
+  // permits posting a copy is a reading of the licence, not of the bytes.
+  const reference = argv.includes("--reference") ? argv[argv.indexOf("--reference") + 1] : undefined;
   const plan = withDerivedArms(
-    planFor(pdf, undefined, stagingRoot),
+    reference
+      ? {
+          rung: "referenced",
+          why: "--reference given — recorded with its outline and sha256, text withheld",
+          steps: [["python3", pyHelper("referenced-source.py"), "-o", stagingRoot, pdf, "--identity", reference]],
+        }
+      : planFor(pdf, undefined, stagingRoot),
     pdf,
     stagingRoot,
     staging,

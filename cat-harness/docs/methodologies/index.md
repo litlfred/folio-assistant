@@ -37,8 +37,8 @@ column answers.
 
 <div class="mv-grid">
 <div class="mv-stat"><b>16</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>11</b><span>with the source held here</span></div>
-<div class="mv-stat"><b>5</b><span>cited, not ingested</span></div>
+<div class="mv-stat"><b>12</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>4</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
 
@@ -54,7 +54,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work](#blueprint-driven-formalization)**<br>`blueprint-driven-formalization` | **A formalization is large enough that its state has to be tracked node by node** — many interdependent definitions and theorems, several contributor… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-sci` |
 | **[Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score](#consensus-grounded-subject-evaluation)**<br>`consensus-grounded-subject-evaluation` | **Judging how good a set of controlled-vocabulary assignments is, when qualified people would themselves disagree about the exact answer.** Use it to… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[DIIG — Digital Implementation Investment Guide](#diig)**<br>`diig` | Planning, costing and monitoring a DIGITAL HEALTH IMPLEMENTATION inside a health programme — from forming the team through to the budget and the moni… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-base` |
-| **[DMN — Decision Model and Notation](#dmn)**<br>`dmn` | The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
+| **[DMN — Decision Model and Notation](#dmn)**<br>`dmn` | The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold](#doc-researcher)**<br>`doc-researcher` | **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread acros… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-core` |
 | **[Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it](#hybrid-llm-deterministic)**<br>`hybrid-llm-deterministic` | **An agent must produce an artefact that something downstream will act on.** Use it when a language model is in the loop and a wrong output would be… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Kepner-Tregoe Decision Analysis](#kepner-tregoe)**<br>`kepner-tregoe` | A decision with several candidate options and no recurring rule — a platform choice, an architecture question, which of three fixes to take. Contextu… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
@@ -139,15 +139,15 @@ these.
 
 <a id="dmn"></a>
 
-`dmn` — declared by `cat-harness` — <span class="mv-tag mv-cited">cited, not ingested</span>
+`dmn` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
 
 **Applies when.** The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that is `kepner-tregoe`, recorded per `madr`.
 
-**Origin.** OMG Decision Model and Notation, v1.x (omg.org/dmn)
+**Origin.** Object Management Group, Decision Model and Notation (DMN) Version 1.5, OMG document formal/24-01-01, January 2024 (omg.org/spec/DMN). RECORDED, not held: its licence forbids posting copies on a network, so the library entry identifies the exact PDF (sha256) and its outline and holds no text.
 
-**No ingested source.** The origin above names one; nothing in this
-checkout holds it. `literature-search` is the skill that closes one of
-these.
+**Ingested sources:**
+
+- `library/omg-2024-dmn-1-5`
 
 ### Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold
 
@@ -276,6 +276,8 @@ these.
 **Ingested sources:**
 
 - [`library/arxiv-2607.14456v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.14456v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.14456v1/README.md)
+- `library/kg-folio-asst-2026-09-30`
+- `library/omg-2013-bpmn-2-0-2`
 
 ### SWOT — situation analysis over internal and external factors
 

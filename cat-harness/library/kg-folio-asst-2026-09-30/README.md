@@ -13,7 +13,7 @@ Held in the library [`cat-harness/library/`](../README.md) as `kg-folio-asst-202
 
 | holds | count |
 |---|---|
-| [sections](sections/) | 13 |
-| [blocks](blocks/) | 13 |
+| [sections](sections/) | 26 |
+| [blocks](blocks/) | 36 |
 | images | 31 |
 <!-- kg:subgraph:end -->

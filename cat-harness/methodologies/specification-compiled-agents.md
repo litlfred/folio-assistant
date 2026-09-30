@@ -39,6 +39,7 @@ applies-when: >
 evidence:
   - library/arxiv-2607.14456v1
   - library/kg-folio-asst-2026-09-30
+  - library/omg-2013-bpmn-2-0-2
 ---
 
 # Specification-compiled agents
@@ -207,6 +208,12 @@ mechanical and agentic QA/QC reports. This node is the method for the first
 end. The deck measures nothing, so it says where the owner wants the harness
 to go and nothing about how well either end works. That is what the paper
 above is for.
+
+The diagrams this method executes are OMG BPMN 2.0.2 (formal/2013-12-09),
+recorded as `library/omg-2013-bpmn-2-0-2`. The entry identifies the exact
+specification and its clause outline, so a citation can name a clause and page.
+It holds none of the text, because OMG's licence forbids posting copies on a
+network.
 
 ## See also
 

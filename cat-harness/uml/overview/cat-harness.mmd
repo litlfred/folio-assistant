@@ -942,6 +942,14 @@ classDiagram
       entry [1] string
       summaries [0..*] Summary[]
     }
+    class cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1["folio-slides-accessibility/v1"] {
+      <<json: SlidesAccessibilitySchema>>
+      $schema [1] 'folio-slides-accessibility/v1'
+      source [1] object
+      format [1] pptx | odp
+      slides [1] integer
+      checks [1] object
+    }
   }
   namespace cat_harness__who_iris_library {
     class n_cat_harness_who_iris_library_library["library: no node schema"] {
@@ -1971,6 +1979,7 @@ classDiagram
   cssClass "cat_harness_library_folio_block_summaries_v1_Superseded" fa_uml_kind_library
   cssClass "cat_harness_library_folio_block_summaries_v1_Summary" fa_uml_kind_library
   cssClass "cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1" fa_uml_kind_library
+  cssClass "cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1" fa_uml_kind_library
   cssClass "n_cat_harness_who_iris_library_library" fa_uml_kind_library
   cssClass "n_cat_harness_who_iris_library_library" fa_uml_undetermined
   cssClass "n_cat_harness_agent_skills_library_library" fa_uml_kind_library

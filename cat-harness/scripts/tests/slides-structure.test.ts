@@ -17,6 +17,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { PdfStructureSchema } from "../../schemas/pdf-structure.ts";
+import { type SlidesAccessibility, SlidesAccessibilitySchema } from "../../schemas/slides-accessibility.ts";
 import { ImagesSidecarSchema } from "../../schemas/document-image.ts";
 import { attributionFor } from "../apply-image-verdicts.ts";
 import { planFor } from "../ingest-document.ts";
@@ -124,10 +125,10 @@ function odp(dir: string): string {
   return p;
 }
 
-function a11y(...files: string[]): Array<Record<string, any>> {
+function a11y(...files: string[]): SlidesAccessibility[] {
   const r = Bun.spawnSync(["python3", SCRIPT, "--a11y-only", "--json", ...files]);
   if (r.exitCode !== 0) throw new Error(new TextDecoder().decode(r.stderr));
-  return JSON.parse(new TextDecoder().decode(r.stdout));
+  return SlidesAccessibilitySchema.array().parse(JSON.parse(new TextDecoder().decode(r.stdout)));
 }
 
 describe("routing", () => {
@@ -152,7 +153,7 @@ describe("accessibility report", () => {
     expect(c["document-title"].pass).toBe(false);
     expect(c["speaker-notes"].slides_with_notes).toEqual([2]);
     // The third state is stated, never omitted.
-    for (const k of ["reading-order", "images-of-text", "contrast"]) expect(c[k].state).toBe("undetermined");
+    for (const k of ["reading-order", "images-of-text", "contrast"] as const) expect(c[k].state).toBe("undetermined");
   });
 
   test("ODP export without alt text, language only on the default style", () => {

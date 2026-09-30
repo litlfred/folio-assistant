@@ -61,7 +61,9 @@ transformation handbook for primary health care* (2024), §1.2 pp. 20–21,
 ingested as `smart-base/library/9789240093362-eng`. It cites, as its ref. 18,
 the primary source: Mehl G. et al., *WHO SMART guidelines: optimising
 country-level use of guideline recommendations in the digital age*, Lancet
-Digital Health 2021;3(4):e213–e216. That source is not held here.
+Digital Health 2021;3(4):e213–e216, ingested as
+`smart-base/library/mehl-2021-who-smart-guidelines` (CC BY 3.0 IGO). It
+presents the same five as "knowledge layers (L1–L5)".
 
 **This page stops at L3 on purpose.** L4 and L5 are software and trained
 models. They consume what L1–L3 publish, but they are not authored as FHIR

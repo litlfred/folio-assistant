@@ -102,6 +102,7 @@ of declaring one: navigable without being held.
 | `pdf-ocr.py` | text extraction yields almost nothing | a text layer to then page-split |
 | `pdf-tables.py` | tables or figures matter | what `pdf-structure/v1`'s Section does not carry |
 | `slides-structure.py` | the package declares a **PPTX or ODP** deck | one section per **slide**, `images.json`, `accessibility.json` |
+| `referenced-source.py` | `--reference` given: the **licence forbids a copy** | `referenced.jsonld` only — identity, sha256, outline; no text |
 
 **The decision is mechanical, and the corpus shows all three paths.** Measured
 2026-09-19 over the four entries in `library/`:
@@ -154,6 +155,31 @@ Image descriptions go in the library's `image-verdicts.json` as for a PDF. Put
 the inspector in `attribution.<doc-id>` when they are not the file's
 `inspected_by`; without it the deck inherits the first inspector's name and
 date.
+
+## A source whose licence forbids a copy — record it, do not ingest it (bean `scfh`)
+
+Some sources may be read but not reposted. The OMG BPMN and DMN specifications
+permit use on condition that a copy "will not be copied or posted on any
+network computer or broadcast in any media". A normal ingest commits every
+section's text to a public repository, which breaks that condition. It does so
+silently, because nothing in the text layer says so.
+
+```sh
+bun run ingest FILE.pdf --reference IDENTITY.json --library <name>
+```
+
+`IDENTITY.json` holds the title, version, document number, date, publisher,
+URL and the licence clause, **read off the document**. A missing field is
+refused, never guessed. The entry holds `referenced.jsonld` — the exact bytes'
+sha256, the embedded outline (clause titles and pages, so a citation can still
+name a clause), a `folio-materialization/v1` record in state `referenced`, and
+why the text is withheld — plus a manifest with an empty `contains`, and a
+`licence.json` quoting the clause.
+
+**The choice is the caller's, never inferred.** Whether a licence permits
+posting is a reading of the licence, not of the bytes. `check:l1-complete`
+knows the kind, and **refuses** a `referenced` entry that holds `sections/`,
+`blocks/` or `images/`. That would be the copy this kind exists not to make.
 
 ## An inferred chapter tree is refused, not guessed
 

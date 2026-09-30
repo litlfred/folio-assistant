@@ -50,6 +50,13 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     entry [1] : string
     summaries [0..*] : Summary[]
   }
+  class "folio-slides-accessibility/v1" as cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1 <<json: SlidesAccessibilitySchema>> #f4f4f1 {
+    $schema [1] : 'folio-slides-accessibility/v1'
+    source [1] : object
+    format [1] : pptx | odp
+    slides [1] : integer
+    checks [1] : object
+  }
 }
 
 cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded
