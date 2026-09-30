@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-29T23:47:39Z
-updated_at: 2026-09-30T00:10:51Z
+updated_at: 2026-09-30T00:25:28Z
 parent: folio-assistant-slw1
 ---
 
@@ -70,3 +70,26 @@ them is an authoring act.
 
 GitHub issue: https://github.com/litlfred/folio-assistant/issues/1526
 Branch: `claude/uploads-page-shows-process`
+
+
+
+## Round 1 landed — PR #1529, not merged
+
+https://github.com/litlfred/folio-assistant/pull/1529
+
+Open questions put to the owner on issue #1526 (one asked in full, two
+recorded):
+
+1. **Asked.** Is the page generated from Tool documentation still wanted,
+   given the upload is a start event and there is no Task to carry a Tool?
+   Options (a) model an upload Task + skill + Tool nodes, (b) drop the page
+   and let the boundary paragraph be the answer, (c) generate from something
+   other than a Tool. Recommended (a), as its own issue and PR.
+2. **Recorded, not asked.** Should `cat-harness/uploads/` — the harness
+   layer's own queue — declare the same `coverage.process`? It is a
+   different instance's directory sharing an id; the ingestion process is
+   arguably the same one. One-line declaration either way.
+3. **Recorded, not asked.** The `## Files` heading the subgraph template now
+   emits is CONDITIONAL — written only where a section precedes the table, so
+   only `uploads/README.md` has one today. Unconditional would be more
+   consistent and would churn all 90 subgraph READMEs in one commit.
