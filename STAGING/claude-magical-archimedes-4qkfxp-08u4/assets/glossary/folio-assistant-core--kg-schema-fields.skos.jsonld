@@ -1,8 +1,10 @@
 {
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
-    "dcterms": "http://purl.org/dc/terms/"
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields",
@@ -1836,6 +1838,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.glossaryschema.ordered",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySchema.ordered"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The terms are in a LOGICAL order, each defined only by terms above it, and a reader should meet them in that order — not alphabetically. The owner, 2026-09-29, of bootstrap's terms: keep \"logical rather than alphabetical order\". Published as a skos:OrderedCollection."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.ordered",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.glossaryschema.source",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1874,6 +1895,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.termschema.isdefinedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermSchema.isDefinedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The schema or standard that defines the term (rdfs:isDefinedBy)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.isDefinedBy",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.termschema.notation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1909,6 +1949,25 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.termschema.requires",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermSchema.requires"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Local ids of the terms this definition USES — what a reader must know first (dcterms:requires). In an `ordered` glossary each must come earlier; the scheme refuses one that does not."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.requires",
       "skos:note": "candidate"
     },
     {

@@ -1,7 +1,7 @@
 <!-- kg:subgraph:begin -->
 # scenarios
 
-bootstrap's four Roles: Bootstrapping Agent, Requestor, Knowledge Graph Data Store and Logger.
+bootstrap's four [Roles](../schemas/README.md#role): Bootstrapping Agent, Requestor, [Knowledge Graph](../schemas/README.md#knowledge-graph) Data Store and Logger.
 
 Part of [Bootstrap](../README.md) 0.1.0, declared as `scenarios`, holding `scenarios`.
 
