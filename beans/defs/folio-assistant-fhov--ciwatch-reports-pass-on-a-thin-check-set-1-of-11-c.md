@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-30T19:07:23Z
 updated_at: 2026-09-30T19:07:46Z
+parent: folio-assistant-1xhc
 ---
 
 Found by the tool's own author, one session after building it, while using it

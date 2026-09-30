@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T18:57:28Z
-updated_at: 2026-09-30T19:04:43Z
+updated_at: 2026-09-30T19:10:53Z
 parent: folio-assistant-1xhc
 ---
 
@@ -170,3 +170,55 @@ written into the code's own docblock rather than only here.
 
 Still not established: whether any of the other 75 has the same two-writer
 problem latently.
+
+
+## SUPERSEDED — `main` fixed it better, and first
+
+Recorded 2026-09-30, on merging `main`. The section above describes a fix that
+is **not** what landed. It is kept rather than rewritten, because a bean that
+quietly replaces its own reasoning teaches the next reader nothing.
+
+`main` carries `6c7acb528ac` — *"render-bpmn: delegate beside-source SVGs to
+bootstrap-tools' own writer"*, bean `xsqm` — another session reaching the same
+diagnosis independently, within the same hour.
+
+**Theirs is better.** It calls `besideSourceSvg(renderer, file, processPath)`,
+which is **bootstrap-tools' own writer function**, imported. So there is one
+IMPLEMENTATION producing the bytes and cat-harness' renderer delegates to it.
+
+Mine stopped writing and asserted existence only. That needed `package.json` to
+run both renderers, and it left a gap I had to write into the docblock: an
+exempt instance with no renderer of its own would pass an existence check on a
+sibling nothing keeps current. Delegation has no such gap — a future exempt
+instance is served by the same one function.
+
+| | render:bpmn:check | invocations | latent gap |
+|---|---|---|---|
+| theirs (`6c7acb528ac`) | exit 0, **78 files** | 1 | none |
+| mine | exit 0, 81 lines | 2 | documented |
+
+Taken wholesale; `package.json` reverted to main's single-renderer form.
+
+### What survives, and why this bean is not scrapped
+
+The DIAGNOSIS, which `xsqm`'s commit does not carry:
+
+- the two obvious fixes are both wrong, with the measurement for each —
+  `bun run render:bpmn` deleting the owner's note (`3 files changed, 3
+  deletions(-)`), and repointing `package.json` checking 3 files instead of 78
+- the failure message **advised the first of those**, so the trap was armed for
+  whoever read it
+- the two renderers were never contesting the same job: 75 site copies
+  uncontested, 3 siblings contested, which is why `oqdr` was never at risk
+
+Two sessions hit this within an hour and neither could see the other's work in
+flight. That is the same shape as `8zsb` — a finding needing somewhere to live
+that is not a PR body — pointed at duplicated EFFORT rather than at a lost
+finding.
+
+### Still open, and NOT addressed by `xsqm`
+
+Nothing checks whether two writers claim one artefact. This was the second such
+case in two days (`ymsu`'s was one producer and a gate), and both were found by
+a red run rather than by a gate. `xsqm` fixes this instance; the class has no
+detector.
