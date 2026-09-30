@@ -54,7 +54,11 @@ describe("living deck: every claim about the KG still holds", () => {
     expect(ids.size).toBe(25);
   });
 
-  test("slide 10 — smart-kg/ is still gone from the repository", () => {
+  test("slide 10 — the taxonomy still uses smart-kg as its example, and says it is its own repository", () => {
+    const t = read(join(H, "docs/architecture/repo-taxonomy.md"));
+    expect(t).toContain("`smart-kg` and `smart-kg-tools` is the worked example");
+    expect(t).toContain("`smart-kg` is already its own repository");
+    // Its stub left this checkout for that reason (bean `wg7r`).
     expect(existsSync(join(REPO, "smart-kg"))).toBe(false);
   });
 

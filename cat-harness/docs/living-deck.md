@@ -292,10 +292,11 @@ and apps **utilize** all three.
 **Sources:** [Repo taxonomy](architecture/repo-taxonomy.html);
 [KGraph repositories](kgraph.html).
 
-> **Misaligned — naming:** slide 10 has `who/smart-kg` depending on
-> `who/smart-base`. The repo taxonomy still uses `smart-kg`/`smart-kg-tools` as
-> its worked example, but `smart-kg/` has since left this repository (bean
-> `wg7r`), so that example needs refreshing.
+> **Aligned:** slide 10's `who/smart-kg` is a real, separate repository, which
+> is the repo taxonomy's worked example of splitting content from tools. Its
+> stub directory in this checkout was removed because the repository already
+> exists elsewhere (bean `wg7r`), and the taxonomy now says so. An earlier
+> version of this note read that removal as the example going stale.
 
 ## 11 — C@T: the computable asset acquisition, adjudication and agentic test tool harness
 {: #slide-11 data-fa-label="sec:living-deck-slide-11" }
@@ -363,8 +364,7 @@ repository: <https://github.com/litlfred/folio-assistant>
 | 3 | speaker notes: 8 components | 9 (SMART Base `DAK`) | snapshot only |
 | 8 | UML lacks Voice Profile | the generated diagram | page shows current |
 | 9 | target repository names | the monorepo today | target vs current |
-| 10 | `smart-kg` as the worked example | `smart-kg/` has left the repo | repo taxonomy to refresh |
 | 11 | "not yet live" links | published under folio-assistant | snapshot only |
 | 12 | `folio-assitant` link | `folio-assistant` | snapshot only |
 
-Aligned: slides 4 (count), 5, 6 (same lanes and tasks), 7 (partly built) and 13 (three taskable actor kinds, plus `external`).
+Aligned: slides 4 (count), 5, 6 (same lanes and tasks), 7 (partly built), 10 (`smart-kg` is its own repository) and 13 (three taskable actor kinds, plus `external`).

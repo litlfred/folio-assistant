@@ -19,7 +19,8 @@ and apps **utilize** all three.
 **Sources:** [Repo taxonomy](architecture/repo-taxonomy.html);
 [KGraph repositories](kgraph.html).
 
-> **Misaligned — naming:** slide 10 has `who/smart-kg` depending on
-> `who/smart-base`. The repo taxonomy still uses `smart-kg`/`smart-kg-tools` as
-> its worked example, but `smart-kg/` has since left this repository (bean
-> `wg7r`), so that example needs refreshing.
+> **Aligned:** slide 10's `who/smart-kg` is a real, separate repository, which
+> is the repo taxonomy's worked example of splitting content from tools. Its
+> stub directory in this checkout was removed because the repository already
+> exists elsewhere (bean `wg7r`), and the taxonomy now says so. An earlier
+> version of this note read that removal as the example going stale.
