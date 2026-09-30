@@ -6,8 +6,8 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
     "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
-    "cat-harness": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
-    "folio-assistant-core": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
+    "cat-harness": "https://litlfred.github.io/cat-harness/0.1.0/ns#",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#",
     "label": "rdfs:label",
     "comment": "rdfs:comment",
     "isDefinedBy": {
@@ -38,9 +38,9 @@
       "@id": "dcterms:isReplacedBy",
       "@type": "@id"
     },
-    "layer": "https://litlfred.github.io/folio-assistant/cat-harness/ns#layer"
+    "layer": "https://litlfred.github.io/cat-harness/0.1.0/ns#layer"
   },
-  "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+  "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
   "@type": [
     "owl:Ontology",
     "skos:ConceptScheme"
@@ -59,8 +59,8 @@
       "prefLabel": "Image",
       "definition": "A declared picture belonging to an instance, carrying its role, its layout and any text region.",
       "notation": "folio-assistant-core:Image",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -74,8 +74,8 @@
       "prefLabel": "FolioGraph",
       "definition": "Authored content — the folio itself, rendered to a website.",
       "notation": "folio-assistant-core:FolioGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core",
       "seeAlso": "https://litlfred.github.io/content-types.html"
     },
@@ -90,8 +90,8 @@
       "prefLabel": "GlossaryGraph",
       "definition": "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
       "notation": "folio-assistant-core:GlossaryGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -105,8 +105,8 @@
       "prefLabel": "PreviewGraph",
       "definition": "A staging target: the same folio built for review rather than for release.",
       "notation": "folio-assistant-core:PreviewGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -120,8 +120,8 @@
       "prefLabel": "UnknownGraph",
       "definition": "A declared graph kind nothing recognises — reported as its own state, never silently treated as empty.",
       "notation": "folio-assistant-core:UnknownGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -135,8 +135,8 @@
       "prefLabel": "folio",
       "definition": "Authored content, rendered to a website by the just-the-docs pipeline.",
       "notation": "folio-assistant-core:graphKind/folio",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -150,8 +150,8 @@
       "prefLabel": "glossary",
       "definition": "SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS schemes by exactMatch rather than copied. Rendered on the glossary/ page.",
       "notation": "folio-assistant-core:graphKind/glossary",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -165,8 +165,8 @@
       "prefLabel": "library",
       "definition": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL.",
       "notation": "folio-assistant-core:graphKind/library",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -180,8 +180,8 @@
       "prefLabel": "review-verdicts",
       "definition": "Reviewers' per-block verdicts — one `folio-review-verdict/v1` JSON each, pinned to the block's content hash and committed on the edit-set's feature branch. Read by the review coverage gate (`folio-review-coverage`), which counts a verdict only while its hash is current.",
       "notation": "folio-assistant-core:graphKind/review-verdicts",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -195,8 +195,8 @@
       "prefLabel": "todo-feedback",
       "definition": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill.",
       "notation": "folio-assistant-core:graphKind/todo-feedback",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -210,8 +210,8 @@
       "prefLabel": "todo-items",
       "definition": "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. Authored by people and by agents on their behalf.",
       "notation": "folio-assistant-core:graphKind/todo-items",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -225,8 +225,8 @@
       "prefLabel": "todos",
       "definition": "Human actors' outstanding work — content, owned by the folio, tagged by role, process, task and identity. Its inner directories are declared by `todos/todos.json`.",
       "notation": "folio-assistant-core:graphKind/todos",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -240,8 +240,8 @@
       "prefLabel": "uploads",
       "definition": "The incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus: a document here reads as absent to every consumer.",
       "notation": "folio-assistant-core:graphKind/uploads",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -255,8 +255,8 @@
       "prefLabel": "voice-vendors",
       "definition": "Vendor voice profiles — a base voice specialised for one agent vendor, `folio-voice/v1` with `extends` naming the base. A sub-graph of `voices`, declared from within by `voices.json`, each vendor declared by `vendors.json`.",
       "notation": "folio-assistant-core:graphKind/voice-vendors",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     },
     {
@@ -270,8 +270,8 @@
       "prefLabel": "voices",
       "definition": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
       "notation": "folio-assistant-core:graphKind/voices",
-      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "inScheme": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns",
       "layer": "core"
     }
   ]
