@@ -53,7 +53,7 @@ flock 200 2>/dev/null || true
 # question that follows. A preference re-learned each session is a question
 # asked twice, which is WCAG 2.2 SC 3.3.7 (Redundant Entry) — and for a user
 # who types with difficulty, "just ask again" is not a small cost.
-# See skills/folio-core/interaction-modality.md.
+# See skills/conduct/conduct-core/interaction-modality.md.
 INTERACTION="$CHECKOUT_ROOT/interaction/interaction.json"
 if [ -f "$INTERACTION" ]; then
   echo "## Interaction preferences"
@@ -74,7 +74,7 @@ fi
 # until bean `46uh`: the skills are English, the corpus is English, so an agent
 # answered in English without ever asking whether that was right. Printed here
 # so "never determined" is visible rather than silent.
-# See skills/folio-core/communication-language.md.
+# See skills/conduct/conduct-core/communication-language.md.
 echo "## Communication language"
 echo
 if command -v jq >/dev/null 2>&1 && [ -f "$INTERACTION" ]; then

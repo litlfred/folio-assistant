@@ -247,7 +247,7 @@ exactly item 5 here: *"A gate asserts each manifest lists every skill exactly
 once — the complement of the coverage question."*
 
 Checked rather than assumed. `skill-manifest-coverage.test.ts:167` holds it, and
-injecting a deliberate duplicate into `skills/security/package-manifest.json`
+injecting a deliberate duplicate into `skills/conduct/security/package-manifest.json`
 produces:
 
     (fail) no manifest lists a skill TWICE — the complement of coverage

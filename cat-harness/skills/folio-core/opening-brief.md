@@ -54,7 +54,7 @@ advance can be corrected by the author in one line. The same route discovered in
 a finished diff costs a review cycle and, often, a revert.
 
 It is the same discipline as the question frame in
-[`interaction-modality`](interaction-modality.md) §4.1, applied to work instead
+[`interaction-modality`](../conduct/conduct-core/interaction-modality.md) §4.1, applied to work instead
 of decisions. That rule exists because a terse question forces the author to go
 and find context the agent already had; a terse *start* does the same thing one
 step earlier.
