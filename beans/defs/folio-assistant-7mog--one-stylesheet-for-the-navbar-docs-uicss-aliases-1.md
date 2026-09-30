@@ -1,11 +1,12 @@
 ---
 # folio-assistant-7mog
-title: 'The navbar stylesheets share 3 rules and 0 drift — a guard, not a merge (this bean''s first premise was WRONG)'
-status: in-progress
-parent: folio-assistant-p5wm
+title: The navbar stylesheets share 3 rules and 0 drift — a guard, not a merge (this bean's first premise was WRONG)
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-24T17:39:39Z
-updated_at: 2026-09-24T18:10:09Z
+updated_at: 2026-09-29T17:59:40Z
+parent: folio-assistant-p5wm
 ---
 
 The owner chose "1 2" on 2026-09-24: land the low-risk version first, then single-source the CSS. This is the 2.
@@ -50,13 +51,16 @@ does, so a local render UNDER-REPRESENTS the published one — a CSS migration
 verified only locally is verified against a weaker rendering. Verify on the
 staging preview, not just the local build.
 
-## Done when
+## Original scope — WITHDRAWN by the 2026-09-24 measurement below
 
-- [ ] `navbarCss()` takes a declared scope; the rail's output is byte-unchanged
-- [ ] the sidebar-scoped stylesheet is generated and gated by a `--check`
-- [ ] the 12 aliases and the 185 hand-written sidebar lines are gone
-- [ ] before/after RENDERS match on the staging preview, not only locally
-- [ ] `bun run gates` green
+Kept as plain bullets, not boxes, so there is one checklist in this bean
+(`shadow-checklist`); the live `## Done when` is at the end.
+
+- `navbarCss()` takes a declared scope; the rail's output is byte-unchanged
+- the sidebar-scoped stylesheet is generated and gated by a `--check`
+- the 12 aliases and the 185 hand-written sidebar lines are gone
+- before/after RENDERS match on the staging preview, not only locally
+- `bun run gates` green
 
 ## MEASURED 2026-09-24, and it refutes the scope above — issue #1294
 
@@ -126,3 +130,19 @@ grows is a test failure and a decision — not something somebody notices.
 - [x] the guard names the shared set, so its size is observable rather than remembered
 - [x] this bean carries the measurement and the corrected scope
 - [x] `bun run gates` green
+
+
+
+Claimed by claude/goal2-navbar-resume — 2026-09-29, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq (GOAL 2 resume after the 09-25 usage-limit stall).
+
+## Summary of Changes — closed 2026-09-29 on evidence
+
+Every box in `## Done when` was already ticked; the bean had simply not been
+closed. Re-verified on `main` at `f2d58d67b`, not taken from the ticks:
+
+- `cat-harness/scripts/tests/navbar-css-single-source.test.ts` exists
+  (landed in `7bc8e1dd1`) and passes: `bun test` → 3 pass, 0 fail.
+- The withdrawn first list is kept as prose above so its reasoning is not lost.
+
+The generated sidebar stylesheet stays available as a future trade (see
+§"The trade"), not as open work here.
