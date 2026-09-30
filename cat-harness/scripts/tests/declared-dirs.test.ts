@@ -64,7 +64,6 @@ afterAll(() => {
 const dir = (over: Record<string, unknown> = {}) => ({
   id: "t",
   path: "somewhere/",
-  dependents: "reproduce",
   graphKinds: ["schemas"],
   ...over,
 });

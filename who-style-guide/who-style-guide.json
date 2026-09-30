@@ -28,7 +28,6 @@
     {
       "id": "glossary",
       "path": "glossary/",
-      "dependents": "reproduce",
       "description": "The WHO glossary: folio-glossary/v1 schemes of terms the WHO publications use under more than one name. Owner, 2026-09-30 (bean ftu0): who-style-guide owns it rather than who-iris, because the glossary is a HOUSE rule about wording, like the voices, while who-iris holds the publications themselves. An alternative label is recorded only where a publication STATES the equivalence, and each term cites that sentence in who-iris across the instance boundary; a count or a latent-semantic cosine is never the evidence. The scheme's own source is a who-style-guide voice, so its terms are minted in this instance's namespace. Rendered on the glossary/ page and checked by check:glossary, both of which read every instance's declared glossary directory.",
       "graphKinds": [
         "glossary"
@@ -37,7 +36,6 @@
     {
       "id": "qa",
       "path": "test/results/",
-      "dependents": "reproduce",
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 4 files across scenarios (1), skills (3). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "graphKinds": [
         "qa"

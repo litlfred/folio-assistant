@@ -168,6 +168,24 @@ export interface GraphKindDef {
    */
   layer?: "core";
   /**
+   * Does every instance have ITS OWN graph of this kind — so an instance that
+   * inherits a directory of this kind gets its own copy created?
+   *
+   * The per-entry `dependents: "reproduce" | "skip"` answered this until
+   * 2026-09-30, when the owner retired it (option A: "make dependents:
+   * reproduce automatic behaviour so [we] don't need it"). It is a fact about
+   * the KIND: a folio has its own `uploads/`, `library/`, `docs/`, `qa`
+   * results and work plan; it does not have its own empty `schemas/`,
+   * `tools/` or `code`. Stated once here, it cannot disagree between two
+   * declarations of the same kind — which the per-entry field did, e.g.
+   * `docs` was `reproduce` once and `skip` four times.
+   *
+   * Absent means no: an inherited directory of the kind is a MEMBER of the
+   * subgraph exactly where it already exists, and is never created empty
+   * (the `dh4f` rule). {@link materialiseDirectories} reads it.
+   */
+  perInstance?: true;
+  /**
    * Is a graph of this kind expected to render as a website?
    *
    * The only behavioural distinction in the vocabulary — and the reason
@@ -696,6 +714,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // moment a `docs` page needs a block viewer, a LaTeX pass, a QA badge or a
   // translation overlay, it is describing authored CONTENT and is a `folio`.
   docs: {
+    perInstance: true,
     renderable: true,
     // THE FROM-WITHIN NODE (issue #1164; the owner's #980 ruling: nesting is
     // allowed when "a (Sub?)KGraph node within the first subdir labels all the
@@ -781,6 +800,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "at these statements by `req:<slug>#<key>`.",
   },
   "external-schema": {
+    perInstance: true,
     renderable: false,
     // `content`, and the call is against the obvious reading. A process DOES
     // write these files — `external-schemas.ts --write` refreshes each
@@ -862,6 +882,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // declaration mentioned, so a consumer scanning the declared directories saw
   // none of them and reported a clean run over the lot.
   qa: {
+    perInstance: true,
     renderable: false,
     // A verdict is where a REVIEW got to on a subject that lives elsewhere.
     // Detached from the artefact it judges it says nothing — which is the
@@ -1096,6 +1117,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["models"],
   },
   beans: {
+    perInstance: true,
     renderable: false,
     // The work plan. Its own declaration already splits WHAT IS BEING WORKED
     // ON from WHERE IT GOT TO — both are records about content, neither is
@@ -1200,6 +1222,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // the four coordinates of the role model: who, as which role, in which
   // process, on which task.
   todos: {
+    perInstance: true,
     layer: "core",
     renderable: false,
     // A person's outstanding items. Outstanding is the word that settles it —
@@ -1293,6 +1316,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md`
   // exists to state.
   uploads: {
+    perInstance: true,
     layer: "core",
     renderable: false,
     // A QUEUE, and a queue is a position in a pipeline. The declaration
@@ -1313,6 +1337,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "greppable as corpus: a document here reads as absent to every consumer.",
   },
   library: {
+    perInstance: true,
     layer: "core",
     renderable: false,
     // DERIVED, not content — bean `hqku`, and the owner's ruling of
@@ -1616,6 +1641,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // a voice apply, and a graph kind that conflated the two would have no place
   // to record that this instance ships four voices and activates none.
   voices: {
+    perInstance: true,
     layer: "core",
     renderable: false,
     // THE FROM-WITHIN NODE, as on `docs` (owner 2026-09-30, bean `rkqp`:
@@ -1924,6 +1950,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // defect in reverse, five committed directories that no declaration
   // mentioned. That is what this kind is for.
   "translation-sources": {
+    perInstance: true,
     renderable: false,
     // A `.po` catalogue and its manifest are authored content in another
     // language, not a record of a translation having happened.

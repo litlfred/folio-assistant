@@ -345,8 +345,9 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   scope: { gloss: "Which root a declared path resolves against — the instance's or the repository's." },
   dependents: {
     gloss:
-      "Whether an instance depending on this one materialises its own copy of a declared directory. " +
-      "Orthogonal to `scope`, which says where a path resolves rather than who gets one.",
+      "RETIRED 2026-09-30: whether an instance depending on this one materialised its own copy of a declared directory. " +
+      "Inheritance is now automatic — every instance whose directory exists is a member of the declared subgraph — " +
+      "and whether a dependent gets one created is its graph kind's `perInstance`.",
   },
 
   // ── The trashcan ─────────────────────────────────────────────────────

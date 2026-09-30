@@ -671,7 +671,7 @@ describe("a render-exempt instance is not missing what it was excused from", () 
    * excused from exactly that, which is the noise the bean names. */
   const exempt = (extra: Record<string, unknown> = {}) => ({
     name: "floor",
-    directories: [{ id: "skills", path: "skills/", graphKinds: ["skills"], dependents: "skip" }],
+    directories: [{ id: "skills", path: "skills/", graphKinds: ["skills"] }],
     renderExemption: {
       of: ["visualiser"],
       reason: "the bottom of the stack renders nothing",
