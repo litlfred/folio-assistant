@@ -5,7 +5,8 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-30T21:48:48Z
-updated_at: 2026-09-30T21:48:59Z
+updated_at: 2026-09-30T22:04:49Z
+parent: folio-assistant-o3xy
 ---
 
 Issue #1682, owner 2026-09-30: theme the per-IG site at /<instance>/ig/ (bamf, #1670) reusing the webpage theme #1683 declares, not a second copy.
