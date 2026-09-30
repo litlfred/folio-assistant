@@ -1091,14 +1091,14 @@
     {
       "id": "folio-assistant-52cz",
       "title": "A CONFLICTED PR CREATES NO pull_request RUN, and g62s's headUnjudged cannot see it — the one absent-run case that needs no glob evaluation",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T14:07:18Z",
-      "updatedAt": "2026-09-30T14:07:18Z",
+      "updatedAt": "2026-09-30T18:23:03Z",
       "preview": "## The incident, measured\n\nPR #1589, 2026-09-30. `Repository gates (hard)` failed on `86e403cdfdd`. I\nfixed the cause (`readme:subgraphs`, two stale directory READMEs), pushed twice,\nand **no `Code-quality gates` run was ever created for either new head.** The\nPR went on showing a red from a superseded commit.\n\nThe cause was not the queue and not a path filter. The PR was\n**`mergeable_state: \"dirt",
       "file": "beans/defs/folio-assistant-52cz--a-conflicted-pr-creates-no-pull-request-run-and-g6.md"
     },
