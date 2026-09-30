@@ -72,5 +72,5 @@ answer.
 | | |
 |---|---|
 | the three states, and never rendering the third as clean | [`ci-health`](ci-health.md) |
-| where a new rule belongs before you write it | [`placement`](placement.md) |
+| where a new rule belongs before you write it | [`placement`](../kg/kg-core/placement.md) |
 | re-measure rather than quoting a number | [`uses-editorial-review`](uses-editorial-review.md) |

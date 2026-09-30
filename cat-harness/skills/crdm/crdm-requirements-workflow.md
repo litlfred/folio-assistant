@@ -180,7 +180,7 @@ Three checks that catch most of it:
 This is also why the declaration file keeps a fixed name while artefacts are
 stub-named: a consumer must be able to open a repository it has never seen
 without first deriving a filename. See
-[`directory-conventions`](../../skills/folio-core/directory-conventions.md) §Naming.
+[`directory-conventions`](../../skills/kg/kg-core/directory-conventions.md) §Naming.
 
 **Post to the issue:** structured requirements with acceptance criteria.
 

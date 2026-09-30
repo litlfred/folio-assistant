@@ -64,8 +64,13 @@ describe("the live table", () => {
     // So the SUBJECT moved and the CLAIM did not: a co-located skill is still
     // discovered rather than hand-listed. Asserted on the skill rather than on
     // the directory, because the directory was the accident.
-    const dir = discoverLocalPackages(ROOT)["folio-core"];
+    //
+    // And it moved again (bean `9umr`): `corpus-grep` is a KG skill, now in
+    // `kg-core` inside the `kg` TOPIC — one level deeper, which is the second
+    // thing this now proves discovery reaches.
+    const dir = discoverLocalPackages(ROOT)["kg-core"];
     expect(dir).toBeDefined();
+    expect(dir!).toContain(join("skills", "kg", "kg-core"));
     expect(readdirSync(dir!)).toContain("corpus-grep.md");
   });
 
@@ -89,7 +94,7 @@ describe("the live table", () => {
     // live subject instead. `bootstrap/skills/` is basenamed `skills` and
     // takes its instance's name, exactly as `src/skills/` did. (The subject was
     // `kg-navigation/skills/` until bean `byql` folded that instance into
-    // cat-harness as an ordinary `skills/kg-navigation/` package.)
+    // cat-harness as an ordinary `skills/kg/kg-navigation/` package.)
     expect(discoverLocalPackages(ROOT)["bootstrap"]).toContain("bootstrap/skills");
   });
 });

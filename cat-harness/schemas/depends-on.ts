@@ -92,7 +92,7 @@ export interface DependsOnExport {
 
 const GAP_DETAIL: Record<DependsOnGapReason, string> = {
   "no-uri":
-    "has an id and a version, but no `canonicalUrl` — §3.4's record is `{packageId, version, uri}` and `canonicalUrl` is what plays `uri`, so the record cannot be expressed. Not a publishability question any more: every instance carries an id and a version (`skills/folio-core/instance-publication.md`)",
+    "has an id and a version, but no `canonicalUrl` — §3.4's record is `{packageId, version, uri}` and `canonicalUrl` is what plays `uri`, so the record cannot be expressed. Not a publishability question any more: every instance carries an id and a version (`skills/kg/kg-core/instance-publication.md`)",
   unresolved:
     "matches no instance in this checkout — it is external to it, or the name is misspelled, and those are not the same",
   unreadable: "its declaration did not parse, so nothing about it is known — which is not the same as it having no record",
@@ -133,7 +133,7 @@ export function dependsOnFor(instanceRoot: string): DependsOnExport {
   // §3.4 USED TO BE withheld from any instance that had not declared
   // `publishable: true`. That gate is gone: the owner's ruling of 2026-09-23
   // gives every instance an id and a version, and puts them all in `draft`
-  // (`skills/folio-core/instance-publication.md`).
+  // (`skills/kg/kg-core/instance-publication.md`).
   //
   // What remains is a DIFFERENT obligation, and it is the one §3.4 actually
   // has: the record is `{packageId, version, uri}`, and `canonicalUrl` plays

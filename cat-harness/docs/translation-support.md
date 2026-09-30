@@ -351,7 +351,7 @@ The `po-inject` tool takes a completed `.po` file and produces a translated
 
 Semantic verification is per BLOCK, not per page, and it is not a script's to assert: `content/pipeline/translation-block-qa.ts` writes what a script can establish (coverage, preserved terms, untranslated echoes) and leaves
 `translation-semantic-roundtrip` with no verdict. A real round trip needs a back-translator that has not seen the original — a pair of agents, recorded by `content/pipeline/translation-roundtrip.ts`. See
-`skills/folio-core/translation-manager.md`.
+`skills/library/library-core/translation-manager.md`.
 
 ---
 

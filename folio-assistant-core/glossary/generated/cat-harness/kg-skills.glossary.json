@@ -26,7 +26,7 @@
       "prefLabel": "adopt-methodology-from-source",
       "definition": "The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related beans and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/methodology-from-source.bpmn.",
       "notation": "adopt-methodology-from-source",
-      "source": "cat-harness/skills/folio-core/adopt-methodology-from-source.md",
+      "source": "cat-harness/skills/library/library-core/adopt-methodology-from-source.md",
       "status": "candidate"
     },
     {
@@ -42,7 +42,7 @@
       "prefLabel": "archiving-arxiv",
       "definition": "Materializing a paper from arXiv — why the version suffix is part of the identity rather than a detail, what to keep beside the PDF, and which facts must be read from the published API rather than recalled.",
       "notation": "archiving-arxiv",
-      "source": "cat-harness/skills/folio-core/archiving-arxiv.md",
+      "source": "cat-harness/skills/library/library-core/archiving-arxiv.md",
       "status": "candidate"
     },
     {
@@ -50,7 +50,7 @@
       "prefLabel": "archiving-web-pages",
       "definition": "Capturing a web page so it can be cited later — the two fidelities, what each one is evidence of, and why capturing only one of them loses something that cannot be recovered. A URL is not an archive.",
       "notation": "archiving-web-pages",
-      "source": "cat-harness/skills/folio-core/archiving-web-pages.md",
+      "source": "cat-harness/skills/library/library-core/archiving-web-pages.md",
       "status": "candidate"
     },
     {
@@ -58,7 +58,7 @@
       "prefLabel": "asset-extraction",
       "definition": "Reading a container — a zip, a PDF, a saved web page — into the knowledge graph. What goes in by default (metadata), what does not (contents), the three timestamps that sit near each other and mean different things, and why a producer string is evidence.",
       "notation": "asset-extraction",
-      "source": "cat-harness/skills/folio-core/asset-extraction.md",
+      "source": "cat-harness/skills/library/library-core/asset-extraction.md",
       "status": "candidate"
     },
     {
@@ -66,7 +66,7 @@
       "prefLabel": "associate-harness",
       "definition": "Declare a harness this one knows about and does not hold (`associatedHarnesses`): a folio in another repository, published at its own site. Referenced, never loaded, never materialized. Issue #1146.",
       "notation": "associate-harness",
-      "source": "cat-harness/skills/folio-core/associate-harness.md",
+      "source": "cat-harness/skills/kg/kg-core/associate-harness.md",
       "status": "candidate"
     },
     {
@@ -74,7 +74,7 @@
       "prefLabel": "audit-coverage",
       "definition": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census.",
       "notation": "audit-coverage",
-      "source": "cat-harness/skills/folio-core/audit-coverage.md",
+      "source": "cat-harness/skills/kg/kg-core/audit-coverage.md",
       "status": "candidate"
     },
     {
@@ -98,7 +98,7 @@
       "prefLabel": "bib-human-review",
       "definition": "Human-validated bibliography workflow. Flag references that have not been human-reviewed against their source; drive the acquisition ladder (source-in-repo → acquire-legally → physical-library); open one GitHub issue per reference needing physical review (full project context + bibliographic data + page-photo request, assigned to the repo owner); hand off uploaded photos to the bib-photo-ingestion watcher. Use when auditing bib human-review status, ingesting an uploaded paper's results, or preparing a physical-review issue.",
       "notation": "bib-human-review",
-      "source": "cat-harness/skills/folio-core/bib-human-review.md",
+      "source": "cat-harness/skills/library/library-core/bib-human-review.md",
       "status": "candidate"
     },
     {
@@ -106,7 +106,7 @@
       "prefLabel": "bib-photo-ingestion-watcher",
       "definition": "Integration-watcher for bib physical-review issues. When a page photo is uploaded to a `bib-physical-review` issue (or an in-repo source passage is agent-identified), OCR/read it, formalise the cited result (if the project has a formal-proof pipeline), confirm the project's usage matches the source, run machine + agent bib validation, then set the reference status to `validated` and refresh references.review.json. Use when processing a bib-physical-review issue that has an attached photo, or when ingesting an uploaded paper.",
       "notation": "bib-photo-ingestion-watcher",
-      "source": "cat-harness/skills/folio-core/bib-photo-ingestion-watcher.md",
+      "source": "cat-harness/skills/library/library-core/bib-photo-ingestion-watcher.md",
       "status": "candidate"
     },
     {
@@ -114,7 +114,7 @@
       "prefLabel": "bib-qa",
       "definition": "Bibliography quality-assurance agent — validates every reference in content/schema/references.ts against several QA checks: URL availability, URL resolution, metadata completeness, citation coverage, and screenshot/image evidence. Generates bib-qa.json consumed by the standalone bib-qa.html dashboard.",
       "notation": "bib-qa",
-      "source": "cat-harness/skills/folio-core/bib-qa.md",
+      "source": "cat-harness/skills/library/library-core/bib-qa.md",
       "status": "candidate"
     },
     {
@@ -225,7 +225,7 @@
       "prefLabel": "code-lists",
       "definition": "Author, extend or consume a code list: a closed set of codes, each with a label, a definition and a source, kept as a node and published as SKOS. Use when a diagram, a schema or a script needs a fixed set of values (adjudication answers, namespace IRIs) instead of strings in code.",
       "notation": "code-lists",
-      "source": "cat-harness/skills/folio-core/code-lists.md",
+      "source": "cat-harness/skills/library/library-core/code-lists.md",
       "status": "candidate"
     },
     {
@@ -233,7 +233,7 @@
       "prefLabel": "code-node-review",
       "definition": "Review the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/` — for the joins a reader cannot see: that a node declares what it is, that what it names resolves, and that the mechanism it describes is the one that actually runs.",
       "notation": "code-node-review",
-      "source": "cat-harness/skills/folio-core/code-node-review.md",
+      "source": "cat-harness/skills/kg/kg-core/code-node-review.md",
       "status": "candidate"
     },
     {
@@ -289,7 +289,7 @@
       "prefLabel": "content-acquisition",
       "definition": "Getting a resource INTO the graph in the first place — accepting one offered unprompted, or asking for one and then asking for it to be uploaded. The channels are plural and open: `uploads/` is one, the conversation is another. Runs before document ingestion, which begins only once a file has landed.",
       "notation": "content-acquisition",
-      "source": "cat-harness/skills/folio-core/content-acquisition.md",
+      "source": "cat-harness/skills/library/library-core/content-acquisition.md",
       "status": "candidate"
     },
     {
@@ -312,7 +312,7 @@
       "prefLabel": "content-context-and-state-graphs",
       "definition": "Every declared graph is the subject a process produces, static context it reads, or live state it writes. The one question that settles it, the classification of every kind with its reason, what a consumer may assume of each layer, and why agent memory is context rather than state.",
       "notation": "content-context-and-state-graphs",
-      "source": "cat-harness/skills/folio-core/content-context-and-state-graphs.md",
+      "source": "cat-harness/skills/kg/kg-core/content-context-and-state-graphs.md",
       "status": "candidate"
     },
     {
@@ -408,7 +408,7 @@
       "prefLabel": "corpus-grep",
       "definition": "Pre-declaration corpus check. Before declaring any item \"open\", \"gap\", \"TODO\", \"open problem\", \"pending derivation\" — or asserting in chat that something is unresolved in the corpus — run the four-path grep checklist. A source file's `## Status` note lags the corpus by weeks; the corpus is the source of truth. An item is open only after all four paths come back empty (modulo the originating file itself).",
       "notation": "corpus-grep",
-      "source": "cat-harness/skills/folio-core/corpus-grep.md",
+      "source": "cat-harness/skills/kg/kg-core/corpus-grep.md",
       "status": "candidate"
     },
     {
@@ -503,7 +503,7 @@
       "prefLabel": "data-modelling",
       "definition": "Build a data model: identify the entities a body of work is actually about, the relations between them, and the cardinalities — then declare it where the tools can read it. Process-agnostic technique; the CRDM phase that invokes it is `crdm-data-model`.",
       "notation": "data-modelling",
-      "source": "cat-harness/skills/folio-core/data-modelling.md",
+      "source": "cat-harness/skills/kg/kg-core/data-modelling.md",
       "status": "candidate"
     },
     {
@@ -597,7 +597,7 @@
       "id": "directory-conventions",
       "prefLabel": "directory-conventions",
       "notation": "directory-conventions",
-      "source": "cat-harness/skills/folio-core/directory-conventions.md",
+      "source": "cat-harness/skills/kg/kg-core/directory-conventions.md",
       "status": "candidate"
     },
     {
@@ -665,7 +665,7 @@
       "prefLabel": "domain-fencing",
       "definition": "How a domain-specific rule is kept out of the platform without being lost — the opt-in axis mechanism, the one criterion that should use it and does not, and the test for whether a rule generalizes at all.",
       "notation": "domain-fencing",
-      "source": "cat-harness/skills/graph-management/domain-fencing.md",
+      "source": "cat-harness/skills/kg/graph-management/domain-fencing.md",
       "status": "candidate"
     },
     {
@@ -673,7 +673,7 @@
       "prefLabel": "edge-kinds-and-blast-radius",
       "definition": "A graph has more than one kind of edge, and conflating them corrupts both the ordering and the impact answer. Interface edges versus implementation edges, the union rule for blast radius, and the split/merge signals — generalized out of the formal-math skills that first stated them.",
       "notation": "edge-kinds-and-blast-radius",
-      "source": "cat-harness/skills/graph-management/edge-kinds-and-blast-radius.md",
+      "source": "cat-harness/skills/kg/graph-management/edge-kinds-and-blast-radius.md",
       "status": "candidate"
     },
     {
@@ -734,7 +734,7 @@
       "prefLabel": "filing-dublin-core",
       "definition": "Cataloguing a source as it arrives — which facts are `dcterms`, which are this project's own, and why the line is drawn by the vocabulary rather than by convenience. The bibliographic layer only; the derived layer belongs to ingestion.",
       "notation": "filing-dublin-core",
-      "source": "cat-harness/skills/folio-core/filing-dublin-core.md",
+      "source": "cat-harness/skills/library/library-core/filing-dublin-core.md",
       "status": "candidate"
     },
     {
@@ -742,7 +742,7 @@
       "prefLabel": "flushable-containers",
       "definition": "A flushable container is a named store that accumulates by design — a trash you can recover from, a review preview, a console log. It declares a buffer limit, badges when over it, and offers three flush actions: flush all, trim to limit, and select to prune. What \"flush\" means, and which end of the order is expendable, are declared per container and differ.",
       "notation": "flushable-containers",
-      "source": "cat-harness/skills/folio-core/flushable-containers.md",
+      "source": "cat-harness/skills/kg/kg-core/flushable-containers.md",
       "status": "candidate"
     },
     {
@@ -789,7 +789,7 @@
       "id": "glossary-build",
       "prefLabel": "glossary-build",
       "notation": "glossary-build",
-      "source": "cat-harness/skills/folio-core/glossary-build.md",
+      "source": "cat-harness/skills/library/library-core/glossary-build.md",
       "status": "candidate"
     },
     {
@@ -797,7 +797,7 @@
       "prefLabel": "glossary-terms",
       "definition": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
       "notation": "glossary-terms",
-      "source": "cat-harness/skills/folio-core/glossary-terms.md",
+      "source": "cat-harness/skills/library/library-core/glossary-terms.md",
       "status": "candidate"
     },
     {
@@ -821,7 +821,7 @@
       "prefLabel": "graph-detanglement",
       "definition": "Drive a tangled graph toward a clean partition, so a sub-graph can be split off when it grows too large or when a business reason separates it. The staged practice — declare in place, detangle, isolate, extract — with the seventeen moves that were measured rather than argued, and the failures each one cost.",
       "notation": "graph-detanglement",
-      "source": "cat-harness/skills/graph-management/graph-detanglement.md",
+      "source": "cat-harness/skills/kg/graph-management/graph-detanglement.md",
       "status": "candidate"
     },
     {
@@ -829,7 +829,7 @@
       "prefLabel": "graph-rendering",
       "definition": "Draw any graph in a harness (schemas, processes, a paper's block graph, a Lean proof's dependencies, a detangle partition) so the picture is derived, checkable and readable. Ten rules learned on the UML overview, which engine to lay a graph out with and why, and how each graph kind here applies them.",
       "notation": "graph-rendering",
-      "source": "cat-harness/skills/graph-management/graph-rendering.md",
+      "source": "cat-harness/skills/kg/graph-management/graph-rendering.md",
       "status": "candidate"
     },
     {
@@ -845,7 +845,7 @@
       "prefLabel": "harness-requirements",
       "definition": "What an instance OWES for every directory it declares — a visualiser, a documentation entry, a governing skill, json/jsonld/schema.json serialisations at the directory's URL and at every node beneath it, and a starting README of its own. Read before declaring a directory, before adding a graph kind, and when reading `check:subgraph-coverage`. Carries which obligations are ranked as unmet promises rather than unanswered questions, why the discriminator is \"is this the static knowledge graph\", and which single obligation a harness may never waive.",
       "notation": "harness-requirements",
-      "source": "cat-harness/skills/folio-core/harness-requirements.md",
+      "source": "cat-harness/skills/kg/kg-core/harness-requirements.md",
       "status": "candidate"
     },
     {
@@ -914,7 +914,7 @@
       "prefLabel": "instance-kinds",
       "definition": "How to make a new KIND of harness instance — choosing the prefix family, the keep-the-kind's-name default and the owner's right to decline it, which inherited files the new owner may repoint, and what a new GRAPH kind must declare. Read before naming a new instance, before adding a value to the graph-kind registry, and before building a visualiser. Carries the test that usually says \"this is not a new kind\".",
       "notation": "instance-kinds",
-      "source": "cat-harness/skills/folio-core/instance-kinds.md",
+      "source": "cat-harness/skills/kg/kg-core/instance-kinds.md",
       "status": "candidate"
     },
     {
@@ -922,7 +922,7 @@
       "prefLabel": "instance-publication",
       "definition": "Every asset carries an id and a version and sits in DRAFT. Publication is a state, not a boolean, and `published` is refused by the schema because the formal process does not exist yet. Carries the id namespace rule, why a mirror never takes its subject's identity, and what a consumer may assume of a draft.",
       "notation": "instance-publication",
-      "source": "cat-harness/skills/folio-core/instance-publication.md",
+      "source": "cat-harness/skills/kg/kg-core/instance-publication.md",
       "status": "candidate"
     },
     {
@@ -978,7 +978,7 @@
       "prefLabel": "kg-contribution-offer",
       "definition": "Ask whether agreed requirements should become knowledge-graph content, and as what — in a form the person can answer by selecting. Use at the end of CRDM sign-off, or whenever a body of agreed work could become a skill, a process, a schema or a bean and nobody has been asked. Offers \"none\" as a first-class answer.",
       "notation": "kg-contribution-offer",
-      "source": "cat-harness/skills/folio-core/kg-contribution-offer.md",
+      "source": "cat-harness/skills/kg/kg-core/kg-contribution-offer.md",
       "status": "candidate"
     },
     {
@@ -986,7 +986,7 @@
       "prefLabel": "kg-export",
       "definition": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, and before adding a node type to the export.",
       "notation": "kg-export",
-      "source": "cat-harness/skills/folio-core/kg-export.md",
+      "source": "cat-harness/skills/kg/kg-core/kg-export.md",
       "status": "candidate"
     },
     {
@@ -994,7 +994,7 @@
       "prefLabel": "kg-navigation",
       "definition": "How a cold agent finds and loads the skill that governs its task. The two Tools that serve the knowledge graph — the MCP pair and the filesystem fallback — what counts as a skill, and the three ways the search goes wrong.",
       "notation": "kg-navigation",
-      "source": "cat-harness/skills/kg-navigation/kg-navigation.md",
+      "source": "cat-harness/skills/kg/kg-navigation/kg-navigation.md",
       "status": "candidate"
     },
     {
@@ -1002,7 +1002,7 @@
       "prefLabel": "kg-separation",
       "definition": "Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, and rollback. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools is the worked example; cat-harness + cat-harness-tools is next.",
       "notation": "kg-separation",
-      "source": "cat-harness/skills/graph-management/kg-separation.md",
+      "source": "cat-harness/skills/kg/graph-management/kg-separation.md",
       "status": "candidate"
     },
     {
@@ -1010,7 +1010,7 @@
       "prefLabel": "kg-to-portal",
       "definition": "Getting a knowledge graph out to a public portal — the six stages between \"the graph is in the repository\" and \"a reader's browser has the bytes\", why a CDN is a layer rather than a publication host, and which decisions are the deployment's to make rather than the pipeline's.",
       "notation": "kg-to-portal",
-      "source": "cat-harness/skills/folio-core/kg-to-portal.md",
+      "source": "cat-harness/skills/kg/kg-core/kg-to-portal.md",
       "status": "candidate"
     },
     {
@@ -1157,7 +1157,7 @@
       "prefLabel": "library-ingestion",
       "definition": "Taking a file from `uploads/` to `library/<bib-slug>/` — which rung to reach for and why, what a complete L1 entry holds, and why an inferred structure is refused rather than guessed. One entry point: `bun run ingest`.",
       "notation": "library-ingestion",
-      "source": "cat-harness/skills/folio-core/library-ingestion.md",
+      "source": "cat-harness/skills/library/library-core/library-ingestion.md",
       "status": "candidate"
     },
     {
@@ -1173,7 +1173,7 @@
       "prefLabel": "literature-search",
       "definition": "Finding the source a node cites but does not hold — memory first, then this repository, then open-access services. Always produce a DIRECT download link. Read before recording that a citation cannot be found, and before appraising any source you have not opened. Its central rule: a blocked network is not a missing document, and the two must never share a report.",
       "notation": "literature-search",
-      "source": "cat-harness/skills/folio-core/literature-search.md",
+      "source": "cat-harness/skills/library/library-core/literature-search.md",
       "status": "candidate"
     },
     {
@@ -1181,7 +1181,7 @@
       "prefLabel": "lsi-indexing",
       "definition": "Build, read and audit a Latent Semantic Indexing index over a declared prose graph — a library, the skills, the beans, docs — to find units that discuss the same thing in different words, near-duplicates, outlier clusters, and a proposed home for unfiled work. Every output is a proposal; LSI never writes a relation.",
       "notation": "lsi-indexing",
-      "source": "cat-harness/skills/graph-management/lsi-indexing.md",
+      "source": "cat-harness/skills/kg/graph-management/lsi-indexing.md",
       "status": "candidate"
     },
     {
@@ -1281,7 +1281,7 @@
       "prefLabel": "ontologist",
       "definition": "Semantic Ontologist — scans narrative text for ambiguous terms, generates a formal glossary/registry, and produces a mapping linking narrative strings to formal identifiers. Acts as the \"Gatekeeper\" ensuring every term has a unique type/identity assignment before formalization proceeds.",
       "notation": "ontologist",
-      "source": "cat-harness/skills/folio-core/ontologist.md",
+      "source": "cat-harness/skills/library/library-core/ontologist.md",
       "status": "candidate"
     },
     {
@@ -1337,7 +1337,7 @@
       "prefLabel": "placement",
       "definition": "Establish where a new node belongs BEFORE you create it — which instance, which declared graph, which kind of node, and which of the two \"stub\" conventions applies. Read before adding a skill, role, actor, workflow, decision table, schema, tool or content object, and before writing any literal that names one folio.",
       "notation": "placement",
-      "source": "cat-harness/skills/folio-core/placement.md",
+      "source": "cat-harness/skills/kg/kg-core/placement.md",
       "status": "candidate"
     },
     {
@@ -1652,7 +1652,7 @@
       "prefLabel": "schema-management",
       "definition": "Manage a schema over its life — add one, change one, read the schema graph and its viewer, and act on what the reader could not determine. The layout rule lives in `directory-conventions`; the entity question lives in `data-modelling`; this is the work in between.",
       "notation": "schema-management",
-      "source": "cat-harness/skills/folio-core/schema-management.md",
+      "source": "cat-harness/skills/kg/kg-core/schema-management.md",
       "status": "candidate"
     },
     {
@@ -1753,7 +1753,7 @@
       "prefLabel": "skill-registration",
       "definition": "Adding a skill is never a one-file change. What a new skill file owes, the one command that performs the derived half, the one declaration it deliberately leaves to you, why running it once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.",
       "notation": "skill-registration",
-      "source": "cat-harness/skills/folio-core/skill-registration.md",
+      "source": "cat-harness/skills/kg/kg-core/skill-registration.md",
       "status": "candidate"
     },
     {
@@ -1808,7 +1808,7 @@
       "prefLabel": "surprise-to-corpus",
       "definition": "What was unexpected in that task, and does it belong in the corpus? Logical surprise is the detectable kind, recurrence is the filter that stops this generating noise every turn, and the agent PROMPTS — it never writes corpus guidance unasked.",
       "notation": "surprise-to-corpus",
-      "source": "cat-harness/skills/folio-core/surprise-to-corpus.md",
+      "source": "cat-harness/skills/kg/kg-core/surprise-to-corpus.md",
       "status": "candidate"
     },
     {
@@ -1847,7 +1847,7 @@
       "prefLabel": "tabular-metadata",
       "definition": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph.",
       "notation": "tabular-metadata",
-      "source": "cat-harness/skills/folio-core/tabular-metadata.md",
+      "source": "cat-harness/skills/library/library-core/tabular-metadata.md",
       "status": "candidate"
     },
     {
@@ -1965,7 +1965,7 @@
       "prefLabel": "translation-manager",
       "definition": "Translation lifecycle management for folio content. Covers gettext PO/POT extraction and injection, TranslationNode manifests as KG nodes, official vs unofficial translations, staleness tracking, sign-off workflow, automatic badge rendering, and the poSources fallback resolution chain.",
       "notation": "translation-manager",
-      "source": "cat-harness/skills/folio-core/translation-manager.md",
+      "source": "cat-harness/skills/library/library-core/translation-manager.md",
       "status": "candidate"
     },
     {
@@ -1989,7 +1989,7 @@
       "prefLabel": "uml-overview",
       "definition": "Read, regenerate or extend the UML class diagrams of a harness: one per harness and one per named sub-graph it declares, plus the harness object model. Every box is generated from a declaration and a schema, never drawn by hand, so a wrong diagram is fixed at the declaration or the schema, and a dashed \"could not determine\" box is a finding about the registry.",
       "notation": "uml-overview",
-      "source": "cat-harness/skills/folio-core/uml-overview.md",
+      "source": "cat-harness/skills/kg/kg-core/uml-overview.md",
       "status": "candidate"
     },
     {
@@ -2029,7 +2029,7 @@
       "prefLabel": "uploads-watch",
       "definition": "Notice what has landed in the acquisition queue, and tell an arrival from a backlog. Reports; it never deletes, and never ingests on its own say-so.",
       "notation": "uploads-watch",
-      "source": "cat-harness/skills/folio-core/uploads-watch.md",
+      "source": "cat-harness/skills/library/library-core/uploads-watch.md",
       "status": "candidate"
     },
     {
@@ -2069,7 +2069,7 @@
       "prefLabel": "vocabulary-authority",
       "definition": "One vocabulary is authoritative for one kind of fact, and every other is a derived rendering reached by a declared mapping. Which vocabulary owns what here, the pros and cons behind each ruling, how DC and SKOS overlap and what stops them drifting, and the normalisation-first rule for any modelling or mapping exercise.",
       "notation": "vocabulary-authority",
-      "source": "cat-harness/skills/folio-core/vocabulary-authority.md",
+      "source": "cat-harness/skills/kg/kg-core/vocabulary-authority.md",
       "status": "candidate"
     },
     {

@@ -26,7 +26,7 @@
  * SEMVER"*, with alignment to FHIR/SUSHI a hard constraint because some
  * instances ARE consumed from outside this monorepo. So the two tiers differ
  * and the rule lives where declarations are governed —
- * [`directory-conventions`](../skills/folio-core/directory-conventions.md)
+ * [`directory-conventions`](../skills/kg/kg-core/directory-conventions.md)
  * §"Pinning a reference — a SHA may stage, only a version may publish" —
  * with `bun run check:published-refs` as its mechanical half. The full scheme
  * is `cat-harness/docs/proposals/instance-versioning.md`.
