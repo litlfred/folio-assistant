@@ -2,12 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-reference-direction.ts",
-    "script_hash": "8860d288bd15"
+    "script_hash": "5732e61e5d03"
   },
   "subject": {
     "kind": "reference-direction",
     "id": "instances"
   },
+  "updated_at": "2026-09-30T20:10:52.694Z",
   "families": {
     "instances-undeclared": {
       "summary": "An instance that declares no `needs`, so nothing about its layer is known and every reference from it is `undetermined`. `[]` is the floor; absent is nobody-has-said, and collapsing the two would make an undeclared instance look either tangled or spotless.",
@@ -16,10 +17,10 @@
     },
     "multi-destination-unlisted": {
       "summary": "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which `PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one is an unrecorded question rather than a finding somebody can act on: \"move it up\" has no single destination. This is the set the script exits 1 on, and recording it is not resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-      "count": 91,
+      "count": 88,
       "entries": [
         {
-          "file": "cat-harness/content/docs/knowledge-graph/what-is-declared-today.md",
+          "file": "cat-harness/content/docs/kgraph/what-is-declared-today.md",
           "names": 2
         },
         {
@@ -40,7 +41,7 @@
         },
         {
           "file": "cat-harness/docs/architecture/folio-board-requirements.md",
-          "names": 3
+          "names": 2
         },
         {
           "file": "cat-harness/docs/architecture/future-state.md",
@@ -56,7 +57,7 @@
         },
         {
           "file": "cat-harness/docs/external-schemas/index.md",
-          "names": 3
+          "names": 2
         },
         {
           "file": "cat-harness/docs/fr/publication-workflow.md",
@@ -72,14 +73,10 @@
         },
         {
           "file": "cat-harness/docs/processes/copy-out-materialized.md",
-          "names": 3
-        },
-        {
-          "file": "cat-harness/docs/processes/kg-to-portal.md",
           "names": 2
         },
         {
-          "file": "cat-harness/docs/processes/sample-import.md",
+          "file": "cat-harness/docs/processes/kg-to-portal.md",
           "names": 2
         },
         {
@@ -195,10 +192,6 @@
           "names": 6
         },
         {
-          "file": "cat-harness/scripts/check-structure-accessor.ts",
-          "names": 2
-        },
-        {
           "file": "cat-harness/scripts/check-subgraph-coverage.ts",
           "names": 2
         },
@@ -212,10 +205,6 @@
         },
         {
           "file": "cat-harness/scripts/compose-docs.ts",
-          "names": 2
-        },
-        {
-          "file": "cat-harness/scripts/gates.ts",
           "names": 2
         },
         {
@@ -351,16 +340,20 @@
           "names": 3
         },
         {
+          "file": "cat-harness/src/builtin-adapters.ts",
+          "names": 2
+        },
+        {
           "file": "cat-harness/src/docs/declaration-claims.ts",
           "names": 3
         },
         {
-          "file": "cat-harness/src/workflow/process-model.ts",
+          "file": "cat-harness/tools/index.ts",
           "names": 2
         },
         {
-          "file": "cat-harness/tools/index.ts",
-          "names": 2
+          "file": "folio-assistant-core/folio-assistant-core.json",
+          "names": 4
         },
         {
           "file": "folio-assistant-core/schemas/library-ref.ts",
@@ -372,10 +365,6 @@
         },
         {
           "file": "folio-assistant-core/scripts/check-voices.ts",
-          "names": 3
-        },
-        {
-          "file": "folio-assistant-core/skills/skills.json",
           "names": 3
         },
         {
@@ -580,13 +569,8 @@
     },
     "pending-stale": {
       "summary": "A `PENDING` entry that no longer qualifies — either no wrong-direction reference is left in the file, or it now names exactly one instance and so HAS a destination. The set is compared both ways on purpose: a list that only grows stops meaning anything.",
-      "count": 1,
-      "entries": [
-        {
-          "file": "cat-harness/scripts/layout-norms-baseline.json",
-          "why": "now names ONE instance, so it has a destination and is not pending"
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "verdict-census": {
       "summary": "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict counts are recorded because they ARE this axis's answer — a reader holding only this file cannot otherwise tell `audited clean` from `never audited`, which is the whole reason the sidecar exists. They are not graded because they move whenever anybody writes a paragraph, and `audit-coverage` already established that a gate keyed on a number like that is stale by default. FILE counts are not here at all — how many files were skipped as machine-written or self-declared generator output is a census of the tree, not a statement about direction, and stays in the printed report. 47 file(s) held pending; 4 exemption(s) declared, each with a stated reason.",
@@ -594,18 +578,18 @@
       "entries": [
         {
           "instances": 17,
-          "occurrences": 5391,
+          "occurrences": 5554,
           "allowed": 0,
-          "wrongDirection": 1402,
-          "wrongDirectionFiles": 327,
-          "exempt": 1083,
-          "namesRepository": 1915,
-          "undetermined": 991,
+          "wrongDirection": 1403,
+          "wrongDirectionFiles": 335,
+          "exempt": 1094,
+          "namesRepository": 2053,
+          "undetermined": 1004,
           "pendingFiles": 47,
-          "pendingOccurrences": 480
+          "pendingOccurrences": 470
         }
       ]
     }
   },
-  "total": 140
+  "total": 136
 }

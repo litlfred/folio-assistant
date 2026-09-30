@@ -11,7 +11,7 @@
  * @module adapters/paper/tools/_pipeline
  */
 
-import { folioDir } from "../../../schemas/cat-harness.js";
+import { folioDir } from "../../../../cat-harness/schemas/cat-harness.js";
 import { spawnSync } from "child_process";
 import { existsSync, readdirSync } from "fs";
 import { join, resolve } from "path";
@@ -37,7 +37,14 @@ export interface PipelineResult {
  * that a tool never has to know where it is installed.
  */
 function platformPipelineDir(): string {
-  return resolve(import.meta.dir, "..", "..", "..", "content", "pipeline");
+  // MOVED 2026-09-30 (bean `ybp4`): this module left `cat-harness/` for
+  // `folio-assistant-core/`, so three hops no longer reach the PLATFORM root —
+  // they reach core's. The platform must be named now. An `import.meta.dir` hop
+  // is invisible to every import-path scan, so neither typecheck nor a specifier
+  // rewrite could see this break; `resolvePipelineScript("qa-sweep")` returning
+  // undefined in `pipeline-resolution.test.ts` is what caught it, which is why
+  // those tests moved WITH their subject.
+  return resolve(import.meta.dir, "..", "..", "..", "..", "cat-harness", "content", "pipeline");
 }
 
 /**
@@ -58,7 +65,12 @@ function platformPipelineDir(): string {
  * true pre-split and is what #223 will remove.
  */
 function corePipelineDir(): string {
-  return resolve(import.meta.dir, "..", "..", "..", "..", "folio-assistant-core", "scripts");
+  // Now WITHIN this module's own instance — the simplification the move bought.
+  // This used to hop out to the parent checkout and back down, the one place
+  // here that assumed the two instances sit beside each other. That assumption
+  // is gone from this function; what remains of it is in `platformPipelineDir`,
+  // pointing the other way and in the LEGAL direction.
+  return resolve(import.meta.dir, "..", "..", "..", "scripts");
 }
 
 /**

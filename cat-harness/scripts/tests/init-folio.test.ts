@@ -220,14 +220,25 @@ describe("what gets written", () => {
     // cannot tell the right path from the broken one is not covering the
     // thing it looks like it covers, so each full path is written out.
     //
-    // The two now differ in their INSTANCE, which is the fact worth pinning:
-    // `document` under `cat-harness/`, `paper` under `folio-assistant-sci/`.
+    // The two differ in their INSTANCE, which is the fact worth pinning, and
+    // since 2026-09-30 NEITHER is under `cat-harness/`: `document` under
+    // `folio-assistant-core/` (bean `ybp4`, step 2 of the adapters closure)
+    // and `paper` under `folio-assistant-sci/` (bean `y5si`, step 1). That is
+    // the whole closure — the escape axis reads 0 because the harness no
+    // longer holds an adapter that imports upward.
+    //
+    // This assertion is why `toBe` replaced `toContain`, and it earned that on
+    // the very next move: the document path changed instance, and a substring
+    // pin on `adapters/document/index.ts` would have passed over it silently.
     // A change that re-composes both from one template breaks this line.
     const doc = tmp();
     initFolio(opts(doc));
     const docCfg = JSON.parse(readFileSync(scaffoldConfigIn(doc), "utf-8"));
     expect(docCfg.contentType).toBe("document");
-    expect(docCfg.adapterModule).toBe("./folio-assistant/cat-harness/adapters/document/index.ts");
+    expect(docCfg.adapterModule).toBe("./folio-assistant/folio-assistant-core/adapters/document/index.ts");
+    // The document entry's `module` now starts `../` too, exactly as paper's
+    // does, so it has to RESOLVE rather than carry the segment through.
+    expect(docCfg.adapterModule).not.toContain("..");
 
     const pap = tmp();
     initFolio(opts(pap, { contentType: "paper" }));
