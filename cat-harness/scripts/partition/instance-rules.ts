@@ -164,6 +164,7 @@ export const RULES: Rule[] = [
     triaged: true,
     exact: [
       "scripts/check-ci-health.ts",          // workflow state on the default branch
+      "scripts/watch-ci.ts",                 // one commit's check runs → a three-state verdict
       "scripts/check-workflow-policy.ts",    // BPMN relaxation legality
       "scripts/bpmn-render.ts",              // BPMN → SVG
       "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
