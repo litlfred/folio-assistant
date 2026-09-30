@@ -643,6 +643,27 @@ uniquely was had no picture.
 
 A role that binds no lane in any diagram is reported by `role-binds-a-lane`:
 either a lane name has drifted, or the role is dead.
+
+## Renaming a role, and a role's other names
+
+**Never let a name go silently.** A role carries every name it goes by
+(owner, 2026-09-30: *"model both retired names and alternative names"*):
+
+- **`otherNames`** — names in use today: synonyms, a local title, an example.
+  The same field, and meaning, as `otherNames` on WHO SMART Base's Generic
+  Persona. Published as `skos:altLabel`, beside the names the role's lanes are
+  drawn with.
+- **`formerNames`** — `{ "name", "retiredOn" }` for each name it no longer
+  goes by. Published as `skos:hiddenLabel` on the role, and the old name's
+  concept is `owl:deprecated` and `dcterms:isReplacedBy` the role, so a reader
+  holding the old name from older text is sent to the current one.
+
+To rename: change `title`, and add the old one to `formerNames` with today's
+date, in the same commit. `readRoleGraph` refuses a name — title, other or
+former — that two roles share, so a retired name cannot be quietly given to a
+new role. The glossary ledger still records, from the harness's side, every
+name a swimlane has derived; the role's own lists are the authored record a
+README can show (`kg:roles`, written by bootstrap-tools).
 {% endraw %}
 
 ## Processes that run this skill

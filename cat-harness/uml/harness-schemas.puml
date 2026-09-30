@@ -29,6 +29,8 @@ package scenario {
     title [1] : string
     description [1] : string
     actorKinds [1..*] : list<person | agent | system | external>
+    otherNames [0..*] : string[]
+    formerNames [0..*] : {name, retiredOn}[]
     skills [0..*] : string[]
     inherits [0..*] : string[]
     actedUpon [0..1] : boolean

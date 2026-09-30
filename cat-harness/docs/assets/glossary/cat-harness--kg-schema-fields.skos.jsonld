@@ -18329,6 +18329,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/role-graph.formername.retiredon",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FormerName.retiredOn"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "ISO date (YYYY-MM-DD) the name was retired."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/role-graph.ts#FormerName.retiredOn",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/role-graph.loadedactor.capabilities",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -18500,6 +18519,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/role-graph.roledef.formernames",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RoleDef.formerNames"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Names this role was known by and no longer is, each with the date it was retired — `Initiator` became `Bootstrapping Agent` on 2026-09-23. Published as `skos:hiddenLabel` on this role, and the old name's concept is `owl:deprecated` and `dcterms:isReplacedBy` this role, so a reader holding the old name is sent to the new one. Authored here, beside the definition, rather than only remembered by the harness's glossary ledger: a retired name is part of what the role IS to a reader of old text."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleDef.formerNames",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/role-graph.roledef.id",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -18554,6 +18592,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleDef.judgementOnly",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/role-graph.roledef.othernames",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RoleDef.otherNames"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Other names this role goes by today — synonyms, local titles, examples. The same field, and the same meaning, as `otherNames` on WHO SMART Base's Generic Persona (\"Other names or examples for the persona\"); published as `skos:altLabel`. Owner, 2026-09-30: *\"model both retired names and alternative names\"*."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleDef.otherNames",
       "skos:note": "candidate"
     },
     {
@@ -18614,6 +18671,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/role-graph.roledefschema.formernames",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RoleDefSchema.formerNames"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Names it no longer goes by, with the retirement date; `skos:hiddenLabel`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.formerNames",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/role-graph.roledefschema.inherits",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -18630,6 +18706,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.inherits",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/role-graph.roledefschema.othernames",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RoleDefSchema.otherNames"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Other names this role goes by today; `skos:altLabel`. As smart-base's `otherNames`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.otherNames",
       "skos:note": "candidate"
     },
     {

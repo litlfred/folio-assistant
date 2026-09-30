@@ -6754,6 +6754,13 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.formername.retiredon",
+      "prefLabel": "FormerName.retiredOn",
+      "definition": "ISO date (YYYY-MM-DD) the name was retired.",
+      "source": "cat-harness/schemas/role-graph.ts#FormerName.retiredOn",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.loadedactor.capabilities",
       "prefLabel": "LoadedActor.capabilities",
       "definition": "Capability ids the actor claims — an environment probe it needs, not a skill. Carried here because nothing resolved them: `fhir-validator` was claimed by three actors and declared nowhere.",
@@ -6817,6 +6824,13 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.roledef.formernames",
+      "prefLabel": "RoleDef.formerNames",
+      "definition": "Names this role was known by and no longer is, each with the date it was retired — `Initiator` became `Bootstrapping Agent` on 2026-09-23. Published as `skos:hiddenLabel` on this role, and the old name's concept is `owl:deprecated` and `dcterms:isReplacedBy` this role, so a reader holding the old name is sent to the new one. Authored here, beside the definition, rather than only remembered by the harness's glossary ledger: a retired name is part of what the role IS to a reader of old text.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDef.formerNames",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.roledef.id",
       "prefLabel": "RoleDef.id",
       "definition": "Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`.",
@@ -6835,6 +6849,13 @@
       "prefLabel": "RoleDef.judgementOnly",
       "definition": "The role PERFORMS, but by judgement — no instruction body implements its steps, and naming one would be a lie about what the role does.",
       "source": "cat-harness/schemas/role-graph.ts#RoleDef.judgementOnly",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.roledef.othernames",
+      "prefLabel": "RoleDef.otherNames",
+      "definition": "Other names this role goes by today — synonyms, local titles, examples. The same field, and the same meaning, as `otherNames` on WHO SMART Base's Generic Persona (\"Other names or examples for the persona\"); published as `skos:altLabel`. Owner, 2026-09-30: *\"model both retired names and alternative names\"*.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDef.otherNames",
       "status": "candidate"
     },
     {
@@ -6859,10 +6880,24 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.roledefschema.formernames",
+      "prefLabel": "RoleDefSchema.formerNames",
+      "definition": "Names it no longer goes by, with the retirement date; `skos:hiddenLabel`.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.formerNames",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.roledefschema.inherits",
       "prefLabel": "RoleDefSchema.inherits",
       "definition": "Roles this one IS-A, outermost last. Static composition, not the scoped subprocess stack.",
       "source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.inherits",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.roledefschema.othernames",
+      "prefLabel": "RoleDefSchema.otherNames",
+      "definition": "Other names this role goes by today; `skos:altLabel`. As smart-base's `otherNames`.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.otherNames",
       "status": "candidate"
     },
     {

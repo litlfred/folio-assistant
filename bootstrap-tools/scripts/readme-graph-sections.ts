@@ -38,10 +38,12 @@
  * reported as "this instance has no Processes".
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { basename, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 
 import { declarationFileIn, readKnowledgeGraphDeclaration } from "../schemas/declaration.ts";
+import { BOOTSTRAP_TERMS } from "../schemas/graph.ts";
 import { gitFiles } from "./git-files.ts";
+import { bootstrapTermTargets, linkTerms } from "./term-links.ts";
 
 /** What a section renders. The same shape as the harness's `SectionOutput`. */
 export interface SectionOutput {
@@ -346,5 +348,65 @@ export const filesSection: GraphSection = {
       lines.push(...head, ...files.map((f) => row(f, d.path)), "");
     }
     return { markdown: lines.join("\n"), notes: [] };
+  },
+};
+
+/** One role as a README reads it: the fields of a role graph this section shows. */
+interface RoleNames {
+  id: string;
+  title: string;
+  description?: string;
+  otherNames?: string[];
+  formerNames?: { name: string; retiredOn: string }[];
+}
+
+/**
+ * `kg:roles` — every Role the instance declares, with its definition and
+ * every name it goes by: its other names today, and its former names with
+ * the date each was retired.
+ *
+ * Owner, 2026-09-30: glossary content must be readable in bootstrap's README,
+ * and *"model both retired names and alternative names"*. The names are
+ * authored on the role (`otherNames`, as WHO SMART Base's Generic Persona has
+ * it; `formerNames`), so this section reads them rather than the harness's
+ * glossary ledger: the README of a Knowledge Graph shows what the graph says.
+ * Read from `roles.json` in each directory declared with the `scenarios`
+ * graph kind.
+ */
+export const rolesSection: GraphSection = {
+  marker: "kg:roles",
+  summary: "Every Role the instance declares: its definition, other names, and former names with the date retired",
+  render(ctx) {
+    let decl: ReturnType<typeof readKnowledgeGraphDeclaration>;
+    try {
+      decl = readKnowledgeGraphDeclaration(ctx.root);
+    } catch {
+      return skip("declaration does not parse");
+    }
+    if (!decl) return skip("no readable declaration at this root");
+    const files = (decl.directories ?? [])
+      .filter((d) => d.graphKinds.includes("scenarios"))
+      .map((d) => join(ctx.root, d.path, "roles.json"))
+      .filter((f) => existsSync(f));
+    if (files.length === 0) return { markdown: "_This instance declares no Roles._\n", notes: ["no scenarios/roles.json"] };
+    const roles: RoleNames[] = [];
+    for (const f of files) {
+      try {
+        roles.push(...((JSON.parse(readFileSync(f, "utf-8")) as { roles?: RoleNames[] }).roles ?? []));
+      } catch {
+        return skip(`${relative(ctx.root, f)} does not parse`);
+      }
+    }
+    // Defined terms in a definition link to their definition, as in every
+    // generated region (owner, 2026-09-29: terms "should be links").
+    const terms = bootstrapTermTargets(dirname(ctx.root), ctx.root, Object.keys(BOOTSTRAP_TERMS));
+    const lines = ["| Role | what it is | also called | formerly |", "|---|---|---|---|"];
+    for (const r of roles) {
+      const other = (r.otherNames ?? []).map(cell).join(", ");
+      const former = (r.formerNames ?? []).map((f) => `${cell(f.name)} (until ${f.retiredOn})`).join(", ");
+      const what = linkTerms(cell(firstSentence(r.description ?? "")), terms).text;
+      lines.push(`| **${cell(r.title)}** | ${what} | ${other} | ${former} |`);
+    }
+    return { markdown: `${lines.join("\n")}\n`, notes: [] };
   },
 };

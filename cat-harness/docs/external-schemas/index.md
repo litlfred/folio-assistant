@@ -28,7 +28,7 @@ depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
 <div class="xs-stat"><b>17</b><span>specifications</span></div>
-<div class="xs-stat"><b>100</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>101</b><span>operative terms in the graph</span></div>
 <div class="xs-stat"><b>191</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
@@ -508,7 +508,7 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/scripts/glossary-export.ts` | `@conformsTo` tag |
 | `cat-harness/scripts/ns-export.ts` | `@conformsTo` tag |
 
-**Operative terms (16).** The terms this repository acts on —
+**Operative terms (17).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
 a subset of the edition rather than a transcription of it.
 
@@ -522,6 +522,7 @@ a subset of the edition rather than a transcription of it.
 | `skos:broader` | A glossary term's `broader`: a local term id or an external IRI, emitted as a link (folio-glossary/v1). |
 | `skos:changeNote` | Retirement. A term whose defining role is gone is deprecated and dated in the ledger, never deleted — a derived document has no memory, so the ledger is what makes "reported and never deleted" implementable. |
 | `skos:definition` | What the term MEANS, taken from the role's authored `description` — one author, one place to fix. Absent by design on a lane whose performer varies, which is honest rather than indistinguishable from a lane nobody bound. |
+| `skos:hiddenLabel` | a role's former names (`formerNames` in roles.json), emitted by glossary-export: findable by a reader holding an old name, never offered as current |
 | `skos:inScheme` | Binds a concept to its instance's glossary document. Each concept's `inScheme` names that document's own published URL, so a preview that publishes the graph without the glossary serves a 404ing scheme IRI — which `check:invocation-parity` refuses. |
 | `skos:member` | The external concept IRIs of a glossary's `members` Collection. |
 | `skos:memberList` | derived from the corpus; what this repository does with it is not yet described |

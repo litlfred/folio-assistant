@@ -55,6 +55,21 @@ the four [Roles](schemas/README.md#role) here are declared in [`scenarios/roles.
 | **Knowledge Graph Data Store** | a repository: the one being set up, and any a [Harness](schemas/README.md#harness) is read from |
 | **Logger** | the record of what you did. Here, it is the conversation you are in. |
 
+The same four, as [`scenarios/roles.json`](scenarios/roles.json) defines them, with every
+name each goes by: other names in use today, and former names with the day each
+was retired, so a name met in older text still leads to the right one.
+
+<!-- kg:roles:begin -->
+
+| Role | what it is | also called | formerly |
+|---|---|---|---|
+| **Bootstrapping Agent** | An agent asked to set up a [Harness](schemas/README.md#harness) with ONLY the knowledge bootstrap's README.md hands it. |  | Initiator (until 2026-09-23) |
+| **Knowledge Graph Data Store** | A git repository, reached either through the git CLI or through a forge's API. |  |  |
+| **Requestor** | Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any [Harness](schemas/README.md#harness) built on it. |  |  |
+| **Logger** | A machine that accepts log messages and puts them somewhere a person can read. |  |  |
+
+<!-- kg:roles:end -->
+
 As the Bootstrapping Agent you have no [Harness](schemas/README.md#harness) yet, so you have no
 tools (programs to call): a [Harness](schemas/README.md#harness) defines those, and bootstrap does not. If a step
 seems to need one, it belongs to the [Harness](schemas/README.md#harness) you are about to set up, not to

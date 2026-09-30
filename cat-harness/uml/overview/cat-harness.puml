@@ -488,12 +488,18 @@ package "cat-harness/skills" as pkg_cat_harness_skills <<skills>> {
   }
 }
 package "cat-harness/scenarios" as pkg_cat_harness_scenarios <<scenarios>> {
+  class "FormerName" as cat_harness_scenarios_FormerName <<json: RoleGraphSchema>> #e8f0ee {
+    name [1] : string
+    retiredOn [1] : string
+  }
   class "Role" as cat_harness_scenarios_Role <<json: RoleGraphSchema>> #e8f0ee {
     persona [0..1] : string
     id [1] : string
     title [1] : string
     description [1] : string
     actorKinds [1..*] : list<person | agent | system | external>
+    otherNames [0..*] : string[]
+    formerNames [0..*] : FormerName[]
     skills [0..*] : string[]
     inherits [0..*] : string[]
     actedUpon [0..1] : boolean
@@ -1588,6 +1594,7 @@ cat_harness_schemas_skills_proof_verification_output_schema_json_Proof_Verificat
 cat_harness_schemas_skills_quality_control_output_schema_json_Quality_Control_Output *-- "0..*" cat_harness_schemas_skills_quality_control_output_schema_json_Finding : findings
 cat_harness_schemas_skills_terminology_management_output_schema_json_Terminology_Management_Output *-- "0..*" cat_harness_schemas_skills_terminology_management_output_schema_json_Resource : resources
 cat_harness_skills_folio_remote_skill_v1_folio_remote_skill_v1 *-- "1..*" cat_harness_skills_folio_remote_skill_v1_File : files
+cat_harness_scenarios_Role *-- "0..*" cat_harness_scenarios_FormerName : formerNames
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors
 cat_harness_policies_Permission *-- "0..*" cat_harness_policies_Constraint : constraint

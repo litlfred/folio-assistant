@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 25 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1454 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 152 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 25 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1459 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 152 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1649 terms and is 895 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1654 terms and is 899 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1649</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1654</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -3612,6 +3612,13 @@ FormalRefResolverAPI.refPatternMessage <span class="fa-gloss-status">candidate, 
 <dd>
 <p>Failure message for &#123;@link refPattern}, in the layer's own vocabulary.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formal-ref.ts"><code>cat-harness/schemas/formal-ref.ts#FormalRefResolverAPI.refPatternMessage</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--role-graph.formername.retiredon" data-fa-state="extracted" data-fa-gloss="">
+FormerName.retiredOn <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>ISO date (YYYY-MM-DD) the name was retired.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#FormerName.retiredOn</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--fsh-guts.fshgutsnodeschema.bean" data-fa-state="extracted" data-fa-gloss="">
 FshGutsNodeSchema.bean <span class="fa-gloss-status">candidate, extracted</span>
@@ -8302,6 +8309,13 @@ RoleDef.actorKinds <span class="fa-gloss-status">candidate, extracted</span>
 <p>Which kinds of actor may take this role on. `external` marks a participant outside the instance's control (a registry, a third-party service).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDef.actorKinds</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--role-graph.roledef.formernames" data-fa-state="extracted" data-fa-gloss="">
+RoleDef.formerNames <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Names this role was known by and no longer is, each with the date it was retired — `Initiator` became `Bootstrapping Agent` on 2026-09-23. Published as `skos:hiddenLabel` on this role, and the old name's concept is `owl:deprecated` and `dcterms:isReplacedBy` this role, so a reader holding the old name is sent to the new one. Authored here, beside the definition, rather than only remembered by the harness's glossary ledger: a retired name is part of what the role IS to a reader of old text.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDef.formerNames</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--role-graph.roledef.id" data-fa-state="extracted" data-fa-gloss="">
 RoleDef.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -8322,6 +8336,13 @@ RoleDef.judgementOnly <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>The role PERFORMS, but by judgement — no instruction body implements its steps, and naming one would be a lie about what the role does.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDef.judgementOnly</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--role-graph.roledef.othernames" data-fa-state="extracted" data-fa-gloss="">
+RoleDef.otherNames <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Other names this role goes by today — synonyms, local titles, examples. The same field, and the same meaning, as `otherNames` on WHO SMART Base's Generic Persona (&quot;Other names or examples for the persona&quot;); published as `skos:altLabel`. Owner, 2026-09-30: *&quot;model both retired names and alternative names&quot;*.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDef.otherNames</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--role-graph.roledef.persona" data-fa-state="extracted" data-fa-gloss="">
 RoleDef.persona <span class="fa-gloss-status">candidate, extracted</span>
@@ -8344,12 +8365,26 @@ RoleDef.title <span class="fa-gloss-status">candidate, extracted</span>
 <p>Display text. Not used for matching: a lane binds by `&lt;bootstrap.processes:role ref&gt;`.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDef.title</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--role-graph.roledefschema.formernames" data-fa-state="extracted" data-fa-gloss="">
+RoleDefSchema.formerNames <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Names it no longer goes by, with the retirement date; `skos:hiddenLabel`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDefSchema.formerNames</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--role-graph.roledefschema.inherits" data-fa-state="extracted" data-fa-gloss="">
 RoleDefSchema.inherits <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Roles this one IS-A, outermost last. Static composition, not the scoped subprocess stack.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDefSchema.inherits</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--role-graph.roledefschema.othernames" data-fa-state="extracted" data-fa-gloss="">
+RoleDefSchema.otherNames <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Other names this role goes by today; `skos:altLabel`. As smart-base's `otherNames`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/role-graph.ts"><code>cat-harness/schemas/role-graph.ts#RoleDefSchema.otherNames</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--role-graph.roledefschema.skills" data-fa-state="extracted" data-fa-gloss="">
 RoleDefSchema.skills <span class="fa-gloss-status">candidate, extracted</span>

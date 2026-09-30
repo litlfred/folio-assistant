@@ -43,6 +43,11 @@ Kept so the page renders even where the PlantUML image is missing, and because M
 classDiagram
   direction TB
   namespace bootstrap__scenarios {
+    class bootstrap_scenarios_FormerName["FormerName"] {
+      <<json: RoleGraphSchema>>
+      name [1] string
+      retiredOn [1] string
+    }
     class bootstrap_scenarios_Role["Role"] {
       <<json: RoleGraphSchema>>
       persona [0..1] string
@@ -50,6 +55,8 @@ classDiagram
       title [1] string
       description [1] string
       actorKinds [1..*] list~person | agent | system | external~
+      otherNames [0..*] string[]
+      formerNames [0..*] FormerName[]
       skills [0..*] string[]
       inherits [0..*] string[]
       actedUpon [0..1] boolean
@@ -70,8 +77,10 @@ classDiagram
       actors [0..*] Actor[]
     }
   }
+  bootstrap_scenarios_Role *-- "0..*" bootstrap_scenarios_FormerName : formerNames
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
+  cssClass "bootstrap_scenarios_FormerName" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_Role" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_Actor" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_RoleGraph" fa_uml_kind_scenarios

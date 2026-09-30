@@ -449,7 +449,18 @@ export function buildGlossary(opts: {
     // A declared role with no lane in THIS instance is still a declared term
     // — omitting it would be `dh4f`, a glossary silently short of the
     // vocabulary it claims to index. It is reported in `undrawn` instead.
-    const altLabels = [...new Set(ls.map((l) => l.laneName).filter((n): n is string => typeof n === "string" && n !== r.title))].sort();
+    // Alternative labels from two sources, merged: the names the role's lanes
+    // are drawn with, and the role's own authored `otherNames` (smart-base's
+    // Generic Persona field, owner 2026-09-30). Retired names are NOT here —
+    // `formerNames` become `hiddenLabel`: findable, never offered as current.
+    const altLabels = [
+      ...new Set(
+        [...ls.map((l) => l.laneName), ...(r.otherNames ?? [])].filter(
+          (n): n is string => typeof n === "string" && n !== r.title,
+        ),
+      ),
+    ].sort();
+    const hiddenLabels = [...new Set((r.formerNames ?? []).map((f) => f.name))].sort();
     live.set(localPart, r.title);
     nodes.push({
       "@id": iri,
@@ -457,6 +468,7 @@ export function buildGlossary(opts: {
       prefLabel: r.title,
       ...(r.description ? { definition: r.description } : {}),
       ...(altLabels.length > 0 ? { altLabel: altLabels } : {}),
+      ...(hiddenLabels.length > 0 ? { hiddenLabel: hiddenLabels } : {}),
       notation: r.id,
       inScheme: schemeIri,
       // `actedUpon` is not decoration: `Work plan — beans`, `Corpus` and
@@ -497,6 +509,15 @@ export function buildGlossary(opts: {
   }
 
   // ── Retirement ────────────────────────────────────────────────
+  // A retired name a role now lists among its `formerNames` was RENAMED, not
+  // dropped: its deprecated concept says which role replaced it, so a reader
+  // holding the old name from old text is sent to the current one.
+  const renamedTo = new Map<string, { iri: string; title: string }>();
+  for (const r of roles) {
+    for (const f of r.formerNames ?? []) {
+      renamedTo.set(f.name.trim().toLowerCase(), { iri: makeIri(id.docIri, "role", r.id), title: r.title });
+    }
+  }
   const prior = readLedger(instanceRoot, id.stub);
   const concepts: Record<string, LedgerEntry> = {};
   const retired: string[] = [];
@@ -530,7 +551,12 @@ export function buildGlossary(opts: {
       // REPORTED, NEVER DELETED. `owl:deprecated` is the machine-readable
       // half; the change note is the half a person reads.
       deprecated: true,
-      changeNote: `Retired ${retiredOn}: no swimlane in this instance derives this term.`,
+      ...(() => {
+        const to = renamedTo.get(was.prefLabel.trim().toLowerCase());
+        return to === undefined
+          ? { changeNote: `Retired ${retiredOn}: no swimlane in this instance derives this term.` }
+          : { changeNote: `Retired ${retiredOn}: renamed ${to.title}.`, isReplacedBy: to.iri };
+      })(),
     });
   }
 
@@ -557,6 +583,8 @@ export function buildGlossary(opts: {
       label: "rdfs:label",
       prefLabel: "skos:prefLabel",
       altLabel: "skos:altLabel",
+      hiddenLabel: "skos:hiddenLabel",
+      isReplacedBy: { "@id": "dcterms:isReplacedBy", "@type": "@id" },
       definition: "skos:definition",
       scopeNote: "skos:scopeNote",
       changeNote: "skos:changeNote",
