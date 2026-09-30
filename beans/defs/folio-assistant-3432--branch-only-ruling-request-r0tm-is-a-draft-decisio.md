@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3432
 title: 'BRANCH-ONLY RULING REQUEST: r0tm is a draft decision with a recommendation and a safe default, reachable from no ancestor of main'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T11:33:55Z
-updated_at: 2026-09-30T19:50:14Z
+updated_at: 2026-09-30T23:08:28Z
 parent: folio-assistant-ahvw
 ---
 
@@ -200,3 +200,5 @@ asserted is only that building 2 first buys a green light over an empty set.
        keyed on prose it is 1-to-190 arbitrary and 0-for-1 precise.
 3. [ ] `bean-coordination` records the convention, INCLUDING the declared
        marker 2 will read.
+
+_2026-09-30T23:08:28Z_ — Claimed by claude/cool-fermi-htir5p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
