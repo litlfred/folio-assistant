@@ -7,14 +7,13 @@ description: >-
   says when a build lacks its data, and how the colour was chosen. Use when a
   reviewer or author asks "where do I start", reads a number off the heat map,
   or asks why coverage or QA say "no data"; and before adding a column.
-capability: review
 user_invocable: true
 allowed-tools: Read Grep Glob
 ---
 
 # Review heat map — where to look first
 
-> Skill id: `review-heatmap` · Capability: `review` · Package: `folio-core` · Bean: `qbfi` · Epic: `q4jm`
+> Skill id: `review-heatmap` · Package: `folio-core` · Bean: `qbfi` · Epic: `q4jm`
 
 The review page (`review/` in a folio's staging preview) opens with a table.
 It has **one row per section**, in reading order, and **one column per

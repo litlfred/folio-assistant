@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Graph rendering: one set of rules for every drawn graph
 
-> Skill id: `graph-rendering` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `graph-rendering` · Package: `graph-management`
 
 This repository draws graphs in at least six places, and until this skill each
 one followed its own conventions. Owner, 2026-09-23 (issue #1137): *"make

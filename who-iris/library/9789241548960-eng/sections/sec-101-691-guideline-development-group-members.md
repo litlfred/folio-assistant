@@ -20,22 +20,17 @@ WHO handbook for guideline development
 Participation is restricted ‒ the individual is excluded from parts of 
 meetings and of the guideline development process.
 ––
-The conflicted individual can be excluded from the formula­
-tion of specific recommendations but allowed to participate in all 
+The conflicted individual can be excluded from the formulation of specific recommendations but allowed to participate in all 
 discussions.
 ––
-The conflicted individual can be barred from participating in dis­
-cussions as well as in the formulation of the recommendations. He 
+The conflicted individual can be barred from participating in discussions as well as in the formulation of the recommendations. He 
 or she can be asked to leave the meeting during the development 
-and ratification of any recommendations related to his or her con­
-flict of interest.
+and ratification of any recommendations related to his or her conflict of interest.
 ■■
 No participation is allowed ‒ the conflict of interest is deemed 
-serious enough to preclude membership in the GDG or participa­
-tion as a contractor for WHO in a specific guideline development 
+serious enough to preclude membership in the GDG or participation as a contractor for WHO in a specific guideline development 
 process.
-In general, certain individuals should not participate at all in the devel­
-opment of a guideline. This includes those who declare significant personal 
+In general, certain individuals should not participate at all in the development of a guideline. This includes those who declare significant personal 
 financial interests in one or more companies with a commercial interest in 
 the outcome of the guideline, and those who have intellectual conflicts of 
 interest that are severe and/or cannot be adequately managed at the group 
@@ -61,8 +56,7 @@ is or has been recently employed by a company with an interest in a
 product related to the guideline, or has been hired by such a company 
 as a consultant, adviser, paid speaker, or opinion leader;
 ■■
-has financial associations with multiple companies that have commer­
-cial interests in the outcome of the guideline;
+has financial associations with multiple companies that have commercial interests in the outcome of the guideline;
 Chapter 6 
 Declaration and management of interests
 69
@@ -79,8 +73,7 @@ is or has been involved in a major academic programme of work that
 concerns the intervention, approach or exposure under consideration 
 in the guideline, including conducting trials or systematic reviews and 
 publishing conclusions or opinions on the benefits and/or harms.
-There is no evidence to support the use of a particular monetary thresh­
-old beyond which an individual must provide a declaration of interests. 
+There is no evidence to support the use of a particular monetary threshold beyond which an individual must provide a declaration of interests. 
 However, for practical reasons, a threshold is commonly used. (WHO’s 
 present threshold is US$ 5000.) There is also no evidence to suggest that 
 an individual who has received money from multiple companies is any less 
@@ -91,8 +84,6 @@ between funding paid directly to the individual or to an institution on the
 person’s behalf. The lack of evidence to guide the management of conflicts 
 of interest makes it difficult and the decisions somewhat arbitrary. Therefore 
 it is critical that the processes, procedures and rules that are implemented 
-for each group developing a guideline must be explicit, transparent, consist­
-ent, thoughtfully constructed and defensible. The Office of Compliance, Risk 
-Management and Ethics provides guidance on the assessment and manage­
-ment of declarations and conflicts of interest (7) and will provide advice on 
+for each group developing a guideline must be explicit, transparent, consistent, thoughtfully constructed and defensible. The Office of Compliance, Risk 
+Management and Ethics provides guidance on the assessment and management of declarations and conflicts of interest (7) and will provide advice on 
 how to handle individual cases.

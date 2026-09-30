@@ -12,6 +12,4 @@ What level of detail and format will your target audience find most useful?
 Guideline users are not generally interested in a detailed description of how 
 guidelines are developed to conform to WHO standards, so you should plan 
 and budget for derivative products such as summaries, algorithms or wall 
-charts specifically tailored for the end-users of the guideline. Electronic ver­
-sions, perhaps accompanied by short paper publications, may be more prac­
-tical and cheaper than print versions.
+charts specifically tailored for the end-users of the guideline. Electronic versions, perhaps accompanied by short paper publications, may be more practical and cheaper than print versions.

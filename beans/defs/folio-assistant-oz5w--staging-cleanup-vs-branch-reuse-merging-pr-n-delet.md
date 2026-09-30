@@ -3,9 +3,10 @@
 title: 'STAGING CLEANUP vs BRANCH REUSE: merging PR N deletes the preview PR N+1 just published'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-21T20:12:17Z
-updated_at: 2026-09-21T20:12:17Z
-parent: folio-assistant-ahvw
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-1xhc
 ---
 
 
@@ -87,3 +88,6 @@ propagation window**, and the skill should say so.
 The workflow change is `cleanup`'s, and it belongs to whoever owns
 `feature-staging.yml`'s close path. `yzsj` (the publish-ref race) is a separate
 open bean and this does not touch it.
+
+
+_2026-09-29_ — **Re-parented `ahvw` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Staging-preview deletion is the staging/concurrency machinery 1xhc already groups (xd1s, w2g5, lx2s).

@@ -80,7 +80,7 @@ import type { LibraryRef } from "./library-refs.ts";
 import { basename, dirname, extname, join, relative } from "node:path";
 import { createHash } from "node:crypto";
 
-import { directoriesForGraph, repoRootFor, sourceLinks } from "../schemas/cat-harness.js";
+import { directoriesForGraph, readDeclaration, repoRootFor, sourceLinks } from "../schemas/cat-harness.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { arxivId } from "./library-readmes.ts";
 
@@ -392,11 +392,18 @@ function sha256(path: string): string {
  * the resolved path rather than passed in, so a caller cannot label a queue
  * with an instance it did not come from, which is the mislabelling `v1hw`
  * warns about from the other direction.
+ *
+ * The repository root's instance is its DECLARED name, never
+ * `basename(repoRoot)` (bean `t5dm`): the root's basename is wherever the
+ * repository was cloned — a worktree named `pr1290` published
+ * `"uploadInstance": "pr1290"` — while a sub-instance's first path segment is
+ * a path INSIDE the repository and the same in every clone. The basename is
+ * the fallback only for a root that declares nothing.
  */
-function instanceOf(absDir: string, repoRoot: string): string {
+export function instanceOf(absDir: string, repoRoot: string): string {
   const rel = relative(repoRoot, absDir).split("\\").join("/");
   const parts = rel.split("/");
-  return parts.length > 1 ? parts[0]! : basename(repoRoot);
+  return parts.length > 1 ? parts[0]! : (readDeclaration(repoRoot)?.name ?? basename(repoRoot));
 }
 
 /**

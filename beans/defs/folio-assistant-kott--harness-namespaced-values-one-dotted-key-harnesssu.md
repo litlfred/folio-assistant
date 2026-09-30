@@ -3,8 +3,9 @@
 title: 'Harness-namespaced values: one dotted key <harness>.<subgraph...>.<name> for :val AND site.data'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-30T10:16:19Z
-updated_at: 2026-09-30T10:16:19Z
+updated_at: 2026-09-30T14:37:24Z
 parent: folio-assistant-zzmr
 ---
 
@@ -29,3 +30,7 @@ Owner: *"{{ site.data...}} is declared for fhir-harness only... it declares its 
 - [x] both render paths (LaTeX, Markdown) run the same resolver; a cross-target test — one fixture, the same text everywhere
 - [x] `:val` kept as a deprecated alias (LaTeX path, unchanged); the `witnessed-values` skill documents the new syntax and why Liquid won
 - [x] an unresolved own-prefix reference is visible in the output AND reported, never silently dropped
+
+
+## 2026-09-30: Liquid references are validated
+validate-value.ts runs val-resolves / val-precision-bounded / val-block-computation (and val-filter) on {{ … }} references too. Without it, qou's :val→Liquid migration (58 refs, 29 files, LaTeX byte-identical) would have removed their validation. Measured on qou: a planted broken reference is caught as val-resolves; the real corpus stays at the same 4 issues.

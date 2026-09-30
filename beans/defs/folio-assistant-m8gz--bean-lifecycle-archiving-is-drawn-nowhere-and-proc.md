@@ -5,8 +5,8 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-20T07:35:41Z
-updated_at: 2026-09-22T10:57:22Z
-parent: folio-assistant-zzmr
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-ahvw
 ---
 
 
@@ -129,3 +129,6 @@ by default.
 The 219 beans were **not** a defect. They were the correct state under the
 rules as written — every process ends at `resolve` and nothing said to go
 further. The defect is that no layer *could* have said so.
+
+
+_2026-09-29_ — **Re-parented `zzmr` → `ahvw`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Bean archiving as a BPMN subprocess is process governance.

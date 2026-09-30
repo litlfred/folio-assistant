@@ -8,13 +8,9 @@ pages: 166-166
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-All guidelines need to be kept up to date and consistent with the best avail­
-able evidence. This is particularly important and difficult to achieve in the 
-context of a public health emergency, when new data are constantly emerg­
-ing and experience is continually accruing. The technical unit with primary 
-responsibility for the rapid advice guideline must keep abreast of new infor­
-mation and continually assess how such information might affect the rec­
-ommendations given in the guideline. If data emerge to suggest that the 
+All guidelines need to be kept up to date and consistent with the best available evidence. This is particularly important and difficult to achieve in the 
+context of a public health emergency, when new data are constantly emerging and experience is continually accruing. The technical unit with primary 
+responsibility for the rapid advice guideline must keep abreast of new information and continually assess how such information might affect the recommendations given in the guideline. If data emerge to suggest that the 
 current recommendations need to be revised, WHO needs to be prepared to 
 undertake such a revision. 
 In light of the above, it is important for the guideline document and 
@@ -29,13 +25,10 @@ guideline should be replaced with a standard guideline. This will depend on
 how closely the development of the rapid advice guideline resembled that of a 
 standard guideline based on systematic reviews, and the rate of emergence of 
 new information. Other important considerations include the extent to which 
-the scope was narrowed for the rapid advice guideline, the demand for recom­
-mendations based on additional key questions, and the needs of various sub­
-populations. For example, the interim guidance produced by WHO during 
+the scope was narrowed for the rapid advice guideline, the demand for recommendations based on additional key questions, and the needs of various subpopulations. For example, the interim guidance produced by WHO during 
 the 2009 H1N1 pandemic was noncommittal on the use of antiviral agents 
 in pregnant women. However, as the pandemic unfolded it became clear that 
 pregnant women were vulnerable to severe disease; thus, greater attention was 
 paid to this population in revised guidance (10). In certain situations, WHO 
-may decide to sponsor systematic reviews and to apply the standard guide­
-line development process to update and confirm high-impact or controversial 
+may decide to sponsor systematic reviews and to apply the standard guideline development process to update and confirm high-impact or controversial 
 recommendations, even if no substantive new evidence has been reported.

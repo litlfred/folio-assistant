@@ -46,14 +46,14 @@ import { readFileSync } from "node:fs";
 import { dirname, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { repoRootFor } from "../schemas/cat-harness.ts";
+import { licenceProblem, type SourceLicence } from "../schemas/source-licence.ts";
 import { gitScan } from "../schemas/git-corpus.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
 
-type Searched = { where: string; result: string; on?: string };
-type Licence = { status?: string; id?: string; basis?: string; searched?: Searched[]; note?: string };
+type Licence = SourceLicence;
 
 export interface LicenceReport {
   entries: number;
@@ -63,21 +63,8 @@ export interface LicenceReport {
   malformed: { entry: string; problem: string }[];
 }
 
-/** The problem with a record, or `undefined` when it is well formed. */
-export function licenceProblem(l: Licence): string | undefined {
-  if (l.status === "stated") {
-    if (!l.id?.trim()) return "`stated` with no `id`";
-    if (!l.basis?.trim()) return "`stated` with no `basis`: where is it stated?";
-    return undefined;
-  }
-  if (l.status === "unknown") {
-    if (!Array.isArray(l.searched) || l.searched.length === 0)
-      return "`unknown` with no `searched`: unknown means somebody looked, so say where";
-    const bad = l.searched.find((s) => !s?.where?.trim() || !s?.result?.trim());
-    return bad ? "a `searched` entry lacks `where` or `result`" : undefined;
-  }
-  return `status ${JSON.stringify(l.status)} is neither \`stated\` nor \`unknown\``;
-}
+/** Moved to `schemas/source-licence.ts` (bean `7bg9`) so an intake record shares it; re-exported for existing callers. */
+export { licenceProblem };
 
 export function checkSourceLicence(root: string = REPO_ROOT): LicenceReport {
   const r: LicenceReport = { entries: 0, stated: [], unknown: [], notRecorded: [], malformed: [] };

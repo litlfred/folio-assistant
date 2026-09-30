@@ -5,8 +5,8 @@ status: todo
 type: feature
 priority: high
 created_at: 2026-09-21T14:13:32Z
-updated_at: 2026-09-29T18:14:47Z
-parent: folio-assistant-yj32
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-uhkv
 ---
 
 The generalisation test qsf5 deferred. Until a second DAK-API IG goes through, "generalisable across many IGs" is a design claim.
@@ -54,3 +54,6 @@ litlfred.github.io is 403 policy-denied by this environment's egress proxy. The 
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+_2026-09-29_ — **Re-parented `yj32` → `uhkv`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Ingesting a second IG to test the artefact-index pipeline is SMART-stack work.
