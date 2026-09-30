@@ -797,14 +797,14 @@
     {
       "id": "folio-assistant-3r47",
       "title": "Drop the per-kind graph classes (KGraph, SkillGraph, VoiceGraph, …): a directory is a Subgraph holding GraphKind individuals",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-xsqm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:04:38Z",
-      "updatedAt": "2026-09-30T10:04:38Z",
+      "updatedAt": "2026-09-30T19:12:25Z",
       "preview": "## The ruling, owner 2026-09-30\n\nAsked *\"KGraph needs better name? CatHarness? … what is bootstrap's? consistent? why not just CatHarness? why need graph?\"*, then chose **\"Drop per-kind classes\"** over renaming.\n\n## Why (measured 2026-09-30)\n\n- bootstrap has no class per kind: a kind is a word (`skills`, `processes`) and one `bootstrap:GraphKind` individual, `bootstrap:graphKind/<kind>`; a declare",
       "file": "beans/defs/folio-assistant-3r47--drop-the-per-kind-graph-classes-kgraph-skillgraph.md"
     },
@@ -1912,7 +1912,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T17:53:09Z",
-      "updatedAt": "2026-09-30T19:00:17Z",
+      "updatedAt": "2026-09-30T19:00:21Z",
       "preview": "## What was measured\n\n`bun test` on `origin/main` `da684477383`, run four times, varying **only the\ndirectory the checkout sits in**. Same commit, same `node_modules`, same\ncommand.\n\n| checkout path | basename | parent | result |\n|---|---|---|---|\n| `/home/user/folio-assistant` | `folio-assistant` | `/home/user` | pass |\n| `/tmp/probe-main/folio-assistant` | `folio-assistant` | `/tmp/probe-main` |",
       "file": "beans/defs/folio-assistant-8zsb--bun-test-reads-the-checkout-path-2-tests-fail-in-a.md"
     },
