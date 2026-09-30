@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 512,
+      "count": 517,
       "unit": "beans"
     }
   },
@@ -496,7 +496,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T14:56:30Z",
-      "updatedAt": "2026-09-30T19:42:58Z",
+      "updatedAt": "2026-09-30T19:43:02Z",
       "preview": "Issue #1624. Owner asked for this as a repo tool rather than session-local\nscratch tooling, 2026-09-30.\n\n## The defect, measured\n\nAn agent's CI poll folded `cancelled` into the failure set and reported **`main`\nred** on `3d2c7fbe869`, whose every hard gate had passed:\n\n```\nsuccess   Repository gates (hard)\nsuccess   TypeScript — tests, lint, types (hard)\nsuccess   End-to-end + accessibility (hard)",
       "file": "beans/defs/folio-assistant-2c2b--ci-watch-is-two-state-cancelled-read-as-failure-an.md"
     },
@@ -797,14 +797,14 @@
     {
       "id": "folio-assistant-3r47",
       "title": "Drop the per-kind graph classes (KGraph, SkillGraph, VoiceGraph, …): a directory is a Subgraph holding GraphKind individuals",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-xsqm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:04:38Z",
-      "updatedAt": "2026-09-30T19:12:28Z",
+      "updatedAt": "2026-09-30T20:04:55Z",
       "preview": "## The ruling, owner 2026-09-30\n\nAsked *\"KGraph needs better name? CatHarness? … what is bootstrap's? consistent? why not just CatHarness? why need graph?\"*, then chose **\"Drop per-kind classes\"** over renaming.\n\n## Why (measured 2026-09-30)\n\n- bootstrap has no class per kind: a kind is a word (`skills`, `processes`) and one `bootstrap:GraphKind` individual, `bootstrap:graphKind/<kind>`; a declare",
       "file": "beans/defs/folio-assistant-3r47--drop-the-per-kind-graph-classes-kgraph-skillgraph.md"
     },
@@ -1313,6 +1313,20 @@
       "file": "beans/defs/folio-assistant-676g--kgvalidate-cannot-own-a-nested-instances-path-so-1.md"
     },
     {
+      "id": "folio-assistant-68k7",
+      "title": "resolveDirectories climbs the checkout's PARENT: is that intended for the ROOT instance?",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T19:48:10Z",
+      "updatedAt": "2026-09-30T19:48:28Z",
+      "preview": "**Owner ruling, 2026-09-30: leave open until the call site is named.**\n\n## Why this is its own bean\n\nIt was Box 3 of `8zsb`, and **`8zsb` is `completed`**. A completed bean's\nunchecked box is not reachable by `beans list`, so the question was on its way\nto being invisible — which is `8zsb`'s own lesson (*a finding needs somewhere\nto live that nobody has to already know about*) turned on the bean t",
+      "file": "beans/defs/folio-assistant-68k7--resolvedirectories-climbs-the-checkouts-parent-is.md"
+    },
+    {
       "id": "folio-assistant-6b8u",
       "title": "EXTRACTION: MD_MIN_TEXT_LEN is a threshold in CHARACTERS, so the same table cell is translatable in Arabic and not in English",
       "status": "completed",
@@ -1485,14 +1499,14 @@
     {
       "id": "folio-assistant-6rmv",
       "title": "B10e (#1168): instance references are owner/repo everywhere",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T14:59:54Z",
-      "updatedAt": "2026-09-30T17:48:29Z",
+      "updatedAt": "2026-09-30T19:28:44Z",
       "preview": "Owner 2026-09-30: owner/repo everywhere (over the recommended instance names). 137 instance values (136 names, 1 owner/repo) across AssetSource.instance, ThemeRef, voices, role refs, session-context, tool-invocation, site-indexes. Needs the instance→repo mapping from each <instance>.json.\n## Done when\n- [ ] every instance-reference field is RepoFullName-typed and every value converted\n\n\n\n## Scope ",
       "file": "beans/defs/folio-assistant-6rmv--b10e-1168-instance-references-are-ownerrepo-everyw.md"
     },
@@ -1912,7 +1926,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T17:53:09Z",
-      "updatedAt": "2026-09-30T19:00:21Z",
+      "updatedAt": "2026-09-30T19:49:03Z",
       "preview": "## What was measured\n\n`bun test` on `origin/main` `da684477383`, run four times, varying **only the\ndirectory the checkout sits in**. Same commit, same `node_modules`, same\ncommand.\n\n| checkout path | basename | parent | result |\n|---|---|---|---|\n| `/home/user/folio-assistant` | `folio-assistant` | `/home/user` | pass |\n| `/tmp/probe-main/folio-assistant` | `folio-assistant` | `/tmp/probe-main` |",
       "file": "beans/defs/folio-assistant-8zsb--bun-test-reads-the-checkout-path-2-tests-fail-in-a.md"
     },
@@ -2475,6 +2489,20 @@
       "updatedAt": "2026-09-20T03:12:36Z",
       "preview": "**The parent of three, from the owner 2026-09-20.** Full argument:\n[`cat-harness/docs/proposals/actor-facts-and-their-processes.md`](../../cat-harness/docs/proposals/actor-facts-and-their-processes.md).\n\nAn actor fact that no process reads is the same defect as a skill bound to\nno role — found four times here, fixed once, and the missing CONSUMER was\nnever added:\n\n| when | where | what |\n|---|---|",
       "file": "beans/defs/folio-assistant-bkje--actor-facts-a-declared-actor-fact-with-no-consumin.md"
+    },
+    {
+      "id": "folio-assistant-bp43",
+      "title": "render:bpmn:check is permanently red: two renderers own bootstrap/processes/ and disagree",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T18:57:28Z",
+      "updatedAt": "2026-09-30T19:10:53Z",
+      "preview": "`main` has been red on **End-to-end + accessibility (hard)** since at least\n`de4a49ecfbe` (2026-09-30). The failing step is `render:bpmn:check`, and it\ncannot go green on its own.\n\n## What is actually true\n\nThere are **two** `render-bpmn.ts`, and they overlap on three files while\ndisagreeing about their contents.\n\n| renderer | files its `--check` reports | writes the generated-by note |\n|---|---|-",
+      "file": "beans/defs/folio-assistant-bp43--renderbpmncheck-is-permanently-red-two-renderers-o.md"
     },
     {
       "id": "folio-assistant-bqrg",
@@ -3121,6 +3149,20 @@
       "updatedAt": "2026-09-22T11:55:45Z",
       "preview": "Issue #877. The eight PDFs are in `litlfred/qou` as https://github.com/litlfred/qou/commit/a3d2266a1b08018af5f8f88c222c1e7b45e6a36c — a mathematics repository, which is not their home.\n\n**`deletion-requires-confirmation` governs and this is not the agent's call.** What follows is the report the skill requires: what would go, with sizes, and the evidence that nothing would be lost. Nothing has been",
       "file": "beans/defs/folio-assistant-fgkb--smart-base-clear-qouuploads-once-the-bytes-have-a.md"
+    },
+    {
+      "id": "folio-assistant-fhov",
+      "title": "ci:watch reports PASS on a THIN check set: 1 of 11 checks looks identical to all green",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T19:07:23Z",
+      "updatedAt": "2026-09-30T19:48:42Z",
+      "preview": "Found by the tool's own author, one session after building it, while using it\nto decide a merge. That is the interesting part: `check-verdict.ts` was written\nthis session **specifically** to stop CI state being misread, and it handled\nthe zero case on purpose while leaving the one case wide open.\n\n## Measured\n\nPR #1671, head `a3e27f6b0e1`, 2026-09-30:\n\n```\n$ bun run ci:watch a3e27f6b0e1\n19:05:47  ",
+      "file": "beans/defs/folio-assistant-fhov--ciwatch-reports-pass-on-a-thin-check-set-1-of-11-c.md"
     },
     {
       "id": "folio-assistant-fjwi",
@@ -4115,7 +4157,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-26T08:05:18Z",
       "updatedAt": "2026-09-26T08:54:33Z",
-      "preview": "Measured on `origin/main` at `0c5086db6c1`, 2026-09-26.\n\n`cat-harness/skills/process/workflow/package-manifest.json` lists **14** skills of which\n**13 are distinct**. `release-epic-planning` appears **twice**.\n\n    skills entries: 14 | distinct: 13\n    DUPLICATES: {'release-epic-planning': 2}\n\n## Why no gate sees it\n\n`scripts/tests/skill-manifest-coverage.test.ts:133`:\n\n    const listed = new Set(p.listed",
+      "preview": "Measured on `origin/main` at `0c5086db6c1`, 2026-09-26.\n\n`cat-harness/skills/process/workflow/package-manifest.json` lists **14** skills of which\n**13 are distinct**. `release-epic-planning` appears **twice**.\n\n    skills entries: 14 | distinct: 13\n    DUPLICATES: {'release-epic-planning': 2}\n\n## Why no gate sees it\n\n`scripts/tests/skill-manifest-coverage.test.ts:133`:\n\n    const listed = new Set(",
       "file": "beans/defs/folio-assistant-m1k4--duplicate-manifest-entry-survives-every-gate-the-u.md"
     },
     {
@@ -4781,6 +4823,20 @@
       "file": "beans/defs/folio-assistant-pgzn--kgaudit-instance-crashes-the-root-instances-reporo.md"
     },
     {
+      "id": "folio-assistant-pkpf",
+      "title": "Capabilities live in the undeclared .claude/skills/capabilities (follow-up to rqao)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T20:31:57Z",
+      "updatedAt": "2026-09-30T20:31:57Z",
+      "preview": "rqao moved actors beside roles.json (cat-harness/scenarios/actors/, resolved by actorsDir). The owner said capabilities and requirements are each decided on their own. .claude/skills/capabilities/ (14 files) is still vendor-named and undeclared; readers: kg-audit CAPABILITY_DIR, kg-export registry group, generate-registry, fsh-guts generate-docs. Needs the owner's call on its home.",
+      "file": "beans/defs/folio-assistant-pkpf--capabilities-live-in-the-undeclared-claudeskillsca.md"
+    },
+    {
       "id": "folio-assistant-pomp",
       "title": "A stale origin/main produced two confident wrong findings in one session — 'not in my checkout' is not 'does not exist'",
       "status": "in-progress",
@@ -5247,14 +5303,14 @@
     {
       "id": "folio-assistant-rqao",
       "title": "ACTORS LIVE IN A CLAUDE-SPECIFIC, UNDECLARED DIRECTORY: .claude/skills/actors (and capabilities/, requirements/) → an agent-generic declared graph",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:19:40Z",
-      "updatedAt": "2026-09-30T13:38:24Z",
+      "updatedAt": "2026-09-30T20:31:57Z",
       "preview": "Owner, 2026-09-30: 'why .claude/skills/actors/*.json? need generic'.\n\n## Commit archaeology\n- 05e72abe92 (2026-03-24, 'Add agent skills framework'): 16 actor definitions created in .claude/skills/actors/, beside .claude/skills/capabilities/ (14), requirements/ (5) and local/ — the framework began as a Claude Code skill tree.\n- 571d208db8 (2026-09-18): BPMN/DMN moved INTO the declared kg graph and ",
       "file": "beans/defs/folio-assistant-rqao--actors-live-in-a-claude-specific-undeclared-direct.md"
     },
@@ -5317,28 +5373,28 @@
     {
       "id": "folio-assistant-s4sp",
       "title": "B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:53:34Z",
-      "updatedAt": "2026-09-23T20:12:11Z",
+      "updatedAt": "2026-09-30T19:38:35Z",
       "preview": "See #1168 plan B. Migrates cat-harness roles and voices; changes audit criteria role-declares-voice and role-has-use-cases.\n\nOwner, 2026-09-23: \"you'll need to fix tools\". Tools are in scope for B: a Tool's io ports reference the skill's input/output schemas (typed KG refs, not t(\"Text\")), and check-tools checks port TYPES against the skill contract, not only names (today contractRequires compares",
       "file": "beans/defs/folio-assistant-s4sp--b-data-model-rolevoice-out-voice-role-lanes-carry.md"
     },
     {
       "id": "folio-assistant-s8nu",
       "title": "Four orphan-selectors now exist for one question — orphanSubjectPages should be the only one",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T05:33:00Z",
-      "updatedAt": "2026-09-30T14:53:06Z",
+      "updatedAt": "2026-09-30T19:48:18Z",
       "preview": "Recorded after `ankg` was fixed on main while this branch was fixing it too —\nso the count below is measured against main, not against a plan.\n\n## The four\n\n| selector | where | how it decides |\n|---|---|---|\n| `prunableStickies` | `ensure-landing-sticky.ts` | the candidate parses as the thing it writes |\n| `OWNED` | `who-iris/scripts/gen-iris-pages.ts` (#607) | a regex over FILE NAMES this genera",
       "file": "beans/defs/folio-assistant-s8nu--three-orphan-pruners-now-exist-for-one-problem-vie.md"
     },
@@ -6985,6 +7041,20 @@
       "updatedAt": "2026-09-30T15:14:04Z",
       "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
       "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
+    },
+    {
+      "id": "folio-assistant-yn2k",
+      "title": "B10f (#1168): move instance namespaces to their planned repos' own hosts? (owner decision)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T19:28:44Z",
+      "updatedAt": "2026-09-30T20:13:16Z",
+      "preview": "B10e made the owner/repo → IRI map derived (instanceNamespace in schemas/instance-repositories.ts). Today cat-harness and folio-assistant-core mint under https://litlfred.github.io/folio-assistant/<stub>/ns#, which does NOT survive the split; bootstrap already mints under its own host (iriBase https://litlfred.github.io/bootstrap/). Moving the other two means declaring iriBase (e.g. https://litlfr",
+      "file": "beans/defs/folio-assistant-yn2k--b10f-1168-move-instance-namespaces-to-their-planne.md"
     },
     {
       "id": "folio-assistant-yo4m",

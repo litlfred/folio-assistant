@@ -21,7 +21,7 @@ Four objects, each with a home:
 
 | object | what it is | declared in |
 |---|---|---|
-| **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `.claude/skills/actors/*.json` |
+| **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `scenarios/actors/*.json`, beside `roles.json` — resolved by `actorsDir()` (bean `rqao`; it was the undeclared `.claude/skills/actors/` until 2026-09-30) |
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `scenarios/roles.json` |
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md` (naming its `input:`/`output:` contracts, usually under `schemas/skills/<name>/`), `.claude/skills/local/` |
 | **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/*.bpmn`, `processes/decisions/*.dmn` |
@@ -98,7 +98,7 @@ Three facts, in case the question comes up again:
   migration (`2734a70f`, 2026-06-15) the contract read *"Actor IDs (roles)
   that may invoke this skill"*, pointing at `ActorDefinition.id`. No
   `reader.json`, `collaborator.json` or `owner.json` has ever been added to
-  `.claude/skills/actors/`, in any commit in the repository's history.
+  the actor registry (`.claude/skills/actors/` until 2026-09-30), in any commit in the repository's history.
 - **The second vocabulary was a collision.** `Role` was later given to the
   BPMN swimlane, and authors reading the field by its new name wrote
   swimlane roles into it. At removal, across the 114 skill files: 288
@@ -132,7 +132,7 @@ So nothing is "a reviewer". Somebody **acts as** reviewer, inside a process,
 for the duration of a lane.
 
 > **The actor registry used to model this backwards, and now does not.**
-> `.claude/skills/actors/*.json` held eighteen entries with an `inherits`
+> `.claude/skills/actors/*.json` (its home until 2026-09-30) held eighteen entries with an `inherits`
 > chain — `author` inherits `reviewer` inherits `viewer`. That is a **role**
 > lattice wearing an actor's name: "can review", "can push" are properties of a
 > position, not of a person. Those entries now carry **`roles[]`** — the roles
@@ -278,7 +278,7 @@ how it becomes a rubber stamp.
 ## Three questions about an actor, and only two are answered on the actor
 
 ```jsonc
-// .claude/skills/actors/admin.json
+// cat-harness/scenarios/actors/admin.json
 { "id": "admin",
   "roles":        ["programme-manager", "publication-manager", "editor", "author", "reviewer"],
   "capabilities": ["git-push"] }

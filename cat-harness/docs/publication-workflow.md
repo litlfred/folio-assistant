@@ -401,7 +401,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/publication-workflow/how-to-read-them.md){: .fa-node-edit title="Edit content/docs/publication-workflow/how-to-read-them.md" } <span class="fa-qa-badges"><button type="button" class="fa-qa-badge fa-qa-pending fa-qa-fam-block" data-qa-family="block" data-qa-key="how-to-read-them.block" data-qa-label="Content QA" data-qa-noun="block" data-qa-src="{{ '/assets/qa/publication-workflow/how-to-read-them.block.json' | relative_url }}" data-qa-index="{{ '/assets/qa/publication-workflow/qa-index.json' | relative_url }}" aria-expanded="false" aria-busy="true" title="Content QA: loading the verdict…" aria-label="Content QA: loading the verdict…"><span class="fa-qa-tag">QA</span><span class="fa-qa-glyph" aria-hidden="true">…</span></button> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
 
 - **A lane is a role.** Every lane maps to an actor in
-  [`.claude/skills/actors/`](https://github.com/litlfred/folio-assistant/tree/main/.claude/skills/actors) —
+  [`cat-harness/scenarios/actors/`](https://github.com/litlfred/folio-assistant/tree/main/cat-harness/scenarios/actors) —
   see [Who is who](#who-is-who).
 - **`[skill-name]` under an activity** is the folio-assistant skill that
   implements it. The same reference is carried machine-readably as a

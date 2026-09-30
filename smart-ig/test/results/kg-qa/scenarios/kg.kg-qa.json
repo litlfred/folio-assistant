@@ -41,7 +41,7 @@
       "findings": [
         {
           "where": "—",
-          "detail": "not evaluated: `actor-roles-resolve` is `repo`-scoped and this run is scoped to smart-ig. An actor is declared ONCE at the repository root (`.claude/skills/actors/`) while a role is a swimlane inside one instance's diagrams, so this compares a repository-level set against an instance-level one. MEASURED 2026-09-26: `--instance ./bootstrap` produced 73 findings, one for almost every one of the 36 repository actors, because they name roles the bootstrap graph does not declare. Every one was false."
+          "detail": "not evaluated: `actor-roles-resolve` is `repo`-scoped and this run is scoped to smart-ig. An actor is declared ONCE at the repository root (`cat-harness/scenarios/actors/`) while a role is a swimlane inside one instance's diagrams, so this compares a repository-level set against an instance-level one. MEASURED 2026-09-26: `--instance ./bootstrap` produced 73 findings, one for almost every one of the 36 repository actors, because they name roles the bootstrap graph does not declare. Every one was false."
         }
       ]
     },

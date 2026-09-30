@@ -5483,7 +5483,7 @@ LoadedActor.reach <span class="fa-gloss-status">candidate, extracted</span>
 LogEntrySchema.actor <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The actor id from <code>.claude/skills/actors/</code>, where one is known.</p>
+<p>The actor id from <code>cat-harness/scenarios/actors/</code>, where one is known.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/log-entry.ts"><code>cat-harness/schemas/log-entry.ts#LogEntrySchema.actor</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--log-entry.logentryschema.bean" data-fa-state="extracted" data-fa-gloss="">
@@ -7260,7 +7260,7 @@ QaReportSourceSchema.tool <span class="fa-gloss-status">candidate, extracted</sp
 QaReviewer.actor <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The declared ACTOR this reviewer was acting as — an id in <code>.claude/skills/actors/</code>.</p>
+<p>The declared ACTOR this reviewer was acting as — an id in <code>cat-harness/scenarios/actors/</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/block-qa.ts"><code>cat-harness/schemas/block-qa.ts#QaReviewer.actor</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--block-qa.qareviewer.agent_date" data-fa-state="extracted" data-fa-gloss="">
