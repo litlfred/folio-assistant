@@ -398,8 +398,9 @@ jobs:
           # `<stub>.jsonld` because `bootstrap/` already holds that instance's
           # OTHER rendered documents — `ns.jsonld` among them — so the graph
           # belongs beside them rather than one level up.
-          # `gen-bootstrap-graph.ts` stays as a generator and a test subject;
-          # it no longer publishes.
+          # `gen-bootstrap-graph.ts` was removed on 2026-09-30 (owner, bean
+          # `xsqm`); since then the one publisher is bootstrap-tools'
+          # `export-graph.ts`, below.
           #
           # `.json` alongside for the reason every other rendering here has
           # one: Pages has no media type for `.jsonld` and serves it as

@@ -26,7 +26,7 @@ Two predicates, one fact, and nothing declaring which is the source. They agree 
 
 The glossary document is genuinely two things: a **file** (which has a `dcterms:title`) and a **`skos:ConceptScheme`** (which has a `skos:prefLabel`). This is the one node in the corpus where the DC/SKOS overlap is not a modelling error.
 
-[`vocabulary-authority`](../../cat-harness/skills/folio-core/vocabulary-authority.md) states the rule that resolves it: **DC describes a RESOURCE, SKOS describes a CONCEPT, one object one naming predicate** — and where a node is both, the authoritative one is decided by what the node IS *primarily*. Here that is the concept scheme, so `skos:prefLabel` is the source and `dcterms:title` is a derived copy for resource-metadata consumers.
+[`vocabulary-authority`](../../cat-harness/skills/kg/kg-core/vocabulary-authority.md) states the rule that resolves it: **DC describes a RESOURCE, SKOS describes a CONCEPT, one object one naming predicate** — and where a node is both, the authoritative one is decided by what the node IS *primarily*. Here that is the concept scheme, so `skos:prefLabel` is the source and `dcterms:title` is a derived copy for resource-metadata consumers.
 
 ## What has NOT been decided, and is the reason this is a bean rather than a fix
 

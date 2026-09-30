@@ -390,6 +390,11 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-core": "Platform core (folio-core)",
   workflow: "Workflow & process (workflow)",
   "graph-management": "Graph management (graph-management)",
+  // The `kg` and `library` topics' packages (bean `9umr`): keyed by the
+  // package's own basename, like every entry here — the topic is a level of
+  // the directory, not part of the name.
+  "kg-core": "Knowledge graph — declaration, placement, export, audit (kg-core)",
+  "library-core": "Library and information management (library-core)",
   theming: "Theming (theming)",
   // Keyed by basename: a package subdirectory of the declared `skills/`,
   // like `theming` above. Bean `6bhf`, owner 2026-09-25 — "bean as

@@ -73,7 +73,7 @@ deliberately did not pivot.
 ## Box 1 answered, 2026-09-30 — and the answer OVERTURNS this bean's headline
 
 Triaged read-only by replicating `kg-detangle`'s own extractor and node set
-(`cat-harness/skills/graph-management/kg-detangle.ts`, `SCAN` at :79, `link()`
+(`cat-harness/skills/kg/graph-management/kg-detangle.ts`, `SCAN` at :79, `link()`
 at :284, the `ts-import` site at :367) against git's file list. Nothing was run
 that writes — deliberately, because `kg:detangle` is an `ymsu` witness and the
 gate set was in flight in the same tree.

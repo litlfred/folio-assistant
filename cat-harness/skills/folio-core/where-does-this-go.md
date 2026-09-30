@@ -55,7 +55,7 @@ placement.
 | 3 | What TYPE of bean is it, and under which parent? | [`todo-manager`](todo-manager.md), and `check:bean-parents` enforces it |
 | 4 | Does a bean for this already exist? | [`todo-manager`](todo-manager.md) §"Check before you create" |
 | 5 | May I claim it — is a sibling already on it? | [`bean-coordination`](bean-coordination.md) §"A claim is branch-local" |
-| 6 | Which directory, and what KIND of graph does it hold? | [`content-context-and-state-graphs`](content-context-and-state-graphs.md) and [`directory-conventions`](directory-conventions.md) |
+| 6 | Which directory, and what KIND of graph does it hold? | [`content-context-and-state-graphs`](../kg/kg-core/content-context-and-state-graphs.md) and [`directory-conventions`](../kg/kg-core/directory-conventions.md) |
 | 7 | Is this an adapter, a profile, or a visualiser? | [`content-profiles`](content-profiles.md), and [issue #764](https://github.com/litlfred/folio-assistant/issues/764) for the axis still open |
 | 8 | Does this belong in `AGENTS.md` or in a skill? | the banner atop [`AGENTS.md`](../../../AGENTS.md) — **always the skill** |
 | 9 | Is this a skill, or an agent's memory? | [`agent-memory`](agent-memory.md) |
@@ -92,7 +92,7 @@ row existed. Filing by resemblance to the last thing you filed is what
 produced nine rules nobody can see at once.
 
 If the same unmatched question recurs, it has earned a row, and the route to
-adding one is [`surprise-to-corpus`](surprise-to-corpus.md): the recurrence is
+adding one is [`surprise-to-corpus`](../kg/kg-core/surprise-to-corpus.md): the recurrence is
 the evidence, and the person decides.
 
 ## What this skill is NOT

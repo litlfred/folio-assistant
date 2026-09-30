@@ -3,12 +3,13 @@
 title: State tags and badges fail colour contrast on the dark theme
 status: completed
 type: bug
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - cross-cutting
 created_at: 2026-09-23T10:36:13Z
-updated_at: 2026-09-30T11:11:43Z
+updated_at: 2026-09-30T16:12:47Z
 parent: folio-assistant-4ccr
 ---
 
@@ -40,3 +41,14 @@ The tag inks on the tools, methodologies and fsh-guts pages were chosen for a li
 | methodologies | 2.19–2.71 | **7.40–7.57** | 5.54–6.16 (unchanged) |
 
 fsh-guts is published only to staging, so the local build does not include it. Its inks are the same colours, and each is computed at ≥7.03:1 on #27262b. external-schemas no longer shows state tags at all (1b2d10c7e). The navbar was cannot-tell in the re-check (no fixed-colour tags).
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 0 still present, 5 fixed, 1 could not be determined. FIXED means observed on the built page, not read from code. fsh-guts was measured on a second build composed with `compose-docs --staging`. kg-viewer was measured on the standalone viewer generated with `kg-viewer.ts --out <site>/cat-harness/index.html`, as `docs-site.yml` does.
+
+- **FIXED** — Tag colours fixed hex, ~2:1 on dark — tools: Changed since 2026-09-29. Dark (emulated plus saved fa-color-scheme=dark, data-fa-scheme=dark), .tg-tag over the row bg rgb(48,45,54): tg-shell rgb(92,211,189) 7.40:1, tg-inproc rgb(134,184,242) 6.53, tg-mcp rgb(185,168,236) 6.35, tg-manual rgb(245,160,112) 6.53, at 11.52px (10.08px at 390). Light is unchanged: 5.91–6.45. — #1592 (contrast.mjs, D/p_tools.js)
+- **FIXED** — Tag colours fixed hex, ~2:1 on dark — methodologies: Changed since 2026-09-29. Dark: .mv-ingested 7.40:1 (22 tags), .mv-cited 7.57:1 (10) on the row bg, and 8.23/8.41 on the page bg, at 11.52px. Light is unchanged: 5.54–6.16. — #1592 (contrast.mjs, C_meth.mjs)
+- **FIXED** — Tag colours fixed hex, ~2:1 on dark — external-schemas: Unchanged: the page renders 0 .xs-ok/.xs-na/.xs-missing elements. The fixed-hex rules are still dead in its inline <style>. — 1b2d10c7e (contrast.mjs, rv-xs2.mjs)
+- **FIXED** — Tag colours fixed hex, ~2:1 on dark — fsh-guts: Changed since 2026-09-29 (was CANNOT-TELL). On the staging build: dark .fg-ok 7.40:1, .fg-side 6.35, .fg-gap 6.53 on rgb(48,45,54) at 12px (10.5px at 390). Light 6.16/5.91/6.04. — #1592 (rv-fg.mjs)
+- **FIXED** — Tag colours fixed hex, ~2:1 on dark — kg-viewer: Changed since 2026-09-29 (was CANNOT-TELL, because the viewer was not in that build). On the generated standalone viewer, no link, button, badge, count or tag is under 4.5:1 in dark (bg rgb(23,24,26)) or light (bg rgb(251,251,250)), at 1280 or 390. This is 'not reproduced' rather than a fix observed at a known before-value. (kgv.mjs against the kg-viewer build)
+- **CANNOT-TELL** — Tag colours fixed hex, ~2:1 on dark — navbar: Unchanged: the navbar has no fixed-hex state tags. The only readings under 4.5:1 are .fa-node-badge / .fa-node-badge-count on sticky avatars: 2.80:1 dark, 3.03:1 light, 11px, white/black on a translucent layer over an image. (contrast.mjs)

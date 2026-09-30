@@ -26,7 +26,7 @@ rather than containing them.
 
 Shape: `schemas/session-context.ts`. Graph kind: `session-state`, layer
 `state` — a session writes its own record as it goes, which is exactly what
-[`content-context-and-state-graphs`](../folio-core/content-context-and-state-graphs.md)
+[`content-context-and-state-graphs`](../kg/kg-core/content-context-and-state-graphs.md)
 means by live state.
 
 ## The fields — read them off the schema, never off this page

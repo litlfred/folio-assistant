@@ -8,7 +8,7 @@ issue: 1482
 # Latent Semantic Indexing: where it applies here, measured
 
 **Method:** [`methodologies/lsi.md`](../../methodologies/lsi.md) · **Skill:**
-[`lsi-indexing`](../../skills/graph-management/lsi-indexing.md) · **Engine:**
+[`lsi-indexing`](../../skills/kg/graph-management/lsi-indexing.md) · **Engine:**
 `content/pipeline/lsi.ts` · **Bean** `ansc`, **issue** #1482.
 
 Every number below was measured on 2026-09-29 in this checkout, by the commands

@@ -33,7 +33,7 @@ at all.
 | asked for | state |
 |---|---|
 | `schemas/` is a **content kind** | **already true** — `BASE_GRAPH_KINDS.schemas` in `schemas/cat-harness.ts` carries `holds: "content"` ("a shape is the subject matter of the schema graph"). It is `renderable: false`, which is the half that is missing. |
-| **skills** on schema management / data modelling | **partly** — `skills/folio-core/data-modelling.md` exists (113 lines, entities-before-fields, invoked by the `crdm-data-model` phase). There is **no** schema-management skill and **no** schema-ingestion skill. |
+| **skills** on schema management / data modelling | **partly** — `skills/kg/kg-core/data-modelling.md` exists (113 lines, entities-before-fields, invoked by the `crdm-data-model` phase). There is **no** schema-management skill and **no** schema-ingestion skill. |
 | ingesting schemas into the KG **library** | **does not exist.** `library/` is the L1 bibliographic corpus; nothing ingests a schema into it, and whether a schema even belongs there is undecided (see the open question below). |
 | a **visualiser** | **does not exist** for `schemas/`. |
 
@@ -321,7 +321,7 @@ All three of `2krx`'s requirements, for `schemas/`:
 |---|---|
 | **visualiser** | `scripts/schema-graph.ts` (reader) + `scripts/gen-schema-viz.ts` (projection + viewer). Faceted index, detail panel, per-type UML neighbourhood. |
 | **documentation entry** | `docs/subgraph-viewers.md`, covering both this and `library/`. |
-| **governing skill** | `skills/folio-core/schema-management.md`, registered in `folio-core`. |
+| **governing skill** | `skills/kg/kg-core/schema-management.md`, registered in `folio-core`. |
 
 And option A separately, as the owner asked: TypeDoc reads the schemas
 DIRECTORY rather than a list of eight literals — **8 → 95** module pages, 0
