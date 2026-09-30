@@ -700,14 +700,14 @@ one is argued.
    column reads exactly that, so a file that says nothing shows as a gap.
 7. **Generated or authored — say which, in the file.** A generated file
    carries the markers of the region it owns
-   ([`readme-sections`](../../folio-core/readme-sections.md)) or a header naming the command
+   ([`readme-sections`](../../ui/ui-core/readme-sections.md)) or a header naming the command
    that wrote it, is never hand-edited, and has a `--check` twin in CI.
 8. **A missing fact is a QA finding, never a blank or a guess** — the three
    states of §"Three states, as everywhere else here". Record it in a
    committed sidecar under `test/results/`; do not fill it with a plausible
    default.
 9. **Then regenerate**: `bun run readme:subgraphs` renders the directory's
-   README from this entry ([`liquid-templates`](../../folio-core/liquid-templates.md)), and
+   README from this entry ([`liquid-templates`](../../ui/ui-core/liquid-templates.md)), and
    `bun run kg:export` publishes the entry as a Directory node
    ([`kg-export`](kg-export.md)).
 

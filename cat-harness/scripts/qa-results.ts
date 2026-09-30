@@ -184,3 +184,76 @@ export function writeQaResult(root: string, stem: string, result: QaResult): str
   writeFileSync(out, JSON.stringify(result, null, 2) + "\n");
   return out;
 }
+
+/**
+ * The four states a committed QA result can be in against a freshly computed
+ * one. Not three, and never two — bean `ymsu`, and this repository's standing
+ * rule that could-not-determine is a state of its own.
+ */
+export type QaResultState = "current" | "stale" | "absent" | "unreadable";
+
+/** Where a stem's result lives under a given root. One composition, two readers. */
+export function qaResultPath(root: string, stem: string): string {
+  return join(root, QA_RESULTS_DIR, `${stem}.qa-results.json`);
+}
+
+/**
+ * Read a QA result a producer wrote, for comparison.
+ *
+ * `undefined` for absent or unparseable — which a caller must report as
+ * could-not-determine rather than as agreement. A producer failing to write its
+ * own sidecar is a finding about the producer, not a clean run.
+ */
+export function readQaResult(path: string): QaResult | undefined {
+  if (!existsSync(path)) return undefined;
+  try {
+    return JSON.parse(readFileSync(path, "utf-8")) as QaResult;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * Compare a COMMITTED QA result against one a caller just computed elsewhere.
+ *
+ * ## Why this exists at all
+ *
+ * Bean `ymsu`: `check:version-bump` and `check:published-instance-exports` each
+ * spawn `kg-export.ts` to answer a question, and the exporter wrote its QA
+ * sidecar into the tree those gates were judging. Measured on `origin/main`
+ * `e718627f198` with `producer.script_hash` hand-staled to `deadbeefdead`, both
+ * gates exited **0** and the hash came back repaired — a checker comparing the
+ * writer's output to the writer's output.
+ *
+ * Sending the exporter's sidecar to a temp directory (`--qa-root`) stops the
+ * repair, and ON ITS OWN that would be a WEAKENING rather than a fix: the
+ * staleness would simply stop being noticed, where before it at least surfaced
+ * as the runner's mutation guard. `main` was carrying exactly that —
+ * `kg-export.bootstrap.qa-results.json` at `b539167517cb` against a true
+ * `0456470f68c8` — and only the guard saw it.
+ *
+ * So the repair is replaced by a COMPARISON, which is the bean's own
+ * prescription: compute into a temp directory and **report** rather than repair.
+ *
+ * ## `updated_at` is held out, and nothing else is
+ *
+ * The same field {@link writeQaResult}'s churn guard holds out, for the same
+ * reason: it moves on every run, so comparing it would report staleness forever
+ * and the report would be ignored within a day. Every other field — including
+ * `producer.script_hash`, the one actually wrong on `main` — is compared.
+ *
+ * ## The two non-verdicts are not agreement
+ *
+ * `absent` means nothing is committed yet, which is a first run rather than a
+ * defect. `unreadable` means the question could not be asked: a sidecar that
+ * will not parse is not one that disagrees, and calling it `stale` would send a
+ * reader to regenerate a file whose problem is that it is corrupt. Neither may
+ * be rendered as `current`; whether a caller FAILS on them is the caller's
+ * call, and each says so where it decides.
+ */
+export function qaResultState(committedPath: string, fresh: QaResult): QaResultState {
+  if (!existsSync(committedPath)) return "absent";
+  const committed = readQaResult(committedPath);
+  if (committed === undefined) return "unreadable";
+  return withoutTimestamp(committed) === withoutTimestamp(fresh) ? "current" : "stale";
+}

@@ -54,7 +54,7 @@ applies-when: >
 - **Choice between surviving candidates:** a one-off choice, so it uses the decision-analysis methodology. Rejected candidates are kept with the reason they lost.
 - **After build:** the rendered result does **not** go through `theme-ui-review.bpmn` any more. Theme and UI review moved to ingestion only, by owner ruling (bean `9fdi`, 2026-09-24): it runs when the graphical assets arrive, from `ingest-theme.bpmn`, and still requires both web and mobile layouts (#1023). A post-build visual look for a wiregen output is therefore not provided by that process — recorded so it is not assumed.
 
-The executable form is [`processes/wireframe-design-review.bpmn`](../processes/wireframe-design-review.bpmn). The operating skill is [`wireframe-design-review`](../skills/folio-core/wireframe-design-review.md). The mechanical checks are the Tool `wireframe-check`.
+The executable form is [`processes/wireframe-design-review.bpmn`](../processes/wireframe-design-review.bpmn). The operating skill is [`wireframe-design-review`](../skills/ui/ui-core/wireframe-design-review.md). The mechanical checks are the Tool `wireframe-check`.
 
 ## Refusals
 

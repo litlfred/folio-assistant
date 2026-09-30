@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/theming/theming.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theming.md) — do not edit here.
+> Generated from [`cat-harness/skills/ui/theming/theming.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theming.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/theming/theming.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/theming/theming.md){: .fa-edit-source }
 
 {% raw %}
 # Theming, split on the stage it fails at
@@ -31,7 +31,7 @@ would also be the one orientation file an agent could not reach through
 **This is a PACKAGE under `skills/`, not a top-level declared directory**, and
 the difference was paid for. Two sessions built this package independently on
 2026-09-20: one relocated `theme-art-intake`, `create-sticky-note` and
-`site-presentation-assets` out of folio-core into `skills/theming/`; the other
+`site-presentation-assets` out of folio-core into `skills/ui/theming/`; the other
 wrote the stage split, the visualiser and the documentation entry into a
 top-level `cat-harness/theming/`. The merge kept both halves and took THIS
 location on evidence — bean `lps0` measured that `kg-audit`'s `skillFiles()`
@@ -89,7 +89,7 @@ generated `docs-ui.css`, `themes:css`, `check:theme-art`, the scrim measurement
 rules and the avatar crop boxes — with the discipline recorded in one skill's
 prose and nowhere else. Bean `1hvo`.
 
-**`skills/folio-core/theme-ui-review.md` deliberately did NOT move here.** It
+**`skills/ui/ui-core/theme-ui-review.md` deliberately did NOT move here.** It
 is a UI review skill covering branding, languages and findings discipline;
 theming is one of its subjects rather than its subject. A directory that takes
 every file with `theme` in the name is a directory nobody can describe.

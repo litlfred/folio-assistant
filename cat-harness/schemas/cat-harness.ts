@@ -3399,7 +3399,7 @@ export function publicationLinkStyleConflict(
  * The media type each rendering extension declares, longest extension first.
  *
  * The companion to `renderingPath`: that says WHERE an artefact is, this says
- * WHAT it is. Both were prose in `skills/folio-core/serving-renderings.md` and
+ * WHAT it is. Both were prose in `skills/ui/ui-core/serving-renderings.md` and
  * only one of them was code, so every consumer that served a rendering had to
  * re-derive the type — and `grep` for `ld+json` across this repository's
  * TypeScript returned **nothing** before this existed (measured 2026-09-19).

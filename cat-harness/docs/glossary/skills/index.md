@@ -12,13 +12,13 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 1 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 273 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 6 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 2 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 1 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 274 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 6 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 2 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 294 terms and is 213 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 295 terms and is 214 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">294</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">295</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -138,14 +138,14 @@ board-diagram-interchange <span class="fa-gloss-status">candidate, extracted</sp
 </dt>
 <dd>
 <p>A board is a DIAGRAM OF a folio, not a container of one. The OMG split between the semantic model and its layout, why the arrow runs one way, and what a note may never carry.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/board-diagram-interchange.md"><code>cat-harness/skills/folio-core/board-diagram-interchange.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/board-diagram-interchange.md"><code>cat-harness/skills/ui/ui-core/board-diagram-interchange.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--board-windows" data-fa-state="extracted" data-fa-gloss="">
 board-windows <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Everything starts as its avatar; opening projects a window onto the board. The two mechanisms that must not be conflated, z-order, and the fixed chrome a content kind fills in.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/board-windows.md"><code>cat-harness/skills/folio-core/board-windows.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/board-windows.md"><code>cat-harness/skills/ui/ui-core/board-windows.md</code></a></p>
 </dd>
 <dt id="bootstrap-tools--kg-skills--bootstrap-contract-semver" data-fa-state="extracted" data-fa-gloss="">
 bootstrap-contract-semver <span class="fa-gloss-status">candidate, extracted</span>
@@ -492,7 +492,7 @@ create-sticky-note <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/create-sticky-note.md"><code>cat-harness/skills/theming/create-sticky-note.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/create-sticky-note.md"><code>cat-harness/skills/ui/theming/create-sticky-note.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--critical-path-analysis" data-fa-state="extracted" data-fa-gloss="">
 critical-path-analysis <span class="fa-gloss-status">candidate, extracted</span>
@@ -643,14 +643,14 @@ docs-auto <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/docs-auto.md"><code>cat-harness/skills/folio-core/docs-auto.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/docs-auto.md"><code>cat-harness/skills/ui/ui-core/docs-auto.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--docs-generation" data-fa-state="extracted" data-fa-gloss="">
 docs-generation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Generate and deploy documentation artifacts: schema docs (TypeDoc), formal-layer API docs, dependency graphs, schema manifests, and per-paper HTML/PDF/Markdown outputs.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/docs-generation.md"><code>cat-harness/skills/folio-core/docs-generation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/docs-generation.md"><code>cat-harness/skills/ui/ui-core/docs-generation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--document-authoring" data-fa-state="extracted" data-fa-gloss="">
 document-authoring <span class="fa-gloss-status">candidate, extracted</span>
@@ -876,14 +876,14 @@ harness-tiles <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>A tile is a function of the harness watching a directory, not of nodes. Where the tile set comes from, what a tile opens, and the two gaps it reports rather than hides.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/harness-tiles.md"><code>cat-harness/skills/folio-core/harness-tiles.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/harness-tiles.md"><code>cat-harness/skills/ui/ui-core/harness-tiles.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--html-rendering-qc" data-fa-state="extracted" data-fa-gloss="">
 html-rendering-qc <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/html-rendering-qc.md"><code>cat-harness/skills/folio-core/html-rendering-qc.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/html-rendering-qc.md"><code>cat-harness/skills/ui/ui-core/html-rendering-qc.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--hypothesis-generation" data-fa-state="extracted" data-fa-gloss="">
 hypothesis-generation <span class="fa-gloss-status">candidate, extracted</span>
@@ -950,7 +950,7 @@ incremental-render <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/incremental-render.md"><code>cat-harness/skills/folio-core/incremental-render.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/incremental-render.md"><code>cat-harness/skills/ui/ui-core/incremental-render.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--injection-boundaries" data-fa-state="extracted" data-fa-gloss="">
 injection-boundaries <span class="fa-gloss-status">candidate, extracted</span>
@@ -1066,7 +1066,7 @@ kg-viewer <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Render a published knowledge-graph document so a person can read it — faceted index, node detail, followable edges, and an honest account of what the document is missing. Host-agnostic; the publishing is a separate Tool.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/kg-viewer.md"><code>cat-harness/skills/folio-core/kg-viewer.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/kg-viewer.md"><code>cat-harness/skills/ui/ui-core/kg-viewer.md</code></a></p>
 </dd>
 </dl>
 
@@ -1210,7 +1210,7 @@ liquid-templates <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Authoring a Liquid template in this repository — a README template the <code>subgraph-readmes</code> Tool renders with liquidjs, or a Jekyll include on the just-the-docs site. Where templates live (inside a declared directory, reached through its id), what a template may read (only what the Knowledge Graph hands it), the leading comment the generator reads as the file's description, includes, whitespace control, escaping, and regenerate-then-commit with the <code>--check</code> gate. Read it before adding or changing any <code>.liquid</code> file or anything under <code>docs/_includes/</code>.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/liquid-templates.md"><code>cat-harness/skills/folio-core/liquid-templates.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/liquid-templates.md"><code>cat-harness/skills/ui/ui-core/liquid-templates.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--literature-search" data-fa-state="extracted" data-fa-gloss="">
 literature-search <span class="fa-gloss-status">candidate, extracted</span>
@@ -1242,7 +1242,7 @@ markdown-render-check <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/markdown-render-check.md"><code>cat-harness/skills/folio-core/markdown-render-check.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/markdown-render-check.md"><code>cat-harness/skills/ui/ui-core/markdown-render-check.md</code></a></p>
 </dd>
 <dt id="large-datasets--kg-skills--materialize-on-demand" data-fa-state="extracted" data-fa-gloss="">
 materialize-on-demand <span class="fa-gloss-status">candidate, extracted</span>
@@ -1577,7 +1577,7 @@ readme-sections <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>A folio's README is the author's file; the platform owns only the marked regions it generates. How the sync/audit split works, why the whole-file generator it replaced could not, and the third state both tools must report.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/readme-sections.md"><code>cat-harness/skills/folio-core/readme-sections.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/readme-sections.md"><code>cat-harness/skills/ui/ui-core/readme-sections.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--reference-dataset-ingestion" data-fa-state="extracted" data-fa-gloss="">
 reference-dataset-ingestion <span class="fa-gloss-status">candidate, extracted</span>
@@ -1619,14 +1619,14 @@ render-logging <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Log every render to the publish branch — what was published, removed, restored or deliberately retained — to an append-only log that lives beside what it describes. Use when adding or removing anything on <code>gh-pages</code>, when asking &quot;what happened to this preview&quot;, or before writing a workflow step that deletes a published artefact.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/render-logging.md"><code>cat-harness/skills/folio-core/render-logging.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/render-logging.md"><code>cat-harness/skills/ui/ui-core/render-logging.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--render-order" data-fa-state="extracted" data-fa-gloss="">
 render-order <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/render-order.md"><code>cat-harness/skills/folio-core/render-order.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/render-order.md"><code>cat-harness/skills/ui/ui-core/render-order.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--rendered-verification" data-fa-state="extracted" data-fa-gloss="">
 rendered-verification <span class="fa-gloss-status">candidate, extracted</span>
@@ -1749,7 +1749,7 @@ serving-renderings <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/serving-renderings.md"><code>cat-harness/skills/folio-core/serving-renderings.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/serving-renderings.md"><code>cat-harness/skills/ui/ui-core/serving-renderings.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--session-context" data-fa-state="extracted" data-fa-gloss="">
 session-context <span class="fa-gloss-status">candidate, extracted</span>
@@ -1791,7 +1791,7 @@ site-presentation-assets <span class="fa-gloss-status">candidate, extracted</spa
 </dt>
 <dd>
 <p>A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/site-presentation-assets.md"><code>cat-harness/skills/theming/site-presentation-assets.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/site-presentation-assets.md"><code>cat-harness/skills/ui/theming/site-presentation-assets.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--skill-registration" data-fa-state="extracted" data-fa-gloss="">
 skill-registration <span class="fa-gloss-status">candidate, extracted</span>
@@ -1928,49 +1928,49 @@ theme-art-intake <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-art-intake.md"><code>cat-harness/skills/theming/theme-art-intake.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-art-intake.md"><code>cat-harness/skills/ui/theming/theme-art-intake.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--theme-artefacts" data-fa-state="extracted" data-fa-gloss="">
 theme-artefacts <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The per-surface SPECIALISATION layer — sticky, landing board, docs background, navbar avatar. Only what DIFFERS lives here; the general rule lives in its stage. Read this last, after the stage that owns your question.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-artefacts.md"><code>cat-harness/skills/theming/theme-artefacts.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-artefacts.md"><code>cat-harness/skills/ui/theming/theme-artefacts.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--theme-contrast" data-fa-state="extracted" data-fa-gloss="">
 theme-contrast <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Why every scrim is measured over PURE BLACK rather than over the art actually in use, what the AAA floor is, and why the high-contrast pair declares no backdrop at all. The CONSUMER stage that says what the ink must survive.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-contrast.md"><code>cat-harness/skills/theming/theme-contrast.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-contrast.md"><code>cat-harness/skills/ui/theming/theme-contrast.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--theme-declaration" data-fa-state="extracted" data-fa-gloss="">
 theme-declaration <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>What a theme IS as data — the palette, the three required layouts, and the per-image regions (<code>textRegion</code>, <code>avatarRegion</code>). The PRODUCER stage: this is where a number is written down, and the rule is that geometry over art is declared rather than derived, because no amount of arithmetic on an aspect ratio can see where a picture is quiet.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-declaration.md"><code>cat-harness/skills/theming/theme-declaration.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-declaration.md"><code>cat-harness/skills/ui/theming/theme-declaration.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--theme-generation" data-fa-state="extracted" data-fa-gloss="">
 theme-generation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Turning a declared theme into CSS — <code>bun run themes:css</code> — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of &quot;still not image&quot; had that one cause.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-generation.md"><code>cat-harness/skills/theming/theme-generation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-generation.md"><code>cat-harness/skills/ui/theming/theme-generation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--theme-ui-review" data-fa-state="extracted" data-fa-gloss="">
 theme-ui-review <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be. At ingestion only, by owner ruling; called from ingest-theme. Measures rather than asserts, and raises findings rather than fixing them.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/theme-ui-review.md"><code>cat-harness/skills/folio-core/theme-ui-review.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/theme-ui-review.md"><code>cat-harness/skills/ui/ui-core/theme-ui-review.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--theming" data-fa-state="extracted" data-fa-gloss="">
 theming <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The map of this subgraph: theming is split on PIPELINE STAGE first — intake, declaration, generation, contrast — with producer/consumer as the direction each stage faces, and per-artefact specialisation last. Read this to find which stage owns the fact you need; read the stage for the fact.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theming.md"><code>cat-harness/skills/theming/theming.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theming.md"><code>cat-harness/skills/ui/theming/theming.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--todo-manager" data-fa-state="extracted" data-fa-gloss="">
 todo-manager <span class="fa-gloss-status">candidate, extracted</span>
@@ -2016,7 +2016,7 @@ ui-accessibility <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, and why an automated pass is not the standard.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/ui-accessibility.md"><code>cat-harness/skills/folio-core/ui-accessibility.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/ui-accessibility.md"><code>cat-harness/skills/ui/ui-core/ui-accessibility.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--uml-overview" data-fa-state="extracted" data-fa-gloss="">
 uml-overview <span class="fa-gloss-status">candidate, extracted</span>
@@ -2045,6 +2045,13 @@ unverified-constraints <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule. Read before adding a check to a schema, a validator, a gate or an incompatibility table, and whenever you are about to write down that something &quot;is not supported&quot;.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/unverified-constraints.md"><code>cat-harness/skills/folio-core/unverified-constraints.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--upload-naming" data-fa-state="extracted" data-fa-gloss="">
+upload-naming <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What an ingested file may be CALLED. Read before adding anything to an <code>uploads</code> or <code>library</code> graph, before writing a generator that links to one, and before &quot;fixing&quot; a broken link in a generated README. Covers which characters break what, why the name is normalised rather than the link escaped, how a sidecar stays paired with its source, and the one case the fixer refuses.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/upload-naming.md"><code>cat-harness/skills/library/library-core/upload-naming.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--upload-routes" data-fa-state="extracted" data-fa-gloss="">
 upload-routes <span class="fa-gloss-status">candidate, extracted</span>
@@ -2150,7 +2157,7 @@ wireframe-design-review <span class="fa-gloss-status">candidate, extracted</span
 </dt>
 <dd>
 <p>Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/wireframe-design-review.bpmn.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/wireframe-design-review.md"><code>cat-harness/skills/folio-core/wireframe-design-review.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/wireframe-design-review.md"><code>cat-harness/skills/ui/ui-core/wireframe-design-review.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--witnessed-values" data-fa-state="extracted" data-fa-gloss="">
 witnessed-values <span class="fa-gloss-status">candidate, extracted</span>
