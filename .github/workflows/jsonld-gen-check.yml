@@ -86,6 +86,7 @@ on:
   # merge_group event takes NO `paths:` filter, so in the queue this runs on
   # every entry: about fifteen seconds, and a required check that did not
   # report would stall the queue rather than skip.
+  # Unreachable on this repository — bean `1hjm`; kept, not removed.
   merge_group:
   workflow_dispatch:
 
