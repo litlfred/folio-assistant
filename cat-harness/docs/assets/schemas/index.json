@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 194,
+      "count": 195,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1421,6 +1421,14 @@
       "name": "tool-invocation",
       "graphNode": "schema",
       "summary": "What happened when a Tool ran, and under whose authority.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/tool-run.ts",
+      "instance": "cat-harness",
+      "name": "tool-run",
+      "graphNode": "schema",
+      "summary": "A TOOL RUN RECORD — did the downstream tool run, did it succeed, and over",
       "isTest": false
     },
     {
@@ -31112,6 +31120,94 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-run.ts#DownstreamState",
+      "name": "DownstreamState",
+      "module": "cat-harness/schemas/tool-run.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "fresh",
+        "stale",
+        "not-run",
+        "failed"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-run.ts#ToolRunRecord",
+      "name": "ToolRunRecord",
+      "module": "cat-harness/schemas/tool-run.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema",
+      "name": "ToolRunRecordSchema",
+      "module": "cat-harness/schemas/tool-run.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(TOOL_RUN_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tool",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The Tool node id whose run this records. @ref ToolDefinitionSchema"
+        },
+        {
+          "name": "target",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Which of the tool's outputs — one tool may keep several (LSI: one per graph)."
+        },
+        {
+          "name": "outcome",
+          "type": "z.enum([\"succeeded\", \"failed\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "inputFingerprint",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The tool's own fingerprint of the inputs the run read, or `unknown` when"
+        },
+        {
+          "name": "detail",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "For a failure: what went wrong, for a reader who has only the file."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "TOOL_RUN_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-types.ts#BeanIdSchema",
       "name": "BeanIdSchema",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -31928,6 +32024,13 @@
           "doc": "Published artefacts this Tool is authoritative for. See"
         },
         {
+          "name": "downstream",
+          "type": "ToolDownstreamSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A downstream output this Tool keeps current, with its declared inputs."
+        },
+        {
           "name": "renders",
           "type": "z.array(z.string().min(1)).optional()",
           "optional": true,
@@ -31939,6 +32042,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+        "cat-harness/schemas/tool.ts#ToolDownstreamSchema",
         "cat-harness/schemas/tool.ts#ToolId",
         "cat-harness/schemas/tool.ts#ToolInputSchema",
         "cat-harness/schemas/tool.ts#ToolInstallSchema",
@@ -31948,6 +32052,63 @@
         "cat-harness/schemas/tool.ts#ToolRequiresSchema",
         "cat-harness/schemas/tool.ts#ToolSelectionSchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolDownstream",
+      "name": "ToolDownstream",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolDownstreamSchema",
+      "name": "ToolDownstreamSchema",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "zod-object",
+      "doc": "A DOWNSTREAM output this Tool keeps current, the inputs it is derived from,",
+      "fields": [
+        {
+          "name": "output",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the Tool keeps current — repo-relative for `checkout`, site-relative for `published`."
+        },
+        {
+          "name": "inputs",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "What it is derived from, so a reader can see what makes it stale."
+        },
+        {
+          "name": "judgedAt",
+          "type": "z.enum([\"checkout\", \"published\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verifier",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`published` only: the `publish-verify` verifier id that judges the output."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -46080,6 +46241,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
+      "via": "tool",
+      "kind": "id-ref",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/tool-types.ts#DelimitedTextPathSchema",
       "to": "cat-harness/schemas/tool-types.ts#RepoPathSchema",
       "via": "",
@@ -46102,6 +46271,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolDownstreamSchema",
+      "via": "downstream",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
