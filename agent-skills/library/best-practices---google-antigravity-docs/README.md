@@ -8,7 +8,7 @@ Held in the library [`agent-skills/library/`](../README.md) as `best-practices--
 | | |
 |---|---|
 | document id | `best-practices---google-antigravity-docs` |
-| source file | `Best Practices - Google Antigravity Docs.pdf` (sha256 `3c51afd33724…`) |
+| source file | `Best-Practices-Google-Antigravity-Docs.pdf` (sha256 `3c51afd33724…`) |
 | provenance | ingested |
 
 | holds | count |

@@ -3292,7 +3292,7 @@
         },
         {
           "name": "model",
-          "type": "z.string().optional()",
+          "type": "ModelIdSchema.optional()",
           "optional": true,
           "array": false
         },
@@ -3324,6 +3324,7 @@
       "unresolved": [],
       "external": [
         "ATTRIBUTION_KINDS",
+        "ModelIdSchema",
         "z"
       ],
       "exported": true
@@ -6578,6 +6579,13 @@
           "optional": true,
           "array": false,
           "doc": "This directory is what answers at the instance's own route, `/<instance>/`."
+        },
+        {
+          "name": "kindRouteRedirect",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`/<kind>/<instance>/` for this directory is a ONE-FILE REDIRECT to the"
         },
         {
           "name": "composed",
@@ -24986,7 +24994,7 @@
         },
         {
           "name": "draftedBy",
-          "type": "z.object({ kind: z.string(), id: z.string(), model: z.string().optional() }).strict().optional()",
+          "type": "z.object({ kind: z.string(), id: z.string(), model: ModelIdSchema.optional() }).strict().optional()",
           "optional": true,
           "array": false
         },
@@ -25016,6 +25024,7 @@
         "SUMMARY_STATUSES"
       ],
       "external": [
+        "ModelIdSchema",
         "z"
       ],
       "exported": true
@@ -37019,6 +37028,7 @@
       "external": [
         "ADJUDICATION_SCHEMA_TAG",
         "ADJUDICATOR_KINDS",
+        "ModelIdSchema",
         "z"
       ],
       "exported": true

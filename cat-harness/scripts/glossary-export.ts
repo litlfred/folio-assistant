@@ -245,8 +245,10 @@ export function readLanes(instanceRoot: string, repoRoot: string): LaneOccurrenc
 // ── The ledger ──────────────────────────────────────────────────
 
 export interface LedgerEntry {
-  /** The label at the time of minting — what a retired concept is shown as. */
+  /** The current label — what a retired concept keeps being shown as. */
   readonly prefLabel: string;
+  /** Labels this key carried before, oldest first (#1168 B10b) — published as skos:hiddenLabel. */
+  readonly formerLabels?: readonly string[];
   /** ISO date this key was first written. */
   readonly firstSeen: string;
   /** ISO date it stopped being derivable, or `null` while it still is. */
@@ -266,6 +268,27 @@ export interface Ledger {
  * for an instance that declares none, as bootstrap does not since 2026-09-30 —
  * hosted in this harness's under the instance's stub ({@link glossaryHomeFor}).
  */
+/**
+ * A live key's next ledger entry. New: minted today. Known: keeps its
+ * `firstSeen`, is un-retired, and — when its label changed — keeps the old
+ * label in `formerLabels` rather than minting a new term (#1168 B10b, owner
+ * 2026-09-30: "use SKOS for rename/alternate name"; published as
+ * skos:hiddenLabel, so the old name still finds it).
+ */
+export function liveLedgerEntry(was: LedgerEntry | undefined, label: string, now: string): LedgerEntry {
+  if (was === undefined) return { prefLabel: label, firstSeen: now, retiredOn: null };
+  const former = [...(was.formerLabels ?? [])];
+  if (was.prefLabel !== label && !former.includes(was.prefLabel)) former.push(was.prefLabel);
+  // The current label is never also a former one (a lane renamed back).
+  const kept = former.filter((f) => f !== label);
+  return {
+    prefLabel: label,
+    ...(kept.length > 0 ? { formerLabels: kept } : {}),
+    firstSeen: was.firstSeen,
+    retiredOn: null,
+  };
+}
+
 export function ledgerPath(instanceRoot: string): string {
   return join(glossaryHomeFor(instanceRoot, ROOT).root, LEDGER_FILENAME);
 }
@@ -502,16 +525,20 @@ export function buildGlossary(opts: {
   }
 
   // The lanes whose performer VARIES: a concept with a scope note and no
-  // definition, which is TRUE. Keyed by lane name because there is no role to
-  // key by — that is the whole content of the `variable` answer.
-  const varyingByName = new Map<string, LaneOccurrence[]>();
+  // definition, which is TRUE. There is no role to key by — that is the whole
+  // content of the `variable` answer — so the key is the LANE's own identity,
+  // `process/<process id>/lane/<lane id>`, the same local part kg-export mints
+  // for the Lane node (#1168 B10b). It was the display name until then, so
+  // renaming a lane minted a new term; now the old name is a former label.
+  const varyingByLane = new Map<string, LaneOccurrence[]>();
   for (const l of varying) {
-    const k = l.laneName ?? l.laneId;
-    varyingByName.set(k, [...(varyingByName.get(k) ?? []), l]);
+    const k = `${l.processId}/lane/${l.laneId}`;
+    varyingByLane.set(k, [...(varyingByLane.get(k) ?? []), l]);
   }
-  for (const [name, ls] of [...varyingByName].sort(([a], [b]) => a.localeCompare(b))) {
-    const localPart = `lane/${name}`;
-    const iri = makeIri(id.docIri, "lane", name);
+  for (const [laneKey, ls] of [...varyingByLane].sort(([a], [b]) => a.localeCompare(b))) {
+    const name = ls[0]!.laneName ?? ls[0]!.laneId;
+    const localPart = `process/${laneKey}`;
+    const iri = makeIri(id.docIri, "process", laneKey);
     live.set(localPart, name);
     nodes.push({
       "@id": iri,
@@ -545,15 +572,11 @@ export function buildGlossary(opts: {
   const restored: string[] = [];
   for (const [key, label] of [...live].sort(([a], [b]) => a.localeCompare(b))) {
     const was = prior.concepts[key];
-    if (was === undefined) {
-      concepts[key] = { prefLabel: label, firstSeen: now, retiredOn: null };
-    } else {
-      // A term that comes BACK is un-retired and said so. Leaving the flag on
-      // would report a live term as gone for ever, which is the mirror of the
-      // defect this ledger exists to prevent.
-      if (was.retiredOn !== null) restored.push(key);
-      concepts[key] = { prefLabel: label, firstSeen: was.firstSeen, retiredOn: null };
-    }
+    // A term that comes BACK is un-retired and said so. Leaving the flag on
+    // would report a live term as gone for ever, which is the mirror of the
+    // defect this ledger exists to prevent.
+    if (was !== undefined && was.retiredOn !== null) restored.push(key);
+    concepts[key] = liveLedgerEntry(was, label, now);
   }
   for (const [key, was] of Object.entries(prior.concepts).sort(([a], [b]) => a.localeCompare(b))) {
     if (live.has(key)) continue;
@@ -578,6 +601,18 @@ export function buildGlossary(opts: {
           : { changeNote: `Retired ${retiredOn}: renamed ${to.title}.`, isReplacedBy: to.iri };
       })(),
     });
+  }
+
+  // A renamed live term carries its former labels as skos:hiddenLabel —
+  // findable under the old name, never offered as current — beside any the
+  // role declared itself (`formerNames`).
+  for (const [key, entry] of Object.entries(concepts)) {
+    if (entry.retiredOn !== null || !entry.formerLabels?.length) continue;
+    const [kind, ...rest] = key.split("/");
+    const node = nodes.find((n) => n["@id"] === makeIri(id.docIri, kind!, rest.join("/")));
+    if (node === undefined) continue;
+    const hidden = new Set([...((node["hiddenLabel"] as string[] | undefined) ?? []), ...entry.formerLabels]);
+    node["hiddenLabel"] = [...hidden].sort();
   }
 
   const ledger: Ledger = { $schema: LEDGER_SCHEMA, instance: id.stub, concepts };

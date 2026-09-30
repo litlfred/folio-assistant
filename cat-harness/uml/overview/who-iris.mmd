@@ -35,6 +35,11 @@ classDiagram
       paths [0..*] Path[]
     }
   }
+  namespace who_iris__who_iris_site {
+    class n_who_iris_who_iris_site_docs["docs: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace who_iris__who_iris_catalogue {
     class who_iris_who_iris_catalogue_folio_dublin_core_v1_Value["Value"] {
       <<json: DublinCoreRecordSchema>>
@@ -224,6 +229,8 @@ classDiagram
   cssClass "who_iris_library_folio_section_verdicts_v1_folio_section_verdicts_v1" fa_uml_kind_library
   cssClass "who_iris_library_folio_withheld_v1_Path" fa_uml_kind_library
   cssClass "who_iris_library_folio_withheld_v1_folio_withheld_v1" fa_uml_kind_library
+  cssClass "n_who_iris_who_iris_site_docs" fa_uml_kind_docs
+  cssClass "n_who_iris_who_iris_site_docs" fa_uml_undetermined
   who_iris_who_iris_catalogue_folio_dublin_core_v1_Field *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Value : values
   who_iris_who_iris_catalogue_folio_dublin_core_v1_folio_dublin_core_v1 *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Field : fields
   who_iris_who_iris_catalogue_folio_catalogue_node_v1_Bitstream *-- "1..*" who_iris_who_iris_catalogue_folio_catalogue_node_v1_MaskedRegion : maskedRegions
