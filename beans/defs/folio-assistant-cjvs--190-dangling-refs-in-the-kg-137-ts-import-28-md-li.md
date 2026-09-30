@@ -58,7 +58,7 @@ ref:  ../../methodologies/dmn.md
 - [ ] The 137 `ts-import` entries are split into scanner limitation vs genuinely
       unresolvable — the first is a fix to the scanner, the second to the code,
       and reporting them as one number hides which.
-- [ ] `kg:detangle` says whether its wrong-direction count is over all edges or
+- [x] `kg:detangle` says whether its wrong-direction count is over all edges or
       only the resolving ones. Today a reader cannot tell.
 - [ ] The 28 `md-link` and 25 `bpmn-skill` entries are each fixed or recorded
       with a reason.
@@ -173,14 +173,56 @@ So: **measured, recorded, not fixed.** The remaining two boxes (`md-link` 28,
 may be genuine rot, which is the usual shape of this defect and is exactly what
 the `ts-import` bucket turned out not to be.
 
+## Done-when 2 is done — PR #1580 (bean `p11x`), 2026-09-30
+
+*"`kg:detangle` says whether its wrong-direction count is over all edges or only
+the resolving ones."* It is over the **resolving** ones, and the new blocking
+cross-instance gate `kg:detangle:direction` states that before it states its
+count — the excluded dangling total and its per-extractor breakdown, reported
+and never graded.
+
+Taken there rather than here because `p11x` made the count **blocking**, which
+turns this from a legibility nit into a way the gate can pass for the wrong
+reason: a blocking gate whose denominator silently drops unresolved edges can go
+green because an edge failed to resolve rather than because the layering held.
+That is `1xhc` arriving through the back door of its own remedy.
+
+**Remeasured on that branch — `main` has moved and the numbers above are stale:**
+
+| | this bean, 2026-09-26 | 2026-09-30 |
+|---|---:|---:|
+| nodes | 697 | **718** |
+| edges | 2828 | **3015** |
+| dangling | 190 | **198** |
+| — `ts-import` | 137 | **145** |
+| — `md-link` | 28 | **28** |
+| — `bpmn-skill` | 25 | **25** |
+
+The `ts-import` bucket grew by **8**; the other two are unchanged. The two
+remaining boxes (triaging the `ts-import` entries into scanner-limitation vs
+genuinely-unresolvable, and the `md-link` / `bpmn-skill` entries) were
+deliberately **not** taken — that is separate work and #1580 was not widened
+into it.
+
 ## Done when
 
 - [x] The `ts-import` entries are split into scanner limitation vs genuinely
       unresolvable. **Answer: 107 dropped real edges, 34 out of scope, 4 not
       imports, 0 broken.** `tsc --noEmit` being clean was correct evidence, and
-      the bean's own reading of it was right.
-- [ ] `kg:detangle` says whether its wrong-direction count is over all edges or
-      only the resolving ones. Handed to the `p11x` implementation, whose
-      ruling makes that count blocking — the two questions are one question.
+      the bean's own reading of it was right. (#1582)
+- [x] `kg:detangle` says whether its wrong-direction count is over all edges or
+      only the resolving ones. **It is over the resolving ones**, and
+      `kg:detangle:direction` states the excluded dangling total with its
+      per-extractor breakdown before it states its count. (#1580)
 - [ ] The 28 `md-link` and 25 `bpmn-skill` entries are each fixed or recorded
-      with a reason.
+      with a reason. Untouched by either PR, and neither says anything about
+      them — they may be the genuine rot the `ts-import` bucket turned out not
+      to be.
+
+### One number to reconcile, recorded rather than smoothed
+
+#1580 reports the edge total as **3015** in this bean and **3016** in its PR
+body, from the same run. Neither this triage nor that PR depends on which is
+right — both use the *dangling* counts, which agree — but a measurement that
+appears twice with two values is exactly the thing this bean exists to
+distrust, so it is written down rather than quietly picked.
