@@ -63,7 +63,7 @@ if (args.includes("--check-deps")) {
     }
   }
   // Declared capability probes. These are a separate mechanism from the list
-  // above — `.claude/skills/capabilities/*.json` is what skills declare
+  // above — `cat-harness/scenarios/capabilities/*.json` is what skills declare
   // `requiredCapabilities` against — and until now nothing executed them, so a
   // skill's prerequisite could be missing with no way to find out. The two
   // hardcoded lists remain (here and in src/tools/check-deps.ts); unifying
@@ -72,7 +72,7 @@ if (args.includes("--check-deps")) {
   const instance = resolve(import.meta.dir, "..");
   const caps = loadCapabilities(repoRootFor(instance));
   if (caps.length) {
-    console.log("\nDeclared capabilities (.claude/skills/capabilities/):\n");
+    console.log("\nDeclared capabilities (cat-harness/scenarios/capabilities/):\n");
     const statuses = probeAll(caps);
     console.log(formatCapabilityReport(statuses));
 

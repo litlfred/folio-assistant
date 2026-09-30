@@ -163,8 +163,10 @@ export interface ActorDefinition {
    * fact about the host, declared by whoever built the site; probing for it
    * would ask the network a question the network is precisely unable to
    * answer on an air-gapped box, where the probe is indistinguishable from
-   * an outage. Capabilities that *need* egress say so with `requires`
-   * instead — see `.claude/skills/capabilities/network-egress.json`.
+   * an outage. A capability that *needs* egress would say so with `requires`
+   * instead. None does yet: no `network-egress` capability is declared in
+   * `cat-harness/scenarios/capabilities/` (checked 2026-09-30, when this line
+   * named that file as if it existed).
    *
    * Absent means UNDECLARED, which is not `internet`. Composition with the
    * deployment value — asymmetric, and `unknown` as a third state — is in

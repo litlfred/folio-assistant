@@ -32,5 +32,10 @@ Nine readers hardcode `.claude/skills/actors`: check-actor-reach, check-qa-revie
 ## Owner, 2026-09-30 (round 3): `cat-harness/scenarios/actors/`
 Actors move beside `roles.json`, inside the already-declared `scenarios` graph. Capabilities and requirements are still to be decided, each on its own.
 
+
+
+## Owner, 2026-09-30 (round 4): capabilities → `cat-harness/scenarios/capabilities/`, kept as their own kind, with an optional link to a setup skill
+They are not recast as skills: the role model keeps an actor's capabilities (environment) separate from its role's skills (knowledge). Each capability may gain an optional pointer to the skill that explains how to set it up, like `satisfiedBy` on requirements. `requirements/` no longer exists under .claude/skills.
+
 ## Owner decision 2026-09-30
 Actors move BESIDE roles.json: cat-harness/scenarios/ (the declared kg directory holding roles.json and stories.json). Capabilities/requirements each decided separately.

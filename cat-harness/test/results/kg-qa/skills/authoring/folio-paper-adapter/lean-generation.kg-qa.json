@@ -29,13 +29,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "cat-harness/skills/authoring/folio-paper-adapter/lean-generation.ts",
-          "detail": "cat-harness/skills/authoring/folio-paper-adapter/lean-generation.ts changed since cat-harness/skills/authoring/folio-paper-adapter/lean-generation.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "unknown",
@@ -53,12 +48,16 @@
           "detail": "file-run: pipeline/prune-transitive-deps.ts is not in this repository"
         }
       ]
+    },
+    "skill-voice-review-current": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 3,
-    "fail": 2,
-    "n/a": 0,
+    "pass": 4,
+    "fail": 1,
+    "n/a": 1,
     "unknown": 1
   },
   "pair_attestations": [
@@ -67,7 +66,7 @@
       "prose": "cat-harness/skills/authoring/folio-paper-adapter/lean-generation.md",
       "code": "cat-harness/skills/authoring/folio-paper-adapter/lean-generation.ts",
       "prose_hash": "4eb09f12b677",
-      "code_hash": "4ce85c880542",
+      "code_hash": "826c1385b420",
       "by": "baseline"
     }
   ]

@@ -28,8 +28,8 @@ import { buildL1 } from "../l1-blocks.ts";
 import { blockId, buildDocumentNodes, orphanedBlocks, sectionKey } from "../../content/pipeline/gen-library-jsonld.ts";
 
 const SECTIONS = [
-  { id: "sec-001-introduction", title: "Introduction", page_start: 1, page_end: 2 },
-  { id: "sec-002-2-related-work", title: "Related work", page_start: 3, page_end: 4 },
+  { id: "sec-001-introduction", number: null, title: "Introduction", level: 1, page_start: 1, page_end: 2, n_chars: 13, n_words: 1 },
+  { id: "sec-002-2-related-work", number: "2", title: "Related work", level: 1, page_start: 3, page_end: 4, n_chars: 13, n_words: 2 },
 ];
 
 /** A staged entry: `structure.json` plus the section `.md` files it names. */
@@ -38,7 +38,18 @@ function staged(): { root: string; dir: string; docId: string } {
   const docId = "fixture-doc";
   const dir = join(root, docId);
   mkdirSync(join(dir, "sections"), { recursive: true });
-  writeFileSync(join(dir, "structure.json"), JSON.stringify({ doc_id: docId, sections: SECTIONS }));
+  // A conforming `pdf-structure/v1`: `buildL1` reads through the shared
+  // accessor (bean rkqp), which refuses an untagged file rather than guessing.
+  writeFileSync(
+    join(dir, "structure.json"),
+    JSON.stringify({
+      _schema: "pdf-structure/v1",
+      doc_id: docId,
+      source: { file: "fixture.pdf", sha256: "c".repeat(64), bytes: 1, mtime: null, mimetype_sniffed: "application/pdf", mimetype_source: "magic-bytes" },
+      toc_source: "outline",
+      sections: SECTIONS,
+    }),
+  );
   for (const s of SECTIONS) writeFileSync(join(dir, "sections", `${s.id}.md`), `# ${s.title}\n`);
   return { root, dir, docId };
 }

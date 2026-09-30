@@ -10,7 +10,7 @@
  *
  * Now a route names the ACTION it performs and asks the same evaluator the BPMN
  * executor asks. The gateway's three sessions are three declared actors
- * (`viewer`, `collaborator`, `owner` in `.claude/skills/actors/`), and what each
+ * (`viewer`, `collaborator`, `owner` in `cat-harness/scenarios/actors/`), and what each
  * may do is `cat-harness/policies/http-gateway.jsonld` — a policy file, where a
  * reviewer can see it, not a rung compared in code.
  *

@@ -396,7 +396,7 @@ One sentence, and every word in it is a distinct declared object:
 
 | object | what it is | declared in |
 |---|---|---|
-| **Actor** | a concrete participant — human, agentic or mechanical. Persists across processes. | `.claude/skills/actors/*.json` |
+| **Actor** | a concrete participant — human, agentic or mechanical. Persists across processes. | `cat-harness/scenarios/actors/*.json` |
 | **Role** | **the BPMN swimlane**: a persona an actor *takes on* because of the lane it is acting in. Carries skills. | `scenarios/roles.json` |
 | **Skill** | the instruction body the actor needs to perform the task. | the `cat-harness` graph — here, `skills/` |
 | **Permission** | what an actor may **do**, in any lane — as opposed to what its lane's role knows. Cross-cuts roles, so it lives on the actor. | `skills/permissions/permissions.json` |

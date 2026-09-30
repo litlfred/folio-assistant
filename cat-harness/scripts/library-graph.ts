@@ -94,6 +94,7 @@ import { proseBody, type SummaryStatus } from "../schemas/block-summary.ts";
 import { withheldReason } from "./lib/withheld.ts";
 import { entryItems, type SummaryTally } from "./summaries.ts";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
+import { pagesOf, readStructure, STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
 
 /**
  * Whether a library entry's source upload is still on disk, and whether it is
@@ -697,10 +698,21 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
       }>(join(dir, "manifest.jsonld"));
       const meta = (manifest?.meta ?? {}) as Record<string, unknown>;
       const str = (k: string): string => (typeof meta[k] === "string" ? (meta[k] as string) : "");
-      const structure = readJson<{
-        sections?: Array<{ page_start?: number; page_end?: number; n_words?: number; n_chars?: number }>;
-      }>(join(dir, "structure.json"));
-      const secs = structure?.sections ?? [];
+      // Through the shared accessor (bean rkqp). A file that conforms to no
+      // declared variant contributes no sections, as an absent one always has;
+      // the per-field number guards below stay, as a second line. Pages come
+      // only from a format that has them: `pagesOf` is undefined for a
+      // notebook, never a cell index read as a page.
+      const read = readStructure(dir);
+      const secs: Array<{ page_start?: number; page_end?: number; n_words?: number; n_chars?: number }> =
+        "reason" in read
+          ? []
+          : read.sections.map((s) => ({
+              page_start: pagesOf(s)?.start,
+              page_end: pagesOf(s)?.end,
+              n_words: s.n_words,
+              n_chars: s.n_chars,
+            }));
       /**
        * Sum a section field, keeping only the values that are actually numbers.
        *
@@ -753,7 +765,7 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
         ocrPages: filesIn(join(dir, "ocr")).length,
         hasOcr: existsSync(join(dir, "ocr")),
         hasManifest: has("manifest.jsonld"),
-        hasStructure: has("structure.json"),
+        hasStructure: has(STRUCTURE_FILENAME),
         hasImagesJson: has("images.json"),
         pageStart: pages.length ? Math.min(...pages) : null,
         pageEnd: pages.length ? Math.max(...pages) : null,
