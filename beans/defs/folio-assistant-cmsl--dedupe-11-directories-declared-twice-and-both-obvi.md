@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-09-30T13:38:24Z
+updated_at: 2026-09-30T13:54:32Z
 parent: folio-assistant-zzmr
 ---
 
@@ -97,3 +97,8 @@ Owner: 'analyze and characterize the 23 externals. why? options for relocation/c
 
 ## Owner, 2026-09-30 (round 3): option A — the checkout aggregates
 In the three steps of the proposal: (1) folio-assistant-sci declares its own `skills/lean/`; (2) the root instance declares the checkout-level state (ids unchanged); (3) an overlay helper, the call-site switch, the mirrors removed, and a check against re-mirroring. The falsifier (a split checkout sees less) is to be confirmed before step 3.
+
+
+
+## 2026-09-30 — step 1 reverted: it is a NESTING question, not only an ownership one
+Declaring `skills/lean/` in folio-assistant-sci.json put a declared directory inside that instance's inherited `skills/`. `check:layout-norms` rejected it: "folio-assistant-sci: skills contains skills/lean". Its baseline only ever shrinks, so adding the pair to it is not a fix. The mirror in cat-harness.json does not trip the check, because there it is not inside that instance's own `skills/`. Under the owner's 2026-09-22 ruling, the correct shape is a declaration INSIDE sci's `skills/` naming `lean/`. That needs a `declarationFile` on the `skills` (kg) kind, the mechanism `voices` gained in this change (bean rkqp), whose reader now recurses. So step 1 becomes: give `skills` a from-within declaration file, then declare `lean/` there. The mirror stays until then.

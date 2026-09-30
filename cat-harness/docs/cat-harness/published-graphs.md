@@ -257,7 +257,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `skills`
 
-5 of 7 published.
+6 of 8 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
@@ -265,6 +265,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/skills/' | relative_url }})
 - [FHIR IG Harness]({{ '/cat-harness/docs-auto/index/skills/fhir-ig-skills/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/' | relative_url }})
+- [folio-assistant-sci]({{ '/cat-harness/docs-auto/index/skills/folio-assistant-sci-lean-skills/' | relative_url }})
 - [large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }})
 
@@ -322,6 +323,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [C@T Harness]({{ '/uploads/' | relative_url }})
 - [Folio Assistant]({{ '/cat-harness/uploads/folio-assistant/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/uploads/who-iris/' | relative_url }})
+
+### `voice-vendors`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- agent-skills — *declared, not published*
 
 ### `voices`
 

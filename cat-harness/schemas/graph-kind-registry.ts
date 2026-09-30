@@ -1487,6 +1487,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   voices: {
     type: termIri("VoiceGraph"),
     renderable: false,
+    // THE FROM-WITHIN NODE, as on `docs` (owner 2026-09-30, bean `rkqp`:
+    // "vendors/<id>/ should be declared subgraphs along with vendors/").
+    // `skills/voices/voices.json` names the sub-graphs a voices directory
+    // holds; only those are read as part of it. Absent means none.
+    declarationFile: "voices.json",
     // An authored rule set. A voice is true whether or not any prose has been
     // written against it.
     holds: "content",
@@ -1496,6 +1501,26 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
       "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
+  },
+  // ── SUB-GRAPH OF `voices` — bean `rkqp`, owner 2026-09-30 ──────────────
+  //
+  // A vendor voice specialises a base voice for one agent vendor (Claude,
+  // Gemini CLI, ...). ONE kind serves both levels: `vendors/` and each
+  // `vendors/<id>/` hold the same thing, vendor voice profiles, and a kind
+  // says what is held rather than how deep. `vendors/vendors.json` declares
+  // each `<id>/`; the chain stops where a directory carries no declaration.
+  "voice-vendors": {
+    type: termIri("VoiceVendorsGraph"),
+    renderable: false,
+    within: "voices",
+    declarationFile: "vendors.json",
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `voices`.
+    validator: "schemas/voices.ts#VoiceProfileSchema",
+    summary:
+      "Vendor voice profiles — a base voice specialised for one agent vendor, " +
+      "`folio-voice/v1` with `extends` naming the base. A sub-graph of `voices`, " +
+      "declared from within by `voices.json`, each vendor declared by `vendors.json`.",
   },
   // Themes an instance DERIVED from a source it holds — a served stylesheet or
   // a style guide's stated rules. A separate kind from `folio` because a theme

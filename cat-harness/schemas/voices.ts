@@ -63,7 +63,7 @@ import { join, relative, resolve } from "node:path";
 import { z } from "zod";
 
 import { kgNodeLabelShape, type KgNodeLabels } from "./kg-node";
-import { directoryForGraph } from "./cat-harness.js";
+import { defaultGraphKinds, directoryForGraph } from "./cat-harness.js";
 import { BLOCK_KINDS } from "./block-kinds.js";
 import { ProcessElementIdSchema } from "./process-element-id.js";
 
@@ -656,6 +656,13 @@ function voicesFallbackDir(instanceRoot: string): string {
  * and it is why this name is a convention for humans rather than a second
  * source of truth.
  */
+/**
+ * **Superseded 2026-09-30 (bean `rkqp`)**: the loader no longer descends by
+ * this name. The owner asked for `vendors/` and each `vendors/<id>/` to be
+ * DECLARED sub-graphs, so `voiceFilesIn` follows `voices.json` and
+ * `vendors/vendors.json`. The name stays as the conventional spelling a person
+ * uses when creating the directory.
+ */
 export const VOICE_VENDORS_DIR = "vendors";
 
 /**
@@ -686,25 +693,81 @@ export const VOICE_VENDORS_DIR = "vendors";
  * clean run. Found by reading this function when the layout was chosen, not
  * after shipping into it.
  */
-function voiceFilesIn(dir: string): { id: string; path: string }[] {
+export function voiceFilesIn(dir: string, kind: string = "voices"): { id: string; path: string }[] {
   const out: { id: string; path: string }[] = [];
+  // The directory's own from-within declaration (bean `rkqp`, owner
+  // 2026-09-30: "vendors/<id>/ should be declared subgraphs along with
+  // vendors/"). It names the sub-graphs this directory holds, and it is not a
+  // voice, so it is not read as one.
+  const declFile = defaultGraphKinds.get(kind)?.declarationFile;
+  const subgraphs = declaredSubgraphs(dir, declFile);
   for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
     if (e.isDirectory()) {
       const inner = join(dir, e.name, "voice.json");
+      const sub = subgraphs.get(e.name);
       if (existsSync(inner)) {
+        // Inside a SUB-graph (`vendors/`) the declaration is the member list:
+        // the owner asked for each `vendors/<id>/` to be declared, so an
+        // undeclared one is refused rather than loaded on its shape. At the
+        // top of `voices` a `<id>/voice.json` is the graph itself and needs no
+        // entry.
+        if (kind !== "voices" && sub === undefined) {
+          throw new Error(
+            `voices: ${join(dir, e.name)} is a voice in the "${kind}" sub-graph but is not declared. ` +
+              `Add it to ${declFile ? join(dir, declFile) : `a declaration for kind "${kind}"`}.`,
+          );
+        }
         out.push({ id: e.name, path: inner });
-      } else if (e.name === VOICE_VENDORS_DIR) {
-        // ONE level, not arbitrary recursion. A reserved name is a convention
-        // a reader can state; "any directory, any depth" is a rule nobody can
-        // check, and it would make an unrelated nested directory into a silent
-        // part of the graph.
-        out.push(...voiceFilesIn(join(dir, e.name)));
+      } else if (sub !== undefined) {
+        // Descend only where a declaration says to. Replaces the reserved
+        // name `vendors`: a convention nothing declared, which the owner
+        // asked to be declared instead.
+        out.push(...voiceFilesIn(join(dir, e.name), sub));
+      } else if (voiceFilesPresent(join(dir, e.name))) {
+        // A directory holding voices that nothing declares. Skipping it is
+        // `dh4f` (a consumer scans nothing and calls the read clean), so it is
+        // refused, with the fix named.
+        throw new Error(
+          `voices: ${join(dir, e.name)} holds voice files but is not declared. ` +
+            `Add it to ${declFile ? join(dir, declFile) : `a declaration for kind "${kind}"`} as a sub-graph.`,
+        );
       }
-    } else if (e.isFile() && e.name.endsWith(".json")) {
+    } else if (e.isFile() && e.name.endsWith(".json") && e.name !== declFile) {
       out.push({ id: e.name.replace(/\.json$/, ""), path: join(dir, e.name) });
     }
   }
   return out;
+}
+
+/** The file name of a voices directory's from-within declaration, if the kind has one. */
+export const VOICES_DECLARATION_FILE = defaultGraphKinds.get("voices")?.declarationFile;
+
+/** The sub-graphs `dir`'s declaration names: directory name → its graph kind. */
+function declaredSubgraphs(dir: string, declFile: string | undefined): Map<string, string> {
+  const out = new Map<string, string>();
+  if (declFile === undefined) return out;
+  const p = join(dir, declFile);
+  if (!existsSync(p)) return out;
+  // A declaration that will not parse throws, as a malformed voice does: an
+  // unreadable declaration must not present as a directory with no sub-graphs.
+  const parsed = JSON.parse(readFileSync(p, "utf-8")) as {
+    directories?: Array<{ path?: string; graphKinds?: string[] }>;
+  };
+  for (const d of parsed.directories ?? []) {
+    const name = (d.path ?? "").replace(/^\.\//, "").replace(/\/+$/, "");
+    const kind = d.graphKinds?.[0];
+    if (name !== "" && !name.includes("/") && kind !== undefined) out.set(name, kind);
+  }
+  return out;
+}
+
+/** Does `dir` hold a voice file anywhere beneath it? */
+function voiceFilesPresent(dir: string): boolean {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (e.isFile() && e.name === "voice.json") return true;
+    if (e.isDirectory() && voiceFilesPresent(join(dir, e.name))) return true;
+  }
+  return false;
 }
 
 /**

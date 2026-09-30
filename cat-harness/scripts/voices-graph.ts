@@ -38,7 +38,7 @@
  * cross-instance reader over this graph.
  */
 import { existsSync, readdirSync, statSync } from "node:fs";
-import { basename, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 
 import {
   directoriesForGraph,
@@ -52,7 +52,8 @@ import {
   type VoiceProfile,
   type VoiceProvenanceFlag,
   type VoiceRule,
-  VOICE_VENDORS_DIR,
+  VOICES_DECLARATION_FILE,
+  voiceFilesIn,
 } from "../schemas/voices.ts";
 
 /** How a rule's citation resolves — the reader's verdict, never the file's claim. */
@@ -207,17 +208,17 @@ function voicePath(dir: string, id: string, repoRoot: string): string {
 }
 
 /**
- * Where a voice actually is: a skill directory or a bare profile, at the top
- * of the voices directory or under `vendors/` (`VOICE_VENDORS_DIR`), which the
- * loader has read since vendor overrides were added and this did not — so the
- * first vendor voice was reported at a path that does not exist.
+ * Where a voice actually is: a skill directory or a bare profile, wherever the
+ * loader found it. Asked of `voiceFilesIn` itself rather than re-probed, so the
+ * two cannot disagree. They did once: the loader read `vendors/` and this did
+ * not, and the first vendor voice was reported at a path that does not exist.
+ * Since bean `rkqp` the sub-graphs are DECLARED (`voices.json`,
+ * `vendors/vendors.json`), and only the walker knows them.
  */
 function voiceLocation(dir: string, id: string): string {
-  for (const base of [dir, join(dir, VOICE_VENDORS_DIR)]) {
-    if (existsSync(join(base, id, "voice.json"))) return join(base, id);
-    if (existsSync(join(base, `${id}.json`))) return join(base, `${id}.json`);
-  }
-  return join(dir, `${id}.json`);
+  const hit = existsSync(dir) ? voiceFilesIn(dir).find((v) => v.id === id) : undefined;
+  if (hit === undefined) return join(dir, `${id}.json`);
+  return basename(hit.path) === "voice.json" ? dirname(hit.path) : hit.path;
 }
 
 /** Does a `SKILL.md` sit beside the rules? */
@@ -234,7 +235,7 @@ function voiceIdsIn(dir: string): string[] {
     const p = join(dir, name);
     if (statSync(p).isDirectory()) {
       if (existsSync(join(p, "voice.json"))) out.push(name);
-    } else if (name.endsWith(".json")) {
+    } else if (name.endsWith(".json") && name !== VOICES_DECLARATION_FILE) {
       out.push(name.slice(0, -".json".length));
     }
   }

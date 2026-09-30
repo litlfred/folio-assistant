@@ -2,7 +2,7 @@
   "$schema": "folio-voices-index/v1",
   "tile": {
     "voices": {
-      "count": 43,
+      "count": 45,
       "unit": "voices"
     }
   },
@@ -12,7 +12,8 @@
       "dir": "agent-skills/skills/voices",
       "present": true,
       "voices": [
-        "agent-skill-authoring"
+        "agent-skill-authoring",
+        "voices"
       ]
     },
     {
@@ -1636,6 +1637,370 @@
       ]
     },
     {
+      "id": "agent-skill-authoring-claude",
+      "title": "Agent skill authoring — Claude override",
+      "description": "What Anthropic's own 'Skill authoring best practices' (Claude Platform Docs) adds to the shared base voice agent-skill-authoring: Claude's front-matter validation, its naming conventions, forward-slash paths, and three authoring methods (plan-validate-execute, no voodoo constants, author with one instance and test with another). MODEL-SPECIFIC by the owner's ruling (bean rkqp): a vendor's advice is evidence about that vendor's platform. Provenance ASSERTION: a publisher describing its own product. Rules the base already carries — much of it traceable to this very document (the ~500-line body, one-level references, a table of contents over ~100 lines, third-person descriptions, evaluations before instructions) — are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate.",
+      "instance": "agent-skills",
+      "path": "agent-skills/skills/voices/vendors/agent-skill-authoring-claude",
+      "provenance": "assertion",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-agent-skill-authoring-claude",
+      "sources": [
+        {
+          "title": "Skill authoring best practices | Claude Platform Docs (captured 2026-09-20)",
+          "year": 2026
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "cl-frontmatter-limits",
+          "title": "name ≤ 64 characters of lowercase, digits and hyphens; description ≤ 1,024 characters; no XML tags in either",
+          "description": "Claude validates the SKILL.md front matter: name at most 64 characters, lowercase letters, numbers and hyphens only, no XML tags and no reserved words; description non-empty, at most 1,024 characters, no XML tags. A skill that breaks these does not load on Claude, which is why this is a vendor rule — other platforms state different limits or none.",
+          "category": "formatting",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-029",
+          "pages": "29",
+          "quote": "The SKILL.md frontmatter requires name and description fields with specific validation rules: name : Maximum 64 characters, lowercase letters/numbers/hyphens only, no XML tags, no reserved words description : Maximum 1,024 characters, non-empty, no XML tags",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-name-gerund-form",
+          "title": "Prefer a gerund name — processing-pdfs, not pdf-helper",
+          "description": "Anthropic's preferred form is the gerund (processing-pdfs, analyzing-spreadsheets); noun phrases (pdf-processing) and action-oriented names (process-pdfs) are acceptable alternatives. Pick one pattern for a whole collection: inconsistency within a collection is listed among the things to avoid.",
+          "category": "terminology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-005",
+          "pages": "5",
+          "quote": "Remember that the name field must use lowercase letters, numbers, and hyphens only. Good naming examples (gerund form): processing-pdfs analyzing-spreadsheets managing-databases testing-code writing-documentation Acceptable alternatives: Noun phrases: pdf-processing , spreadsheet-analysis Action-oriented: process-pdfs , analyze-spreadsheets",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-no-vague-or-reserved-names",
+          "title": "No vague, generic or reserved names",
+          "description": "helper, utils and tools say nothing; documents, data and files are too generic to route on; names containing the reserved words (anthropic-helper, claude-tools) are refused.",
+          "category": "terminology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 1,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-005",
+          "pages": "5",
+          "quote": "Avoid: Vague names: helper , utils , tools Overly generic: documents , data , files Reserved words: anthropic-helper , claude-tools Inconsistent patterns within your skill collection",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-forward-slash-paths",
+          "title": "Forward slashes in every file path, even on Windows",
+          "description": "scripts/helper.py, never scripts\\helper.py: Unix-style paths work on every platform, Windows-style ones fail on Unix systems.",
+          "category": "formatting",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-021",
+          "pages": "21",
+          "quote": "Always use forward slashes in file paths, even on Windows: ✓ Good: scripts/helper.py , reference/guide.md ✗ Avoid: scripts\\helper.py , reference\\guide.md Unix-style paths work across all platforms, while Windows-style paths cause errors on Unix systems.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-no-voodoo-constants",
+          "title": "Every configuration value in a bundled script says why it is that value",
+          "description": "A magic number in a script is a value Claude cannot reason about: if the author does not know why it is right, the model cannot determine it either. Justify and document each constant (Ousterhout's 'voodoo constants').",
+          "category": "methodology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-023",
+          "pages": "23",
+          "quote": "Configuration parameters should also be justified and documented to avoid \"voodoo constants\" (Ousterhout's law). If you don't know the right value, how will Claude determine it?",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-plan-validate-execute",
+          "title": "For a complex, open-ended change: plan in a structured form, validate the plan with a script, then execute",
+          "description": "The intermediate plan is the checkable artefact — mistakes (a non-existent field, a conflicting value, a missed requirement) are caught before anything is changed, not after.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-026",
+          "pages": "26",
+          "quote": "When Claude performs complex, open-ended tasks, it can make mistakes. The \"plan-validate- execute\" pattern catches errors early by having Claude first create a plan in a structured format, then validate that plan with a script before executing it.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-consistent-terminology",
+          "title": "One term per concept, throughout the skill",
+          "description": "Choose a term — 'API endpoint', 'field', 'extract' — and never alternate it with a synonym inside one skill; a variant reads to the model as a different thing.",
+          "category": "terminology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-015",
+          "pages": "15",
+          "quote": "Use consistent terminology Choose one term and use it throughout the Skill: Good - Consistent: Always \"API endpoint\" Always \"field\" Always \"extract\"",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        },
+        {
+          "id": "cl-author-with-one-claude-test-with-another",
+          "title": "Write the skill with one Claude instance and test it with another",
+          "description": "Anthropic's authoring loop: 'Claude A' helps design and refine the instructions; 'Claude B', a separate instance with the skill loaded, uses it on real tasks and exposes what is missing. Begin by doing the task once without a skill and noting the context you kept supplying — that is the skill's content.",
+          "category": "methodology",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "skill-authoring-best-practices---claude-platform-docs#page-019",
+          "pages": "19",
+          "quote": "Claude (\"Claude A\") to create a Skill that is used by other instances (\"Claude B\"). Claude A helps you design and refine instructions, while Claude B tests them in real tasks.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fskill-authoring-best-practices---claude-platform-docs",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md"
+          }
+        }
+      ]
+    },
+    {
+      "id": "agent-skill-authoring-gemini-cli",
+      "title": "Agent skill authoring — Gemini CLI override",
+      "description": "What Gemini CLI's own documentation adds to the shared base voice (agent-skill-authoring): its loading budget in words, its degrees-of-freedom rule, its folder names, script ergonomics and security. MODEL-SPECIFIC by the owner's ruling (bean rkqp, 2026-09-20): a vendor's advice is evidence about that vendor's platform, so it is a separate voice extending the base rather than caveats folded into it — a rule that turns out to be Gemini-only can then be dropped without touching the rest. Provenance is ASSERTION: a publisher describing its own product, revisable without notice. Rules the base already states (description carries function and trigger; read third-party skills before installing) are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate — the owner's instruction, because 'best practice' drifts.",
+      "instance": "agent-skills",
+      "path": "agent-skills/skills/voices/vendors/agent-skill-authoring-gemini-cli",
+      "provenance": "assertion",
+      "overlaySeverity": "major",
+      "criterion": "voice-overlay-agent-skill-authoring-gemini-cli",
+      "sources": [
+        {
+          "title": "Agent Skill best practices | Gemini CLI (captured 2026-09-20, page last updated 2026-04-30)",
+          "year": 2026
+        }
+      ],
+      "hasInstructions": false,
+      "provenanceFlags": [],
+      "rules": [
+        {
+          "id": "gc-descriptions-do-not-overlap",
+          "title": "A description is distinct from every other skill's — and from what the model does anyway",
+          "description": "Gemini CLI routes on the description alone, so two skills whose descriptions cover the same requests compete for them, and a description that restates a general capability of the model gives the router no reason to load the skill at all. Check a new description against the descriptions already installed, not only against the skill's own body.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-001",
+          "pages": "1",
+          "quote": "Avoid overlap: Ensure your skill descriptions are distinct from one another and from the general capabilities of the model.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-context-budget-in-words",
+          "title": "Budget the three loading levels in WORDS: ~100 always loaded, under 5k on trigger",
+          "description": "Gemini CLI states its budget per level and in words: the name and description are always in context (~100 words), the SKILL.md body is loaded only when the skill triggers (under 5,000 words), and bundled resources only as needed. The base voice's '~500 lines' comes from a different source and a different unit; on Gemini CLI the word budget is the vendor's own figure. Neither is a hard limit the platform enforces — both are the publisher's guidance.",
+          "category": "numbers",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-001",
+          "pages": "1",
+          "quote": "1. Metadata (name + description): Always in context (~100 words). 2. SKILL.md body: Loaded only after the skill triggers (<5k words). 3. Bundled resources: Loaded only as needed by the model.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-degrees-of-freedom",
+          "title": "Match how prescriptive a step is to how fragile it is",
+          "description": "Three levels: text instructions where several approaches are valid, pseudocode or a parameterised script where one pattern is preferred, and a specific script with few parameters where the operation is fragile or the sequence MUST be followed. Writing a fragile step as free prose is the failure this prevents; so is scripting a judgement call.",
+          "category": "methodology",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "Degrees of freedom Match the level of instruction specificity to the task’s fragility. High freedom (text-based instructions): Use when multiple approaches are valid or decisions depend heavily on context. Medium freedom (pseudocode or scripts with parameters): Use when a preferred pattern exists but some variation is acceptable. Low freedom (specific scripts, few parameters): Use when operations are fragile and error-prone, or a specific sequence MUST be followed.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-scripts-for-deterministic-tasks",
+          "title": "A task a script can do is a script in scripts/, not prose",
+          "description": "If the step is deterministic — run a linter, fetch from an API — bundle it as a script under scripts/ and have the body call it, rather than describing the commands for the model to reproduce each time.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "Use scripts for deterministic tasks: If a task can be automated with a script (for example, running a linter, fetching data from an API), bundle it in the scripts/ folder.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-llm-friendly-script-output",
+          "title": "A bundled script's output is written for a model to read",
+          "description": "Suppress verbose tracebacks and end with a clear, short success or failure message. The reader of a skill script's stdout is the agent, and a stack trace is context it pays for without learning what to do next.",
+          "category": "formatting",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "Agentic ergonomics: Ensure scripts output LLM-friendly stdout. Suppress verbose tracebacks and provide clear, concise success/failure messages.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-templates-in-assets",
+          "title": "Boilerplate the agent must reproduce exactly lives in assets/",
+          "description": "Common file headers and boilerplate go in assets/ as templates, so every run produces the same output rather than the model's recollection of it.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "Provide templates: Include common file headers or boilerplate code in the assets/ folder to ensure the agent produces consistent output.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-skill-directory-anatomy",
+          "title": "SKILL.md is required; scripts/, references/ and assets/ are the optional sub-folders",
+          "description": "Gemini CLI's layout: SKILL.md (core instructions and metadata) is the only required file; executable logic goes in scripts/, documentation loaded on demand in references/, templates and other non-executable resources in assets/. Other vendors name these folders differently — Antigravity documents examples/ and resources/ — which is why this is a vendor rule and not a base one.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "my-skill/ ├── SKILL.md (Required) Core instructions and metadata ├── scripts/ (Optional) Executable logic (Node.js, Python, etc.) ├── references/ (Optional) Documentation to be loaded as needed └── assets/ (Optional) Templates and non-executable resources",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-reference-material-out-of-the-body",
+          "title": "Keep the body procedural; reference material, schemas and examples go in references/",
+          "description": "The body holds the core procedure. Detailed reference material, schemas and examples move to separate files in references/, loaded only when needed — the vendor's own folder name for what the base voice calls a reference file.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-002",
+          "pages": "2",
+          "quote": "Best practice: Keep the SKILL.md body focused on core procedural instructions. Move detailed reference material, schemas, and examples into separate files in a references/ directory.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-no-hardcoded-secrets",
+          "title": "No API key or password in a skill's scripts or documentation",
+          "description": "A skill is shared and installed by others; a credential written into it is published with it.",
+          "category": "methodology",
+          "severity": "critical",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-003",
+          "pages": "3",
+          "quote": "Avoid hardcoded secrets: Never include API keys or passwords in your skill’s scripts or documentation.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        },
+        {
+          "id": "gc-limit-scope",
+          "title": "Keep a skill as narrow as it can be",
+          "description": "The narrower the skill, the smaller the damage when it is wrong. A skill that does several things fails in several places at once.",
+          "category": "structure",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "agent-skill-best-practices---gemini-cli#page-003",
+          "pages": "3",
+          "quote": "Limit scope: Design skills to be as focused as possible to minimize the potential impact of errors.",
+          "links": {
+            "viewer": "cat-harness/library/agent-skills/#agent-skills%2Fagent-skill-best-practices---gemini-cli",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md"
+          }
+        }
+      ]
+    },
+    {
       "id": "milnor",
       "title": "Milnor exposition standard",
       "description": "Eight hallmarks of mathematical exposition, scored 0-2 each with sixteen the only passing total, derived from John Milnor's \"Link Groups\" (Annals of Mathematics 59(2), 1954, pp. 177-195). Not a house standard named after him any more: every rule now cites a page of the paper, and three of them exist because the paper CONTRADICTS what this platform's own house voice asserts. 8899 words, 496 sentences, measured 2026-09-19.",
@@ -2432,6 +2797,294 @@
             "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
             "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
           }
+        },
+        {
+          "id": "who-ed-spelling-general",
+          "title": "Follow The concise Oxford dictionary's first spelling — and Annex 1 where WHO differs",
+          "description": "The general spelling rule the manual's Annex 1 opens with: take the spelling The concise Oxford dictionary gives first, or the one a variant entry refers you to. Annex 1 then lists WHO's own exceptions and the words that most often cause doubt; the rules who-ed-spelling-annex-p088 to p102 carry that list, one rule per printed page, each quoting its page. Where a word is not listed, this rule decides.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 2,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-088",
+          "pages": "88",
+          "quote": "The general rule in WHO is to follow the spelling given in the latest edition of The concise Oxford dictionary; where it gives alternative spellings or forms, use the one given first (e.g. fulfil, fulfill) or the one to which you are referred from an entry giving a variant spelling (e.g. \"tire, US var. of tyre\": use \"tyre\").",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p088",
+          "title": "Annex 1 spellings, printed page 83",
+          "description": "The entries on printed page 83 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 6,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-088",
+          "pages": "88",
+          "quote": "adaptation (not adaption) … adviser (not advisor) … Aedes (not Aëdes) … all right (not alright) … among (not amongst) … acquired immunodeficiency syndrome (not …immune deficiency…)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p089",
+          "title": "Annex 1 spellings, printed page 84",
+          "description": "The entries on printed page 84 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 6,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-089",
+          "pages": "89",
+          "quote": "ancylostomiasis (not ankylo…) … arc, arced, arcing (not arcked, etc.) … artefact (not artifact) … bibliographic (not bibliographical) … blender (not blendor) … calliper (not caliper)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p090",
+          "title": "Annex 1 spellings, printed page 85",
+          "description": "The entries on printed page 85 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 5,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-090",
+          "pages": "90",
+          "quote": "carcass (not carcase) … connection (not connexion) … consensus (not concensus) … cotton wool (not cottonwool) … dare say (not daresay)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p091",
+          "title": "Annex 1 spellings, printed page 86",
+          "description": "The entries on printed page 86 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 12,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-091",
+          "pages": "91",
+          "quote": "dermatotropic (not dermotropic) … disinsection (not disinsectization) … dispatch (not despatch) … dissociate (not disassociate) … Down syndrome (not Down's) … Dr (not Dr.) … dracunculiasis (= guinea-worm disease; avoid dracontiasis) … Economic and Social Council (of the United Nations) (not ECOSOC) … enclose (not inclose) … enzyme-linked immunosorbent assay (ELISA) (not …immuno-absorbent; not Elisa) … etiology (not aetiology)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p092",
+          "title": "Annex 1 spellings, printed page 87",
+          "description": "The entries on printed page 87 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 13,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-092",
+          "pages": "92",
+          "quote": "fibre (not fiber) … fine-tooth comb (not fine tooth-comb) … First World War (not World War I) … flammable (prefer to inflammable) … Food and Agriculture Organization of the United Nations (not…Agricultural; do not omit \"of the United Nations\") … further, furthest (prefer to farther, farthest) … γ-isomer (not gamma isomer) … gauge (n. & vb; not guage) … genetic (not genetical) … geographical (not geographic) … goitre (not goiter) … gonococcus (not Gonococcus; see Neisseria)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p093",
+          "title": "Annex 1 spellings, printed page 88",
+          "description": "The entries on printed page 88 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 4,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-093",
+          "pages": "93",
+          "quote": "grey (colour; not gray) … haematopoietic (not haemopoietic) … heterogeneity, heterogeneous (not heterogenous) … HTLV-III (deprecated abbr. for virus associated with AIDS; prefer HIV)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p094",
+          "title": "Annex 1 spellings, printed page 89",
+          "description": "The entries on printed page 89 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 6,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-094",
+          "pages": "94",
+          "quote": "immunological (not immunologic) … inflection (not inflexion) … insanitary (not unsanitary) … International Labour Organisation (not …Organization) … intersectoral (not intersectorial) … isolatable (not isolable)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p095",
+          "title": "Annex 1 spellings, printed page 90",
+          "description": "The entries on printed page 90 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 9,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-095",
+          "pages": "95",
+          "quote": "liquefaction (not liquifaction) … liquefy (not liquify) … logistic (not logistical) … man-hours, man-months, etc. (prefer work-hours, work-months, etc.) … manoeuvre, manoeuvrable (not maneuver, maneuverable) … marijuana (not marihuana) … meningococcus (not Meningococcus)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p096",
+          "title": "Annex 1 spellings, printed page 91",
+          "description": "The entries on printed page 91 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 16,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-096",
+          "pages": "96",
+          "quote": "misspell, misspelt (not mispell, mispelled) … molarity (deprecated; use mol/litre) … mollusc (not mollusk) … molluscicide (not molluscocide) … mosquitos (not mosquitoes) … mould, mouldy (not mold, moldy) … Muhammad (not Mahomet) … Muslim (not Moslem) … naive (not naïve) … newborn (adj. & abstract sing. n.; avoid newborns – prefer neonates) … none the less (not nonetheless) … normality (not normalcy) … oblivious of (not to) … offence (not offense)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p097",
+          "title": "Annex 1 spellings, printed page 92",
+          "description": "The entries on printed page 92 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 10,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-097",
+          "pages": "97",
+          "quote": "ophthalmic, ophthalmology (not ophtalmic or opthalmic, etc.) … organophosphorus compounds (not …phorous) … orient, oriented (not orientate, orientated) … overseas (not oversea) … overview (prefer survey, outline, review) … participate in (not at or to) … phagocytose (not phagocytize) … pneumococcus, pneumococcal (not Pneumococcus)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p098",
+          "title": "Annex 1 spellings, printed page 93",
+          "description": "The entries on printed page 93 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 12,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-098",
+          "pages": "98",
+          "quote": "predominant(ly) (not predominate(ly)) … primary health worker (prefer community health worker) … progestogen (not progestagen) … provenance (not provenience) … quantify (not quantitate) … racoon (not raccoon) … rarefy, rarefaction (not rarify, rarifaction) … reflection (not reflexion) … regime (not régime) … Region of the Americas (of WHO; not American Region)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p099",
+          "title": "Annex 1 spellings, printed page 94",
+          "description": "The entries on printed page 94 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 5,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-099",
+          "pages": "99",
+          "quote": "role (not rôle) … sanatorium (not sanitarium; pl. sanatoria) … sceptic, sceptical (not skeptic, skeptical) … Second World War (not World War II)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p100",
+          "title": "Annex 1 spellings, printed page 95",
+          "description": "The entries on printed page 95 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 7,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-100",
+          "pages": "100",
+          "quote": "siphon (not syphon) … sulfur (not sulphur) … supersede (not supercede) … supervisor (not superviser) … sylvan (not silvan) … synthesize (not synthetize) … template (not templet)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p101",
+          "title": "Annex 1 spellings, printed page 96",
+          "description": "The entries on printed page 96 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 13,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-101",
+          "pages": "101",
+          "quote": "through (not thru) … tonne (not \"metric ton\" or \"metric tonne\") … towards (not toward) … under way (not underway) … unequivocal, unequivocally (not unequivocable, unequivocably) … United Kingdom (not UK) … United Nations (not UN) … urine analysis (not urinalysis) … Vaseline (trade name, requires cap.; prefer petroleum jelly) … venepuncture (not venipuncture) … vitamin A, etc. (not Vitamin A, etc.) … viz. (prefer namely)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
+        },
+        {
+          "id": "who-ed-spelling-annex-p102",
+          "title": "Annex 1 spellings, printed page 97",
+          "description": "The entries on printed page 97 of Annex 1 (\"Spelling of words that commonly cause difficulty\") that name a form to avoid — marked by an italic not, or by prefer, avoid, use or deprecated. Read from the page image, not the OCR text layer, which drops and garbles entries on these pages. An entry with a roman \"not\" is a gloss, not a rejected form (\"impractical (not practical)\" defines the word), and is not recorded. Entries that only state a spelling, with nothing to reject, are covered by who-ed-spelling-general.",
+          "category": "spelling",
+          "severity": "minor",
+          "patterns": 0,
+          "terminology": 9,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "who-pub-tps-931#page-102",
+          "pages": "102",
+          "quote": "wagon (not waggon) … weal (not wheal) … while (not whilst) … whooping cough (prefer pertussis) … World Health Assembly (may be shortened to Health Assembly, not to Assembly) … World Health Organization (not Organisation) … X-ray (not x-ray) … xerophthalmia (not xerophtalmia or xeropthalmia) … zoonosis, zoonoses (pl.) (not zöo…)",
+          "links": {
+            "viewer": "cat-harness/library/who-iris/#who-iris%2Fwho-pub-tps-931",
+            "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md"
+          }
         }
       ]
     },
@@ -2765,10 +3418,10 @@
     }
   ],
   "totals": {
-    "voices": 43,
-    "rules": 102,
-    "citingLibrary": 63,
+    "voices": 45,
+    "rules": 136,
+    "citingLibrary": 97,
     "citingKgNode": 39,
-    "mechanical": 12
+    "mechanical": 29
   }
 }
