@@ -1,7 +1,7 @@
 ---
 # folio-assistant-qgjh
 title: References are shown as plain text, not links
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - cross-cutting
 created_at: 2026-09-23T10:36:13Z
-updated_at: 2026-09-30T16:12:47Z
+updated_at: 2026-09-30T17:43:41Z
 parent: folio-assistant-4ccr
 ---
 
@@ -85,3 +85,9 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 - **STILL-PRESENT** — References shown as plain text, not links — processes: Narrowed since 2026-09-29. 'skill | run by' (103 rows) now has 335 links: 98 of 103 skill cells and 103 of 103 run-by cells, and all 173 local targets return 200. The 'lane | in' table (106 rows) still has 0 links. The bean records that as deliberate (a lane has no page). — #1592 (qgjh.mjs, D/p_idx.js, linkcheck.mjs)
 - **FIXED** — References shown as plain text, not links — tools: Changed since 2026-09-29. In the main table (107 rows), 'satisfies' links in 105 of 107 rows (136 links, all 61 targets return 200). The 2 unlinked are bootstrap skills with no page. The tool-id column is still code (0 of 107); that part is tracked under qbfm. — #1592 (qgjh.mjs, D/p_tools.js, linkcheck.mjs)
 - **FIXED** — References shown as plain text, not links — voices: Changed since 2026-09-29. /cat-harness/voices/: 102 of 102 span.cite contain an <a> (library viewer / item page / source, or the KG node's file). /cat-harness/voices/who-style-guide/: 25 of 25. The local targets resolve. — #1592 (qgjh.mjs, D/p_vo3.js, linkcheck.mjs)
+
+## Landed
+- #1592: catalogue, external-schemas, folio, library, methodologies, processes (run by), tools, voices link their references.
+- #1594: glossary role names link to their rows.
+- #1651 (merged bbba1ea6): glossary skills link to instruction pages and repository paths to their source.
+Left as code on purpose: permissions with no page (claim, note, resolve), and the processes 'lane | in' table (a lane has no page), both recorded above.

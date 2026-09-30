@@ -12,7 +12,7 @@ back to its authoritative sources.
 | Content authoring (paper) | authoring-math skills | [`skills/authoring-math/`](../skills/authoring-math/) |
 | Content authoring (document) | folio-document-adapter skills | [`skills/folio-document-adapter/`](../skills/folio-document-adapter/) |
 | Content lifecycle | content-lifecycle skills | [`skills/content-lifecycle/`](../skills/content-lifecycle/) |
-| Document ingestion | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../skills/folio-core/docs-generation.md) |
+| Document ingestion | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../skills/ui/ui-core/docs-generation.md) |
 | Dispatch and coordination | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../skills/folio-core/) |
 | Content types and adapters | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
 | BPMN diagram authoring | `bpmn-authoring` skill | [`skills/folio-core/`](../skills/folio-core/) |

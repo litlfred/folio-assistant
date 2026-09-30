@@ -106,7 +106,7 @@ makes bootstrap's graph reference artefacts it does not own and cannot
 validate. The arrow runs **one way** — a per-locale document references the
 core, never the reverse — and the core is complete with no translation
 existing. The same relation
-[`board-diagram-interchange`](../../folio-core/board-diagram-interchange.md) states for a board
+[`board-diagram-interchange`](../../ui/ui-core/board-diagram-interchange.md) states for a board
 and its folio. `localeDocumentsUnreferenced` checks it rather than trusting it.
 
 **2. A translated node keeps its `@id`.** A translation is not a new term.
