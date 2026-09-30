@@ -428,8 +428,8 @@ export interface KgCriterionDefinition {
    * corpus can decide it*. They are independent, and the graph roll-up proves
    * it: `applies: ["graph"]` covers both `skill-in-role-or-process`, which every
    * instance can answer about its own graph, and `actor-roles-resolve`, which
-   * only the repository can — because an actor is declared once at the
-   * repository root (`.claude/skills/actors/`) while a role is a swimlane inside
+   * only the repository can — because an actor is declared once for the whole
+   * repository (`cat-harness/scenarios/actors/`) while a role is a swimlane inside
    * one instance's diagrams.
    *
    * **Required, deliberately.** A criterion that has not decided its scope does
@@ -938,6 +938,20 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "`pairs:attest` with a reason. A prose edit never raises this; a missing side of a declared pair is `unknown`.",
   },
   {
+    id: "skill-voice-review-current",
+    applies: ["skill"],
+    scope: "instance",
+    // `minor` and not gated, by the owner's ruling on bean `rkqp`: an agentic
+    // review of skills against the skill voices, with NO formal gate on rule
+    // content. This asks only whether a current review exists; a rule the
+    // reviewer judged `fail` is recorded in `voice_reviews`, never a finding.
+    severity: "minor",
+    summary:
+      "An ACTIVE voice with rules scoped to skills (`appliesTo: [\"skill\"]`) has no review of this skill, or the " +
+      "review predates a change to the skill or to the voice's skill rules. Review it rule by rule with each citation " +
+      "open, then `bun run voice:review`. `n/a` when no such voice is active; `unknown` when the harness config is unreadable.",
+  },
+  {
     id: "prose-claims-resolve",
     applies: ["process", "skill"],
     scope: "instance",
@@ -1294,7 +1308,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     scope: "repo",
     scopeBasis:
-      "An actor is declared ONCE at the repository root (`.claude/skills/actors/`) while a role is a " +
+      "An actor is declared ONCE for the whole repository (`cat-harness/scenarios/actors/`) while a role is a " +
       "swimlane inside one instance's diagrams, so this compares a repository-level set against an " +
       "instance-level one. MEASURED 2026-09-26: `--instance ./bootstrap` produced 73 findings, one for " +
       "almost every one of the 36 repository actors, because they name roles the bootstrap graph does " +
@@ -1309,7 +1323,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     scope: "repo",
     scopeBasis:
-      "Both sides are repository-level — actors and `.claude/skills/capabilities/` are resolved through " +
+      "Both sides are repository-level — actors and capabilities (`cat-harness/scenarios/`) are resolved through " +
       "`repoRootFor`, so `--instance` does not move either. Re-asking per instance would re-derive the " +
       "root's own answer once per declaration and report the same findings N times.",
     severity: "critical",
@@ -1498,6 +1512,23 @@ export interface KgQaReport {
    * `kg-audit` and by `pairs:attest`; see `scripts/prose-code-pairs.ts`.
    */
   pair_attestations?: KgPairAttestation[];
+  /**
+   * An agent's or a person's rule-by-rule review of a skill against a voice
+   * that judges skills — carried across runs like `pair_attestations`, and
+   * written by `voice:review`; see `scripts/skill-voice-review.ts`.
+   */
+  voice_reviews?: KgVoiceReview[];
+}
+
+/** One review of a skill against one voice. Hashes pin what was reviewed. */
+export interface KgVoiceReview {
+  voice: string;
+  instance: string;
+  skill_hash: string;
+  voice_hash: string;
+  by: "agent" | "human";
+  at: string;
+  verdicts: Array<{ rule: string; result: "pass" | "fail" | "n/a"; note?: string }>;
 }
 
 /** One declared pair's accepted state. Paths are repo-relative. */
@@ -1541,6 +1572,25 @@ export const KgQaReportSchema = z.object({
         code_hash: z.string().min(1),
         by: z.enum(["baseline", "agent", "human"]),
         reason: z.string().min(1).optional(),
+      }),
+    )
+    .optional(),
+  voice_reviews: z
+    .array(
+      z.object({
+        voice: z.string().min(1),
+        instance: z.string().min(1),
+        skill_hash: z.string().min(1),
+        voice_hash: z.string().min(1),
+        by: z.enum(["agent", "human"]),
+        at: z.string().min(1),
+        verdicts: z.array(
+          z.object({
+            rule: z.string().min(1),
+            result: z.enum(["pass", "fail", "n/a"]),
+            note: z.string().min(1).optional(),
+          }),
+        ),
       }),
     )
     .optional(),

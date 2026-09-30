@@ -16,7 +16,7 @@
 # Network: needs github.com egress at RUN time (Lake fetches the require), not
 # just at image-build time.
 #
-# See: .claude/skills/capabilities/lean-atlas.json
+# See: cat-harness/scenarios/capabilities/lean-atlas.json
 #      content/pipeline/lean-atlas-ingest.ts
 set -euo pipefail
 

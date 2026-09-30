@@ -183,6 +183,20 @@ export const CapabilityDefinitionSchema = z.object({
    * {@link RequirementStatementRefSchema}.
    */
   satisfies: z.array(z.lazy(() => RequirementStatementRefSchema)).optional(),
+  /**
+   * The skill that explains how to SET UP this capability — install it,
+   * configure it, verify it. Optional.
+   *
+   * A pointer, not a merge (bean `rqao`, owner 2026-09-30, round 4). The
+   * owner asked whether capabilities could be recast as skills; they stay
+   * their own kind because the role model keeps an actor's ENVIRONMENT
+   * (capabilities: can this host run Bun?) apart from its role's KNOWLEDGE
+   * (skills: how is a proof reviewed?), and merging them would make those one
+   * relation. This field is the part of the recast that costs nothing: where
+   * a setup procedure exists as a skill, the probe names it, so a failed probe
+   * can say what to read.
+   */
+  setupSkill: SkillNameSchema.optional(),
 });
 
 // ─── SkillDefinition ─────────────────────────────────────────────────────────

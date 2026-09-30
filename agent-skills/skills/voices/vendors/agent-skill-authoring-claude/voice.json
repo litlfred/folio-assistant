@@ -2,6 +2,7 @@
   "$schema": "folio-voice/v1",
   "id": "agent-skill-authoring-claude",
   "title": "Agent skill authoring — Claude override",
+  "appliesTo": ["skill"],
   "description": "What Anthropic's own 'Skill authoring best practices' (Claude Platform Docs) adds to the shared base voice agent-skill-authoring: Claude's front-matter validation, its naming conventions, forward-slash paths, and three authoring methods (plan-validate-execute, no voodoo constants, author with one instance and test with another). MODEL-SPECIFIC by the owner's ruling (bean rkqp): a vendor's advice is evidence about that vendor's platform. Provenance ASSERTION: a publisher describing its own product. Rules the base already carries — much of it traceable to this very document (the ~500-line body, one-level references, a table of contents over ~100 lines, third-person descriptions, evaluations before instructions) — are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate.",
   "provenance": "assertion",
   "extends": {
