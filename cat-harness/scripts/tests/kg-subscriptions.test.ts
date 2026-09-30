@@ -81,3 +81,49 @@ describe("subscriptions: the schema", () => {
     expect(failedPaths(decl({ associatedHarnesses: [associated], subscriptions: [WHO_IRIS] }))).toEqual(["subscriptions.0.id"]);
   });
 });
+
+import { knownSubstrates, render, repoFromUrl, type SubstrateRow } from "../subscriptions-viz.ts";
+import { resolve } from "node:path";
+
+describe("the known-substrates registry (subscriptions-viz)", () => {
+  const REPO = resolve(import.meta.dir, "../../..");
+
+  test("a staged instance is DERIVED as planned — nobody keeps a second list of it", () => {
+    const rows = knownSubstrates(REPO);
+    const core = rows.find((r) => r.name === "folio-assistant-core");
+    expect(core?.status).toBe("planned");
+    expect(core?.source).toBe("staged instance");
+    expect(core?.repository).toBe("litlfred/folio-assistant-core");
+  });
+
+  test("an associated harness is derived as exists, its repository read from the URL", () => {
+    const ihris = knownSubstrates(REPO).find((r) => r.name === "ihris");
+    expect(ihris?.status).toBe("exists");
+    expect(ihris?.repository).toBe("litlfred/ihris");
+  });
+
+  test("a hand row OVERRIDES a derived one by name (who-iris: planned -> exists)", () => {
+    const who = knownSubstrates(REPO).find((r) => r.name === "who-iris");
+    expect(who?.status).toBe("exists");
+    expect(who?.source).toBe("hand-entered");
+  });
+
+  test("repoFromUrl takes only a github repository URL", () => {
+    expect(repoFromUrl("https://github.com/litlfred/ihris")).toBe("litlfred/ihris");
+    expect(repoFromUrl("https://github.com/litlfred/ihris/")).toBe("litlfred/ihris");
+    expect(repoFromUrl("https://litlfred.github.io/ihris/")).toBeUndefined();
+    expect(repoFromUrl(undefined)).toBeUndefined();
+  });
+
+  test("a subscription card draws chosen parts as NOT YET HELD — never as held", () => {
+    const text = render([] as SubstrateRow[], [{ subscriber: "demo", subscription: WHO_IRIS as never }]);
+    expect(text).toContain("subgraph `catalogue` | ✓ | 🔗 chosen, not yet held");
+    expect(text).toContain("harness `who-iris` | ✓ | 🔗 chosen, not yet instantiated");
+    expect(text).toContain("everything else the substrate offers | — | 🔗 referenced");
+    expect(text).not.toContain("⬇");
+  });
+
+  test("an empty registry says so rather than rendering an empty table", () => {
+    expect(render([], [])).toContain("_No substrate is known");
+  });
+});
