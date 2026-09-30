@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-30T11:15:58Z
-updated_at: 2026-09-30T11:15:58Z
+updated_at: 2026-09-30T13:47:27Z
 parent: folio-assistant-1xhc
 ---
 
@@ -124,3 +124,48 @@ direction check permits across the whole repository, and adding
 `bootstrap-tools/` to `kg:detangle`'s `SCAN` adds nodes and edges to a set of
 **pinned adjudications** while `p11x` is being implemented against that file.
 Both are rulings, not triage by-products.
+
+
+## RULED 2026-09-30 — declare it
+
+The owner chose **`cat-harness` declares `needs: ["bootstrap", "bootstrap-tools"]`**,
+over folding `bootstrap-tools` into `bootstrap`, permitting the 20 with a
+recorded reason, or treating the imports as the defect.
+
+That confirms the reading this bean recorded as a **guess**: bean `xsqm` moved
+the code out into its own instance and this list was not updated with it. The
+imports were right; the declaration was behind them.
+
+### What landed
+
+One line in `cat-harness/cat-harness.json`, plus the reason written into the
+existing `_needs_comment` beside it, so the next reader finds it where the
+declaration is rather than only in a bean.
+
+Checked after the edit, not assumed:
+
+```
+check:instance-graph   ✓ 17 instance(s): every one declares needs, every
+                         dependency resolves, no cycle; 17 distinct harness IRIs
+check:tools-closure    ✓ bootstrap-tools imports only itself, zod, liquidjs,
+                         @playwright/test and the runtime (32 files)
+check:partition        0 edges touching an unassigned module
+```
+
+**The reverse arrow stays forbidden**, and `check:tools-closure` still guards
+it — this makes `cat-harness → bootstrap-tools` legal, not the pair mutual. No
+cycle: `bootstrap-tools` needs `bootstrap`, and `bootstrap` needs nothing.
+
+### The second box is NOT ticked by this
+
+Declaring the dependency makes the 20 edges legal. It does **not** make any
+check able to see the relation, so the *next* undeclared sibling edge would be
+just as invisible: `kg:detangle`'s `SCAN` still does not list
+`bootstrap-tools/`, `check:partition`'s `ROOT` is still `cat-harness/`, and
+`check:instance-graph` still judges declarations rather than imports.
+
+**Fixing the number without fixing the blindness is exactly what this bean
+warned about**, so that box stays open on purpose. PR #1580 (`p11x`) is the
+work that addresses it — it makes the cross-instance wrong-direction count
+blocking and, per its own body, prints how many of the checkout's instances the
+graph actually reaches (3 of 19) and names the 16 it does not.
