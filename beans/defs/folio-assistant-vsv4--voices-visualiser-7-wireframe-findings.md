@@ -23,3 +23,15 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/voices/` (intent.
 7. **The directory table breaks words at 390 px.** "agent- / skills", "folio- / assistant- / core", and the monospace directory paths wrap mid-segment ("folio-assistant- / core/skills/voices").
 
 When fixed, re-draw `cat-harness/docs/wireframes/voices/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 7 still present, 0 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — Citations cannot be opened; no links: 102 span.cite, 0 contain or sit in an <a>; 0 links outside the nav on voices/ and voices/who-style-guide/ (e.g. 'who-pub-tps-931#page-014, p14'). A nav.fa-nav now exists, but it does not reach citations.
+- **STILL-PRESENT** — Summary counts do not follow the filter: #inst preset 'who-style-guide', 3 voice cards shown, chips still read '43 voice(s) 102 rule(s) 63 citing an ingested source 39 citing a KG node …' (whole-repo totals).
+- **STILL-PRESENT** — No rule visible until a card is opened; first card below first screen on phone: 43 cards, 0 open at rest. At 390x844 first card y=1020 (was 851), first rule when opened y=1470; closed cards 430–812px tall at 390, 169–232px at 1280.
+- **STILL-PRESENT** — Headings sit inside the disclosure control: 43 of 43 cards have h2 inside <summary>; summary text length 564 chars for the first card.
+- **STILL-PRESENT** — ▸/▾ marker detached from the title: summary::before content '▸' 15px inline-block on its own line; h2 starts 35px below the summary top (screenshot confirms marker alone above heading).
+- **STILL-PRESENT** — Markdown shows through as raw text: Descriptions contain literal backticks, e.g. "moved out of the role's own `voice` field", "derived from Role `adjudicator`" (div.vmeta).
+- **STILL-PRESENT** — Directory table breaks words at 390: At 390x844 8 cells wrap mid-segment: 'folio-assistant-core' 3 lines, 'folio-assistant-core/skills/voices' 4 lines, 'agent-skills/skills/voices' 3 lines, etc.

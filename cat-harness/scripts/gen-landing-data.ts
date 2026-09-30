@@ -46,7 +46,7 @@ import {
 } from "../schemas/cat-harness.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
-import { themeById } from "../schemas/themes.js";
+import { themeByRef } from "../schemas/theme-by-ref.js";
 import { readLandingStickies } from "./ensure-landing-sticky.js";
 import { isExternalLink } from "../schemas/landing-sticky.js";
 
@@ -182,7 +182,11 @@ function defaultCloud(layout: string): unknown {
 }
 
 const stickies = readLandingStickies(ROOT).map((st) => {
-  const theme = themeById(st.theme.themeId);
+  // By REFERENCE, owner first (bean `v8n5`): a card citing another
+  // instance's theme resolves against that instance's declared themes, and a
+  // bare id against the contributing instance's own, then the platform's.
+  const found = themeByRef(st.theme, repoRootFor(ROOT), st.contributedBy);
+  const theme = found.ok ? found.theme : undefined;
   const resolved = theme ? resolveThemeBackdrop(theme, decl?.images) : undefined;
   const art: Record<string, unknown> = {};
   if (resolved && resolved.art.size > 0) {

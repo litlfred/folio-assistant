@@ -5429,6 +5429,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.liquid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.liquid"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The Liquid prefix this instance's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.liquid",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.name",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5711,6 +5730,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.liquid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.liquid"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "See {@link CatHarnessDeclaration.liquid}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.liquid",
       "skos:note": "candidate"
     },
     {
@@ -6167,6 +6205,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.liquidprefix.passthrough",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LiquidPrefix.passThrough"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#LiquidPrefix.passThrough",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.liquidprefix.prefix",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LiquidPrefix.prefix"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The first path segment(s); default the instance's `name`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#LiquidPrefix.prefix",
       "skos:note": "candidate"
     },
     {
@@ -20318,7 +20394,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/harness.json`, `bootstrap/harness.json`, `harness.json`."
+          "@value": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/cat-harness.json`, `bootstrap/bootstrap.json`: each instance's own `<instance>/<instance>.json`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.declaredIn",
@@ -22282,25 +22358,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.alternativeto",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ToolDefinitionSchema.alternativeTo"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Other Tools that do the SAME job by a different mechanism."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.alternativeTo",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.maintains",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -22370,7 +22427,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Why to reach for this one. REQUIRED once `alternativeTo` is non-empty — see {@link ToolSelectionSchema}, and the refinement below."
+          "@value": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set."
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",

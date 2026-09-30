@@ -10,7 +10,7 @@ import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { tools } from "../../tools/discover.js";
-import { ToolDefinitionSchema, defineTool } from "../../schemas/tool.js";
+import { ToolDefinitionSchema, alternativesWithoutSelection, deriveAlternatives } from "../../schemas/tool.js";
 import { TOOL_TYPES } from "../../schemas/tool-types.js";
 import { checkTools, knownSkills, contractRequires } from "../check-tools.js";
 import { knownSkills as canonicalKnownSkills } from "../known-skills.js";
@@ -265,25 +265,34 @@ describe("tools", () => {
   });
 });
 
-describe("substitutable Tools declare it, and say how to choose", () => {
+describe("substitutable Tools are DERIVED, and say how to choose (#1168, B9a)", () => {
   const all = tools("https://example.org/");
   const byId = new Map(all.map((t) => [t.id, t]));
+  const alts = deriveAlternatives(all);
+  const pairs = [...alts].flatMap(([a, bs]) => bs.filter((b) => a < b).map((b) => `${a} ~ ${b}`)).sort();
 
-  test("the relation is symmetric across the real tool set", () => {
-    // Asymmetry is the failure this relation exists to prevent, occurring
-    // exactly half the time — and the half that works makes it look
-    // maintained, which is worse than not declaring it at all.
-    for (const t of all) {
-      for (const other of t.alternativeTo ?? []) {
-        expect(`${t.id} -> ${other}`).toBe(`${t.id} -> ${byId.get(other)?.id ?? "MISSING"}`);
-        expect(byId.get(other)?.alternativeTo ?? []).toContain(t.id);
-      }
-    }
+  test("the derived pairs are exactly the substitutable ones", () => {
+    // Every pair that was declared by hand before the field was removed, and
+    // nothing else. A new pair here is either a real alternative (add it, and
+    // its `selection`) or a Tool typed more loosely than what it reads (type
+    // it). `release-please` / `package-release-manual` were declared too; their
+    // I/O differs (a release PR against a tag), so the rule does not pair them.
+    expect(pairs).toEqual([
+      "beans-cli ~ beans-manual",
+      "ingest-extended ~ ingest-stdlib",
+      "transcribe-faster-whisper ~ transcribe-vosk",
+      "transcribe-faster-whisper ~ transcribe-whisper-cpp",
+      "transcribe-vosk ~ transcribe-whisper-cpp",
+    ]);
   });
 
-  test("every declared alternative carries all three selection fields", () => {
-    for (const t of all) {
-      if ((t.alternativeTo?.length ?? 0) === 0) continue;
+  test("the relation is symmetric by construction", () => {
+    for (const [a, bs] of alts) for (const b of bs) expect(alts.get(b) ?? []).toContain(a);
+  });
+
+  test("every Tool with an alternative carries all three selection fields", () => {
+    for (const id of alts.keys()) {
+      const t = byId.get(id)!;
       // `limits` is the one an author is tempted to skip. Without it an agent
       // reaches for the tool and discovers the boundary by failing.
       for (const k of ["when", "limits", "cost"] as const) {
@@ -292,31 +301,32 @@ describe("substitutable Tools declare it, and say how to choose", () => {
     }
   });
 
-  test("the schema refuses an alternative with no selection", () => {
-    const base = byId.get("ingest-stdlib");
-    expect(base).toBeDefined();
-    if (!base) return;
+  test("check-tools reports a Tool with an alternative and no selection", () => {
+    // The falsifier: the real set is clean, so the check is proved on it by
+    // counting zero, and on a broken copy by counting one.
+    expect(checkTools().unselectableAlternatives).toEqual([]);
+    const base = byId.get("ingest-stdlib")!;
     const { selection: _drop, ...without } = base;
-    expect(() => defineTool(without as typeof base)).toThrow(/selection/);
-  });
-
-  test("a Tool cannot be an alternative to itself", () => {
-    const base = byId.get("ingest-stdlib");
-    if (!base) return;
-    expect(() => defineTool({ ...base, alternativeTo: [base.id] })).toThrow(/itself/);
+    const broken = [...all.filter((t) => t.id !== base.id), without as typeof base];
+    expect(alternativesWithoutSelection(broken)).toEqual([{ tool: "ingest-stdlib", alternatives: ["ingest-extended"] }]);
   });
 
   test("sharing a skill does NOT imply substitutability", () => {
-    // The measurement that refuted deriving this from `satisfies`: 12 of 25
-    // skills carry more than one Tool and nearly all are COMPLEMENTARY. The
-    // five `process-state` tools are steps, not choices, and must stay free
-    // of a relation that would demand comparative prose about nothing.
+    // The measurement that refuted deriving this from `satisfies` ALONE: 12 of
+    // 25 skills carry more than one Tool and nearly all are COMPLEMENTARY.
+    // The `process-state` tools are steps, not choices, and their different
+    // I/O signatures are what keep them apart.
     const processState = all.filter((t) => t.satisfies.includes("process-state"));
     expect(processState.length).toBeGreaterThan(1);
-    for (const t of processState) expect(t.alternativeTo ?? []).toEqual([]);
+    for (const t of processState) expect(alts.get(t.id) ?? []).toEqual([]);
   });
 
-  test("the ingest pair is declared, and splits on the dependency boundary", () => {
+  test("an empty signature is interchangeable with nothing", () => {
+    const empty = { ...byId.get("ingest-stdlib")!, io: { inputs: [], outputs: [] } };
+    expect(deriveAlternatives([empty, { ...empty, id: "other" }]).size).toBe(0);
+  });
+
+  test("the ingest pair is derived, and splits on the dependency boundary", () => {
     const std = byId.get("ingest-stdlib");
     const ext = byId.get("ingest-extended");
     expect([std?.id, ext?.id]).toEqual(["ingest-stdlib", "ingest-extended"]);

@@ -39,7 +39,6 @@
  *
  * @module content/pipeline/tabular-nodes
  */
-import { LIBRARY_BLOCK_ORIGIN } from "../../schemas/attribution.ts";
 import { CONTENT_CONTEXT_URL } from "../../schemas/jsonld.ts";
 
 /** All a manifest needs to know, from either record. */
@@ -158,7 +157,13 @@ export function buildTabularNodes(
         headers: [...sheet.headers],
         derivedFrom: opts.iri("manifest"),
         sourceDocument: opts.iri("manifest"),
-        provenance: LIBRARY_BLOCK_ORIGIN.table ?? "ingested",
+        // "ingested": the table is the source's own content, which is what
+        // LIBRARY_BLOCK_ORIGIN.table === "extracted" means. This read
+        // `LIBRARY_BLOCK_ORIGIN.table ?? "ingested"` — an ORIGIN category used
+        // as a PROVENANCE value — and was right only while `table` was
+        // unclassified; classifying it (bean uyp8) wrote "extracted", which
+        // check-l1-complete's narrative-provenance correctly refused.
+        provenance: "ingested",
       }),
     });
 

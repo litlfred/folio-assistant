@@ -3,8 +3,9 @@
 title: 'REGEN BLIND SPOT: regen pairs a check `X:check` with writer `X`, so a `check:X` gate whose writer is spelled differently is never repaired'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-30T08:57:47Z
-updated_at: 2026-09-30T08:57:47Z
+updated_at: 2026-09-30T11:21:27Z
 parent: folio-assistant-1xhc
 ---
 
@@ -26,3 +27,8 @@ Declare the pairing rather than inferring it from the script name. Either map ea
 ## Done when
 - [ ] each of the 4 gates above is paired with its writer, or recorded as having none
 - [ ] regen repairs a stale prov-qaqc page after a merge that adds a workflow instance
+
+
+
+## Also blind: audit-coverage after a merge (2026-09-30, #1577)
+Taking main's audit-coverage.qa-results.json in a merge left it stale for the branch; three regen passes reported 0 regenerated while audit:coverage:require-all failed in CI. Fixed by hand with bun run audit:coverage.

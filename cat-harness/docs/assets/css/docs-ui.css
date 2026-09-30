@@ -4196,12 +4196,18 @@ a.fa-glass-asset-name { text-decoration: underline; text-underline-offset: 2px; 
  *     bean `jpjt`: who-iris exists to look like WHO), and a band moves it;
  *   - two test fixtures with no theme header moved too.
  *
- * The replica's banner is still under the handle. Whether that is acceptable
- * is the owner's call against `jpjt`, not this rule's to settle.
+ * REPLICAS TOO, since 2026-09-29 — bean `g9r2`, the owner's call on the
+ * question this comment used to leave open: "Band on replicas". The pill sat
+ * over the replica's own "INGESTED COPY — not WHO" banner at 390 px and over
+ * its folio-assistant link at 1280. A replica is found by the mount script
+ * `folio-mount.ts` writes into it (`data-fa-folio-mount`). The band moves
+ * the whole replica down at once, and `folio-mount.e2e` now measures from
+ * the top of body's content, so it still fails on anything but that.
  *
  * 2.25rem clears the 1.75rem pill (owner, 2026-09-27: "not so tall") with a
  * few pixels of air. */
-html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle) {
+html:has(style[data-folio-narrow-viewport]) body:has(> .fa-glass-handle),
+html:has(script[data-fa-folio-mount]) body:has(> .fa-glass-handle) {
   padding-top: 2.25rem;
 }
 
@@ -8209,3 +8215,32 @@ a.fa-harness-tab__body:focus-visible {
   content: " (" attr(data-fa-source-locale) ")";
   font-size: 0.8em;
 }
+
+/* The filter `mountTableFilters` puts above every long table (bean 0fua).
+ * Colours are inherited rather than set, so it reads in both schemes without
+ * an override; the input is 44px tall, the WCAG 2.5.5 target size, because the
+ * pages it exists for are the ones read on a phone. */
+.fa-table-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 0.75rem 0 0.5rem;
+}
+.fa-table-filter label { font-weight: 600; }
+.fa-table-filter input {
+  flex: 1 1 14rem;
+  min-width: 0;
+  max-width: 28rem;
+  min-height: 44px;
+  padding: 0 0.75rem;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+}
+.fa-table-filter-count { font-size: 0.875em; opacity: 0.85; }
+/* A filtered-out row must stay out even where a table lays its rows out
+ * itself (`.fa-hc-table tr { display: grid }` would otherwise beat `hidden`). */
+table[data-fa-filtered] tr[hidden] { display: none !important; }
