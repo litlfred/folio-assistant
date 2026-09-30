@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 443,
+      "count": 444,
       "unit": "beans"
     }
   },
@@ -1003,6 +1003,20 @@
       "updatedAt": "2026-09-23T22:39:31Z",
       "preview": "Split out of `ehve`, which added the `document` content type and deliberately\nstopped short of this.\n\n## Why\n\nAn L1 health-policy guidance note exists to state **recommendations**. A\nrecommendation is the block readers cite, implementers trace to, and reviewers\nsign off individually — it wants a label, a stable identity and a place in the\n`uses[]` graph, which is everything a `theorem` has. It is ",
       "file": "beans/defs/folio-assistant-55ao--add-a-first-class-recommendation-block-kind-for-do.md"
+    },
+    {
+      "id": "folio-assistant-57mn",
+      "title": "qa-sweep loads contributions from cat-harness/ and registers 0 contributed checkers",
+      "status": "completed",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T23:57:45Z",
+      "updatedAt": "2026-09-30T00:13:13Z",
+      "preview": "Found while building #1492 (PR #1515). Owner chose a separate small PR (2026-09-29).\n\n**Measured:** qa-sweep.ts called loadContributions(INSTANCE_ROOT), and INSTANCE_ROOT is cat-harness/, which declares no dependencies. So a real sweep registered 0 contributed checkers, and folio-assistant-sci's proof-compile-cost and proof-no-cost-regression never ran. qa-checker-discovery.test.ts passed because ",
+      "file": "beans/defs/folio-assistant-57mn--qa-sweep-loads-contributions-from-cat-harness-and.md"
     },
     {
       "id": "folio-assistant-5a3l",
