@@ -58,7 +58,7 @@
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 
 import { readKnowledgeGraphDeclaration } from "../schemas/declaration.ts";
 import { releaseIri, bootstrapRelease } from "../schemas/release-iri.ts";
@@ -388,7 +388,9 @@ if (import.meta.main) {
     process.exit(2);
   }
   const doc = exportGraph(root, {
-    docIri: `${base.replace(/\/?$/, "/")}bootstrap.jsonld`,
+    // Named by the file it is written to, so the `@id` IS the served path
+    // whatever the stub: `--base-url <site>/<stub>/ --out _site/<stub>/<file>`.
+    docIri: `${base.replace(/\/?$/, "/")}${basename(out)}`,
     provenance: args.includes("--provenance"),
     sourceBase: arg("--source-base"),
   });

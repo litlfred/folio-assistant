@@ -135,8 +135,8 @@ subgraph, as
 [`bootstrap-graph-emission`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-emission.md)
 and
 [`bootstrap-graph-publication`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-publication.md)
-— performed by the `kg-graph-export` Tool and typed by
-`BootstrapGraphDocumentSchema` (bean `n350`).
+— performed since 2026-09-30 by bootstrap-tools' `export-graph.ts` and typed
+by its `GraphExportSchema` (beans `n350`, `xsqm`).
 Until that directory existed the emission discipline lived in a code comment in
 `kg-export.ts` and a YAML comment in `docs-site.yml` — which is why it was
 rediscovered rather than read, and why one of those comments still called the

@@ -21,6 +21,8 @@ Part of [Bootstrap tools](../README.md) 0.1.0, declared as `bootstrap-tools-scri
 | [`gen-vocabulary.ts`](gen-vocabulary.ts) | a file |  |
 | [`git-files.ts`](git-files.ts) | a file |  |
 | [`iri-sync.ts`](iri-sync.ts) | a file |  |
+| [`link-target.test.ts`](link-target.test.ts) | a file |  |
+| [`link-target.ts`](link-target.ts) | a file |  |
 | [`readme-graph-sections.test.ts`](readme-graph-sections.test.ts) | a file |  |
 | [`readme-graph-sections.ts`](readme-graph-sections.ts) | a file |  |
 | [`render-bpmn.ts`](render-bpmn.ts) | a file |  |

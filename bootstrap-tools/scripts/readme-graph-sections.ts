@@ -37,6 +37,7 @@
  * writing a broken image; an unreadable declaration does the same. Neither is
  * reported as "this instance has no Processes".
  */
+import { linkTarget } from "./link-target.ts";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
 
@@ -304,7 +305,7 @@ export const filesSection: GraphSection = {
     // link stays the path from this README. A table under `skills/` that
     // repeats `skills/` on every row says the same thing twice.
     const row = (f: string, under = "") =>
-      `| [\`${cell(under ? relative(under, f) : f)}\`](${f}) | ${cell(describe(root, f, assets))} | ${used(f)} |`;
+      `| [\`${cell(under ? relative(under, f) : f)}\`](${linkTarget(f)}) | ${cell(describe(root, f, assets))} | ${used(f)} |`;
     const head = ["| file | what it is | used by |", "|---|---|---|"];
 
     const lines: string[] = [];

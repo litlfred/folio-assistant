@@ -81,6 +81,7 @@
  *
  * Usage: `bun run bootstrap-tools/scripts/subgraph-readmes.ts [--repo <dir>] [--check]`
  */
+import { linkTarget } from "./link-target.ts";
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
@@ -262,6 +263,9 @@ export function instancesIn(repo: string): InstanceInput[] {
 /** Every declared directory of every instance given, planned. */
 export async function plan(repo: string, instances: InstanceInput[], templates: string = TEMPLATES): Promise<Plan> {
   const liquid = new Liquid({ root: [templates], extname: ".liquid", jekyllInclude: true, strictFilters: true });
+  // A path in a link TARGET is a URL path: a space or a `)` in a file name
+  // would end the link early (see `linkTarget`).
+  liquid.registerFilter("href", (v: unknown) => linkTarget(String(v)));
   const out: Plan = {
     writes: new Map(),
     findings: {
