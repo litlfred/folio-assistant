@@ -27,3 +27,13 @@ Loop the ask-and-regenerate pass until one pass regenerates nothing, capped at a
 
 
 *2026-09-30* — Parented under **1xhc** CI RELIABILITY: it arrived on main with no parent, which fails check:bean-parents on every branch. Chosen by evidence, not taste: its two nearest filed neighbours (lsi:near) — ymsu (kg:detangle:check cannot fail inside gates, 0.55) and lxpq (clean merge, wrong artefact, 0.55) — are both under 1xhc.
+
+## Measured again, 2026-09-30 (PR #1530 merge of main)
+
+`bun run regen` reported `60 current, 2 regenerated (skill:register,
+readme:subgraphs), 0 unrepaired`, yet the next `bun run gates` failed
+`audit:coverage:require-all` and `audit:coverage:strict`: the committed
+`audit-coverage.qa-results.json` disagreed with the run. Running
+`bun run audit:coverage` once fixed both. Consistent with an ORDER
+dependence: audit-coverage was asked before the later writers changed the
+files it counts, so one pass is not a fixpoint.

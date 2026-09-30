@@ -44,10 +44,10 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 13 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 469 files | |
+| [`assets/`](assets/) | 464 files | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
-| [`cat-harness/`](cat-harness/) | 44 files | |
+| [`cat-harness/`](cat-harness/) | 45 files | |
 | [`es/`](es/) | 13 files | |
 | [`external-schemas/`](external-schemas/) | 1 file | |
 | [`fr/`](fr/) | 13 files | |
@@ -56,10 +56,9 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`guides/`](guides/) | 14 files | |
 | [`health/`](health/) | 1 file | |
 | [`issue-marks/`](issue-marks/) | 1 file | |
-| [`lsi/`](lsi/) | 1 file | |
 | [`methodologies/`](methodologies/) | 1 file | |
 | [`processes/`](processes/) | 76 files | |
-| [`proposals/`](proposals/) | 18 files | |
+| [`proposals/`](proposals/) | 15 files | |
 | [`prov-qaqc/`](prov-qaqc/) | 1 file | |
 | [`qa/`](qa/) | 1 file | |
 | [`reference/`](reference/) | 314 files | |
@@ -73,6 +72,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`translation-status/`](translation-status/) | 1 file | |
 | [`uml/`](uml/) | 129 files | |
 | [`uploads/`](uploads/) | 1 file | |
-| [`wireframes/`](wireframes/) | 146 files | |
+| [`wireframes/`](wireframes/) | 140 files | |
 | [`zh/`](zh/) | 13 files | |
 <!-- kg:subgraph:end -->
