@@ -231,15 +231,45 @@ export function formatSkillAvailability(rows: readonly SkillAvailability[]): str
 /**
  * Load every skill module that declares `requiredCapabilities`.
  *
- * A dynamic `import()` of each module, not a regex over its source, and the
- * difference matters: `check-fallback-roles.ts` reads source because it must
- * catch a value that is not a literal as a MISS, but here a non-literal is
+ * A dynamic `import()` of each candidate module, not a regex over its source,
+ * and the difference matters: `check-fallback-roles.ts` reads source because it
+ * must catch a value that is not a literal as a MISS, but here a non-literal is
  * perfectly good data and reading the evaluated object is the only way to get
  * it. `src/route-groups.ts` already loads declaration-named modules this way.
  *
  * A module that will not import is reported, not skipped. A broken skill is
  * a defect whose remedy is to fix it, and silently dropping it from the
  * report would make a broken skill read as one with nothing to require.
+ *
+ * ## IMPORTING IS RUNNING, and this function used to run the whole graph
+ *
+ * Bean `ymsu`, clause 1. The walk below reaches every `.ts` under every
+ * declared knowledge-graph root, and a knowledge-graph root holds SCRIPTS as
+ * well as declarations — `skills/graph-management/kg-detangle.ts` does its work
+ * at module top level. So importing "each module to read a field off it" also
+ * EXECUTED the detangler, which writes 28 committed sidecars under
+ * `test/results/detangle/`.
+ *
+ * Measured 2026-09-30 on `origin/main` `e718627f198`: inside `bun run gates`,
+ * `bun test` reached `src/tools/degradation.test.ts`, that file called this
+ * function over the real corpus, and the runner's tree guard attributed the
+ * repair of `folio-core.detangle.json` to `bun test` — 1140 lines before
+ * `kg:detangle:check` read the same file and passed over it.
+ *
+ * The fix is to read the source FIRST and import only a file that names the
+ * field this function exists to collect. That is not the regex-versus-import
+ * trade the paragraph above rules on: the regex SELECTS a candidate, the import
+ * still supplies the value, so a non-literal is read exactly as before. It is
+ * also the predicate the `catch` below was already using to decide whether a
+ * file was this function's business — now asked before the side effect instead
+ * of after it.
+ *
+ * What it can miss, stated rather than left to be discovered: a module that
+ * declares `requiredCapabilities` only through a re-export, or by composing the
+ * key name at runtime. Neither exists in this corpus — measured by comparing
+ * the skill count across the change, which is unchanged — and a skill that
+ * hides its own declaration from a text search is a declaration problem rather
+ * than a loader one.
  */
 export async function loadSkillNeeds(
   dirs: readonly string[],
@@ -263,6 +293,15 @@ export async function loadSkillNeeds(
 
   for (const dir of dirs) {
     for (const file of walk(dir)) {
+      // BEFORE the import, because the import is what runs the file (bean
+      // `ymsu`, and the docblock above). A file that does not name the field
+      // cannot contribute one, so loading it can only have side effects.
+      //
+      // An unreadable source is treated as a CANDIDATE rather than skipped:
+      // "I could not read it" is not "it declares nothing", and the import
+      // below will fail too and land it in `unreadable` where a reader sees it.
+      const src = await Bun.file(file).text().catch(() => "requiredCapabilities");
+      if (!/requiredCapabilities/.test(src)) continue;
       let mod: Record<string, unknown>;
       try {
         // ABSOLUTE. A relative specifier resolves against THIS module, not
@@ -271,12 +310,10 @@ export async function loadSkillNeeds(
         // found in one run instead of reading as "no skill declares any".
         mod = (await import(resolve(file))) as Record<string, unknown>;
       } catch (e) {
-        // Only report a module that LOOKS like a skill; every other .ts in
-        // these trees failing to import is not this function's business.
-        const src = await Bun.file(file).text().catch(() => "");
-        if (/requiredCapabilities/.test(src)) {
-          unreadable.push({ file, error: e instanceof Error ? e.message : String(e) });
-        }
+        // Every file reaching here named the field, so a failure to import it
+        // is always this function's business — the `LOOKS like a skill` filter
+        // that used to live here has moved above the import.
+        unreadable.push({ file, error: e instanceof Error ? e.message : String(e) });
         continue;
       }
       for (const v of Object.values(mod)) {
