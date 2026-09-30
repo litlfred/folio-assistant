@@ -151,8 +151,13 @@ versions of the content."*
 - **At the split, both start at the content's current version** — bootstrap
   was `0.1.0`, so bootstrap-tools starts at `0.1.0`.
 - **After that each is versioned on its own**, by the same rules: semver, the
-  bump computed from the exported surface (`check:version-bump`), tags
-  `<name>-v<major>.<minor>.<patch>`.
+  bump computed from the exported surface (`check:version-bump`).
+- **Tags are plain `v<major>.<minor>.<patch>` in each new repository** (owner,
+  2026-09-30): a standalone repository holds one instance, declared at its
+  root, so the tag needs no name. `check:version-bump` reads the plain form
+  only there; a repository of several instances — the parent while the pair
+  is staged — keeps `<name>-v<major>.<minor>.<patch>`, because a plain tag
+  could not say which instance it released.
 - **A tools release says which content versions it handles** as a list of
   supported MAJOR versions (`bootstrap: [0]`), never a range expression —
   `instance-versioning` rule 2 forbids range syntax, and within one major a

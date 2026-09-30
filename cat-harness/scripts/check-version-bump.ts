@@ -93,23 +93,39 @@ function git(repoRoot: string, ...args: string[]): { ok: boolean; out: string } 
 /**
  * The release tags for an instance, newest version first.
  *
- * Convention `<name>-v<major>.<minor>.<patch>`, which is what the repository's
- * one existing tag uses. Sorted by the parsed triple rather than by git's tag
- * order or by string comparison — `v0.10.0` sorts before `v0.9.0` as a string,
- * and a baseline picked by the wrong ordering is a comparison against the
- * wrong release.
+ * Two spellings. `<name>-v<major>.<minor>.<patch>` is the convention in a
+ * repository holding several instances — the one existing tag here,
+ * `folio-assistant-v0.1.0`, uses it. A STANDALONE repository holds one
+ * instance, declared at its root, and tags it plainly `v<major>.<minor>.<patch>`
+ * (owner, 2026-09-30, Q4 of bean `xsqm`: bootstrap and bootstrap-tools each tag
+ * `v0.1.0`). So the plain form is read only when `standalone` is set — the
+ * instance's declaration IS the repository root — because in a repository of
+ * several instances a plain `v1.2.0` would say nothing about which one it
+ * released — which is why a root instance that shares its repository, as
+ * folio-assistant does here, is NOT standalone. Where both spellings name one version, one entry is kept.
+ *
+ * Sorted by the parsed triple rather than by git's tag order or by string
+ * comparison — `v0.10.0` sorts before `v0.9.0` as a string, and a baseline
+ * picked by the wrong ordering is a comparison against the wrong release.
  */
-export function releaseTags(repoRoot: string, name: string): { tag: string; version: string }[] {
-  const { ok, out } = git(repoRoot, "tag", "--list", `${name}-v*`);
+export function releaseTags(
+  repoRoot: string,
+  name: string,
+  standalone = false,
+): { tag: string; version: string }[] {
+  const patterns = standalone ? [`${name}-v*`, "v*"] : [`${name}-v*`];
+  const { ok, out } = git(repoRoot, "tag", "--list", ...patterns);
   if (!ok || out === "") return [];
-  return out
-    .split("\n")
-    .map((tag) => tag.trim())
-    .filter((tag) => tag !== "")
-    .flatMap((tag) => {
-      const m = new RegExp(`^${name}-v(\\d+\\.\\d+\\.\\d+)$`).exec(tag);
-      return m === null ? [] : [{ tag, version: m[1]! }];
-    })
+  const named = new RegExp(`^${name}-v(\\d+\\.\\d+\\.\\d+)$`);
+  const plain = /^v(\d+\.\d+\.\d+)$/;
+  const byVersion = new Map<string, string>();
+  for (const tag of out.split("\n").map((t) => t.trim())) {
+    if (tag === "") continue;
+    const m = named.exec(tag) ?? (standalone ? plain.exec(tag) : null);
+    if (m !== null && !byVersion.has(m[1]!)) byVersion.set(m[1]!, tag);
+  }
+  return [...byVersion]
+    .map(([version, tag]) => ({ tag, version }))
     .sort((x, y) => {
       const px = x.version.split(".").map(Number);
       const py = y.version.split(".").map(Number);
@@ -172,8 +188,9 @@ export function surfaceAtHead(repoRoot: string): SurfaceSubject[] | undefined {
 export function auditVersionBumps(repoRoot: string): BumpReport {
   const rows: BumpRow[] = [];
   const publishable: { root: string; name: string; version: string }[] = [];
+  const roots = instanceRootsIn(repoRoot);
 
-  for (const root of instanceRootsIn(repoRoot)) {
+  for (const root of roots) {
     let decl;
     try {
       decl = readDeclaration(root);
@@ -206,14 +223,18 @@ export function auditVersionBumps(repoRoot: string): BumpReport {
 
   for (const { root, name, version } of publishable) {
     const where = relative(repoRoot, root) || ".";
-    const tags = releaseTags(repoRoot, name);
+    // Standalone: the repository's ONE instance, declared at its root. A root
+    // instance sharing its repository with others (this one does) keeps the
+    // `<name>-v` spelling, because a plain tag could not say which it released.
+    const standalone = roots.length === 1 && resolve(root) === resolve(repoRoot);
+    const tags = releaseTags(repoRoot, name, standalone);
     if (tags.length === 0) {
       rows.push({
         instance: where,
         name,
         state: "unreleased",
         declared: version,
-        detail: `no tag matching \`${name}-v*\` — this instance has never been released, so there is no baseline to diff against`,
+        detail: `no tag matching \`${name}-v*\`${standalone ? " or \`v*\`" : ""} — this instance has never been released, so there is no baseline to diff against`,
       });
       continue;
     }
