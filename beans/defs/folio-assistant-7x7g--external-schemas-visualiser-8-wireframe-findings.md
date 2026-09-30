@@ -3,12 +3,13 @@
 title: 'external-schemas visualiser: 8 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-external-schemas
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-23T10:36:14Z
+updated_at: 2026-09-30T16:12:46Z
 parent: folio-assistant-4ccr
 ---
 
@@ -37,3 +38,16 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **CANNOT-TELL** — State tags fail contrast on the default dark scheme: No .xs-ok/.xs-na/.xs-missing element is rendered on today's page (0 matches), so nothing to measure; the inline <style> still sets #0d6e5e/#5b5f66/#a8200f and body is rgb(39,38,43) in dark, so any tag the generator emits would fail as before.
 - **STILL-PRESENT** — Mobile: the spec table is four columns in a 358 px column: At 390: spec table scrollWidth 430 in .table-wrapper 362px (overflow-x auto), no scroll hint text/role/tabindex/shadow. 22-row DCMI and BPMN term tables still repeat 'not yet described' per row.
 - **STILL-PRESENT** — The notes are single long paragraphs in capitals for emphasis: Paragraphs containing 'THE TRANSCRIPTION CAME FIRST AND THAT WAS THE DEFECT' (779 ch) and 'NO XSD IS HELD' (792 ch), each one <p>.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 5 still present, 2 fixed, 1 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — 44 of the 53 operative terms say nothing: 86 of 112 term-table rows read 'not yet described' (was 84/110). The stat box reads '100 operative terms in the graph' with no qualifier. (rv-xs.mjs, rv-xs2.mjs)
+- **FIXED** — The '0 dependents that no longer resolve' box covers 8 of 14: Still fixed. The stat grid is 17 specifications / 100 operative terms / 191 declared uses / 0 declarations naming no record. There is no 'no longer resolve' box. — 1b2d10c7e (rv-xs.mjs)
+- **STILL-PRESENT** — The namespace check reports DCMI and SKOS as 'declared and not in use' by construction: The section still says 'Read from the BPMN and DMN files themselves — 6 namespace IRI(s) are in use'. The '17 declared and not in use' list still includes purl.org/dc/elements/1.1/ and skos/core#. (xs5.mjs)
+- **FIXED** — 'Resolves' dependents cannot be opened: Changed since 2026-09-29. The 17 'user | declared by' tables (41 rows) now link the user in 29 of 41 cells (32 of 82 code cells are inside an <a>, to the file on GitHub; was 0 of 49). The 12 unlinked cells are aggregates with no single target, e.g. 'cat-harness/processes/*.bpmn (70)' and 'folio-dublin-core/v1 nodes'. — #1592 (xs5.mjs, qgjh.mjs)
+- **STILL-PRESENT** — Section anchors sit below their headings: As on 2026-09-29: #dcmi-terms is the H3 itself, and the jump lands the heading at top 0. There is no scroll-margin, so at 390 the fixed .fa-glass-handle (x154–236, y0–25) overlaps the heading text (x14–390, y0–17). At 1280 there is no overlap (text x64–285, handle x594–686). (rv-xs3.mjs, rv-xs4.mjs)
+- **CANNOT-TELL** — State tags fail contrast on the default dark scheme: 0 .xs-ok/.xs-na/.xs-missing elements are rendered, so there is nothing to measure. The inline <style> still defines .xs-ok #0d6e5e, .xs-na #5b5f66, .xs-missing #a8200f. (rv-xs2.mjs, contrast.mjs)
+- **STILL-PRESENT** — Mobile: the spec table is four columns in a 358 px column: At 390 the spec table has scrollWidth 430 in a .table-wrapper of 362px (overflow-x auto). There is no scroll hint (no hint text, role, tabindex or shadow). The 22-row term tables still repeat 'not yet described' on every row. (rv-xs3.mjs)
+- **STILL-PRESENT** — The notes are single long paragraphs in capitals for emphasis: The paragraphs containing 'THE TRANSCRIPTION CAME FIRST AND THAT WAS THE DEFECT' (779 ch) and 'NO XSD IS HELD' (792 ch) are each still one <p>. (xs5.mjs)
