@@ -3,8 +3,9 @@
 title: 'SPLIT: bootstrap agentic-harness + folio-assist-core as forks, then prove an empty-repo bootstrap'
 status: todo
 type: task
+priority: normal
 created_at: 2026-09-18T17:24:16Z
-updated_at: 2026-09-18T17:24:16Z
+updated_at: 2026-09-30T19:49:54Z
 parent: folio-assistant-vke6
 ---
 
@@ -75,3 +76,32 @@ Depends on:
 Nothing here is measured. MVP is not defined for either layer, no fork has
 been taken, and the acceptance test does not exist. This bean is the
 placeholder that keeps the sequencing visible; it is not a plan yet.
+
+
+## UNBLOCKED CONDITION 2026-09-30 — MVP is now defined, so this block is computable
+
+`tndo` recorded that this bean was blocked on a term nothing defined, which made
+`bean-blocking`'s expiry rule unsatisfiable. The owner ruled it:
+
+> **MVP = `folio_init` creates a working folio against that layer ALONE, in an
+> empty repository.**
+
+So the block is no longer "wait for a judgement" but a condition a check can
+evaluate, per layer:
+
+- [ ] `bun run init-folio` against that layer alone, no sibling instance on
+      disk, exits 0 in an empty repo
+- [ ] the scaffolded folio's declared graphs all resolve — no declared-but-absent
+      directory (`dh4f`)
+- [ ] that folio's gate set passes in the fresh repository
+- [ ] the layer's `needs:` closure is satisfied by what is present
+
+**Still blocked, and correctly so** — the condition is defined, not met. What
+changed is that "not met" is now measurable rather than asserted.
+
+**First thing to measure, and it may be a finding rather than a wait:** whether
+`folio_init` can target a single layer at all today. If it cannot, that is a
+defect against `folio_init` — not a reason to weaken the definition.
+
+Full comparison of the four candidate definitions, and why the other three were
+rejected, is on `tndo`.
