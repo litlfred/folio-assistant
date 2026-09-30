@@ -26,7 +26,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 <div class="lv-grid">
 <div class="lv-stat"><b>4</b><span>committed indexes</span></div>
 <div class="lv-stat"><b>1168</b><span>units indexed</span></div>
-<div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
+<div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
 ## Which graphs need an index
@@ -45,7 +45,7 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `cat-harness/folio` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/folio-assistant-sci-data-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/folio-assistant-sci-lean-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `cat-harness/library` | <span class="lv-pass">pass</span> | fresh |
+| `cat-harness/library` | <span class="lv-fail">fail</span> | stale — re-run `bun run lsi index --instance cat-harness --graph library` |
 | `cat-harness/memory` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/policies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**308** units · **7602** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**308** units · **7614** terms · k = **100** · retains **68.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -130,14 +130,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 47.09 | bean, instance, session, graph, kind, branch, page, directory | *(none)* |
-| 2 | 27.78 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
-| 3 | 22.36 | proof, watcher, lean, slot, blocks, witness, project, chapter | harness, node, instance, bean, directory, page, actor, bias |
-| 4 | 19.55 | session, branch, queue, prs, commits, coordination, beans, sibling | dpi, color, lean, grayscale, pdf, matplotlib, images, raster |
-| 5 | 18.64 | dpi, color, grayscale, contrast, matplotlib, raster, eps, fonts | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
+| 1 | 47.29 | bean, instance, session, graph, kind, branch, directory, page | *(none)* |
+| 2 | 27.79 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
+| 3 | 22.38 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, directory, page, actor, bias |
+| 4 | 19.53 | dpi, color, lean, grayscale, pdf, matplotlib, images, raster | session, branch, queue, prs, commits, coordination, beans, sibling |
+| 5 | 18.64 | dpi, color, grayscale, contrast, raster, matplotlib, eps, fonts | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
 | 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
-| 7 | 16.28 | lean, mathlib, mcp, sorry, search, proof, page, theorem | watcher, slot, voice, backlog, queue, ledger, nesting, objection |
-| 8 | 15.37 | mathlib, lean, sorry, lake, mcp, oleans, subdirectory, sessions | slot, watcher, criterion, forward, band, backlog, major, avatar |
+| 7 | 16.28 | lean, mathlib, mcp, search, sorry, proof, page, theorem | watcher, slot, voice, backlog, ledger, nesting, queue, objection |
+| 8 | 15.38 | mathlib, lean, sorry, lake, mcp, oleans, sessions, subdirectory | slot, watcher, criterion, forward, backlog, band, major, prose |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
