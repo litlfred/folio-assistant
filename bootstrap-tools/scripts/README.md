@@ -15,6 +15,8 @@ Part of [Bootstrap tools](../README.md) 0.1.0, declared as `bootstrap-tools-scri
 | [`check-node-iris.test.ts`](check-node-iris.test.ts) | a file |  |
 | [`check-node-iris.ts`](check-node-iris.ts) | a file |  |
 | [`gen-bootstrap-schemas.ts`](gen-bootstrap-schemas.ts) | a file |  |
+| [`gen-vocabulary.test.ts`](gen-vocabulary.test.ts) | a file |  |
+| [`gen-vocabulary.ts`](gen-vocabulary.ts) | a file |  |
 | [`git-files.ts`](git-files.ts) | a file |  |
 | [`iri-sync.ts`](iri-sync.ts) | a file |  |
 | [`readme-graph-sections.test.ts`](readme-graph-sections.test.ts) | a file |  |

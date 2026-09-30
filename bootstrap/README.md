@@ -193,6 +193,7 @@ Process that reads a file, where a diagram says so.
 |---|---|---|
 | [`AGENTS.md`](AGENTS.md) | Phase one of two. |  |
 | [`README.md`](README.md) | The flow, with every term linked to the schema that defines it. |  |
+| [`ns.jsonld`](ns.jsonld) | Every term bootstrap defines, in order, and every Graph Kind it defines, as RDF and SKOS — the document bootstrap's namespace resolves to. |  |
 | [`bootstrap.json`](bootstrap.json) | Bootstrap |  |
 
 **[`skills/`](skills/README.md)**
@@ -234,7 +235,7 @@ Process that reads a file, where a diagram says so.
 | [`initialize-harness.svg`](processes/initialize-harness.svg) | the picture of `initialize-harness.bpmn`, generated from it |  |
 | [`log-message.bpmn`](processes/log-message.bpmn) | a Process: Log a message | "Initialize a harness" |
 | [`log-message.svg`](processes/log-message.svg) | the picture of `log-message.bpmn`, generated from it |  |
-| [`ns.jsonld`](processes/ns.jsonld) | data |  |
+| [`ns.jsonld`](processes/ns.jsonld) | bootstrap's diagram elements |  |
 
 **[`models/`](models/README.md)**: Which languages a model is good at, and whether anybody checked.
 

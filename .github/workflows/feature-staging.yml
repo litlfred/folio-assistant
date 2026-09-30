@@ -841,10 +841,15 @@ jobs:
           # unchanged.
           mkdir -p "./_site/ns/content"
           cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
-          bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
-          cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
+          # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
+          # each term is defined by its layer's own document, below, and the
+          # Glossary publishes SKOS for every scheme. bootstrap's document is
+          # bootstrap's own, written by bootstrap-tools and committed, so it is
+          # copied rather than rebuilt by a harness exporter.
+          mkdir -p "./_site/bootstrap"
+          for ext in "ns.jsonld" "ns" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
 
-          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
+          for pair in "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"

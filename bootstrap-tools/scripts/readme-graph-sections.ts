@@ -253,7 +253,10 @@ export function describe(root: string, file: string, assets: Map<string, string>
   if (file.endsWith(".json") || file.endsWith(".jsonld")) {
     try {
       const j = JSON.parse(text()) as Record<string, unknown>;
-      for (const k of ["title", "description", "$comment", "summary"]) {
+      // `label` too: an RDF vocabulary names itself with rdfs:label (bootstrap's
+      // `ns.jsonld` is "bootstrap vocabulary"), and a row reading "data" for it
+      // would hide the one file a reader looking for the terms wants.
+      for (const k of ["title", "description", "label", "$comment", "summary"]) {
         if (typeof j[k] === "string") return firstSentence(j[k] as string);
       }
     } catch {

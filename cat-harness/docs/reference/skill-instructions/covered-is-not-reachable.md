@@ -63,9 +63,11 @@ name. A declaration naming one file out of tens is false in the way that is wors
 than absent: **it looks like a complete provenance record.**
 
 **A `maintains` claim asserts the artefact is published.** Verify that by reading
-the build, not by assuming. `ns/vocabulary.jsonld` is a real claim because
+the build, not by assuming. `cat-harness/ns.jsonld` is a real claim because
 `.github/workflows/docs-site.yml` writes it, and that was checked before the claim
-was made. An artefact nobody publishes is exactly the 404 the drift check exists
+was made. (The example was `ns/vocabulary.jsonld` until 2026-09-30, when that
+all-layers union was retired and its claim removed in the same change — a
+claim outliving its artefact is the same 404 from the other side.) An artefact nobody publishes is exactly the 404 the drift check exists
 to prevent.
 
 ### And the drift check only covers its own producer

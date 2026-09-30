@@ -864,6 +864,12 @@ jobs:
       - name: bootstrap schemas are current
         run: bun run bootstrap:schemas:check
 
+      # bootstrap's vocabulary, `bootstrap/ns.jsonld`: exactly its defined
+      # terms and graph kinds, written by bootstrap-tools and committed, and
+      # copied to the site as-is (owner, 2026-09-30, bean `xsqm`).
+      - name: bootstrap vocabulary is current
+        run: bun run bootstrap:vocabulary:check
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and

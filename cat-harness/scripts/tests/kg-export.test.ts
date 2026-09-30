@@ -650,11 +650,9 @@ describe("every self-URL the export publishes resolves to something published", 
       // lives in the document `<base>/ns`. The `.jsonld` and `.json` are the
       // canonical-extension and correct-Content-Type aliases, exactly as for
       // the graph itself.
-      // `ns/` is a directory: the union vocabulary and the content context
-      // live inside it. There is deliberately no file at `ns` — see
-      // `vocabularyIri()`.
-      "ns/vocabulary.jsonld",
-      "ns/vocabulary.json",
+      // `ns/` is a directory holding the content context. There is
+      // deliberately no file at `ns`, and no all-layers union inside it any
+      // more (retired 2026-09-30) — each layer's vocabulary is `<stub>/ns`.
       "ns/content/v1.jsonld",
       // The generated stylesheets, reached because `themes-css` and
       // `avatars-css` DECLARE them through `maintains` and the export publishes

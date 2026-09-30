@@ -153,7 +153,46 @@ stub. The address is written once, in `cat-harness/code-lists/own-namespaces.jso
 included — at bootstrap's declared version.
 
 One word in three places — path segment, stub, prefix — instead of three
-words that must agree. `NS_PREFIXES` in `schemas/namespaces.ts` is the one
+words that must agree.
+
+### Naming a namespace document — `ns`, and why (owner, 2026-09-30)
+
+**A namespace document is published where its identifiers point**, so its file
+name IS its address: `bootstrap/ns.jsonld` is what makes
+`…/bootstrap/0.1.0/ns#Node` resolve, and `check:node-iris` fails the day they
+differ. Renaming the file renames every term.
+
+The owner asked whether `ns` should be a friendlier name (`vocabulary.jsonld`,
+`schemas/terms.jsonld`) and chose to keep it, on this analysis:
+
+- **It is the house rule and the common practice.** Six of this project's own
+  namespaces end in `/ns#` — each layer's, core's DSpace fields, and both
+  process-extension namespaces — and `<canonical>/<stub>/ns#` is what "the
+  prefix is the stub" rests on. W3C publishes PROV, DCAT, ORG and SHACL under
+  `w3.org/ns/`.
+- **Renaming is not local.** Changing the pattern means renaming cat-harness's
+  and core's namespaces, already published (a MAJOR version each under
+  `instance-versioning`), and 91 BPMN files binding the process namespaces.
+- **`schemas/` would misclassify it.** Here a schema is what a Node is
+  *checked against*; a vocabulary *defines words*.
+- **Findability is solved without renaming**: the file's own `label` ("bootstrap
+  vocabulary") is what the generated README file table shows beside it.
+
+### One source per layer — and no all-layers union (owner, 2026-09-30)
+
+Each layer's vocabulary is ONE document, and every term's `rdfs:isDefinedBy`
+names that document. bootstrap's is `bootstrap/ns.jsonld`, written by
+bootstrap-tools from bootstrap's own terms and committed; the site copies it,
+and the harness's full build reads it rather than rebuilding it, so nothing
+can say a thing about a bootstrap term that bootstrap's file does not
+(`ns-export-skos.test.ts` holds them equal, node for node).
+
+The all-layers union at `<site>/ns/vocabulary.jsonld` is **retired**. Asked
+where it should live for findability, the answer came from who reads it: a
+program follows a term's IRI to its layer document; a person looking for terms
+goes to the Glossary, which lists every term and publishes SKOS for every
+scheme. The union served neither, linked from no page, and was a third copy of
+the same terms — so it is gone, rather than moved. `NS_PREFIXES` in `schemas/namespaces.ts` is the one
 list; `stubOfNamespace()` reads the stub back off an IRI. The abbreviations
 `bs`, `cat` and `fac` were retired the same day, for a measured reason
 rather than taste.
