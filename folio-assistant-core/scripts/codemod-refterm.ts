@@ -25,12 +25,12 @@
  *
  * Usage:
  *
- *   bun run cat-harness/content/pipeline/codemod-refterm.ts <paper-or-chapter-dir>            # dry-run
- *   bun run cat-harness/content/pipeline/codemod-refterm.ts <paper-or-chapter-dir> --write    # apply
+ *   bun run folio-assistant-core/scripts/codemod-refterm.ts <paper-or-chapter-dir>            # dry-run
+ *   bun run folio-assistant-core/scripts/codemod-refterm.ts <paper-or-chapter-dir> --write    # apply
  *
  * Mdast-based; no regex over raw markdown source.
  *
- * @module content/pipeline/codemod-refterm
+ * @module scripts/codemod-refterm
  */
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { basename, join, resolve } from "path";
@@ -48,8 +48,8 @@ import type { PhrasingContent, Text } from "mdast";
 // `PhrasingContent` and every node built below needs a cast.
 import type {} from "mdast-util-directive";
 import type {} from "mdast-util-math";
-import type { Block, Chapter, Paper, Section } from "../../schemas/types";
-import { ChapterSchema, PaperSchema } from "../../schemas/constraints";
+import type { Block, Chapter, Paper, Section } from "../../cat-harness/schemas/types";
+import { ChapterSchema, PaperSchema } from "../../cat-harness/schemas/constraints";
 import { buildGlossary } from "./build-glossary";
 
 // Round-trip parser/serializer with directive support. Must mirror

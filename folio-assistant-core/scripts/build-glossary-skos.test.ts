@@ -16,15 +16,15 @@
  *   `--check` does not fail on upgrade;
  * - `--check` fails on a stale scheme and passes on a current one.
  *
- * @module content/pipeline/build-glossary-skos.test
+ * @module scripts/build-glossary-skos.test
  */
 import { afterAll, describe, expect, it } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { GlossarySchema, schemeIri, termIri } from "../../../folio-assistant-core/schemas/glossary.ts";
-import { collect, instanceNs } from "../../../folio-assistant-core/scripts/glossary-page.ts";
+import { GlossarySchema, schemeIri, termIri } from "../schemas/glossary.ts";
+import { collect, instanceNs } from "./glossary-page.ts";
 import { definingParagraph, localId } from "./build-glossary.ts";
 
 const SCRIPT = resolve(import.meta.dir, "build-glossary.ts");

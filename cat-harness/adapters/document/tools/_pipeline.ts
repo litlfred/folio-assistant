@@ -41,6 +41,27 @@ function platformPipelineDir(): string {
 }
 
 /**
+ * `folio-assistant-core/scripts/`, the CONTENT layer's own executable surface.
+ *
+ * A third place to look, and it exists because a pipeline script is not
+ * automatically the platform's. Bean `yj6r` moved the glossary cluster —
+ * `build-glossary` and its `:refterm` codemod — up into core, where the
+ * `schemas/glossary.ts` they read already lived; before that they imported
+ * UPWARD out of `cat-harness/` into a sibling instance the harness does not
+ * declare as a need.
+ *
+ * Resolving this as a SIBLING of the platform root, not through the platform's
+ * own tree: `adapters/document/tools/` -> platform root -> its parent, which is
+ * the checkout holding both instances. That parent hop is the whole reason this
+ * is a separate function with a comment — it is the one place in this module
+ * that assumes the two instances are checked out beside each other, which is
+ * true pre-split and is what #223 will remove.
+ */
+function corePipelineDir(): string {
+  return resolve(import.meta.dir, "..", "..", "..", "..", "folio-assistant-core", "scripts");
+}
+
+/**
  * Absolute path to a `content/pipeline/<script>.ts` file, or `undefined` when
  * neither the folio nor the platform has one.
  *
@@ -50,6 +71,13 @@ function platformPipelineDir(): string {
  *   when the platform was vendored inside the content repo; and
  * - the folio carries only `content/schema/` and reaches the pipeline in the
  *   platform checkout, which is what `folio_init` scaffolds.
+ *
+ * and a THIRD location that is not a layout at all: `folio-assistant-core/
+ * scripts/`, where the content layer keeps the pipeline scripts whose subject is
+ * a folio's content rather than the harness (bean `yj6r`). Searched LAST, so the
+ * folio's fork still wins and the platform's copy still wins over core's — a
+ * script that exists in two places was already a decided question and this does
+ * not re-open it.
  *
  * Resolving ONLY against the folio meant every pipeline-backed tool — around
  * twenty-five of them, the whole QA, audit, bibliography and transform surface
@@ -66,7 +94,9 @@ export function resolvePipelineScript(script: string): string | undefined {
   const inFolio = join(get.REPO_ROOT(), "content", "pipeline", name);
   if (existsSync(inFolio)) return inFolio;
   const inPlatform = join(platformPipelineDir(), name);
-  return existsSync(inPlatform) ? inPlatform : undefined;
+  if (existsSync(inPlatform)) return inPlatform;
+  const inCore = join(corePipelineDir(), name);
+  return existsSync(inCore) ? inCore : undefined;
 }
 
 /**
@@ -117,7 +147,7 @@ export function runPipeline(
       stderr: "",
       error:
         `pipeline script not found: content/pipeline/${script}.ts — ` +
-        `looked in this folio and in the platform checkout`,
+        `looked in this folio, in the platform checkout and in the content layer's folio-assistant-core/scripts/`,
     };
   }
   const res = spawnSync("bun", ["run", path, ...args], {

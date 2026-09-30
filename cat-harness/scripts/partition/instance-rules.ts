@@ -1589,6 +1589,23 @@ export const RULES: Rule[] = [
   },
 
   // ── folio-assist-core: the generic document model and its pipeline
+  //
+  // The `content/pipeline/` prefix below classifies that whole directory as
+  // core, which is why `check:partition` has always read 0 for it. Bean `yj6r`
+  // acted on that classification for the GLOSSARY cluster: `build-glossary.ts`,
+  // `codemod-refterm.ts` and their three tests now live in
+  // `folio-assistant-core/scripts/`. Nothing was removed from the prefix — a
+  // prefix stops matching a path that is no longer under it — but the fact is
+  // recorded here because the next reader will count `content/pipeline/` and
+  // find two files missing from a directory this rule claims in full.
+  //
+  // What the move BOUGHT is not a change of classification: it was already
+  // core. It removed the three imports reaching UP out of `cat-harness/` into
+  // `folio-assistant-core/schemas/glossary.ts` and `scripts/glossary-page.ts`,
+  // which this scan cannot see at all (its root is `cat-harness/`, so an edge
+  // leaving it is not resolved and not counted). That blindness is the whole
+  // subject of `yj6r`, and it is why a green `check:partition` was never
+  // evidence about this cluster either way.
   {
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no

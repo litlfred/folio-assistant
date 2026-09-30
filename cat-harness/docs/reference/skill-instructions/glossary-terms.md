@@ -207,7 +207,7 @@ templates with no change of its own. `bun run glossary:pot:check` is the gate.
 
 ## A paper's glossary (bean `lqo9`, ruling 2: converge on SKOS)
 
-The paper builder (`content/pipeline/build-glossary.ts`, skill
+The paper builder (`folio-assistant-core/scripts/build-glossary.ts`, skill
 [`glossary-build`](glossary-build.md)) also writes the paper's terms as one
 `folio-glossary/v1` scheme, `paper-<paper directory>`, into the glossary
 directory the paper's OWN instance declares. The page picks it up through

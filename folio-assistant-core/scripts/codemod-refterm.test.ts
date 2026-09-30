@@ -16,7 +16,7 @@
  * visitor (or re-adds the guards on a hunch), this says what must stay true.
  */
 import { describe, test, expect } from "bun:test";
-import { rewriteMarkdown } from "../../content/pipeline/codemod-refterm.ts";
+import { rewriteMarkdown } from "./codemod-refterm.ts";
 
 const SLUGS = new Set(["rigid-monoidal-category"]);
 const rewrite = (md: string) => rewriteMarkdown(md, SLUGS, new Set());

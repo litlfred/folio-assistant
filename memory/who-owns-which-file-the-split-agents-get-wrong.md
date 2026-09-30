@@ -17,9 +17,20 @@ archived: "true"
 **This repo (the platform)** holds the pipeline that *acts on* content:
 `validate.ts`, `render-latex.ts`, `render-markdown.ts`, `build.ts`,
 `qa-sweep.ts`, `qa-staleness.ts`, `profile-check.ts`, `export-bibtex.ts`,
-`citations.ts`, `build-glossary.ts`, the `validate-*` family, and every
+`citations.ts`, the `validate-*` family, and every
 schema under `schemas/` (`types.ts`, `constraints.ts`, `builders.ts`,
 `block-kinds.ts`, `block-qa.ts`, `lean-packages.ts`).
+
+**The CONTENT layer (`folio-assistant-core/`)** holds the pipeline scripts whose
+subject is a folio's content rather than the harness. `build-glossary.ts` and
+`codemod-refterm.ts` moved there on 2026-09-30 (bean `yj6r`) and are named here
+because this list carried `build-glossary.ts` on the platform side until then.
+`cat-harness` declares `needs: ["bootstrap"]` and core sits ABOVE it, so a
+harness module importing core's `schemas/glossary.ts` was an import against the
+harness's own declaration — and a circular dependency between repositories once
+the split lands. They are
+still addressed as pipeline scripts by id; `resolvePipelineScript` searches the
+folio, then the platform, then `folio-assistant-core/scripts/`.
 
 **A folio** holds its own audit scripts — vacuity/axiom, clarity, orphan,
 trace-convention, and so on — under its own `content/pipeline/`.

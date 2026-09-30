@@ -27,7 +27,7 @@
  * input it was wrongly given. The observable is the process, so the process is
  * what this runs.
  *
- * @module content/pipeline/build-glossary-usage.test
+ * @module scripts/build-glossary-usage.test
  */
 import { describe, expect, it } from "bun:test";
 import { mkdtempSync, rmSync } from "node:fs";
@@ -35,7 +35,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 const SCRIPT = resolve(import.meta.dir, "build-glossary.ts");
-const REPO = resolve(import.meta.dir, "../../..");
+const REPO = resolve(import.meta.dir, "../..");
 
 interface Ran {
   code: number | null;

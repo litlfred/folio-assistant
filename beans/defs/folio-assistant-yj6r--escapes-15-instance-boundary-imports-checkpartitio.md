@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-27T07:47:30Z
-updated_at: 2026-09-27T08:17:37Z
+updated_at: 2026-09-30T08:27:48Z
 parent: folio-assistant-vke6
 ---
 
@@ -212,3 +212,8 @@ Renaming or re-homing anything outside the four groups. And the 129 isolated
 files under `schemas/` are a finding in their own right, not carve residue: a
 file that nothing in its own group references may belong elsewhere entirely, and
 deciding that per file is a bigger job than drawing subgraph boundaries.
+
+
+## Claimed by `claude/yj6r-glossary-cluster` — the GLOSSARY cluster (2026-09-30)
+
+Claimed by branch `claude/yj6r-glossary-cluster` for the GLOSSARY cluster only, the last of the eight. No holder note existed on `main` when this was taken — `beans:claim` refused with `already-claimed` and no holder, which cannot tell a live sibling from an abandoned claim — so the open-PR list was read first: PR #1535 holds the ingest/materialisation tranche and nothing covered glossary. Recorded here so the next session does not have to repeat that check.

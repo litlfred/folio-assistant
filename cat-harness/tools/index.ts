@@ -2010,7 +2010,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       description:
         "Build a paper's glossary index from its manifests and render the LaTeX. `--check` reports drift instead of writing, comparing everything except the `generated` timestamp so a re-run is not mistaken for a change.",
       install: { none: true },
-      invoke: { shell: "bun run cat-harness/content/pipeline/build-glossary.ts" },
+      invoke: { shell: "bun run folio-assistant-core/scripts/build-glossary.ts" },
       io: {
         inputs: [
           { name: "targetPath", schema: t("RepoPath"), required: true, arg: { positional: 0 }, description: "The paper directory, which must hold a `<paper>.ts` manifest. Absent, the command exits 2 with its usage — could-not-determine, not an empty glossary." },

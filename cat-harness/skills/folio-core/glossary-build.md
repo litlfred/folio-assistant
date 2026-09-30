@@ -55,6 +55,16 @@ not regenerated since the change keeps a green gate. `glossary.json` and
 | `cd content && bun run validate <paper-dir>` | Includes the five glossary-term validation rules |
 | `cd content && bun run validate <paper-dir> --strict` | Adds `term-mention-coverage` (bare-text mentions) |
 
+**`pipeline/…` above is the FOLIO's own path.** The two glossary scripts moved
+out of the platform on 2026-09-30 (bean `yj6r`): `build-glossary.ts` and
+`codemod-refterm.ts` now live in `folio-assistant-core/scripts/`, beside the
+`schemas/glossary.ts` they read, because walking a paper's blocks is content
+machinery and `cat-harness` may not import upward into the content layer. A
+folio that vendors its own `content/pipeline/` is unaffected — its copy still
+wins. A folio that does not reaches them through the `glossary_check` and
+`codemod` MCP tools, whose resolver searches the folio, then the platform, then
+`folio-assistant-core/scripts/`.
+
 ### Curator web UI (Phase C)
 
 `/folio/glossary-curator.html?paper=<paper-dir>` is a propose-and-pick
@@ -128,8 +138,8 @@ first backfill batch lands, to avoid an avalanche of
 
 - `content-validation` — full authoring contract and agent-facing rules
 - `content/pipeline/validate-defterm.ts` — validator implementation
-- `content/pipeline/build-glossary.ts` — builder implementation
-- `content/pipeline/codemod-refterm.ts` — backfill codemod
+- `folio-assistant-core/scripts/build-glossary.ts` — builder implementation
+- `folio-assistant-core/scripts/codemod-refterm.ts` — backfill codemod
 - `content/pipeline/glossary-candidates.ts` — Phase C proposer
 - `content/pipeline/apply-glossary-curation.ts` — Phase C applier
 - `ui/glossary-curator.html` — curator web UI
