@@ -47,6 +47,31 @@
  * `templates/readme/` beside this file; templates may `{% include %}` each
  * other, Jekyll style, and read any declared field through `kg`.
  *
+ * ## The governing PROCESS, where the caller resolved one
+ *
+ * Owner, 2026-09-29: *"show highlevel (sub)process bpmn on the uploads
+ * page."* A directory may name a BPMN process that governs it; the diagram is
+ * then drawn on its README, with its `.bpmn` source and a row per subprocess.
+ * The template half is `templates/readme/process.liquid`, included only when
+ * the caller supplies a {@link ProcessView}.
+ *
+ * **Resolved by the caller, like every other Extension here.** A process name
+ * is declared in a field this reader does not know (in cat-harness,
+ * `coverage.process`), and a diagram has a home the calling harness's
+ * declaration knows; this writer defines only the SHAPE it renders. So a
+ * harness resolves the name to a diagram and hands over the view.
+ *
+ * DECLARED, never matched out of the diagram's prose. `document-ingestion`
+ * opens on an event named "A file lands in uploads/", which is exactly the
+ * inference not to make: an event's name is editorial text, and rewording it
+ * would unlink the page with nothing able to tell that from a directory that
+ * never had a process.
+ *
+ * A directory the caller resolved nothing for gets no section and is no
+ * finding. A view whose `bpmn` is empty keeps the section, says *could not
+ * determine*, and IS a finding — a printed absence and a real absence must
+ * not look alike.
+ *
  * ## A missing fact is a finding, never a blank
  *
  * {@link Plan.findings} records every directory with no `title` or no
@@ -92,6 +117,42 @@ export const LIST_LIMIT = 150;
 
 const cell = (t: string) => t.replace(/\|/g, "\\|").replace(/\s*\n\s*/g, " ");
 
+/** One call activity of a governing process, as the template reads it. */
+export interface SubProcessView {
+  id: string;
+  /** Whitespace collapsed and table-escaped by the resolver: it is a cell. */
+  name: string;
+  /** The skill the activity names, or `""`. */
+  skill: string;
+  /** The called process id. */
+  calls: string;
+  /** Links relative to the directory whose README this is, or `""`. */
+  bpmn: string;
+  svg: string;
+}
+
+/**
+ * A directory's governing process, resolved by the caller to what a template
+ * can print. Every path is already relative to that directory, and every
+ * absent fact is `""` rather than missing, so `process.liquid` never has to
+ * compose a link or test for nil.
+ */
+export interface ProcessView {
+  /** The name as DECLARED, echoed back whatever else resolved. */
+  name: string;
+  /** The `<bpmn:process name>`, or `""` when the diagram was not found. */
+  title: string;
+  /** The diagram, or `""` — the one field that says whether this resolved. */
+  bpmn: string;
+  /** Its rendered SVG, or `""` when nothing has been rendered. */
+  svg: string;
+  /** The names of its start events, read from the element type. */
+  startEvents: string[];
+  subprocesses: SubProcessView[];
+  /** Why the drawing is missing, or `""`. */
+  undetermined: string;
+}
+
 /** One declared directory, with its path resolved by the caller. */
 export interface SubgraphInput {
   id: string;
@@ -104,6 +165,12 @@ export interface SubgraphInput {
   graphKinds: string[];
   /** The caller's declaration says it may be missing; its absence is not a finding. */
   mayBeAbsent?: boolean;
+  /**
+   * The process governing this directory, already resolved. `undefined` means
+   * the caller was told of none — an answer, not a gap — and the README then
+   * carries no process section at all.
+   */
+  process?: ProcessView;
 }
 
 /** One Knowledge Graph, resolved. */
@@ -125,7 +192,12 @@ export interface Plan {
   /** README path → the full text it should hold. */
   writes: Map<string, string>;
   findings: Record<
-    "no-title" | "no-description" | "long-description" | "absent-directory" | "unmarked-readme",
+    | "no-title"
+    | "no-description"
+    | "long-description"
+    | "absent-directory"
+    | "unmarked-readme"
+    | "unresolved-process",
     Finding[]
   >;
 }
@@ -192,7 +264,14 @@ export async function plan(repo: string, instances: InstanceInput[], templates: 
   const liquid = new Liquid({ root: [templates], extname: ".liquid", jekyllInclude: true, strictFilters: true });
   const out: Plan = {
     writes: new Map(),
-    findings: { "no-title": [], "no-description": [], "long-description": [], "absent-directory": [], "unmarked-readme": [] },
+    findings: {
+      "no-title": [],
+      "no-description": [],
+      "long-description": [],
+      "absent-directory": [],
+      "unmarked-readme": [],
+      "unresolved-process": [],
+    },
   };
   const seen = new Set<string>();
 
@@ -266,8 +345,16 @@ export async function plan(repo: string, instances: InstanceInput[], templates: 
         : `${direct.length} files directly here, too many to list: ` +
           [...byExt].sort((a, b) => b[1] - a[1]).map(([e, n]) => `${n} ${e}`).join(", ") + ".";
 
+      // A view with no `bpmn` resolved to nothing: the template still prints
+      // the section saying so, and the finding sends its owner to the
+      // declaration. A view that found the diagram but no rendered SVG is NOT
+      // this finding — that is a stale checkout, repaired by `render:bpmn`,
+      // and merging the two would send a reader to the wrong repair.
+      if (d.process !== undefined && d.process.bpmn === "") out.findings["unresolved-process"].push(at);
+
       const region = await liquid.renderFile("subgraph", {
         subgraph: { id: d.id, path: d.path, title, description: description ? linked(description) : description, kinds: d.graphKinds },
+        process: d.process,
         instance: { name, title: decl.title, readme: relative(abs, instLink) },
         release,
         kg: decl,

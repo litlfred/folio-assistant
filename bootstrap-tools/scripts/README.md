@@ -24,5 +24,5 @@ Part of [Bootstrap tools](../README.md) 0.1.0, declared as `bootstrap-tools-scri
 | [`subgraph-readmes.ts`](subgraph-readmes.ts) | a file |  |
 | [`term-links.test.ts`](term-links.test.ts) | a file |  |
 | [`term-links.ts`](term-links.ts) | a file |  |
-| [`templates/`](templates/) | 2 files | |
+| [`templates/`](templates/) | 3 files | |
 <!-- kg:subgraph:end -->

@@ -14,6 +14,9 @@
     files     each file directly here: path, what (read from the file),
               usedBy (from diagrams that name it)
     subdirs   each subdirectory: name, count, readme (a link, or empty)
+    process   the DECLARED governing process (`coverage.process`), resolved
+              to its diagram and its rendered SVG — or nil when the directory
+              declares none, which is an answer and not a gap
 {%- endcomment -%}
 # {{ subgraph.title | default: subgraph.id }}
 
@@ -25,4 +28,16 @@ _No description is declared for `{{ subgraph.id }}`._
 
 Part of [{{ instance.title | default: instance.name }}]({{ instance.readme }}){% if release.version != "" %} {{ release.version }}{% endif %}, declared as `{{ subgraph.id }}`, holding {% for k in subgraph.kinds %}`{{ k }}`{% unless forloop.last %}, {% endunless %}{% endfor %}.
 
+{% if process -%}
+{% include process.liquid -%}
+
+{%- comment -%}
+  The file table is headed ONLY when a section precedes it. With nothing
+  above, the table is the body of the page and a heading over it says
+  nothing; with the process section above, an unheaded table reads as part
+  of THAT section, which is the one thing the reader would be wrong about.
+{%- endcomment %}
+## Files
+
+{% endif -%}
 {% include files.liquid -%}
