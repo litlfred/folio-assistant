@@ -6,10 +6,11 @@ summary: "placement is a SKILL — run it before the first file exists"
 createdAt: 2026-09-19
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
-`skills/folio-core/placement.md` is a four-step decision procedure with a
+`skills/kg/kg-core/placement.md` is a four-step decision procedure with a
 stop — **instance → declared graph → kind of node → which of the two
 unrelated "stub" conventions**, and when you cannot tell, ask rather than
 default to the repo you are standing in. Run it **before** adding a skill,

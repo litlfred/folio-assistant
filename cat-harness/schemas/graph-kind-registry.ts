@@ -105,7 +105,7 @@ import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph";
  * entry, which no step may touch. A consumer told only "this is state" cannot
  * tell whether writing to it is normal or a bug.
  *
- * See `skills/folio-core/content-context-and-state-graphs.md`.
+ * See `skills/kg/kg-core/content-context-and-state-graphs.md`.
  */
 export type GraphLayer = "content" | "context" | "state" | "derived";
 
@@ -236,7 +236,7 @@ export interface GraphKindDef {
    * not say" indistinguishable from "content".
    *
    * **The discipline is in the skill, not here** —
-   * `skills/folio-core/content-context-and-state-graphs.md` carries the definition,
+   * `skills/kg/kg-core/content-context-and-state-graphs.md` carries the definition,
    * the classification of every kind with its reason, the two questions that
    * settle a hard case, and what a consumer may assume about each side. The
    * classification of `fsh-guts`, `qa`, `health` and `uploads` is the part
@@ -553,6 +553,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-voice-skill/v1": { validator: "schemas/voice-skill.ts#VoiceSkillSchema" },
       // A synced remote skill's pinned, per-file fixity record (issue #556).
       "folio-remote-skill/v1": { validator: "schemas/skill-package.ts#RemoteSkillRecordSchema" },
+      // `skills.json`, the node that names a skills directory's TOPICS (bean `9umr`).
+      "skill-topics/v1": { validator: "schemas/skill-topics.ts#SkillTopicsSchema" },
     },
     // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
     summary: BOOTSTRAP_GRAPH_KINDS["skills"],

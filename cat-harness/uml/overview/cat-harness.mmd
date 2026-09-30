@@ -554,6 +554,19 @@ classDiagram
       note [1] string
       files [1..*] File[]
     }
+    class cat_harness_skills_skill_topics_v1_Topic["Topic"] {
+      <<json: SkillTopicsSchema>>
+      id [1] string
+      path [1] string
+      title [1] string
+      description [1] string
+    }
+    class cat_harness_skills_skill_topics_v1_skill_topics_v1["skill-topics/v1"] {
+      <<json: SkillTopicsSchema>>
+      $schema [1] 'skill-topics/v1'
+      _comment [0..1] string
+      topics [0..*] Topic[]
+    }
   }
   namespace cat_harness__scenarios {
     class cat_harness_scenarios_FormerName["FormerName"] {
@@ -1954,8 +1967,11 @@ classDiagram
   cssClass "cat_harness_schemas_block_qa_schema_schema_qa_script_schema_json_QaScriptSidecar" fa_uml_kind_schemas
   cssClass "cat_harness_uml_uml_shape" fa_uml_kind_uml
   cat_harness_skills_folio_remote_skill_v1_folio_remote_skill_v1 *-- "1..*" cat_harness_skills_folio_remote_skill_v1_File : files
+  cat_harness_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" cat_harness_skills_skill_topics_v1_Topic : topics
   cssClass "cat_harness_skills_folio_remote_skill_v1_File" fa_uml_kind_skills
   cssClass "cat_harness_skills_folio_remote_skill_v1_folio_remote_skill_v1" fa_uml_kind_skills
+  cssClass "cat_harness_skills_skill_topics_v1_Topic" fa_uml_kind_skills
+  cssClass "cat_harness_skills_skill_topics_v1_skill_topics_v1" fa_uml_kind_skills
   cat_harness_scenarios_Role *-- "0..*" cat_harness_scenarios_FormerName : formerNames
   cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
   cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors

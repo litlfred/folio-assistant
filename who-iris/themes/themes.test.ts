@@ -28,6 +28,7 @@ import {
   whoThemeById,
 } from "./themes.js";
 import { ResolvedThemeSchema, themeKey } from "../../cat-harness/schemas/theme.js";
+import { DEFAULT_THEME_ID, themeById } from "../../cat-harness/schemas/themes.js";
 
 const INSTANCE = resolve(import.meta.dir, "..");
 const CAPTURE = join(
@@ -65,12 +66,14 @@ function page(n: number): string {
 const CSS = clientThemeCss();
 const IRIS = whoThemeById("iris-web")!;
 const PUB = whoThemeById("who-wpro-publication")!;
+const STICKY = whoThemeById("iris-sticky")!;
 
 describe("both themes exist and resolve", () => {
-  it("resolves two themes, one of each screen/print kind", () => {
-    expect(WHO_THEMES.map((t) => t.id).sort()).toEqual(["iris-web", "who-wpro-publication"]);
+  it("resolves three themes: two measured (webpage, publication) and one derived sticky", () => {
+    expect(WHO_THEMES.map((t) => t.id).sort()).toEqual(["iris-sticky", "iris-web", "who-wpro-publication"]);
     expect(IRIS.kind).toBe("webpage");
     expect(PUB.kind).toBe("publication");
+    expect(STICKY.kind).toBe("sticky");
   });
 
   it("each passes the platform's RESOLVED schema, where requiredness lives", () => {
@@ -265,5 +268,51 @@ describe("j66n's fourth clause: a missing layout stays INVALID, never degraded",
   it("refuses print geometry on a webpage theme, and viewports on a publication theme", () => {
     expect(() => ResolvedThemeSchema.parse({ ...IRIS, layouts: PUB.layouts })).toThrow();
     expect(() => ResolvedThemeSchema.parse({ ...PUB, layouts: IRIS.layouts })).toThrow();
+  });
+});
+
+describe("iris-sticky is DERIVED from iris-web, not restated (bean v8n5)", () => {
+  // Read off the SAME capture as iris-web's own tests, so a re-skinned IRIS
+  // fails here too rather than leaving the board card on the old palette.
+  const body = CSS.match(/body\{margin:0;[^}]*\}/)?.[0] ?? "";
+  const hex = (v: string | undefined): string | undefined => {
+    if (v === undefined) return undefined;
+    const m = v.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+    if (!m) return v.toLowerCase();
+    const h = m[1]!.toLowerCase();
+    return h.length === 3 ? `#${h.split("").map((c) => c + c).join("")}` : `#${h}`;
+  };
+
+  it("its palette equals what the captured DSpace stylesheet says, role by role", () => {
+    expect(STICKY.palette.accent).toBe(hex(cssVar(CSS, "primary"))!);
+    expect(STICKY.palette.edge).toBe(hex(cssVar(CSS, "ds-header-navbar-border-bottom-color"))!);
+    expect(STICKY.palette.ink).toBe(hex(body.match(/;color:(#[0-9a-f]+)/i)?.[1])!);
+    expect(STICKY.palette.surface).toBe(hex(body.match(/background-color:(#[0-9a-f]+)/i)?.[1])!);
+  });
+
+  it("its palette IS iris-web's — every role, and no role of its own", () => {
+    expect(STICKY.palette).toEqual(IRIS.palette);
+  });
+
+  it("declares no colour literal of its own: the palette arrives by inheritance", () => {
+    const src = readFileSync(join(import.meta.dir, "themes.ts"), "utf-8");
+    const decl = src.slice(src.indexOf("const IRIS_STICKY"), src.indexOf("const RAW"));
+    expect(decl).toContain('inherits: { instance: THEME_INSTANCE, themeId: IRIS_WEB.id }');
+    expect(decl).not.toMatch(/#[0-9a-f]{3,6}\b/i);
+    expect(decl).not.toContain("palette:");
+  });
+
+  it("says in its description that it is derived from iris-web", () => {
+    expect(STICKY.description).toContain("derived from iris-web");
+  });
+
+  it("takes the note board's geometry, since IRIS has no sticky surface to measure", () => {
+    const board = themeById(DEFAULT_THEME_ID)!;
+    expect(board.kind).toBe("sticky");
+    expect(STICKY.layouts).toEqual(board.layouts);
+  });
+
+  it("carries no backdrop — IRIS imagery is somebody else's artefact", () => {
+    expect(STICKY.backdrop).toBeUndefined();
   });
 });

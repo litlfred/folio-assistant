@@ -7,8 +7,9 @@ createdAt: 2026-09-19
 roles:
   - build-pipeline
   - validation-pipeline
-agents:
-  - ci-health-watcher
+references:
+  - kind: agent
+    id: ci-health-watcher
 ---
 Not incidental; do not simplify either away.
 

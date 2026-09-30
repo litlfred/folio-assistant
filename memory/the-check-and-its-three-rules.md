@@ -7,8 +7,9 @@ createdAt: 2026-09-19
 roles:
   - build-pipeline
   - validation-pipeline
-agents:
-  - ci-health-watcher
+references:
+  - kind: agent
+    id: ci-health-watcher
 ---
 `bun run check:ci-health` reports each workflow's state on the **default
 branch**: consecutive failures, days since the last green, whether it has run

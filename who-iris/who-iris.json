@@ -135,6 +135,26 @@
       ]
     }
   ],
+  "stickies": [
+    {
+      "_comment": "WHO-IRIS'S OWN CARD, bean v8n5. The owner ruled that each initiated harness contributes its own initialization card, and a theme is reached THROUGH a sticky -- so this card is also what gives the who-iris board tile and navbar entry their theme. It cites `iris-sticky` BY REFERENCE, owner first (`themeByRef`): a sticky-kind theme declared in this instance's own `themes/`, DERIVED from `iris-web` (inherits its palette), which was measured from the captured DSpace stylesheet. The platform holds no WHO colour; `gen-themes-css.ts` finds the theme by this instance's declaration and emits its CSS at build time. `bodyFrom: description` so the words are read from this declaration's own `description` and cannot drift from it.",
+      "id": "who-iris",
+      "order": 40,
+      "theme": {
+        "instance": "who-iris",
+        "themeId": "iris-sticky"
+      },
+      "summary": "A catalogue by reference",
+      "bodyFrom": "description",
+      "links": [
+        {
+          "label": "The IRIS replica",
+          "href": "/who-iris/",
+          "note": "The three materialized items, on IRIS's own theme."
+        }
+      ]
+    }
+  ],
   "_icon_comment": "THE INSTANCE'S MARK, copied OUT of uploads/ rather than referenced there. `10s1`: a materialised copy of somebody else's artefact is read-only and the copy-out is step one — so `docs/assets/img/who-emblem.svg` is this instance's own asset, and the capture under `uploads/wpr-rdo-2020-003-eng/iris-capture/` stays untouched as the record of what was ingested. OWNER'S CHOICE, 2026-09-22, made against a stated alternative: this is the WHO emblem and wordmark, NOT the blue `iris.` wordmark the IRIS repository uses as its own brand. Swapping it is one `src` and one re-measured `avatarRegion`.",
   "images": [
     {

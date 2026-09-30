@@ -7,8 +7,9 @@ createdAt: 2026-09-19
 roles:
   - build-pipeline
   - validation-pipeline
-agents:
-  - ci-health-watcher
+references:
+  - kind: agent
+    id: ci-health-watcher
 ---
 `witness-refresh.yml` and `qa-sweep.yml` failed to **parse** on 2026-08-07 —
 which is why GitHub ran them on `push` despite both being

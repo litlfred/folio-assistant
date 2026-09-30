@@ -6,8 +6,9 @@ summary: "a page is a translation because it declares `lang`, never because of i
 createdAt: 2026-09-19
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 `docs/fr/index.md` is French because it carries `lang: fr` and
 `translation_source: index.md`. **Never** match a directory name against a
@@ -20,4 +21,4 @@ property of a FORMAT within a content type (`schemas/translation-tools.ts`,
 its content (e.g. markdown, bpmn) should be translatable"*. `nav_exclude: true`
 is the half JS cannot do — just-the-docs builds the nav once, for every
 reader, before anybody picks a locale. Full rule:
-`skills/folio-core/translation-manager.md#the-navbar-filters-by-locale`.
+`skills/library/library-core/translation-manager.md#the-navbar-filters-by-locale`.

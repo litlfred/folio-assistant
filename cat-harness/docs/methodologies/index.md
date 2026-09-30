@@ -135,7 +135,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- `library/qi-hessen-vanderheijden-2023-ca-vs-lsa`
+- [`library/qi-hessen-vanderheijden-2023-ca-vs-lsa`](../cat-harness/library/cat-harness/#cat-harness%2Fqi-hessen-vanderheijden-2023-ca-vs-lsa) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/README.md) · [source](https://doi.org/10.1007/s10844-023-00815-y)
 
 ### DIIG — Digital Implementation Investment Guide
 
@@ -219,11 +219,11 @@ these.
 
 **Ingested sources:**
 
-- `library/deerwester-1990-indexing-by-lsa`
-- `library/landauer-foltz-laham-1998-intro-lsa`
-- `library/arxiv-0909.4061v2`
-- `library/qi-hessen-vanderheijden-2023-ca-vs-lsa`
-- `library/arxiv-2202.02427v1`
+- [`library/deerwester-1990-indexing-by-lsa`](../cat-harness/library/cat-harness/#cat-harness%2Fdeerwester-1990-indexing-by-lsa) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/deerwester-1990-indexing-by-lsa/README.md)
+- [`library/landauer-foltz-laham-1998-intro-lsa`](../cat-harness/library/cat-harness/#cat-harness%2Flandauer-foltz-laham-1998-intro-lsa) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/landauer-foltz-laham-1998-intro-lsa/README.md)
+- [`library/arxiv-0909.4061v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-0909.4061v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-0909.4061v2/README.md)
+- [`library/qi-hessen-vanderheijden-2023-ca-vs-lsa`](../cat-harness/library/cat-harness/#cat-harness%2Fqi-hessen-vanderheijden-2023-ca-vs-lsa) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/README.md) · [source](https://doi.org/10.1007/s10844-023-00815-y)
+- [`library/arxiv-2202.02427v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2202.02427v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2202.02427v1/README.md) · [source](https://arxiv.org/abs/2202.02427v1)
 
 ### MADR — Markdown Architectural Decision Records
 

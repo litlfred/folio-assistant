@@ -82,3 +82,37 @@ test.describe("table filter", () => {
     await expect(p.locator(".fa-table-filter")).toHaveCount(0);
   });
 });
+
+/**
+ * The docs-auto pages, which do not load docs-ui.js (bean 0fua, reopened
+ * 2026-09-30): the SHIPPED swimlane glossary page, read from the file the
+ * generator committed, so a generator change that drops the filter fails here.
+ */
+test.describe("table filter on a docs-auto page", () => {
+  const GLOSSARY = readFileSync(
+    join(ROOT, SITE, "cat-harness/docs-auto/glossary/swimlane-glossary/index.html"),
+    "utf8",
+  );
+
+  test("the shipped glossary page filters its rows with a live count", async ({ page: p }) => {
+    const errors: string[] = [];
+    p.on("pageerror", (e) => errors.push(String(e)));
+    await p.route("http://docsauto.fixture/**", (r) => r.fulfill({ contentType: "text/html", body: GLOSSARY }));
+    await p.goto("http://docsauto.fixture/g", { waitUntil: "load" });
+    expect(errors).toEqual([]);
+    const input = p.getByLabel("Filter this table");
+    await expect(input).toBeVisible();
+    const rows = p.locator("table[data-fa-filtered] tbody tr");
+    const total = await rows.count();
+    expect(total).toBeGreaterThan(25);
+    const count = p.locator(".fa-table-filter-count");
+    await expect(count).toHaveText(total + " of " + total + " rows");
+    await input.fill("reviewer");
+    const shown = await p.locator("table[data-fa-filtered] tbody tr:not([hidden])").count();
+    expect(shown).toBeGreaterThan(0);
+    expect(shown).toBeLessThan(total);
+    await expect(count).toHaveText(shown + " of " + total + " rows");
+    await input.fill("");
+    await expect(count).toHaveText(total + " of " + total + " rows");
+  });
+});

@@ -3,12 +3,13 @@
 title: 'voices visualiser: 7 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-voices
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-23T10:36:15Z
+updated_at: 2026-09-30T16:12:48Z
 parent: folio-assistant-4ccr
 ---
 
@@ -35,3 +36,15 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — ▸/▾ marker detached from the title: summary::before content '▸' 15px inline-block on its own line; h2 starts 35px below the summary top (screenshot confirms marker alone above heading).
 - **STILL-PRESENT** — Markdown shows through as raw text: Descriptions contain literal backticks, e.g. "moved out of the role's own `voice` field", "derived from Role `adjudicator`" (div.vmeta).
 - **STILL-PRESENT** — Directory table breaks words at 390: At 390x844 8 cells wrap mid-segment: 'folio-assistant-core' 3 lines, 'folio-assistant-core/skills/voices' 4 lines, 'agent-skills/skills/voices' 3 lines, etc.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 6 still present, 1 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **FIXED** — Citations cannot be opened; no links: Changed since 2026-09-29. 102 of 102 span.cite on /cat-harness/voices/ contain an <a>: library citations go to the viewer deep link and the item page, and KG-node citations to the file's 'source'. On /voices/who-style-guide/ it is 25 of 25 (e.g. 'who-pub-tps-931#page-014' → ../../../cat-harness/library/who-iris/#who-iris%2F…). The local targets resolve. — #1592 (qgjh.mjs, D/p_vo3.js, linkcheck.mjs)
+- **STILL-PRESENT** — Summary counts do not follow the filter: On /voices/who-style-guide/ #inst is preset to 'who-style-guide', and the chips still read '43 voice(s) 102 rule(s) 63 citing an ingested source 39 citing a KG node …', which are whole-repo totals. (D/p_vo3.js)
+- **STILL-PRESENT** — No rule visible until a card is opened; first card below first screen on phone: 43 cards, 0 open at rest. At 390×844 the first card is at y=1020 and the first rule when opened at y=1470. Closed cards are 430–812px tall at 390 and 169–232px at 1280. (D/p_vo4.js)
+- **STILL-PRESENT** — Headings sit inside the disclosure control: 43 of 43 cards have their h2 inside <summary>. (D/p_vo4.js)
+- **STILL-PRESENT** — ▸/▾ marker detached from the title: summary::before is inline-block 15px on its own line. The h2 starts 35px below the summary top. (D/p_vo4.js)
+- **STILL-PRESENT** — Markdown shows through as raw text: The descriptions (div.vmeta) still contain literal backticks, e.g. "moved out of the role's own `voice` field (#1168)". (D/p_vo2.js)
+- **STILL-PRESENT** — Directory table breaks words at 390: At 390×844, 8 cells wrap mid-segment: 'folio-assistant-core' 3 lines, 'folio-assistant-core/skills/voices' 4 lines, 'agent-skills/skills/voices' 3 lines, etc. (D/p_vo3.js)

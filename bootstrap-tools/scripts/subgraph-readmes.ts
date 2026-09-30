@@ -99,6 +99,13 @@ import { gitFiles } from "./git-files.ts";
 import { describe as describeFile, linkTarget, usedByIndex } from "./readme-graph-sections.ts";
 import { bootstrapTermTargets, linkTerms } from "./term-links.ts";
 
+/**
+ * A relative path as a markdown link DESTINATION. Defined beside the
+ * `kg:files` section in `readme-graph-sections.ts`, which writes the same kind
+ * of link and which this module already imports; re-exported here for callers.
+ */
+export { linkTarget };
+
 /** The Liquid templates this writer renders: `subgraph.liquid`, which includes `files.liquid`. */
 export const TEMPLATES = join(import.meta.dir, "templates", "readme");
 
@@ -326,15 +333,13 @@ export async function plan(repo: string, instances: InstanceInput[], templates: 
       for (const f of all) if (f.includes("/")) counts.set(f.split("/")[0]!, (counts.get(f.split("/")[0]!) ?? 0) + 1);
       const subdirs = [...counts]
         .sort((a, b) => a[0].localeCompare(b[0]))
-        .map(([n, count]) => ({ name: n, count, readme: existsSync(join(abs, n, "README.md")) ? `${n}/README.md` : "" }));
+        .map(([n, count]) => ({ name: n, href: linkTarget(n), count, readme: existsSync(join(abs, n, "README.md")) ? `${linkTarget(n)}/README.md` : "" }));
       const listed = direct.length <= LIST_LIMIT;
       const files = listed
         ? direct.map((f) => {
             const relToInst = relative(inst, join(abs, f));
             return {
               path: f,
-              // The link DESTINATION, percent-encoded: a space or parenthesis in
-              // a file name otherwise ends the link early (bean `scfh`).
               href: linkTarget(f),
               what: linked(cell(describeFile(inst, relToInst, assets))),
               usedBy: used(relToInst),

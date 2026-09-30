@@ -2154,7 +2154,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The skill or tool that dispatched the authoring, e.g. `folio-core/library-ingestion`."
+          "@value": "The skill or tool that dispatched the authoring, e.g. `library-core/library-ingestion`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/attribution.ts#Attribution.skill",
@@ -4685,101 +4685,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/board.ts#BoardSchema.title",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/bootstrap-graph.bootstrapgraphdocumentschema.at-id",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "BootstrapGraphDocumentSchema.@id"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Must equal the path the document is published at (bootstrap-graph-publication)."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.@id",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/bootstrap-graph.bootstrapgraphdocumentschema.omitted",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "BootstrapGraphDocumentSchema.omitted"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The instance-bound collectors that were NOT run. \"Has no tools\" and \"tools were never looked for\" are different facts; this is how the document says which one it means."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.omitted",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/bootstrap-graph.bootstrapgraphdocumentschema.problems",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "BootstrapGraphDocumentSchema.problems"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Sources that could not be read, counted rather than silently dropped."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.problems",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/bootstrap-graph.bootstrapgraphdocumentschema.repository",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "BootstrapGraphDocumentSchema.repository"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The instance's declared name."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.repository",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/bootstrap-graph.bootstrapgraphdocumentschema.sourcecommitunavailable",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "BootstrapGraphDocumentSchema.sourceCommitUnavailable"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Said instead of `sourceCommit*` when the build could not read git."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.sourceCommitUnavailable",
       "skos:note": "candidate"
     },
     {
@@ -20322,6 +20227,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema.sync",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/skill-topics.skilltopicschema.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SkillTopicSchema.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One plain segment: a topic is a direct subdirectory, never deeper."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/skill-topics.ts#SkillTopicSchema.path",
       "skos:note": "candidate"
     },
     {

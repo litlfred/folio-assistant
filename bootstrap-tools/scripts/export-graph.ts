@@ -58,7 +58,7 @@
  */
 import { spawnSync } from "node:child_process";
 import { existsSync, readdirSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 
 import { readKnowledgeGraphDeclaration } from "../schemas/declaration.ts";
 import { releaseIri, bootstrapRelease } from "../schemas/release-iri.ts";
@@ -350,6 +350,13 @@ export function exportGraph(root: string, opts: ExportOptions): Record<string, u
       versionInfo: "owl:versionInfo",
       generatedAtTime: { "@id": "prov:generatedAtTime", "@type": "http://www.w3.org/2001/XMLSchema#dateTime" },
       wasDerivedFrom: { "@id": "prov:wasDerivedFrom", "@type": "@id" },
+      // What the build saw, kept as opaque JSON literals (`@json`) rather than
+      // left undeclared: a strict processor — `publish:verify`'s — rejects an
+      // undeclared key as an "invalid property", and that failed every preview
+      // build. The values are byte-for-byte what they were.
+      omitted: { "@id": "bootstrap:buildOmitted", "@type": "@json" },
+      counts: { "@id": "bootstrap:buildCounts", "@type": "@json" },
+      problems: { "@id": "bootstrap:buildProblems", "@type": "@json" },
     },
     "@id": doc,
     "@type": ["bootstrap:KnowledgeGraph", "prov:Entity"],
@@ -366,8 +373,8 @@ export function exportGraph(root: string, opts: ExportOptions): Record<string, u
     // the machine that built it never reaches the file (bootstrap-graph-emission).
     "@graph": nodes.sort((a, b) => (String(a["@id"]) < String(b["@id"]) ? -1 : String(a["@id"]) > String(b["@id"]) ? 1 : 0)),
     // Not RDF facts about bootstrap, but what the build saw: counted, never
-    // silently dropped. Plain JSON keys outside the context, so an RDF reader
-    // ignores them and a person or a check reads them.
+    // silently dropped. Declared in the context as `@json` literals, so an RDF
+    // reader carries them as opaque values and a person or a check reads them.
     omitted,
     counts: Object.fromEntries([...byType].sort(([a], [b]) => a.localeCompare(b))),
     problems,
@@ -388,7 +395,9 @@ if (import.meta.main) {
     process.exit(2);
   }
   const doc = exportGraph(root, {
-    docIri: `${base.replace(/\/?$/, "/")}bootstrap.jsonld`,
+    // Named by the file it is written to, so the `@id` IS the served path
+    // whatever the stub: `--base-url <site>/<stub>/ --out _site/<stub>/<file>`.
+    docIri: `${base.replace(/\/?$/, "/")}${basename(out)}`,
     provenance: args.includes("--provenance"),
     sourceBase: arg("--source-base"),
   });
