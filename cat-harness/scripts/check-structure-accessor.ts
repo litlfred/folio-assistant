@@ -47,7 +47,7 @@ export const ALLOWED: Readonly<Record<string, string>> = {
   "cat-harness/schemas/document-structure.ts": "the accessor itself: it defines STRUCTURE_FILENAME",
   "folio-assistant-core/schemas/library-ref.ts":
     "EXISTENCE only — whether an entry was ingested at all — and it never parses the file",
-  "who-iris/scripts/check-catalogue.ts":
+  "folio-assistant-core/scripts/check-catalogue.ts":
     "EXISTENCE only — whether a catalogue item's libraryId was ingested — and it never parses the file",
 };
 

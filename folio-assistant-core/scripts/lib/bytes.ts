@@ -1,7 +1,13 @@
 /**
  * Where a catalogue bitstream's bytes are.
  *
- * @module who-iris/scripts/lib/bytes
+ * @module folio-assistant-core/scripts/lib/bytes
+ *
+ * **Moved from `who-iris/scripts/lib/` on 2026-09-30 (bean `eayu`).** Owner:
+ * *"dspace scripts generic in folio-assistant"*. Nothing here is IRIS's: a
+ * `localPath` is instance-relative for EVERY catalogue instance, so the
+ * instance directory is now a parameter rather than `import.meta.dir/../..`,
+ * which could only ever name who-iris.
  *
  * **This was the `yl5w` workaround, and `yl5w` is settled.** Every `localPath`
  * on an ORIGINAL bitstream pointed at `who-iris/uploads/…` while the bytes sat
@@ -25,13 +31,10 @@
  * second. A generator that conflated them would print "no asset" over a defect.
  */
 import { existsSync } from "fs";
-import { join, resolve } from "path";
-
-const INSTANCE = resolve(import.meta.dir, "..", "..");
-const REPO = resolve(INSTANCE, "..");
+import { join, relative, sep } from "path";
 
 /**
- * The declared path, resolved — and nothing else is tried.
+ * The declared path, resolved against `instanceDir` — and nothing else is tried.
  *
  * Instance-relative, per `MaterializationSchema.localPath`: *"where the bytes
  * landed, instance-relative"*. Searching elsewhere is what the removed
@@ -39,19 +42,18 @@ const REPO = resolve(INSTANCE, "..");
  * a resolver that finds the file one instance over reports a false claim as
  * true, which is the defect `yl5w` was opened for.
  *
- * `name` is no longer read. It stays in the signature because both callers
- * pass it and it is what a future fixity check would compare against; drop it
- * only alongside them.
+ * `instanceDir` is the catalogue instance's root, the directory holding its
+ * `<name>.json`. `name` is no longer read. It stays in the signature because
+ * callers pass it and it is what a future fixity check would compare against;
+ * drop it only alongside them.
  */
-export function bytesFor(localPath: string | undefined, _name: string): string | undefined {
+export function bytesFor(instanceDir: string, localPath: string | undefined, _name: string): string | undefined {
   if (localPath === undefined) return undefined;
-  const p = join(INSTANCE, localPath);
+  const p = join(instanceDir, localPath);
   return existsSync(p) ? p : undefined;
 }
 
-/** A resolved path, made repository-relative — what a raw or CDN URL is built from. */
-export function repoRelative(abs: string): string {
-  return abs.slice(REPO.length + 1);
+/** A resolved path, made relative to `repoRoot` with `/` separators — what a raw or CDN URL is built from. */
+export function repoRelative(repoRoot: string, abs: string): string {
+  return relative(repoRoot, abs).split(sep).join("/");
 }
-
-export { INSTANCE, REPO };

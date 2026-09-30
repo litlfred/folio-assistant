@@ -2,7 +2,17 @@
 /**
  * Every catalogue node validates, and every reference it makes resolves.
  *
- * Usage: `bun run who-iris/scripts/check-catalogue.ts`
+ * Usage: `bun run folio-assistant-core/scripts/check-catalogue.ts <instance-root>`
+ * (e.g. `who-iris`; `bun run check:catalogue` passes it).
+ *
+ * ## Generic, and so in core (bean `eayu`, 2026-09-30)
+ *
+ * This lived at `who-iris/scripts/`. The owner: *"dspace scripts generic in
+ * folio-assistant"*. Nothing below is IRIS's — `CatalogueSchema`, Dublin Core
+ * records, Handles, `localPath` and the publication gates are core vocabulary
+ * any catalogue instance uses — and `who-iris/` is staged to become a CONTENT
+ * repository, which holds no code (kg-separation, bootstrap FR-7). So the
+ * instance root is an argument, the same shape as `source-liveness.ts`.
  *
  * ## Why a script and not only a Zod schema
  *
@@ -35,15 +45,24 @@
  * @covers catalogue
  */
 import { existsSync, readFileSync, readdirSync } from "fs";
-import { join, relative, resolve } from "path";
-import { CatalogueNodeSchema, CatalogueSchema, handleFromUrl, materializationCensus, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
-import { DublinCoreRecordSchema } from "../../folio-assistant-core/schemas/dublin-core.js";
-import { instanceDirectoryForGraph } from "../../cat-harness/schemas/cat-harness.js";
+import { basename, join, relative, resolve } from "path";
+import { CatalogueNodeSchema, CatalogueSchema, handleFromUrl, materializationCensus, type CatalogueNode } from "../schemas/catalogue.js";
+import { DublinCoreRecordSchema } from "../schemas/dublin-core.js";
+import { instanceDirectoryForGraph, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 import { checkLocalPath } from "./lib/local-path.js";
-import { PUBLICATION_GATES } from "../../folio-assistant-core/schemas/materialization.js";
+import { PUBLICATION_GATES } from "../schemas/materialization.js";
 
-const INSTANCE = resolve(import.meta.dir, "..");
-const REPO = resolve(INSTANCE, "..");
+const arg = process.argv[2];
+if (!arg || arg.startsWith("-")) {
+  console.error("usage: check-catalogue.ts <instance-root>   (e.g. who-iris)");
+  process.exit(2);
+}
+const INSTANCE = resolve(arg);
+if (!existsSync(join(INSTANCE, "catalogue", "catalogue.json"))) {
+  console.error(`check-catalogue: ${arg} has no catalogue/catalogue.json — not a catalogue instance`);
+  process.exit(2);
+}
+const REPO = repoRootFor(INSTANCE);
 /**
  * Where ingested content lives — READ from this instance's declaration.
  *
@@ -204,7 +223,7 @@ if (!cat.sourceLoss) {
   problems.push("catalogue.json states no `sourceLoss` per node kind — for every referenced node, 'what happens if the source goes away' would go unanswered");
 }
 
-console.log(`\nwho-iris catalogue — ${nodes.length} node(s)\n`);
+console.log(`\n${basename(INSTANCE)} catalogue — ${nodes.length} node(s)\n`);
 for (const [k, v] of Object.entries(census)) console.log(`  ${k.padEnd(14)} ${v}`);
 // ITEMS and FILES, separately -- they were one number until 2026-09-20, when
 // the home page turned out to publish the item count the statistics page does

@@ -314,7 +314,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         when:
           "A listing needs a cover and the bytes are already held. It renders page 1 by default and calls that the cover, because page 1 is a determined answer and \"the cover\" is not — the same choice `pdf-pages.py` makes about sections.",
         limits:
-          "It decides nothing beyond the raster. WHICH documents get a cover, where the file lands, and what the catalogue must say about the derivation are the instance's — see `who-iris/scripts/gen-covers.ts`, which refuses to write bytes for a THUMBNAIL that does not declare itself derived. It also cannot tell you whether the page it rendered IS the cover; it can only tell you it is page 1.",
+          "It decides nothing beyond the raster. WHICH documents get a cover, where the file lands, and what the catalogue must say about the derivation are the catalogue's to declare — see `folio-assistant-core/scripts/gen-covers.ts`, which reads them from an instance's catalogue and refuses to write bytes for a THUMBNAIL that does not declare itself derived. It also cannot tell you whether the page it rendered IS the cover; it can only tell you it is page 1.",
         cost:
           "One PyMuPDF wheel, no network at run time, and a few milliseconds per page. Deterministic — identical input gives identical bytes, which is what lets a caller gate on `--check` rather than re-deciding.",
       },

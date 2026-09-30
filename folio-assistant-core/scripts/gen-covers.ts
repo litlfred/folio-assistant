@@ -2,8 +2,16 @@
 /**
  * Render a cover thumbnail for every item whose PDF this repository holds.
  *
- * @module who-iris/scripts/gen-covers
+ * @module folio-assistant-core/scripts/gen-covers
  * @covers catalogue, uploads
+ *
+ * ## Generic, and so in core (bean `eayu`, 2026-09-30)
+ *
+ * Moved from `who-iris/scripts/`. Owner: *"dspace scripts generic in
+ * folio-assistant"*. `THUMBNAIL` is a DSpace bundle, not an IRIS one, and the
+ * node shape is core's `CatalogueNode`, so this renders covers for ANY
+ * catalogue instance — the instance root is the first argument. who-iris was
+ * the first to ask for them, which is why the owner's words below are IRIS's.
  *
  * Owner, 2026-09-20: *"do the needed things like extract cover avatar igf
  * neeeded"* — the IRIS home page shows a cover beside each recent submission,
@@ -41,17 +49,18 @@
  * pixel dimensions. A claim this script makes is a claim this script checks.
  *
  * Usage:
- *   bun run who-iris/scripts/gen-covers.ts
- *   bun run who-iris/scripts/gen-covers.ts --check
+ *   bun run folio-assistant-core/scripts/gen-covers.ts <instance-root>   (e.g. who-iris)
+ *   bun run folio-assistant-core/scripts/gen-covers.ts <instance-root> --check
  */
 import { createHash } from "crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "fs";
-import { dirname, join, relative } from "path";
+import { dirname, join, relative, resolve } from "path";
 
-import type { CatalogueNode, MaskedRegion } from "../../folio-assistant-core/schemas/catalogue.js";
-import { bytesFor, INSTANCE, REPO } from "./lib/bytes.js";
+import type { CatalogueNode, MaskedRegion } from "../schemas/catalogue.js";
+import { bytesFor } from "./lib/bytes.js";
 
-const NODES = join(INSTANCE, "catalogue", "nodes");
+/** The platform checkout — where the renderer and the render cache live, never the instance. */
+const REPO = resolve(import.meta.dir, "..", "..");
 const RENDERER = join(REPO, "cat-harness", "scripts", "pdf-cover.py");
 
 /** The listing width. One number, because every cover shares a column. */
@@ -88,12 +97,14 @@ type Cover = {
   masks: MaskedRegion[];
 };
 
-function nodes(): CatalogueNode[] {
-  return readdirSync(NODES)
+/** Every node under `<instanceDir>/catalogue/nodes`, `_`-comments stripped. */
+function nodes(instanceDir: string): CatalogueNode[] {
+  const dir = join(instanceDir, "catalogue", "nodes");
+  return readdirSync(dir)
     .filter((f) => f.endsWith(".json"))
     .sort()
     .map((f) => {
-      const raw = JSON.parse(readFileSync(join(NODES, f), "utf-8"));
+      const raw = JSON.parse(readFileSync(join(dir, f), "utf-8"));
       for (const k of Object.keys(raw)) if (k.startsWith("_")) delete raw[k];
       return raw as CatalogueNode;
     })
@@ -109,7 +120,7 @@ function nodes(): CatalogueNode[] {
  * repository that nobody asked for, and `deletion-requires-confirmation`'s
  * mirror image is that creation should be asked for too.
  */
-export function coversWanted(all: CatalogueNode[]): { covers: Cover[]; problems: string[] } {
+export function coversWanted(all: CatalogueNode[], instanceDir: string): { covers: Cover[]; problems: string[] } {
   const covers: Cover[] = [];
   const problems: string[] = [];
 
@@ -136,7 +147,7 @@ export function coversWanted(all: CatalogueNode[]): { covers: Cover[]; problems:
       problems.push(`${n.id}: a THUMBNAIL is declared but no ORIGINAL PDF bitstream is — nothing to render from`);
       continue;
     }
-    const pdf = bytesFor(orig.materialization?.localPath, orig.name);
+    const pdf = bytesFor(instanceDir, orig.materialization?.localPath, orig.name);
     if (!pdf) {
       problems.push(`${n.id}: the ORIGINAL "${orig.name}" resolves to no bytes — see bean yl5w`);
       continue;
@@ -259,8 +270,18 @@ function verifyWithoutRender(c: Cover, abs: string, problems: string[]): boolean
 
 function main(): number {
   const check = process.argv.includes("--check");
-  const all = nodes();
-  const { covers, problems } = coversWanted(all);
+  const arg = process.argv.slice(2).find((a) => !a.startsWith("-"));
+  if (!arg) {
+    console.error("usage: gen-covers.ts <instance-root> [--check]   (e.g. who-iris)");
+    return 2;
+  }
+  const instanceDir = resolve(arg);
+  if (!existsSync(join(instanceDir, "catalogue", "nodes"))) {
+    console.error(`gen-covers: ${arg} has no catalogue/nodes — not a catalogue instance`);
+    return 2;
+  }
+  const all = nodes(instanceDir);
+  const { covers, problems } = coversWanted(all, instanceDir);
 
   if (covers.length === 0 && problems.length === 0) {
     console.log("gen-covers: no THUMBNAIL bitstreams declared — nothing to render.");
@@ -285,7 +306,7 @@ function main(): number {
   let verified = 0;
 
   for (const c of covers) {
-    const abs = join(INSTANCE, c.outPath);
+    const abs = join(instanceDir, c.outPath);
 
     if (!backend) {
       // Four of the five claims, checked against the committed file itself.
@@ -331,7 +352,7 @@ function main(): number {
   }
   if (check) {
     if (stale) {
-      console.error(`\n${stale} cover(s) stale or missing. Run: bun run who-iris/scripts/gen-covers.ts`);
+      console.error(`\n${stale} cover(s) stale or missing. Run: bun run folio-assistant-core/scripts/gen-covers.ts ${relative(process.cwd(), instanceDir) || "."}`);
       return 1;
     }
     // SAY WHICH CHECK RAN. "3 covers verified" would read identically whether
