@@ -45,6 +45,7 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-xsd11-datatypes
  */
+import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph.ts";
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { basename, join, dirname, relative, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -177,6 +178,11 @@ function findBpmnDirs(root: string = ROOT): string[] {
 
 /** The namespace a declared graph kind's nodes belong in. */
 function graphKindNamespace(kindName: string): string {
+  // A kind bootstrap DEFINES is bootstrap's individual, whatever layer owns the
+  // class a harness types its directories with: since 2026-09-30 (bean `xsqm`)
+  // `SkillGraph` and the rest are the harness's classes, but `skills` is still
+  // bootstrap's kind, named `bootstrap:graphKind/skills`.
+  if (Object.hasOwn(BOOTSTRAP_GRAPH_KINDS, kindName)) return namespaceForLayer("bootstrap");
   const def = BASE_GRAPH_KINDS[kindName];
   const local = def?.type.split("#")[1];
   return local ? namespaceForLayer(termLayer(local)) : namespaceForLayer("harness");
@@ -2116,7 +2122,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
       const kinds = x.graphKinds ?? [];
       return {
         "@id": makeIri(doc, "directory", x.id),
-        "@type": termIri("Directory"),
+        "@type": termIri("Subgraph"),
         name: x.id,
         path: x.path,
         holdsGraph: kinds.map((k) => `${graphKindNamespace(k)}graphKind/${k}`),
