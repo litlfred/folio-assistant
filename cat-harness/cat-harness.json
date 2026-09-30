@@ -841,6 +841,16 @@
       ]
     },
     {
+      "id": "folio-assistant-sci-data-skills",
+      "path": "folio-assistant-sci/skills/data/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The SCIENCE layer's reference-data skills: `reference-dataset-ingestion`, which turns a published constants table (CODATA first) into a library dataset whose values are addressable as `{{ <instance>.library.<entry>.<slug> }}` with provenance (bean uyp8). A subdirectory beside `skills/lean/` for the same reason that one is: `skills/voices/` is already declared as the `voices` kind.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
       "id": "folio-assistant-core-skills",
       "path": "folio-assistant-core/skills/",
       "scope": "repository",

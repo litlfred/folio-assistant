@@ -185,6 +185,9 @@ export const ENTRY_SIDECARS: readonly string[] = [
   // Authored, not produced by an arm: the licence record gen-library-jsonld
   // carries into manifest.jsonld as meta.licence (folio-assistant#1492).
   LICENCE_FILENAME,
+  // A dataset's addressable values, written by an ingest tool beside its
+  // tabular.jsonld (e.g. codata-ingest, bean uyp8; resolved by liquid-values).
+  "values.json",
 ];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [

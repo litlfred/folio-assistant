@@ -44,7 +44,7 @@
  */
 
 import { existsSync, readFileSync } from "fs";
-import { join, relative } from "path";
+import { dirname, join, relative } from "path";
 import {
   findDeclarationFile,
   instanceRootsIn,
@@ -84,6 +84,10 @@ export interface ValueProvenance {
   path: string;
   commitSha?: string;
   scriptHash?: string;
+  /** For a library dataset: the source file's sha256, publisher URL, edition. */
+  sourceSha256?: string;
+  sourceUrl?: string;
+  edition?: string;
 }
 
 export type Resolution =
@@ -177,18 +181,27 @@ export function resolveKey(key: string, scope: ValueScope): Resolution & { raw?:
     return { state: "unresolved", reason: `${inst.name} declares no directory "${dirId}" (only declared directories are addressable)` };
   }
   if (!path.length) return { state: "unresolved", reason: `"${key}" names an entry but no field inside it` };
-  const candidates = [join(dir, `${entry}.witness.json`), join(dir, `${entry}.json`)];
+  // A witness, a JSON entry, or a library DATASET entry (`<entry>/values.json`,
+  // written by an ingest tool such as `codata-ingest`, bean uyp8).
+  const candidates = [join(dir, `${entry}.witness.json`), join(dir, `${entry}.json`), join(dir, entry, "values.json")];
   const file = candidates.find((f) => existsSync(f));
   if (!file) {
-    return { state: "unresolved", reason: `no ${entry}.witness.json or ${entry}.json in ${relative(scope.repoRoot, dir)}` };
+    return { state: "unresolved", reason: `no ${entry}.witness.json, ${entry}.json or ${entry}/values.json in ${relative(scope.repoRoot, dir)}` };
   }
   const doc = readJson(file);
   if (doc === undefined) return { state: "unresolved", reason: `${relative(scope.repoRoot, file)} is not valid JSON` };
-  const raw = resolvePath(doc, path.join("."));
+  let raw = resolvePath(doc, path.join("."));
+  // A dataset record ({ value, uncertainty, unit, … }) resolves to its value;
+  // its other fields stay addressable explicitly (`….uncertainty`).
+  if (raw && typeof raw === "object" && !Array.isArray(raw) && asScalar((raw as { value?: unknown }).value) !== null) {
+    raw = (raw as { value: unknown }).value;
+  }
   if (raw === undefined || raw === null || (typeof raw === "object" && asScalar(raw) === null)) {
     return { state: "unresolved", reason: `${relative(scope.repoRoot, file)} has no scalar at "${path.join(".")}"` };
   }
   const meta = doc as { commitSha?: unknown; scriptHash?: unknown };
+  const tabular = file.endsWith("values.json") ? readJson(join(dirname(file), "tabular.jsonld")) : undefined;
+  const src = (tabular as { source?: { sha256?: unknown; primaryUrl?: unknown; edition?: unknown } } | undefined)?.source;
   return {
     state: "resolved",
     text: String(asScalar(raw)?.value ?? raw),
@@ -198,6 +211,9 @@ export function resolveKey(key: string, scope: ValueScope): Resolution & { raw?:
       path: path.join("."),
       ...(typeof meta.commitSha === "string" ? { commitSha: meta.commitSha } : {}),
       ...(typeof meta.scriptHash === "string" ? { scriptHash: meta.scriptHash } : {}),
+      ...(typeof src?.sha256 === "string" ? { sourceSha256: src.sha256 } : {}),
+      ...(typeof src?.primaryUrl === "string" ? { sourceUrl: src.primaryUrl } : {}),
+      ...(typeof src?.edition === "string" ? { edition: src.edition } : {}),
     },
   };
 }

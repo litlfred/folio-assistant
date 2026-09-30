@@ -1,7 +1,7 @@
 ---
 # folio-assistant-uyp8
 title: Ingest CODATA as a library dataset with provenance, and the skills/tools to ingest reference datasets
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-30T10:26:31Z
 updated_at: 2026-09-30T10:26:31Z
@@ -15,7 +15,14 @@ Owner 2026-09-30: *"CODATA would need to be properly ingested as a dataset into 
 - The ingestion pipeline has a tabular rung (`tabular.jsonld`, `folio-tabular-csvw/v1`) that records headers and source sha256 but NO cell values; its CSVW extractors are STUBs. `large-datasets/schemas/source-descriptor.ts` already models identifiers, volatility and archivalImperative, and names CODATA. `schemas/formalization-types.ts:431` has an unused `CODATAConstants` type.
 
 ## Done when
-- [ ] a skill for ingesting a REFERENCE dataset (constants tables: CODATA, AME, PDG): fetch or accept the official file, record edition, source URL, retrieval date, sha256, licence (licence.json), volatility
-- [ ] a tool that parses NIST's CODATA ASCII table (allascii) into a library entry holding the values themselves — quantity, value, uncertainty, unit, exact flag — addressable as `<instance>.library.<entry>.<quantity-slug>` (bean kott's resolver)
-- [ ] quantity slugs are stable and documented (e.g. `mass-electron` vs NIST's 'electron mass'), with the mapping stored, not re-derived
+- [x] a skill for ingesting a REFERENCE dataset (constants tables: CODATA, AME, PDG): fetch or accept the official file, record edition, source URL, retrieval date, sha256, licence (licence.json), volatility
+- [x] a tool that parses NIST's CODATA ASCII table (allascii) into a library entry holding the values themselves — quantity, value, uncertainty, unit, exact flag — addressable as `<instance>.library.<entry>.<quantity-slug>` (bean kott's resolver)
+- [x] quantity slugs are stable and documented (e.g. `mass-electron` vs NIST's 'electron mass'), with the mapping stored, not re-derived
 - [ ] qou: CODATA 2022 ingested, witnesses and prose repointed at the library entry — qou work, ask the author before any qou PR
+
+## Round 1, 2026-09-30
+- Tool `folio-assistant-sci/content/pipeline/codata-ingest.ts`; skill `folio-assistant-sci/skills/data/reference-dataset-ingestion.md` (new declared dir `folio-assistant-sci-data-skills`).
+- **CODATA 2022 ingested** into `folio-assistant-sci/library/codata-2022/`: 355 quantities, tabular rung + `values.json` + `licence.json` (unknown, searched). Addressable as `{{ folio-assistant-sci.library.codata-2022.<slug> }}` — ONE copy for every folio, rather than one per folio. Slugs are NIST's names, mechanical (`electron-mass-energy-equivalent-in-mev`); the owner's `mass-electron` was an example ("or so"), and a hand alias would be a second vocabulary.
+- **Source honesty:** physics.nist.gov is blocked by this session's network policy, so the copy is SciPy 1.17.1's verbatim embed (`scipy/constants/_codata.py`, `txt2022`); `obtainedFrom` says so, `primaryUrl` names NIST, sha256 recorded.
+- **Finding (qou):** `inv_alpha`'s placeholder witness holds `137.035999084` — the CODATA **2018** value; CODATA 2022 is `137.035999177`. Not changed here — qou work, ask the author.
+- Tests 7, pinned to published CODATA 2022 values and to the committed entry; calibrated (keeping grouping spaces fails 4).
