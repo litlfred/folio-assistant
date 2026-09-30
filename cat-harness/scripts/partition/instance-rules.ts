@@ -1344,6 +1344,7 @@ export const RULES: Rule[] = [
       "scripts/skill-governance.ts",        // which skill governs a directory, read from the skills (#1168 B7b)
       "scripts/docs-declarations.ts",       // which page documents a directory, read from the pages (#1168 B7c)
       "scripts/viewer-declarations.ts",     // which viewer page draws a directory, read from the pages (#1168 B7a-2)
+      "scripts/governing-process.ts",       // which BPMN process governs a directory, read from `coverage.process`
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/ingest-ig-menu.ts",        // a FHIR IG's own navigation, read from its sushi-config (bean `0818`)
       "scripts/check-code-accounting.ts", // the two questions about a code file, kept apart (bean `ylj7`)

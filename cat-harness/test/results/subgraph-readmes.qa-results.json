@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "855d46b512fc"
+    "script_hash": "70d60e12049e"
   },
   "subject": {
     "kind": "graph",
     "id": "subgraph-readmes"
   },
-  "updated_at": "2026-09-29T23:19:43.342Z",
+  "updated_at": "2026-09-30T00:22:39.396Z",
   "families": {
     "absent-directory": {
       "summary": "Declared directories not on disk and not declared `absent`: a consumer scanning them finds nothing and may report a clean run.",
@@ -878,6 +878,11 @@
           "path": "folio-assistant-core/folios/README.md"
         }
       ]
+    },
+    "unresolved-process": {
+      "summary": "Directories whose `coverage.process` names a diagram no instance declares: the README says `could not determine` in place of the drawing. Declaring none is not here — a directory owes no process, and only a declaration that points at nothing is a finding.",
+      "count": 0,
+      "entries": []
     }
   },
   "total": 168

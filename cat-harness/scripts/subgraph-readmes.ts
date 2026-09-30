@@ -35,6 +35,23 @@
  * tools graph. Templates may `{% include %}` each other, Jekyll style,
  * and read any declared field through `kg`.
  *
+ * ## The governing PROCESS, where one is declared
+ *
+ * Owner, 2026-09-29: *"show highlevel (sub)process bpmn on the uploads
+ * page."* A directory naming a BPMN process in `coverage.process` gets that
+ * diagram drawn on its README, with its `.bpmn` source and a row per
+ * subprocess — resolved by `governing-process.ts`, which
+ * `check-subgraph-coverage` shares so the page and the axis cannot disagree.
+ *
+ * DECLARED, never matched out of the diagram's prose. `document-ingestion`
+ * opens on an event named "A file lands in uploads/", which is exactly the
+ * inference not to make: an event's name is editorial text, and rewording it
+ * would unlink the page with nothing able to tell that from a directory that
+ * never had a process.
+ *
+ * A directory declaring none gets no section and is no finding. A declared
+ * name resolving to nothing keeps the section and says *could not determine*.
+ *
  * ## QA: a missing fact is a finding, never a blank
  *
  * `test/results/subgraph-readmes.qa-results.json` records every directory
@@ -60,6 +77,7 @@ import {
   repoRootFor,
 } from "../schemas/cat-harness.ts";
 import { describe as describeFile, usedByIndex } from "../content/pipeline/readme-graph-sections.ts";
+import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 import { gitCorpus } from "../schemas/git-corpus.ts";
 
@@ -127,7 +145,12 @@ export interface Plan {
   /** README path → the full text it should hold. */
   writes: Map<string, string>;
   findings: Record<
-    "no-title" | "no-description" | "long-description" | "absent-directory" | "unmarked-readme",
+    | "no-title"
+    | "no-description"
+    | "long-description"
+    | "absent-directory"
+    | "unmarked-readme"
+    | "unresolved-process",
     Finding[]
   >;
 }
@@ -145,9 +168,21 @@ export function splice(existing: string | undefined, region: string): string | u
 /** Every declared directory of every instance under `repo`, planned. */
 export async function plan(repo: string, templates: string): Promise<Plan> {
   const liquid = new Liquid({ root: [templates], extname: ".liquid", jekyllInclude: true, strictFilters: true });
+  // Built on FIRST USE, not up front: it reads every `.bpmn` in the
+  // repository, and a repository whose directories declare no process should
+  // not pay for a walk whose answer nothing asks for.
+  let processes: ProcessIndex | undefined;
+  const index = (): ProcessIndex => (processes ??= processIndex(repo));
   const out: Plan = {
     writes: new Map(),
-    findings: { "no-title": [], "no-description": [], "long-description": [], "absent-directory": [], "unmarked-readme": [] },
+    findings: {
+      "no-title": [],
+      "no-description": [],
+      "long-description": [],
+      "absent-directory": [],
+      "unmarked-readme": [],
+      "unresolved-process": [],
+    },
   };
   const seen = new Set<string>();
 
@@ -221,8 +256,23 @@ export async function plan(repo: string, templates: string): Promise<Plan> {
         : `${direct.length} files directly here, too many to list: ` +
           [...byExt].sort((a, b) => b[1] - a[1]).map(([e, n]) => `${n} ${e}`).join(", ") + ".";
 
+      // The DECLARED governing process, resolved to its rendered diagram.
+      // Absent declaration means the template gets nothing and writes no
+      // section: a directory owes no process, so silence here is an answer
+      // rather than a gap. A declared name that resolves to no diagram is the
+      // finding, and the template still prints the section saying so — a
+      // printed absence and a real absence must not look alike.
+      const declaredProcess = d.coverage?.process;
+      let process: ReturnType<typeof forDirectory> | undefined;
+      if (declaredProcess !== undefined) {
+        const resolved = resolveProcess(index(), declaredProcess);
+        if (resolved.bpmn === undefined) out.findings["unresolved-process"].push(at);
+        process = forDirectory(resolved, repo, abs);
+      }
+
       const region = await liquid.renderFile("subgraph", {
         subgraph: { id: d.id, path: d.path, title, description, kinds: d.graphKinds },
+        process,
         instance: { name, title: decl.title, readme: relative(abs, instLink) },
         release,
         kg: decl,
@@ -266,6 +316,11 @@ export function qaResult(p: Plan) {
       summary: "READMEs that exist without the kg:subgraph markers, left untouched because somebody wrote them. Add the marker pair to adopt the generated section.",
       entries: p.findings["unmarked-readme"],
     },
+    "unresolved-process": {
+      summary:
+        "Directories whose `coverage.process` names a diagram no instance declares: the README says `could not determine` in place of the drawing. Declaring none is not here — a directory owes no process, and only a declaration that points at nothing is a finding.",
+      entries: p.findings["unresolved-process"],
+    },
   };
   return buildQaResult({
     script: "scripts/subgraph-readmes.ts",
@@ -308,7 +363,8 @@ if (import.meta.main) {
     `${p.writes.size} directory README(s); ${check ? `${stale} stale` : `${wrote} written`}. ` +
       `Findings: ${f["no-title"].length} no title, ${f["no-description"].length} no description, ` +
       `${f["long-description"].length} long description, ` +
-      `${f["absent-directory"].length} absent, ${f["unmarked-readme"].length} unmarked.`,
+      `${f["absent-directory"].length} absent, ${f["unmarked-readme"].length} unmarked, ` +
+      `${f["unresolved-process"].length} unresolved process.`,
   );
   if (check && stale) {
     console.error("\nRun `bun run readme:subgraphs` and commit.");
