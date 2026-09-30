@@ -131,8 +131,8 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
 | 1 | 47.10 | bean, instance, session, graph, kind, branch, page, directory | *(none)* |
-| 2 | 27.77 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
-| 3 | 22.36 | proof, watcher, lean, slot, blocks, project, witness, chapter | harness, node, instance, bean, directory, page, actor, bias |
+| 2 | 27.77 | bias, studies, study, effect, statistical, causation, validity, causal | bean, instance, harness, directory, node, graph, kind, session |
+| 3 | 22.35 | proof, watcher, lean, slot, blocks, project, witness, chapter | harness, node, instance, bean, directory, page, actor, bias |
 | 4 | 19.55 | session, branch, queue, prs, commits, coordination, beans, sibling | dpi, color, lean, grayscale, pdf, matplotlib, images, raster |
 | 5 | 18.64 | dpi, color, grayscale, contrast, matplotlib, raster, eps, fonts | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
 | 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
