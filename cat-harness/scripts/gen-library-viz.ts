@@ -622,7 +622,7 @@ function summaryLabel(s){
   switch (s.status) {
     case "draft":
       return { cls: "info", t: d && d.kind === "agent"
-        ? "agent draft (model " + (d.model || "unknown") + ")"
+        ? (d.model === "not-disclosed" ? "agent draft (model not disclosed)" : "agent draft (model " + (d.model || "unknown") + ")")
         : "draft by " + (d ? d.id : "unknown") };
     case "confirmed": return { cls: "ok", t: "confirmed by " + (s.confirmedBy || "a person") };
     case "stale": return { cls: "warn", t: "stale: source changed" };
@@ -644,7 +644,7 @@ function summaryPanel(s){
   }[s.status];
   var who = s.draftedBy
     ? "Drafted by " + s.draftedBy.kind + " " + s.draftedBy.id +
-      (s.draftedBy.model ? ", model " + s.draftedBy.model : "") + (s.draftedAt ? ", " + s.draftedAt : "") + ". " +
+      (s.draftedBy.model === "not-disclosed" ? ", model not disclosed (recoverable from its session)" : s.draftedBy.model ? ", model " + s.draftedBy.model : "") + (s.draftedAt ? ", " + s.draftedAt : "") + ". " +
       (s.status === "confirmed" ? "Confirmed by " + (s.confirmedBy || "a person") + "."
         : s.status === "stale" ? "The block's text has changed since; this summary may no longer match it."
         : s.status === "rejected" ? "Rejected by a person: " + (s.rejectionReason || "no reason recorded") + "."

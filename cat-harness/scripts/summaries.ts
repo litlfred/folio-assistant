@@ -57,7 +57,7 @@ import {
   type SummaryStatus,
 } from "../schemas/block-summary.ts";
 import { NarrativeSchema, type Narrative } from "../schemas/narrative.ts";
-import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.ts";
+import { declarationPathIn, directoriesForGraph, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { specimenSections } from "../schemas/section-verdicts.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -163,12 +163,39 @@ export function entryItems(entryDir: string, sidecar = readSidecar(entryDir)): S
   );
 }
 
-/** Every entry directory in every declared library, sorted. */
+/**
+ * The declared `library` directories whose OWNING instance declares
+ * `summaries: "held"` (bean `x80s`). Read from the owner's declaration — the
+ * nearest ancestor holding one — never from a mirror another instance
+ * declares, so the hold is stated once, where the directory is held.
+ */
+export function heldLibraries(root = ROOT): string[] {
+  const held: string[] = [];
+  for (const lib of directoriesForGraph(root, "library").filter((d) => existsSync(d))) {
+    const abs = resolve(lib);
+    for (let owner = dirname(abs); owner !== dirname(owner); owner = dirname(owner)) {
+      if (declarationPathIn(owner) === undefined) continue;
+      const entry = readDeclaration(owner)?.directories.find(
+        (d) => (d.graphKinds ?? []).includes("library") && resolve(owner, d.path) === abs,
+      );
+      if (entry?.summaries === "held") held.push(abs);
+      break;
+    }
+  }
+  return [...new Set(held)].sort();
+}
+
+/**
+ * Every entry directory in every declared library, sorted — except the
+ * libraries whose owner holds summaries back ({@link heldLibraries}), which
+ * the drain must never offer.
+ */
 export function entryDirs(root = ROOT): string[] {
   const out: string[] = [];
+  const held = new Set(heldLibraries(root));
   // EVERY declared library, not the first. A drain that sees one library
   // reports a backlog that is short by the rest, with no sign that it is.
-  for (const lib of directoriesForGraph(root, "library").filter((d) => existsSync(d)).sort()) {
+  for (const lib of directoriesForGraph(root, "library").filter((d) => existsSync(d) && !held.has(resolve(d))).sort()) {
     for (const slug of readdirSync(lib).sort()) {
       const dir = join(lib, slug);
       if (statSync(dir).isDirectory()) out.push(dir);
@@ -431,6 +458,11 @@ function listing(root: string): void {
       return [];
     }
   }));
+  // HELD is said, not dropped: a library the drain never offers must not
+  // read as one with nothing to do.
+  for (const lib of heldLibraries(root)) {
+    console.log(`held: ${relative(repoRootFor(root), lib)}/ — its owner declares summaries: "held"; the drain does not offer it`);
+  }
   console.log(`${"entry".padEnd(66)} prose  done  draft  conf  stale  rej  backlog`);
   for (const { entry, t } of rows) {
     console.log(

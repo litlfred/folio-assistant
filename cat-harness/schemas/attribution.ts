@@ -110,7 +110,33 @@ export const AttributionSchema = z
   .refine((a) => a.kind !== "agent" || (a.model !== undefined && a.model !== ""), {
     message: "an `agent` attribution must name its `model` — see the module docstring",
     path: ["model"],
+  })
+  .refine((a) => a.model !== MODEL_NOT_DISCLOSED || (a.session !== undefined && a.session !== ""), {
+    message: "a `not-disclosed` model must name the `session` it can be recovered from",
+    path: ["session"],
   });
+
+/**
+ * The DECLARED value for an agent that is not permitted to write its model
+ * identifier into the repository (owner, 2026-09-30, options B+C).
+ *
+ * `model` stays REQUIRED for an agent — the omission this module exists to
+ * prevent is still impossible — and this is the one sanctioned answer that is
+ * not an identifier. It is a true statement, never a guess: an agent that
+ * cannot name its model says so rather than writing a plausible one.
+ *
+ * It is only half an answer, which is why it demands a `session`: the model
+ * is recoverable from the session record, so the per-model re-review this
+ * field exists for is one lookup away rather than lost. Used before it was
+ * declared: 28 figure descriptions in `arxiv-2312.07755v1/images.json`
+ * (2026-09-23), each with its session.
+ */
+export const MODEL_NOT_DISCLOSED = "not-disclosed" as const;
+
+/** False for {@link MODEL_NOT_DISCLOSED} (and for no model): whether the attribution names a real model. */
+export function modelDisclosed(a: Pick<Attribution, "model">): boolean {
+  return a.model !== undefined && a.model !== "" && a.model !== MODEL_NOT_DISCLOSED;
+}
 
 export const ProvenanceSchema = z.union([z.literal(INGESTED), AttributionSchema]);
 

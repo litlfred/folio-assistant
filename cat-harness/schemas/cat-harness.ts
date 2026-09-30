@@ -519,6 +519,9 @@ export interface ContentDirectory extends GraphNodeDirectory {
   /** Why — required whenever {@link readOnly} is declared, either value. See the schema field. */
   readOnlyBasis?: string;
 
+  /** Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`). */
+  summaries?: "drain" | "held";
+
   /**
    * Which theme this subgraph renders on — one answer for every surface that
    * renders it (navbar section, board panel, sticky).
@@ -1224,6 +1227,18 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   coverage: SubgraphCoverageSchema.optional(),
   /** How this directory's tile looks. See {@link TileSchema}. */
   tile: TileSchema.optional(),
+  /**
+   * Whether the agent summary drain may draft summaries for a `library`
+   * directory's prose blocks (bean `x80s`). Absent means `drain`.
+   *
+   * `held` keeps every entry out of `summaries:next` and out of the backlog,
+   * and the listing names it as held rather than dropping it — "never
+   * offered" must not read as "nothing to do". A property of the directory,
+   * declared by the instance that OWNS it: the owner held agent-skills'
+   * library back on 2026-09-24, and while that lived only as prose on the
+   * bean, `summaries:next` handed its blocks out FIRST.
+   */
+  summaries: z.enum(["drain", "held"]).optional(),
   /**
    * HOW this graph is shown, and what can be done to it.
    *
