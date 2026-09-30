@@ -32,7 +32,7 @@ voice has exactly one of those.</p>
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">VoiceScope</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#activein">activeIn</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span><br/>        <span class="tsd-kind-property">processes</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">roles</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">instance</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">role</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">scenarios</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#appliesto">appliesTo</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0417c070a677acef99d919cfa8be9eb60d3efc5e/cat-harness/schemas/voices.ts#L892">work/folio-assistant/folio-assistant/cat-harness/schemas/voices.ts:892</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/6cf7515ca78a3325d898e48b5f50dc82fb0afa44/cat-harness/schemas/voices.ts#L894">work/folio-assistant/folio-assistant/cat-harness/schemas/voices.ts:894</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -57,9 +57,10 @@ voice has exactly one of those.</p>
 <li class="tsd-parameter">
 <h5><code class="tsd-tag">Optional</code><span class="tsd-kind-property">processes</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 <div class="tsd-comment tsd-typography"><p>BPMN process ids, as <code>&lt;bpmn:process id&gt;</code> spells them —
-<code>Process_CrdmRequirements</code>, not a filename. Resolved against the
-diagrams the <code>cat-harness</code> graph carries, so a typo is a dangling
-reference rather than a voice that quietly never activates.</p>
+<code>Process_CRDM_Requirements</code>, not a filename (#1168, B8: the element
+id, as <code>calledElement</code> uses it). Resolved against the loaded diagrams
+by <code>process-refs.test.ts</code>, so a typo is a dangling reference rather
+than a voice that quietly never activates.</p>
 </div></li>
 <li class="tsd-parameter">
 <h5><code class="tsd-tag">Optional</code><span class="tsd-kind-property">roles</span><span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">instance</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">role</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">[]</span></h5>
@@ -81,14 +82,14 @@ process — so demanding a declared id here would mean no voice could be
 written until the process existed, which is backwards.</p>
 </div></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0417c070a677acef99d919cfa8be9eb60d3efc5e/cat-harness/schemas/voices.ts#L896">work/folio-assistant/folio-assistant/cat-harness/schemas/voices.ts:896</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/6cf7515ca78a3325d898e48b5f50dc82fb0afa44/cat-harness/schemas/voices.ts#L898">work/folio-assistant/folio-assistant/cat-harness/schemas/voices.ts:898</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="appliesto"><code class="tsd-tag">Optional</code><span>applies<wbr/>To</span><a href="#appliesto" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">appliesTo</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 <div class="tsd-comment tsd-typography"><p>Block kinds. Absent means every kind the folio has.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0417c070a677acef99d919cfa8be9eb60d3efc5e/cat-harness/schemas/voices.ts#L894">work/folio-assistant/folio-assistant/cat-harness/schemas/voices.ts:894</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/6cf7515ca78a3325d898e48b5f50dc82fb0afa44/cat-harness/schemas/voices.ts#L896">work/folio-assistant/folio-assistant/cat-harness/schemas/voices.ts:896</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

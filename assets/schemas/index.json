@@ -34410,7 +34410,7 @@
       "fields": [
         {
           "name": "processes",
-          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "type": "z.array(ProcessElementIdSchema).min(1).optional()",
           "optional": true,
           "array": true,
           "doc": "BPMN process ids, as `<bpmn:process id>` spells them —"
@@ -34433,6 +34433,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema",
         "cat-harness/schemas/role-graph.ts#RoleRefSchema"
       ],
       "unresolved": [],
@@ -44819,6 +44820,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
+      "to": "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema",
+      "via": "processes",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
