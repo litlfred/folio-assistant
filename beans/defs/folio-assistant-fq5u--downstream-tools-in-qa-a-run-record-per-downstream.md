@@ -1,7 +1,7 @@
 ---
 # folio-assistant-fq5u
 title: 'DOWNSTREAM TOOLS IN QA: a run record per downstream tool, and QA goes stale when its inputs change — LSI first'
-status: in-progress
+status: completed
 type: feature
 priority: high
 created_at: 2026-09-29T23:46:01Z
@@ -23,10 +23,22 @@ One QA criterion family generalizing `lsi-index-fresh`: every downstream tool is
 - **fresh** only when a successful run's recorded input hash matches the current one.
 
 ## Done when
-- [ ] #1483 merged (this builds on `lsi-index-fresh`) — BLOCKED until then
-- [ ] the criterion family exists, with LSI as its first member (run outcome + input fingerprint)
-- [ ] the site search index is the second member, with a pre-publish verifier (present, parses, non-empty, entries ≈ page count)
-- [ ] a downstream tool with no declaration is itself a finding
-- [ ] stale / not-run surface where people already look (`bun run health` or the kg:audit report)
+- [x] #1483 merged (this builds on `lsi-index-fresh`) — BLOCKED until then
+- [x] the criterion family exists, with LSI as its first member (run outcome + input fingerprint)
+- [x] the site search index is the second member, with a pre-publish verifier (present, parses, non-empty, entries ≈ page count)
+- [x] a downstream tool with no declaration is itself a finding
+- [x] stale / not-run surface where people already look (`bun run health` or the kg:audit report)
 
 _2026-09-30T17:25:23Z_ — Claimed by claude/magical-archimedes-4qkfxp-fq5u — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Summary of Changes
+
+Branch `claude/magical-archimedes-4qkfxp-fq5u`.
+
+- **The declaration.** `schemas/tool.ts` gains `downstream` on a Tool node: `output`, declared `inputs`, `judgedAt` (`checkout` | `published`) and, for `published`, the `verifier` that judges it. Kept apart from `maintains`, which names a PUBLISHED artefact that `check:maintained-artefacts` looks for in `_site/` — LSI's output is a committed sidecar the site never carries.
+- **The run record.** New `schemas/tool-run.ts` (`folio-tool-run/v1`, registered in the `qa` kind): tool, target, outcome, input fingerprint, and `downstreamState()` — fresh only for a successful run over the current fingerprint; stale when it moved; not-run / failed never green. No timestamp, so re-runs over the same inputs do not churn.
+- **Member 1: LSI.** New Tool node `lsi-index`. `lsi index` writes a record on success AND failure (`indexRecorded`); `graphVerdict` now needs a successful run record, so a sidecar on disk with no record reads `not-run`. `lsi:audit` gains an `index-run-unrecorded` family.
+- **Member 2: the site search index.** New Tool node `site-search-index` (`judgedAt: published`) and a `search-index` verifier in `publish-verify`'s set: present, parses, non-empty, every indexed page resolves in the tree, and indexed pages >= 0.5 x pages carrying the search box (basis: a local build on 2026-09-23 had 1,347 of 1,347; halved for pages mounted after Jekyll). The staging preview passes `--search-index borrowed`: it serves the published index or a declared-empty one, so only presence and parsing are asked.
+- **The family in `kg:audit`** (`scripts/downstream-runs.ts`): per-Tool `tool-downstream-fresh` (minor; replaces the graph-level `lsi-index-fresh`), and graph-level `downstream-tool-declared` (major, repo-scoped): a member reader, a run record or a publish verifier naming a Tool with no matching declaration is a finding.
+- **Where it surfaces:** the kg:audit report and sidecars. Today `tool:lsi-index tool-downstream-fresh (4)` — four prose graphs that need an index and have never been run (agent-skills/library, cat-harness/docs, smart-base/library, smart-trust/smart-trust-docs) — and `tool:site-search-index` `unknown` naming its verifier. `bun run health` was not extended; the box allowed either.
+
