@@ -19,7 +19,7 @@
  * the tests written to prevent it.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -29,9 +29,11 @@ import {
   LEDGER_SCHEMA,
   buildGlossary,
   glossaryIri,
+  liveLedgerEntry,
   readLanes,
   type Ledger,
 } from "../glossary-export.ts";
+import { LEDGER_KEY, LedgerSchema } from "../../schemas/glossary-ledger.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 const HARNESS = join(REPO, "cat-harness");
@@ -183,7 +185,7 @@ describe("bootstrap — the instance with the one varying performer", () => {
     // Bean `ug4r`. The absence is an assertion: the performer is whoever
     // called the sub-process, so there is no persona to define. Without
     // `laneBinding` this would be indistinguishable from a lane nobody bound.
-    const actor = concepts(doc).find((c) => String(c["@id"]).includes("#lane/Actor"));
+    const actor = concepts(doc).find((c) => String(c["@id"]).includes("#process/Process_LogMessage/lane/Lane_Actor"));
     expect(actor).toBeDefined();
     expect(actor!.definition).toBeUndefined();
     expect(actor!.performerVaries).toBe(true);
@@ -295,7 +297,7 @@ describe("retirement — reported, never deleted", () => {
     // IRI would rot the day it moved and take the retirement records with it.
     for (const k of Object.keys(buildGlossary({ today: () => "2026-09-21" }).ledger.concepts)) {
       expect(k).not.toContain("http");
-      expect(k).toMatch(/^(role|lane)\//);
+      expect(k).toMatch(LEDGER_KEY);
     }
   });
 
@@ -322,5 +324,57 @@ describe("glossaryIri", () => {
     expect(glossaryIri("https://x.test/", "bootstrap/bootstrap.jsonld")).toBe(
       "https://x.test/bootstrap/bootstrap-glossary.jsonld",
     );
+  });
+});
+
+// ── Keys are the KG's identities, and a rename is a label (#1168 B10b) ─────
+
+describe("ledger keys and renames", () => {
+  test("a varying lane is keyed by its BPMN identity, as kg-export mints the Lane node", () => {
+    const { ledger } = buildGlossary({ instanceRoot: BOOTSTRAP, today: () => "2026-09-21" });
+    expect(Object.keys(ledger.concepts)).toContain("process/Process_LogMessage/lane/Lane_Actor");
+    expect(Object.keys(ledger.concepts).filter((k) => k.startsWith("lane/"))).toEqual([]);
+  });
+
+  test("the schema refuses a key that is not a role or a lane identity", () => {
+    const entry = { prefLabel: "X", firstSeen: "2026-01-01", retiredOn: null };
+    const parse = (k: string) => LedgerSchema.safeParse({ $schema: LEDGER_SCHEMA, instance: "x", concepts: { [k]: entry } }).success;
+    expect(parse("role/reviewer")).toBe(true);
+    expect(parse("process/Process_A/lane/Lane_B")).toBe(true);
+    expect(parse("lane/Actor")).toBe(false);
+    expect(parse("Reviewer")).toBe(false);
+  });
+
+  test("a rename keeps the key and the old label becomes a former label", () => {
+    const was = { prefLabel: "Caller", firstSeen: "2026-01-01", retiredOn: null };
+    const next = liveLedgerEntry(was, "Actor", "2026-09-30");
+    expect(next).toEqual({ prefLabel: "Actor", formerLabels: ["Caller"], firstSeen: "2026-01-01", retiredOn: null });
+    // Renamed back: the label in between becomes former, and the current
+    // label is never also a former one.
+    expect(liveLedgerEntry(next, "Caller", "2026-10-01").formerLabels).toEqual(["Actor"]);
+    // Unchanged: no former label invented.
+    expect(liveLedgerEntry(was, "Caller", "2026-09-30").formerLabels).toBeUndefined();
+  });
+
+  test("every committed ledger parses, and every lane key names a lane a diagram declares", () => {
+    const declared = new Set<string>();
+    for (const rel of new Bun.Glob("**/*.bpmn").scanSync({ cwd: REPO })) {
+      if (rel.includes("node_modules/") || rel.includes("/docs/")) continue;
+      const x = readFileSync(join(REPO, rel), "utf-8");
+      for (const p of x.matchAll(/<bpmn:process\b[^>]*\bid="([^"]+)"[\s\S]*?<\/bpmn:process>/g)) {
+        for (const l of p[0].matchAll(/<bpmn:lane\b[^>]*\bid="([^"]+)"/g)) declared.add(`process/${p[1]}/lane/${l[1]}`);
+      }
+    }
+    expect(declared.size).toBeGreaterThan(10);
+    const ledgers = [...new Bun.Glob("**/glossary-ledger.json").scanSync({ cwd: REPO })].filter((r) => !r.includes("node_modules/"));
+    expect(ledgers.length).toBeGreaterThan(0);
+    const dangling: string[] = [];
+    for (const rel of ledgers) {
+      const l = LedgerSchema.parse(JSON.parse(readFileSync(join(REPO, rel), "utf-8")));
+      for (const [k, e] of Object.entries(l.concepts)) {
+        if (k.startsWith("process/") && e.retiredOn === null && !declared.has(k)) dangling.push(`${rel}: ${k}`);
+      }
+    }
+    expect(dangling).toEqual([]);
   });
 });
