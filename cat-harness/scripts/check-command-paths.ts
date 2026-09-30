@@ -564,14 +564,28 @@ function walkSource(dir: string): string[] {
  * after it is repository-relative and judged as one — the expansion is
  * stripped by {@link shellWords} like any other, which is why it is put back
  * here rather than left for the tokenizer to guess at.
+ *
+ * **`.mcp.json` is the same class, and it was the next one to break.** On
+ * 2026-09-30 the root file still named `scripts/sage-mcp.sh` and
+ * `scripts/google-drive-mcp.sh` ten days after both moved to
+ * `cat-harness/scripts/`. Every session's host reported the two servers as
+ * failing to connect (`ENOENT`), and nothing here read the file, because this
+ * reader was written for hooks and named for them. A host launches an MCP
+ * server from the project root, so its `command` and each `args` entry are
+ * judged as repository-relative words exactly like a hook's.
  */
+export const HOST_COMMAND_FILES = [join(".claude", "settings.json"), ".mcp.json"] as const;
+
 export function checkHooks(repo: string, report: CommandPathReport): void {
-  const file = join(".claude", "settings.json");
+  for (const file of HOST_COMMAND_FILES) checkHostCommandFile(repo, file, report);
+}
+
+function checkHostCommandFile(repo: string, file: string, report: CommandPathReport): void {
   let parsed: unknown;
   try {
     parsed = JSON.parse(readFileSync(join(repo, file), "utf8"));
   } catch {
-    return; // No settings file is a determined absence: this instance has no hooks.
+    return; // No such file is a determined absence: this instance has no hooks, or no MCP servers.
   }
   report.filesRead++;
   const commands: string[] = [];
@@ -580,7 +594,9 @@ export function checkHooks(repo: string, report: CommandPathReport): void {
     else if (v && typeof v === "object") {
       for (const [k, val] of Object.entries(v as Record<string, unknown>)) {
         if (k === "command" && typeof val === "string") commands.push(val);
-        else walk(val);
+        else if (k === "args" && Array.isArray(val)) {
+          for (const a of val) if (typeof a === "string") commands.push(a);
+        } else walk(val);
       }
     }
   };
