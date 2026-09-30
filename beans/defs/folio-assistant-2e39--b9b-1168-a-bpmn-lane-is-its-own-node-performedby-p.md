@@ -1,10 +1,11 @@
 ---
 # folio-assistant-2e39
 title: 'B9b (#1168): a BPMN lane is its own node; performedBy points at the registry role'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-30T10:54:25Z
-updated_at: 2026-09-30T10:54:25Z
+updated_at: 2026-09-30T11:24:47Z
 parent: folio-assistant-tr05
 ---
 

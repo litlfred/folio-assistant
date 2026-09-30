@@ -168,6 +168,12 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     // definitional"). No `seeAlso`: a bootstrap term links to nothing above it.
     gloss: BOOTSTRAP_TERMS.Role,
   },
+  Lane: {
+    gloss:
+      "A swimlane of one BPMN process: part of that process, binding the Role " +
+      "that acts in it (`bindsRole`). Not itself a role — a role is a " +
+      "registry node, and many lanes in many processes bind it (#1168, B9b).",
+  },
   LaneUsage: {
     gloss:
       "One appearance of a glossary concept as a swimlane in one BPMN process — " +
@@ -426,7 +432,8 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   roleName: { gloss: "The role's own name, as a lane binds it." },
   mayTakeRole: { gloss: "A declared role this actor may take on: a link to the Role node from `scenarios/roles.json` (#1168 B8)." },
   satisfiesStatement: { gloss: "A requirement statement this node discharges, as `req:<requirement>#<statement key>`." },
-  performedBy: { gloss: "The role that performs this activity." },
+  performedBy: { gloss: "The role that performs this activity: the registry Role its lane binds." },
+  inLane: { gloss: "The BPMN lane this activity sits in, a Lane node of the same process." },
   implementedBy: { gloss: "The skill that implements this activity." },
   assignments: { gloss: "The role-to-lane bindings a diagram carries." },
   permissionName: { gloss: "A permission's name, as an actor holds it." },
