@@ -1,11 +1,11 @@
 ---
 # folio-assistant-bnuy
 title: 'PUBLISHED-PACKAGES: an unanswerable git reads as ''no packages'' — [] where every neighbour refuses'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T14:54:32Z
-updated_at: 2026-09-30T14:54:55Z
+updated_at: 2026-09-30T15:20:46Z
 parent: folio-assistant-2upx
 ---
 
@@ -52,3 +52,27 @@ could-not-determine as its own state.
 
 - [ ] `manifests()` distinguishes "git could not answer" from "no manifests"
 - [ ] a test covers the could-not-answer path, so the new behaviour is not itself vacuous
+
+
+## Done 2026-09-30 — owner chose "Refuse, like check-portable-paths"
+
+`manifests()` throws `GitUnanswerable` (exported), carrying the pathspec and
+git's own reason. `import.meta.main` catches it and exits **2**, distinct from
+the **1** a real finding exits with.
+
+**A throw rather than a third return value**, and the reason is the call
+shape: `publishablePackages` asks git once PER ECOSYSTEM and concatenates, so
+an `undefined` would have to be threaded through each call site and a site
+that forgot would be back to the silent empty. A throw cannot be forgotten.
+
+**The entry point's existing vacuity guard did not cover this**, which is a
+sharper statement of the defect than the one this bean opened with. It refuses
+on `pkgs.length === 0`; a git that failed on `*pyproject.toml` ALONE deleted
+the Python packages while the npm ones still answered, so the length was not
+0, the guard was satisfied, and the gate reported green over a corpus with a
+hole in it. That is `1s5s` again — the npm half passing to vouch for a Python
+half nothing ran.
+
+Three tests, calibrated: reverting the throw turns 2 of 15 red. The third is
+the one that keeps the distinction alive — a repository that genuinely
+publishes nothing must still answer `[]` and must NOT refuse.

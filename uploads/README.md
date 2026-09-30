@@ -29,9 +29,6 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 
 | file | what it is | used by |
 |---|---|---|
-| [`2508.21620v2.pdf`](2508.21620v2.pdf) | a file |  |
-| [`2509.06388v1.pdf`](2509.06388v1.pdf) | a file |  |
-| [`2607.20636v1.pdf`](2607.20636v1.pdf) | a file |  |
 | [`ChatGPT Image Sep 20, 2026, 03_33_23 PM.png`](ChatGPT Image Sep 20, 2026, 03_33_23 PM.png) | a file |  |
 | [`ChatGPT Image Sep 20, 2026, 03_33_28 PM.png`](ChatGPT Image Sep 20, 2026, 03_33_28 PM.png) | a file |  |
 | [`ChatGPT Image Sep 20, 2026, 03_35_27 PM.png`](ChatGPT Image Sep 20, 2026, 03_35_27 PM.png) | a file |  |

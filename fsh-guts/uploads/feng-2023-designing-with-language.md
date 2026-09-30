@@ -6,23 +6,55 @@ movedOn: 2026-09-30
 movedFrom: "cat-harness/uploads/feng-2023-designing-with-language.pdf"
 bean: folio-assistant-q7ey
 summary: >-
-  RESTORED from git history, not relocated from the queue. This source was
-  ingested to `cat-harness/library/arxiv-2312.07755v1` and then deleted by an earlier session
-  under no rule, because there was none to read until 2026-09-29. Recovered
-  from `4b10661cdde`, the last commit that held it, and its bytes verified
-  against the `source_sha256` its own library entry records (matches).
+  The archival copy of the source ingested to `cat-harness/library/arxiv-2312.07755v1`.
+  Retired from `cat-harness/uploads/` per the owner's ruling 2026-09-29 that an
+  ingested upload is archival and belongs in `fsh-guts`. Its bytes were checked
+  against the `source_sha256` that entry's manifest records — matches.
 ---
 
-# `feng-2023-designing-with-language.pdf` — restored
+# `feng-2023-designing-with-language.pdf`
 
-One of five sources deleted before the retention rule existed. All five had
-been renamed to a descriptive filename, which is the pattern: the sessions
-that renamed also tidied away.
+Ingested to [`cat-harness/library/arxiv-2312.07755v1`](../../cat-harness/library/arxiv-2312.07755v1/), which holds what was
+derived from it. A library entry may not hold the source bytes:
+`check:l1-complete`'s `contents` check refuses an unexpected child, so this is
+where the original lives.
 
-Ingested to [`cat-harness/library/arxiv-2312.07755v1`](../../cat-harness/library/arxiv-2312.07755v1/). Its bytes were checked against the
-`source_sha256` in that entry's manifest on restore — **matches** — so
-this is the same file the derivation was made from, not a lookalike.
+`cat-harness/library/arxiv-2312.07755v1/manifest.jsonld` records `source_sha256`,
+which is what lets a re-derivation be checked against this file.
 
-The rule that now forbids the deletion is in
+## Correction, 2026-09-30 — this file was never deleted
+
+**The first version of this sidecar said it was, and that was wrong.** It read
+*"RESTORED from git history, not relocated from the queue … deleted by an
+earlier session under no rule"*, and the sweep that wrote it reported five such
+recoveries.
+
+Re-derived from git rather than from that claim:
+
+```
+git log --diff-filter=D -- cat-harness/uploads/feng-2023-designing-with-language.pdf
+  (empty — never deleted)
+git cat-file -e 4b10661cdde:cat-harness/uploads/feng-2023-designing-with-language.pdf
+  (present, and present at HEAD too)
+```
+
+So the file sat at `cat-harness/uploads/` the whole time. The sweep
+`git show`-ed a copy out of `4b10661cdde` into here while the live one was
+untouched at the same path — producing **two copies of identical bytes** and a
+recovery claim with nothing recovered.
+
+**The cause is the same one-directory error twice in one commit.** That sweep
+had already corrected its own count from nine to 28 after walking only
+`cat-harness/library/`; the *deleted-or-not* determination still looked in
+`uploads/` alone, where these five genuinely were absent — because they had
+been renamed INTO `cat-harness/uploads/`, not removed. A sweep that resolves
+one declared directory and reports over the ones it never opened is `dh4f`,
+and correcting the number it produced did not correct the method that produced
+it.
+
+The duplicate in `cat-harness/uploads/` is removed as of this commit, and
+`check:uploads-retired` now fails on an ingested upload left in any queue.
+
+The rule is in
 [`library-ingestion`](../../cat-harness/skills/folio-core/library-ingestion.md)
 §"What happens to the upload after it is ingested".

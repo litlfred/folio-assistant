@@ -1410,6 +1410,15 @@ jobs:
           bun run deps:python:check
           bun run check:l1-complete
           bun run check:l1-complete -- --check
+          # Bean `q7ey`: an ingested upload retires to `fsh-guts/uploads/`.
+          # The rule was written and hand-swept on 2026-09-30, and that one
+          # sweep left eight files in two places and a whole harness
+          # unswept -- so the rule needed enforcement, not a better sweep.
+          # Blocking on a bare queue drop; who-iris's per-source intake
+          # directories are reported and advisory, because moving the PDF
+          # out of one would orphan its `intake.json` and that layout is
+          # being reworked in #1612.
+          bun run check:uploads-retired
           bun run check:catalogue
           # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
           # least one MEANINGFULLY POPULATED page. Exit 2 — could not

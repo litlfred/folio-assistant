@@ -162,40 +162,81 @@ same thing — every derived artefact in `library/` becomes unreproducible from 
 checkout. `deletion-requires-confirmation` governs any exception, and an ingest
 step that removed its own input would be the `plj1` shape exactly.
 
-### Swept 2026-09-30 — 33 sources archived, and what is left in the queue
+### Swept 2026-09-30 — and the sweep is now `check:uploads-retired`, not a habit
 
-Done, under the owner's ruling and the four decisions that followed it.
-`fsh-guts/uploads/` is the sub-directory; an ingested source's
+`fsh-guts/uploads/` is the sub-directory. An ingested source's
 `*.pdf.extraction.json` companion moves with it, being a derived artefact of
-the same ingest rather than a queue item; and the five sources earlier
-sessions had deleted were **restored from git history** rather than left gone.
+the same ingest rather than a queue item.
+
+**The hand sweep that first implemented this rule got four things wrong, in
+one commit, and each was invisible from its own output.** They are recorded
+here in full because they are one defect wearing four faces, and because the
+third and fourth were found only after the first two had been "corrected":
+
+| # | what it reported | what was true |
+|---|---|---|
+| 1 | **nine** sources to retire | **28**, across five harnesses — it had resolved `cat-harness/library/` alone, 14 of the corpus's entries |
+| 2 | **five sources RESTORED** from `4b10661cdde` after an earlier session deleted them | **none had been deleted.** All five were at `cat-harness/uploads/` continuously and are in that commit at that path. The sweep `git show`-ed a second copy of each into the archive |
+| 3 | 28 relocated | three of them were **copied, not moved** — the original stayed in `uploads/` |
+| 4 | who-iris among the five harnesses swept | **three ingested sources still in its queue** — that queue keeps a DIRECTORY per source, and the sweep listed only the top level |
+
+Eight files in two places, and a recovery claim with nothing recovered.
+
+**The common cause is one sentence: an answer computed over less than the
+corpus looks exactly like an answer over all of it.** (2) is the sharpest
+case — the five were *absent from `uploads/`* because they had been RENAMED
+into `cat-harness/uploads/`, and "absent from the one directory I looked in"
+was read as "deleted from the repository".
+
+**And correcting (1)'s number did not prevent (2), (3) or (4).** The count was
+re-derived across five libraries; the deleted-or-not determination, the
+move-or-copy, and the per-harness enumeration each kept the original method.
+That is the argument for the check rather than for a more careful sweep:
+
+```sh
+bun run check:uploads-retired
+```
+
+It matches on **sha256 against every declared library's recorded
+`source_sha256`**, never on filename — `2509.06388v1.pdf` is archived as
+`wang-rangaiah-2026-mcdm-aggregation.pdf`, and a name comparison would have
+called that unarchived and minted a ninth duplicate. Two families:
+
+- **blocking** — an already-ingested **bare drop** in a queue. The remedy is a
+  `git mv` plus a sidecar, or a `git rm` when identical bytes are already
+  archived. Those two are distinguished, because conflating them is exactly
+  how eight files ended up in two places.
+- **advisory** — an already-ingested file inside a **per-source intake
+  directory** (`who-iris/uploads/<slug>/` holds the PDF beside an
+  `intake.json` and an `iris-capture/`). Moving the PDF alone would leave that
+  record naming a file that is not there, so whether such a source retires as
+  a file or as a directory is a who-iris layout decision. Reported on every
+  run with its count; **not** exempted, because a family that goes quiet is a
+  family nobody revisits.
+
+It refuses rather than passing when no library records a `source_sha256` — the
+first version of it resolved libraries from the repository root, got **zero**,
+and printed a green line over 15 files. `dh4f`, inside the check written to
+stop `dh4f`. The repository root is not an instance that declares a library;
+`cat-harness` is, and the root declares the `uploads/` that `cat-harness` does
+not — so both roots are asked and neither alone is the corpus.
+
+It reports and never moves anything: `deletion-requires-confirmation`.
+
+**State after the correction, 2026-09-30:**
 
 | | |
 |---|---:|
-| relocated from `uploads/` | 28 |
-| their `.extraction.json` companions, moved with them | 7 |
-| restored from history | 5 |
-| sources now archived | **33** |
-| `fsh-guts/uploads/` | 62 MB |
-| still queued in `uploads/` | 14 — none of them ingested |
+| sources archived in `fsh-guts/uploads/` | **41** |
+| duplicates removed from queues (identical bytes already archived) | 8 |
+| retired late, missed by the sweep | 1 (`milnorlink.pdf`, ingested to `folio-assistant-sci`) |
+| still queued, none of them ingested | 32 |
+| advisory, inside a who-iris intake directory | 3 |
 
-**A first pass of this said "nine", and it was wrong** — it walked
-`cat-harness/library/` only, 14 of the corpus's entries, and reported a
-clean-looking number over four declared libraries it never opened. That is
-`dh4f` one level up, and it is why the count is recorded with its method.
-
-**Every restored file was verified, not assumed.** Each of the five was
-recovered from `4b10661cdde`, the last commit holding it, and its bytes hashed
-against the `source_sha256` its own library entry records. **All five match**,
-so each is provably the file its derivation was made from rather than a
-lookalike. The five are exactly the five whose upload had been renamed to a
-descriptive filename — the sessions that renamed also tidied away, under no
-rule, because there was none to read.
-
-**What is still in `uploads/` is the queue doing its job**: eleven PNGs, two
-PDFs nobody has ingested (`Home _ folio-assistant.pdf`,
-`ihris_admin_handbook_sep_17_2010.pdf`) and a stray image. The uningested
-count the queue viewer leads with is now the only thing in there.
+`milnorlink.pdf` is the cleanest statement of the whole class: it was ingested
+to `folio-assistant-sci/library/`, so a sweep matching against
+`cat-harness/library/` found no match and read it as still queued. Nobody was
+careless; the method could not see it.
 
 ### Renaming an upload is done BEFORE the first ingest
 
