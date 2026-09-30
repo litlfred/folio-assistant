@@ -10,5 +10,5 @@ Part of [C@T Harness](../cat-harness/README.md) 0.1.0, declared as `beans`, hold
 | [`beans.json`](beans.json) | data |  |
 | [`defs/`](defs/) | 1073 files | |
 | [`surveys/`](surveys/README.md) | 2 files | |
-| [`workflows/`](workflows/) | 6 files | |
+| [`workflows/`](workflows/) | 7 files | |
 <!-- kg:subgraph:end -->
