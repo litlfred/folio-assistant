@@ -196,9 +196,9 @@ method here means taking the first three principles, not the code generator.
 
 ## See also
 
-- [`specification-compiled-agents`](../skills/workflow/specification-compiled-agents.md)
+- [`specification-compiled-agents`](../skills/process/workflow/specification-compiled-agents.md)
   — the part an agent here acts on.
-- [`deterministic-and-agentic`](../skills/workflow/deterministic-and-agentic.md)
+- [`deterministic-and-agentic`](../skills/process/workflow/deterministic-and-agentic.md)
   — the open research agenda this is evidence for, and the four mechanisms this
   repository already has.
 - [`hybrid-llm-deterministic`](hybrid-llm-deterministic.md) — the same shape at
