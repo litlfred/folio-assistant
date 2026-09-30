@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-j6t3/skills/content-test/output.schema.json",
+  "title": "Content Test Output",
+  "description": "Output schema for content testing results.",
+  "type": "object",
+  "required": [
+    "overallStatus",
+    "testResults"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail"
+      ]
+    },
+    "testResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "testId",
+          "status"
+        ],
+        "properties": {
+          "testId": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "skipped"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "duration": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "passed": {
+          "type": "integer"
+        },
+        "failed": {
+          "type": "integer"
+        },
+        "skipped": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-archimedes-4qkfxp-j6t3",
+    "sha": "b7821faf4aca20c65b4b1dba364a49688ef016da",
+    "pr": "1546/merge",
+    "run": "36692653278"
+  }
+}
