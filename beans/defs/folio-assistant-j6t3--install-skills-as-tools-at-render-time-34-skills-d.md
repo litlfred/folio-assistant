@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j6t3
 title: 'INSTALL SKILLS AS TOOLS AT RENDER TIME: 34 skills declare user_invocable, 4 are reachable — options for Claude Code, Antigravity and any MCP host'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T21:42:35Z
-updated_at: 2026-09-21T23:15:22Z
+updated_at: 2026-09-30T08:27:11Z
 parent: folio-assistant-vuip
 ---
 
@@ -234,3 +234,5 @@ declaring `user_invocable`") would not produce it, and would not notice.
 Worth folding into this bean's options rather than opening a fifth: whatever
 generates commands has to reconcile BOTH directions, or the next count is
 wrong again in the other one.
+
+_2026-09-30T08:27:11Z_ — Claimed by claude/magical-archimedes-4qkfxp-08u4 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
