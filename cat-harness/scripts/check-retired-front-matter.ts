@@ -38,7 +38,7 @@ import { resolve, relative, join } from "node:path";
 import { Glob } from "bun";
 
 import { parseFrontMatter } from "../schemas/front-matter.ts";
-import { repoRootFor, directoryForGraph, declarationPathIn } from "../schemas/cat-harness.ts";
+import { checkoutDirectoriesForGraph, repoRootFor, declarationPathIn } from "../schemas/cat-harness.ts";
 import { kgRoots } from "./known-skills.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..");
@@ -201,7 +201,7 @@ export function scan(
   instance = INSTANCE,
   repo = repoRootFor(instance),
 ): { findings: Finding[]; scanned: number; missingRecords: Retired[]; roots: string[] } {
-  const guts = directoryForGraph(instance, "fsh-guts");
+  const guts = checkoutDirectoriesForGraph(instance, "fsh-guts")[0];
   // No declared trashcan means the records are UNREACHABLE, not absent. Both
   // report here, because a rule whose reasons cannot be located is in the
   // same state either way from the reader's side.
@@ -257,7 +257,7 @@ function main(): void {
     console.error(`    ${f.entry.because}`);
     console.error(
       `    The full record, with every value it ever held: ` +
-        `${relative(REPO, join(directoryForGraph(INSTANCE, "fsh-guts") ?? "", f.entry.record))}`,
+        `${relative(REPO, join(checkoutDirectoriesForGraph(INSTANCE, "fsh-guts")[0] ?? "", f.entry.record))}`,
     );
   }
 

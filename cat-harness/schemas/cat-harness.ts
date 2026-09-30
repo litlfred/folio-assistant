@@ -5030,6 +5030,41 @@ function matchingDirectories(
 }
 
 /**
+ * An instance's STATE graph, answered by the instance or else by its CHECKOUT.
+ *
+ * Bean `cmsl` step 2 (owner, 2026-09-30, round 5, issue #1694): the
+ * checkout-level graphs — `beans`, `todos`, `memory` (and its `waiver` kind),
+ * `fsh-guts`, `issue-marks`, `interaction` — are declared by the ROOT instance,
+ * whose directory they physically sit in, not by `cat-harness` reaching up
+ * with `scope: "repository"`. A lookup rooted at `cat-harness/` then finds
+ * nothing, and a reader handed nothing reports a clean run over it (the `dh4f`
+ * shape). So: the instance's own declaration first — an instance may keep its
+ * own, and every test fixture does — then the checkout root's, consulted only
+ * when that directory carries a declaration of its own, so a fixture in a
+ * temporary directory never picks up whatever happens to sit beside it.
+ */
+export function checkoutResolvedDirectories(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): ResolvedDirectory[] {
+  const own = matchingDirectories(root, graph, registry);
+  if (own.length > 0) return own;
+  const checkout = repoRootFor(root);
+  if (resolve(checkout) === resolve(root) || declarationPathIn(checkout) === undefined) return [];
+  return matchingDirectories(checkout, graph, registry);
+}
+
+/** {@link checkoutResolvedDirectories}, as absolute paths. */
+export function checkoutDirectoriesForGraph(
+  root: string,
+  graph: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): string[] {
+  return checkoutResolvedDirectories(root, graph, registry).map((d) => d.absPath);
+}
+
+/**
  * Every directory holding `graph`, for the callers {@link directoryForGraph}
  * now refuses.
  *
