@@ -5,7 +5,7 @@
  * index.
  *
  * Sources (the actual skill bodies — single source of truth):
- *   skills/content-lifecycle/*.md   → "Lifecycle skills"
+ *   skills/authoring/content-lifecycle/*.md   → "Lifecycle skills"
  *   src/skills/*.md                  → "Agent skills"
  *
  * Output (consumed by Jekyll → HTML on GitHub Pages):
@@ -398,6 +398,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "ui-core": "Rendering, UI and publication surfaces (ui-core)",
   "conduct-core": "Agent conduct (conduct-core)",
   "process-core": "Process model — roles, authorization, methodology (process-core)",
+  "authoring-core": "Content authoring and editorial review (authoring-core)",
   theming: "Theming (theming)",
   // Keyed by basename: a package subdirectory of the declared `skills/`,
   // like `theming` above. Bean `6bhf`, owner 2026-09-25 — "bean as

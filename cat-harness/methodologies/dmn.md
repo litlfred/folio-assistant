@@ -2,7 +2,13 @@
 $schema: folio-methodology/v1
 name: dmn
 title: DMN — Decision Model and Notation
-origin: OMG Decision Model and Notation, v1.x (omg.org/dmn)
+origin: >
+  Object Management Group, Decision Model and Notation (DMN) Version 1.5,
+  OMG document formal/24-01-01, January 2024 (omg.org/spec/DMN). RECORDED, not
+  held: its licence forbids posting copies on a network, so the library entry
+  identifies the exact PDF (sha256) and its outline and holds no text.
+evidence:
+  - library/omg-2024-dmn-1-5
 applies-when: >
   The criteria RECUR and the inputs are data. A gateway that must branch the same
   way on the same facts every time. Not for a one-off judgement — that is

@@ -133,7 +133,7 @@ own `var SCOPE` line, never assumed from the directory.
 
 - [`readme-sections`](readme-sections.md) — the same split one level out: the
   platform owns the markers, the folio owns the file.
-- [`uses-editorial-review`](../../folio-core/uses-editorial-review.md) — why a count in prose is
+- [`uses-editorial-review`](../../authoring/authoring-core/uses-editorial-review.md) — why a count in prose is
   a claim rather than evidence, which is why these pages compute their counts.
 - Bean `06e3` — the handler, the authoring rule, the per-harness docs landing
   page and its QA check, and the navbar over harnesses with populated `docs/`.
