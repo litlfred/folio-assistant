@@ -41,3 +41,11 @@ One shared answer for "does this skill have a page": `cat-harness/scripts/lib/sk
 | tools: satisfies | 0 links in 105 rows | **131** of 135 skill references | 0 |
 
 The skills left as code are bootstrap's own (`bootstrap-kg-navigation`, `confirm-harness`, `discussion`, `log-message`, `root-readme`, `bootstrap-graph-emission`, `bootstrap-graph-publication`), which publish no instruction page. Remaining pages: catalogue, external-schemas, folio, glossary, library, methodologies, voices.
+
+## Owner ruling on library references — 2026-09-30
+
+Library items have no pages of their own: the library viewer renders entries in JavaScript and opens one from `#<key>`. For the 102 voice citations, the 14 methodology `library/…` references and the library listing, the owner chose ALL THREE targets ("1 2 3 (2 should be like bootstrap readmes...)"):
+
+1. the viewer deep link, `library/<instance>/#<slug>`, with each key checked against the library index at generation time;
+2. a static page per library item, written the way bootstrap's generated READMEs are;
+3. a link to the item's source (upstream URL, or its file on GitHub).
