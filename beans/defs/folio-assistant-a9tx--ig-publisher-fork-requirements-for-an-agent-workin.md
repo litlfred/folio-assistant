@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-30T16:30:00Z
+updated_at: 2026-09-30T17:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -153,8 +153,25 @@ based on delta file changes... then add in the changed files and recompute AST"*
 
 - [x] **W5** delta → resources
 - [x] **W6** cone (forward = rebuild, backward = load) and decision
-- [ ] **W7** rebuild. First choice: pack `loadFromCache` as a local NPM package and run
+- [~] **W7** rebuild, BUILT but **not run end to end** (fork `638e9af`, 19 unit tests). First choice: pack `loadFromCache` as a local NPM package and run
       the stock Publisher on a temporary IG holding only `rebuild`. The cone is
       computed on base edges, so recompute it after the rebuild and repeat until it
       stops growing.
 - [ ] **W8** diff a full build against the incremental AST, plus the threshold
+
+
+## W7 built, 2026-09-30, untested end to end
+
+`CachePackageWriter` (the unchanged part becomes a package written into the
+package cache), `TempIgAssembler` (an IG of only the rebuild set, depending on
+that package), `AstMerger` (mixed-provenance AST with `builtAt` per resource; edges
+re-resolved; reports what the merged cone reaches that was not rebuilt), and
+`IncrementalBuildCli`, which loops until nothing grows, up to 3 rounds, then asks
+for a full build. 19 unit tests pass. The loop has never met a real Publisher.
+The fork README lists the risks to check first: canonical collision between the
+cache package and the temporary IG, dangling page/resource references, CQL
+includes resolving from the package, and non-`Type-id.json` sources.
+
+Network: the owner opened the policy, but this container's proxy still refuses
+`packages.fhir.org`, `packages2.fhir.org` and `tx.fhir.org` ("organization
+policy"), re-checked three times through 2026-09-30T15:00Z. The next step is a fresh session.
