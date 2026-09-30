@@ -10,6 +10,11 @@
     "label": "rdfs:label",
     "prefLabel": "skos:prefLabel",
     "altLabel": "skos:altLabel",
+    "hiddenLabel": "skos:hiddenLabel",
+    "isReplacedBy": {
+      "@id": "dcterms:isReplacedBy",
+      "@type": "@id"
+    },
     "definition": "skos:definition",
     "scopeNote": "skos:scopeNote",
     "changeNote": "skos:changeNote",
@@ -34,7 +39,7 @@
       "@type": "@id"
     },
     "actedUpon": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actedUpon",
-    "performerVaries": "https://litlfred.github.io/bootstrap/0.1.0/ns#performerVaries"
+    "performerVaries": "https://litlfred.github.io/folio-assistant/cat-harness/ns#performerVaries"
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-goal2-navbar-resume/cat-harness-glossary.jsonld",
   "@type": "skos:ConceptScheme",
@@ -1778,7 +1783,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-goal2-navbar-resume/cat-harness.jsonld#role/build-pipeline",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-goal2-navbar-resume/cat-harness.jsonld#process/Process_FeatureStaging",
       "label": "CI/CD Pipeline",
-      "scopeNote": "Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.",
+      "scopeNote": "Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.\n\nA FOURTH trigger starts none of them, and that is deliberate rather than an omission from this diagram. `merge_group` is declared on the workflow so it REPORTS in the merge queue — a required check that never reports on a `merge_group` event leaves every queued pull request pending forever — and all three jobs skip on it. A preview exists for the reviewers of a pull request; a queue entry has none and lives for minutes. Without the skip, `stage`'s existing guards all pass on a queue run (`github.event.action` is empty and the event is not a dispatch), so it would publish `STAGING/&lt;slug&gt;/` named after the ephemeral `gh-readonly-queue/...` ref, and nothing would ever remove it — `Start_Closed` below fires on `pull_request_target: closed`, and a queue branch is never a pull request that closes. That is the `plj1` shape arriving once per MERGE rather than once per pull request.",
       "source": "cat-harness/processes/feature-staging.bpmn"
     },
     {
