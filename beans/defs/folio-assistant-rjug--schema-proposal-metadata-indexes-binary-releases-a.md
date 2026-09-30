@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rjug
 title: 'SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-29T20:03:11Z
+updated_at: 2026-09-30T10:09:58Z
 parent: folio-assistant-uhkv
 ---
 
@@ -119,3 +119,5 @@ registered for them. Their options stand as written above.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+_2026-09-30T10:09:58Z_ — Claimed by claude/zhg2-direction-sidecar — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
