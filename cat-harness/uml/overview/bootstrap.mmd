@@ -43,17 +43,11 @@ classDiagram
       exchange [1..*] Exchange[]
       stillOpen [0..*] list~harness | repositories~
     }
-    class bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger["Glossary Ledger"] {
-      <<schema: glossary-ledger.schema.json>>
-      $schema [1] 'glossary-ledger/1.0.0'
-      instance [1] string
-      concepts [1] map~object~
-    }
     class bootstrap_schemas_graph_schema_json_Directory["Directory"] {
       <<schema: graph.schema.json>>
       id [1] string
       path [1] string
-      graphKinds [1..*] list~'skills' | 'schemas' | 'scenarios' | 'processes' | 'models' | 'swimlane-glossary' | string~
+      graphKinds [1..*] list~'skills' | 'schemas' | 'scenarios' | 'processes' | 'models' | string~
       title [0..1] string
       description [0..1] string
     }
@@ -119,6 +113,11 @@ classDiagram
     }
   }
   namespace bootstrap__scenarios {
+    class bootstrap_scenarios_FormerName["FormerName"] {
+      <<json: RoleGraphSchema>>
+      name [1] string
+      retiredOn [1] string
+    }
     class bootstrap_scenarios_Role["Role"] {
       <<json: RoleGraphSchema>>
       persona [0..1] string
@@ -126,6 +125,8 @@ classDiagram
       title [1] string
       description [1] string
       actorKinds [1..*] list~person | agent | system | external~
+      otherNames [0..*] string[]
+      formerNames [0..*] FormerName[]
       skills [0..*] string[]
       inherits [0..*] string[]
       actedUpon [0..1] boolean
@@ -190,14 +191,6 @@ classDiagram
       models [0..*] Model[]
     }
   }
-  namespace bootstrap__swimlane_glossary {
-    class bootstrap_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0["glossary-ledger/1.0.0"] {
-      <<json: LedgerSchema>>
-      $schema [1] 'glossary-ledger/1.0.0'
-      instance [1] string
-      concepts [1] map~object~
-    }
-  }
   cssClass "n_bootstrap_skills_skills" fa_uml_kind_skills
   cssClass "n_bootstrap_skills_skills" fa_uml_undetermined
   bootstrap_schemas_discussion_input_schema_json_Discussion_Input *-- "0..*" bootstrap_schemas_discussion_input_schema_json_KnownRepository : knownRepositories
@@ -212,7 +205,6 @@ classDiagram
   cssClass "bootstrap_schemas_discussion_output_schema_json_Repository" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_discussion_output_schema_json_Exchange" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_discussion_output_schema_json_Discussion_Output" fa_uml_kind_schemas
-  cssClass "bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_graph_schema_json_Directory" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_graph_schema_json_Asset" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_graph_schema_json_Knowledge_Graph_declaration" fa_uml_kind_schemas
@@ -220,8 +212,10 @@ classDiagram
   cssClass "bootstrap_schemas_model_registry_schema_json_Model_Registry" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_requirement_schema_json_Statement" fa_uml_kind_schemas
   cssClass "bootstrap_schemas_requirement_schema_json_Requirement" fa_uml_kind_schemas
+  bootstrap_scenarios_Role *-- "0..*" bootstrap_scenarios_FormerName : formerNames
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
+  cssClass "bootstrap_scenarios_FormerName" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_Role" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_Actor" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_RoleGraph" fa_uml_kind_scenarios
@@ -229,4 +223,3 @@ classDiagram
   bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
   cssClass "bootstrap_models_Model" fa_uml_kind_models
   cssClass "bootstrap_models_ModelRegistry" fa_uml_kind_models
-  cssClass "bootstrap_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0" fa_uml_kind_swimlane_glossary

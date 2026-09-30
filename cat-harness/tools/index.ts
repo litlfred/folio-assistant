@@ -1272,9 +1272,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // They are separate nodes because they answer different questions. A
     // consumer that meets `folio:Actor` needs the VOCABULARY to learn what it
     // means; a consumer parsing a block needs the CONTEXT to expand its keys.
-    // One document cannot be both: `<base>/ns` has to be a directory for
-    // `ns/content/v1.jsonld` to sit under it, which is why the vocabulary is
-    // `ns/vocabulary.jsonld` and not `ns` itself.
+    // One document cannot be both. The vocabulary is one document per layer
+    // (`<stub>/ns`); the all-layers union at `ns/vocabulary.jsonld` was retired
+    // on 2026-09-30 (owner, bean `xsqm`), and bootstrap's layer document is
+    // bootstrap-tools' to write.
     defineTool({
       id: "ns-vocabulary",
       title: "Namespace vocabulary",
@@ -1297,7 +1298,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // led with "conformance test" would invert that and invite someone to
       // drop the document once CI was satisfied another way.
       maintains: [
-        { source: "schemas/vocabulary.ts", artefact: "ns/vocabulary.jsonld", format: "json-ld" },
+        { source: "schemas/vocabulary.ts", artefact: "cat-harness/ns.jsonld", format: "json-ld" },
+        { source: "schemas/vocabulary.ts", artefact: "folio-assistant-core/ns.jsonld", format: "json-ld" },
       ],
       requires: { runtime: ["bun"], network: false },
     }),

@@ -9,12 +9,18 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "cat-harness/scenarios" as pkg_cat_harness_scenarios <<scenarios>> {
+  class "FormerName" as cat_harness_scenarios_FormerName <<json: RoleGraphSchema>> #e8f0ee {
+    name [1] : string
+    retiredOn [1] : string
+  }
   class "Role" as cat_harness_scenarios_Role <<json: RoleGraphSchema>> #e8f0ee {
     persona [0..1] : string
     id [1] : string
     title [1] : string
     description [1] : string
     actorKinds [1..*] : list<person | agent | system | external>
+    otherNames [0..*] : string[]
+    formerNames [0..*] : FormerName[]
     skills [0..*] : string[]
     inherits [0..*] : string[]
     actedUpon [0..1] : boolean
@@ -34,6 +40,7 @@ package "cat-harness/scenarios" as pkg_cat_harness_scenarios <<scenarios>> {
   }
 }
 
+cat_harness_scenarios_Role *-- "0..*" cat_harness_scenarios_FormerName : formerNames
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors
 @enduml
