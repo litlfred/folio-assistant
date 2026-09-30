@@ -70,10 +70,13 @@ on:
   # then, which promised a pending state that cannot arrive: the repository's
   # ruleset form offers thirteen rules and `Require merge queue` is not among
   # them. GitHub renders only the rules a repository is ELIGIBLE for, so the
-  # absence is the measurement. `folio-assistant` is owned by a personal
-  # account rather than an organization, which is the likely cause but is
-  # INFERENCE — docs.github.com is egress-blocked from the agent container, so
-  # the eligibility rule could not be quoted.
+  # absence is the measurement, and the rule behind it is organization
+  # ownership: merge queues are available in a public repository owned by an
+  # ORGANIZATION, or a private one owned by an organization on Enterprise
+  # Cloud. `folio-assistant` is public and owned by the user `litlfred`, so it
+  # is outside both arms. Sourced with one caveat recorded in `1hjm`: the page
+  # itself is egress-blocked from the agent container, so that wording comes
+  # from web search OVER the page rather than from the page.
   #
   # The trigger is KEPT anyway, deliberately: it becomes correct with no work
   # if the repository ever moves under an organization, and removing it would

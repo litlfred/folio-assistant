@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T22:29:45Z
-updated_at: 2026-09-30T22:34:13Z
+updated_at: 2026-09-30T22:47:27Z
 parent: folio-assistant-1xhc
 ---
 
@@ -81,9 +81,13 @@ hand before each merge is the accepted cost.
       `jsonld-gen-check.yml` gained a pointer rather than a rewrite, because
       their comments describe what the trigger is FOR and only the
       reachability claim was wrong
-- [ ] the eligibility rule is confirmed from GitHub's own documentation by
-      somebody whose network can reach it, and written down; until then the
-      org-ownership explanation stays labelled as inference
+- [ ] the eligibility rule is read VERBATIM from GitHub's own documentation by
+      somebody whose network can reach it. **Narrowed rather than ticked,
+      2026-09-30**: web search over the page returns the availability
+      statement and it names organization ownership, so this is no longer bare
+      inference — but a search index's rendering of a page is not the page,
+      and the defect this bean records is precisely a claim nobody could
+      check. See §"The eligibility rule, sourced"
 - [x] `391j`'s own text is checked for the same assumption, since it is the
       bean that recommends the queue — done, and it was not the only one. Five
       beans carried the claim: `391j` ("it is the owner's click"), `nytj`
@@ -120,3 +124,50 @@ will keep doing so; that is not the `dh4f` shape (a consumer scanning nothing
 and reporting a clean run) because nothing reads their verdict as coverage —
 they are declarations that become correct if the ownership changes. The `1xhc`
 failure was the *prose*, and prose is what was fixed.
+
+
+## The eligibility rule, sourced — 2026-09-30, later the same day
+
+The body above labels org-ownership as the *likely* cause and says the rule
+could not be quoted because `docs.github.com` is egress-blocked. **A second
+route works**: the page cannot be fetched (`WebFetch` → `EGRESS_BLOCKED`), but
+**web search over it is not blocked**, and it returns the availability
+statement:
+
+> Pull request merge queues are available in any public repository owned by an
+> **organization**, or in private repositories owned by organizations using
+> GitHub Enterprise Cloud.
+
+A personal-account repository is outside **both** arms: the first needs an
+organization owner, the second needs an organization owner *and* Enterprise
+Cloud. `folio-assistant` is `public` and owned by the user `litlfred`, so the
+form's omission is exactly what the rule predicts.
+
+Corroborated independently by GitHub's own community forum,
+[discussion #56838](https://github.com/orgs/community/discussions/56838)
+("Merge queue setting not available"), and by the docs page
+[Managing a merge queue](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/managing-a-merge-queue).
+
+### The caveat, stated rather than papered over
+
+That quotation is **a search index's rendering of the page, not bytes fetched
+from it.** It is better evidence than the inference it replaces — it agrees with
+the observed absence in the ruleset form, so two independent lines converge on
+the same rule — but it is not the page. So the box below is **narrowed rather
+than ticked**: what remains is a verbatim read by somebody whose network reaches
+`docs.github.com`, which is a minute's work for a person and impossible from
+this container.
+
+**Why this distinction is kept rather than rounded off.** The whole defect this
+bean records is a claim that nobody could contradict. Writing "confirmed from
+the documentation" when the documentation was never opened would reproduce it
+one level up, with a citation attached to make it harder to check.
+
+### What this settles
+
+Moving the repository under an organization **would** unlock the queue on the
+public plan — that is the first arm of the grant, and it needs no Enterprise
+Cloud. `1hjm`'s "Not established" section said this was unexplored; it is now
+explored as a *rule*, while its **cost** to this repository (a transfer, and
+whatever depends on the `litlfred/` path) remains genuinely unexplored and is
+nobody's decision but the owner's.
