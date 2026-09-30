@@ -49,3 +49,24 @@ Library items have no pages of their own: the library viewer renders entries in 
 1. the viewer deep link, `library/<instance>/#<slug>`, with each key checked against the library index at generation time;
 2. a static page per library item, written the way bootstrap's generated READMEs are;
 3. a link to the item's source (upstream URL, or its file on GitHub).
+
+## Progress — 2026-09-30 (slices 1–7, on the branch after #1512)
+
+| page | before | after |
+|---|---|---|
+| processes: skill → run by | 0 links | 322 (94 of 99 skills; every diagram) |
+| tools: satisfies | 0 | 131 of 135 skill references |
+| voices: citations | 0 of 102 | **102 of 102**: 63 library (viewer, item page, 12 with a source), 39 KG-node (the file, 3 with a skill page) |
+| methodologies: ingested sources | 0 of 15 | **15 of 15** (viewer, item page, source) |
+| folio: node links | 0 | 14 (checked in a browser) |
+| external-schemas: dependents | 0 | 32 |
+| catalogue: every-node table | 0 | 5 replica pages (all collections and items) + 3 held-as |
+| library listing | entries could not be opened | title → item page (37 of 37), source where recorded; viewer deep links select the item |
+| library items | no page | 37 generated READMEs, like bootstrap's |
+
+Shared answers: `scripts/lib/skill-pages.ts`, `scripts/lib/library-links.ts`, and the item READMEs from `scripts/library-readmes.ts`.
+
+**Left, each for a stated reason:**
+- processes' lane → in table: a lane has no page to link to (no role pages, and the swimlane glossary carries no term anchors).
+- glossary: 9 descriptions name roles or permissions in backticks. The terms carry anchors, so these can link within the page. Not done yet.
+- Skills that publish no instruction page (bootstrap's own) stay code on purpose.
