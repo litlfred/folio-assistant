@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 450,
+      "count": 452,
       "unit": "beans"
     }
   },
@@ -4235,6 +4235,20 @@
       "file": "beans/defs/folio-assistant-p67i--ingest-csv-and-spreadsheet-sheet-names-headers-sha.md"
     },
     {
+      "id": "folio-assistant-pb3e",
+      "title": "QA gate: instances declare needs and have a harness IRI (#1548)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:48:21Z",
+      "updatedAt": "2026-09-30T08:51:34Z",
+      "preview": "Owner 2026-09-30: 'QA gates on harness declaration of dependences. harness instancess need IRI for harness.' Issue #1548; done on PR #1530, which it unblocks.\n\n## Done when\n- [x] check:instance-graph fails on an instance with no needs ([] stays legal)\n- [x] check:instance-graph fails on an instance with no absolute harness IRI, or two sharing one — via kg-export's exportIdentity\n- [x] exportIdenti",
+      "file": "beans/defs/folio-assistant-pb3e--qa-gate-instances-declare-needs-and-have-a-harness.md"
+    },
+    {
       "id": "folio-assistant-pesg",
       "title": "A review re-derived a finding the instrument had already computed, and got it wrong",
       "status": "in-progress",
@@ -4949,6 +4963,20 @@
       "updatedAt": "2026-09-30T00:35:22Z",
       "preview": "Found 2026-09-26 resolving #1290's conflicts in a worktree named `pr1290` (session_01ERf1yH3k69x37rXCrb6GYt). `bun run library:viz` wrote `\"uploadInstance\": \"pr1290\"` into 12 entries of `cat-harness/docs/assets/library/index.json` and emitted a page at `cat-harness/docs/cat-harness/library/pr1290/index.html`. Caught before push; regenerated from a directory named `folio-assistant`, after which all",
       "file": "beans/defs/folio-assistant-t5dm--instance-name-from-the-checkout-folder-library-gra.md"
+    },
+    {
+      "id": "folio-assistant-t7fl",
+      "title": "uploads/README shows the high-level document-ingestion BPMN, via a DECLARED coverage.process",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T23:47:39Z",
+      "updatedAt": "2026-09-30T00:25:28Z",
+      "preview": "Owner, 2026-09-29: *\"show highlevel (sub)process bpmn on the uploads page.\"*\n\nThe uploads page is `uploads/README.md`, the generated subgraph README written\nby `cat-harness/scripts/subgraph-readmes.ts` through the `subgraph` Liquid\ntemplate in the tools graph.\n\n## What is being added\n\nA new optional declared field on `SubgraphCoverageSchema` naming the BPMN\nprocess that GOVERNS a directory, declar",
+      "file": "beans/defs/folio-assistant-t7fl--uploadsreadme-shows-the-high-level-document-ingest.md"
     },
     {
       "id": "folio-assistant-t8g3",
@@ -6128,7 +6156,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T07:47:30Z",
-      "updatedAt": "2026-09-30T00:40:00Z",
+      "updatedAt": "2026-09-30T08:57:59Z",
       "preview": "Found 2026-09-27 while answering the owner's question *\"how resolve/gate/qa escape\nimports?\"* — sibling to `zlmp` under the same SPLIT epic, and **not** a reopening\nof it.\n\n## Two axes, and only one of them has ever been driven to zero\n\n`zlmp` drove the MODULE axis to zero: `check:partition` reports **0**\nwrong-direction edges today, and that is correct on its own terms — it measures\nedges between",
       "file": "beans/defs/folio-assistant-yj6r--escapes-15-instance-boundary-imports-checkpartitio.md"
     },

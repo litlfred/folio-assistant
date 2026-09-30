@@ -297,10 +297,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T08:40:28.592Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/29f5331ead0ca92c3abf1d98f5bbb3bf8ba4855c",
-  "sourceCommitSha": "29f5331ead0ca92c3abf1d98f5bbb3bf8ba4855c",
-  "sourceCommitAt": "2026-09-30T08:35:55Z",
+  "generatedAt": "2026-09-30T09:13:49.359Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/8e87fe6ee562d5ccabd6148f0d68b82f4e3f7cfa",
+  "sourceCommitSha": "8e87fe6ee562d5ccabd6148f0d68b82f4e3f7cfa",
+  "sourceCommitAt": "2026-09-30T09:10:49Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1678,7 +1678,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/associate-harness.md",
-      "instructionLines": 74,
+      "instructionLines": 90,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2082,7 +2082,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-build.md",
-      "instructionLines": 137,
+      "instructionLines": 147,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4150,7 +4150,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/content-validation.md",
-      "instructionLines": 294,
+      "instructionLines": 296,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40461,7 +40461,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run cat-harness/content/pipeline/build-glossary.ts"
+        "shell": "bun run folio-assistant-core/scripts/build-glossary.ts"
       },
       "io": {
         "inputs": [
