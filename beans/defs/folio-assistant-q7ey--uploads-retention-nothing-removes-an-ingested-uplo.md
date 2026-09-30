@@ -48,10 +48,13 @@ The sidecar convention needed no invention — `fsh-guts/` already pairs
 
 ## What is left
 
-**Nine uploads to retire.** Measured 2026-09-29 across fourteen library
-entries by each manifest's own `meta.source_file`: nine still in `uploads/`,
-five already gone. Roughly 20 MB of PDFs, all reversible — a relocate, never
-an `rm`.
+**28 uploads to retire, 47.4 MB, across five harnesses.** Corrected
+2026-09-30: the first pass said "nine" and walked `cat-harness/library/` only,
+which is 14 of the corpus's entries. Swept across every declared library —
+`cat-harness`, `agent-skills`, `smart-base`, `folio-assistant-core`,
+`who-iris` — it is 28. The error is worth keeping: a sweep that resolves one
+declared directory reports a clean-looking number over four it never opened,
+which is `dh4f` one level up. All reversible — a relocate, never an `rm`.
 
 **Five already deleted**, and they are exactly the five whose upload had been
 renamed to a descriptive filename (`feng-2023-designing-with-language`,
@@ -66,6 +69,13 @@ under the same reasoning that makes the rule worth having.
 `scripts/`, named for what the thing is. An ingested source is neither, so the
 skill proposes `fsh-guts/uploads/` and marks it as not yet ruled on.
 
+**And one the sweep cannot proceed without.** Six of the 28 have a
+`<name>.pdf.extraction.json` sitting beside them in `uploads/`
+(`2602.12670v4`, `2607.25032v1`, `2608.08453v1`, the two Antigravity pages,
+`Skill authoring best practices`, `Skills in OpenAI API`). Either they are
+derived artefacts that simply go, or they are part of what is archived and
+move with their PDF. Cheap to guess, expensive to undo across 28 files.
+
 ## Done when
 
 - [x] Decision 1 — does a library entry carry its source? **No**, and it is
@@ -75,7 +85,8 @@ skill proposes `fsh-guts/uploads/` and marks it as not yet ruled on.
 - [x] `deletion-requires-confirmation` restated for this case: never `rm` an
       ingested upload; relocate, which is reversible
 - [ ] `fsh-guts/uploads/` confirmed as the sub-directory, or renamed
-- [ ] the nine surviving uploads retired, with a sidecar each
+- [ ] the 28 surviving uploads retired, with a sidecar each
+- [ ] what happens to the six `*.pdf.extraction.json` companions
 - [ ] the five already-deleted sources restored from git history, or the
       owner rules that they stay gone
 - [ ] whether `ingest --promote` should perform the retirement itself, or
