@@ -44,9 +44,9 @@ Analysis: session scratchpad `separation-process-analysis.md` (94 beans, cone me
 - [ ] publish-instance-files moves into bootstrap-tools (bootstrap's site is the tools' job) and is documented
 - [x] role names authored on the role (owner 2026-09-30, option 1, "model both retired names and alternative names"): `otherNames` (smart-base Generic Persona; skos:altLabel) and `formerNames` {name, retiredOn} (skos:hiddenLabel; old concept dcterms:isReplacedBy the role); one name one role, enforced at read; `kg:roles` README section written by bootstrap-tools; Initiator recorded on Bootstrapping Agent
 - [ ] glossary ledger hosted in cat-harness (owner chose it with option 1) — code ready on local branch `next/bt-ledger-wip` (glossaryHomeFor); OPEN: bootstrap would still define the `swimlane-glossary` graph kind and publish the `glossary-ledger` schema it no longer holds (graph.test.ts D1 rule fails) — owner decides where those two live
-- [ ] check:version-bump reads plain `v<semver>` tags for a standalone repository
-- [ ] docs: instance-publication release site per Q3; kg-export namespace table; bootstrap-graph-publication `.json` collision; hosted outputs in kg-audit and translation skills; release/tag mechanics
-- [ ] described (disabled) reusable workflow + npm manifest note; agent-runnable role/process for the tools
+- [x] check:version-bump reads plain `v<semver>` tags for a standalone repository
+- [x] docs: instance-publication release site per Q3; kg-export namespace table; hosted outputs in kg-audit (role-model) and translation skills; release/tag mechanics. OPEN: bootstrap-graph-publication/emission skills describe a harness artefact from inside bootstrap
+- [x] described (disabled) CI workflow + no npm publish (private) ; which lane runs each tool (bootstrap-tools/AGENTS.md), every command verified from the directory
 - [ ] migration-plan Phase II: left as a record (default B), pointer to kg-separation only
 
 ## Phase 4 — the replicable separation process
