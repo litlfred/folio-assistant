@@ -269,3 +269,38 @@ declaration ruling for the owner. Bean `xsqm` moved that code out and the
 
 What this bean's change does about it is refuse to let the omission read as
 clean: **not "clean", NOT MEASURED**, named instance by instance.
+
+#### Context for whoever rules on the `bootstrap-tools` declaration
+
+Found while measuring the above; **recorded, not acted on**, because the answer
+is a declaration ruling. The history explains the mismatch and narrows the
+question.
+
+`bootstrap-tools/` was **retired** by bean `319n` (2026-09-24, *"Zod is in
+cat-harness: move bootstrap-tools' schemas, retire the instance"*) and then
+**re-created as a sibling instance** by bean `xsqm` (2026-09-29). Its own
+declaration says why:
+
+> Re-created 2026-09-29 … after bean `319n` had folded it into cat-harness:
+> across two repositories, Zod in cat-harness would make a bootstrap release
+> depend on cat-harness, which depends on bootstrap. A SIBLING, never nested in
+> bootstrap … It depends on bootstrap and on nothing above it —
+> `check:tools-closure` fails on any import that leaves it.
+
+So the **architectural** direction is not in dispute: `bootstrap-tools` sits
+below `cat-harness` and imports nothing above itself, and `check:tools-closure`
+is a real gate (`package.json:301`, wired at `code-quality-gates.yml:1007`)
+enforcing that half. What is missing is the **other** half: nothing says
+`cat-harness` may reach *into* it, and `cat-harness.json` still declares
+`needs: ["bootstrap"]` — the value it had while the code was still inside it.
+
+That makes the likely resolution the cheap one — `cat-harness` declares
+`needs: ["bootstrap", "bootstrap-tools"]` — rather than a code move. But it IS
+a ruling: `allowedFromNeeds` is what every direction verdict in the repository
+is computed from, so widening it is a statement about the layer graph, not a
+lint fix. **Left for the owner.**
+
+Worth noting for whoever takes it: `check:tools-closure` guards imports
+*leaving* `bootstrap-tools`, and this bean's gate guards edges between scanned
+instances. Neither guards `cat-harness → bootstrap-tools`, which is how 20
+imports sit between two gates that each look like they would have caught them.
