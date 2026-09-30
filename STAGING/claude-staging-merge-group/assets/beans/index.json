@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 476,
+      "count": 477,
       "unit": "beans"
     }
   },
@@ -144,7 +144,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T11:15:58Z",
-      "updatedAt": "2026-09-30T11:15:58Z",
+      "updatedAt": "2026-09-30T13:47:27Z",
       "preview": "`cat-harness/` imports **20 times** from `bootstrap-tools/`, an instance it does\n**not declare needing** — and **four separate checks all report clean.**\n\nFound 2026-09-30 while a sibling agent was planning the `adapters/` closure. It\nflagged the relation as *undetermined* and said it could not find what treats\nthe two as one layer; this bean is that question answered.\n\n## The declarations\n\n```\nca",
       "file": "beans/defs/folio-assistant-0lj4--undeclared-sibling-cat-harness-imports-20x-from-bo.md"
     },
@@ -5697,6 +5697,20 @@
       "updatedAt": "2026-09-19T08:55:36Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"need fixed\nand generated data sets skills\" and \"need generate data sets (e.g. fhir data\ntemplating system, etc) so need egneral processes and specialization for content\nttype, subprocess etc.\"\n\n## Two kinds, and they are not degrees of the same thing\n\n**Fixed** data is committed, reviewed, and cited. It is evidence: an SME looke",
       "file": "beans/defs/folio-assistant-vm6m--test-data-fixed-and-generated-data-sets-as-a-skill.md"
+    },
+    {
+      "id": "folio-assistant-vpek",
+      "title": "LINT POISONED BY AGENT WORKTREES: eslint.config.mjs does not ignore .claude/worktrees/**, so one worktree-isolated agent reports 3158 errors on an unrelated branch",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T13:53:15Z",
+      "updatedAt": "2026-09-30T13:53:15Z",
+      "preview": "`eslint.config.mjs`'s `ignores` does not cover `.claude/worktrees/**`. A\nworktree-isolated agent puts a **complete second checkout of this repository**\nthere, so `bun run lint` walks into it and reports thousands of errors that\nbelong to nobody's diff.\n\nMeasured 2026-09-30, on `claude/declare-bootstrap-tools-need`, a branch whose\nwhole diff is three lines of JSON:\n\n```\n✖ 3163 problems (3158 errors",
+      "file": "beans/defs/folio-assistant-vpek--lint-poisoned-by-agent-worktrees-eslintconfigmjs-d.md"
     },
     {
       "id": "folio-assistant-vq8o",
