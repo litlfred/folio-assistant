@@ -135,11 +135,13 @@ cd content && bun run pipeline/validate-tex.ts --json
 # backfilled with `:refterm[…]`.
 cd content && bun run validate <paper> --strict
 
-# Build the glossary index (committed) + LaTeX chapter (gitignored)
-cd content && bun run pipeline/build-glossary.ts <paper>
+# Build the glossary index (committed) + LaTeX chapter (gitignored).
+# The builder moved to the CONTENT layer on 2026-09-30 (bean `yj6r`); a folio
+# that vendors its own `content/pipeline/build-glossary.ts` still uses that copy.
+bun run folio-assistant-core/scripts/build-glossary.ts content/<paper>
 
 # CI gate: non-zero exit on duplicates or out-of-date glossary.json
-cd content && bun run pipeline/build-glossary.ts <paper> --check
+bun run folio-assistant-core/scripts/build-glossary.ts content/<paper> --check
 ```
 
 ## Post-rebase / merge: run the lean-ref migration first

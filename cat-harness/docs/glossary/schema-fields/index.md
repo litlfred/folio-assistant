@@ -9420,6 +9420,13 @@ StickyTextSchema.scale <span class="fa-gloss-status">candidate, extracted</span>
 <p>Multiply the words' size. `1` is normal; `0.8` fits more in.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/sticky-contribution.ts"><code>cat-harness/schemas/sticky-contribution.ts#StickyTextSchema.scale</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.subgraphcoverageschema.process" data-fa-state="extracted" data-fa-gloss="">
+SubgraphCoverageSchema.process <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The BPMN process that GOVERNS this directory — a diagram's basename, without `.bpmn`, as `document-ingestion`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.process</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.subgraphcoverageschema.serialisations" data-fa-state="extracted" data-fa-gloss="">
 SubgraphCoverageSchema.serialisations <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
