@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tqv4
 title: 'CENSUS SCOPE: root-scan-census is instance-scoped, so scripts moved up to core are counted nowhere — and its headline family reads 0 of 0 while the only instance of the shape sits outside it'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-30T10:28:50Z
-updated_at: 2026-09-30T10:28:50Z
+updated_at: 2026-09-30T13:50:29Z
 parent: folio-assistant-vke6
 ---
 
@@ -98,3 +98,5 @@ Whether `check-artifact-index.ts` should be made git-aware. The census reports
 and never fails (owner's ruling, 2026-09-27); this bean is about the
 measurement losing its subject, not about the subject. Fixing the script while
 the census still cannot see it would remove the evidence and leave the gap.
+
+_2026-09-30T13:50:29Z_ — Claimed by claude/magical-archimedes-4qkfxp-tqv4 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
