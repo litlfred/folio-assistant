@@ -7,7 +7,6 @@ description: >-
   to the person and writing durable artefacts, where the determination is
   recorded so a sibling session does not re-ask, and when to re-ask.
 capability: interaction
-package: folio-core
 ---
 
 # The language you communicate in
@@ -64,7 +63,7 @@ to say *"this pairing may be better served by something other than the
 corpus's language"* — it never selects one on its own.
 
 **Only `human-validated` entries are read at all.** `validatedLanguages()` in
-`schemas/model-registry.ts` returns nothing for `self-reported` or
+`bootstrap-tools/schemas/model-registry.ts` returns nothing for `self-reported` or
 `unverified`, because a model's own claim about which languages it handles
 well is a generated assertion about a generated system. `self-reported` is not
 a weaker `human-validated`; it is a different kind of claim.
@@ -135,5 +134,5 @@ indistinguishable from a real one.
   takes; this is the LANGUAGE it takes. Both are read from the same file.
 - [`translation-manager`](translation-manager.md) — the language of content,
   which this skill does not govern.
-- `schemas/model-registry.ts` — why a model's own word is not
+- `bootstrap-tools/schemas/model-registry.ts` — why a model's own word is not
   evidence.

@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
 title: Evidence for a recommendation
 nav_order: 8
 lang: en

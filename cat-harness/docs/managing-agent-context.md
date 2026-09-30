@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
 title: Managing agent context
 nav_order: 9
 lang: en
