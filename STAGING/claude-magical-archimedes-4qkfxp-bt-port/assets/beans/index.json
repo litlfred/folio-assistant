@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 463,
+      "count": 467,
       "unit": "beans"
     }
   },
@@ -457,6 +457,20 @@
       "updatedAt": "2026-09-30T10:16:57Z",
       "preview": "## What\n\n`mount-instance-docs.ts` mounts a directory when it carries an `index.html`\n**at its own root**, and then copies **everything beneath it**. For\n`who-iris/library/` that is 1,378 files, of which 11 are pages:\n\n| | count | what |\n|---|---|---|\n| pages | 11 | 7 `.html` (index, community-list, 2 collections, 3 items), 3 cover `.png`, `image-verdicts.json` |\n| L1 corpus | 1,367 | 813 `.jsonld`",
       "file": "beans/defs/folio-assistant-2b5s--mount-copies-a-directory-wholesale-who-iris-publis.md"
+    },
+    {
+      "id": "folio-assistant-2e39",
+      "title": "B9b (#1168): a BPMN lane is its own node; performedBy points at the registry role",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T11:21:30Z",
+      "preview": "Owner, 2026-09-30: Lane node. kg-export mints role/<lane name> per lane, so one role can get two nodes or merge by accident. Emit process/<p>/lane/<id> (type Lane) with bindsRole; performedBy goes to role/<roleRef>.\n\n## Done when\n- [ ] lanes exported as Lane nodes, not Role nodes\n- [ ] performedBy resolves to registry Role nodes, 0 dangling\n\n_2026-09-30T11:21:30Z_ — Claimed by claude/sharp-einstei",
+      "file": "beans/defs/folio-assistant-2e39--b9b-1168-a-bpmn-lane-is-its-own-node-performedby-p.md"
     },
     {
       "id": "folio-assistant-2j09",
@@ -1289,14 +1303,14 @@
     {
       "id": "folio-assistant-6pfo",
       "title": "Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T12:28:52Z",
-      "updatedAt": "2026-09-29T21:43:13Z",
+      "updatedAt": "2026-09-30T11:16:57Z",
       "preview": "Owner, 2026-09-19: *\"metadata on ghpages staging should be avalabale in KG\"*.\n\nQueued, not started — raised mid-turn while the preview cleanup was running,\nand the standing instruction is to queue rather than pivot.\n\n## The ask, as I read it\n\nEvery staging preview under `STAGING/<slug>` on `gh-pages` has facts attached\nto it: which branch it was built from, which commit, which pull request and\niss",
       "file": "beans/defs/folio-assistant-6pfo--staging-previews-on-gh-pages-carry-metadata-that-e.md"
     },
@@ -4755,6 +4769,20 @@
       "file": "beans/defs/folio-assistant-rnfl--phase-i-3-rename-content-to-folio-2408-occurrences.md"
     },
     {
+      "id": "folio-assistant-rogk",
+      "title": "B9a (#1168): alternatives are DERIVED — delete Tool.alternativeTo",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T11:00:04Z",
+      "preview": "Owner, 2026-09-30: \"why tools need alternativeTo? skills and tools are associated, the alternatives should be derivable\" — chose Derive + fix 3.\n\nRule: two Tools are alternatives iff they share a satisfied skill AND have the same full io signature (input name/schema/required, output name/schema) AND the same renders/maintains. Measured over 118 tools: 8 pairs, recovering all 5 declared (beans-cli/",
+      "file": "beans/defs/folio-assistant-rogk--b9a-1168-alternatives-are-derived-delete-toolalter.md"
+    },
+    {
       "id": "folio-assistant-rq8s",
       "title": "A SESSION BLOCKED ON THE OWNER IS INVISIBLE: four sessions held verbatim questions that only the session API could see, and nothing durable records one",
       "status": "todo",
@@ -6063,6 +6091,20 @@
       "file": "beans/defs/folio-assistant-xgd8--schema-visualiser-schemas-is-a-content-kind-with-n.md"
     },
     {
+      "id": "folio-assistant-xha9",
+      "title": "B9c (#1168): KgRef.kind is an enum of registered node kinds",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T10:54:25Z",
+      "preview": "Owner, 2026-09-30: Enum. KgRef.kind is a free string (todo.ts, carried-note.ts), so 'skil' parses. Build the enum from the graph-kind registry.\n\n## Done when\n- [ ] KgRefSchema.kind is an enum; every committed KgRef parses",
+      "file": "beans/defs/folio-assistant-xha9--b9c-1168-kgrefkind-is-an-enum-of-registered-node-k.md"
+    },
+    {
       "id": "folio-assistant-xies",
       "title": "PUBLISH TO CDN: editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE not the design",
       "status": "todo",
@@ -6481,6 +6523,20 @@
       "updatedAt": "2026-09-18T17:24:16Z",
       "preview": "## The ask\n\nOwner, in chat 2026-09-18, verbatim intent:\n\n> when we get to an MVP for agent-harness and folio-assist-core, create\n> the two repo as forks of folio-asst. then delete/modify the new repos\n> until we get to a state we can test under a new/empty repo \"bootstrap a\n> litlfred/folio-assistant here\"\n\nSo: **fork twice, subtract, then prove the result bootstraps from nothing.**\n\n## Why fork-a",
       "file": "beans/defs/folio-assistant-zmdo--split-bootstrap-agentic-harness-folio-assistant-co.md"
+    },
+    {
+      "id": "folio-assistant-zmm2",
+      "title": "B9d (#1168): rename voice source kgRef → path, skill front matter capability: → requiresCapability",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T10:54:25Z",
+      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected",
+      "file": "beans/defs/folio-assistant-zmm2--b9d-1168-rename-voice-source-kgref-path-skill-fron.md"
     },
     {
       "id": "folio-assistant-zru7",

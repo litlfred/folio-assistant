@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T11:18:39.921Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7b0d244e81c17a8634a7788fad1d4796378e4469",
-  "sourceCommitSha": "7b0d244e81c17a8634a7788fad1d4796378e4469",
-  "sourceCommitAt": "2026-09-30T11:14:37Z",
+  "generatedAt": "2026-09-30T11:28:49.194Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9f7f034fe277f69cb744d5e3d05ffedf261907da",
+  "sourceCommitSha": "9f7f034fe277f69cb744d5e3d05ffedf261907da",
+  "sourceCommitAt": "2026-09-30T11:25:26Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1174,7 +1174,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/covered-is-not-reachable.md",
-      "instructionLines": 273,
+      "instructionLines": 272,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2475,7 +2475,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 369,
+      "instructionLines": 382,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -39024,7 +39024,7 @@
         ],
         "outputs": [
           {
-            "name": "pages",
+            "name": "schemaReference",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/tool-types.schema.json#/$defs/RepoPath",
             "description": "The generated reference directory. Never hand-edited."
           }
@@ -39067,7 +39067,7 @@
         ],
         "outputs": [
           {
-            "name": "pages",
+            "name": "skillInstructions",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/tool-types.schema.json#/$defs/RepoPath",
             "description": "The generated instruction directory. Never hand-edited."
           }
@@ -40680,7 +40680,7 @@
         "inputs": [
           {
             "name": "file",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/tool-types.schema.json#/$defs/DelimitedTextPath",
             "description": "Path to the delimited text file.",
             "required": true
           }
@@ -40717,7 +40717,7 @@
         "inputs": [
           {
             "name": "file",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/tool-types.schema.json#/$defs/WorkbookPath",
             "description": "Path to the workbook.",
             "required": true
           }

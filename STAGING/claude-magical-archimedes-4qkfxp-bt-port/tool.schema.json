@@ -191,14 +191,6 @@
             "description": "A skill name, e.g. todo-manager"
           }
         },
-        "alternativeTo": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "^[a-z][a-z0-9-]*$"
-          }
-        },
         "selection": {
           "type": "object",
           "properties": {
@@ -289,8 +281,8 @@
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-bt-port",
-    "sha": "bed68de736432cd8aacdae511632517051ba639e",
+    "sha": "4b674a99ee69b53b7e40e8601daf080e59759cfc",
     "pr": "1553/merge",
-    "run": "36707474744"
+    "run": "36708581393"
   }
 }
