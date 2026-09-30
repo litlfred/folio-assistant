@@ -1,0 +1,177 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2504.21474v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2504.21474v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-000-introduction.md",
+      "narrative": null,
+      "content": "Libraries are the heart of every society and a cor-\nnerstone of education, serving as repositories of\nhuman knowledge and cultural heritage. As infor-\nmation landscapes evolve, these institutions must\nadapt to the growing volume and complexity of\ndigital resources. Therefore, technological innova-\ntion in both traditional libraries and modern digital\nlibrary systems is essential to optimize workflows,\nenhance accessibility, and improve resource orga-\nnization. With the rapid advancement of artificial\nintelligence (AI), particularly through Large Lan-\nguage Models (LLMs) (Chang et al., 2024), t",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.21474v1/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "Homa at SemEval-2025 Task 5: Aligning Librarian Records with\nOntoAligner for Subject Tagging\nHadi Bayrami Asl Tekanlou1, Jafar Razmara1, Mahsa Sanaei1,\nMostafa Rahgouy2, Hamed Babaei Giglou3\n1University of Tabriz, Tabriz, Iran\nh.bayrami1403@ms.tabrizu.ac.ir,razmara@tabrizu.ac.ir,mahsa.san75@gmail.com\n2Auburn University, Alabama, USA\nmzr0108@auburn.edu\n3TIB - Leibniz Information Centre for Science and Technology, Hannover, Germany\nhamed.babaei@tib.eu\nAbstract\nThis paper presents our system, Homa, for\nSemEval-2025 Task 5: Subject Tagging, which\nfocuses on automatically assigning subject la-\nbels",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.21474v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Dataset",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-001-dataset.md",
+      "narrative": null,
+      "content": "into the input data structure of OntoAligner and\nused the retrieval-augmented generation (RAG)\ntechnique to assess the OntoAligner capability in\ndownstream tasks such as subject tagging. The ex-\nperimental setting in this work plays a case study\nto analyze OntoAligner behavior toward how much\nit can be flexible and accurate for subject indexing\nand what are the bottlenecks.\n2",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.21474v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Work",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-related-work.md",
+      "narrative": null,
+      "content": "Subject indexing in library systems has evolved to\nbalance precision and adaptability, incorporating\ncontrolled vocabularies, social tagging, ontology-\nbased indexing, and hybrid approaches. Controlled\nvocabularies, such as the Library of Congress Sub-\nject Headings (LCSH), provide structured access to\nresources but require substantial intellectual effort\nto maintain consistency (Ni, 2010). While LCSH\nhas expanded through cooperative contributions, it\nfaces criticism for outdated terminology and lim-\nited flexibility (Pirmann, 2012). Social tagging,\nintroduced with Web 2.0, allows users to gen",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.21474v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Methodology",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-003-methodology.md",
+      "narrative": null,
+      "content": "In this study, we employ the OntoAligner li-\nbrary (Giglou et al., 2025b,a; Babaei Giglou et al.,\n2025) – a Retrieval-Augmented Generation (RAG)\npipeline – to align technical records from the\nTIBKAT for Subject Indexing tasks. This task in-\nvolves generating relevant subject suggestions that\naccurately reflect the content of a given technical\nrecord. The RAG pipeline is designed to handle\nmultilingual, hierarchical data, ensuring that meta-\ndata and semantic relationships within the records\nare preserved for efficient retrieval. Our proposed\nmethodology consists of two main components: 1)",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.21474v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "OntoAligner Pipeline",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-ontoaligner-pipeline.md",
+      "narrative": null,
+      "content": "3.1\nOntoAligner Pipeline\n1) Data Representation. To align the technical\nrecords with the target subjects, we explore multi-\nple levels of information from the records for rep-\nresentation of input data: 1) Title-based Represen-\ntation: We start by using the titles of the technical\nrecords, capturing the most concise representation\nof the content. 2) Contextual Representation: We\nenhance the alignment by incorporating additional\nmetadata, such as abstracts and descriptions, pro-\nviding deeper context for each record. 3) Hierarchi-\ncal Representation: For records with hierarchical\nrelationships,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.21474v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 3,
+      "pageEnd": 5,
+      "target": "../sections/sec-005-results.md",
+      "narrative": null,
+      "content": "TIB-Core\n2.84\n20.30\n4.66\nQualitative Results\nCase 1\n22.99\n27.20\n23.54\nCase 2\n14.02\n23.39\n16.33\nTable 2: Quantitative and Qualitative results on TIB-\nCore-Subjects sets. The averaged metrics are reported.\nthe model to improve retrieval performance.\nSupervised Fine-Tuning of LLM. We followed\na similar process as the retriever model fine-\ntuning, constructing the fine-tuning dataset with\na limit of 200 pairs per record.\nThis resulted\nin a total of 12,348 samples for supervised fine-\ntuning (SFT). Later, we fine-tuned a Qwen2.5-\n0.5B-Instruct LLM using QLoRA-based (Dettmers\net al., 2023) SFT to ad",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.21474v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Qualitative Results",
+      "pageStart": 5,
+      "pageEnd": 5,
+      "target": "../sections/sec-006-qualitative-results.md",
+      "narrative": null,
+      "content": "Figure 3 (combination of train and dev sets) indi-\ncates that the average number of records typically\nfalls between 0 and 20 with mostly having an upper\nquartile Q3 of 5. This explains why the results for\ntop-k values within this range vary according to\nthe recall@k in Figure 2 for most participants.\nSystem Performance Against Other Teams. The\nFigure 2 illustrates our system’s performance com-\npared to other teams across different top-k values.\nWhile precision differences are marginal, indicat-\ning similar ranking effectiveness among top mod-\nels, the F1 trends show a balance between precision",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.21474v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Limitation and Conclusion",
+      "pageStart": 5,
+      "pageEnd": 7,
+      "target": "../sections/sec-007-limitation-and-conclusion.md",
+      "narrative": null,
+      "content": "The quantitative evaluation results in Table 2 indi-\ncate that, despite achieving a strong average recall\nof 20.30%, the model struggles with low preci-\nsion. The low precision suggests that the system re-\ntrieves a broad set of candidate subjects, but many\nare not relevant. However, this is also evident in\nqualitative results for case-2 where the precision\ndidn’t reach the same level as recall. This limita-\ntion likely stems from the small fine-tuning dataset,\nsuggesting that further fine-tuning could enhance\nperformance, particularly for smaller LLMs. Ad-\nditionally, OntoAligner’s flexibilit",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
