@@ -1098,6 +1098,21 @@ function linkPlatform(
     }
   }
 
+  if (!enclosing) {
+    const seed = seedMainIfEmpty(root, o.slug);
+    if (seed.kind === "seeded") {
+      result.notes.push(
+        `The repository was empty, so main was seeded with one empty commit${seed.pushed ? " and pushed" : ""}, ` +
+        `and this scaffold is on branch '${seed.branch}'. Commit it there and open a pull request against main.`,
+      );
+    } else if (seed.kind === "no-main") {
+      result.notes.push(`This repository has commits but no 'main' (on '${seed.current}'). Not seeded — that would give it a second root.`);
+    } else if (seed.kind === "stopped") {
+      result.notes.push(`Stopped before linking the platform: ${seed.reason}.`);
+      return;
+    }
+  }
+
   if (o.link === "sibling") {
     result.notes.push(
       `Linked as a sibling checkout at '${assistant}' — nothing to add to version control. ` +
@@ -1125,6 +1140,81 @@ function linkPlatform(
       `Run it yourself: git submodule add ${FOLIO_ASSISTANT_REPO} ${assistant}`,
     );
   }
+}
+
+/**
+ * What {@link seedMainIfEmpty} found, and what it did about it.
+ *
+ * - `seeded` — the repository had no commits; `main` now holds one empty seed
+ *   commit (pushed where a remote exists) and the scaffold sits on `branch`.
+ * - `has-main` — ordinary repository; nothing to do.
+ * - `no-main` — commits exist but no `main`. Reported, NEVER seeded over: a
+ *   repository with history on `master` is a different case, and a seed commit
+ *   would give it two unrelated roots.
+ * - `stopped` — could not seed safely; `reason` says why and nothing past the
+ *   check was done.
+ */
+export type SeedOutcome =
+  | { kind: "seeded"; branch: string; pushed: boolean }
+  | { kind: "has-main" }
+  | { kind: "no-main"; current: string }
+  | { kind: "stopped"; reason: string };
+
+function git(root: string, args: string[], timeout = 60_000) {
+  const r = spawnSync("git", args, { cwd: root, stdio: "pipe", timeout });
+  return { ok: r.status === 0, out: r.stdout?.toString().trim() ?? "", err: r.stderr?.toString().trim() ?? "" };
+}
+
+/**
+ * On an EMPTY repository, make `main` real before bootstrapping onto it.
+ *
+ * Bean `izqr`, owner 2026-09-22: *"when bootstrap initializes, if repo is
+ * empty, it should seed main then bootstrap"*. A repository with no commits
+ * has no base for a feature branch, no target for a PR, and nothing for
+ * staging, `id-stable` or a ChangeSet to diff against — so a bootstrap onto it
+ * either fails at the first `git switch -c`, or becomes the root of `main`
+ * itself and is never reviewable. Seeding first makes the bootstrap an
+ * ordinary branch, and so an ordinary PR.
+ *
+ * **The seed is an EMPTY commit.** The least that makes `main` real, and it
+ * holds nothing a bootstrap would then have to overwrite — a README or
+ * `.gitignore` stub would be exactly that.
+ *
+ * **A remote is asked before anything is written.** A remote that already has
+ * branches means the local repository is empty only because nothing was
+ * fetched; seeding would fork history. A remote that cannot be asked is could
+ * not determine, and stops rather than guesses. A seed that cannot be pushed
+ * stops too: the owner's rule is never to bootstrap onto an orphan branch.
+ */
+export function seedMainIfEmpty(root: string, slug: string): SeedOutcome {
+  const head = git(root, ["rev-parse", "--verify", "--quiet", "HEAD"]);
+  if (head.ok) {
+    if (git(root, ["show-ref", "--verify", "--quiet", "refs/heads/main"]).ok) return { kind: "has-main" };
+    const current = git(root, ["symbolic-ref", "--short", "--quiet", "HEAD"]).out || "(detached)";
+    return { kind: "no-main", current };
+  }
+
+  const hasOrigin = git(root, ["remote"]).out.split(/\s+/).includes("origin");
+  if (hasOrigin) {
+    const heads = git(root, ["ls-remote", "--heads", "origin"]);
+    if (!heads.ok) return { kind: "stopped", reason: `could not ask the remote whether it is empty (${heads.err.slice(0, 200) || "no output"}) — not seeding over history nobody checked` };
+    if (heads.out !== "") return { kind: "stopped", reason: "the remote already has branches — this checkout is empty only because nothing was fetched; fetch and check out its default branch instead of seeding" };
+  }
+
+  if (!git(root, ["symbolic-ref", "HEAD", "refs/heads/main"]).ok) return { kind: "stopped", reason: "could not point HEAD at main" };
+  const seed = git(root, ["-c", "commit.gpgsign=false", "commit", "--allow-empty", "--quiet", "-m", "Seed main"]);
+  if (!seed.ok) return { kind: "stopped", reason: `the seed commit failed (${seed.err.slice(0, 200) || "unknown error"}) — often an unset user.name / user.email` };
+
+  let pushed = false;
+  if (hasOrigin) {
+    const push = git(root, ["push", "--quiet", "-u", "origin", "main"], 120_000);
+    if (!push.ok) return { kind: "stopped", reason: `main was seeded locally but could not be pushed (${push.err.slice(0, 200) || "unknown error"}) — not bootstrapping onto a branch whose base the remote lacks` };
+    pushed = true;
+  }
+
+  const branch = `bootstrap/${slug}`;
+  if (!git(root, ["switch", "--quiet", "-c", branch]).ok) return { kind: "stopped", reason: `main was seeded but branch '${branch}' could not be created` };
+  return { kind: "seeded", branch, pushed };
 }
 
 /** Render a result as the report a human or an agent reads. */
