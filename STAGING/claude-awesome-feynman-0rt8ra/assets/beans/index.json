@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 467,
+      "count": 473,
       "unit": "beans"
     }
   },
@@ -67,14 +67,14 @@
     {
       "id": "folio-assistant-0fua",
       "title": "Long flat lists with no search or filter",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:14Z",
-      "updatedAt": "2026-09-23T10:36:14Z",
+      "updatedAt": "2026-09-30T12:08:24Z",
       "preview": "Pages of 46 to 240+ rows are one flat list with no search, filter or grouping, so finding an entry means scrolling tens of thousands of pixels on a phone. Add a filter and grouping in the shared list component.\n\nObserved on: `glossary`, `processes`, `skills-index`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Re",
       "file": "beans/defs/folio-assistant-0fua--long-flat-lists-with-no-search-or-filter.md"
     },
@@ -1595,6 +1595,20 @@
       "file": "beans/defs/folio-assistant-81t5--tool-813-ingest-extract-structure-document-ingesti.md"
     },
     {
+      "id": "folio-assistant-81tw",
+      "title": "BOOTSTRAP-TOOLS STAGED AGAIN: the tools that render and validate bootstrap/ leave cat-harness, toward litlfred/bootstrap-tools",
+      "status": "scrapped",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T23:13:27Z",
+      "updatedAt": "2026-09-30T08:46:25Z",
+      "preview": "**Owner, 2026-09-29:** *\"we will https://github.com/litlfred/bootstrap-tools use this for the tools that render bootstrap/ but were put in cat-harness. for now create dir bootstrap-tools/ for staging split out into repo. make sure IRIs updated\"* — then, choosing scope: *\"1 2 ... need Zod usage in bootstrap tools as part of validation in rendering pipeline. will also need SEMVER skills in bootstrap",
+      "file": "beans/defs/folio-assistant-81tw--bootstrap-tools-staged-again-the-tools-that-render.md"
+    },
+    {
       "id": "folio-assistant-81vy",
       "title": "DEPLOYMENT AWARENESS: the agent must know its UI surface — gh-pages, local server, MCP or chat-only — because it decides which tools apply",
       "status": "todo",
@@ -1845,6 +1859,20 @@
       "updatedAt": "2026-09-23T10:36:14Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/folio/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **Horizontal scroll at phone width.** At 390 px the document is 769 px wide (`scrollWidth` 769). The node table's *declared in*, *links* and *prose* columns start",
       "file": "beans/defs/folio-assistant-9scf--folio-visualiser-5-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-9umr",
+      "title": "Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)",
+      "status": "todo",
+      "type": "epic",
+      "priority": "",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:12:08Z",
+      "updatedAt": "2026-09-30T08:12:08Z",
+      "preview": "Owner 2026-09-29: 'declared sub-graphs of cat-harness based on semantic concern (see sibling work on bootstrap definitions as named subset). dont need a separate facet. built into location.' Ruled 2026-09-30: **eight groups, KG + library move first**.\n\nA Subgraph is bootstrap's term (cat-harness/schemas/graph.ts): 'a named subset of Node Instances: a Declaration's directory entry, with its id, its",
+      "file": "beans/defs/folio-assistant-9umr--concern-subgraphs-cat-harness-skills-live-in-one-d.md"
     },
     {
       "id": "folio-assistant-9v4m",
@@ -3011,6 +3039,20 @@
       "file": "beans/defs/folio-assistant-gw8h--a-scripts-cat-harnessscripts-rewrite-doubled-six-h.md"
     },
     {
+      "id": "folio-assistant-gyoj",
+      "title": "Library viewer omits 3 of folio-assistant-sci's 4 library items",
+      "status": "scrapped",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T09:08:04Z",
+      "updatedAt": "2026-09-30T10:22:02Z",
+      "preview": "Measured 2026-09-30 while linking methodology sources (bean qgjh). folio-assistant-sci/library/ holds four complete items — arxiv-2406.01940v2, arxiv-2601.22554v1, arxiv-2602.16554v1, milnorlink — each with manifest.jsonld and structure.json. The library projection (cat-harness/docs/assets/library/index.json, written by gen-library-viz.ts) lists only milnorlink for that instance, and its tile says",
+      "file": "beans/defs/folio-assistant-gyoj--library-viewer-omits-3-of-folio-assistant-scis-4-l.md"
+    },
+    {
       "id": "folio-assistant-h1wq",
       "title": "JUDGE the four typed-only kinds: health, todos, interaction, issue-marks",
       "status": "completed",
@@ -3279,14 +3321,14 @@
     {
       "id": "folio-assistant-j6t3",
       "title": "INSTALL SKILLS AS TOOLS AT RENDER TIME: 34 skills declare user_invocable, 4 are reachable — options for Claude Code, Antigravity and any MCP host",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:42:35Z",
-      "updatedAt": "2026-09-30T08:27:11Z",
+      "updatedAt": "2026-09-30T11:02:04Z",
       "preview": "## What — the owner's ask, verbatim\n\n2026-09-21:\n\n> bean: develop otpions onhow could we \"install\" i guess at render time new\n> skills to antigravity, caludecode as tools to improve discussion clairty\n> between huamn and agent in dicsussion\n>\n> (e.g. so /coordinate work and /prepare-merge,  different model -> diffent\n> tools)\n\n## The gap, MEASURED rather than argued\n\n| | count |\n|---|---|\n| skills",
       "file": "beans/defs/folio-assistant-j6t3--install-skills-as-tools-at-render-time-34-skills-d.md"
     },
@@ -3601,6 +3643,20 @@
       "file": "beans/defs/folio-assistant-kx0p--catalogue-visualiser-6-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-l9d5",
+      "title": "BOOTSTRAP-TOOLS PORT: contract-semver skill + Zod validate step from #1514 onto main's bootstrap-tools",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-xsqm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:46:09Z",
+      "updatedAt": "2026-09-30T08:46:09Z",
+      "preview": "**Owner, 2026-09-30 (\"Port 2 pieces\"):** PR #1514 (bean `81tw`) was overtaken by `xsqm` (PRs #1516, #1537), which re-created `bootstrap-tools/` on main with a zod-only import cone. Port ONLY the two pieces unique to #1514 onto main's existing `bootstrap-tools/`, adapted to its layout — nothing main already has is re-created.\n\n1. **Bootstrap contract semver** — skill `bootstrap-contract-semver` (wi",
+      "file": "beans/defs/folio-assistant-l9d5--bootstrap-tools-port-contract-semver-skill-zod-val.md"
+    },
+    {
       "id": "folio-assistant-lfxa",
       "title": "QA: write the proof-no-placeholder-stub checker (and drop the QOU literal from its description)",
       "status": "todo",
@@ -3797,6 +3853,20 @@
       "updatedAt": "2026-09-24T06:32:51Z",
       "preview": "The residue `cflw` named and said *\"wants its own bean\"*. This is it, with the\nnumber re-derived rather than inherited.\n\n## Measured 2026-09-23, with `cflw`'s own probe\n\nAppend one comment line to `scripts/kg-audit.ts`, then:\n\n| run | files changed |\n|---|---|\n| `bun run kg:audit` alone | **2** — the probe itself, and `skills/kg-qa.manifest.json` |\n| `bun run regen` (43 verify/write pairs) | **2**",
       "file": "beans/defs/folio-assistant-mcdj--the-20-kg-witnesses-each-copy-the-auditor-hash-the.md"
+    },
+    {
+      "id": "folio-assistant-mdn6",
+      "title": "bun test re-stamps two proof script sidecars, so gates reports the tree changed",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T00:40:34Z",
+      "updatedAt": "2026-09-30T00:40:34Z",
+      "preview": "Measured 2026-09-30 on origin/main 0d2ec884c (worktree for g9r2): every gate passed, then gates.ts failed the run because `bun test` wrote `cat-harness/content/pipeline/script-sidecars/proof-compile-cost.script.json` and `proof-no-cost-regression.script.json`. The diff: `source_file` now reads `folio-assistant-sci/content/pipeline/qa-checkers-cost.ts` (the checker moved there), and `last_run_at`/`",
+      "file": "beans/defs/folio-assistant-mdn6--bun-test-re-stamps-two-proof-script-sidecars-so-ga.md"
     },
     {
       "id": "folio-assistant-mi97",
@@ -4799,7 +4869,7 @@
     {
       "id": "folio-assistant-rtuo",
       "title": "State tags and badges fail colour contrast on the dark theme",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-4ccr",
@@ -5482,7 +5552,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:43:50Z",
-      "updatedAt": "2026-09-30T11:02:54Z",
+      "updatedAt": "2026-09-30T11:02:57Z",
       "preview": "Owner, 2026-09-30, answering the GOAL 3 goal review: keep GOAL 3 **open**, and theme the harness itself. The goal's words are *\"showing who-iris w/ existing materialized assets with themed harness\"*, and the owner reads \"themed harness\" as more than the pages.\n\n## What is true today (measured 2026-09-30)\n- The who-iris **pages** (`/who-iris/`, generated by `who-iris/scripts/gen-iris-pages.ts`) ren",
       "file": "beans/defs/folio-assistant-v8n5--harness-theming-the-who-iris-board-tile-navbar-and.md"
     },
@@ -5697,6 +5767,20 @@
       "updatedAt": "2026-09-23T19:45:00Z",
       "preview": "## What this is\n\nStream 3 of 3 in the 2026-09-22 consolidation (see the sibling claims under\n`vuip` and `p5wm`). It owns **GOAL 3 (`yg29`) — 15 open beans**: showing who-iris\nwith its existing materialised assets, through a themed harness.\n\nSmallest of the three streams by bean count, and the one carrying the largest\nsingle pull request in the repository.\n\n## What this stream owns\n\n**Beans** — `yg",
       "file": "beans/defs/folio-assistant-w0cr--stream-33-goal-3-who-iris-through-a-themed-harness.md"
+    },
+    {
+      "id": "folio-assistant-w2gr",
+      "title": "cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:12:08Z",
+      "updatedAt": "2026-09-30T08:12:08Z",
+      "preview": "Owner 2026-09-29/30: 'i want to split out cat-harness-tools too https://github.com/litlfred/cat-harness-tools' — 'see sibling work' (#1514, bootstrap-tools, bean 81tw). Direction ruled 2026-09-30: **tools depend on the harness** — cat-harness never imports the new instance.\n\nMeasured 2026-09-30: litlfred/cat-harness-tools is EMPTY (no commits). In scope: cat-harness/tools/ (8 files: discover, inde",
+      "file": "beans/defs/folio-assistant-w2gr--cat-harness-tools-split-the-mcp-server-and-tool-im.md"
     },
     {
       "id": "folio-assistant-w5h0",
@@ -6184,7 +6268,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T23:42:57Z",
-      "updatedAt": "2026-09-29T23:42:57Z",
+      "updatedAt": "2026-09-30T08:46:25Z",
       "preview": "Owner rulings, 2026-09-29 (answers to the separation analysis, Q7/Q1/Q10/Q5):\n\n- **Zod moves DOWN into bootstrap-tools** — reverses `319n`'s placement. Across repos, Zod in cat-harness makes a bootstrap release depend on cat-harness, which depends on bootstrap. bootstrap still knows no zod (`etg1`).\n- **bootstrap-tools owns content checks AND the README/SVG writers** (options 1+2), not a whole har",
       "file": "beans/defs/folio-assistant-xsqm--bootstrap-tools-re-create-as-a-sibling-instance-zo.md"
     },
