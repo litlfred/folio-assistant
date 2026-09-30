@@ -1,8 +1,10 @@
 {
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
-    "dcterms": "http://purl.org/dc/terms/"
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities",
@@ -6029,6 +6031,346 @@
       ],
       "skos:notation": "Task_Check",
       "dcterms:source": "cat-harness/processes/jsonld-drift-check.bpmn#Task_Check",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_authorise",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "9 · Authorise the extraction"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A repository cut changes the substrate every other process binds to; that is a person's decision. Declining leaves the graph declared, detangled, isolated and split in place."
+        }
+      ],
+      "skos:notation": "Task_Authorise",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Authorise",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_brief",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Brief, and claim the bean"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What is separating and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. Claim the bean so a sibling session sees the work."
+        }
+      ],
+      "skos:notation": "Task_Brief",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Brief",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_consume",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "11 · Parent consumes, additively"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The parent pins the pair (a commit while staging, a version once released), repoints its imports, and keeps its own copy until it is green with the dependency declared."
+        }
+      ],
+      "skos:notation": "Task_Consume",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Consume",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_create",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Create the repositories"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The owner creates the content and tools repositories and their Pages. Nothing is committed to them before this."
+        }
+      ],
+      "skos:notation": "Task_Create",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Create",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_cutover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "13 · Cutover: delete the parent's copy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences."
+        }
+      ],
+      "skos:notation": "Task_Cutover",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Cutover",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_decide",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Separate this graph?"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The owner decides from the measured signals, and also decides the address base for its identifiers, where verdicts about it live, and what its tools repository owns. Declining is a real outcome: the graph stays where it is."
+        }
+      ],
+      "skos:notation": "Task_Decide",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Decide",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_detangle",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "1–3 · Declare, detangle, isolate"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The graph-detanglement practice, all of its gates: declared in place, zero wrong-direction edges on every axis, and standing alone with its own declaration, namespace and artefact. A plain task on purpose, not a call to graph-detanglement.bpmn: that process ends in its own authorise-and-extract steps, which here are stages 9-13 of this one, and calling it would run them twice."
+        }
+      ],
+      "skos:notation": "Task_Detangle",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Detangle",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_hosted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "5 · Move harness output about it to the host"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "QA verdicts, translation templates, the exported graph and the glossary ledger are harness output ABOUT the graph: they live with the harness (kgQaHomeFor, translationsHomeFor). The content keeps only what its own checks need; the leak test's pending list is empty."
+        }
+      ],
+      "skos:notation": "Task_Hosted",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Hosted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_identity",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "4 · Identity: version, iriBase, nodeSchemas"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declaration carries name, version, iriBase, needs and nodeSchemas. A base move is `bun run iri:sync -- --from <old base>`, once; then `iri:sync:check` and `check:node-iris` are green."
+        }
+      ],
+      "skos:notation": "Task_Identity",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Identity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_measure",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Measure the signals"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Files and bytes per instance, clone cost (`bun run health`), gate time, merge contention, the candidate's cohesion and cut (`kg:detangle`), wrong-direction edges, and the would-be tools package's import cone. Recorded in the bean; none alone is a trigger."
+        }
+      ],
+      "skos:notation": "Task_Measure",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Measure",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_plan",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "7 · Plan publication"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every identifier the content mints is a file some step publishes: /<version>/ for what programs read, kept for every version; /v<major>/ for pages people read. Name collisions between published files are resolved here."
+        }
+      ],
+      "skos:notation": "Task_Plan",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Plan",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_propose",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report what moves — sizes, what breaks"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The agent reports and waits: what moves, how large, what in the parent breaks, and the rollback. It never relocates a durable artefact on its own initiative."
+        }
+      ],
+      "skos:notation": "Task_Propose",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Propose",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_rehearse",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "8 · Rehearse standalone"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Copy the content and the tools alone into a temporary directory, with nothing else on the path, and run the tools' checks there. An empty tree must exit non-zero, so a rehearsal over nothing cannot pass."
+        }
+      ],
+      "skos:notation": "Task_Rehearse",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Rehearse",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_release",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "12 · First release"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tag each repository, publish /<version>/ and /v<major>/. From here the two are versioned independently; a tools release lists the content majors it supports."
+        }
+      ],
+      "skos:notation": "Task_Release",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Release",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_seed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "10 · Seed both repositories"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Seed main, then bring the content and the tools in as reviewed pull requests with their history, so neither repository's first commit is unreviewable."
+        }
+      ],
+      "skos:notation": "Task_Seed",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Seed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_split",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "6 · Split content from tools"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Create <name>-tools as a sibling directory and move the code: the Zod source, the generators, the README and diagram writers, the content checks. Cut its import cone to its own files and declared packages. Both start at the content's version."
+        }
+      ],
+      "skos:notation": "Task_Split",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Split",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities/process_kgseparation.task_verify",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Every identifier dereferences"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "After the release is live, every published identifier resolves to the file it names."
+        }
+      ],
+      "skos:notation": "Task_Verify",
+      "dcterms:source": "cat-harness/processes/kg-separation.bpmn#Task_Verify",
       "skos:note": "candidate"
     },
     {

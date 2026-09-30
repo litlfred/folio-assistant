@@ -1,0 +1,621 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "sampleimport--xlg2-wpro-trial-original",
+  "processId": "Process_SampleImport",
+  "source": "cat-harness/processes/sample-import.bpmn",
+  "subject": "xlg2-wpro-trial-original",
+  "bean": "folio-assistant-xlg2",
+  "tokens": [],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-09-29T23:25:38.811Z",
+      "node": "StartEvent_Proposed",
+      "note": "instance started"
+    },
+    {
+      "at": "2026-09-29T23:25:39.648Z",
+      "node": "Task_Scope",
+      "actor": "claude",
+      "note": "WHICH ITEMS: item/18892cf3-5a4f-42a4-923c-a93f4a594dec (\"Publication and information products style guide\"). WHICH STORE: who-iris/catalogue — folio-catalogue-node/v1 nodes with folio-dublin-core/v1 records. PERMANENT: no — a TRIAL (owner, 2026-09-29: \"WPRO as a trial\"); it lands in fsh-guts/ and library/ is untouched.",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "user",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "sampleimport--xlg2-wpro-trial-original#1",
+        "prov:startedAtTime": "2026-09-29T23:25:39.648Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "user",
+          "prov:hadPlan": "sample-import#Task_Scope"
+        },
+        "prov:used": [
+          "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-09-29T23:25:47.392Z",
+      "node": "Call_Materialize",
+      "actor": "claude",
+      "note": "subprocess Process_MaterializeRemote completed"
+    },
+    {
+      "at": "2026-09-29T23:25:48.017Z",
+      "node": "Gateway_Materialized",
+      "outcome": "yes",
+      "actor": "claude",
+      "note": "materialize-remote completed; the sample's bytes are present and their fixity verified",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "ingestion-agent",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "sampleimport--xlg2-wpro-trial-original#3",
+        "prov:startedAtTime": "2026-09-29T23:25:48.017Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "ingestion-agent",
+          "prov:hadPlan": "sample-import#Gateway_Materialized"
+        },
+        "prov:used": [
+          "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-09-29T23:25:48.601Z",
+      "node": "Gateway_Permanent",
+      "outcome": "trial",
+      "actor": "claude",
+      "note": "trial, per the scope",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "ingestion-agent",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "sampleimport--xlg2-wpro-trial-original#4",
+        "prov:startedAtTime": "2026-09-29T23:25:48.601Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "ingestion-agent",
+          "prov:hadPlan": "sample-import#Gateway_Permanent"
+        },
+        "prov:used": [
+          "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-09-29T23:25:49.168Z",
+      "node": "Task_Trial",
+      "actor": "claude",
+      "note": "landed as a trial at fsh-guts/samples/xlg2-wpro-trial-original.md (folio-fsh-guts/v1, kind sample-import-trial); library/ untouched",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "ingestion-agent",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "sampleimport--xlg2-wpro-trial-original#5",
+        "prov:startedAtTime": "2026-09-29T23:25:49.168Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "ingestion-agent",
+          "prov:hadPlan": "sample-import#Task_Trial"
+        },
+        "prov:used": [
+          "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-09-29T23:25:49.813Z",
+      "node": "Task_ImportTest",
+      "actor": "claude",
+      "note": "count: pass (1 of 1 requested item(s) are nodes in the store; item/18892cf3-5a4f-42a4-923c-a93f4a594dec: 2 bitstream(s)) · identifiers: pass (item/18892cf3-5a4f-42a4-923c-a93f4a594dec: upstream https://iris.who.int/handle/10665/332098 is among dc.identifier.uri) · structure: pass (item/18892cf3-5a4f-42a4-923c-a93f4a594dec: node validates; item/18892cf3-5a4f-42a4-923c-a93f4a594dec: record validates) · provenance: pass (item/18892cf3-5a4f-42a4-923c-a93f4a594dec WPR-RDO-2020-003-eng.pdf: upstream; sha256 re-computed matches; item/18892cf3-5a4f-42a4-923c-a93f4a594dec wpr-rdo-2020-003-eng-cover.png: local; sha256 re-computed matches)",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "ingestion-agent",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "sampleimport--xlg2-wpro-trial-original#6",
+        "prov:startedAtTime": "2026-09-29T23:25:49.813Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "ingestion-agent",
+          "prov:hadPlan": "sample-import#Task_ImportTest"
+        },
+        "prov:used": [
+          "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-09-29T23:25:50.394Z",
+      "node": "Gateway_Passed",
+      "outcome": "yes",
+      "actor": "claude",
+      "note": "all four checks passed",
+      "authz": {
+        "allowed": true,
+        "mode": "strict",
+        "authenticatedBy": "github",
+        "actor": "owner",
+        "account": "litlfred",
+        "role": "ingestion-agent",
+        "assignment": "unconstrained",
+        "authorized": "permit",
+        "access": "permit",
+        "findings": []
+      },
+      "prov": {
+        "@type": "prov:Activity",
+        "@id": "sampleimport--xlg2-wpro-trial-original#7",
+        "prov:startedAtTime": "2026-09-29T23:25:50.394Z",
+        "prov:qualifiedAssociation": {
+          "prov:agent": "owner",
+          "prov:hadRole": "ingestion-agent",
+          "prov:hadPlan": "sample-import#Gateway_Passed"
+        },
+        "prov:used": [
+          "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+        ],
+        "cat-harness:underPolicy": [
+          "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+          "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+        ]
+      }
+    },
+    {
+      "at": "2026-09-29T23:25:50.396Z",
+      "node": "EndEvent_Imported",
+      "note": "end event reached"
+    }
+  ],
+  "status": "completed",
+  "startedAt": "2026-09-29T23:25:38.811Z",
+  "updatedAt": "2026-09-29T23:25:50.396Z",
+  "children": {
+    "Call_Materialize": {
+      "id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize",
+      "processId": "Process_MaterializeRemote",
+      "source": "cat-harness/processes/materialize-remote.bpmn",
+      "subject": "xlg2-wpro-trial-original",
+      "bean": "folio-assistant-xlg2",
+      "tokens": [],
+      "arrivals": {},
+      "history": [
+        {
+          "at": "2026-09-29T23:25:39.650Z",
+          "node": "StartEvent_Asked",
+          "note": "instance started"
+        },
+        {
+          "at": "2026-09-29T23:25:40.300Z",
+          "node": "Task_Purpose",
+          "actor": "claude",
+          "note": "working — a trial of the import, not an archival copy.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "user",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#1",
+            "prov:startedAtTime": "2026-09-29T23:25:40.300Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "user",
+              "prov:hadPlan": "materialize-remote#Task_Purpose"
+            },
+            "prov:used": [
+              "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-09-29T23:25:41.897Z",
+          "node": "Task_Enumerate",
+          "actor": "claude",
+          "note": "2 bitstream(s) in the item; SUBSET to bundle(s) ORIGINAL: WPR-RDO-2020-003-eng.pdf (ORIGINAL, 2810648 bytes).",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "ingestion-agent",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#2",
+            "prov:startedAtTime": "2026-09-29T23:25:41.897Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "ingestion-agent",
+              "prov:hadPlan": "materialize-remote#Task_Enumerate"
+            },
+            "prov:used": [
+              "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-09-29T23:25:42.450Z",
+          "node": "Task_Size",
+          "actor": "claude",
+          "note": "READ from the recorded materialization, not re-decided. WPR-RDO-2020-003-eng.pdf: permitted — 2,810,648 bytes of a 361.55 GB catalogue (0.001%)",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "ingestion-agent",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#3",
+            "prov:startedAtTime": "2026-09-29T23:25:42.450Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "ingestion-agent",
+              "prov:hadPlan": "materialize-remote#Task_Size"
+            },
+            "prov:used": [
+              "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-09-29T23:25:43.072Z",
+          "node": "Task_Restrictions",
+          "actor": "claude",
+          "note": "READ from the recorded materialization, not re-decided. WPR-RDO-2020-003-eng.pdf: permitted — The only restrictions stated are the CC BY-NC-SA 3.0 IGO licence's own conditions — attribution, non-commercial use, share-alike. This replica is non-commercial and attributes WHO and the upstream record.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "ingestion-agent",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#4",
+            "prov:startedAtTime": "2026-09-29T23:25:43.072Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "ingestion-agent",
+              "prov:hadPlan": "materialize-remote#Task_Restrictions"
+            },
+            "prov:used": [
+              "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-09-29T23:25:43.676Z",
+          "node": "Task_Copyright",
+          "actor": "claude",
+          "note": "READ from the recorded materialization, not re-decided. WPR-RDO-2020-003-eng.pdf: permitted — The publication's copyright page (library/wpr-rdo-2020-003-eng/sections/page-032.md l.15-16): \"© World Health Organization 2020. Some rights reserved. This work is available under the CC BY-NC-SA 3.0 IGO licence.\" The licence permits non-commercial redistribution with attribution.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "ingestion-agent",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#5",
+            "prov:startedAtTime": "2026-09-29T23:25:43.676Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "ingestion-agent",
+              "prov:hadPlan": "materialize-remote#Task_Copyright"
+            },
+            "prov:used": [
+              "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-09-29T23:25:44.576Z",
+          "node": "Task_Retention",
+          "actor": "claude",
+          "note": "READ from the recorded materialization, not re-decided. WPR-RDO-2020-003-eng.pdf: permitted — archival: kept indefinitely, by design",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "ingestion-agent",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#6",
+            "prov:startedAtTime": "2026-09-29T23:25:44.576Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "ingestion-agent",
+              "prov:hadPlan": "materialize-remote#Task_Retention"
+            },
+            "prov:used": [
+              "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-09-29T23:25:45.148Z",
+          "node": "Task_SourceLoss",
+          "actor": "claude",
+          "note": "READ from the recorded materialization, not re-decided. WPR-RDO-2020-003-eng.pdf: permitted — original bytes held locally with a recorded sha256",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "ingestion-agent",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#7",
+            "prov:startedAtTime": "2026-09-29T23:25:45.148Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "ingestion-agent",
+              "prov:hadPlan": "materialize-remote#Task_SourceLoss"
+            },
+            "prov:used": [
+              "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-09-29T23:25:45.983Z",
+          "node": "Gateway_Gates",
+          "outcome": "yes",
+          "actor": "claude",
+          "note": "every gate reads permitted on every bitstream (publication gates copyright, restrictions included)",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "ingestion-agent",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#8",
+            "prov:startedAtTime": "2026-09-29T23:25:45.983Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "ingestion-agent",
+              "prov:hadPlan": "materialize-remote#Gateway_Gates"
+            },
+            "prov:used": [
+              "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-09-29T23:25:46.786Z",
+          "node": "Task_Fetch",
+          "actor": "claude",
+          "note": "NOT PERFORMED HERE: egress to iris.who.int is blocked in this environment. SUBSTITUTED: the bytes already held at who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf, sha256 re-computed and matching 5021518ccd91e26a9533edd8efc643bc24ab7bf2d4eb425c9644967e0bf72842.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "ingestion-agent",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#9",
+            "prov:startedAtTime": "2026-09-29T23:25:46.786Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "ingestion-agent",
+              "prov:hadPlan": "materialize-remote#Task_Fetch"
+            },
+            "prov:used": [
+              "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-09-29T23:25:47.391Z",
+          "node": "Task_Declare",
+          "actor": "claude",
+          "note": "The materialization (purpose, gates, fixity) is already recorded on item/18892cf3-5a4f-42a4-923c-a93f4a594dec in who-iris/catalogue; nothing is re-declared, because re-writing it would claim this run as its provenance.",
+          "authz": {
+            "allowed": true,
+            "mode": "strict",
+            "authenticatedBy": "github",
+            "actor": "owner",
+            "account": "litlfred",
+            "role": "corpus",
+            "assignment": "unconstrained",
+            "authorized": "permit",
+            "access": "permit",
+            "findings": []
+          },
+          "prov": {
+            "@type": "prov:Activity",
+            "@id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize#10",
+            "prov:startedAtTime": "2026-09-29T23:25:47.391Z",
+            "prov:qualifiedAssociation": {
+              "prov:agent": "owner",
+              "prov:hadRole": "corpus",
+              "prov:hadPlan": "materialize-remote#Task_Declare"
+            },
+            "prov:used": [
+              "item/18892cf3-5a4f-42a4-923c-a93f4a594dec"
+            ],
+            "cat-harness:underPolicy": [
+              "https://litlfred.github.io/folio-assistant/policies/folio-defaults",
+              "https://litlfred.github.io/folio-assistant/policies/http-gateway"
+            ]
+          }
+        },
+        {
+          "at": "2026-09-29T23:25:47.392Z",
+          "node": "EndEvent_Done",
+          "note": "end event reached"
+        }
+      ],
+      "status": "completed",
+      "startedAt": "2026-09-29T23:25:39.650Z",
+      "updatedAt": "2026-09-29T23:25:47.392Z"
+    }
+  }
+}

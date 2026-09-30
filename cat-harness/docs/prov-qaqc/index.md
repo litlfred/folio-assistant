@@ -18,15 +18,15 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ## Totals
 
-7 instance(s), 71 step(s) checked, 71 `prov:Activity` emitted, 75 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
+8 instance(s), 95 step(s) checked, 95 `prov:Activity` emitted, 74 finding(s). Policies evaluated: `https://litlfred.github.io/folio-assistant/policies/folio-defaults`, `https://litlfred.github.io/folio-assistant/policies/http-gateway`.
 
 | finding | count | means |
 |---|---|---|
 | `no-actor` | 0 | the entry names nobody; no activity is emitted, because `prov:agent` is required and would have to be invented |
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
 | `undeclared-actor` | 1 | the actor is not declared in `.claude/skills/actors/` |
-| `not-eligible` | 0 | the actor's `roles` do not include the role the lane binds |
-| `unknown` | 60 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
+| `not-eligible` | 2 | the actor's `roles` do not include the role the lane binds |
+| `unknown` | 57 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
 | `authz-disagrees` | 0 | the verdict recorded in the entry's `authz` differs from the one recomputed now |
 | `node-not-in-model` | 4 | the entry names a node its process model does not have |
@@ -76,18 +76,6 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `code-change-review--issue-1190-bean-restates-skill` | 3 | `Task_Implement` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Implement as authoring-agent |
 | `code-change-review--issue-1190-bean-restates-skill` | 4 | `Task_RunGates` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_RunGates as authoring-agent |
 | `code-change-review--issue-1190-bean-restates-skill` | 5 | `Task_AddressReview` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_AddressReview as authoring-agent |
-
-### code-change-review--issue-1531-upload-step
-
-5 step(s) checked, 5 `prov:Activity` emitted, 5 finding(s). Source: `cat-harness/processes/code-change-review.bpmn`. [PROV JSON-LD]({{ '/assets/prov/code-change-review--issue-1531-upload-step.prov.jsonld' | relative_url }})
-
-| instance | entry | node | finding | detail |
-|---|---|---|---|---|
-| `code-change-review--issue-1531-upload-step` | 1 | `Task_ClaimBean` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_ClaimBean as authoring-agent |
-| `code-change-review--issue-1531-upload-step` | 2 | `Task_BranchAndAnnounce` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_BranchAndAnnounce as authoring-agent |
-| `code-change-review--issue-1531-upload-step` | 3 | `Task_Implement` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_Implement as authoring-agent |
-| `code-change-review--issue-1531-upload-step` | 4 | `Task_RunGates` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_RunGates as authoring-agent |
-| `code-change-review--issue-1531-upload-step` | 5 | `Task_CommitAndOpenPR` | `unknown` | no policy grants perform-task for Process_CodeChangeReview/Task_CommitAndOpenPR as authoring-agent |
 
 ### crdm--folio-assistant-6lb8
 
@@ -158,6 +146,24 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | (instance) | `Process_CRDM_Needs` | `source-moved` | cat-harness/methodologies/crdm/processes/crdm-needs.bpmn does not exist; read cat-harness/processes/crdm-needs.bpmn, which defines Process_CRDM_Needs |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 1 | `A_Stakeholders` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Stakeholders as authoring-agent |
 | `crdm--issue-607-kg-to-cdn-portal/Call_Needs` | 2 | `A_Synthesise` | `unknown` | no policy grants perform-task for Process_CRDM_Needs/A_Synthesise as authoring-agent |
+
+### sampleimport--xlg2-wpro-trial
+
+12 step(s) checked, 12 `prov:Activity` emitted, 2 finding(s). Sources: `cat-harness/processes/sample-import.bpmn`, `cat-harness/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `sampleimport--xlg2-wpro-trial` | 2 | `Call_Materialize` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as ingestion-agent |
+| `sampleimport--xlg2-wpro-trial` | 2 | `Call_Materialize` | `unknown` | no policy grants perform-task for Process_SampleImport/Call_Materialize as ingestion-agent |
+
+### sampleimport--xlg2-wpro-trial-original
+
+17 step(s) checked, 17 `prov:Activity` emitted, 2 finding(s). Sources: `cat-harness/processes/sample-import.bpmn`, `cat-harness/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
+
+| instance | entry | node | finding | detail |
+|---|---|---|---|---|
+| `sampleimport--xlg2-wpro-trial-original` | 2 | `Call_Materialize` | `not-eligible` | claude may act as authoring-agent, business-analyst, code-reviewer, not as ingestion-agent |
+| `sampleimport--xlg2-wpro-trial-original` | 2 | `Call_Materialize` | `unknown` | no policy grants perform-task for Process_SampleImport/Call_Materialize as ingestion-agent |
 
 ## Regenerate
 

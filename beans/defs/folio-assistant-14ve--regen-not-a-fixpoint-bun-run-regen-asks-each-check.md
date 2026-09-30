@@ -3,8 +3,10 @@
 title: 'REGEN NOT A FIXPOINT: bun run regen asks each check once, so a check asked before its input''s writer runs reports current and stays stale'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-29T23:42:28Z
-updated_at: 2026-09-29T23:42:28Z
+updated_at: 2026-09-29T23:59:55Z
+parent: folio-assistant-1xhc
 ---
 
 Measured 2026-09-29 on claude/sharp-einstein-970n6g (PR #1511), after merging main:

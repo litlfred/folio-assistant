@@ -15,8 +15,11 @@ skill. Read it first; this file only parses the arguments and names the order.
 
 - Window: a duration (`4h`, `90m`, `1d`) or two instants. **Default: `4h`.**
 - Goals: kept **verbatim**; they are the owner's words, not yours. With no
-  goals, produce the synopsis and the instruction gaps, and say that no queue
-  was built because no goal was given.
+  goals, list the store's open goal **milestones** (`beans list -t milestone`)
+  verbatim — saying which quote the owner and which are a milestone's wording
+  only — and offer them as the queue basis in the closing question. Only if
+  the store has none, produce the synopsis and the instruction gaps and say
+  that no queue was built because no goal was given (bean `tjj6`).
 
 ## Order
 

@@ -1,10 +1,11 @@
 ---
 # folio-assistant-ws99
 title: 'GENERATED OUTPUT: every generator''s output should declare its writer — five write into docs/ and none did'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-24T06:27:05Z
-updated_at: 2026-09-24T06:27:05Z
+updated_at: 2026-09-29T22:45:00Z
 parent: folio-assistant-vke6
 ---
 
