@@ -8,7 +8,7 @@
     "kind": "corpus",
     "id": "skill-registration-chain"
   },
-  "updated_at": "2026-09-30T08:26:51.470Z",
+  "updated_at": "2026-09-30T08:57:06.742Z",
   "families": {
     "declarations": {
       "summary": "Skills whose DECLARATIONS are wrong: present in no package manifest, carrying a retired front-matter key, or listed in a manifest with no file. Empty means audited and clean, not unaudited — the chain family above records whether the run happened. Only the retired key is repaired; the other two are the author's assertion to make and this command reports them rather than guessing.",
@@ -41,7 +41,7 @@
           "verify": "kg:audit:check",
           "because": "the skill's kg-qa sidecar — masked inside `gates` by `bun test`",
           "ran": true,
-          "current": false
+          "current": true
         },
         {
           "verify": "kg:detangle:check",
