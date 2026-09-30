@@ -180,7 +180,7 @@ describe("per-family node schemas (bean rdkm)", () => {
     const { resolveNodeSchemas } = await import("./kind-validator");
     const fams = await resolveNodeSchemas("qa", HARNESS);
     expect(fams.map((f) => f.tag).sort()).toEqual([
-      "block-qa/v1", "folio-detangle-sidecar/v1", "folio-qa-index/v1", "folio-test-run/v1",
+      "block-qa/v1", "folio-detangle-sidecar/v1", "folio-lsi-index/v1", "folio-qa-index/v1", "folio-test-run/v1",
       // `kg-qa-manifest/v1` joined the `qa` kind on 2026-09-27, from `skills`.
       // The manifest records the auditor's identity for the `kg-qa/v1` files
       // beside it, and it used to live in `skills/` — harmless while ONE

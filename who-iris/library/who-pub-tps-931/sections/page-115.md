@@ -10,9 +10,9 @@ source_sha256: ecc88eee99756755
 text_source: ocr
 granularity: page
 ---
-WHO Editorial Style Manval
+WHO Editorial Style Manual
 
-English/approved nome Local/other nome English/approved name Local/other name
+English/approved name Local/other name English/approved name Local/other name
 Hague (The) Den Haag, Lvov Lwéw
 °’s Gravenhage Lyon Lyons
 Haifa Kaiffa, Khaifa
@@ -22,15 +22,15 @@ Hanoi Hanot Marrakesh Marakesh,
 Havana Habana (La) Marrakech
 Helsinki Helsingfors Marseilles Marseille
 Hungary* Magyarorszag Mauritania* Mauritanie
-: Mauritius* Tle Maurice
+: Mauritius* Ile Maurice
 Iceland* Island Mecca Makkah, Mekka
 Traq* Trak Milan Milano
-Treland* Eire Mogadishu Mogadiscio,
+Ireland* Eire Mogadishu Mogadiscio,
 Mogadisho
 Jaffa Yafa, Yafo Morocco* Al-Maghribiyah,
 Jakarta Djakarta Al-Mamlakah
 Moscow Moskva
-Kathmandu Katmandu, Mozambique* = Mogambique
+Kathmandu Katmandu, Mozambique* = Moçambique
 Khatmandu Munich Miinchen
 Kazakhstan* Kazakstan Muscat Maskat, Masqat
 Kenya* Kenia Myanmar* Burma

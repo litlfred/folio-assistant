@@ -13,8 +13,7 @@ The members of the GDG are not commissioned and do not receive any
 financial compensation other than for direct expenses associated with their 
 work on the guideline. The responsible technical officer may develop terms 
 of reference so potential GDG members clearly understand their roles and 
-responsibilities before committing themselves. Members of the GDG par­
-ticipate in the guideline development process and at meetings as individuals 
+responsibilities before committing themselves. Members of the GDG participate in the guideline development process and at meetings as individuals 
 and not as representatives of the institutions or organizations with which 
 they are affiliated.
 The role of the GDG is to:
@@ -26,13 +25,10 @@ assist the steering group in developing the key questions in PICO format;
 choose and rank priority outcomes that will guide the evidence 
 reviews and focus the recommendations;
 ■■
-examine the Grading of Recommendations Assessment, Devel­
-opment and Evaluation (GRADE) evidence profiles or other 
-assessments of the quality of the evidence used to inform the recom­
-mendations and provide input;
+examine the Grading of Recommendations Assessment, Development and Evaluation (GRADE) evidence profiles or other 
+assessments of the quality of the evidence used to inform the recommendations and provide input;
 ■■
-interpret the evidence, with explicit consideration of the overall bal­
-ance of benefits and harms;
+interpret the evidence, with explicit consideration of the overall balance of benefits and harms;
 ■■
 formulate recommendations taking into account benefits, harms, 
 values and preferences, feasibility, equity, acceptability, resource 

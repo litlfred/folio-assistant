@@ -10,8 +10,7 @@ source_sha256: bfcd856e3ad7ab20
 ---
 Although the PICO framework was originally devised to address the efficacy, 
 effectiveness and potential harms of an intervention, it can be applied to 
-other types of questions, as outlined in Table 7.1. The general types of ques­
-tions most relevant to WHO guidelines relate to the following:
+other types of questions, as outlined in Table 7.1. The general types of questions most relevant to WHO guidelines relate to the following:
 ■■
 intervention efficacy and effectiveness;
 ■■
@@ -39,17 +38,14 @@ Intervention
 efficacy and/or 
 effectiveness
 Among individuals with a 
-certain disease or condi­
-tion (P), how effective 
+certain disease or condition (P), how effective 
 is a certain treatment or 
 approach (I) in producing 
 an outcome of benefit (O)?
-What popula­
-tions are of 
+What populations are of 
 interest? Which 
 subpopulations?
-What interven­
-tion, treatment 
+What intervention, treatment 
 or approach 
 is being 
 considered?
@@ -69,8 +65,7 @@ Among individuals with
 a certain disease or 
 condition (P), what are the 
 unintended consequences 
-(harms) of a certain treat­
-ment or approach (I)?
+(harms) of a certain treatment or approach (I)?
 As above
 As above
 As above
@@ -79,28 +74,23 @@ effects of the intervention
 matter most to individuals who 
 experience the intervention?
 Among children with HIV (P), what are the 
-harms and burden (O) of isoniazid prophy­
-laxis (I) used to prevent tuberculosis compared 
+harms and burden (O) of isoniazid prophylaxis (I) used to prevent tuberculosis compared 
 to no prophylaxis?
 Diagnosis
 Among patients with a 
 certain condition (P), how 
 accurate is a certain test (I) 
-in diagnosing a given dis­
-ease (O) compared with a 
+in diagnosing a given disease (O) compared with a 
 reference standard (C)?
-To which popula­
-tions would the 
-test be appli­
-cable? Which 
+To which populations would the 
+test be applicable? Which 
 subpopulations?
 What test or 
 strategy is being 
 evaluated?
 What is the 
 comparison test, 
-(often the refer­
-ence standard or 
+(often the reference standard or 
 current diagnostic 
 approaches)?
 What is the diagnostic accuracy 
@@ -110,23 +100,19 @@ detecting the target condition
 predictive value and related 
 parameters)?
 Among patients with acute chest pain (P), how 
-accurate is an electrocardiogram (I) in diagnos­
-ing acute myocardial infarction (O) compared to 
+accurate is an electrocardiogram (I) in diagnosing acute myocardial infarction (O) compared to 
 serum enzyme testing (C)?
 Values and 
 preference
 What are the values and 
-preferences (O) of individu­
-als with a certain disease or 
+preferences (O) of individuals with a certain disease or 
 condition (P) in terms of the 
 potential outcomes of the 
 intervention or exposure (I)?
-What popula­
-tions are of 
+What populations are of 
 interest? Which 
 subpopulations?
-What interven­
-tion, treatment 
+What intervention, treatment 
 or approach 
 is being 
 considered?
@@ -138,22 +124,18 @@ Which outcomes matter most
 to individuals affected by the 
 disease or condition?
 How do they feel about the 
-possible benefits of the inter­
-vention or exposure versus its 
+possible benefits of the intervention or exposure versus its 
 possible harms?
 What are the attitudes of 
-people affected by the interven­
-tion or exposure regarding the 
+people affected by the intervention or exposure regarding the 
 intervention?
 How do health-care workers rate outcomes 
 potentially impacted by wearing personal 
 protective equipment when working in Ebola 
 treatment centres? Relevant outcomes might 
-include manual dexterity, ability to commu­
-nicate with patients, becoming infected with 
+include manual dexterity, ability to communicate with patients, becoming infected with 
 Ebola virus, or death.
-What are health-care workers’ (P) prefer­
-ences (O) regarding wearing a face shield (I) 
+What are health-care workers’ (P) preferences (O) regarding wearing a face shield (I) 
 versus goggles (C)?
 continues ...
 Chapter 7 
@@ -173,8 +155,7 @@ Among patients with a
 certain disease (P), does a 
 prognostic or risk factor (I), 
 change the risk of a certain 
-event (O) relative to base­
-line risk (C)?
+event (O) relative to baseline risk (C)?
 As above
 What exposure 
 is of interest?
@@ -187,22 +168,17 @@ What is the
 baseline risk 
 (the risk in the 
 unexposed)?
-What is the incidence or preva­
-lence of the condition
+What is the incidence or prevalence of the condition
 In the exposed?
 Among patients with prostate cancer (P), do 
-lumbar metastases (I), increase 5 year mortal­
-ity (O) compared to no metastatic disease?
+lumbar metastases (I), increase 5 year mortality (O) compared to no metastatic disease?
 Resource 
 considerations
-What is the cost of inter­
-vention X in setting Y?
-What is the cost–effective­
-ness of intervention X in 
+What is the cost of intervention X in setting Y?
+What is the cost–effectiveness of intervention X in 
 setting Y, for outcome Z?
 As above
-What interven­
-tion, treatment 
+What intervention, treatment 
 or approach 
 is being 
 considered?
@@ -227,5 +203,4 @@ This table is based in part on Chapter 4 of the NICE guidelines manual (2).
 WHO handbook for guideline development
 86
 ■■
-resource considerations, including cost and measures of economic effi­
-ciency, such as cost–effectiveness.
+resource considerations, including cost and measures of economic efficiency, such as cost–effectiveness.

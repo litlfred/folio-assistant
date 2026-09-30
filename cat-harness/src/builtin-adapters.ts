@@ -70,7 +70,22 @@ export interface BuiltinAdapterDeclaration {
  * loses nothing, while falling back from it loses Lean and TeX.
  */
 export const BUILTIN_ADAPTERS: BuiltinAdapterDeclaration[] = [
-  { contentType: "paper", module: "adapters/paper/index.ts", className: "PaperContentAdapter", layer: "sci" },
+  // `../folio-assistant-sci/…` because `ROOT` is `cat-harness/` and the paper
+  // adapter moved OUT of it on 2026-09-30 (bean `y5si`). The `layer: "sci"`
+  // beside it is unchanged — this table has declared that since it was
+  // written, and the move is the directory catching up with the declaration
+  // rather than a reclassification.
+  //
+  // The specifier is a VARIABLE path, so this is the one edge no static-import
+  // gate here can see — not `check:partition`, not
+  // `check:reference-direction`. Saying so is the point: a reader must not
+  // take a green import gate as evidence about this line.
+  {
+    contentType: "paper",
+    module: "../folio-assistant-sci/adapters/paper/index.ts",
+    className: "PaperContentAdapter",
+    layer: "sci",
+  },
   { contentType: "document", module: "adapters/document/index.ts", className: "DocumentContentAdapter", layer: "core" },
 ];
 

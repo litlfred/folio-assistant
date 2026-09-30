@@ -19,7 +19,7 @@ import { afterEach, describe, expect, test } from "bun:test";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 
 import { directoriesForGraph, siteDirFor } from "../../schemas/cat-harness.ts";
 import {
@@ -327,7 +327,16 @@ describe("the real backlog — not vacuous, and it adds up", () => {
   function walk(): { prose: number; summarised: number } {
     let prose = 0;
     let summarised = 0;
-    for (const lib of directoriesForGraph(ROOT, "library").filter((d) => existsSync(d))) {
+    // A library its owner holds back (bean x80s) is not backlog. Read from the
+    // owner's declaration file directly, sharing no code with summaries.ts.
+    const heldByOwner = (lib: string): boolean => {
+      const owner = dirname(resolve(lib));
+      const decl = join(owner, `${basename(owner)}.json`);
+      if (!existsSync(decl)) return false;
+      const dirs = (JSON.parse(readFileSync(decl, "utf-8")).directories ?? []) as { path: string; summaries?: string }[];
+      return dirs.some((d) => resolve(owner, d.path) === resolve(lib) && d.summaries === "held");
+    };
+    for (const lib of directoriesForGraph(ROOT, "library").filter((d) => existsSync(d) && !heldByOwner(d))) {
       for (const slug of readdirSync(lib)) {
         const blocksDir = join(lib, slug, "blocks");
         if (!existsSync(blocksDir)) continue;
@@ -361,5 +370,18 @@ describe("the real backlog — not vacuous, and it adds up", () => {
     expect(backlog(ROOT)).toHaveLength(t.backlog);
     // The first drain is on disk.
     expect(w.summarised).toBeGreaterThan(0);
+  });
+});
+
+describe("a library whose owner holds summaries back (bean x80s)", () => {
+  test("is named as held, and the drain never offers its blocks", async () => {
+    const { heldLibraries, next } = await import("../summaries.ts");
+    const held = heldLibraries(ROOT);
+    // The owner's 2026-09-24 decision, declared on agent-skills' own library entry.
+    expect(held.some((d) => d.endsWith("agent-skills/library"))).toBe(true);
+    for (const b of next(ROOT, { n: 10_000 })) {
+      expect(held.some((d) => d.endsWith(`/${b.entry}`) || existsSync(join(d, b.entry)))).toBe(false);
+    }
+    expect(entryDirs(ROOT).some((e) => held.some((d) => e.startsWith(d + "/")))).toBe(false);
   });
 });

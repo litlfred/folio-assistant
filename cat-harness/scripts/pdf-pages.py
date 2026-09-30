@@ -58,6 +58,7 @@ from pathlib import Path
 # output: the first draft of this file DID reimplement `slugify` and produced
 # `who-pub-tps-93-1` against `pdf-structure.py`'s `who-pub-tps-931`.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _pdf_text import join_soft_hyphens  # noqa: E402
 from _pdf_doc_id import (  # noqa: E402
     derive_doc_id_from_pdf as _doc_id,
     ocr_cache_dir,
@@ -191,6 +192,9 @@ def main() -> int:
         # wearing the clothes of an incomplete ingestion.
         doc_id = _doc_id(str(pdf))
         texts, source = page_texts(pdf, a.from_ocr, a.outdir)
+        # Soft hyphens joined here too — the same function as pdf-structure,
+        # so the two rungs cannot disagree about a word (bean `3spu`).
+        texts = [join_soft_hyphens(x) for x in texts]
         sha = hashlib.sha256(pdf.read_bytes()).hexdigest()[:16]
         secdir = a.outdir / doc_id / "sections"
         secdir.mkdir(parents=True, exist_ok=True)

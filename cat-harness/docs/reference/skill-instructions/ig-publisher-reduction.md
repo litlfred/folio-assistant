@@ -54,11 +54,31 @@ invoked *for these*, not the Publisher gone.
 
 | | does | exit criterion — MEASURED |
 |---|---|---|
-| **P0** | re-point the metadata→variables bridge; render one IG's `input/pages/` through just-the-docs | a named IG's pages render with Publisher metadata populating the Jekyll variables, and the page set matches the Publisher's for that IG |
-| **P1** | derive navigation from `sushi-config.yaml`'s `pages:` and `menu:` | the derived navigation is diffed against the Publisher's and the difference is **empty or explained entry by entry** |
-| **P2** | JSON-only representations; XML/TTL dropped from the render path | every dropped representation is **recorded as a refusal**, so "publishes no Turtle" and "we ignored its Turtle" stay distinguishable |
-| **P3** | AST dump behind a flag on the fork; staging renders from cached AST | a staging page built from cache carries a **visible** stale-until-full-run mark, and a reader can tell which facts are provisional |
+| **P0** | re-point the metadata→variables bridge; render one IG's `input/pages/` through just-the-docs | **smart-trust**'s pages render with Publisher metadata populating the Jekyll variables, and the page set matches the Publisher's for that IG — strictly: a page the Publisher renders from data it does not export is a gap, not an exception |
+| **P1** | derive navigation from `sushi-config.yaml`'s `pages:` and `menu:` | the derived navigation is diffed against the Publisher's, **one diff per IG**, and each difference is **empty or explained entry by entry**; the per-IG diffs are also reported **together**, answering "what are the differences in IG1, IG2, … IGN?" |
+| **P2** | JSON-only representations; XML/TTL dropped from the render path | every dropped representation is **recorded as a refusal**, per IG with the same combined view as P1, so "publishes no Turtle" and "we ignored its Turtle" stay distinguishable |
+| **P3** | AST dump behind a flag on the fork; staging renders from cached AST | a staging page built from cache carries a **visible** stale-until-full-run mark, and a reader can tell which facts are provisional — the AST comes **from the fork**, which is a prerequisite |
 | **P4** | Publisher invoked for AST + QA only | a release is still cut from a full build, and the artefact **says which** it came from |
+
+### Approved by the owner, 2026-09-30
+
+All five phases were put to the owner one at a time, with the criteria above
+(bean `kn0t`). Three answers changed the wording, and the table carries them:
+
+- **P0** — approved with smart-trust as the named IG, and the page-set match
+  kept **strict**. The looser option (list data-limited page kinds as
+  exceptions) was offered and not taken.
+- **P1** — approved with a change in the owner's words: *"each IG should have
+  its own set of diffs. can be grouped together to see 'what are diffs in IG1,
+  IG2, ... IGN?'"*. P2 takes the same per-IG + combined shape.
+- **P3** — approved with the **fork required**. `fsh-cone`'s source edges
+  (458 of 458, below) are real and stay useful for rebuild cones, but they were
+  offered as a replacement for the fork and **not** accepted as one: the AST is
+  the Publisher's.
+- **P2** and **P4** — approved as written.
+
+Still open, and not decided by these approvals: `transform_dmn.py`'s HTML, the
+"parity-ish" checklist, and whether staging keeps a `tx` dependency (below).
 
 ### P0 is a re-point, not a build
 

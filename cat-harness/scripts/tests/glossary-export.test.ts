@@ -153,6 +153,19 @@ describe("the corpus it is actually run against", () => {
     }
   });
 
+  test("an undrawn role another instance draws is told apart from one drawn nowhere (bean nafz)", () => {
+    // The walk is per instance, so "no swimlane draws" is a fact about the
+    // walk. deep-researcher's lane is in folio-assistant-core, bound by
+    // <folio:role ref>; the report must say where rather than list it beside
+    // roles no diagram in the repository draws.
+    const dr = report.drawnElsewhere.find((d) => d.role === "deep-researcher");
+    expect(dr?.files.some((f) => f.startsWith("folio-assistant-core/"))).toBe(true);
+    for (const d of report.drawnElsewhere) {
+      expect(report.undrawn).toContain(d.role);
+      for (const f of d.files) expect(f.startsWith("cat-harness/")).toBe(false);
+    }
+  });
+
 });
 
 describe("bootstrap — the instance with the one varying performer", () => {

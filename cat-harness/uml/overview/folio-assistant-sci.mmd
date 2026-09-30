@@ -78,6 +78,11 @@ classDiagram
       <<could not determine>>
     }
   }
+  namespace folio_assistant_sci__sci_adapters {
+    class n_folio_assistant_sci_sci_adapters_code["code: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace folio_assistant_sci__qa {
     class folio_assistant_sci_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
       <<json: KgQaReportSchema>>
@@ -118,6 +123,8 @@ classDiagram
   cssClass "folio_assistant_sci_voices_VoiceProfile" fa_uml_kind_voices
   cssClass "n_folio_assistant_sci_sci_methodologies_methodology" fa_uml_kind_methodology
   cssClass "n_folio_assistant_sci_sci_methodologies_methodology" fa_uml_undetermined
+  cssClass "n_folio_assistant_sci_sci_adapters_code" fa_uml_kind_code
+  cssClass "n_folio_assistant_sci_sci_adapters_code" fa_uml_undetermined
   folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Pair_attestation : pair_attestations
   cssClass "folio_assistant_sci_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
   cssClass "folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa

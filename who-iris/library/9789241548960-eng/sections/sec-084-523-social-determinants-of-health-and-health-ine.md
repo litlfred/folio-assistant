@@ -11,9 +11,7 @@ source_sha256: bfcd856e3ad7ab20
 The social determinants of health are the conditions in which people grow, 
 live, work and age (6). Health inequities are differences in health that are 
 unfair, avoidable and remediable because they depend largely on the social 
-determinants of health, which are amenable to improvement. WHO’s nor­
-mative work, including guideline development, must thus take these deter­
-minants into consideration (7).
+determinants of health, which are amenable to improvement. WHO’s normative work, including guideline development, must thus take these determinants into consideration (7).
 5.2.4 Gender
 “Gender” refers to the roles, behaviours, activities and attributes that a given 
 society considers appropriate for men and women and boys and girls. Thus, 
@@ -23,18 +21,15 @@ physiological characteristics that define men and women. That is, “male” and
 “female” are sex categories, while “masculine” and “feminine” are gender 
 categories (8). It is important to be sensitive to the different gender identities 
 that do not fit into the binary models of masculine versus feminine.
-Gender norms, roles and relations influence people’s risk of contract­
-ing disease and their susceptibility to different health conditions. They also 
+Gender norms, roles and relations influence people’s risk of contracting disease and their susceptibility to different health conditions. They also 
 have a bearing on people’s access to and uptake of health services and on the 
 health outcomes they experience throughout the life-course. It is important 
 to consider how WHO guidelines can contribute to gender equality.
 5.2.5 Social determinants of health
-The effects of the social determinants of health are manifest in the form of dif­
-ferences in health outcomes across subpopulations and in a gradient in health 
+The effects of the social determinants of health are manifest in the form of differences in health outcomes across subpopulations and in a gradient in health 
 status in accordance with income and education. These social determinants 
 contribute to inequity in health because they are responsible for differences in 
-physical and social environments; vulnerability; access to services and prod­
-ucts; ability to benefit from services; and ability to cope with ill health and 
+physical and social environments; vulnerability; access to services and products; ability to benefit from services; and ability to cope with ill health and 
 disability. These differentials can all be reduced through the interventions 
 and actions of one or several health programmes and services, or through 
 intersectoral collaboration (7). WHO’s normative work, including guideline 
@@ -47,8 +42,7 @@ Eight entry points for integrating equity, human rights
 and gender into WHO guidelines
 1. Analysis of evidence on inequities and their determinants. As appropriate to 
 the health topic of a guideline and as there are reasons to expect differences in the 
-impact of a recommendation across subpopulations, you might examine the strati­
-fiers used in primary data sources and analyse disaggregated data; review additional 
+impact of a recommendation across subpopulations, you might examine the stratifiers used in primary data sources and analyse disaggregated data; review additional 
 studies (including qualitative studies) conducted in subpopulations experiencing 
 different health outcomes; explore the related evidence on access barriers and the 
 unintentional consequences of service usage; explore the determinants that require 
@@ -66,22 +60,15 @@ consider how equity, human rights, gender and social determinants are affected b
 the existing policy, legal, normative, programmatic and monitoring and evaluation 
 frameworks in national contexts, and how a new guideline might serve to better 
 address these issues.
-3. Analysis of the social determinants at play. To effectively contribute to the reduc­
-tion of health inequities, guideline developers can identify and take into account 
+3. Analysis of the social determinants at play. To effectively contribute to the reduction of health inequities, guideline developers can identify and take into account 
 those social determinants most relevant for each guideline, including those that 
 influence the following (7):
-■■differential exposure to the physical environment, e.g. adverse workplaces and com­
-munity settings, poor infrastructures, unhealthy and harmful consumables, etc.;
-■■differential exposure to the social environment, e.g. social norms that can under­
-mine health, gender expectations and repression, ethnic and racial discrimina­
-tion, unregulated marketing, etc.;
-■■differential community and individual vulnerability, e.g. poverty and unem­
-ployment, family and community dysfunction, poor knowledge, low levels of 
+■■differential exposure to the physical environment, e.g. adverse workplaces and community settings, poor infrastructures, unhealthy and harmful consumables, etc.;
+■■differential exposure to the social environment, e.g. social norms that can undermine health, gender expectations and repression, ethnic and racial discrimination, unregulated marketing, etc.;
+■■differential community and individual vulnerability, e.g. poverty and unemployment, family and community dysfunction, poor knowledge, low levels of 
 health literacy and care-seeking, alcohol abuse, malnutrition, etc.;
-■■differential access to health products and services, e.g. skewed availability, finan­
-cial barriers, products and services with poor acceptability, etc.;
-■■differential benefit from health services, e.g. poor quality health services, dis­
-criminatory treatment and care, biased referral systems, services insensitive 
+■■differential access to health products and services, e.g. skewed availability, financial barriers, products and services with poor acceptability, etc.;
+■■differential benefit from health services, e.g. poor quality health services, discriminatory treatment and care, biased referral systems, services insensitive 
 to needs, limited patient–provider interaction, poor adherence to advice and 
 recommended treatments, etc.; and
 Chapter 5 
@@ -89,8 +76,7 @@ Equity, human rights, gender and social determinants
 49
 ... continued
 ■■
-differential consequences of illness and disability, e.g. loss of income, impov­
-erishment/catastrophic health expenditure, stigmatization or other forms of 
+differential consequences of illness and disability, e.g. loss of income, impoverishment/catastrophic health expenditure, stigmatization or other forms of 
 discrimination.
 4. Analysis and allocation of resources. Fulfilment of the right to health for all is not 
 just a matter of the absolute level of resources. It also has to do with how resources 
@@ -100,14 +86,11 @@ efforts might influence the implementation of the final guidelines. They should 
 include guidance on how to plan or prioritize services and interventions related to 
 guideline roll-out in ways that reduce rather than increase inequity.
 5. Analysis and strategies to address gender issues. Guideline developers can use 
-certain tools, such as the Gender Analysis Matrix and the Gender Responsive Assess­
-ment Scale (12), to examine the extent to which the interventions covered in the 
+certain tools, such as the Gender Analysis Matrix and the Gender Responsive Assessment Scale (12), to examine the extent to which the interventions covered in the 
 guideline address gender issues. Guidelines should promote gender-responsiveness 
 in all processes and in the organization of programmes and services.
-6. Analysis and provision of means for civil society and individuals to partici­
-pate in decision-making for health. The right to health is best protected when 
-individuals and concerned populations, including those marginalized or other­
-wise disadvantaged, are actively involved in decision-making on policy and their 
+6. Analysis and provision of means for civil society and individuals to participate in decision-making for health. The right to health is best protected when 
+individuals and concerned populations, including those marginalized or otherwise disadvantaged, are actively involved in decision-making on policy and their 
 individual health. Guideline developers can consider how to make the processes 
 and services they recommend more participatory and how to involve the relevant 
 population groups (i.e. so that participation is not the exclusive privilege of the 

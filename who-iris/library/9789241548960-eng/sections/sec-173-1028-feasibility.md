@@ -8,8 +8,6 @@ pages: 140-140
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-The less feasible an option is (i.e. the greater the barriers to its implementa­
-tion), the lesser the likelihood that the intervention will be strongly recom­
-mended. Feasibility is influenced by the resources available, programmatic 
+The less feasible an option is (i.e. the greater the barriers to its implementation), the lesser the likelihood that the intervention will be strongly recommended. Feasibility is influenced by the resources available, programmatic 
 considerations, the existing and the necessary infrastructure and training, 
 and many other factors.

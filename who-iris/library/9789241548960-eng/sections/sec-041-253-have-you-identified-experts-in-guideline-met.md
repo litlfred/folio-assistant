@@ -8,8 +8,7 @@ pages: 31-31
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-Generally WHO staff commission systematic review and guideline devel­
-opment experts to assist in formulating the key questions; identifying, 
+Generally WHO staff commission systematic review and guideline development experts to assist in formulating the key questions; identifying, 
 assessing and synthesizing the evidence; and translating the evidence into 
 recommendations. Such experts should be identified early in the guideline 
 development process.

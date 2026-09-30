@@ -621,5 +621,5 @@ only from a layer above it: a wrong-direction dependency, and after the split
 | process | step(s) that name it |
 |---|---|
 | [Content acquisition](../../processes/content-acquisition.html) | Route it, and watch the queue |
-| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Prose blocks enter the summary queue |
+| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | L1 completeness gate (calls a sub-process); Prose blocks enter the summary queue |
 

@@ -10,12 +10,9 @@ source_sha256: bfcd856e3ad7ab20
 ---
 While financial conflicts of interest are usually managed at the individual 
 level, nonfinancial conflicts of interest (including intellectual ones) may be 
-managed at both the individual and group level. Group composition is influ­
-ential in any decision-making process and observational evidence shows a 
-correlation between the composition of GDGs and specific recommenda­
-tions. For example, physicians tend to recommend procedures that they 
-personally deliver, whereas multidisciplinary groups tend to be more con­
-servative in their recommendations (11, 12). If individuals with a particular 
+managed at both the individual and group level. Group composition is influential in any decision-making process and observational evidence shows a 
+correlation between the composition of GDGs and specific recommendations. For example, physicians tend to recommend procedures that they 
+personally deliver, whereas multidisciplinary groups tend to be more conservative in their recommendations (11, 12). If individuals with a particular 
 viewpoint have a dominant role in selecting GDG members, this can lead 
 to the selection of members that support a particular recommendation (so-
 called “committee stacking”) (13).
