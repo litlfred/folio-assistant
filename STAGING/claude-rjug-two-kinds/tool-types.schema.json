@@ -88,6 +88,20 @@
       "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
       "description": "A path relative to the repository root. No `..` segments."
     },
+    "DelimitedTextPath": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+      "description": "A repository path to a delimited text (CSV or TSV) file."
+    },
+    "WorkbookPath": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+      "description": "A repository path to a spreadsheet workbook."
+    },
     "Url": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "string",
@@ -339,8 +353,8 @@
   },
   "staging": {
     "branch": "claude/rjug-two-kinds",
-    "sha": "32625342c7b571849d615282eeee5856904ecab8",
+    "sha": "aa75c3a5321e66f5ba78114411fddc32fcee9315",
     "pr": "1571/merge",
-    "run": "36706805642"
+    "run": "36724153310"
   }
 }

@@ -131,6 +131,21 @@
       "seeAlso": "https://litlfred.github.io/crdm-methodology.html"
     },
     {
+      "@id": "cat-harness:Lane",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Lane",
+      "comment": "A swimlane of one BPMN process: part of that process, binding the Role that acts in it (`bindsRole`). Not itself a role — a role is a registry node, and many lanes in many processes bind it (#1168, B9b).",
+      "prefLabel": "Lane",
+      "definition": "A swimlane of one BPMN process: part of that process, binding the Role that acts in it (`bindsRole`). Not itself a role — a role is a registry node, and many lanes in many processes bind it (#1168, B9b).",
+      "notation": "cat-harness:Lane",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:LaneUsage",
       "@type": [
         "rdfs:Class",
@@ -1356,10 +1371,25 @@
         "skos:Concept"
       ],
       "label": "performedBy",
-      "comment": "The role that performs this activity.",
+      "comment": "The role that performs this activity: the registry Role its lane binds.",
       "prefLabel": "performedBy",
-      "definition": "The role that performs this activity.",
+      "definition": "The role that performs this activity: the registry Role its lane binds.",
       "notation": "cat-harness:performedBy",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:inLane",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "inLane",
+      "comment": "The BPMN lane this activity sits in, a Lane node of the same process.",
+      "prefLabel": "inLane",
+      "definition": "The BPMN lane this activity sits in, a Lane node of the same process.",
+      "notation": "cat-harness:inLane",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
