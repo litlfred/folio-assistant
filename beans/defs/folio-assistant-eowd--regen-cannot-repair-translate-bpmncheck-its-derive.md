@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-30T09:25:14Z
-updated_at: 2026-09-30T09:25:14Z
+updated_at: 2026-09-30T10:05:44Z
 parent: folio-assistant-1xhc
 ---
 
@@ -20,3 +20,6 @@ Same class as 14ve: regen's verdict ('a real defect') is wrong about a plain sta
 ## Done when
 - [ ] regen repairs translate-bpmn:check (a translate-bpmn:extract writer script, or an explicit override in writerFor — reported, not silent)
 - [ ] a test pins that every check regen maps to a writer names a writer that WRITES (a writer run that leaves its check failing on a fresh stale fixture is a finding)
+
+
+*2026-09-30, same day* — a SECOND check regen does not repair: audit:coverage:strict / audit:coverage:require-all. After a regen that reported '65 current, 0 regenerated', audit:coverage:strict still failed ('the committed sidecar … disagrees with this run'); 'bun run audit:coverage' fixed it at once. Its writer is not derivable by dropping ':strict' / ':require-all', so regen never runs it. Seen three times in this session. The Done-when test should cover every check whose writer is not '<check minus :check>'.
