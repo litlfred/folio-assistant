@@ -40,7 +40,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`swarm-management.md`](swarm-management.md) | Swarm management |  |
 | [`tool-graph.md`](tool-graph.md) | "What a Tool is, how it differs from a skill, and how the two are joined without being conflated." |  |
 | [`translation-support.md`](translation-support.md) | Translation support |  |
-| [`_data/`](_data/) | 5 files | |
+| [`_data/`](_data/) | 6 files | |
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |

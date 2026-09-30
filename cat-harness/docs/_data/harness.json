@@ -598,12 +598,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 5
         },
         {
           "id": "views",
@@ -628,10 +628,14 @@
         {
           "kind": "qa",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "themes",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "smart-trust: declares 3 graph(s) with no published viewer — code, fhir-artifact-index, qa. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 4 graph(s) with no published viewer — code, fhir-artifact-index, qa, themes. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
@@ -2471,7 +2475,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa"
+            "summary": "5: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa, smart-trust-themes"
           },
           {
             "key": "stickies",
