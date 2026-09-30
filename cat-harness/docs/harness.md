@@ -174,6 +174,33 @@ The first four are per declared directory. A fifth, a starting README, is per
 instance and is ranked harder still: an instance without one is not a gap
 somebody has not filled, it is an instance a reader cannot enter.
 
+### `coverage.process` is DECLARED and is not an obligation
+
+A directory may also name the BPMN process that **governs** it —
+`coverage.process`, a diagram's basename such as `document-ingestion`. The
+generated subgraph README then draws that diagram, links its `.bpmn` source and
+lists the subprocesses it calls, so the page a reader lands on says how the
+directory is worked rather than only what is in it.
+
+It sits apart from the four above in two ways.
+
+**It is not owed.** Most directories are not the subject of a process, so an
+absent `coverage.process` means NOT DECLARED and never "no process" — the same
+third state `readOnly` keeps — and a directory declaring none gets no such
+section and is not a finding. What *is* a finding, ranked major, is a declared
+name that resolves to no diagram: somebody said, and what they said points at
+nothing. There is correspondingly no `exempt.process`; declaring nothing
+already is the silence, and a waiver would be a second spelling of it.
+
+**It is declared rather than inferred, and the temptation is the point.**
+`document-ingestion.bpmn` starts on an event named *"A file lands in
+`uploads/`"*, so the directory could be matched out of that prose. An event's
+name is editorial text: rewording it would silently unlink the page, and
+nothing could tell that from a directory that never had a process. A diagram
+also touches several directories while being *about* one — `document-ingestion`
+reads `uploads/` and writes `library/` — which is the direction name-matching
+cannot see at all.
+
 ### The serialisation is the one obligation a Harness MAY NOT waive
 
 A Harness **MUST** serve `json`, `jsonld` and `schema.json` at a harnessed

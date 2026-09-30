@@ -719,3 +719,82 @@ describe("this repository declares nothing that fails to resolve — bean `bsay`
     expect(undeclared.length).toBeGreaterThan(0);
   });
 });
+
+/**
+ * `coverage.process` — asked ONLY of a directory that declares one.
+ *
+ * The falsifier here is the mirror of the bean's: declaring nothing must NOT
+ * appear, and declaring a name that resolves to nothing must. An axis that
+ * reported the first would put every directory in the report, which is the
+ * wall this check's own header says somebody switches off.
+ *
+ * Fixture instances in a temporary directory; nothing walks the real corpus.
+ */
+function processInstance(opts: { process?: string; withDiagram?: boolean }): {
+  root: string;
+  cleanup: () => void;
+} {
+  const base = mkdtempSync(join(tmpdir(), "coverage-process-"));
+  const root = join(base, "inst");
+  mkdirSync(join(root, "thing"), { recursive: true });
+  mkdirSync(join(root, "processes"), { recursive: true });
+  if (opts.withDiagram) {
+    writeFileSync(
+      join(root, "processes", "demo-flow.bpmn"),
+      `<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL">
+  <bpmn:process id="Process_Demo" name="Demo flow" />
+</bpmn:definitions>
+`,
+    );
+  }
+  writeDeclaration(
+    root,
+    JSON.stringify({
+      name: "inst",
+      directories: [
+        { id: "processes", path: "processes/", dependents: "skip", graphKinds: ["processes"] },
+        {
+          id: "thing",
+          path: "thing/",
+          dependents: "reproduce",
+          graphKinds: ["cat-harness"],
+          ...(opts.process === undefined ? {} : { coverage: { process: opts.process } }),
+        },
+      ],
+    }),
+  );
+  return { root, cleanup: () => rmSync(base, { recursive: true, force: true }) };
+}
+
+describe("coverage.process is a declared-only criterion", () => {
+  it("declaring NO process is not a finding — a directory owes none", () => {
+    const { root, cleanup } = processInstance({});
+    expect(auditInstance(root).findings.map((f) => f.criterion)).not.toContain("process");
+    cleanup();
+  });
+
+  it("declaring one that resolves is not a finding either", () => {
+    const { root, cleanup } = processInstance({ process: "demo-flow", withDiagram: true });
+    expect(auditInstance(root).findings.map((f) => f.criterion)).not.toContain("process");
+    cleanup();
+  });
+
+  it("declaring one that names no diagram is MAJOR and `unresolvable`", () => {
+    const { root, cleanup } = processInstance({ process: "demo-flow", withDiagram: false });
+    const f = auditInstance(root).findings.filter((x) => x.criterion === "process");
+    expect(f).toHaveLength(1);
+    expect(f[0]?.severity).toBe("major");
+    expect(f[0]?.unmet).toBe("unresolvable");
+    cleanup();
+  });
+
+  it("the message names the DIRECTORY and the PROCESS, so the repair is locatable", () => {
+    const { root, cleanup } = processInstance({ process: "demo-flow", withDiagram: false });
+    const f = auditInstance(root).findings.find((x) => x.criterion === "process")!;
+    expect(f.directory).toBe("thing");
+    expect(f.detail).toContain("demo-flow");
+    expect(f.detail).toContain("thing/");
+    cleanup();
+  });
+});

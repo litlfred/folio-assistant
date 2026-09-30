@@ -1157,12 +1157,63 @@ export const SubgraphCoverageSchema = z.object({
    * belongs here.
    */
   serialisations: z.string().min(1).optional(),
+  /**
+   * The BPMN process that GOVERNS this directory — a diagram's basename,
+   * without `.bpmn`, as `document-ingestion`.
+   *
+   * Owner, 2026-09-29: *"show highlevel (sub)process bpmn on the uploads
+   * page."* The uploads page is the generated subgraph README, and this is the
+   * field that tells it which diagram to draw.
+   *
+   * ## DECLARED, and the temptation not to is the whole reason it exists
+   *
+   * `document-ingestion.bpmn` opens on a start event named *"A file lands in
+   * uploads/"*. The directory is right there in the prose, so the link could
+   * be inferred by matching the path against every start event's name — and
+   * that is exactly the inference this repository keeps paying for. An event's
+   * name is EDITORIAL text: rewording it to *"a source is dropped"* would be
+   * an improvement to the diagram and would silently unlink the page, with no
+   * gate able to tell the unlinking from a directory that never had a process.
+   * The same argument `check-subgraph-coverage`'s header already makes about
+   * `visualiser`: *a declaration inside the file is the contract*.
+   *
+   * It is also many-to-one in the direction inference cannot see. A diagram
+   * may touch several directories (`document-ingestion` reads `uploads/` and
+   * writes `library/`) while only ONE of them is the directory the process is
+   * *about*. Name-matching would give `library/` the same claim.
+   *
+   * ## Absent means NOT DECLARED, never "no process"
+   *
+   * The standing rule, and the same one `readOnly` states two fields down.
+   * A directory that says nothing has not asserted that no process governs it;
+   * it has not answered. So a directory declaring none gets no process section
+   * on its README and is **not** a finding — unlike `visualiser`, this is not
+   * an obligation every directory owes, and treating silence as a gap would
+   * put 20-odd rows in a report that means nothing by them.
+   *
+   * What IS a finding is a declared name that resolves to no diagram:
+   * somebody said, and what they said points at nothing.
+   * `check:subgraph-coverage` reports that as `unresolvable`, naming the
+   * directory and the process, and the generated README says *could not
+   * determine* rather than quietly dropping the section — a printed absence
+   * and a real absence must not look alike.
+   *
+   * ## No `exempt.process`
+   *
+   * A waiver records a considered "we are not doing this" against an
+   * obligation. There is no obligation here, so there is nothing to waive:
+   * declaring nothing already IS the silence, and an `exempt` entry would be a
+   * second spelling of it, free to disagree.
+   */
+  process: z.string().min(1).optional(),
   exempt: z
     .object({
       visualiser: z.string().min(1).optional(),
       docs: z.string().min(1).optional(),
       skill: z.string().min(1).optional(),
       // NO `serialisations` — see the field above. Not an omission.
+      // NO `process` either, and for the opposite reason: there is no
+      // obligation to waive. Declaring nothing already means "not declared".
     })
     .optional(),
 });
