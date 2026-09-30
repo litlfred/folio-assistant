@@ -6,11 +6,9 @@
 | Terminology | [`terminology-management`](../reference/skills/terminology-management.html) | code systems / value sets |
 | Review | [`content-review`](../reference/skills/content-review.html) | criteria-based |
 
-The table is the authoring skills, not the DAK. A DAK has **nine components**,
-per the SMART Base 1.0.0 logical model `DAK` (*"a complete Digital Adaptation
-Kit with metadata and all 9 DAK components"*). They were eight until
-scheduling logic was split out of decision-support logic. Against the skills
-above:
+The table is the authoring skills, not the DAK. A DAK has **ten components**
+(owner, 2026-09-30): the original eight, plus **scheduling logic**, split out
+of decision-support logic, and **test scenarios**. Against the skills above:
 
 | # | DAK component | covered above by |
 |---|---|---|
@@ -23,9 +21,31 @@ above:
 | 7 | Scheduling logic | `dmn-authoring` (decision tables) |
 | 8 | Indicators and monitoring | — |
 | 9 | Functional and non-functional requirements | — |
+| 10 | Test scenarios | — |
 
 A dash means *no skill in this table*. It does not mean no skill anywhere. It
-is where to look before starting a component. Source: slide 3 of
-`cat-harness/library/kg-folio-asst-2026-09-30`, which reproduces WHO's
-nine-card figure. The speaker notes on that slide still say "8 components".
-Trust the figure and the logical model over the notes.
+is where to look before starting a component.
+
+**Scheduling logic is authored, but not yet formalized.** It is written as DMN
+decision tables, like decision-support logic. But it may not yet have its own
+L2 logical-model component or L3 artefact (owner, 2026-09-30). That is why the
+sources count differently, and the difference is recorded here:
+
+- WHO's DAK figure (slide 3 of `cat-harness/library/kg-folio-asst-2026-09-30`)
+  shows nine cards, with scheduling logic as #7, and testing drawn beside them.
+- The SMART Base `DAK` logical model, as `DAK_COMPONENTS` in
+  `schemas/block-kinds.ts` pins it from `DAK.fsh`, declares nine fields:
+  test scenarios **in**, and scheduling logic carried **inside**
+  decision-support logic.
+- The speaker notes on that slide said eight.
+- WHO's IG starter kit, *L2 DAK authoring*
+  (<https://smart.who.int/ig-starter-kit/l2_dak_authoring.html>; source
+  `input/pagecontent/l2_dak_authoring.md` in
+  `WorldHealthOrganization/smart-ig-starter-kit`, read from `main` on
+  2026-09-30) **disagrees with itself**. Its introduction counts *"9
+  interlinked components"* with scheduling logic as #7 and no testing. Its own
+  table counts 9 with **test scenarios** as #9, and scheduling logic inside
+  decision-support logic.
+
+Ten is the owner's count. A DAK read through the logical model carries nine
+until scheduling logic is formalized as its own L2 component.

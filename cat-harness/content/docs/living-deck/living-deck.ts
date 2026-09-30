@@ -8,7 +8,7 @@ export default webpage({
     { id: "overview", block: "overview" },
     { id: "slide-01", title: "1 — Human and agentic actors and the SMART Guidelines content levels", block: "slide-01" },
     { id: "slide-02", title: "2 — Accessing the WHO L1 corpus", block: "slide-02" },
-    { id: "slide-03", title: "3 — The nine components of an L2 DAK", block: "slide-03" },
+    { id: "slide-03", title: "3 — The ten components of an L2 DAK", block: "slide-03" },
     { id: "slide-04", title: "4 — Existing L1/L2/L3 schemas", block: "slide-04" },
     { id: "slide-05", title: "5 — Tie the L1/L2/L3 models into the larger KG", block: "slide-05" },
     { id: "slide-06", title: "6 — Roles, tasks, skills and tests in the publication lifecycle", block: "slide-06" },

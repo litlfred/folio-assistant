@@ -9,12 +9,20 @@
 | 7 | Scheduling logic | decision tables for scheduling by care plan (formerly part of 6) |
 | 8 | Indicators and monitoring | numerators and denominators; person-centred data linked to aggregate |
 | 9 | Functional and non-functional requirements | key functions and requirements of a digital tracking and decision-support system |
+| 10 | Test scenarios | test data and scenarios to check a system against the other nine |
 
-Beside them, the slide places **Testing: test data and test harness**.
+The figure draws the tenth, **testing: test data and test harness**, beside the nine cards rather than as one of them.
 
-**Sources:** SMART Base 1.0.0 logical model `DAK` ("all 9 DAK components");
+**Sources:** the owner, 2026-09-30 (ten: the original eight plus scheduling
+logic and test scenarios); the SMART Base 1.0.0 `DAK` logical model;
 [the L2 artefacts and their skills](guides/who-smart-dak.html).
 
-> **Misaligned — inside the snapshot:** the slide's speaker notes say "8
-> components". The figure and the logical model say 9. The notes predate
-> scheduling logic being split out of decision-support logic.
+> **Misaligned, in three directions:** the speaker notes said 8. The figure
+> shows 9 cards, with testing beside them. The SMART Base `DAK` logical model,
+> as the repository pins it, declares 9 fields: test scenarios **in**,
+> scheduling logic carried **inside** decision-support logic. The owner's
+> count is 10. WHO's IG starter kit disagrees with itself the same way: its
+> introduction counts 9 with scheduling and no testing, and its table counts 9
+> with test scenarios and scheduling inside decision support. Scheduling logic is authored as DMN decision tables but may not
+> yet be formalized as its own L2 component or L3 artefact, and that is the
+> gap the logical model shows. The notes are corrected in the owner's copy.

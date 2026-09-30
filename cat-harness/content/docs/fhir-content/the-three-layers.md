@@ -5,7 +5,7 @@ FHIR content generally:
 | layer | what it holds | form |
 |---|---|---|
 | **L1** Narrative | narrative guidance — the publication a recommendation comes from | prose, figures, tables |
-| **L2** Operational | the Digital Adaptation Kit — its nine components, from health interventions to functional requirements | BPMN, DMN, structured tables |
+| **L2** Operational | the Digital Adaptation Kit — its ten components, from health interventions to test scenarios | BPMN, DMN, structured tables |
 | **L3** Machine readable | the FHIR Implementation Guide | FSH → FHIR resources |
 | L4 Executable | reference applications and services that execute the static algorithms | software |
 | L5 Dynamic | dynamic algorithms trained and optimised on data — the precision-health model | models, analytics |

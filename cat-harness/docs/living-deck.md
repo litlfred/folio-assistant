@@ -114,7 +114,7 @@ the slide as Cloudflare R2 storage and the Cloudflare edge network.
 > CDN, GitHub Pages alone, another object store + CDN) and what has to be
 > measured before one is chosen. Read this slide as that proposal.
 
-## 3 — The nine components of an L2 DAK
+## 3 — The ten components of an L2 DAK
 {: #slide-03 data-fa-label="sec:living-deck-slide-03" }
 
 [✎ Edit](https://github.com/litlfred/folio-assistant/edit/main/content/docs/living-deck/slide-03.md){: .fa-node-edit title="Edit content/docs/living-deck/slide-03.md" } <span class="fa-qa-badges"><span class="fa-qa-badge fa-qa-unswept fa-qa-fam-block" title="Content QA: not swept — no sidecar for this block" aria-label="Content QA: not swept — no sidecar for this block"><span class="fa-qa-tag">QA</span></span> <span class="fa-qa-badge fa-qa-unswept fa-qa-fam-translation" title="Translation QA: not swept — no sidecar for this block" aria-label="Translation QA: not swept — no sidecar for this block"><span class="fa-qa-tag">TR</span></span></span>
@@ -130,15 +130,23 @@ the slide as Cloudflare R2 storage and the Cloudflare edge network.
 | 7 | Scheduling logic | decision tables for scheduling by care plan (formerly part of 6) |
 | 8 | Indicators and monitoring | numerators and denominators; person-centred data linked to aggregate |
 | 9 | Functional and non-functional requirements | key functions and requirements of a digital tracking and decision-support system |
+| 10 | Test scenarios | test data and scenarios to check a system against the other nine |
 
-Beside them, the slide places **Testing: test data and test harness**.
+The figure draws the tenth, **testing: test data and test harness**, beside the nine cards rather than as one of them.
 
-**Sources:** SMART Base 1.0.0 logical model `DAK` ("all 9 DAK components");
+**Sources:** the owner, 2026-09-30 (ten: the original eight plus scheduling
+logic and test scenarios); the SMART Base 1.0.0 `DAK` logical model;
 [the L2 artefacts and their skills](guides/who-smart-dak.html).
 
-> **Misaligned — inside the snapshot:** the slide's speaker notes say "8
-> components". The figure and the logical model say 9. The notes predate
-> scheduling logic being split out of decision-support logic.
+> **Misaligned, in three directions:** the speaker notes said 8. The figure
+> shows 9 cards, with testing beside them. The SMART Base `DAK` logical model,
+> as the repository pins it, declares 9 fields: test scenarios **in**,
+> scheduling logic carried **inside** decision-support logic. The owner's
+> count is 10. WHO's IG starter kit disagrees with itself the same way: its
+> introduction counts 9 with scheduling and no testing, and its table counts 9
+> with test scenarios and scheduling inside decision support. Scheduling logic is authored as DMN decision tables but may not
+> yet be formalized as its own L2 component or L3 artefact, and that is the
+> gap the logical model shows. The notes are corrected in the owner's copy.
 
 ## 4 — Existing L1/L2/L3 schemas
 {: #slide-04 data-fa-label="sec:living-deck-slide-04" }
@@ -167,7 +175,7 @@ exactly one of `url`, `canonical` or an inline `instance`.
 
 The DAK logical model (SMART Base 1.0.0) is a complete kit with its metadata
 (id, name, title, description, version, status, publication, preview and
-canonical URLs, licence, copyright year, publisher) and all nine components. Each
+canonical URLs, licence, copyright year, publisher) and its components: nine in this model, ten by the owner's count (see slide 3). Each
 component is held as a **source reference**, not inline: by URL, by canonical or
 as an instance. That indirection is what lets the kit's parts be nodes of a
 larger graph.
@@ -364,7 +372,7 @@ repository: <https://github.com/litlfred/folio-assistant>
 |---|---|---|---|
 | 1 | docs said SMART has three layers | five (Mehl et al. 2021, the primary source) | fixed on this branch |
 | 2 | Cloudflare named as *the* CDN; 10 TB, Data Hub, "Swiss Observatory" appear nowhere else | undecided — the repo keeps the CDN swappable | recorded as proposed: bean `l9v6` |
-| 3 | speaker notes: 8 components | 9 (SMART Base `DAK`) | snapshot only |
+| 3 | notes 8; figure 9; logical model 9, scheduling not its own field | 10: the original 8 + scheduling logic + test scenarios (owner) | scheduling logic not yet formalized as L2/L3 |
 | 8 | UML lacks Voice Profile | the generated diagram | page shows current |
 | 9 | target repository names | the monorepo today | target vs current |
 | 11 | "not yet live" links | published under folio-assistant | snapshot only |
