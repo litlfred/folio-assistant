@@ -34,12 +34,14 @@
  * Usage:
  *   bun run cat-harness/scripts/check-model-languages.ts [--instance ROOT]
  */
+import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import {
   MODEL_REGISTRY_DIR,
   MODEL_REGISTRY_FILENAME,
+  NOT_DISCLOSED,
   parseModelRegistry,
   validatedLanguages,
   type ModelEntry,
@@ -60,6 +62,36 @@ export interface ModelLanguageReport {
   readonly unverified: ModelEntry[];
   /** `human-validated` whose evidence has gone stale is not this check's job. */
   readonly problems: string[];
+}
+
+/**
+ * Model ids the corpus RECORDS (`model` / `agent_model` in committed JSON)
+ * that the registry does not declare — ADVISORY (#1168 B10c, owner
+ * 2026-09-30: "Type + advisory").
+ *
+ * Advisory rather than failing, because the registry is populated only by
+ * people: an agent adding an entry to make this list empty would manufacture
+ * the evidence the registry exists to distrust (see its `$comment`). So this
+ * says which ids a person has not yet looked at; it never asks an agent to.
+ * `not-disclosed` is a declared value, not an id, and is never reported.
+ */
+export function unregisteredModelIds(
+  repoRoot: string,
+  registered: ReadonlySet<string>,
+): { id: string; count: number }[] {
+  const files = spawnSync("git", ["ls-files", "*.json"], { cwd: repoRoot, encoding: "utf8" });
+  if (files.status !== 0) throw new Error(`git ls-files failed in ${repoRoot}`);
+  const counts = new Map<string, number>();
+  for (const rel of files.stdout.split("\n").filter(Boolean)) {
+    const path = join(repoRoot, rel);
+    if (!existsSync(path)) continue;
+    for (const m of readFileSync(path, "utf8").matchAll(/"(?:model|agent_model)":\s*"([^"]+)"/g)) {
+      const id = m[1]!;
+      if (id === NOT_DISCLOSED || registered.has(id)) continue;
+      counts.set(id, (counts.get(id) ?? 0) + 1);
+    }
+  }
+  return [...counts].map(([id, count]) => ({ id, count })).sort((x, y) => y.count - x.count || x.id.localeCompare(y.id));
 }
 
 export function registryPath(instanceRoot: string): string {
@@ -125,6 +157,14 @@ if (import.meta.main) {
         `  and a person adds entries. Until then the communication-language determination has\n` +
         `  three inputs rather than four, and says so.`,
     );
+  }
+  // Advisory: ids the corpus records that no registry entry declares.
+  const known = new Set([...report.usable, ...report.selfReported, ...report.unverified].map((m) => m.id));
+  const unregistered = unregisteredModelIds(repoRootFor(ROOT), known);
+  if (unregistered.length > 0) {
+    console.log(`\n  Model ids recorded in the corpus that the registry does not declare (advisory):`);
+    for (const u of unregistered) console.log(`  · ${u.id} — ${u.count} record(s)`);
+    console.log(`  A person adds an entry once they have looked; an agent does not (see the registry's $comment).`);
   }
   // Never red on an empty or unverified registry — see the header. Red only
   // on a registry this code could not read, which `parseModelRegistry`
