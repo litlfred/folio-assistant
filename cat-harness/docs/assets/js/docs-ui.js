@@ -4661,7 +4661,16 @@
       if (side && getComputedStyle(side).position === "fixed") {
         var sb = side.getBoundingClientRect();
         // Only a side bar docked to the LEFT edge and narrower than the page.
-        if (sb.left <= 0 && sb.right < window.innerWidth / 2) left = sb.right;
+        // Its RESTING edge, which is where the page content starts: hovered
+        // or focused, `.side-bar` widens to the open nav (264 px) OVER the
+        // content, and above this band (z-index 100 against 89). Taking that
+        // edge left the text between the rail and 264 px readable beside the
+        // handle -- CI's Chrome rests the pointer on the rail (#1693).
+        if (sb.left <= 0 && sb.right < window.innerWidth / 2) {
+          var main = side.nextElementSibling;
+          var content = main && main.classList.contains("main") ? main.getBoundingClientRect().left : sb.right;
+          left = Math.max(0, Math.min(sb.right, content));
+        }
       }
       band.style.top = hb.top + "px";
       band.style.height = hb.height + "px";

@@ -119,7 +119,10 @@ function visibleTextUnderHandle(page: Page) {
         for (const x of [b.left + 1, (b.left + b.right) / 2, b.right - 1]) {
           const xx = Math.min(Math.max(x, 0), window.innerWidth - 1);
           const top = document.elementFromPoint(xx, cy);
-          if (top && !top.closest(".fa-glass-band, .fa-glass-handle")) {
+          // Visible means the reader sees THIS text there: the element on top
+          // is the text's own element or inside it. Anything else on top (the
+          // band, the handle, an opened nav) is covering it.
+          if (top && (p.contains(top) || top.contains(p))) {
             // Say what the reader sees there and where the band is, so a
             // failure in a browser we cannot run locally names its cause.
             const bandEl = document.querySelector(".fa-glass-band") as HTMLElement | null;
@@ -183,6 +186,33 @@ test("the band sits behind the handle at its height, and stops at a FIXED side b
     return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest(".fa-glass-handle") !== null;
   });
   expect(onTop).toBe(true);
+});
+
+test("with the pointer resting on the side bar, the band still starts at the page's content, not the opened nav", async ({ page }) => {
+  // CI's Chrome 153 found this: the pointer at rest over the rail makes
+  // `.side-bar:hover` widen it to the OPEN nav width (264 px). The band took
+  // that edge and left the text between the collapsed rail and 264 px
+  // readable beside the handle at every scroll position. The opened nav
+  // paints above the band anyway (z-index 100 against 89), so the band's left
+  // edge is where the page content starts, whatever the rail is doing.
+  await open(page, 1280, 900);
+  await page.mouse.move(20, 400);
+  const railOpen = await page.evaluate(() => document.querySelector(".side-bar")!.matches(":hover"));
+  expect(railOpen).toBe(true);
+  for (const y of [300, 600, 900]) {
+    await scrollTo(page, y);
+    expect(await visibleTextUnderHandle(page)).toEqual([]);
+  }
+  // The pointer leaves and the nav closes WITHOUT a scroll, so the band keeps
+  // the edge it last measured. Measured on the rail's hover width, that edge
+  // would leave the text between the rail and 264 px exposed.
+  await page.mouse.move(700, 600);
+  await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
+  expect(await page.evaluate(() => document.querySelector(".side-bar")!.matches(":hover"))).toBe(false);
+  expect(await visibleTextUnderHandle(page)).toEqual([]);
+  const bb = (await page.locator(band).boundingBox())!;
+  const mainLeft = await page.evaluate(() => document.querySelector(".main")!.getBoundingClientRect().left);
+  expect(Math.round(bb.x)).toBeLessThanOrEqual(Math.round(mainLeft));
 });
 
 test("scrolled, the handle is still a keyboard-reachable button with its name", async ({ page }) => {
