@@ -1,10 +1,10 @@
 ---
 # folio-assistant-3r47
 title: 'Drop the per-kind graph classes (KGraph, SkillGraph, VoiceGraph, …): a directory is a Subgraph holding GraphKind individuals'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-30T10:04:38Z
-updated_at: 2026-09-30T10:04:38Z
+updated_at: 2026-09-30T19:12:25Z
 parent: folio-assistant-xsqm
 ---
 
@@ -29,3 +29,5 @@ Asked *"KGraph needs better name? CatHarness? … what is bootstrap's? consisten
 ## Not now
 
 Owner: keep the primary focus on the bootstrap / bootstrap-tools separation. Needed for that only: bootstrap's `bs:` vocabulary is its own terms, and the harness's classes are minted in the harness's namespace (done in #1538); the classes themselves go here.
+
+_2026-09-30T19:12:25Z_ — Claimed by next/3r47 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
