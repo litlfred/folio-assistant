@@ -3,7 +3,7 @@
 
 The content-type adapters -- `DocumentContentAdapter` and the `PaperContentAdapter` that extends it. Code rather than schema: they are the behaviour the profiles select between, and `content-profiles` is the skill that says which axis they sit on.
 
-Part of [C@T Harness](../README.md), declared as `cat-harness-adapters`, holding `code`.
+Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-adapters`, holding `code`.
 
 | file | what it is | used by |
 |---|---|---|

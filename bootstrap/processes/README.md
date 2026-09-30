@@ -3,7 +3,7 @@
 
 bootstrap's Processes: `initialize-harness.bpmn`, the only one an Actor starts; `discussion.bpmn`, which it calls to ask the Requestor; and `log-message.bpmn`, which any step may call to record what it is doing. `ns.jsonld` defines the elements these diagrams add to BPMN (skill, role, precondition), written with the prefix `bootstrap.processes:`.
 
-Part of [Bootstrap](../README.md), declared as `processes`, holding `processes`.
+Part of [Bootstrap](../README.md) 0.1.0, declared as `processes`, holding `processes`.
 
 | file | what it is | used by |
 |---|---|---|

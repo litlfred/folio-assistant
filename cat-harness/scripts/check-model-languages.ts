@@ -22,7 +22,7 @@
  * judgement in this file. Refusing it would make the gate red on a repository
  * that has simply not had a person look at a model yet, and a gate somebody
  * switches off protects nothing. Reporting it keeps the zero visible, which
- * is the whole reason `folio-model-registry/v1` ships empty: an agent is not
+ * is the whole reason `model-registry/1.0.0` ships empty: an agent is not
  * a valid source for the evidence the schema asks for.
  *
  * **Unparseable is exit 2 rather than "no models".** Reporting a malformed

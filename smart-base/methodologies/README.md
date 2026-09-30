@@ -3,7 +3,7 @@
 
 The methodologies `smart-base` adopts from its own corpus -- `diig`, the WHO/ITU Digital Implementation Investment Guide. Separate from the harness's `methodologies` because DIIG is a programme-investment method owned by this layer. (It was declared beside a `smart-kg-methodologies` entry holding GRADE until 2026-09-24, when GRADE became a skill plus code lists — bean `wg7r`.) `methodology-adoption` SS4 places a method by ownership so that extraction is literal -- this directory lifts out with this entry and nothing else moves. Issue #877, bean `wkt1`.
 
-Part of [C@T Harness](../../cat-harness/README.md), declared as `smart-base-methodologies`, holding `methodology`.
+Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `smart-base-methodologies`, holding `methodology`.
 
 | file | what it is | used by |
 |---|---|---|
