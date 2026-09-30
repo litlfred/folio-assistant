@@ -950,6 +950,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
   },
   {
+    script: "check:instance-themes",
+    kind: "report",
+    reason:
+      "prints each declaring instance's themes and their kinds; `check:instance-themes:check` is the gating form and is wired",
+  },
+  {
     script: "check:navbar-consistency",
     kind: "report",
     reason:
