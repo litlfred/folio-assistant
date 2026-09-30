@@ -23,7 +23,8 @@ describe("the catalogue's rows lead somewhere (qgjh)", () => {
     const pages = [...nodes.matchAll(/href="[^"#]*\/((?:item|collection)-[^"]+\.html)"/g)].map((m) => m[1]!);
     // The premise: a table with no links would pass the loop below.
     expect(pages.length).toBeGreaterThan(0);
-    for (const p of pages) expect(existsSync(join(INSTANCE, "library", p)), p).toBe(true);
+    // `site/` since bean `2b5s`: the replica left `library/`, which is corpus only.
+    for (const p of pages) expect(existsSync(join(INSTANCE, "site", p)), p).toBe(true);
   });
 
   it("links a held-as library id to the viewer page, which exists", () => {

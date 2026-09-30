@@ -51,10 +51,10 @@ const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
 /**
- * A page the generator wrote. `community-list.html` is the library landing —
+ * A page the generator wrote. `community-list.html` is the replica's landing —
  * the page a reader arrives on, so the one whose folio matters most.
  */
-const PAGE_FILE = join(REPO, "who-iris", "library", "community-list.html");
+const PAGE_FILE = join(REPO, "who-iris", "site", "community-list.html");
 const PAGE = existsSync(PAGE_FILE) ? readFileSync(PAGE_FILE, "utf8") : "";
 
 /**
@@ -134,7 +134,7 @@ test.describe("the glass comes down on a library page", () => {
   });
 
   test("and on the OTHER mount route, where a relative href would 404", async ({ page }) => {
-    // `who-iris/library/` is served at `/who-iris/` and `who-iris/docs/` at
+    // `who-iris/site/` is served at `/who-iris/` and `who-iris/docs/` at
     // `/docs/who-iris/`. One generated file, two depths below the site root —
     // which is the whole reason the root is derived in the browser.
     await serve(page, "/docs/who-iris/index.html");

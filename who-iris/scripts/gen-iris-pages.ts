@@ -87,8 +87,28 @@ const NODES = join(INSTANCE, "catalogue", "nodes");
  * would appear in the L1 listing as a document titled "assets" with no
  * sections. The covers therefore stay where the catalogue's `localPath`
  * already names them, and nothing about `yl5w` has to move again.
+ *
+ * ## The replica LEFT `library/` on 2026-09-30 — bean `2b5s`
+ *
+ * Owner, choosing *"site/ + publish covers"*: the replica pages move to their
+ * own directory, `site/`, which is the instance root; `library/` holds the
+ * corpus only. The 2026-09-21 words place the KG — corpus and materialized
+ * content — in `library/`, and say nothing about where its RENDERING lives.
+ * Keeping the rendering there meant the build copied the whole corpus (1,367
+ * sidecars) to two published routes as if it were pages, because a mount
+ * copies the directory whose `index.html` it found.
+ *
+ * So `LIB` is now the CORPUS side only — the covers the replica shows and the
+ * `withheld.json` this generator writes — and `SITE` is where the pages go.
+ * The covers are NOT copied into `site/`: a page references
+ * `../library/<slug>-cover.png`, which resolves in the checkout, and the
+ * mount's referenced-asset rule publishes exactly the files a page embeds
+ * (`referencedAssets` in `mount-instance-docs.ts`). A copy here would be a
+ * second committed binary of one image, free to drift from the one the
+ * catalogue's `localPath` names.
  */
 const LIB = join(INSTANCE, "library");
+const SITE = join(INSTANCE, "site");
 const DOCS = join(INSTANCE, "docs");
 
 /**
@@ -229,7 +249,7 @@ const ARCH_SVG = join(REPO_ROOT, "cat-harness", "docs", "assets", "img", "kg-to-
  * through — are enumerated once here.
  */
 const PAGES = {
-  library: {
+  site: {
     /** The replica: the KG rendered. */
     fixed: ["index", "community-list"],
     /** One page per collection and per item; prunable when the node is gone. */
@@ -257,8 +277,8 @@ export const SIDES = Object.keys(PAGES) as Side[];
 const ownedPattern = (names: readonly string[]): RegExp =>
   new RegExp(`^(${names.join("|")})\\.html$`);
 
-/** What it owns in `library/`. */
-export const OWNED_LIB = ownedPattern([...PAGES.library.fixed, ...PAGES.library.families]);
+/** What it owns in `site/`. */
+export const OWNED_SITE = ownedPattern([...PAGES.site.fixed, ...PAGES.site.families]);
 
 /** What it owns in `docs/`. */
 export const OWNED_DOCS = ownedPattern([...PAGES.docs.fixed, ...PAGES.docs.families]);
@@ -279,7 +299,7 @@ export const fixedPagesOf = (side: Side): string[] =>
   PAGES[side].fixed.map((n) => `${n}.html`);
 
 /** The pattern that governs one side. */
-export const ownedOn = (side: Side): RegExp => (side === "library" ? OWNED_LIB : OWNED_DOCS);
+export const ownedOn = (side: Side): RegExp => (side === "site" ? OWNED_SITE : OWNED_DOCS);
 
 /**
  * Where a committed file is actually served from.
@@ -458,8 +478,12 @@ function assetHref(
  * What the site must not SERVE from `library/`, for the mount to honour
  * (`WITHHELD_FILE` in `mount-instance-docs.ts`, bean `cw35`).
  *
- * Removing a link does not stop a URL: the mount copies `library/` wholesale,
- * so a refused publication's cover and its ingested text stayed reachable. For
+ * Removing a link does not stop a URL: the mount copied `library/` wholesale
+ * until bean `2b5s`, so a refused publication's cover and its ingested text
+ * stayed reachable. It no longer mounts `library/` at all; it publishes the
+ * files a replica page EMBEDS, and it still consults this list for each, so a
+ * page that came to embed a withheld cover would be refused rather than
+ * served. For
  * every item whose ORIGINAL bitstream's publication gates block, its whole
  * library entry is withheld — the text, figures and structure are derived from
  * the same bytes under the same licence. A blocked THUMBNAIL is withheld on its
@@ -582,7 +606,7 @@ function coverSrc(n: Node): { src: string; w: number; h: number; masked: boolean
   // A literal prefix is a second answer to "where is this page", and it goes
   // stale the moment the first answer moves. `relative()` asks the one answer.
   return {
-    src: encPath(relative(LIB, abs).split(sep).join("/")),
+    src: encPath(relative(SITE, abs).split(sep).join("/")),
     w: b.pixelWidth,
     h: b.pixelHeight,
     // Read off the bitstream rather than assumed for every cover: a future
@@ -644,7 +668,7 @@ function banner(): string {
  * implementation here to drift.
  *
  * **The pattern lives in this file and not in the platform**, because it is a
- * statement about THIS instance's routes: `who-iris/library/` is served at
+ * statement about THIS instance's routes: `who-iris/site/` is served at
  * `/who-iris/` and `who-iris/docs/` at `/docs/who-iris/`, exactly as the
  * comment below records. A platform module that knew that would be the
  * platform knowing about one library.
@@ -679,7 +703,7 @@ const FOLIO_ROUTE = /^(.*?)(?:docs\/)?who-iris\//;
  * chrome. Matching it would put who-iris's furniture on a cat-harness route.
  *
  * #879's own gate agrees by construction: who-iris declares
- * `folioMount.roots` as `["library/", "docs/"]`, and the viewer is under
+ * `folioMount.roots` as `["site/", "docs/"]`, and the viewer is under
  * neither, so nothing asks that page for the marker.
  */
 const FOLIO_MOUNT = folioMountFragment(FOLIO_ROUTE);
@@ -688,7 +712,7 @@ const FOLIO_MOUNT = folioMountFragment(FOLIO_ROUTE);
  * One replica page.
  *
  * `side` is not decoration: the two sides are MOUNTED AT DIFFERENT ROUTES —
- * `who-iris/library/` at `/who-iris/` and `who-iris/docs/` at
+ * `who-iris/site/` at `/who-iris/` and `who-iris/docs/` at
  * `/docs/who-iris/` — so a relative link written on one side and rendered on
  * the other resolves to a path that does not exist. Both sides carried exactly
  * that, and both 404ed on the deployed site: the shared chrome's
@@ -710,11 +734,11 @@ function page(
   /**
    * WHICH SITE THIS PAGE IS ON, which is now three answers rather than two.
    *
-   * `library` and `docs` are who-iris's own tree, mounted under its routes.
+   * `site` and `docs` are who-iris's own tree, mounted under its routes.
    * `harness` is a kind viewer published into cat-harness's site at
    * `/<handler>/<kind>/<subject>/` — a different site, with its own chrome.
    */
-  side: "library" | "docs" | "harness",
+  side: "site" | "docs" | "harness",
   /**
    * The graph kinds this page documents, as `<meta name="documents">` — the
    * page names what it is about, so the directory need not name the page
@@ -1065,7 +1089,7 @@ function page(
   failing at a line far from the mistake.)
 -->
 <nav class="main"><div class="wrap">
-  ${side === "library"
+  ${side === "site"
     ? `<a href="community-list.html">Communities &amp; Collections</a>`
     : `<span>Communities &amp; Collections</span>`}
   <span>Browse IRIS</span><span>Statistics</span><span>About</span><span>Contact</span><span>Help</span>
@@ -1404,17 +1428,33 @@ function replicaPageOf(n: Node): string | undefined {
 }
 
 /**
- * The catalogue page's way to the replica, relative (bean `qgjh`). The
- * replica mounts at its KIND route, `<kind>/<instance>`, which
- * `withRoutes` defines and which every mounted instance has — unlike the
- * themed root, which only one kind can claim. Relative, so it holds under the
- * bare site, the project baseurl and a staging preview alike.
+ * The catalogue page's way to the replica, relative (bean `qgjh`).
+ *
+ * The replica is the INSTANCE ROOT, and since bean `2b5s` that is the only
+ * route it answers at: `site/` shares the `docs` kind with `docs/`, and
+ * `withRoutes` gives the kind route to the sibling that is not the instance
+ * root. It used to link the kind route `library/who-iris`, which is now a
+ * redirect to the library viewer — a link that would land on a different page
+ * from the one it names. So the route is ASKED of `withRoutes`, fed from the
+ * declaration, rather than spelled: the declaration says which directory is
+ * the root, and `withRoutes` says where that puts it. Relative, so it holds
+ * under the bare site, the project baseurl and a staging preview alike.
  */
 const LIBRARY_LINKS = libraryResolver(repoRootFor(HARNESS_ROOT), HARNESS_ROOT);
 
 const REPLICA_FROM_CATALOGUE = (() => {
-  const { candidates } = withRoutes([{ name: SUBJECT, kind: "library", dir: "library/", instanceRoot: true }]);
-  const route = candidates.find((c) => c.route.includes("/"))!.route;
+  const declared = (readDeclaration(INSTANCE)?.directories ?? []).flatMap((d) =>
+    (d.graphKinds ?? []).map((kind) => ({ name: SUBJECT, kind, dir: d.path, instanceRoot: (d as { instanceRoot?: boolean }).instanceRoot === true })),
+  );
+  const { candidates } = withRoutes(declared);
+  const root = candidates.find((c) => c.instanceRoot && c.route === SUBJECT);
+  if (root === undefined) {
+    throw new Error(
+      "who-iris.json marks no directory `instanceRoot`, so the replica has no route for the " +
+        "catalogue page to link. Mark the replica's directory, or this link is a guess.",
+    );
+  }
+  const route = root.route;
   const from = subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, "");
   return posix.relative(from, route);
 })();
@@ -2049,16 +2089,17 @@ function kgToPortal(all: Node[]): string {
   const heldBytes = held
     .map((n) => assetHref(n)?.bytes ?? 0)
     .reduce((a, b) => a + b, 0);
-  // BOTH sides, since the 2026-09-21 split: the replica is library-side and
+  // BOTH sides, since the 2026-09-21 split: the replica is site-side and
   // the documentation is docs-side, and "how many pages does this instance
   // ship" is a question about the instance rather than about one directory.
   const htmlIn = (dir: string): number =>
     existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith(".html")).length : 0;
-  const pages = htmlIn(LIB) + htmlIn(DOCS);
-  // The covers stay docs-side, where the catalogue's `localPath` names them.
-  const covers = existsSync(join(DOCS, "assets", "covers"))
-    ? readdirSync(join(DOCS, "assets", "covers")).filter((f) => f.endsWith(".png")).length
-    : 0;
+  const pages = htmlIn(SITE) + htmlIn(DOCS);
+  // The covers the replica SHOWS — which are exactly the covers the mount
+  // publishes, since bean `2b5s` publishes a page's embedded assets and not
+  // the directory they sit in. This counted `docs/assets/covers/`, a
+  // directory the covers left in `yl5w`, so it reported 0 over three.
+  const covers = all.filter((n) => coverSrc(n) !== undefined).length;
 
   const svg = existsSync(ARCH_SVG)
     ? readFileSync(ARCH_SVG, "utf-8").replace(/^<\?xml[^>]*\?>\s*/, "").replace(/<!--[\s\S]*?-->\s*/g, "")
@@ -2213,8 +2254,8 @@ function docsIndex(): string {
 
 <p class="lede">What this harness is, what ingesting it cost, and where the
 ingested copy is meant to end up. These pages are <em>about</em> the work; the
-catalogue itself, and the replica rendered from it, are served separately by
-the library handler.</p>
+catalogue itself is served by the library handler, and the replica rendered
+from it is this instance&rsquo;s own front page.</p>
 
 <div class="caveat">
   <p><strong>This is not a copy of IRIS.</strong> who-iris models the WHO
@@ -2264,8 +2305,8 @@ function main(): number {
   // `mount-instance-docs.ts` will not mount a directory without it — so a map
   // keyed on the bare name can hold only one of them.
   files.set(
-    "library/index.html",
-    page("who-iris", [{ label: "Home" }], landingPage(all), "library"),
+    "site/index.html",
+    page("who-iris", [{ label: "Home" }], landingPage(all), "site"),
   );
 
   files.set(
@@ -2321,21 +2362,21 @@ function main(): number {
   );
 
   files.set(
-    "library/community-list.html",
-    page("List of Communities", [{ label: "Home", href: "community-list.html" }, { label: "Community List" }], communityList(all), "library"),
+    "site/community-list.html",
+    page("List of Communities", [{ label: "Home", href: "community-list.html" }, { label: "Community List" }], communityList(all), "site"),
   );
 
   for (const c of all.filter((n) => n.flavour === "collection")) {
     files.set(
-      `library/${replicaPageOf(c)!}`,
-      page(c.title, [{ label: "Home", href: "community-list.html" }, { label: c.title }], collectionPage(c, all), "library"),
+      `site/${replicaPageOf(c)!}`,
+      page(c.title, [{ label: "Home", href: "community-list.html" }, { label: c.title }], collectionPage(c, all), "site"),
     );
   }
 
   for (const n of all.filter((x) => x.flavour === "item")) {
     files.set(
-      `library/${replicaPageOf(n)!}`,
-      page(n.title, [{ label: "Home", href: "community-list.html" }, { label: n.title }], itemPage(n, all), "library"),
+      `site/${replicaPageOf(n)!}`,
+      page(n.title, [{ label: "Home", href: "community-list.html" }, { label: n.title }], itemPage(n, all), "site"),
     );
   }
 
@@ -2455,7 +2496,7 @@ function main(): number {
           .sort()
       : [];
   const orphans = [
-    ...orphansIn(LIB, OWNED_LIB).map((f) => ({ dir: LIB, name: f, rel: `who-iris/library/${f}` })),
+    ...orphansIn(SITE, OWNED_SITE).map((f) => ({ dir: SITE, name: f, rel: `who-iris/site/${f}` })),
     ...orphansIn(DOCS, OWNED_DOCS).map((f) => ({ dir: DOCS, name: f, rel: `who-iris/docs/${f}` })),
     // The pages that CHANGED SIDES, and the predicate here is deliberately
     // NOT the one above. A page carrying the other side's name does not belong
@@ -2465,8 +2506,13 @@ function main(): number {
     // so the docs-side copy looked live and stayed exactly where the owner did
     // not want it. Caught by listing the directory afterwards rather than by
     // trusting the sweep.
-    ...wrongSide(DOCS, OWNED_LIB, OWNED_DOCS).map((f) => ({ dir: DOCS, name: f, rel: `who-iris/docs/${f}` })),
-    ...wrongSide(LIB, OWNED_DOCS, OWNED_LIB).map((f) => ({ dir: LIB, name: f, rel: `who-iris/library/${f}` })),
+    ...wrongSide(DOCS, OWNED_SITE, OWNED_DOCS).map((f) => ({ dir: DOCS, name: f, rel: `who-iris/docs/${f}` })),
+    ...wrongSide(SITE, OWNED_DOCS, OWNED_SITE).map((f) => ({ dir: SITE, name: f, rel: `who-iris/site/${f}` })),
+    // `library/` IS CORPUS ONLY (bean `2b5s`), so no page of this generator's
+    // belongs there at all. This is the sweep with teeth: an `index.html` left
+    // in `library/` is what made the mount copy the whole corpus to two
+    // published routes, so a stale one is pruned rather than tolerated.
+    ...wrongSide(LIB, OWNED, /(?!)/).map((f) => ({ dir: LIB, name: f, rel: `who-iris/library/${f}` })),
   ];
 
   if (check) {
@@ -2489,10 +2535,10 @@ function main(): number {
 
   for (const o of orphans) rmSync(join(o.dir, o.name));
 
-  const lib = [...files.keys()].filter((k) => k.startsWith("library/"));
+  const site = [...files.keys()].filter((k) => k.startsWith("site/"));
   const docs = [...files.keys()].filter((k) => k.startsWith("docs/"));
-  console.log(`wrote ${lib.length} page(s) to who-iris/library/ and ${docs.length} to who-iris/docs/`);
-  for (const key of [...lib, ...docs]) console.log(`  who-iris/${key}`);
+  console.log(`wrote ${site.length} page(s) to who-iris/site/ and ${docs.length} to who-iris/docs/`);
+  for (const key of [...site, ...docs]) console.log(`  who-iris/${key}`);
   for (const o of orphans) console.log(`  pruned ${o.rel}`);
   return 0;
 }

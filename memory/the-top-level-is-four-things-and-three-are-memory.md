@@ -6,8 +6,9 @@ summary: "top level = bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, w
 createdAt: 2026-09-20
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 Owner, 2026-09-20: the top level is *"the contents of repos"* except
 `bootstrap/`, `beans/`, `todos/` and `fsh-guts/` — the last *"created in tooling

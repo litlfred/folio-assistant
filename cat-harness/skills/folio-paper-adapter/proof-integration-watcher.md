@@ -1,7 +1,7 @@
 ---
 name: proof-integration-watcher
 user_invocable: true
-inherits: local/integration-watcher
+inherits: folio-core/integration-watcher
 watch_arg: proof
 description: >
   Proof-QA integration watcher — watches origin/main + open active
