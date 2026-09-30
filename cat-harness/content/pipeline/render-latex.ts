@@ -855,7 +855,12 @@ function renderMdastNode(node: MdNode): string {
       const name: string = node.name ?? "";
       if (name === "val") {
         // :val[<registry-name>]{key=value ...}
-        const valName = renderChildren(node).join("").trim();
+        //
+        // The name is the children's RAW text, never their rendered output:
+        // `renderChildren` LaTeX-escapes, so `inv_alpha` became `inv\_alpha`,
+        // missed the registry, and the directive was printed literally. That
+        // was every underscore name in prose, which is every name qou uses.
+        const valName = rawText(node).trim();
         // mdast-util-directive types attributes as
         // `Record<string, string | null | undefined> | null | undefined`;
         // `parseValAttrs` wants defined string values. Drop the empty ones
@@ -961,6 +966,13 @@ function isMathTextSeam(prev: MdNode | undefined, cur: MdNode): boolean {
   if (isFormulaNode(prev) && cur.type === "text" && /^[A-Za-z]{4,}/.test(cur.value)) return true;
   if (prev.type === "text" && isFormulaNode(cur) && /[A-Za-z]{4,}$/.test(prev.value)) return true;
   return false;
+}
+
+/** The source text under a node, unescaped — for names and keys, not output. */
+function rawText(node: MdNode): string {
+  const n = node as { value?: unknown };
+  if (typeof n.value === "string") return n.value;
+  return childrenOf(node).map((c) => rawText(c as MdNode)).join("");
 }
 
 /** Render all children of a node, inserting a zero-width break (`\allowbreak{}`)
