@@ -181,6 +181,8 @@ describe("per-family node schemas (bean rdkm)", () => {
     const fams = await resolveNodeSchemas("qa", HARNESS);
     expect(fams.map((f) => f.tag).sort()).toEqual([
       "block-qa/v1", "folio-detangle-sidecar/v1", "folio-lsi-index/v1", "folio-qa-index/v1", "folio-test-run/v1",
+      // A downstream Tool's run record, bean `fq5u`.
+      "folio-tool-run/v1",
       // `kg-qa-manifest/v1` joined the `qa` kind on 2026-09-27, from `skills`.
       // The manifest records the auditor's identity for the `kg-qa/v1` files
       // beside it, and it used to live in `skills/` — harmless while ONE

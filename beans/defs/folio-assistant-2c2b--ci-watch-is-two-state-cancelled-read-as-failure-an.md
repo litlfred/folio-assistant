@@ -1,7 +1,7 @@
 ---
 # folio-assistant-2c2b
 title: 'CI WATCH IS TWO-STATE: cancelled read as failure and reported a green main red — bun run ci:watch, three states with undetermined never collapsing'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-30T14:56:30Z
@@ -140,7 +140,7 @@ observations are not a rate.
 - [x] `stale` classified with `cancelled`, not with failure.
 - [x] The vacuous cases refuse to read as `pass`.
 - [x] A cancellation names its superseding commit, or says it cannot.
-- [ ] Whether the session-start sweep should USE it — it currently runs
+- [x] Whether the session-start sweep should USE it — it currently runs
       `check:ci-health`, which answers a different question. Not presumed.
 - [x] Whether `build-and-deploy` is chronically superseded. Two observations
       are not a rate; this needs the run history, which `ci-health` already
@@ -166,3 +166,7 @@ _2026-09-30T19:42:58Z_ — Claimed by claude/magical-archimedes-4qkfxp-2c2b — 
 **What it means:** yes, chronically superseded, and **by design, not a defect**. Each deploy builds the newest `main`, so a cancelled run's content ships with the next one. The rate is a reason never to read `cancelled` as failure, which is this bean's box 1 to 4, and it now has a number. It becomes a problem only if the success count fell to 0 over a burst, meaning the site stopped updating. That is `check:ci-health`'s Pages question (bean `3yi4`), not this one.
 
 Box 5, whether the session-start sweep should use `ci:watch`, stays open. It is a decision about what the sweep reports, and it is not presumed here.
+
+## Box 5 — OWNER RULING 2026-09-30: no, the sweep stays as it is
+
+Asked in session https://claude.ai/code/session_01SiFEMuTciyB681XP5WfcbB. `check:ci-health` answers *is each workflow healthy on the default branch across recent history*; `ci:watch` answers *may this ONE commit merge*. At session start there is usually no single commit to judge. **The owner chose to keep the sweep as it is**, so `ci:watch` stays a merge-time tool. All six boxes are closed, and the bean is complete.
