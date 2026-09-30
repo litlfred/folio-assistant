@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld",
+  "@id": "library/kg-folio-asst-2026-09-30/blocks/figure-img-p008-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../../../docs/assets/img/kg-deck/img-p008-1.webp",
+  "pageStart": 8,
+  "pageEnd": 8,
+  "narrative": {
+    "text": "UML class diagram \"Harness schemas — attributes derived from JSON Schema\", in four packages. test: KG QA Report (kg-qa/v1; subject kind process|decision|role|requirement|skill|graph|tool, criteria, totals, pair_attestations) and Test Run (folio-test-run/v1; skill, subject, data and process hashes, outcome, cases). process: Task (process, task; BPMN callActivity, serviceTask, task and userTask) 'in process' Process (external OMG BPMN 2.0; start and end events, gateways, lanes, sequence flows) — noted as XSD, not JSON Schema. scenario: Actor (id, title, kind person|agent|system|external, roles) 'takes on roles' Role (persona, actorKinds, skills, inherits, actedUpon, judgementOnly); User Story (role, want, soThat) 'as a role'; Role 'carries skills' Skill (id, name, description, roles, requiredCapabilities, dependsOn, allowedTools, routingPatterns, tags, package, lifecycleStages plan|author|validate|review|test|publish|feedback|retire). schema: JSON Schema (draft-07, from Zod) and External Schema (authority OMG|DCMI|W3C|IETF|ISO|HL7|other; use conforms|reads|cites). Edges: KG QA Report audits subject kind; Test Run tests Skill; Task in lane of Role and uses Skill; every class conforms to JSON Schema.",
+    "state": "draft",
+    "drafted_by": {
+      "kind": "agent",
+      "id": "claude",
+      "model": "not-disclosed",
+      "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+    },
+    "drafted_at": "2026-09-30"
+  },
+  "derivedFrom": "library/kg-folio-asst-2026-09-30/sections/slide-008",
+  "sourceDocument": "library/kg-folio-asst-2026-09-30/manifest",
+  "provenance": "ingested"
+}
