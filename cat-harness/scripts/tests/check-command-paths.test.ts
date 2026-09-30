@@ -174,6 +174,34 @@ describe("the defect it was written for", () => {
     expect(checkCommandPaths(root).dead).toEqual([]);
   });
 
+  test("a moved MCP server script in `.mcp.json` fails — the 2026-09-30 case", () => {
+    const root = fixture({
+      ".mcp.json": JSON.stringify({ mcpServers: { sage: { command: "scripts/sage-mcp.sh", args: [] } } }),
+      "cat-harness/scripts/sage-mcp.sh": "",
+    });
+    const r = checkCommandPaths(root);
+    expect(r.dead.map((d) => [d.file, d.token])).toEqual([[".mcp.json", "scripts/sage-mcp.sh"]]);
+  });
+
+  test("...an `args` path is judged too, and both pass once repointed", () => {
+    const dead = fixture({
+      ".mcp.json": JSON.stringify({ mcpServers: { fa: { command: "bun", args: ["run", "src/index.ts", "--stdio"] } } }),
+      "cat-harness/src/index.ts": "",
+    });
+    expect(checkCommandPaths(dead).dead.map((d) => d.token)).toEqual(["src/index.ts"]);
+    const live = fixture({
+      ".mcp.json": JSON.stringify({
+        mcpServers: {
+          sage: { command: "cat-harness/scripts/sage-mcp.sh", args: [] },
+          fa: { command: "bun", args: ["run", "cat-harness/src/index.ts", "--stdio"] },
+        },
+      }),
+      "cat-harness/scripts/sage-mcp.sh": "",
+      "cat-harness/src/index.ts": "",
+    });
+    expect(checkCommandPaths(live).dead).toEqual([]);
+  });
+
   test("EXAMINED NOTHING is not a pass", () => {
     const root = fixture({});
     expect(checkCommandPaths(root).filesRead).toBe(0);

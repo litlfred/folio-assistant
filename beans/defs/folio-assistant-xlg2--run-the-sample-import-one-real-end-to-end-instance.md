@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xlg2
 title: 'RUN THE SAMPLE IMPORT: one real end-to-end instance of sample-import.bpmn, recorded, with a test'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-24T18:01:44Z
-updated_at: 2026-09-29T22:26:13Z
+updated_at: 2026-09-30T00:13:47Z
 parent: folio-assistant-kupb
 ---
 
@@ -19,3 +19,7 @@ From the `v048` roast, objection 5. Placed under `kupb` by the owner, 2026-09-24
 - [x] every step the run could not perform here is recorded as such, not skipped silently
 
 _2026-09-29T22:26:13Z_ — Claimed by claude/magical-archimedes-4qkfxp-xlg2 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Summary of Changes
+
+Merged in #1510 (`e390d52`). `sample-import.bpmn` ran for real twice through the real workflow tools, both runs committed under `beans/workflows/`: whole WPRO item → refused at the gates (derived cover's `sourceLoss` unknown); PDF only → imported as a trial in `fsh-guts/samples/`. `sample-import-check.ts` (count / identifiers / structure / provenance with re-computed fixity), `sample-import-run.ts` (drives the real handlers; fetch recorded NOT PERFORMED with verified substitution), `sample-import-run.test.ts` (fixture: refused / imported / tampered). Also fixed out-of-root instance source resolution in the workflow tools.
