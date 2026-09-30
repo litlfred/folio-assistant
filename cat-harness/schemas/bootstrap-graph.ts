@@ -18,14 +18,14 @@
  *
  * ## Which document this describes
  *
- * The one that is PUBLISHED, which is `kg-export --instance ./bootstrap` (the
- * sole publisher since bean `dyd3`), not `gen-bootstrap-graph.ts`, which still
- * runs as a test subject but publishes nothing. The two differ in one way:
- * the published document carries PROV provenance (`generatedAt`,
- * `sourceCommit*`, or `sourceCommitUnavailable`), and the generator's does not.
- * Owner, 2026-09-23 (bean `hwzu`): every published graph carries it, and the
- * emission skill's "no timestamp, no commit SHA" is narrowed to the `@graph`
- * itself. So the fields are optional here, and both documents parse.
+ * `gen-bootstrap-graph.ts`'s, which runs as a test subject and publishes
+ * nothing. Since 2026-09-30 (owner, bean `xsqm`: "bootstrap.jsonld, should be
+ * in bootstrap-tools") the PUBLISHED `bootstrap.jsonld` is written by
+ * bootstrap-tools' `scripts/export-graph.ts` in bootstrap's classes and
+ * standard properties, and its shape is `GraphExportSchema` in
+ * `bootstrap-tools/schemas/graph-export.ts`, not this one. Before then it was
+ * `kg-export --instance ./bootstrap` (bean `dyd3`), whose PROV fields are why
+ * `generatedAt` and `sourceCommit*` are optional below.
  */
 
 import { z } from "zod";

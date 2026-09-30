@@ -4796,6 +4796,42 @@ export function kgQaHomeFor(
   return { root: join(instanceRoot, "test", "results"), by: "convention" };
 }
 
+/**
+ * Where an instance's swimlane-glossary retirement LEDGER lives — the same
+ * three answers as {@link kgQaHomeFor}, for the same reason.
+ *
+ * - **own** — the instance declares a `swimlane-glossary` directory.
+ * - **hosted** — it declares none, and `hostRoot` (the instance running the
+ *   export) does; the ledger lives in the host's directory under the
+ *   instance's stub, e.g. `cat-harness/glossary/bootstrap/`. The ledger is
+ *   harness state ABOUT bootstrap — `glossary-export` writes it, nothing in
+ *   bootstrap reads it — so it is hosted like the QA verdicts (owner,
+ *   2026-09-30, Q2 of bean `xsqm`).
+ * - **convention** — neither declares one; `<instance>/glossary/`.
+ *
+ * A hosted ledger sits in a stub-named subdirectory, so the host's own
+ * `glossary-ledger.json` and a guest's never share a path, and each file
+ * carries its `instance`, so a walker over the host's directory attributes it.
+ */
+export function glossaryHomeFor(
+  instanceRoot: string,
+  hostRoot?: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): { root: string; by: "own" | "hosted" | "convention" } {
+  const own = matchingDirectories(instanceRoot, "swimlane-glossary", registry)[0];
+  if (own !== undefined) return { root: own.absPath, by: "own" };
+  if (hostRoot !== undefined && resolve(hostRoot) !== resolve(instanceRoot)) {
+    const host = matchingDirectories(hostRoot, "swimlane-glossary", registry)[0];
+    const decl = readDeclaration(instanceRoot);
+    if (host !== undefined && decl !== undefined && decl !== null) {
+      return { root: join(host.absPath, artefactStub(decl)), by: "hosted" };
+    }
+  }
+  // declared-path-literal: the base case for an instance that declares no
+  // `swimlane-glossary` directory and is hosted by nobody — `GLOSSARY_DIR`'s convention.
+  return { root: join(instanceRoot, "glossary"), by: "convention" };
+}
+
 function matchingDirectories(
   root: string,
   graph: string,

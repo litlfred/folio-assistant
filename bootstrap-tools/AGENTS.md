@@ -23,4 +23,46 @@ After a change here: `bun run bootstrap:schemas`, then `bun test bootstrap-tools
 
 ## Running a tool as a process step
 
-Each script is a step an agent can perform in a process lane: the agent runs it, reads its output, and reports. Nothing here requires a CI service; a GitHub Actions workflow may be described but is not enabled unless the owner asks.
+Each script is a step an agent can perform in a process lane: the agent runs it, reads its output, and reports. Nothing here requires a CI service; a GitHub Actions workflow may be described but is not enabled unless the owner asks (owner, 2026-09-29: *"assume primarily agentic"*, and no paid runs without an explicit request).
+
+Which lane runs what — the lanes are the roles of [`kg-separation.bpmn`](../cat-harness/processes/kg-separation.bpmn) while the pair is staged, and of the content repository's own review once it is not:
+
+| step | command (from this directory) | lane | fails when |
+|---|---|---|---|
+| regenerate schemas and the schema page | `bun run schemas` | authoring agent | — (writes) |
+| schemas are current | `bun run schemas:check` | build pipeline | a generated file differs from its Zod |
+| every file's identifier is its path | `bun run check:node-iris` | build pipeline | an `$id`/`@id` under the release base names another path |
+| literal release IRIs at the declared version | `bun run iri:sync:check` | build pipeline | a literal names another version |
+| no outside concept in the schemas | `bun run check:concepts` | build pipeline | a forbidden word appears |
+| imports stay inside the toolset | `bun run check:closure` | build pipeline | an import leaves or names a package not allowed |
+| READMEs and diagrams are current | `bun run readmes:check`, `bun run render:check` | build pipeline | a generated region or picture is stale |
+| unit tests | `bun test .` | build pipeline | any fails |
+
+A step that fails is reported with its output and the command to reproduce it; the agent does not "fix" a check by editing what the check reads unless that is the change under review.
+
+## CI — described, not enabled
+
+When the owner asks for CI, this is the whole of it: one workflow in the **content** repository, calling the tools at a pinned version. It is written here rather than committed as `.github/workflows/*.yml` so that nothing runs, and nothing is billed, until someone decides it should.
+
+```yaml
+# litlfred/bootstrap — .github/workflows/check.yml (NOT ENABLED)
+on: [pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: bootstrap }
+      - uses: actions/checkout@v4
+        with: { repository: litlfred/bootstrap-tools, ref: v0.1.0, path: bootstrap-tools }
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --cwd bootstrap-tools
+      - run: |
+          cd bootstrap-tools
+          bun run schemas:check && bun run check:node-iris && bun run iri:sync:check \
+            && bun run check:concepts && bun run readmes:check && bun test .
+```
+
+The tools are checked out at a **tag**, never a branch: a content check that changes under the content without a commit to it cannot be reproduced. Rendering the diagrams needs a browser and is left to the agent's run, not this workflow, until someone asks.
+
+No npm package is published either: `package.json` is `"private": true`. The parent consumes the tools by path while the pair is staged, and a published package is a decision for the first release (`kg-separation` stage 12).

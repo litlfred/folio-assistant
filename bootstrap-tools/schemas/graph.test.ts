@@ -190,8 +190,9 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
    *   location, not a reference to another Harness.
    *
    * The `folio-*` schema identifiers are no longer allowed: bootstrap's own
-   * files carry `model-registry/1.0.0` and `glossary-ledger/1.0.0`, each resolving
-   * to a schema inside bootstrap (bean r3gy, D2). The `folio:` diagram prefix
+   * files carry `model-registry/1.0.0`, resolving to a schema inside bootstrap
+   * (bean r3gy, D2); `glossary-ledger/1.0.0` moved up to cat-harness with the
+   * hosted ledger (bean xsqm). The `folio:` diagram prefix
    * went earlier (bean 12s9, stage 2).
    */
   const ALLOW = [
@@ -287,9 +288,9 @@ describe("every $schema a bootstrap file carries is a Node Kind its declaration 
     expect(bad).toEqual([]);
   });
 
-  test("the two tags that used to name the platform are bootstrap's own", () => {
+  test("the tag that used to name the platform is bootstrap's own; the ledger's left with the ledger", () => {
     expect(kinds["model-registry/1.0.0"]).toBe("schemas/model-registry.schema.json");
-    expect(kinds["glossary-ledger/1.0.0"]).toBe("schemas/glossary-ledger.schema.json");
+    expect(kinds["glossary-ledger/1.0.0"]).toBeUndefined();
   });
 
   test("the declaration shape knows the field", () => {

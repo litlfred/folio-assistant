@@ -441,7 +441,9 @@ jobs:
       # that publishes nothing. `kg-export.test.ts` is where the published
       # document's are, and the two guards in `bootstrap-graph.test.ts` that
       # DO reach the site are the ones about publication: the path the `@id`
-      # names, and exactly one publisher per workflow.
+      # names, and exactly one publisher per workflow. Since 2026-09-30 that
+      # publisher is bootstrap-tools' `export-graph.ts` (bean `xsqm`), whose
+      # own properties are asserted in `bootstrap-tools/scripts/export-graph.test.ts`.
 
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two
@@ -942,6 +944,12 @@ jobs:
       # validates nothing, fails.
       - name: bootstrap documents parse against their Zod
         run: bun run bootstrap:validate
+
+      # bootstrap's vocabulary, `bootstrap/ns.jsonld`: exactly its defined
+      # terms and graph kinds, written by bootstrap-tools and committed, and
+      # copied to the site as-is (owner, 2026-09-30, bean `xsqm`).
+      - name: bootstrap vocabulary is current
+        run: bun run bootstrap:vocabulary:check
 
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
