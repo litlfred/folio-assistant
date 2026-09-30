@@ -114,8 +114,10 @@ export function exportBlueprint(tex: string, formal: FormalView): ExportResult {
   for (const l of lines) for (const m of l.matchAll(LABEL_RE)) labels.add(m[1]!);
 
   const dangling = new Set<string>();
-  const keep = (xs: string[] | undefined) =>
-    (xs ?? []).filter((t) => (labels.has(t) ? true : (dangling.add(t), false))).sort();
+  // A self-edge is dropped: plasTeX's dependency graph recurses on it without
+  // end (measured, RecursionError), and "X uses X" says nothing.
+  const keep = (xs: string[] | undefined, self: string) =>
+    (xs ?? []).filter((t) => t !== self && (labels.has(t) ? true : (dangling.add(t), false))).sort();
 
   const out: string[] = [];
   const res = { lean: 0, leanok: 0, uses: 0, removedEditorial: 0 };
@@ -139,7 +141,7 @@ export function exportBlueprint(tex: string, formal: FormalView): ExportResult {
       proved.add(last.label);
       const indent = "  ";
       if (last.decl && last.bucket === "compiled") { out.push(`${indent}\\leanok`); res.leanok++; }
-      const deps = keep(formal.valueDeps.get(last.label));
+      const deps = keep(formal.valueDeps.get(last.label), last.label);
       if (deps.length) { out.push(`${indent}\\uses{${deps.join(", ")}}`); res.uses += deps.length; }
       continue;
     }
@@ -156,12 +158,12 @@ export function exportBlueprint(tex: string, formal: FormalView): ExportResult {
       res.lean++;
       if (bucket !== "stubbed") { out.push(`${indent}\\leanok`); res.leanok++; }
     }
-    const deps = keep(formal.typeDeps.get(label));
+    const deps = keep(formal.typeDeps.get(label), label);
     if (deps.length) { out.push(`${indent}\\uses{${deps.join(", ")}}`); res.uses += deps.length; }
   }
 
   const valueWithoutProof = [...formal.valueDeps.keys()]
-    .filter((l) => labels.has(l) && !proved.has(l) && keep(formal.valueDeps.get(l)).length)
+    .filter((l) => labels.has(l) && !proved.has(l) && keep(formal.valueDeps.get(l), l).length)
     .sort();
 
   const stamp = formal.source

@@ -27,14 +27,14 @@ function voice(id: string, rules: string[], rest: Partial<VoiceProfile> = {}): V
     title: id,
     description: `the ${id} voice`,
     provenance: "assertion",
-    sources: [{ title: "a source", kgRef: "schemas/voices.ts" }],
+    sources: [{ title: "a source", path: "schemas/voices.ts" }],
     rules: rules.map((r) => ({
       id: r,
       title: r,
       description: `rule ${r}`,
       category: "register",
       severity: "minor",
-      source: { kgRef: "schemas/voices.ts", quote: "a quote long enough to check against" },
+      source: { path: "schemas/voices.ts", quote: "a quote long enough to check against" },
     })),
     ...rest,
   });
