@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-30T17:24:45Z
-updated_at: 2026-09-30T18:22:23Z
+updated_at: 2026-09-30T19:49:40Z
 parent: folio-assistant-vke6
 ---
 
@@ -33,3 +33,13 @@ Fixed (now on `instanceDirectories`): gen-uml-overview, check-wireframes, viewer
 Triaged, no behaviour change today (filter kinds/instances nothing has moved inward): check-docs-populated (docs), compose-docs (docs, cat-harness only), state-visualizer (state kinds), gen-handler-index + sync-docs-harness (cat-harness tiles only). Guarded by a --check gate that would go red: readme-sections, subgraph-readmes ×2.
 
 Still to triage: the rest of `git grep -n "decl\??\.directories" -- '*.ts'`.
+
+
+## 2026-09-30 — second sweep: measured against main, not reasoned about
+Method: every line mentioning `voices` REMOVED between origin/main and HEAD, per file (svg, kg-qa, beans excluded). Each accounted for:
+- FIXED, now on `instanceDirectories`: **kg-validate** (a voice.json classified as `skills` or as nothing, where main said `voices`); **mount-instance-docs `declaredGraphs`** (the rail of every voices viewer page lost its `voices` row); **subgraph-readmes** (the five `voices/` READMEs dropped out of coverage, 75 → 70; now back at main's count).
+- CORRECT as-authored: harness-panel summaries (a properties view of the declaration FILE, which really no longer lists voices); the five `<instance>.json` files themselves; layout-norms baseline (the five pairs this change sanctions).
+- REORDERED only: UML instance overviews (the voices namespace now comes after the authored entries; same content), subgraph-readmes order.
+- INTENDED: voices index count 45 → 46 (the OpenAI voice).
+NOT fixable here: `bootstrap-tools/scripts/subgraph-readmes.ts` and `readme-graph-sections.ts` read the declaration through bootstrap's own reader, and `bootstrap-tools imports nothing above bootstrap` forbids reaching `instanceDirectories`. Today neither loses output (their gates are current); the helper would need a bootstrap-level twin if a from-within entry ever matters there.
+Remaining unaffected by construction: sites filtering a kind nothing declares from within (processes, code, uploads, docs, state kinds, the site dir).
