@@ -27,7 +27,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`bootstrap/`](bootstrap/) | 16 files | |
 | [`detangle/`](detangle/) | 28 files | |
 | [`kg-export.@litlfred/`](kg-export.@litlfred/) | 1 file | |
-| [`kg-qa/`](kg-qa/) | 550 files | |
+| [`kg-qa/`](kg-qa/) | 553 files | |
 | [`library-qa/`](library-qa/) | 37 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |
 | [`viewer-nav/`](viewer-nav/) | 1 file | |

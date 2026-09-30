@@ -5,7 +5,7 @@
     "id": "Process_Ingestion",
     "path": "processes/document-ingestion.bpmn"
   },
-  "source_hash": "sha256:755cedea1d1f898e91eaf7fbc40c1171b093edcb5ff97b79e2547447ada72f8f",
+  "source_hash": "sha256:8781b5b879023aaebf1f2f1171730c72f3fee58fcae1ee1d9fec619a1290aec6",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -61,8 +61,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Place",
+          "detail": "needs skill \"upload-routes\", but its lane's role \"user\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -114,8 +119,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 1,
+    "pass": 15,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

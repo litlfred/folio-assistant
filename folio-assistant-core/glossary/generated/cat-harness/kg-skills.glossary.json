@@ -1999,6 +1999,14 @@
       "status": "candidate"
     },
     {
+      "id": "upload-routes",
+      "prefLabel": "upload-routes",
+      "definition": "How a file actually REACHES `uploads/` — the two mechanisms that write bytes into a declared queue, the persona that performs one of them on somebody's behalf, and what each writer owes that the route does not do for them. The step before intake and after acquisition.",
+      "notation": "upload-routes",
+      "source": "cat-harness/skills/folio-core/upload-routes.md",
+      "status": "candidate"
+    },
+    {
       "id": "uploads-watch",
       "prefLabel": "uploads-watch",
       "definition": "Notice what has landed in the acquisition queue, and tell an arrival from a backlog. Reports; it never deletes, and never ingests on its own say-so.",

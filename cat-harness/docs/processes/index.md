@@ -58,7 +58,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [CRDM Phase 5 — beans and sign-off](crdm-signoff.html) | 6 | — |
 | [Criterion adjudication](criterion-adjudication.html) | 4 | — |
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 8 | — |
-| [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 10 | — |
+| [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 11 | — |
 | [Draft, review and publish](draft-to-publication.html) | 11 | — |
 | [Editing and HCI validation](editing-hci-validation.html) | 17 | — |
 | [Evidence for a recommendation](evidence-retrieval.html) | 10 | — |
@@ -107,7 +107,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 
 The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else exposes: a skill says what to do, and until now nothing said which processes ask for it.
 
-**99** distinct skill(s) are named by an activity.
+**100** distinct skill(s) are named by an activity.
 
 | skill | run by |
 |---|---|
@@ -202,6 +202,7 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 | `todo-manager` | `authoring-a-document.bpmn`, `authoring-a-paper.bpmn`, `bean-lifecycle.bpmn`, `code-change-review.bpmn`, `content-change-review.bpmn`, `content-lifecycle.bpmn`, `crdm-signoff.bpmn`, `document-ingestion.bpmn`, `draft-to-publication.bpmn`, `editing-hci-validation.bpmn`, `evidence-retrieval.bpmn`, `getting-started.bpmn`, `ig-incremental-build.bpmn`, `l2-dak-authoring.bpmn`, `l3-fhir-pipeline.bpmn` |
 | `translation-manager` | `human-translation-workflow.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn` |
 | `untainted-verification` | `adjudication.bpmn` |
+| `upload-routes` | `document-ingestion.bpmn` |
 | `uploads-watch` | `content-acquisition.bpmn` |
 | `upstream-version-adoption` | `upstream-pin-watch.bpmn`, `upstream-version-adoption.bpmn` |
 | `uses-editorial-review` | `review-narrative.bpmn` |
@@ -331,7 +332,7 @@ A lane IS a role. The NAME is free text — `process-model.ts` notes that sixty 
 
 | op | diagrams |
 |---|---|
-| `note` | 22 |
+| `note` | 23 |
 | `claim` | 17 |
 | `resolve` | 8 |
 
