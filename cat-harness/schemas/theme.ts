@@ -125,6 +125,7 @@
  * a geometry, not a licence to remove a non-colour channel.
  */
 import { z } from "zod";
+import { RepoFullNameSchema } from "./repo-full-name.js";
 
 import { nodeKind } from "./node-kind.js";
 
@@ -376,8 +377,8 @@ export const ThemePartialPaletteSchema = z.object(themePaletteShape).strict().pa
 
 export const ThemeRefSchema = z
   .object({
-    /** Declared instance name. Absent means the citing instance's own. */
-    instance: z.string().min(1).optional(),
+    /** The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own. */
+    instance: RepoFullNameSchema.optional(),
     themeId: z.string().regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case"),
   })
   .strict();
