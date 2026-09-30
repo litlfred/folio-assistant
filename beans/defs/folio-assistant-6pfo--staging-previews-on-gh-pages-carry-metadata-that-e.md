@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T12:28:52Z
-updated_at: 2026-09-30T11:17:01Z
+updated_at: 2026-09-30T14:39:07Z
 parent: folio-assistant-zzmr
 ---
 
@@ -305,3 +305,8 @@ Correction first: I put 6pfo to the owner as undecided having read only the top 
 - A second, JSON-LD copy (<stub>/staging.jsonld) was drafted and REVERTED before commit: a second record of the same facts is what this design exists to prevent. <base>/fsh-guts.jsonld already carries these records as fsh-guts nodes.
 
 _2026-09-30T11:16:57Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+
+## 2026-09-30 14:36 — piece 1 verified LIVE
+PR #1483's staging deploy (commit `1e6511f`) wrote `STAGING/claude-brave-hawking-511rrx/staging-preview.json` on gh-pages, with `pr: 1483` and `issue: 1482`. `builtAt` was kept from the first deploy (13:50:49Z) while `commit` updated, which is the create-or-update rule working as designed. Pieces 2–4 run only on close, so this PR's merge is their first live run.
