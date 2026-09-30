@@ -419,6 +419,44 @@
                   }
                 }
               },
+              "tile": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "surfaces": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "navbar",
+                        "board",
+                        "glass"
+                      ]
+                    }
+                  },
+                  "hidden": {
+                    "type": "boolean"
+                  },
+                  "theme": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "icon": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "publish": {
+                    "type": "string",
+                    "enum": [
+                      "staging-only"
+                    ]
+                  }
+                }
+              },
               "visualisedAs": {
                 "type": "string",
                 "enum": [
@@ -728,8 +766,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/cat-harness.jsonld",
   "staging": {
     "branch": "claude/laughing-thompson-vjcmlx",
-    "sha": "2f47ef2a2ee18b389cb70fb2b2d6dc1e3cb3dd45",
+    "sha": "4d0e67071150b19e4ad9278ddbb165fc098645dc",
     "pr": "1516/merge",
-    "run": "36645702841"
+    "run": "36648372894"
   }
 }
