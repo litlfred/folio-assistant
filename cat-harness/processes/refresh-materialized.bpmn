@@ -83,7 +83,7 @@ never re-fetch">
     </bpmn:serviceTask>
     <bpmn:serviceTask id="Task_Upstream" name="WORKING
 what changed upstream">
-      <bpmn:documentation>Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late.</bpmn:documentation>
+      <bpmn:documentation>Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late. Reachability is asked by `bun run sources:liveness &lt;instance&gt;` against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error (bean 08u4).</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="materialize-remote" />
       </bpmn:extensionElements>

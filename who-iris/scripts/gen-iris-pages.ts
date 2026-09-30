@@ -54,8 +54,9 @@ import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
 import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
-import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
+import { resolvableIri, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 import { publicationBlockers } from "../../folio-assistant-core/schemas/materialization.js";
+import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 
 
 const INSTANCE = resolve(import.meta.dir, "..");
@@ -1379,8 +1380,9 @@ function slug(id: string): string {
  * question the function is actually asking, so the heuristic is gone.
  */
 function sourceOf(n: Node): string | undefined {
-  const b = n.bitstreams?.find((x) => x.materialization?.provenance?.upstream);
-  return b?.materialization?.provenance?.upstream ?? n.materialization?.provenance?.upstream;
+  // Bean `08u4`: the Handle IRI first (it outlives the host), the host URL
+  // second, never the front page — one definition, in the schema.
+  return resolvableIri(n);
 }
 
 /**
@@ -1559,7 +1561,7 @@ function collectionPage(c: Node, all: Node[]): string {
   ${c.materialization?.provenance?.upstream ? `<a href="${esc(c.materialization.provenance.upstream)}">${esc(c.materialization.provenance.upstream)}</a>` : `<span class="none">none recorded</span>`}
   ${stateBadge(c.materialization?.state ?? "unknown")}</p>
 
-${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was established.</strong> ${esc(c.materialization.note)}</p></div>` : ""}
+${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was established.</strong> ${withInlineCode(c.materialization.note, esc)}</p></div>` : ""}
 
 <h2>Items in this Collection</h2>
 <p>Now showing 1 – ${items.length} of ${items.length} <em>modelled</em>. The upstream

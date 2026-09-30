@@ -1,0 +1,291 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2602.16554v1",
+  "blocks": [
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Framework",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-framework.md",
+      "narrative": null,
+      "content": "MALIZATION IN QUANTUM COMPUTATION\nYuanjie Ren∗\nMassachusetts Institute of Technology\nCambridge, MA 02139\nyuanjie@mit.edu\nJinzheng Li∗\nNortheastern University\nBoston, MA 02115\nli.jinzh@northeastern.edu\nYidi Qi∗\nNortheastern University\nBoston, MA 02115\ny.qi@northeastern.edu\nABSTRACT",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Autoformalization",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-001-autoformalization.md",
+      "narrative": null,
+      "content": "in quantum computation. MerLean extracts mathematical statements from LATEX\nsource files, formalizes them into verified Lean 4 code built on Mathlib, and trans-\nlates the result back into human-readable LATEX for semantic review. We evaluate\nMerLean on three theoretical quantum computing papers producing 2,050 Lean dec-\nlarations from 114 statements in total. MerLean achieves end-to-end formalization\non all three papers, reducing the verification burden to only the newly introduced\ndefinitions and axioms. Our results demonstrate that agentic autoformalization can\nscale to frontier research, of",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-introduction.md",
+      "narrative": null,
+      "content": "The goal of autoformalization (Szegedy, 2020) is to automatically translate mathematical statements\nfrom natural language into formal code verifiable by systems such as Isabelle (Paulson, 1994),\nCoq (Team, 2024), and Lean (Moura & Ullrich, 2021). Recent work has shown that Large Language\nModels (LLMs) are well suited to this task due to their semantic processing capabilities (Wu et al.,\n2022; Jiang et al., 2022; Tarrach et al., 2024; Weng et al., 2025).\nWhile most research in autoformalization focuses on pure mathematics, applications in physics\nhave also attracted significant attention: Lean",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Related Works",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-003-related-works.md",
+      "narrative": null,
+      "content": "LLM-based autoformalization and automated theorem provers demonstrated promising capabilities\non competition-level problems (Wu et al., 2022; Jiang et al., 2022). Subsequent work improved\nupon these foundations by addressing proof detail expansion (Tarrach et al., 2024) and faithfulness\nverification (Li et al., 2024; Liu et al., 2025; Peng et al., 2025). Extensions to domain-specific\napplications include Euclidean geometry (Murphy et al., 2024), biomedical text (Zhang et al., 2025),\nand physics (Zhang et al., 2026).\nRecent work has shifted toward agentic systems that couple frontier LLMs with",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Autoinformalization",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-autoinformalization.md",
+      "narrative": null,
+      "content": "for expert review. This round-trip design ensures both machine-verified correctness and human-\nverifiable semantic alignment. The framework employs a frontier LLM agent based on Claude Code\nthat engages multi-turn agentic interactions—iteratively refining outputs based on compiler feedback,\nfaithfulness checks, and tool-augmented exploration of Mathlib. Figure 1 illustrates the overall\narchitecture.\n3.1\nAUTOFORMALIZATION\nStatement Extraction.\nGiven a LATEX paper, the agent first extracts all mathematical statements,\nincluding definitions, theorems, lemmas, propositions, corollaries, and remark",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-005-results.md",
+      "narrative": null,
+      "content": "formula for certain coefficient rings). MerLean handles this through explicit axiom declarations,\nclearly distinguishing intentional assumptions from incomplete proofs (sorry). When formalization\nfails after maximum attempts, an “axiom phase” converts blocking subgoals to axioms, producing\npartial formalizations with transparent assumptions that can be filled in as Mathlib expands.\n3.2\nAUTOINFORMALIZATION\nThe decoder reverses the formalization process, converting a verified Lean 4 library back into\nhuman-readable LATEX. While existing tools such as doc-gen4 can produce reasonably readable\ndocu",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experiments",
+      "pageStart": 4,
+      "pageEnd": 5,
+      "target": "../sections/sec-006-experiments.md",
+      "narrative": null,
+      "content": "We evaluate MerLean on three papers in theoretical quantum computing: one unpublished manuscript\nto guarantee zero data contamination, and two published papers to assess performance on existing\nliterature.\n• Paper A: Balanced Product Codes (Breuckmann & Eberhardt, 2021). This paper studies\nquantum codes constructed from tensor products and fiber bundles of chain complexes.\nThe mathematical machinery includes homological algebra, tensor product of complexes,\nexpander graphs and spectral expansion.\n• Paper B: Fault-Tolerant Quantum Computation (Williamson & Yoder, 2024). This\npaper provides a co",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Qualitative Observations",
+      "pageStart": 5,
+      "pageEnd": 6,
+      "target": "../sections/sec-007-qualitative-observations.md",
+      "narrative": null,
+      "content": "Compile-Fix Loop Behavior.\nThe hard statements that require 20+ compile attempts typically\ninvolve:\n1. Dependent type arithmetic (e.g., proving i −1 + 1 = i at the type level)\n2. Missing lemmas that require creative workarounds\n3. Tactic timeouts requiring proof restructuring\nAgent-Discovered Lemmas.\nMerLean frequently introduces auxiliary lemmas not stated in the\noriginal paper. These helper lemmas are natural intermediate steps that a human mathematician would\ntypically leave implicit (see Appendix A.2 for a full example). For instance, the agent introduced:\n• edgeBoundary card eq edgeCount",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Discussion",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-008-discussion.md",
+      "narrative": null,
+      "content": "5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Challenges in MerLean",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-009-challenges-in-merlean.md",
+      "narrative": null,
+      "content": "Mathlib Gaps and Axiom-Based Formalization.\nOur evaluation highlighted gaps in Mathlib\nregarding specialized physics concepts, for instance, the K¨unneth formula was unavailable. MerLean\nhandles this by explicitly declaring axiom nodes in the dependency graph. More broadly, many\nphysics concepts are not rigorously defined in the language of mathematics (e.g., notions in quantum\nfield theory). Yet, it is out of the scope of this work (and similar ones) to build lean code of full prior\nknowledge. Consequently, it is reasonable to develop libraries based on “axioms”. Such choices of\naxioms should",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Future Applications of MerLean",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-010-future-applications-of-merlean.md",
+      "narrative": null,
+      "content": "Research Assistant.\nDuring our initial formalization of the unpublished Quantum Topology paper,\none lemma persistently required an axiom. Examining the autoinformalized blueprint revealed that an\nambiguous definition, where a constraint the author had implicitly assumed was lacking, caused the\nproblem. After fixing the LATEX source, MerLean produced a complete formalization. This illustrates\nhow the bidirectional pipeline can help researchers improve the rigor of their setups, definitions, and\nproofs.\nFormalized Peer Review.\nOur validation on an unpublished manuscript confirms that MerLean\nope",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusion",
+      "pageStart": 7,
+      "pageEnd": 9,
+      "target": "../sections/sec-011-conclusion.md",
+      "narrative": null,
+      "content": "We have presented MerLean, a fully automated bidirectional framework for formalizing mathematical\nresearch papers from LATEX into verified Lean 4 libraries. Our evaluation on three papers in theoretical\nquantum computation, covering stabilizer codes, fault-tolerant protocols, balanced product codes,\nand homological algebra, produced over 2,000 Lean declarations across 41,000+ lines of verified\ncode, demonstrating that fully automated formalization of frontier research is feasible. The iterative\ncompile-fix-verify loop effectively produces faithful formalizations without human intervention,\nwhi",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Formalization Examples",
+      "pageStart": 9,
+      "pageEnd": 9,
+      "target": "../sections/sec-012-formalization-examples.md",
+      "narrative": null,
+      "content": "We provide representative examples from the Fault-Tolerant QC formalization to illustrate the quality\nof MerLean’s output.\nA.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Theorem: Fault Tolerance of Gauging Measurement",
+      "pageStart": 9,
+      "pageEnd": 10,
+      "target": "../sections/sec-013-theorem-fault-tolerance-of-gauging-measurement.md",
+      "narrative": null,
+      "content": "Theorem 2 of Williamson & Yoder (2024) (adapted): The fault-tolerant implementation of Algorithm 1\nwith a suitable graph G has spacetime fault-distance dST = d, where d is the distance of the original\ncode. Specifically, if (1) the Cheeger constant satisfies h(G) ≥1, and (2) the number of measurement\nrounds satisfies to −ti ≥d, then any spacetime logical fault has weight at least d.\n/-- Main Theorem (Fault Tolerance): The spacetime fault-distance\nequals d. Under the conditions:\n1. h(G) >= 1 (Cheeger constant at least 1)\n2. (t_o - t_i) >= d (sufficient measurement rounds)\nThe spacetime fault-di",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2602.16554v1/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Agent-Discovered Helper Lemma",
+      "pageStart": 10,
+      "pageEnd": 13,
+      "target": "../sections/sec-014-agent-discovered-helper-lemma.md",
+      "narrative": null,
+      "content": "This lemma is part of the formalization of Williamson & Yoder (2024), specifically addressing the\nlower bound on space distance. The agent introduced this intermediate lemma on its own to complete\nthe proof of the space distance lower bound in the fault-tolerant quantum computation formalization.\nGiven a Cheeger-like expansion parameter h(G), a cleaning set of size at most the cleaned operator\nweight, and a boundary satisfying the isoperimetric inequality, the lemma establishes:\nw′ −|S| + |∂S| ≥min(h(G), 1) · d,\nwhere w′ is the cleaned weight, |S| the cleaning set size, |∂S| the boundary size,",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}

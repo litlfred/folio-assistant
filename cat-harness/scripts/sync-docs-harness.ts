@@ -37,6 +37,7 @@ import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { imageForRole, imagesForRole } from "../schemas/kg-node.js";
 import { graphTiles, withTileCounts } from "./graph-tiles.js";
 import { readTileCounts, type TileCount } from "../schemas/tile-count.js";
+import { gitTopLevelDirs } from "../schemas/git-corpus.ts";
 import { harnessTiles, instanceDirs } from "./harness-tiles.js";
 import { harnessPanel, skillPageIn } from "./harness-panel.js";
 import { siteLinks } from "./site-links.js";
@@ -240,10 +241,18 @@ function scanTileCounts(assetsDir: string): Map<string, TileCount> {
 }
 
 const links = siteLinks(decl, repoUrl);
-const instanceNames = readdirSync(REPO_ROOT, { withFileTypes: true })
-  .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
-  .map((d) => d.name)
-  .sort();
+// ASKED OF GIT (bean `qrlc`). The hand-written filter below admitted **26**
+// top-level names on this container and `_kg` was the first: a gitignored
+// directory of knowledge-graph exports that a clean checkout does not have.
+// Git's answer is 24 — it drops `_kg` and `test-results`, both gitignored,
+// and gains nothing.
+//
+// Latent today, and by a DIFFERENT mechanism from `xd1g`'s eleven: the
+// committed output carries 0 mentions of `_kg` because a later predicate
+// drops anything without a declaration. The walk was contaminated and the
+// artefact was not — which is luck a reader cannot see from the walk, and
+// the argument for asking git here rather than trusting the filter behind.
+const instanceNames = gitTopLevelDirs(REPO_ROOT).names;
 const allHarnesses = harnessTiles(REPO_ROOT, ROOT, instanceNames);
 
 /**

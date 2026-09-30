@@ -36,7 +36,7 @@
  */
 import { existsSync, readFileSync, readdirSync } from "fs";
 import { join, relative, resolve } from "path";
-import { CatalogueNodeSchema, CatalogueSchema, materializationCensus, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
+import { CatalogueNodeSchema, CatalogueSchema, handleFromUrl, materializationCensus, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 import { DublinCoreRecordSchema } from "../../folio-assistant-core/schemas/dublin-core.js";
 import { instanceDirectoryForGraph } from "../../cat-harness/schemas/cat-harness.js";
 import { checkLocalPath } from "./lib/local-path.js";
@@ -172,6 +172,38 @@ for (const n of nodes) {
 }
 
 const census = materializationCensus(nodes);
+// 5. HANDLES (bean `08u4`, iris-dspace.md R1: "only the Handle is guaranteed
+// outside WHO"). A node whose upstream URL carries a Handle must DECLARE it, so
+// it resolves through hdl.handle.net rather than only through the host; and a
+// declared Handle must be READ somewhere — its upstream URL or its record's
+// dc.identifier.uri — never minted.
+for (const n of nodes) {
+  const raw = JSON.stringify(n);
+  const seen = new Set<string>();
+  for (const m of raw.matchAll(/"upstream":"([^"]+)"/g)) {
+    const h = handleFromUrl(m[1]);
+    if (h) seen.add(h);
+  }
+  if (n.metadataRef && existsSync(join(INSTANCE, n.metadataRef))) {
+    for (const m of readFileSync(join(INSTANCE, n.metadataRef), "utf8").matchAll(/"value":\s*"([^"]+\/handle\/[^"]+)"/g)) {
+      const h = handleFromUrl(m[1]);
+      if (h) seen.add(h);
+    }
+  }
+  const upstreamHandles = [...raw.matchAll(/"upstream":"([^"]+)"/g)].map((m) => handleFromUrl(m[1])).filter(Boolean);
+  if (upstreamHandles.length > 0 && !n.handle) {
+    problems.push(`${n.id}: its upstream URL carries Handle ${upstreamHandles[0]} but the node declares no \`handle\` — it resolves only while the host does`);
+  }
+  if (n.handle && !seen.has(n.handle)) {
+    problems.push(`${n.id}: declares handle ${n.handle}, which appears in no upstream URL or dc.identifier.uri — a Handle must be read, never minted`);
+  }
+}
+
+// 6. What survives if the source goes away, per node kind (bean `08u4`).
+if (!cat.sourceLoss) {
+  problems.push("catalogue.json states no `sourceLoss` per node kind — for every referenced node, 'what happens if the source goes away' would go unanswered");
+}
+
 console.log(`\nwho-iris catalogue — ${nodes.length} node(s)\n`);
 for (const [k, v] of Object.entries(census)) console.log(`  ${k.padEnd(14)} ${v}`);
 // ITEMS and FILES, separately -- they were one number until 2026-09-20, when

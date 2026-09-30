@@ -12,7 +12,7 @@
  * which is why it is a separate module.
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -25,7 +25,17 @@ import {
   type Occurrence,
   type ReferenceExemption,
 } from "../../schemas/reference-direction.ts";
-import { analyse } from "../check-reference-direction.ts";
+import {
+  analyse,
+  buildDirectionResult,
+  CENSUS_FAMILY,
+  directionCensus,
+  directionSidecarState,
+  directionStates,
+  SIDECAR_STEM,
+  type PendingEntry,
+} from "../check-reference-direction.ts";
+import { QA_RESULTS_DIR, writeQaResult, type QaResult } from "../qa-results.ts";
 
 // ── The rule, with no filesystem ────────────────────────────────
 
@@ -470,5 +480,210 @@ describe("a declared path resolves against the scope it declares, not against th
     ]);
     expect(verdicts(r).sort()).toEqual(["low/keep.md wrong-direction", "low/out/x.md wrong-direction"]);
     expect(analyse(r).skippedMachineWritten).toBe(0);
+  });
+});
+
+// ── The committed sidecar ───────────────────────────────────────
+//
+// Same constraint as everything above and for the same measured reason: every
+// tree here is built for one distinction and thrown away. Nothing in this
+// block reads the real corpus, and `scriptAbsPath` deliberately names a file
+// that does not exist, so the producer hash is a stable `"unknown"` rather
+// than a hash of whichever version of the script is on disk.
+
+/** `low` <- `mid` <- `high`: `low` has TWO instances above it, which is what `names > 1` needs. */
+function threeTier(files: Record<string, string>): string {
+  const root = mkdtempSync(join(tmpdir(), "refdir-"));
+  made.push(root);
+  for (const [name, needs] of [["low", []], ["mid", ["low"]], ["high", ["mid"]]] as const) {
+    mkdirSync(join(root, name), { recursive: true });
+    writeFileSync(join(root, name, `${name}.json`), JSON.stringify({ name, needs, directories: [] }));
+  }
+  for (const [rel, body] of Object.entries(files)) {
+    const abs = join(root, rel);
+    mkdirSync(join(abs, ".."), { recursive: true });
+    writeFileSync(abs, body);
+  }
+  return root;
+}
+
+const resultFor = (root: string, pending: PendingEntry[], now = new Date("2026-01-01T00:00:00.000Z")) =>
+  buildDirectionResult({
+    report: analyse(root),
+    pending,
+    exemptionsDeclared: 4,
+    script: "scripts/producer.ts",
+    scriptAbsPath: join(root, "does-not-exist.ts"),
+    now,
+  });
+
+describe("directionStates records the determinations, and each one separately", () => {
+  test("a file naming SEVERAL instances above it, unlisted, is the state that exits 1", () => {
+    const s = directionStates(analyse(threeTier({ "low/a.md": "about mid and high\n" })), []);
+    expect(s.multiDestinationUnlisted).toEqual([{ file: "low/a.md", names: 2 }]);
+  });
+
+  test("the same file LISTED is not in that set — membership is the ruling", () => {
+    const r = analyse(threeTier({ "low/a.md": "about mid and high\n" }));
+    expect(directionStates(r, [{ file: "low/a.md", names: 2 }]).multiDestinationUnlisted).toEqual([]);
+  });
+
+  test("a file naming ONE instance above it is not multi-destination — it has a destination", () => {
+    const s = directionStates(analyse(threeTier({ "low/a.md": "about high\n" })), []);
+    expect(s.multiDestinationUnlisted).toEqual([]);
+  });
+
+  test("a PENDING entry with no wrong-direction reference left is reported stale", () => {
+    const s = directionStates(analyse(threeTier({ "low/a.md": "nothing to see\n" })), [
+      { file: "low/a.md", names: 2 },
+    ]);
+    expect(s.pendingStale).toEqual([{ file: "low/a.md", why: "no wrong-direction reference left" }]);
+  });
+
+  test("a PENDING entry that now names ONE instance is reported stale too — the set is checked BOTH ways", () => {
+    const s = directionStates(analyse(threeTier({ "low/a.md": "about high\n" })), [
+      { file: "low/a.md", names: 2 },
+    ]);
+    expect(s.pendingStale.map((p) => p.why)).toEqual([
+      "now names ONE instance, so it has a destination and is not pending",
+    ]);
+  });
+
+  test("an instance declaring no `needs` is carried as its own state, never folded into a count", () => {
+    const root = mkdtempSync(join(tmpdir(), "refdir-"));
+    made.push(root);
+    for (const [n, body] of [["low", { name: "low", needs: [] }], ["adrift", { name: "adrift" }]] as const) {
+      mkdirSync(join(root, n), { recursive: true });
+      writeFileSync(join(root, n, `${n}.json`), JSON.stringify(body));
+    }
+    expect(directionStates(analyse(root), []).undeclaredInstances).toEqual(["adrift"]);
+  });
+});
+
+describe("the census records VERDICT counts and no FILE count", () => {
+  test("the four verdicts are all recorded, `undetermined` among them", () => {
+    const r = analyse(threeTier({ "low/a.md": "about mid and high\n" }));
+    const c = directionCensus(r, directionStates(r, []));
+    for (const k of ["wrongDirection", "exempt", "namesRepository", "undetermined"]) {
+      expect(`${k} present: ${k in c}`).toBe(`${k} present: true`);
+    }
+    expect(c.wrongDirection).toBe(2);
+  });
+
+  test("a count of FILES is NOT recorded — it is a census and stays printed", () => {
+    // `audit-coverage`'s rule, applied here rather than rediscovered: a census
+    // moves on any commit that adds a page and says nothing about direction.
+    const r = analyse(threeTier({ "low/a.md": "about high\n" }));
+    const c = directionCensus(r, directionStates(r, []));
+    expect(Object.keys(c).filter((k) => k.startsWith("skipped"))).toEqual([]);
+  });
+
+  test("`undetermined` is carried as its own number, never merged with a pass or a finding", () => {
+    // `adrift` declares no `needs`, and `dep` needs it — so `dep` is above
+    // `adrift` and a reference from `adrift` to `dep` is a reference whose
+    // direction NOBODY has declared. It is neither clean nor a finding, and
+    // the sidecar has to keep saying so: 969 occurrences land here on the real
+    // corpus, all bare mentions with no path and no URL.
+    const root = mkdtempSync(join(tmpdir(), "refdir-"));
+    made.push(root);
+    for (const [n, body] of [["adrift", { name: "adrift" }], ["dep", { name: "dep", needs: ["adrift"] }]] as const) {
+      mkdirSync(join(root, n), { recursive: true });
+      writeFileSync(join(root, n, `${n}.json`), JSON.stringify(body));
+    }
+    writeFileSync(join(root, "adrift", "a.md"), "about dep\n");
+    const r = analyse(root);
+    const c = directionCensus(r, directionStates(r, []));
+    expect(`undet ${c.undetermined} wrong ${c.wrongDirection} allowed ${c.allowed}`).toBe("undet 1 wrong 0 allowed 0");
+  });
+});
+
+describe("the sidecar is idempotent, and `--check` grades the states rather than the counts", () => {
+  /** An instance root with a `test/results/` the writer can fill. */
+  const instanceRoot = (): string => {
+    const d = mkdtempSync(join(tmpdir(), "refdir-side-"));
+    made.push(d);
+    return d;
+  };
+
+  test("re-running the producer over the same tree yields the same bytes", () => {
+    const corpus = threeTier({ "low/a.md": "about mid and high\n" });
+    const out = instanceRoot();
+    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, []));
+    const first = readFileSync(join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`), "utf-8");
+    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, [], new Date("2027-05-05T00:00:00.000Z")));
+    expect(readFileSync(join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`), "utf-8")).toBe(first);
+  });
+
+  test("a fresh sidecar is `current`", () => {
+    const corpus = threeTier({ "low/a.md": "about mid and high\n" });
+    const out = instanceRoot();
+    const fresh = resultFor(corpus, []);
+    writeQaResult(out, SIDECAR_STEM, fresh);
+    expect(directionSidecarState(out, fresh)).toBe("current");
+  });
+
+  test("no sidecar at all is `absent`, which is NOT `current`", () => {
+    // `dh4f`: no record reading identically to a clean one is the whole defect.
+    expect(directionSidecarState(instanceRoot(), resultFor(threeTier({}), []))).toBe("absent");
+  });
+
+  test("the state check does NOT write — bean `ymsu`, and this is what pins it", () => {
+    const out = instanceRoot();
+    directionSidecarState(out, resultFor(threeTier({ "low/a.md": "about mid and high\n" }), []));
+    expect(existsSync(join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`))).toBe(false);
+  });
+
+  test("a hand-edited GRADED family is `stale`", () => {
+    const corpus = threeTier({ "low/a.md": "about mid and high\n" });
+    const out = instanceRoot();
+    const fresh = resultFor(corpus, []);
+    writeQaResult(out, SIDECAR_STEM, fresh);
+    const p = join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`);
+    const doc = JSON.parse(readFileSync(p, "utf-8")) as QaResult;
+    doc.families["multi-destination-unlisted"]!.entries = [];
+    doc.families["multi-destination-unlisted"]!.count = 0;
+    writeFileSync(p, JSON.stringify(doc, null, 2) + "\n");
+    expect(directionSidecarState(out, fresh)).toBe("stale");
+  });
+
+  test("a corpus whose STATES moved is `stale` — the sidecar cannot outlive its ruling", () => {
+    const out = instanceRoot();
+    writeQaResult(out, SIDECAR_STEM, resultFor(threeTier({ "low/a.md": "about mid and high\n" }), []));
+    expect(directionSidecarState(out, resultFor(threeTier({ "low/b.md": "about mid and high\n" }), []))).toBe("stale");
+  });
+
+  test("a hand-edited CENSUS is still `current`, and that is the deliberate line", () => {
+    // The counts are RECORDED so a reader can tell `audited clean` from `never
+    // audited`; they are not GRADED because they move whenever anybody writes a
+    // paragraph. Grading them would make a gate stale by default, which is what
+    // `audit-coverage` already paid for. This test exists so that decision
+    // cannot be reversed by accident.
+    const corpus = threeTier({ "low/a.md": "about mid and high\n" });
+    const out = instanceRoot();
+    const fresh = resultFor(corpus, []);
+    writeQaResult(out, SIDECAR_STEM, fresh);
+    const p = join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`);
+    const doc = JSON.parse(readFileSync(p, "utf-8")) as QaResult;
+    (doc.families[CENSUS_FAMILY]!.entries[0] as Record<string, number>).wrongDirection = 999_999;
+    writeFileSync(p, JSON.stringify(doc, null, 2) + "\n");
+    expect(directionSidecarState(out, fresh)).toBe("current");
+  });
+
+  test("a producer that moved is `stale` — a result says what the code that wrote it found", () => {
+    // `check:harness-state`'s rule for `health`: age is a proxy, the hash is
+    // the fact. A result written by a producer that no longer exists states the
+    // old code's answer.
+    const corpus = threeTier({ "low/a.md": "about mid and high\n" });
+    const out = instanceRoot();
+    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, []));
+    const moved = { ...resultFor(corpus, []), producer: { script: "scripts/producer.ts", script_hash: "0123456789ab" } };
+    expect(directionSidecarState(out, moved)).toBe("stale");
+  });
+
+  test("the timestamp alone never makes it stale", () => {
+    const corpus = threeTier({ "low/a.md": "about mid and high\n" });
+    const out = instanceRoot();
+    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, []));
+    expect(directionSidecarState(out, resultFor(corpus, [], new Date("2030-12-31T23:59:59.000Z")))).toBe("current");
   });
 });

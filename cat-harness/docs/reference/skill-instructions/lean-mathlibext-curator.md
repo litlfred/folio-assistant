@@ -1,7 +1,7 @@
 ---
 layout: default
 generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
-title: '`MathlibExt` Curator'
+title: 'MathlibExt Curator'
 parent: Skill instructions
 ---
 

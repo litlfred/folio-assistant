@@ -1343,6 +1343,7 @@
     {
       "id": "prepare-merge",
       "prefLabel": "prepare-merge",
+      "definition": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\".",
       "notation": "prepare-merge",
       "source": "cat-harness/skills/folio-core/prepare-merge.md",
       "status": "candidate"
@@ -2005,6 +2006,14 @@
       "definition": "Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule. Read before adding a check to a schema, a validator, a gate or an incompatibility table, and whenever you are about to write down that something \"is not supported\".",
       "notation": "unverified-constraints",
       "source": "cat-harness/skills/folio-core/unverified-constraints.md",
+      "status": "candidate"
+    },
+    {
+      "id": "upload-routes",
+      "prefLabel": "upload-routes",
+      "definition": "How a file actually REACHES `uploads/` — the two mechanisms that write bytes into a declared queue, the persona that performs one of them on somebody's behalf, and what each writer owes that the route does not do for them. The step before intake and after acquisition.",
+      "notation": "upload-routes",
+      "source": "cat-harness/skills/folio-core/upload-routes.md",
       "status": "candidate"
     },
     {

@@ -40,6 +40,7 @@ import { z } from "zod";
 
 import { resolveDirectories } from "./cat-harness.ts";
 import { BeanIdSchema } from "./tool-types.ts";
+import { ProcessElementIdSchema } from "./process-element-id.ts";
 
 /** The `$schema` tag every log entry carries, per the declare-yourself rule. */
 export const LOG_ENTRY_SCHEMA_ID = "folio-log/v1";
@@ -224,7 +225,7 @@ export const LogEntrySchema = z.object({
    */
   role: z.string().min(1).optional(),
   /** BPMN process id, when the entry was written inside one. */
-  process: z.string().min(1).optional(),
+  process: ProcessElementIdSchema.optional(),
   /** The activity/step id within that process. */
   task: z.string().min(1).optional(),
   /** The bean this work is claimed against, where there is one. A typed id (#1168 B8). */

@@ -13,8 +13,8 @@
         <dt>About</dt><dd><a href="{{ '/beans-and-todos.html' | relative_url }}#human-todos">beans-and-todos &rsaquo; human-todos</a></dd>
       </dl>
       <div class="fa-todo-listing-body">
-        <p>`content/docs/beans-and-todos/human-todos.md` opens **&quot;Not built yet&quot;**, and
-that is no longer true. `todos/` is a declared graph with items on disk, a
+        <p><code>content/docs/beans-and-todos/human-todos.md</code> opens **&quot;Not built yet&quot;**, and
+that is no longer true. <code>todos/</code> is a declared graph with items on disk, a
 reader, a published JSON index and a board on the site.</p>
         <p>This todo is attached to that block, so it renders beside the sentence it
 contradicts. That is the per-page assignment working on a real case rather
@@ -23,13 +23,13 @@ what it should say now.</p>
         <p>## What the page still gets RIGHT, and must not lose</p>
         <p>Three of its four claims survive, and they are the valuable part:</p>
         <p>- **&quot;Do not repurpose beans for it.&quot;** Still correct, and now structural:
-  `beans/` and `todos/` are separate declared graphs.
+  <code>beans/</code> and <code>todos/</code> are separate declared graphs.
 - **When a todo is shown.** Still undecided. This PR answers it for the
   navbar and the board; it does not answer whether an open item should
   surface unasked, and the page&#39;s objection stands — surfacing every item on
   every turn is noise, surfacing none is a list nobody reads.
-- **How one is retired.** Still undecided. `TodoStatus` carries `resolved`
-  and `wontfix`, but nothing retires one, and the page&#39;s point holds: a
+- **How one is retired.** Still undecided. <code>TodoStatus</code> carries <code>resolved</code>
+  and <code>wontfix</code>, but nothing retires one, and the page&#39;s point holds: a
   person abandoning a reminder is ordinary and needs no ceremony, so the bean
   rules do not transfer.</p>
         <p>## What has changed and needs writing down</p>
@@ -62,18 +62,18 @@ from where the stale sentence renders.</p>
         <dt>About</dt><dd><a href="{{ '/publication-workflow.html' | relative_url }}#agents-and-system-actors">publication-workflow &rsaquo; agents-and-system-actors</a></dd>
       </dl>
       <div class="fa-todo-listing-body">
-        <p>`ci-health-watcher` is settled: it is a mechanical participant in the CI
-process, so it takes `build-pipeline` and `validation-pipeline`, both
-`actorKind: &quot;system&quot;`. Declared, and `memoryForRoles` now discriminates
+        <p><code>ci-health-watcher</code> is settled: it is a mechanical participant in the CI
+process, so it takes <code>build-pipeline</code> and <code>validation-pipeline</code>, both
+<code>actorKind: &quot;system&quot;</code>. Declared, and <code>memoryForRoles</code> now discriminates
 because of it.</p>
         <p>**The other two are not settled by that argument, and the reason is precise.**
 Both system roles are described as running a fixed program and exercising *no
 judgement*. That is exactly what makes them the right home for a watcher — and
 exactly why they are the wrong home for these two:</p>
-        <p>- **`platform-boundary-guard`** decides whether a literal naming one folio
+        <p>- **<code>platform-boundary-guard</code>** decides whether a literal naming one folio
   belongs in platform code, and whether a new content type needs an adapter or
   only a profile. Those are judgements; a wrong one is not a failed check.
-- **`content-pipeline-navigator`** is closer to mechanical — it knows which
+- **<code>content-pipeline-navigator</code>** is closer to mechanical — it knows which
   stage owns which file — but it also answers &quot;should this be a block kind&quot;,
   which is not.</p>
         <p>## What differs depending on the answer</p>
@@ -85,14 +85,14 @@ lane, or only the agent named in the file.</p>
         <p>1. **Leave both agent-scoped, and say so in the role model.** Costs nothing,
    and is honest — neither is a lane anyone else acts in. The cost is that the
    role axis stays half-used, with one actor on it.
-2. **Give them a judgement-bearing existing role** — `editor` and
-   `code-reviewer` are the nearest. Cheap, and wrong if the fit is loose: a
+2. **Give them a judgement-bearing existing role** — <code>editor</code> and
+   <code>code-reviewer</code> are the nearest. Cheap, and wrong if the fit is loose: a
    forced edge is one every later audit trusts as true.
-3. **Add roles for them.** Honest edges. But `AGENTS.md` warns under
-   `skill-in-role-or-process` against &quot;inventing roles and activities to
+3. **Add roles for them.** Honest edges. But <code>AGENTS.md</code> warns under
+   <code>skill-in-role-or-process</code> against &quot;inventing roles and activities to
    absorb tools that do not want them&quot;, and a role with one actor describes
    the tool rather than the work.</p>
-        <p>No recommendation. The `ci-health-watcher` case was settled by a property of
+        <p>No recommendation. The <code>ci-health-watcher</code> case was settled by a property of
 the work (it exercises no judgement); neither option here has an equivalent,
 which is why it is a person&#39;s call and not an agent&#39;s.</p>
         <p>## If nothing is decided</p>
@@ -126,7 +126,7 @@ the three candidates differ enough that guessing would be wasted work.</p>
         <p>**Option 2.** A dispatch point is a **task / workflow initiation**, and it
 opens a **bean** — not a GitHub Actions job. That is the answer the repo&#39;s own
 machinery is already shaped for: an activity carrying
-`&lt;folio:bean op=&quot;claim&quot;/&gt;` performs the bean operation when the step
+<code>&lt;folio:bean op=&quot;claim&quot;/&gt;</code> performs the bean operation when the step
 completes, so &quot;start the watcher&quot; and &quot;record that it is running&quot; are one
 declared step rather than two mechanisms that can disagree.</p>
         <p>It also settles the cost I flagged against option 2 — that a BPMN activity
@@ -137,11 +137,11 @@ that opened it is still alive.</p>
 feature-branch one needs a process that does not yet exist.</p>
         <p>## Options, with what each costs</p>
         <p>1. **A GitHub Actions job.** Fires without anybody present, which is the whole
-   premise of `xom7` — the failure being guarded against is a quiet stretch
+   premise of <code>xom7</code> — the failure being guarded against is a quiet stretch
    with nobody looking. Cost: it cannot read the session&#39;s memory, so the
    &quot;dispatch an agent with a specific memory context&quot; half does not happen.
 2. **An activity in a BPMN process**, performed by a session. Gets the memory
-   context, and puts the dispatch where `workflow_next` can report it. Cost: it
+   context, and puts the dispatch where <code>workflow_next</code> can report it. Cost: it
    only fires while somebody is working — precisely the stretch that is already
    covered.
 3. **An MCP tool a workflow step calls.** Both, at the price of building the
@@ -149,20 +149,20 @@ feature-branch one needs a process that does not yet exist.</p>
         <p>## Where the two dispatch points already live</p>
         <p>Both are steps in diagrams that exist, which is why this todo is tagged with
 them rather than describing them:</p>
-        <p>- **&quot;approved for final publication / merge to `main`&quot;** is
-  `Process_Publication` (`draft-to-publication.bpmn`), whose lane carries
+        <p>- **&quot;approved for final publication / merge to <code>main</code>&quot;** is
+  <code>Process_Publication</code> (<code>draft-to-publication.bpmn</code>), whose lane carries
   *Authorise the release* and *Version, tag and publish*. The dispatch point
   the owner named is that authorisation step.
-- **&quot;once changes are made to feature branch&quot;** is `Process_CodeReview`,
-  reached from `Process_Review`.</p>
+- **&quot;once changes are made to feature branch&quot;** is <code>Process_CodeReview</code>,
+  reached from <code>Process_Review</code>.</p>
         <p>## What is already true, so this is not started from nothing</p>
         <p>The two dispatch points are process events, so wherever they are performed they
-should be DRAWN in BPMN under `processes/`. The likely homes are
-`draft-to-publication` for the merge-to-main gate and a feature-branch process
+should be DRAWN in BPMN under <code>processes/</code>. The likely homes are
+<code>draft-to-publication</code> for the merge-to-main gate and a feature-branch process
 that may not exist yet — that needs checking rather than assuming.</p>
         <p>## If nothing is decided</p>
-        <p>Nothing fires. `bun run check:ci-health` still runs in the session-start sweep
-and `ci-health.yml` still runs weekly, so the watcher is not silent — it is
+        <p>Nothing fires. <code>bun run check:ci-health</code> still runs in the session-start sweep
+and <code>ci-health.yml</code> still runs weekly, so the watcher is not silent — it is
 just not tied to the two moments named above.</p>
       </div>
       <p class="fa-todo-listing-links"><a href="https://github.com/litlfred/folio-assistant/blob/main/todos/items/what-kick-off-means-for-a-ci-watcher.md">View source</a> &middot; <a href="https://github.com/litlfred/folio-assistant/edit/main/todos/items/what-kick-off-means-for-a-ci-watcher.md">Edit</a></p>

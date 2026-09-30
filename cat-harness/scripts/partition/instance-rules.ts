@@ -169,6 +169,8 @@ export const RULES: Rule[] = [
       "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
       "scripts/generate-registry.ts",        // scans skills/ → SkillRegistry
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
+      "scripts/gen-skill-commands.ts",       // user_invocable skills → .claude/commands pointers (bean `j6t3`)
+      "scripts/gen-upload-step-docs.ts",     // a process step's Tools → docs; both graphs are harness concepts
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       // HARNESS: the review page is rendered surface, which the harness owns
@@ -513,6 +515,13 @@ export const RULES: Rule[] = [
       // `scripts/` directory read through `gitCorpus`, and it cannot express
       // an opinion about a folio because it never looks at one.
       "scripts/root-scan-census.ts",
+      // Does a generator's COMMITTED OUTPUT change when gitignored content is
+      // present (bean `qrlc`)? Harness by the same route as the census above:
+      // its subjects are derived from this repository's own `package.json`
+      // scripts, it compares them with `git status`, and it never opens a
+      // folio's content — it only asks whether running a writer produced
+      // different bytes.
+      "scripts/detect-live-corpus.ts",
       // Whether a translated page's links survived being one directory
       // deeper than the page they were translated from (bean `ahab`).
       // Harness for `check-subgraphs.ts`' reason and by the same route — it
@@ -1052,6 +1061,9 @@ export const RULES: Rule[] = [
       // HARNESS's own declarations and need no folio to have anything to do.
       "src/tools/degradation.ts",
       "src/tools/skill-fetch.ts",
+      // The person-facing half of the same skills (bean `j6t3`): each
+      // `user_invocable` skill as an MCP prompt. Harness for skill-fetch's reason.
+      "src/tools/skill-prompts.ts",
       "src/tools/preferences.ts",
       "src/tools/beans-prime.ts",
       "src/tools/workflow.ts",
@@ -1233,6 +1245,9 @@ export const RULES: Rule[] = [
       //    survives the "describes a process" test.
       "schemas/memory.ts",
       "schemas/carried-note.ts",
+      // The BPMN process element id (#1168 B8): a leaf `carried-note`'s
+      // TaskRef and the log / invocation records all reference.
+      "schemas/process-element-id.ts",
       // Same argument as `memory.ts`, one step along: a waiver is a permission
       // a PERSON gives an AGENT about a gate in this repository's process. It
       // is declared over the same directory as agent memory and it fails the
@@ -1334,6 +1349,7 @@ export const RULES: Rule[] = [
       "scripts/skill-governance.ts",        // which skill governs a directory, read from the skills (#1168 B7b)
       "scripts/docs-declarations.ts",       // which page documents a directory, read from the pages (#1168 B7c)
       "scripts/viewer-declarations.ts",     // which viewer page draws a directory, read from the pages (#1168 B7a-2)
+      "scripts/governing-process.ts",       // which BPMN process governs a directory, read from `coverage.process`
       "scripts/check-published-refs.ts",  // a SHA may stage, only a version may publish (issue #592)
       "scripts/ingest-ig-menu.ts",        // a FHIR IG's own navigation, read from its sushi-config (bean `0818`)
       "scripts/check-code-accounting.ts", // the two questions about a code file, kept apart (bean `ylj7`)
@@ -1598,23 +1614,49 @@ export const RULES: Rule[] = [
   },
 
   // ── folio-assist-core: the generic document model and its pipeline
+  //
+  // The `content/pipeline/` prefix below classifies that whole directory as
+  // core, which is why `check:partition` has always read 0 for it. Bean `yj6r`
+  // acted on that classification for the GLOSSARY cluster: `build-glossary.ts`,
+  // `codemod-refterm.ts` and their three tests now live in
+  // `folio-assistant-core/scripts/`. Nothing was removed from the prefix — a
+  // prefix stops matching a path that is no longer under it — but the fact is
+  // recorded here because the next reader will count `content/pipeline/` and
+  // find two files missing from a directory this rule claims in full.
+  //
+  // What the move BOUGHT is not a change of classification: it was already
+  // core. It removed the three imports reaching UP out of `cat-harness/` into
+  // `folio-assistant-core/schemas/glossary.ts` and `scripts/glossary-page.ts`,
+  // which this scan cannot see at all (its root is `cat-harness/`, so an edge
+  // leaving it is not resolved and not counted). That blindness is the whole
+  // subject of `yj6r`, and it is why a green `check:partition` was never
+  // evidence about this cluster either way.
   {
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: [
-      // CORE: renders a DOCUMENT folio to a site through the document
-      // pipeline's own `buildDocumentMarkdown` (content/pipeline, core). Its
-      // subject is a folio's content, not the harness (bean `fyu2`).
-      "scripts/build-document-site.ts",
+      // `scripts/build-document-site.ts` STOOD HERE and is GONE as of bean
+      // `yj6r`, 2026-09-30: it now lives in `folio-assistant-core/scripts/`
+      // beside the `schemas/changeset.ts` its test reads, so the classification
+      // is carried by location. Reasoning kept: it renders a DOCUMENT folio to
+      // a site through the document pipeline's own `buildDocumentMarkdown`
+      // (content/pipeline, core), and its subject is a folio's content, not the
+      // harness (bean `fyu2`). The `gen-review-page.ts` entry above still names
+      // it as a core caller reaching DOWN into the harness, which is now true
+      // by location as well as by rule.
       "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/render-order.ts", "src/tools/translation.ts",
       "src/tools/preview.ts", "src/qa-agent-write.ts",
-      // The voice-graph validator. It resolves each rule's citation into
-      // `library/` — a FOLIO's reference library — and `schemas/voices.ts`,
-      // which it reads, is core by the `schemas/` prefix. Arrived from `main`
-      // and fell through every prefix.
-      "scripts/check-voices.ts",
+      // `scripts/check-voices.ts` STOOD HERE and is GONE as of bean `yj6r`,
+      // 2026-09-30: it now lives in `folio-assistant-core/scripts/` beside the
+      // `schemas/library-ref.ts` it resolves citations through, so the
+      // classification is carried by location rather than by this list. The
+      // reasoning is kept because the next reader will ask why the voice-graph
+      // validator is not adjudicated — it resolves each rule's citation into
+      // `library/`, a FOLIO's reference library, and `schemas/voices.ts`, which
+      // it reads, is core by the `schemas/` prefix. It arrived from `main` and
+      // fell through every prefix, which is why it needed an exact entry at all.
       // CORE, by the same test and for the same stated reason: the subject is
       // CONTENT. It asks whether a change publishes a TRANSLATED PAGE with no
       // `.po` beside it, so both sides of the question are a folio's material —
@@ -1753,11 +1795,17 @@ export const RULES: Rule[] = [
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
       "scripts/l1-blocks.ts",               // staged entry → manifest + blocks/, the arm between the two
-      // Same test as the three above: it reads a CONTAINER a folio was
-      // given — a zip, a PDF, a saved page — and writes a
-      // `folio-extraction/v1` record beside it. Core material, and its
-      // schema (`folio-assistant-core/schemas/extraction.ts`) is core too.
-      "scripts/extract-assets.ts",          // container → extraction record, metadata by default
+      // `scripts/extract-assets.ts` STOOD HERE and is GONE as of bean `yj6r`,
+      // 2026-09-30, for the reason the materialisation trio above gives: it now
+      // lives in `folio-assistant-core/scripts/` beside the
+      // `schemas/extraction.ts` it reads, so the classification is carried by
+      // location. Its reasoning is kept rather than deleted with the entry,
+      // because the next reader will ask why a container-extraction tool is not
+      // adjudicated and "it is, by where it sits" is the answer: same test as
+      // the three above — it reads a CONTAINER a folio was given (a zip, a PDF,
+      // a saved page) and writes a `folio-extraction/v1` record beside it. Core
+      // material, and its schema is core too. A rule naming a path its own scan
+      // can no longer see fires on nothing while reading as an adjudication.
       "scripts/narratives.ts",              // the narrative review queue
       // Same test, same answer: it reads `library/<bib-slug>/blocks/` and
       // writes `summaries.json` beside them, a folio's own material, through

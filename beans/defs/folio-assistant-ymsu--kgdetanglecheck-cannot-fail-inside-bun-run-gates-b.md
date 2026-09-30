@@ -884,3 +884,37 @@ a TEST performs a real sweep into the tree, not that the fields exist.
 The writer is OUTSIDE `content/pipeline/` and fires only in the full suite. Not
 identified. Do not assume it is one of the three above — each was measured to
 write nothing.
+
+## A SECOND witness, 2026-09-30 — and this one reddens a DIFFERENT gate
+
+Found while porting the uploads-page diagram (PR #1529). Same mechanism, one
+consumer along: it is not only `kg:detangle:check` that reads the repaired
+file.
+
+The gate set runs `kg:detangle`, which rewrites
+
+    cat-harness/test/results/detangle/cat-harness/schemas.detangle.json
+
+**inside the tree being judged** (`size` 230 -> 231, already stale before the
+change under test). `gen-uml-overview` then reads the repaired copy, so
+`uml:overview:check` fails — green at the branch's baseline, red inside the
+run, for a reason belonging to neither.
+
+It reproduces exactly by running `kg:detangle` on the pre-change head, which
+is how it was told apart from a real regression.
+
+### Why this widens the bean rather than repeating it
+
+The original measurement is about a checker comparing the writer's output to
+the writer's output — a gate that CANNOT FAIL. This is the inverse: a gate
+that fails for something that is not its subject and not the diff's. Both come
+from the same cause, a gate writing into the tree the rest of the run is
+judging, and a fix that only stops `kg:detangle:check` reading its own writer
+leaves this one standing.
+
+### Not committed, on purpose
+
+The repaired sidecar was left uncommitted. It is `main`'s staleness, not the
+PR's, and committing it would put an unrelated change under that PR's name —
+which is how a shared artefact's churn gets attributed to whoever happened to
+run the gates.

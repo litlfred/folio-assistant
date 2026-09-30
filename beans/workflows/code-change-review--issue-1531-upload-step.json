@@ -1,0 +1,53 @@
+{
+  "$schema": "folio-workflow-instance/v1",
+  "id": "code-change-review--issue-1531-upload-step",
+  "processId": "Process_CodeChangeReview",
+  "source": "cat-harness/processes/code-change-review.bpmn",
+  "subject": "issue-1531-upload-step",
+  "bean": "folio-assistant-ojai",
+  "tokens": [
+    "Task_RunCI"
+  ],
+  "arrivals": {},
+  "history": [
+    {
+      "at": "2026-09-30T00:36:58.209Z",
+      "node": "Start_Change",
+      "note": "RECORDED DURING THE WORK, at the point the fourth layer landed — not at the start. The session opened as a directed implementation, and the process should have been named at the first tool call rather than after the commit. Stated so the gap is visible rather than papered over by a timestamp.",
+      "actor": "claude"
+    },
+    {
+      "at": "2026-09-30T00:36:58.209Z",
+      "node": "Task_ClaimBean",
+      "actor": "claude",
+      "note": "Bean folio-assistant-ojai created under the INGEST epic slw1 after a duplicate scan (no bean named the arrival routes or the missing first task; archived eq01 is the nearest and is about WHERE web uploads land, not about who owes what). `beans:claim` reported the bean is not yet on the default branch, so it was set in-progress locally, as that tool instructs."
+    },
+    {
+      "at": "2026-09-30T00:36:58.209Z",
+      "node": "Task_BranchAndAnnounce",
+      "actor": "claude",
+      "note": "Branch claude/upload-task-and-routes (session-designated). Issue #1531 opened with the gap as measured; the branch announcement is the round-1 comment on it, posted with the first push."
+    },
+    {
+      "at": "2026-09-30T00:36:58.209Z",
+      "node": "Task_Implement",
+      "actor": "claude",
+      "note": "Four layers: Task_Place in document-ingestion.bpmn (skill ref + bean op, start event renamed, Lane_0 documented), the upload-routes skill (registered), the upload-url Tool plus subgraph-readmes' second `satisfies` and the generator's own node, and gen-upload-step-docs.ts with --check registered in code-quality-gates.yml. The five call-activity subprocesses were not touched."
+    },
+    {
+      "at": "2026-09-30T00:36:58.209Z",
+      "node": "Task_RunGates",
+      "actor": "claude",
+      "note": "`bun run gates` run twice. The first run named nine reds, every one caused by this change (lane documentation, four generator sidecars, artefact verification, partition, a declared-path literal) — each fixed at its cause rather than exempted. check:bean-parents is red on folio-assistant-14ve, which is on main and not this branch's."
+    },
+    {
+      "at": "2026-09-30T00:36:58.209Z",
+      "node": "Task_CommitAndOpenPR",
+      "actor": "claude",
+      "note": "Commit 38f90b41d88, pushed; PR #1533 opened against main, referencing #1531 and carrying the measurements, the two-mechanisms-and-a-persona answer with its evidence, and the two points left unsettled."
+    }
+  ],
+  "status": "running",
+  "startedAt": "2026-09-30T00:36:58.209Z",
+  "updatedAt": "2026-09-30T00:36:58.209Z"
+}

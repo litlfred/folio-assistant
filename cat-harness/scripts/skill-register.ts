@@ -74,10 +74,11 @@
  * **Only an isolated run of one check against a known tree measures anything**,
  * which is why the table below cites per-check runs and not a `gates` summary.
  *
- * ## The six, each measured alone, red before and green after
+ * ## The seven, each measured alone, red before and green after
  *
  * | writer | the check it clears |
  * |---|---|
+ * | `skill:commands` | `skill:commands:check` — added 2026-09-30 (`j6t3`): red with 37 missing and one undeclared, green after |
  * | `skills:docs` | `skills:docs:check` |
  * | `glossary:page` | `check:glossary` |
  * | `docs:auto` | `docs:auto:check` |
@@ -474,6 +475,11 @@ export interface Step {
  * correct pairing. A convention test can enforce a defect.
  */
 export const STEPS: readonly Step[] = [
+  {
+    write: ["skill:commands"],
+    verify: ["skill:commands:check"],
+    because: "a skill declaring `user_invocable: true` owes a slash command (bean `j6t3`)",
+  },
   {
     write: ["skills:docs"],
     verify: ["skills:docs:check"],

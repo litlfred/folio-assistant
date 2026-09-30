@@ -48,11 +48,10 @@ Add the node for the mechanism. Then two things not to do:
 
 - **Do not widen an existing node's `satisfies`** to make the gap look closed.
   That makes the graph assert a node does something it does not.
-- **Do not add `alternativeTo`** between the existing nodes and the new one.
-  Export-then-publish-then-serve are complementary steps, not competing arms, and
-  that field's own note warns against deriving the relation from a shared skill.
-  Exactly one pair in this instance is genuinely substitutable, `beans-cli` /
-  `beans-manual`.
+- **Do not give the new node the same I/O as an existing one** unless it
+  really is a substitute. Alternatives are derived from a shared skill plus an
+  identical I/O signature (`deriveAlternatives`), and export-then-publish-then-
+  serve are complementary steps, not competing arms.
 
 ## Two reasons NOT to write `maintains`, both judgements rather than omissions
 
@@ -225,8 +224,8 @@ initiates:
 | a QA sweep axis | **trigger** | the sweep fires it per subject |
 | a schedule or a watcher | **trigger** | time or an event fires it |
 
-`alternativeTo` stays **empty** across them, by the same argument
-`ToolDefinitionSchema` makes about sharing a skill: these are not substitutable
+None of them is an alternative to another, by the same argument
+`deriveAlternatives` makes about sharing a skill: these are not substitutable
 arms, they are different ways the same work gets started.
 
 ### Enumerating the dispatch points is also how you find the ones already built
