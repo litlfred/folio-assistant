@@ -693,6 +693,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   associatedHarnesses?: AssociatedHarness[];
   /** External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — {@link Subscription}. Issue #1719. */
   subscriptions?: Subscription[];
+  /** Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719. */
+  knownSubstrates?: KnownSubstrate[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -2114,6 +2116,46 @@ export const SubscriptionSchema = z
   // chosen something it had not.
   .strict();
 
+/**
+ * A substrate this harness knows of that NO declaration in the checkout names.
+ * Issue #1719, owner: *"cat-harness should list known substrates now and as
+ * part of separation plans."*
+ *
+ * **Hand-entered only where no fact already exists.** Every staged instance
+ * already declares its planned `repository` (#1652), and every associated
+ * harness its `repository`, so the registry DERIVES those rows. Listing them
+ * again here would be a second copy of a fact, free to drift. This list is for
+ * the rest: a proposed substrate with no instance yet (the WHO World Health
+ * Data Hub), or a status only a person knows (a repository created today).
+ * `scripts/subscriptions-viz.ts` merges the two, and a hand row overrides a
+ * derived one by `name`.
+ */
+export interface KnownSubstrate {
+  /** The substrate's instance name, as its declaration gives it or will. */
+  name: string;
+  /** Human title. */
+  title?: string;
+  /** `owner/repo`, when one exists or is planned. */
+  repository?: RepoFullName;
+  /** Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release). */
+  status: "proposed" | "planned" | "exists" | "published";
+  /** Its paired tools repository, when the `kg-separation` pattern gives it one. */
+  toolsRepository?: RepoFullName;
+  /** One sentence a reader of the visualizer sees. */
+  note?: string;
+}
+
+export const KnownSubstrateSchema = z
+  .object({
+    name: z.string().regex(INSTANCE_NAME),
+    title: z.string().min(1).optional(),
+    repository: RepoFullNameSchema.optional(),
+    status: z.enum(["proposed", "planned", "exists", "published"]),
+    toolsRepository: RepoFullNameSchema.optional(),
+    note: z.string().min(1).optional(),
+  })
+  .strict();
+
 export const RemoteGraphSchema = z
   .object({
     id: z.string().min(1),
@@ -2544,6 +2586,11 @@ export const CatHarnessDeclarationSchema = z.object({
   subscriptions: z
     .array(SubscriptionSchema)
     .refine((xs) => new Set(xs.map((x) => x.id)).size === xs.length, { message: "subscriptions: an id appears twice" })
+    .optional(),
+  /** See {@link KnownSubstrate}. Names are unique. */
+  knownSubstrates: z
+    .array(KnownSubstrateSchema)
+    .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: "knownSubstrates: a name appears twice" })
     .optional(),
   stickies: z.array(StickyContributionSchema).optional(),
   renderExemption: RenderExemptionSchema.optional(),
