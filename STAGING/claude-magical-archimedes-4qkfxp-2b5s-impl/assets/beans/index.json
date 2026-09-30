@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 477,
+      "count": 478,
       "unit": "beans"
     }
   },
@@ -1957,6 +1957,20 @@
       "updatedAt": "2026-09-30T10:42:13Z",
       "preview": "Mechanical sweep from the string-to-reference analysis (#1168 comment 5803006038). SkillNameSchema / ProcessIdSchema / TaskRefSchema / BeanIdSchema / BLOCK_KINDS enum / ThemeRefSchema / KgRefSchema on the listed fields; kg-export ActorDef.roles and role toJsonLd skills as @id links; resolve memory roles/agents. Delete SkillDefinition.roles (inverse of RoleDef.skills, 0 instances) and skill front-m",
       "file": "beans/defs/folio-assistant-a0s3--b8-1168-string-to-reference-sweep-typed-refs-on-25.md"
+    },
+    {
+      "id": "folio-assistant-a1ku",
+      "title": "Generate a paper's leanblueprint layout (blueprint/src) from its manifest, and wire it into the folio blueprint.yml",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T13:39:21Z",
+      "updatedAt": "2026-09-30T14:03:45Z",
+      "preview": "Owner 2026-09-30: after #1591, 'fix the platform (1), then the blueprint wiring (3)'. Parent work: yxob / 6dvy (#1492).\n\n## Why\nThe folio blueprint.yml runs docgen-action with blueprint: true, which needs <paper>/lean/blueprint/src/ (web.tex, print.tex, content.tex, macros/, plastex.cfg). Nothing generates it: blueprint-export.ts writes content only, and the one blueprint/src in the tree (cat-harn",
+      "file": "beans/defs/folio-assistant-a1ku--generate-a-papers-leanblueprint-layout-blueprintsr.md"
     },
     {
       "id": "folio-assistant-a7t8",
@@ -6669,13 +6683,13 @@
       "title": "B9d (#1168): rename voice source kgRef → path, skill front matter capability: → requiresCapability",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:54:25Z",
-      "updatedAt": "2026-09-30T12:51:45Z",
-      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected\n\n_2026-09-30T12:51:45Z_ — Claimed by claude/sharp-einstein-970n",
+      "updatedAt": "2026-09-30T12:53:05Z",
+      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected\n\n\n\n## 2026-09-30 progress\n- [x] voice source kgRef → path (37 v",
       "file": "beans/defs/folio-assistant-zmm2--b9d-1168-rename-voice-source-kgref-path-skill-fron.md"
     },
     {
