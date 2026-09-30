@@ -160,37 +160,40 @@ same thing — every derived artefact in `library/` becomes unreproducible from 
 checkout. `deletion-requires-confirmation` governs any exception, and an ingest
 step that removed its own input would be the `plj1` shape exactly.
 
-### Measured 2026-09-30 — 28 to retire, 47.4 MB, across five harnesses
+### Swept 2026-09-30 — 33 sources archived, and what is left in the queue
 
-**A first pass of this said "nine", and it was wrong** — it walked
-`cat-harness/library/` only, which is 14 of the corpus's entries. Swept across
-every declared library by each manifest's own `meta.source_file`:
+Done, under the owner's ruling and the four decisions that followed it.
+`fsh-guts/uploads/` is the sub-directory; an ingested source's
+`*.pdf.extraction.json` companion moves with it, being a derived artefact of
+the same ingest rather than a queue item; and the five sources earlier
+sessions had deleted were **restored from git history** rather than left gone.
 
 | | |
 |---|---:|
-| ingested uploads still sitting in `uploads/` | **28** |
-| their total size | **47.4 MB** |
-| harnesses they belong to | `cat-harness`, `agent-skills`, `smart-base`, `folio-assistant-core`, `who-iris` |
-| sources already deleted by earlier sessions | 5 |
+| relocated from `uploads/` | 28 |
+| their `.extraction.json` companions, moved with them | 7 |
+| restored from history | 5 |
+| sources now archived | **33** |
+| `fsh-guts/uploads/` | 62 MB |
+| still queued in `uploads/` | 14 — none of them ingested |
 
-The five deleted are exactly the five whose upload had been renamed to a
-descriptive filename (`feng-2023-designing-with-language`,
-`neubauer-2025-ai-assisted-schema-creation`,
-`dusengumuremyi-2026-ai-mediated-raci`, `gurel-tat-2017-swot-analysis`,
-`sammut-bonnici-galea-2015-swot-analysis`) — the sessions that renamed also
-tidied away, under no rule, because there was none to read. Recoverable from
-git history; not restored.
+**A first pass of this said "nine", and it was wrong** — it walked
+`cat-harness/library/` only, 14 of the corpus's entries, and reported a
+clean-looking number over four declared libraries it never opened. That is
+`dh4f` one level up, and it is why the count is recorded with its method.
 
-**The count being wrong by a factor of three is the point of recording it
-here.** `library` is a graph kind declared by five instances, and a sweep that
-resolves one directory reports a clean-looking number over four it never
-opened — the `dh4f` shape, one level up.
+**Every restored file was verified, not assumed.** Each of the five was
+recovered from `4b10661cdde`, the last commit holding it, and its bytes hashed
+against the `source_sha256` its own library entry records. **All five match**,
+so each is provably the file its derivation was made from rather than a
+lookalike. The five are exactly the five whose upload had been renamed to a
+descriptive filename — the sessions that renamed also tidied away, under no
+rule, because there was none to read.
 
-**Nothing is swept yet**, and two things have to be settled first, both on
-bean `q7ey`: whether `fsh-guts/uploads/` is the right sub-directory, and what
-happens to the `*.pdf.extraction.json` companions that sit beside six of the
-28 in `uploads/` — derived artefacts that may simply go, or part of what is
-archived. Guessing either is cheap to do and expensive to undo across 28 files.
+**What is still in `uploads/` is the queue doing its job**: eleven PNGs, two
+PDFs nobody has ingested (`Home _ folio-assistant.pdf`,
+`ihris_admin_handbook_sep_17_2010.pdf`) and a stray image. The uningested
+count the queue viewer leads with is now the only thing in there.
 
 ### Renaming an upload is done BEFORE the first ingest
 

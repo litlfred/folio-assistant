@@ -9,37 +9,12 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
-  class "Asset" as folio_assistant_uploads_folio_extraction_v1_Asset <<json: ExtractionSchema>> #f4f4f1 {
-    path [1] : string
-    bytes [1] : integer
-    mediaType [0..1] : string
-    modifiedAt [0..1] : string
-    sha256 [0..1] : string
-    localPath [0..1] : string
-    extractedBecause [0..1] : string
-  }
-  class "Omitted" as folio_assistant_uploads_folio_extraction_v1_Omitted <<json: ExtractionSchema>> #f4f4f1 {
-    pattern [1] : string
-    reason [1] : string
-    count [1] : integer
-  }
-  class "folio-extraction/v1" as folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 <<json: ExtractionSchema>> #f4f4f1 {
-    $schema [1] : 'folio-extraction/v1'
-    container [1] : string
-    method [1] : zip | pdf | saved-webpage | tarball
-    capturedAt [0..1] : string
-    producer [0..1] : string
-    readAt [1] : string
-    assets [0..*] : Asset[]
-    omitted [0..*] : Omitted[]
-  }
+  note "uploads: no node schema declared\n(no node here carries a $schema family uploads names (3 named): could not determine)" as n_folio_assistant_uploads_uploads
 }
 package "folio-assistant/root-tools" as pkg_folio_assistant_root_tools <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_root_tools_code
 }
 
-folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Asset : assets
-folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Omitted : omitted
 ' grid: portrait, 1 column(s) — pkg_folio_assistant_uploads pkg_folio_assistant_root_tools
 pkg_folio_assistant_uploads -[hidden]down- pkg_folio_assistant_root_tools
 @enduml
