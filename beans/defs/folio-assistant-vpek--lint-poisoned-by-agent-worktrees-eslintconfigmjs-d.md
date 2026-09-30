@@ -1,11 +1,11 @@
 ---
 # folio-assistant-vpek
 title: 'LINT POISONED BY AGENT WORKTREES: eslint.config.mjs does not ignore .claude/worktrees/**, so one worktree-isolated agent reports 3158 errors on an unrelated branch'
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-30T13:53:15Z
-updated_at: 2026-09-30T13:53:15Z
+updated_at: 2026-09-30T18:43:06Z
 parent: folio-assistant-1xhc
 ---
 
@@ -73,10 +73,10 @@ did not exist when the list was last extended.
 
 ## Done when
 
-- [ ] `.claude/worktrees/**` is in `eslint.config.mjs`'s `ignores`, with a
+- [x] `.claude/worktrees/**` is in `eslint.config.mjs`'s `ignores`, with a
       comment saying why — an agent worktree is a second checkout, and its
       files are already linted on their own branch.
-- [ ] The **general** question is answered rather than only this instance:
+- [x] The **general** question is answered rather than only this instance:
       are there other tools that walk the tree from the repository root and
       would find a worktree there? `root-scan-census` counts 65 enumerating
       scripts in `cat-harness/scripts` alone. Whether any of them has this
@@ -89,3 +89,10 @@ did not exist when the list was last extended.
 directory. That guard does not reach here — `.claude/` is the agent host's
 directory, not a declared graph — so this is not an instance of that rule
 being broken. Worth stating so the next reader does not file it as one.
+
+## Summary of Changes
+
+Closed on evidence 2026-09-30.
+
+- **Box 1:** `.claude/worktrees/**` is in `eslint.config.mjs`'s ignores with the reason stated. It landed in 30e42937d33 ("vpek: eslint ignores .claude/worktrees/** — a worktree is a second checkout") and is present on main.
+- **Box 2, the general question:** answered by bean `g43f`'s sweep. 205 enumerating scripts were examined: the loose filter matched 142 and the tight filter 2, and both tight candidates were false positives on inspection. **No fourth instance was found** beyond eslint and g43f's two. Since #1602 (bean `tqv4`), `root-scan-census` also scans every declared instance, so the instrument now covers the class repository-wide.
