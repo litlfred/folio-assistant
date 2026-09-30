@@ -34,3 +34,7 @@ Two defects the first render showed, which no test had caught:
 - the footer's "Just the Docs" link was accent on accent. Now takes the sidebar text colour.
 
 Until #1683 merges, smart-trust declares no webpage theme on main, so the staging site builds with the default scheme and the stage log says so. Nothing here names WHO: fhir-harness takes a palette.
+
+## Coordination (2026-09-30)
+
+Only sibling in scope: #1683 (bean `7h3u`), which declares the palette this reads. No shared files. #1683 changes neither `instanceThemes` nor the palette roles. Intent, files and asks posted there: https://github.com/litlfred/folio-assistant/pull/1683#issuecomment-5920385735. Either merge order works; #1683's "theme applied" item now covers two surfaces, and this bean does not tick it.
