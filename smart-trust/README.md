@@ -11,6 +11,15 @@ from what the IG publishes.
 | Published at | <https://worldhealthorganization.github.io/smart-trust> |
 | DAK API | present |
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [What is here](#what-is-here)
+- [Regenerating](#regenerating)
+
+<!-- readme:toc:end -->
+
 ## What is here
 
 `fhir-artifact-index/index.json` lists every artefact of the IG with its
