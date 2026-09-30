@@ -1,10 +1,10 @@
 ---
 # folio-assistant-9umr
 title: 'Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)'
-status: todo
+status: in-progress
 type: epic
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-09-30T08:12:08Z
+updated_at: 2026-09-30T12:47:36Z
 parent: folio-assistant-vuip
 ---
 
@@ -21,3 +21,5 @@ Risks already checked: only workflow/gate.ts:75 takes kgRoots()[0]; four skill s
 - [ ] KG + library (39 skills) moved out of folio-core; ~668 references in 184 files rewritten; gates green
 - [ ] gate.ts no longer assumes kgRoots()[0]
 - [ ] Remaining groups moved one cluster per PR
+
+_2026-09-30T12:47:36Z_ — Claimed by claude/charming-curie-n04agq — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
