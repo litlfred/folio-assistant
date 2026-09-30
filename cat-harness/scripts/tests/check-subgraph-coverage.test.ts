@@ -81,7 +81,6 @@ function instance(
         {
           id: "thing",
           path: "thing/",
-          dependents: "reproduce",
           graphKinds: kinds,
           ...(coverage === undefined ? {} : { coverage: rest }),
         },
@@ -613,7 +612,6 @@ describe("coverage.* resolves against the REPOSITORY root and nothing else — b
           {
             id: "thing",
             path: "thing/",
-            dependents: "reproduce",
             graphKinds: ["cat-harness"],
             coverage: { visualiser: "viz.html" },
           },
@@ -752,11 +750,10 @@ function processInstance(opts: { process?: string; withDiagram?: boolean }): {
     JSON.stringify({
       name: "inst",
       directories: [
-        { id: "processes", path: "processes/", dependents: "skip", graphKinds: ["processes"] },
+        { id: "processes", path: "processes/", graphKinds: ["processes"] },
         {
           id: "thing",
           path: "thing/",
-          dependents: "reproduce",
           graphKinds: ["cat-harness"],
           ...(opts.process === undefined ? {} : { coverage: { process: opts.process } }),
         },

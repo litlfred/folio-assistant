@@ -12,13 +12,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1513 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1515 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1714 terms and is 943 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1716 terms and is 944 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1714</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1716</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1970,13 +1970,6 @@ ContentDirectory.coverage <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>What makes this subgraph reachable — a renderer, a documentation entry, and a governing skill — or the reasons it does not need one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.coverage</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.dependents" data-fa-state="extracted" data-fa-gloss="">
-ContentDirectory.dependents <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Whether a DEPENDENT instance materialises its own copy of this directory.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ContentDirectory.dependents</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.contentdirectory.readonly" data-fa-state="extracted" data-fa-gloss="">
 ContentDirectory.readOnly <span class="fa-gloss-status">candidate, extracted</span>
@@ -3939,6 +3932,13 @@ GraphKindDef.nodeSchemas <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>One entry per <code>$schema</code> family a node of this kind may carry, keyed by the tag. Bean <code>rdkm</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.nodeSchemas</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.perinstance" data-fa-state="extracted" data-fa-gloss="">
+GraphKindDef.perInstance <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Does every instance have ITS OWN graph of this kind — so an instance that inherits a directory of this kind gets its own copy created?</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.perInstance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.recordswork" data-fa-state="extracted" data-fa-gloss="">
 GraphKindDef.recordsWork <span class="fa-gloss-status">candidate, extracted</span>
@@ -8345,11 +8345,18 @@ ResolvedDirectory.declaredBy <span class="fa-gloss-status">candidate, extracted<
 <p>Name of the instance whose declaration contributed this entry.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ResolvedDirectory.declaredBy</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.resolveddirectory.member" data-fa-state="extracted" data-fa-gloss="">
+ResolvedDirectory.member <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The instance whose directory this is. A declared subgraph is inherited as one MEMBER per instance in the chain whose same-named directory exists (owner, 2026-09-30, bean <code>3r47</code>/<code>xsqm</code> follow-up, option A: &quot;if f-a-core … has a docs/ … and depends on cat-harness where docs/ is declared … the viewer should detect f-a-core/docs&quot;, &quot;a named (sub-)subgraph of docs&quot;). The declarer's own member comes first; <code>member</code> names each.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ResolvedDirectory.member</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.resolveddirectory.own" data-fa-state="extracted" data-fa-gloss="">
 ResolvedDirectory.own <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>True when the declaring instance is the root rather than a dependency.</p>
+<p>True when this entry is the ROOT instance's — its own declaration, or its own member of an inherited subgraph.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#ResolvedDirectory.own</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.resolveddirectory.within" data-fa-state="extracted" data-fa-gloss="">
@@ -9370,6 +9377,13 @@ SkillSchemaRef.types <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Type name(s) within the module.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/assistant-types.ts"><code>cat-harness/schemas/assistant-types.ts#SkillSchemaRef.types</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--skill-topics.skillsdirectoryentryschema.subgraph" data-fa-state="extracted" data-fa-gloss="">
+SkillsDirectoryEntrySchema.subgraph <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Marks the entry as a subgraph of the INSTANCE rather than a part of the skills graph. Replaced <code>dependents</code> on 2026-09-30 (option A), when inheritance became automatic and the per-entry field was retired.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/skill-topics.ts"><code>cat-harness/schemas/skill-topics.ts#SkillsDirectoryEntrySchema.subgraph</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--skill-topics.skilltopicschema.path" data-fa-state="extracted" data-fa-gloss="">
 SkillTopicSchema.path <span class="fa-gloss-status">candidate, extracted</span>

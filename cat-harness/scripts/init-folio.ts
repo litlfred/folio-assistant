@@ -222,7 +222,6 @@ function instanceDeclaration(o: InitFolioOptions): string {
           // This line IS the declaration being written; there is nothing to
           // read it from in a repository that does not exist yet.
           path: "folio/",
-          dependents: "reproduce",
           graphKinds: ["folio"],
           description: `The content of ${o.title} — its document, chapters and blocks.`,
         },

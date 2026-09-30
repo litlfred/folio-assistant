@@ -276,8 +276,8 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
 
   it("ignores a repository-scoped entry even when it is declared FIRST", () => {
     const root = instance([
-      { id: "other", path: "elsewhere/library/", scope: "repository", dependents: "skip", graphKinds: ["library"] },
-      { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
+      { id: "other", path: "elsewhere/library/", scope: "repository", graphKinds: ["library"] },
+      { id: "library", path: "library/", graphKinds: ["library"] },
     ]);
     expect(libraryDirOf(root)).toBe(resolve(root, "library"));
     rmSync(root, { recursive: true, force: true });
@@ -286,8 +286,8 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
   it("and the answer does not change when the order does", () => {
     // The whole point: the same declaration, written the other way round.
     const root = instance([
-      { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
-      { id: "other", path: "elsewhere/library/", scope: "repository", dependents: "skip", graphKinds: ["library"] },
+      { id: "library", path: "library/", graphKinds: ["library"] },
+      { id: "other", path: "elsewhere/library/", scope: "repository", graphKinds: ["library"] },
     ]);
     expect(libraryDirOf(root)).toBe(resolve(root, "library"));
     rmSync(root, { recursive: true, force: true });
@@ -298,8 +298,8 @@ describe("an instance's library is ITS OWN, not the first one declared", () => {
     // different and wrong fact. Two libraries of one's own has no answer to
     // "where does this instance keep its corpus".
     const root = instance([
-      { id: "a", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
-      { id: "b", path: "elsewhere/library/", dependents: "reproduce", graphKinds: ["library"] },
+      { id: "a", path: "library/", graphKinds: ["library"] },
+      { id: "b", path: "elsewhere/library/", graphKinds: ["library"] },
     ]);
     expect(() => libraryDirOf(root)).toThrow(/no single answer/);
     rmSync(root, { recursive: true, force: true });

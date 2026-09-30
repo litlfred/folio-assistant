@@ -132,7 +132,7 @@ decides it.
 | `beans` | **harness** | the work plan as a whole (`beans/`); its inner nodes are declared by `beans/beans.json` | no |
 | `external-schema` | **harness** | the specifications this instance depends on (`external-schemas/`) — one record per specification, pinning the EDITION in use, with the operative terms DERIVED from the corpus rather than hand-listed. `content`, and the call goes against the obvious reading: a process DOES write these files (`external-schemas.ts --write` refreshes `terms[]`), which sounds like `state`, but the axis asks what the graph IS and the subject matter here is a DECISION — which specifications we depend on, at which edition, and what each term operatively means. `derived` would be destructive: it says "regenerate it", and regenerating a deleted record recovers neither the authored edition, nor the `usedBy` blast radius, nor a line of the `operative` prose. UNDECLARED until 2026-09-22, which is `dh4f` inverted — a held directory nothing declares, so every consumer fanning out over declared directories skipped a registry pinning four external namespaces. Governed by [`vocabulary-authority`](vocabulary-authority.md) and [`schema-management`](schema-management.md). | no |
 | `code-list` | **harness** | closed sets of codes (`code-lists/`) — one `folio-code-list/v1` file per list, each code with a label, a definition, a source and, where it stands for one, a value; published as SKOS concept schemes. `content`, by the same argument as `external-schema`: the subject matter is a DECISION — which answers an adjudication may give, which namespaces are ours — and a person makes it. Diagrams (`<cat-harness.processes:adjudication list>`) and `schemas/namespaces.ts` READ these. Owner, 2026-09-23. Governed by [`code-lists`](code-lists.md). | no |
-| `glossary` | **core** (registered by `schemas/glossary-graph-kind.ts`), and any layer | Terms and what they mean, as W3C SKOS (`folio-glossary/v1`, `folio-assistant-core/schemas/glossary.ts`): local terms, each `authored`, `candidate` or `could-not-extract`, linked to external SKOS concepts by `exactMatch`/`closeMatch`, and external concepts listed as `members` without being copied. A whole external scheme is a `remoteGraphs` entry with `graphKinds: ["glossary"]`. Core declares `glossary/` with `dependents: reproduce`, so every folio built on core gets one. Rendered on the site's `glossary/` page with SKOS JSON-LD beside it; the swimlane ledger is one more source. Read with the [`glossary-terms`](glossary-terms.md) skill; gated by `check:glossary`. | no |
+| `glossary` | **core** (registered by `schemas/glossary-graph-kind.ts`), and any layer | Terms and what they mean, as W3C SKOS (`folio-glossary/v1`, `folio-assistant-core/schemas/glossary.ts`): local terms, each `authored`, `candidate` or `could-not-extract`, linked to external SKOS concepts by `exactMatch`/`closeMatch`, and external concepts listed as `members` without being copied. A whole external scheme is a `remoteGraphs` entry with `graphKinds: ["glossary"]`. The `glossary` kind is `perInstance`, so every folio built on core gets one. Rendered on the site's `glossary/` page with SKOS JSON-LD beside it; the swimlane ledger is one more source. Read with the [`glossary-terms`](glossary-terms.md) skill; gated by `check:glossary`. | no |
 | `swimlane-glossary` | **harness** | (renamed from `glossary` on 2026-09-23, owner: "Rename harness one") the swimlane glossary's retirement ledger (`glossary/`) — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. `state` but **not** work (`recordsWork: false`): a bean is something somebody is partway through, this is a record that a term exists. Only the ledger is stored — the glossary DOCUMENT is derived from the corpus each run, which is exactly why the ledger has to exist: a derived document has no memory, so without it a retired term and one that never existed look the same. Written by `scripts/glossary-export.ts`; read with the [`swimlane-glossary`](swimlane-glossary.md) skill. | no |
 | `models` | **bootstrap** | which languages a model is good at, and whether a human checked (`models/models.json`). `context`: READ when a session opens, never written by a process — a person grants a validation, an agent never does, because a model's own claim about its languages is precisely what the validation state exists to distrust. In BOOTSTRAP because an agent reaching for the language it should communicate in has not yet loaded the harness that would otherwise answer. One INPUT to the [`communication-language`](communication-language.md) determination, never the answer. | no |
 | `bean-defs` | **harness** | work items — one Markdown file each, in the layout the `beans` CLI reads. Authored by people and agents. | no |
@@ -526,31 +526,50 @@ relocation, and every consumer would scan a directory that is not there. An
 override also **keeps the inherited position** in the scan order rather than
 moving to the end — a relocation should not reshuffle what is scanned first.
 
-### `dependents` — whether an inheriting instance gets one of its OWN
+### A subgraph is declared ONCE; every instance that has it is a MEMBER
 
-`scope` says where a path RESOLVES. `dependents` says whether a folio depending
-on this instance **materialises its own copy**, and the two are independent:
+Owner, 2026-09-30 (option A):
 
-- **`reproduce`** — part of the SHAPE a folio has. `uploads/`, `library/`,
-  `folio/`, `voices/`, `translations/`. A dependent gets its own, empty, with a
-  keep marker.
-- **`skip`** — merely WHERE THIS INSTANCE'S CONTENT LIVES. `schemas/`,
-  `tools/`, `methodologies/`. A dependent reads it through the
-  overlay and creates nothing.
+> *"if f-a-core is instantiated and has a docs/ sub-dir/graph at
+> f-a-core/docs, and f-a-core depends on cat-harness where docs/ is declared
+> dir/subgraph and watched, then viewer should detect f-a-core/docs. note
+> f-a-core (or matching instance with docs) is then a named (sub-)subgraph of
+> docs/ graph"* — and: *"make dependents: reproduce automatic behaviour so
+> [we] don't need it."*
 
-Before this existed, a fresh folio depending on `cat-harness` resolved **12**
-directories and created all 12 — six of them the platform's own, each with a
-committed keep marker. That is `dh4f` shipped downstream: a consumer scanning a
-directory that exists and is empty, reporting a clean run over it.
+So inheritance is **automatic**, and the per-entry `dependents: "reproduce" |
+"skip"` field is **retired**. `resolveDirectories` returns, for every
+instance-scoped entry, one **member** per instance in the chain whose
+`<root>/<path>` exists — `ResolvedDirectory.member` names it. The declarer's
+member comes first, so a consumer looking a subgraph up by id is handed the
+same directory as before; the rest follow in chain order. Existence-filtered
+(the `dh4f` rule); a `repository`-scoped entry has one location by definition
+and gets no members.
 
-**It suppresses `mkdirSync` and nothing else.** A `skip` entry is still
-RESOLVED, because that is how the cross-instance overlay serves a dependency's
-skills to `skill_list` and `skill_fetch`. Suppressing resolution instead would
-break the overlay to fix a directory-creation problem.
+**Whether an inherited directory is CREATED is a fact about its graph kind**,
+`GraphKindDef.perInstance`, stated once in the registry rather than per entry:
 
-**And it never governs the declaring instance.** `dependents` says what a
-DEPENDENT does; an instance always materialises what it declared itself.
-Otherwise marking `schemas/` as `skip` would stop the platform creating its own.
+- **`perInstance: true`** — part of the SHAPE a folio has: `uploads`,
+  `library`, `docs`, `qa`, `beans`, `todos`, `voices`, `folio`, `glossary`,
+  `translation-sources`, `external-schema`. `materialiseDirectories` creates
+  the dependent's own, empty, with a keep marker.
+- **absent** — merely where an instance's content lives: `schemas`, `tools`,
+  `code`, `processes`, `methodology`. A dependent that HAS one is a member of
+  the subgraph; one that does not gets nothing created.
+
+The per-entry field disagreed with itself — `docs` was `reproduce` once and
+`skip` four times — which is the argument for moving it to the kind. **An
+instance always materialises what it declared itself**, whatever its kind.
+
+A legacy `dependents` key still parses and is dropped, so a folio written
+before the change keeps loading. A nested entry that is a subgraph of the
+INSTANCE (`skills.json`'s `voices`, as opposed to `beans.json`'s `defs`, which
+is part of its parent's graph) now says so with `"subgraph": true`.
+
+Before the per-entry field existed, a fresh folio depending on `cat-harness`
+resolved **12** directories and created all 12 — six of them the platform's
+own, each with a committed keep marker: `dh4f` shipped downstream.
+`perInstance` keeps that fixed.
 
 ## Nesting is declared FROM WITHIN, by a node in the first subdirectory (STRICT)
 
@@ -584,11 +603,12 @@ the describing node came with the directory.
 ### A from-within entry can be an INSTANCE directory — bean `cmsl`, 2026-09-30
 
 A kind's `declarationFile` names the node. What an entry in it IS depends on
-one field: **an entry that answers `dependents` is an instance directory**,
+one field: **an entry marked `"subgraph": true` is an instance directory**
+(until 2026-09-30 the marker was answering the now-retired `dependents`),
 and `resolveDirectories` lists it exactly as if `<instance>.json` had declared
 it. It carries `within` (the id of the directory that declared it), and
 `check:layout-norms` treats that pair as the sanctioned shape. An entry
-without `dependents` (`beans.json`'s `defs`, `docs.json`'s `proposals`,
+without the marker (`beans.json`'s `defs`, `docs.json`'s `proposals`,
 `voices.json`'s `vendors`) is a part of one graph and stays out of the
 instance list, exactly as before.
 
@@ -648,11 +668,12 @@ and knows which part is ruled and which is open:
 
 ## Making a field REQUIRED is a change other branches pay for
 
-`dependents` has no default, deliberately: `reproduce` ships junk downstream and
-`skip` silently denies a folio its ingestion queue, so a field whose wrong value
-is invisible either way has to be written down. That reasoning is sound and the
-**cost lands somewhere else**, which is the part worth knowing before you do it
-again.
+The now-retired `dependents` field had no default, deliberately: `reproduce`
+shipped junk downstream and `skip` silently denied a folio its ingestion queue,
+so a field whose wrong value is invisible either way had to be written down.
+That reasoning was sound and the **cost landed somewhere else**, which is the
+part worth knowing before you do it again. (It was retired 2026-09-30 for a
+different reason — see §"A subgraph is declared ONCE" above.)
 
 Measured 2026-09-20, within an hour of the change: `main` added
 `methodology-crdm` and `methodology-raci` while the field was in review. Neither

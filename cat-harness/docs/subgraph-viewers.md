@@ -231,9 +231,10 @@ The content stays in that instance's own `docs/`, and part of the handler's
 job is to look for those directories.
 
 Measured 2026-09-20: only `cat-harness` has a `docs/` directory today, and its
-declaration carries `dependents: "skip"` — which is exactly what prevents a
-dependent from getting one. Nothing is declared against a directory that does
-not exist.
+declaration carried `dependents: "skip"` — which was exactly what prevented a
+dependent from getting one. Since 2026-09-30 (option A) the field is retired:
+every instance's existing `docs/` is a **member** of the one declared `docs`
+subgraph, and `docs` is a `perInstance` kind, so a dependent gets its own.
 
 ### Nothing composes a path
 
