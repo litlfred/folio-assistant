@@ -175,6 +175,17 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 <script>
 var DATA_HREF = "../../assets/folio/index.json";
+// Bean "qgjh": a node's links are LINKS. An absolute http(s) href is used as
+// it is; a site-rooted one ("/agentic-harness.html") is resolved against this
+// site's root, found from where the page reads its data, so it works under the
+// bare site, the project baseurl and a staging preview alike. Anything else
+// stays text rather than becoming a link that 404s.
+var SITE_ROOT = (function (h) { var i = h.lastIndexOf("assets/"); return i < 0 ? "" : h.slice(0, i); })(DATA_HREF);
+function linkHref(h) {
+  if (/^https?:[/][/]/.test(h)) return h;
+  if (h.charAt(0) === "/" && h.charAt(1) !== "/") return SITE_ROOT + h.slice(1);
+  return "";
+}
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? "" : s)
   .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -212,7 +223,10 @@ fetch(DATA_HREF).then(function(r){ if(!r.ok) throw new Error(r.status + " " + r.
         "<td>" + (n.theme ? esc(n.theme) : '<span class="muted">none</span>') + "</td>" +
         "<td><code class=\"muted\">" + esc(n.declaredIn || "\u2014") + "</code></td>" +
         "<td>" + (n.links.length
-          ? n.links.map(function(l){ return esc(l.label); }).join("<br>")
+          ? n.links.map(function(l){
+              var h = linkHref(l.href);
+              return h ? '<a href="' + esc(h) + '">' + esc(l.label) + "</a>" : esc(l.label);
+            }).join("<br>")
           : '<span class="muted">none</span>') + "</td>" +
         '<td class="muted">' + n.chars.toLocaleString() + " chars</td>" +
       "</tr>";
