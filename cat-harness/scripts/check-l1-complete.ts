@@ -68,6 +68,7 @@ import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
 import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import { REFERENCED_SOURCE_SCHEMA_ID, ReferencedSourceSchema } from "../schemas/referenced-source.ts";
 
 export type State = "met" | "unmet" | "not-derivable";
 
@@ -129,7 +130,7 @@ export interface EntryReport {
  * about the entry rather than a claim about the file, which is the same
  * argument `nso8` makes for sniffing over extensions, one level up.
  */
-export type EntryKind = "paged" | "tabular" | "archive" | "undetermined";
+export type EntryKind = "paged" | "tabular" | "archive" | "referenced" | "undetermined";
 
 /** Which sidecar identifies which shape. One place, so a fourth rung adds one line. */
 /**
@@ -188,12 +189,17 @@ export const ENTRY_SIDECARS: readonly string[] = [
   // A dataset's addressable values, written by an ingest tool beside its
   // tabular.jsonld (e.g. codata-ingest, bean uyp8; resolved by liquid-values).
   "values.json",
+  // A slide deck's accessibility report, written by `slides-structure.py`
+  // beside its structure.json (bean `scfh`, issue #1614).
+  "accessibility.json",
 ];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
   ["paged", STRUCTURE_FILENAME],
   ["tabular", "tabular.jsonld"],
   ["archive", "contents.jsonld"],
+  // Recorded, text withheld by licence — `referenced-source.py`, bean `scfh`.
+  ["referenced", "referenced.json"],
 ];
 
 /**
@@ -742,6 +748,42 @@ function derivableRequirements(dir: string): Requirement[] {
             : `contents.jsonld is not ${ARCHIVE_CONTENTS_SCHEMA_ID}: ${r.error.issues[0]?.message ?? "invalid"}`,
         });
       }
+    }
+  }
+
+  // ── referenced-record — bean `scfh` ──────────────────────────────────────
+  //
+  // A source RECORDED and not held: its licence forbids posting copies, so the
+  // entry identifies the exact bytes and holds none of them. Two failures
+  // matter. A record that does not say it is `referenced` or does not say WHY
+  // is a claim with no basis. And an entry of this kind that carries
+  // `sections/` or `blocks/` is the copy this kind exists NOT to make, which is
+  // worse than no entry, so it is refused rather than tolerated.
+  if (has("referenced.json")) {
+    let r: unknown;
+    try {
+      r = JSON.parse(readFileSync(join(dir, "referenced.json"), "utf-8"));
+    } catch (e) {
+      out.push({ name: "referenced-record", state: "unmet", detail: `referenced.json unparseable: ${String(e)}` });
+    }
+    if (r !== undefined) {
+      const problems: string[] = [];
+      // The whole record, by the schema the writer is held to — not a list of
+      // spot checks here that could drift from it.
+      const parsed = ReferencedSourceSchema.safeParse(r);
+      if (!parsed.success) {
+        const i = parsed.error.issues[0];
+        problems.push(`not ${REFERENCED_SOURCE_SCHEMA_ID}: ${i?.path.join(".")} ${i?.message ?? "invalid"}`);
+      }
+      for (const d of ["sections", "blocks", "images"]) if (has(d)) problems.push(`holds ${d}/ — the text is meant to be withheld`);
+      out.push({
+        name: "referenced-record",
+        state: problems.length ? "unmet" : "met",
+        detail:
+          problems.length || !parsed.success
+            ? problems.join("; ")
+            : `${parsed.data.identity.title} — ${parsed.data.outline.length} outline entries, no text held`,
+      });
     }
   }
 
