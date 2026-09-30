@@ -15,7 +15,7 @@ parent: Skill instructions
 
 The SDLC for trying out a remote source before committing to it: take a
 sample, land it, import it into the store you care about, and find out what
-breaks. The process is `processes/sample-import.bpmn`. IRIS is the worked
+breaks. The process is `large-datasets/processes/sample-import.bpmn`. IRIS is the worked
 instance (`who-iris/`); nothing here is WHO-specific.
 
 ## The gates are not here

@@ -957,6 +957,16 @@
       ]
     },
     {
+      "id": "large-datasets-processes",
+      "path": "large-datasets/processes/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The `large-datasets` subgraph's BPMN -- `materialize-remote`, `refresh-materialized`, `copy-out-materialized` and `sample-import`, moved out of cat-harness/processes/ on 2026-09-30 (bean `cjvs`, issue #1605) because their steps name skills cat-harness cannot reach. Declared in large-datasets.json as that instance's own `processes` graph, and here as well, repository-scoped, for the reason `folio-assistant-core-processes` is: the consumers that scan for diagrams run from this root, and `workflowDirs` resolves only from a DECLARED directory (bean `g43o`).",
+      "graphKinds": [
+        "processes"
+      ]
+    },
+    {
       "id": "large-datasets-schemas",
       "path": "large-datasets/schemas/",
       "scope": "repository",

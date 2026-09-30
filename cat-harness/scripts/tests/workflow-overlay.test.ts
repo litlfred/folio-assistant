@@ -100,7 +100,9 @@ describe("a root that declares no diagram of its own", () => {
 
 describe("a name collision", () => {
   test("the root's own diagram shadows the dependency's", () => {
-    const root = rootWithDependency(join(CAT_HARNESS, "processes", "sample-import.bpmn"));
+    // large-datasets owns the diagram since bean `cjvs`; cat-harness still
+    // reaches it through its repository-scoped `large-datasets-processes` entry.
+    const root = rootWithDependency(join(REPO, "large-datasets", "processes", "sample-import.bpmn"));
     const hits = processFiles(root).filter((f) => f.endsWith("/sample-import.bpmn"));
     expect(hits).toEqual([join(root, "processes", "sample-import.bpmn")]);
     expect(readFileSync(hits[0], "utf-8")).toContain("Process_SampleImport");

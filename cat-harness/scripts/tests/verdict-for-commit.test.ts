@@ -87,6 +87,18 @@ describe("a conflicted head gets its own story, not the generic one", () => {
     expect(v.because).not.toContain("partial check set");
   });
 
+  test("NO runs on a conflicted head gets the conflict story too — re-told, not re-decided", () => {
+    // `ci:watch --pr 1677`, 2026-09-30: REST said `dirty`, and the tool printed
+    // the generic "no check runs". Still undetermined; only the story changes.
+    const empty = verdictOf([]);
+    const v = verdictForCommit(empty, undefined, "conflicted");
+    expect(v.state).toBe("undetermined");
+    expect(v.because).toContain("CONFLICTED");
+    expect(v.because).toContain("no check has run");
+    // Without the conflict, the generic story stands.
+    expect(verdictForCommit(empty, undefined, "mergeable")).toEqual(empty);
+  });
+
   test("conflicted is checked BEFORE missing, so the better message wins", () => {
     // A conflicted head has no pull_request runs, so `missing` would also fire.
     const v = verdictForCommit(clean, { missing: ["Code-quality gates"], unreadable: 0 }, "conflicted");
