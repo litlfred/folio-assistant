@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/kg-export.ts",
-    "script_hash": "de43a4c47d33"
+    "script_hash": "e6caa1ece08c"
   },
   "subject": {
     "kind": "graph",
     "id": "cat-harness.jsonld"
   },
-  "updated_at": "2026-09-30T17:58:12.055Z",
+  "updated_at": "2026-09-30T17:27:32.151Z",
   "families": {
     "danglingLinks": {
       "summary": "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
@@ -22,17 +22,8 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 2,
-      "entries": [
-        {
-          "module": "schemas/instance-repositories.ts",
-          "why": "no-tag"
-        },
-        {
-          "module": "schemas/repo-full-name.ts",
-          "why": "no-tag"
-        }
-      ]
+      "count": 0,
+      "entries": []
     },
     "undeclaredTerms": {
       "summary": "Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.",
@@ -40,5 +31,5 @@
       "entries": []
     }
   },
-  "total": 2
+  "total": 0
 }
