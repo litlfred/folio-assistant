@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 510,
+      "count": 511,
       "unit": "beans"
     }
   },
@@ -3289,6 +3289,20 @@
       "updatedAt": "2026-09-24T19:38:13Z",
       "preview": "Found 2026-09-24 while retiring `bootstrap-tools` (bean 319n). `gen-schema-viz.ts` and `gen-uml-overview.ts` write one page per instance but never remove the page of an instance that no longer exists. So a retired instance keeps a published page that nothing links to.\n\n- `bootstrap-tools`: its two orphans (`cat-harness/docs/cat-harness/schemas/bootstrap-tools/index.html` and `cat-harness/docs/uml/",
       "file": "beans/defs/folio-assistant-ghgn--orphaned-viewer-pages-the-schema-viewer-and-uml-ge.md"
+    },
+    {
+      "id": "folio-assistant-gm9g",
+      "title": "MAIN IS RED: render:bpmn:check judges bootstrap/processes/*.svg that bootstrap-tools owns — two generators, one artefact, and regenerating DELETES the provenance banner",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T18:57:39Z",
+      "updatedAt": "2026-09-30T18:58:16Z",
+      "preview": "**A regression from `oqdr`'s fix**, which is `completed` and covered exactly\nthese three files from the opposite direction: *\"rendered by nothing since the\nsplit\"*. They are now rendered by **two** generators that disagree.\n\n## Measured\n\n`End-to-end + accessibility (hard)` failed on PR #1664, at `render:bpmn:check`:\n\n```\n✗ bootstrap/processes/discussion.svg is stale\n✗ bootstrap/processes/initializ",
+      "file": "beans/defs/folio-assistant-gm9g--main-is-red-renderbpmncheck-judges-bootstrapproces.md"
     },
     {
       "id": "folio-assistant-gnqa",
