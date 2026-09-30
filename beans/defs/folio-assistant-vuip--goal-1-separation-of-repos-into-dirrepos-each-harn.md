@@ -75,7 +75,7 @@ thousand commits later:
 
 | criterion | artefact, verified present |
 |---|---|
-| a skill that governs them | `cat-harness/skills/folio-core/getting-started.md`, with `cat-harness/processes/getting-started.bpmn` |
+| a skill that governs them | `cat-harness/skills/conduct/conduct-core/getting-started.md`, with `cat-harness/processes/getting-started.bpmn` |
 | a Tool node that performs them | `folio_init`, registered at `cat-harness/src/tools/folio-init.ts:59` — registration checked, not just the file's existence |
 | a test that fails when they do not run | `cat-harness/scripts/tests/init-folio.test.ts` — **30 tests, 0 fail, 235 assertions** |
 

@@ -1865,7 +1865,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: "Durable facts an agent carries between sessions. Read during a process, never written by one.",
   },
 
-  // A confirmation the owner gave IN ADVANCE — `skills/folio-core/confirmation-waiver.md`.
+  // A confirmation the owner gave IN ADVANCE — `skills/conduct/conduct-core/confirmation-waiver.md`.
   //
   // Owner, 2026-09-20: "human can waive confirmation rights (e.g. for session,
   // for process run)", and "context dependent, should be in memories".

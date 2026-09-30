@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /interaction-modality
 
-Run the `interaction-modality` skill. Read [`cat-harness/skills/folio-core/interaction-modality.md`](../../cat-harness/skills/folio-core/interaction-modality.md) and follow it.
+Run the `interaction-modality` skill. Read [`cat-harness/skills/conduct/conduct-core/interaction-modality.md`](../../cat-harness/skills/conduct/conduct-core/interaction-modality.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/security/security.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/security/security.md) — do not edit here.
+> Generated from [`cat-harness/skills/conduct/security/security.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/security/security.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/security/security.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/conduct/security/security.md){: .fa-edit-source }
 
 {% raw %}
 # Security — one question, asked at every boundary

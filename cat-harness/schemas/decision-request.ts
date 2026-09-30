@@ -1,8 +1,8 @@
 /**
  * A decision handed to a person, as a shape rather than as a habit.
  *
- * Skills: [`interaction-modality`](../skills/folio-core/interaction-modality.md)
- * §4 and [`decision-comparison`](../skills/folio-core/decision-comparison.md).
+ * Skills: [`interaction-modality`](../skills/conduct/conduct-core/interaction-modality.md)
+ * §4 and [`decision-comparison`](../skills/conduct/conduct-core/decision-comparison.md).
  * Both were written before this module and both are complete; what was missing
  * is any way for a rule stated in prose to be **checked**.
  *

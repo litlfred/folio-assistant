@@ -145,7 +145,7 @@ mechanism.
 
 **Do not ingest on your own say-so, and do not delete.** Both are other
 skills' decisions — [`library-ingestion`](../library/library-core/library-ingestion.md) and
-[`deletion-requires-confirmation`](deletion-requires-confirmation.md). A
+[`deletion-requires-confirmation`](../conduct/conduct-core/deletion-requires-confirmation.md). A
 processed upload still looks spent and still is not.
 
 ## What the routes are NOT responsible for
