@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-09-30T16:02:22Z
+updated_at: 2026-09-30T22:09:25Z
 parent: folio-assistant-zzmr
 ---
 
@@ -107,3 +107,8 @@ Declaring `skills/lean/` in folio-assistant-sci.json put a declared directory in
 
 ## Owner, 2026-09-30 (round 4): step 1 = `skills/` inherited as `reproduce`, plus a from-within `skills.json`
 The harness's `skills` entry becomes `dependents: reproduce`, so every instance inherits a declared `skills/` instead of the `(default)` convention. The `skills` kind gains `declarationFile: skills.json`, which names sub-graphs such as `voices/` and `lean/` (in folio-assistant-sci) from within. That sanctions the five baselined `skills contains skills/voices` pairs. The resolver and the checks must follow a declaration file under an inherited directory.
+
+
+## Owner, 2026-09-30 (round 5): steps 2 and 3 accepted as proposed — issue #1694
+- Step 2: the root instance declares the seven checkout-level state entries; **accepted** that their navbar tiles move from the C@T Harness tab to Folio Assistant (tiles come from the declaring instance — measured in `harness-tiles.ts`), and every lookup rooted at `cat-harness/` switches to the checkout root.
+- Step 3: remove the 16 mirrors; **falsifier accepted** — a checkout that does not stage every instance shows corpus tools less, which is what that checkout contains.
