@@ -177,7 +177,7 @@ renames neither: picking a winner silently destroys an upload, and an upload is
 somebody's source material. Rename one by hand.
 
 That is
-[`deletion-requires-confirmation`](../../folio-core/deletion-requires-confirmation.md) applied to
+[`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md) applied to
 a rename — a `git mv` that overwrites is a deletion with a friendlier name.
 
 ## What this does NOT cover

@@ -2,7 +2,7 @@
 /**
  * Every recorded waiver is well formed, in a gate class that exists, and dated.
  *
- * Skill: `skills/folio-core/confirmation-waiver.md`. Owner, 2026-09-20:
+ * Skill: `skills/conduct/conduct-core/confirmation-waiver.md`. Owner, 2026-09-20:
  * *"human can waive confirmation rights (e.g. for session, for process run)"*.
  *
  * ## Why a waiver is checked rather than trusted
@@ -129,7 +129,7 @@ function formatReport(r: WaiverReport): string {
   if (r.malformed.length) {
     out.push("");
     out.push("  A malformed waiver is NOT a lenient one. The gate it named still stands.");
-    out.push("  Fields and their reasons: skills/folio-core/confirmation-waiver.md");
+    out.push("  Fields and their reasons: skills/conduct/conduct-core/confirmation-waiver.md");
   }
   return out.join("\n");
 }

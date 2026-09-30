@@ -296,7 +296,7 @@ Three properties make this the cheap answer rather than a new mechanism:
 
 **Verbatim, and this is not a style note.** A goal is the owner's sentence, and
 a tidied paraphrase is a different claim that nobody agreed to — the same rule
-[`confirmation-waiver`](confirmation-waiver.md) applies to a waiver's `quote`,
+[`confirmation-waiver`](../conduct/conduct-core/confirmation-waiver.md) applies to a waiver's `quote`,
 and for the same reason: the reader auditing the classification has only that
 string to check it against. **If you do not have the owner's words, you do not
 have the goal** — record the paraphrase as a paraphrase, say so, and ask.
@@ -451,7 +451,7 @@ You can map out sequence blockers using:
 `beans archive` moves every `completed` or `scrapped` bean out of the working
 set. It **moves**, never deletes: an archived bean is still resolvable by id,
 which is what makes it a disposal an agent may perform at all
-([`deletion-requires-confirmation`](deletion-requires-confirmation.md)).
+([`deletion-requires-confirmation`](../conduct/conduct-core/deletion-requires-confirmation.md)).
 
 **There are two ways it can be driven, they are not alternatives, and a
 process author needs to know which one they are reaching for.** Owner,

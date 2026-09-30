@@ -16,9 +16,9 @@ allowed-tools: Read Grep Glob
 
 **This is a pointer. The rule lives in the knowledge graph:**
 
-- [`interaction-modality`](../../../cat-harness/skills/folio-core/interaction-modality.md)
+- [`interaction-modality`](../../../cat-harness/skills/conduct/conduct-core/interaction-modality.md)
   §4 — the six parts, the form checklist, the ONE-in-full/count-the-rest rule.
-- [`decision-comparison`](../../../cat-harness/skills/folio-core/decision-comparison.md)
+- [`decision-comparison`](../../../cat-harness/skills/conduct/conduct-core/decision-comparison.md)
   — the five columns, and why cost and downstream impact are different things.
 
 Read those before composing the question. **This stub exists because the

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-s8nu
 title: Four orphan-selectors now exist for one question — orphanSubjectPages should be the only one
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T05:33:00Z
-updated_at: 2026-09-30T14:53:06Z
+updated_at: 2026-09-30T19:48:18Z
 parent: folio-assistant-vke6
 ---
 
@@ -235,3 +235,5 @@ Re-measured on main @ 5b8db8da691:
 So the rest of box 2 (stickies) and box 3 (who-iris `OWNED`) are **the same question**: should the selector's unit be generalised from *directory holding an index.html* to *artefact this generator emits*, so flat files qualify? Nothing more is buildable here until that is ruled on. Put to the owner 2026-09-30.
 
 Note for whoever takes it: #1612 (bean 2b5s) renames who-iris's `OWNED` side to `OWNED_SITE` and adds a sweep of its own pages left in `library/`. Read that before touching the who-iris selectors.
+
+_2026-09-30T19:48:18Z_ — Claimed by claude/magical-archimedes-4qkfxp-rulings — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
