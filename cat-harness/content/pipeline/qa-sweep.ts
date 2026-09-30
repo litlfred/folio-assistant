@@ -108,6 +108,30 @@ interface Args {
   dryRun: boolean;
   json: boolean;
   ci: boolean;
+  /**
+   * Where the per-criterion script sidecars go. Defaults to `INSTANCE_ROOT` —
+   * this platform checkout, whose checkers they describe.
+   *
+   * ## Why a caller may need to say (bean `ymsu`)
+   *
+   * Those sidecars describe folio-assistant's OWN checker scripts, so the
+   * default is right for a real sweep and wrong for a test: a test sweeping a
+   * temp-directory folio still writes into the platform checkout, because
+   * `INSTANCE_ROOT` is resolved from this module's location rather than from
+   * anything the caller passed. `scripts/tests/init-folio-qa.test.ts` does
+   * exactly that, inside `bun test`, which is gate 1 of `bun run gates`.
+   *
+   * `saveQaScriptSidecar`'s write-skip (bean `3ozg`) hides it on a clean tree
+   * and stops hiding it the moment a checker's hash actually moves — which is
+   * precisely the run where a gate reading a repaired copy matters.
+   *
+   * A directory rather than a suppress-flag, and explicit rather than an
+   * environment variable, because that is the pattern already here:
+   * `content/pipeline/profile-conformance-axis.test.ts` builds its root with
+   * `mkdtempSync` and passes it in. The test still exercises the real write —
+   * it just writes somewhere it owns.
+   */
+  scriptSidecarRoot?: string;
 }
 
 function parseArgs(argv: string[]): Args {
@@ -115,6 +139,13 @@ function parseArgs(argv: string[]): Args {
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--dry-run") out.dryRun = true;
+    else if (a === "--script-sidecar-root") {
+      // Absent and empty are NOT the same: `--script-sidecar-root` with no
+      // value is a caller who meant to redirect and failed to, and silently
+      // falling back to the platform checkout is the write they were trying to
+      // avoid. Left undefined here; the resolution below refuses it.
+      out.scriptSidecarRoot = argv[++i];
+    }
     else if (a === "--json") out.json = true;
     else if (a === "--ci") out.ci = true;
     else if (a === "--only") {
@@ -127,8 +158,13 @@ function parseArgs(argv: string[]): Args {
   }
   if (!out.root) {
     console.error(
-      "usage: qa-sweep.ts <content-root> [--only ID,ID] [--axis NAME[,NAME]] [--dry-run] [--json] [--ci]",
+      "usage: qa-sweep.ts <content-root> [--only ID,ID] [--axis NAME[,NAME]] [--dry-run] [--json] [--ci]\n" +
+        "                   [--script-sidecar-root DIR]",
     );
+    process.exit(2);
+  }
+  if (out.scriptSidecarRoot !== undefined && out.scriptSidecarRoot.trim() === "") {
+    console.error("--script-sidecar-root needs a directory. Omit the flag to write to this platform checkout.");
     process.exit(2);
   }
   return out;
@@ -733,7 +769,8 @@ async function run(): Promise<void> {
       // one — measured 2026-09-18, a sweep in a 102-commit checkout
       // flattened 77 of 78 sidecars from nine distinct shas to the single
       // boundary sha. An older true answer beats a fresh false one.
-      const previous = loadQaScriptSidecar(id, INSTANCE_ROOT);
+      const sidecarRoot = args.scriptSidecarRoot ?? INSTANCE_ROOT;
+      const previous = loadQaScriptSidecar(id, sidecarRoot);
       const commitSha =
         hashes.script_commit_sha === GIT_SHA_UNKNOWN && previous?.script_commit_sha
           ? previous.script_commit_sha
@@ -757,7 +794,7 @@ async function run(): Promise<void> {
         last_run_sha: gitHeadSha(INSTANCE_ROOT),
         engine_version: engineVersion,
       };
-      saveQaScriptSidecar(sidecar, INSTANCE_ROOT);
+      saveQaScriptSidecar(sidecar, sidecarRoot);
     }
   }
 

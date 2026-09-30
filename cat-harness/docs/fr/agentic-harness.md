@@ -404,7 +404,7 @@ dispersés à travers le dépôt. Cette section rattache le comportement consoli
 | Rédaction de contenu (article) | compétences authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
 | Rédaction de contenu (document) | compétences folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
 | Cycle de vie du contenu | compétences content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
-| Ingestion de documents | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
+| Ingestion de documents | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Répartition et coordination | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Types de contenu et adaptateurs | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
 | Conception de diagrammes BPMN | compétence `bpmn-authoring` | [`skills/folio-core/`](../../skills/folio-core/) |

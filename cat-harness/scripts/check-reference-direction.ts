@@ -462,7 +462,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/scripts/kg-export.ts", names: 2 },
   { file: "cat-harness/scripts/layout-norms-baseline.json", names: 2 },
   { file: "cat-harness/tools/discover.ts", names: 2 },
-  { file: "cat-harness/skills/folio-core/harness-tiles.md", names: 2 },
+  { file: "cat-harness/skills/ui/ui-core/harness-tiles.md", names: 2 },
   { file: "cat-harness/schemas/harness-config.ts", names: 3 },
   { file: "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md", names: 2 },
   { file: "cat-harness/scripts/check-context-emission.ts", names: 3 },

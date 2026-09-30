@@ -50,8 +50,8 @@ Analysis: session scratchpad `separation-process-analysis.md` (94 beans, cone me
 - [x] bootstrap.jsonld written by bootstrap-tools `export-graph.ts`, standard properties (#1538)
 - [x] kg-export aligned to standard properties; retired terms deprecated + isReplacedBy (#1538)
 - [x] gen-bootstrap-graph.ts + cat-harness/schemas/bootstrap-graph.ts removed (owner 2026-09-30); bootstrap:validate builds and parses the graph
-- [ ] one SKOS: ns.jsonld the only term SKOS; glossary reads it; bootstrap--terms.skos.jsonld retired
-- [ ] generated-by notes on bootstrap's other generated files
+- [x] one SKOS — owner 2026-09-30 chose option A, ONE IDENTITY: the glossary's bootstrap concepts ARE ns.jsonld's IRIs (term `iri`, read from the declared `vocabulary` asset); no `…ns#glossary/terms/*` minted; the c592 translations stay hosted in cat-harness as language-tagged labels on those concepts; .po `#.` comments refreshed, msgstr untouched
+- [x] generated-by notes: every file bootstrap-tools writes into bootstrap (schemas `$comment`, schema page, ns.jsonld rdfs:comment + prov:wasAttributedTo, SVGs) names bootstrap-tools; one wording in `scripts/generated-by.ts`; `generated-by.test.ts` derives the set from disk and checks authored files do not claim it
 - [ ] publish-instance-files moves into bootstrap-tools (bootstrap's site is the tools' job) and is documented
 - [x] role names authored on the role (owner 2026-09-30, option 1, "model both retired names and alternative names"): `otherNames` (smart-base Generic Persona; skos:altLabel) and `formerNames` {name, retiredOn} (skos:hiddenLabel; old concept dcterms:isReplacedBy the role); one name one role, enforced at read; `kg:roles` README section written by bootstrap-tools; Initiator recorded on Bootstrapping Agent
 - [x] glossary ledger hosted in cat-harness (glossaryHomeFor → cat-harness/glossary/bootstrap/); the swimlane-glossary kind and the glossary-ledger schema moved up with it (owner, second round, A); bootstrap defines 5 graph kinds

@@ -244,7 +244,7 @@ Three rules for reading it, the same three every sweep here follows:
   and every graph kind
 - [`content-context-and-state-graphs`](content-context-and-state-graphs.md) —
   what `holds` means, and the one question that settles a kind
-- [`kg-viewer`](../../folio-core/kg-viewer.md) — the viewer this repository already ships
+- [`kg-viewer`](../../ui/ui-core/kg-viewer.md) — the viewer this repository already ships
 - `bun run check:subgraph-coverage` — the axis; `schemas/cat-harness.ts`
   `owesVisualiser()` — the visualiser obligation, and
   `SubgraphCoverageSchema.serialisations` — the one that takes no waiver

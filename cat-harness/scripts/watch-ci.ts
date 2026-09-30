@@ -54,7 +54,7 @@ import { repoRootFor } from "../schemas/cat-harness.js";
 // The owed-workflow reconciliation and the merge probe are IMPORTED, never
 // reimplemented — see `verdictForCommit`'s docblock for the two designs that
 // duplicated them before this landed (#1646). `check:head-has-run` owns these.
-import { coverageFor, mergeStateForHead, runsForHead } from "./check-head-has-run.js";
+import { coverageFor, mergeStateForHead, resolveCommit, runsForHead } from "./check-head-has-run.js";
 import { scanTriggers } from "../src/core/workflow-events.js";
 
 const USAGE = "Usage: cat-harness/scripts/watch-ci.ts <sha> [--branch <name>] [--once] [--interval <s>] [--max <n>]";
@@ -122,16 +122,29 @@ async function completeness(
   slug: string,
   sha: string,
 ): Promise<{ owed?: OwedSummary; merge?: HeadMergeState }> {
+  // THE SHA MUST BE FULL, and this cost a falsification to find. `ci:watch`
+  // takes whatever revision the caller typed, and `prNumberForHead` compares it
+  // by EQUALITY against `git ls-remote origin refs/pull/*/head`, which lists
+  // 40-character object names. An abbreviated `32779147214` therefore matched
+  // nothing and the probe answered `not-a-pr-head` — so the owed event became
+  // `push`, the one push-triggered workflow had run, and the guard reported
+  // PASS on a fresh PR head whose `Code-quality gates` had not started.
+  //
+  // Measured 2026-09-30 18:47 against this script's own PR (#1664), where
+  // `refs/pull/1664/head` existed and `refs/pull/1664/merge` did not.
+  // Unreachable by reading: every layer was individually correct.
+  const full = resolveCommit(root, sha);
+  if (full === undefined) return {};
   let merge: HeadMergeState | undefined;
   try {
-    merge = mergeStateForHead(root, sha);
+    merge = mergeStateForHead(root, full);
   } catch {
     merge = undefined;
   }
   if (merge === undefined) return {};
   const event = merge === "not-a-pr-head" ? "push" : "pull_request";
   try {
-    const head = await runsForHead(slug, sha);
+    const head = await runsForHead(slug, full);
     const scan = scanTriggers(root, event);
     const cov = coverageFor(head.state === "has-run" ? head.runs : [], scan, event);
     return {

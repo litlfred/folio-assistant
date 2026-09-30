@@ -159,3 +159,5 @@ them.
 
 The fourth item above ("the base-branch alternative is written down as
 considered and rejected") is wrong as written and is superseded by this.
+
+_2026-09-30T18:43:34Z_ — Claimed by claude/cool-fermi-htir5p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
