@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-09-30T16:48:12Z
+updated_at: 2026-09-30T17:03:14Z
 parent: folio-assistant-vuip
 ---
 
@@ -42,3 +42,17 @@ Tool DEFINITIONS (the contracts in cat-harness/tools/mcp.ts etc.) stay in the ha
 - #1594 moved skill-package discovery to scripts/skill-packages.ts (kg-audit, the workflow engine).
 - The user-invocable skill list moves to scripts/invocable-skills.ts (gen-skill-commands).
 After this, harness code imports cat-harness/tools/ (the definitions graph, which stays) and no src/tools module. Remaining: the MCP server, routes, sessions and src/tools/* move into cat-harness-tools/, plus the tests that exercise them.
+
+## Classification, 2026-09-30 (real imports only, on main b1eaffee)
+
+92 non-test modules under cat-harness/src/ and cat-harness/adapters/: **56 MOVES, 35 STAYS, 1 SPLIT**.
+- MOVES: src/index.ts, server.ts, route-groups.ts, tool-groups.ts, types.ts; src/tools/* (16); src/routes/* (5); src/core/{cache,feedback,git,logging,rbac,github-auth}; auth/gateway; mcp/project; adapters/document/* (11); adapters/mcp-server/* (11).
+- STAYS: src/workflow/* (14, by ruling); src/core/{access,git-refs,markdown-links,retry,safe-path,workflow-events}; blocks/*; crdm; docs; impact; issue-watch/*; logging/*; sessions/staleness; upstream/pins; qa-agent-write; adapters/manifest-entries.ts.
+- SPLIT: src/builtin-adapters.ts — init-folio (harness) reads the BUILTIN_ADAPTERS table; resolveBuiltinAdapter() (server only) loads adapters/document by variable path.
+
+Blockers found:
+1. scripts/capture-mcp-tools.ts loads 11 src/tools by variable path — moves with them (with mcp:capture and mcp-project.test).
+2. folio-assistant-core/scripts/sample-import-run.ts imports registerWorkflowTools from src/tools/workflow.ts — rewrite against the src/workflow engine.
+3. folio-assistant-sci/adapters/paper imports adapters/document/* — sci's paper adapter is server-side, so sci would depend on cat-harness-tools (allowed by direction; paths repoint).
+
+Entry points to repoint: package.json main/exports/files/scripts (start*, check-deps, mcp:capture), .mcp.json, build-lean-mcp.yml (adapters/mcp-server/Dockerfile), start-folio-assistant.sh, tsconfig include, code-quality-gates ruff scope.
