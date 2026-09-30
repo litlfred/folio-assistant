@@ -44,21 +44,25 @@
  *   bun run voices:viz          # write
  *   bun run voices:viz:check    # fail if either artefact is stale
  */
-import { rmSync } from "node:fs";
-import { basename, join } from "node:path";
+import { existsSync, rmSync } from "node:fs";
+import { basename, join, relative, sep } from "node:path";
 
 import { readVoicesGraph, type VoicesGraph } from "./voices-graph.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import {
   directoriesForGraph,
+  instanceRootsIn,
   readDeclaration,
   repoRootFor,
   siteDirFor,
+  sourceLinks,
 } from "../schemas/cat-harness.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 import { withRenders } from "./viewer-declarations.js";
 import { libraryResolver, type LibraryResolver } from "./lib/library-links.ts";
+import { SKILL_PAGES_DIR, skillPagesOf } from "./lib/skill-pages.ts";
+import { detectRepoUrl } from "../src/core/git-refs.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "voices-viewer";
@@ -75,7 +79,11 @@ const check = process.argv.includes("--check");
  * Each rule gets `links` only where its citation resolves, so an unresolved one
  * stays text on the page rather than becoming a 404.
  */
-export function projection(g: VoicesGraph, links?: LibraryResolver): unknown {
+export function projection(
+  g: VoicesGraph,
+  links?: LibraryResolver,
+  kgLinks?: (kgRef: string, instance: string | undefined) => { viewer?: string; source?: string } | undefined,
+): unknown {
   const linked =
     links === undefined
       ? g
@@ -84,8 +92,13 @@ export function projection(g: VoicesGraph, links?: LibraryResolver): unknown {
           voices: g.voices.map((v) => ({
             ...v,
             rules: v.rules.map((r) => {
-              if (r.citation !== "library" || r.cites === undefined) return r;
-              const l = links.links(r.cites.split("#")[0]!, r.citesInstance);
+              if (r.cites === undefined) return r;
+              const l =
+                r.citation === "library"
+                  ? links.links(r.cites.split("#")[0]!, r.citesInstance)
+                  : r.citation === "kg-node"
+                    ? kgLinks?.(r.cites, r.citesInstance)
+                    : undefined;
               return l === undefined ? r : { ...r, links: l };
             }),
           })),
@@ -453,7 +466,26 @@ if (import.meta.main) {
     process.exit(0);
   }
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
-  emit(join(dataDir, "index.json"), JSON.stringify(projection(g, libraryResolver(repoRoot, ROOT)), null, 2) + "\n");
+  // A KG-node citation is a file in the cited instance (bean `qgjh`): it links
+  // to that file on the repository host, and a skill also to its published
+  // instruction page. Resolved against the instance's root, and only where
+  // the file exists; anything else stays text.
+  const skillPages = skillPagesOf(repoRoot);
+  const repoUrl = detectRepoUrl(repoRoot);
+  const roots = new Map(instanceRootsIn(repoRoot).map((r) => [readDeclaration(r)?.name ?? basename(r), r]));
+  const kgLinks = (kgRef: string, instance: string | undefined) => {
+    const root = instance === undefined ? undefined : roots.get(instance);
+    if (root === undefined || !existsSync(join(root, kgRef))) return undefined;
+    const rel = relative(repoRoot, join(root, kgRef)).split(sep).join("/");
+    const out: { viewer?: string; source?: string } = { source: sourceLinks(repoUrl, rel, "main")?.viewHref };
+    const skill = kgRef.endsWith(".md") ? basename(kgRef, ".md") : undefined;
+    if (skill !== undefined && skillPages.has(skill)) out.viewer = `${SKILL_PAGES_DIR}/${skill}.html`;
+    return out.source === undefined && out.viewer === undefined ? undefined : out;
+  };
+  emit(
+    join(dataDir, "index.json"),
+    JSON.stringify(projection(g, libraryResolver(repoRoot, ROOT), kgLinks), null, 2) + "\n",
+  );
   const nav = { built: basename(ROOT), docsRoot: site };
   // Each page says which directories it draws (#1168 B7a-2): the voices
   // directories present — every one here, the subject's own on a subject page.
