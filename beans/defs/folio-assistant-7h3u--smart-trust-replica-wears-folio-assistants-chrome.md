@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T20:04:11Z
-updated_at: 2026-09-30T20:04:36Z
+updated_at: 2026-09-30T20:13:13Z
 parent: folio-assistant-o3xy
 ---
 
@@ -89,3 +89,109 @@ them silently is how one of these two instructions gets quietly dropped.
 - [ ] the `_comment_composed` in `smart-trust.json` is updated to match what is
       actually true afterwards — it is currently correct and would become the
       stale-guidance defect the moment this changes
+
+
+## Owner ruling, 2026-09-30 — refined twice
+
+1. *"theme it, keep the justthedocs machinery"* — **option 1**.
+2. *"reuse all existing justthedocs infra (see sibling work on variable
+   substitution) but keep styling of smart-trust (except navbar on LHS not
+   top)"*
+
+So: just-the-docs machinery and composition unchanged, WHO's **visual** style,
+and the nav stays on the **left** rather than moving to the IG's top bar. The
+LHS carve-out is what stops this being a pure replica and is the owner's, not
+an inference.
+
+## Both "not established" items above are now MEASURED
+
+### The styling is not in `smart-trust` at all
+
+`WorldHealthOrganization/smart-trust` @ `26635f7b05b` carries **no branding
+CSS** — the only `.css` under it is vendored swagger
+(`input/images/openapi/`). `local-template/` holds Liquid layouts for actor and
+requirements pages and no styling.
+
+`ig.ini` selects `template = #local-template`, and
+`local-template/package/package.json` says where the look actually comes from:
+
+```json
+{ "name": "local.template", "license": "CC0-1.0",
+  "base": "who.template.root",
+  "dependencies": { "who.template.root": "current" } }
+```
+
+`who.template.root` is **`WorldHealthOrganization/smart-ig-template`**
+@ `82603d0795379c829c12c0e9cb15f022afa5c29e`, whose own `package.json` reads:
+
+```json
+{ "name": "who.template.root", "version": "0.5.0",
+  "license": "CC0-1.0", "author": "World Health Organization",
+  "base": "fhir.base.template" }
+```
+
+The branding is `content/assets/css/who.css`, 705 lines.
+
+### Licence: `CC0-1.0`
+
+Public-domain dedication, stated by the template package itself. **Vendoring is
+unambiguously permitted**; CC0 requires no attribution, though naming the
+source is right anyway and the provenance shas above are the record. This
+closes the licensing question raised earlier, and closes it with the
+package's own declaration rather than an assumption about WHO material in
+general.
+
+### The palette is already expressed as NAMED ROLES
+
+`who.css` does not scatter hex values — it declares custom properties, which is
+the same discipline `cat-harness/schemas/theme.ts` exists to enforce (*"try to
+use named css assets in KG rather than hardcoded colors"*). Measured:
+
+```
+--navbar-bg-color            #00477d     (WHO blue; the most frequent colour, 4×)
+--footer-container-bg-color  #00477d
+--ig-status-text-color       #00376d
+--btn-hover-color            #0070A1
+--btn-active-color           #0078d4
+--footer-bg-color            #505050
+--ig-header-color            #f6f7f9
+--toc-box-bg-color           #f6f7f9
+--toc-box-border             navy
+```
+
+That mapping is the reason option 1 is viable: WHO's roles line up with the
+theme schema's roles, so this is a palette translation rather than a stylesheet
+transplant.
+
+## The falsifier I set, and how it came out
+
+The brief said: *if the gap is layout rather than colour, a theme cannot close
+it and option 1 is the wrong ruling.* Partly relevant, and the owner's own
+carve-out resolves it — `who.css`'s layout rules are overwhelmingly `.navbar*`
+(the top bar), and the owner has asked for the nav to stay on the LEFT. So the
+layout half is deliberately NOT being reproduced, and what remains is colour
+and type, which a theme does express.
+
+**Not established:** how much of `who.css` beyond `--navbar-*` is structural
+rather than palette. 705 lines have not been classified line by line, and the
+count matters for whether a theme alone reaches "looks like the IG".
+
+## Reuse target — sibling work, per the owner's pointer
+
+Bean `kott` (**completed**): harness-namespaced values, one dotted key
+`<instance>.<directory-id>.<entry>`, Liquid `{{ … }}` everywhere, and
+critically *"fhir-harness declares `site.data` as PASS-THROUGH: Jekyll and the
+IG Publisher resolve it, exactly as today"*. That is the infra to build on
+rather than beside.
+
+## Where a WHO theme BELONGS
+
+`who-iris/themes/themes.ts` settles it by precedent: WHO palettes live in the
+WHO instance, not in `cat-harness/schemas/themes.ts`, because *"a palette read
+off a WHO style guide is subject matter"*. They still resolve through the
+platform's `resolveTheme`. A smart-trust theme follows that pattern.
+
+It also sets the testing bar: `themes.test.ts` **re-reads the source artefact**
+rather than comparing constants to a copy of themselves. Here the source is a
+git repo at a pinned sha, which is a better provenance than who-iris's capture
+zip.
