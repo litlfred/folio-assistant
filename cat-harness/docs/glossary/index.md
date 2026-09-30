@@ -28,11 +28,11 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <thead><tr><th>page</th><th>holds</th><th>terms</th><th>size</th></tr></thead>
 <tbody>
 <tr><td>this page</td><td>authored terms, counts and sources</td><td>29</td><td>41 KB</td></tr>
-<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>289</td><td>206 KB</td></tr>
-<tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>120</td><td>76 KB</td></tr>
-<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>549</td><td>418 KB</td></tr>
+<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>289</td><td>208 KB</td></tr>
+<tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>120</td><td>77 KB</td></tr>
+<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>549</td><td>422 KB</td></tr>
 <tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>7 KB</td></tr>
-<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1649</td><td>895 KB</td></tr>
+<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1649</td><td>903 KB</td></tr>
 </tbody></table></div>
 
 **Size:** this page holds 29 terms and is 41 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
@@ -87,7 +87,7 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <span class="fa-gloss-n">6.</span> Node Instance
 </dt>
 <dd>
-<p>A Node that names its Node Kind, in `$schema` or front matter, and satisfies that kind's Node Schema.</p>
+<p>A Node that names its Node Kind, in <code>$schema</code> or front matter, and satisfies that kind's Node Schema.</p>
 <p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node">Node</a>, <a href="#bootstrap--terms--node-kind">Node Kind</a>, <a href="#bootstrap--terms--node-schema">Node Schema</a></p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/NodeInstance">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/NodeInstance</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/NodeInstance</code></a></p>
 </dd>
@@ -103,7 +103,7 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <span class="fa-gloss-n">8.</span> Declaration
 </dt>
 <dd>
-<p>A JSON document, `&lt;name&gt;.json`, that gives a name and lists directory entries and file entries.</p>
+<p>A JSON document, <code>&lt;name&gt;.json</code>, that gives a name and lists directory entries and file entries.</p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Declaration</code></a></p>
 </dd>
 <dt id="bootstrap--terms--extension" data-fa-state="authored" data-fa-gloss="">
@@ -126,7 +126,7 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <span class="fa-gloss-n">11.</span> Asset
 </dt>
 <dd>
-<p>A file entry of a Declaration: one file about the repository itself, whose `role` field says what it is for.</p>
+<p>A file entry of a Declaration: one file about the repository itself, whose <code>role</code> field says what it is for.</p>
 <p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a></p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/asset</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Asset">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Asset</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Asset</code></a></p>
 </dd>
@@ -142,7 +142,7 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <span class="fa-gloss-n">13.</span> Dependency
 </dt>
 <dd>
-<p>A Declaration's `needs` entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back.</p>
+<p>A Declaration's <code>needs</code> entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back.</p>
 <p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a>, <a href="#bootstrap--terms--knowledge-graph">Knowledge Graph</a>, <a href="#bootstrap--terms--reference">Reference</a>, <a href="#bootstrap--terms--node-instance">Node Instance</a></p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/dependency</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Dependency">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Dependency</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Dependency</code></a></p>
 </dd>
