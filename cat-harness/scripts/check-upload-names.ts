@@ -18,13 +18,23 @@
  * link in every generated README resolves"*. **Main was red on this**, from an
  * upload rather than from any code.
  *
- * ## Why the name and not the link
+ * ## Why the name AS WELL AS the link — both layers exist, on purpose
  *
- * Escaping downstream needs the generator to percent-encode AND the test's
- * `\]\(([^)]+)\)` regex to decode — two changes, in two layers, for one
- * defect, and the next generator that links a file repeats it. A name that is
- * safe everywhere is safe once. The owner ruled it 2026-09-30: *"rename files
- * to normalize to stubs and downstream us is OK"*.
+ * The escaping half landed on `main` the same day from a sibling session
+ * (#1639): `linkTarget` in `bootstrap-tools/scripts/subgraph-readmes.ts`
+ * percent-encodes every segment of a destination, and `decodeLinkTarget` in
+ * `check-subgraphs.ts` decodes before asking the filesystem. **That is what
+ * keeps `main` green, and this check does not replace it.**
+ *
+ * The two reach different things. The encoder is total over what that ONE
+ * generator writes. This is total over the NAME, so it also holds for a shell,
+ * an `href`, a CI log line, and the next generator nobody has written yet — the
+ * places the encoder is not. Measured after both landed: `uploads/README.md`
+ * contains zero percent-escapes, because the encoder is a no-op once the names
+ * are safe.
+ *
+ * So the reason is reach, not effort. The owner ruled it 2026-09-30: *"rename
+ * files to normalize to stubs and downstream us is OK"*.
  *
  * ## The extension chain is preserved, and that is the whole risk
  *

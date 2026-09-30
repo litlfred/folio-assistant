@@ -99,6 +99,24 @@ import { gitFiles } from "./git-files.ts";
 import { describe as describeFile, usedByIndex } from "./readme-graph-sections.ts";
 import { bootstrapTermTargets, linkTerms } from "./term-links.ts";
 
+/**
+ * A relative path as a markdown link DESTINATION: every segment
+ * percent-encoded, parentheses included.
+ *
+ * A file name is not a URL. `PIIS2589750021000388 (2).pdf` arrived through the
+ * GitHub web UI's upload on 2026-09-30, and written verbatim into `](...)` its
+ * space ended the destination, so the uploads README linked nowhere and the
+ * blocking `subgraph-readmes` test went red on main. `encodeURIComponent`
+ * handles the space but leaves `(` and `)` alone, and an unbalanced one ends a
+ * CommonMark destination just as surely, so both are encoded here too.
+ */
+export function linkTarget(path: string): string {
+  return path
+    .split("/")
+    .map((seg) => encodeURIComponent(seg).replace(/\(/g, "%28").replace(/\)/g, "%29"))
+    .join("/");
+}
+
 /** The Liquid templates this writer renders: `subgraph.liquid`, which includes `files.liquid`. */
 export const TEMPLATES = join(import.meta.dir, "templates", "readme");
 
@@ -326,13 +344,14 @@ export async function plan(repo: string, instances: InstanceInput[], templates: 
       for (const f of all) if (f.includes("/")) counts.set(f.split("/")[0]!, (counts.get(f.split("/")[0]!) ?? 0) + 1);
       const subdirs = [...counts]
         .sort((a, b) => a[0].localeCompare(b[0]))
-        .map(([n, count]) => ({ name: n, count, readme: existsSync(join(abs, n, "README.md")) ? `${n}/README.md` : "" }));
+        .map(([n, count]) => ({ name: n, href: linkTarget(n), count, readme: existsSync(join(abs, n, "README.md")) ? `${linkTarget(n)}/README.md` : "" }));
       const listed = direct.length <= LIST_LIMIT;
       const files = listed
         ? direct.map((f) => {
             const relToInst = relative(inst, join(abs, f));
             return {
               path: f,
+              href: linkTarget(f),
               what: linked(cell(describeFile(inst, relToInst, assets))),
               usedBy: used(relToInst),
             };
