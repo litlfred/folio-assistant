@@ -36,10 +36,10 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>107</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>65</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>87</b><span>invoked as a shell command</span></div>
-<div class="tg-stat"><b>23</b><span>reachable over MCP</span></div>
+<div class="tg-stat"><b>109</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>66</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>89</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
 ## How they are invoked, and installed
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 87 |
-| <span class="tg-tag tg-inproc">inProcess</span> | 23 |
-| <span class="tg-tag tg-mcp">mcp</span> | 23 |
+| <span class="tg-tag tg-shell">shell</span> | 89 |
+| <span class="tg-tag tg-inproc">inProcess</span> | 24 |
+| <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 6 |
 
 | installation | tools |
 |---|---|
-| `none` | 98 |
+| `none` | 100 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **65** skills named across **107** tools resolve to a
+Yes — all **66** skills named across **109** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -111,6 +111,8 @@ tool advertising a capability the graph cannot locate.
 | `lean-toolchain-setup`<br>Lean toolchain install | Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading. | <span class="tg-tag tg-shell">shell</span> | [`lean-environment-setup`](../reference/skill-instructions/lean-environment-setup.html) | 0 in / 1 out |
 | `library-viewer`<br>Library viewer | Render each declared library directory — its entries, intakes and avatars — as a page per subject instance. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `log-message`<br>Log a message to the discussion | Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry. | <span class="tg-tag tg-manual">manual</span> | `log-message` | 6 in / 1 out |
+| `lsi-query`<br>Latent Semantic Indexing over a prose graph | Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`lsi-indexing`](../reference/skill-instructions/lsi-indexing.html) | 3 in / 1 out |
+| `lsi-viewer`<br>Latent semantic index viewer | Render every committed LSI index — dimensions as two poles, narrow-dimension and near-duplicate findings — and which declared prose graphs still need one. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `mcp-capture`<br>What this instance's MCP server serves | Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source. | <span class="tg-tag tg-shell">shell</span> | [`mcp-contract`](../reference/skill-instructions/mcp-contract.html) | 1 in / 1 out |
 | `methodologies-viewer`<br>Methodologies viewer | Render the declared methodology graph as one page. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `narrative-queue`<br>What narratives are waiting on a person | List the agent-drafted narratives awaiting human confirmation, numbered, with the numbered rejection reasons beside them. The queue is the only place a draft's state is visible before someone accepts it. | <span class="tg-tag tg-shell">shell</span> | [`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | 0 in / 1 out |

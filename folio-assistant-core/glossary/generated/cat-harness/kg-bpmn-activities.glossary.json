@@ -2305,7 +2305,7 @@
     {
       "id": "process_ingestion.callactivity_gate",
       "prefLabel": "L1 completeness gate",
-      "definition": "See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has never existed, and is not `proof-triage` (that one triages proofs). Left uncovered until the skill is written. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.",
+      "definition": "See ingest-l1-completeness-gate.bpmn. Skill-backed by `library-ingestion` (2026-09-30, bean 7bg9): its section \"What a complete L1 entry holds\" names `check:l1-complete` as the gate and states its three results. Until then this step named `paper-relevance-triage`, which never existed, and was left uncovered rather than bound to a guess. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.",
       "notation": "CallActivity_Gate",
       "source": "cat-harness/processes/document-ingestion.bpmn#CallActivity_Gate",
       "status": "candidate"
@@ -2332,6 +2332,14 @@
       "definition": "Sniff the media type rather than trusting the extension, and mint the doc id from the page-1 arXiv stamp where there is one, else from the filename.",
       "notation": "Task_Detect",
       "source": "cat-harness/processes/document-ingestion.bpmn#Task_Detect",
+      "status": "candidate"
+    },
+    {
+      "id": "process_ingestion.task_licence",
+      "prefLabel": "Establish the licence from the upload alone [document-intake]",
+      "definition": "EARLY, by the owner's ruling on bean 7bg9 (2026-09-20): before any derivation, because library/ is holds: content and anything derived first is committed, so refusing it later is a deletion nobody may take unasked. This step sees only the upload itself — the licence recorded in its intake.json (the same stated / unknown record a library manifest carries) and whether a LICENSE file sits beside it. It never infers a licence from extracted text. The verdict is stated, unknown, or UNDETERMINED, and undetermined is never reported as cleared: the pipeline proceeds and says so, because a licence that only extraction can reveal is a later check's to find.",
+      "notation": "Task_Licence",
+      "source": "cat-harness/processes/document-ingestion.bpmn#Task_Licence",
       "status": "candidate"
     },
     {

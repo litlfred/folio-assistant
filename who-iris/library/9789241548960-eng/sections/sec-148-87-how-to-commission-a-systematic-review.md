@@ -16,21 +16,17 @@ external source.
 Performing systematic reviews correctly takes time, expertise and 
 resources and the systematic review team needs to be carefully selected. 
 Members of the Cochrane Collaboration may be commissioned to update an 
-existing Cochrane review or to perform a review de novo. The cost of a sys­
-tematic review varies widely and depends on the level of expertise required, 
+existing Cochrane review or to perform a review de novo. The cost of a systematic review varies widely and depends on the level of expertise required, 
 the daily rate of the contractor and his or her team, and the estimate of the 
 total number of days of work. The expertise and number of days depend, in 
-turn, on the number and complexity of the key questions, the volume of lit­
-erature on the questions of interest, the number of languages involved and 
+turn, on the number and complexity of the key questions, the volume of literature on the questions of interest, the number of languages involved and 
 the need for translation, among other factors. An estimate of the extent of 
 the work involved can be made by WHO staff through an initial scan of the 
 evidence, or potential contractors can be asked to include the results of a 
-scan when responding to the request for proposals issued by WHO’s respon­
-sible technical officer.
+scan when responding to the request for proposals issued by WHO’s responsible technical officer.
 In commissioning a systematic review, the steering group will need to:
 ■■
-disseminate a request for proposals to established suppliers of sys­
-tematic reviews;
+disseminate a request for proposals to established suppliers of systematic reviews;
 ■■
 provide clear terms of reference to the suppliers selected;
 ■■
@@ -42,8 +38,7 @@ review; and
 ■■
 assess the quality of the deliverable(s).
 Systematic review teams commissioned by WHO must have expertise 
-in using GRADE and should produce GRADE evidence profiles (see Chap­
-ter 9). Separate individuals or teams should not be commissioned to perform 
+in using GRADE and should produce GRADE evidence profiles (see Chapter 9). Separate individuals or teams should not be commissioned to perform 
 the systematic review and the GRADE evidence profiles.
 The terms of reference for a systematic review should be detailed and 
 explicit to ensure that the deliverables meet the needs of the GDG. Detailed 

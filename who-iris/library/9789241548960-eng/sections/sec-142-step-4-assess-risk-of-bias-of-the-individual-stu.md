@@ -15,8 +15,7 @@ sources of bias, the most important being selection bias, which results in
 the presence of systematic differences in the baseline characteristics of the 
 groups being compared. Chapter 9 provides additional details on how to 
 assess the risk of bias at the individual study level.
-The following resources may be helpful when determining which instru­
-ment to use to assess the risk of bias of studies included in a systematic review:
+The following resources may be helpful when determining which instrument to use to assess the risk of bias of studies included in a systematic review:
 ■■
 Cochrane risk of bias tool for randomized controlled trials (23);
 ■■

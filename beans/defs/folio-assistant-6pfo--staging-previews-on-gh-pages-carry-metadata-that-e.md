@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T12:28:52Z
-updated_at: 2026-09-30T11:16:57Z
+updated_at: 2026-09-30T14:39:07Z
 parent: folio-assistant-zzmr
 ---
 
@@ -295,4 +295,18 @@ So the design is four pieces, and the last two are what "never delete" actually 
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
 
+
+## 2026-09-30 — owner chose A (deploy time, on gh-pages); piece 1 wired
+Correction first: I put 6pfo to the owner as undecided having read only the top of this bean. The design below it — staging-record.ts + schemas/staging-preview.ts, retirement as a state — was already built (23d81a697c, 2026-09-20) and already IS option A. What was missing is the wiring: feature-staging.yml called none of it.
+- [x] **Piece 1 — the deploy writes the live record.** The 'Inject staging banner' step (which already computes PR and issue, and already fetches gh-pages) now copies the published STAGING/<slug>/staging-preview.json into _site first, then runs staging-record.ts create: builtAt is kept from the first deploy, the commit updates, a RETIRED record is refused as live, and a corrupt one is refused rather than replaced (the copied original stays; the failure is a ::error annotation, not a blocked preview). Simulated locally through all three cases; staging and workflow tests 535/535, check:workflow-refs and check:workflows pass. Verified for real only by this PR's next staging deploy — its log line 'staging-record: created|updated … STAGING/<slug>' is the evidence.
+- [x] Piece 2 — `cleanup` and `cleanup-dispatch` both copy STAGING/<slug>/staging-preview.json to STAGING/_retired/<slug>.json (first retirement kept) and run `staging-record.ts retire` with the gate's own reason, BEFORE rm -rf, in the same commit as the removal. A preview staged before 6pfo has no record, and says so. `git add` of the store is conditional, since a pathspec matching nothing fails. **Unverified live**: it runs only on PR close, so the first real evidence is this PR's own merge.
+- [x] Piece 3 — `RETIRED_DIR = "_retired"`, and `STAGING/_retired` is in CARRIED_PREFIXES (carried unconditionally, and verified by the deploy's verify step like `_render-log`). `previewsAt` no longer lists `_retired` as a preview, so a branch holding only retired records restores as `empty`, not `restored`. Two tests added.
+- [x] Piece 4 — there is now NO removal path for a retired record: all three slug guards (`stage`, `cleanup`, `cleanup-dispatch`) refuse `_retired`, and so does `slugProblem` in staging-cleanup-preflight.ts. A test asserts all three jobs refuse it. A deliberate removal would need a new, confirmed path, which is `deletion-requires-confirmation` rather than something to pre-build.
+- A second, JSON-LD copy (<stub>/staging.jsonld) was drafted and REVERTED before commit: a second record of the same facts is what this design exists to prevent. <base>/fsh-guts.jsonld already carries these records as fsh-guts nodes.
+
 _2026-09-30T11:16:57Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+
+## 2026-09-30 14:36 — piece 1 verified LIVE
+PR #1483's staging deploy (commit `1e6511f`) wrote `STAGING/claude-brave-hawking-511rrx/staging-preview.json` on gh-pages, with `pr: 1483` and `issue: 1482`. `builtAt` was kept from the first deploy (13:50:49Z) while `commit` updated, which is the create-or-update rule working as designed. Pieces 2–4 run only on close, so this PR's merge is their first live run.

@@ -10,7 +10,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { repairableGates, scriptOf, writerFor } from "../regen-after-merge.ts";
+import { WRITER_OVERRIDES, repairableGates, scriptOf, writerFor } from "../regen-after-merge.ts";
 import { loadGates } from "../gates.ts";
 import { repoRootFor } from "../../schemas/cat-harness.ts";
 
@@ -66,7 +66,7 @@ describe("the set comes from the WORKFLOW, not from package.json", () => {
   });
 
   test("...and a STRICT subset of package.json's check scripts", () => {
-    const allChecks = Object.keys(SCRIPTS).filter((s) => s.endsWith(":check"));
+    const allChecks = Object.keys(SCRIPTS).filter((s) => s.endsWith(":check") || WRITER_OVERRIDES[s] !== undefined);
     expect(pairs.length).toBeLessThan(allChecks.length);
     for (const p of pairs) expect(allChecks).toContain(p.check);
   });
@@ -105,5 +105,21 @@ describe("a check with no writer is REPORTED, never skipped", () => {
     expect(pairs.map((p) => p.check)).toEqual(["orphan:check", "voices:viz:check"]);
     expect(pairs[0]!.writer).toBeUndefined();
     expect(pairs[1]!.writer).toBe("voices:viz");
+  });
+});
+
+describe("a writer that is not <check minus :check> is DECLARED (bean eowd)", () => {
+  test("translate-bpmn:check is repaired by the script that writes, not the one that reports", () => {
+    expect(writerFor(SCRIPTS, "translate-bpmn:check")).toBe("translate-bpmn:extract");
+    expect(SCRIPTS["translate-bpmn:extract"]).toContain("--extract");
+  });
+  test("the audit-coverage gates are offered, with audit:coverage as their writer", () => {
+    const pairs = repairableGates(loadGates(REPO, {}), SCRIPTS);
+    for (const gate of ["audit:coverage:strict", "audit:coverage:require-all"]) {
+      expect(pairs.find((p) => p.check === gate)?.writer).toBe("audit:coverage");
+    }
+  });
+  test("every override names a writer that exists — a renamed writer is a finding, not a guess", () => {
+    for (const w of Object.values(WRITER_OVERRIDES)) expect(SCRIPTS[w]).toBeDefined();
   });
 });

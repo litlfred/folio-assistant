@@ -9,19 +9,14 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 determinants of health, gender equality and relevant international human 
-rights standards and principles, should be included in the sections on imple­
-mentation, monitoring and evaluation. The interventions recommended 
+rights standards and principles, should be included in the sections on implementation, monitoring and evaluation. The interventions recommended 
 in a guideline pose the risk of increasing rather than reducing inequities, 
-depending on how they are implemented. For example, marginalized popu­
-lation groups might be ignored or strategies that make them the last to ben­
-efit might be used. Important gender differences might not be considered 
+depending on how they are implemented. For example, marginalized population groups might be ignored or strategies that make them the last to benefit might be used. Important gender differences might not be considered 
 or unintended effects on certain subpopulations or population strata might 
 occur. Such situations arise because decisions governing implementation are 
 not explicitly related to equity. For instance, vaccination coverage targets 
 might be achieved without benefit to the poorest and most disadvantaged 
-groups. WHO staff have a responsibility to monitor and evaluate how recom­
-mendations affect equity, human rights, gender equality and the advance­
-ment of the highest attainable standard of health, and how health services 
+groups. WHO staff have a responsibility to monitor and evaluate how recommendations affect equity, human rights, gender equality and the advancement of the highest attainable standard of health, and how health services 
 and programmes implement the recommended interventions.
 5.5 References
 1.	
@@ -38,20 +33,17 @@ Whitehead M. The concepts and principles of equity and health. Int J Health Serv
 25 Questions & Answers on Health & Human Rights. Geneva: World Health Organization; 
 2002. (http://whqlibdoc.who.int/hq/2002/a76549.pdf, accessed 12 November 2014).
 5.	
-Ensuring human rights in the provision of contraceptive information and services: guid­
-ance and recommendations. Geneva: World Health Organization; 2014 (http://www.who.
+Ensuring human rights in the provision of contraceptive information and services: guidance and recommendations. Geneva: World Health Organization; 2014 (http://www.who.
 int/reproductivehealth/publications/family_planning/human-rights-contraception/en/, 
 accessed 12 November 2014).
 Chapter 5 
 Equity, human rights, gender and social determinants
 55
 6.	
-Closing the gap in a generation. Geneva: World Health Organization; 2008 (http://whqlib­
-doc.who.int/hq/2008/WHO_IER_CSDH_08.1_eng.pdf, accessed 12 November 2014).
+Closing the gap in a generation. Geneva: World Health Organization; 2008 (http://whqlibdoc.who.int/hq/2008/WHO_IER_CSDH_08.1_eng.pdf, accessed 12 November 2014).
 7.	
 Blas E, Kurup AS, editors. Equity, social determinants and public health programmes. 
-Geneva: World Health Organization; 2010 (http://whqlibdoc.who.int/publica­
-tions/2010/9789241563970_eng.pdf, accessed 12 November 2014).
+Geneva: World Health Organization; 2010 (http://whqlibdoc.who.int/publications/2010/9789241563970_eng.pdf, accessed 12 November 2014).
 8.	
 Gender, women and health [website]. Geneva: World Health Organization; 2014 (http://
 www.who.int/gender/whatisgender/en/, accessed 25 November 2014)
@@ -74,8 +66,7 @@ un.org/en/rights/index.shtml, accessed 14 November 2014).
 14.	 Evans T, Brown H. Road traffic crashes: operationalizing equity in the context of health 
 sector reform. Inj Control Saf Promot. 2003;10(1-2):11–2. doi: http://dx.doi.org/10.1076/
 icsp.10.1.11.14117 PMID: 12772480
-15.	 Armstrong RWE, Doyle J, editors. Chapter 21: Reviews in public health and health promo­
-tion. In: Higgins JPT, Green S, editors. Cochrane handbook for systematic reviews of 
+15.	 Armstrong RWE, Doyle J, editors. Chapter 21: Reviews in public health and health promotion. In: Higgins JPT, Green S, editors. Cochrane handbook for systematic reviews of 
 interventions, version 5.1.0 [updated March 2011]. Oxford: The Cochrane Collaboration; 
 2011 (http://www.cochrane-handbook.org, accessed 12 November 2014).
 16.	 Campbell & Cochrane Equity Methods Group [website]. Ottawa: The Campbell and the 

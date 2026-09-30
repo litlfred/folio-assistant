@@ -8,14 +8,11 @@ pages: 162-163
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-The review team needs to produce a concise report that succinctly yet method­
-ically summarizes the methods used and the results of the review. Suggested 
+The review team needs to produce a concise report that succinctly yet methodically summarizes the methods used and the results of the review. Suggested 
 components of the rapid review report are listed in Box 11.2. All components 
 should be described briefly; excessive detail is not necessary. The rapid review 
-methods should be reported at a level of detail that will allow them to be rep­
-licated. A brief section on the gaps in the evidence and future research needs 
-may be very useful and particularly important when data are sparse. A writ­
-ten disclosure should be provided to the effect that the rapid review is not 
+methods should be reported at a level of detail that will allow them to be replicated. A brief section on the gaps in the evidence and future research needs 
+may be very useful and particularly important when data are sparse. A written disclosure should be provided to the effect that the rapid review is not 
 intended to be a gold standard systematic review and that its results should 
 therefore be interpreted with caution and viewed within a specific context.
 continues ...
