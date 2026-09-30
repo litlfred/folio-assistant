@@ -15327,9 +15327,15 @@
       "fields": [
         {
           "name": "prefLabel",
-          "type": "z.string().describe(\"The label at the time of minting — what a retired term is shown as.\")",
+          "type": "z.string().describe(\"The current label — what the term is shown as, and what a retired term keeps.\")",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "formerLabels",
+          "type": "z .array(z.string()) .optional() .describe(\"Labels this key carried before, oldest first — published as skos:hiddenLabe…",
+          "optional": true,
+          "array": true
         },
         {
           "name": "firstSeen",
@@ -15373,7 +15379,7 @@
         },
         {
           "name": "concepts",
-          "type": "z .record(z.string(), LedgerEntrySchema) .describe(\"Keyed by the term IRI's local part, never the absolute IRI, so the …",
+          "type": "z .record(z.string().regex(LEDGER_KEY, \"a ledger key is role/<id> or process/<process id>/lane/<lane id>\"), LedgerEntry…",
           "optional": false,
           "array": false
         }
@@ -15385,6 +15391,7 @@
       ],
       "unresolved": [],
       "external": [
+        "LEDGER_KEY",
         "LEDGER_SCHEMA",
         "z"
       ],
@@ -39412,6 +39419,13 @@
           "doc": "The schema or standard that defines the term (rdfs:isDefinedBy)."
         },
         {
+          "name": "iri",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The concept's IRI when its defining vocabulary already mints one. The"
+        },
+        {
           "name": "source",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -47073,6 +47087,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "iri",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
