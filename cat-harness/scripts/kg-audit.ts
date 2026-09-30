@@ -2344,7 +2344,7 @@ const skills = knownSkills(root);
  * dangle: measured 2026-09-27, `smart-base` reported `skill-ref-resolves`
  * **fail (9)** on nine activities of `diig-investment-path.bpmn`, all naming
  * the one skill `methodology-adoption`, which lives at
- * `cat-harness/skills/folio-core/methodology-adoption.md` — four layers down
+ * `cat-harness/skills/process/process-core/methodology-adoption.md` — four layers down
  * its own declared `needs` chain. Nine criticals against a diagram that is
  * correct.
  *

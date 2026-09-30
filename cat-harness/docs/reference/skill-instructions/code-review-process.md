@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/workflow/code-review-process.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/code-review-process.md) — do not edit here.
+> Generated from [`cat-harness/skills/process/workflow/code-review-process.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/code-review-process.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/code-review-process.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/code-review-process.md){: .fa-edit-source }
 
 {% raw %}
 # Code review process — from PR to release approval

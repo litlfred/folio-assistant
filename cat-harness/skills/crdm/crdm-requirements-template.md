@@ -83,7 +83,7 @@ Format as a markdown checklist:
   - _Scope:_ 1 bean, 1 PR
 
 - [ ] **REQ-002** — Release lifecycle skill
-  - _Acceptance:_ Skill exists at `cat-harness/skills/workflow/release-lifecycle.md`
+  - _Acceptance:_ Skill exists at `cat-harness/skills/process/workflow/release-lifecycle.md`
   - _Scope:_ 1 bean, 1 PR
 
 ### Should-have

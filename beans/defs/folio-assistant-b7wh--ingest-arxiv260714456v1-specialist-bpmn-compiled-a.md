@@ -71,7 +71,7 @@ contribute. A hypothesis from their diagrams, not a finding of theirs.
 | `cat-harness/library/arxiv-2607.14456v1/` | **PROMOTED**, L1 complete — 24 pages, 24 blocks, 14 images all described |
 | `cat-harness/library/image-verdicts.json` | NEW. This library had none; every other has had one since `frs5` |
 | `cat-harness/methodologies/specification-compiled-agents.md` | the method, with `evidence:` pointing at the promoted entry |
-| `cat-harness/skills/workflow/specification-compiled-agents.md` | the skill, on the processes subgraph as asked |
+| `cat-harness/skills/process/workflow/specification-compiled-agents.md` | the skill, on the processes subgraph as asked |
 | `deterministic-and-agentic.md` | §"One experiment now exists, and it is somebody else's" |
 
 **All 14 images were opened and read**, and the figure-number mapping was

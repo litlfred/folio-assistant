@@ -233,7 +233,7 @@ Verified: `check:bean-front-matter` rc=0, `check:bean-parents`,
 
 **I missed the real instance first, with my own instrument.** Scanning for
 manifests I filtered to `>= 20` skill entries, found two, and reported both clean
-and sorted. `cat-harness/skills/workflow/package-manifest.json` — the one this
+and sorted. `cat-harness/skills/process/workflow/package-manifest.json` — the one this
 bean's sibling measured, 14 entries and 13 distinct — was BELOW my threshold. A
 cutoff I chose excluded the case I was looking for. Re-measured with no
 threshold: **22 manifests** carry a `skills` array, not 2. Third time today that

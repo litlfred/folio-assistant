@@ -67,7 +67,7 @@ The full set, each established against `origin/main` rather than inferred:
 
 ### Cause A — the retired `roles:` field, in FOUR files across TWO packages
 
-Not three in crdm. `cat-harness/skills/workflow/branch-freshness.md` carries it
+Not three in crdm. `cat-harness/skills/process/workflow/branch-freshness.md` carries it
 too, and on `origin/main` it reads literally:
 
     roles: [reader, collaborator, owner]
@@ -76,7 +76,7 @@ Those three actor ids **have never existed in any commit** — which is the whol
 reason the field was retired (325 annotations across 140 files, read by nothing;
 record: `fsh-guts/retired/skill-roles-front-matter.md`).
 
-Files: `skills/workflow/branch-freshness.md`,
+Files: `skills/process/workflow/branch-freshness.md`,
 `skills/crdm/crdm-needs-assessment.md`, `skills/crdm/crdm-impact-analysis.md`,
 `skills/crdm/crdm-requirements-template.md`.
 
@@ -157,10 +157,10 @@ a corpus that has moved on"*.
 
 | when | file(s) | unlisted | retired `roles:` |
 |---|---|---|---|
-| 09-25 | `folio-core/decision-methodology-selector.md` | yes | — |
+| 09-25 | `process-core/decision-methodology-selector.md` | yes | — |
 | 09-26 | 3 × `skills/crdm/crdm-*.md` | yes | yes |
-| 09-26 | `skills/workflow/branch-freshness.md` | — | yes |
-| 09-26 | `skills/workflow/release-epic-planning.md` | yes | yes |
+| 09-26 | `skills/process/workflow/branch-freshness.md` | — | yes |
+| 09-26 | `skills/process/workflow/release-epic-planning.md` | yes | yes |
 
 **Four in two days, and the last one landed hours after the previous three were
 repaired.** Each repair is two minutes; the class is not going away, because a
