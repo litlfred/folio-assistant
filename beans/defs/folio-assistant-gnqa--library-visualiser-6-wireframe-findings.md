@@ -3,12 +3,13 @@
 title: 'library visualiser: 6 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-library
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-23T10:36:15Z
+updated_at: 2026-09-30T16:12:46Z
 parent: folio-assistant-4ccr
 ---
 
@@ -33,3 +34,14 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — Entries cannot be opened: All 3 rows carry data-fa-library-href but 0 <a> elements; tr tabIndex -1, cursor auto; the cover img is not in a link. Clicking the title cell changes neither the URL nor the page height, and opens no dialog.
 - **STILL-PRESENT** — Titles shown are extraction artefacts (Abies, PUBLICATION AND INFORMATION, Handbook forGuideline): Row titles are still 'Handbook forGuideline Development 2nd edition', 'Abies' and 'PUBLICATION AND INFORMATION'. Button aria-label: 'Pull Abies out to your folio glass'. Cover img is 32x44 px.
 - **STILL-PRESENT** — 'Referenced by' details in a title tooltip only: The pill span '1 catalogue, 1 voices' holds its paths only in the title attribute ('who-iris/catalogue/nodes/item-...json (1)\nwho-style-guide/skills/...'). tabIndex is -1 and it is not in a <details>.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 4 still present, 2 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — Five columns off-screen even at desktop width, no cue: 1280×800: the table is 1820px wide in section.wrap (1224px, overflow-x auto), and the first cell is 391px. 'ocr' is PART, and pages/words/size/referenced by/source start at x≥1327 (OFF). The wrap has mask-image none and box-shadow none. (C_lib.mjs, C_lib2.mjs)
+- **STILL-PRESENT** — On a phone the listing is one column (uploads shows only Unit): 390×844: the box is 334px wide. Only 'slug' is in view (56–447, PART), and title..source are all OFF. In the uploads table only 'unit' is partly visible. The 40px right-edge fade mask on the table is still the only cue. (C_lib.mjs, C_lib2.mjs)
+- **FIXED** — Fixed Folio handle covers the page title on a phone: Still fixed. The h1 'Library — the L1 corpus' is at top 52–81, and the handle is at 0–28, so there is no overlap at either width. (C_lib.mjs)
+- **FIXED** — Entries cannot be opened: Changed since 2026-09-29. Each of the 3 rows' title cell is now an <a> to the item's README on GitHub (e.g. who-iris/library/9789241548960-eng/README.md). Clicking the title navigates away. The row still has tabIndex −1, and slug and cover are not links. On /cat-harness/library/cat-harness/ 11 of 11 titles link, plus 7 'source' links. — #1592 (C_lib.mjs, C_lib2.mjs, qgjh.mjs)
+- **STILL-PRESENT** — Titles shown are extraction artefacts (Abies, PUBLICATION AND INFORMATION, Handbook forGuideline): The titles are still 'Handbook forGuideline Development 2nd edition', 'Abies' and 'PUBLICATION AND INFORMATION'. The button aria-label is 'Pull Abies out to your folio glass'. The cover img is 32×44px. (C_lib.mjs)
+- **STILL-PRESENT** — 'Referenced by' details in a title tooltip only: The pill span '1 catalogue, 1 voices' holds its paths only in the title attribute. It is not focusable and not in a <details>. (C_lib.mjs)
