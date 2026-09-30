@@ -1,4 +1,4 @@
-A KGraph is **managed in git repositories, comprised of self-documenting
+A Knowledge Graph is **managed in git repositories, comprised of self-documenting
 JSON-LD**, and rendered into whatever formats a downstream knowledge product,
 public-health system, clinical system or personal-health application needs.
 That makes a repository the unit of distribution, and repositories come in four
@@ -7,9 +7,9 @@ to contain.
 
 ### Content repositories
 
-Where the KGraph itself lives. A Content repository:
+Where the Knowledge Graph itself lives. A Content repository:
 
-- MAY define Schemas for the Content types of a KGraph's nodes.
+- MAY define Schemas for the Content types of a Knowledge Graph's nodes.
 - MAY instantiate instances of those Content types.
 - MAY define the Skills needed to publish and consume those instances.
 - MAY designate a Skill as mechanical, as human, or as either.
@@ -55,7 +55,7 @@ repository:
 
 The downstream end. A consumer application:
 
-- MAY use a KGraph's Schemas and instance data from a Content repository.
+- MAY use a Knowledge Graph's Schemas and instance data from a Content repository.
 - MAY execute decision logic or indicator calculation from a Content
   repository.
 - MAY use Test and Tool repositories when building, preparing for a

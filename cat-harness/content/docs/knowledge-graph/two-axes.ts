@@ -1,5 +1,5 @@
 import { prose } from "../../../schemas/builders.ts";
 
 export default prose({
-  label: "sec:kgraph-repositories",
+  label: "sec:knowledge-graph-two-axes",
 });
