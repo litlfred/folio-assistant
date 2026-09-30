@@ -65,6 +65,7 @@ import { z } from "zod";
 import { kgNodeLabelShape, type KgNodeLabels } from "./kg-node";
 import { directoryForGraph } from "./cat-harness.js";
 import { BLOCK_KINDS } from "./block-kinds.js";
+import { ProcessElementIdSchema } from "./process-element-id.js";
 
 /** Which aspect of the prose (or of its presentation) a rule governs. */
 export const VOICE_RULE_CATEGORIES = [
@@ -381,11 +382,12 @@ export const VoiceApplicabilitySchema = z
   .object({
     /**
      * BPMN process ids, as `<bpmn:process id>` spells them —
-     * `Process_CrdmRequirements`, not a filename. Resolved against the
-     * diagrams the `cat-harness` graph carries, so a typo is a dangling
-     * reference rather than a voice that quietly never activates.
+     * `Process_CRDM_Requirements`, not a filename (#1168, B8: the element
+     * id, as `calledElement` uses it). Resolved against the loaded diagrams
+     * by `process-refs.test.ts`, so a typo is a dangling reference rather
+     * than a voice that quietly never activates.
      */
-    processes: z.array(z.string().min(1)).min(1).optional(),
+    processes: z.array(ProcessElementIdSchema).min(1).optional(),
     /**
      * The roles this voice addresses — the reader it is written FOR.
      *
