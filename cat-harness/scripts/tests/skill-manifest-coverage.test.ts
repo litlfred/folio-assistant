@@ -88,6 +88,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { knownSkills } from "../known-skills.js";
+import { packageDirsIn } from "../skill-topics.js";
 
 const SKILLS = join(import.meta.dir, "../../skills");
 
@@ -101,13 +102,13 @@ function skillFilesIn(pkgDir: string): string[] {
 function packages(): Array<{ name: string; dir: string; listed: string[] }> {
   if (!existsSync(SKILLS)) return [];
   const out: Array<{ name: string; dir: string; listed: string[] }> = [];
-  for (const d of readdirSync(SKILLS, { withFileTypes: true })) {
-    if (!d.isDirectory()) continue;
-    const dir = join(SKILLS, d.name);
+  // Topic-aware (bean 9umr): a one-level readdir skipped every package inside
+  // a topic directory, so their manifests went unchecked.
+  for (const { name, dir } of packageDirsIn(SKILLS)) {
     const manifest = join(dir, "package-manifest.json");
     if (!existsSync(manifest)) continue;
     const parsed = JSON.parse(readFileSync(manifest, "utf-8")) as { skills?: string[] };
-    out.push({ name: d.name, dir, listed: parsed.skills ?? [] });
+    out.push({ name, dir, listed: parsed.skills ?? [] });
   }
   return out;
 }

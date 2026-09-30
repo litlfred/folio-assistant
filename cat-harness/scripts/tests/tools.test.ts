@@ -190,7 +190,7 @@ describe("tools", () => {
     // Four hardcoded corpus paths have been wrong in this repo already; this
     // asserts the check sees the packages a list would have missed.
     const s = knownSkills();
-    expect(s.has("smart-base-tools")).toBe(true); // skills/authoring-who-smart-guidelines
+    expect(s.has("smart-base-tools")).toBe(true); // skills/authoring/authoring-who-smart-guidelines
     expect(s.has("lean-formalization")).toBe(true); // schemas/skills/<name>/
     expect(s.has("kg-export")).toBe(true); // skills/folio-core
   });

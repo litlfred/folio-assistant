@@ -20,11 +20,12 @@
  * machine-readable manifest.
  */
 import { describe, test, expect, beforeAll, afterAll } from "bun:test";
-import { existsSync, readdirSync, readFileSync, renameSync, unlinkSync } from "fs";
+import { existsSync, readFileSync, renameSync, unlinkSync } from "fs";
 import { join } from "path";
 import { spawnSync } from "child_process";
 import { SkillRegistrySchema } from "../../schemas/constraints.ts";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { packageDirsIn } from "../skill-topics.js";
 
 const ROOT = join(import.meta.dir, "..", "..");
 const OUT = join(repoRootFor(ROOT), ".claude", "skills", "registry.json");
@@ -84,9 +85,10 @@ describe("generated skill registry", () => {
 
   test("every package manifest on disk is in the registry", () => {
     const reg = SkillRegistrySchema.parse(JSON.parse(readFileSync(OUT, "utf-8")));
-    const onDisk = readdirSync(join(ROOT, "skills"), { withFileTypes: true })
-      .filter((d) => d.isDirectory())
-      .filter((d) => existsSync(join(ROOT, "skills", d.name, "package-manifest.json")))
+    // The same walk the generator uses, so a package inside a topic directory
+    // (bean 9umr) counts as on disk — a one-level readdir would miss it.
+    const onDisk = packageDirsIn(join(ROOT, "skills"))
+      .filter((d) => existsSync(join(d.dir, "package-manifest.json")))
       .map((d) => d.name);
     expect(onDisk.length).toBeGreaterThan(0);
     expect(reg.packages.map((p) => p.name).sort()).toEqual([...onDisk].sort());

@@ -4225,6 +4225,41 @@ html:has(script[data-fa-folio-mount]) body:has(> .fa-glass-handle) {
   padding-top: 2.25rem;
 }
 
+/* ...AND KEEP IT RESERVED ONCE THE PAGE SCROLLS — issue #1693.
+ *
+ * The rule above, and the theme header's empty middle, clear the handle at
+ * the TOP of a page only. Scrolled, the handle sat over the middle of a body
+ * line (9 of 21 scroll positions on `platform.html` at 1280x900). While the
+ * page is scrolled `placeHandleBand` in `docs-ui.js` shows this strip behind
+ * the handle, across the content column, at the handle's own top and height
+ * and in the page's own background, so text scrolls under a bar rather than
+ * past a pill. Its geometry and colour are set there because both are read
+ * off the page: the handle's height differs by viewport, and a FIXED side bar
+ * must stay uncovered.
+ *
+ * Just under the glass layer (90), so an open glass is unchanged; and
+ * `scroll-padding-top` so an anchor jump or a focus scroll lands its target
+ * below the strip instead of under it. 2.25rem matches the band above. */
+.fa-glass-band {
+  position: fixed;
+  right: 0;
+  z-index: 89;
+  pointer-events: auto;
+  box-shadow: 0 1px 0 rgba(128, 128, 128, 0.3);
+  /* The page's own background: the band is body's child, and a themed page's
+     body paints the scheme's colour. NOT `Canvas`, which follows the OS
+     scheme rather than `data-fa-scheme` (see `.fa-sticky-floating`). */
+  background-color: inherit;
+}
+.fa-glass-band[hidden] { display: none; }
+/* A body that paints no background (the JS marks it): the scheme's page
+   colours, the same pair `head_custom.html` gives `html`. */
+.fa-glass-band[data-fa-band-fallback] { background-color: #ffffff; }
+:root[data-fa-scheme="dark"] .fa-glass-band[data-fa-band-fallback] { background-color: #27262b; }
+html:has(body > .fa-glass-handle) {
+  scroll-padding-top: calc(var(--fa-staging-offset, 0px) + 2.25rem);
+}
+
 /* A pinned sticky sits OVER page content, so it must be opaque — and which
  * opaque colour depends on the scheme.
  *

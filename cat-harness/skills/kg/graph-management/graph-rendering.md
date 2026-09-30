@@ -20,7 +20,7 @@ This skill is the general part. It says what any drawing of a graph owes its
 reader. The per-graph skills say how one generator meets it:
 [`uml-overview`](../kg-core/uml-overview.md) for schemas,
 [`bpmn-authoring`](../../process/workflow/bpmn-authoring.md) for processes, and
-[`content-graph`](../../folio-core/content-graph.md) for a paper's blocks.
+[`content-graph`](../../authoring/authoring-core/content-graph.md) for a paper's blocks.
 
 A drawing is how a person READS a graph. [`graph-detanglement`](graph-detanglement.md)
 is how the graph is RESTRUCTURED, and it needs the drawing: a partition you
@@ -124,7 +124,7 @@ which outranks the Lean status: the order the CI graph used.
 
 **Never populate `uses[]` from the formal graph to make a drawing look
 connected.** The editorial relation is authored; see `AGENTS.md` and
-[`uses-editorial-review`](../../folio-core/uses-editorial-review.md). Rule 4 is how
+[`uses-editorial-review`](../../authoring/authoring-core/uses-editorial-review.md). Rule 4 is how
 the drawing keeps them apart.
 
 ## Related

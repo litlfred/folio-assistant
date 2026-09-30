@@ -620,7 +620,7 @@ upstream authority for DAK translation workflows.
 
 ### What to import vs wrap
 
-Following the principle in `skills/authoring-who-smart-guidelines/smart-base-tools.md`
+Following the principle in `skills/authoring/authoring-who-smart-guidelines/smart-base-tools.md`
 — **load it; never vendor it** — folio-assistant does not copy smart-base's
 translation scripts. Instead:
 

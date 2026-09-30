@@ -397,7 +397,7 @@ workflow): **exit 1**, six sidecars STALE —
     bootstrap/skills — proseMentions
     cat-harness/schemas — size, internal, outbound, cohesion, recordedBoundary, proseMentions
     cat-harness/skills/folio-core — inbound, recordedBoundary, proseMentions
-    cat-harness/skills/folio-paper-adapter — inbound, recordedBoundary
+    cat-harness/skills/authoring/folio-paper-adapter — inbound, recordedBoundary
     cat-harness/skills/hypothesis-generation — proseMentions
     cat-harness/skills/scientific-critical-thinking — proseMentions
 

@@ -6,7 +6,8 @@
  * itself a DAK by carrying {@link DAK_MARKER_FILENAME} at its root, exactly as
  * it declares itself a harness instance by carrying `harness.json`. That
  * much is settled and is modelled here. What is *not* settled is the shape of
- * the nine components inside it: WHO's `DAK` Logical Model is still being
+ * the ten components inside it (nine in WHO's model, plus scheduling logic —
+ * see `DAK_UNFORMALIZED_COMPONENTS`): WHO's `DAK` Logical Model is still being
  * finalised in FHIR upstream, so this module **records the components without
  * inventing their contents**.
  *
@@ -20,7 +21,7 @@
  *
  * ## What this deliberately does NOT model
  *
- * **The element shape of a component.** Each of the nine is declared
+ * **The element shape of a component.** Each of WHO's nine is declared
  * `0..* <Name>Source` in `smart-base`'s `input/fsh/models/DAK.fsh`. The
  * **cardinality is final** — an array, possibly empty — so that much is
  * enforced. The **element** is not, so it is `unknown` and is carried through
@@ -36,7 +37,7 @@
  *
  * ## Where the component vocabulary lives
  *
- * `schemas/block-kinds.ts`, not here: {@link DAK_COMPONENTS} names the nine,
+ * `schemas/block-kinds.ts`, not here: {@link DAK_COMPONENTS} names the ten,
  * {@link DAK_COMPONENT_FIELDS} maps each to its field in WHO's own model, and
  * `scripts/tests/dak-blocks.test.ts` checks those names against a real
  * `DAK.fsh` when a `smart-base` checkout is present — reporting `n/a`, never a
@@ -101,7 +102,7 @@ export type DakComponentEntries = unknown[];
 /**
  * A `dak.config.json`, as much of it as is settled.
  *
- * The nine component fields are reachable by their WHO names through
+ * The component fields are reachable by their WHO names through
  * {@link DAK_COMPONENT_FIELDS}; {@link componentEntries} does that lookup so a
  * caller never hardcodes one.
  */
@@ -114,12 +115,12 @@ export interface DakDeclaration extends KgNodeLabels {
   publicationUrl?: string;
   /** Where CI previews are served. */
   previewUrl?: string;
-  /** The nine components, keyed by their field name in WHO's model. */
+  /** The components, keyed by their field name (WHO's, or prospective for an unformalized one). */
   [component: string]: unknown;
 }
 
 /**
- * The nine component fields, built from {@link DAK_COMPONENT_FIELDS} rather
+ * The component fields, built from {@link DAK_COMPONENT_FIELDS} rather
  * than written out, so a component added to the vocabulary appears here with
  * no edit.
  */

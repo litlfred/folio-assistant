@@ -281,8 +281,9 @@ export const DAK_KIND_TO_FOLIO_TYPE: Record<DakBlockKind, string> = {
  * vocabularies instead of merely parallel to them.
  *
  * Deliberately **partial**. Ten of WHO's logical models name a component; kinds
- * without one — the L3 FHIR artefacts, and `scheduling-logic`, which WHO folds
- * into decision support — get no entry rather than a fabricated IRI. An
+ * without one — the L3 FHIR artefacts, and `scheduling-logic`, which WHO's model
+ * still folds into decision support (the owner counts it as its own component;
+ * see `DAK_UNFORMALIZED_COMPONENTS`) — get no entry rather than a fabricated IRI. An
  * unverified IRI never goes in a published graph.
  */
 export const DAK_KIND_TO_WHO_MODEL: Partial<Record<DakBlockKind, string>> = {

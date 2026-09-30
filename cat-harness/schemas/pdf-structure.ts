@@ -41,6 +41,17 @@ import { z } from "zod";
 export const PDF_STRUCTURE_SCHEMA_ID = "pdf-structure/v1" as const;
 
 /**
+ * Slide decks that `scripts/slides-structure.py` writes in THIS shape — bean
+ * `scfh`, issue #1614. A slide is a determined division exactly as a page is,
+ * so a deck is one section per slide with `page_start == page_end == <slide>`
+ * and `granularity: "slide"`, and every reader of `library/` reads it unchanged.
+ */
+export const SLIDE_MIMETYPES = [
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+  "application/vnd.oasis.opendocument.presentation",
+] as const;
+
+/**
  * `toc_source`, FOUR states and not three (bean `6xaz`). `none` is a DETERMINED
  * "no discoverable table of contents"; `undetermined` is "one was inferred and
  * could not be trusted". `outline-unusable` is `pdf-pages.py`'s: the PDF has an
@@ -97,7 +108,10 @@ export const PdfSourceSchema = z
     bytes: z.number().int().min(0),
     mtime: z.string().nullable(),
     mimetype_sniffed: z.string().nullable(),
-    mimetype_source: z.enum(["magic-bytes", "unrecognised", "unreadable"]),
+    // `zip-package`: `_tech_meta.sniff_effective_mimetype`'s answer for an OOXML
+    // or ODF package, which DECLARES its type inside the zip. Only a deck
+    // reaches this schema with it (bean `scfh`); the PDF rungs never do.
+    mimetype_source: z.enum(["magic-bytes", "zip-package", "unrecognised", "unreadable"]),
     pages: z.number().int().min(0).optional(),
     text_source: z.enum(["embedded", "ocr"]).optional(),
     extractor: z.enum(["pymupdf", "pypdf"]).optional(),
@@ -139,8 +153,11 @@ export const PdfStructureSchema = z
     toc_undetermined_reason: z.string().nullable().optional(),
     sections: z.array(PdfSectionSchema),
     diagnostics: PdfDiagnosticsSchema.optional(),
-    /** Written by `pdf-pages.py`: the entry was ingested one section per page. */
-    granularity: z.literal("page").optional(),
+    /**
+     * `page`: written by `pdf-pages.py`, one section per page. `slide`: written
+     * by `slides-structure.py`, one section per slide (bean `scfh`).
+     */
+    granularity: z.enum(["page", "slide"]).optional(),
     /** What a rung did NOT claim. Required by check-l1-complete when there are no sections. */
     structure_note: z.string().optional(),
   })

@@ -86,7 +86,7 @@ export const BUILTIN_ADAPTERS: BuiltinAdapterDeclaration[] = [
     className: "PaperContentAdapter",
     layer: "sci",
   },
-  { contentType: "document", module: "adapters/document/index.ts", className: "DocumentContentAdapter", layer: "core" },
+  { contentType: "document", module: "../folio-assistant-core/adapters/document/index.ts", className: "DocumentContentAdapter", layer: "core" },
 ];
 
 export interface AdapterResolution {
