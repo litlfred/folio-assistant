@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6lre
 title: 'CI WATCH READS A PARTIAL CHECK SET AS GREEN: 1 of 13 registered, verdict PASS — ask the check SUITES, not only the runs'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-30T16:15:00Z
-updated_at: 2026-09-30T17:29:28Z
+updated_at: 2026-09-30T18:43:38Z
 parent: folio-assistant-1xhc
 ---
 

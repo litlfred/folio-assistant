@@ -44,10 +44,18 @@ import { resolve } from "node:path";
 import {
   exitCodeFor,
   explainSuperseded,
+  verdictForCommit,
   verdictOf,
   type CheckRun,
+  type HeadMergeState,
+  type OwedSummary,
 } from "../src/workflow/check-verdict.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
+// The owed-workflow reconciliation and the merge probe are IMPORTED, never
+// reimplemented — see `verdictForCommit`'s docblock for the two designs that
+// duplicated them before this landed (#1646). `check:head-has-run` owns these.
+import { coverageFor, mergeStateForHead, runsForHead } from "./check-head-has-run.js";
+import { scanTriggers } from "../src/core/workflow-events.js";
 
 const USAGE = "Usage: cat-harness/scripts/watch-ci.ts <sha> [--branch <name>] [--once] [--interval <s>] [--max <n>]";
 
@@ -97,6 +105,49 @@ function commitsAfter(root: string, sha: string, branch: string): string[] {
   }
 }
 
+
+/**
+ * Was the check set COMPLETE? — asked of the existing machinery, not rebuilt.
+ *
+ * The event matters and is derived rather than assumed: a `pull_request`
+ * workflow is not owed on a commit that no open PR heads, so judging a `main`
+ * commit against `pull_request` triggers would report every gate missing.
+ * `mergeStateForHead` answers that in the same call that detects a conflict.
+ *
+ * Returns `undefined` for either half it could not establish, because
+ * `verdictForCommit` turns that into `undetermined` rather than into a pass.
+ */
+async function completeness(
+  root: string,
+  slug: string,
+  sha: string,
+): Promise<{ owed?: OwedSummary; merge?: HeadMergeState }> {
+  let merge: HeadMergeState | undefined;
+  try {
+    merge = mergeStateForHead(root, sha);
+  } catch {
+    merge = undefined;
+  }
+  if (merge === undefined) return {};
+  const event = merge === "not-a-pr-head" ? "push" : "pull_request";
+  try {
+    const head = await runsForHead(slug, sha);
+    const scan = scanTriggers(root, event);
+    const cov = coverageFor(head.state === "has-run" ? head.runs : [], scan, event);
+    return {
+      merge,
+      owed: {
+        missing: cov.required.filter((r) => !r.ran).map((r) => r.name),
+        unreadable: cov.unreadable.length,
+      },
+    };
+  } catch {
+    // The scan or the run query failed. `owed` stays absent, which is
+    // could-not-determine — never a satisfied required set.
+    return { merge };
+  }
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const flag = (name: string): string | undefined => {
@@ -128,7 +179,8 @@ if (import.meta.main) {
   const max = Number(flag("max") ?? 40);
 
   for (let i = 0; i < max; i++) {
-    const v = verdictOf(await fetchRuns(slug, sha));
+    const { owed, merge } = await completeness(root, slug, sha);
+    const v = verdictForCommit(verdictOf(await fetchRuns(slug, sha)), owed, merge);
     const when = new Date().toISOString().slice(11, 19);
     const named = v.names.length > 0 ? `  ${v.names.slice(0, 4).join(", ")}` : "";
     console.log(`${when}  ${sha.slice(0, 11)}  ${v.state.toUpperCase()} — ${v.because}${named}`);
