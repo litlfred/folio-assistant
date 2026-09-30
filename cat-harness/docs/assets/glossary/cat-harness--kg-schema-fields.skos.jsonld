@@ -3921,7 +3921,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declared ACTOR this reviewer was acting as — an id in `.claude/skills/actors/`."
+          "@value": "The declared ACTOR this reviewer was acting as — an id in `cat-harness/scenarios/actors/`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/block-qa.ts#QaReviewer.actor",
@@ -6813,6 +6813,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.own",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.resolveddirectory.within",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ResolvedDirectory.within"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The id of the directory that declared this one FROM WITHIN (bean `cmsl`, owner 2026-09-30): an entry of its kind's declaration file, e.g. `skills/skills.json` naming `voices/`. Absent for an instance-level entry. `check:layout-norms` reads it: nesting declared this way is the sanctioned shape, not a root declaration reaching down."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.within",
       "skos:note": "candidate"
     },
     {
@@ -10442,6 +10461,177 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-structure.basestructure.raw",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BaseStructure.raw"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The parsed variant, for the few readers that need its own fields."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#BaseStructure.raw",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-structure.notebooksectionschema.cell_end",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSectionSchema.cell_end"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Zero-based index of its last cell, inclusive."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.cell_end",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-structure.notebooksectionschema.cell_start",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSectionSchema.cell_start"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Zero-based index of the section's first cell, which is its heading cell."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.cell_start",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-structure.notebooksectionschema.code_cells",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSectionSchema.code_cells"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many of those cells are code. Kept verbatim in the section text, never executed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.code_cells",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-structure.notebooksourceschema.language",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSourceSchema.language"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kernel language the notebook declares, or null when it declares none."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.language",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-structure.notebooksourceschema.mimetype_sniffed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSourceSchema.mimetype_sniffed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The same two fields every rung writes (bean `nso8`), so the L1 gate's `technical-metadata` requirement reads them as it does for a PDF. A notebook has no magic bytes, so its type is decided by CONTENT, and `mimetype_source` says exactly that rather than claiming a sniff."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.mimetype_sniffed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-structure.notebooksourceschema.nbformat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSourceSchema.nbformat"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A notebook is JSON; this is what the file declared (`nbformat`), not sniffed bytes."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.nbformat",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-structure.notebookstructureschema.structure_note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookStructureSchema.structure_note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the rung did NOT claim. Required when `toc_source` is `none`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema.structure_note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-structure.notebookstructureschema.toc_source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookStructureSchema.toc_source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`headings`: sections come from markdown headings. `none`: the notebook has no markdown heading, so it is one section, and `structure_note` says so."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema.toc_source",
       "skos:note": "candidate"
     },
     {
@@ -15879,6 +16069,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/kg-qa.kgqareport.voice_reviews",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgQaReport.voice_reviews"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An agent's or a person's rule-by-rule review of a skill against a voice that judges skills — carried across runs like `pair_attestations`, and written by `voice:review`; see `scripts/skill-voice-review.ts`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgQaReport.voice_reviews",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/kg-qa.kgsubject.id",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -16366,7 +16575,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The actor id from `.claude/skills/actors/`, where one is known."
+          "@value": "The actor id from `cat-harness/scenarios/actors/`, where one is known."
         }
       ],
       "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.actor",
@@ -20382,6 +20591,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/skill-package.capabilitydefinitionschema.setupskill",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CapabilityDefinitionSchema.setupSkill"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The skill that explains how to SET UP this capability — install it, configure it, verify it. Optional."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/skill-package.ts#CapabilityDefinitionSchema.setupSkill",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/skill-package.remotepackagerefschema.sync",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -20417,6 +20645,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/skill-topics.ts#SkillTopicSchema.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/skill-topics.skilltopicsschema.directories",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SkillTopicsSchema.directories"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One node, two lists: the instance directories declared from within."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/skill-topics.ts#SkillTopicsSchema.directories",
       "skos:note": "candidate"
     },
     {
