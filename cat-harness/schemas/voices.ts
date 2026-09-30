@@ -61,6 +61,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { resolveHarnessConfigPath } from "./harness-config";
 import { join, relative, resolve } from "node:path";
 import { z } from "zod";
+import { RepoFullNameSchema } from "./repo-full-name.js";
 
 import { kgNodeLabelShape, type KgNodeLabels } from "./kg-node";
 import { defaultGraphKinds, directoryForGraph } from "./cat-harness.js";
@@ -100,8 +101,8 @@ export type VoiceRuleCategory = (typeof VOICE_RULE_CATEGORIES)[number];
 export const VoiceRuleSourceSchema = z
   .object({
     /**
-     * The DECLARED NAME of the instance holding the corpus, when it is not this
-     * one. Absent means this instance, so every existing citation keeps its
+     * The instance holding the corpus, as its planned `owner/repo` (bean
+     * `6rmv`; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its
      * meaning unchanged.
      *
      * Bean `r1lz` predicted why this is needed, on 2026-09-19, while deciding
@@ -111,14 +112,14 @@ export const VoiceRuleSourceSchema = z
      * breaks all 25 cited rules at once — and provenance was the entire reason
      * those rules were rewritten.
      *
-     * A NAME, never a path. `../who-iris/library/...` would work today and
+     * An identity, never a path. `../who-iris/library/...` would work today and
      * hardcode a checkout layout into content, which is the practice
      * `AGENTS.md` opens by warning against and which this repository paid for
      * twice in one week. Resolution is `folio-assist-core`'s
      * `resolveLibraryRef`, which reports an unknown instance as its own
      * finding and NEVER falls back to local.
      */
-    instance: z.string().min(1).optional(),
+    instance: RepoFullNameSchema.optional(),
     /** `doc_id` under `library/`, e.g. `who-pub-tps-931`. */
     libraryId: z.string().min(1).optional(),
     /** `section_id` within that document, e.g. `page-014` or `sec-180-106-…`. */
@@ -220,8 +221,8 @@ export type VoiceRule = z.infer<typeof VoiceRuleSchema>;
  */
 export const VoiceRefSchema = z
   .object({
-    /** The declared name of the instance holding it. Absent means this one. */
-    instance: z.string().min(1).optional(),
+    /** The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one. */
+    instance: RepoFullNameSchema.optional(),
     voiceId: z.string().regex(/^[a-z0-9-]+$/, "a voice id is lower-case kebab"),
   })
   .strict();
@@ -489,7 +490,7 @@ export const VoiceProfileSchema = z.object({
       z.object({
         title: z.string().min(1),
         /** The instance holding it, when not this one. See `VoiceRuleSourceSchema.instance`. */
-        instance: z.string().min(1).optional(),
+        instance: RepoFullNameSchema.optional(),
         /** Absent for a house standard — see `VoiceRuleSourceSchema.path`. */
         libraryId: z.string().min(1).optional(),
         /** The KG node stating the standard, for a voice with no ingested source. */

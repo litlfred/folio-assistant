@@ -53,7 +53,7 @@ changes. Each of those is a child bean.
   change proposals* from *running with no external service at all*, and records
   that the portability claim is asserted and never exercised. The topology axes
   here name the same distinction; they do not re-decide it.
-- `skills/folio-core/serving-renderings.md` — already settles per-host media
+- `skills/ui/ui-core/serving-renderings.md` — already settles per-host media
   type enforcement and states that GitHub Pages cannot be made to serve
   `application/ld+json`. Its closing section explicitly leaves "how to run a
   server" uncovered. That hole is child bean **DEPLOY: a local HTTP server**,

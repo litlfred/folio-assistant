@@ -7,7 +7,7 @@
  */
 import { afterEach, describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdtempSync, readFileSync, rmSync, symlinkSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync, symlinkSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
@@ -38,8 +38,31 @@ describe("a new folio is QA'd from its first commit", () => {
     initFolio({ targetDir: folio, contentType: "document", slug: "qa-sub", title: "QA Sub", authors: ["A"], link: "sibling", assistantPath: "../platform", skipVcs: true });
     symlinkSync(REPO_ROOT, join(repo, "platform"));
 
-    const sweep = spawnSync("bun", ["run", join(REPO_ROOT, "cat-harness/content/pipeline/qa-sweep.ts"), "handbook/folio"], { cwd: repo, encoding: "utf-8" });
+    // ── `--script-sidecar-root`, and it is not tidiness (bean `ymsu`) ──────
+    //
+    // `qa-sweep.ts` writes one script sidecar per automated criterion, and
+    // their home is resolved from the SWEEP SCRIPT's location, not from the
+    // folio being swept. So this test — sweeping a temp-directory folio —
+    // wrote into `cat-harness/content/pipeline/script-sidecars/` of the real
+    // platform checkout, inside `bun test`, which is gate 1 of `bun run gates`.
+    // Every gate ordered after it then read a repaired copy.
+    //
+    // Measured on origin/main e718627f198: with one sidecar's `script_hash`
+    // hand-staled to `deadbeefdead`, `bun test` on THIS FILE ALONE put the
+    // true value back.
+    //
+    // Pointed at a directory this test owns, so the real write still happens
+    // and lands where the test can assert on it.
+    const sidecars = join(repo, "sidecar-root");
+    const sweep = spawnSync("bun", ["run", join(REPO_ROOT, "cat-harness/content/pipeline/qa-sweep.ts"), "handbook/folio", "--script-sidecar-root", sidecars], { cwd: repo, encoding: "utf-8" });
     expect(sweep.status).toBe(0);
+    // ANTI-VACUITY. Without this, "the platform checkout was not written to"
+    // would also be satisfied by a flag that silently disabled the write, or
+    // by a sweep that found no automated criteria at all — and this test would
+    // pass over exactly the emptiness it is supposed to rule out.
+    const wrote = readdirSync(join(sidecars, "content/pipeline/script-sidecars"));
+    expect(wrote.length).toBeGreaterThan(0);
+    expect(wrote.every((f) => f.endsWith(".script.json"))).toBe(true);
     expect(existsSync(join(folio, "test/results/block-qa/folio/qa-sub/introduction/overview.qa.json"))).toBe(true);
     // Not at the repository root, and not inside the content graph.
     expect(existsSync(join(repo, "test"))).toBe(false);

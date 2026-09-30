@@ -171,7 +171,7 @@ is not re-checked on every patch.
 
 - in TypeScript, `releaseIris(decl)` / `releaseIri(r, path, "agent" | "human")`
   in `bootstrap-tools/schemas/release-iri.ts` — `gen-bootstrap-schemas` mints every `$id` this way;
-- in a README template, the `release` variable ([`liquid-templates`](../../folio-core/liquid-templates.md));
+- in a README template, the `release` variable ([`liquid-templates`](../../ui/ui-core/liquid-templates.md));
 - on the site, `site.data.harness.releases.<instance>` (`version`, `major`,
   `agent`, `human`), written by `sync-docs-harness`.
 

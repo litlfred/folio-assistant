@@ -248,6 +248,9 @@ export const RULES: Rule[] = [
       // through `scripts/beans.ts` — the one reader of the store. No folio
       // content is opened.
       "scripts/check-bean-parent-prose.ts",
+      // HARNESS: it reads the NAMES of files in declared uploads/library
+      // graphs and never their contents, so no folio content is opened.
+      "scripts/check-upload-names.ts",
       // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
       // LEAF so `state-visualizer.ts` can be a call site without importing
       // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one
@@ -435,6 +438,8 @@ export const RULES: Rule[] = [
       "schemas/tool.ts",                     // what a Tool IS — `tools` is a harness graph kind
       "schemas/withheld.ts",                 // what an instance must not publish — read by the harness mount (bean `mkao`)
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
+      "schemas/repo-full-name.ts",           // `owner/name` — a Tool type AND the declaration's repository (bean `6rmv`)
+      "schemas/instance-repositories.ts",    // the derived owner/repo ↔ instance map (bean `6rmv`)
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)

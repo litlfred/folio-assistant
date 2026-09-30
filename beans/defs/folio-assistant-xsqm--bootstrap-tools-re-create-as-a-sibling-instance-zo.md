@@ -50,9 +50,9 @@ Analysis: session scratchpad `separation-process-analysis.md` (94 beans, cone me
 - [x] bootstrap.jsonld written by bootstrap-tools `export-graph.ts`, standard properties (#1538)
 - [x] kg-export aligned to standard properties; retired terms deprecated + isReplacedBy (#1538)
 - [x] gen-bootstrap-graph.ts + cat-harness/schemas/bootstrap-graph.ts removed (owner 2026-09-30); bootstrap:validate builds and parses the graph
-- [ ] one SKOS: ns.jsonld the only term SKOS; glossary reads it; bootstrap--terms.skos.jsonld retired
-- [ ] generated-by notes on bootstrap's other generated files
-- [ ] publish-instance-files moves into bootstrap-tools (bootstrap's site is the tools' job) and is documented
+- [x] one SKOS — owner 2026-09-30 chose option A, ONE IDENTITY: the glossary's bootstrap concepts ARE ns.jsonld's IRIs (term `iri`, read from the declared `vocabulary` asset); no `…ns#glossary/terms/*` minted; the c592 translations stay hosted in cat-harness as language-tagged labels on those concepts; .po `#.` comments refreshed, msgstr untouched
+- [x] generated-by notes: every file bootstrap-tools writes into bootstrap (schemas `$comment`, schema page, ns.jsonld rdfs:comment + prov:wasAttributedTo, SVGs) names bootstrap-tools; one wording in `scripts/generated-by.ts`; `generated-by.test.ts` derives the set from disk and checks authored files do not claim it
+- [x] publish-instance-files: the COPY moved to bootstrap-tools `publish-files.ts` (no remark; Pages renders .md on bootstrap's own site); cat-harness keeps only the .md→.html rendering for its hosted copy. Output byte-identical (46 files)
 - [x] role names authored on the role (owner 2026-09-30, option 1, "model both retired names and alternative names"): `otherNames` (smart-base Generic Persona; skos:altLabel) and `formerNames` {name, retiredOn} (skos:hiddenLabel; old concept dcterms:isReplacedBy the role); one name one role, enforced at read; `kg:roles` README section written by bootstrap-tools; Initiator recorded on Bootstrapping Agent
 - [x] glossary ledger hosted in cat-harness (glossaryHomeFor → cat-harness/glossary/bootstrap/); the swimlane-glossary kind and the glossary-ledger schema moved up with it (owner, second round, A); bootstrap defines 5 graph kinds
 - [x] check:version-bump reads plain `v<semver>` tags for a standalone repository
@@ -60,7 +60,17 @@ Analysis: session scratchpad `separation-process-analysis.md` (94 beans, cone me
 - [x] described (disabled) CI workflow + no npm publish (private) ; which lane runs each tool (bootstrap-tools/AGENTS.md), every command verified from the directory
 - [ ] migration-plan Phase II: left as a record (default B), pointer to kg-separation only
 
+## Owner ruling, 2026-09-30 — seeding carries NO history
+
+"I dont want all the clutter in git history on bootstrap (still retained in
+folio-assistant)". Supersedes the earlier `git filter-repo` default: each new
+repository starts from ONE commit of its tracked files, whose message names the
+folio-assistant commit it was taken from. The history stays here; the pointer
+is how to reach it. Seeding still waits on the owner's go.
+
 ## Phase 4 — the replicable separation process
-- [ ] kg-separation BPMN + skills (done, 433d3c5) + missing gates (analysis §6–7; still open)
+- [x] kg-separation BPMN + skills (done, 433d3c5)
+- [x] gate: served-name collision — publish step fails on a DIFFERENT file at a taken address unless the workflow names it (`--allow-collision bootstrap.json`)
+- [x] gate: standalone rehearsal — `check:bootstrap-standalone`, CI step; first run found two split defects (leak test walked .git; iri-sync asked git at a non-repo parent), both fixed
 
 **Port from #1514 (2026-09-30):** the two pieces unique to the overtaken PR #1514 (bean `81tw`, now scrapped) — the `bootstrap-contract-semver` skill with `scripts/schema-semver.ts` (`bootstrap:semver`), and `scripts/validate-bootstrap.ts` (`bootstrap:validate`, a CI step beside `bootstrap:schemas:check`) — are ported onto this bean's `bootstrap-tools/` under child task `folio-assistant-l9d5`, adapted to the zod-only closure; the validator's graph-document target is not ported because its Zod is still in cat-harness.

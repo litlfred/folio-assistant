@@ -130,7 +130,7 @@
       "prefLabel": "board-diagram-interchange",
       "definition": "A board is a DIAGRAM OF a folio, not a container of one. The OMG split between the semantic model and its layout, why the arrow runs one way, and what a note may never carry.",
       "notation": "board-diagram-interchange",
-      "source": "cat-harness/skills/folio-core/board-diagram-interchange.md",
+      "source": "cat-harness/skills/ui/ui-core/board-diagram-interchange.md",
       "status": "candidate"
     },
     {
@@ -138,7 +138,7 @@
       "prefLabel": "board-windows",
       "definition": "Everything starts as its avatar; opening projects a window onto the board. The two mechanisms that must not be conflated, z-order, and the fixed chrome a content kind fills in.",
       "notation": "board-windows",
-      "source": "cat-harness/skills/folio-core/board-windows.md",
+      "source": "cat-harness/skills/ui/ui-core/board-windows.md",
       "status": "candidate"
     },
     {
@@ -471,7 +471,7 @@
       "prefLabel": "create-sticky-note",
       "definition": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
       "notation": "create-sticky-note",
-      "source": "cat-harness/skills/theming/create-sticky-note.md",
+      "source": "cat-harness/skills/ui/theming/create-sticky-note.md",
       "status": "candidate"
     },
     {
@@ -620,7 +620,7 @@
       "prefLabel": "docs-auto",
       "definition": "Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating it.",
       "notation": "docs-auto",
-      "source": "cat-harness/skills/folio-core/docs-auto.md",
+      "source": "cat-harness/skills/ui/ui-core/docs-auto.md",
       "status": "candidate"
     },
     {
@@ -628,7 +628,7 @@
       "prefLabel": "docs-generation",
       "definition": "Generate and deploy documentation artifacts: schema docs (TypeDoc), formal-layer API docs, dependency graphs, schema manifests, and per-paper HTML/PDF/Markdown outputs.",
       "notation": "docs-generation",
-      "source": "cat-harness/skills/folio-core/docs-generation.md",
+      "source": "cat-harness/skills/ui/ui-core/docs-generation.md",
       "status": "candidate"
     },
     {
@@ -853,14 +853,14 @@
       "prefLabel": "harness-tiles",
       "definition": "A tile is a function of the harness watching a directory, not of nodes. Where the tile set comes from, what a tile opens, and the two gaps it reports rather than hides.",
       "notation": "harness-tiles",
-      "source": "cat-harness/skills/folio-core/harness-tiles.md",
+      "source": "cat-harness/skills/ui/ui-core/harness-tiles.md",
       "status": "candidate"
     },
     {
       "id": "html-rendering-qc",
       "prefLabel": "html-rendering-qc",
       "notation": "html-rendering-qc",
-      "source": "cat-harness/skills/folio-core/html-rendering-qc.md",
+      "source": "cat-harness/skills/ui/ui-core/html-rendering-qc.md",
       "status": "candidate"
     },
     {
@@ -898,7 +898,7 @@
       "prefLabel": "incremental-render",
       "definition": "Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-renders rather than serving a stale page.",
       "notation": "incremental-render",
-      "source": "cat-harness/skills/folio-core/incremental-render.md",
+      "source": "cat-harness/skills/ui/ui-core/incremental-render.md",
       "status": "candidate"
     },
     {
@@ -1018,7 +1018,7 @@
       "prefLabel": "kg-viewer",
       "definition": "Render a published knowledge-graph document so a person can read it — faceted index, node detail, followable edges, and an honest account of what the document is missing. Host-agnostic; the publishing is a separate Tool.",
       "notation": "kg-viewer",
-      "source": "cat-harness/skills/folio-core/kg-viewer.md",
+      "source": "cat-harness/skills/ui/ui-core/kg-viewer.md",
       "status": "candidate"
     },
     {
@@ -1165,7 +1165,7 @@
       "prefLabel": "liquid-templates",
       "definition": "Authoring a Liquid template in this repository — a README template the `subgraph-readmes` Tool renders with liquidjs, or a Jekyll include on the just-the-docs site. Where templates live (inside a declared directory, reached through its id), what a template may read (only what the Knowledge Graph hands it), the leading comment the generator reads as the file's description, includes, whitespace control, escaping, and regenerate-then-commit with the `--check` gate. Read it before adding or changing any `.liquid` file or anything under `docs/_includes/`.",
       "notation": "liquid-templates",
-      "source": "cat-harness/skills/folio-core/liquid-templates.md",
+      "source": "cat-harness/skills/ui/ui-core/liquid-templates.md",
       "status": "candidate"
     },
     {
@@ -1188,7 +1188,7 @@
       "id": "markdown-render-check",
       "prefLabel": "markdown-render-check",
       "notation": "markdown-render-check",
-      "source": "cat-harness/skills/folio-core/markdown-render-check.md",
+      "source": "cat-harness/skills/ui/ui-core/markdown-render-check.md",
       "status": "candidate"
     },
     {
@@ -1525,7 +1525,7 @@
       "prefLabel": "readme-sections",
       "definition": "A folio's README is the author's file; the platform owns only the marked regions it generates. How the sync/audit split works, why the whole-file generator it replaced could not, and the third state both tools must report.",
       "notation": "readme-sections",
-      "source": "cat-harness/skills/folio-core/readme-sections.md",
+      "source": "cat-harness/skills/ui/ui-core/readme-sections.md",
       "status": "candidate"
     },
     {
@@ -1565,14 +1565,14 @@
       "prefLabel": "render-logging",
       "definition": "Log every render to the publish branch — what was published, removed, restored or deliberately retained — to an append-only log that lives beside what it describes. Use when adding or removing anything on `gh-pages`, when asking \"what happened to this preview\", or before writing a workflow step that deletes a published artefact.",
       "notation": "render-logging",
-      "source": "cat-harness/skills/folio-core/render-logging.md",
+      "source": "cat-harness/skills/ui/ui-core/render-logging.md",
       "status": "candidate"
     },
     {
       "id": "render-order",
       "prefLabel": "render-order",
       "notation": "render-order",
-      "source": "cat-harness/skills/folio-core/render-order.md",
+      "source": "cat-harness/skills/ui/ui-core/render-order.md",
       "status": "candidate"
     },
     {
@@ -1698,7 +1698,7 @@
       "id": "serving-renderings",
       "prefLabel": "serving-renderings",
       "notation": "serving-renderings",
-      "source": "cat-harness/skills/folio-core/serving-renderings.md",
+      "source": "cat-harness/skills/ui/ui-core/serving-renderings.md",
       "status": "candidate"
     },
     {
@@ -1745,7 +1745,7 @@
       "prefLabel": "site-presentation-assets",
       "definition": "A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it. Read before adding a colour, an icon or a theme, before hand-editing any generated stylesheet, and before referencing a generated asset from a page.",
       "notation": "site-presentation-assets",
-      "source": "cat-harness/skills/theming/site-presentation-assets.md",
+      "source": "cat-harness/skills/ui/theming/site-presentation-assets.md",
       "status": "candidate"
     },
     {
@@ -1885,7 +1885,7 @@
       "prefLabel": "theme-art-intake",
       "definition": "Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.",
       "notation": "theme-art-intake",
-      "source": "cat-harness/skills/theming/theme-art-intake.md",
+      "source": "cat-harness/skills/ui/theming/theme-art-intake.md",
       "status": "candidate"
     },
     {
@@ -1893,7 +1893,7 @@
       "prefLabel": "theme-artefacts",
       "definition": "The per-surface SPECIALISATION layer — sticky, landing board, docs background, navbar avatar. Only what DIFFERS lives here; the general rule lives in its stage. Read this last, after the stage that owns your question.",
       "notation": "theme-artefacts",
-      "source": "cat-harness/skills/theming/theme-artefacts.md",
+      "source": "cat-harness/skills/ui/theming/theme-artefacts.md",
       "status": "candidate"
     },
     {
@@ -1901,7 +1901,7 @@
       "prefLabel": "theme-contrast",
       "definition": "Why every scrim is measured over PURE BLACK rather than over the art actually in use, what the AAA floor is, and why the high-contrast pair declares no backdrop at all. The CONSUMER stage that says what the ink must survive.",
       "notation": "theme-contrast",
-      "source": "cat-harness/skills/theming/theme-contrast.md",
+      "source": "cat-harness/skills/ui/theming/theme-contrast.md",
       "status": "candidate"
     },
     {
@@ -1909,7 +1909,7 @@
       "prefLabel": "theme-declaration",
       "definition": "What a theme IS as data — the palette, the three required layouts, and the per-image regions (`textRegion`, `avatarRegion`). The PRODUCER stage: this is where a number is written down, and the rule is that geometry over art is declared rather than derived, because no amount of arithmetic on an aspect ratio can see where a picture is quiet.",
       "notation": "theme-declaration",
-      "source": "cat-harness/skills/theming/theme-declaration.md",
+      "source": "cat-harness/skills/ui/theming/theme-declaration.md",
       "status": "candidate"
     },
     {
@@ -1917,7 +1917,7 @@
       "prefLabel": "theme-generation",
       "definition": "Turning a declared theme into CSS — `bun run themes:css` — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art. Four rounds of \"still not image\" had that one cause.",
       "notation": "theme-generation",
-      "source": "cat-harness/skills/theming/theme-generation.md",
+      "source": "cat-harness/skills/ui/theming/theme-generation.md",
       "status": "candidate"
     },
     {
@@ -1925,7 +1925,7 @@
       "prefLabel": "theme-ui-review",
       "definition": "Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be. At ingestion only, by owner ruling; called from ingest-theme. Measures rather than asserts, and raises findings rather than fixing them.",
       "notation": "theme-ui-review",
-      "source": "cat-harness/skills/folio-core/theme-ui-review.md",
+      "source": "cat-harness/skills/ui/ui-core/theme-ui-review.md",
       "status": "candidate"
     },
     {
@@ -1933,7 +1933,7 @@
       "prefLabel": "theming",
       "definition": "The map of this subgraph: theming is split on PIPELINE STAGE first — intake, declaration, generation, contrast — with producer/consumer as the direction each stage faces, and per-artefact specialisation last. Read this to find which stage owns the fact you need; read the stage for the fact.",
       "notation": "theming",
-      "source": "cat-harness/skills/theming/theming.md",
+      "source": "cat-harness/skills/ui/theming/theming.md",
       "status": "candidate"
     },
     {
@@ -1981,7 +1981,7 @@
       "prefLabel": "ui-accessibility",
       "definition": "Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit. How to build to that, how to check it, and why an automated pass is not the standard.",
       "notation": "ui-accessibility",
-      "source": "cat-harness/skills/folio-core/ui-accessibility.md",
+      "source": "cat-harness/skills/ui/ui-core/ui-accessibility.md",
       "status": "candidate"
     },
     {
@@ -2014,6 +2014,14 @@
       "definition": "Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule. Read before adding a check to a schema, a validator, a gate or an incompatibility table, and whenever you are about to write down that something \"is not supported\".",
       "notation": "unverified-constraints",
       "source": "cat-harness/skills/folio-core/unverified-constraints.md",
+      "status": "candidate"
+    },
+    {
+      "id": "upload-naming",
+      "prefLabel": "upload-naming",
+      "definition": "What an ingested file may be CALLED. Read before adding anything to an `uploads` or `library` graph, before writing a generator that links to one, and before \"fixing\" a broken link in a generated README. Covers which characters break what, why the name is normalised rather than the link escaped, how a sidecar stays paired with its source, and the one case the fixer refuses.",
+      "notation": "upload-naming",
+      "source": "cat-harness/skills/library/library-core/upload-naming.md",
       "status": "candidate"
     },
     {
@@ -2124,7 +2132,7 @@
       "prefLabel": "wireframe-design-review",
       "definition": "Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both viewports, a blind per-criterion review, adjudication where reviewers disagree, and a recorded choice. Also how an EXISTING visualiser is wireframed as-is, so that every declared visualiser has a wireframe with a QA sidecar. Process: processes/wireframe-design-review.bpmn.",
       "notation": "wireframe-design-review",
-      "source": "cat-harness/skills/folio-core/wireframe-design-review.md",
+      "source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
       "status": "candidate"
     },
     {

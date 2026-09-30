@@ -951,6 +951,14 @@ jobs:
       - name: bootstrap vocabulary is current
         run: bun run bootstrap:vocabulary:check
 
+      # The split, rehearsed (Phase 4, bean `xsqm`): bootstrap and
+      # bootstrap-tools copied alone into an empty directory as sibling clones,
+      # and bootstrap-tools' checks and tests run there. The closure gate
+      # proves no IMPORT reaches up; this proves no script or test READS
+      # anything only the monorepo has. Its first run found two such reads.
+      - name: bootstrap-tools passes standing alone beside bootstrap
+        run: bun run check:bootstrap-standalone
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and
@@ -1361,6 +1369,12 @@ jobs:
           # narrow by measurement: 338 bean-id mentions in bodies, 1 in a
           # placement phrase.
           bun run check:bean-parent-prose:check
+          # Every file in an `uploads` or `library` graph carries a name that is
+          # safe to link to. `uploads/PIIS2589750021000388 (2).pdf` broke the
+          # generated README's Markdown link — a target ends at the first `)` —
+          # which reddened main through `every link in every generated README
+          # resolves`. Owner ruling 2026-09-30: normalise the NAME, not the link.
+          bun run check:upload-names:check
           # Bean `e8m3`, on the owner's VIEW ruling. `beans/defs/archive/` held 631
           # bean-defs while `beans/beans.json` declared it nowhere — the `dh4f`
           # family INVERTED, and invisible to check:declared-dirs and

@@ -257,7 +257,7 @@ a file is at rather than the path a consumer writes.**
 
 - `--preamble ../latex/preamble.tex` appears in `lean_ci.yml`, `publish.yml`,
   `blueprint.yml` and `lean-build.yml`, and in
-  `skills/folio-core/docs-generation.md`.
+  `skills/ui/ui-core/docs-generation.md`.
 - `folio-assistant/computations/wall-violations.witness.json` is the default
   output path in `content/pipeline/wall-violations-sweep.ts`.
 

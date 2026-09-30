@@ -10,8 +10,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
-import { CLASS_GLOSSES, termLayer } from "./vocabulary.ts";
-import { BASE_GRAPH_KINDS } from "./graph-kind-registry.ts";
+import { CLASS_GLOSSES } from "./vocabulary.ts";
+import { BASE_GRAPH_KINDS, graphKindLayer } from "./graph-kind-registry.ts";
 import { BOOTSTRAP_GRAPH_KINDS, BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../../bootstrap-tools/schemas/graph.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
@@ -56,12 +56,9 @@ describe("the harness reads bootstrap's terms and kinds as bootstrap states them
       const def = BASE_GRAPH_KINDS[k as keyof typeof BASE_GRAPH_KINDS];
       expect(def, k).toBeDefined();
       expect(def.summary).toBe(BOOTSTRAP_GRAPH_KINDS[k as keyof typeof BOOTSTRAP_GRAPH_KINDS]);
-      // The per-kind class (`SkillGraph`…) is the HARNESS's, not a term
-      // bootstrap defines (owner, 2026-09-30); the kind itself stays
-      // bootstrap's individual, `bootstrap:graphKind/<kind>`. Bean `3r47`
-      // drops the classes altogether.
-      const local = def.type.split("#").pop()!;
-      expect(termLayer(local), `${k} → ${local}`).toBe("harness");
+      // There is no per-kind class (owner, 2026-09-30, bean `3r47`): the kind
+      // IS bootstrap's individual, `bootstrap:graphKind/<kind>`.
+      expect(graphKindLayer(k, def), k).toBe("bootstrap");
     }
   });
 });

@@ -404,7 +404,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 | Создание контента (paper) | навыки authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
 | Создание контента (document) | навыки folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
 | Жизненный цикл контента | навыки content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
-| Импорт документов | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
+| Импорт документов | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Диспетчеризация и координация | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Типы контента и адаптеры | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
 | Разработка диаграмм BPMN | навык `bpmn-authoring` | [`skills/folio-core/`](../../skills/folio-core/) |

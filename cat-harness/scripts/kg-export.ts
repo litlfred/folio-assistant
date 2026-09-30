@@ -47,23 +47,22 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-xsd11-datatypes
  */
-import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph.ts";
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { basename, join, dirname, relative, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
-import { NS_PREFIXES, namespaceForLayer, propertyIri, termIri } from "../schemas/namespaces.js";
+import { NS_PREFIXES, propertyIri, termIri } from "../schemas/namespaces.js";
 import { DCTERMS_NS } from "../schemas/jsonld.js";
-import { termLayer } from "../schemas/vocabulary.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
-import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   artefactStub,
   defaultGraphKinds,
+  graphKindIri,
   isPublishedDirectory,
   isPublishedGraphKind,
   isPublishedSchemaModule,
@@ -181,15 +180,9 @@ function findBpmnDirs(root: string = ROOT): string[] {
 // ── JSON-LD context ─────────────────────────────────────────────
 
 /** The namespace a declared graph kind's nodes belong in. */
-function graphKindNamespace(kindName: string): string {
-  // A kind bootstrap DEFINES is bootstrap's individual, whatever layer owns the
-  // class a harness types its directories with: since 2026-09-30 (bean `xsqm`)
-  // `SkillGraph` and the rest are the harness's classes, but `skills` is still
-  // bootstrap's kind, named `bootstrap:graphKind/skills`.
-  if (Object.hasOwn(BOOTSTRAP_GRAPH_KINDS, kindName)) return namespaceForLayer("bootstrap");
-  const def = BASE_GRAPH_KINDS[kindName];
-  const local = def?.type.split("#")[1];
-  return local ? namespaceForLayer(termLayer(local)) : namespaceForLayer("harness");
+/** A kind's individual, `<layer ns>graphKind/<name>` — the registry's one answer. */
+function graphKindId(kindName: string): string {
+  return graphKindIri(kindName, defaultGraphKinds.get(kindName));
 }
 
 /** A type IRI with whichever folio namespace it carries removed. */
@@ -342,7 +335,6 @@ export function buildContext(): Record<string, unknown> {
     // "same underlying thing, different presentation" and merges nothing.
     alternateOf: { "@id": `${PROV}alternateOf`, ...link },
     canonicalDocument: { "@id": termIri("canonicalDocument"), ...link },
-    typeIri: { "@id": termIri("typeIri"), "@type": "@id" },
 
     // ── The standards a graph is written in, and what validates it ──────
     //
@@ -2056,14 +2048,13 @@ function collectGraphKinds(root: string = ROOT): Node[] {
   return emitted.map((name) => {
     const def = defaultGraphKinds.get(name)!;
     return {
-      // The instance sits in the SAME namespace as the class it instantiates,
-      // which is not always the harness's: `cat-harness` and `schemas` are
-      // bootstrap's kinds, `voices` and `library` are core's. Derived from the
-      // kind's own `type` rather than chosen here, so the two cannot drift.
-      "@id": `${graphKindNamespace(name)}graphKind/${name}`,
+      // The individual IS the kind — there is no class per kind (owner,
+      // 2026-09-30, bean `3r47`). Its namespace is its layer's: `skills` is
+      // bootstrap's, `voices` core's. `graphKindIri` is the one answer, so a
+      // directory's `holdsGraph` and this node cannot disagree.
+      "@id": graphKindId(name),
       "@type": termIri("GraphKind"),
       name,
-      typeIri: def.type,
       renderable: def.renderable,
       summary: def.summary,
     };
@@ -2146,7 +2137,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
         "@type": termIri("Subgraph"),
         name: x.id,
         path: x.path,
-        holdsGraph: kinds.map((k) => `${graphKindNamespace(k)}graphKind/${k}`),
+        holdsGraph: kinds.map(graphKindId),
         // `graphKinds: kinds` was here. REMOVED as denormalised: `holdsGraph`
         // lands on a GraphKind node whose `name` is the kind, and the export's
         // own test already asserts every one of those links resolves.
@@ -2784,6 +2775,36 @@ if (import.meta.main) {
   // document the root's own graph LINKS TO, and a link that names a document
   // nothing publishes is a 404 with a `@id` in front of it.
   const instanceRoot = arg("--instance");
+  // ── `--qa-root <dir>` — where the COMMITTED QA sidecar goes (bean `ymsu`) ──
+  //
+  // This script writes two things: the JSON-LD document, whose destination
+  // `--out` has always governed, and a QA sidecar under
+  // `<root>/test/results/`, whose destination nothing did. So a caller that
+  // only wants the computation — and both callers below are exactly that —
+  // pointed `--out` at a temp directory and still wrote a tracked file into
+  // the tree it was about to judge.
+  //
+  // Measured on `origin/main` `e718627f198`, one gate at a time, with
+  // `producer.script_hash` hand-staled to `deadbeefdead`:
+  //
+  //   check:version-bump                  exit 0, hash REPAIRED to 0456470f68c8
+  //   check:published-instance-exports    exit 0, hash REPAIRED to 0456470f68c8
+  //
+  // A gate that repairs its own subject cannot fail on it, and it takes the
+  // evidence with it. Worse on that same tree, `kg-export.bootstrap.qa-results
+  // .json` was ALREADY stale at `b539167517cb` — so `main` was carrying a wrong
+  // recorded hash that no verdict reported, only the runner's mutation guard.
+  //
+  // The flag is explicit rather than an environment variable, and a directory
+  // rather than a boolean, because that is the pattern this repository already
+  // has: `content/pipeline/profile-conformance-axis.test.ts` builds its root
+  // with `mkdtempSync` and passes it in. A second mechanism for "compute
+  // somewhere else" would be a second answer to one question.
+  //
+  // It defaults to `ROOT`, so `bun run kg:export` and the deploy are unchanged:
+  // the producer still writes the committed sidecar, and only a caller that
+  // says otherwise gets a different destination.
+  const qaRoot = arg("--qa-root") ?? ROOT;
   const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
   // Named after the repository, per the stub convention — `<stub>.jsonld`,
   // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension
@@ -2866,7 +2887,7 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   // own stub.
   const hostStub = artefactStub(readDeclaration(ROOT)!);
   const qaStem = stub === hostStub ? "kg-export" : `kg-export.${stub}`;
-  const resultPath = writeQaResult(ROOT, qaStem, buildQaResult({
+  const resultPath = writeQaResult(qaRoot, qaStem, buildQaResult({
     script: "scripts/kg-export.ts",
     scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
     // `docPath`, not `${stub}.jsonld`: a foreign instance's document sits at
@@ -2897,7 +2918,10 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
       },
     },
   }));
-  console.log(`QA result → ${relative(ROOT, resultPath)}`);
+  // Relative to the root it was WRITTEN under, not to `ROOT`. With `--qa-root`
+  // pointing elsewhere the latter prints a pile of `../`, and a reader chasing
+  // a sidecar has to resolve it by hand to find out it is in a temp directory.
+  console.log(`QA result → ${relative(qaRoot, resultPath)}`);
 
   const collisions = keywordCollisions(data["@graph"]);
   if (collisions.length > 0) {

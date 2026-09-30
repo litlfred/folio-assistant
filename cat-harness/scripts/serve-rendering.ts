@@ -2,7 +2,7 @@
  * Serve an instance's renderings over local HTTP, with their DECLARED media
  * types.
  *
- * `skills/folio-core/serving-renderings.md` settles the contract — four
+ * `skills/ui/ui-core/serving-renderings.md` settles the contract — four
  * endpoints under the instance's stub, the media type each declares, and the
  * three enforcement states per host — and closes by saying, verbatim:
  *
