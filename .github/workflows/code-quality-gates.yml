@@ -1475,6 +1475,13 @@ jobs:
           # about whether an instance wants a mark at all, not a regression.
           # Same line `check:theme-art` drew above, for the same reason.
           bun run check:navbar-consistency:check
+          # Every instance declaring a `themes` graph: does it load, and does
+          # each theme validate? The gate that TRULY covers the `themes` kind —
+          # three others declared `@covers themes` while resolving no themes
+          # directory (bean `z6xd`), so the kind read audited over ground
+          # nothing reached. Theme KINDS are reported and never graded: which
+          # theme may style who-iris's card is the owner's call (#1584).
+          bun run check:instance-themes:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.

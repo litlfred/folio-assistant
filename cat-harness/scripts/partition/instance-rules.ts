@@ -164,6 +164,7 @@ export const RULES: Rule[] = [
     triaged: true,
     exact: [
       "scripts/check-ci-health.ts",          // workflow state on the default branch
+      "scripts/watch-ci.ts",                 // one commit's check runs → a three-state verdict
       "scripts/check-workflow-policy.ts",    // BPMN relaxation legality
       "scripts/bpmn-render.ts",              // BPMN → SVG
       "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
@@ -237,6 +238,12 @@ export const RULES: Rule[] = [
       // content — the declarations it reads are the harness's, and the glyph
       // registries it compares are the harness's own furniture.
       "scripts/check-navbar-consistency.ts",
+      // HARNESS for the same reason: it asks the runtime's own question
+      // through `schemas/theme-by-ref.ts` over this repository's declared
+      // instances. The THEMES it loads are an instance's subject matter,
+      // but this script reads no folio content — it validates a graph
+      // against a schema the harness owns.
+      "scripts/check-instance-themes.ts",
       // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
       // LEAF so `state-visualizer.ts` can be a call site without importing
       // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one
@@ -1597,7 +1604,17 @@ export const RULES: Rule[] = [
     // declaration in THIS repo describes — that is the whole point of the plan.
     // `simulators/` was here until they moved to the folio that owns them: a
     // simulator is subject matter, so no platform package is its target.
-    prefixes: ["adapters/paper/", "skills/authoring-math/", "skills/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
+    //
+    // `adapters/paper/` was here until 2026-09-30, and its removal is the rule
+    // SUCCEEDING rather than being withdrawn. It named `PaperContentAdapter`
+    // as sci-layer code, and bean `y5si` moved the directory to
+    // `folio-assistant-sci/` on that adjudication plus the matching
+    // `layer: "sci"` in `src/builtin-adapters.ts`. This scan is rooted at
+    // `cat-harness/`, so the prefix now matches nothing — and a rule that
+    // fires on nothing while reading as a live adjudication is worse than no
+    // rule, because the next reader takes it as evidence the file is still
+    // here. The reasoning is kept; the dead prefix is not.
+    prefixes: ["skills/authoring-math/", "skills/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
     exact: ["schemas/formalization-types.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
   },
   {
