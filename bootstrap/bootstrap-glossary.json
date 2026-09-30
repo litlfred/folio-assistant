@@ -153,7 +153,7 @@
       "source": "bootstrap/processes/log-message.bpmn"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#lane/Actor",
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor",
       "@type": "skos:Concept",
       "prefLabel": "Actor",
       "performerVaries": true,
@@ -166,7 +166,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#glossary-usage/Process_LogMessage/Lane_Actor",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#lane/Actor",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor",
       "inProcess": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "label": "Actor",
       "scopeNote": "Whichever process called this sub-process, composing the five required fields and nothing more. GW_Complete then refuses an incomplete message rather than logging it anyway, because a partial entry that reads as a whole one is worse than no entry at all.",
