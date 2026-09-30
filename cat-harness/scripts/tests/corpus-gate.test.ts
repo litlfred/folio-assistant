@@ -211,6 +211,8 @@ describe("it does not fail open", () => {
       join(platform, "processes/editing-hci-validation.bpmn"),
       await Bun.file(join(INSTANCE_ROOT, "processes/editing-hci-validation.bpmn")).text(),
     );
+    // A package holds a skill: policies are read from discovered packages (bean 9umr).
+    writeFileSync(join(platform, "skills/pkg/a-skill.md"), "# A skill\n");
     writeFileSync(join(platform, "skills/pkg/workflow-policy.json"), "{ not json");
 
     // Treating a broken policy as "no relaxations" would refuse work a package
