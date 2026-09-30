@@ -3,12 +3,13 @@
 
 The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion Process. Their published `$id`s do not change when a file moves.
 
-Part of [Bootstrap](../README.md), declared as `schemas`, holding `schemas`.
+Part of [Bootstrap](../README.md) 0.1.0, declared as `schemas`, holding `schemas`.
 
 | file | what it is | used by |
 |---|---|---|
 | [`discussion.input.schema.json`](discussion.input.schema.json) | Discussion Input |  |
 | [`discussion.output.schema.json`](discussion.output.schema.json) | Discussion Output |  |
+| [`glossary-ledger.schema.json`](glossary-ledger.schema.json) | Glossary Ledger |  |
 | [`graph.schema.json`](graph.schema.json) | Knowledge Graph declaration |  |
 | [`model-registry.schema.json`](model-registry.schema.json) | Model Registry |  |
 | [`requirement.schema.json`](requirement.schema.json) | Requirement |  |
@@ -44,6 +45,10 @@ One unit of recorded knowledge, held in one file or as one identifiable part of 
 
 A name for a class of Nodes, together with its Node Schema: a JSON Schema that every Node of that kind satisfies. [src](graph.schema.json#/$defs/NodeKind)
 
+#### Sub Kind
+
+A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node of it is also a Node of that other kind. [src](graph.schema.json#/$defs/SubKind)
+
 #### Node Instance
 
 A Node that states its Node Kind and satisfies that kind's Node Schema. [src](graph.schema.json#/$defs/NodeInstance)
@@ -63,6 +68,10 @@ A named subset of Node Instances: a Declaration's directory entry, with its id, 
 #### Asset
 
 A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/Asset)
+
+#### Extension
+
+A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning. [src](graph.schema.json#/$defs/Extension)
 
 #### Knowledge Graph
 
@@ -198,28 +207,30 @@ Rules the drawing cannot show:
 
 [src](graph.schema.json) · describes `<name>.json`
 
-A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph. This schema is the shape of that declaration, and its `$defs` define every term bootstrap uses.
+A Declaration. Any field not listed here is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.
 
 ```text
 +--------------------------------------+
 | Knowledge Graph declaration          |
 +--------------------------------------+
 | * name         [1]     string        |
+|   version      [0..1]  string        |
+|   iriBase      [0..1]  string        |
 |   title        [0..1]  string        |
 |   description  [0..1]  string        |
 |   directories  [0..*]  Subgraph list |
 |   assets       [0..*]  Asset list    |
 +--------------------------------------+
   |
-  +-- directories (each item) --> +---------------------------------------+
-  |                               | Subgraph                              |
-  |                               +---------------------------------------+
-  |                               | * id           [1]     string         |
-  |                               | * path         [1]     string         |
-  |                               | * graphKinds   [1..*]  list of string |
-  |                               |   title        [0..1]  string         |
-  |                               |   description  [0..1]  string         |
-  |                               +---------------------------------------+
+  +-- directories (each item) --> +---------------------------------------------------------------------------------------------------------------------------------------+
+  |                               | Subgraph                                                                                                                              |
+  |                               +---------------------------------------------------------------------------------------------------------------------------------------+
+  |                               | * id           [1]     string                                                                                                         |
+  |                               | * path         [1]     string                                                                                                         |
+  |                               | * graphKinds   [1..*]  list of = "skills" | = "schemas" | = "scenarios" | = "processes" | = "models" | = "swimlane-glossary" | string |
+  |                               |   title        [0..1]  string                                                                                                         |
+  |                               |   description  [0..1]  string                                                                                                         |
+  |                               +---------------------------------------------------------------------------------------------------------------------------------------+
   |
   +-- assets (each item) --> +---------------------+
                              | Asset               |
@@ -237,12 +248,12 @@ A semi-static description of one or more datasets or information repositories as
 Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.
 
 ```text
-+------------------------------------------------+
-| Model Registry                                 |
-+------------------------------------------------+
-| * $schema  [1]     = "folio-model-registry/v1" |
-| * models   [0..*]  Model list                  |
-+------------------------------------------------+
++---------------------------------------------+
+| Model Registry                              |
++---------------------------------------------+
+| * $schema  [1]     = "model-registry/1.0.0" |
+| * models   [0..*]  Model list               |
++---------------------------------------------+
   |
   +-- models (each item) --> +----------------------------------------------------------------------------------+
                              | Model                                                                            |
@@ -255,6 +266,30 @@ Which languages a model is good at, and whether a person checked. Only `human-va
                              |   validatedOn         [0..1]  string                                             |
                              |   note                [0..1]  string                                             |
                              +----------------------------------------------------------------------------------+
+```
+
+### Glossary Ledger
+
+[src](glossary-ledger.schema.json)
+
+Every term a Knowledge Graph's Processes have ever named, with the date each was first seen and the date it stopped being used. The glossary itself is regenerated each time; this is the one fact that cannot be, so a retired term is never silently reused.
+
+```text
++--------------------------------------------+
+| Glossary Ledger                            |
++--------------------------------------------+
+| * $schema   [1]  = "glossary-ledger/1.0.0" |
+| * instance  [1]  string                    |
+| * concepts  [1]  map of key to Concept     |
++--------------------------------------------+
+  |
+  +-- concepts (each item) --> +---------------------------------+
+                               | Concept                         |
+                               +---------------------------------+
+                               | * prefLabel  [1]  string        |
+                               | * firstSeen  [1]  string        |
+                               | * retiredOn  [1]  string | null |
+                               +---------------------------------+
 ```
 
 ### Requirement
