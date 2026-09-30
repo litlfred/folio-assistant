@@ -141,6 +141,22 @@ describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () =>
     expect(pairs).toEqual([{ check: "check:prov-qaqc", writer: "prov:qaqc" }]);
   });
 
+  test("every `check:X` that is some script's command plus ` --check` is decided — paired or recorded", () => {
+    // The measurement that found `check:glossary` (main red at 7bdda74) after
+    // uju6 had listed four. Composing the pair from the COMMAND, not the name,
+    // is how a fifth and sixth were found; this keeps a seventh from hiding.
+    const byCmd = new Map(Object.entries(SCRIPTS).map(([k, v]) => [String(v).trim(), k]));
+    const gates = loadGates(REPO, { all: false });
+    for (const g of gates) {
+      const c = scriptOf(g.command);
+      if (c === undefined || !c.startsWith("check:") || c.endsWith(":check")) continue;
+      const cmd = String(SCRIPTS[c] ?? "").trim();
+      if (!cmd.endsWith(" --check")) continue;
+      if (!byCmd.has(cmd.slice(0, -" --check".length).trim())) continue;
+      expect(WRITER_OVERRIDES[c] !== undefined || NO_WRITER[c] !== undefined, `${c} is undecided`).toBe(true);
+    }
+  });
+
   test("the recorded non-writers are real scripts, and none is also paired", () => {
     for (const check of Object.keys(NO_WRITER)) {
       expect(SCRIPTS[check]).toBeDefined();
