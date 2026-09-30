@@ -14,7 +14,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`content-lifecycle/`](content-lifecycle/) | 11 files | |
 | [`conventions/`](conventions/) | 2 files | |
 | [`crdm/`](crdm/) | 7 files | |
-| [`folio-core/`](folio-core/) | 90 files | |
+| [`folio-core/`](folio-core/) | 91 files | |
 | [`folio-document-adapter/`](folio-document-adapter/) | 6 files | |
 | [`folio-paper-adapter/`](folio-paper-adapter/) | 66 files | |
 | [`framework/`](framework/) | 1 file | |

@@ -5,7 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T22:34:51Z
-updated_at: 2026-09-30T22:34:57Z
+updated_at: 2026-09-30T22:53:46Z
+parent: folio-assistant-q4jm
 ---
 
 Owner request (issue #1710). Author skills/folio-core/before-after-preview.md, point rendered-verification/visual-diff/staging-review at it, reference it from the review BPMN. Worked example: Folio tab overlap #1693 / PR #1709.
