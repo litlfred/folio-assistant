@@ -153,13 +153,26 @@ basis stated in `scripts/lsi.ts`; the method gives no corpus-size rule. It
 reports and does not gate (exit 0), like `check:methodology-evidence`;
 `--strict` exits 1 for a caller that has decided; no CI step runs it yet.
 
-### The same verdict in the audited record — `kg:audit`'s `lsi-index-fresh`
+### The same verdict in the audited record — `kg:audit`'s `tool-downstream-fresh`
 
-`kg:audit` carries the criterion `lsi-index-fresh` (graph level, `minor`), for
-the prose graphs the audited instance OWNS. It uses the same verdict function
-as `lsi:audit`, but its finding text carries **no counts**, so the committed
-kg-qa sidecar moves only when a verdict flips — an edit that keeps an index
-fresh, or keeps it missing, does not make `kg:audit:check` stale.
+LSI is the first member of the **downstream-tool family** (bean `fq5u`). The
+`lsi-index` Tool node declares `downstream`, and every `bun run lsi index`
+writes a `folio-tool-run/v1` record — outcome and input fingerprint, on
+success AND on failure — under `test/results/tool-runs/lsi-index/`. The
+verdict reads three states:
+
+| state | meaning | green? |
+|---|---|---|
+| fresh | a successful run's recorded fingerprint matches the graph now | yes |
+| stale | the graph changed since the recorded run | no |
+| not-run / failed | no run record, or the last run failed | **never** |
+
+A sidecar on disk with no run record is `not-run`: a file is not evidence the
+run that should keep it current succeeded. `kg:audit` carries this as
+`tool-downstream-fresh` on the `lsi-index` Tool (`minor`), one finding per
+graph, using the same verdict function as `lsi:audit`. It generalises the
+graph-level `lsi-index-fresh` it replaced. Its finding text carries **no
+counts**, so the committed kg-qa sidecar moves only when a verdict flips.
 
 Two chains keep the committed indexes fresh, so the criterion stays quiet in
 ordinary work:
@@ -169,7 +182,7 @@ ordinary work:
 - **an ingest** — `--promote` re-indexes the library (§"On ingestion").
 
 A graph nobody has indexed yet (today: `cat-harness/docs`) is a standing
-`minor` finding. That is the point of recording it: "needs one and has none"
+`minor` finding on the `lsi-index` Tool. That is the point of recording it: "needs one and has none"
 is now a fact in the audited record instead of a line in a report.
 
 ## Epic filing — the qou hierarchy, proposed by evidence

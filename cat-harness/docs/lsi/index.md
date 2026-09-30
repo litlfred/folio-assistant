@@ -33,7 +33,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 A graph needs one at 100 units and 20,000 words — a house threshold, with its
 basis in `scripts/lsi.ts`. Below it a graph is **not judged**, which is not
-the same as fine. The same verdict is `kg:audit`'s `lsi-index-fresh`.
+the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for the `lsi-index` Tool.
 
 | graph | verdict | detail |
 |---|---|---|
@@ -109,7 +109,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.96 | bean, instance, session, graph, kind, branch, page, directory | *(none)* |
+| 1 | 46.97 | bean, instance, session, graph, kind, branch, page, directory | *(none)* |
 | 2 | 27.75 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
 | 3 | 22.33 | proof, watcher, lean, slot, blocks, witness, project, chapter | harness, node, instance, bean, page, directory, actor, bias |
 | 4 | 19.54 | dpi, color, grayscale, lean, pdf, matplotlib, images, raster | session, branch, queue, prs, commits, coordination, beans, sibling |
