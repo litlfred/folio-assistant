@@ -15,6 +15,7 @@ import { readdirSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
 import { isSkillMd } from "./known-skills.js";
+import { packageDirsIn } from "./skill-topics.js";
 import { resolveSkillDirs } from "../schemas/harness-config.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
@@ -153,10 +154,9 @@ export function discoverLocalPackages(root: string): Record<string, string> {
     // the one this fixes, and inventing a disambiguator for it now would be a
     // rule with no subject.
     if (holdsSkill(kgDir)) held.push(kgDir);
-    for (const e of readdirSync(kgDir, { withFileTypes: true })) {
-      if (!e.isDirectory()) continue;
-      const dir = join(kgDir, e.name);
-      if (holdsSkill(dir)) out[e.name] = dir;
+    // One level, or two inside a topic `skills.json` declares (bean `9umr`).
+    for (const p of packageDirsIn(kgDir)) {
+      if (holdsSkill(p.dir)) out[p.name] = p.dir;
     }
   }
   Object.assign(out, nameDirectlyHeld(held));
