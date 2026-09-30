@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T10:40:21.323Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0eff7037317281e1ad1bfc9d79feb60d949bc8e2",
-  "sourceCommitSha": "0eff7037317281e1ad1bfc9d79feb60d949bc8e2",
-  "sourceCommitAt": "2026-09-30T10:38:08Z",
+  "generatedAt": "2026-09-30T11:02:18.503Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9e6f788c90c2d16d6d5d815e22dd28b012f3db82",
+  "sourceCommitSha": "9e6f788c90c2d16d6d5d815e22dd28b012f3db82",
+  "sourceCommitAt": "2026-09-30T10:59:51Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2927,11 +2927,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "prepare-merge",
       "title": "Prepare-merge — get a feature branch ready to land",
+      "description": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\".",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 452,
+      "instructionLines": 463,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
