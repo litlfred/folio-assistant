@@ -405,4 +405,9 @@ function main(): number {
   return (check || strict) && fail ? 1 : 0;
 }
 
-process.exit(main());
+// GUARDED so the module can be imported. Without this, a test importing an
+// exported helper runs the CLI and exits the test runner — which is exactly
+// what happened to `upload-names.test.ts`: the report printed and the run
+// died with no tally. `if (import.meta.main)` is the idiom every other
+// importable script here uses.
+if (import.meta.main) process.exit(main());
