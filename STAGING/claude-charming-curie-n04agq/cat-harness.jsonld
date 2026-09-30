@@ -297,10 +297,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T08:55:34.439Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c49b93d5104fe17811d2cf46c30232014f04dac6",
-  "sourceCommitSha": "c49b93d5104fe17811d2cf46c30232014f04dac6",
-  "sourceCommitAt": "2026-09-30T08:52:41Z",
+  "generatedAt": "2026-09-30T09:21:20.704Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9aa94b8d55256c2a61aab319649c7e5120abec5a",
+  "sourceCommitSha": "9aa94b8d55256c2a61aab319649c7e5120abec5a",
+  "sourceCommitAt": "2026-09-30T09:18:28Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2082,7 +2082,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-build.md",
-      "instructionLines": 137,
+      "instructionLines": 147,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4150,7 +4150,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/content-validation.md",
-      "instructionLines": 294,
+      "instructionLines": 296,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40072,7 +40072,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run cat-harness/content/pipeline/build-glossary.ts"
+        "shell": "bun run folio-assistant-core/scripts/build-glossary.ts"
       },
       "io": {
         "inputs": [
@@ -45736,8 +45736,8 @@
   ],
   "staging": {
     "branch": "claude/charming-curie-n04agq",
-    "sha": "097230169c199b2b5676889aba1f157c5127e463",
+    "sha": "c96b66ae16c29c36a923e1bf4609d52644480bdd",
     "pr": "1512/merge",
-    "run": "36692489617"
+    "run": "36695290083"
   }
 }
