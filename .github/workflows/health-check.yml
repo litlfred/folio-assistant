@@ -74,6 +74,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
+          submodules: true
           # REQUIRED, and not an optimisation to shave off. `repository-size`
           # measures the pack a full-history clone downloads; a shallow one
           # would report a fraction of it and the ratio finding would never

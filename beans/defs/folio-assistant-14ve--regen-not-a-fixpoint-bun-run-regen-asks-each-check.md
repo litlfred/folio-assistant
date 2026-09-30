@@ -23,7 +23,7 @@ Loop the ask-and-regenerate pass until one pass regenerates nothing, capped at a
 
 ## Done when
 - [ ] after a merge that leaves harness.json stale, one `bun run regen` leaves every check current
-- [ ] a unit test covers a two-step dependency: writer B's output is an input to check A, and A is asked first
+- [x] a unit test covers a two-step dependency: writer B's output is an input to check A, and A is asked first
 
 
 *2026-09-30* — Parented under **1xhc** CI RELIABILITY: it arrived on main with no parent, which fails check:bean-parents on every branch. Chosen by evidence, not taste: its two nearest filed neighbours (lsi:near) — ymsu (kg:detangle:check cannot fail inside gates, 0.55) and lxpq (clean merge, wrong artefact, 0.55) — are both under 1xhc.
@@ -39,3 +39,10 @@ dependence: audit-coverage was asked before the later writers changed the
 files it counts, so one pass is not a fixpoint.
 
 _2026-09-30T21:25:46Z_ — Claimed by claude/magical-archimedes-4qkfxp-regen — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Built — 2026-09-30, branch `claude/magical-archimedes-4qkfxp-regen` (session https://claude.ai/code/session_01SiFEMuTciyB681XP5WfcbB)
+
+`regenToFixpoint` repeats passes until one runs **no** writer, capped at 3. The last pass's result is reported, except that a `regenerated` from an earlier pass is kept over a later `current`. When the cap is reached with a writer still running, regen says so rather than claiming the tree has settled.
+
+- **Box 2, ticked:** `regen-after-merge.test.ts` models writer B's output as check A's input, with A asked first. One pass leaves A stale; that is the control, and it fails as it should. The fixpoint repairs A and settles in 3 passes. A third test covers two writers that undo each other: they stop at the cap and say so.
+- **Box 1, left open deliberately:** a live regen settled in 2 passes (the prov-qaqc probe on uju6), but the specific merge this box names, one that leaves `harness.json` stale, was not reproduced. The mechanism is pinned; that instance is not.

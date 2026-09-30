@@ -7,8 +7,8 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `large-dat
 
 | file | what it is | used by |
 |---|---|---|
-| [`copy-out-materialized.bpmn`](copy-out-materialized.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Copy out materialized content — to work on somebody else's bytes |  |
-| [`materialize-remote.bpmn`](materialize-remote.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Materialize remote content — the shared subprocess |  |
-| [`refresh-materialized.bpmn`](refresh-materialized.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Refresh materialized remote content |  |
-| [`sample-import.bpmn`](sample-import.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Sample import into a structured data store |  |
+| [`copy-out-materialized.bpmn`](copy-out-materialized.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Copy out materialized content — to work on somebody else's bytes |  |
+| [`materialize-remote.bpmn`](materialize-remote.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Materialize remote content — the shared subprocess |  |
+| [`refresh-materialized.bpmn`](refresh-materialized.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Refresh materialized remote content |  |
+| [`sample-import.bpmn`](sample-import.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Sample import into a structured data store |  |
 <!-- kg:subgraph:end -->

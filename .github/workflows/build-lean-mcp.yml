@@ -46,6 +46,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          submodules: true
 
       # ubuntu-latest ships with ~14 GB free disk; the paper-assistant
       # image build needs more once we add TeX Live full, Mathlib

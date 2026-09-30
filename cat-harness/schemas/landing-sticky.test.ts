@@ -731,9 +731,18 @@ describe("sourceLinks — where a card's declaration can be read and edited", ()
     // shows edit src icon (and also need view icon)". `/blob/` reads and
     // `/edit/` opens the editor; a reader checking what a card says should not
     // land in a text box.
+    expect(sourceLinks(REPO, "cat-harness/cat-harness.json", "main")).toEqual({
+      viewHref: `${REPO}/blob/main/cat-harness/cat-harness.json`,
+      editHref: `${REPO}/edit/main/cat-harness/cat-harness.json`,
+    });
+  });
+
+  test("a file in a submodule is read and edited in the submodule's own repository", () => {
+    // `bootstrap/` is litlfred/bootstrap since 2026-09-30 (bean `xsqm`): this
+    // checkout's forge shows only a pointer there, so a link through it is dead.
     expect(sourceLinks(REPO, "bootstrap/bootstrap.json", "main")).toEqual({
-      viewHref: `${REPO}/blob/main/bootstrap/bootstrap.json`,
-      editHref: `${REPO}/edit/main/bootstrap/bootstrap.json`,
+      viewHref: "https://github.com/litlfred/bootstrap/blob/main/bootstrap.json",
+      editHref: "https://github.com/litlfred/bootstrap/edit/main/bootstrap.json",
     });
   });
 

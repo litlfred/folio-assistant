@@ -7,7 +7,7 @@ Part of [C@T Harness](../cat-harness/README.md) 0.1.0, declared as `fsh-guts`, h
 
 | file | what it is | used by |
 |---|---|---|
-| [`retired/`](retired/) | 17 files | |
+| [`retired/`](retired/) | 19 files | |
 | [`samples/`](samples/) | 1 file | |
 | [`scripts/`](scripts/) | 16 files | |
 <!-- kg:subgraph:end -->
