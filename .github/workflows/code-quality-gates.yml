@@ -958,6 +958,14 @@ jobs:
       - name: bootstrap vocabulary is current
         run: bun run bootstrap:vocabulary:check
 
+      # The split, rehearsed (Phase 4, bean `xsqm`): bootstrap and
+      # bootstrap-tools copied alone into an empty directory as sibling clones,
+      # and bootstrap-tools' checks and tests run there. The closure gate
+      # proves no IMPORT reaches up; this proves no script or test READS
+      # anything only the monorepo has. Its first run found two such reads.
+      - name: bootstrap-tools passes standing alone beside bootstrap
+        run: bun run check:bootstrap-standalone
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and
