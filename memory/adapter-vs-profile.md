@@ -4,11 +4,12 @@ id: adapter-vs-profile
 label: stable
 summary: "adapter vs profile: a different axis, and conflating them is costly"
 createdAt: 2026-09-19
-archived: "true"
+archived: true
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 - **Adapters** (`paper`, `dak`) partition block kinds into **disjoint**
   namespaces. `adapterForKind` is what QA-criterion scoping reads, and it

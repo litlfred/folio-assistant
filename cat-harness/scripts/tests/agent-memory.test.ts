@@ -261,13 +261,13 @@ describe("archived entries are retained but injected nowhere", () => {
     try {
       const node = (id: string, archived: string): string =>
         `---\n$schema: ${MEMORY_SCHEMA_TAG}\nid: ${id}\nlabel: stable\n` +
-        `summary: "${id}"\ncreatedAt: 2026-09-19\narchived: ${archived}\nagents:\n---\nbody\n`;
+        `summary: "${id}"\ncreatedAt: 2026-09-19\narchived: ${archived}\nreferences:\n---\nbody\n`;
       writeFileSync(join(dir, "bare.md"), node("bare", "true"));
       writeFileSync(join(dir, "quoted.md"), node("quoted", '"true"'));
       writeFileSync(
         join(dir, "live.md"),
         `---\n$schema: ${MEMORY_SCHEMA_TAG}\nid: live\nlabel: stable\n` +
-          `summary: "live"\ncreatedAt: 2026-09-19\nagents:\n---\nbody\n`,
+          `summary: "live"\ncreatedAt: 2026-09-19\nreferences:\n---\nbody\n`,
       );
 
       const nodes = readMemoryNodes(dir);
@@ -303,7 +303,7 @@ describe("archived entries are retained but injected nowhere", () => {
       writeFileSync(
         join(dir, "typo.md"),
         `---\n$schema: ${MEMORY_SCHEMA_TAG}\nid: typo\nlabel: stable\n` +
-          `summary: "typo"\ncreatedAt: 2026-09-19\narchived: probably\nagents:\n---\nbody\n`,
+          `summary: "typo"\ncreatedAt: 2026-09-19\narchived: probably\nreferences:\n---\nbody\n`,
       );
       expect(() => readMemoryNodes(dir)).toThrow(/archived/);
       // The message has to name the value and the file, or the author cannot
@@ -323,7 +323,7 @@ describe("archived entries are retained but injected nowhere", () => {
     try {
       const node = (id: string, archived: string): string =>
         `---\n$schema: ${MEMORY_SCHEMA_TAG}\nid: ${id}\nlabel: stable\n` +
-        `summary: "${id}"\ncreatedAt: 2026-09-19\narchived: ${archived}\nagents:\n---\nbody\n`;
+        `summary: "${id}"\ncreatedAt: 2026-09-19\narchived: ${archived}\nreferences:\n---\nbody\n`;
       const truthy = ["true", "True", "TRUE", "yes", "Yes", "on", '"true"'];
       const falsy = ["false", "False", "FALSE", "no", "No", "off"];
       truthy.forEach((v, i) => writeFileSync(join(dir, `t${i}.md`), node(`t${i}`, v)));

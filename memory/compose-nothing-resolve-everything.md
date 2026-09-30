@@ -4,11 +4,12 @@ id: compose-nothing-resolve-everything
 label: trap
 summary: "compose nothing; resolve everything"
 createdAt: 2026-09-19
-archived: "true"
+archived: true
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 The old contents table built every PDF cell as
 `${PAGES}/papers/<paper>/chapters/<dir>.pdf` — by convention, checked against

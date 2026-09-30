@@ -4,11 +4,12 @@ id: the-readme-generator-that-replaced-the-whole-file
 label: trap
 summary: "the README generator that replaced the whole file"
 createdAt: 2026-09-19
-archived: "true"
+archived: true
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 `scripts/generate-readme.sh` ended in `cp "$OUT" README.md`. It held one
 folio's content **in the platform**: the title `# Quantum Observable

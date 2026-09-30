@@ -4,8 +4,9 @@ id: a-diagnostic-must-not-wear-a-findings-grep-string
 label: trap
 summary: "a 'could not check' notice reusing a finding's wording inflates the census it protects"
 createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
+references:
+  - kind: agent
+    id: content-pipeline-navigator
 archived: true
 ---
 > **Archived 2026-09-19, on arrival.** Written for
