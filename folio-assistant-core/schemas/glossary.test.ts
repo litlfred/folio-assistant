@@ -23,6 +23,7 @@ import {
   pagePath,
   permalinkOf,
   renderPages,
+  linkTermCodes,
 } from "../scripts/glossary-page.ts";
 import {
   ASSET_TYPES,
@@ -526,6 +527,29 @@ describe("an ordered glossary (owner, 2026-09-29: logical, not alphabetical)", (
     const schema = JSON.parse(readFileSync(join(import.meta.dir, "..", "..", boot.file), "utf-8")) as { $defs: Record<string, unknown> };
     expect(boot.glossary.terms.map((t) => t.prefLabel)).toEqual(
       Object.keys(schema.$defs).map((k) => k.replace(/([a-z])([A-Z])/g, "$1 $2")),
+    );
+  });
+});
+
+describe("a description naming another term links to it (bean qgjh)", () => {
+  const c = collect();
+  const pages = renderPages(c);
+
+  test("every in-page term link lands on an entry of the same page", () => {
+    for (const [k, page] of pages) {
+      const ids = new Set([...page.matchAll(/<dt id="([^"]+)"/g)].map((m) => m[1]!));
+      for (const m of page.matchAll(/<a href="#([^"]+--[^"]+--[^"]+)"><code>/g)) {
+        expect(ids.has(m[1]!) ? "" : `${k}: #${m[1]} has no entry`).toBe("");
+      }
+    }
+  });
+
+  test("only an exact id of the SAME scheme links, and never the term itself", () => {
+    const s = { instance: "i", glossary: { id: "g", terms: [{ id: "a" }, { id: "b" }] } } as unknown as Parameters<
+      typeof linkTermCodes
+    >[0];
+    expect(linkTermCodes(s, "a", "<code>a</code> <code>b</code> <code>c</code>")).toBe(
+      '<code>a</code> <a href="#i--g--b"><code>b</code></a> <code>c</code>',
     );
   });
 });

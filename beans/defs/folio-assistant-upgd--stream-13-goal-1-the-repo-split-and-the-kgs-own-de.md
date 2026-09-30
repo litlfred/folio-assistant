@@ -1,11 +1,11 @@
 ---
 # folio-assistant-upgd
 title: 'STREAM 1/3: GOAL 1 — the repo split and the KG''s own declaration (vuip + zzmr, 47 open beans)'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-22T18:08:55Z
-updated_at: 2026-09-23T09:18:18Z
+updated_at: 2026-09-30T13:47:14Z
 parent: folio-assistant-vuip
 ---
 
@@ -70,12 +70,12 @@ of a three-stream split, not overlooked.
 
 ## Done when
 
-- [ ] `vuip` and `zzmr` critical paths re-verified against the store, stale
+- [x] `vuip` and `zzmr` critical paths re-verified against the store, stale
       blockers withdrawn with their reasons
-- [ ] #954 merged; #938 resolved (merged or closed on evidence)
-- [ ] #951, #944 conflict-free and green, or a stated reason they are not
-- [ ] The 10 dependabot PRs triaged with a recorded decision per major bump
-- [ ] #731, #750, #737, #231 each either advanced or given an owner question
+- [x] #954 merged; #938 resolved (merged or closed on evidence)
+- [x] #951, #944 conflict-free and green, or a stated reason they are not
+- [x] The 10 dependabot PRs triaged with a recorded decision per major bump
+- [x] #731, #750, #737, #231 each either advanced or given an owner question
 
 
 ---
@@ -299,3 +299,17 @@ Measured against the forge on 2026-09-30, not carried forward from this body:
 | `vuip` critical path | `check:stale-paths` reports nothing for `vuip` |
 
 So this stream's remaining precondition is **one owner decision** on #910: migrate, pin below 7 with a Dependabot ignore, or close. It was put to the owner on 2026-09-30. The first clause is left unticked because it asks for the `zzmr` path as well, and that was not re-derived here.
+
+## Summary of Changes — closed on evidence 2026-09-30
+
+Every precondition was re-derived against the forge and the store today, not carried forward:
+
+| clause | evidence |
+|---|---|
+| `vuip` / `zzmr` critical paths | `check:stale-paths` reports nothing for either |
+| #954; #938 | both **closed unmerged**. #954's subject, bean `itka`, is `completed` on main by another route. #938's own body records that #941 took finding 1 and that the PR changed shape |
+| #951; #944 | #951 **merged** 2026-09-26 (`zldg` completed). #944 closed; its work-plan half landed as #1130 (`tebu` completed) |
+| dependabot | 1 remained, #910 (TypeScript 7). The owner chose "try migration now", then "adopt". It landed as #1555 (`2f67548`), and #910 was closed with its reason |
+| #731, #750, #737, #231 | all **closed** |
+
+Nothing this stream named is still open.
