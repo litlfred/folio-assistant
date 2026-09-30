@@ -9,7 +9,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `external-schemas`, holdi
 |---|---|---|
 | [`dcmi-terms.json`](dcmi-terms.json) | DCMI Metadata Terms |  |
 | [`hl7-fhir.json`](hl7-fhir.json) | HL7 FHIR |  |
-| [`omg-bpmn-2.0.json`](omg-bpmn-2.0.json) | Business Process Model and Notation (BPMN) |  |
+| [`omg-bpmn-2.0.json`](omg-bpmn-2.0.json) | Business [Process](../../bootstrap/schemas/README.md#process) Model and Notation (BPMN) |  |
 | [`omg-dd-1.0.json`](omg-dd-1.0.json) | Diagram Definition (DD) |  |
 | [`omg-dmn-1.3.json`](omg-dmn-1.3.json) | Decision Model and Notation (DMN) |  |
 | [`schema-org.json`](schema-org.json) | Schema.org |  |
@@ -20,7 +20,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `external-schemas`, holdi
 | [`w3c-prov-o.json`](w3c-prov-o.json) | PROV-O: The PROV Ontology |  |
 | [`w3c-rdf.json`](w3c-rdf.json) | RDF 1.1 Concepts and Abstract Syntax |  |
 | [`w3c-rdfs.json`](w3c-rdfs.json) | RDF Schema 1.1 |  |
-| [`w3c-skos.json`](w3c-skos.json) | SKOS Simple Knowledge Organization System Reference |  |
+| [`w3c-skos.json`](w3c-skos.json) | SKOS Simple Knowledge Organization System [Reference](../../bootstrap/schemas/README.md#reference) |  |
 | [`w3c-web-annotation.json`](w3c-web-annotation.json) | Web Annotation Vocabulary |  |
 | [`w3c-xsd11-datatypes.json`](w3c-xsd11-datatypes.json) | XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes |  |
 | [`who-smart-base.json`](who-smart-base.json) | WHO SMART Guidelines base IG |  |

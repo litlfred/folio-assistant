@@ -927,6 +927,19 @@ jobs:
       - name: Every literal release IRI is at its declared version
         run: bun run iri:sync:check
 
+      # bootstrap-tools may depend on bootstrap and nothing above it (bean
+      # `xsqm`): its own files, zod and the runtime. Tested with planted
+      # violations, because a boundary check never seen failing checks nothing.
+      - name: bootstrap-tools imports nothing above bootstrap
+        run: bun run check:tools-closure
+
+      # A published node's own identifier ($id, or a JSON-LD @id) under an
+      # instance's release base must name the path its file actually sits at,
+      # so publishing files where they sit serves every identifier (owner,
+      # 2026-09-29: "make QA gate for KG nodes").
+      - name: Every published node's identifier is its file's path
+        run: bun run check:node-iris
+
       # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
       # harness injects. An entry edited and never assembled is a fact the

@@ -736,13 +736,8 @@ export const RULES: Rule[] = [
       // which it calls: a generator that lived elsewhere would be a second
       // place deciding what a harness row contains, which is the defect.
       "scripts/gen-navbar-include.ts",
-      // Zod in `bootstrap-tools` → JSON Schema in `bootstrap`. CORE for a
-      // reason the others here do not have: bootstrap must hold no executable
-      // code, so the generator cannot live beside what it generates.
-      "scripts/gen-bootstrap-schemas.ts",
-      // Its drawn page, `bootstrap/schemas/README.md`. Beside the generator
-      // that calls it, and for the same reason: bootstrap holds no code.
-      "scripts/bootstrap-schema-page.ts",
+      // gen-bootstrap-schemas and bootstrap-schema-page moved to the sibling
+      // instance `bootstrap-tools/` (bean `xsqm`), outside this partition.
       // A README per declared directory, from the declaration. Core beside
       // `readme-sections`, whose file description and 'used by' it reuses.
       "scripts/subgraph-readmes.ts",
@@ -1072,11 +1067,6 @@ export const RULES: Rule[] = [
       // importing the content vocabulary, so classifying it here adds no
       // wrong-direction edge — see schemas/cat-harness.ts.
       "schemas/cat-harness.ts",
-      // An instance's release addresses (`<iriBase><version>/`, `<iriBase>v<major>/`),
-      // composed from the declaration above; harness for the same reason it is.
-      "schemas/release-iri.ts",
-      // Keeps every literal copy of those addresses at the declared version.
-      "scripts/iri-sync.ts",
       // The graph-kind registry, split out of the line above so core could
       // import it without a cycle (bean `q2wn`). HARNESS on the same terms:
       // it holds `BASE_GRAPH_KINDS` — the harness's OWN three kinds — plus
@@ -1115,11 +1105,10 @@ export const RULES: Rule[] = [
       // is harness machinery, and none imports the content vocabulary.
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
-      // Issue #1164: bootstrap schemas name no outside concept, and a filed
-      // requirement is a valid one with no name used twice. Harness
-      // machinery over the harness's own declarations; neither imports the
-      // content vocabulary.
-      "scripts/check-bootstrap-concepts.ts",
+      // Issue #1164: a filed requirement is a valid one with no name used
+      // twice. Harness machinery over the harness's own declarations; it does
+      // not import the content vocabulary. (Its sibling check-bootstrap-concepts
+      // moved to `bootstrap-tools/`, bean `xsqm`.)
       "scripts/check-requirements.ts",
       // Bean `95ir`: declared-but-absent is reported by a scanner, never
       // dropped. Harness machinery over declarations; imports only node:fs.
@@ -1209,16 +1198,10 @@ export const RULES: Rule[] = [
       // edge `namespaces.ts` was extracted to remove. Measured on first run:
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
-      // bootstrap's Zod (owner, 2026-09-24: "Validate/zod in cat-harness. Graph
-      // and Subgraph too"). Moved in from the retired `bootstrap-tools`
-      // instance; `vocabulary.ts` above reads BOOTSTRAP_TERMS from `graph.ts`,
-      // so a core placement is a wrong-direction edge.
-      "schemas/graph.ts",
-      "schemas/discussion.ts",
+      // bootstrap's own Zod (graph, discussion, requirement) moved down to
+      // `bootstrap-tools/` (owner, 2026-09-29, bean `xsqm`), outside this
+      // partition. What stays is the harness's reading of it.
       "schemas/bootstrap-graph.ts",
-      // The Requirement bootstrap publishes (issue #1164); `skill-package.ts`
-      // builds the harness Requirement on it, so core would be an edge downward.
-      "schemas/requirement.ts",
       // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
       // adjudication's codes against, and the loader `namespaces.ts` sits
       // beside. Needed to RUN a process, so harness — the same test as the

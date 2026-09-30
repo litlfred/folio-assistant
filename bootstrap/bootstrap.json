@@ -4,6 +4,12 @@
   "version": "0.1.0",
   "_iriBase_comment": "The one place bootstrap's address is written. Every IRI bootstrap mints is derived from it and `version`: `<iriBase><version>/…` for what a program reads, `<iriBase>v<major>/…` for pages a person reads. A fork changes this line and re-runs the sync; nothing else names the address by hand.",
   "iriBase": "https://litlfred.github.io/bootstrap/",
+  "_nodeSchemas_comment": "This Knowledge Graph's Node Kinds, declared: every `$schema` value a file here carries, and the Node Schema that defines it. A path is relative to this file; an IRI is a published standard. Declared rather than found by searching `schemas/`, so a reader with nothing installed can go from a file's `$schema` straight to its definition — and a test fails on a file whose `$schema` is not listed here.",
+  "nodeSchemas": {
+    "model-registry/1.0.0": "schemas/model-registry.schema.json",
+    "glossary-ledger/1.0.0": "schemas/glossary-ledger.schema.json",
+    "http://json-schema.org/draft-07/schema#": "http://json-schema.org/draft-07/schema#"
+  },
   "_title_comment": "The display name. `name` stays the identifier that file names use; `title` is what a person reads.",
   "title": "Bootstrap",
   "description": "The graph an agent reads before it knows what this repository is.",

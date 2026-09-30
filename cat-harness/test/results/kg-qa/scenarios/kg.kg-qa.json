@@ -140,10 +140,6 @@
           "detail": "no role carries \"injection-boundaries\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `fhir-ig-skills` at `fhir-harness/skills/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`) — a nested instance may name it, and this audit does not read one."
         },
         {
-          "where": "instance-publication",
-          "detail": "no role carries \"instance-publication\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `fhir-ig-skills` at `fhir-harness/skills/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
           "where": "iris-dspace",
           "detail": "no role carries \"iris-dspace\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `fhir-ig-skills` at `fhir-harness/skills/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`) — a nested instance may name it, and this audit does not read one."
         },
@@ -154,10 +150,6 @@
         {
           "where": "materialize-on-demand",
           "detail": "no role carries \"materialize-on-demand\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `fhir-ig-skills` at `fhir-harness/skills/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "package-release",
-          "detail": "no role carries \"package-release\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `fhir-ig-skills` at `fhir-harness/skills/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`) — a nested instance may name it, and this audit does not read one."
         },
         {
           "where": "path-containment",
@@ -298,13 +290,8 @@
       "findings": []
     },
     "prose-names-resolve": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "processes/ig-incremental-build.bpmn",
-          "detail": "names `docs/proposals/ig-incremental-build.md`: its directory is here and the file is not — renamed, moved, or never written."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "skill-contract-claimed": {
       "result": "pass",
@@ -320,6 +307,10 @@
         {
           "where": "beans/beans.json",
           "detail": "nested instance \"folio-assistant\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "bootstrap-tools/bootstrap-tools.json",
+          "detail": "nested instance \"bootstrap-tools\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
           "where": "bootstrap/bootstrap.json",
@@ -389,8 +380,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 4,
+    "pass": 17,
+    "fail": 3,
     "n/a": 0,
     "unknown": 0
   }
