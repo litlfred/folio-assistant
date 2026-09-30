@@ -35,8 +35,18 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-/** The labelling node's file name, inside the skills directory it labels. */
-export const TOPICS_FILE = "skills.json";
+import { defaultGraphKinds } from "../schemas/graph-kind-registry.ts";
+
+/**
+ * The labelling node's file name, inside the skills directory it labels.
+ *
+ * ASKED OF THE KIND, like `BEAN_GRAPH_FILE`: the same file is the `skills`
+ * kind's `declarationFile`, which the directory resolver reads for the
+ * instance directories declared inside `skills/` (bean cmsl). One node with
+ * two lists, `topics` here and `directories` there, and one place its name is
+ * written.
+ */
+export const TOPICS_FILE = defaultGraphKinds.get("skills")?.declarationFile ?? "skills.json";
 
 /** One topic: a subdirectory of the skills directory that holds packages. */
 export interface SkillTopic {

@@ -542,6 +542,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // A downstream declaration still saying `["cat-harness"]` therefore keeps
   // parsing. What it loses is the finer query, which is the thing it never had.
   skills: {
+    // THE FROM-WITHIN NODE for a skills directory (bean cmsl, owner
+    // 2026-09-30, round 4): `skills/skills.json` names the instance
+    // directories declared inside `skills/` — `voices/`, and `lean/` in
+    // folio-assistant-sci — so the nesting is declared where the #980 ruling
+    // says it must be, never by a root declaration reaching down.
+    declarationFile: "skills.json",
     type: termIri("SkillGraph"),
     renderable: false,
     // A Skill is a Capability with defined inputs and outputs — an authored

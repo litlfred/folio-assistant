@@ -155,12 +155,21 @@ export function checkLayoutNorms(repoRoot = REPO_ROOT, baselineFile = BASELINE):
     const name = decl.name ?? basename(root);
     const dirs = resolveDirectories([{ name, root, own: true }]);
     const pathOf = new Map(dirs.map((d) => [d.id, d.path]));
+    // Nesting declared FROM WITHIN (the owner's #980 ruling; bean cmsl): the
+    // inner directory is named by a declaration file inside the outer one, so
+    // the pair is the sanctioned shape and never a finding.
+    const withinOf = new Map(dirs.map((d) => [d.id, d.within]));
     for (const rel of subgraphTree(dirs)) {
       const parentPath = pathOf.get(rel.parent);
       if (parentPath === undefined) continue;
       for (const child of rel.children) {
         const childPath = pathOf.get(child);
         if (childPath === undefined) continue;
+        // By PATH, not id: two ids may name one directory (core's `core-skills`
+        // and the default `skills` are both `skills/`), and the nesting is a
+        // fact about the place.
+        const within = withinOf.get(child);
+        if (within !== undefined && pathOf.get(within) === parentPath) continue;
         r.found.push(pairKey(name, parentPath, childPath));
       }
     }
