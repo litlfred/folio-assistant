@@ -189,6 +189,10 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
    * - The publication address and the source repository: bootstrap's own
    *   location, not a reference to another Harness. `livesAt` states the same
    *   location in owner/repo form (bean 6rmv).
+   * - `bootstrap-tools`, which LEAKS does not list: the one name outside
+   *   itself bootstrap may carry, as the answer to "what wrote this file?"
+   *   (owner, 2026-09-30, bean `xsqm`). Every generated file carries it —
+   *   `scripts/generated-by.test.ts`.
    *
    * The `folio-*` schema identifiers are no longer allowed: bootstrap's own
    * files carry `model-registry/1.0.0`, resolving to a schema inside bootstrap

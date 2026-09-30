@@ -77,6 +77,14 @@ export const TermSchema = z
     requires: z.array(z.string().min(1)).optional(),
     /** The schema or standard that defines the term (rdfs:isDefinedBy). */
     isDefinedBy: Iri.optional(),
+    /**
+     * The concept's IRI when its defining vocabulary already mints one. The
+     * glossary then DESCRIBES that concept — its labels, translations, order —
+     * rather than minting a second IRI for the same term. Owner, 2026-09-30
+     * (bean `xsqm`, "one SKOS", option A): bootstrap's terms are
+     * `<bootstrap>/ns#Node`, not also `…ns#glossary/terms/node`.
+     */
+    iri: Iri.optional(),
     /** Where the term came from: a repository path (with #anchor) or an IRI. */
     source: z.string().min(1).optional(),
     status: z.enum(TERM_STATUSES),
@@ -182,7 +190,10 @@ function langValues(t: LangText): Array<{ "@value": string; "@language"?: string
  */
 export function toSkos(g: Glossary, ns: string): Record<string, unknown> {
   const scheme = schemeIri(ns, g);
-  const ref = (r: string) => ({ "@id": /^[a-z][a-z0-9+.-]*:\/\//i.test(r) ? r : termIri(ns, g, r) });
+  // A term that names its own concept IRI is referred to by it, everywhere.
+  const own = new Map(g.terms.filter((t) => t.iri).map((t) => [t.id, t.iri!]));
+  const idOf = (termId: string) => own.get(termId) ?? termIri(ns, g, termId);
+  const ref = (r: string) => ({ "@id": /^[a-z][a-z0-9+.-]*:\/\//i.test(r) ? r : idOf(r) });
   const iris = (xs?: string[]) => (xs && xs.length ? { value: xs.map((x) => ({ "@id": x })) } : undefined);
   const graph: Record<string, unknown>[] = [
     {
@@ -198,7 +209,7 @@ export function toSkos(g: Glossary, ns: string): Record<string, unknown> {
   ];
   for (const t of g.terms) {
     const node: Record<string, unknown> = {
-      "@id": termIri(ns, g, t.id),
+      "@id": idOf(t.id),
       "@type": "skos:Concept",
       "skos:inScheme": { "@id": scheme },
       "skos:prefLabel": langValues(t.prefLabel),
@@ -227,7 +238,7 @@ export function toSkos(g: Glossary, ns: string): Record<string, unknown> {
       "@id": `${scheme}#order`,
       "@type": "skos:OrderedCollection",
       "skos:prefLabel": `${g.title}, in order`,
-      "skos:memberList": { "@list": g.terms.map((t) => ({ "@id": termIri(ns, g, t.id) })) },
+      "skos:memberList": { "@list": g.terms.map((t) => ({ "@id": idOf(t.id) })) },
     });
   }
   if (g.members?.length) {

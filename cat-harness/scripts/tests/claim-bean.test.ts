@@ -22,7 +22,7 @@ import { chmodSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { absoluteRemote, claimOnDefaultBranch, describe as describeOutcome, exitCodeFor } from "../claim-bean.js";
+import { absoluteRemote, claimOnDefaultBranch, describe as describeOutcome, exitCodeFor, wrongCheckout } from "../claim-bean.js";
 
 const ID = ["-c", "user.name=t", "-c", "user.email=t@t"];
 
@@ -301,5 +301,42 @@ describe("absoluteRemote", () => {
     ]) {
       expect(absoluteRemote("/srv/folio", u)).toBe(u);
     }
+  });
+});
+
+describe("a claim from the wrong checkout is refused, not misattributed (ssfp)", () => {
+  test("a checkout on a work branch is the right one", () => {
+    const { work } = repoWith({ aaaa: bean("aaaa") });
+    expect(wrongCheckout(work, "claude/feature")).toBeUndefined();
+  });
+
+  test("a checkout on the default branch, or detached, names the tree it would have written to", () => {
+    const { work } = repoWith({ aaaa: bean("aaaa") });
+    expect(wrongCheckout(work, "main")).toContain(work);
+    expect(wrongCheckout(work, "main")).toContain("default branch");
+    expect(wrongCheckout(work, "(detached)")).toContain("detached");
+  });
+
+  test("the CLI claims from a WORKTREE into that worktree, and refuses from the main checkout", () => {
+    // The measured failure: an agent's worktree held the work, the main
+    // checkout sat on `main`, and the claim landed in the main checkout.
+    const { work } = repoWith({ aaaa: bean("aaaa"), bbbb: bean("bbbb") });
+    git(work, "switch", "-q", "main");
+    const wt = join(work, "..", "wt");
+    git(work, "worktree", "add", "-q", "-b", "claude/agent", wt);
+    const script = join(import.meta.dir, "..", "claim-bean.ts");
+    const run = (cwd: string, id: string) => spawnSync("bun", ["run", script, id], { cwd, encoding: "utf-8" });
+
+    const fromMain = run(work, "aaaa");
+    expect(fromMain.status).toBe(5);
+    expect(fromMain.stderr).toContain(work);
+    expect(readFileSync(join(work, "beans", "defs", "folio-assistant-aaaa--b.md"), "utf8")).toContain("status: todo");
+
+    const fromWorktree = run(join(wt, "beans"), "bbbb");
+    expect(fromWorktree.status).toBe(0);
+    expect(fromWorktree.stdout).toContain(`claiming from ${wt}`);
+    expect(readFileSync(join(wt, "beans", "defs", "folio-assistant-bbbb--b.md"), "utf8")).toContain("status: in-progress");
+    // The main checkout is untouched — no stray claim left as dirt.
+    expect(readFileSync(join(work, "beans", "defs", "folio-assistant-bbbb--b.md"), "utf8")).toContain("status: todo");
   });
 });

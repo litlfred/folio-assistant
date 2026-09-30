@@ -1,11 +1,11 @@
 ---
 # folio-assistant-52cz
 title: A CONFLICTED PR CREATES NO pull_request RUN, and g62s's headUnjudged cannot see it — the one absent-run case that needs no glob evaluation
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-30T14:07:18Z
 parent: folio-assistant-1xhc
-updated_at: 2026-09-30T14:07:18Z
+updated_at: 2026-09-30T18:23:03Z
 ---
 
 ## The incident, measured
@@ -82,3 +82,5 @@ That `g62s` was wrong, or that its inertness is a defect to fix by loosening
 `pushTriggerOf`. Its own measurement shows loosening produces a false fire on
 `jsonld-gen-check.yml`. The claim is narrower: **one absent-run cause is exactly
 decidable today**, and it is the one that cost a real PR two wasted pushes.
+
+_2026-09-30T18:23:03Z_ — Claimed by claude/magical-archimedes-4qkfxp-52cz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

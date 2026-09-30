@@ -700,6 +700,13 @@
       "status": "candidate"
     },
     {
+      "id": "glossary.termschema.iri",
+      "prefLabel": "TermSchema.iri",
+      "definition": "The concept's IRI when its defining vocabulary already mints one. The glossary then DESCRIBES that concept — its labels, translations, order — rather than minting a second IRI for the same term. Owner, 2026-09-30 (bean `xsqm`, \"one SKOS\", option A): bootstrap's terms are `<bootstrap>/ns#Node`, not also `…ns#glossary/terms/node`.",
+      "source": "folio-assistant-core/schemas/glossary.ts#TermSchema.iri",
+      "status": "candidate"
+    },
+    {
       "id": "glossary.termschema.isdefinedby",
       "prefLabel": "TermSchema.isDefinedBy",
       "definition": "The schema or standard that defines the term (rdfs:isDefinedBy).",
