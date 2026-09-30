@@ -7,7 +7,6 @@ description: >-
   in one of three ways, sending a disagreement with a checker to adjudication.
   General: the Lean case is a specialisation with its own skill.
 capability: review
-package: folio-core
 ---
 
 # Does the prose say what the code does?

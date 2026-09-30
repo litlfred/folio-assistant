@@ -7,7 +7,6 @@ description: >-
   seventeen moves that were measured rather than argued, and the failures each
   one cost.
 capability: architecture
-package: graph-management
 ---
 
 # Graph detanglement — the practice, not the migration

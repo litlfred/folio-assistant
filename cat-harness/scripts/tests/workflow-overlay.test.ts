@@ -76,6 +76,21 @@ describe("a root that declares no diagram of its own", () => {
     expect(existsSync(join(CAT_HARNESS, "beans", "workflows", "sampleimport--overlay.json"))).toBe(false);
   });
 
+  test("workflow_complete advances an instance whose diagram lives OUTSIDE the root", async () => {
+    // The store keeps an out-of-root `source` absolute; the tools must not
+    // join it onto the root. Found by the first real sample-import run.
+    const root = rootWithDependency();
+    const h = handlers(root);
+    await h.get("workflow_start")!({ process: "sample-import", subject: "outside" });
+    // A temp root has no git remote, so GitHub vouches for nobody and strict
+    // authorization refuses — correctly. What this pins is that the refusal is
+    // AUTHORIZATION, reached only after the diagram loaded: before the fix it
+    // was ENOENT on `<root>/<absolute path>`.
+    const done = h.get("workflow_complete")!({ instance: "sampleimport--outside", node: "Task_Scope", note: "t" });
+    await expect(done).rejects.toThrow(/REFUSED \(strict\)/);
+    await expect(done).rejects.not.toThrow(/ENOENT/);
+  });
+
   test("the role graph is found in the dependency, so a step says what it acts AS", async () => {
     const root = rootWithDependency();
     const out = (await handlers(root).get("workflow_start")!({ process: "sample-import", subject: "roles" })).content[0].text;

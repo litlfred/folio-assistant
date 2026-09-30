@@ -86,7 +86,10 @@ import {
 } from "../schemas/role-graph.js";
 import { ownElementPattern } from "../schemas/namespaces.js";
 import { processPresentations, type Presentation } from "./process-presentations.js";
-import { handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
+import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "processes-viewer";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
@@ -792,25 +795,12 @@ export function processPage(
   return `${L.join("\n")}\n`;
 }
 
-/** Where the declaration says this page goes. Never a literal — `site-dir-single-answer` refuses one. */
+/**
+ * Where the page goes: the declared directory's own name (#1168 B7a-2b,
+ * `conventionalPage`). Never a literal — `site-dir-single-answer` refuses one.
+ */
 export function pageRelPath(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
-  };
-  for (const e of d.directories ?? []) {
-    if (!(e.graphKinds ?? []).includes(KIND)) continue;
-    const v = e.coverage?.visualiser;
-    for (const one of Array.isArray(v) ? v : [v]) {
-      const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
-      if (!ref) continue;
-      const rel = relative(baseDocs(repo), resolve(repo, ref));
-      if (rel.startsWith("..") || rel === "") return undefined;
-      return rel;
-    }
-  }
-  return undefined;
+  return conventionalPage(join(repo, "cat-harness"), KIND);
 }
 
 /**
@@ -819,7 +809,7 @@ export function pageRelPath(repo = REPO): string | undefined {
  * every instance's diagrams are on it.
  */
 export function publishedIndex(rows: Parameters<typeof page>[0], repo = REPO): string {
-  return withRendersFrontMatter(page(rows), instanceRoots(repo).flatMap((r) => handledDirectories(repo, r, KIND)));
+  return withRendersFrontMatter(page(rows), instanceRoots(repo).flatMap((r) => handledDirectories(repo, r, KIND)), VIEWER_TOOL);
 }
 
 if (import.meta.main) {

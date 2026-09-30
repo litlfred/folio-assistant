@@ -3,6 +3,7 @@ title: "External schemas"
 description: "The specifications this repository depends on — the edition of each, what would move if one bumped, and the terms it actually branches on."
 renders:
   - cat-harness/external-schemas
+rendered-by: external-schemas-viewer
 ---
 <style>
 .xs-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;

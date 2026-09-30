@@ -17,4 +17,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`review-comments.ts`](review-comments.ts) | a file |  |
 | [`review-coverage.test.ts`](review-coverage.test.ts) | a file |  |
 | [`review-coverage.ts`](review-coverage.ts) | a file |  |
+| [`sample-import-check.ts`](sample-import-check.ts) | a file |  |
+| [`sample-import-run.test.ts`](sample-import-run.test.ts) | a file |  |
+| [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
 <!-- kg:subgraph:end -->
