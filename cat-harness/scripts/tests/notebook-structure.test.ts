@@ -1,0 +1,55 @@
+import { describe, expect, test } from "bun:test";
+
+import { buildEntry, openingHeading } from "../notebook-structure.ts";
+import { structureOf } from "../../schemas/document-structure.ts";
+
+const SRC = { file: "t.ipynb", sha256: "b".repeat(64), bytes: 1, mtime: null };
+const md = (s: string) => ({ cell_type: "markdown", source: s });
+const code = (s: string) => ({ cell_type: "code", source: [s] });
+const nb = (cells: Array<{ cell_type: string; source: string | string[] }>) => ({
+  nbformat: 4,
+  nbformat_minor: 5,
+  metadata: { kernelspec: { language: "python" } },
+  cells,
+});
+
+describe("sections follow the author's headings", () => {
+  const out = buildEntry(nb([md("intro text"), md("# Title\nwords"), code("x = 1"), md("## Part\nmore")]), SRC, "t");
+
+  test("a preamble before the first heading is kept as its own section", () => {
+    expect(out.structure.sections.map((s) => s.title)).toEqual(["Preamble", "Title", "Part"]);
+    expect(out.structure.toc_source).toBe("headings");
+  });
+
+  test("cell ranges tile the notebook, and code cells are counted where they sit", () => {
+    const r = out.structure.sections.map((s) => [s.cell_start, s.cell_end, s.code_cells]);
+    expect(r).toEqual([[0, 0, 0], [1, 2, 1], [3, 3, 0]]);
+  });
+
+  test("code is fenced with the declared language and never run", () => {
+    const body = out.sections.get(out.structure.sections[1]!.id)!;
+    expect(body).toContain("```python\nx = 1\n```");
+  });
+
+  test("the output reads back through the shared accessor as the notebook variant", () => {
+    const s = structureOf(JSON.parse(JSON.stringify(out.structure)));
+    expect("reason" in s ? s.reason : s.variant).toBe("notebook");
+  });
+});
+
+describe("a notebook with no heading", () => {
+  test("is one section, and says no structure was inferred", () => {
+    const out = buildEntry(nb([md("just prose"), code("y = 2")]), SRC, "t");
+    expect(out.structure.toc_source).toBe("none");
+    expect(out.structure.sections).toHaveLength(1);
+    expect(out.structure.structure_note).toContain("no markdown heading");
+  });
+});
+
+describe("what opens a section", () => {
+  test("only a markdown cell whose first line is a heading", () => {
+    expect(openingHeading(md("## A heading"))).toEqual({ level: 2, title: "A heading" });
+    expect(openingHeading(md("text\n# later heading"))).toBeUndefined();
+    expect(openingHeading(code("# a python comment"))).toBeUndefined();
+  });
+});
