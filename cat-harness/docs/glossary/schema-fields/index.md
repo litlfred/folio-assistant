@@ -654,7 +654,7 @@ BeanIndexItemSchema.file <span class="fa-gloss-status">candidate, extracted</spa
 BeanIndexItemSchema.parent <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>`&quot;&quot;` when the bean has no parent.</p>
+<p>`&quot;&quot;` when the bean has no parent; otherwise a typed bean id (#1168 B8).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/site-indexes.ts"><code>cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--site-indexes.beanindexitemschema.preview" data-fa-state="extracted" data-fa-gloss="">
@@ -5300,7 +5300,7 @@ LogEntrySchema.actor <span class="fa-gloss-status">candidate, extracted</span>
 LogEntrySchema.bean <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The bean this work is claimed against, where there is one.</p>
+<p>The bean this work is claimed against, where there is one. A typed id (#1168 B8).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/log-entry.ts"><code>cat-harness/schemas/log-entry.ts#LogEntrySchema.bean</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--log-entry.logentryschema.branch" data-fa-state="extracted" data-fa-gloss="">

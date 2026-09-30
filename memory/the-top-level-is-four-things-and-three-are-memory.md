@@ -5,7 +5,6 @@ label: stable
 summary: "top level = bootstrap/ + one dir per repo + beans/ todos/ fsh-guts/, which stay because they ARE the instance's memory"
 createdAt: 2026-09-20
 roles:
-  - platform-boundary-guard
   - code-reviewer
 agents:
   - platform-boundary-guard
