@@ -82,6 +82,16 @@ export function firstSentence(text: string): string {
  * tracked or untracked, never ignored, so a build cache does not become a
  * row. Outside a git work tree it falls back to a walk.
  */
+/**
+ * A path as a Markdown link DESTINATION. A space or a parenthesis ends an
+ * unbracketed destination, so `uploads/X (2).pdf` rendered as a link to
+ * `uploads/X` followed by stray text — measured when such a file landed on
+ * main (bean `scfh`). Percent-encoding is what a browser resolves.
+ */
+export function linkTarget(path: string): string {
+  return encodeURI(path).replace(/\(/g, "%28").replace(/\)/g, "%29");
+}
+
 function filesUnder(root: string, dir: string): string[] {
   if (!existsSync(dir) || !statSync(dir).isDirectory()) return [];
   const corpus = gitFiles(dir);
@@ -304,7 +314,7 @@ export const filesSection: GraphSection = {
     // link stays the path from this README. A table under `skills/` that
     // repeats `skills/` on every row says the same thing twice.
     const row = (f: string, under = "") =>
-      `| [\`${cell(under ? relative(under, f) : f)}\`](${f}) | ${cell(describe(root, f, assets))} | ${used(f)} |`;
+      `| [\`${cell(under ? relative(under, f) : f)}\`](${linkTarget(f)}) | ${cell(describe(root, f, assets))} | ${used(f)} |`;
     const head = ["| file | what it is | used by |", "|---|---|---|"];
 
     const lines: string[] = [];

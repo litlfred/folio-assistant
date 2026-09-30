@@ -13,7 +13,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { filesSection, firstSentence, processesSection } from "./readme-graph-sections.ts";
+import { filesSection, firstSentence, linkTarget, processesSection } from "./readme-graph-sections.ts";
 
 const bpmn = (id: string, name: string, body = "") =>
   `<?xml version="1.0"?><bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:x="urn:x">` +
@@ -110,4 +110,9 @@ describe("kg:files", () => {
 
 test("firstSentence stops at the first sentence and drops bold", () => {
   expect(firstSentence("**Bold** start. Second.")).toBe("Bold start.");
+});
+
+test("a file named with a space or parentheses links percent-encoded (bean scfh)", () => {
+  expect(linkTarget("uploads/PIIS2589750021000388 (2).pdf")).toBe("uploads/PIIS2589750021000388%20%282%29.pdf");
+  expect(linkTarget("skills/do-it.md")).toBe("skills/do-it.md");
 });

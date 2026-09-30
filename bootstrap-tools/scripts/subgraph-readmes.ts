@@ -96,7 +96,7 @@ import {
 import { BOOTSTRAP_TERMS } from "../schemas/graph.ts";
 import { releaseIris } from "../schemas/release-iri.ts";
 import { gitFiles } from "./git-files.ts";
-import { describe as describeFile, usedByIndex } from "./readme-graph-sections.ts";
+import { describe as describeFile, linkTarget, usedByIndex } from "./readme-graph-sections.ts";
 import { bootstrapTermTargets, linkTerms } from "./term-links.ts";
 
 /** The Liquid templates this writer renders: `subgraph.liquid`, which includes `files.liquid`. */
@@ -333,6 +333,9 @@ export async function plan(repo: string, instances: InstanceInput[], templates: 
             const relToInst = relative(inst, join(abs, f));
             return {
               path: f,
+              // The link DESTINATION, percent-encoded: a space or parenthesis in
+              // a file name otherwise ends the link early (bean `scfh`).
+              href: linkTarget(f),
               what: linked(cell(describeFile(inst, relToInst, assets))),
               usedBy: used(relToInst),
             };

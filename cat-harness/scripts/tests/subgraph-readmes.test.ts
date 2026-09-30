@@ -43,7 +43,9 @@ test("over the real tree, every link in every generated README resolves", async 
     for (const m of region.matchAll(/\]\(([^)]+)\)/g)) {
       const l = m[1]!;
       if (/^[a-z]+:/.test(l) || l.startsWith("#")) continue;
-      if (!existsSync(join(dirname(file), l.split("#")[0]!))) broken.push(`${file}: ${l}`);
+      // Decoded, as a browser resolves it: a target is a URL, and a file named
+      // with a space or parenthesis is written percent-encoded (bean `scfh`).
+      if (!existsSync(join(dirname(file), decodeURI(l.split("#")[0]!)))) broken.push(`${file}: ${l}`);
     }
   }
   expect(broken).toEqual([]);
