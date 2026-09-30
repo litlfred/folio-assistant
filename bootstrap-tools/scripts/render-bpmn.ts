@@ -32,6 +32,7 @@
  * Usage: `bun run bootstrap-tools/scripts/render-bpmn.ts [--repo <dir>] [--check]`
  * — the graphs these tools `support`, each `.bpmn` in a `processes` subgraph.
  */
+import { generatedNote } from "./generated-by.ts";
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 
@@ -193,7 +194,12 @@ export async function besideSource(
   const drawn = drawing(raw.svg, "bpmn-marker-");
   if (!drawn) return { error: "could not make the SVG responsive — bpmn-js output changed shape" };
   const own = siblingLinks(file, xml, processFile);
-  let local = drawn;
+  // The note goes on THIS copy only — the one written into the content graph.
+  // A harness drawing its own site copy with `drawing()` is not bootstrap-tools
+  // writing into bootstrap, and must not say it is.
+  const note = `<!-- ${generatedNote("scripts/render-bpmn.ts", basename(file), `change ${basename(file)}`)} -->`;
+  let local = drawn.replace(/^(<\?xml[^>]*\?>\n?)/, `$1${note}\n`);
+  if (!local.includes(note)) return { error: "could not place the generated-by note — no XML declaration" };
   for (const [id, href] of own) local = wrapShapeInLink(local, id, href);
   const n = (local.match(/class="fa-subprocess-link"/g) ?? []).length;
   if (n !== own.size) return { error: `${own.size} sibling link(s) to write but ${n} wrapped` };
