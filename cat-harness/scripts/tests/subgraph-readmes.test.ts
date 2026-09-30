@@ -43,7 +43,7 @@ test("over the real tree, every link in every generated README resolves", async 
     for (const m of region.matchAll(/\]\(([^)]+)\)/g)) {
       const l = m[1]!;
       if (/^[a-z]+:/.test(l) || l.startsWith("#")) continue;
-      if (!existsSync(join(dirname(file), decodeURIComponent(l.split("#")[0]!)))) broken.push(`${file}: ${l}`);
+      if (!existsSync(join(dirname(file), l.split("#")[0]!))) broken.push(`${file}: ${l}`);
     }
   }
   expect(broken).toEqual([]);

@@ -12,9 +12,9 @@ _This directory holds no files yet._
 | file | what it is | used by |
 |---|---|---|
 {% for f in files -%}
-| [`{{ f.path }}`]({{ f.href }}) | {{ f.what }} | {{ f.usedBy }} |
+| [`{{ f.path }}`]({{ f.path }}) | {{ f.what }} | {{ f.usedBy }} |
 {% endfor -%}
 {% for d in subdirs -%}
-| [`{{ d.name }}/`]({{ d.href }}) | {{ d.count }} file{% if d.count != 1 %}s{% endif %} | |
+| [`{{ d.name }}/`]({% if d.readme != "" %}{{ d.readme }}{% else %}{{ d.name }}/{% endif %}) | {{ d.count }} file{% if d.count != 1 %}s{% endif %} | |
 {% endfor -%}
 {%- endif %}

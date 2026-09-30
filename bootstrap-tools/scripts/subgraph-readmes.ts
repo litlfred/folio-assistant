@@ -96,7 +96,7 @@ import {
 import { BOOTSTRAP_TERMS } from "../schemas/graph.ts";
 import { releaseIris } from "../schemas/release-iri.ts";
 import { gitFiles } from "./git-files.ts";
-import { describe as describeFile, href, usedByIndex } from "./readme-graph-sections.ts";
+import { describe as describeFile, usedByIndex } from "./readme-graph-sections.ts";
 import { bootstrapTermTargets, linkTerms } from "./term-links.ts";
 
 /** The Liquid templates this writer renders: `subgraph.liquid`, which includes `files.liquid`. */
@@ -326,17 +326,13 @@ export async function plan(repo: string, instances: InstanceInput[], templates: 
       for (const f of all) if (f.includes("/")) counts.set(f.split("/")[0]!, (counts.get(f.split("/")[0]!) ?? 0) + 1);
       const subdirs = [...counts]
         .sort((a, b) => a[0].localeCompare(b[0]))
-        .map(([n, count]) => {
-          const readme = existsSync(join(abs, n, "README.md")) ? `${n}/README.md` : "";
-          return { name: n, count, readme, href: href(readme || `${n}/`) };
-        });
+        .map(([n, count]) => ({ name: n, count, readme: existsSync(join(abs, n, "README.md")) ? `${n}/README.md` : "" }));
       const listed = direct.length <= LIST_LIMIT;
       const files = listed
         ? direct.map((f) => {
             const relToInst = relative(inst, join(abs, f));
             return {
               path: f,
-              href: href(f),
               what: linked(cell(describeFile(inst, relToInst, assets))),
               usedBy: used(relToInst),
             };
