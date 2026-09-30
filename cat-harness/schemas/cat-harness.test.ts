@@ -1047,6 +1047,10 @@ describe("instanceRootsIn — discovered, never listed", () => {
       ".",
       "agent-skills",
       "bootstrap",
+      // Added 2026-09-30 when it fired as designed: bootstrap's tools were
+      // re-created as the sibling instance `bootstrap-tools/` (bean `xsqm`),
+      // which declares `bootstrap-tools.json` and is therefore an instance.
+      "bootstrap-tools",
       "cat-harness",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and

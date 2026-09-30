@@ -997,6 +997,14 @@
       "status": "candidate"
     },
     {
+      "id": "kg-separation",
+      "prefLabel": "kg-separation",
+      "definition": "Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, and rollback. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools is the worked example; cat-harness + cat-harness-tools is next.",
+      "notation": "kg-separation",
+      "source": "cat-harness/skills/graph-management/kg-separation.md",
+      "status": "candidate"
+    },
+    {
       "id": "kg-to-portal",
       "prefLabel": "kg-to-portal",
       "definition": "Getting a knowledge graph out to a public portal — the six stages between \"the graph is in the repository\" and \"a reader's browser has the bytes\", why a CDN is a layer rather than a publication host, and which decisions are the deployment's to make rather than the pipeline's.",

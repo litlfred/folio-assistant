@@ -7,27 +7,21 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
-import { CLASS_GLOSSES, termLayer } from "./vocabulary.ts";
-import { BASE_GRAPH_KINDS } from "./graph-kind-registry.ts";
-import { BOOTSTRAP_GRAPH_KINDS, BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "./graph.ts";
+import {
+  BOOTSTRAP_GRAPH_KINDS,
+  BOOTSTRAP_TERM_DEFINED_BY,
+  BOOTSTRAP_TERM_USES,
+  BOOTSTRAP_TERMS,
+  KnowledgeGraphDeclarationSchema,
+} from "./graph.ts";
+import { checkDeclaredOrder } from "./declared-order.ts";
+import { unlinkedTerms } from "../scripts/term-links.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 const BOOTSTRAP = join(REPO_ROOT, "bootstrap");
 /** Names of things above bootstrap, and outside standards named by acronym alone. */
 const LEAKS = [/\bWHO\b/, /\bDAK\b/, /\bSMART\b/i, /cat-harness/, /folio/i, /smart-base/, /\bL[123]\b/];
 
-describe("every declaration in this repository is a Knowledge Graph declaration", () => {
-  const roots = instanceRootsIn(REPO_ROOT);
-  test("there are declarations to check", () => expect(roots.length).toBeGreaterThan(3));
-  for (const root of roots) {
-    test(root.slice(REPO_ROOT.length) || "/", () => {
-      const file = join(root, findDeclarationFile(root)!);
-      const r = KnowledgeGraphDeclarationSchema.safeParse(JSON.parse(readFileSync(file, "utf-8")));
-      expect(r.success ? "ok" : JSON.stringify(r.error.issues.slice(0, 2))).toBe("ok");
-    });
-  }
-});
 
 describe("bootstrap's terms are its own", () => {
   test("no definition names anything above bootstrap", () => {
@@ -35,13 +29,6 @@ describe("bootstrap's terms are its own", () => {
     expect(leaking).toEqual([]);
   });
 
-  test("the published vocabulary uses bootstrap's definitions, and bootstrap's terms link nowhere above", () => {
-    for (const [cls, term] of [["Actor", "Actor"], ["Role", "Role"], ["Skill", "Skill"], ["Process", "Process"], ["Directory", "Subgraph"], ["Tool", "Tool"], ["Harness", "Harness"]] as const) {
-      expect(CLASS_GLOSSES[cls]!.gloss).toBe(BOOTSTRAP_TERMS[term]);
-    }
-    const bootstrapLinks = Object.entries(CLASS_GLOSSES).filter(([, g]) => g.layer === "bootstrap" && g.seeAlso);
-    expect(bootstrapLinks.map(([n]) => n)).toEqual([]);
-  });
 
   test("the generated schema carries every term as a definition", () => {
     const schema = JSON.parse(readFileSync(join(BOOTSTRAP, "schemas", "graph.schema.json"), "utf-8"));
@@ -76,6 +63,44 @@ describe("the terms are ordered: each definition uses only terms above it", () =
       expect(later).toEqual([]);
     });
   }
+
+  // The AUTHORED relation is the source; the matcher above is its guard.
+  test("the authored uses lists keep the declared order (checkDeclaredOrder)", () => {
+    const steps = order.map((id) => ({ id, needs: BOOTSTRAP_TERM_USES[id as keyof typeof BOOTSTRAP_TERM_USES] }));
+    expect(checkDeclaredOrder(steps)).toEqual([]);
+  });
+
+  test("each authored uses list names exactly the terms its definition's text uses", () => {
+    const disagree = order.flatMap((key) => {
+      const k = key as keyof typeof BOOTSTRAP_TERMS;
+      const said = new Set(uses(BOOTSTRAP_TERMS[k]));
+      const authored = new Set(BOOTSTRAP_TERM_USES[k]);
+      const onlySaid = [...said].filter((u) => !authored.has(u as never));
+      const onlyAuthored = [...authored].filter((u) => !said.has(u));
+      return onlySaid.length || onlyAuthored.length ? [`${key}: text ${[...said]} vs authored ${[...authored]}`] : [];
+    });
+    expect(disagree).toEqual([]);
+  });
+
+  test("checkDeclaredOrder names a forward, a self and a missing use", () => {
+    expect(
+      checkDeclaredOrder([
+        { id: "a", needs: ["b"] },
+        { id: "b", needs: ["b", "z"] },
+      ]),
+    ).toEqual([
+      { id: "a", uses: "b", kind: "forward" },
+      { id: "b", uses: "b", kind: "self" },
+      { id: "b", uses: "z", kind: "missing" },
+    ]);
+  });
+
+  test("every term names the schema that defines it", () => {
+    for (const key of order) {
+      const by = BOOTSTRAP_TERM_DEFINED_BY[key as keyof typeof BOOTSTRAP_TERM_DEFINED_BY];
+      expect(by, key).toMatch(/^(#|https?:\/\/)/);
+    }
+  });
 });
 
 describe("bootstrap/README.md is self-definitional", () => {
@@ -103,25 +128,43 @@ describe("bootstrap/README.md is self-definitional", () => {
   });
 
   test("each defined term is linked to its definition once, at its first use", () => {
-    for (const term of ["KnowledgeGraph", "Subgraph", "Harness", "Actor", "Role", "Process", "Skill", "Tool"]) {
+    // No Tool: "no tools in bootstrap" (owner, 2026-09-29); a Harness defines it.
+    for (const term of ["KnowledgeGraph", "Subgraph", "Harness", "Actor", "Role", "Process", "Skill"]) {
       const target = `schemas/graph.schema.json#/$defs/${term}`;
       expect(`${term}: ${links.filter((l) => l === target).length}`).toBe(`${term}: 1`);
     }
+  });
+
+  test("every defined term in the prose is a link (owner, 2026-09-29)", () => {
+    // Hand-written prose only: the generated regions (`<!-- kg:… -->`) are
+    // linked by their generator.
+    const text = readme.slice(0, readme.indexOf("<!-- kg:") >= 0 ? readme.indexOf("<!-- kg:") : undefined);
+    const targets = Object.keys(BOOTSTRAP_TERMS).map((key) => ({ key, href: "x" }));
+    expect(unlinkedTerms(text, targets)).toEqual([]);
   });
 
   test("each term also links to its drawing, and the drawing's heading exists", () => {
     // The `[src]` link above opens JSON; a person reads the drawn page. Both
     // are asserted, because a link to a heading that was renamed lands at the
     // top of the page with nothing to say it missed.
+    // A target is a heading OR an explicit `<a id>`. The Terms table uses the
+    // second: the staging site's kramdown gave headings no ids, so a deep link
+    // to a heading there landed at the top of the page.
     const page = readFileSync(join(BOOTSTRAP, "schemas", "README.md"), "utf-8");
-    const headings = new Set(
-      [...page.matchAll(/^#{1,6} (.+)$/gm)].map((m) =>
+    const targets = new Set([
+      ...[...page.matchAll(/^#{1,6} (.+)$/gm)].map((m) =>
         m[1]!.toLowerCase().replace(/[^a-z0-9 -]/g, "").trim().replace(/ /g, "-"),
       ),
-    );
+      ...[...page.matchAll(/<a id="([^"]+)"><\/a>/g)].map((m) => m[1]!),
+    ]);
     const drawn = links.filter((l) => l.startsWith("schemas/README.md#"));
-    expect(drawn.length).toBeGreaterThanOrEqual(8);
-    expect(drawn.map((l) => l.split("#")[1]!).filter((a) => !headings.has(a))).toEqual([]);
+    expect(drawn.length).toBeGreaterThanOrEqual(7);
+    expect(drawn.map((l) => l.split("#")[1]!).filter((a) => !targets.has(a))).toEqual([]);
+    // Every term in the table carries its own anchor, so every term can be linked.
+    for (const key of Object.keys(BOOTSTRAP_TERMS)) {
+      const id = key.replace(/([a-z])([A-Z])/g, "$1 $2").toLowerCase().replace(/ /g, "-");
+      expect(targets.has(id), key).toBe(true);
+    }
   });
 });
 
@@ -205,47 +248,51 @@ describe("bootstrap's graph kinds are its own (bean r3gy, D1)", () => {
     expect(own.filter((k) => !used.has(k))).toEqual([]);
   });
 
-  test("the harness's registry reads bootstrap's sentence, and mints the type in bootstrap's layer", () => {
-    for (const k of own) {
-      const def = BASE_GRAPH_KINDS[k as keyof typeof BASE_GRAPH_KINDS];
-      expect(def, k).toBeDefined();
-      expect(def.summary).toBe(BOOTSTRAP_GRAPH_KINDS[k as keyof typeof BOOTSTRAP_GRAPH_KINDS]);
-      const local = def.type.split("#").pop()!;
-      expect(termLayer(local), `${k} → ${local}`).toBe("bootstrap");
-    }
-  });
 });
 
-describe("every $schema a bootstrap file carries resolves inside bootstrap (bean r3gy, D2)", () => {
-  const schemasDir = join(BOOTSTRAP, "schemas");
-  /** The tags bootstrap's own schemas fix: `properties.$schema.const`. */
-  const owned = new Set<string>();
-  for (const f of readdirSync(schemasDir).filter((f) => f.endsWith(".schema.json"))) {
-    const doc = JSON.parse(readFileSync(join(schemasDir, f), "utf-8")) as {
-      properties?: { $schema?: { const?: string } };
-    };
-    const tag = doc.properties?.$schema?.const;
-    if (tag) owned.add(tag);
-  }
+describe("every $schema a bootstrap file carries is a Node Kind its declaration lists (r3gy D2; nodeSchemas, 2026-09-29)", () => {
+  const decl = JSON.parse(readFileSync(join(BOOTSTRAP, "bootstrap.json"), "utf-8")) as {
+    nodeSchemas?: Record<string, string>;
+  };
+  const kinds = decl.nodeSchemas ?? {};
 
-  test("each tag names a schema in bootstrap/schemas/", () => {
-    const unresolved: string[] = [];
+  test("each file's $schema is declared in bootstrap.json's nodeSchemas", () => {
+    const undeclared: string[] = [];
     const walk = (d: string) => {
       for (const f of readdirSync(d)) {
         const p = join(d, f);
         if (statSync(p).isDirectory()) walk(p);
-        else if (f.endsWith(".json") && !f.endsWith(".schema.json")) {
+        else if (f.endsWith(".json")) {
           const tag = (JSON.parse(readFileSync(p, "utf-8")) as { $schema?: unknown }).$schema;
-          if (typeof tag === "string" && !owned.has(tag)) unresolved.push(`${p.slice(BOOTSTRAP.length + 1)}: ${tag}`);
+          if (typeof tag === "string" && !(tag in kinds)) undeclared.push(`${p.slice(BOOTSTRAP.length + 1)}: ${tag}`);
         }
       }
     };
     walk(BOOTSTRAP);
-    expect(unresolved).toEqual([]);
+    expect(undeclared).toEqual([]);
+  });
+
+  test("a local Node Schema exists inside bootstrap and fixes that very tag", () => {
+    const bad: string[] = [];
+    for (const [tag, where] of Object.entries(kinds)) {
+      if (/^[a-z][a-z0-9+.-]*:\/\//i.test(where)) continue; // a published standard
+      const p = join(BOOTSTRAP, where);
+      if (!p.startsWith(BOOTSTRAP) || !existsSync(p)) {
+        bad.push(`${tag}: ${where} is not a file in bootstrap/`);
+        continue;
+      }
+      const c = (JSON.parse(readFileSync(p, "utf-8")) as { properties?: { $schema?: { const?: string } } }).properties?.$schema?.const;
+      if (c !== tag) bad.push(`${tag}: ${where} fixes ${JSON.stringify(c)}`);
+    }
+    expect(bad).toEqual([]);
   });
 
   test("the two tags that used to name the platform are bootstrap's own", () => {
-    expect(owned.has("model-registry/1.0.0")).toBe(true);
-    expect(owned.has("glossary-ledger/1.0.0")).toBe(true);
+    expect(kinds["model-registry/1.0.0"]).toBe("schemas/model-registry.schema.json");
+    expect(kinds["glossary-ledger/1.0.0"]).toBe("schemas/glossary-ledger.schema.json");
+  });
+
+  test("the declaration shape knows the field", () => {
+    expect(KnowledgeGraphDeclarationSchema.safeParse(decl).success).toBe(true);
   });
 });

@@ -31,6 +31,7 @@ THE EXTRACTION IS A PERSON'S DECISION, AND THE LANE SAYS SO. `Authorise the extr
 
 - **Called by:** no call activity names this process
 - **Calls:** none
+- **Names the `graph-detanglement` skill without calling this process:** [A knowledge graph leaves for its own repositories](kg-separation.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** no docs page section shows this diagram
 - **Skill:** [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html)
 

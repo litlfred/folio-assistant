@@ -299,7 +299,7 @@ export type NsPrefix = keyof typeof NS_PREFIXES;
 export function stubOfNamespace(ns: string): string | undefined {
   // A release segment — `0.1.0` for what a program reads, `v0` for a page —
   // sits between the stub and `ns#` once an instance declares an iriBase
-  // (`release-iri.ts`); it is the version, never the stub.
+  // (`bootstrap-tools/schemas/release-iri.ts`); it is the version, never the stub.
   return /\/([^/]+)\/(?:(?:\d+\.\d+\.\d+|v\d+)\/)?ns#$/.exec(ns)?.[1];
 }
 

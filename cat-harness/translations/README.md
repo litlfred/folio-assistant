@@ -7,9 +7,9 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `translation-sources`, ho
 
 | file | what it is | used by |
 |---|---|---|
-| [`ar/`](ar/) | 103 files | |
-| [`es/`](es/) | 105 files | |
-| [`fr/`](fr/) | 113 files | |
-| [`ru/`](ru/) | 106 files | |
-| [`zh/`](zh/) | 102 files | |
+| [`ar/`](ar/) | 105 files | |
+| [`es/`](es/) | 107 files | |
+| [`fr/`](fr/) | 115 files | |
+| [`ru/`](ru/) | 108 files | |
+| [`zh/`](zh/) | 104 files | |
 <!-- kg:subgraph:end -->

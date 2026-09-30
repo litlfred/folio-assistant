@@ -37,8 +37,8 @@
 import { readFileSync, statSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
-import { instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
-import { gitCorpus } from "../schemas/git-corpus.ts";
+import { knowledgeGraphsIn } from "../schemas/declaration.ts";
+import { gitFiles } from "./git-files.ts";
 import { type ReleaseIris, releaseIris } from "../schemas/release-iri.ts";
 
 /** Text a person or program reads; binaries and lockfiles are never IRI carriers here. */
@@ -77,8 +77,8 @@ export function rewrite(text: string, r: ReleaseIris, from?: string): { text: st
 /** Every instance that declares an `iriBase`, with its release. */
 export function releases(repoRoot: string): { root: string; release: ReleaseIris }[] {
   const out: { root: string; release: ReleaseIris }[] = [];
-  for (const root of instanceRootsIn(repoRoot)) {
-    const r = releaseIris(readDeclaration(root));
+  for (const { root, decl } of knowledgeGraphsIn(repoRoot)) {
+    const r = releaseIris(decl);
     if (r) out.push({ root, release: r });
   }
   return out;
@@ -89,7 +89,9 @@ if (import.meta.main) {
   const check = args.includes("--check");
   const fromAt = args.indexOf("--from");
   const from = fromAt >= 0 ? args[fromAt + 1] : undefined;
-  const repo = repoRootFor(join(import.meta.dir, ".."));
+  // `--repo <dir>`: the checkout to keep in step; this one by default.
+  const repoAt = args.indexOf("--repo");
+  const repo = repoAt >= 0 && args[repoAt + 1] ? args[repoAt + 1]! : join(import.meta.dir, "..", "..");
   const rels = releases(repo);
   if (rels.length === 0) {
     console.log("No instance declares an iriBase; nothing to keep in step.");
@@ -99,7 +101,7 @@ if (import.meta.main) {
     console.error(`--from moves ONE instance's base, and ${rels.length} declare one. Name it by editing only that declaration first.`);
     process.exit(2);
   }
-  const files = gitCorpus(repo);
+  const files = gitFiles(repo);
   if (!files) {
     console.error("git could not list the corpus, so nothing was checked — that is not a pass.");
     process.exit(2);
