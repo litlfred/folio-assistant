@@ -1,11 +1,11 @@
 ---
 # folio-assistant-x6lu
 title: 'goal-review axis 4: ''items only on a branch'' must be compared by bean ID — a stale merge base reported 131 where 1 was real'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T12:20:12Z
-updated_at: 2026-09-24T12:20:12Z
+updated_at: 2026-09-30T00:27:10Z
 parent: folio-assistant-ahvw
 ---
 
@@ -20,5 +20,9 @@ This is the skill's own rule 4 ("a window boundary is an artefact") one level do
 `065p` added to axis 4: *"Compare against `origin/main`, never a bare `main`"*, plus a freshness check on the baseline ref. That closes a stale **local ref**. It does not close this gap. Here the baseline was `origin/main` and fresh, and the error came from `A...B`, which diffs against the **merge base**. For a branch 822 commits behind, the merge base predates 130 beans that main already has. The two traps give the same symptom, an inflated count, from different causes. The fix below belongs beside `065p`'s paragraph, not in place of it.
 
 ## Done when
-- [ ] axis 4 says to compare by bean id against the default branch's store, never by file diff against a merge base
-- [ ] it gives the check (ids on the branch minus ids on main) and says a large file-diff count from a far-behind branch is the stale-base signature
+- [x] axis 4 says to compare by bean id against the default branch's store, never by file diff against a merge base
+- [x] it gives the check (ids on the branch minus ids on main) and says a large file-diff count from a far-behind branch is the stale-base signature
+
+## Summary of Changes
+
+Amended `cat-harness/skills/folio-core/goal-review.md` (and `.claude/commands/goal-review.md` for tjj6) on branch claude/magical-archimedes-4qkfxp-goal-review-gaps; every done-when box addressed in the skill text.

@@ -75,7 +75,7 @@ import { parse as parseYaml } from "yaml";
 
 import { LOCALE_RTL, UN_LOCALES } from "../../schemas/translation.ts";
 import { isTranslatable } from "../../schemas/translation-tools.ts";
-import { siteDirFor } from "../../schemas/cat-harness.ts";
+import { ownDirectoryById, siteDirFor } from "../../schemas/cat-harness.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(HERE, "..", "..");
@@ -83,21 +83,41 @@ const REPO_ROOT = resolve(HERE, "..", "..");
 /**
  * The Jekyll site directory, relative to the instance root.
  *
- * A literal, and a CHECKED one: {@link siteRoot} confirms it by finding
- * `_config.yml` there and reports "could not determine" rather than scanning
- * an empty tree if it is not. It is no longer a literal: `siteDir()` in
- * `schemas/cat-harness.ts` composes it from the instance's own `stub`, so
- * `gen-docs-pages.ts`, `gen-skill-docs.ts`, `gen-schema-docs.ts` and
- * `translation-qa-sweep.ts` all read one answer rather than five copies.
+ * **Read from the instance's own declaration** (`cat-harness.json`, entry id
+ * `docs`), with the composed `siteDirFor()` as the fallback when nothing is
+ * declared. That is bean `x4a6`'s last box: *"`translation-index.ts` takes its
+ * root from the declaration instead of `SITE_DIR`."*
  *
- * It is not in `cat-harness.json` because `docs/` would have to be declared
- * with the `folio` kind, which is registered by CORE rather than the harness.
- * Measured 2026-09-19: adding that entry broke `harness:dirs`,
- * `kg:schema:check` and `docs:harness:check` plus 9 tests, because those
- * readers do not import core's registration. That is issue #223's split to
- * land, not translation's. Bean `folio-assistant-x4a6`.
+ * ## Why the id lookup, and not the path
+ *
+ * This instance declares **two** entries whose `path` is `docs/` — `docs`
+ * (instance-scoped, resolving under `cat-harness/`) and `root-docs`
+ * (`scope: "repository"`, resolving under the REPOSITORY root). They are
+ * different directories wearing one path. {@link ownDirectoryById} excludes
+ * the repository-scoped one, so this resolves to the instance's own.
+ *
+ * Everything here is instance-relative — `join(instanceRoot, SITE_DIR)` below,
+ * and `INDEX_PATH` — so the absolute path the lookup returns is made relative
+ * again rather than leaked.
+ *
+ * ## The comment this replaces was stale, and said the opposite
+ *
+ * It read: *"It is not in `cat-harness.json` because `docs/` would have to be
+ * declared with the `folio` kind, which is registered by CORE rather than the
+ * harness. Measured 2026-09-19: adding that entry broke `harness:dirs`,
+ * `kg:schema:check` and `docs:harness:check` plus 9 tests."*
+ *
+ * Both entries are in `cat-harness.json` now, and the way they got there is the
+ * point: they declare `graphKinds: ["docs"]`, not `folio`. The measurement was
+ * true — declaring `docs/` as `folio` DID break those three checks, because
+ * `folio` is registered by core. The CONCLUSION drawn from it, that the
+ * directory therefore could not be declared at all, was wrong: it needed a
+ * different KIND, not the split to land first. A measurement of one option is
+ * not a measurement of the question.
  */
-export const SITE_DIR = siteDirFor(REPO_ROOT);
+const DECLARED_SITE_DIR = ownDirectoryById(REPO_ROOT, "docs", siteDirFor(REPO_ROOT));
+
+export const SITE_DIR = relative(REPO_ROOT, DECLARED_SITE_DIR);
 
 /** Where the generated index lands, relative to the instance root. */
 export const INDEX_PATH = join(SITE_DIR, "_data", "translations.json");

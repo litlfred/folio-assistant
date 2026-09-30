@@ -2,7 +2,7 @@
 /**
  * Validate every committed FHIR IG artefact index against its schema.
  *
- * @module scripts/check-artifact-index
+ * @module folio-assistant-core/scripts/check-artifact-index
  * @covers fhir-artifact-index
  *
  * ## Why this exists beside `ingest:ig:check`
@@ -35,8 +35,8 @@
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-import { FhirArtifactIndexSchema, materializationCensus } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
-import { declarationPathIn, repoRootFor } from "../schemas/cat-harness.js";
+import { FhirArtifactIndexSchema, materializationCensus } from "../schemas/fhir-artifact-index.js";
+import { declarationPathIn, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
 
 const ROOT = repoRootFor(join(import.meta.dir, ".."));
 

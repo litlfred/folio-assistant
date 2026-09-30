@@ -2,7 +2,7 @@
 /**
  * Record a fixity digest for every materialized FILE that has none.
  *
- * @module cat-harness/scripts/backfill-materialized-fixity
+ * @module folio-assistant-core/scripts/backfill-materialized-fixity
  *
  * ## Why this exists
  *

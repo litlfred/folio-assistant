@@ -221,6 +221,84 @@ deciding that per file is a bigger job than drawing subgraph boundaries.
 Claimed by branch `claude/yj6r-glossary-cluster` for the GLOSSARY cluster only, the last of the eight. No holder note existed on `main` when this was taken — `beans:claim` refused with `already-claimed` and no holder, which cannot tell a live sibling from an abandoned claim — so the open-PR list was read first: PR #1535 holds the ingest/materialisation tranche and nothing covered glossary. Recorded here so the next session does not have to repeat that check.
 
 
+## Summary of Changes
+
+### Cluster 2 of 8 — ingest/materialisation. Escapes 12 -> 8.
+
+Landed on `claude/yj6r-ingest-materialisation`. Tranche 1 (`external-schema`)
+had already taken the count 15 -> 12 on `main`; this takes it 12 -> 8, and all
+four of the cluster's escapes are gone. **No schema moved down.** Both
+`schemas/materialization.ts` and `schemas/fhir-artifact-index.ts` stayed in
+`folio-assistant-core/schemas/`, which is the whole of §"The cheap fix works and
+is WRONG".
+
+    cat-harness/scripts/cache-index.ts                     -> folio-assistant-core/scripts/
+    cat-harness/scripts/check-materialized-fixity.ts       -> folio-assistant-core/scripts/
+    cat-harness/scripts/backfill-materialized-fixity.ts    -> folio-assistant-core/scripts/
+    cat-harness/scripts/check-artifact-index.ts            -> folio-assistant-core/scripts/
+    cat-harness/scripts/ingest-ig-artifacts.ts             -> folio-assistant-core/scripts/
+    cat-harness/scripts/tests/cache-index.test.ts          -> folio-assistant-core/scripts/cache-index.test.ts
+    cat-harness/scripts/tests/materialized-fixity.test.ts  -> folio-assistant-core/scripts/materialized-fixity.test.ts
+    cat-harness/scripts/tests/ingest-ig-invocation.test.ts -> folio-assistant-core/scripts/ingest-ig-invocation.test.ts
+
+Tests sit BESIDE their subjects in `folio-assistant-core/scripts/`, which is
+that instance's existing convention (`sample-import-run.test.ts`), not in a
+`tests/` subdirectory as in `cat-harness/`.
+
+### The partition had already adjudicated all five, and that is the evidence
+
+The cluster was not decided by reading names. `scripts/partition/instance-rules.ts`
+on `main` classified `check-artifact-index.ts` and `ingest-ig-artifacts.ts`
+`repo: "core"` in as many words — *"a script is not automatically tooling-side,
+and this one's SUBJECT is content"* — and `cache-index.ts`,
+`check-materialized-fixity.ts` and `backfill-materialized-fixity.ts` sat in the
+same `core` block. So the MODULE axis had already ruled; only the DIRECTORY
+disagreed, which is exactly why `check:partition` read 0 while 4 escapes stood.
+The move makes the layout state what the rule already said, and the now-dead
+`exact` entries were removed with their reasoning kept in place as a note — a
+rule naming a path its own scan can no longer see fires on nothing while reading
+as an adjudication.
+
+### Two beyond the four named, and why
+
+`check-materialized-fixity.ts` and `backfill-materialized-fixity.ts` were not in
+the cluster list. They moved because `materialized-fixity.test.ts` — which WAS —
+tests them, and a test does not leave its subject to make a count fall. The
+counter-argument was weighed: `check:materialized-fixity` guards
+`cat-harness/skills/remote/`'s own materialized packages, so after a repository
+cut cat-harness would carry no fixity gate over its own bytes. It loses, because
+it is a generic property of every core-classified checker that scans a lower
+instance (`check-undeclared-files.ts` is the same shape), not a fact about this
+file — and this repository's standing rule is that a checker's layer follows its
+SUBJECT SCHEMA, which here is core's `materialization.ts`. `backfill` writes a
+`fixity` object whose shape core owns, so it is a consumer of that schema in
+substance even though it constructs the literal rather than importing it.
+
+### Measured, before -> after
+
+    escape imports under cat-harness/       12 -> 8   (all 4 of this cluster)
+    check:partition wrong-direction          0 -> 0   (blocking gate; unmoved)
+    check:reference-direction wrong-dir    798 -> 798 in 213 -> 212 files
+    PENDING entries failing the check        1 -> 1   (see below)
+
+`check:reference-direction` **exits 1 on `origin/main` unchanged**, measured in a
+clean worktree at `16c41921e13`: `cat-harness/scripts/gen-object-model-uml.ts`
+*"now names ONE instance"*, a leftover of tranche 1. That failure is untouched
+here and is NOT this branch's. This branch's own PENDING entry for
+`check-artifact-index.ts` stopped qualifying once the file moved and was deleted,
+as the checker's own message instructs.
+
+### One coverage loss, reported rather than papered over
+
+`root-scan-census` is INSTANCE-scoped (`INSTANCE_ROOT/scripts`, sidecar under
+`cat-harness/test/results/`), so `check-artifact-index.ts` left its census:
+68 enumerating scripts -> 67, and the `seeded-at-root-not-git-aware` family
+3 -> 2. That is correct for cat-harness — the file is no longer its script — but
+`folio-assistant-core` runs no equivalent census, so the row is now counted
+nowhere. Same shape as `p11x` one axis over. Not fixed here; naming it so the
+next tranche does not read the smaller number as an improvement.
+
+
 ## Summary of Changes — the GLOSSARY cluster, 2026-09-30
 
 Branch `claude/yj6r-glossary-cluster`, PR #1541, issue #1540. The eighth and

@@ -267,3 +267,63 @@ export function corpusPredicate(repoRoot: string): (abs: string) => boolean {
   const tracked = new Set(corpus.map((f) => resolve(repoRoot, f)));
   return (abs: string): boolean => !abs.startsWith(`${repoRoot}/`) || tracked.has(abs);
 }
+
+/**
+ * Top-level directory names under `root` that GIT accounts for.
+ *
+ * The instance-discovery shape, and it is NOT the recursive one `gitFiles`
+ * serves. Three scanners list the repository's top level to find instances —
+ * `check-artifact-index`, `gen-default-boards`, `sync-docs-harness` — each
+ * behind the same hand-written filter: skip dot-names and `node_modules`.
+ *
+ * Measured 2026-09-27 (bean `qrlc`), on the tree that filter actually sees:
+ * **26 names, and `_kg` is the first of them.** `_kg/` is gitignored
+ * (`.gitignore:102`) and holds this container's knowledge-graph exports, so a
+ * contributor who has run one discovers an "instance" that a clean checkout
+ * does not have.
+ *
+ * ## Latent today, and by a DIFFERENT mechanism from `xd1g`'s eleven
+ *
+ * The committed output carries **0** mentions of `_kg`, because a later filter
+ * drops it: it holds no declaration, so `harnessesOwedABoard` and
+ * `harnessTiles` never keep it. The walk is contaminated and the artefact is
+ * not.
+ *
+ * That is worth stating precisely rather than filed under "same bug". `xd1g`'s
+ * eleven were saved by their skip lists happening to name the generated trees
+ * that exist; these three are saved by a downstream predicate. Both are luck,
+ * but only one of them is luck a reader can see from the walk — which is the
+ * argument for asking git at the walk rather than trusting the filter behind
+ * it.
+ *
+ * Derived from the file list rather than a separate `git ls-tree`, so there is
+ * ONE question asked of git in this module and the answers cannot disagree. A
+ * directory holding no file git accounts for is not a directory git accounts
+ * for, which is the same rule {@link gitFiles} applies one level down.
+ */
+export function gitTopLevelDirs(root: string): { names: string[]; source: "git" | "walk" } {
+  const tracked = gitCorpus(root);
+  if (tracked === undefined) {
+    // `gates` must run where git cannot be asked, and the fallback is REPORTED
+    // rather than silent — a list taken from a bare walk contains whatever is
+    // on the machine and has to be legible as such.
+    return {
+      names: readdirSync(root, { withFileTypes: true })
+        .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
+        .map((d) => d.name)
+        .sort(),
+      source: "walk",
+    };
+  }
+  const names = new Set<string>();
+  for (const abs of tracked) {
+    const first = relative(root, abs).split(sep)[0];
+    // A top-level FILE has no directory segment, and a dot-name is excluded
+    // here for the same reason each caller excluded it before: `.github/` and
+    // `.claude/` are tracked content but they are not instances.
+    if (first !== undefined && first !== "" && !first.startsWith(".") && relative(root, abs) !== first) {
+      names.add(first);
+    }
+  }
+  return { names: [...names].sort(), source: "git" };
+}

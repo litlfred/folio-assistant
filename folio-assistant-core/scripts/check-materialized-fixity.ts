@@ -2,7 +2,7 @@
 /**
  * Materialized content is READ-ONLY, and this is what enforces it.
  *
- * @module cat-harness/scripts/check-materialized-fixity
+ * @module folio-assistant-core/scripts/check-materialized-fixity
  * @covers computed — it follows every node whose `materialization.state` is `materialized`,
  *   which is a property of NODES rather than of kinds
  *
@@ -70,7 +70,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { declarationPathIn } from "../schemas/cat-harness.js";
+import { declarationPathIn } from "../../cat-harness/schemas/cat-harness.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 

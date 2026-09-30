@@ -139,7 +139,12 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           { name: "readmes", schema: t("RepoPath"), description: "`<directory>/README.md` for each declared directory, and the QA record." },
         ],
       },
-      satisfies: ["docs-generation"],
+      // `upload-routes` too, and not as a courtesy: `uploads/README.md` is
+      // one of the READMEs this writes and it lists EVERY file in the queue,
+      // so any arrival stales it and `readme:subgraphs:check` is a blocking
+      // step in `code-quality-gates.yml`. This is the mechanism that
+      // discharges that obligation, whichever route placed the file.
+      satisfies: ["docs-generation", "upload-routes"],
       requires: { runtime: ["bun"], network: false },
     }),
     defineTool({
@@ -314,6 +319,43 @@ export function tools(baseUrl?: string): ToolDefinition[] {
           "It decides nothing beyond the raster. WHICH documents get a cover, where the file lands, and what the catalogue must say about the derivation are the instance's — see `who-iris/scripts/gen-covers.ts`, which refuses to write bytes for a THUMBNAIL that does not declare itself derived. It also cannot tell you whether the page it rendered IS the cover; it can only tell you it is page 1.",
         cost:
           "One PyMuPDF wheel, no network at run time, and a few milliseconds per page. Deterministic — identical input gives identical bytes, which is what lets a caller gate on `--check` rather than re-deciding.",
+      },
+    }),
+
+    // ── The step BEFORE ingestion, and it had no Tool until 2026-09-30.
+    //
+    // Owner, 2026-09-29: "generate documentation from Tool documentation of
+    // the upload Task/Skill as first step of document ingestion process."
+    // The chain could not be built, because its first link was missing:
+    // `document-ingestion.bpmn` began at an EVENT ("a file lands in
+    // uploads/"), the ingest Tools below both type their first input as a
+    // file already present, and nothing named the act of putting it there.
+    // `Task_Place` is that step, `upload-routes` governs it, and this is its
+    // one mechanism.
+    defineTool({
+      id: "upload-url",
+      title: "Where to drop a file — the queue's upload URL",
+      description:
+        "Compose the forge URL a person can drop a file at, from the instance's own declaration: the `uploads` graph's directory, resolved against the ROOT its scope names, expressed relative to the repository, and appended to the origin remote as GitHub's `/upload/<branch>/<path>`. Every failure is NAMED and no URL is guessed — no declaration, no declared `uploads` graph, a declared queue absent from disk, no `origin` remote, and a non-github.com remote each return a reason and a remedy instead. It exists because the obvious composition mints a live 404: the declared path `uploads/` is relative to the INSTANCE and a forge URL needs it relative to the REPOSITORY, so pasting the declared path drops the `cat-harness/` segment. Owner, 2026-09-20, on the hand-written form: \"were it to exist, but it doesmt on main!!!!!\"",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/upload-url.ts" },
+      requires: { runtime: ["bun"], network: false },
+      io: {
+        inputs: [
+          { name: "branch", schema: t("Branch"), required: false, arg: { positional: 0 }, description: "The branch the upload form targets. Defaults to `main`, which is what a forge's web upload form targets when nobody says otherwise — pass the working branch to send somebody at a pull request's head instead, which is the difference between a commit CI judges and one it never sees." },
+        ],
+        outputs: [
+          { name: "url", schema: t("Text"), description: "The upload URL on stdout, exit 0 — or, on stderr and exit 1, the reason it could not be composed and the remedy for that reason. Never a guessed URL: a URL is believed, and somebody sent to a wrong one cannot tell it from an empty directory." },
+        ],
+      },
+      satisfies: ["upload-routes", "content-acquisition"],
+      selection: {
+        when:
+          "You are about to tell somebody where to put a file, in any channel. Reach for it every time rather than when you are unsure — a hand-written path is right until a directory moves, and the failure is silent on the writing side and a 404 on the reading side. It is also the resolver for the question \"which queue\": this repository declares TWO, `uploads/` at the root (the `folio-assistant` instance) and `cat-harness/uploads/` (the `cat-harness` instance), and the answer is whichever instance root you pass, never a literal.",
+        limits:
+          "It answers WHERE, and nothing else. It does not upload, does not check whether the person has write access, and cannot tell you which of the two declared queues should own a given file — that is undecided and `upload-routes` says so rather than picking. The `/upload/<branch>/<path>` form is GitHub's, so another forge gets a named refusal rather than a guess. And the URL it hands back opens the route with the FEWEST guarantees: the web form has no working tree, so no pre-commit hook and no generator run happen on it, and everything `upload-routes` lists has to be discharged afterwards from a checkout.",
+        cost:
+          "One read of the declaration and one of the git remote; no network at run time and nothing installed. Measured over `origin/main` on 2026-09-30, the cost of NOT using it: of 16 `Add files via upload` commits, 10 put their files at the repository root, outside any declared queue, where every consumer that resolves the queue from the declaration reads them as absent.",
       },
     }),
 
@@ -1198,6 +1240,30 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // either is not served by the other. Complementary, so no
       // `alternativeTo` — the field's own note warns against deriving that
       // relation from a shared skill.
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun"], network: false },
+    }),
+
+    // Third sibling of the two above, and the one whose subject is a JOIN
+    // rather than a directory. `schema-docs` renders one page per skill
+    // contract and `skill-docs` one per instruction body — each walks a
+    // directory and publishes what it finds. This one publishes a RELATION:
+    // the Tools that implement whichever activity a named process reaches
+    // first. Nothing about which step, which skill or which Tools is written
+    // into it, so the page follows the diagram instead of restating it.
+    defineTool({
+      id: "upload-step-docs",
+      title: "The upload step, from its Tools",
+      description:
+        "Render document ingestion's FIRST step as a reference page, generated from the Tool nodes that implement it: the step, its lane and role, its skill and every Tool whose `satisfies` names that skill, with each Tool's description, installation, invocation, typed ports and selection triple. Everything but the process file's own path is derived — the start event, the activity its single outgoing flow reaches, and that activity's skill — so a step inserted, renamed or re-pointed moves the page rather than staling a literal. Refuses rather than emitting a partial page when the start event flows nowhere or to more than one place, when the first step is not an activity, when it names no skill or several, or when NO Tool satisfies that skill — the last because an empty page reads as a documented absence of mechanism, which is a finding rather than a document.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/gen-upload-step-docs.ts" },
+      io: {
+        inputs: [
+          { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed page and fail if stale, instead of writing." },
+        ],
+        outputs: [{ name: "page", schema: t("RepoPath"), description: "`docs/reference/upload-step/index.md`, under the instance's declared site directory. Never hand-edited." }],
+      },
       satisfies: ["docs-generation"],
       requires: { runtime: ["bun"], network: false },
     }),

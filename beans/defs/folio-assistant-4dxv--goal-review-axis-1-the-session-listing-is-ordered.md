@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4dxv
 title: 'goal-review axis 1: the session listing is ordered by CREATION, so a window filter must page until creation predates the window'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T12:20:12Z
-updated_at: 2026-09-24T12:20:12Z
+updated_at: 2026-09-30T00:27:10Z
 parent: folio-assistant-ahvw
 ---
 
@@ -16,5 +16,9 @@ Found 2026-09-24 in a 1-day goal review. The rule concerned is `goal-review` §"
 Two more practical facts belong in the skill: the listing is large (~75 KB per 40 sessions), so it must be parsed, not read; and the JSON sits inside an untrusted wrapper line.
 
 ## Done when
-- [ ] axis 1 says the listing is creation-ordered, and when to stop paging (a whole page created before the window opened)
-- [ ] it names `status_bucket` / `session_status` and `task_summary` as the fields to read, and says a REQUIRES_ACTION summary is a held question to quote
+- [x] axis 1 says the listing is creation-ordered, and when to stop paging (a whole page created before the window opened)
+- [x] it names `status_bucket` / `session_status` and `task_summary` as the fields to read, and says a REQUIRES_ACTION summary is a held question to quote
+
+## Summary of Changes
+
+Amended `cat-harness/skills/folio-core/goal-review.md` (and `.claude/commands/goal-review.md` for tjj6) on branch claude/magical-archimedes-4qkfxp-goal-review-gaps; every done-when box addressed in the skill text.

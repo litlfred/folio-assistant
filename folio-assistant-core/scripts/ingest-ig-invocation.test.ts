@@ -30,14 +30,14 @@
  * the index and its remote source and exits 1; a genuine misinvocation still
  * gets the usage string and exits 2.
  *
- * @module cat-harness/scripts/tests/ingest-ig-invocation.test
+ * @module folio-assistant-core/scripts/ingest-ig-invocation.test
  */
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-const REPO = resolve(import.meta.dir, "..", "..", "..");
-const SCRIPT = "cat-harness/scripts/ingest-ig-artifacts.ts";
+const REPO = resolve(import.meta.dir, "..", "..");
+const SCRIPT = "folio-assistant-core/scripts/ingest-ig-artifacts.ts";
 
 const run = (args: string[]) => {
   const p = Bun.spawnSync(["bun", "run", SCRIPT, ...args], { cwd: REPO });
