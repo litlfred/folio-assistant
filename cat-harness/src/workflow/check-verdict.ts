@@ -213,6 +213,18 @@ export interface OwedSummary {
 /** `mergeStateForHead`'s answer, re-declared so this module imports no script. */
 export type HeadMergeState = "not-a-pr-head" | "conflicted" | "mergeable" | "unknown";
 
+/** The one story for a conflicted head, however many runs it has registered. */
+function conflictedVerdict(lead: string): Verdict {
+  return {
+    state: "undetermined",
+    names: [],
+    because:
+      `${lead}, but the head is CONFLICTED with its base — no ` +
+      "`pull_request` run is published for it at all (bean `52cz`), so the missing checks " +
+      "will never arrive. Merge the base in. NOT a pass",
+  };
+}
+
 /**
  * The runs verdict, re-asked against whether the set was COMPLETE.
  *
@@ -231,6 +243,15 @@ export function verdictForCommit(
   owed: OwedSummary | undefined,
   merge: HeadMergeState | undefined,
 ): Verdict {
+  // ONE non-pass is re-told, never re-decided: NO runs at all on a CONFLICTED
+  // head. It is `undetermined` either way, but "nobody ran a check" and "no
+  // check will EVER run until the base is merged in" are different
+  // instructions. Measured 2026-09-30: `ci:watch --pr 1677` printed the generic
+  // "no check runs" for a PR that REST called `dirty`. The state is unchanged,
+  // so `fail` and `pending` are still never touched.
+  if (runs.state === "undetermined" && runs.names.length === 0 && merge === "conflicted") {
+    return conflictedVerdict("no check has run on this head");
+  }
   if (runs.state !== "pass") return runs;
 
   // `conflicted` is checked before `missing` even though it implies it. A
@@ -239,16 +260,7 @@ export function verdictForCommit(
   // `refs/pull/N/merge`, and a `pull_request` run checks that ref out, so the
   // absent checks are not slow, they are NEVER GOING TO RUN. That is a
   // different instruction to the reader, and the more actionable one.
-  if (merge === "conflicted") {
-    return {
-      state: "undetermined",
-      names: [],
-      because:
-        "every registered run is clean, but the head is CONFLICTED with its base — no " +
-        "`pull_request` run is published for it at all (bean `52cz`), so the missing checks " +
-        "will never arrive. Merge the base in. NOT a pass",
-    };
-  }
+  if (merge === "conflicted") return conflictedVerdict("every registered run is clean");
   if (merge === undefined) {
     return {
       state: "undetermined",

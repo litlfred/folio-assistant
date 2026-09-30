@@ -218,6 +218,10 @@ twice without a word for it: `who-iris` taking three items out of a 361.55 GB
 catalogue, and `bootstrap` fetching a harness and landing it locally, with
 `upstream-pins.json` as half of that second one's refresh.
 
+All four diagrams below live in `large-datasets/processes/`, not in
+`cat-harness/processes/`: 25 of their steps name a skill only `large-datasets` holds,
+and cat-harness depends only on `bootstrap` (bean `cjvs`, 2026-09-30).
+
 | Diagram | Answers |
 |---------|---------|
 | `materialize-remote.bpmn` | May we hold a local copy, what does holding it cost, and for what purpose — `working` or `archival`? Five gates, three states, and a refusal leaves the node `referenced` rather than failing |

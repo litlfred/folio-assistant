@@ -226,7 +226,6 @@
       "Process_Editing",
       "Process_Publication"
     ],
-    "Process_CopyOutMaterialized": [],
     "Process_CRDM_Close": [],
     "Process_CRDM_DataModel": [],
     "Process_CRDM_Deliver": [
@@ -292,7 +291,6 @@
     "Process_KgToPortal": [],
     "Process_L2Dak": [],
     "Process_L3Fhir": [],
-    "Process_MaterializeRemote": [],
     "Process_MethodologyFromSource": [
       "Process_Ingestion",
       "Process_RelatedWork"
@@ -305,9 +303,6 @@
     "Process_PublishAlert": [],
     "Process_PublishVerification": [],
     "Process_QaReportSigning": [],
-    "Process_RefreshMaterialized": [
-      "Process_Adjudication"
-    ],
     "Process_RelatedWork": [],
     "Process_RepoHealth": [],
     "Process_CodeReview": [],
@@ -319,10 +314,6 @@
       "Process_CodeReview",
       "Process_NarrativeCodeReview",
       "Process_NarrativeReview"
-    ],
-    "Process_SampleImport": [
-      "Process_MaterializeRemote",
-      "Process_RefreshMaterialized"
     ],
     "Process_SessionStateMachine": [],
     "Process_RenderLog": [],
@@ -345,6 +336,15 @@
       "Process_OptionsAnalysis"
     ],
     "Process_DeepDocumentResearch": [],
+    "Process_CopyOutMaterialized": [],
+    "Process_MaterializeRemote": [],
+    "Process_RefreshMaterialized": [
+      "Process_Adjudication"
+    ],
+    "Process_SampleImport": [
+      "Process_MaterializeRemote",
+      "Process_RefreshMaterialized"
+    ],
     "Process_DIIG": []
   },
   "themeArt": {
