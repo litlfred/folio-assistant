@@ -7,6 +7,14 @@
   "source": "Tools of fhir-harness",
   "terms": [
     {
+      "id": "build-ig-site",
+      "prefLabel": "Stage one IG as its own just-the-docs Jekyll site",
+      "definition": "Turn an IG source repository into ONE Jekyll source for just-the-docs, as the IG Publisher builds one IG per site: `input/pagecontent` pages with title, parent and order from `sushi-config.yaml` `pages:`, the files the Publisher resolves `{% include %}` against, images, `_data/fhir.json` from `ig-site-data`, and a `_config.yml`. The pages render unchanged, `{{ site.data.fhir.* }}` included (bean `bamf`, owner's choice of one site per IG).",
+      "notation": "build-ig-site",
+      "source": "fhir-harness/tools/index.ts#build-ig-site",
+      "status": "candidate"
+    },
+    {
       "id": "ig-site-data",
       "prefLabel": "Populate site.data.fhir for a just-the-docs IG render",
       "definition": "Write the IG Publisher's Jekyll variables (`site.data.fhir.ig.*`, `packageId`, `canonical`) for ONE implementation guide, from `sushi-config.yaml` or a published IG's `fhir-artifact-index`, so pages written for the Publisher render on just-the-docs unchanged. fhir-harness declares `site.data` as a pass-through Liquid prefix; this is what Jekyll then reads (bean `bamf`).",

@@ -5,6 +5,7 @@
   "repository": "litlfred/cat-harness",
   "livesAt": { "repository": "litlfred/folio-assistant", "path": "cat-harness" },
   "version": "0.1.0",
+  "iriBase": "https://litlfred.github.io/cat-harness/",
   "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs. Owner, 2026-09-21: \"harnesses should list the names (they should be named in schmeas, e.g. cat-boostrap should be named 'Boostrap', f-a => Folio Assistant, cat-harness => C@T Harness)\". `name` stays the machine identifier that filenames, `needs` edges and `declaredBy` resolve against; `title` is what a reader sees and nothing resolves against. Bean t3n8. THIS ONE WAS WRONG RATHER THAN ABSENT: it declared `title: \"folio-assistant\"`, the ROOT instance's name, so two instances carried one title and `disambiguate()` correctly qualified this tab to \"folio-assistant (cat-harness)\" — the label the owner reported. The disambiguator behaved as designed; the declaration was the defect.",
   "title": "C@T Harness",
   "description": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-harness\n\n c@t-harness",
@@ -557,7 +558,7 @@
       "readOnly": false,
       "readOnlyBasis": "NOT frozen, and the exception is worth stating. Most of this graph is authored here and edited every day. Since issue #556 it also holds the skill packages synced from a remote package at a pinned commit: each carries its own `materialization.json` with a sha256 per file, so `check:materialized-fixity` already fails an edit in place, file by file. Freezing the whole directory because some packages in it are materialized would freeze the skills this repository writes.",
       "path": "skills/",
-      "dependents": "skip",
+      "dependents": "reproduce",
       "description": "The knowledge graph. Skill packages, and the four other node kinds that point at them: `roles/roles.json` (a role IS a BPMN swimlane, and carries the skills its lane's activities need), `workflows/*.bpmn` + `workflows/decisions/*.dmn` (the processes those roles act in, reached through the skill that describes them), `requirements/*.json` (conformance obligations whose `satisfiedBy` names the skill or capability discharging them), `permissions/permissions.json` (what an actor may DO in any lane, as opposed to what its lane's role knows), Its audit verdicts are NOT here: they moved to the `qa` tree on 2026-09-19, because a verdict is a QA reviewer's output and placement follows provenance. Its id is `skills`, so its qualified name is `cat-harness.skills`; it was `cat-harness` until 2026-09-23 (bean iwtn), and `resolveDirectories` still reads that id as this one. Ids are stable across a relocation, paths are not. The `skills` graph does NOT owe a visualiser: `owesVisualiser` is `!renderable && holds !== \"content\"`, and `skills` is `content` — *\"a graph that stands on its own does not need a viewer to be legible\"*. So no gate was failing. What WAS wrong is that the viewer already existed and nothing declared it: `docs-auto` renders one sub-page per skills directory, and `graph-tiles.undeclaredProjections` lists exactly a directory with a published page and no declared visualisation — so all seven read as \"no published viewer\" in the navbar tiles while being rendered the whole time. `tools` is the same `content` kind and has declared one all along, which is the precedent: declaring a visualiser for a content kind is a courtesy the corpus already extends, not an obligation this invents.",
       "graphKinds": [
         "skills"
@@ -953,6 +954,16 @@
       "description": "The `fhir-harness` instance's instruction bodies -- the FHIR IG layer's two packages, `fhir-ig-base` (build pipeline, publisher fork and reduction, Jekyll render) and `fhir-client` (client operations, SMART launch). Declared here for the reason `bootstrap-skills` above gives, and the id is deliberately the SAME one `fhir-harness/fhir-harness.json` uses for the same directory: where a sibling instance's id does not collide with one of this instance's own, reusing it keeps one name on one directory. Measured 2026-09-27 (bean `3x2o`): `fhir-client-operations.md` and `smart-launch.md` were committed under `docs/reference/skill-instructions/` and produced by NO source, so they were orphans no re-run could refresh -- 280 committed against 278 produced -- while the four `fhir-ig-base` bodies had never been published at all.",
       "graphKinds": [
         "skills"
+      ]
+    },
+    {
+      "id": "large-datasets-processes",
+      "path": "large-datasets/processes/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The `large-datasets` subgraph's BPMN -- `materialize-remote`, `refresh-materialized`, `copy-out-materialized` and `sample-import`, moved out of cat-harness/processes/ on 2026-09-30 (bean `cjvs`, issue #1605) because their steps name skills cat-harness cannot reach. Declared in large-datasets.json as that instance's own `processes` graph, and here as well, repository-scoped, for the reason `folio-assistant-core-processes` is: the consumers that scan for diagrams run from this root, and `workflowDirs` resolves only from a DECLARED directory (bean `g43o`).",
+      "graphKinds": [
+        "processes"
       ]
     },
     {

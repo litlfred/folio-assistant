@@ -28,7 +28,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { relative, resolve, sep } from "node:path";
 
-import { readDeclaration } from "../schemas/cat-harness.js";
+import { instanceDirectories, readDeclaration } from "../schemas/cat-harness.js";
 import type { z } from "zod";
 
 import { resolveKindValidator, resolveNodeSchemas, stripAnnotations } from "../schemas/kind-validator.js";
@@ -77,7 +77,10 @@ export async function validatePath(filePath: string, root: string): Promise<Verd
   if (!decl) {
     return { path: filePath, state: "undetermined", reason: `no declaration under ${root}` };
   }
-  const kind = kindForPath(filePath, root, decl.directories ?? []);
+  // Own entries AND those declared from within (bean `cmsl`): a voice file
+  // under `skills/voices/` classified as `skills`, or as nothing, the moment
+  // `voices` moved into `skills/skills.json` (measured 2026-09-30, bean `2j2r`).
+  const kind = kindForPath(filePath, root, instanceDirectories(root, decl));
   if (!kind) {
     return {
       path: filePath,

@@ -28,6 +28,7 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
     selection [0..1] : object
     requires [0..1] : object
     maintains [0..*] : Maintain[]
+    downstream [0..1] : object
     renders [0..*] : string[]
   }
 }
@@ -41,6 +42,20 @@ package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {
     by [1] : baseline | agent | human
     reason [0..1] : string
   }
+  class "Verdict" as fhir_harness_qa_kg_qa_v1_Verdict <<json: KgQaReportSchema>> #f4e6e6 {
+    rule [1] : string
+    result [1] : pass | fail | n/a
+    note [0..1] : string
+  }
+  class "Voice_review" as fhir_harness_qa_kg_qa_v1_Voice_review <<json: KgQaReportSchema>> #f4e6e6 {
+    voice [1] : string
+    instance [1] : string
+    skill_hash [1] : string
+    voice_hash [1] : string
+    by [1] : agent | human
+    at [1] : string
+    verdicts [0..*] : Verdict[]
+  }
   class "kg-qa/v1" as fhir_harness_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
     subject [1] : object
@@ -48,6 +63,7 @@ package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {
     criteria [1] : map<object>
     totals [1] : map<number>
     pair_attestations [0..*] : Pair_attestation[]
+    voice_reviews [0..*] : Voice_review[]
   }
   class "kg-qa-manifest/v1" as fhir_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa-manifest/v1'
@@ -57,6 +73,8 @@ package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {
 
 fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_Maintain : maintains
 fhir_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" fhir_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
+fhir_harness_qa_kg_qa_v1_Voice_review *-- "0..*" fhir_harness_qa_kg_qa_v1_Verdict : verdicts
+fhir_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" fhir_harness_qa_kg_qa_v1_Voice_review : voice_reviews
 ' grid: portrait, 2 column(s) — pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_qa
 pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_qa
 @enduml

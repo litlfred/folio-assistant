@@ -188,6 +188,20 @@ package "who-iris/qa" as pkg_who_iris_qa <<qa>> {
     by [1] : baseline | agent | human
     reason [0..1] : string
   }
+  class "Verdict" as who_iris_qa_kg_qa_v1_Verdict <<json: KgQaReportSchema>> #f4e6e6 {
+    rule [1] : string
+    result [1] : pass | fail | n/a
+    note [0..1] : string
+  }
+  class "Voice_review" as who_iris_qa_kg_qa_v1_Voice_review <<json: KgQaReportSchema>> #f4e6e6 {
+    voice [1] : string
+    instance [1] : string
+    skill_hash [1] : string
+    voice_hash [1] : string
+    by [1] : agent | human
+    at [1] : string
+    verdicts [0..*] : Verdict[]
+  }
   class "kg-qa/v1" as who_iris_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
     subject [1] : object
@@ -195,6 +209,7 @@ package "who-iris/qa" as pkg_who_iris_qa <<qa>> {
     criteria [1] : map<object>
     totals [1] : map<number>
     pair_attestations [0..*] : Pair_attestation[]
+    voice_reviews [0..*] : Voice_review[]
   }
   class "kg-qa-manifest/v1" as who_iris_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa-manifest/v1'
@@ -212,6 +227,8 @@ who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who
 who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" who_iris_who_iris_uploads_folio_intake_v1_File : files
 who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
 who_iris_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" who_iris_qa_kg_qa_v1_Pair_attestation : pair_attestations
+who_iris_qa_kg_qa_v1_Voice_review *-- "0..*" who_iris_qa_kg_qa_v1_Verdict : verdicts
+who_iris_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" who_iris_qa_kg_qa_v1_Voice_review : voice_reviews
 ' grid: portrait, 3 column(s) — pkg_who_iris_library pkg_who_iris_who_iris_site pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs pkg_who_iris_who_iris_scripts pkg_who_iris_qa
 pkg_who_iris_library -[hidden]down- pkg_who_iris_who_iris_uploads
 pkg_who_iris_who_iris_site -[hidden]down- pkg_who_iris_who_iris_skills

@@ -104,7 +104,7 @@ import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, wri
 import { dirname, isAbsolute, join, posix, relative, resolve, sep } from "path";
 
 import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
-import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
+import { instanceDirectories, declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { injectRail, type NavItem } from "./lib/harness-rail.js";
 import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import { viewersOf } from "./viewer-declarations.js";
@@ -386,7 +386,10 @@ export function declaredGraphs(
   if (decl === undefined || !existsSync(decl)) return [];
   let d: { directories?: { graphKinds?: string[] }[] };
   try {
-    d = JSON.parse(readFileSync(decl, "utf-8"));
+    // Own entries AND those declared from within (bean `cmsl`): `voices` is
+    // declared in `skills/skills.json` now, and the raw file dropped it from
+    // every voices viewer page's rail (measured 2026-09-30, bean `2j2r`).
+    d = { directories: instanceDirectories(join(REPO, instanceDirName)) };
   } catch {
     // Not this script's finding — `kg:schema:check` owns an unparseable
     // declaration. Here it is an empty middle, and the caller still renders

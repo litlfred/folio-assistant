@@ -62,6 +62,7 @@ import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { refreshLibraryIndex } from "./lsi.ts";
 import { IntakeSchema } from "../schemas/intake.ts";
 import { LICENCE_FILENAME, readLicence } from "../content/pipeline/gen-library-jsonld.ts";
+import { STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -203,7 +204,7 @@ export function libraryChoice(argv: string[]): string | undefined {
 
 /** Which rung a document needs, and the evidence that chose it. */
 export interface Plan {
-  rung: "archive" | "tabular" | "slides" | "referenced" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
+  rung: "archive" | "tabular" | "notebook" | "slides" | "referenced" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
@@ -320,6 +321,12 @@ export function withDerivedArms(
   staging: string,
   library: string,
 ): Plan {
+  // A notebook gets the ONE arm that reads what a rung wrote rather than the
+  // source: `l1-blocks.ts` builds blocks from `sections/`. The image arms read
+  // a PDF and do not apply; the notebook rung writes its own `images.json`.
+  if (plan.rung === "notebook") {
+    return { ...plan, steps: [...plan.steps, ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging]] };
+  }
   const PDF_RUNGS = ["pdf-structure", "pdf-pages", "pdf-ocr+pdf-pages"];
   // A deck writes the same `structure.json` + `sections/` a paged PDF does, and
   // its own `images.json` (the images are package members, so there is no
@@ -606,6 +613,20 @@ export function tabularDelimiter(file: string): string | null {
   }
 }
 
+/**
+ * Is this file a Jupyter notebook, by its CONTENT? A reason-free boolean,
+ * because an unreadable file or one that is not JSON is simply not a notebook
+ * and falls through to the next question, as a non-CSV does.
+ */
+export function isNotebook(file: string): boolean {
+  try {
+    const j = JSON.parse(readFileSync(file, "utf-8")) as { nbformat?: unknown; cells?: unknown };
+    return typeof j.nbformat === "number" && Array.isArray(j.cells);
+  } catch {
+    return false;
+  }
+}
+
 export function planFor(
   pdf: string,
   p: Probe | undefined = undefined,
@@ -636,6 +657,20 @@ export function planFor(
       rung: "tabular",
       why: `the package declares ${mime} — a workbook, read for its sheets and headers`,
       steps: [["python3", pyHelper("tabular-records.py"), "-o", lib, pdf]],
+    };
+  }
+
+  // A Jupyter notebook is JSON text, so it has no magic bytes either, and the
+  // same rule applies: ask the content, never the `.ipynb` extension. It is a
+  // notebook when it parses as JSON with a numeric `nbformat` and a `cells`
+  // array. Checked BEFORE the delimited-text test, which a notebook's lines
+  // could satisfy by accident. Bean `rkqp`: the notebook variant of the shared
+  // document-structure base (`schemas/document-structure.ts`).
+  if (mime === null && isNotebook(pdf)) {
+    return {
+      rung: "notebook",
+      why: "JSON with a numeric nbformat and a cells array — a Jupyter notebook, read by its own headings",
+      steps: [["bun", "run", pyHelper("notebook-structure.ts"), "-o", lib, pdf]],
     };
   }
 
@@ -752,7 +787,7 @@ export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
   const slug = bibSlug(pdf);
   // Against INSTANCE_ROOT, same reason as the promote path below: `libraryRoot`
   // is INSTANCE-relative, and a bare `resolve` reads the CWD.
-  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, "structure.json");
+  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, STRUCTURE_FILENAME);
   if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
   // The indent is READ OFF the file, never chosen here. `pdf-structure.py`
   // writes `indent=1` and `pdf-pages.py` writes `indent=2`, so a refresh that

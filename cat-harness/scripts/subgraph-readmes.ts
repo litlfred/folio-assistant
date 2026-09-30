@@ -42,7 +42,7 @@ import {
   type Plan,
   plan,
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
-import { declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
+import { instanceDirectories, declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
@@ -74,7 +74,10 @@ export function harnessInstances(repo: string): InstanceInput[] {
       root: inst,
       decl: decl as unknown as InstanceInput["decl"],
       readme: declaredAssetPath(inst, INSTANCE_README_ROLE),
-      dirs: (decl.directories ?? []).map((d) => {
+      // Own entries AND those declared from within (bean `cmsl`): the five
+      // `voices/` READMEs dropped out of coverage when the entries moved into
+      // `skills/skills.json` (75 → 70, measured 2026-09-30, bean `2j2r`).
+      dirs: instanceDirectories(inst, decl).map((d) => {
         const base = (d as { scope?: string }).scope === "repository" ? repo : inst;
         const abs = resolve(base, d.path);
         // Absent declaration means the writer gets nothing and prints no

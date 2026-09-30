@@ -130,7 +130,7 @@
       ],
       "href": "/cat-harness/library/agent-skills/",
       "hidden": false,
-      "count": 11,
+      "count": 12,
       "unit": "entries"
     },
     {
@@ -146,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 518,
+      "count": 520,
       "unit": "beans"
     },
     {
@@ -341,7 +341,7 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
-      "count": 16,
+      "count": 19,
       "unit": "entries"
     },
     {
@@ -383,7 +383,7 @@
       ],
       "href": "/lsi/",
       "hidden": false,
-      "count": 1003,
+      "count": 1015,
       "unit": "documents"
     },
     {
@@ -411,7 +411,7 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 194,
+      "count": 195,
       "unit": "modules"
     },
     {
@@ -440,7 +440,7 @@
       ],
       "href": "/cat-harness/library/smart-base/",
       "hidden": false,
-      "count": 7,
+      "count": 8,
       "unit": "entries"
     },
     {
@@ -512,7 +512,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 25,
+      "count": 23,
       "unit": "waiting"
     },
     {
@@ -1099,17 +1099,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 7
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 6
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 3
+          "value": 4
         }
       ],
       "visualisations": [
@@ -1120,6 +1120,10 @@
         {
           "kind": "code",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "processes",
+          "path": "/processes/"
         },
         {
           "kind": "qa",
@@ -1169,12 +1173,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 6
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 6
         },
         {
           "id": "views",
@@ -1200,12 +1204,16 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "skills",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/folio-assistant-sci/"
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 3 graph(s) with no published viewer — code, qa, skills. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -1390,12 +1398,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 3
         },
         {
           "id": "views",
@@ -1413,17 +1421,12 @@
           "note": "no viewer yet"
         },
         {
-          "kind": "voice-vendors",
-          "within": "voices",
-          "note": "no viewer yet"
-        },
-        {
           "kind": "voices",
           "path": "/cat-harness/voices/agent-skills/"
         }
       ],
       "findings": [
-        "agent-skills: declares 2 graph(s) with no published viewer — qa, voice-vendors. Declared and not rendered is a gap, not a dead link.",
+        "agent-skills: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root."
       ],
@@ -1622,7 +1625,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 51
+          "value": 52
         },
         {
           "id": "kinds",
@@ -2087,9 +2090,9 @@
     },
     "cat-harness": {
       "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
+      "major": 0,
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/",
+      "human": "https://litlfred.github.io/cat-harness/v0/"
     },
     "fhir-harness": {
       "version": "0.1.0",
@@ -2105,9 +2108,9 @@
     },
     "folio-assistant-core": {
       "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
+      "major": 0,
+      "agent": "https://litlfred.github.io/folio-assistant-core/0.1.0/",
+      "human": "https://litlfred.github.io/folio-assistant-core/v0/"
     },
     "folio-assistant-sci": {
       "version": "0.1.0",
@@ -2694,7 +2697,7 @@
           },
           {
             "key": "directories",
-            "summary": "3: voices, glossary, qa"
+            "summary": "2: glossary, qa"
           },
           {
             "key": "needs",
@@ -2744,7 +2747,7 @@
           },
           {
             "key": "directories",
-            "summary": "7: library, methodologies, voices, processes, smart-base-artifact-index, tools, qa"
+            "summary": "6: library, methodologies, processes, smart-base-artifact-index, tools, qa"
           },
           {
             "key": "needs",
@@ -2840,7 +2843,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: large-datasets-schemas, large-datasets-sources, large-datasets-skills, large-datasets-scr…"
+            "summary": "7: large-datasets-schemas, large-datasets-sources, large-datasets-skills, large-datasets-pro…"
           },
           {
             "key": "needs",
@@ -2882,7 +2885,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: library, voices, sci-methodologies, sci-adapters, qa"
+            "summary": "4: library, sci-methodologies, sci-adapters, qa"
           },
           {
             "key": "needs",
@@ -3024,7 +3027,7 @@
           },
           {
             "key": "directories",
-            "summary": "3: library, voices, qa"
+            "summary": "2: library, qa"
           },
           {
             "key": "needs",
@@ -3065,8 +3068,12 @@
             "summary": "{ repository, path }"
           },
           {
+            "key": "iriBase",
+            "summary": "https://litlfred.github.io/folio-assistant-core/"
+          },
+          {
             "key": "directories",
-            "summary": "11: core-schemas, folios, glossary, voices, core-tools, core-scripts, core-library, core-meth…"
+            "summary": "10: core-schemas, folios, glossary, core-tools, core-scripts, core-library, core-methodologie…"
           },
           {
             "key": "stickies",
@@ -3135,12 +3142,16 @@
             "summary": "https://litlfred.github.io/folio-assistant"
           },
           {
+            "key": "iriBase",
+            "summary": "https://litlfred.github.io/cat-harness/"
+          },
+          {
             "key": "publication",
             "summary": "{ host }"
           },
           {
             "key": "directories",
-            "summary": "49: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "50: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",

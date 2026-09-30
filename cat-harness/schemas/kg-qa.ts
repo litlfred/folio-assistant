@@ -428,8 +428,8 @@ export interface KgCriterionDefinition {
    * corpus can decide it*. They are independent, and the graph roll-up proves
    * it: `applies: ["graph"]` covers both `skill-in-role-or-process`, which every
    * instance can answer about its own graph, and `actor-roles-resolve`, which
-   * only the repository can — because an actor is declared once at the
-   * repository root (`.claude/skills/actors/`) while a role is a swimlane inside
+   * only the repository can — because an actor is declared once for the whole
+   * repository (`cat-harness/scenarios/actors/`) while a role is a swimlane inside
    * one instance's diagrams.
    *
    * **Required, deliberately.** A criterion that has not decided its scope does
@@ -560,6 +560,26 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A Tool's `maintains` artefact is missing from the published tree. Answerable only against an " +
       "assembled `_site/`, so from a checkout this records `unknown` naming `check:maintained-artefacts` " +
       "as where the answer lives — never `pass`. `n/a` for a Tool that maintains nothing.",
+  },
+  {
+    id: "tool-downstream-fresh",
+    applies: ["tool"],
+    scope: "instance",
+    // `minor` for the same reason as `tool-maintains-in-tree`: a member judged
+    // only in the published tree is ALWAYS `unknown` from a checkout, and
+    // `unknown` counts toward `worstSeverity`, so anything higher would put
+    // `kg:audit:strict` beyond the reach of any change to the repository.
+    severity: "minor",
+    // THE FAMILY, generalising `lsi-index-fresh` (bean `fq5u`, owner's design).
+    // A Tool declaring `downstream` records each run's outcome and input
+    // fingerprint (`folio-tool-run/v1`); this reads three states and only one
+    // of them is a pass. No record, or a failed last run, is never green —
+    // a file on disk is not evidence the run that keeps it current succeeded.
+    summary:
+      "A downstream Tool's output is not shown to be current: a target is STALE (a declared input changed since the " +
+      "recorded run), NOT-RUN (no run record) or FAILED (the last run failed). Only a successful run over the current " +
+      "input fingerprint passes. An output judged only in the assembled site records `unknown` naming its publish " +
+      "verifier — never `pass`. `n/a` for a Tool that declares no downstream output, or none of whose targets is judged.",
   },
   {
     id: "skill-ref-resolves",
@@ -918,6 +938,20 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "`pairs:attest` with a reason. A prose edit never raises this; a missing side of a declared pair is `unknown`.",
   },
   {
+    id: "skill-voice-review-current",
+    applies: ["skill"],
+    scope: "instance",
+    // `minor` and not gated, by the owner's ruling on bean `rkqp`: an agentic
+    // review of skills against the skill voices, with NO formal gate on rule
+    // content. This asks only whether a current review exists; a rule the
+    // reviewer judged `fail` is recorded in `voice_reviews`, never a finding.
+    severity: "minor",
+    summary:
+      "An ACTIVE voice with rules scoped to skills (`appliesTo: [\"skill\"]`) has no review of this skill, or the " +
+      "review predates a change to the skill or to the voice's skill rules. Review it rule by rule with each citation " +
+      "open, then `bun run voice:review`. `n/a` when no such voice is active; `unknown` when the harness config is unreadable.",
+  },
+  {
     id: "prose-claims-resolve",
     applies: ["process", "skill"],
     scope: "instance",
@@ -1220,16 +1254,20 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "unfalsifiable opt-out.",
   },
   {
-    id: "lsi-index-fresh",
+    id: "downstream-tool-declared",
     applies: ["graph"],
-    scope: "instance",
-    severity: "minor",
+    scope: "repo",
+    scopeBasis:
+      "Its three sources are repository-level, not per instance: the member readers are code in `scripts/downstream-runs.ts`, the publish " +
+      "verifiers are `publish-verify`'s set, and run records live under the auditor's own `qa` directory. Asked per " +
+      "instance it would judge the platform's members against an instance's Tools and report every one as undeclared.",
+    // `major`: unlike a stale output, which is expected between runs, an
+    // undeclared downstream tool is a DECLARATION gap that one edit clears.
+    severity: "major",
     summary:
-      "A prose graph this instance owns is large enough to need a Latent Semantic Indexing index and has none, or has " +
-      "one built before the graph last changed (method `lsi`, step 7: an index is stale by construction once its corpus " +
-      "changes). The threshold is a HOUSE number with its basis in `scripts/lsi.ts`; below it the graph is not judged. " +
-      "`minor` because an index is a retrieval aid, not content: its absence costs recall on a vocabulary gap, never " +
-      "correctness. Bean `ansc`.",
+      "A downstream tool with no declaration (bean `fq5u`): a member reader, a `folio-tool-run/v1` record or a publish " +
+      "verifier names a Tool that declares no matching `downstream` output. Its runs are then recorded and read by " +
+      "nothing, or read and attributed to nothing — the invisible failure the family exists to end.",
   },
   {
     id: "manifest-skill-exists",
@@ -1270,7 +1308,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     scope: "repo",
     scopeBasis:
-      "An actor is declared ONCE at the repository root (`.claude/skills/actors/`) while a role is a " +
+      "An actor is declared ONCE for the whole repository (`cat-harness/scenarios/actors/`) while a role is a " +
       "swimlane inside one instance's diagrams, so this compares a repository-level set against an " +
       "instance-level one. MEASURED 2026-09-26: `--instance ./bootstrap` produced 73 findings, one for " +
       "almost every one of the 36 repository actors, because they name roles the bootstrap graph does " +
@@ -1285,7 +1323,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     scope: "repo",
     scopeBasis:
-      "Both sides are repository-level — actors and `.claude/skills/capabilities/` are resolved through " +
+      "Both sides are repository-level — actors and capabilities (`cat-harness/scenarios/`) are resolved through " +
       "`repoRootFor`, so `--instance` does not move either. Re-asking per instance would re-derive the " +
       "root's own answer once per declaration and report the same findings N times.",
     severity: "critical",
@@ -1474,6 +1512,23 @@ export interface KgQaReport {
    * `kg-audit` and by `pairs:attest`; see `scripts/prose-code-pairs.ts`.
    */
   pair_attestations?: KgPairAttestation[];
+  /**
+   * An agent's or a person's rule-by-rule review of a skill against a voice
+   * that judges skills — carried across runs like `pair_attestations`, and
+   * written by `voice:review`; see `scripts/skill-voice-review.ts`.
+   */
+  voice_reviews?: KgVoiceReview[];
+}
+
+/** One review of a skill against one voice. Hashes pin what was reviewed. */
+export interface KgVoiceReview {
+  voice: string;
+  instance: string;
+  skill_hash: string;
+  voice_hash: string;
+  by: "agent" | "human";
+  at: string;
+  verdicts: Array<{ rule: string; result: "pass" | "fail" | "n/a"; note?: string }>;
 }
 
 /** One declared pair's accepted state. Paths are repo-relative. */
@@ -1517,6 +1572,25 @@ export const KgQaReportSchema = z.object({
         code_hash: z.string().min(1),
         by: z.enum(["baseline", "agent", "human"]),
         reason: z.string().min(1).optional(),
+      }),
+    )
+    .optional(),
+  voice_reviews: z
+    .array(
+      z.object({
+        voice: z.string().min(1),
+        instance: z.string().min(1),
+        skill_hash: z.string().min(1),
+        voice_hash: z.string().min(1),
+        by: z.enum(["agent", "human"]),
+        at: z.string().min(1),
+        verdicts: z.array(
+          z.object({
+            rule: z.string().min(1),
+            result: z.enum(["pass", "fail", "n/a"]),
+            note: z.string().min(1).optional(),
+          }),
+        ),
       }),
     )
     .optional(),

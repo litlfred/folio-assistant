@@ -62,7 +62,7 @@ namespace is `<publication root><instance stub>/ns#` (`instanceNs` in
 
 | instance | namespace |
 |---|---|
-| `folio-assistant-core` | `https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#` |
+| `folio-assistant-core` | `https://litlfred.github.io/folio-assistant-core/0.1.0/ns#` |
 | `ihris` (its own site) | `https://litlfred.github.io/ihris/ihris/ns#` |
 
 The namespace is never the asset's path: moving the asset must not move the

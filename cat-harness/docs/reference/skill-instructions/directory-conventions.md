@@ -269,7 +269,7 @@ decides it.
 >   its phase is not an address.
 > - **An identity is provider-qualified, and its link to an actor is optional.**
 >   `litlfred` is not an identity; `github:litlfred` is. The link to a declared
->   actor is absent whenever the person is not in `.claude/skills/actors/` — and
+>   actor is absent whenever the person is not in `cat-harness/scenarios/actors/` — and
 >   somebody who comments on a pull request is a real person with a real
 >   outstanding item whether or not the registry has heard of them. Absent means
 >   **not linked**, a third state; never anonymous, and never defaulted.
@@ -581,6 +581,34 @@ same way it gets the directory — through the overlay, resolved by id, in scan
 order. It does not re-describe a dependency's interior, and it does not have to:
 the describing node came with the directory.
 
+### A from-within entry can be an INSTANCE directory — bean `cmsl`, 2026-09-30
+
+A kind's `declarationFile` names the node. What an entry in it IS depends on
+one field: **an entry that answers `dependents` is an instance directory**,
+and `resolveDirectories` lists it exactly as if `<instance>.json` had declared
+it. It carries `within` (the id of the directory that declared it), and
+`check:layout-norms` treats that pair as the sanctioned shape. An entry
+without `dependents` (`beans.json`'s `defs`, `docs.json`'s `proposals`,
+`voices.json`'s `vendors`) is a part of one graph and stays out of the
+instance list, exactly as before.
+
+`skills/skills.json` is the worked case. It is one node with two lists:
+`topics` (subdirectories that hold skill packages, bean `9umr`) and
+`directories` (instance directories inside `skills/`: `voices/` in five
+instances, and `lean/` in folio-assistant-sci). Moving the five `voices`
+entries inward cleared all five of the baselined `skills contains
+skills/voices` pairs. Every `directoriesForGraph(…, "voices")` answer was
+identical before and after, compared instance by instance.
+
+Two rules the resolver holds, both measured the hard way:
+
+- **Never through a mirror.** A `scope: "repository"` entry points at ANOTHER
+  instance's directory. Following its declaration file made cat-harness
+  resolve core's `voices/` as its own.
+- **A declaration beats a default.** `skills/voices` is also a built-in
+  default; a from-within declaration replaces that convention, while an
+  instance-level declaration with the same id still wins over both.
+
 ### The live case this ruling settles
 
 Stream 1 of the #956 consolidation measured `cat-harness/content/docs/`,
@@ -802,6 +830,15 @@ produces it, and the glossary uses the same rule:
 reads them by code. The gate fails when the list spells one differently from
 what the declaration derives. So moving an instance's IRIs is one edit, to
 its declaration's `iriBase`, and the list follows.
+
+Since 2026-09-30 (bean `yn2k`, the owner's decision), `cat-harness` and
+`folio-assistant-core` declare an `iriBase` on their planned repositories'
+hosts, versioned as bootstrap's is:
+- `https://litlfred.github.io/cat-harness/0.1.0/ns#`
+- `https://litlfred.github.io/folio-assistant-core/0.1.0/ns#`
+
+Their namespace documents are still published beside the site, as
+bootstrap's are.
 
 ### Every other marker: THE TYPE DECLARES ITS OWN FILENAME (STRICT)
 

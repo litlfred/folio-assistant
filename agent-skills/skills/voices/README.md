@@ -9,5 +9,5 @@ Part of [agent-skills](../../README.md) 0.1.0, declared as `voices`, holding `vo
 |---|---|---|
 | [`voices.json`](voices.json) | data |  |
 | [`agent-skill-authoring/`](agent-skill-authoring/) | 1 file | |
-| [`vendors/`](vendors/) | 3 files | |
+| [`vendors/`](vendors/) | 4 files | |
 <!-- kg:subgraph:end -->

@@ -74,7 +74,7 @@ of drawing primitives is emitted as `kind: "vector-cluster"` with a primitive
 count, explicitly a *candidate*, because deciding that fourteen curves are one
 figure is exactly the judgement Docling's layout model exists to make.  It does
 not read a scan.  It does not classify figures.  Those are Stage 3's, and the
-capability probe in `.claude/skills/capabilities/docling.json` is what lets a
+capability probe in `cat-harness/scenarios/capabilities/docling.json` is what lets a
 consumer see that Stage 3 has not run instead of guessing.
 
 Usage:

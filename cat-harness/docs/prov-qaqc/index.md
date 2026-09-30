@@ -24,7 +24,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 |---|---|---|
 | `no-actor` | 0 | the entry names nobody; no activity is emitted, because `prov:agent` is required and would have to be invented |
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
-| `undeclared-actor` | 1 | the actor is not declared in `.claude/skills/actors/` |
+| `undeclared-actor` | 1 | the actor is not declared in `cat-harness/scenarios/actors/` |
 | `not-eligible` | 2 | the actor's `roles` do not include the role the lane binds |
 | `unknown` | 62 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
@@ -161,7 +161,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### sampleimport--xlg2-wpro-trial
 
-12 step(s) checked, 12 `prov:Activity` emitted, 2 finding(s). Sources: `cat-harness/processes/sample-import.bpmn`, `cat-harness/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
+12 step(s) checked, 12 `prov:Activity` emitted, 2 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
@@ -170,7 +170,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### sampleimport--xlg2-wpro-trial-original
 
-17 step(s) checked, 17 `prov:Activity` emitted, 2 finding(s). Sources: `cat-harness/processes/sample-import.bpmn`, `cat-harness/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
+17 step(s) checked, 17 `prov:Activity` emitted, 2 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|

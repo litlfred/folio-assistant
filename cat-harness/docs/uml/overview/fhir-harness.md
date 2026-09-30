@@ -70,6 +70,7 @@ classDiagram
       selection [0..1] object
       requires [0..1] object
       maintains [0..*] Maintain[]
+      downstream [0..1] object
       renders [0..*] string[]
     }
   }
@@ -84,6 +85,22 @@ classDiagram
       by [1] baseline | agent | human
       reason [0..1] string
     }
+    class fhir_harness_qa_kg_qa_v1_Verdict["Verdict"] {
+      <<json: KgQaReportSchema>>
+      rule [1] string
+      result [1] pass | fail | n/a
+      note [0..1] string
+    }
+    class fhir_harness_qa_kg_qa_v1_Voice_review["Voice_review"] {
+      <<json: KgQaReportSchema>>
+      voice [1] string
+      instance [1] string
+      skill_hash [1] string
+      voice_hash [1] string
+      by [1] agent | human
+      at [1] string
+      verdicts [0..*] Verdict[]
+    }
     class fhir_harness_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
       <<json: KgQaReportSchema>>
       $schema [1] 'kg-qa/v1'
@@ -92,6 +109,7 @@ classDiagram
       criteria [1] map~object~
       totals [1] map~number~
       pair_attestations [0..*] Pair_attestation[]
+      voice_reviews [0..*] Voice_review[]
     }
     class fhir_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
       <<json: KgQaManifestSchema>>
@@ -105,7 +123,11 @@ classDiagram
   cssClass "fhir_harness_fhir_ig_tools_Maintain" fa_uml_kind_tools
   cssClass "fhir_harness_fhir_ig_tools_ToolDefinition" fa_uml_kind_tools
   fhir_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" fhir_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
+  fhir_harness_qa_kg_qa_v1_Voice_review *-- "0..*" fhir_harness_qa_kg_qa_v1_Verdict : verdicts
+  fhir_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" fhir_harness_qa_kg_qa_v1_Voice_review : voice_reviews
   cssClass "fhir_harness_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
+  cssClass "fhir_harness_qa_kg_qa_v1_Verdict" fa_uml_kind_qa
+  cssClass "fhir_harness_qa_kg_qa_v1_Voice_review" fa_uml_kind_qa
   cssClass "fhir_harness_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
   cssClass "fhir_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa
 ```

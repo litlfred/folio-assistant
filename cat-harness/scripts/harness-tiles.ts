@@ -78,6 +78,7 @@ import {
   siteDirFor,
   visualisationsOf,
   defaultGraphKinds,
+  instanceDirectories,
   nestedDirectories,
 } from "../schemas/cat-harness.js";
 import { withViewers } from "./viewer-declarations.js";
@@ -520,10 +521,17 @@ function tileFor(
     });
   });
   type Dir = NonNullable<CatHarnessDeclaration["directories"]>[number];
+  // `instanceDirectories` adds the INSTANCE directories declared from within
+  // (bean `cmsl`: `skills/skills.json` names `voices/`). `nestedDirectories`
+  // walks only DECLARED parents, and `skills/` is now inherited, so without
+  // this SMART Base's voices tile vanished (measured 2026-09-30).
   const dirs: Dir[] = [
     ...(decl.directories ?? []),
     ...listedSubgraphs.map(({ parentId: _parent, ...d }) => d as Dir),
   ];
+  for (const d of instanceDirectories(instanceDir, decl)) {
+    if (!dirs.some((x) => x.id === d.id)) dirs.push(d as Dir);
+  }
   const kinds = [...new Set(dirs.flatMap((d) => d.graphKinds ?? []))].sort();
   const findings: string[] = [];
 

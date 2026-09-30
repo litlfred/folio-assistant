@@ -547,6 +547,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // A downstream declaration still saying `["cat-harness"]` therefore keeps
   // parsing. What it loses is the finer query, which is the thing it never had.
   skills: {
+    // THE FROM-WITHIN NODE for a skills directory (bean cmsl, owner
+    // 2026-09-30, round 4): `skills/skills.json` names the instance
+    // directories declared inside `skills/` — `voices/`, and `lean/` in
+    // folio-assistant-sci — so the nesting is declared where the #980 ruling
+    // says it must be, never by a root declaration reaching down.
+    declarationFile: "skills.json",
     renderable: false,
     // A Skill is a Capability with defined inputs and outputs — an authored
     // instruction body. It states what can be done, never what was done.
@@ -898,6 +904,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // The per-graph LSI index sidecar (bean `ansc`): fingerprint, pole terms,
       // neighbours and findings — never the vectors.
       "folio-lsi-index/v1": { shape: "scripts/lsi.ts#LsiSidecar" },
+      // A downstream tool's run record (bean `fq5u`): outcome and input
+      // fingerprint, read by kg:audit's `tool-downstream-fresh`.
+      "folio-tool-run/v1": { validator: "schemas/tool-run.ts#ToolRunRecordSchema" },
       // The viewer-navbar audit (bean `edx7`). A VERDICT PER PAGE rather than
       // a count, because the owner's rule has two clauses -- present unless
       // EXPLICITLY removed -- and a count cannot tell a deliberate removal
