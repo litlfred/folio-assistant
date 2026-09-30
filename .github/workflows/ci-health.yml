@@ -17,8 +17,25 @@
 # another. It maintains ONE tracking issue, which shows in the repo's open-issue
 # count on the front page, and closes it when `main` is clean again.
 #
+# It fires on TWO different blind spots, and they are not the same defect.
+# Bean `kgho`, 2026-09-30:
+#
+#   - a QUIET stretch, with nobody working: the weekly `schedule:` below. This
+#     is `ynu8`'s original case, and its reasoning is unchanged.
+#   - an ACTIVE stretch: `main` moves every 7.7 min here (measured over 186
+#     merges in 24h) and a red `main` blocks every branch in flight at once.
+#     `391j` had NINE red-`main` incidents in one day and needed three
+#     `Unblock main:` fixes in a week — and each of those cost somebody the time
+#     to NOTICE first, which is the part a weekly cadence cannot shorten.
+#     Weekly cannot bound that, because the premise of the weekly
+#     argument — "the sweep already covers every day somebody is working" — is
+#     about whether a session STARTS, not about how long a red persists inside
+#     one. So `workflow_run` below fires on the failing run itself.
+#
 # Cost: this repository is PUBLIC, so standard GitHub-hosted runners are free.
-# One ~40s job a week.
+# One ~40s job a week, plus one per FAILING gating run on `main` — nothing at
+# all while `main` is green, because the job is conditioned on the triggering
+# run's conclusion. The cost scales with the defect, not with the merge cadence.
 
 name: CI health watchdog
 
@@ -29,6 +46,32 @@ on:
   # seven days without turning the tracking issue into a feed.
   schedule:
     - cron: '17 9 * * 1'
+  # ...and on the failure itself, for the ACTIVE stretch the weekly cadence
+  # cannot bound. Bean `kgho`.
+  #
+  # WHY `workflow_run` AND NOT `push`. A `push`-triggered run starts at the same
+  # instant as the gating workflows it exists to report on, so it would read
+  # them as `in_progress` — which `check:ci-health` correctly declines to call
+  # red, and rightly refuses to call green either. The result would be a job
+  # that runs 186 times a day to report "could not determine". `workflow_run`
+  # fires AFTER the triggering run completes, so the state it reads is settled.
+  # That is this module's own could-not-determine discipline applied to the
+  # trigger rather than fought against.
+  #
+  # The two named are the workflows that GATE `main` — the ones whose red is
+  # what a person needs to hear about. `docs-site.yml` also runs on `main` and
+  # is deliberately absent: it is a publish step, its failure does not block a
+  # merge, and the weekly sweep reports it like everything else. Naming it here
+  # would turn a broken preview into an immediate page.
+  #
+  # NOT filtered to the failing case HERE. `workflow_run` takes no `conclusions:`
+  # filter, so the condition is on the job, where `conclusion == 'failure'` is
+  # checkable. A skipped job costs no runner and still reports as a run, which is
+  # the honest record of "asked, nothing to do".
+  workflow_run:
+    workflows: ["Code-quality gates", "JSON-LD generated-file drift"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -43,6 +86,14 @@ jobs:
   report:
     # bpmn-node: Start_Sweep
     name: Report CI health on the default branch
+    # On a `workflow_run` trigger, only a FAILING triggering run is worth a
+    # sweep; the schedule and a manual dispatch always sweep. Written as
+    # "not workflow_run OR failed" rather than as a list of allowed events, so
+    # adding a future trigger does not silently skip the job — the failure mode
+    # `1xhc` is about.
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'failure'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
