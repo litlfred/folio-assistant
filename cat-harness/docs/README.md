@@ -25,6 +25,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`folio-assistant-migration.md`](folio-assistant-migration.md) | Folio-Assistant Infrastructure Migration (miga) |  |
 | [`getting-started.md`](getting-started.md) | Getting started |  |
 | [`harness.md`](harness.md) | The [Harness](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#harness) |  |
+| [`harnessed-kg-overview.md`](harnessed-kg-overview.md) | Harnessed [Knowledge Graph](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#knowledge-graph) Overview |  |
 | [`ig-publisher.md`](ig-publisher.md) | The FHIR IG Publisher |  |
 | [`index.md`](index.md) | "folio-assistant — a content-agnostic agent skills framework." |  |
 | [`installation.md`](installation.md) | Installation |  |
@@ -44,7 +45,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 494 files | |
+| [`assets/`](assets/) | 528 files | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
 | [`cat-harness/`](cat-harness/) | 48 files | |
@@ -71,7 +72,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`todos/`](todos/) | 1 file | |
 | [`tools/`](tools/) | 1 file | |
 | [`translation-status/`](translation-status/) | 1 file | |
-| [`uml/`](uml/) | 137 files | |
+| [`uml/`](uml/) | 138 files | |
 | [`uploads/`](uploads/) | 1 file | |
 | [`wireframes/`](wireframes/) | 146 files | |
 | [`zh/`](zh/) | 14 files | |
