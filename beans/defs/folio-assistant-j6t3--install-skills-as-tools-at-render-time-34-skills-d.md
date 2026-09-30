@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j6t3
 title: 'INSTALL SKILLS AS TOOLS AT RENDER TIME: 34 skills declare user_invocable, 4 are reachable — options for Claude Code, Antigravity and any MCP host'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T21:42:35Z
-updated_at: 2026-09-30T08:27:11Z
+updated_at: 2026-09-30T11:02:04Z
 parent: folio-assistant-vuip
 ---
 
@@ -288,5 +288,10 @@ The owner chose **"F + A (Rec.)"** on 2026-09-30.
 
 **Deliberately not decided here.** All 41 declared skills get a command, including the watchers the 2026-09-21 tiering called noise. The declaration is the source of truth. A skill that should not be in the menu should stop declaring `user_invocable`, and that is the owner's call per skill; this generator will not hide what a skill declares.
 
-- [ ] The root `.mcp.json` registers the folio-assistant server, so this repository's own sessions get the prompts. Waits on PR #1544, which edits the same file.
+- [x] The root `.mcp.json` registers the folio-assistant server, so this repository's own sessions get the prompts. Waits on PR #1544, which edits the same file.
 
+## Summary of Changes
+
+- **F** (MCP prompts) and **A** (generated `.claude/commands/` pointers, with a two-way check) landed in PR #1546, merged as `54e38c5`. `prepare-merge` now declares itself.
+- The root `.mcp.json` now registers the `folio-assistant` server (`bun run cat-harness/src/index.ts --stdio --repo .`), so this repository's own sessions get the prompts. Started with that exact command, it lists **42** prompts, and `getPrompt("coordinate")` returns the skill's body. `check:command-paths` judges the new `args` path, which resolves.
+- Every Done-when box is ticked. The owner's "reminder now, gate later" ruling was honoured: nothing here gates how an agent asks.
