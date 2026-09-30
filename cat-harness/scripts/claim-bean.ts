@@ -345,6 +345,32 @@ export function claimOnDefaultBranch(id: string, branch: string, opts: { repo?: 
   return { state: "fell-back", reason: `${MAX_ATTEMPTS} attempts all lost the race. Last: ${lastReason}`, attempts };
 }
 
+/**
+ * Why a claim made from this checkout would be recorded against the wrong
+ * work — or `undefined` when the checkout looks like the one doing it.
+ *
+ * Bean `ssfp`. The store defaults to the current directory, and a bean store
+ * exists at EVERY checkout of the repository, so a claim run from the wrong
+ * tree finds the bean, succeeds, records that tree's branch as the holder and
+ * leaves the local status edit there as unexplained dirt. Nothing noticed.
+ *
+ * The tell is the branch. Work happens on a work branch; a checkout sitting on
+ * the default branch, or detached, is not where anybody's work is — it is the
+ * main checkout doing something else, or a scratch tree. So a claim from one is
+ * refused, naming the tree it was about to write to, rather than attributed to
+ * a branch that holds no work.
+ */
+export function wrongCheckout(root: string, branch: string): string | undefined {
+  if (branch === "(detached)" || branch === "HEAD") {
+    return `${root} has a detached HEAD, so the claim would name no branch as its holder`;
+  }
+  const def = defaultBranch(root);
+  if (def !== undefined && branch === def) {
+    return `${root} is on '${def}', the default branch, which holds nobody's work`;
+  }
+  return undefined;
+}
+
 export function describe(o: ClaimOutcome, id: string): string {
   switch (o.state) {
     case "pushed":
@@ -418,13 +444,28 @@ if (import.meta.main) {
   const id = argv.filter((a, i) => !a.startsWith("-") && !(repoAt >= 0 && i === repoAt + 1))[0];
   if (id === undefined) {
     console.error(
-      `usage: bun run ${PLATFORM_ROOT}/scripts/claim-bean.ts <bean-id> [--repo <folio>] [--dry-run]\n` +
+      `usage: bun run ${PLATFORM_ROOT}/scripts/claim-bean.ts <bean-id> [--repo <folio>] [--dry-run] [--any-branch]\n` +
         "       the store defaults to the CURRENT DIRECTORY, because beans live in the folio, not the platform",
     );
     process.exit(64);
   }
-  const root = repo ?? process.cwd();
+  // The checkout's TOP LEVEL, not the literal directory: run from a subdirectory
+  // the store would otherwise not be found, and a worktree's top level is the
+  // worktree — which is the tree this claim is about (bean `ssfp`).
+  const start = repo ?? process.cwd();
+  const top = git(start, ["rev-parse", "--show-toplevel"]).out.trim();
+  const root = top !== "" ? top : start;
   const branch = git(root, ["rev-parse", "--abbrev-ref", "HEAD"]).out.trim() || "(detached)";
+  const wrong = wrongCheckout(root, branch);
+  if (wrong !== undefined && !argv.includes("--any-branch")) {
+    console.error(
+      `✗ not claiming ${id}: ${wrong}.\n` +
+        "  A claim records the branch holding the work. Run it from the worktree doing the work,\n" +
+        "  or pass --repo <that worktree>. --any-branch overrides, for a claim that really is made from here.",
+    );
+    process.exit(5);
+  }
+  console.log(`  claiming from ${root} (branch ${branch})`);
   const outcome = claimOnDefaultBranch(id, branch, { repo: root, dryRun: argv.includes("--dry-run") });
   const code = exitCodeFor(outcome);
   (code === 0 ? console.log : console.error)(`${code === 0 ? "✓" : "✗"} ${describe(outcome, id)}`);

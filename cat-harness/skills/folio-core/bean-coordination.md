@@ -216,9 +216,20 @@ writes to the default branch for claims, which this repository otherwise routes
 through pull requests.
 
 ```sh
-bun run beans:claim <bean-id>              # store defaults to the CURRENT directory
+bun run beans:claim <bean-id>              # store defaults to the CURRENT directory's checkout
 bun run beans:claim <bean-id> --dry-run    # say what would happen
 ```
+
+**Run it from the checkout doing the work.** A bean store exists at every
+checkout, so a claim run from the wrong one used to succeed silently, record
+that tree's branch as the holder, and leave the status edit there as stray
+dirt (bean `ssfp`, measured on a delegated agent whose worktree held the work
+while the claim landed in the main checkout). The command now resolves the
+checkout's top level, prints `claiming from <tree> (branch <b>)`, and **refuses
+with exit 5** when that checkout is on the default branch or detached — the
+signature of the wrong tree — naming the tree it was about to write to. Pass
+`--repo <worktree>` from elsewhere; `--any-branch` overrides for a claim that
+really is made from there.
 
 It is a **claim only** — never your work, which is the point: a claim bundled
 with work cannot be pushed until the work is ready. It does write the same
