@@ -203,6 +203,31 @@
             ]
           }
         },
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "description": "A forge repository's full name, owner/name"
+        },
+        "livesAt": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "description": "A forge repository's full name, owner/name"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9._-]+(?:\\/[A-Za-z0-9._-]+)*$"
+            }
+          },
+          "required": [
+            "repository",
+            "path"
+          ],
+          "additionalProperties": false
+        },
         "stub": {
           "type": "string",
           "minLength": 1
@@ -845,8 +870,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "de0e23a222b89632388a5eaff09cc5ecd3e6db11",
+    "sha": "0ec0ac9752acf803af7432e8103d6d649803f06f",
     "pr": "main",
-    "run": "36760238896"
+    "run": "36763550024"
   }
 }
