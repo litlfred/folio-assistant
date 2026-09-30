@@ -1,10 +1,10 @@
 ---
 # folio-assistant-7bg9
 title: 'INGESTION: a licence check subprocess, and the marker coverage the ingest family is missing'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-20T15:25:27Z
-updated_at: 2026-09-20T15:25:27Z
+updated_at: 2026-09-30T09:25:32Z
 parent: folio-assistant-zzmr
 ---
 
@@ -135,3 +135,5 @@ If a licence can only be determined from extracted structure, the early gate
 must report **undetermined** and let the pipeline proceed to a second check,
 rather than passing it. Undetermined is never rendered as cleared; that rule
 holds here as everywhere else in this repository.
+
+_2026-09-30T09:25:32Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
