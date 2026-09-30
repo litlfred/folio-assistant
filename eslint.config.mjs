@@ -36,6 +36,17 @@ export default tseslint.config(
   {
     ignores: [
       "node_modules/**",
+      // An agent dispatched with worktree isolation puts a COMPLETE SECOND
+      // CHECKOUT of this repository under `.claude/worktrees/<id>/`. Without
+      // this, `bun run lint` walks into it and typescript-eslint's project
+      // service refuses every file there as outside the tsconfig program.
+      // Measured 2026-09-30 on a branch whose whole diff was three lines of
+      // JSON: 3158 errors, none of them the branch's — and 0 errors with this
+      // pattern added (bean `vpek`). Those files are linted on their own
+      // branch, by their own agent; linting them twice from here reports a
+      // failure that belongs to nobody's diff, which is the one thing a gate
+      // must not do.
+      ".claude/worktrees/**",
       "**/.lake/**",
       // `**/`, not root-anchored: a PUBLISHABLE package builds into its own
       // `dist/`, and since `check:published-packages` builds it (bean `rsi6`),
