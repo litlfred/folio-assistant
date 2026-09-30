@@ -8,7 +8,11 @@
  *
  * ## Three states, never two
  *
- * A library entry's `manifest.jsonld` may carry `meta.licence`:
+ * A library entry's `manifest.jsonld` may carry `meta.licence`. It is AUTHORED in
+ * `licence.json` beside the entry and carried verbatim by `gen-library-jsonld`,
+ * because the manifest is generated: a record written into it directly is
+ * erased by the next regeneration (folio-assistant#1492).
+ *
  *
  * | `status`  | means                                                     | must carry |
  * |-----------|-----------------------------------------------------------|------------|

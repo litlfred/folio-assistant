@@ -135,3 +135,14 @@ If a licence can only be determined from extracted structure, the early gate
 must report **undetermined** and let the pipeline proceed to a second check,
 rather than passing it. Undetermined is never rendered as cleared; that rule
 holds here as everywhere else in this repository.
+
+## Finding, 2026-09-30 — no licence record could survive regeneration (FIXED on #1530)
+
+`check-source-licence` reads `meta.licence` from `manifest.jsonld`, but
+`gen-library-jsonld` GENERATES that manifest and never carried a licence: a
+record written into it was erased by the next `gen:jsonld` (observed on the
+three `folio-assistant-sci` arXiv entries). Fixed by an authored
+`licence.json` sidecar per entry, carried verbatim into `meta.licence`; an
+unparseable sidecar comes through as malformed, never as absent. This is the
+storage half the early gate (ruled above) will write to — the gate itself is
+still this bean's work.

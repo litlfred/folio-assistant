@@ -115,6 +115,32 @@ interface Candidates {
   candidates?: Candidate[];
 }
 
+/**
+ * The AUTHORED licence record beside an entry, carried verbatim into
+ * `manifest.jsonld` as `meta.licence` — the field `check-source-licence` reads.
+ *
+ * A sidecar because the manifest is generated: a record written into it by hand
+ * was erased by the next run, so until 2026-09-30 no licence, `stated` or
+ * `unknown`, could survive a regeneration (folio-assistant#1492). Its shape is
+ * the checker's (`licenceProblem`), which judges it; this only carries it.
+ */
+export const LICENCE_FILENAME = "licence.json";
+
+/**
+ * The entry's licence record, or `undefined` when there is no sidecar. A
+ * sidecar that does not parse is NOT absent: it comes through with a status the
+ * checker rejects, so it reports as malformed rather than as "not recorded".
+ */
+export function readLicence(dir: string): unknown {
+  const path = join(dir, LICENCE_FILENAME);
+  if (!existsSync(path)) return undefined;
+  try {
+    return JSON.parse(readFileSync(path, "utf-8"));
+  } catch (e) {
+    return { status: "unparseable", note: `${LICENCE_FILENAME}: ${(e as Error).message}` };
+  }
+}
+
 /** `sec-000-1-introduction` → `sec-000`, the stable part of a section id. */
 export function sectionKey(sectionId: string): string {
   const m = sectionId.match(/^(sec-\d+)/);
@@ -150,6 +176,7 @@ export function buildDocumentNodes(
   candidates: Candidates | undefined,
   hasSectionMd: (sid: string) => boolean,
   images?: ImagesSidecar,
+  licence?: unknown,
 ): Array<{ path: string; content: string }> {
   const out: Array<{ path: string; content: string }> = [];
   const sections = structure.sections ?? [];
@@ -328,6 +355,7 @@ export function buildDocumentNodes(
         disposition:
           candidates?.disposition ??
           "ingested source material — attributed to its document, not folio content",
+        licence,
       },
     }),
   });
@@ -499,6 +527,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     if (!structure) return { state: "unreadable", rung };
     const candidates = readJson<Candidates>(join(dir, "candidates.json"));
     const images = readJson<ImagesSidecar>(join(dir, "images.json"));
+    const licence = readLicence(dir);
     return {
       state: "built",
       rung,
@@ -508,6 +537,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
         candidates,
         (sid) => existsSync(join(dir, "sections", `${sid}.md`)),
         images,
+        licence,
       ),
     };
   }
@@ -530,7 +560,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
         // Where the headers and shape came from. The manifest points at
         // sheets and blocks; without this nothing in the graph says which
         // record produced them.
-        meta: { tabular_record: record?.$schema },
+        meta: { tabular_record: record?.$schema, licence: readLicence(dir) },
       }),
     };
   }
