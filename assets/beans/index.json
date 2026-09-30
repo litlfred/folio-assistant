@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 466,
+      "count": 468,
       "unit": "beans"
     }
   },
@@ -67,14 +67,14 @@
     {
       "id": "folio-assistant-0fua",
       "title": "Long flat lists with no search or filter",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:14Z",
-      "updatedAt": "2026-09-23T10:36:14Z",
+      "updatedAt": "2026-09-30T12:08:24Z",
       "preview": "Pages of 46 to 240+ rows are one flat list with no search, filter or grouping, so finding an entry means scrolling tens of thousands of pixels on a phone. Add a filter and grouping in the shared list component.\n\nObserved on: `glossary`, `processes`, `skills-index`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Re",
       "file": "beans/defs/folio-assistant-0fua--long-flat-lists-with-no-search-or-filter.md"
     },
@@ -1593,6 +1593,20 @@
       "updatedAt": "2026-09-26T00:00:00Z",
       "preview": "Group 8 of 13 in `d308`. **15 files, 7 entry points.**\n\n`pdf-extract`, `pdf-ocr`, `pdf-pages`, `pdf-structure`, `pdf-tables`,\n`split-pdf-by-chapter`, `extract-candidates`, `tabular-records`,\n`archive-contents`, `ingest-document`, `scan-repo-content`,\n`smart-base-transform`, `_pdf_doc_id`, `_pypdf_compat`, `_tech_meta`,\n`pypdf_safe`.\n\n**BPMN:** `ingest-extract-structure · Task_ExtractText · Task_Oc",
       "file": "beans/defs/folio-assistant-81t5--tool-813-ingest-extract-structure-document-ingesti.md"
+    },
+    {
+      "id": "folio-assistant-81tw",
+      "title": "BOOTSTRAP-TOOLS STAGED AGAIN: the tools that render and validate bootstrap/ leave cat-harness, toward litlfred/bootstrap-tools",
+      "status": "scrapped",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T23:13:27Z",
+      "updatedAt": "2026-09-30T08:46:25Z",
+      "preview": "**Owner, 2026-09-29:** *\"we will https://github.com/litlfred/bootstrap-tools use this for the tools that render bootstrap/ but were put in cat-harness. for now create dir bootstrap-tools/ for staging split out into repo. make sure IRIs updated\"* — then, choosing scope: *\"1 2 ... need Zod usage in bootstrap tools as part of validation in rendering pipeline. will also need SEMVER skills in bootstrap",
+      "file": "beans/defs/folio-assistant-81tw--bootstrap-tools-staged-again-the-tools-that-render.md"
     },
     {
       "id": "folio-assistant-81vy",
@@ -3279,14 +3293,14 @@
     {
       "id": "folio-assistant-j6t3",
       "title": "INSTALL SKILLS AS TOOLS AT RENDER TIME: 34 skills declare user_invocable, 4 are reachable — options for Claude Code, Antigravity and any MCP host",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:42:35Z",
-      "updatedAt": "2026-09-30T08:27:11Z",
+      "updatedAt": "2026-09-30T11:02:04Z",
       "preview": "## What — the owner's ask, verbatim\n\n2026-09-21:\n\n> bean: develop otpions onhow could we \"install\" i guess at render time new\n> skills to antigravity, caludecode as tools to improve discussion clairty\n> between huamn and agent in dicsussion\n>\n> (e.g. so /coordinate work and /prepare-merge,  different model -> diffent\n> tools)\n\n## The gap, MEASURED rather than argued\n\n| | count |\n|---|---|\n| skills",
       "file": "beans/defs/folio-assistant-j6t3--install-skills-as-tools-at-render-time-34-skills-d.md"
     },
@@ -3599,6 +3613,20 @@
       "updatedAt": "2026-09-23T10:36:14Z",
       "preview": "Findings from the as-is wireframe `cat-harness/docs/wireframes/catalogue/` (intent.md, as-is.html, checks/), observed at 1280×800 and 390×844. Verbatim from its `## Findings`; a finding tagged → is also covered by that cross-cutting bug.\n\n1. **Horizontal scroll at phone width.** At 390 px the document is 752 px wide (`scrollWidth` 752). The \"Every node\" table does not wrap or scroll in a container",
       "file": "beans/defs/folio-assistant-kx0p--catalogue-visualiser-6-wireframe-findings.md"
+    },
+    {
+      "id": "folio-assistant-l9d5",
+      "title": "BOOTSTRAP-TOOLS PORT: contract-semver skill + Zod validate step from #1514 onto main's bootstrap-tools",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-xsqm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:46:09Z",
+      "updatedAt": "2026-09-30T08:46:09Z",
+      "preview": "**Owner, 2026-09-30 (\"Port 2 pieces\"):** PR #1514 (bean `81tw`) was overtaken by `xsqm` (PRs #1516, #1537), which re-created `bootstrap-tools/` on main with a zod-only import cone. Port ONLY the two pieces unique to #1514 onto main's existing `bootstrap-tools/`, adapted to its layout — nothing main already has is re-created.\n\n1. **Bootstrap contract semver** — skill `bootstrap-contract-semver` (wi",
+      "file": "beans/defs/folio-assistant-l9d5--bootstrap-tools-port-contract-semver-skill-zod-val.md"
     },
     {
       "id": "folio-assistant-lfxa",
@@ -5468,7 +5496,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:43:50Z",
-      "updatedAt": "2026-09-30T11:02:54Z",
+      "updatedAt": "2026-09-30T11:02:57Z",
       "preview": "Owner, 2026-09-30, answering the GOAL 3 goal review: keep GOAL 3 **open**, and theme the harness itself. The goal's words are *\"showing who-iris w/ existing materialized assets with themed harness\"*, and the owner reads \"themed harness\" as more than the pages.\n\n## What is true today (measured 2026-09-30)\n- The who-iris **pages** (`/who-iris/`, generated by `who-iris/scripts/gen-iris-pages.ts`) ren",
       "file": "beans/defs/folio-assistant-v8n5--harness-theming-the-who-iris-board-tile-navbar-and.md"
     },
@@ -6170,7 +6198,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T23:42:57Z",
-      "updatedAt": "2026-09-29T23:42:57Z",
+      "updatedAt": "2026-09-30T08:46:25Z",
       "preview": "Owner rulings, 2026-09-29 (answers to the separation analysis, Q7/Q1/Q10/Q5):\n\n- **Zod moves DOWN into bootstrap-tools** — reverses `319n`'s placement. Across repos, Zod in cat-harness makes a bootstrap release depend on cat-harness, which depends on bootstrap. bootstrap still knows no zod (`etg1`).\n- **bootstrap-tools owns content checks AND the README/SVG writers** (options 1+2), not a whole har",
       "file": "beans/defs/folio-assistant-xsqm--bootstrap-tools-re-create-as-a-sibling-instance-zo.md"
     },

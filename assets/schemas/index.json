@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 180,
+      "count": 182,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1205,6 +1205,23 @@
       "name": "theme-art-intake",
       "graphNode": "schema",
       "summary": "Theme art arriving as three files — accepted, or refused with a reason.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/theme-by-ref.test.ts",
+      "instance": "cat-harness",
+      "name": "theme-by-ref.test",
+      "graphNode": "undeclared",
+      "summary": "`themeByRef` — a theme reference resolved against its OWNER (bean `v8n5`).",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/theme-by-ref.ts",
+      "instance": "cat-harness",
+      "name": "theme-by-ref",
+      "graphNode": "none",
+      "reason": "a resolver over theme nodes declared elsewhere; it defines no schema of its own",
+      "summary": "A theme by REFERENCE — `{instance?, themeId}` — resolved against the",
       "isTest": false
     },
     {
@@ -28010,6 +28027,33 @@
       "refs": [
         "cat-harness/schemas/theme.ts#ThemeLayout"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/theme-by-ref.ts#ThemeRefMiss",
+      "name": "ThemeRefMiss",
+      "module": "cat-harness/schemas/theme-by-ref.ts",
+      "kind": "type-alias",
+      "doc": "Why a reference did not resolve — each a different repair.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/theme-by-ref.ts#ThemeRefResult",
+      "name": "ThemeRefResult",
+      "module": "cat-harness/schemas/theme-by-ref.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
