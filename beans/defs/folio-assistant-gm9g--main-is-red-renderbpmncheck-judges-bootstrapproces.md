@@ -1,11 +1,11 @@
 ---
 # folio-assistant-gm9g
 title: 'MAIN IS RED: render:bpmn:check judges bootstrap/processes/*.svg that bootstrap-tools owns — two generators, one artefact, and regenerating DELETES the provenance banner'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-30T18:57:39Z
-updated_at: 2026-09-30T18:58:16Z
+updated_at: 2026-09-30T22:46:49Z
 parent: folio-assistant-vke6
 ---
 
@@ -88,3 +88,5 @@ and it belongs to whoever owns the split (`vke6`).
 
 Whether `generatedNote` should be used by more generators. This is about one
 overlap, not about provenance banners in general.
+
+_2026-09-30T22:46:49Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

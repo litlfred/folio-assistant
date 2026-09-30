@@ -5,7 +5,7 @@
  *
  *   1. Core framework schemas (Zod → JSON Schema → Markdown)
  *   2. Per-skill input/output schemas (schemas/skills/*)
- *   3. SkillDefinition instances (.claude/skills/local/*.json) with schemaRef links
+ *   3. SkillDefinition instances (each owner's skills/skill-definitions/*.json, via skillDefinitionDirs) with schemaRef links
  *   4. ActorDefinition instances (cat-harness/scenarios/actors/*.json)
  *   5. CapabilityDefinition instances (cat-harness/scenarios/capabilities/*.json)
  *   6. Requirement instances (skills/requirements/*.json)
@@ -53,6 +53,7 @@ import type { SkillPackageManifest } from "../schemas/types.ts";
 import { instanceDirectoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 import { actorsDir, capabilitiesDir } from "../../cat-harness/schemas/role-graph.ts";
+import { skillDefinitionDirs } from "../../cat-harness/schemas/skill-definitions-dir.ts";
 
 /**
  * The declared knowledge-graph root, or the convention.
@@ -206,7 +207,7 @@ function getTransitiveRoles(actorId: string): Set<string> {
 const actors = loadJsonDir<ActorDefinition>(actorsDir(rootDir) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })());
 const capabilities = loadJsonDir<CapabilityDefinition>(capabilitiesDir(rootDir) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the capability registry (bean rqao) has no home to read"); })());
 const requirements = loadJsonDir<Requirement>(join(kgRoot(rootDir), "requirements"));
-const skills = loadJsonDir<SkillDefinition>(join(rootDir, ".claude", "skills", "local"));
+const skills = skillDefinitionDirs(rootDir).flatMap((d) => loadJsonDir<SkillDefinition>(d));
 const remotePackages = loadJsonDir<RemotePackageRef>(join(rootDir, "skills", "remote-packages"));
 const skillSchemaDirs = existsSync(join(rootDir, "schemas", "skills"))
   ? readdirSync(join(rootDir, "schemas", "skills"), { withFileTypes: true }).filter(d => d.isDirectory()).map(d => d.name)
