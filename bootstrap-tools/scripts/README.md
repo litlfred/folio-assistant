@@ -1,7 +1,7 @@
 <!-- kg:subgraph:begin -->
 # The tools
 
-The schema generator and drawn schema page, the README writers (each directory's README, and the `kg:processes` and `kg:files` sections) with their Liquid templates, the [Process](../../bootstrap/schemas/README.md#process) renderer, the release-IRI sync, the term linker, and the checks: import closure, node identifiers, bootstrap's concepts.
+The schema generator and drawn schema page, the README writers (each directory's README, and the `kg:processes` and `kg:files` sections) with their Liquid templates, the [Process](../../bootstrap/schemas/README.md#process) renderer, the release-IRI sync, the term linker, and the checks: import closure, node identifiers, bootstrap's concepts, bootstrap's documents parsed against their Zod (`bootstrap:validate`), and the semver bump the published schemas require, computed from a diff (`bootstrap:semver`).
 
 Part of [Bootstrap tools](../README.md) 0.1.0, declared as `bootstrap-tools-scripts`, holding `code`.
 
@@ -20,9 +20,13 @@ Part of [Bootstrap tools](../README.md) 0.1.0, declared as `bootstrap-tools-scri
 | [`readme-graph-sections.test.ts`](readme-graph-sections.test.ts) | a file |  |
 | [`readme-graph-sections.ts`](readme-graph-sections.ts) | a file |  |
 | [`render-bpmn.ts`](render-bpmn.ts) | a file |  |
+| [`schema-semver.test.ts`](schema-semver.test.ts) | a file |  |
+| [`schema-semver.ts`](schema-semver.ts) | a file |  |
 | [`subgraph-readmes.test.ts`](subgraph-readmes.test.ts) | a file |  |
 | [`subgraph-readmes.ts`](subgraph-readmes.ts) | a file |  |
 | [`term-links.test.ts`](term-links.test.ts) | a file |  |
 | [`term-links.ts`](term-links.ts) | a file |  |
+| [`validate-bootstrap.test.ts`](validate-bootstrap.test.ts) | a file |  |
+| [`validate-bootstrap.ts`](validate-bootstrap.ts) | a file |  |
 | [`templates/`](templates/) | 2 files | |
 <!-- kg:subgraph:end -->

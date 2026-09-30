@@ -1,9 +1,9 @@
 <!-- kg:subgraph:begin -->
-# bootstrap-tools-skills
+# The toolset's skills
 
-The skills this instance owns. ONE today -- `bootstrap-contract-semver`, what MAJOR, MINOR and PATCH mean for bootstrap's published schemas and graph, and why the bump is computed from a diff rather than asserted.
+The skills this toolset owns. ONE today -- `bootstrap-contract-semver`, what MAJOR, MINOR and PATCH mean for bootstrap's published schemas, and why the bump is computed from a diff rather than asserted.
 
-Part of [Bootstrap Tools](../README.md) 0.1.0, declared as `bootstrap-tools-skills`, holding `skills`.
+Part of [Bootstrap tools](../README.md) 0.1.0, declared as `bootstrap-tools-skills`, holding `skills`.
 
 | file | what it is | used by |
 |---|---|---|

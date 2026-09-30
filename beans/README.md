@@ -8,7 +8,7 @@ Part of [C@T Harness](../cat-harness/README.md) 0.1.0, declared as `beans`, hold
 | file | what it is | used by |
 |---|---|---|
 | [`beans.json`](beans.json) | data |  |
-| [`defs/`](defs/) | 1081 files | |
+| [`defs/`](defs/) | 1083 files | |
 | [`surveys/`](surveys/README.md) | 2 files | |
 | [`workflows/`](workflows/) | 9 files | |
 <!-- kg:subgraph:end -->

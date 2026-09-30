@@ -9,5 +9,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `uml`, holding `uml`.
 |---|---|---|
 | [`harness-object-model.puml`](harness-object-model.puml) | a file |  |
 | [`harness-schemas.puml`](harness-schemas.puml) | a file |  |
-| [`overview/`](overview/) | 254 files | |
+| [`overview/`](overview/) | 256 files | |
 <!-- kg:subgraph:end -->
