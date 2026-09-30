@@ -4,7 +4,7 @@
  * ## Why the workflow is PARSED rather than run
  *
  * Because running it would remove a review preview, and that is the one thing
- * this change must not do: `skills/folio-core/deletion-requires-confirmation.md`
+ * this change must not do: `skills/conduct/conduct-core/deletion-requires-confirmation.md`
  * holds that an agent never removes a durable artefact on its own initiative,
  * and a staging preview is named there as durable. The properties that matter
  * here are all about WHICH STEP RUNS AND WHEN — `if:` expressions, `env:`

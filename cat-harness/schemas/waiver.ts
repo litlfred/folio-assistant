@@ -1,7 +1,7 @@
 /**
  * A confirmation the owner has given **in advance**, scoped and dated.
  *
- * Skill: [`confirmation-waiver`](../skills/folio-core/confirmation-waiver.md).
+ * Skill: [`confirmation-waiver`](../skills/conduct/conduct-core/confirmation-waiver.md).
  * Owner, 2026-09-20: *"human can waive confirmation rights (e.g. for session,
  * for process run)"*, and *"context dependent, should be in memories"*.
  *

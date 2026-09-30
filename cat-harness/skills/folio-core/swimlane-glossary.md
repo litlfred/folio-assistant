@@ -112,7 +112,7 @@ describes.
 The document is derived and rebuilt every run, so it has no memory:
 delete a role and its concept simply stops appearing, which is what
 *"never existed"* also looks like. Retirement and accident must not look
-alike ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)),
+alike ([`deletion-requires-confirmation`](../conduct/conduct-core/deletion-requires-confirmation.md)),
 so the one non-derivable fact — **this term was once minted** — is
 committed at `<instance>/glossary/glossary-ledger.json`, declared as
 graph kind `swimlane-glossary` (`holds: "state"`; renamed from `glossary` on
@@ -172,5 +172,5 @@ must never be reachable as `unbound`.
   means a reader must not be told `Corpus` is a persona.
 - [`directory-conventions`](../kg/kg-core/directory-conventions.md) — why the ledger's
   directory is declared rather than hidden.
-- [`deletion-requires-confirmation`](deletion-requires-confirmation.md) —
+- [`deletion-requires-confirmation`](../conduct/conduct-core/deletion-requires-confirmation.md) —
   the rule retirement implements.

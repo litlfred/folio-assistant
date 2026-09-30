@@ -29,10 +29,10 @@
  * ## It reports and never acts
  *
  * Closing is the owner's, per
- * [`deletion-requires-confirmation`](../skills/folio-core/deletion-requires-confirmation.md)
+ * [`deletion-requires-confirmation`](../skills/conduct/conduct-core/deletion-requires-confirmation.md)
  * applied to the work plan — **unless** a `bean-close` waiver is in force, in
  * which case the session closing the batch names the waiver in its turn report:
- * [`confirmation-waiver`](../skills/folio-core/confirmation-waiver.md).
+ * [`confirmation-waiver`](../skills/conduct/conduct-core/confirmation-waiver.md).
  * This script does not read waivers and does not close anything; a waiver
  * changes who may act on the list, never what the list says.
  *
@@ -113,7 +113,7 @@ function formatReport(r: ReadyToCloseReport): string {
   if (r.ready.length) {
     out.push("");
     out.push("  Closing these is the owner's — or a session acting under a `bean-close` waiver,");
-    out.push("  which it names in its turn report. See skills/folio-core/confirmation-waiver.md.");
+    out.push("  which it names in its turn report. See skills/conduct/conduct-core/confirmation-waiver.md.");
   }
   return out.join("\n");
 }

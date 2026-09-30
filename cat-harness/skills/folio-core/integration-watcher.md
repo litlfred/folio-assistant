@@ -78,7 +78,7 @@ watcher and its one-line QA axis, then surface the structured chip set.
 
 ## 0a. Repo-owner preferences (binding for all watchers)
 
-Per [`interaction-modality`](interaction-modality.md) the repo owner types with
+Per [`interaction-modality`](../conduct/conduct-core/interaction-modality.md) the repo owner types with
 difficulty and prefers a small set of binding behavioural defaults.
 These override the historical watcher defaults — every child inherits
 them.
@@ -131,7 +131,7 @@ now the default.
 
 ## 0d. AskUserQuestion accessibility
 
-Per [`interaction-modality`](interaction-modality.md) and its `low-dexterity`
+Per [`interaction-modality`](../conduct/conduct-core/interaction-modality.md) and its `low-dexterity`
 profile, which defaults `AskUserQuestion` to `multiSelect: true`: the repo
 owner types with difficulty.
 

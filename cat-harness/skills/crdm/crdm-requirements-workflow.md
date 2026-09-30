@@ -52,7 +52,7 @@ requirements, impact, sign-off, feedback — and each one is the agent handing a
 decision to a person who was not inside the analysis that produced it.
 
 **So the ordering rule in
-[`interaction-modality.md` §4.1](../../skills/folio-core/interaction-modality.md) governs this whole
+[`interaction-modality.md` §4.1](../../skills/conduct/conduct-core/interaction-modality.md) governs this whole
 workflow, not just its explicit checkpoints: context → options → recommendation
 → question.** Its test applies unchanged:
 
@@ -210,7 +210,7 @@ without first deriving a filename. See
 Phase 4 often ends with a **choice** rather than a plan, and that is the moment
 the BA is handed a decision. Not a list of approach names with the analysis
 linked: a **comparison**, per
-[`decision-comparison`](../../skills/folio-core/decision-comparison.md) — per option its pro, its con,
+[`decision-comparison`](../../skills/conduct/conduct-core/decision-comparison.md) — per option its pro, its con,
 what it changes **downstream** and how reversible it is, laid out where the rows
 can be read against each other, then one recommendation and a stated default.
 
@@ -468,7 +468,7 @@ When a round of implementation is complete (one or more beans resolved):
 ## Cross-references
 
 - [CRDM methodology page](https://litlfred.github.io/folio-assistant/crdm-methodology.html) — the documentation page for users
-- [`interaction-modality.md`](../../skills/folio-core/interaction-modality.md) §4.1 — context before the question; the ordering rule this workflow runs on
+- [`interaction-modality.md`](../../skills/conduct/conduct-core/interaction-modality.md) §4.1 — context before the question; the ordering rule this workflow runs on
 - [`crdm-detect.md`](crdm-detect.md) — feature-request detection skill
 - [`staging-review.md`](../../skills/folio-core/staging-review.md) — before/after staging comparison skill
 - [`todo-manager.md`](../../skills/folio-core/todo-manager.md) — bean creation protocol
