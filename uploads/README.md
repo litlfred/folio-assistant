@@ -76,8 +76,6 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | [`WHO-RHR-18.06-eng.pdf`](WHO-RHR-18.06-eng.pdf) | a file |  |
 | [`d1a26515-9bde-455d-84bc-2e5fc196b004.png`](d1a26515-9bde-455d-84bc-2e5fc196b004.png) | a file |  |
 | [`dong-2025-doc-researcher.pdf`](dong-2025-doc-researcher.pdf) | a file |  |
-| [`formal-13-12-09.pdf`](formal-13-12-09.pdf) | a file |  |
-| [`formal-24-01-01.pdf`](formal-24-01-01.pdf) | a file |  |
 | [`ihris_admin_handbook_sep_17_2010.pdf`](ihris_admin_handbook_sep_17_2010.pdf) | a file |  |
 | [`rfc2119-key-words-requirement-levels.pdf`](rfc2119-key-words-requirement-levels.pdf) | a file |  |
 | [`rfc8174-uppercase-vs-lowercase-2119-key-words.pdf`](rfc8174-uppercase-vs-lowercase-2119-key-words.pdf) | a file |  |
