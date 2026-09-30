@@ -47,23 +47,22 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-xsd11-datatypes
  */
-import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph.ts";
 import { readFileSync, readdirSync, existsSync, writeFileSync, mkdirSync } from "node:fs";
 import { basename, join, dirname, relative, resolve, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
-import { NS_PREFIXES, namespaceForLayer, propertyIri, termIri } from "../schemas/namespaces.js";
+import { NS_PREFIXES, propertyIri, termIri } from "../schemas/namespaces.js";
 import { DCTERMS_NS } from "../schemas/jsonld.js";
-import { termLayer } from "../schemas/vocabulary.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
-import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
+import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
 import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   artefactStub,
   defaultGraphKinds,
+  graphKindIri,
   isPublishedDirectory,
   isPublishedGraphKind,
   isPublishedSchemaModule,
@@ -181,15 +180,9 @@ function findBpmnDirs(root: string = ROOT): string[] {
 // ── JSON-LD context ─────────────────────────────────────────────
 
 /** The namespace a declared graph kind's nodes belong in. */
-function graphKindNamespace(kindName: string): string {
-  // A kind bootstrap DEFINES is bootstrap's individual, whatever layer owns the
-  // class a harness types its directories with: since 2026-09-30 (bean `xsqm`)
-  // `SkillGraph` and the rest are the harness's classes, but `skills` is still
-  // bootstrap's kind, named `bootstrap:graphKind/skills`.
-  if (Object.hasOwn(BOOTSTRAP_GRAPH_KINDS, kindName)) return namespaceForLayer("bootstrap");
-  const def = BASE_GRAPH_KINDS[kindName];
-  const local = def?.type.split("#")[1];
-  return local ? namespaceForLayer(termLayer(local)) : namespaceForLayer("harness");
+/** A kind's individual, `<layer ns>graphKind/<name>` — the registry's one answer. */
+function graphKindId(kindName: string): string {
+  return graphKindIri(kindName, defaultGraphKinds.get(kindName));
 }
 
 /** A type IRI with whichever folio namespace it carries removed. */
@@ -342,7 +335,6 @@ export function buildContext(): Record<string, unknown> {
     // "same underlying thing, different presentation" and merges nothing.
     alternateOf: { "@id": `${PROV}alternateOf`, ...link },
     canonicalDocument: { "@id": termIri("canonicalDocument"), ...link },
-    typeIri: { "@id": termIri("typeIri"), "@type": "@id" },
 
     // ── The standards a graph is written in, and what validates it ──────
     //
@@ -2056,14 +2048,13 @@ function collectGraphKinds(root: string = ROOT): Node[] {
   return emitted.map((name) => {
     const def = defaultGraphKinds.get(name)!;
     return {
-      // The instance sits in the SAME namespace as the class it instantiates,
-      // which is not always the harness's: `cat-harness` and `schemas` are
-      // bootstrap's kinds, `voices` and `library` are core's. Derived from the
-      // kind's own `type` rather than chosen here, so the two cannot drift.
-      "@id": `${graphKindNamespace(name)}graphKind/${name}`,
+      // The individual IS the kind — there is no class per kind (owner,
+      // 2026-09-30, bean `3r47`). Its namespace is its layer's: `skills` is
+      // bootstrap's, `voices` core's. `graphKindIri` is the one answer, so a
+      // directory's `holdsGraph` and this node cannot disagree.
+      "@id": graphKindId(name),
       "@type": termIri("GraphKind"),
       name,
-      typeIri: def.type,
       renderable: def.renderable,
       summary: def.summary,
     };
@@ -2146,7 +2137,7 @@ function collectDeclaration(doc: string, problems: string[], root: string = ROOT
         "@type": termIri("Subgraph"),
         name: x.id,
         path: x.path,
-        holdsGraph: kinds.map((k) => `${graphKindNamespace(k)}graphKind/${k}`),
+        holdsGraph: kinds.map(graphKindId),
         // `graphKinds: kinds` was here. REMOVED as denormalised: `holdsGraph`
         // lands on a GraphKind node whose `name` is the kind, and the export's
         // own test already asserts every one of those links resolves.

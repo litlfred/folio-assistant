@@ -84,7 +84,7 @@ That authorisation may be given **in advance**: an `issue-close` waiver, which
 names the issues it covers and expires. It is the stakeholder answering the
 same question earlier, which is the whole of what this rule asks for — never
 the agent supplying the judgement itself.
-[`confirmation-waiver.md`](confirmation-waiver.md).
+[`confirmation-waiver.md`](../conduct/conduct-core/confirmation-waiver.md).
 
 After each round of implementation, post a summary on **the issue**, not only on
 the change proposal: what was accomplished, what remains, and links to the

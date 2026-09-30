@@ -226,7 +226,7 @@ not fine for the only statement of what to do to be `gh pr create`.
    being replaced.
 2b. **If an input reaches a command line, give it a type that cannot be a
    payload** — and put free prose on stdin. See
-   [`untrusted-input`](untrusted-input.md); `check:tools` fails CI on a
+   [`untrusted-input`](../conduct/conduct-core/untrusted-input.md); `check:tools` fails CI on a
    violation.
 3. **Say a mechanism exists and where to find it** — never inline it. A Tool is
    reached the same way a skill is: resolve the `kg` graph from the instance's

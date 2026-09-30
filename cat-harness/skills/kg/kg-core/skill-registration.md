@@ -112,7 +112,7 @@ not an omission.
   being loosened"*.
 - **A derived artefact whose subject is gone.** `kg:audit` reports `SUBJECT GONE`
   and refuses to delete it. That is
-  [`deletion-requires-confirmation`](../../folio-core/deletion-requires-confirmation.md):
+  [`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md):
   an agent never removes a durable artefact on its own initiative. No amount of
   regenerating settles it, which is why the command reports the check as still
   red rather than looping.
@@ -125,4 +125,4 @@ probe skill and then deleting it produced one of each.
 Whether a skill should exist, what it should say, or which package it belongs in.
 This is about the declarations a skill owes once you have decided to add it. For
 where a new thing goes at all, start at
-[`where-does-this-go`](../../folio-core/where-does-this-go.md).
+[`where-does-this-go`](../../conduct/conduct-core/where-does-this-go.md).

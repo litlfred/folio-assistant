@@ -41,7 +41,7 @@ not an instruction to publish it: ingestion decides a bib slug, writes into
 [`library-ingestion`](library-ingestion.md) owns.
 
 **Never delete anything from the queue** — that is
-[`deletion-requires-confirmation`](../../folio-core/deletion-requires-confirmation.md) applied
+[`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md) applied
 where it is most tempting, because a processed file *looks* spent. It is not:
 `uploads/` is the raw record of what was handed over, and the derived entry in
 `library/` is not a substitute for it. Report what could go, with sizes and

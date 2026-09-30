@@ -10,7 +10,7 @@ import {
   releaseBytes,
   type BinaryRelease,
 } from "./binary-release";
-import { defaultGraphKinds, graphLayer, isDerivedGraph, isRenderable, processMayWrite } from "./cat-harness";
+import { defaultGraphKinds, graphKindIri, graphLayer, isDerivedGraph, isRenderable, processMayWrite } from "./cat-harness";
 
 const SHA = "a".repeat(64);
 
@@ -212,7 +212,7 @@ describe("the graph kind it is held under", () => {
     // Option B was reusing `materialization`. A release is a publication
     // upstream; a materialization is a copy here. This test is what stops a
     // later tidy-up folding them without the argument being made again.
-    const kinds = ["binary-release", "catalogue"].map((k) => defaultGraphKinds.get(k)?.type);
+    const kinds = ["binary-release", "catalogue"].map((k) => (defaultGraphKinds.has(k) ? graphKindIri(k, defaultGraphKinds.get(k)) : undefined));
     expect(new Set(kinds).size).toBe(2);
   });
 });

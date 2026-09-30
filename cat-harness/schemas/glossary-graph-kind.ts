@@ -33,10 +33,9 @@
  * @graphNode schema
  */
 import { defaultGraphKinds, type GraphKindDef, type GraphKindRegistry } from "./graph-kind-registry.js";
-import { termIri } from "./namespaces";
 
 export const GLOSSARY_GRAPH_KIND: GraphKindDef = {
-  type: termIri("GlossaryGraph"),
+  layer: "core",
   renderable: false,
   // Authored or extracted terms and what they mean: true on their own, read by
   // every rendering, written by no process run. Content, as `scenarios` is.

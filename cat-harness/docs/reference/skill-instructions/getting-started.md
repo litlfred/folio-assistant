@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/getting-started.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/getting-started.md) — do not edit here.
+> Generated from [`cat-harness/skills/conduct/conduct-core/getting-started.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/getting-started.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/getting-started.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/conduct/conduct-core/getting-started.md){: .fa-edit-source }
 
 {% raw %}
 # /getting-started — what did they actually ask for?

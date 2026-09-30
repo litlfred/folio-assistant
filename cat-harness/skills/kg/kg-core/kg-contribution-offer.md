@@ -34,12 +34,12 @@ which declared graph, which kind of node, which stub convention. Run it **after*
 this skill has an answer, not instead of it.
 
 It is **not** general guidance on asking questions. That is
-[`interaction-modality`](../../folio-core/interaction-modality.md) §4.1, and this skill does not
+[`interaction-modality`](../../conduct/conduct-core/interaction-modality.md) §4.1, and this skill does not
 restate it — it **obeys** it, and adds the one thing §4.1 cannot supply: what
 the options actually are here.
 
 It is **not** what to do when the author CORRECTS a rule. That is
-[`symbiotic-interaction`](../../folio-core/symbiotic-interaction.md) §2, and it runs the other
+[`symbiotic-interaction`](../../conduct/conduct-core/symbiotic-interaction.md) §2, and it runs the other
 way: the node already exists, the author has just said it is wrong, and the
 correction is written into it **in the same turn without an offer**. Offering
 there asks the author to repeat a correction they have already made, which is
@@ -229,8 +229,8 @@ indistinguishable from never having asked.
 
 | | |
 |---|---|
-| the shape of the asking | [`interaction-modality`](../../folio-core/interaction-modality.md) §4.1 |
-| a correction to a rule that already exists — no offer | [`symbiotic-interaction`](../../folio-core/symbiotic-interaction.md) §2 |
+| the shape of the asking | [`interaction-modality`](../../conduct/conduct-core/interaction-modality.md) §4.1 |
+| a correction to a rule that already exists — no offer | [`symbiotic-interaction`](../../conduct/conduct-core/symbiotic-interaction.md) §2 |
 | where the answer lands | [`placement`](placement.md) |
 | the process step | [`crdm-signoff.bpmn`](../../../processes/crdm-signoff.bpmn) |
 | the round summary that records it | [`issue-working`](../../folio-core/issue-working.md) |

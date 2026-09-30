@@ -31,7 +31,7 @@ happen if the owner said nothing.
 **The "why not invoked" is mechanical, not a lapse of care.** Four facts, each
 checkable:
 
-1. The rule is in the `kg` graph at `skills/folio-core/interaction-modality.md`.
+1. The rule is in the `kg` graph at `skills/conduct/conduct-core/interaction-modality.md`.
 2. `AGENTS.md` carries a **summary** of it, and the summary omits the clause
    that was broken.
 3. The skill was **not offerable to the agent by name** — nothing under

@@ -280,7 +280,7 @@ queue entry, not a gap.
 **Then one question, selectable.** The queue will surface several owner
 decisions. Ask **one** in full — context, options, recommendation first and
 marked, a stated default — and give a **count** of the rest
-([`interaction-modality`](interaction-modality.md) §4.1). A reader on a
+([`interaction-modality`](../conduct/conduct-core/interaction-modality.md) §4.1). A reader on a
 low-dexterity profile (`interaction/`) answers by choosing a number.
 
 ## Rules

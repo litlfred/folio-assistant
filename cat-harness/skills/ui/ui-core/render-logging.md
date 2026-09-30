@@ -42,7 +42,7 @@ The never-delete property is a shape, so a caller cannot be written wrongly.
 
 **Emptying a log is a person's decision**, taken deliberately, with the
 confirmation every durable artefact here requires
-([`deletion-requires-confirmation`](../../folio-core/deletion-requires-confirmation.md)). No
+([`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md)). No
 tool and no workflow does it.
 
 ## The four events, and why `retained` earns its place

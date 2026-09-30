@@ -15532,11 +15532,11 @@
       "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
         {
-          "name": "type",
-          "type": "string",
-          "optional": false,
+          "name": "layer",
+          "type": "\"core\"",
+          "optional": true,
           "array": false,
-          "doc": "The `@type` IRI this kind projects to."
+          "doc": "Whose namespace the kind is named in, when it is not the harness's:"
         },
         {
           "name": "renderable",

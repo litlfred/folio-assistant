@@ -50,7 +50,7 @@ agent-memory <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as the third state between &quot;reaches everybody&quot; and &quot;deleted&quot;.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/agent-memory.md"><code>cat-harness/skills/folio-core/agent-memory.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/agent-memory.md"><code>cat-harness/skills/conduct/conduct-core/agent-memory.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--archiving-arxiv" data-fa-state="extracted" data-fa-gloss="">
 archiving-arxiv <span class="fa-gloss-status">candidate, extracted</span>
@@ -275,7 +275,7 @@ communication-language <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Determine the language an agent SPEAKS IN — the language of a turn, as against the language of content. Covers the four inputs and their order, why a model's own languages are never the answer, the boundary between speaking to the person and writing durable artefacts, where the determination is recorded so a sibling session does not re-ask, and when to re-ask.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/communication-language.md"><code>cat-harness/skills/folio-core/communication-language.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/communication-language.md"><code>cat-harness/skills/conduct/conduct-core/communication-language.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--compute-audit" data-fa-state="extracted" data-fa-gloss="">
 compute-audit <span class="fa-gloss-status">candidate, extracted</span>
@@ -310,7 +310,7 @@ confirmation-waiver <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>A human may waive a confirmation they are owed — for a session, for a process run, or until a stated time. Covers what a waiver is made of, where it is recorded (the context graph, never the work plan), the gates that can be waived and the rules that cannot, why every waiver carries an expiry, and the one thing an agent may never do: grant itself one.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/confirmation-waiver.md"><code>cat-harness/skills/folio-core/confirmation-waiver.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/confirmation-waiver.md"><code>cat-harness/skills/conduct/conduct-core/confirmation-waiver.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--content-acquisition" data-fa-state="extracted" data-fa-gloss="">
 content-acquisition <span class="fa-gloss-status">candidate, extracted</span>
@@ -538,7 +538,7 @@ decision-comparison <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Lay a decision out as a comparison before you ask it — what each option does, its pro, its con, what it changes downstream, and how reversible it is — in the prose that precedes the question, never inside the option labels. Required whenever a choice is handed to a person.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-comparison.md"><code>cat-harness/skills/folio-core/decision-comparison.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/decision-comparison.md"><code>cat-harness/skills/conduct/conduct-core/decision-comparison.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--decision-methodology-selector" data-fa-state="extracted" data-fa-gloss="">
 decision-methodology-selector <span class="fa-gloss-status">candidate, extracted</span>
@@ -566,7 +566,7 @@ deletion-requires-confirmation <span class="fa-gloss-status">candidate, extracte
 </dt>
 <dd>
 <p>An agent never removes a durable artefact on its own initiative. Report what would go, with sizes and ages, and wait for the user to say so. Covers what counts as durable, the non-destructive move for each kind, and the rule that a workflow whose shape deletes something counts as a deletion nobody decided.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/deletion-requires-confirmation.md"><code>cat-harness/skills/folio-core/deletion-requires-confirmation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md"><code>cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--delivery-summary" data-fa-state="extracted" data-fa-gloss="">
 delivery-summary <span class="fa-gloss-status">candidate, extracted</span>
@@ -802,7 +802,7 @@ getting-started <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Triage what a person means when they ask to create a folio, and route them. Five requests share one sentence — a folio in a new repo, folio-assistant overlaid on an existing repo, a second folio in an instance that already has one, a content object they called a folio, or something the filesystem cannot tell apart. Reads the repository facts, runs them through the folio-intent decision table, asks a selectable question for what facts cannot settle, scaffolds, and reports the published URL. Use whenever a user asks to create, start, set up, or initialise a folio, a paper, a DAK, an IG, or &quot;folio-assistant&quot; itself.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/getting-started.md"><code>cat-harness/skills/folio-core/getting-started.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/getting-started.md"><code>cat-harness/skills/conduct/conduct-core/getting-started.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--github-state-inspection" data-fa-state="extracted" data-fa-gloss="">
 github-state-inspection <span class="fa-gloss-status">candidate, extracted</span>
@@ -957,7 +957,7 @@ injection-boundaries <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/security/injection-boundaries.md"><code>cat-harness/skills/security/injection-boundaries.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/security/injection-boundaries.md"><code>cat-harness/skills/conduct/security/injection-boundaries.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--instance-kinds" data-fa-state="extracted" data-fa-gloss="">
 instance-kinds <span class="fa-gloss-status">candidate, extracted</span>
@@ -1006,7 +1006,7 @@ interaction-modality <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice durably so every later session and sibling agent honours it. Covers the accessibility rules a conversational agent can actually keep, the settings surface in the published site, and how to drive a question set from DMN so the SAME logic serves every modality. Use at first contact with a new user, when a user reports difficulty answering, whenever a question is about to be asked, and before any long free-text prompt.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/interaction-modality.md"><code>cat-harness/skills/folio-core/interaction-modality.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/interaction-modality.md"><code>cat-harness/skills/conduct/conduct-core/interaction-modality.md</code></a></p>
 </dd>
 <dt id="who-iris--kg-skills--iris-dspace" data-fa-state="extracted" data-fa-gloss="">
 iris-dspace <span class="fa-gloss-status">candidate, extracted</span>
@@ -1380,7 +1380,7 @@ path-containment <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/security/path-containment.md"><code>cat-harness/skills/security/path-containment.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/security/path-containment.md"><code>cat-harness/skills/conduct/security/path-containment.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--pending-show" data-fa-state="extracted" data-fa-gloss="">
 pending-show <span class="fa-gloss-status">candidate, extracted</span>
@@ -1654,14 +1654,14 @@ repo-conversion <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, or asks whether their PDFs/notes/drafts can come along.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/repo-conversion.md"><code>cat-harness/skills/folio-core/repo-conversion.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/repo-conversion.md"><code>cat-harness/skills/conduct/conduct-core/repo-conversion.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--retry-backoff" data-fa-state="extracted" data-fa-gloss="">
 retry-backoff <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Every error gets a falling-off retry rate — each wait doubles, with jitter. Read before writing any call that can fail transiently, and before deciding that a failure is worth retrying at all. Exhausting the retries does not change the verdict.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/retry-backoff.md"><code>cat-harness/skills/folio-core/retry-backoff.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/retry-backoff.md"><code>cat-harness/skills/conduct/conduct-core/retry-backoff.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--review-comments" data-fa-state="extracted" data-fa-gloss="">
 review-comments <span class="fa-gloss-status">candidate, extracted</span>
@@ -1735,7 +1735,7 @@ security <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/security/security.md"><code>cat-harness/skills/security/security.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/security/security.md"><code>cat-harness/skills/conduct/security/security.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--semantic-review-scoping" data-fa-state="extracted" data-fa-gloss="">
 semantic-review-scoping <span class="fa-gloss-status">candidate, extracted</span>
@@ -1882,7 +1882,7 @@ symbiotic-interaction <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic folio-assistant platform skill.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/symbiotic-interaction.md"><code>cat-harness/skills/folio-core/symbiotic-interaction.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/symbiotic-interaction.md"><code>cat-harness/skills/conduct/conduct-core/symbiotic-interaction.md</code></a></p>
 </dd>
 </dl>
 
@@ -2037,14 +2037,14 @@ untrusted-input <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Keep attacker-controlled values out of program text — in GitHub Actions, in command lines, in anything that is parsed before it runs. Read before interpolating any value into a script, and before giving a Tool a command-line input.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/untrusted-input.md"><code>cat-harness/skills/folio-core/untrusted-input.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/untrusted-input.md"><code>cat-harness/skills/conduct/conduct-core/untrusted-input.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--unverified-constraints" data-fa-state="extracted" data-fa-gloss="">
 unverified-constraints <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule. Read before adding a check to a schema, a validator, a gate or an incompatibility table, and whenever you are about to write down that something &quot;is not supported&quot;.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/unverified-constraints.md"><code>cat-harness/skills/folio-core/unverified-constraints.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/unverified-constraints.md"><code>cat-harness/skills/conduct/conduct-core/unverified-constraints.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--upload-naming" data-fa-state="extracted" data-fa-gloss="">
 upload-naming <span class="fa-gloss-status">candidate, extracted</span>
@@ -2150,7 +2150,7 @@ where-does-this-go <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The router for filing decisions. This repository answers &quot;where does this go?&quot; nine separate times, each well, and nothing says WHICH question you are asking — so an agent who does not know a rule exists cannot look it up. One discriminating question per row, and the skill that owns the answer.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/where-does-this-go.md"><code>cat-harness/skills/folio-core/where-does-this-go.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/where-does-this-go.md"><code>cat-harness/skills/conduct/conduct-core/where-does-this-go.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--wireframe-design-review" data-fa-state="extracted" data-fa-gloss="">
 wireframe-design-review <span class="fa-gloss-status">candidate, extracted</span>

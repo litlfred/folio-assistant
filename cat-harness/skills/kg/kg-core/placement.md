@@ -272,7 +272,7 @@ A misplaced node is not a typo: it is a second copy of something, free to
 drift, that a later agent will find and believe.
 
 Hand the decision over the way
-[`interaction-modality.md` §4.1](../../folio-core/interaction-modality.md) requires — context →
+[`interaction-modality.md` §4.1](../../conduct/conduct-core/interaction-modality.md) requires — context →
 options **with what each costs** → your recommendation, marked → what happens
 if they say nothing → the question. The test is one pass:
 
