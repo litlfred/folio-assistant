@@ -182,9 +182,10 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmn:outgoing>Flow_12</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:userTask id="Task_SmeReview" name="Human / SME review&#10;[content-review]">
-      <bpmn:documentation>Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement.</bpmn:documentation>
+      <bpmn:documentation>Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement. A rendered change reaches the reviewer with its before/after preview (skill before-after-preview).</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="content-review" />
+        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_11</bpmn:incoming>
       <bpmn:outgoing>Flow_13</bpmn:outgoing>

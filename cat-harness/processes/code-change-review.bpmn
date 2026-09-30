@@ -185,10 +185,13 @@ The loop back through "root-cause the failure" is the point of drawing this at a
       <bpmn:documentation>
         The PR opens at the FIRST commit, even on a stub, and permission is
         never asked for it. Holding a green PR back for someone to look at
-        is not caution — it is a blocked reviewer.
+        is not caution — it is a blocked reviewer. A change to a rendered
+        surface carries a before/after preview in the PR body
+        (skill before-after-preview).
       </bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="continual-progress"/>
+        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f5</bpmn:incoming>
       <bpmn:outgoing>f6</bpmn:outgoing>
@@ -291,10 +294,13 @@ The loop back through "root-cause the failure" is the point of drawing this at a
     <bpmn:task id="Task_Review" name="Review the change">
       <bpmn:documentation>
         A human or an agent acting AS reviewer. Nothing is a reviewer;
-        somebody acts as one for the duration of this lane.
+        somebody acts as one for the duration of this lane. For a rendered
+        change the reviewer reads the agent's before/after preview rather
+        than building one.
       </bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="code-node-review"/>
+        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
       <bpmn:incoming>f8</bpmn:incoming>
       <bpmn:outgoing>f12</bpmn:outgoing>

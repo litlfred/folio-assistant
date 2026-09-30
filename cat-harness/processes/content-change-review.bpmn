@@ -105,12 +105,15 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
     <bpmn:task id="Task_ReviewStaging" name="Review staged rendering">
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="staging-review"/>
+        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
         Author reviews the rendered feature branch at
         &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/ and compares
         against the main site. The staging banner shows the commit SHA.
+        The agent's before/after preview (skill before-after-preview) sits
+        beside the URLs, with its counts and status line.
       </bpmn:documentation>
       <bpmn:incoming>p4</bpmn:incoming>
       <bpmn:outgoing>f3</bpmn:outgoing>
@@ -247,12 +250,15 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     <bpmn:task id="Task_CommitPush" name="Commit, push, update PR">
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="prepare-merge-auto"/>
+        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
         Agent commits all changes to the feature branch and pushes.
         The feature-staging.yml workflow automatically deploys to
         STAGING/&lt;branch-slug&gt;/ and comments the URL on the PR.
+        For a rendered change the agent also produces the before/after
+        preview (skill before-after-preview) and links it in the PR body.
       </bpmn:documentation>
       <bpmn:incoming>a6</bpmn:incoming>
       <bpmn:outgoing>a7</bpmn:outgoing>
@@ -287,6 +293,7 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="staging-review"/>
         <bootstrap.processes:skill ref="visual-diff"/>
+        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -297,7 +304,9 @@ On the trigger: reaching this call is not the same as running the whole of it. `
         what they are reviewing matches the PR. A changed figure, diagram
         or table is also pictured before and after on the review page,
         with the share of changed pixels in words (skill visual-diff,
-        Tool folio-block-screenshots).
+        Tool folio-block-screenshots). Anything the staging job cannot
+        picture (page chrome, scroll behaviour, a PDF page, an IG page) is
+        in the agent's before/after preview (skill before-after-preview).
       </bpmn:documentation>
       <bpmn:incoming>r1</bpmn:incoming>
       <bpmn:outgoing>r2</bpmn:outgoing>
