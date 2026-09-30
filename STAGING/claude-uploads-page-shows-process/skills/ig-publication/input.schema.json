@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-uploads-page-shows-process/skills/ig-publication/input.schema.json",
+  "title": "IG Publication Input",
+  "description": "Input schema for FHIR Implementation Guide publication.",
+  "type": "object",
+  "required": [
+    "igRoot",
+    "versionIncrement"
+  ],
+  "properties": {
+    "igRoot": {
+      "type": "string",
+      "description": "Path to the IG repository root."
+    },
+    "versionIncrement": {
+      "type": "string",
+      "enum": [
+        "major",
+        "minor",
+        "patch"
+      ],
+      "description": "Semantic version increment type."
+    },
+    "releaseNotes": {
+      "type": "string",
+      "description": "Release notes for this publication."
+    },
+    "publicationTarget": {
+      "type": "string",
+      "enum": [
+        "github-pages",
+        "smart-who-int",
+        "both"
+      ],
+      "default": "github-pages"
+    }
+  },
+  "staging": {
+    "branch": "claude/uploads-page-shows-process",
+    "sha": "e5128648b20cd4494e5fb49d7342dd81f1b8f4b6",
+    "pr": "1529/merge",
+    "run": "36651343531"
+  }
+}
