@@ -40,11 +40,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`swarm-management.md`](swarm-management.md) | Swarm management |  |
 | [`tool-graph.md`](tool-graph.md) | "What a Tool is, how it differs from a skill, and how the two are joined without being conflated." |  |
 | [`translation-support.md`](translation-support.md) | Translation support |  |
-| [`_data/`](_data/) | 5 files | |
+| [`_data/`](_data/) | 6 files | |
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 492 files | |
+| [`assets/`](assets/) | 494 files | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
 | [`cat-harness/`](cat-harness/) | 48 files | |
@@ -71,7 +71,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`todos/`](todos/) | 1 file | |
 | [`tools/`](tools/) | 1 file | |
 | [`translation-status/`](translation-status/) | 1 file | |
-| [`uml/`](uml/) | 136 files | |
+| [`uml/`](uml/) | 137 files | |
 | [`uploads/`](uploads/) | 1 file | |
 | [`wireframes/`](wireframes/) | 146 files | |
 | [`zh/`](zh/) | 14 files | |
