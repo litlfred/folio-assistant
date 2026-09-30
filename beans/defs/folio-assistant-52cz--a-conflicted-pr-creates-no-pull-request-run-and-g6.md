@@ -128,7 +128,7 @@ Live, 2026-09-30 19:10, `ci:watch --pr <n> --once`:
 
 `ci:watch --pr 1665` reported a "partial check set", while REST said `dirty`. The cause: `refs/pull/1665/merge` was 8cdfbc1, which GitHub built for the **earlier** head 1b7b537. When a new head conflicts, GitHub leaves the old merge ref in place. `mergeStateForHead` read existence alone, so it called the head `mergeable`, and `noRunAdvice` then offered to dispatch a run on a tree that will never exist.
 
-**Fixed in #1659:** the merge commit's second parent must BE the head. When it is not, the answer is `unknown`, never `mergeable`. It is also not `conflicted`, because a mergeable head's ref is stale too for about 15 s after a push (PR #813), and one read cannot tell the two apart.
+**Fixed in the follow-up to #1659:** the merge commit's second parent must BE the head. When it is not, the answer is `unknown`, never `mergeable`. It is also not `conflicted`, because a mergeable head's ref is stale too for about 15 s after a push (PR #813), and one read cannot tell the two apart.
 
 Live, 2026-09-30:
 - #1665, stale ref → `unknown`, where it used to be `mergeable`;
