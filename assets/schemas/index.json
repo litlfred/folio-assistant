@@ -5847,7 +5847,6 @@
       "name": "CatHarnessDeclaration",
       "module": "cat-harness/schemas/cat-harness.ts",
       "kind": "interface",
-      "doc": "An instance's root declaration.",
       "fields": [
         {
           "name": "images",
@@ -5962,6 +5961,13 @@
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
         },
         {
+          "name": "liquid",
+          "type": "LiquidPrefix",
+          "optional": true,
+          "array": false,
+          "doc": "The Liquid prefix this instance's VALUES are addressed by in authored"
+        },
+        {
           "name": "id",
           "type": "string",
           "optional": true,
@@ -5983,6 +5989,7 @@
       "refs": [
         "cat-harness/schemas/cat-harness.ts#AssociatedHarness",
         "cat-harness/schemas/cat-harness.ts#ContentDirectory",
+        "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
         "cat-harness/schemas/cat-harness.ts#NavbarIcon",
         "cat-harness/schemas/cat-harness.ts#Publication",
         "cat-harness/schemas/cat-harness.ts#RemoteGraph",
@@ -6117,6 +6124,13 @@
           "optional": true,
           "array": true,
           "doc": "The instances this one is BUILT ON — its layer stack, foundation first."
+        },
+        {
+          "name": "liquid",
+          "type": "z .object({ prefix: z.string().regex(/^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)*$/, \"a dotted, lower-case Liquid path\").opt…",
+          "optional": true,
+          "array": false,
+          "doc": "See {@link CatHarnessDeclaration.liquid}."
         },
         {
           "name": "id",
@@ -6525,6 +6539,35 @@
         "z"
       ],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
+      "name": "LiquidPrefix",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "interface",
+      "doc": "How an instance's values are addressed in Liquid — {@link CatHarnessDeclaration.liquid}.",
+      "fields": [
+        {
+          "name": "prefix",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The first path segment(s); default the instance's `name`."
+        },
+        {
+          "name": "passThrough",
+          "type": "boolean",
+          "optional": true,
+          "array": false,
+          "doc": "Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/cat-harness.ts#MaterialisedDirectory",
@@ -27350,7 +27393,7 @@
         },
         {
           "name": "format",
-          "type": "z.enum([\"xlsx\", \"ods\", \"csv\"])",
+          "type": "z.enum([\"xlsx\", \"ods\", \"csv\", \"fixed-width\"])",
           "optional": false,
           "array": false
         },
@@ -40383,6 +40426,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
+      "via": "liquid",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",

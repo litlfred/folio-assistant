@@ -802,6 +802,19 @@
             "minLength": 1
           }
         },
+        "liquid": {
+          "type": "object",
+          "properties": {
+            "prefix": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]*(?:\\.[a-z][a-z0-9-]*)*$"
+            },
+            "passThrough": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
         "id": {
           "type": "string",
           "minLength": 1
@@ -822,8 +835,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "daacfaf10c7b367e75ec43f3c94996cc610af983",
+    "sha": "378a1000801f67e7aa02332a9b2c71ec3bc15433",
     "pr": "main",
-    "run": "36717539083"
+    "run": "36722796363"
   }
 }

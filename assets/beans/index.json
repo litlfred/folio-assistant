@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 472,
+      "count": 473,
       "unit": "beans"
     }
   },
@@ -2171,7 +2171,7 @@
     {
       "id": "folio-assistant-bamf",
       "title": "fhir-harness declares and populates FHIR IG Jekyll data (site.data.fhir.*) for the just-the-docs pipeline",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-zzmr",
@@ -3561,7 +3561,7 @@
     {
       "id": "folio-assistant-kott",
       "title": "Harness-namespaced values: one dotted key <harness>.<subgraph...>.<name> for :val AND site.data",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-zzmr",
@@ -3569,7 +3569,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-30T10:16:19Z",
       "updatedAt": "2026-09-30T10:16:19Z",
-      "preview": "Owner 2026-09-30: 'can we do something like bootstrap.blah, cat-harness.blah.blah, etc...?' Extends the 12s9 ruling (prefix = the DECLARING Subgraph's path joined with dots) from BPMN/schema prefixes to VALUES, and supersedes the prefix:name proposal on #1564.\n\n## The design\n- One key per value: <harness>.<subgraph...>.<name>, e.g. cat-harness.build.version, fhir-harness.<ig>.ig.version, qou.compu",
+      "preview": "Owner 2026-09-30: 'can we do something like bootstrap.blah, cat-harness.blah.blah, etc...?' Extends the 12s9 ruling (prefix = the DECLARING Subgraph's path joined with dots) from BPMN/schema prefixes to VALUES, and supersedes the prefix:name proposal on #1564.\n\n## The design — as confirmed by the owner, 2026-09-30\n\nOwner: *\"{{ site.data...}} is declared for fhir-harness only... it declares its sit",
       "file": "beans/defs/folio-assistant-kott--harness-namespaced-values-one-dotted-key-harnesssu.md"
     },
     {
@@ -5431,6 +5431,20 @@
       "file": "beans/defs/folio-assistant-upgd--stream-13-goal-1-the-repo-split-and-the-kgs-own-de.md"
     },
     {
+      "id": "folio-assistant-uyp8",
+      "title": "Ingest CODATA as a library dataset with provenance, and the skills/tools to ingest reference datasets",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:26:31Z",
+      "updatedAt": "2026-09-30T10:26:31Z",
+      "preview": "Owner 2026-09-30: *\"CODATA would need to be properly ingested as a dataset into library (bean up task to do, add skills tools) and variables be like {{ qou.library.codata-2022.mass-electron }} or so\"*.\n\n## Measured 2026-09-30\n- qou's CODATA values live in a hand-vendored Python snapshot: `computations/codata_2022_source.py` (CODATA_EDITION_YEAR=2022, CODATA_SOURCE_URL, ALLASCII_URL, VENDORED_SNAPS",
+      "file": "beans/defs/folio-assistant-uyp8--ingest-codata-as-a-library-dataset-with-provenance.md"
+    },
+    {
       "id": "folio-assistant-v048",
       "title": "ROAST: adversarial pass over the catalogue-import design before any of it is believed",
       "status": "completed",
@@ -6597,15 +6611,15 @@
     {
       "id": "folio-assistant-zmm2",
       "title": "B9d (#1168): rename voice source kgRef → path, skill front matter capability: → requiresCapability",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:54:25Z",
-      "updatedAt": "2026-09-30T10:54:25Z",
-      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected",
+      "updatedAt": "2026-09-30T12:51:45Z",
+      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected\n\n_2026-09-30T12:51:45Z_ — Claimed by claude/sharp-einstein-970n",
       "file": "beans/defs/folio-assistant-zmm2--b9d-1168-rename-voice-source-kgref-path-skill-fron.md"
     },
     {

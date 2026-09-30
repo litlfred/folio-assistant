@@ -301,18 +301,18 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T12:56:28.281Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/daacfaf10c7b367e75ec43f3c94996cc610af983",
-  "sourceCommitSha": "daacfaf10c7b367e75ec43f3c94996cc610af983",
-  "sourceCommitAt": "2026-09-30T14:51:34+02:00",
+  "generatedAt": "2026-09-30T13:39:51.328Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/378a1000801f67e7aa02332a9b2c71ec3bc15433",
+  "sourceCommitSha": "378a1000801f67e7aa02332a9b2c71ec3bc15433",
+  "sourceCommitAt": "2026-09-30T15:35:52+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 284,
+    "Skill": 285,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 23,
+    "SkillPackage": 24,
     "Decision": 9,
     "Process": 72,
     "SequenceFlow": 940,
@@ -323,7 +323,7 @@
     "ExternalSchema": 17,
     "GraphKind": 35,
     "Role": 48,
-    "Directory": 47,
+    "Directory": 48,
     "Asset": 3
   },
   "@graph": [
@@ -4297,7 +4297,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/witnessed-values.md",
-      "instructionLines": 199,
+      "instructionLines": 252,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4694,6 +4694,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-lean-skills"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/reference-dataset-ingestion",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "reference-dataset-ingestion",
+      "title": "Reference dataset ingestion",
+      "description": "Ingest a published REFERENCE dataset — a constants table such as CODATA, AME or PDG — into a library entry whose values are addressable in prose as {{ <instance>.library.<entry>.<slug> }}, with edition, source, sha256 and licence recorded. Use when a paper quotes a physical constant, when a value is hard-coded in a script or registry, or before adding a \"vendored snapshot\" of someone else's numbers.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/data"
+      ],
+      "instructionsPath": "../folio-assistant-sci/skills/data/reference-dataset-ingestion.md",
+      "instructionLines": 95,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-data-skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deep-document-research",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "deep-document-research",
@@ -4815,7 +4831,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md",
-      "instructionLines": 240,
+      "instructionLines": 251,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5954,6 +5970,14 @@
       "path": "../folio-assistant-sci/skills/lean",
       "hasManifest": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-lean-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/data",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "data",
+      "path": "../folio-assistant-sci/skills/data",
+      "hasManifest": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-data-skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills",
@@ -44916,6 +44940,16 @@
         "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/skills"
       ],
       "description": "The SCIENCE layer's Lean tooling skills: `lean-formal-edges`, which runs the elaborated formal-edge extractor (folio-assistant#1492). Under the science layer, not core, per the owner's cut 'f-a-core has high level processes only, no tooling'. A subdirectory of `folio-assistant-sci/skills/` rather than that directory itself, because `skills/voices/` is already declared as the `voices` kind, and one directory declared under two kinds would be scanned twice. Repository-scoped, like `folio-assistant-core-skills`, so the consumers that resolve a skill ref from this root can see it."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-data-skills",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "name": "folio-assistant-sci-data-skills",
+      "path": "folio-assistant-sci/skills/data/",
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/skills"
+      ],
+      "description": "The SCIENCE layer's reference-data skills: `reference-dataset-ingestion`, which turns a published constants table (CODATA first) into a library dataset whose values are addressable as `{{ <instance>.library.<entry>.<slug> }}` with provenance (bean uyp8). A subdirectory beside `skills/lean/` for the same reason that one is: `skills/voices/` is already declared as the `voices` kind."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-skills",
