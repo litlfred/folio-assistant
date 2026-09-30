@@ -44,6 +44,7 @@
  * @graphNode schema
  */
 import { z } from "zod";
+import { ProcessElementIdSchema } from "./process-element-id.js";
 
 /** The `$schema` tag a session record carries. Files declare what they are. */
 export const SESSION_CONTEXT_SCHEMA_TAG = "folio-session-context/v1";
@@ -81,7 +82,7 @@ export const OpenInstanceSchema = z.object({
   /** The instance id — the stem of a node in the bean graph's workflow-state. */
   instance: z.string().min(1),
   /** The BPMN process it walks. Named, so a reader need not open the instance. */
-  process: z.string().min(1),
+  process: ProcessElementIdSchema,
   /**
    * The node the session believes it is at.
    *

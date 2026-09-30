@@ -85,6 +85,7 @@
  * and is re-exported there, so nothing that imported it has to change.
  */
 import { z } from "zod";
+import { ThemeRefSchema } from "./theme.js";
 
 /** The tag a declared contribution set is identified by, for documentation. */
 export const STICKY_CONTRIBUTION_SCHEMA_TAG = "folio-sticky-contribution/v1";
@@ -357,7 +358,7 @@ export const StickyContributionSchema = z
      * which a declaration cannot see. Resolution happens at render time, where a
      * missing theme degrades rather than failing the page.
      */
-    theme: z.string().regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case"),
+    theme: ThemeRefSchema,
     /** Shown where notes are listed. Derived from the body's first line when absent. */
     summary: z.string().min(1).optional(),
     /** The sticky's text, markdown, written out. Mutually exclusive with `bodyFrom`. */
