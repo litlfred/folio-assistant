@@ -95,6 +95,7 @@ import {
   resolveDirectories,
   siteDirFor,
   visualisationsOf,
+  forgeLocation,
 } from "../schemas/cat-harness.ts";
 import { withViewerNav } from "./viewer-page.ts";
 import { withInlineCode } from "../schemas/inline-code.ts";
@@ -629,7 +630,12 @@ function esc(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-const BLOB = "https://github.com/litlfred/folio-assistant/blob/main";
+const FORGE = "https://github.com/litlfred/folio-assistant";
+/** A file's page on the forge — in its submodule's own repository when it sits in one. */
+const blobUrl = (path: string): string => {
+  const at = forgeLocation(path, FORGE);
+  return `${at.repoUrl}/blob/main/${at.path}`;
+};
 
 /**
  * The chrome every page here shares.
@@ -736,7 +742,7 @@ export function codeRefsFor(site: string, pageDir: string, repoRoot: string, pag
   return {
     skill: (name) => skillPageHref(name, fromPage, pages),
     file: (path) =>
-      /^[\w.@-]+(\/[\w.@-]+)+$/.test(path) && existsSync(join(repoRoot, path)) ? `${BLOB}/${path}` : undefined,
+      /^[\w.@-]+(\/[\w.@-]+)+$/.test(path) && existsSync(join(repoRoot, path)) ? blobUrl(path) : undefined,
   };
 }
 
@@ -780,7 +786,7 @@ export function autoDocPage(
             .join("")
         : "";
       return `<tr${keyOf(i) ? ` id="${esc(rowId(i))}"` : ""}>
-  <td><a href="${esc(`${BLOB}/${i.path}`)}"><code>${esc(i.name)}</code></a><br><span class="p">${esc(i.path)}</span></td>
+  <td><a href="${esc(blobUrl(i.path))}"><code>${esc(i.name)}</code></a><br><span class="p">${esc(i.path)}</span></td>
   <td>${i.summary ? linkCodes(i, withInlineCode(i.summary, esc)) : '<span class="none">no description in the artefact</span>'}${facts}</td>
 </tr>`;
     })
