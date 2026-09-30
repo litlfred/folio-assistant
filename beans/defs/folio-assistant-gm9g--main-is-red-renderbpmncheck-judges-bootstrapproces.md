@@ -1,11 +1,11 @@
 ---
 # folio-assistant-gm9g
-title: render:bpmn:check FLAPS on bootstrap/processes/*.svg — red then green with no input change; plus a two-generator overlap underneath
-status: todo
+title: 'render:bpmn:check on bootstrap/processes/*.svg — two generators, one artefact; FIXED by #1663, and my ''flap'' diagnosis retracted'
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-30T18:57:39Z
-updated_at: 2026-09-30T19:06:51Z
+updated_at: 2026-09-30T19:10:33Z
 parent: folio-assistant-vke6
 ---
 
@@ -147,3 +147,74 @@ whether it worked.
       comparison.
 - [ ] Only then: which generator owns `bootstrap/processes/*.svg`.
 - [ ] `oqdr`'s gap stays closed — whatever renders them is RUN in CI.
+
+
+## RESOLVED 2026-09-30 — measured, and the "flap" is RETRACTED
+
+The owner asked for the flap to be measured. It was not a flap. Three
+experiments, cheapest first.
+
+### B — the renderer is DETERMINISTIC locally
+
+Two independent renders of all three SVGs, byte-compared: **identical**. So
+local non-determinism is ruled out. (A first attempt at this was invalid — a
+stale `.git/index.lock` blocked the restore so the second render never
+happened, and `cmp` reported a missing file. Not read as a result.)
+
+### C — the committed files are byte-identical to a fresh render
+
+    discussion           IDENTICAL to committed
+    initialize-harness   IDENTICAL to committed
+    log-message          IDENTICAL to committed
+
+And `render:bpmn:check` now exits **0**.
+
+A first comparison here was also invalid: I stripped the banner from the
+committed copy before comparing, on the assumption the render omitted it. The
+render **includes** the banner, so the stripped comparison differed at line 2
+for a reason I had created. Reading the two file headers side by side is what
+caught it.
+
+### A — why it was red at 18:52 and green at 19:00
+
+    18:51:32  6c7acb528ac authored — "render-bpmn: delegate beside-source
+              SVGs to bootstrap-tools' own writer"
+    18:52:22  my b937d71cb40 CI ran render:bpmn:check   -> RED
+    18:58:45  that fix MERGED TO MAIN as c431e64e611 (#1663)
+    19:00:0x  my 7d28eb637da CI ran render:bpmn:check   -> GREEN
+
+Neither of my heads CONTAINS `6c7acb528ac`. It did not have to: a
+`pull_request` run tests the head **merged with main**, and main gained the fix
+in the six minutes between my two runs. **The inputs changed. The gate did not
+flap.**
+
+### What each of my claims was worth
+
+| claim | verdict |
+|---|---|
+| two generators, one artefact | **correct** — and #1663's fix is essentially reading 1: bootstrap-tools owns the beside-source SVGs, so the cat-harness writer delegates to it |
+| `main` is red on this | **true at 18:52, false from 18:58:45** — stated without a time, which is what made it wrong |
+| the gate flapped | **wrong, and retracted** — I reached for non-determinism rather than checking whether main had moved |
+| a font/Chromium story explains the flip | **wrong** — recorded as unestablished at the time, which was the one thing I got right about it |
+
+### The lesson, and it is the SAME mechanism that bit the other way
+
+`code-quality-gates.yml`'s own `merge_group` comment says it: *a pull_request
+run tests the PR merged with main AS IT WAS WHEN THE PR WAS PUSHED*. This
+morning that made a green branch head produce a red merge commit (#1634, which
+reddened `main`). This afternoon it made a red check go green with no change to
+my branch.
+
+**So a verdict that changes with no change to your branch is not evidence of
+non-determinism — check whether the base moved FIRST.** That check is one
+command and I did not run it before writing "flapped" into a bean.
+
+## Closed on evidence rather than authorship
+
+`render:bpmn:check` exits 0 on `main` at `75acd070efd` and the three SVGs are
+byte-identical to a fresh render. The fix is `6c7acb528ac` in #1663, by another
+session. Nothing here is left to do, so this closes rather than staying open as
+a duplicate of work that landed.
+
+`oqdr`'s gap stays closed by that fix's own design: the beside-source SVGs are
+delegated to the writer that owns them rather than dropped.
