@@ -185,6 +185,9 @@ export const ENTRY_SIDECARS: readonly string[] = [
   // Authored, not produced by an arm: the licence record gen-library-jsonld
   // carries into manifest.jsonld as meta.licence (folio-assistant#1492).
   LICENCE_FILENAME,
+  // A dataset's addressable values, written by an ingest tool beside its
+  // tabular.jsonld (e.g. codata-ingest, bean uyp8; resolved by liquid-values).
+  "values.json",
 ];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
@@ -369,7 +372,6 @@ export const PAGED_ONLY: readonly string[] = [
   "structure-note",
   "sections",
   "blocks",
-  "narrative-provenance",
   "image-descriptions",
   "block-summaries",
 ];
@@ -382,8 +384,18 @@ export const PAGED_ONLY: readonly string[] = [
  * that is the vacuity this repository keeps paying for, and it would let an
  * empty directory promote.
  */
+/**
+ * Requirements for any entry whose ingest GENERATES blocks — paged and
+ * tabular, not an archive. `narrative-provenance` was paged-only until the
+ * first tabular entry (CODATA 2022, bean `uyp8`): a tabular sheet becomes a
+ * `table` block claiming "ingested", and that claim is exactly what this
+ * requirement checks, so exempting it would leave it unchecked.
+ */
+export const BLOCK_BEARING: readonly string[] = ["narrative-provenance"];
+
 export function appliesTo(requirement: string, kind: EntryKind): boolean {
   if (kind === "paged" || kind === "undetermined") return true;
+  if (BLOCK_BEARING.includes(requirement)) return kind === "tabular";
   return !PAGED_ONLY.includes(requirement);
 }
 

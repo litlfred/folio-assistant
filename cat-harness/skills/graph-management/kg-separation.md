@@ -44,7 +44,9 @@ bean before deciding:
 | gate time a content change pays | `bun run gates` (the gate count and wall time) |
 | merge contention | commits per day on `main`; PRs re-conflicted before merge |
 | cohesion and cut of the candidate | `bun run kg:detangle` |
-| wrong-direction edges | `check:partition`, `kg:detangle:check`, `check:reference-direction` |
+| wrong-direction edges **within one instance** — modules bucketed into the proposed repos by path rule | `check:partition` (its root is ONE instance; read the scope it prints) |
+| wrong-direction edges **between instances** — checked against each one's declared `needs` | `bun run kg:detangle:direction`, blocking in CI (bean `p11x`) |
+| wrong-direction **references** — the prose axis, not the import axis | `check:reference-direction` |
 | what the tools would drag along | the import cone of the would-be tools package (`check:tools-closure` once it exists) |
 
 ## Preconditions — each was learned from a failure

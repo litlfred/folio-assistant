@@ -846,6 +846,52 @@ jobs:
       - name: detangle measurements are current
         run: bun run kg:detangle:check
 
+      # THE CROSS-INSTANCE WRONG-DIRECTION AXIS, and it is a SECOND step
+      # rather than a third flag on the one above — same reasoning as
+      # `audit:coverage:require-all` / `audit:coverage:strict` a few steps
+      # back: the two lock different things and a reader should be able to see
+      # which broke. Here the difference is sharper than there, because the
+      # two steps stand on opposite sides of the pinned/graded line:
+      #
+      #   - the step ABOVE grades NOTHING. It fails on a stale or orphaned
+      #     sidecar, because the carve is an adjudication a person makes
+      #     (`detangle.ts`, "taste is a declared step"). That ruling stands.
+      #   - this step grades exactly ONE number. A module's BUCKET is taste;
+      #     an import pointing at an instance that declares a dependency on
+      #     you is a contradiction between two `<instance>.json` files, and no
+      #     adjudication makes it consistent.
+      #
+      # Owner's ruling on bean `p11x`, 2026-09-30, Option 2: leave
+      # `check:partition` instance-scoped and make `kg:detangle` the
+      # cross-instance gate, "since it already sees the axis (it is the one
+      # check that caught `bf5l`'s sabotage)". `check:partition` resolves its
+      # ROOT to `<checkout>/cat-harness`, so its 0 is scoped to ONE instance
+      # and is silent about edges between already-extracted siblings. `bf5l`
+      # measured the discriminator: with `cat-harness/schemas/intake.ts`
+      # importing `folio-assistant-core`, `check:instance-graph` and
+      # `check:partition` were both green and this axis reported 1.
+      #
+      # It is wired as BLOCKING because the count is 0 today, which is the
+      # repository's standing precedent for switching a reporter into an
+      # enforcer (the ruff comment, and `repo-partition.ts`'s own per-axis
+      # history): a check is an error only once its count is zero, because
+      # turning a red gate on just teaches the next agent to append `|| true`.
+      #
+      # It WRITES NOTHING, so it does not inherit `ymsu` — that defect is
+      # `bun test` repairing a sidecar a later gate then compares against
+      # itself, and a live-computed edge count has no sidecar to repair.
+      # `ymsu` is open and was NOT fixed here; the owner accepted that cost
+      # when ruling Option 2 over the "fix `ymsu` first" variant.
+      #
+      # Two things it reports rather than grades, both because grading them
+      # would mean grading a could-not-determine: `undetermined` edges (no
+      # declaration settles their direction) and the dangling refs its
+      # denominator excludes (bean `cjvs`). Both counts are PRINTED by the
+      # step; no number for either is written down here, because a count in a
+      # comment is a claim that outlives its measurement.
+      - name: no wrong-direction edges across declared instances
+        run: bun run kg:detangle:direction
+
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
       # 2026-09-19 nothing served that stem at all — the dead-link walk in

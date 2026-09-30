@@ -1064,6 +1064,83 @@
       "status": "candidate"
     },
     {
+      "id": "binary-release.releaseassetschema.bytes",
+      "prefLabel": "ReleaseAssetSchema.bytes",
+      "definition": "Size in bytes. Required — this is half of what the node is for.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.bytes",
+      "status": "candidate"
+    },
+    {
+      "id": "binary-release.releaseassetschema.contenttype",
+      "prefLabel": "ReleaseAssetSchema.contentType",
+      "definition": "Media type, where the publisher declares one.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.contentType",
+      "status": "candidate"
+    },
+    {
+      "id": "binary-release.releaseassetschema.dispositionreason",
+      "prefLabel": "ReleaseAssetSchema.dispositionReason",
+      "definition": "Why, for a disposition somebody DECIDED. Required for those; refused for the rest.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.dispositionReason",
+      "status": "candidate"
+    },
+    {
+      "id": "binary-release.releaseassetschema.fetchedfrom",
+      "prefLabel": "ReleaseAssetSchema.fetchedFrom",
+      "definition": "Where the bytes are fetched from. **Required, even for a purged asset** — a record of a file it cannot get back is a size and a hash with no referent.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.fetchedFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "binary-release.releaseassetschema.name",
+      "prefLabel": "ReleaseAssetSchema.name",
+      "definition": "The file's published name, e.g. `package.tgz`.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.name",
+      "status": "candidate"
+    },
+    {
+      "id": "binary-release.releaseidentityschema.id",
+      "prefLabel": "ReleaseIdentitySchema.id",
+      "definition": "The release's own id in its origin — a GitHub release id, a registry key.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.id",
+      "status": "candidate"
+    },
+    {
+      "id": "binary-release.releaseidentityschema.publishedat",
+      "prefLabel": "ReleaseIdentitySchema.publishedAt",
+      "definition": "When it was published.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.publishedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "binary-release.releaseidentityschema.tag",
+      "prefLabel": "ReleaseIdentitySchema.tag",
+      "definition": "The git tag, where the origin uses one.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.tag",
+      "status": "candidate"
+    },
+    {
+      "id": "binary-release.releaseidentityschema.url",
+      "prefLabel": "ReleaseIdentitySchema.url",
+      "definition": "The human-facing page for the release, if there is one.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.url",
+      "status": "candidate"
+    },
+    {
+      "id": "binary-release.releaseidentityschema.version",
+      "prefLabel": "ReleaseIdentitySchema.version",
+      "definition": "The version released. Required: an id alone collides across re-publications.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.version",
+      "status": "candidate"
+    },
+    {
+      "id": "binary-release.releaseoriginrefschema.repository",
+      "prefLabel": "ReleaseOriginRefSchema.repository",
+      "definition": "The repository or registry, e.g. `WorldHealthOrganization/smart-trust`.",
+      "source": "cat-harness/schemas/binary-release.ts#ReleaseOriginRefSchema.repository",
+      "status": "candidate"
+    },
+    {
       "id": "block-qa.blockqareport.criteria",
       "prefLabel": "BlockQaReport.criteria",
       "definition": "Per-criterion reviewer entries. Multiple reviewers (script + agent + human) may co-exist; they are NOT deduplicated.",
@@ -2002,6 +2079,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.liquid",
+      "prefLabel": "CatHarnessDeclaration.liquid",
+      "definition": "The Liquid prefix this instance's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.liquid",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.name",
       "prefLabel": "CatHarnessDeclaration.name",
       "definition": "The instance's name, e.g. `\"agentic-harness\"`.",
@@ -2104,6 +2188,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.iriBase",
       "definition": "The address this instance's IRIs are minted under, BEFORE the version — bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.liquid",
+      "prefLabel": "CatHarnessDeclarationSchema.liquid",
+      "definition": "See {@link CatHarnessDeclaration.liquid}.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.liquid",
       "status": "candidate"
     },
     {
@@ -2272,6 +2363,20 @@
       "prefLabel": "GraphNodeDirectoryShape.absent",
       "definition": "This directory is DECLARED and deliberately not on disk, with the reason.",
       "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.liquidprefix.passthrough",
+      "prefLabel": "LiquidPrefix.passThrough",
+      "definition": "Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher).",
+      "source": "cat-harness/schemas/cat-harness.ts#LiquidPrefix.passThrough",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.liquidprefix.prefix",
+      "prefLabel": "LiquidPrefix.prefix",
+      "definition": "The first path segment(s); default the instance's `name`.",
+      "source": "cat-harness/schemas/cat-harness.ts#LiquidPrefix.prefix",
       "status": "candidate"
     },
     {
@@ -5324,6 +5429,48 @@
       "prefLabel": "IgMenuSourceSchema.ref",
       "definition": "The commit it was read at. Provenance.",
       "source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-metadata-index.igidentityschema.canonical",
+      "prefLabel": "IgIdentitySchema.canonical",
+      "definition": "The IG's canonical URL, where it declares one.",
+      "source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.canonical",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-metadata-index.igidentityschema.packageid",
+      "prefLabel": "IgIdentitySchema.packageId",
+      "definition": "The NPM-style package id, e.g. `who.smart.trust`.",
+      "source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.packageId",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-metadata-index.igidentityschema.version",
+      "prefLabel": "IgIdentitySchema.version",
+      "definition": "The IG version this harvest was taken at. An id alone collides across versions.",
+      "source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.version",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-metadata-index.igmetadatasourceschema.harvestedat",
+      "prefLabel": "IgMetadataSourceSchema.harvestedAt",
+      "definition": "When the harvest ran.",
+      "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedAt",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-metadata-index.igmetadatasourceschema.harvestedfrom",
+      "prefLabel": "IgMetadataSourceSchema.harvestedFrom",
+      "definition": "The published site or package the exports were read out of.",
+      "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedFrom",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-metadata-index.igmetadatasourceschema.runurl",
+      "prefLabel": "IgMetadataSourceSchema.runUrl",
+      "definition": "A URL for the harvest run, if one exists.",
+      "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
       "status": "candidate"
     },
     {

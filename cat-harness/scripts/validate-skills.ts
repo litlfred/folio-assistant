@@ -13,6 +13,7 @@ import { readFileSync, readdirSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { kgRoots } from "./known-skills.js";
+import { packageDirsIn } from "./skill-topics.js";
 import { vacuityRefusal, type Source } from "./vacuity-refusal.ts";
 
 /**
@@ -108,26 +109,26 @@ validateDir(
 // are the skills" two ways is a defect in its own right, reported rather than
 // changed here because it is not this bean's subject.
 const skillsDir = join(rootDir, "skills");
-const pkgDirs = existsSync(skillsDir)
-  ? readdirSync(skillsDir, { withFileTypes: true }).filter((d) => d.isDirectory())
-  : [];
+// Topic-aware (bean `9umr`): a package may sit one level down, inside a topic
+// `skills/skills.json` declares.
+const pkgDirs = packageDirsIn(skillsDir);
 sources.push({
   label: "packages",
   dir: skillsDir,
   present: existsSync(skillsDir),
-  found: pkgDirs.filter((d) => existsSync(join(skillsDir, d.name, "package-manifest.json"))).length,
+  found: pkgDirs.filter((d) => existsSync(join(d.dir, "package-manifest.json"))).length,
 });
 if (existsSync(skillsDir)) {
   for (const pkg of pkgDirs) {
-    const manifestPath = join(skillsDir, pkg.name, "package-manifest.json");
+    const manifestPath = join(pkg.dir, "package-manifest.json");
     if (existsSync(manifestPath)) {
       try {
         const data = JSON.parse(readFileSync(manifestPath, "utf-8"));
         SkillPackageManifestSchema.parse(data);
-        console.log(`  ✓ skills/${pkg.name}/package-manifest.json`);
+        console.log(`  ✓ skills/${pkg.rel}/package-manifest.json`);
         validated++;
       } catch (e) {
-        console.error(`  ✗ skills/${pkg.name}/package-manifest.json: ${e instanceof Error ? e.message : String(e)}`);
+        console.error(`  ✗ skills/${pkg.rel}/package-manifest.json: ${e instanceof Error ? e.message : String(e)}`);
         errors++;
       }
     }

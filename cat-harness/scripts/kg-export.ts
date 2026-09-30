@@ -73,6 +73,7 @@ import {
   renderingPath,
 } from "../schemas/cat-harness.js";
 import { firstHeading, frontMatter } from "./front-matter.js";
+import { packageDirsIn } from "./skill-topics.js";
 import { isExternalContract, skillContracts } from "./skill-contracts.js";
 import {
   isSkillMd,
@@ -1249,9 +1250,8 @@ function collectPackages(doc: string, problems: string[]): Node[] {
   // package entry.
   const declaredUnpublished = unpublishedSkills(ROOT);
   if (!existsSync(skillsRoot)) return nodes;
-  for (const d of readdirSync(skillsRoot, { withFileTypes: true })) {
-    if (!d.isDirectory()) continue;
-    const mf = join(skillsRoot, d.name, "package-manifest.json");
+  for (const d of packageDirsIn(skillsRoot)) {
+    const mf = join(d.dir, "package-manifest.json");
     if (!existsSync(mf)) continue;
     try {
       const m = JSON.parse(readFileSync(mf, "utf-8")) as Record<string, unknown>;
@@ -1260,7 +1260,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
       // package under `skills/` happens to sit in a directory of its own name;
       // the moment one does not, this pushed a second node beside the stub
       // instead of replacing it (bean `r1vw`).
-      const id = packageIdFor(`skills/${d.name}`);
+      const id = packageIdFor(`skills/${d.rel}`);
       const iri = makeIri(doc, "package", id);
       // Replace the stub emitted above with the manifest-backed node.
       const stubAt = nodes.findIndex((n) => n["@id"] === iri);
@@ -1271,7 +1271,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
         name: m.name ?? d.name,
         version: m.version,
         description: m.description,
-        path: `skills/${d.name}`,
+        path: `skills/${d.rel}`,
         hasManifest: true,
         // Links, so a consumer can walk package → skill without string surgery.
         // Filtered too: an edge to a stripped node is a dangling reference
@@ -1283,7 +1283,7 @@ function collectPackages(doc: string, problems: string[]): Node[] {
         requiresCapability: ((m.requiresCapabilities as string[]) ?? []).map((c) => makeIri(doc, "capability", c)),
       });
     } catch (e) {
-      problems.push(`unparseable manifest skills/${d.name}: ${e instanceof Error ? e.message : String(e)}`);
+      problems.push(`unparseable manifest skills/${d.rel}: ${e instanceof Error ? e.message : String(e)}`);
     }
   }
   return nodes;

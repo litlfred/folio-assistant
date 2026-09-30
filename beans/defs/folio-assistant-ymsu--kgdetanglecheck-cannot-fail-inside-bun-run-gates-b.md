@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-27T05:55:41Z
+updated_at: 2026-09-30T10:57:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -918,3 +918,81 @@ The repaired sidecar was left uncommitted. It is `main`'s staleness, not the
 PR's, and committing it would put an unrelated change under that PR's name —
 which is how a shared artefact's churn gets attributed to whoever happened to
 run the gates.
+
+
+## A THIRD witness pair, 2026-09-30 — and a third SYMPTOM, not a third instance
+
+`check:version-bump` and `check:published-instance-exports` both regenerate
+
+    cat-harness/test/results/kg-export.qa-results.json
+    cat-harness/test/results/kg-export.bootstrap.qa-results.json
+
+inside the tree being judged. Found on `origin/main` @ `408f9982265` (PR #1570):
+
+```
+✗ 2 gate(s) CHANGED THE REPOSITORY while the gates were running:
+  · bun run check:version-bump                 (1 path)  cat-harness/test/results/kg-export.qa-results.json
+  · bun run check:published-instance-exports   (1 path)  cat-harness/test/results/kg-export.bootstrap.qa-results.json
+
+✗ every gate passed, and the run is NOT clean — 2 gate(s) changed the tree.
+```
+
+**178 of 178 verdicts green, exit 1.** The whole diff was a `script_hash` and an
+`updated_at`, twice — no finding changed. `git log -1 -- cat-harness/scripts/kg-export.ts`
+gives `56114cfe1a0`, PR #1548, which edited the script whose hash these two
+sidecars record without regenerating them.
+
+### Why this is a third symptom rather than a third example
+
+The three are distinguishable from the outside, which matters because an agent
+diagnoses from the symptom:
+
+| witness | symptom | what a reader sees |
+|---|---|---|
+| `kg:detangle:check` | a gate that **cannot fail** | ✓, always |
+| `uml:overview:check` | a gate that fails for something **not its subject** | ✗ on a gate the diff never touched |
+| this pair | the staleness reaches **only the final mutation guard** | **every verdict green, exit 1** |
+
+The third is the one that most resembles a broken harness rather than a stale
+artefact, because no gate reports a finding at all. A reader who trusts the
+verdict count concludes the run passed and the wrapper is buggy.
+
+### The part worth recording is that it was masked, not fixed
+
+`main` then moved to `0417c070a67` (PR #1550), which **touched `kg-export.ts`
+and regenerated both sidecars in the same commit**. Verified from git blobs
+(`script_hash` is `sha256(bytes)[:12]`, `cat-harness/scripts/qa-results.ts:96`):
+
+```
+kg-export.ts on origin/main:                    b539167517cb
+kg-export.qa-results.json            recorded=  b539167517cb   MATCH
+kg-export.bootstrap.qa-results.json  recorded=  b539167517cb   MATCH
+```
+
+So the repair landed **by luck** — the next edit to `kg-export.ts` that forgets
+the sidecars reproduces it exactly. PR #1570, which fixed it deliberately, was
+made obsolete by that accident and became actively harmful: its branch carries
+`d4b2d9e423e4`, the pre-#1550 hash, so merging it would overwrite a correct
+hash with a stale one and re-trigger the same guard in the opposite direction.
+Recommended for closure 2026-09-30; the owner ruled *"close it, keep the
+diagnosis as a bean"*, which is this section.
+
+**A defect that gets masked by unrelated work is worse than one that stays
+red**, because the red one is on somebody's list. This one left no trace on
+`main` at all.
+
+### What the fix has to cover, now measured at four gates
+
+`check:version-bump` and `check:published-instance-exports` join
+`kg:detangle` — so the fix (compute into a temp directory, as the
+profile-conformance tests already do, and **report** rather than repair) has
+four call sites, not one. A fix scoped to `kg:detangle` leaves three standing.
+
+### One more reason this bean is not academic
+
+Three `Unblock main:` PRs landed within a week — #1563, #1568, #1570 — and this
+mechanism is why none of them could have been caught before merge by running
+`bun run gates` on the branch: the gate that would notice repairs the file
+first. Of the nine red-`main` incidents on 2026-09-30, five were corpus-walking
+artefacts staled by the merge *sequence* (bean `391j`) and this mechanism is
+what made them invisible on each branch in isolation.

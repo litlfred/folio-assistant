@@ -56,6 +56,40 @@ direction: whether an allowed edge is a *restatement* or *essential* is the
 adjudicator's call, so those edges stay `unclassified` with the verdict as
 their basis.
 
+**The direction count is the one detangle number that is GRADED**, and it is
+graded in a gate of its own — `bun run kg:detangle:direction`, blocking in CI
+since the owner's Option 2 ruling on bean `p11x` (2026-09-30). Everything else
+this tool measures stays **pinned**: `kg:detangle:check` fails on a stale or
+orphaned sidecar and never on a number, because the carve is an adjudication a
+person makes and grading it would be the tool overruling the adjudicator.
+
+The line between them is not a matter of degree. A module's **bucket** is taste.
+An edge whose target layer is not among what the source layer's
+`<instance>.json` says it may reach is a **contradiction between two
+declarations**, and no adjudication makes it consistent — so it is the one thing
+here a machine may refuse. Two flags, two npm scripts, two CI steps, so a red
+run says which question broke.
+
+Two things that gate **reports and refuses to grade**, both because grading them
+would be grading a could-not-determine:
+
+- **`undetermined` edges** — an endpoint's instance declares no `needs`. Failing
+  on these would be the gate deciding a layering nobody declared.
+- **the denominator** — the count is over the edges that **resolve**. Dangling
+  refs (bean `blv9`) are excluded before any edge is classified, so a `0` is
+  *"0 among the edges that resolve"*, which is the weaker claim. The gate prints
+  the excluded count and its breakdown, because a blocking gate that hides its
+  denominator can pass because an edge failed to resolve rather than because the
+  layering held. Bean `cjvs` owns triaging them.
+
+**It is not `check:partition`'s second opinion.** That tool's root is one
+instance, so it partitions a **future** layout by path rule among that
+instance's own modules; this checks the **present** layout against declared
+`needs` across instances. `bf5l` measured them disagreeing — a real
+`cat-harness → folio-assistant-core` import gave `check:partition` `0` and this
+`1`. Either can be green while the other is red, and Phase I.1 of the migration
+plan now needs both.
+
 **At term scale** — a glossary declared `ordered` (owner, 2026-09-29, of
 bootstrap's terms: *"logically tight, non self-referential"*). Each term's
 `requires` must point UP, and `checkDeclaredOrder` in
