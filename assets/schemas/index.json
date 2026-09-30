@@ -2719,13 +2719,6 @@
           "doc": "What this skill does."
         },
         {
-          "name": "roles",
-          "type": "string[]",
-          "optional": true,
-          "array": true,
-          "doc": "by nothing. Kept optional so a downstream instance still validates."
-        },
-        {
           "name": "requiredCapabilities",
           "type": "SkillCapabilityRef[]",
           "optional": false,
@@ -26703,13 +26696,6 @@
           "type": "z.string()",
           "optional": false,
           "array": false
-        },
-        {
-          "name": "roles",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true,
-          "doc": "RETIRED 2026-09-20 (bean `y1w9`) — optional, and read by nothing."
         },
         {
           "name": "requiredCapabilities",
