@@ -17,6 +17,6 @@ _408 files directly here, too many to list: 288 .ts, 44 .sh, 33 .bat, 26 .py, 14
 | [`lib/`](lib/) | 8 files | |
 | [`partition/`](partition/) | 2 files | |
 | [`render-tex/`](render-tex/) | 2 files | |
-| [`tests/`](tests/) | 472 files | |
+| [`tests/`](tests/) | 474 files | |
 | [`translation/`](translation/README.md) | 14 files | |
 <!-- kg:subgraph:end -->

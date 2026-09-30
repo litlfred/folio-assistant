@@ -12,7 +12,7 @@ nav_exclude: true
 `Process_IgIncremental` · advisory · 19 step(s)
 
 One change — a PR push or a push to main — through the incremental IG build
-of docs/proposals/ig-incremental-build.md: restore the derived state, compute
+proposed in issue #199: restore the derived state, compute
 the change's dependency cone, compile and validate only the cone against the
 warm validator, re-render the cone's records, rebuild the meta-index, assemble
 the site, gate on QA, then deploy — and, on main or a release only, seed the

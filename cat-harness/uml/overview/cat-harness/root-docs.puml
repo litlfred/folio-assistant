@@ -62,7 +62,7 @@ package "cat-harness/root-docs" as pkg_cat_harness_root_docs <<docs>> {
     status [1] : string
     type [1] : string
     priority [1] : string
-    parent [1] : string
+    parent [1] : '' | string
     blocking [0..*] : string[]
     blockedBy [0..*] : string[]
     createdAt [1] : string
