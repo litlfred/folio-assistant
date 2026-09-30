@@ -18,6 +18,7 @@ import { join, resolve } from "node:path";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS } from "../../schemas/block-kinds.ts";
 import { ActorDefSchema } from "../../schemas/role-graph.ts";
+import { ownKgRoots } from "../known-skills.ts";
 
 const H = resolve(import.meta.dir, "../..");
 const REPO = resolve(H, "..");
@@ -25,6 +26,25 @@ const DECK = join(H, "content/docs/harnessed-kg-overview");
 /** The published site root, from the declaration — never a literal. */
 const SITE = join(H, siteDirFor(H));
 const read = (p: string) => readFileSync(p, "utf-8");
+
+/**
+ * A skill's file, found under the instance's declared knowledge-graph roots
+ * rather than at a literal path — skills move between topic directories
+ * (`role-model` left `skills/folio-core/` for `skills/process/process-core/`).
+ */
+function skillFile(name: string): string {
+  const hits: string[] = [];
+  const walk = (d: string) => {
+    for (const e of readdirSync(d, { withFileTypes: true })) {
+      const p = join(d, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name === `${name}.md`) hits.push(p);
+    }
+  };
+  for (const r of ownKgRoots(H)) if (existsSync(r)) walk(r);
+  expect(hits, `skill ${name} under the declared kg roots`).toHaveLength(1);
+  return hits[0]!;
+}
 
 describe("living deck: every claim about the KG still holds", () => {
   test("slide 1 — the layers page lists all five SMART layers", () => {
@@ -86,7 +106,7 @@ describe("living deck: every claim about the KG still holds", () => {
   test("slide 13 — three taskable actor kinds, plus `external`, and the skill says so", () => {
     const kinds = (ActorDefSchema.shape.kind as unknown as { options: string[] }).options;
     expect([...kinds].sort()).toEqual(["agent", "external", "person", "system"]);
-    const skill = read(join(H, "skills/folio-core/role-model.md"));
+    const skill = read(skillFile("role-model"));
     expect(skill).toContain("An actor is one of three kinds — human, agentic, mechanical");
     expect(skill).toMatch(/`external` is the fourth/);
   });
