@@ -45,7 +45,7 @@ evidence:
 **Adopted 2026-09-29** as one of the three decision-methodology sources the
 owner supplied, and rendered as a FAMILY with a selection rule rather than as
 eight separate adoptions — which is what
-[`decision-methodology-selector`](../skills/folio-core/decision-methodology-selector.md)
+[`decision-methodology-selector`](../skills/process/process-core/decision-methodology-selector.md)
 needs from it.
 
 ## The load-bearing idea

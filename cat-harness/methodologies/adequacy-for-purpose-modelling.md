@@ -123,7 +123,7 @@ laundered into a theorem.
 
 ## See also
 
-- [`methodology-adoption`](../skills/folio-core/methodology-adoption.md) — the
+- [`methodology-adoption`](../skills/process/process-core/methodology-adoption.md) — the
   protocol that routes a question to a methodology in the first place.
 - [`consensus-grounded-subject-evaluation`](consensus-grounded-subject-evaluation.md)
   — the same instinct one level down: judge against a declared standard, and

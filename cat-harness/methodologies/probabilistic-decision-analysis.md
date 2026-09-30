@@ -104,5 +104,5 @@ as `m4xy`'s declared-versus-placed and LCSHBench's exact-versus-concept.
 - [`mcdm-aggregation`](mcdm-aggregation.md) — one-shot ranking from a fixed matrix.
 - [`adequacy-for-purpose-modelling`](adequacy-for-purpose-modelling.md) — what a
   formal model of any of this may claim.
-- [`decision-methodology-selector`](../skills/folio-core/decision-methodology-selector.md)
+- [`decision-methodology-selector`](../skills/process/process-core/decision-methodology-selector.md)
   — the skill that reads these `applies-when` clauses and ranks them.
