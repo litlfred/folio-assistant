@@ -21,7 +21,7 @@ Shaped after `crdm-requirements.bpmn` because the question is the same one: some
 
 ## How it connects
 
-- **Called by:** [Watching a pinned upstream dependency](upstream-pin-watch.html)
+- **Called by:** [A knowledge graph leaves for its own repositories](kg-separation.html), [Watching a pinned upstream dependency](upstream-pin-watch.html)
 - **Calls:** [Options analysis](options-analysis.html)
 - **Names the `upstream-version-adoption` skill without calling this process:** [Watching a pinned upstream dependency](upstream-pin-watch.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** no docs page section shows this diagram

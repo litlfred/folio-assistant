@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
 title: The Harness
 nav_order: 11
 lang: en

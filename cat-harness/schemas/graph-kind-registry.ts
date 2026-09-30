@@ -45,7 +45,7 @@
  * @graphNode schema
  */
 import { termIri } from "./namespaces";
-import { BOOTSTRAP_GRAPH_KINDS } from "./graph";
+import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph";
 
 
 // ── Graph kinds ─────────────────────────────────────────────────
@@ -1059,7 +1059,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "glossary-ledger/1.0.0": { validator: "schemas/glossary-ledger.ts#LedgerSchema" },
+      "glossary-ledger/1.0.0": { validator: "bootstrap-tools:schemas/glossary-ledger.ts#LedgerSchema" },
     },
     // NOT work. A bean is something somebody is partway through; this is a
     // record that a term exists, true whether or not anybody is doing
@@ -1084,7 +1084,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // that did would be manufacturing its own evidence.
     holds: "context",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "schemas/model-registry.ts#ModelRegistrySchema",
+    validator: "bootstrap-tools:schemas/model-registry.ts#ModelRegistrySchema",
     // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
     // The harness's detail, formerly in the summary: read when a session opens
     // as ONE input to the communication-language determination and never as
