@@ -1,11 +1,11 @@
 ---
 # folio-assistant-2c2b
 title: 'CI WATCH IS TWO-STATE: cancelled read as failure and reported a green main red — bun run ci:watch, three states with undetermined never collapsing'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-30T14:56:30Z
-updated_at: 2026-09-30T14:56:30Z
+updated_at: 2026-09-30T19:42:58Z
 parent: folio-assistant-1xhc
 ---
 
@@ -145,3 +145,5 @@ observations are not a rate.
 - [ ] Whether `build-and-deploy` is chronically superseded. Two observations
       are not a rate; this needs the run history, which `ci-health` already
       fetches.
+
+_2026-09-30T19:42:58Z_ — Claimed by claude/magical-archimedes-4qkfxp-2c2b — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
