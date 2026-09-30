@@ -12,13 +12,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 25 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1455 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 152 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 25 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1456 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 152 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1650 terms and is 896 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1651 terms and is 897 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1650</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1651</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -555,6 +555,13 @@ Attribution.version <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Version pin: a script revision, or a human's role at the time.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/attribution.ts"><code>cat-harness/schemas/attribution.ts#Attribution.version</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--attribution.attributionschema.skill" data-fa-state="extracted" data-fa-gloss="">
+AttributionSchema.skill <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The skill being exercised: `name` or `package/name` (#1168 B8).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/attribution.ts"><code>cat-harness/schemas/attribution.ts#AttributionSchema.skill</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--qa-review.auditnote.author" data-fa-state="extracted" data-fa-gloss="">
 AuditNote.author <span class="fa-gloss-status">candidate, extracted</span>
@@ -7635,7 +7642,7 @@ RenderLogEntrySchema.id <span class="fa-gloss-status">candidate, extracted</span
 RenderLogEntrySchema.process <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>BPMN process id — `staging-render-log` — when written inside one.</p>
+<p>BPMN process element id — `Process_RenderLog` — when written inside one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/render-log.ts"><code>cat-harness/schemas/render-log.ts#RenderLogEntrySchema.process</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--render-log.renderlogentryschema.reason" data-fa-state="extracted" data-fa-gloss="">
@@ -11025,7 +11032,7 @@ VisualisationSchema.surfaces <span class="fa-gloss-status">candidate, extracted<
 VisualisationSchema.theme <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The tile's theme. Absent means the directory's, then the instance's.</p>
+<p>The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#VisualisationSchema.theme</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.visualisationschema.title" data-fa-state="extracted" data-fa-gloss="">
@@ -11242,7 +11249,7 @@ VoiceProfileSchema.activeIn <span class="fa-gloss-status">candidate, extracted</
 VoiceProfileSchema.appliesTo <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Block kinds this voice audits. Absent means every kind the folio has.</p>
+<p>What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceProfileSchema.appliesTo</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voiceprofileschema.extends" data-fa-state="extracted" data-fa-gloss="">
