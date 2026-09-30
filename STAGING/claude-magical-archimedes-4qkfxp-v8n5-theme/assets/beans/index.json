@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 500,
+      "count": 501,
       "unit": "beans"
     }
   },
@@ -1315,14 +1315,14 @@
     {
       "id": "folio-assistant-6dvy",
       "title": "Witnessed values (:val): prose bug, just-the-docs substitution, namespacing by source",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:08:52Z",
-      "updatedAt": "2026-09-30T10:08:52Z",
+      "updatedAt": "2026-09-30T15:42:28Z",
       "preview": "Owner 2026-09-30: fix the platform; first analyze consistency with the just-the-docs pipeline, and how to namespace values by source (paper, dataset e.g. CODATA with provenance via ingestion, FHIR IG metadata).\n\n## Done when\n- [x] prose :val resolves names with underscores (render-latex), tested and calibrated\n- [x] consistency analysis across PDF / just-the-docs / blueprint / FHIR IG, recorded (b",
       "file": "beans/defs/folio-assistant-6dvy--witnessed-values-val-prose-bug-just-the-docs-subst.md"
     },
@@ -2059,14 +2059,14 @@
     {
       "id": "folio-assistant-a1ku",
       "title": "Generate a paper's leanblueprint layout (blueprint/src) from its manifest, and wire it into the folio blueprint.yml",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T13:39:21Z",
-      "updatedAt": "2026-09-30T14:03:45Z",
+      "updatedAt": "2026-09-30T15:42:28Z",
       "preview": "Owner 2026-09-30: after #1591, 'fix the platform (1), then the blueprint wiring (3)'. Parent work: yxob / 6dvy (#1492).\n\n## Why\nThe folio blueprint.yml runs docgen-action with blueprint: true, which needs <paper>/lean/blueprint/src/ (web.tex, print.tex, content.tex, macros/, plastex.cfg). Nothing generates it: blueprint-export.ts writes content only, and the one blueprint/src in the tree (cat-harn",
       "file": "beans/defs/folio-assistant-a1ku--generate-a-papers-leanblueprint-layout-blueprintsr.md"
     },
@@ -3785,14 +3785,14 @@
     {
       "id": "folio-assistant-kott",
       "title": "Harness-namespaced values: one dotted key <harness>.<subgraph...>.<name> for :val AND site.data",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:16:19Z",
-      "updatedAt": "2026-09-30T14:37:24Z",
+      "updatedAt": "2026-09-30T15:42:28Z",
       "preview": "Owner 2026-09-30: 'can we do something like bootstrap.blah, cat-harness.blah.blah, etc...?' Extends the 12s9 ruling (prefix = the DECLARING Subgraph's path joined with dots) from BPMN/schema prefixes to VALUES, and supersedes the prefix:name proposal on #1564.\n\n## The design — as confirmed by the owner, 2026-09-30\n\nOwner: *\"{{ site.data...}} is declared for fhir-harness only... it declares its sit",
       "file": "beans/defs/folio-assistant-kott--harness-namespaced-values-one-dotted-key-harnesssu.md"
     },
@@ -5741,14 +5741,14 @@
     {
       "id": "folio-assistant-uyp8",
       "title": "Ingest CODATA as a library dataset with provenance, and the skills/tools to ingest reference datasets",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:26:31Z",
-      "updatedAt": "2026-09-30T10:26:31Z",
+      "updatedAt": "2026-09-30T15:42:28Z",
       "preview": "Owner 2026-09-30: *\"CODATA would need to be properly ingested as a dataset into library (bean up task to do, add skills tools) and variables be like {{ qou.library.codata-2022.mass-electron }} or so\"*.\n\n## Measured 2026-09-30\n- qou's CODATA values live in a hand-vendored Python snapshot: `computations/codata_2022_source.py` (CODATA_EDITION_YEAR=2022, CODATA_SOURCE_URL, ALLASCII_URL, VENDORED_SNAPS",
       "file": "beans/defs/folio-assistant-uyp8--ingest-codata-as-a-library-dataset-with-provenance.md"
     },
@@ -5963,6 +5963,20 @@
       "updatedAt": "2026-09-19T08:55:36Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"need fixed\nand generated data sets skills\" and \"need generate data sets (e.g. fhir data\ntemplating system, etc) so need egneral processes and specialization for content\nttype, subprocess etc.\"\n\n## Two kinds, and they are not degrees of the same thing\n\n**Fixed** data is committed, reviewed, and cited. It is evidence: an SME looke",
       "file": "beans/defs/folio-assistant-vm6m--test-data-fixed-and-generated-data-sets-as-a-skill.md"
+    },
+    {
+      "id": "folio-assistant-vov0",
+      "title": "Decide: remove the hand-written QOU blueprint at cat-harness/blueprint/src",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T15:42:29Z",
+      "updatedAt": "2026-09-30T15:42:29Z",
+      "preview": "Found in a1ku (#1598). cat-harness/blueprint/src/ is a hand-written QOU blueprint: content.tex maps 1,192 lines of manuscript labels to QOU.* declarations, with a hand-synced \\lean/\\uses. Bean 0uu2 kept it on 2026-09-24 because qou held no copy.\n\nWhy it may now go: blueprint-layout.ts (#1598) GENERATES <paper>/lean/blueprint/src from the manifest in CI, so a hand-synced copy is a second answer, fr",
+      "file": "beans/defs/folio-assistant-vov0--decide-remove-the-hand-written-qou-blueprint-at-ca.md"
     },
     {
       "id": "folio-assistant-vpek",
