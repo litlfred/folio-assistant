@@ -1,0 +1,41 @@
+{
+  "@context": {
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "dcterms": "http://purl.org/dc/terms/"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-style-guide/ns#glossary/who-terms",
+      "@type": "skos:ConceptScheme",
+      "skos:prefLabel": "WHO house terms",
+      "skos:definition": "Terms the WHO publications use under more than one name, recorded where a publication itself STATES that the names are equivalent. A shared spelling or a latent-semantic cosine is not evidence of equivalence and is never recorded here: each alternative label carries the source sentence that asserts it. Owner, 2026-09-30 (bean ftu0): the WHO glossary is owned by who-style-guide, the instance the house voices live in, and cites the who-iris library across the instance boundary as the voices do.",
+      "dcterms:hasVersion": "2026-09-30",
+      "dcterms:modified": "2026-09-30",
+      "dcterms:source": "who-style-guide/skills/voices/who-guideline-development/voice.json",
+      "dcterms:license": "CC-BY-4.0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/who-style-guide/ns#glossary/who-terms/quality-of-the-evidence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/who-style-guide/ns#glossary/who-terms"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "quality of the evidence"
+        }
+      ],
+      "skos:altLabel": [
+        "certainty of the evidence",
+        "confidence in the estimates of effect"
+      ],
+      "skos:definition": [
+        {
+          "@value": "In the context of guideline development, the confidence that the estimates of an effect are adequate to support a particular decision or recommendation. Rated high, moderate, low or very low."
+        }
+      ],
+      "skos:scopeNote": "The WHO handbook for guideline development (2nd edition, §9.1, p. 122) names both alternatives: \"Alternative terms to describe the quality of the evidence are 'certainty of the evidence' or 'confidence in the estimates of effect'.\" The handbook uses 'quality of the evidence' 77 times and 'certainty of the evidence' once; the who-guideline-development voice and the platform's `grade-certainty` code list use 'certainty', GRADE's later name. Rated for a body of evidence per outcome, never for a single study. Not the strength of a recommendation, which the handbook keeps apart throughout.",
+      "dcterms:source": "who-iris/library/9789241548960-eng/sections/sec-153-91-what-is-the-quality-of-the-evidence.md"
+    }
+  ]
+}

@@ -9,12 +9,12 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2608 terms: **7 authored** in 2 glossaries, on this page, and **2601 extracted** from knowledge-graph assets in 18 generated schemes, one page per asset type, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2609 terms: **8 authored** in 3 glossaries, on this page, and **2601 extracted** from knowledge-graph assets in 18 generated schemes, one page per asset type, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
-<tr><td>authored</td><td>A person wrote or approved the definition.</td><td>7</td></tr>
+<tr><td>authored</td><td>A person wrote or approved the definition.</td><td>8</td></tr>
 <tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2601</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
@@ -27,7 +27,7 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <div style="overflow-x:auto"><table>
 <thead><tr><th>page</th><th>holds</th><th>terms</th><th>size</th></tr></thead>
 <tbody>
-<tr><td>this page</td><td>authored terms, counts and sources</td><td>7</td><td>16 KB</td></tr>
+<tr><td>this page</td><td>authored terms, counts and sources</td><td>8</td><td>17 KB</td></tr>
 <tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>289</td><td>206 KB</td></tr>
 <tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>122</td><td>77 KB</td></tr>
 <tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>532</td><td>407 KB</td></tr>
@@ -35,15 +35,15 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1649</td><td>894 KB</td></tr>
 </tbody></table></div>
 
-**Size:** this page holds 7 terms and is 16 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 8 terms and is 17 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 ## Authored terms
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">7</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">8</span> shown</p>
 
-<nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-G">G</a> <a href="#letter-P">P</a> <a href="#letter-R">R</a> <a href="#letter-T">T</a></nav>
+<nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-G">G</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-T">T</a></nav>
 
 <h2 id="letter-A">A</h2>
 <dl class="fa-gloss">
@@ -96,6 +96,17 @@ policy
 </dd>
 </dl>
 
+<h2 id="letter-Q">Q</h2>
+<dl class="fa-gloss">
+<dt id="who-style-guide--who-terms--quality-of-the-evidence" data-fa-state="authored" data-fa-gloss="certainty of the evidence confidence in the estimates of effect">
+quality of the evidence
+</dt>
+<dd>
+<p>In the context of guideline development, the confidence that the estimates of an effect are adequate to support a particular decision or recommendation. Rated high, moderate, low or very low.</p>
+<p class="fa-gloss-meta">WHO house terms · <code>https://litlfred.github.io/folio-assistant/who-style-guide/ns#glossary/who-terms/quality-of-the-evidence</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/sections/sec-153-91-what-is-the-quality-of-the-evidence.md"><code>who-iris/library/9789241548960-eng/sections/sec-153-91-what-is-the-quality-of-the-evidence.md</code></a></p>
+</dd>
+</dl>
+
 <h2 id="letter-R">R</h2>
 <dl class="fa-gloss">
 <dt id="cat-harness--platform--role" data-fa-state="authored" data-fa-gloss="">
@@ -127,6 +138,7 @@ task run
 <ul>
 <li><strong>Folio Assistant platform terms (cat-harness)</strong> (cat-harness, 6 terms) · <a href="{{ '/assets/glossary/cat-harness--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/cat-harness.glossary.json</code></li>
 <li><strong>Folio Assistant platform terms</strong> (folio-assistant-core, 1 term) · <a href="{{ '/assets/glossary/folio-assistant-core--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/folio-assistant-core.glossary.json</code></li>
+<li><strong>WHO house terms</strong> (who-style-guide, 1 term) · <a href="{{ '/assets/glossary/who-style-guide--who-terms.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>who-style-guide/glossary/who-style-guide.glossary.json</code></li>
 <li><strong>Swimlane roles</strong> (bootstrap, 6 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>bootstrap/glossary/glossary-ledger.json</code></li>
 <li><strong>Swimlane roles</strong> (cat-harness, 48 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>cat-harness/glossary/glossary-ledger.json</code></li>
 </ul>
@@ -183,6 +195,12 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
    "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/policy",
    "name": "policy",
    "description": "Which Actor may do which action, and where, written as W3C ODRL 2.2 permission and prohibition rules scoped by Process, Task and Role."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/folio-assistant/who-style-guide/ns#glossary/who-terms/quality-of-the-evidence",
+   "name": "quality of the evidence",
+   "description": "In the context of guideline development, the confidence that the estimates of an effect are adequate to support a particular decision or recommendation. Rated high, moderate, low or very low."
   },
   {
    "@type": "DefinedTerm",

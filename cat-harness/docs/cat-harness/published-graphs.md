@@ -121,10 +121,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `glossary`
 
-1 of 1 published.
+1 of 2 published.
 {: .fa-hx-dim }
 
 - [folio-assistant-core]({{ '/glossary/' | relative_url }})
+- who-style-guide — *declared, not published*
 
 ### `health`
 

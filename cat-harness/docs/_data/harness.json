@@ -903,12 +903,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -917,6 +917,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "glossary",
+          "note": "no viewer yet"
+        },
         {
           "kind": "qa",
           "note": "no viewer yet"
@@ -927,7 +931,7 @@
         }
       ],
       "findings": [
-        "who-style-guide: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "who-style-guide: declares 2 graph(s) with no published viewer — glossary, qa. Declared and not rendered is a gap, not a dead link.",
         "who-style-guide: no avatar declared for this instance — showing the generic mark.",
         "who-style-guide: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/who-style-guide/) rather than the instance's own themed root.",
         "who-style-guide: declares no `needs`, so its place in the stack is alphabetical rather than derived."
@@ -2455,7 +2459,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: voices, qa"
+            "summary": "3: voices, glossary, qa"
           },
           {
             "key": "version",

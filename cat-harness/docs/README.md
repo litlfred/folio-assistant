@@ -44,7 +44,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`_includes/`](_includes/) | 9 files | |
 | [`ar/`](ar/) | 13 files | |
 | [`architecture/`](architecture/) | 8 files | |
-| [`assets/`](assets/) | 454 files | |
+| [`assets/`](assets/) | 457 files | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
 | [`cat-harness/`](cat-harness/) | 44 files | |
@@ -71,7 +71,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`todos/`](todos/) | 1 file | |
 | [`tools/`](tools/) | 1 file | |
 | [`translation-status/`](translation-status/) | 1 file | |
-| [`uml/`](uml/) | 125 files | |
+| [`uml/`](uml/) | 126 files | |
 | [`uploads/`](uploads/) | 1 file | |
 | [`wireframes/`](wireframes/) | 146 files | |
 | [`zh/`](zh/) | 13 files | |

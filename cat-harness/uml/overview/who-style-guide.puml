@@ -53,6 +53,9 @@ package "who-style-guide/voices" as pkg_who_style_guide_voices <<voices>> {
     superseded [0..1] : object
   }
 }
+package "who-style-guide/glossary" as pkg_who_style_guide_glossary <<glossary>> {
+  note "glossary: no node schema declared\n(no validator registered: could not determine)" as n_who_style_guide_glossary_glossary
+}
 package "who-style-guide/qa" as pkg_who_style_guide_qa <<qa>> {
   class "Pair_attestation" as who_style_guide_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
     kind [1] : implements | co-located
@@ -82,6 +85,6 @@ who_style_guide_voices_Rule *-- "0..*" who_style_guide_voices_Pattern : patterns
 who_style_guide_voices_Rule *-- "0..*" who_style_guide_voices_Terminology : terminology
 who_style_guide_voices_VoiceProfile *-- "1..*" who_style_guide_voices_Rule : rules
 who_style_guide_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" who_style_guide_qa_kg_qa_v1_Pair_attestation : pair_attestations
-' grid: portrait, 1 column(s) — pkg_who_style_guide_voices pkg_who_style_guide_qa
+' grid: portrait, 2 column(s) — pkg_who_style_guide_voices pkg_who_style_guide_glossary pkg_who_style_guide_qa
 pkg_who_style_guide_voices -[hidden]down- pkg_who_style_guide_qa
 @enduml
