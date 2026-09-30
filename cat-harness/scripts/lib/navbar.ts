@@ -422,6 +422,12 @@ export function navbarCss(): string {
     `.fa-nav-group>summary:hover{background:#30363d}`,
     `.fa-nav-group[open]>summary{font-weight:600}`,
     `.fa-nav-group .fa-nav-sub a{padding-left:${NAV_PAD_PX + NAV_GLYPH_PX + 8}px}`,
+    // A graph-kind row carries its OWN mark (bean `yag0`), so it sits in the
+    // strip's column like the inert rows beside it. Indented as above, a
+    // LINKED row's mark was pushed past the 56px strip at rest while an inert
+    // row's was not — measured on a built /who-iris/ page — so the strip showed
+    // marks only for the rows that do not open.
+    `.fa-nav-group .fa-nav-sub a.fa-nav-kind{padding-left:${NAV_PAD_PX}px}`,
     `.fa-nav-tone{border-radius:3px}`,
     // THE CLOSE CONTROL, only while pinned open. Alone in a strip this narrow
     // it would be the only thing in it, and would read as a close button for
@@ -505,7 +511,8 @@ function itemHtml(i: NavItem, c: Ctx): string {
     const note = i.note ? `<span class="fa-nav-note">${esc(i.note)}</span>` : "";
     row = `<span class="fa-nav-dead"${d}${title}>${body}${note}</span>`;
   } else {
-    row = `<a href="${href(i.href, c)}"${d}${title}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
+    const kind = i.glyphPath && !i.icon ? ' class="fa-nav-kind"' : "";
+    row = `<a href="${href(i.href, c)}"${kind}${d}${title}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
   }
   if (!i.action && !i.children) return row;
   // The action is a SIBLING of the row, never inside it — a control nested in
