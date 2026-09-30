@@ -15,3 +15,7 @@
 # fails its own gate rather than being covered up here.
 [test]
 preload = ["./cat-harness/schemas/test-preload.ts"]
+# fsh-guts is the kept trashcan: its retired copies (e.g. the staged
+# bootstrap-tools, whose tests import from paths that moved) are addressable,
+# never run (bean `xsqm`, 2026-09-30).
+pathIgnorePatterns = ["fsh-guts/**"]

@@ -74,3 +74,12 @@ is how to reach it. Seeding still waits on the owner's go.
 - [x] gate: standalone rehearsal — `check:bootstrap-standalone`, CI step; first run found two split defects (leak test walked .git; iri-sync asked git at a non-repo parent), both fixed
 
 **Port from #1514 (2026-09-30):** the two pieces unique to the overtaken PR #1514 (bean `81tw`, now scrapped) — the `bootstrap-contract-semver` skill with `scripts/schema-semver.ts` (`bootstrap:semver`), and `scripts/validate-bootstrap.ts` (`bootstrap:validate`, a CI step beside `bootstrap:schemas:check`) — are ported onto this bean's `bootstrap-tools/` under child task `folio-assistant-l9d5`, adapted to the zod-only closure; the validator's graph-document target is not ported because its Zod is still in cat-harness.
+
+## 2026-09-30 — seeded, QA'd, and carried as submodules
+
+- litlfred/bootstrap and litlfred/bootstrap-tools seeded from 3aa7917, one
+  commit each, no history; QA'd from scratch on fresh clones (both pass,
+  self-contained). Fixes found by that QA are in each repository's log.
+- folio-assistant carries them as submodules at bootstrap/ and
+  bootstrap-tools/ (owner: root paths, option B); the staged copies are
+  packed in fsh-guts/retired/bootstrap-split.tar.gz with a manifest.

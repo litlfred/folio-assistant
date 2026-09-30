@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rqao
 title: 'ACTORS LIVE IN A CLAUDE-SPECIFIC, UNDECLARED DIRECTORY: .claude/skills/actors (and capabilities/, requirements/) → an agent-generic declared graph'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T08:19:40Z
-updated_at: 2026-09-30T19:55:31Z
+updated_at: 2026-09-30T21:54:28Z
 parent: folio-assistant-tr05
 ---
 
@@ -39,3 +39,5 @@ They are not recast as skills: the role model keeps an actor's capabilities (env
 
 ## Owner decision 2026-09-30
 Actors move BESIDE roles.json: cat-harness/scenarios/ (the declared kg directory holding roles.json and stories.json). Capabilities/requirements each decided separately.
+
+_2026-09-30T21:54:28Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
