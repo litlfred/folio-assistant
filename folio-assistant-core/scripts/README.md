@@ -7,10 +7,18 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 
 | file | what it is | used by |
 |---|---|---|
+| [`backfill-materialized-fixity.ts`](backfill-materialized-fixity.ts) | a file |  |
+| [`cache-index.test.ts`](cache-index.test.ts) | a file |  |
+| [`cache-index.ts`](cache-index.ts) | a file |  |
+| [`check-artifact-index.ts`](check-artifact-index.ts) | a file |  |
+| [`check-materialized-fixity.ts`](check-materialized-fixity.ts) | a file |  |
 | [`glossary-extract.ts`](glossary-extract.ts) | a file |  |
 | [`glossary-page.ts`](glossary-page.ts) | a file |  |
 | [`glossary-pot.test.ts`](glossary-pot.test.ts) | a file |  |
 | [`glossary-pot.ts`](glossary-pot.ts) | a file |  |
+| [`ingest-ig-artifacts.ts`](ingest-ig-artifacts.ts) | a file |  |
+| [`ingest-ig-invocation.test.ts`](ingest-ig-invocation.test.ts) | a file |  |
+| [`materialized-fixity.test.ts`](materialized-fixity.test.ts) | a file |  |
 | [`review-comment-move.test.ts`](review-comment-move.test.ts) | a file |  |
 | [`review-comment-move.ts`](review-comment-move.ts) | a file |  |
 | [`review-comments.test.ts`](review-comments.test.ts) | a file |  |

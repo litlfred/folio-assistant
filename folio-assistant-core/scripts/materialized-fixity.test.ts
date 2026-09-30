@@ -27,18 +27,18 @@
  *   The same defect as `harness-tiles` reporting a viewer nobody had built,
  *   one layer along.
  *
- * @module cat-harness/scripts/tests/materialized-fixity.test
+ * @module folio-assistant-core/scripts/materialized-fixity.test
  */
 import { describe, expect, it } from "bun:test";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { collect, materializationsIn, run, verify } from "../check-materialized-fixity.js";
-import { applyTo, backfillable } from "../backfill-materialized-fixity.js";
-import { FixitySchema } from "../../../folio-assistant-core/schemas/materialization.js";
+import { collect, materializationsIn, run, verify } from "./check-materialized-fixity.js";
+import { applyTo, backfillable } from "./backfill-materialized-fixity.js";
+import { FixitySchema } from "../schemas/materialization.js";
 
-const REPO = resolve(import.meta.dir, "..", "..", "..");
+const REPO = resolve(import.meta.dir, "..", "..");
 
 /** sha256 of the string "hello", used as a known-good digest in fixtures. */
 const HELLO = "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824";
