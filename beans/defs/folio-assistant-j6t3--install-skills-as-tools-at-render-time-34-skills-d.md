@@ -116,9 +116,9 @@ ruling that should not be quietly reopened by an implementation.
 
 - [x] Each option has a cost in files-touched and hosts-covered, measured (2026-09-30, below)
 - [x] The 4-of-34 number is RE-MEASURED rather than quoted from this bean — 40 declared, 3 reachable (2026-09-30)
-- [ ] Whatever ships is derived from `user_invocable`, so the list cannot
+- [x] Whatever ships is derived from `user_invocable`, so the list cannot
       drift from the declarations again
-- [ ] The owner's "reminder now, gate later" ruling is either honoured or
+- [x] The owner's "reminder now, gate later" ruling is either honoured or
       explicitly revisited with them — never stepped over by a tool that
       happens to enforce
 
@@ -276,3 +276,17 @@ The gap is **37**, up from 32, and it grows by about one per working day. That r
 Recommendation, which the owner may overrule: **F as the spine, and A for the short names.** Both are derived from `user_invocable`, and one gate reconciles both directions: a declaration with no surface, and a surface (`prepare-merge`) with no declaration. That gate is Done-when clause 3.
 
 Also found while measuring, and fixed separately: the root `.mcp.json`'s two server paths were dead (bean `d4m4`, PR #1544).
+
+## BUILT 2026-09-30 — F + A, on the owner's choice
+
+The owner chose **"F + A (Rec.)"** on 2026-09-30.
+
+- **F** — `cat-harness/src/tools/skill-prompts.ts`: `userInvocableSkills()` is the one derivation, and `registerSkillPrompts()` registers each skill as an MCP **prompt**. It is registered beside `skill_fetch` in the document adapter. Checked end to end: the real server started over stdio lists **41** prompts, and `getPrompt("coordinate")` returns the skill's own body. No tool is registered and nothing is written into `tools/`, which keeps *"keep tools and skills separate!"*.
+- **A** — `cat-harness/scripts/gen-skill-commands.ts` (`skill:commands`, `skill:commands:check`) writes `.claude/commands/<name>.md` as a **pointer** to the skill, never a copy. It reports four findings: missing, stale, orphaned (its own output, which it removes) and **undeclared** (a hand-written command with no declared skill, reported and never touched). Falsified before the fix: 37 missing plus `prepare-merge` undeclared, exit 1. It is a CI gate and the first step of `skill:register`'s chain, since a new `user_invocable` skill now owes a command.
+- **`prepare-merge`** gained the front matter it never had (`name`, `description`, `user_invocable: true`), so the command and the declaration now agree.
+- **Clause 4:** the ruling is honoured, not stepped over. Nothing here gates how an agent asks; the only gate checks the *set* of declarations against the set of commands.
+
+**Deliberately not decided here.** All 41 declared skills get a command, including the watchers the 2026-09-21 tiering called noise. The declaration is the source of truth. A skill that should not be in the menu should stop declaring `user_invocable`, and that is the owner's call per skill; this generator will not hide what a skill declares.
+
+- [ ] The root `.mcp.json` registers the folio-assistant server, so this repository's own sessions get the prompts. Waits on PR #1544, which edits the same file.
+

@@ -885,6 +885,14 @@ jobs:
       - name: the upload step's page is current
         run: bun run upload-step:docs:check
 
+      # Every skill that declares `user_invocable: true` has a slash command,
+      # and every command has a declared skill (bean `j6t3`). Measured
+      # 2026-09-30: 40 declared, 3 reachable, and `/prepare-merge` a command
+      # whose skill declared nothing. BOTH directions fail, because a check
+      # that only asked the first would never have found the second.
+      - name: every user-invocable skill has a command, and every command a skill
+        run: bun run skill:commands:check
+
       # The README's AUTHORED half. `readme-sections.ts` owns the marked
       # regions; this owns every other link, and `AGENTS.md` claims that
       # "between the two tools no link in a folio README is unaccounted for".

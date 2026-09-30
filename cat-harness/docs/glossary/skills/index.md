@@ -1393,7 +1393,7 @@ platform-gates <span class="fa-gloss-status">candidate, extracted</span>
 prepare-merge <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><em>The asset carries no description.</em></p>
+<p>Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for &quot;prepare-merge&quot;, &quot;make it mergeable&quot;, &quot;ship it&quot;.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/prepare-merge.md"><code>cat-harness/skills/folio-core/prepare-merge.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--prepare-merge-auto" data-fa-state="extracted" data-fa-gloss="">

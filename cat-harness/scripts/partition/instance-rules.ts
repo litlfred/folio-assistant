@@ -169,6 +169,7 @@ export const RULES: Rule[] = [
       "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
       "scripts/generate-registry.ts",        // scans skills/ → SkillRegistry
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
+      "scripts/gen-skill-commands.ts",       // user_invocable skills → .claude/commands pointers (bean `j6t3`)
       "scripts/gen-upload-step-docs.ts",     // a process step's Tools → docs; both graphs are harness concepts
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
@@ -1060,6 +1061,9 @@ export const RULES: Rule[] = [
       // HARNESS's own declarations and need no folio to have anything to do.
       "src/tools/degradation.ts",
       "src/tools/skill-fetch.ts",
+      // The person-facing half of the same skills (bean `j6t3`): each
+      // `user_invocable` skill as an MCP prompt. Harness for skill-fetch's reason.
+      "src/tools/skill-prompts.ts",
       "src/tools/preferences.ts",
       "src/tools/beans-prime.ts",
       "src/tools/workflow.ts",
