@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-29T20:03:11Z
+updated_at: 2026-09-30T15:00:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -67,3 +67,50 @@ this environment.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+## Read of the fork, 2026-09-30 — and a correction to §"Which repositories"
+
+Read-only clone of `litlfred/fhir-ig-publisher` at `e382dc3` (a plain mirror
+of upstream, no local changes). Session
+https://claude.ai/code/session_015v8WoYtr8gHuz9Tadg7KjV.
+
+**Correction.** §"Which repositories" says *"the logic-layer edges live in
+core, so a publisher-only fork cannot satisfy criterion 2"*. Read against the
+code, that is wrong: `DependencyAnalyser` is in the **publisher**
+(`org.hl7.fhir.publisher.core/.../igtools/publisher/DependencyAnalyser.java`).
+Only criterion 3 (page-fragment provenance) needs `org.hl7.fhir.core`.
+
+What already exists, all in the publisher:
+
+- `fileList` → `FetchedResource` holds every loaded resource as both `Resource`
+  and `Element` — the AST, in memory.
+- `DependencyAnalyser` emits `(source, kind, target)` for terminology and
+  conformance resources, consumed only by `DependencyRenderer` (HTML).
+  `analysePD` and `analyseAD` are **empty stubs**; Library and Measure are not
+  dispatched at all. That is the criterion-2 gap, exactly.
+- `CqlSubSystem` computes CQL `depends-on` related artifacts, and
+  `AdjunctFileLoader.java:311` attaches them to each Library — so
+  Library→Library edges already exist on the resource; nothing exports them.
+- Existing exports: `qa.json`, `usage-stats.json`, `expansions.json`,
+  `canonicals.json` — none carries an edge.
+
+| # | criterion | change | size |
+|---|---|---|---|
+| 7 | flag, byte-identical default | CLI flag (e.g. `-ast-export`), no-op when absent; diff a normal build before/after | S |
+| 1 | per-resource dump by `canonical\|version` | `AstExporter` in `Publisher.execute()` after `validate()`, before `generate()`; walks `fileList`, writes `output/ast/` | S |
+| 2 | Library / PlanDefinition / Measure edges | fill `analysePD` (`library`, `action.definitionCanonical`, `relatedArtifact`) and `analyseAD`; add Library and Measure; keep `\|version` on edges; export `dependencyList` | M |
+| 6 | toolchain object | publisher + core version from the build; SUSHI version | S |
+| 4 | pinned dependency closure | packages already resolved at load (`dependencyList`, ~`Publisher.java:11074`); export it | M |
+| 5 | tx expansion provenance | tie `expansions.json` to server + version (`processTxLog`) | M |
+| 3 | page-fragment provenance | across publisher and core renderers | L |
+
+Work plan, each step small and upstreamable:
+
+- [ ] **W1** criteria 7, 1, 6 — flag, `AstExporter`, per-resource dump, toolchain, byte-identical check
+- [ ] **W2** criterion 2 — measure on smart-immunizations: 458 of 458, cross-checked against `fsh-cone`'s source count
+- [ ] **W3** criteria 4, 5
+- [ ] **W4** criterion 3 — scoped separately; the only step needing the core fork
+
+Not started: this session has read access only, and Maven/JDK availability is
+unchecked. The owner chose to record the plan first (2026-09-30).
