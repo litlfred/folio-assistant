@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/skills/document-publishing/output.schema.json",
+  "title": "Document Publishing Output",
+  "type": "object",
+  "required": [
+    "outputPath",
+    "blockCount"
+  ],
+  "properties": {
+    "outputPath": {
+      "type": "string"
+    },
+    "engine": {
+      "type": "string",
+      "description": "The engine actually used, or absent for md/html."
+    },
+    "blockCount": {
+      "type": "integer"
+    },
+    "chapterCount": {
+      "type": "integer"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "level": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warn"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/awesome-feynman-0rt8ra",
+    "sha": "ada3c64c2bc145ae62c661cb2b272b365db68d0c",
+    "pr": "1645/merge",
+    "run": "36746678449"
+  }
+}

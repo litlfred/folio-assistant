@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/skills/latex-authoring/input.schema.json",
+  "title": "LaTeX Authoring Input",
+  "description": "Input schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "documentClass",
+    "mainFile"
+  ],
+  "properties": {
+    "documentClass": {
+      "type": "string",
+      "enum": [
+        "article",
+        "book",
+        "report",
+        "beamer"
+      ],
+      "description": "LaTeX document class."
+    },
+    "mainFile": {
+      "type": "string",
+      "description": "Path to the main .tex file."
+    },
+    "bibliographyFile": {
+      "type": "string",
+      "description": "Path to the .bib bibliography file."
+    },
+    "outputFormat": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "dvi",
+        "ps"
+      ],
+      "default": "pdf"
+    }
+  },
+  "staging": {
+    "branch": "claude/awesome-feynman-0rt8ra",
+    "sha": "ada3c64c2bc145ae62c661cb2b272b365db68d0c",
+    "pr": "1645/merge",
+    "run": "36746678449"
+  }
+}
