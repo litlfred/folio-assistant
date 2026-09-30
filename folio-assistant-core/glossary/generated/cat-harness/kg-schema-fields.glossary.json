@@ -805,6 +805,13 @@
       "status": "candidate"
     },
     {
+      "id": "attribution.attributionschema.skill",
+      "prefLabel": "AttributionSchema.skill",
+      "definition": "The skill being exercised: `name` or `package/name` (#1168 B8).",
+      "source": "cat-harness/schemas/attribution.ts#AttributionSchema.skill",
+      "status": "candidate"
+    },
+    {
       "id": "avatars.avatar.glyph",
       "prefLabel": "Avatar.glyph",
       "definition": "SVG path data, drawn in a 24×24 box.",
@@ -2501,7 +2508,7 @@
     {
       "id": "cat-harness.visualisationschema.theme",
       "prefLabel": "VisualisationSchema.theme",
-      "definition": "The tile's theme. Absent means the directory's, then the instance's.",
+      "definition": "The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's.",
       "source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.theme",
       "status": "candidate"
     },
@@ -6680,7 +6687,7 @@
     {
       "id": "render-log.renderlogentryschema.process",
       "prefLabel": "RenderLogEntrySchema.process",
-      "definition": "BPMN process id — `staging-render-log` — when written inside one.",
+      "definition": "BPMN process element id — `Process_RenderLog` — when written inside one.",
       "source": "cat-harness/schemas/render-log.ts#RenderLogEntrySchema.process",
       "status": "candidate"
     },
@@ -7513,7 +7520,7 @@
     {
       "id": "sticky-contribution.declaredcontribution.declaredin",
       "prefLabel": "DeclaredContribution.declaredIn",
-      "definition": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/harness.json`, `bootstrap/harness.json`, `harness.json`.",
+      "definition": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/cat-harness.json`, `bootstrap/bootstrap.json`: each instance's own `<instance>/<instance>.json`.",
       "source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.declaredIn",
       "status": "candidate"
     },
@@ -8239,13 +8246,6 @@
       "status": "candidate"
     },
     {
-      "id": "tool.tooldefinitionschema.alternativeto",
-      "prefLabel": "ToolDefinitionSchema.alternativeTo",
-      "definition": "Other Tools that do the SAME job by a different mechanism.",
-      "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.alternativeTo",
-      "status": "candidate"
-    },
-    {
       "id": "tool.tooldefinitionschema.maintains",
       "prefLabel": "ToolDefinitionSchema.maintains",
       "definition": "Published artefacts this Tool is authoritative for. See {@link ToolMaintainsSchema}.",
@@ -8269,7 +8269,7 @@
     {
       "id": "tool.tooldefinitionschema.selection",
       "prefLabel": "ToolDefinitionSchema.selection",
-      "definition": "Why to reach for this one. REQUIRED once `alternativeTo` is non-empty — see {@link ToolSelectionSchema}, and the refinement below.",
+      "definition": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set.",
       "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
       "status": "candidate"
     },
@@ -9837,7 +9837,7 @@
     {
       "id": "voices.voiceapplicabilityschema.processes",
       "prefLabel": "VoiceApplicabilitySchema.processes",
-      "definition": "BPMN process ids, as `<bpmn:process id>` spells them — `Process_CrdmRequirements`, not a filename. Resolved against the diagrams the `cat-harness` graph carries, so a typo is a dangling reference rather than a voice that quietly never activates.",
+      "definition": "BPMN process ids, as `<bpmn:process id>` spells them — `Process_CRDM_Requirements`, not a filename (#1168, B8: the element id, as `calledElement` uses it). Resolved against the loaded diagrams by `process-refs.test.ts`, so a typo is a dangling reference rather than a voice that quietly never activates.",
       "source": "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema.processes",
       "status": "candidate"
     },
@@ -9879,7 +9879,7 @@
     {
       "id": "voices.voiceprofileschema.appliesto",
       "prefLabel": "VoiceProfileSchema.appliesTo",
-      "definition": "Block kinds this voice audits. Absent means every kind the folio has.",
+      "definition": "What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has.",
       "source": "cat-harness/schemas/voices.ts#VoiceProfileSchema.appliesTo",
       "status": "candidate"
     },

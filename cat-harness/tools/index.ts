@@ -221,7 +221,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         "bean-coordination", "todo-manager", "pending-show",
         "session-intent", "continual-progress", "idle-backlog",
       ],
-      alternativeTo: ["beans-manual"],
       selection: {
         when:
           "The normal case, once `scripts/install-beans.sh` has run. It is the only arm that can answer what an item IS or what it waits on — the fallback gives titles and statuses and nothing else — so any work that involves choosing, claiming or reasoning about an item wants this one.",
@@ -258,7 +257,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         "bean-coordination", "todo-manager", "pending-show",
         "session-intent", "continual-progress", "idle-backlog",
       ],
-      alternativeTo: ["beans-cli"],
       selection: {
         when:
           "When the CLI is not installed and cannot be — not a rare case: a fresh container has no `beans` on PATH. Equal standing, not a degraded mode. An agent that knows only the CLI reads the plan and touches nothing, which is exactly the 2026-09-18 session that completed two merged PRs' worth of durable work UNCLAIMED.",
@@ -379,7 +377,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "slug", schema: t("Slug"), description: "The library entry written." }],
       },
       satisfies: ["library-ingestion"],
-      alternativeTo: ["ingest-extended"],
       selection: {
         when:
           "Reach for this first, and in CI always. It is the only one of the pair that runs where nothing has been installed — which is every fresh container and every CI job here, since the workflow installs `ruff` and nothing else. It covers archives, CSV and spreadsheets, technical metadata, and the sniff that decides which rung a file takes, including the OOXML/ODF container check that stops a workbook being listed as a bag of XML parts.",
@@ -412,7 +409,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "slug", schema: t("Slug"), description: "The library entry written." }],
       },
       satisfies: ["library-ingestion"],
-      alternativeTo: ["ingest-stdlib"],
       selection: {
         when:
           "Reach for this when the upload is a PDF and you need its CONTENT — an outline-bearing document read at chapter granularity, a text-layer document read at page granularity, or a scan that must be OCR'd first. Confirm the backend is present before relying on it: `bun run src/index.ts --check-deps`, or simply run the pair's entry point, which reports `no PDF backend` rather than guessing.",
@@ -590,12 +586,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       // satisfies the two skills that govern that graph. They live in
       // `bootstrap/skills/`; `check-tools` resolves them across instances.
       satisfies: ["kg-export", "bootstrap-graph-emission", "bootstrap-graph-publication"],
-      // No `alternativeTo`, deliberately. The four siblings sharing this skill
-      // are COMPLEMENTARY steps — export, then publish, then serve — not four
-      // ways to do one thing, and the schema's own note on that field says a
-      // rule keyed on "shares a skill" would demand comparative prose where
-      // there is nothing to compare. Exactly one pair in this instance is
-      // genuinely substitutable, and it is `beans-cli` / `beans-manual`.
+      // Not an alternative to its siblings, and `deriveAlternatives` agrees:
+      // the four sharing this skill are COMPLEMENTARY steps — export, then
+      // publish, then serve — with different I/O, not four ways to do one
+      // thing. A rule keyed on "shares a skill" alone would pair them.
       requires: { runtime: ["bun"], network: false },
     }),
 
@@ -760,8 +754,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
       },
       satisfies: ["latex-validation"],
-      // `alternativeTo` stays EMPTY against its two siblings. They are
-      // complementary rather than substitutable, and the sequence says why:
+      // Not an alternative to its two siblings (their I/O differs, so none is
+      // derived). They are complementary, and the sequence says why:
       // preflight gates the source BEFORE a compile, this parses the snippets
       // IN it, overfull reads the log AFTER. Naming them alternatives would tell
       // a caller that running one covers another.
@@ -1216,7 +1210,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
         ],
-        outputs: [{ name: "pages", schema: t("RepoPath"), description: "The generated reference directory. Never hand-edited." }],
+        outputs: [{ name: "schemaReference", schema: t("RepoPath"), description: "The generated reference directory. Never hand-edited." }],
       },
       satisfies: ["docs-generation"],
       requires: { runtime: ["bun"], network: false },
@@ -1233,13 +1227,13 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [
           { name: "check", schema: t("Flag"), required: false, arg: { flag: "--check" }, description: "Compare against the committed pages and fail if stale, instead of writing." },
         ],
-        outputs: [{ name: "pages", schema: t("RepoPath"), description: "The generated instruction directory. Never hand-edited." }],
+        outputs: [{ name: "skillInstructions", schema: t("RepoPath"), description: "The generated instruction directory. Never hand-edited." }],
       },
       // Sibling of `schema-docs`, not an alternative to it: one renders a
       // skill's CONTRACT and the other its INSTRUCTIONS, and a reader wanting
-      // either is not served by the other. Complementary, so no
-      // `alternativeTo` — the field's own note warns against deriving that
-      // relation from a shared skill.
+      // either is not served by the other. Complementary: the output ports
+      // are named for what each writes, so `deriveAlternatives` does not pair
+      // them on a shared skill (#1168, B9a).
       satisfies: ["docs-generation"],
       requires: { runtime: ["bun"], network: false },
     }),
@@ -1573,8 +1567,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     // One Tool among several for that skill rather than the whole of it —
     // `mcp-contract` is an equivalence in both directions and this supplies one
     // side. `skills-and-tools` is explicit that several Tools may satisfy one
-    // skill and be complementary rather than alternative, so `alternativeTo`
-    // stays empty.
+    // skill and be complementary rather than alternative; their I/O differs,
+    // so none is derived.
     defineTool({
       id: "mcp-capture",
       title: "What this instance's MCP server serves",
@@ -1830,18 +1824,18 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //
     // Groups 6 (`oait`) and 10 (`9x17`) of `d308` both bind `authoring-a-paper ·
     // Task_Validate` and both satisfy `content-validate`. Both beans asked for
-    // `alternativeTo` / `selection` between them "since they share a task", and
-    // **that is the inference `ToolDefinitionSchema` refutes in as many words**:
+    // an alternative relation and `selection` between them "since they share a
+    // task", and **that is the inference `deriveAlternatives` refuses**:
     // sharing a skill does not make two Tools substitutable, measured across 12
-    // of this instance's 25 multi-Tool skills.
+    // of this instance's 25 multi-Tool skills. It also needs the same I/O.
     //
     // These two are the ordinary case, not the exception. One asks whether the
     // content GRAPH is well-formed and well-ordered; the other asks whether a
     // block is valid against its schema. A folio runs both, in that order, and
-    // neither answer substitutes for the other — so an `alternativeTo` edge here
-    // would oblige `selection` prose comparing two things that do not compete,
-    // and an author made to write it writes noise. Left unset deliberately, and
-    // both beans corrected rather than satisfied.
+    // neither answer substitutes for the other — so pairing them would oblige
+    // `selection` prose comparing two things that do not compete, and an
+    // author made to write it writes noise. Their I/O differs, so none is
+    // derived, and both beans were corrected rather than satisfied.
     defineTool({
       id: "content-graph-build",
       title: "Content graph",
@@ -2183,8 +2177,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     //   · the Tool node is the one that was missing, and it is this.
     //
     // Which is why the node exists and the other two are recorded as done and as
-    // refused. `alternativeTo` stays empty: a recorder and a decider are not two
-    // ways to do one thing.
+    // refused. Not an alternative (their I/O differs): a recorder and a decider
+    // are not two ways to do one thing.
     defineTool({
       id: "translation-roundtrip-record",
       title: "Record a round-trip translation verdict",
@@ -2256,9 +2250,8 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         ],
       },
       // `library-ingestion`, whose other two Tools INGEST. This one gates what
-      // they produced, so `alternativeTo` stays EMPTY: `ingest-stdlib` and
-      // `ingest-extended` are substitutable with each other — the one genuinely
-      // substitutable pair in this instance alongside `beans-cli`/`beans-manual` —
+      // they produced, so it is not an alternative to them (its I/O differs):
+      // `ingest-stdlib` and `ingest-extended` are substitutable with each other,
       // and a completeness check is not a third way to ingest.
       //
       // The skill carries no input contract, so `check-tools` cannot verify this
@@ -2286,7 +2279,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { manual: true },
       io: {
         inputs: [
-          { name: "file", schema: t("Text"), required: true, description: "Path to the delimited text file." },
+          { name: "file", schema: t("DelimitedTextPath"), required: true, description: "Path to the delimited text file." },
         ],
         outputs: [
           { name: "record", schema: t("Text"), description: "A `folio-tabular-csvw/v1` document. While stubbed, one table carrying `fac:stub` and NO columns — a half-stub is refused by the schema because it reads as a working extraction." },
@@ -2304,7 +2297,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { manual: true },
       io: {
         inputs: [
-          { name: "file", schema: t("Text"), required: true, description: "Path to the workbook." },
+          { name: "file", schema: t("WorkbookPath"), required: true, description: "Path to the workbook." },
         ],
         outputs: [
           { name: "record", schema: t("Text"), description: "A `folio-tabular-csvw/v1` document, one table per sheet. While stubbed, every table carries `fac:stub` and no columns." },
@@ -2359,7 +2352,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "releasePr", schema: t("Url"), description: "The release PR it opened or updated. Merging it is the approval." }],
       },
       satisfies: ["package-release"],
-      alternativeTo: ["package-release-manual"],
       selection: {
         when:
           "A repository whose commits follow conventional-commit messages and that releases often enough that doing it by hand is the bottleneck. Several packages in one repository, each with its own tag, is its strength.",
@@ -2382,7 +2374,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "tag", schema: t("Text"), description: "The tag created, `<package>-v<version>`." }],
       },
       satisfies: ["package-release"],
-      alternativeTo: ["release-please"],
       selection: {
         when: "A first release, a rare one, or a repository whose commit messages carry no conventional prefixes.",
         limits: "Every step is a person's, so each is a place to slip; the skill's rules (build first, no reused version) are checked by nobody.",
@@ -2407,7 +2398,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "transcript", schema: t("RepoPath"), description: "Timed transcript under the entry's `transcript/`." }],
       },
       satisfies: ["library-ingestion"],
-      alternativeTo: ["transcribe-faster-whisper", "transcribe-vosk"],
       selection: {
         when:
           "The default candidate: offline, no Python, good accuracy from the tiny model up, and timestamps per segment — what a transcript that can be translated segment by segment needs.",
@@ -2433,7 +2423,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "transcript", schema: t("RepoPath") }],
       },
       satisfies: ["library-ingestion"],
-      alternativeTo: ["transcribe-whisper-cpp", "transcribe-vosk"],
       selection: {
         when:
           "When the ingestion pipeline should stay in Python beside the PDF arms and `schemas/python-deps.ts` is the one place dependencies are declared. Same models as whisper.cpp, typically faster on CPU.",
@@ -2459,7 +2448,6 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         outputs: [{ name: "transcript", schema: t("RepoPath"), description: "Written where `-o` names." }],
       },
       satisfies: ["library-ingestion"],
-      alternativeTo: ["transcribe-whisper-cpp", "transcribe-faster-whisper"],
       selection: {
         when:
           "When size and speed matter more than accuracy: the lightest offline option, with a separate small model per language.",

@@ -56,6 +56,7 @@ import { processArrowFindings, schemaArrowFindings } from "./arrow-direction.js"
 import { classifyName, diagramProse, generalDeclarationProse, namedFiles } from "./prose-names.js";
 import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
+import { deriveAlternatives } from "../schemas/tool.js";
 import { tools, toolsOf } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
@@ -1233,9 +1234,9 @@ function auditSkills(): KgQaReport[] {
  *
  * ## The two states that are not `pass`
  *
- * `n/a` where the property does not apply — a Tool declaring no
- * `alternativeTo` has no alternative to dangle, and recording that as a pass
- * would count 60-odd non-answers as evidence.
+ * `n/a` where the property does not apply — a Tool with no derived
+ * alternative has no choice to explain, and recording that as a pass would
+ * count 100-odd non-answers as evidence.
  *
  * `unknown` for `tool-maintains-in-tree`, ALWAYS, from a checkout: the
  * artefact's presence is a fact about `_site/`, which does not exist here. The
@@ -1272,8 +1273,8 @@ function auditTools(instance?: string): KgQaReport[] {
   const unmet = by(check.unmetContracts);
   const types = by(check.unknownTypes);
   const unsafe = by(check.unsafeArgs);
-  const altDangling = by(check.danglingAlternatives);
-  const altAsym = by(check.asymmetricAlternatives);
+  const unselectable = by(check.unselectableAlternatives);
+  const alternatives = deriveAlternatives(instance === undefined ? tools() : toolsOf(instance));
   const unreadable = new Set(check.unreadableContracts);
 
   const out: KgQaReport[] = [];
@@ -1323,13 +1324,10 @@ function auditTools(instance?: string): KgQaReport[] {
           "tool-args-shell-safe": entry(
             f((unsafe.get(t.id) ?? []).map((r) => ({ detail: `command-line input "${r.port}" is ${r.type}, which can carry a shell payload` }))),
           ),
-          "tool-alternative-resolves": entry(
-            [
-              ...f((altDangling.get(t.id) ?? []).map((r) => ({ detail: `alternativeTo names ${JSON.stringify(r)}, which does not exist` }))),
-              ...f((altAsym.get(t.id) ?? []).map((r) => ({ detail: `alternativeTo is not symmetric: ${JSON.stringify(r)}` }))),
-            ],
-            // `n/a` rather than a pass when there is no alternative declared.
-            (t.alternativeTo ?? []).length > 0,
+          "tool-alternative-selectable": entry(
+            f((unselectable.get(t.id) ?? []).map((r) => ({ detail: `has alternatives ${r.alternatives.join(", ")} and no \`selection\`` }))),
+            // `n/a` rather than a pass when the Tool has no derived alternative.
+            alternatives.has(t.id),
           ),
           "tool-maintains-in-tree":
             (t.maintains ?? []).length === 0

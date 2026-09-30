@@ -18,6 +18,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`check-artifact-index.ts`](check-artifact-index.ts) | a file |  |
 | [`check-materialized-fixity.ts`](check-materialized-fixity.ts) | a file |  |
 | [`check-voices.ts`](check-voices.ts) | a file |  |
+| [`codemod-refterm-usage.test.ts`](codemod-refterm-usage.test.ts) | a file |  |
 | [`codemod-refterm.test.ts`](codemod-refterm.test.ts) | a file |  |
 | [`codemod-refterm.ts`](codemod-refterm.ts) | a file |  |
 | [`extract-assets.ts`](extract-assets.ts) | a file |  |
@@ -37,4 +38,6 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`sample-import-check.ts`](sample-import-check.ts) | a file |  |
 | [`sample-import-run.test.ts`](sample-import-run.test.ts) | a file |  |
 | [`sample-import-run.ts`](sample-import-run.ts) | a file |  |
+| [`source-liveness.test.ts`](source-liveness.test.ts) | a file |  |
+| [`source-liveness.ts`](source-liveness.ts) | a file |  |
 <!-- kg:subgraph:end -->

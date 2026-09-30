@@ -39,6 +39,7 @@
  * @graphNode schema
  */
 import { z } from "zod";
+import { SkillRefSchema } from "./tool-types.js";
 
 /**
  * The three sorts of participant that can author content.
@@ -105,7 +106,8 @@ export const AttributionSchema = z
     model: z.string().optional(),
     session: z.string().optional(),
     date: z.string().optional(),
-    skill: z.string().optional(),
+    /** The skill being exercised: `name` or `package/name` (#1168 B8). */
+    skill: SkillRefSchema.optional(),
   })
   .refine((a) => a.kind !== "agent" || (a.model !== undefined && a.model !== ""), {
     message: "an `agent` attribution must name its `model` — see the module docstring",

@@ -164,3 +164,5 @@ Measured before building: structure.json is pdf-structure/v1 (cat-harness/schema
 - (B) generalise pdf-structure/v1 to 'document-structure' — one shape, a rename across the corpus;
 - (C) render the notebook to PDF first (nbconvert HTML → headless Chromium print, with a document outline) and run the existing PDF rungs — zero schema change, but the library would hold a DERIVED PDF, which structure_note must say.
 Also measured: image-descriptions accepts a determined empty images.json, and a notebook with image outputs can record images: null with its reason (the sidecar's own third state). Put to the owner as blocker 2 of this round.
+
+_2026-09-30T10:39:35Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

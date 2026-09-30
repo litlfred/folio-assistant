@@ -72,13 +72,18 @@ function engineTools(root: string): Map<string, Handler> {
   ]);
 }
 
+/** The network, refused — liveness is could-not-determine without touching it. */
+const refuses = async () => {
+  throw new Error("connect_rejected");
+};
+
 const endOf = (root: string, subject: string) =>
   loadInstance(root, instanceId("Process_SampleImport", subject))!.history.map((h) => h.node).at(-1);
 
 describe("the whole item — a derived thumbnail's sourceLoss gate is unknown", () => {
   test("the gates refuse, nothing lands, and the run ends Not imported", async () => {
     const root = fixture();
-    const r = await runSampleImport({ root, instance: "who-iris", item: ITEM, subject: "whole", tools: engineTools(root) });
+    const r = await runSampleImport({ root, instance: "who-iris", item: ITEM, subject: "whole", tools: engineTools(root), livenessFetcher: refuses });
     expect(r.status).toBe("completed");
     expect(r.steps.find((s) => s.node === "Gateway_Gates")?.outcome).toBe("no, or unknown");
     expect(r.steps.find((s) => s.node === "Gateway_Materialized")?.outcome).toBe("no, or unknown");
@@ -91,13 +96,15 @@ describe("the whole item — a derived thumbnail's sourceLoss gate is unknown", 
 describe("the ORIGINAL bundle only — every gate permitted", () => {
   test("it materializes, lands as a trial, passes the import test, and ends Imported", async () => {
     const root = fixture();
-    const r = await runSampleImport({ root, instance: "who-iris", item: ITEM, subject: "original", bundles: ["ORIGINAL"], tools: engineTools(root) });
+    const r = await runSampleImport({ root, instance: "who-iris", item: ITEM, subject: "original", bundles: ["ORIGINAL"], tools: engineTools(root), livenessFetcher: refuses });
     expect(r.steps.find((s) => s.node === "Gateway_Gates")?.outcome).toBe("yes");
     expect(r.steps.find((s) => s.node === "Gateway_Permanent")?.outcome).toBe("trial");
     expect(r.steps.find((s) => s.node === "Gateway_Passed")?.outcome).toBe("yes");
     expect(endOf(root, "original")).toBe("EndEvent_Imported");
     // The fetch is RECORDED as not performed, never skipped silently.
     expect(r.steps.find((s) => s.node === "Task_Fetch")?.note).toContain("NOT PERFORMED HERE");
+    // Liveness is asked, through the Handle, and an unanswered probe is recorded as such.
+    expect(r.steps.find((s) => s.node === "Task_Fetch")?.note).toContain("LIVENESS of https://hdl.handle.net/10665/332098: could-not-determine");
     // A trial lands in fsh-guts/ as a declared node, and library/ is untouched.
     const trial = readFileSync(r.trialPath!, "utf-8");
     expect(trial).toContain("$schema: folio-fsh-guts/v1");
@@ -111,7 +118,7 @@ describe("held bytes that no longer match their recorded fixity", () => {
     const root = fixture();
     writeFileSync(join(root, "who-iris", "uploads", "wpr-rdo-2020-003-eng", "WPR-RDO-2020-003-eng.pdf"), "tampered");
     await expect(
-      runSampleImport({ root, instance: "who-iris", item: ITEM, subject: "tampered", bundles: ["ORIGINAL"], tools: engineTools(root) }),
+      runSampleImport({ root, instance: "who-iris", item: ITEM, subject: "tampered", bundles: ["ORIGINAL"], tools: engineTools(root), livenessFetcher: refuses }),
     ).rejects.toThrow(/do not match the recorded sha256/);
   });
 });

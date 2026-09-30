@@ -303,3 +303,5 @@ Correction first: I put 6pfo to the owner as undecided having read only the top 
 - [ ] Piece 3 — restore-staging.ts carries the retired store: add it to CARRIED_PREFIXES (the list already names it as the next tenant).
 - [ ] Piece 4 — every removal path of a retired record guarded by the explicit confirmation input.
 - A second, JSON-LD copy (<stub>/staging.jsonld) was drafted and REVERTED before commit: a second record of the same facts is what this design exists to prevent. <base>/fsh-guts.jsonld already carries these records as fsh-guts nodes.
+
+_2026-09-30T11:16:57Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

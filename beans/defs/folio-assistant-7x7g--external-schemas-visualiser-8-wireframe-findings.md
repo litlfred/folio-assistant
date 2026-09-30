@@ -24,3 +24,16 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/external-schemas/
 8. **The notes are single long paragraphs in capitals for emphasis** ("THE TRANSCRIPTION CAME FIRST AND THAT WAS THE DEFECT", "NO XSD IS HELD"). The DCMI note is about 900 characters in one block.
 
 When fixed, re-draw `cat-harness/docs/wireframes/external-schemas/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 6 still present, 1 fixed, 1 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — 44 of the 53 operative terms say nothing: Registry grew to 17 specs; 84 of 110 term-table rows read 'not yet described' (tr in tables with th 'term'). Stat box still reads '98 operative terms in the graph' with no qualifier.
+- **FIXED** — The '0 dependents that no longer resolve' box covers 8 of 14: Stat grid now: 17 specifications / 98 operative terms / 192 declared uses / 0 declarations naming no record — no 'no longer resolve' box and no 'not a path' text on page. Dependents are now declarations read from the using files ('Every declaration names a record on this page'). — 1b2d10c7e
+- **STILL-PRESENT** — The namespace check reports DCMI and SKOS as 'declared and not in use' by construction: Section still says in-use set is 'Read from the BPMN and DMN files themselves — 6 namespace IRI(s)'; '17 declared and not in use' list includes purl.org/dc/elements/1.1/, purl.org/dc/terms/, skos/core#. The real gap (folio-assistant/bpmn undeclared) is gone: 'Every namespace the corpus declares is covered by a recor…
+- **STILL-PRESENT** — 'Resolves' dependents cannot be opened: 'What depends on it' tables: 49 td>code path cells, 0 inside an <a>.
+- **STILL-PRESENT** — Section anchors sit below their headings: Narrowed: #dcmi-terms is now the H3 itself (id on heading, no trailing <a id>); clicking the spec-table link lands heading top at 0. But no scroll-margin: at 390 the fixed .fa-glass-handle (x154-236, y0-25) overlaps the heading text (x14-390, y0-17), covering 'Terms'. At 1280 no overlap (text x64-285, handle x594-686). — 95d43a483
+- **CANNOT-TELL** — State tags fail contrast on the default dark scheme: No .xs-ok/.xs-na/.xs-missing element is rendered on today's page (0 matches), so nothing to measure; the inline <style> still sets #0d6e5e/#5b5f66/#a8200f and body is rgb(39,38,43) in dark, so any tag the generator emits would fail as before.
+- **STILL-PRESENT** — Mobile: the spec table is four columns in a 358 px column: At 390: spec table scrollWidth 430 in .table-wrapper 362px (overflow-x auto), no scroll hint text/role/tabindex/shadow. 22-row DCMI and BPMN term tables still repeat 'not yet described' per row.
+- **STILL-PRESENT** — The notes are single long paragraphs in capitals for emphasis: Paragraphs containing 'THE TRANSCRIPTION CAME FIRST AND THAT WAS THE DEFECT' (779 ch) and 'NO XSD IS HELD' (792 ch), each one <p>.

@@ -175,7 +175,8 @@ export type TiledDirectory = {
   /** `repository` when the path is resolved from the repository root rather than the instance's. */
   scope?: string;
   coverage?: Parameters<typeof visualisationsOf>[0];
-  theme?: string;
+  /** A theme reference (#1168 B8); the tile carries its `themeId`. */
+  theme?: { themeId: string; instance?: string };
   /** The directory holds materialized content. Absent is NOT DECLARED, never `false`. */
   readOnly?: boolean;
 };
@@ -257,7 +258,9 @@ export function graphTiles(
         ...(d.readOnly === undefined ? {} : { readOnly: d.readOnly }),
         ...(v.icon === undefined ? {} : { icon: v.icon }),
         ...(v.publish === undefined ? {} : { publish: v.publish }),
-        ...(v.theme ?? d.theme ? { theme: v.theme ?? d.theme } : {}),
+        // The published tile carries the theme's ID, not the reference: the
+        // browser reads `harness.json`, and the reference is a declaration shape.
+        ...((v.theme ?? d.theme) ? { theme: (v.theme ?? d.theme)!.themeId } : {}),
       });
     });
   }
