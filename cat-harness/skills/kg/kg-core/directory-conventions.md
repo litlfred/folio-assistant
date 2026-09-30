@@ -794,6 +794,15 @@ reads them by code. The gate fails when the list spells one differently from
 what the declaration derives. So moving an instance's IRIs is one edit, to
 its declaration's `iriBase`, and the list follows.
 
+Since 2026-09-30 (bean `yn2k`, the owner's decision), `cat-harness` and
+`folio-assistant-core` declare an `iriBase` on their planned repositories'
+hosts, versioned as bootstrap's is:
+- `https://litlfred.github.io/cat-harness/0.1.0/ns#`
+- `https://litlfred.github.io/folio-assistant-core/0.1.0/ns#`
+
+Their namespace documents are still published beside the site, as
+bootstrap's are.
+
 ### Every other marker: THE TYPE DECLARES ITS OWN FILENAME (STRICT)
 
 Settled by the owner 2026-09-20, bean `79t3` question 1. The rule above covers

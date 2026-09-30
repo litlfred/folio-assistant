@@ -82,7 +82,7 @@ bean `12s9`). A diagram binds one address per vocabulary it uses:
 
 ```xml
 xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
-xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns#"
 ```
 
 - `bootstrap.processes:` for `skill`, `role` and `precondition`, which bootstrap
