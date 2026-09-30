@@ -82,7 +82,8 @@ const BPMN_RECORD = join(
  * folio-assistant-core, which cat-harness does not depend on.
  */
 const OWN = readDeclaration(HARNESS);
-const GLOSSARY_PAGE = join(HARNESS, OWN ? siteDir(OWN) : "docs", "glossary", "index.md");
+if (!OWN) throw new Error(`${HARNESS} declares no instance — no site to find the glossary page in`);
+const GLOSSARY_PAGE = join(HARNESS, siteDir(OWN), "glossary", "index.md");
 
 // ── JSON Schema, reduced to what a class box shows ────────────────────────
 
