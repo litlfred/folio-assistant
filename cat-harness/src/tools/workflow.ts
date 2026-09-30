@@ -36,7 +36,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { workflowFiles } from "../../scripts/known-skills.js";
 import { orderedDependencies } from "../../schemas/harness-config.js";
 import { z } from "zod";
-import { basename, join, resolve } from "node:path";
+import { basename, resolve } from "node:path";
 import { findInModel, loadProcessModel, type ProcessModel } from "../workflow/process-model.js";
 import { complete, describe, startInstance, type InstanceState } from "../workflow/instance.js";
 import { describePreflight, preflight, preflightRefusal } from "../workflow/preflight.js";
@@ -281,7 +281,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
     async ({ instance }) => {
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
-      const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
+      const model = await loadProcessModel(resolve(root, state.source));
       return text(describe(model, state, roles()));
     },
   );
@@ -302,7 +302,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
     async ({ instance, activity, actor, target }) => {
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
-      const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
+      const model = await loadProcessModel(resolve(root, state.source));
       const relaxations = loadRelaxations(root);
       validateRelaxations(relaxations, [model]);
       const verdict = checkGate(model, state, activity, relaxations);
@@ -368,7 +368,7 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
     async ({ instance, node, outcome, facts, actor, target, note }) => {
       const state = loadInstance(root, instance);
       if (!state) throw new Error(`No instance "${instance}". Try workflow_list.`);
-      const model = await loadProcessModel(join(root, state.source.replace(`${root}/`, "")));
+      const model = await loadProcessModel(resolve(root, state.source));
       // `actor` stays in the history as what the caller SAID it was acting as;
       // authorization is decided on the principal GitHub vouches for.
       const { principal } = await githubPrincipalFor(root, process.env);
