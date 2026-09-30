@@ -51,3 +51,7 @@ The owner earlier called theme mapping *"authoring (human/agentic) decision/judg
 - **Rendered check.** `preview:site` (which runs `mount-instance-docs.ts`: 5 mounts, rail on 19 pages), served under `/folio-assistant/`, Chromium: the landing card carries `data-fa-sticky-theme="iris-sticky"` and computes `--fa-sticky-accent: #008dc9`; `#harness-who-iris` computes `--fa-tile-tone: 198`; the sidebar entry's mark is `hsl(198 45% 28%)`.
 - **Seen on the build, not fixed here:** the board uses `--fa-sticky-accent` only for the medium-priority stripe, and a landing card has no priority, so the IRIS card renders as white / `#ced4da` edge / `#212529` ink — faithful to IRIS, but the blue does not show on the card itself. Making it show needs a board CSS change or a backdrop: the owner's call.
 
+
+## OWNER RULING, 2026-09-30: a thin accent band on themed cards with no priority
+
+Asked in session https://claude.ai/code/session_01SiFEMuTciyB681XP5WfcbB. The problem: the board paints a theme's accent colour only as a priority stripe, so the who-iris landing card, which has no priority, showed white with grey edges and no IRIS blue. **The owner chose the generic fix:** a thin accent band on ANY themed card without a priority, so every instance theme benefits. Not a who-iris special case. Implementation follows in its own PR.
