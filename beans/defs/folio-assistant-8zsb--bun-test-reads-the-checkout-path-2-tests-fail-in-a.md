@@ -6,6 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-30T17:53:09Z
 updated_at: 2026-09-30T17:53:34Z
+parent: folio-assistant-1xhc
 ---
 
 ## What was measured
