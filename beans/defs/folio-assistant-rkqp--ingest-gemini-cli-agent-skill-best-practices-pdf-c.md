@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rkqp
 title: Ingest Gemini-CLI agent-skill best-practices PDF + commit 4677175 as MODEL-SPECIFIC voices for skills
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-29T20:03:12Z
+updated_at: 2026-09-30T10:39:39Z
 parent: folio-assistant-slw1
 ---
 
@@ -138,3 +138,13 @@ layout nor these gates exist there yet; they arrive when #773 merges.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+## 2026-09-30 — the Gemini CLI voice
+- [x] **A Gemini-CLI voice exists SEPARATELY from our own**: agent-skills/skills/voices/vendors/agent-skill-authoring-gemini-cli/voice.json, extends the shared base agent-skill-authoring (the base's own description reserves vendors/ for exactly this). Home by judgement per the owner's 2026-09-21 ruling: agent-skills declares the voices graph and its base already names 'a shared base plus one override per vendor'.
+  - 10 rules, each quoting its page of agent-skill-best-practices---gemini-cli (already ingested in agent-skills/library): descriptions do not overlap; the context budget in WORDS (~100 / <5k — vs the base's ~500 lines, a different source and unit); degrees of freedom; scripts for deterministic tasks; LLM-friendly script output; templates in assets/; the directory anatomy; reference material out of the body; no hardcoded secrets (critical); limit scope. Rules the base already states are inherited, not repeated.
+  - provenance **assertion** (a vendor describing its own product), and **superseded** — the capture's own banner: 'Unpaid tier and Google One users: Gemini CLI was replaced by Antigravity CLI on June 18th, 2026.' No successor: Antigravity's pages do not cover skill authoring, which VoiceSupersessionSchema's own docblock records for this very document.
+  - Verified: resolveVoice folds it to 22 rules (10 + 12 inherited); check:voices and check:voice-skills pass; the voices viewer lists it.
+- [x] **Commit 4677175** is six uploads (2602.12670v4, 2607.25032v1, 2608.08453v1, Anthropic's 'Equipping agents…', Claude Platform Docs' 'Skill authoring best practices', 'Skills in OpenAI API'); all six are ingested in agent-skills/library with their source sha256 in structure.json. The two arXiv papers already back the base voice.
+- [ ] STILL OPEN — the other MODEL-SPECIFIC sources in that commit as vendor voices of their own: Claude (Anthropic + Claude Platform Docs) and OpenAI. Same shape as the Gemini one.
+- [ ] STILL OPEN — the agentic review axis for skills against these voices (no formal gate on rule content, per the owner).
