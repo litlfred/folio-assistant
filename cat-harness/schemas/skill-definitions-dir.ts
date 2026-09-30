@@ -30,7 +30,12 @@ export const SKILL_DEFINITIONS_DIRNAME = "skill-definitions";
 export function skillDefinitionDirs(repoRoot: string): string[] {
   const out = new Set<string>();
   for (const root of instanceRootsIn(repoRoot)) {
-    for (const dir of instanceDirectoriesForGraph(root, "skills")) {
+    // The declared `skills` directories, plus the conventional `skills/` an
+    // instance declaring none still has (smart-base, folio-assistant-sci):
+    // declaring `skills/skill-definitions/` there would nest one declared
+    // directory inside the conventional one, which layout-norms refuses.
+    const candidates = new Set([...instanceDirectoriesForGraph(root, "skills"), ownDirectoryById(root, "skills", "skills")]);
+    for (const dir of candidates) {
       const clean = dir.replace(/\/+$/, "");
       if (basename(clean) === SKILL_DEFINITIONS_DIRNAME) {
         if (existsSync(clean)) out.add(resolve(clean));
