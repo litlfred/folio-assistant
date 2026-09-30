@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-30T08:43:50Z
-updated_at: 2026-09-30T11:02:54Z
+updated_at: 2026-09-30T11:02:57Z
 parent: folio-assistant-yg29
 ---
 
@@ -25,3 +25,18 @@ An instance-declared theme has to be resolvable wherever a surface names a theme
 - [ ] Checked on a rendered build, `preview:site` **plus** the `mount-instance-docs.ts` step (see `yg29` §"A correction worth keeping"), not inferred from generator output
 
 _2026-09-30T11:02:54Z_ — Claimed by claude/magical-archimedes-4qkfxp-v8n5 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-09-30: the platform half is built; the who-iris half waits on one question
+
+**Built** (`cat-harness/schemas/theme-by-ref.ts`, with 9 tests). A theme reference now resolves against its **owner**. `{instance: "who-iris", themeId: "iris-web"}` finds who-iris's declared `themes` directory and reads its `themes.ts` export, `INSTANCE_THEMES`, by declaration, not by import, so the platform holds no WHO value. A reference with no `instance` means the citing instance's own, then the platform's, so every reference written before #1168 B8 resolves exactly as it did.
+
+It is wired into the two consumers that take a reference, `harness-tiles.ts` and `gen-landing-data.ts`. For today's references their output is byte-identical.
+
+**Held: which theme styles who-iris's harness surfaces.** The note board styles a card only from **`sticky`-kind** themes. `gen-themes-css.ts` states the rule: a `webpage` theme *"shares the geometry but not this stylesheet: its CSS is the site's, not the note board's."* who-iris's themes are `iris-web` (webpage) and `who-wpro-publication` (publication). The platform's own model therefore forbids a who-iris card from citing either.
+
+The options, put to the owner:
+- author a `sticky`-kind IRIS theme in `who-iris/themes/`, derived from `iris-web`'s measured palette; or
+- let a `webpage` theme style harness surfaces, which changes the platform rule; or
+- theme only the tile and navbar tone from `iris-web`'s accent. Its hue is about 198°, against the avatar's 199, so the tile's colour barely moves.
+
+The owner earlier called theme mapping *"authoring (human/agentic) decision/judgement"* (for `xffc`/`d3yq`), which is why this is asked rather than decided here.

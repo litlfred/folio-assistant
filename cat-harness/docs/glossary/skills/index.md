@@ -12,7 +12,7 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 272 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 6 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 2 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 1 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 272 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 6 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 1 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
 **Size:** this page holds 292 terms and is 210 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
@@ -146,6 +146,13 @@ board-windows <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Everything starts as its avatar; opening projects a window onto the board. The two mechanisms that must not be conflated, z-order, and the fixed chrome a content kind fills in.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/board-windows.md"><code>cat-harness/skills/folio-core/board-windows.md</code></a></p>
+</dd>
+<dt id="bootstrap-tools--kg-skills--bootstrap-contract-semver" data-fa-state="extracted" data-fa-gloss="">
+bootstrap-contract-semver <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's <code>schemas/*.schema.json</code> are generated from, and before publishing one.</p>
+<p class="fa-gloss-meta">Skills of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/skills/bootstrap-contract-semver.md"><code>bootstrap-tools/skills/bootstrap-contract-semver.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--bootstrap-graph-emission" data-fa-state="extracted" data-fa-gloss="">
 bootstrap-graph-emission <span class="fa-gloss-status">candidate, extracted</span>
@@ -1564,13 +1571,6 @@ readme-sections <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>A folio's README is the author's file; the platform owns only the marked regions it generates. How the sync/audit split works, why the whole-file generator it replaced could not, and the third state both tools must report.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/readme-sections.md"><code>cat-harness/skills/folio-core/readme-sections.md</code></a></p>
-</dd>
-<dt id="folio-assistant-sci--kg-skills--reference-dataset-ingestion" data-fa-state="extracted" data-fa-gloss="">
-reference-dataset-ingestion <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Ingest a published REFERENCE dataset — a constants table such as CODATA, AME or PDG — into a library entry whose values are addressable in prose as &#123;&#123; &lt;instance&gt;.library.&lt;entry&gt;.&lt;slug&gt; }}, with edition, source, sha256 and licence recorded. Use when a paper quotes a physical constant, when a value is hard-coded in a script or registry, or before adding a &quot;vendored snapshot&quot; of someone else's numbers.</p>
-<p class="fa-gloss-meta">Skills of folio-assistant-sci · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/skills/data/reference-dataset-ingestion.md"><code>folio-assistant-sci/skills/data/reference-dataset-ingestion.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--related-work-coordination" data-fa-state="extracted" data-fa-gloss="">
 related-work-coordination <span class="fa-gloss-status">candidate, extracted</span>
