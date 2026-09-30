@@ -297,10 +297,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T08:56:39.831Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9a3704a53e2e320c78fe987fc230372767498596",
-  "sourceCommitSha": "9a3704a53e2e320c78fe987fc230372767498596",
-  "sourceCommitAt": "2026-09-30T08:52:52Z",
+  "generatedAt": "2026-09-30T09:32:04.046Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d0d7e13e03650c4e100899d6caaebe1c7aa529d1",
+  "sourceCommitSha": "d0d7e13e03650c4e100899d6caaebe1c7aa529d1",
+  "sourceCommitAt": "2026-09-30T09:28:43Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2082,7 +2082,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-build.md",
-      "instructionLines": 137,
+      "instructionLines": 147,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4150,7 +4150,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/content-validation.md",
-      "instructionLines": 294,
+      "instructionLines": 296,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40090,7 +40090,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run cat-harness/content/pipeline/build-glossary.ts"
+        "shell": "bun run folio-assistant-core/scripts/build-glossary.ts"
       },
       "io": {
         "inputs": [

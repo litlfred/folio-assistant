@@ -8,7 +8,7 @@
     "kind": "graph",
     "id": "cat-harness.jsonld"
   },
-  "updated_at": "2026-09-29T20:49:36.493Z",
+  "updated_at": "2026-09-30T09:32:00.707Z",
   "families": {
     "danglingLinks": {
       "summary": "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
@@ -22,8 +22,13 @@
     },
     "undeclaredSchemaModules": {
       "summary": "Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "module": "schemas/process-element-id.ts",
+          "why": "no-tag"
+        }
+      ]
     },
     "undeclaredTerms": {
       "summary": "Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.",
@@ -31,5 +36,5 @@
       "entries": []
     }
   },
-  "total": 0
+  "total": 1
 }
