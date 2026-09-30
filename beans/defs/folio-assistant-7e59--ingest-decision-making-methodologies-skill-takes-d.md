@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T15:38:03Z
-updated_at: 2026-09-29T22:52:09Z
+updated_at: 2026-09-30T00:16:25Z
 parent: folio-assistant-slw1
 ---
 
@@ -65,8 +65,43 @@ cover**, which is the same rule its own output already follows for `not-for`.
 - [x] the "covers all methodology families" claim checked against the three
       sources — it is not supported, and the gap is named above
 - [ ] the author replaces this body with the real scope
-- [ ] the skill's ranking output has a schema, or a stated reason it does not
-- [ ] the selector declares the families it does NOT cover, so an agent asking
-      for an outranking method is told none is here rather than given the
-      nearest aggregation one
+- [x] the skill's ranking output has a schema — `MethodologyRecommendationSchema`,
+      and reading it turned up the granularity mismatch below
+- [ ] **owner:** do individual methods get methodology nodes, or does the
+      selector return a FAMILY plus prose? 23 methods are tabulated, 15 of
+      them unsourced, and `methodologyId` requires a node that none of them has
+- [x] the selector declares the families it does NOT cover (2026-09-30)
 - [ ] owner's call on the `250906388v1` slug
+
+## 2026-09-30 — three defects found by checking, not by reading
+
+Measured against the ingested text, not against the skill's own claims.
+
+**1. Two methods are attributed to a source that does not contain them.** §3
+cites Ravichandran (arXiv:2607.20636) for Delphi, nominal group technique and
+grit-aware evaluation. `grit` occurs in 35 of that thesis's sections;
+**`Delphi` in none, `nominal group` in none.** Those two are from the
+group-consensus literature and are unsourced here. Marked in the skill.
+
+**2. Two more in §2.** The monograph's abstract promises *"bandit algorithms,
+Bayesian optimization, and tree search algorithms"*, but v2 as ingested has
+**no tree-search chapter**, and **`contextual bandit` occurs nowhere in it.**
+So 2 of §2's 4 rows are backed and 2 are not.
+
+**3. Eight methods have no source at all** — §4 (cost-benefit, decision trees,
+game theory, expected utility) and §5 (TOPSIS, ELECTRE, PROMETHEE, VIKOR).
+§5's gap is a known one rather than an oversight: the MCDM source is Chapter
+8, *"selected aggregation-type"* methods by its own abstract, so outranking
+and distance-based are somebody else's chapter.
+
+**Totals: 23 methods tabulated, 11 backed by an ingested source.** An unsourced
+row is not thereby wrong — it means nobody here has read a source for it, no
+node renders it, and `methodology-adoption`'s "never adopt a method by naming
+it" applies.
+
+**And the schema makes it structural.** `MethodologyRecommendationSchema`
+requires `methodologyId`, *"the methodology's `name` from its front matter"*.
+No individual method has a node — the graph holds families and adopted
+processes — so the tables are at METHOD granularity while the declared output
+is at NODE granularity. "Use TOPSIS" cannot be expressed in the output shape,
+and an implementation that emits it anyway is inventing an id.

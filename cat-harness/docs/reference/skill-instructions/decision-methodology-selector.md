@@ -88,13 +88,25 @@ Decision-Making Algorithms" (arXiv:2508.21620).
 | **Tree search** (MCTS) | Sequential decisions with branching outcomes | No natural tree structure | High |
 | **Contextual bandits** | Payoff depends on observable context | Context is not available or not meaningful | Medium |
 
+**Two caveats on the source, measured 2026-09-30.** The monograph's abstract
+promises *"bandit algorithms, Bayesian optimization, and tree search
+algorithms"*, but **v2 as ingested has no tree-search chapter** — its sections
+run decision theory, concentration inequalities, frequentist bandits
+(explore-then-exploit, UCB), Gaussian processes, and discrete then continuous
+Bayesian optimisation. And **`contextual bandit` occurs nowhere in it.** So of
+the four rows above, two are backed by the cited source and two are not.
+
 ### 3. Social / behavioral decision methods
 
 **When**: multiple stakeholders, group consensus needed, behavioral biases
 must be accounted for.
 
 Source: Ravichandran, "Algorithmic Approaches to Sequential Decision-Making
-and Social Epistemology" (arXiv:2607.20636).
+and Social Epistemology" (arXiv:2607.20636) — **for `grit-aware evaluation`
+only.** Checked against the ingested text 2026-09-30: `grit` occurs in 35 of
+its sections; **`Delphi` occurs in none, and `nominal group` in none.** Those
+two come from the group-consensus literature and are UNSOURCED here; the
+attribution above covered all three rows until this was measured.
 
 | method | best for | avoid when | complexity |
 |---|---|---|---|
@@ -102,9 +114,14 @@ and Social Epistemology" (arXiv:2607.20636).
 | **Nominal group technique** | Structured brainstorming → voting | >15 participants | Low |
 | **Grit-aware evaluation** | Decisions requiring sustained investment | Reversible/low-stakes | Medium |
 
-### 4. Classical decision methods
+### 4. Classical decision methods — UNSOURCED
 
 **When**: well-understood problem structure, textbook applicability.
+
+**No source in this repository.** Nothing in `library/` covers cost-benefit
+analysis, decision trees, game theory or expected utility, and no methodology
+node renders any of them. The rows below are textbook recall, not adopted
+method — see §"What this does NOT cover".
 
 | method | best for | avoid when | complexity |
 |---|---|---|---|
@@ -113,10 +130,17 @@ and Social Epistemology" (arXiv:2607.20636).
 | **Game theory / minimax** | Adversarial settings, zero-sum contexts | Cooperative settings | High |
 | **Expected utility** | Single decision under known probability distributions | Deep uncertainty, unknown distributions | Low |
 
-### 5. Hybrid / distance-based MCDM
+### 5. Hybrid / distance-based MCDM — UNSOURCED
 
 **When**: reference-point comparison (ideal solution), outranking rather than
 scoring.
+
+**No source in this repository**, and the gap is a known one rather than an
+oversight: the MCDM source ingested here is Chapter 8, *"selected
+**aggregation-type**"* methods by its own abstract, so outranking (ELECTRE,
+PROMETHEE) and distance-based (TOPSIS, VIKOR) are somebody else's chapter.
+TOPSIS appears in that chapter only inside a reference title. The rows below
+are textbook recall — see §"What this does NOT cover".
 
 | method | best for | avoid when | complexity |
 |---|---|---|---|
@@ -124,6 +148,54 @@ scoring.
 | **ELECTRE** | Partial ordering, incomparability is valid | Need a total ranking | High |
 | **PROMETHEE** | Preference functions on each criterion | All criteria are simple linear | Medium |
 | **VIKOR** | Compromise solution for conflicting criteria | Stakeholders refuse compromise | Medium |
+
+## What this does NOT cover — bean `7e59`, measured 2026-09-30
+
+The title of the bean that commissioned this skill claims it *"covers all
+methodology families with when-to-use criteria"*. Checked against the three
+sources now that they are in `library/`, that does not hold, and the honest
+shape is:
+
+| | methods | backed by an ingested source |
+|---|---:|:--:|
+| §1 MCDM aggregation | 8 | **yes** — `mcdm-aggregation` |
+| §2 probabilistic | 4 | **2 of 4** — bandits and Bayesian optimisation |
+| §3 social / behavioural | 3 | **1 of 3** — grit-aware evaluation |
+| §4 classical | 4 | no |
+| §5 distance-based / outranking | 4 | no |
+| **total** | **23** | **11** |
+
+**An unsourced row is not thereby wrong** — these are standard methods and the
+guidance in them may be perfectly good. It means something narrower and worth
+saying: nobody here has read a source for it, no methodology node renders it,
+and `methodology-adoption`'s *"never adopt a method by naming it"* applies.
+
+**The output schema already makes this structural, and that is the sharper
+point.** `MethodologyRecommendationSchema` requires `methodologyId` — *"the
+methodology's `name` from its front matter"* — so a recommendation must name a
+node in the methodology graph. **No individual method above has one.** The
+graph's nodes are families and adopted processes (`mcdm-aggregation`,
+`probabilistic-decision-analysis`, `adequacy-for-purpose-modelling`,
+`kepner-tregoe`, `dmn`, `swot`, `madr`, `raci`/`rasci`, …), so the tables in
+this skill are at METHOD granularity while the declared output is at NODE
+granularity.
+
+Two consequences, and neither is cosmetic. A recommendation of "use TOPSIS" or
+"run a Delphi" **cannot be expressed** in the output shape — there is no id to
+put in `methodologyId`. And an implementation that emits one anyway is
+inventing an id, which is how a consumer ends up resolving a methodology that
+does not exist.
+
+So the selector's honest output today is a FAMILY plus a within-family
+suggestion in prose, and the tables above are material for that prose rather
+than a menu of returnable answers. Whether individual methods should get nodes
+— 23 of them, most unsourced — is a decision for the owner, on `7e59`.
+
+**And these families are entirely absent, even as recall**: ambiguity and
+robust decision-making (maximin under unknown distributions), real options,
+voting rules and social choice beyond the thesis's cascades, multi-objective
+optimisation proper (Pareto fronts rather than scalarisation), and
+satisficing / bounded-rationality methods.
 
 ## Selection algorithm
 

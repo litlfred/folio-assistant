@@ -162,19 +162,37 @@ same thing — every derived artefact in `library/` becomes unreproducible from 
 checkout. `deletion-requires-confirmation` governs any exception, and an ingest
 step that removed its own input would be the `plj1` shape exactly.
 
-### Measured 2026-09-29 — nine to retire, and five already gone
+### Measured 2026-09-30 — 28 to retire, 47.4 MB, across five harnesses
 
-Fourteen library entries compared against `uploads/` by each manifest's own
-`meta.source_file`: **nine present, five absent.** The five absent are exactly
-the five whose upload had been renamed to a descriptive filename
-(`feng-2023-designing-with-language`,
+**A first pass of this said "nine", and it was wrong** — it walked
+`cat-harness/library/` only, which is 14 of the corpus's entries. Swept across
+every declared library by each manifest's own `meta.source_file`:
+
+| | |
+|---|---:|
+| ingested uploads still sitting in `uploads/` | **28** |
+| their total size | **47.4 MB** |
+| harnesses they belong to | `cat-harness`, `agent-skills`, `smart-base`, `folio-assistant-core`, `who-iris` |
+| sources already deleted by earlier sessions | 5 |
+
+The five deleted are exactly the five whose upload had been renamed to a
+descriptive filename (`feng-2023-designing-with-language`,
 `neubauer-2025-ai-assisted-schema-creation`,
 `dusengumuremyi-2026-ai-mediated-raci`, `gurel-tat-2017-swot-analysis`,
 `sammut-bonnici-galea-2015-swot-analysis`) — the sessions that renamed also
-tidied away, under no rule, because there was none to read. They are
-recoverable from git history and have not been restored. Bean `q7ey` carries
-both the retirement of the nine and the question of whether to bring the five
-back.
+tidied away, under no rule, because there was none to read. Recoverable from
+git history; not restored.
+
+**The count being wrong by a factor of three is the point of recording it
+here.** `library` is a graph kind declared by five instances, and a sweep that
+resolves one directory reports a clean-looking number over four it never
+opened — the `dh4f` shape, one level up.
+
+**Nothing is swept yet**, and two things have to be settled first, both on
+bean `q7ey`: whether `fsh-guts/uploads/` is the right sub-directory, and what
+happens to the `*.pdf.extraction.json` companions that sit beside six of the
+28 in `uploads/` — derived artefacts that may simply go, or part of what is
+archived. Guessing either is cheap to do and expensive to undo across 28 files.
 
 ### Renaming an upload is done BEFORE the first ingest
 
