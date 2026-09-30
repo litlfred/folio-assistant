@@ -22,8 +22,22 @@ export const LEDGER_SCHEMA = `${LEDGER_SCHEMA_NAME}/${LEDGER_SCHEMA_VERSION}`;
 /** The tag before 2026-09-29. Read, never written; drop after one release. */
 export const LEGACY_LEDGER_SCHEMA = "folio-glossary-ledger/v1";
 
+/**
+ * The form of a ledger key: the term IRI's local part, as the knowledge-graph
+ * export mints it (#1168 B10b, owner 2026-09-30: "BPMN id + pattern" and a QA
+ * gate). A role is `role/<role id>`; a lane whose performer varies is
+ * `process/<bpmn:process id>/lane/<bpmn:lane id>` — the Lane node's own
+ * identity in kg-export — never its display name, so renaming a lane does
+ * not mint a new term: the old name becomes a `formerLabels` entry.
+ */
+export const LEDGER_KEY = /^(?:role\/[a-z0-9][a-z0-9-]*|process\/[A-Za-z_][\w.-]*\/lane\/[A-Za-z_][\w.-]*)$/;
+
 export const LedgerEntrySchema = z.object({
-  prefLabel: z.string().describe("The label at the time of minting — what a retired term is shown as."),
+  prefLabel: z.string().describe("The current label — what the term is shown as, and what a retired term keeps."),
+  formerLabels: z
+    .array(z.string())
+    .optional()
+    .describe("Labels this key carried before, oldest first — published as skos:hiddenLabel, so the old name still finds the term."),
   firstSeen: z.string().describe("ISO date this key was first written."),
   retiredOn: z.string().nullable().describe("ISO date it stopped being used, or null while it still is."),
 });
@@ -34,6 +48,6 @@ export const LedgerSchema = z.object({
   $schema: z.literal(LEDGER_SCHEMA),
   instance: z.string().min(1).describe("Which Knowledge Graph's glossary this is: its name, never a path."),
   concepts: z
-    .record(z.string(), LedgerEntrySchema)
+    .record(z.string().regex(LEDGER_KEY, "a ledger key is role/<id> or process/<process id>/lane/<lane id>"), LedgerEntrySchema)
     .describe("Keyed by the term IRI's local part, never the absolute IRI, so the file survives a change of address."),
 });

@@ -78,8 +78,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [Block Density](block-density.html) | `block-density` | — |  |
-| [Relationship first, visualisation later](board-diagram-interchange.html) | `board-diagram-interchange` | — | **One sentence, and it is the owner's:** |
-| [Start in the avatar, open into a window](board-windows.html) | `board-windows` | — | The owner, 2026-09-20 and 2026-09-21: |
 | [/canonical-watcher](canonical-watcher.html) | `canonical-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
@@ -101,8 +99,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/devils-advocate-watcher](devils-advocate-watcher.html) | `devils-advocate-watcher` | — | A concrete instance of [`integration-watcher`](integration-watcher.md). |
 | [Diff](diff.html) | `diff` | — | Show what changed at the content-block level, with viewer links and |
 | [/dispatch-agent](dispatch-agent.html) | `dispatch-agent` | — | The expensive failure mode of multi-agent dispatch is **going dark**: you |
-| [docs-auto](docs-auto.html) | `docs-auto` | — | `<base>/<handler>/docs-auto/<auto-doc-type>/<sub-graph>/` is an index of what |
-| [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
 | [Editor](editor.html) | `editor` | — |  |
 | [Evidence review](evidence-review.html) | `evidence-review` | — | > Skill id: `evidence-review` · Package: `folio-core` |
 | [/exposition-swarm-drain](exposition-swarm-drain.html) | `exposition-swarm-drain` | — | Bring every narrative block up to the **Milnor exposition standard** |
@@ -112,19 +108,13 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/getting-started](getting-started.html) | `getting-started` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html). |
 | [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Package: `folio-core` |
 | [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
-| [A tile is the harness's, not the node's](harness-tiles.html) | `harness-tiles` | — | The owner, 2026-09-20, correcting the question rather than answering it: |
-| [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that |
-| [Incremental render](incremental-render.html) | `incremental-render` | — | Owner, 2026-09-20, bean `9c34`: |
 | [/integration-audit](integration-audit.html) | `integration-audit` | — | A maintenance command for the multi-axis QA-sidecar pipeline (`voice`, |
 | [/integration-backlog](integration-backlog.html) | `integration-backlog` | — | A workflow skill that turns each integration-watcher's open findings |
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
 | [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
 | [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
-| [Rendering the knowledge graph](kg-viewer.html) | `kg-viewer` | — | `kg-export` serialises the instance's graph to one JSON-LD document. This skill |
-| [Liquid templates](liquid-templates.html) | `liquid-templates` | — | Two engines run Liquid here, and they produce different kinds of output. Know |
-| [Markdown Render Check](markdown-render-check.html) | `markdown-render-check` | — | git diff HEAD~1 HEAD --name-only -- '*.md' |
 | [MCP assembly](mcp-assembly.html) | `mcp-assembly` | — | [`mcp-projection`](mcp-projection.md) maps **one** Tool node to one MCP tool. |
 | [MCP contract](mcp-contract.html) | `mcp-contract` | — | [`mcp-projection`](mcp-projection.md) emits a server. This checks the emitted |
 | [MCP projection](mcp-projection.html) | `mcp-projection` | — | **The harness does not require MCP. It knows how to emit it.** That distinction |
@@ -147,10 +137,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [QA report signing](qa-report-signing.html) | `qa-report-signing` | — | A QA report becomes **evidence** when a third party can establish what was |
 | [QA witnesses](qa-witness.html) | `qa-witness` | — | A **QA witness** is what a reader sees when they open the QA badge beside a |
 | [Readability Editing](readability-editing.html) | `readability-editing` | — |  |
-| [A folio's README](readme-sections.html) | `readme-sections` | — | Two tools divide the file between them, and **between them no link in a folio |
 | [Related work: find it, sort it, ask](related-work-coordination.html) | `related-work-coordination` | — | Owner, 2026-09-23 (issue #1023): *"when CRDM is initiated/updated through human agent chat discussio |
-| [Render logging](render-logging.html) | `render-logging` | — | Owner, 2026-09-20: *"a specialised Logger skill for the gh-pages rendering |
-| [Render order](render-order.html) | `render-order` | — | Two things live here, and they are deliberately one skill: **the general |
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
 | [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
 | [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
@@ -158,7 +145,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Review heat map](review-heatmap.html) | `review-heatmap` | — | > Skill id: `review-heatmap` · Package: `folio-core` · Bean: `qbfi` · Epic: `q4jm` |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
-| [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
 | [Skills and Tools](skills-and-tools.html) | `skills-and-tools` | — | **A skill is a capability stated generically. A Tool content node is one |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Package: `folio-core` |
@@ -169,11 +155,9 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Task authorization](task-authorization.html) | `task-authorization` | — | > **Before an actor performs a task or answers a decision, the BPMN executor |
 | [Technical documentation](technical-documentation.html) | `technical-documentation` | — | The register is an SDO's — W3C, IHE. The reader is an implementer who was not |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
-| [At ingestion, and only at ingestion](theme-ui-review.html) | `theme-ui-review` | — | **The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`: |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
 | [Turn reporting](turn-reporting.html) | `turn-reporting` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
-| [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
 | [Untainted verification](untainted-verification.html) | `untainted-verification` | — | > Skill id: `untainted-verification` · Package: `folio-core` |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
 | [Never encode a constraint you have not verified](unverified-constraints.html) | `unverified-constraints` | — | Owner, 2026-09-19: **"dont encode rules against a working setup."** |
@@ -187,7 +171,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 | [Where a proposal goes](where-a-proposal-goes.html) | `where-a-proposal-goes` | — | **A design proposal is a comment on the issue it is for.** Not a page in |
 | [Where does this go?](where-does-this-go.html) | `where-does-this-go` | — | > Skill id: `where-does-this-go` · Package: `folio-core` |
-| [Wireframe design review](wireframe-design-review.html) | `wireframe-design-review` | — | Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/ |
 
 ## Document adapter (folio-document-adapter)
 
@@ -320,6 +303,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Semantic Ontologist (Ambiguity Detection & Glossary)](ontologist.html) | `ontologist` | — |  |
 | [Tabular metadata](tabular-metadata.html) | `tabular-metadata` | — | **The model is CSVW and nothing custom.** Bean `ulqj`, decided by the owner: |
 | [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Package: |
+| [Upload naming](upload-naming.html) | `upload-naming` | — | > **Lives in `library-core`, not `folio-core`.** It was written into |
 | [Watching the queue](uploads-watch.html) | `uploads-watch` | — | `uploads/` is the acquisition queue — |
 
 ## RACI involvement model (skills/raci)
@@ -366,6 +350,28 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Declaring a theme](theme-declaration.html) | `theme-declaration` | — | **Producer stage.** Intake decides whether art may enter; this decides what is |
 | [Generating a theme's CSS](theme-generation.html) | `theme-generation` | — | **Consumer stage.** `declaration` says what a theme is; this says what a |
 | [Theming, split on the stage it fails at](theming.html) | `theming` | — | **Every file here is named for the skill it declares, and that is load-bearing |
+
+## Rendering, UI and publication surfaces (ui-core)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Relationship first, visualisation later](board-diagram-interchange.html) | `board-diagram-interchange` | — | **One sentence, and it is the owner's:** |
+| [Start in the avatar, open into a window](board-windows.html) | `board-windows` | — | The owner, 2026-09-20 and 2026-09-21: |
+| [docs-auto](docs-auto.html) | `docs-auto` | — | `<base>/<handler>/docs-auto/<auto-doc-type>/<sub-graph>/` is an index of what |
+| [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
+| [A tile is the harness's, not the node's](harness-tiles.html) | `harness-tiles` | — | The owner, 2026-09-20, correcting the question rather than answering it: |
+| [HTML Rendering QC](html-rendering-qc.html) | `html-rendering-qc` | — | grep -rn '\\operatorname' content/**/*.md |
+| [Incremental render](incremental-render.html) | `incremental-render` | — | Owner, 2026-09-20, bean `9c34`: |
+| [Rendering the knowledge graph](kg-viewer.html) | `kg-viewer` | — | `kg-export` serialises the instance's graph to one JSON-LD document. This skill |
+| [Liquid templates](liquid-templates.html) | `liquid-templates` | — | Two engines run Liquid here, and they produce different kinds of output. Know |
+| [Markdown Render Check](markdown-render-check.html) | `markdown-render-check` | — | git diff HEAD~1 HEAD --name-only -- '*.md' |
+| [A folio's README](readme-sections.html) | `readme-sections` | — | Two tools divide the file between them, and **between them no link in a folio |
+| [Render logging](render-logging.html) | `render-logging` | — | Owner, 2026-09-20: *"a specialised Logger skill for the gh-pages rendering |
+| [Render order](render-order.html) | `render-order` | — | Two things live here, and they are deliberately one skill: **the general |
+| [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
+| [At ingestion, and only at ingestion](theme-ui-review.html) | `theme-ui-review` | — | **The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`: |
+| [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
+| [Wireframe design review](wireframe-design-review.html) | `wireframe-design-review` | — | Method: [`wiregen`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/ |
 
 ## Workflow & process (workflow)
 

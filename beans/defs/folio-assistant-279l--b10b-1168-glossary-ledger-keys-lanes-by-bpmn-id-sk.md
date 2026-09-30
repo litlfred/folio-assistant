@@ -1,10 +1,11 @@
 ---
 # folio-assistant-279l
 title: 'B10b (#1168): glossary ledger keys lanes by BPMN id; SKOS altLabel for renames; key pattern enforced + QA gate'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-30T14:59:53Z
-updated_at: 2026-09-30T17:02:44Z
+updated_at: 2026-09-30T17:07:28Z
 parent: folio-assistant-tr05
 ---
 
@@ -14,4 +15,10 @@ Owner 2026-09-30: do as rec + QA gate + use SKOS for rename/alternate name. lane
 - [ ] rename handled as altLabel/historyNote
 - [ ] CI gate
 
-_2026-09-30T17:02:44Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## Done
+- Varying-lane key = process/<bpmn:process id>/lane/<bpmn:lane id> (kg-export's Lane identity); lane/Actor → process/Process_LogMessage/lane/Lane_Actor, firstSeen kept.
+- LEDGER_KEY pattern enforced by LedgerSchema (propertyNames).
+- Rename: liveLedgerEntry keeps the key and records formerLabels, published as skos:hiddenLabel.
+- QA gate: glossary-export.test parses every committed ledger and fails on a live lane key no diagram declares.

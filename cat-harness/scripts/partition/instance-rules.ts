@@ -248,6 +248,9 @@ export const RULES: Rule[] = [
       // through `scripts/beans.ts` — the one reader of the store. No folio
       // content is opened.
       "scripts/check-bean-parent-prose.ts",
+      // HARNESS: it reads the NAMES of files in declared uploads/library
+      // graphs and never their contents, so no folio content is opened.
+      "scripts/check-upload-names.ts",
       // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
       // LEAF so `state-visualizer.ts` can be a call site without importing
       // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one

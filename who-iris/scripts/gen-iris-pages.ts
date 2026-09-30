@@ -895,11 +895,18 @@ function page(
   table.items td:first-child, table.items th:first-child { min-width: 13rem; }
   table.items td:nth-child(2) { min-width: 9rem; }
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
-  .dl { white-space: nowrap; }
+  /* Wraps at EVERY width (bean on the 2026-09-30 QA re-run): nowrap held the
+     "Metadata record" column to its longest file name, so collection pages ran
+     1338-1475px wide at 1280 and 1162-1405px at 1024. #1592 fixed this only
+     below 640px. A long file name breaks inside the link; the short
+     format/size label stays on one line. */
+  .dl { white-space: normal; }
+  .dl a { overflow-wrap: anywhere; }
+  .dl code { white-space: nowrap; }
 
   /* ── IRIS home replica ────────────────────────────────────────────────
      Bands in the capture's order: hero, search, Recent Submissions. Measured
-     against who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf page 1.
+     against who-iris/uploads/iris-home/iris-capture/IRIS-Home.pdf page 1.
 
      The hero bleeds to the wrap's edges rather than to the viewport: 100vw
      inside a centred column is the classic horizontal-scrollbar bug, and a
@@ -1023,13 +1030,9 @@ function page(
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
     table.items thead { display: none; }
     table.items td { border-bottom: none; padding: 0.25rem 0; }
-    /* Stacked, a download cell is a line of its own, so the desktop
-       \`nowrap\` that kept a size beside its link now holds a whole sentence
-       ("held here, not published — copyright: refused, …") on one line: the
-       page was 537 px wide at 390 (bean \`g9r2\`). Wrap it here; the size
-       stays whole, because \`code\` keeps its own nowrap. */
-    .dl { white-space: normal; }
-    .dl code { white-space: nowrap; }
+    /* The download-cell wrap that g9r2 put here (537 px wide at 390) now
+       applies at every width, in the \`.dl\` rule above: desktop overflowed
+       the same way, one column wider. */
     table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
     table.reqs, table.reqs tbody, table.reqs tr, table.reqs td, table.reqs th { display: block; width: auto; }
     table.reqs thead { display: none; }
@@ -1762,7 +1765,7 @@ ${
  * > mocks the iris landing page. … go back to orinal .pdf of iris pages and
  * > validate look."*
  *
- * Validated against `who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf`,
+ * Validated against `who-iris/uploads/iris-home/iris-capture/IRIS-Home.pdf`,
  * page 1, rendered at 900px on 2026-09-20. Five bands, in the source's order:
  * masthead, hero, search, Recent Submissions, footer. Everything below is
  * either read off that capture or read out of the catalogue; nothing is
