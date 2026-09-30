@@ -115,7 +115,7 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX,  resolveDirectories, instanceDirectoriesForGraph, readDeclaration} from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX,  resolveDirectories, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
@@ -295,6 +295,15 @@ function allUnknown(kind: KgSubjectKind, reason: string): Record<string, KgCrite
  * does instead of silently suppressing five criteria.
  */
 const INSTANCE_RUN = root !== AUDITOR_ROOT;
+
+/**
+ * Where this run's verdicts go: the instance's own `qa` directory, or — for an
+ * instance that declares none, such as bootstrap — the auditor's, under the
+ * instance's stub. `kgQaHomeFor` says why; everything below writes, reads and
+ * sweeps through these two paths and composes no other.
+ */
+const QA_HOME = kgQaHomeFor(root, INSTANCE_RUN ? AUDITOR_ROOT : undefined);
+const KG_QA_TREE = join(QA_HOME.root, "kg-qa");
 
 /**
  * How many criteria this run did not evaluate because they are `repo`-scoped.
@@ -2298,7 +2307,7 @@ function sidecarPath(r: KgQaReport): string {
   const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json|md)$/, "") : r.subject.id;
   const name = r.subject.kind === "role" || r.subject.kind === "requirement" ? r.subject.id : stem;
   const dir = r.subject.path ? dirname(join(root, r.subject.path)) : dirFor[r.subject.kind];
-  return kgQaSidecarPath(root, dir, name);
+  return kgQaSidecarPath(root, dir, name, KG_QA_TREE);
 }
 
 function serialise(r: KgQaReport): string {
@@ -2565,11 +2574,12 @@ const manifest: KgQaManifest = {
     engine_version: ENGINE_VERSION,
   },
 };
-const manifestPath = join(root, KG_QA_MANIFEST_PATH);
+const manifestPath =
+  QA_HOME.by === "hosted" ? join(QA_HOME.root, "kg-qa.manifest.json") : join(root, KG_QA_MANIFEST_PATH);
 const manifestText = `${JSON.stringify(manifest, null, 2)}\n`;
 if (check) {
   const current = existsSync(manifestPath) ? readFileSync(manifestPath, "utf-8") : undefined;
-  if (current !== manifestText) stale.push(KG_QA_MANIFEST_PATH);
+  if (current !== manifestText) stale.push(relative(root, manifestPath));
 } else {
   mkdirSync(join(manifestPath, ".."), { recursive: true });
   writeFileSync(manifestPath, manifestText);
@@ -2616,7 +2626,7 @@ function relocateSidecars(
   root: string,
   targets: ReadonlyMap<string, string>,
 ): Relocation[] {
-  const orphans = sweepOrphans(root, new Set(targets.values()));
+  const orphans = sweepOrphans(root, new Set(targets.values()), KG_QA_TREE);
   const byIdentity = new Map<string, OrphanSidecar[]>();
   for (const o of orphans) {
     // Condition 1 and 2: confirmed gone, and carrying an identity to match on.
@@ -2710,7 +2720,7 @@ for (const r of reports) {
 // process is simply not discovered from this root. Deleting on that
 // evidence would destroy a verdict to hide a declaration gap.
 // `deletion-requires-confirmation` — the agent reports, a person decides.
-const orphans = sweepOrphans(root, written);
+const orphans = sweepOrphans(root, written, KG_QA_TREE);
 if (orphans.length > 0) {
   const gone = orphans.filter((o) => o.subjectExists === false);
   const present = orphans.filter((o) => o.subjectExists === true);

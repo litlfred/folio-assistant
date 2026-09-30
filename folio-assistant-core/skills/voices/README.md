@@ -3,7 +3,7 @@
 
 Voice skills this layer owns. `technical-writer` is the whole of it: an SDO register (W3C, IHE) with RFC 2119 requirement levels, read from the two ingested RFCs and constrained by RFC 8174. PLACED HERE BY JUDGEMENT, on the owner's ruling of 2026-09-21: *"voices should be associated to appropriate home semantically/by judgement"*. It arrived on `main` in `cat-harness/voices/` while the migration to `<instance>/skills/voices/` was in flight (bean `btuv`), and the two obvious mechanical homes are both wrong — the PLATFORM holds no voice content, and `agent-skills` merely holds the RFCs it cites, which has never decided ownership (`who-editorial` cites who-iris's library and lives in who-style-guide). What settles it is what the voice is ABOUT: how to write technical documentation of a standard, software or a knowledge asset — which is what this layer is for.
 
-Part of [folio-assistant-core](../../README.md), declared as `voices`, holding `voices`.
+Part of [folio-assistant-core](../../README.md) 0.1.0, declared as `voices`, holding `voices`.
 
 | file | what it is | used by |
 |---|---|---|

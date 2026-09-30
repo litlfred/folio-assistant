@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xlg2
 title: 'RUN THE SAMPLE IMPORT: one real end-to-end instance of sample-import.bpmn, recorded, with a test'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-24T18:01:44Z
-updated_at: 2026-09-24T18:01:44Z
+updated_at: 2026-09-29T22:26:13Z
 parent: folio-assistant-kupb
 ---
 
@@ -17,3 +17,5 @@ From the `v048` roast, objection 5. Placed under `kupb` by the owner, 2026-09-24
 - [ ] one sample import (fetch blocked by egress is acceptable: use an uploaded or fixture source) runs through `workflow_start` … `workflow_complete`, with the instance committed under `beans/workflows/`
 - [ ] a test drives the process over a fixture, so a later edit that breaks it goes red
 - [ ] every step the run could not perform here is recorded as such, not skipped silently
+
+_2026-09-29T22:26:13Z_ — Claimed by claude/magical-archimedes-4qkfxp-xlg2 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

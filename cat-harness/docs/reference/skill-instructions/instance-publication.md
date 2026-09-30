@@ -148,6 +148,55 @@ So `canonicalUrl` records the **subject**. It must not drive **our** identity.
 A declaration that carries an upstream canonical is describing what it mirrors,
 not asserting where it lives.
 
+## Release IRIs — one address, two audiences, derived from the version
+
+Owner, 2026-09-29: the version is **semver**, and it appears in an IRI in one
+of two forms depending on **who reads it**:
+
+| reader | form | example (bootstrap `0.1.0`) |
+|---|---|---|
+| a program or agent — a namespace, a schema `$id`, a BPMN `xmlns`, a JSON-LD `@id` | `<iriBase><version>/…` | `https://litlfred.github.io/bootstrap/0.1.0/ns#` |
+| a person — a page to read | `<iriBase>v<major>/…` | `https://litlfred.github.io/bootstrap/v0/` |
+
+A program pins exactly, because a reader built against `0.1.0` must not be
+handed `0.2.0` silently. A person's link lasts a major version, because prose
+is not re-checked on every patch.
+
+**`iriBase` and `version` are written ONCE, in the declaration** — the owner's
+"ONE PLACE" rule above, which a fork edits and nothing else. `iriBase` is not
+`canonicalUrl`: `canonicalUrl` says where documents are *published* and
+`kg-export` mints a document `@id` from it; `iriBase` says what the
+*identifiers* are, and those carry the release.
+
+**Never type an address or a version.** Ask for it:
+
+- in TypeScript, `releaseIris(decl)` / `releaseIri(r, path, "agent" | "human")`
+  in `schemas/release-iri.ts` — `gen-bootstrap-schemas` mints every `$id` this way;
+- in a README template, the `release` variable ([`liquid-templates`](liquid-templates.md));
+- on the site, `site.data.harness.releases.<instance>` (`version`, `major`,
+  `agent`, `human`), written by `sync-docs-harness`.
+
+**The copies that cannot ask are synced, and the sync is a gate.** An `xmlns`
+attribute, a code-list value and a fixture string are literal by nature.
+`bun run iri:sync` rewrites every `<iriBase><semver>/` and `<iriBase>v<N>/` in
+the tree to the declared version; `iri:sync:check` fails CI and the pre-commit
+hook on any that is not. Moving the base itself — a fork, or bootstrap's move
+off `litlfred.github.io/folio-assistant/bootstrap/` (bean `r3gy`, group E) — is
+`bun run iri:sync -- --from <old base>`, once. `beans/` is never rewritten: a
+bean records what was true when it was written.
+
+**A `$schema` tag carries its SCHEMA's semver**, not the instance's:
+`model-registry/1.0.0`. A reader accepts any tag of the same major
+(`tagCompatible`); a tag change that breaks a reader is a new major. An old
+tag is accepted until that schema's next major, and a published schema never
+names it.
+
+**Not yet moved, on purpose:** the exported document's own `@id`
+(`bootstrap.jsonld`). `kg-export` mints it from where the document is actually
+served, and today that is this site; pointing it at a base that serves nothing
+is the failure `40fl` / #718 recorded. It moves when the bootstrap repository
+publishes.
+
 ## What a consumer may assume of a draft
 
 - **That the id is stable.** It is the one thing that does not move.

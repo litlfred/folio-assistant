@@ -3,7 +3,7 @@
 
 Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop.
 
-Part of [C@T Harness](../README.md), declared as `folio`, holding `folio`.
+Part of [C@T Harness](../README.md) 0.1.0, declared as `folio`, holding `folio`.
 
 | file | what it is | used by |
 |---|---|---|

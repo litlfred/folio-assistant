@@ -8,8 +8,9 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
 import { findDeclarationFile, instanceRootsIn } from "./cat-harness.ts";
-import { CLASS_GLOSSES } from "./vocabulary.ts";
-import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "./graph.ts";
+import { CLASS_GLOSSES, termLayer } from "./vocabulary.ts";
+import { BASE_GRAPH_KINDS } from "./graph-kind-registry.ts";
+import { BOOTSTRAP_GRAPH_KINDS, BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "./graph.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
 const BOOTSTRAP = join(REPO_ROOT, "bootstrap");
@@ -144,15 +145,15 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
    * What is allowed, and why. Anything else that matches LEAKS fails.
    * - The publication address and the source repository: bootstrap's own
    *   location, not a reference to another Harness.
-   * - The `folio-*` schema identifiers: structural names shared with the
-   *   platform, renamed in a later stage of bean 12s9. The `folio:` diagram
-   *   prefix is GONE from bootstrap (stage 2): its diagrams write
-   *   `bootstrap.processes:`, so it is no longer allowed here.
+   *
+   * The `folio-*` schema identifiers are no longer allowed: bootstrap's own
+   * files carry `model-registry/1.0.0` and `glossary-ledger/1.0.0`, each resolving
+   * to a schema inside bootstrap (bean r3gy, D2). The `folio:` diagram prefix
+   * went earlier (bean 12s9, stage 2).
    */
   const ALLOW = [
     /https:\/\/litlfred\.github\.io\/folio-assistant\//g,
     /https:\/\/github\.com\/litlfred\/folio-assistant\//g,
-    /"folio-[a-z-]+\/v1"/g,
   ];
   /** Structural, awaiting the owner's ruling (bean iwtn). Each entry is `file: the leaking text`. */
   const PENDING: string[] = [];
@@ -185,5 +186,66 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
       }
     }
     expect(found.sort()).toEqual([...PENDING].sort());
+  });
+});
+
+describe("bootstrap's graph kinds are its own (bean r3gy, D1)", () => {
+  const decl = JSON.parse(readFileSync(join(BOOTSTRAP, "bootstrap.json"), "utf-8")) as {
+    directories: { id: string; graphKinds: string[] }[];
+  };
+  const own = Object.keys(BOOTSTRAP_GRAPH_KINDS);
+
+  test("every kind bootstrap's declaration uses is defined in bootstrap", () => {
+    const used = new Set(decl.directories.flatMap((d) => d.graphKinds));
+    expect([...used].filter((k) => !own.includes(k))).toEqual([]);
+  });
+
+  test("every kind bootstrap defines, it uses — no definition for a kind it does not hold", () => {
+    const used = new Set(decl.directories.flatMap((d) => d.graphKinds));
+    expect(own.filter((k) => !used.has(k))).toEqual([]);
+  });
+
+  test("the harness's registry reads bootstrap's sentence, and mints the type in bootstrap's layer", () => {
+    for (const k of own) {
+      const def = BASE_GRAPH_KINDS[k as keyof typeof BASE_GRAPH_KINDS];
+      expect(def, k).toBeDefined();
+      expect(def.summary).toBe(BOOTSTRAP_GRAPH_KINDS[k as keyof typeof BOOTSTRAP_GRAPH_KINDS]);
+      const local = def.type.split("#").pop()!;
+      expect(termLayer(local), `${k} → ${local}`).toBe("bootstrap");
+    }
+  });
+});
+
+describe("every $schema a bootstrap file carries resolves inside bootstrap (bean r3gy, D2)", () => {
+  const schemasDir = join(BOOTSTRAP, "schemas");
+  /** The tags bootstrap's own schemas fix: `properties.$schema.const`. */
+  const owned = new Set<string>();
+  for (const f of readdirSync(schemasDir).filter((f) => f.endsWith(".schema.json"))) {
+    const doc = JSON.parse(readFileSync(join(schemasDir, f), "utf-8")) as {
+      properties?: { $schema?: { const?: string } };
+    };
+    const tag = doc.properties?.$schema?.const;
+    if (tag) owned.add(tag);
+  }
+
+  test("each tag names a schema in bootstrap/schemas/", () => {
+    const unresolved: string[] = [];
+    const walk = (d: string) => {
+      for (const f of readdirSync(d)) {
+        const p = join(d, f);
+        if (statSync(p).isDirectory()) walk(p);
+        else if (f.endsWith(".json") && !f.endsWith(".schema.json")) {
+          const tag = (JSON.parse(readFileSync(p, "utf-8")) as { $schema?: unknown }).$schema;
+          if (typeof tag === "string" && !owned.has(tag)) unresolved.push(`${p.slice(BOOTSTRAP.length + 1)}: ${tag}`);
+        }
+      }
+    };
+    walk(BOOTSTRAP);
+    expect(unresolved).toEqual([]);
+  });
+
+  test("the two tags that used to name the platform are bootstrap's own", () => {
+    expect(owned.has("model-registry/1.0.0")).toBe(true);
+    expect(owned.has("glossary-ledger/1.0.0")).toBe(true);
   });
 });

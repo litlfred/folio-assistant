@@ -3,7 +3,7 @@
 
 The incoming queue of the document-ingestion pipeline for THIS checkout — raw files as dropped, before ingestion. Distinct from `cat-harness/uploads/`, which is the harness layer's own queue: the two are different instances' directories that happen to share an id, not one directory declared twice. NOT L1 and NOT greppable as corpus; a source sitting here reads as absent to every consumer while the file is on disk.
 
-Part of [Folio Assistant](../README.md), declared as `uploads`, holding `uploads`.
+Part of [Folio Assistant](../README.md) 0.1.0, declared as `uploads`, holding `uploads`.
 
 | file | what it is | used by |
 |---|---|---|

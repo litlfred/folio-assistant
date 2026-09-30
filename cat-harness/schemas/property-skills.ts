@@ -34,6 +34,9 @@ export const PROPERTY_SKILLS = {
   stub: { skills: ["directory-conventions"] },
   canonicalUrl: { skills: ["directory-conventions"] },
   previewUrl: { skills: ["directory-conventions"] },
+  // Where identifiers are minted, before the version — and the rule for which
+  // audience gets the full version and which the major (instance-publication).
+  iriBase: { skills: ["instance-publication"] },
   // TWO facets, two skills: `publication.host` is what kind of thing serves
   // the rendering (document-publishing); `publication.state` is how far along
   // it is, and why "published" does not parse (instance-publication).
