@@ -205,6 +205,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { kgDirectories } from "./known-skills.js";
+import { packageDirsIn } from "./skill-topics.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
 
 /**
@@ -268,9 +269,8 @@ const STRIPPABLE = ["roles", "package"] as const;
 export function skillPackages(instance: string = INSTANCE_ROOT): SkillPackage[] {
   const out: SkillPackage[] = [];
   for (const graph of kgDirectories(instance)) {
-    for (const d of readdirSync(graph.absPath, { withFileTypes: true })) {
-      if (!d.isDirectory()) continue;
-      const dir = join(graph.absPath, d.name);
+    for (const d of packageDirsIn(graph.absPath)) {
+      const dir = d.dir;
       const manifest = join(dir, "package-manifest.json");
       if (!existsSync(manifest)) continue;
       const parsed = JSON.parse(readFileSync(manifest, "utf-8")) as { skills?: string[] };
