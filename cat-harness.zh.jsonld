@@ -293,24 +293,24 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T06:57:41.059Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/99371e8896482dce2cfac2256a16cd1569e66274",
-  "sourceCommitSha": "99371e8896482dce2cfac2256a16cd1569e66274",
-  "sourceCommitAt": "2026-09-30T08:54:30+02:00",
+  "generatedAt": "2026-09-30T08:19:32.804Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0deb2dadab591098ee577c85bc20ae34c5e74fa1",
+  "sourceCommitSha": "0deb2dadab591098ee577c85bc20ae34c5e74fa1",
+  "sourceCommitAt": "2026-09-30T10:15:34+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 282,
+    "Skill": 283,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 22,
     "Decision": 9,
     "Process": 72,
-    "SequenceFlow": 939,
+    "SequenceFlow": 940,
     "Role": 149,
-    "ProcessNode": 887,
-    "Tool": 105,
+    "ProcessNode": 888,
+    "Tool": 107,
     "Schema": 123,
     "ExternalSchema": 17,
     "GraphKind": 35,
@@ -1356,7 +1356,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/goal-review.md",
-      "instructionLines": 345,
+      "instructionLines": 399,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1691,6 +1691,22 @@
       ],
       "instructionsPath": "skills/folio-core/glossary-terms.md",
       "instructionLines": 236,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "upload-routes",
+      "title": "Two mechanisms and a persona",
+      "description": "How a file actually REACHES `uploads/` — the two mechanisms that write bytes into a declared queue, the persona that performs one of them on somebody's behalf, and what each writer owes that the route does not do for them. The step before intake and after acquisition.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
+      ],
+      "instructionsPath": "skills/folio-core/upload-routes.md",
+      "instructionLines": 193,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6267,6 +6283,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/untainted-verification",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/untrusted-input",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/unverified-constraints",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uploads-watch",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upstream-version-adoption",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/uses-editorial-review",
@@ -21740,8 +21757,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/StartEvent_Dropped"
       ],
-      "nodeCount": 14,
-      "flowCount": 15,
+      "nodeCount": 15,
+      "flowCount": 16,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -21779,6 +21796,14 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/StartEvent_Dropped",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_Place",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i1a",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_Place",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_Detect",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
@@ -21875,7 +21900,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/StartEvent_Dropped",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "A file lands in uploads/",
+      "name": "A contributor has a file for the folio",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
@@ -21886,6 +21911,28 @@
       "incoming": [],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_Place",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Place it in uploads/ by a declared route",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/Contributor%20(human%20or%20agent)",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i1a"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/processes"
     },
@@ -21903,7 +21950,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i1"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i1a"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i2"
@@ -34348,7 +34395,8 @@
         "network": false
       },
       "satisfies": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes"
       ]
     },
     {
@@ -34669,6 +34717,49 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/asset-extraction"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/upload-url",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "upload-url",
+      "title": "Where to drop a file — the queue's upload URL",
+      "description": "Compose the forge URL a person can drop a file at, from the instance's own declaration: the `uploads` graph's directory, resolved against the ROOT its scope names, expressed relative to the repository, and appended to the origin remote as GitHub's `/upload/<branch>/<path>`. Every failure is NAMED and no URL is guessed — no declaration, no declared `uploads` graph, a declared queue absent from disk, no `origin` remote, and a non-github.com remote each return a reason and a remedy instead. It exists because the obvious composition mints a live 404: the declared path `uploads/` is relative to the INSTANCE and a forge URL needs it relative to the REPOSITORY, so pasting the declared path drops the `cat-harness/` segment. Owner, 2026-09-20, on the hand-written form: \"were it to exist, but it doesmt on main!!!!!\"",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/upload-url.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "branch",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Branch",
+            "description": "The branch the upload form targets. Defaults to `main`, which is what a forge's web upload form targets when nobody says otherwise — pass the working branch to send somebody at a pull request's head instead, which is the difference between a commit CI judges and one it never sees.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "url",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "description": "The upload URL on stdout, exit 0 — or, on stderr and exit 1, the reason it could not be composed and the remedy for that reason. Never a guessed URL: a URL is believed, and somebody sent to a wrong one cannot tell it from an empty directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-acquisition"
       ]
     },
     {
@@ -36186,6 +36277,48 @@
             "name": "pages",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
             "description": "The generated instruction directory. Never hand-edited."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/docs-generation"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/upload-step-docs",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "upload-step-docs",
+      "title": "The upload step, from its Tools",
+      "description": "Render document ingestion's FIRST step as a reference page, generated from the Tool nodes that implement it: the step, its lane and role, its skill and every Tool whose `satisfies` names that skill, with each Tool's description, installation, invocation, typed ports and selection triple. Everything but the process file's own path is derived — the start event, the activity its single outgoing flow reaches, and that activity's skill — so a step inserted, renamed or re-pointed moves the page rather than staling a literal. Refuses rather than emitting a partial page when the start event flows nowhere or to more than one place, when the first step is not an activity, when it names no skill or several, or when NO Tool satisfies that skill — the last because an empty page reads as a documented absence of mechanism, which is a finding rather than a document.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run cat-harness/scripts/gen-upload-step-docs.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare against the committed page and fail if stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "page",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`docs/reference/upload-step/index.md`, under the instance's declared site directory. Never hand-edited."
           }
         ]
       },

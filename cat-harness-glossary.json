@@ -62,6 +62,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ContentAcquisition/Lane_Person",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_CopyOutMaterialized/Lane_Reader",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_0",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_GettingStarted/Lane_User",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MaterializeRemote/Lane_0",
@@ -98,6 +99,15 @@
       "label": "Reader (any actor)",
       "scopeNote": "ANY reader, and that is a ruling rather than an oversight — the owner, 2026-09-22, chose it over restricting the copy-out to an editor. Refusing a copy would not protect the original, because the original is protected by being read-only; a permission here would only stop people working. So this lane has no entry condition, and the one decision in it is about the TARGET rather than about the actor.",
       "source": "cat-harness/processes/copy-out-materialized.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Ingestion/Lane_0",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion",
+      "label": "Contributor (human or agent)",
+      "scopeNote": "Whoever puts the file in the queue. UNDOCUMENTED UNTIL 2026-09-30, and legitimately so until then: the lane held nothing but a start event, and a lane with no activity has no performer to describe. Task_Place gave it one.\n\n\"HUMAN OR AGENT\" IS A MEASUREMENT, NOT A HEDGE. Over this repository's own history both have stood here: files have reached a queue in commits authored by `Carl Leitner` (including 16 made through the forge's web form, committer `GitHub`) and in commits authored by `Claude`. That is why Task_Place is a plain `bpmn:task` rather than a `userTask` — asserting a human performs it would contradict the lane's own role graph, which is what `activity-fulfilment-kind` exists to catch.\n\nWHAT THE LANE IS ACCOUNTABLE FOR, and where it ends. Choosing a route, writing the bytes into the DECLARED queue of the instance that will own them, and discharging afterwards whatever that route could not — the web form has no working tree, so no pre-commit hook and no generator runs on it. The lane does NOT ingest and does not clean the queue: it hands over, and Lane_1 takes it from there. `upload-routes` carries the routes and their obligations.",
+      "source": "cat-harness/processes/document-ingestion.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 176,
+      "count": 177,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -948,6 +948,15 @@
       "graphNode": "schema",
       "summary": "Lean proof-refactoring strategy database.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/reference-direction-declaration.test.ts",
+      "instance": "cat-harness",
+      "name": "reference-direction-declaration.test",
+      "graphNode": "none",
+      "reason": "a test",
+      "summary": "What a file has to SAY to be read as generator output — bean `ws99`.",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/reference-direction.ts",
