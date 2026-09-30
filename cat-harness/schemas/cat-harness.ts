@@ -568,6 +568,45 @@ export const InstanceLocationSchema = z
   })
   .strict();
 
+/**
+ * One content adapter an instance ships, as its own declaration states it.
+ *
+ * `module` is relative to the DECLARING instance's root, and `className` is the
+ * export to construct. `extends` names the `contentType` this one specialises —
+ * `paper` extends `document` — and is what orders the fallback: a
+ * specialisation is a superset, so falling back TO it loses nothing, while
+ * falling back FROM it loses its tools. That order used to be the position of
+ * a row in a table in `src/builtin-adapters.ts`; it is a fact about the
+ * adapters, so it is declared beside them.
+ */
+export interface ContentAdapterDeclaration {
+  /** The `contentType` a folio's config names to get this adapter. */
+  contentType: string;
+  /** Instance-relative module path. */
+  module: string;
+  /** The exported class. */
+  className: string;
+  /** The `contentType` this adapter specialises, if any. */
+  extends?: string;
+}
+
+/**
+ * Zod form of {@link ContentAdapterDeclaration}. Exported on its own so the
+ * composition root can read this one field without parsing — and so without
+ * throwing on — every other field of every declaration in the checkout.
+ */
+export const ContentAdapterDeclarationSchema = z
+  .object({
+    contentType: z.string().min(1),
+    module: z
+      .string()
+      .min(1)
+      .refine((m) => !m.startsWith("/") && !m.split("/").includes(".."), "instance-relative, never absolute or escaping"),
+    className: z.string().min(1),
+    extends: z.string().min(1).optional(),
+  })
+  .strict();
+
 export interface CatHarnessDeclaration extends KgNodeLabels {
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
@@ -731,6 +770,11 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * than computed, and why it is optional.
    */
   needs?: string[];
+  /**
+   * The content adapters this instance SHIPS, which the harness's composition
+   * root discovers rather than names. See {@link ContentAdapterDeclaration}.
+   */
+  contentAdapters?: ContentAdapterDeclaration[];
   /**
    * The Liquid prefix this instance's VALUES are addressed by in authored
    * text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the
@@ -2509,6 +2553,17 @@ export const CatHarnessDeclarationSchema = z.object({
    * in this schema, and a path would break the moment a directory moved.
    */
   needs: z.array(z.string().min(1)).optional(),
+  /**
+   * The content adapters this instance ships — see {@link ContentAdapterDeclaration}.
+   *
+   * Declared by the instance that OWNS the adapter, so the harness below it
+   * finds them by reading declarations instead of naming a directory above
+   * itself. `src/builtin-adapters.ts` held a `../<instance>/adapters/…` path
+   * for each until 2026-09-30 — a variable import no static gate could see,
+   * and the edge that kept this instance from lifting out on its own
+   * (`check:import-direction`, bean `p11x`).
+   */
+  contentAdapters: z.array(ContentAdapterDeclarationSchema).optional(),
   /** See {@link CatHarnessDeclaration.liquid}. */
   liquid: z
     .object({

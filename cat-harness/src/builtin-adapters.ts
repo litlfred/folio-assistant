@@ -1,6 +1,6 @@
 /**
- * Which content adapter a declared content type gets — as data, resolved at
- * startup.
+ * Which content adapter a declared content type gets — discovered from the
+ * instances that ship one, resolved at startup.
  *
  * ## Why this is not a `switch`
  *
@@ -18,17 +18,25 @@
  * that import does not resolve in a core-only checkout, and the module fails
  * to load before any of its own error handling runs.
  *
- * The file already had the right mechanism for the OTHER case: a folio
- * declaring `adapterModule` gets a variable dynamic import with a fallback.
- * The built-ins are the same problem and get the same treatment; this file is
- * the declaration the resolver reads.
+ * ## Why it is not a TABLE either, since 2026-09-30
  *
- * ## It lives in `src/`, deliberately
+ * The switch became a table here of `../folio-assistant-sci/adapters/paper/index.ts`
+ * and `../folio-assistant-core/adapters/document/index.ts`, loaded by variable
+ * path. That fixed the load failure and kept the edge: the harness still named
+ * two instances built on top of it, so it could not be lifted into its own
+ * repository, and — being a variable import — no static gate could see it.
+ * The table's own comment said so.
  *
- * Knowing which adapters this instance ships is the harness's business — it is
- * the composition root's own inventory. Putting the table in `schemas/` would
- * make the harness import core to learn what it itself installed, which is the
- * edge this exists to remove rather than relocate.
+ * So the dependency is inverted. Each instance that ships an adapter declares
+ * it in its own `<instance>.json` under `contentAdapters`
+ * ({@link ContentAdapterDeclaration}), and this file reads the declarations of
+ * the instances in the checkout. It names none of them. `check:import-direction`
+ * is the gate that now sees the shape it replaced (bean `p11x`).
+ *
+ * **Where it looks is unchanged**: the checkout directory `cat-harness/` sits
+ * in, one level deep — exactly where the `../<instance>/` paths resolved. The
+ * `module` each entry carries is still relative to `cat-harness/`, so
+ * `init-folio.ts`, which writes it into a new folio's config, needs no change.
  *
  * ## An absent adapter is reported, and the fallback is honest
  *
@@ -38,56 +46,128 @@
  * other way would silently drop `lean_build` from a folio whose config omits
  * `contentType`.
  *
- * That reasoning survives, but it is no longer an assumption. When `paper` is
- * declared and its module is not installed, falling back to `document`
- * silently would hand a paper folio an adapter with no `lean_build` — the
- * exact failure the default was chosen to avoid, arriving as a missing tool
- * instead of a missing package. So the fallback is taken, and SAID.
+ * That order is now DERIVED rather than positional: an adapter that `extends`
+ * another sorts ahead of it, because the specialisation is the superset. And
+ * when the requested type is not installed, falling back silently would hand
+ * a paper folio an adapter with no `lean_build` — so the fallback is taken, and
+ * SAID, naming what is not registered.
  *
  * @module src/builtin-adapters
  */
 
-import { existsSync } from "node:fs";
-import { resolve } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
+
+import {
+  ContentAdapterDeclarationSchema,
+  findDeclarationFile,
+  instanceRootsIn,
+  repoRootFor,
+  type ContentAdapterDeclaration,
+} from "../schemas/cat-harness.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
 export interface BuiltinAdapterDeclaration {
   /** The `contentType` this answers, as declared in `harness.config.json`. */
   contentType: string;
-  /** Repo-relative module. Resolved by VARIABLE path — this file imports none. */
+  /**
+   * Module path relative to `cat-harness/` — composed from the declaring
+   * instance's root and its instance-relative `module`. Resolved by VARIABLE
+   * path; this file imports none.
+   */
   module: string;
   /** The exported class. */
   className: string;
-  /** For the boot log when the module is not installed. */
-  layer: "core" | "sci";
+  /** The instance whose declaration this came from — for the boot log. */
+  instance: string;
+  /** The `contentType` this one specialises, if declared. */
+  extends?: string;
+}
+
+/** Two instances declaring one `contentType`. Not resolved by order — see `schemas/contributions.ts`. */
+export class AdapterDeclarationCollisionError extends Error {}
+
+/** How many `extends` hops lie beneath this entry — deeper sorts first. */
+function depth(d: BuiltinAdapterDeclaration, byType: ReadonlyMap<string, BuiltinAdapterDeclaration>): number {
+  let n = 0;
+  const seen = new Set<string>([d.contentType]);
+  for (let cur = d.extends; cur !== undefined && byType.has(cur) && !seen.has(cur); cur = byType.get(cur)!.extends) {
+    seen.add(cur);
+    n++;
+  }
+  return n;
 }
 
 /**
- * Ordered by preference for the fallback: the first INSTALLED entry is what an
- * unresolvable content type falls back to. `paper` leads because it is the
- * superset — it registers the document tools as well — so falling back to it
- * loses nothing, while falling back from it loses Lean and TeX.
+ * Every content adapter declared by an instance in `checkoutRoot`, in fallback
+ * preference order: most specialised first, then declaration order.
+ *
+ * A declaration that cannot be read contributes nothing and is RECORDED in
+ * `problems` — "could not read" is not "declares none", and a boot that falls
+ * back must be able to say which it was.
  */
-export const BUILTIN_ADAPTERS: BuiltinAdapterDeclaration[] = [
-  // `../folio-assistant-sci/…` because `ROOT` is `cat-harness/` and the paper
-  // adapter moved OUT of it on 2026-09-30 (bean `y5si`). The `layer: "sci"`
-  // beside it is unchanged — this table has declared that since it was
-  // written, and the move is the directory catching up with the declaration
-  // rather than a reclassification.
-  //
-  // The specifier is a VARIABLE path, so this is the one edge no static-import
-  // gate here can see — not `check:partition`, not
-  // `check:reference-direction`. Saying so is the point: a reader must not
-  // take a green import gate as evidence about this line.
-  {
-    contentType: "paper",
-    module: "../folio-assistant-sci/adapters/paper/index.ts",
-    className: "PaperContentAdapter",
-    layer: "sci",
-  },
-  { contentType: "document", module: "../folio-assistant-core/adapters/document/index.ts", className: "DocumentContentAdapter", layer: "core" },
-];
+export function discoverBuiltinAdapters(
+  checkoutRoot: string = repoRootFor(ROOT),
+  harnessRoot: string = ROOT,
+): { adapters: BuiltinAdapterDeclaration[]; problems: string[] } {
+  const found: BuiltinAdapterDeclaration[] = [];
+  const problems: string[] = [];
+  for (const root of instanceRootsIn(checkoutRoot)) {
+    const file = findDeclarationFile(root);
+    if (file === undefined) continue;
+    let raw: { name?: unknown; contentAdapters?: unknown };
+    try {
+      raw = JSON.parse(readFileSync(join(root, file), "utf-8"));
+    } catch (e) {
+      problems.push(`${relative(checkoutRoot, join(root, file))}: could not be read (${e instanceof Error ? e.message : String(e)})`);
+      continue;
+    }
+    if (raw.contentAdapters === undefined) continue;
+    const name = typeof raw.name === "string" ? raw.name : relative(checkoutRoot, root);
+    const parsed = ContentAdapterDeclarationSchema.array().safeParse(raw.contentAdapters);
+    if (!parsed.success) {
+      problems.push(`${name}: \`contentAdapters\` is malformed (${parsed.error.issues.map((i) => i.message).join("; ")})`);
+      continue;
+    }
+    for (const a of parsed.data as ContentAdapterDeclaration[]) {
+      found.push({
+        contentType: a.contentType,
+        module: relative(harnessRoot, join(root, a.module)).split("\\").join("/"),
+        className: a.className,
+        instance: name,
+        ...(a.extends !== undefined ? { extends: a.extends } : {}),
+      });
+    }
+  }
+
+  const byType = new Map<string, BuiltinAdapterDeclaration>();
+  for (const d of found) {
+    const prior = byType.get(d.contentType);
+    if (prior) {
+      throw new AdapterDeclarationCollisionError(
+        `contentType "${d.contentType}" is declared by both "${prior.instance}" and "${d.instance}". ` +
+          `Adapters do not resolve by load order — one of the two declarations has to go.`,
+      );
+    }
+    byType.set(d.contentType, d);
+  }
+
+  const order = new Map(found.map((d, i) => [d, i]));
+  const adapters = [...found].sort((a, b) => depth(b, byType) - depth(a, byType) || order.get(a)! - order.get(b)!);
+  return { adapters, problems };
+}
+
+const DISCOVERED = discoverBuiltinAdapters();
+
+/**
+ * Ordered by preference for the fallback: the first INSTALLED entry is what an
+ * unresolvable content type falls back to. A specialisation leads its base
+ * because it is the superset — `paper` registers the document tools as well —
+ * so falling back to it loses nothing, while falling back from it loses Lean
+ * and TeX.
+ */
+export const BUILTIN_ADAPTERS: BuiltinAdapterDeclaration[] = DISCOVERED.adapters;
 
 export interface AdapterResolution {
   /** The constructor, ready to `new`. */
@@ -109,18 +189,22 @@ export interface AdapterResolution {
  * process genuinely cannot serve content, and starting anyway would present an
  * empty server as a working one.
  */
-export async function resolveBuiltinAdapter(contentType: string): Promise<AdapterResolution> {
-  const asked = BUILTIN_ADAPTERS.find((a) => a.contentType === contentType);
+export async function resolveBuiltinAdapter(
+  contentType: string,
+  adapters: readonly BuiltinAdapterDeclaration[] = BUILTIN_ADAPTERS,
+  problems: readonly string[] = DISCOVERED.problems,
+): Promise<AdapterResolution> {
+  const asked = adapters.find((a) => a.contentType === contentType);
   const tried: string[] = [];
 
   const load = async (d: BuiltinAdapterDeclaration): Promise<(new (...args: never[]) => unknown) | undefined> => {
     const abs = resolve(ROOT, d.module);
     if (!existsSync(abs)) {
-      tried.push(`${d.contentType}: ${d.module} is not installed (${d.layer} layer)`);
+      tried.push(`${d.contentType}: ${d.module} is not installed (declared by ${d.instance})`);
       return undefined;
     }
     try {
-      // VARIABLE specifier — the module comes from the declaration above.
+      // VARIABLE specifier — the module comes from the instance's declaration.
       const mod = (await import(abs)) as Record<string, unknown>;
       const ctor = mod[d.className];
       if (typeof ctor !== "function") {
@@ -139,7 +223,7 @@ export async function resolveBuiltinAdapter(contentType: string): Promise<Adapte
     if (ctor) return { ctor, used: asked };
   }
 
-  for (const d of BUILTIN_ADAPTERS) {
+  for (const d of adapters) {
     if (asked && d.contentType === asked.contentType) continue;
     const ctor = await load(d);
     if (ctor) {
@@ -149,13 +233,16 @@ export async function resolveBuiltinAdapter(contentType: string): Promise<Adapte
         fallbackReason: asked
           ? `contentType "${contentType}" declares the ${asked.contentType} adapter, which is unavailable ` +
             `(${tried[0]}); using ${d.contentType} instead — tools specific to ${asked.contentType} are NOT registered`
-          : `contentType "${contentType}" matches no built-in adapter; using ${d.contentType}`,
+          : `contentType "${contentType}" matches no built-in adapter declared by an installed instance; ` +
+            `using ${d.contentType} instead — tools specific to ${contentType} are NOT registered` +
+            (problems.length > 0 ? ` (and ${problems.length} declaration(s) could not be read: ${problems.join("; ")})` : ""),
       };
     }
   }
 
   throw new Error(
-    `no built-in content adapter is installed. Tried:\n  ${tried.join("\n  ")}\n` +
+    `no built-in content adapter is installed. Tried:\n  ${tried.join("\n  ") || "(no instance in the checkout declares `contentAdapters`)"}\n` +
+      (problems.length > 0 ? `Could not read:\n  ${problems.join("\n  ")}\n` : "") +
       `A server with no adapter can serve no content, so it does not start.`,
   );
 }
