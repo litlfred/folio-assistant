@@ -216,6 +216,21 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "core"
+    },
+    {
+      "@id": "folio-assistant-core:VoiceVendorsGraph",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "VoiceVendorsGraph",
+      "comment": "Vendor voice profiles — a base voice specialised for one agent vendor, `folio-voice/v1` with `extends` naming the base. A sub-graph of `voices`, declared from within by `voices.json`, each vendor declared by `vendors.json`.",
+      "prefLabel": "VoiceVendorsGraph",
+      "definition": "Vendor voice profiles — a base voice specialised for one agent vendor, `folio-voice/v1` with `extends` naming the base. A sub-graph of `voices`, declared from within by `voices.json`, each vendor declared by `vendors.json`.",
+      "notation": "folio-assistant-core:VoiceVendorsGraph",
+      "inScheme": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "core"
     }
   ]
 }
