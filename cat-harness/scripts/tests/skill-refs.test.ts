@@ -51,6 +51,14 @@ describe("the corpus: every skill reference resolves to one skill", () => {
     roles: { id: string; skills?: string[] }[];
   }).roles;
   for (const r of roles) for (const s of r.skills ?? []) refs.push({ where: `role ${r.id}`, ref: s });
+  // A skill's `inherits:` names the skill it shares mechanics with (#1168 B10d,
+  // owner 2026-09-30: "Typed SkillRef"). It was `local/integration-watcher`,
+  // which named no package, in six of seven files.
+  for (const rel of new Glob("skills/**/*.md").scanSync({ cwd: ROOT })) {
+    const fm = /^---\n([\s\S]*?)\n---/.exec(readFileSync(join(ROOT, rel), "utf-8"))?.[1] ?? "";
+    const m = /^inherits:\s*(\S+)\s*$/m.exec(fm);
+    if (m) refs.push({ where: `${rel} inherits`, ref: m[1]! });
+  }
   for (const rel of new Glob("**/summaries.json").scanSync({ cwd: join(ROOT, "library") })) {
     const text = readFileSync(join(ROOT, "library", rel), "utf-8");
     for (const m of text.matchAll(/"skill":\s*"([^"]+)"/g)) refs.push({ where: `library/${rel}`, ref: m[1]! });
@@ -65,6 +73,10 @@ describe("the corpus: every skill reference resolves to one skill", () => {
   test("no bare name is held by two packages", () => {
     const shared = [...index].filter(([, pkgs]) => pkgs.length > 1).map(([n, pkgs]) => `${n}: ${pkgs.join(", ")}`);
     expect(shared).toEqual([]);
+  });
+
+  test("skill inherits: is counted, so its resolution below is not vacuous", () => {
+    expect(refs.filter((r) => r.where.endsWith(" inherits")).length).toBeGreaterThanOrEqual(7);
   });
 
   test("every reference resolves", () => {

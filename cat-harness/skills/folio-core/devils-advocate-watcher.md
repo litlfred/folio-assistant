@@ -1,7 +1,7 @@
 ---
 name: devils-advocate-watcher
 user_invocable: true
-inherits: integration-watcher
+inherits: folio-core/integration-watcher
 watch_arg: devils-advocate
 description: >
   Logical devil's-advocate integration watcher — for every content

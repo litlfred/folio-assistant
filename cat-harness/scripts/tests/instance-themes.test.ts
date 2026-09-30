@@ -16,15 +16,16 @@
  * re-derived it would be free to disagree with the pages, which is `z6xd`'s own
  * defect one layer along, so a test asserts the import.
  *
- * **Kinds are reported and never graded.** who-iris owns a `webpage` and a
- * `publication` theme and no `sticky` one, and the board styles a card only
- * from `sticky` themes. #1584 held that open for the owner, so a green run over
- * a missing `sticky` is CORRECT here and a test pins it: a check that failed
- * would be answering a question its author was told not to.
+ * **Kinds are reported and never graded.** The board styles a card only from
+ * `sticky` themes, and whether an instance authors one is the owner's call
+ * (#1584; answered for who-iris on 2026-09-30, bean `v8n5`). So a green run over
+ * a missing `sticky` is CORRECT and a test pins it, over a fixture instance: a
+ * check that failed would be answering a question its author was told not to.
  */
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
-import { readFileSync, readdirSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { coversIn } from "../audit-coverage.js";
@@ -109,14 +110,32 @@ describe("one answer, not two", () => {
 
 describe("kinds are reported, never graded", () => {
   test("a declaring instance with no `sticky` theme is still green", () => {
-    // who-iris owns `webpage` and `publication` and no `sticky`; the board
-    // styles a card only from sticky themes. #1584 reserved that decision for
-    // the owner, so this MUST pass. If it ever fails, somebody has graded an
-    // authoring call.
-    const { out, status } = run("--check");
-    expect(out).toMatch(/kinds: .*webpage/);
-    expect(out).not.toMatch(/sticky/);
-    expect(status).toBe(0);
+    // Authoring a sticky theme is the owner's call per instance (#1584); this
+    // MUST pass, and if it ever fails somebody has graded an authoring call.
+    // It used who-iris as the example until who-iris authored one (bean
+    // `v8n5`, owner 2026-09-30), so the case is now a FIXTURE instance whose
+    // only theme is a `webpage` — the real corpus no longer holds one.
+    const dir = mkdtempSync(join(tmpdir(), "instance-themes-"));
+    try {
+      mkdirSync(join(dir, ".git"));
+      mkdirSync(join(dir, "acme", "themes"), { recursive: true });
+      writeFileSync(
+        join(dir, "acme", "acme.json"),
+        JSON.stringify({ name: "acme", version: "0.1.0", directories: [{ id: "acme-themes", path: "themes/", graphKinds: ["themes"], dependents: "skip" }] }),
+      );
+      const themeTs = JSON.stringify(join(REPO, "cat-harness", "schemas", "theme.ts"));
+      writeFileSync(
+        join(dir, "acme", "themes", "themes.ts"),
+        `import { ResolvedThemeSchema } from ${themeTs};\nexport const INSTANCE_THEMES = [ResolvedThemeSchema.parse({ $schema: "folio-theme/v1", kind: "webpage", id: "acme-web", name: "Acme", palette: { surface: "#ffffff", ink: "#111111", edge: "#cccccc", accent: "#aa0000" }, layouts: { laptop: { minWidth: "1000px", padding: "1rem", fontScale: 1 }, mobile: { minWidth: "100%", padding: "1rem", fontScale: 1 }, card: { minWidth: "200px", padding: "1rem", fontScale: 1 } } })];\n`,
+      );
+      const r = spawnSync("bun", ["run", join(REPO, SCRIPT), "--check"], { cwd: dir, encoding: "utf-8" });
+      const out = `${r.stdout ?? ""}${r.stderr ?? ""}`;
+      expect(out).toMatch(/kinds: .*webpage/);
+      expect(out).not.toMatch(/sticky/);
+      expect(r.status).toBe(0);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 
   test("the kinds line is printed, so the gap is visible without being fatal", () => {

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w2gr
 title: 'cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-09-30T13:55:08Z
+updated_at: 2026-09-30T16:48:12Z
 parent: folio-assistant-vuip
 ---
 
@@ -37,3 +37,8 @@ The discovery that changes the plan: **`cat-harness/tools/` is not tool code.** 
 ## Owner ruling 2026-09-30: option A
 
 Tool DEFINITIONS (the contracts in cat-harness/tools/mcp.ts etc.) stay in the harness; cat-harness-tools IMPLEMENTS them — the split bootstrap / bootstrap-tools already uses. So cat-harness/tools/ (definitions graph + discover.ts reader) stays whole; what moves is src/tools/* and the MCP server.
+
+## 2026-09-30: the harness no longer imports Tool implementations
+- #1594 moved skill-package discovery to scripts/skill-packages.ts (kg-audit, the workflow engine).
+- The user-invocable skill list moves to scripts/invocable-skills.ts (gen-skill-commands).
+After this, harness code imports cat-harness/tools/ (the definitions graph, which stays) and no src/tools module. Remaining: the MCP server, routes, sessions and src/tools/* move into cat-harness-tools/, plus the tests that exercise them.

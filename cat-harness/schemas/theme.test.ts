@@ -9,6 +9,7 @@
 import { describe, expect, test } from "bun:test";
 
 import {
+  hexHue,
   THEME_LAYOUTS,
   THEME_SCHEMA_TAG,
   ThemeSchema,
@@ -347,5 +348,41 @@ describe("resolution against an instance's images — three outcomes, not two", 
     const t = ResolvedThemeSchema.parse(theme({ backdrop: BACKDROP }));
     const r = resolveThemeBackdrop(t, [{ role: "landing", src: "/assets/img/harness/x.webp" }]);
     expect(r.missing).toEqual([...THEME_LAYOUTS]);
+  });
+});
+
+describe("hexHue — a palette colour as a tile tone (bean v8n5)", () => {
+  test("the primaries and secondaries land on their angles", () => {
+    expect(hexHue("#ff0000")).toBe(0);
+    expect(hexHue("#ffff00")).toBe(60);
+    expect(hexHue("#00ff00")).toBe(120);
+    expect(hexHue("#00ffff")).toBe(180);
+    expect(hexHue("#0000ff")).toBe(240);
+    expect(hexHue("#ff00ff")).toBe(300);
+  });
+
+  test("a hue just below red wraps to the high end rather than going negative", () => {
+    expect(hexHue("#ff0010")).toBe(356);
+  });
+
+  test("short form, case and whitespace", () => {
+    expect(hexHue("#F00")).toBe(0);
+    expect(hexHue(" #00F ")).toBe(240);
+  });
+
+  test("a grey has no hue, and that is not red", () => {
+    expect(hexHue("#ffffff")).toBeUndefined();
+    expect(hexHue("#212121")).toBeUndefined();
+  });
+
+  test("a value that is not a hex colour is not guessed at", () => {
+    expect(hexHue("rgb(0,0,255)")).toBeUndefined();
+    expect(hexHue("#12345")).toBeUndefined();
+    expect(hexHue("blue")).toBeUndefined();
+  });
+
+  test("a mid-range blue computes to the expected angle (#008dc9 → 198°)", () => {
+    // 0/141/201: max is blue, (r-g)/d = -141/201, + 4 → 3.2985 × 60 = 197.9.
+    expect(hexHue("#008dc9")).toBe(198);
   });
 });

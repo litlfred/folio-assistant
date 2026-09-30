@@ -6,8 +6,9 @@ summary: "the schema cannot catch a profile violation"
 createdAt: 2026-09-19
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 `content/pipeline/profile-check.ts` runs on every `content_validate` and
 catches what **Zod structurally cannot**: a `theorem` is a valid `theorem`
