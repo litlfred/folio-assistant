@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/workflow/bpmn-processes.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/bpmn-processes.md) — do not edit here.
+> Generated from [`cat-harness/skills/process/workflow/bpmn-processes.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/bpmn-processes.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/workflow/bpmn-processes.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/process/workflow/bpmn-processes.md){: .fa-edit-source }
 
 {% raw %}
 # Processes are BPMN, and the diagrams are executable
@@ -82,7 +82,7 @@ bean `12s9`). A diagram binds one address per vocabulary it uses:
 
 ```xml
 xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
-xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns#"
 ```
 
 - `bootstrap.processes:` for `skill`, `role` and `precondition`, which bootstrap

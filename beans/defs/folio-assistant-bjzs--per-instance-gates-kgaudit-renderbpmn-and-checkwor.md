@@ -637,7 +637,7 @@ are **FALSE**:
 
 smart-base declares no `skills` and no `scenarios` directory, so its own sets are
 empty — while `Process_DIIG` references `skill ref="methodology-adoption"`,
-which exists at `cat-harness/skills/folio-core/methodology-adoption.md`.
+which exists at `cat-harness/skills/process/process-core/methodology-adoption.md`.
 cat-harness is smart-base's TRANSITIVE DEPENDENCY
 (`smart-base → fhir-harness → folio-assistant-core → cat-harness`), so the
 reference is legitimate and inherited DOWN the `needs` chain.

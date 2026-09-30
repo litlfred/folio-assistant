@@ -33,7 +33,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 A graph needs one at 100 units and 20,000 words — a house threshold, with its
 basis in `scripts/lsi.ts`. Below it a graph is **not judged**, which is not
-the same as fine. The same verdict is `kg:audit`'s `lsi-index-fresh`.
+the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for the `lsi-index` Tool.
 
 | graph | verdict | detail |
 |---|---|---|
@@ -101,7 +101,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**307** units · **7598** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**307** units · **7599** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -109,14 +109,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.95 | bean, instance, session, graph, kind, branch, page, directory | *(none)* |
+| 1 | 46.97 | bean, instance, session, graph, kind, branch, page, directory | *(none)* |
 | 2 | 27.75 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
 | 3 | 22.33 | proof, watcher, lean, slot, blocks, witness, project, chapter | harness, node, instance, bean, page, directory, actor, bias |
-| 4 | 19.53 | dpi, color, grayscale, lean, pdf, matplotlib, images, raster | session, branch, queue, prs, commits, coordination, beans, sibling |
-| 5 | 18.62 | dpi, color, grayscale, contrast, matplotlib, raster, eps, fonts | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
+| 4 | 19.54 | dpi, color, grayscale, lean, pdf, matplotlib, images, raster | session, branch, queue, prs, commits, coordination, beans, sibling |
+| 5 | 18.63 | dpi, color, grayscale, contrast, matplotlib, raster, eps, fonts | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
 | 6 | 16.77 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
-| 7 | 16.24 | lean, mathlib, mcp, sorry, search, proof, page, theorem | watcher, slot, voice, backlog, ledger, queue, objection, nesting |
-| 8 | 15.35 | mathlib, lean, sorry, lake, subdirectory, mcp, oleans, sessions | slot, watcher, criterion, forward, band, major, avatar, backlog |
+| 7 | 16.25 | lean, mathlib, mcp, sorry, search, proof, page, theorem | watcher, slot, voice, backlog, ledger, queue, objection, nesting |
+| 8 | 15.36 | mathlib, lean, sorry, lake, mcp, subdirectory, oleans, sessions | slot, watcher, criterion, forward, band, major, avatar, backlog |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

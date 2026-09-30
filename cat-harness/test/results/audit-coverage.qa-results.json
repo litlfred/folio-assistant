@@ -8,10 +8,10 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-30T18:53:48.285Z",
+  "updated_at": "2026-09-30T19:07:34.150Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 48 of 48 declared kind(s), 191 gate(s), 70 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 48 of 48 declared kind(s), 191 gate(s), 71 criteria.",
       "count": 48,
       "entries": [
         {
@@ -108,7 +108,7 @@
             "actor-roles-resolve",
             "arrow-direction",
             "consulted-skill-not-performed",
-            "lsi-index-fresh",
+            "downstream-tool-declared",
             "manifest-skill-exists",
             "nested-instance-audited",
             "prose-names-resolve",
@@ -868,6 +868,7 @@
           "criteria": [
             "tool-alternative-selectable",
             "tool-args-shell-safe",
+            "tool-downstream-fresh",
             "tool-invoke-path-resolves",
             "tool-io-types-declared",
             "tool-maintains-in-tree",

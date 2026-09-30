@@ -626,7 +626,7 @@ rôles **héritent** les uns des autres (`viewer` → `reviewer` → `author` �
 acteur peut **faire** ne constitue pas une propriété de son rôle : c'est une règle ODRL
 dans `policies/`, et avant chaque tâche, l'exécuteur BPMN vérifie que l'acteur est
 authentifié, éligible au rôle du couloir, autorisé par la politique et habilité à toucher
-au contenu ([`task-authorization`](../../skills/folio-core/task-authorization.md), ticket #1207).
+au contenu ([`task-authorization`](../../skills/process/process-core/task-authorization.md), ticket #1207).
 
 ### Personnes
 {: #people data-fa-label="sec:publication-workflow-people" }
