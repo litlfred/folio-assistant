@@ -105,7 +105,7 @@ gating workflow, so it is the owner's call and not an agent's.
       step — `translation:drift:check` is 55 of 55, `bun test` is 6 of 6 — and
       `check:red-gate-is-last` enforces it, so this is a property of the arrangement
       rather than of today's tree. Section below for the method and the scope.
-- [ ] **OWNER ONLY:** if the merge queue (`nytj`'s last box) goes on, BOTH check names
+- [ ] **MOOT, 2026-09-30 — bean `1hjm`: the queue cannot go on here.** Kept unchecked rather than deleted because it becomes live again if the repository moves under an organization. **OWNER ONLY:** if the merge queue (`nytj`'s last box) goes on, BOTH check names
       must be required — `TypeScript — tests, lint, types (hard)` and `Repository
       gates (hard)` — or 150 gate invocations run and block nothing.
 

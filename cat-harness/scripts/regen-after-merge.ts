@@ -121,6 +121,41 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   "translate-bpmn:check": "translate-bpmn:extract",
   "audit:coverage:strict": "audit:coverage",
   "audit:coverage:require-all": "audit:coverage",
+  // Bean `uju6`: a `check:X` gate is `check:`-PREFIXED, so the convention never
+  // offered it and regen skipped it outright. It did not even count it as
+  // `no-writer`. #1550 went red on this one while regen reported "63 current,
+  // 0 regenerated". `prov-qaqc.ts` without `--check` rewrites the page.
+  "check:prov-qaqc": "prov:qaqc",
+  // Found by MEASURING, not from uju6's list of four (2026-09-30): every
+  // `check:X` whose command is some writer's command plus ` --check`. Main went
+  // red on `check:glossary` at 7bdda74 while regen, not knowing this pair,
+  // could not repair it. `glossary-page.ts` regenerates from its sources.
+  "check:glossary": "glossary:page",
+  // Re-materialises a remote package's skills at its PINNED commit, so it is
+  // deterministic and is exactly the repair for a stale copy.
+  "check:remote-skills": "sync:remote-skills",
+};
+
+/**
+ * `check:`-prefixed gates whose same-named script exists but is NOT a writer —
+ * bean `uju6`, each read before being listed. Pairing them by name would run a
+ * command that repairs nothing and then report `unrepaired`, a verdict about
+ * the tool rather than the tree. So they are recorded here, and not asked.
+ *
+ * - `raci-chart.ts` without `--check` only PRINTS the chart.
+ * - `check-subgraphs.ts` without `--check` only changes the exit code.
+ * - `harness-dirs.ts` materialises declared DIRECTORIES; `check-harness-dirs`
+ *   compares two config files and has nothing to regenerate.
+ */
+export const NO_WRITER: Readonly<Record<string, string>> = {
+  "check:raci": "raci-chart.ts only prints; it writes nothing",
+  "check:subgraphs": "check-subgraphs.ts only reports",
+  "check:harness-dirs": "compares two config files; harness:dirs makes directories, not what it compares",
+  // `viewer:nav:audit` does write, but what it writes is the BASELINE the gate
+  // compares against, and the gate fails only on a REGRESSION. Running it on a
+  // failure would re-baseline, so the regression would vanish and be reported
+  // as a repair. It is the one case where a writer exists and must not be run.
+  "check:viewer-nav": "its writer re-baselines, which would hide the regression the gate exists to report",
 };
 
 export type Outcome = "current" | "regenerated" | "unrepaired" | "no-writer";
@@ -141,6 +176,8 @@ export function repairableGates(gates: readonly Gate[], scripts: Record<string, 
   for (const g of gates) {
     const script = scriptOf(g.command);
     if (script === undefined || (!script.endsWith(":check") && WRITER_OVERRIDES[script] === undefined)) continue;
+    // `check:X` gates have `:check` nowhere at the end, so only a DECLARED
+    // writer brings one in. NO_WRITER records the rest, with reasons.
     if (seen.has(script)) continue;
     seen.add(script);
     out.push({ check: script, writer: writerFor(scripts, script) });
@@ -151,6 +188,82 @@ export function repairableGates(gates: readonly Gate[], scripts: Record<string, 
 function run(root: string, script: string): boolean {
   const r = spawnSync("bun", ["run", script], { cwd: root, encoding: "utf-8" });
   return r.status === 0;
+}
+
+/** Runs one npm script and says whether it exited 0. Injected in tests. */
+export type Runner = (script: string) => boolean;
+
+/**
+ * Ask every pair once: current, or stale and repaired, or not.
+ *
+ * `writerRan` is the set of writers this pass ran. The caller needs it to know
+ * whether another pass could change anything.
+ */
+export function regenPass(
+  pairs: readonly { check: string; writer: string | undefined }[],
+  runner: Runner,
+  dryRun = false,
+): { results: Result[]; writerRan: string[] } {
+  const results: Result[] = [];
+  const writerRan: string[] = [];
+  for (const { check, writer } of pairs) {
+    if (runner(check)) {
+      results.push({ check, writer, outcome: "current" });
+      continue;
+    }
+    if (writer === undefined) {
+      results.push({ check, outcome: "no-writer" });
+      continue;
+    }
+    if (dryRun) {
+      results.push({ check, writer, outcome: "regenerated" });
+      continue;
+    }
+    runner(writer);
+    writerRan.push(writer);
+    // Ask AGAIN. A writer that ran is not a repair that worked, and reporting
+    // it as one would be the false-clean this whole command is about.
+    results.push({ check, writer, outcome: runner(check) ? "regenerated" : "unrepaired" });
+  }
+  return { results, writerRan };
+}
+
+/**
+ * Passes until one runs NO writer, at most `maxPasses` — bean `14ve`.
+ *
+ * One pass asks each check once, in workflow order. When writer B's output is
+ * an INPUT to check A and A comes first, A reads current before B runs, B then
+ * changes A's input, and A is stale when regen exits. Measured on #1530:
+ * "60 current, 2 regenerated, 0 unrepaired", then `audit:coverage:require-all`
+ * failed in CI.
+ *
+ * So a pass that ran any writer is followed by another. Each check's FINAL
+ * outcome is its last pass's, except that `regenerated` in an earlier pass is
+ * kept over a later `current`, because the repair happened. The cap keeps two
+ * writers that undo each other from looping for ever. The last pass still ran a
+ * writer, so its results are reported as they are, not as settled.
+ */
+export function regenToFixpoint(
+  pairs: readonly { check: string; writer: string | undefined }[],
+  runner: Runner,
+  maxPasses = 3,
+): { results: Result[]; passes: number; settled: boolean } {
+  const final = new Map<string, Result>();
+  let passes = 0;
+  let settled = false;
+  while (passes < maxPasses) {
+    passes++;
+    const { results, writerRan } = regenPass(pairs, runner);
+    for (const r of results) {
+      const prev = final.get(r.check);
+      final.set(r.check, prev?.outcome === "regenerated" && r.outcome === "current" ? prev : r);
+    }
+    if (writerRan.length === 0) {
+      settled = true;
+      break;
+    }
+  }
+  return { results: pairs.map((p) => final.get(p.check)!), passes, settled };
 }
 
 if (import.meta.main) {
@@ -166,32 +279,34 @@ if (import.meta.main) {
       `${all ? "whole" : "fast"} gate set (of ${gates.length} gate(s))`,
   );
 
-  const results: Result[] = [];
-  for (const { check, writer } of repairable) {
-    if (run(repoRoot, check)) {
-      results.push({ check, writer, outcome: "current" });
-      continue;
-    }
-    if (writer === undefined) {
-      results.push({ check, outcome: "no-writer" });
-      console.error(`  ✗ ${check} fails and has NO writer counterpart — not staleness`);
-      continue;
-    }
-    if (dryRun) {
-      results.push({ check, writer, outcome: "regenerated" });
-      console.log(`  · ${check} is stale — would run \`bun run ${writer}\``);
-      continue;
-    }
-    run(repoRoot, writer);
-    // Ask AGAIN. A writer that ran is not a repair that worked, and reporting
-    // it as one would be the false-clean this whole command is about.
-    const fixed = run(repoRoot, check);
-    results.push({ check, writer, outcome: fixed ? "regenerated" : "unrepaired" });
+  const runner: Runner = (script) => run(repoRoot, script);
+  let results: Result[];
+  if (dryRun) {
+    results = regenPass(repairable, runner, true).results;
+  } else {
+    const fx = regenToFixpoint(repairable, runner);
+    results = fx.results;
     console.log(
-      fixed
-        ? `  ✓ ${check} was stale — regenerated with \`bun run ${writer}\``
-        : `  ✗ ${check} STILL fails after \`bun run ${writer}\` — a real defect, not staleness`,
+      `  ${fx.passes} pass(es)` +
+        (fx.settled ? "" : " — CAP REACHED: the last pass still ran a writer, so the tree may not be settled"),
     );
+  }
+  for (const r of results) {
+    if (r.outcome === "regenerated") {
+      console.log(
+        dryRun
+          ? `  · ${r.check} is stale — would run \`bun run ${r.writer}\``
+          : `  ✓ ${r.check} was stale — regenerated with \`bun run ${r.writer}\``,
+      );
+    } else if (r.outcome === "unrepaired") {
+      console.log(`  ✗ ${r.check} STILL fails after \`bun run ${r.writer}\` — a real defect, not staleness`);
+    } else if (r.outcome === "no-writer") {
+      console.error(`  ✗ ${r.check} fails and has NO writer counterpart — not staleness`);
+    }
+  }
+  const unasked = gates.map((g) => scriptOf(g.command)).filter((c): c is string => c !== undefined && NO_WRITER[c] !== undefined);
+  if (unasked.length > 0) {
+    console.log(`  (not asked — no writer, by declaration: ${[...new Set(unasked)].join(", ")})`);
   }
 
   const by = (o: Outcome): Result[] => results.filter((r) => r.outcome === o);

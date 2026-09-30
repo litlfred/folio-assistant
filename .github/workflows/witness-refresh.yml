@@ -67,6 +67,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
+          submodules: true
           # We need write access via the default token; fetch full history
           # so the commit-back is a clean fast-forward.
           fetch-depth: 0

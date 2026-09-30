@@ -179,17 +179,42 @@ describe("could-not-determine is never green", () => {
 });
 
 describe("the themes set is iterated, not hardcoded", () => {
-  test("it reports the denominator and issues no verdict at a set size of 1", () => {
+  test("it reports the denominator and NAMES the whole set", () => {
     const { out, status } = run();
     expect(out).toMatch(/declaring a themes graph\s+\d+ of \d+/);
+    // Both, now. This asserted only `who-iris` and the string "issues no
+    // verdict" until 2026-09-30, when `smart-trust` declared a themes graph
+    // and made the set 2 — so the check stopped printing that NOTE and the
+    // test went red on the real corpus. Bean `7h3u`.
+    //
+    // The test was RIGHT to fail. Its name said "at a set size of 1", and the
+    // premise expired; asserting a branch that no longer fires would have been
+    // a test passing over a state the repository has left.
     expect(out).toContain("who-iris");
-    // `v8n5` Done-when #2 generalised: the CHECK iterates the declared set, so
-    // instance #2 is covered the day it declares one. What it must NOT do is
-    // assert which theme may style a surface — PR #1584 held exactly that for
-    // the owner (who-iris owns `webpage` and `publication`, no `sticky`), and a
-    // check answering a question the owner reserved is speculation.
-    expect(out).toContain("issues no verdict");
+    expect(out).toContain("smart-trust");
     expect(status).toBe(0);
+  });
+
+  test("the size-1 NOTE is gone, and its PROMISE is NOT yet kept", () => {
+    // The NOTE said: "At a set size of 1 there is nothing to COMPARE, so this
+    // reports the denominator and issues no verdict. The set is iterated
+    // rather than hardcoded, so instance #2 is COVERED THE DAY IT DECLARES
+    // ONE."
+    //
+    // That day arrived. The NOTE correctly stopped printing — and nothing took
+    // its place: past the `themed.length <= 1` branch the script carries a
+    // comment and no comparison, so `v8n5` Done-when #2 ("a surface must not
+    // fall back to the platform default for an instance that declares its own
+    // theme") is still unimplemented.
+    //
+    // A NOTE disappearing is not coverage arriving. This test pins the gap so
+    // it cannot be mistaken for closed by the absence of the excuse — bean
+    // `1xhc`'s shape. It is deliberately NOT a failing test: implementing the
+    // comparison means deciding which theme may style a surface, and PR #1584
+    // held exactly that for the owner.
+    const { out } = run();
+    expect(out).not.toContain("issues no verdict");
+    expect(out).not.toContain("covered the day it declares one");
   });
 
   test("the themes denominator is read from `graphKinds`, not a guessed key", () => {

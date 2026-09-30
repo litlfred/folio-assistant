@@ -10236,6 +10236,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-image.documentimageschema.same_as",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DocumentImageSchema.same_as"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The SAME PICTURE is already held elsewhere in the repository, and `file` points there instead of at a copy (bean `scfh`, `scripts/image-reuse.py`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#DocumentImageSchema.same_as",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/document-image.geometrybasisschema.coverage",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -17563,7 +17582,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Written by `pdf-pages.py`: the entry was ingested one section per page."
+          "@value": "`page`: written by `pdf-pages.py`, one section per page. `slide`: written by `slides-structure.py`, one section per slide (bean `scfh`)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.granularity",
