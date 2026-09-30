@@ -194,6 +194,10 @@ footer { padding:14px 16px; border-top:1px solid var(--line); color:var(--muted)
 <footer id="foot"></footer>
 <script>
 var SCOPE = "agent-skills";
+// The site root, from where this page reads its data (assets/voices/),
+// so a site-relative library link works under any base — the bare site, the
+// project baseurl, or a staging preview.
+var SITE_ROOT = (function (h) { var i = h.lastIndexOf("assets/"); return i < 0 ? "" : h.slice(0, i); })("../../../assets/voices/index.json");
 var DATA = null;
 var esc = function (s) {
   return String(s === undefined || s === null ? "" : s)
@@ -339,9 +343,14 @@ function renderRule(r) {
     ? '<p class="nocite">This rule cites nothing. The schema requires a source, ' +
       "so something is loading voices without validating them.</p>"
     : "<blockquote>" + esc(r.quote) + '<span class="cite">' +
-      (r.citation === "library" ? "" : "KG node ") + esc(r.cites) +
+      (r.citation === "library" ? "" : "KG node ") +
+      (r.links && r.links.viewer
+        ? '<a href="' + esc(SITE_ROOT + r.links.viewer) + '">' + esc(r.cites) + "</a>"
+        : esc(r.cites)) +
       (r.pages ? ", p" + esc(r.pages) : "") +
       (r.citesInstance ? " \u2014 in " + esc(r.citesInstance) : "") +
+      (r.links && r.links.readme ? ' \u00b7 <a href="' + esc(r.links.readme) + '">item page</a>' : "") +
+      (r.links && r.links.source ? ' \u00b7 <a href="' + esc(r.links.source) + '">source</a>' : "") +
       "</span></blockquote>";
 
   return '<div class="rule"><span class="rtitle">' + esc(r.title) +

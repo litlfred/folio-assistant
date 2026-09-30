@@ -56,7 +56,7 @@
  *   bun run cat-harness/scripts/gen-methodologies-viz.ts --check
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { docsLayers } from "./compose-docs.js";
@@ -66,6 +66,7 @@ import {
   type EvidenceReport,
   type MethodologyNode,
 } from "./check-methodology-evidence.js";
+import { libraryResolver, type LibraryResolver } from "./lib/library-links.ts";
 import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -180,9 +181,14 @@ function baseDocs(repo: string): string {
 const CSS = `
 .mv-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
   font-weight:600;white-space:nowrap;border:1px solid currentColor}
-.mv-ingested{color:#0d6e5e}
-.mv-cited{color:#8a6100}
-.mv-dangling{color:#a8200f}
+/* Bean rtuo: light-page inks measured 2.06-2.71:1 on the default dark page
+   (#27262b). Dark inks by default; the light scheme keeps the originals. */
+.mv-ingested{color:#5cd3bd}  /* 8.23:1 on #27262b */
+.mv-cited{color:#e6bd52}     /* 8.41:1 */
+.mv-dangling{color:#ff9486}  /* 7.03:1 */
+:root[data-fa-scheme="light"] .mv-ingested{color:#0d6e5e}
+:root[data-fa-scheme="light"] .mv-cited{color:#8a6100}
+:root[data-fa-scheme="light"] .mv-dangling{color:#a8200f}
 .mv-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
 .mv-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
 .mv-stat b{display:block;font-size:1.25rem;line-height:1.2}
@@ -230,7 +236,33 @@ export function short(v: string, n = 150): string {
   return cut.trimEnd() + "…";
 }
 
-export function page(rows: readonly MethodologyRow[], report: EvidenceReport): string {
+/**
+ * One ingested-source line. A `library/<slug>` reference links to the owner's
+ * three targets where each resolves (bean `qgjh`, `lib/library-links.ts`); the
+ * viewer link is made relative to `fromPage`, where this page is published.
+ * Anything it cannot place stays code, never a link that 404s.
+ */
+export function evidenceLine(e: string, links?: LibraryResolver, fromPage = ""): string {
+  const m = /^library\/([^/#]+)/.exec(e);
+  const l = m && links ? links.links(m[1]!) : undefined;
+  if (l === undefined) return `- \`${cell(e)}\``;
+  const parts: string[] = [];
+  if (l.viewer !== undefined) {
+    const [path, hash] = l.viewer.split("#");
+    const rel = posix.relative(posix.dirname(fromPage), path!) || ".";
+    parts.push(`[\`${cell(e)}\`](${rel}/#${hash})`);
+  } else parts.push(`\`${cell(e)}\``);
+  if (l.readme !== undefined) parts.push(`[item page](${l.readme})`);
+  if (l.source !== undefined) parts.push(`[source](${l.source})`);
+  return `- ${parts.join(" · ")}`;
+}
+
+export function page(
+  rows: readonly MethodologyRow[],
+  report: EvidenceReport,
+  links?: LibraryResolver,
+  fromPage = "",
+): string {
   const byState = (s: MethodologyRow["state"]): number => rows.filter((r) => r.state === s).length;
   const instances = [...new Set(rows.map((r) => r.instance))].sort();
 
@@ -309,7 +341,7 @@ export function page(rows: readonly MethodologyRow[], report: EvidenceReport): s
           ? "**Cited sources — at least one does not resolve:**"
           : "**Ingested sources:**",
         "",
-        ...r.evidence.map((e) => `- \`${cell(e)}\``),
+        ...r.evidence.map((e) => evidenceLine(e, links, fromPage)),
         "",
       );
     } else {
@@ -384,7 +416,11 @@ if (import.meta.main) {
   }
 
   // The page says which directories it draws (#1168 B7a-2).
-  const rendered = withRendersFrontMatter(page(rows, report), handledDirectories(REPO, INSTANCE_ROOT, KIND), VIEWER_TOOL);
+  const rendered = withRendersFrontMatter(
+    page(rows, report, libraryResolver(REPO, INSTANCE_ROOT), PAGE),
+    handledDirectories(REPO, INSTANCE_ROOT, KIND),
+    VIEWER_TOOL,
+  );
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {

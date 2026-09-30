@@ -8,7 +8,7 @@
     "kind": "corpus",
     "id": "library-source-licences"
   },
-  "updated_at": "2026-09-30T02:15:30.012Z",
+  "updated_at": "2026-09-30T11:16:39.790Z",
   "families": {
     "malformed": {
       "summary": "A licence record that claims something it cannot back. This is the only family that fails the check.",
@@ -130,7 +130,7 @@
     },
     "unknown": {
       "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
-      "count": 3,
+      "count": 4,
       "entries": [
         {
           "entry": "folio-assistant-sci/library/arxiv-2406.01940v2",
@@ -146,9 +146,14 @@
           "entry": "folio-assistant-sci/library/arxiv-2602.16554v1",
           "searched": 2,
           "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/codata-2022",
+          "searched": 2,
+          "note": "CODATA values are published by NIST as Standard Reference Data; whether the SRD Act (15 U.S.C. 290e) or U.S. government-work status governs reuse is NOT established here. Next place to look: NIST's CODATA terms-of-use page, from an environment that can reach physics.nist.gov."
         }
       ]
     }
   },
-  "total": 37
+  "total": 38
 }

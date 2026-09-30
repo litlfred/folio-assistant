@@ -11,9 +11,14 @@ rendered-by: methodologies-viewer
 <style>
 .mv-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
   font-weight:600;white-space:nowrap;border:1px solid currentColor}
-.mv-ingested{color:#0d6e5e}
-.mv-cited{color:#8a6100}
-.mv-dangling{color:#a8200f}
+/* Bean rtuo: light-page inks measured 2.06-2.71:1 on the default dark page
+   (#27262b). Dark inks by default; the light scheme keeps the originals. */
+.mv-ingested{color:#5cd3bd}  /* 8.23:1 on #27262b */
+.mv-cited{color:#e6bd52}     /* 8.41:1 */
+.mv-dangling{color:#ff9486}  /* 7.03:1 */
+:root[data-fa-scheme="light"] .mv-ingested{color:#0d6e5e}
+:root[data-fa-scheme="light"] .mv-cited{color:#8a6100}
+:root[data-fa-scheme="light"] .mv-dangling{color:#a8200f}
 .mv-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
 .mv-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
 .mv-stat b{display:block;font-size:1.25rem;line-height:1.2}
@@ -85,7 +90,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- `library/arxiv-2602.16554v1`
+- [`library/arxiv-2602.16554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2602.16554v1/README.md) · [source](https://arxiv.org/abs/2602.16554v1)
 
 ### Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work
 
@@ -99,7 +104,7 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- `library/arxiv-2601.22554v1`
+- [`library/arxiv-2601.22554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2601.22554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2601.22554v1/README.md) · [source](https://arxiv.org/abs/2601.22554v1)
 
 ### Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score
 
@@ -113,8 +118,8 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- `library/arxiv-2606.04382v1`
-- `library/arxiv-2504.07199v3`
+- [`library/arxiv-2606.04382v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2606.04382v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2606.04382v1/README.md) · [source](https://arxiv.org/abs/2606.04382v1)
+- [`library/arxiv-2504.07199v3`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2504.07199v3) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2504.07199v3/README.md) · [source](https://arxiv.org/abs/2504.07199v3)
 
 ### DIIG — Digital Implementation Investment Guide
 
@@ -156,7 +161,7 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2510.21603v1`
+- [`library/arxiv-2510.21603v1`](../cat-harness/library/folio-assistant-core/#folio-assistant-core%2Farxiv-2510.21603v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/library/arxiv-2510.21603v1/README.md) · [source](https://arxiv.org/abs/2510.21603v1)
 
 ### Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it
 
@@ -170,7 +175,7 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2508.05192v2`
+- [`library/arxiv-2508.05192v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2508.05192v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2508.05192v2/README.md) · [source](https://arxiv.org/abs/2508.05192v2)
 
 ### Kepner-Tregoe Decision Analysis
 
@@ -212,7 +217,7 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2406.01940v2`
+- [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
 
 ### RACI — who is involved in an activity, and in which of four ways
 
@@ -226,7 +231,7 @@ these.
 
 **Ingested sources:**
 
-- `library/dusengumuremyi-2026-ai-mediated-raci`
+- [`library/dusengumuremyi-2026-ai-mediated-raci`](../cat-harness/library/cat-harness/#cat-harness%2Fdusengumuremyi-2026-ai-mediated-raci) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/dusengumuremyi-2026-ai-mediated-raci/README.md)
 
 ### RASCI — RACI plus Supportive, for when doing the work and owning it come apart
 
@@ -254,9 +259,9 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2605.03537v1`
-- `library/arxiv-2504.19675v2`
-- `library/arxiv-2504.21474v1`
+- [`library/arxiv-2605.03537v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2605.03537v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2605.03537v1/README.md) · [source](https://arxiv.org/abs/2605.03537v1)
+- [`library/arxiv-2504.19675v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2504.19675v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2504.19675v2/README.md) · [source](https://arxiv.org/abs/2504.19675v2)
+- [`library/arxiv-2504.21474v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2504.21474v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2504.21474v1/README.md) · [source](https://arxiv.org/abs/2504.21474v1)
 
 ### Specification-compiled agents — the control flow comes from the diagram, not from the model's plan
 
@@ -270,7 +275,7 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2607.14456v1`
+- [`library/arxiv-2607.14456v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.14456v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.14456v1/README.md)
 
 ### SWOT — situation analysis over internal and external factors
 
@@ -284,8 +289,8 @@ these.
 
 **Ingested sources:**
 
-- `library/gurel-tat-2017-swot-analysis`
-- `library/sammut-bonnici-galea-2015-swot-analysis`
+- [`library/gurel-tat-2017-swot-analysis`](../cat-harness/library/cat-harness/#cat-harness%2Fgurel-tat-2017-swot-analysis) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/gurel-tat-2017-swot-analysis/README.md)
+- [`library/sammut-bonnici-galea-2015-swot-analysis`](../cat-harness/library/cat-harness/#cat-harness%2Fsammut-bonnici-galea-2015-swot-analysis) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/sammut-bonnici-galea-2015-swot-analysis/README.md)
 
 ### WireGen: wireframing from a written design intent
 
@@ -299,7 +304,7 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2312.07755v1`
+- [`library/arxiv-2312.07755v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2312.07755v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2312.07755v1/README.md) · [source](https://arxiv.org/abs/2312.07755v1)
 
 ## Files in the graph that are not methodology nodes
 

@@ -26,3 +26,16 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/kg-viewer/` (inte
 Related: `folio-assistant-a98i`
 
 When fixed, re-draw `cat-harness/docs/wireframes/kg-viewer/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 8 still present, 0 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — Page scrolls sideways at phone width on first load: At 390x844 before any facet: documentElement.scrollWidth 511; main grid-template-columns '510.516px'; 102 descendants of #facets/#subs extend past the right edge (was 606 px wide).
+- **STILL-PRESENT** — On mobile the detail is below the whole list; nothing scrolls to it: 390x844, Tool facet, first row clicked: #detail top is at 1028 px in the viewport (off-screen below 844); page 2256 px tall; focus not moved into #detail; #list max-height 607.68 px (72vh).
+- **STILL-PRESENT** — 'No links to or from this node.' sits directly under a link: Tool 'discussion' (tool/discuss): #detail shows 'satisfies skill/discussion' as <a href='https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion'>, then the text 'No links to or from this node.'
+- **STILL-PRESENT** — Two kinds of link look different and nothing says why (external vs in-graph): The external <a> (skill/discussion) has no icon, ::after content 'none', no title and no aria-label. Its colour is now rgb(74,107,82), the same as the in-graph edge buttons, so there is still no signal that it leaves the graph. There is now also no colour difference. — ce6152624
+- **STILL-PRESENT** — Long list with no alphabetical order: With All selected, 2701 nodes match (SequenceFlow 912 + ProcessNode 862); 401 li rendered, in document order (first ten are Skills: grade, fhir-validation, smart-base Toolchain...); 205 descending pairs among 401 rows.
+- **STILL-PRESENT** — Neighbourhood labels cut to 26 characters: Skill wireframe-design-review: #detail svg text max length 26: 'Produce >= 2 candidates, w', 'Mechanical checks, both vi'. Tool node: 'Review heat map — where to'.
+- **STILL-PRESENT** — Language switcher never appears (translation-boundary note never shown): #langs.hidden true and #boundary.hidden true at both widths; translated msgstr count in ar/es/fr/ru/zh kg-viewer.po @35402147f is 0/0/0/0/0.
+- **STILL-PRESENT** — No link back to the docs site: The page's only anchors outside the list are 'Skip to results' (#list), 'JSON-LD' (../cat-harness.jsonld) and 'source commit' (GitHub). There is no site or home link and no nav chrome.
