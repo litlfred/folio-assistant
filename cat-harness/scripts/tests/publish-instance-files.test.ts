@@ -3,7 +3,9 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { publishInstanceFiles, rewriteMdLinks, titleOf } from "../publish-instance-files.ts";
+import { spawnSync } from "node:child_process";
+
+import { collisions, publishInstanceFiles, rewriteMdLinks, titleOf } from "../publish-instance-files.ts";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..", "..");
 
@@ -50,5 +52,43 @@ describe("publish-instance-files (bean iwtn, ruling 3)", () => {
     const at = decl.renderExemption.reachableAt as string;
     expect(at.startsWith("..") || at.startsWith("/")).toBe(false);
     expect(existsSync(join(REPO_ROOT, "bootstrap", at))).toBe(true);
+  });
+});
+
+describe("served-name collisions are chosen, never won by step order (Phase 4, bean xsqm)", () => {
+  const tmp = mkdtempSync(join(tmpdir(), "pif-collide-"));
+  const inst = join(tmp, "inst");
+  mkdirSync(inst, { recursive: true });
+  writeFileSync(join(inst, "bootstrap.json"), '{"name":"bootstrap"}\n');
+  writeFileSync(join(inst, "ns.jsonld"), '{"@id":"x"}\n');
+  const site = () => {
+    const out = mkdtempSync(join(tmp, "site-"));
+    writeFileSync(join(out, "bootstrap.json"), '{"graph":true}\n'); // a DIFFERENT file
+    writeFileSync(join(out, "ns.jsonld"), '{"@id":"x"}\n'); // the SAME bytes
+    return out;
+  };
+  const script = join(REPO_ROOT, "cat-harness", "scripts", "publish-instance-files.ts");
+
+  test("a byte-identical file is not a collision; a different one is", async () => {
+    const out = site();
+    const { skipped } = await publishInstanceFiles(inst, out);
+    expect(skipped.sort()).toEqual(["bootstrap.json", "ns.jsonld"]);
+    expect(collisions(inst, out, skipped)).toEqual(["bootstrap.json"]);
+  });
+
+  test("the step FAILS on a collision nobody named, and passes when it is named", () => {
+    const run = (...extra: string[]) =>
+      spawnSync("bun", ["run", script, "--instance", inst, "--out", site(), ...extra], { encoding: "utf-8" }).status;
+    expect(run()).toBe(1);
+    expect(run("--allow-collision", "bootstrap.json")).toBe(0);
+  });
+
+  test("both workflows name exactly the one collision they chose", () => {
+    for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
+      const text = readFileSync(join(REPO_ROOT, ".github", "workflows", wf), "utf-8");
+      const step = text.split("\n").find((l) => /^\s*bun run cat-harness\/scripts\/publish-instance-files\.ts/.test(l));
+      expect({ wf, allow: /--allow-collision\s+(\S+)/.exec(step ?? "")?.[1] }).toEqual({ wf, allow: "bootstrap.json" });
+    }
+    rmSync(tmp, { recursive: true, force: true });
   });
 });

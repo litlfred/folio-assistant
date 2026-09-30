@@ -18,6 +18,8 @@ It is **one** toolset over swappable content. Someone who wants a different gene
 | `scripts/gen-bootstrap-schemas.ts` | writes `bootstrap/schemas/*.schema.json` and the drawn page `bootstrap/schemas/README.md` |
 | `scripts/gen-vocabulary.ts` | writes `bootstrap/ns.jsonld`, bootstrap's vocabulary: every defined term and graph kind, as RDF and SKOS, at the address its IRIs name |
 | `scripts/export-graph.ts`, `schemas/graph-export.ts` | writes `bootstrap.jsonld`, bootstrap's own graph, in bootstrap's classes and standard properties (Dublin Core, BPMN, PROV); the site publishes it, nothing commits it |
+| `scripts/publish-files.ts` | publishes bootstrap's files as they sit at its site address, never overwriting; GitHub Pages renders the `.md` |
+| `scripts/rehearse-standalone.ts` | runs these tools' checks and tests with bootstrap and bootstrap-tools copied alone as sibling clones — the split, rehearsed |
 | `scripts/iri-sync.ts` | keeps every literal release IRI at the declared version |
 | `scripts/term-links.ts` | links each defined term in README prose to its definition |
 | `scripts/subgraph-readmes.ts`, `scripts/templates/readme/` | writes each declared directory's README from its declaration, through Liquid templates; standalone it writes only the graphs these tools `support` |

@@ -157,6 +157,8 @@ destination — "not this change" names where it does not belong and nowhere
 that it does. Whether that warrants a convention is a question for the owner,
 recorded here unanswered rather than decided.
 
+_2026-09-30T19:00:17Z_ — Claimed by claude/magical-archimedes-4qkfxp-8zsb — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## Progress — 2026-09-30, branch `claude/magical-archimedes-4qkfxp-8zsb`
 
 - **Box 1:** the test now asserts that the repository root is in `instanceRootsIn(REPO)` **as a path**, and applies the not-an-instance check only to the other entries' basenames. Measured in `/home/user/wt-8zsb`, a checkout not named `folio-assistant`: 15 of 15 tests pass, where before it was 14 pass and 1 fail.
