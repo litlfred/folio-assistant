@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-52cz/skills/dmn-authoring/output.schema.json",
+  "title": "DMN Authoring Output",
+  "description": "Output schema for DMN decision table authoring.",
+  "type": "object",
+  "required": [
+    "dmnFile"
+  ],
+  "properties": {
+    "dmnFile": {
+      "type": "string"
+    },
+    "decisionTableCount": {
+      "type": "integer"
+    },
+    "ruleCount": {
+      "type": "integer"
+    },
+    "hitPolicy": {
+      "type": "string",
+      "enum": [
+        "UNIQUE",
+        "FIRST",
+        "PRIORITY",
+        "ANY",
+        "COLLECT",
+        "RULE ORDER"
+      ]
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-archimedes-4qkfxp-52cz",
+    "sha": "59bce69223dd53f0f191dcebbbb63257f401673b",
+    "pr": "1659/merge",
+    "run": "36759574997"
+  }
+}
