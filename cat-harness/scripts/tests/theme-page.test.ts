@@ -94,7 +94,7 @@ describe("the themes page", () => {
     const worn = wornBy(ROOT);
     const cards = declaredContributions(ROOT);
     expect(cards.length).toBeGreaterThan(0);
-    for (const c of cards) expect(worn.get(c.contribution.theme)).toContain(c.contribution.id);
+    for (const c of cards) expect(worn.get(c.contribution.theme.themeId)).toContain(c.contribution.id);
     const total = [...worn.values()].reduce((n, v) => n + v.length, 0);
     expect(total).toBe(cards.length);
   });

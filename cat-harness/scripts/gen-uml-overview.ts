@@ -59,7 +59,7 @@ import { BASE_GRAPH_KINDS, resolveGraphKind } from "../schemas/graph-kind-regist
 import { readUmlPalette } from "./uml-palette.js";
 import { bothViews, gridLinks, renderSvgs, safeId, sha256, svgStamp, views, type RenderJob } from "./plantuml-render.js";
 import { detangleResultsDir } from "../schemas/detangle-sidecar.js";
-import { schemasViewPuml } from "./gen-object-model-uml.js";
+import { glossaryLinksMd, schemasViewPuml } from "./gen-object-model-uml.js";
 import { resolveKindValidator, resolveNodeSchemas, type NodeSchemaResolution } from "../schemas/kind-validator.js";
 
 const HARNESS = resolve(import.meta.dir, "..");
@@ -727,11 +727,13 @@ async function build(): Promise<Map<string, string>> {
     "",
     "## The harness schemas",
     "",
-    "Schema, Role, Actor, Skill, User Story, Process, Task and Test, each box read from the schema behind it; the stereotype names which. Colours are the five families in `uml.css`.",
+    "Schema, Role, Actor, Skill, Voice, User Story, Process, Task and Test, each box read from the schema behind it; the stereotype names which. Colours are the five families in `uml.css`. Every arrow runs from the dependent to the general node: a Task realises the Skill it implements, a Voice and a User Story point at their Role, and a Test Run is checked against its Skill's input and output schemas.",
+    "",
+    glossaryLinksMd(),
     "",
     `**Source:** [PlantUML](${REPO_URL}/blob/main/${relative(REPO, SCHEMAS_PUML)}) · the full model, with Bean and Todo, is [below](#the-full-object-model).`,
     "",
-    ...views("/assets/img/uml/harness-schemas.svg", "UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships."),
+    ...views("/assets/img/uml/harness-schemas.svg", "UML class diagram of the harness schemas: packages scenario (Actor, Role, Skill, Voice, User Story), process (Process, Task), schema (JSON Schema, External Schema) and test (Test Run, KG QA Report), with their data fields and relationships."),
     "",
     "## The full object model",
     "",

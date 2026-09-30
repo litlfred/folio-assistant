@@ -243,7 +243,8 @@ if (import.meta.main) {
   // the same one `build-glossary.ts` took under bean `1oqu`, whose comment
   // states the mechanism: `resolve("")` returns the CWD, which is truthy and
   // exists, so `resolve(positional[0] || "")` made the guard below unreachable
-  // for the no-argument case. A bare `bun run folio-assistant-core/scripts/codemod-refterm.ts` fell through
+  // for the no-argument case. A bare
+  // `bun run folio-assistant-core/scripts/codemod-refterm.ts` fell through
   // into `resolveChapters`, which threw `Manifest not found:
   // <cwd>/<cwd-basename>.ts` and exited with a stack trace. The usage line
   // never printed, and the exit code said "it broke" rather than "you did not

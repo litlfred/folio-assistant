@@ -494,6 +494,11 @@ export function buildContext(): Record<string, unknown> {
     // until those registries are nodes, and `roleName`/`permissionName` say so
     // instead of implying an edge the graph cannot honour.
     roleName: termIri("roleName"),
+    // An actor's roles, as LINKS since #1168 B8: the role registry IS exported
+    // now (`collectDeclaredRoles`, one Role node per `scenarios/roles.json`
+    // entry), and all 73 actor role references resolve to one — measured
+    // 2026-09-30. The literal-only reasoning above holds for permissions.
+    mayTakeRole: { "@id": termIri("mayTakeRole"), ...link },
     // A literal like `roleName`: requirement statements are not nodes of this
     // graph, so a `req:<id>#<key>` is a name here, not a link (#1168, B3).
     satisfiesStatement: termIri("satisfiesStatement"),
@@ -1034,7 +1039,12 @@ function collectSkills(doc: string, base: string, problems: string[], root: stri
  *   12 of 12. It reuses the term already declared for a package's requirements
  *   rather than minting a second name for one relation. Note a TOOL's
  *   `requires` is a different relation entirely -- see `collectTools`.
- * - **`roles` and `permissions` -> `roleName`/`permissionName`, LITERALS.**
+ * - **`roles` -> `mayTakeRole`, a LINK (#1168 B8).** The role registry is
+ *   exported now, one Role node per `scenarios/roles.json` entry, and all 73
+ *   actor role references resolve (measured 2026-09-30).
+ * - **`permissions` -> `permissionName`, a LITERAL.** What follows was written
+ *   when roles were literals too, and still holds for permissions.
+ * - (Historical) **`roles` and `permissions` -> `roleName`/`permissionName`, LITERALS.**
  *   Neither registry is in this graph: `scenarios/roles.json` and
  *   `skills/permissions/permissions.json` are never collected, and the Role
  *   nodes that do exist are BPMN lanes under different names. All 44 role and
@@ -1057,7 +1067,7 @@ function registryFields(
       ...(capabilities === undefined
         ? {}
         : { hasCapability: names(capabilities).map((c) => makeIri(doc, "capability", c)) }),
-      ...(roles === undefined ? {} : { roleName: names(roles) }),
+      ...(roles === undefined ? {} : { mayTakeRole: names(roles).map((r) => makeIri(doc, "role", r)) }),
       ...(permissions === undefined ? {} : { permissionName: names(permissions) }),
     };
   }
