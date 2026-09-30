@@ -305,12 +305,12 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T13:55:48.865Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/867c16f9954a309db527534b903e26663c3cd929",
-  "sourceCommitSha": "867c16f9954a309db527534b903e26663c3cd929",
-  "sourceCommitAt": "2026-09-30T13:52:38Z",
+  "generatedAt": "2026-09-30T14:04:24.255Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/98f2a3aaba20fd988119b208a152cdbff7c11ee1",
+  "sourceCommitSha": "98f2a3aaba20fd988119b208a152cdbff7c11ee1",
+  "sourceCommitAt": "2026-09-30T14:00:24Z",
   "sourceTreeDirty": true,
-  "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
+  "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
     "Skill": 285,
     "Actor": 36,
@@ -323,7 +323,7 @@
     "Lane": 192,
     "ProcessNode": 888,
     "Tool": 107,
-    "Schema": 125,
+    "Schema": 127,
     "ExternalSchema": 17,
     "GraphKind": 35,
     "Role": 48,
@@ -3140,7 +3140,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-p11x-detangle-cross-instance-gate/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 1122,
+      "instructionLines": 1124,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -44449,6 +44449,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bib-verification"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-p11x-detangle-cross-instance-gate/cat-harness.jsonld#schema/binary-release",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "binary-release",
+      "title": "Binary releases — what was published, under what version, with what digest.",
+      "module": "schemas/binary-release.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-p11x-detangle-cross-instance-gate/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/binary-release"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-p11x-detangle-cross-instance-gate/cat-harness.jsonld#schema/block-kinds",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "block-kinds",
@@ -44756,6 +44765,15 @@
       "module": "schemas/ig-menu.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-p11x-detangle-cross-instance-gate/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-p11x-detangle-cross-instance-gate/cat-harness.jsonld#schema/ig-metadata-index",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "ig-metadata-index",
+      "title": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
+      "module": "schemas/ig-metadata-index.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-p11x-detangle-cross-instance-gate/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-p11x-detangle-cross-instance-gate/cat-harness.jsonld#schema/inline-code",
@@ -47637,8 +47655,8 @@
   ],
   "staging": {
     "branch": "claude/p11x-detangle-cross-instance-gate",
-    "sha": "c3d0a698916381e8bba3ceccc346f957e3ebc36e",
+    "sha": "42b470013e83180fb271123acc83a074edc8984b",
     "pr": "1580/merge",
-    "run": "36724878600"
+    "run": "36725849305"
   }
 }
