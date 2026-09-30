@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T17:53:09Z
-updated_at: 2026-09-30T19:00:17Z
+updated_at: 2026-09-30T19:00:21Z
 parent: folio-assistant-1xhc
 ---
 
@@ -97,17 +97,17 @@ worktree's name.
 
 ## Done when
 
-- [ ] `navbar-consistency.test.ts:208` asserts against the **declared** id,
+- [x] `navbar-consistency.test.ts:208` asserts against the **declared** id,
       not `basename(REPO)` — or the test is retired if the property it wants
       is already covered by the denominator test beside it
-- [ ] the `folio-dir-bad-*` fixture cleans up after itself (`afterEach`/
+- [x] the `folio-dir-bad-*` fixture cleans up after itself (`afterEach`/
       `rmSync`), so a crashed run leaves at most one
 - [ ] decide — separately, and **not** in the same change — whether
       `resolveDirectories` walking the checkout's **parent** is intended.
       It may well be; that is what finds sibling instances. If it is, the fix
       is entirely in the fixture, and this box closes with that reasoning
       written down rather than with a code change.
-- [ ] the 163 leftovers in this container are **not** deleted by an agent on
+- [x] the 163 leftovers in this container are **not** deleted by an agent on
       its own initiative (`deletion-requires-confirmation`); they are `/tmp`
       scratch in an ephemeral container and will go with it.
 
@@ -158,3 +158,19 @@ that it does. Whether that warrants a convention is a question for the owner,
 recorded here unanswered rather than decided.
 
 _2026-09-30T19:00:17Z_ — Claimed by claude/magical-archimedes-4qkfxp-8zsb — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Progress — 2026-09-30, branch `claude/magical-archimedes-4qkfxp-8zsb`
+
+- **Box 1:** the test now asserts that the repository root is in `instanceRootsIn(REPO)` **as a path**, and applies the not-an-instance check only to the other entries' basenames. Measured in `/home/user/wt-8zsb`, a checkout not named `folio-assistant`: 15 of 15 tests pass, where before it was 14 pass and 1 fail.
+- **Box 2:** every root that `folio-dir.test.ts` makes, not just the malformed one, is recorded and removed in `afterEach`. Before and after a run, `/tmp/folio-dir-*` held 1,390 entries both times, so a run adds none.
+- **Box 4:** nothing was deleted. The container now holds 1,390 leftovers, not 163. They are ephemeral scratch and will go with the container.
+
+### Box 3 stays open, with this finding rather than a decision
+
+The code's own documentation leans towards **"the climb is not intended for the root instance"**:
+
+- `siblingScopeFor`'s docblock says `repoRootFor` "climbs out of the checkout" for the root instance, and exists so that sibling lookup does not.
+- `resolveCoveragePath`'s docblock says the same thing ("going up one lands outside the checkout entirely").
+- `rootForScope` (`scope: "repository"` → `repoRootFor`) and `declaredKindsEntryRoot` still compose `repoRootFor` unconditionally. For the root instance, whose instance root IS the repository, that lands in the parent directory, which is `/tmp` for a checkout placed directly in `/tmp`.
+
+**Not established:** which of these produced the voice-skills stack (`readVoicesGraph` → `directoriesForGraph` → `resolveDirectories` → `readDeclaration`). A fix is a resolver change touching every declared `scope: "repository"` path, so per this bean it is a separate change, and it needs that call identified first.
