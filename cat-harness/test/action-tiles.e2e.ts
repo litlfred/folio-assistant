@@ -220,10 +220,16 @@ test.describe("action tiles", () => {
     // The old test's own reasoning is why this checks load rather than first
     // open: if it only happened once the launcher was touched, every reader
     // who never opens it gets the other behaviour.
+    //
+    // 2026-09-30 (issue #1715): on load it is now the CLOSED magnifier at the
+    // top of the display panel, and the field opens full width from it. The
+    // invariant this test exists for is unchanged: search is in the panel on
+    // load, never behind the launcher.
     await page.setContent(HARNESS);
     await expect(page.locator(".main-header .fa-search-home .search")).toHaveCount(1);
     await expect(page.locator(".fa-tiles .search")).toHaveCount(0);
-    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "navbar");
+    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-open", "false");
+    await expect(page.locator(".fa-search-home .fa-search-peek")).toBeVisible();
   });
 
   test("the search input is MOVED, not rebuilt — same node, theme handlers intact", async ({ page }) => {
@@ -249,20 +255,24 @@ test.describe("action tiles", () => {
     await expect(page.locator(".fa-search-home .search #search-results")).toHaveCount(1);
   });
 
-  test("in the navbar the field has size; slid to the corner it collapses behind its icon", async ({ page }) => {
+  test("closed, the field collapses behind its magnifier; opened, it has size", async ({ page }) => {
     // Geometry, not text. `textContent` is DOM order regardless of CSS
     // display, so a collapsed field still answers every text assertion — the
     // input is in the document the whole time BY DESIGN, because the theme
     // looks it up by id and getElementById does not find a detached node.
     //
-    // The COLLAPSE half of this test moved rather than disappearing. It used
-    // to describe the launcher ("collapsed until the tile is pressed"); it
-    // now describes the corner, which is where the owner put the collapsed
-    // state: *"option to slide out to the UR corner as an icon."*
+    // Was "in the navbar ... slid to the corner" until 2026-09-30, when the
+    // owner asked for one magnifier that opens full width (issue #1715).
     await page.setContent(HARNESS);
     const input = page.locator("#search-input");
 
-    // NAVBAR — visible, and big enough to hit.
+    // CLOSED — collapsed, but still in the document.
+    await expect(input).toBeHidden();
+    expect(await input.boundingBox()).toBeNull();
+    await expect(input).toHaveCount(1);
+
+    // OPEN — the magnifier is the way in, and back (`l4zi`).
+    await page.locator(".fa-search-peek").click();
     await expect(input).toBeVisible();
     const box = await input.boundingBox();
     expect(box).not.toBeNull();
@@ -270,20 +280,6 @@ test.describe("action tiles", () => {
     // legal minimum in case that comfort is ever spent.
     expect(box!.height).toBeGreaterThanOrEqual(24);
     expect(box!.width).toBeGreaterThan(80);
-
-    // CORNER — collapsed, but still in the document. Both halves matter: the
-    // first is the space the reader asked to reclaim, the second is the
-    // getElementById rule above.
-    await page.locator(".fa-search-slide").click();
-    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "corner");
-    await expect(input).toBeHidden();
-    expect(await input.boundingBox()).toBeNull();
-    await expect(input).toHaveCount(1);
-
-    // ...and the icon is the way back, which is `l4zi`: an action whose
-    // inverse is not reachable is not a toggle.
-    await page.locator(".fa-search-peek").click();
-    await expect(input).toBeVisible();
   });
 
   test("pressing Search puts the cursor in the field, from the keyboard alone", async ({ page }) => {
@@ -299,26 +295,26 @@ test.describe("action tiles", () => {
     await expect(page.locator("#search-input")).toHaveValue("bean");
   });
 
-  test("sliding to the corner and back keeps the SAME input, and what was typed in it", async ({ page }) => {
-    // The failure this guards is unchanged and is the reason the slide is a
-    // CLASS CHANGE rather than a move: a detached input is one
+  test("closing and reopening keeps the SAME input, and what was typed in it", async ({ page }) => {
+    // The failure this guards is unchanged and is the reason closing is a
+    // STATE CHANGE rather than a move: a detached input is one
     // getElementById away from a dead search. What the reader typed must
     // survive the round trip too — that is the cheap observable proof the
     // node is the same node rather than a convincing replacement.
     //
-    // The round trip used to be tile -> back -> tile. It is now navbar ->
-    // corner -> navbar, because that is the journey the field actually makes
-    // since 2026-09-21.
+    // The round trip was navbar -> corner -> navbar until 2026-09-30; it is
+    // open -> closed -> open on the one magnifier since (issue #1715).
     await page.setContent(HARNESS);
+    await page.locator(".fa-search-peek").click();
     await page.locator("#search-input").fill("workflow");
 
-    await page.locator(".fa-search-slide").click();
+    await page.locator(".fa-search-peek").click();
     // Collapsed, still IN the document — this is the load-bearing bit.
     await expect(page.locator("#search-input")).toHaveCount(1);
     await expect(page.locator("#search-input")).toBeHidden();
 
-    await page.locator(".fa-search-slide").click();
-    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "navbar");
+    await page.locator(".fa-search-peek").click();
+    await expect(page.locator(".fa-search-home")).toHaveAttribute("data-open", "true");
     await expect(page.locator("#search-input")).toBeVisible();
     await expect(page.locator("#search-input")).toHaveValue("workflow");
   });
@@ -388,7 +384,10 @@ test.describe("action tiles", () => {
     //
     // Looked in `.fa-tiles` until 2026-09-21; the field is in the navbar now,
     // and no tile press is needed to reach it.
+    // Opened first since 2026-09-30: search starts closed, and a closed
+    // field has no box to measure (issue #1715).
     await page.setContent(HARNESS);
+    await page.locator(".fa-search-peek").click();
     const label = page.locator(".fa-search-home .search-label");
     await expect(label).toHaveCount(1);
     const style = await label.evaluate((e) => getComputedStyle(e).display);
