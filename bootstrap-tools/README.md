@@ -20,8 +20,9 @@ It is **one** toolset over swappable content. Someone who wants a different gene
 | `scripts/term-links.ts` | links each defined term in README prose to its definition |
 | `scripts/subgraph-readmes.ts`, `scripts/templates/readme/` | writes each declared directory's README from its declaration, through Liquid templates; standalone it writes only the graphs these tools `support` |
 | `scripts/readme-graph-sections.ts` | the `kg:processes` and `kg:files` README sections: every Process drawn, every file described from itself |
+| `scripts/render-bpmn.ts` | draws each Process as an SVG beside its `.bpmn`, with bpmn-js in headless Chromium; the harness's site renderer uses the same drawing |
 | `scripts/git-files.ts` | the files git accounts for — tracked, plus untracked and not ignored |
-| `scripts/check-closure.ts` | fails if anything here imports beyond itself, `zod`, `liquidjs` and the runtime |
+| `scripts/check-closure.ts` | fails if anything here imports beyond itself, `zod`, `liquidjs`, `@playwright/test` and the runtime |
 | `scripts/check-node-iris.ts` | fails if a published node's identifier is not its file's path |
 | `scripts/check-bootstrap-concepts.ts` | checks bootstrap's requirement concepts |
 
@@ -32,6 +33,7 @@ Every tool is a script an agent runs, as the actor in a process step, or a perso
 ```sh
 bun run --cwd bootstrap-tools schemas          # regenerate bootstrap's schemas and schema page
 bun run --cwd bootstrap-tools readmes          # regenerate bootstrap's directory READMEs
+bun run --cwd bootstrap-tools render           # redraw each Process beside its .bpmn
 bun run --cwd bootstrap-tools schemas:check    # fail if they are stale
 bun run --cwd bootstrap-tools check:closure    # nothing here imports above bootstrap
 bun run --cwd bootstrap-tools check:node-iris  # every published identifier is its file's path

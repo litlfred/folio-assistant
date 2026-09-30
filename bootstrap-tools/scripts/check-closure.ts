@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 /**
  * check-closure.ts — bootstrap-tools imports nothing but itself, `zod`,
- * `liquidjs` and the runtime.
+ * `liquidjs`, `@playwright/test` and the runtime.
  *
  * ## Why this is a gate, not a convention
  *
@@ -18,10 +18,12 @@
  *
  * For every `.ts` file under `bootstrap-tools/`:
  * - a RELATIVE import must resolve to a file inside `bootstrap-tools/`;
- * - a BARE import must be `zod`, `liquidjs`, a `node:` builtin, or — in a
- *   test file only — `bun:test` or `ajv`. `liquidjs` is the README writers'
- *   template engine (Phase 2 of bean `xsqm`: the owner ruled one copy of the
- *   writers, here, and allowed it and Playwright as dependencies).
+ * - a BARE import must be `zod`, `liquidjs`, `@playwright/test`, a `node:`
+ *   builtin, or — in a test file only — `bun:test` or `ajv`. `liquidjs` is the
+ *   README writers' template engine and Playwright drives the Chromium that
+ *   draws a Process (Phase 2 of bean `xsqm`: the owner ruled one copy of the
+ *   writers, here, and allowed both as dependencies). bpmn-js is loaded into
+ *   that browser as a file, never imported.
  *
  * Imports are read with comments and string literals of other statements
  * stripped, so a docblock that quotes an import is not one.
@@ -37,7 +39,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 /** Bare specifiers any file may import. */
-export const ALLOWED = [/^zod$/, /^liquidjs$/, /^node:/];
+export const ALLOWED = [/^zod$/, /^liquidjs$/, /^@playwright\/test$/, /^node:/];
 /** …and a test file may also import. */
 export const ALLOWED_IN_TESTS = [/^bun:test$/, /^ajv$/];
 
@@ -152,7 +154,7 @@ if (import.meta.main) {
     process.exit(2);
   }
   if (findings.length === 0) {
-    console.log(`✓ bootstrap-tools imports only itself, zod, liquidjs and the runtime (${files} files).`);
+    console.log(`✓ bootstrap-tools imports only itself, zod, liquidjs, @playwright/test and the runtime (${files} files).`);
     process.exit(0);
   }
   console.error(`✗ ${findings.length} import(s) leave bootstrap-tools' closure:`);

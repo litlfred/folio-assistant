@@ -8,7 +8,7 @@ Bootstrap promises an agent that it needs nothing installed: *"a file you read, 
 
 ## 2. Nothing here may import above bootstrap
 
-bootstrap-tools depends on bootstrap, on `zod`, on `liquidjs` (the README templates), and on the runtime, and on nothing else (owner, 2026-09-29). `bun run check:tools-closure` fails on any import that leaves this directory or names another package; tests may also use `bun:test` and `ajv`. When you need something from a harness, move the small piece down, or have the harness call this toolset instead.
+bootstrap-tools depends on bootstrap, on `zod`, on `liquidjs` (the README templates), on `@playwright/test` and `bpmn-js` (to draw a Process), and on the runtime, and on nothing else (owner, 2026-09-29). `bun run check:tools-closure` fails on any import that leaves this directory or names another package; tests may also use `bun:test` and `ajv`. When you need something from a harness, move the small piece down, or have the harness call this toolset instead.
 
 ## 3. A generated schema is a published contract
 

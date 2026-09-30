@@ -3,7 +3,7 @@
   "name": "bootstrap-tools",
   "version": "0.1.0",
   "title": "Bootstrap tools",
-  "description": "The Zod source of bootstrap's schemas, the generators that write bootstrap's JSON Schemas, schema page and READMEs, and the checks bootstrap's content must pass — runnable by an agent, with zod and liquidjs as its dependencies.",
+  "description": "The Zod source of bootstrap's schemas, the generators that write bootstrap's JSON Schemas, schema page and READMEs, and the checks bootstrap's content must pass — runnable by an agent, with zod, liquidjs, Playwright and bpmn-js as its dependencies.",
   "_needs_comment": "The one layer below it. It reads and writes bootstrap; bootstrap never imports from here.",
   "needs": ["bootstrap"],
   "_supports_comment": "Which content versions these tools handle, as a list of supported MAJOR versions per content graph — never a range expression (instance-versioning rule 2). Within one major a newer minor or patch only adds. At the split both started at the same version (0.1.0); from here each is versioned on its own, and a tools release may support several content majors (owner, 2026-09-29). A tool refuses a content major not listed here rather than guessing.",
@@ -38,7 +38,7 @@
       "path": "scripts/",
       "dependents": "skip",
       "title": "The tools",
-      "description": "The schema generator and drawn schema page, the README writers (each directory's README, and the `kg:processes` and `kg:files` sections) with their Liquid templates, the release-IRI sync, the term linker, and the checks: import closure, node identifiers, bootstrap's concepts.",
+      "description": "The schema generator and drawn schema page, the README writers (each directory's README, and the `kg:processes` and `kg:files` sections) with their Liquid templates, the Process renderer, the release-IRI sync, the term linker, and the checks: import closure, node identifiers, bootstrap's concepts.",
       "graphKinds": ["code"]
     }
   ]

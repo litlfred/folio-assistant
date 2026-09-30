@@ -2,11 +2,13 @@
   "name": "@litlfred/bootstrap-tools",
   "version": "0.1.0",
   "private": true,
-  "description": "The Zod source of bootstrap's schemas, their generators, and the checks bootstrap's content must pass. Depends on zod, and liquidjs for the README templates.",
+  "description": "The Zod source of bootstrap's schemas, their generators, and the checks bootstrap's content must pass. Depends on zod; liquidjs for the README templates; Playwright and bpmn-js to draw a Process.",
   "license": "Apache-2.0",
   "type": "module",
   "repository": "https://github.com/litlfred/bootstrap-tools",
   "scripts": {
+    "render": "bun run scripts/render-bpmn.ts",
+    "render:check": "bun run scripts/render-bpmn.ts --check",
     "readmes": "bun run scripts/subgraph-readmes.ts",
     "readmes:check": "bun run scripts/subgraph-readmes.ts --check",
     "schemas": "bun run scripts/gen-bootstrap-schemas.ts",
@@ -19,6 +21,8 @@
     "test": "bun test ."
   },
   "dependencies": {
+    "@playwright/test": "1.63.0",
+    "bpmn-js": "^18.25.1",
     "liquidjs": "^10.29.0",
     "zod": "^4.6.5"
   },
