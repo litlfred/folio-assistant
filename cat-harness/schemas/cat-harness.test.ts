@@ -1211,7 +1211,7 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
       "folio-assistant-sci-methodologies",
       "methodologies",
     ]);
-    for (const d of themed) expect(d.theme).toBe("analyst");
+    for (const d of themed) expect(d.theme?.themeId).toBe("analyst");
     expect(THEMES.map((t) => t.id)).toContain("analyst");
   });
 
