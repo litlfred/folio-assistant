@@ -863,21 +863,23 @@
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
+      "href": "/cat-harness/voices/who-style-guide/",
+      "hrefKind": "viewer",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 0
+          "value": 1
         }
       ],
       "visualisations": [
@@ -888,12 +890,16 @@
         {
           "kind": "qa",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/who-style-guide/"
         }
       ],
       "findings": [
         "who-style-guide: declares 2 graph(s) with no published viewer — glossary, qa. Declared and not rendered is a gap, not a dead link.",
-        "who-style-guide: a viewer is published at /cat-harness/voices/who-style-guide/ for a \"voices\" graph this instance does not declare. Declare it and the tile links it.",
-        "who-style-guide: no avatar declared for this instance — showing the generic mark."
+        "who-style-guide: no avatar declared for this instance — showing the generic mark.",
+        "who-style-guide: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/who-style-guide/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
         "close",
@@ -924,17 +930,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 7
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 7
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 3
+          "value": 4
         }
       ],
       "visualisations": [
@@ -962,12 +968,15 @@
         {
           "kind": "tools",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/smart-base/"
         }
       ],
       "findings": [
         "smart-base: declares 3 graph(s) with no published viewer — fhir-artifact-index, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
-        "smart-base: a viewer is published at /cat-harness/voices/smart-base/ for a \"voices\" graph this instance does not declare. Declare it and the tile links it.",
         "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/smart-base/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -1150,17 +1159,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 5
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 2
+          "value": 3
         }
       ],
       "visualisations": [
@@ -1175,11 +1184,18 @@
         {
           "kind": "qa",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "skills",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/folio-assistant-sci/"
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant-sci: a viewer is published at /cat-harness/voices/folio-assistant-sci/ for a \"voices\" graph this instance does not declare. Declare it and the tile links it.",
+        "folio-assistant-sci: declares 2 graph(s) with no published viewer — qa, skills. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -1361,17 +1377,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 1
+          "value": 2
         }
       ],
       "visualisations": [
@@ -1382,11 +1398,14 @@
         {
           "kind": "qa",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/agent-skills/"
         }
       ],
       "findings": [
         "agent-skills: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
-        "agent-skills: a viewer is published at /cat-harness/voices/agent-skills/ for a \"voices\" graph this instance does not declare. Declare it and the tile links it.",
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root."
       ],
@@ -1451,17 +1470,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 10
+          "value": 11
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 11
+          "value": 12
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 7
+          "value": 8
         }
       ],
       "visualisations": [
@@ -1508,11 +1527,14 @@
         {
           "kind": "tools",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "voices",
+          "path": "/cat-harness/voices/folio-assistant-core/"
         }
       ],
       "findings": [
         "folio-assistant-core: declares 4 graph(s) with no published viewer — code, folio, qa, tools. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant-core: a viewer is published at /cat-harness/voices/folio-assistant-core/ for a \"voices\" graph this instance does not declare. Declare it and the tile links it.",
         "folio-assistant-core: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/schemas/folio-assistant-core/) rather than the instance's own themed root."
       ],
       "navbarIcons": [

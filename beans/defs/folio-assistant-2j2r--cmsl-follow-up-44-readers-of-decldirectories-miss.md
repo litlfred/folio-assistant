@@ -3,8 +3,9 @@
 title: 'cmsl follow-up: ~44 readers of decl.directories miss entries declared from within'
 status: todo
 type: bug
+priority: normal
 created_at: 2026-09-30T17:24:45Z
-updated_at: 2026-09-30T17:24:45Z
+updated_at: 2026-09-30T18:22:23Z
 parent: folio-assistant-vke6
 ---
 
@@ -24,3 +25,11 @@ Enumerators most likely affected: harness-tiles, check-docs-populated, subgraph-
 
 - every site is either on `instanceDirectories` or carries a one-line reason it wants the authored list;
 - a before/after diff of each changed generator's output shows voices/lean reappearing and nothing else moving.
+
+
+## 2026-09-30 — first sweep
+Fixed (now on `instanceDirectories`): gen-uml-overview, check-wireframes, viewer-tools.test, **harness-tiles** (SMART Base's voices navbar tile had vanished — main had it, the cmsl step-1 head did not), **check-subgraph-coverage** (stopped auditing the 5 voices entries: 235 → 242 findings, the 7 being those audits returning plus sci's lean-skills).
+
+Triaged, no behaviour change today (filter kinds/instances nothing has moved inward): check-docs-populated (docs), compose-docs (docs, cat-harness only), state-visualizer (state kinds), gen-handler-index + sync-docs-harness (cat-harness tiles only). Guarded by a --check gate that would go red: readme-sections, subgraph-readmes ×2.
+
+Still to triage: the rest of `git grep -n "decl\??\.directories" -- '*.ts'`.
