@@ -52,6 +52,7 @@ import {
   type VoiceProfile,
   type VoiceProvenanceFlag,
   type VoiceRule,
+  VOICE_VENDORS_DIR,
 } from "../schemas/voices.ts";
 
 /** How a rule's citation resolves — the reader's verdict, never the file's claim. */
@@ -202,15 +203,26 @@ function ruleView(r: VoiceRule): VoiceRuleView {
  * answer to "where do I look": the skill is a directory of two files.
  */
 function voicePath(dir: string, id: string, repoRoot: string): string {
-  const asSkill = join(dir, id);
-  const asFile = join(dir, `${id}.json`);
-  const abs = existsSync(join(asSkill, "voice.json")) ? asSkill : asFile;
-  return relative(repoRoot, abs).split("\\").join("/");
+  return relative(repoRoot, voiceLocation(dir, id)).split("\\").join("/");
+}
+
+/**
+ * Where a voice actually is: a skill directory or a bare profile, at the top
+ * of the voices directory or under `vendors/` (`VOICE_VENDORS_DIR`), which the
+ * loader has read since vendor overrides were added and this did not — so the
+ * first vendor voice was reported at a path that does not exist.
+ */
+function voiceLocation(dir: string, id: string): string {
+  for (const base of [dir, join(dir, VOICE_VENDORS_DIR)]) {
+    if (existsSync(join(base, id, "voice.json"))) return join(base, id);
+    if (existsSync(join(base, `${id}.json`))) return join(base, `${id}.json`);
+  }
+  return join(dir, `${id}.json`);
 }
 
 /** Does a `SKILL.md` sit beside the rules? */
 function hasInstructions(dir: string, id: string): boolean {
-  return existsSync(join(dir, id, "SKILL.md"));
+  return existsSync(join(voiceLocation(dir, id), "SKILL.md"));
 }
 
 /** Voice ids found in a directory, by either layout. Sorted; `[]` when absent. */
