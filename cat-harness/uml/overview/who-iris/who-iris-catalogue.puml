@@ -51,6 +51,7 @@ package "who-iris/who-iris-catalogue" as pkg_who_iris_who_iris_catalogue <<catal
     title [1] : string
     parents [0..*] : string[][]
     childCountUpstream [0..1] : integer
+    handle [0..1] : string
     libraryId [0..1] : string
     metadataRef [0..1] : string
     bitstreams [0..*] : Bitstream[]
@@ -67,6 +68,7 @@ package "who-iris/who-iris-catalogue" as pkg_who_iris_who_iris_catalogue <<catal
     totalBytesUpstream [0..1] : integer
     sizeBasis [0..1] : string
     nodesDir [0..1] : string
+    sourceLoss [0..1] : object
   }
 }
 

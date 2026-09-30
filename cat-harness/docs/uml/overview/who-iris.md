@@ -131,6 +131,7 @@ classDiagram
       title [1] string
       parents [0..*] string[][]
       childCountUpstream [0..1] integer
+      handle [0..1] string
       libraryId [0..1] string
       metadataRef [0..1] string
       bitstreams [0..*] Bitstream[]
@@ -148,6 +149,7 @@ classDiagram
       totalBytesUpstream [0..1] integer
       sizeBasis [0..1] string
       nodesDir [0..1] string
+      sourceLoss [0..1] object
     }
   }
   namespace who_iris__who_iris_uploads {
