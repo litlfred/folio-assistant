@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T08:19:40Z
-updated_at: 2026-09-30T08:19:40Z
+updated_at: 2026-09-30T12:46:46Z
 parent: folio-assistant-tr05
 ---
 
@@ -21,3 +21,8 @@ Owner, 2026-09-30: 'why .claude/skills/actors/*.json? need generic'.
 - [ ] every reader (kg-audit, role-graph, raci-chart, check-fallback-roles, docs generators) resolves it from the declaration
 - [ ] AGENTS.md and the role-model skill point at the new home
 - [ ] .claude/ keeps only what is genuinely Claude-Code-specific
+
+
+
+## 2026-09-30 — blast radius measured; the home is the owner's decision
+Nine readers hardcode `.claude/skills/actors`: check-actor-reach, check-qa-reviewer-permission, generate-registry, kg-audit, validate-skills, src/core/access.ts, fsh-guts/scripts/generate-docs.ts, plus prose in kg-qa.ts, log-entry.ts, prov-qaqc.ts and auth.ts. There are 36 actor files, 28 capabilities and 5 requirements. The roles they are bound to already sit in the declared `scenarios` graph (`cat-harness/scenarios/roles.json`), and permissions in `policies` (ODRL). Put to the owner as blocker 4 of round 3: (A) `cat-harness/scenarios/actors/`, beside the roles; (B) a new declared `actors/` graph in cat-harness; (C) a root-level `actors/` owned by the checkout (depends on cmsl option A).
