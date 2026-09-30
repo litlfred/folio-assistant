@@ -89,3 +89,128 @@ stays discharged on one instance's evidence, and the next PR to cite the number
 repeats the over-broad claim.
 
 _2026-09-30T11:01:23Z_ — Claimed by worktree-agent-a7a16afc216992bbf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## RULED — Option 2, owner, 2026-09-30. Implemented in PR #1580 / issue #1578.
+
+> Leave `check:partition` instance-scoped and make `kg:detangle` the
+> cross-instance gate, since it already sees the axis.
+
+### The shape, and why it is a second gate rather than a third flag
+
+`--gate-direction` on `kg-detangle.ts`, `kg:detangle:direction` in
+`package.json`, and a **separate CI step** from `kg:detangle:check`.
+
+The constraint that was easiest to get wrong: the existing step's comment
+records a ruling that the detangle measurements are **pinned, not graded** — it
+fails on a stale or orphaned sidecar, never on a number, *"because the carve is
+an adjudication a person makes"*. Making that step grade its numbers would have
+overridden a recorded ruling in service of a different one. So:
+
+| step | grades | fails on |
+|---|---|---|
+| `kg:detangle:check` (unchanged) | nothing | a stale or orphaned sidecar |
+| `kg:detangle:direction` (new) | one number | a wrong-direction edge across a declared instance boundary |
+
+The split is not stylistic. A module's **bucket** is taste; an import pointing
+at an instance that declares a dependency on you is a **contradiction between
+two `<instance>.json` files**, and no adjudication makes it consistent.
+
+### Falsified before shipping
+
+`bf5l`'s sabotage planted in `cat-harness/schemas/intake.ts`, measured
+2026-09-30 on the branch:
+
+| check | verdict with the sabotage in place |
+|---|---|
+| `check:partition` | **0** wrong-direction, exit 0 |
+| `kg:detangle:direction` | **1** wrong-direction, exit 1 |
+
+Reproduces `bf5l`'s discriminator exactly. Removed; tree clean; gate back to 0.
+
+### `zhg2`'s 8 — remeasured, and the honest answer is a blind spot rather than a count
+
+This bean carried *"`zhg2` independently measures 8 real `cat-harness →
+folio-assistant-core` imports invisible to `check:partition`."* Measured today
+(`grep` over `import`/`require` lines under `cat-harness/`): **2 remain**, both
+onto `folio-assistant-core/schemas/dublin-core.js` —
+`cat-harness/adapters/document/intake-records.ts` and its `.test.ts` sibling.
+(`cat-harness/schemas/glossary-graph-kind.ts` matches only in prose, where its
+docblock states the rule it is obeying.)
+
+**The new gate does not see those 2, and that is a finding, not something to
+tune away.** `kg-detangle.ts`'s `SCAN` lists `cat-harness/schemas` but not
+`cat-harness/adapters`, so the axis is only as wide as that list. It catches
+`bf5l`'s sabotage because that one is in `schemas/`. The gate now **prints its
+scan targets and states that an import from an unlisted directory is real and
+invisible to it** — so the count cannot be read as covering what it does not
+reach. Widening `SCAN` is a separate decision with its own reclassification
+cost and is NOT taken here.
+
+### The denominator, and bean `cjvs`
+
+Took `cjvs`'s Done-when 2 — *"`kg:detangle` says whether its wrong-direction
+count is over all edges or only the resolving ones. Today a reader cannot
+tell."* It matters more once the count BLOCKS: a gate whose denominator
+silently drops unresolved edges can pass because an edge failed to resolve
+rather than because the layering held, which is `1xhc` arriving through the
+back door of its own remedy. The gate now states the denominator, the excluded
+dangling count and its breakdown, reported and never graded.
+
+Remeasured on the branch, since `main` has moved since `cjvs` was written:
+
+| | `cjvs`, 2026-09-26 | 2026-09-30 |
+|---|---:|---:|
+| nodes | 697 | **718** |
+| edges | 2828 | **3015** |
+| dangling | 190 | **198** |
+| — `ts-import` | 137 | **145** |
+| — `md-link` | 28 | **28** |
+| — `bpmn-skill` | 25 | **25** |
+
+`cjvs`'s other two boxes are deliberately untouched.
+
+### Borrowed defect — `ymsu`, accepted rather than fixed
+
+The owner accepted in writing that Option 2 concentrates this axis onto a
+script carrying the `ymsu` write-into-tree defect, and chose it over the "fix
+`ymsu` first" variant. **`ymsu` is not fixed here** and still reaches
+`kg:detangle:check` in the step above.
+
+One narrowing, checkable rather than hopeful: `ymsu`'s mechanism is `bun test`
+repairing a **sidecar** that a later gate then compares against itself.
+`--gate-direction` reads no committed file and writes none — it recomputes the
+classification from the corpus each run — so that masking cannot reach it. The
+flag also suppresses the sidecar write, so the gate cannot mutate its own
+subject.
+
+### Option 3's substance came along, and why that is not option-shopping
+
+Option 3 (print the scope) was **not** the option ruled. Its substance is here
+anyway because the two stopped being alternatives: Option 3 was rejected as a
+fix-substitute — *"stops the over-broad read without making anything visible"* —
+and under Option 2 something IS visible, so the same print line stops standing
+in for a fix and becomes the pointer to one. It goes further than Option 3
+asked: it names the check that owns the other question, because a reader who
+knows a number is incomplete and cannot find its complement is barely better off
+than one who never doubted it. Derived from `ROOT`/`SCAN_ROOTS`, never spelled
+out — a literal instance name here is the exact assumption this bean recorded as
+wrong.
+
+### Corrected, because a `0` was being read as discharging Phase I.1
+
+- `cat-harness/docs/architecture/migration-plan.md` — I.1's gate was **one**
+  check and is now two, I.1a (within-instance) and I.1b (cross-instance), with
+  why they are not each other's second opinion. §0.2 now states its scope.
+- `cat-harness/docs/architecture/current-state.md` — *"Every module is
+  classified, so this is a complete count rather than a floor"* is complete
+  **over one instance**; corrected in place rather than deleted, since the
+  table is still the within-instance worklist.
+- `cat-harness/scripts/repo-partition.ts` — header docblock, the report's own
+  output, the failure message, and the "both axes are now zero and both are
+  enforced" enforcement comment that was the sentence being over-read.
+- `skills/graph-management/kg-separation.md` — the signal table listed
+  `kg:detangle:check` under "wrong-direction edges", which was itself part of
+  the confusion: that script grades staleness, not direction. Split into three
+  rows.
+- `skills/graph-management/graph-detanglement.md` — the graded/pinned line,
+  what the gate refuses to grade and why.

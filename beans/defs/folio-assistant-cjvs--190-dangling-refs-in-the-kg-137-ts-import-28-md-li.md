@@ -57,7 +57,7 @@ ref:  ../../methodologies/dmn.md
 - [ ] The 137 `ts-import` entries are split into scanner limitation vs genuinely
       unresolvable — the first is a fix to the scanner, the second to the code,
       and reporting them as one number hides which.
-- [ ] `kg:detangle` says whether its wrong-direction count is over all edges or
+- [x] `kg:detangle` says whether its wrong-direction count is over all edges or
       only the resolving ones. Today a reader cannot tell.
 - [ ] The 28 `md-link` and 25 `bpmn-skill` entries are each fixed or recorded
       with a reason.
@@ -67,3 +67,34 @@ ref:  ../../methodologies/dmn.md
 Found while answering *"where are we in code separation"* (2026-09-26). Recorded
 and left `todo`; the session that found it was working `1xhc`'s CI cluster and
 deliberately did not pivot.
+
+## Done-when 2 is done — PR #1580 (bean `p11x`), 2026-09-30
+
+*"`kg:detangle` says whether its wrong-direction count is over all edges or only
+the resolving ones."* It is over the **resolving** ones, and the new blocking
+cross-instance gate `kg:detangle:direction` states that before it states its
+count — the excluded dangling total and its per-extractor breakdown, reported
+and never graded.
+
+Taken there rather than here because `p11x` made the count **blocking**, which
+turns this from a legibility nit into a way the gate can pass for the wrong
+reason: a blocking gate whose denominator silently drops unresolved edges can go
+green because an edge failed to resolve rather than because the layering held.
+That is `1xhc` arriving through the back door of its own remedy.
+
+**Remeasured on that branch — `main` has moved and the numbers above are stale:**
+
+| | this bean, 2026-09-26 | 2026-09-30 |
+|---|---:|---:|
+| nodes | 697 | **718** |
+| edges | 2828 | **3015** |
+| dangling | 190 | **198** |
+| — `ts-import` | 137 | **145** |
+| — `md-link` | 28 | **28** |
+| — `bpmn-skill` | 25 | **25** |
+
+The `ts-import` bucket grew by **8**; the other two are unchanged. The two
+remaining boxes (triaging the `ts-import` entries into scanner-limitation vs
+genuinely-unresolvable, and the `md-link` / `bpmn-skill` entries) were
+deliberately **not** taken — that is separate work and #1580 was not widened
+into it.
