@@ -109,8 +109,6 @@ import { bootstrapTermTargets, linkTerms } from "./term-links.ts";
  * blocking `subgraph-readmes` test went red on main. `encodeURIComponent`
  * handles the space but leaves `(` and `)` alone, and an unbalanced one ends a
  * CommonMark destination just as surely, so both are encoded here too.
- *
- * Ported from #1639 so this PR can go green; it no-ops once main carries it.
  */
 export function linkTarget(path: string): string {
   return path
