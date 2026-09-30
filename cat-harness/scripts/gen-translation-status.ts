@@ -56,6 +56,9 @@ import { tileCounts } from "../schemas/tile-count.js";
 import { withViewerNav, type ViewerNav } from "./viewer-page.ts";
 import { renderedPath, withRenders } from "./viewer-declarations.js";
 
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "translation-status-viewer";
+
 const ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = resolve(ROOT, "..");
 
@@ -426,7 +429,7 @@ function main(): void {
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
   const page = (changedAt: string) => {
     // The page says which directory it draws (#1168 B7a-2).
-    const html = withRenders(statusPage({ locales, changedAt, scope: doc.scope }), [renderedPath(repoRootFor(ROOT), translationsDir)]);
+    const html = withRenders(statusPage({ locales, changedAt, scope: doc.scope }), [renderedPath(repoRootFor(ROOT), translationsDir)], VIEWER_TOOL);
     return withViewerNav(html, pagePath, nav) ?? html;
   };
   const json = (changedAt: string) => `${JSON.stringify({ ...doc, changedAt }, null, 2)}\n`;

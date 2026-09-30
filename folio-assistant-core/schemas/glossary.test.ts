@@ -319,7 +319,7 @@ describe("extracted KG terms", () => {
       const decl = instanceRootsIn(REPO)
         .map((r) => ({ r, d: readDeclaration(r) }))
         .find(({ d }) => d?.name === s.instance)!;
-      expect(s.ns).toBe(instanceNs(decl.d!.name, decl.d!.stub));
+      expect(s.ns).toBe(instanceNs(decl.d!.name, decl.d!.stub, decl.d!));
       const rel = relative(REPO, decl.r).split("\\").join("/");
       for (const t of s.glossary.terms) expect(t.source!.startsWith(`${rel}/`)).toBe(true);
     }
@@ -409,7 +409,7 @@ describe("every term in the namespace of the instance that owns its source", () 
     .map((r) => ({ root: resolve(r), decl: readDeclaration(r)! }))
     .filter((r) => r.decl)
     .sort((a, b) => b.root.length - a.root.length);
-  const nsOfName = new Map(roots.map((r) => [r.decl.name, instanceNs(r.decl.name, r.decl.stub)] as const));
+  const nsOfName = new Map(roots.map((r) => [r.decl.name, instanceNs(r.decl.name, r.decl.stub, r.decl)] as const));
   const holder = (path: string) => {
     const p = resolve(REPO, path);
     return roots.find((r) => p === r.root || p.startsWith(`${r.root}/`))?.decl.name;

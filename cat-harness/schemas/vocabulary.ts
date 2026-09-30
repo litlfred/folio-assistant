@@ -562,5 +562,38 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
  * the base depend on something above it.
  */
 export function termLayer(name: string): TermLayer {
-  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? "harness";
+  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? GRAPH_KIND_TYPE_LAYERS[name] ?? "harness";
 }
+
+/**
+ * Which layer owns each graph kind's TYPE, keyed by the type's local name.
+ *
+ * The ONE table. It was two, and they disagreed (bean `r3gy`, D1): this file
+ * gave every graph kind `harness`, so `termIri("SchemaGraph")` minted a
+ * cat-harness IRI, while `ns-export.ts` kept its own map publishing `schemas`
+ * as bootstrap's. A term published by one layer and minted by another is the
+ * leak the layering rule forbids. `ns-export` now asks {@link termLayer}.
+ *
+ * Bootstrap's rows are the kinds in `BOOTSTRAP_GRAPH_KINDS` (`graph.ts`), plus
+ * `KGraph`, the kind of a Knowledge Graph itself; `graph.test.ts` holds the two
+ * lists together. The `core` rows are the folio's own furniture, which the
+ * owner named as NOT bootstrap: "we shouldnt need voicegraph or librarygrph or
+ * previewgrapjh in bootstrap!!". An absent kind is `harness`, the safe
+ * direction, for the reason given on `termLayer`.
+ */
+export const GRAPH_KIND_TYPE_LAYERS: Readonly<Record<string, TermLayer>> = {
+  KGraph: "bootstrap",
+  SkillGraph: "bootstrap",
+  SchemaGraph: "bootstrap",
+  ScenarioGraph: "bootstrap",
+  ProcessGraph: "bootstrap",
+  ModelGraph: "bootstrap",
+  SwimlaneGlossaryGraph: "bootstrap",
+  VoiceGraph: "core",
+  LibraryGraph: "core",
+  UploadsGraph: "core",
+  TodoGraph: "core",
+  TodoItemsGraph: "core",
+  TodoFeedbackGraph: "core",
+  ReviewVerdictsGraph: "core",
+};

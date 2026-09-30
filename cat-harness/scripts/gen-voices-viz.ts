@@ -59,6 +59,9 @@ import { tileCounts } from "../schemas/tile-count.js";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 import { withRenders } from "./viewer-declarations.js";
 
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "voices-viewer";
+
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
 
@@ -424,7 +427,7 @@ if (import.meta.main) {
   // directories present — every one here, the subject's own on a subject page.
   const drawn = (subject?: string): string[] =>
     g.directories.filter((d) => d.present && (subject === undefined || d.instance === subject)).map((d) => d.dir);
-  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn()));
+  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
 
   // One page per SUBJECT — the instances whose voices this handler renders.
   // Read from the VOICES rather than from the directory list, so the instance
@@ -438,7 +441,7 @@ if (import.meta.main) {
     // who-style-guide's voices and the rail should offer who-style-guide's
     // library and docs. The generator holds the subject; nothing is parsed
     // back out of the path it just composed.
-    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject)));
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
   }
 
   // ── ORPHANS (bean `ankg`) ──────────────────────────────────────────────

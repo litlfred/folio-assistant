@@ -25,4 +25,11 @@ if command -v bun >/dev/null 2>&1; then
         echo ""
         exit 1
     fi
+    if ! bun run --silent iri:sync:check >/dev/null 2>&1; then
+        echo ""
+        echo "⚠  A release IRI is not at its instance's declared version. Run:  bun run iri:sync"
+        echo "   then stage the result. To commit anyway: git commit --no-verify"
+        echo ""
+        exit 1
+    fi
 fi
