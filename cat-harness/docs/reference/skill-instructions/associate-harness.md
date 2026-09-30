@@ -31,6 +31,22 @@ A harness has four ways to relate to another:
 | utilizes | `dependencies` (config) | resolves another folio's skills and translations |
 | **associated** | `associatedHarnesses` | knows another **harness**, and where it lives |
 
+**`needs` is required of every instance in this repository, and so is a harness
+IRI.** Owner, 2026-09-30 (issue #1548): *"QA gates on harness declaration of
+dependences. harness instancess need IRI for harness."* `check:instance-graph`
+fails on:
+
+- an instance with no `needs` (write `[]` for the floor; absent stays a legal
+  runtime state and reports `unknown`, but a repository does not ship it);
+- a `needs` name that resolves to nothing, or a cycle;
+- an instance with no absolute harness IRI, or two sharing one.
+
+The IRI is **derived, never written**: `kg-export`'s `exportIdentity` mints
+`<canonicalUrl>/<stub>.jsonld` for an instance that declares its own base, and
+`<host base>/<stub>/<stub>.jsonld` for one published from the host. The gate
+calls that function rather than restating it, so the gate and the published
+`@id` cannot disagree, and the one place to change a base stays one place.
+
 An associated harness is **not loaded, not built and not copied**. This site
 does not publish it. The config panel lists it under "Associated ↗ remote",
 and its links go to the harness's own site and its own repository.

@@ -132,7 +132,7 @@ describe("what gets written", () => {
     const wf = readFileSync(join(d, ".github/workflows/staging.yml"), "utf-8");
     expect(wf).toContain("uses: litlfred/folio-assistant/.github/workflows/folio-staging.yml@main");
     expect(wf.split("\n").some((l) => /^\s*pull_request:/.test(l))).toBe(true);
-    expect(wf).toContain("cat-harness/scripts/build-document-site.ts --out _site");
+    expect(wf).toContain("folio-assistant-core/scripts/build-document-site.ts --out _site");
     // A reviewer's tagged comment refreshes the preview's review comments (423d).
     expect(wf.split("\n").some((l) => /^\s*issue_comment:/.test(l))).toBe(true);
     expect(wf).toContain("issues: read");
