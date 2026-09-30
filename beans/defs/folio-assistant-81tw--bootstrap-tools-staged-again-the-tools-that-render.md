@@ -29,9 +29,10 @@ Move, with history (`git mv`):
 - [x] Zod validation runs as a step of the bootstrap render pipeline (owner: "need Zod usage in bootstrap tools as part of validation in rendering pipeline")
 - [x] SEMVER skill in bootstrap-tools — owner, 2026-09-29, chose **"Bootstrap contract semver"**: a skill defining major/minor/patch for bootstrap's PUBLISHED schemas and graph, with the bump COMPUTED by the bootstrap-tools pipeline from a diff of the generated schemas (in the spirit of the instance-versioning proposal, #592: "a version bump COMPUTED by diffing the exported graph rather than asserted"). Not the every-instance version, and the release skills stay where they are.
 - [x] cat-harness carries bootstrap's publication as a worked SDLC example — owner, 2026-09-29: *"in cat-harness, bootstrap publication can be an SDLC example"* — the lifecycle Zod change → generate → validate → computed semver bump → publish, placed in cat-harness's SDLC/release guidance, WITHOUT cat-harness code importing bootstrap-tools (check:reference-direction decides whether prose may name it)
-- [ ] `bun run gates` green apart from the known local-only `.claude/worktrees` failures
+- [x] `bun run gates` green apart from the known local-only `.claude/worktrees` failures
 
 ## Progress (2026-09-30)
 - Root visibility is by DISCOVERY (`instanceRootsIn`), with no entry in `cat-harness.json`; see `_visibility_comment` in `bootstrap-tools/bootstrap-tools.json`.
 - `partition/instance-rules.ts` got NO repo entry for this instance: `check:partition` scans only `cat-harness/` (bean `p11x`), so an entry would name bootstrap-tools from cat-harness code and enforce nothing. The direction is held by `check:reference-direction`, where cat-harness -> bootstrap-tools is 1 occurrence: the owner-mandated `own-namespaces.json` code.
 - After merging main (release-minted `$id`s), `bootstrap:validate` reads the discussion `$id`s from the published schemas, and `bootstrap:semver` treats a `$id` moving to the next release version as no change.
+- `bun run gates` 2026-09-30: 175 of 176 pass. The one red is `bun test`, and only for two assertions that expect the checkout directory to be called `folio-assistant` (`folio-root.test.ts`, `instance-render.test.ts`). They fail only because this worktree is `wt-bootstrap-tools`, and they pass in a checkout with the usual name.
