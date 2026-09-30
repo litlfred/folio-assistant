@@ -1140,12 +1140,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 5
         },
         {
           "id": "views",
@@ -1154,6 +1154,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
         {
           "kind": "library",
           "path": "/cat-harness/library/folio-assistant-sci/"
@@ -1172,7 +1176,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -2731,7 +2735,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: library, voices, sci-methodologies, qa"
+            "summary": "5: library, voices, sci-methodologies, sci-adapters, qa"
           },
           {
             "key": "needs",

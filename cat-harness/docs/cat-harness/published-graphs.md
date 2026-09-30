@@ -55,13 +55,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 7 published.
+0 of 8 published.
 {: .fa-hx-dim }
 
 - Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 - Folio Assistant — *declared, not published*
 - folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
 - large-datasets — *declared, not published*
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
