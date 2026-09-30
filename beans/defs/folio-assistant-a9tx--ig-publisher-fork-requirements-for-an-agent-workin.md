@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-30T17:30:00Z
+updated_at: 2026-09-30T17:45:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -107,7 +107,7 @@ What already exists, all in the publisher:
 
 Work plan, each step small and upstreamable:
 
-- [x] **W1** criteria 7, 1, 6 — flag, `AstExporter`, per-resource dump, toolchain, byte-identical check
+- [ ] **W1** criteria 7, 1, 6: flag, `AstExporter`, per-resource dump, toolchain are BUILT; the byte-identical check and a real-IG run are **not yet measured** (both need the package registry)
 - [ ] **W2** criterion 2 — measure on smart-immunizations: 458 of 458, cross-checked against `fsh-cone`'s source count
 - [ ] **W3** criteria 4, 5
 - [ ] **W4** criterion 3 — scoped separately; the only step needing the core fork
@@ -175,3 +175,11 @@ includes resolving from the package, and non-`Type-id.json` sources.
 Network: the owner opened the policy, but this container's proxy still refuses
 `packages.fhir.org`, `packages2.fhir.org` and `tx.fhir.org` ("organization
 policy"), re-checked three times through 2026-09-30T15:00Z. The next step is a fresh session.
+
+
+## Who picks this up, 2026-09-30
+
+Owner's call: an agent with network access **claims this bean whole**
+(`bun run beans:claim folio-assistant-a9tx`), W3 and W4 included, rather than a
+child bean. W1 was un-ticked the same day. It had been ticked with the
+byte-identical check never run, which was a false tick.
