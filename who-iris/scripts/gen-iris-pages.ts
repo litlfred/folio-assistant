@@ -52,7 +52,7 @@ import { readDeclaration, repoRootFor, siteDirFor } from "../../cat-harness/sche
 import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
 import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
 import { withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
-import { libraryResolver } from "../../cat-harness/scripts/lib/library-refs.ts";
+import { libraryResolver } from "../../cat-harness/scripts/lib/library-links.ts";
 import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
@@ -1142,7 +1142,7 @@ function verdictBadge(verdict: string): string {
 
 /**
  * A "held as" library id, linked the way every library reference is (bean
- * `qgjh`, `lib/library-refs.ts`): the library viewer opened on the item, the
+ * `qgjh`, `lib/library-links.ts`): the library viewer opened on the item, the
  * item's page and its source, each only where it resolves. The viewer link is
  * made relative to this page. An id nothing resolves stays code.
  */

@@ -5,7 +5,8 @@
  * reference is resolved to each only where that target exists:
  *
  * 1. `viewer` — the library viewer's page for the item's instance, opened on
- *    the item (`#<id>`, which the viewer honours on load and on hashchange).
+ *    the item (`#<instance>/<id>`, the key the viewer honours on load and
+ *    on hashchange).
  *    A SITE-relative path; the page that shows it prefixes its own root.
  * 2. `readme` — the item's generated README (`library-readmes.ts`), "like
  *    bootstrap readmes", on the repository host.
@@ -69,7 +70,10 @@ export function libraryResolver(repo: string, instanceRoot: string): LibraryReso
       const out: LibraryLinks = {};
       if (base !== undefined && handler !== undefined && seg !== undefined) {
         if (existsSync(join(base, handler, seg, e.instance, "index.html"))) {
-          out.viewer = `${handler}/${seg}/${e.instance}/#${encodeURIComponent(e.id)}`;
+          // The viewer's own anchor key is `<instance>/<id>` (`honourAnchor` in
+          // gen-library-viz.ts matches `e.instance + "/" + e.id`), so a bare id
+          // would open the page without selecting anything.
+          out.viewer = `${handler}/${seg}/${e.instance}/#${encodeURIComponent(`${e.instance}/${e.id}`)}`;
         }
       }
       const readme = `${e.dir}/README.md`;

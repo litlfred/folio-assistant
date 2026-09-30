@@ -57,7 +57,7 @@ const str = (v: unknown): string => (v === null || v === undefined ? "" : String
  * `{ id, version }` record — the form arXiv itself cites. A bare string is
  * taken as given; anything else is "not recorded".
  */
-function arxivId(v: unknown): string {
+export function arxivId(v: unknown): string {
   if (typeof v === "string") return v;
   if (v !== null && typeof v === "object" && "id" in v) {
     const { id, version } = v as { id: unknown; version?: unknown };

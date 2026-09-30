@@ -58,7 +58,7 @@ import {
 import { tileCounts } from "../schemas/tile-count.js";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 import { withRenders } from "./viewer-declarations.js";
-import { libraryResolver, type LibraryResolver } from "./lib/library-refs.ts";
+import { libraryResolver, type LibraryResolver } from "./lib/library-links.ts";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "voices-viewer";
@@ -70,7 +70,7 @@ const check = process.argv.includes("--check");
  * The projection. Everything the reader found; it is already small.
  *
  * `links`, when given, resolves a LIBRARY citation to the three places the
- * owner asked a library reference to go (bean `qgjh`, `lib/library-refs.ts`):
+ * owner asked a library reference to go (bean `qgjh`, `lib/library-links.ts`):
  * the viewer opened on the item, the item's README, and its upstream record.
  * Each rule gets `links` only where its citation resolves, so an unresolved one
  * stays text on the page rather than becoming a 404.

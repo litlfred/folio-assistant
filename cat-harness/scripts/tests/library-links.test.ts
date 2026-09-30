@@ -1,12 +1,13 @@
 /**
- * `library-refs` — where a library reference links (bean `qgjh`, owner
+ * `library-links` — where a library reference links (bean `qgjh`, owner
  * 2026-09-30: the viewer, the item's page, and its source).
  */
 import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { libraryResolver } from "../lib/library-refs.ts";
+import { libraryResolver } from "../lib/library-links.ts";
+import { itemFacts } from "../library-readmes.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const REPO = resolve(INSTANCE, "..");
@@ -23,7 +24,8 @@ describe("a library reference resolves only where its target exists", () => {
     expect(entries.length).toBeGreaterThan(0);
     for (const e of entries) {
       const l = r.links(e.id, e.instance);
-      expect(l?.viewer, e.id).toBe(`cat-harness/library/${e.instance}/#${encodeURIComponent(e.id)}`);
+      // The key the viewer's honourAnchor matches: `<instance>/<id>`.
+      expect(l?.viewer, e.id).toBe(`cat-harness/library/${e.instance}/#${encodeURIComponent(`${e.instance}/${e.id}`)}`);
       if (existsSync(join(REPO, e.dir, "README.md"))) expect(l?.readme, e.id).toContain(`/${e.dir}/README.md`);
     }
   });
@@ -38,5 +40,26 @@ describe("a library reference resolves only where its target exists", () => {
   it("does not link a reference it cannot place", () => {
     expect(r.links("no-such-item")).toBeUndefined();
     expect(r.links(entries[0]!.id, "no-such-instance")).toBeUndefined();
+  });
+});
+
+describe("the library projection carries what a reader opens (qgjh)", () => {
+  const full = (
+    JSON.parse(readFileSync(join(INSTANCE, "docs", "assets", "library", "index.json"), "utf-8")) as {
+      entries: { id: string; dir: string; arxiv: string; readme?: string }[];
+    }
+  ).entries;
+
+  it("gives every entry with a README its page link", () => {
+    for (const e of full) {
+      if (existsSync(join(REPO, e.dir, "README.md"))) expect(e.readme, e.id).toContain(`/${e.dir}/README.md`);
+    }
+  });
+
+  it("carries the arXiv id its manifest records, not the empty string the flattened record gave", () => {
+    const recorded = full.filter((e) => itemFacts(join(REPO, e.dir))?.arxiv);
+    // The premise: some item records one, or the loop proves nothing.
+    expect(recorded.length).toBeGreaterThan(0);
+    for (const e of recorded) expect(e.arxiv, e.id).toBe(itemFacts(join(REPO, e.dir))!.arxiv);
   });
 });

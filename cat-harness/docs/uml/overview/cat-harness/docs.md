@@ -226,6 +226,7 @@ classDiagram
       hasManifest [1] boolean
       hasStructure [1] boolean
       hasImagesJson [1] boolean
+      readme [0..1] string~uri~
       pageStart [1] integer | null
       pageEnd [1] integer | null
       words [1] integer

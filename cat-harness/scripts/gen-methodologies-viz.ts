@@ -66,7 +66,7 @@ import {
   type EvidenceReport,
   type MethodologyNode,
 } from "./check-methodology-evidence.js";
-import { libraryResolver, type LibraryResolver } from "./lib/library-refs.ts";
+import { libraryResolver, type LibraryResolver } from "./lib/library-links.ts";
 import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -233,7 +233,7 @@ export function short(v: string, n = 150): string {
 
 /**
  * One ingested-source line. A `library/<slug>` reference links to the owner's
- * three targets where each resolves (bean `qgjh`, `lib/library-refs.ts`); the
+ * three targets where each resolves (bean `qgjh`, `lib/library-links.ts`); the
  * viewer link is made relative to `fromPage`, where this page is published.
  * Anything it cannot place stays code, never a link that 404s.
  */
