@@ -59,7 +59,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`lsi/`](lsi/) | 1 file | |
 | [`methodologies/`](methodologies/) | 1 file | |
 | [`processes/`](processes/) | 76 files | |
-| [`proposals/`](proposals/) | 19 files | |
+| [`proposals/`](proposals/) | 20 files | |
 | [`prov-qaqc/`](prov-qaqc/) | 1 file | |
 | [`qa/`](qa/) | 1 file | |
 | [`reference/`](reference/) | 318 files | |
