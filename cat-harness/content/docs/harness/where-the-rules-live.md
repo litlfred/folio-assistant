@@ -3,7 +3,7 @@ this page disagree, **the Skill wins and this page is wrong**.
 
 | question | where it is answered |
 |---|---|
-| What the KGraph is, and which way its references run | [The KGraph](kgraph.html) |
+| What the Knowledge Graph is, and which way its references run | [The Knowledge Graph](knowledge-graph.html) |
 | How an instance declares its directories, and every graph kind | [`directory-conventions`](reference/skill-instructions/directory-conventions.html) |
 | What a visualiser owes a declared directory | [Subgraph viewers](subgraph-viewers.html) |
 | What a Skill states and what a Tool supplies | [`skills-and-tools`](reference/skill-instructions/skills-and-tools.html) |

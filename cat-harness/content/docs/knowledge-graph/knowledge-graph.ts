@@ -1,8 +1,8 @@
 import { webpage } from "../../../schemas/webpage.ts";
 
 export default webpage({
-  slug: "kgraph",
-  title: "The KGraph",
+  slug: "knowledge-graph",
+  title: "The Knowledge Graph",
   navOrder: 10,
   nodes: [
     { id: "overview", block: "overview" },
