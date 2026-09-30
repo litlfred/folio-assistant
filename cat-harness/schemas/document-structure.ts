@@ -63,6 +63,14 @@ export const NotebookSourceSchema = z
     sha256: Sha256,
     bytes: z.number().int().min(0),
     mtime: z.string().nullable(),
+    /**
+     * The same two fields every rung writes (bean `nso8`), so the L1 gate's
+     * `technical-metadata` requirement reads them as it does for a PDF. A
+     * notebook has no magic bytes, so its type is decided by CONTENT, and
+     * `mimetype_source` says exactly that rather than claiming a sniff.
+     */
+    mimetype_sniffed: z.literal("application/x-ipynb+json"),
+    mimetype_source: z.literal("content"),
     /** A notebook is JSON; this is what the file declared (`nbformat`), not sniffed bytes. */
     nbformat: z.string().min(1),
     /** The kernel language the notebook declares, or null when it declares none. */

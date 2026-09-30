@@ -10,7 +10,7 @@ const REPO = resolve(import.meta.dir, "..", "..");
 const notebook = (over: Record<string, unknown> = {}) => ({
   _schema: "notebook-structure/v1",
   doc_id: "nb",
-  source: { file: "nb.ipynb", sha256: "a".repeat(64), bytes: 10, mtime: null, nbformat: "4.5", language: "python", cells: 4 },
+  source: { file: "nb.ipynb", sha256: "a".repeat(64), bytes: 10, mtime: null, mimetype_sniffed: "application/x-ipynb+json", mimetype_source: "content", nbformat: "4.5", language: "python", cells: 4 },
   metadata: { title: "A notebook" },
   toc_source: "headings",
   sections: [

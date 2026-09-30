@@ -87,3 +87,15 @@ describe("ingest-document routes a notebook by its CONTENT (bean rkqp)", () => {
     }
   });
 });
+
+describe("the images sidecar says only what the notebook supports", () => {
+  test("no image anywhere is the determined empty list", () => {
+    expect(buildEntry(nb([md("# T\ntext")]), SRC, "t").images.images).toEqual([]);
+  });
+  test("an image output or a markdown image is COULD NOT DETERMINE, with the count", () => {
+    const withImg = nb([md("# T\n![fig](a.png)"), { cell_type: "code", source: "plot()", outputs: [{ data: { "image/png": "x" } }] } as never]);
+    const im = buildEntry(withImg, SRC, "t").images;
+    expect(im.images).toBeNull();
+    expect(im.undetermined_reason).toContain("1 image output(s), 1 markdown image(s)");
+  });
+});

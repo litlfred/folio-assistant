@@ -33,6 +33,8 @@ import { NOTEBOOK_STRUCTURE_SCHEMA_ID, NotebookStructureSchema, type NotebookStr
 interface Cell {
   cell_type: "markdown" | "code" | "raw" | string;
   source: string | string[];
+  outputs?: Array<{ data?: Record<string, unknown> }>;
+  attachments?: Record<string, unknown>;
 }
 
 interface Notebook {
@@ -67,6 +69,8 @@ const words = (s: string): number => s.split(/\s+/).filter(Boolean).length;
 
 export interface RungOutput {
   structure: NotebookStructure;
+  /** The entry's `images.json` (`folio-document-images/v1`), in one of its two honest states. */
+  images: { $schema: "folio-document-images/v1"; doc_id: string; images: [] | null; undetermined_reason?: string };
   /** Section id → the markdown file body, front matter included. */
   sections: Map<string, string>;
 }
@@ -150,6 +154,8 @@ export function buildEntry(
     doc_id: docId,
     source: {
       ...source,
+      mimetype_sniffed: "application/x-ipynb+json",
+      mimetype_source: "content",
       nbformat: `${nb.nbformat}.${nb.nbformat_minor ?? 0}`,
       language,
       cells: cells.length,
@@ -159,7 +165,35 @@ export function buildEntry(
     sections,
     structure_note: notes.join(" "),
   });
-  return { structure, sections: files };
+  return { structure, sections: files, images: imagesOf(cells, docId) };
+}
+
+/**
+ * The images sidecar, in the state the notebook actually supports. This rung
+ * keeps no outputs and extracts no images, so a notebook that CARRIES images
+ * (an image output, a markdown image, an attachment) gets `images: null` with
+ * the count and the reason: could not determine, never "none". Only a notebook
+ * that carries none gets the determined empty list.
+ */
+export function imagesOf(cells: Cell[], docId: string): RungOutput["images"] {
+  const outputs = cells.reduce(
+    (n, c) => n + (c.outputs ?? []).filter((o) => Object.keys(o.data ?? {}).some((k) => k.startsWith("image/"))).length,
+    0,
+  );
+  const inline = cells
+    .filter((c) => c.cell_type === "markdown")
+    .reduce((n, c) => n + (cellText(c).match(/!\[[^\]]*\]\(|<img\s/g) ?? []).length, 0);
+  const attached = cells.reduce((n, c) => n + Object.keys(c.attachments ?? {}).length, 0);
+  const total = outputs + inline + attached;
+  if (total === 0) return { $schema: "folio-document-images/v1", doc_id: docId, images: [] };
+  return {
+    $schema: "folio-document-images/v1",
+    doc_id: docId,
+    images: null,
+    undetermined_reason:
+      `the notebook carries ${outputs} image output(s), ${inline} markdown image(s) and ${attached} attachment(s); ` +
+      "the notebook rung keeps no outputs and extracts no images, so which are figures is not established",
+  };
 }
 
 /** Read a notebook file, build its entry, and write it under `<lib>/<docId>/`. */
@@ -184,6 +218,7 @@ export function runRung(file: string, lib: string, docId?: string): string {
   mkdirSync(join(dir, "sections"), { recursive: true });
   writeFileSync(join(dir, "structure.json"), JSON.stringify(out.structure, null, 2) + "\n");
   for (const [sid, body] of out.sections) writeFileSync(join(dir, "sections", `${sid}.md`), body);
+  writeFileSync(join(dir, "images.json"), JSON.stringify(out.images, null, 2) + "\n");
   return dir;
 }
 

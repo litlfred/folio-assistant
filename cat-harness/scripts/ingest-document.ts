@@ -319,6 +319,12 @@ export function withDerivedArms(
   staging: string,
   library: string,
 ): Plan {
+  // A notebook gets the ONE arm that reads what a rung wrote rather than the
+  // source: `l1-blocks.ts` builds blocks from `sections/`. The image arms read
+  // a PDF and do not apply; the notebook rung writes its own `images.json`.
+  if (plan.rung === "notebook") {
+    return { ...plan, steps: [...plan.steps, ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging]] };
+  }
   const PDF_RUNGS = ["pdf-structure", "pdf-pages", "pdf-ocr+pdf-pages"];
   if (!PDF_RUNGS.includes(plan.rung)) return plan;
   return {
