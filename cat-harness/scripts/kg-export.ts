@@ -301,6 +301,7 @@ export function buildContext(): Record<string, unknown> {
     // the IRI this document already minted.
     hasSkill: { "@id": termIri("hasSkill"), ...link },
     bindsRole: { "@id": termIri("bindsRole"), ...link },
+    inLane: { "@id": termIri("inLane"), ...link },
     // A LINK: the artefact's published URL, which dereferences. Undeclared it
     // would be dropped by any JSON-LD processor — the `ovkk` defect, where 34
     // property names were used in `@graph` and absent from `@context`, so the
@@ -432,8 +433,9 @@ export function buildContext(): Record<string, unknown> {
     decidedBy: { "@id": termIri("decidedBy"), ...link },
     hitPolicy: termIri("hitPolicy"),
     // WHERE A NODE CAME FROM, and the two senses are not one term. A Process
-    // carries the `.bpmn` path it was loaded from; a lane-derived Role carries
-    // the string `bpmn-lane`, which is a provenance KIND and not a path. Both
+    // carries the `.bpmn` path it was loaded from; a Role carries the string
+    // `role-registry` (and a lane-derived Role, until #1168 B9b, carried
+    // `bpmn-lane`), which is a provenance KIND and not a path. Both
     // were emitted as `source`, so a single declaration would have asserted
     // that `bpmn-lane` is a file. Literals, for `maintainsFrom`'s reason: a
     // repo-relative path is not dereferenceable.
@@ -1405,7 +1407,6 @@ async function collectProcesses(
   notes?: string[],
 ): Promise<Node[]> {
   const nodes: Node[] = [];
-  const lanes = new Set<string>();
   const dirs = findBpmnDirs(root);
   // Zero diagrams is a determined empty ONLY if we looked. Say which.
   //
@@ -1606,27 +1607,22 @@ async function collectProcesses(
           to: makeIri(doc, "process", `${m.id}/node/${f.to}`),
         });
       }
-      // A lane IS a role, and `performedBy` points at it. Minting the link
-      // without emitting the node left all 328 of them dangling.
+      // A lane is its OWN node, part of its process, binding a role (#1168,
+      // B9b; owner 2026-09-30: "Lane node"). Until then a lane was minted as a
+      // Role keyed by its NAME, so one role had two nodes — `role/<lane name>`
+      // and the registry's `role/<id>` — joined only by `bindsRole`, and a lane
+      // whose name happened to equal a role id silently merged into it.
       //
       // Read from the DECLARED lane set, not from the lanes flow nodes happen
       // to name. An `actedUpon` lane holds no activities by construction — it
       // is written to and never acts — so deriving lanes from node references
-      // drops exactly the lanes whose emptiness is the point. Measured: the
-      // `log` lane's link to its role was the one dangling link in the graph.
+      // drops exactly the lanes whose emptiness is the point.
       for (const lane of m.lanes) {
-        const name = lane.name ?? lane.id;
-        if (lanes.has(name)) continue;
-        lanes.add(name);
         nodes.push({
-          "@id": makeIri(doc, "role", name),
-          "@type": termIri("Role"),
-          name,
-          // NOT `source`: a Process's `source` is the file it was read from,
-          // and this is a provenance KIND. One term over both would assert
-          // that `bpmn-lane` is a path.
-          sourceKind: "bpmn-lane",
-          // The lane's own ref: the join from the lane view to the registry.
+          "@id": makeIri(doc, "process", `${m.id}/lane/${lane.id}`),
+          "@type": termIri("Lane"),
+          name: lane.name ?? lane.id,
+          partOf: makeIri(doc, "process", m.id),
           bindsRole: lane.roleRef === undefined ? undefined : makeIri(doc, "role", lane.roleRef),
         });
       }
@@ -1642,11 +1638,15 @@ async function collectProcesses(
           //
           // `laneName` and `implementsSkillNames` sat beside these two,
           // repeating each target's name as a string. REMOVED as denormalised:
-          // the lane's Role node carries the lane name as its `name`, every
-          // named skill has a Skill node carrying its own, and neither link
-          // dangles (0 of 415 ProcessNode links, measured 2026-09-19). A name
-          // duplicated beside a link is a second answer that can go stale.
-          performedBy: n.lane === undefined ? undefined : makeIri(doc, "role", n.lane),
+          // the Lane node carries the lane name as its `name`, every named
+          // skill has a Skill node carrying its own. A name duplicated beside
+          // a link is a second answer that can go stale.
+          //
+          // `performedBy` reaches the REGISTRY role through the lane's
+          // `roleRef` (#1168, B9b): the role that performs, not the lane it
+          // performs in. `inLane` is the lane.
+          performedBy: n.roleRef === undefined ? undefined : makeIri(doc, "role", n.roleRef),
+          inLane: n.laneId === undefined ? undefined : makeIri(doc, "process", `${m.id}/lane/${n.laneId}`),
           implementedBy: n.skills.map((k) => makeIri(doc, "skill", k)),
           touchesWorkPlan: n.touchesWorkPlan,
           workPlanOp: n.workPlanOp,
@@ -1973,9 +1973,10 @@ function linkSchemas(graph: Node[], root: string = ROOT): void {
  * `log` were both absent while `work-plan` happened to be present only
  * because some other diagram gave its lane an activity.
  *
- * Lane-derived nodes are kept as they were — they are keyed by lane name and
- * other links point at them — and each lane links to the declared role it
- * binds with `bindsRole`, so the two views join rather than compete.
+ * Since #1168 B9b these are the ONLY Role nodes: a lane is a `Lane` node of
+ * its process, linking to the role it binds with `bindsRole`, and an
+ * activity's `performedBy` reaches the role here through its lane's
+ * `roleRef`. Lane-derived Roles, keyed by lane name, gave one role two nodes.
  */
 function collectDeclaredRoles(doc: string, root: string = ROOT): Node[] {
   // EVERY declared `kg` root, not the literal `skills/` and not the first one
@@ -2157,7 +2158,7 @@ const LINK_TERMS = [
   "partOf", "implementedBy", "performedBy", "declaresSkill", "inPackage", "inSubgraph",
   "providesCapability", "requiresCapability", "holdsGraph", "startNode",
   "incoming", "outgoing", "from", "to", "satisfies", "hasCapability",
-  "hasSkill", "bindsRole",
+  "hasSkill", "bindsRole", "inLane",
 ] as const;
 
 /**

@@ -175,6 +175,12 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "A stated need a change must satisfy, elicited and signed off in the CRDM process before implementation begins. Distinct from the issue that tracks it and the bean that plans the work.",
     seeAlso: "/crdm-methodology.html",
   },
+  Lane: {
+    gloss:
+      "A swimlane of one BPMN process: part of that process, binding the Role " +
+      "that acts in it (`bindsRole`). Not itself a role — a role is a " +
+      "registry node, and many lanes in many processes bind it (#1168, B9b).",
+  },
   LaneUsage: {
     gloss:
       "One appearance of a glossary concept as a swimlane in one BPMN process — " +
@@ -376,7 +382,8 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   roleName: { gloss: "The role's own name, as a lane binds it." },
   mayTakeRole: { gloss: "A declared role this actor may take on: a link to the Role node from `scenarios/roles.json` (#1168 B8)." },
   satisfiesStatement: { gloss: "A requirement statement this node discharges, as `req:<requirement>#<statement key>`." },
-  performedBy: { gloss: "The role that performs this activity." },
+  performedBy: { gloss: "The role that performs this activity: the registry Role its lane binds." },
+  inLane: { gloss: "The BPMN lane this activity sits in, a Lane node of the same process." },
   implementedBy: { gloss: "The skill that implements this activity." },
   assignments: { gloss: "The role-to-lane bindings a diagram carries." },
   permissionName: { gloss: "A permission's name, as an actor holds it." },

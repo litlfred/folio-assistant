@@ -1361,6 +1361,7 @@ classDiagram
       hasManifest [1] boolean
       hasStructure [1] boolean
       hasImagesJson [1] boolean
+      readme [0..1] string~uri~
       pageStart [1] integer | null
       pageEnd [1] integer | null
       words [1] integer
@@ -1459,6 +1460,7 @@ classDiagram
       quote [1] string
       counterintuitive [0..1] boolean
       commonError [0..1] string
+      links [0..1] object
     }
     class cat_harness_docs_folio_voices_index_v1_Voice["Voice"] {
       <<json: VoicesIndexSchema>>
@@ -1697,6 +1699,7 @@ classDiagram
       hasManifest [1] boolean
       hasStructure [1] boolean
       hasImagesJson [1] boolean
+      readme [0..1] string~uri~
       pageStart [1] integer | null
       pageEnd [1] integer | null
       words [1] integer
@@ -1795,6 +1798,7 @@ classDiagram
       quote [1] string
       counterintuitive [0..1] boolean
       commonError [0..1] string
+      links [0..1] object
     }
     class cat_harness_root_docs_folio_voices_index_v1_Voice["Voice"] {
       <<json: VoicesIndexSchema>>

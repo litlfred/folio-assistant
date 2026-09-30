@@ -284,7 +284,7 @@ describe("kg export", () => {
     const seen = new Set(EXPORT["@graph"].flatMap((n) => Object.keys(n)));
     expect(retired.filter((k) => seen.has(k))).toEqual([]);
     // And the facts they carried are still reachable, by link: a ProcessNode's
-    // lane is its Role node's label, and its skills are Skill nodes.
+    // performer is a Role node with a name, and its skills are Skill nodes.
     const byId = new Map(EXPORT["@graph"].map((n) => [n["@id"] as string, n]));
     const withLane = typed("ProcessNode").filter((n) => n.performedBy !== undefined);
     expect(withLane.length).toBeGreaterThan(100);
@@ -723,18 +723,37 @@ describe("every self-URL the export publishes resolves to something published", 
  * Bean `folio-assistant-7uff`. The role REGISTRY is a source of Role nodes,
  * not just the lane names that fall out of the diagrams.
  */
-describe("a Role comes from the registry as well as from a lane", () => {
+describe("a Role comes from the registry; a lane is a Lane that binds one", () => {
   const roles = typed("Role");
   const registry = roles.filter((r) => r.sourceKind === "role-registry");
+  const lanes = typed("Lane");
 
-  test("both views are present and neither is empty", () => {
+  test("both are present, and every Role is a registry role", () => {
     // The vacuity guard first: every assertion below filters, and a filter
     // over nothing passes. Until 2026-09-19 EVERY Role node came from a
-    // `bpmn-lane`, so `roles.json` — which is where a role's actor kinds,
-    // its skills and its `actedUpon` flag are actually written — contributed
-    // nothing to the published graph at all.
+    // `bpmn-lane`; until #1168 B9b lanes were still minted as Roles keyed by
+    // their NAME, so one role had two nodes. Now a Role is only ever the
+    // registry's, and a lane is its own node.
     expect(registry.length).toBeGreaterThan(20);
-    expect(roles.filter((r) => r.sourceKind === "bpmn-lane").length).toBeGreaterThan(50);
+    expect(lanes.length).toBeGreaterThan(50);
+    expect(roles.filter((r) => r.sourceKind !== "role-registry").map((r) => r["@id"])).toEqual([]);
+  });
+
+  test("every lane is part of its process and binds a registry role", () => {
+    const registryIds = new Set(registry.map((r) => r["@id"]));
+    const processes = new Set(typed("Process").map((p) => p["@id"]));
+    for (const l of lanes) expect(processes.has(l.partOf as string)).toBe(true);
+    const unbound = lanes.filter((l) => !registryIds.has(l.bindsRole as string)).map((l) => l["@id"]);
+    expect(unbound).toEqual([]);
+  });
+
+  test("an activity is performed by a registry role, in a lane", () => {
+    const registryIds = new Set(registry.map((r) => r["@id"]));
+    const laneIds = new Set(lanes.map((l) => l["@id"]));
+    const acting = typed("ProcessNode").filter((n) => n.performedBy !== undefined);
+    expect(acting.length).toBeGreaterThan(100);
+    expect(acting.filter((n) => !registryIds.has(n.performedBy as string)).map((n) => n["@id"])).toEqual([]);
+    expect(acting.filter((n) => !laneIds.has(n.inLane as string)).map((n) => n["@id"])).toEqual([]);
   });
 
   test("every role the registry declares is a node", () => {
@@ -758,10 +777,10 @@ describe("a Role comes from the registry as well as from a lane", () => {
   });
 
   test("the registry view joins the lane view rather than replacing it", () => {
-    // Two kinds of node, joined by `bindsRole` ON THE LANE: the registry node
-    // carries what the role IS, each lane node where it acts. The lane holds
-    // the pointer, not the role (#1168). The join is only worth having if it
-    // resolves, which is what the `log` lane failed until the lane set was read.
+    // Two kinds of node, joined by `bindsRole` ON THE LANE: the Role carries
+    // what the role IS, each Lane where it acts. The lane holds the pointer,
+    // not the role (#1168). The join is only worth having if it resolves,
+    // which is what the `log` lane failed until the lane set was read.
     const log = registry.find((r) => r.name === "log")!;
     const binding = EXPORT["@graph"].filter((n) => n.bindsRole === log["@id"]);
     expect(binding.length).toBeGreaterThanOrEqual(1);

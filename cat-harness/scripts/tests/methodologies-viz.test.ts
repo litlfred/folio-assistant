@@ -35,6 +35,7 @@ import { join, resolve } from "node:path";
 import { siteDirFor } from "../../schemas/cat-harness.js";
 
 import {
+  evidenceLine,
   instanceOf,
   methodologyRows,
   page,
@@ -278,5 +279,30 @@ describe("the page a reader gets — over the REAL corpus", () => {
     expect(stat("cited, not ingested")).toBe(
       rows.filter((x: MethodologyRow) => x.state === "cited-only").length,
     );
+  });
+});
+
+/**
+ * Bean `qgjh`: an ingested source links to the viewer, the item page and the
+ * source where each resolves, and anything unplaceable stays code.
+ */
+describe("ingested sources link what resolves (qgjh)", () => {
+  const links = {
+    links: (id: string) =>
+      id === "known-item"
+        ? { viewer: "cat-harness/library/cat-harness/#known-item", readme: "https://host/README.md", source: "https://arxiv.org/abs/1" }
+        : undefined,
+  };
+
+  it("links a known library item, relative to the page it sits on", () => {
+    const line = evidenceLine("library/known-item", links, "methodologies/index.md");
+    expect(line).toBe(
+      "- [`library/known-item`](../cat-harness/library/cat-harness/#known-item) · [item page](https://host/README.md) · [source](https://arxiv.org/abs/1)",
+    );
+  });
+
+  it("leaves an unknown item, or no resolver, as code", () => {
+    expect(evidenceLine("library/unknown", links, "methodologies/index.md")).toBe("- `library/unknown`");
+    expect(evidenceLine("library/known-item")).toBe("- `library/known-item`");
   });
 });

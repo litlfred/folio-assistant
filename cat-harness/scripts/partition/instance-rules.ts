@@ -750,6 +750,9 @@ export const RULES: Rule[] = [
       // A README per declared directory, from the declaration. Core beside
       // `readme-sections`, whose file description and 'used by' it reuses.
       "scripts/subgraph-readmes.ts",
+      // Its sibling for a library ITEM (bean `qgjh`): the same markers and
+      // `splice`, the words from the item's own manifest. Core beside it.
+      "scripts/library-readmes.ts",
       "scripts/check-docs-populated.ts",     // every harness owes one populated doc page
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
@@ -770,6 +773,13 @@ export const RULES: Rule[] = [
       // CORE beside `external-schemas.ts` itself, which is already here.
       "scripts/gen-external-schemas-viz.ts",
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
+      // Its shared answer to "does this skill have a page" (bean `qgjh`): the
+      // tools and processes visualisers link a skill only where one is, so the
+      // module sits beside the two viewers that read it.
+      "scripts/lib/skill-pages.ts",
+      // Its library twin (bean `qgjh`): where a library reference links — the
+      // viewer, the item README, the upstream record — read, never composed.
+      "scripts/lib/library-links.ts",
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       // The three materialisation modules that stood here — `check-materialized-fixity.ts`
       // (materialized bytes vs their recorded digest, the read-only rule enforced),

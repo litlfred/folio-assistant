@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rogk
 title: 'B9a (#1168): alternatives are DERIVED — delete Tool.alternativeTo'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T10:54:25Z
-updated_at: 2026-09-30T11:00:04Z
+updated_at: 2026-09-30T11:21:27Z
 parent: folio-assistant-tr05
 ---
 
@@ -18,3 +18,8 @@ Rule: two Tools are alternatives iff they share a satisfied skill AND have the s
 - [ ] one derivation function, used by check-tools, kg-export and the tools viewer
 - [ ] the 3 false positives typed away; derived set == the 5 declared pairs
 - [ ] selection still required when a tool has a derived alternative
+
+
+
+## Done — #1577 (merged 2026-09-30)
+deriveAlternatives + alternativesWithoutSelection in schemas/tool.ts; alternativeTo removed from schema and 9 declarations; criterion tool-alternative-selectable. Derived set = beans, ingest, 3 transcriber pairs. Not derived: release-please / package-release-manual (I/O differs) — put to the owner.
