@@ -45,6 +45,16 @@ import { BOOTSTRAP_TERMS } from "../schemas/graph.ts";
 import { gitFiles } from "./git-files.ts";
 import { bootstrapTermTargets, linkTerms } from "./term-links.ts";
 
+/**
+ * A path as a Markdown link destination. A space or a parenthesis ends a bare
+ * destination, so a file uploaded as `PIIS2589750021000388 (2).pdf` rendered a
+ * broken link (2026-09-30); percent-encode them, which GitHub and kramdown both
+ * resolve back to the file.
+ */
+export function href(path: string): string {
+  return encodeURI(path).replace(/\(/g, "%28").replace(/\)/g, "%29");
+}
+
 /** What a section renders. The same shape as the harness's `SectionOutput`. */
 export interface SectionOutput {
   markdown: string;
@@ -197,9 +207,9 @@ export const processesSection: GraphSection = {
       const how = callers.length ? `started from ${callers.map((c) => `"${c}"`).join(" and ")}` : "the one you start";
       const calls = [...new Set(p.calls)].map((c) => byId.get(c)?.name).filter(Boolean);
       lines.push(
-        `**${p.name}**: [\`${p.file}\`](${p.file}), ${how}${calls.length ? `; it calls ${calls.map((c) => `"${c}"`).join(" and ")}` : ""}.`,
+        `**${p.name}**: [\`${p.file}\`](${href(p.file)}), ${how}${calls.length ? `; it calls ${calls.map((c) => `"${c}"`).join(" and ")}` : ""}.`,
         "",
-        `![${p.name}](${p.file.replace(/\.bpmn$/, ".svg")})`,
+        `![${p.name}](${href(p.file.replace(/\.bpmn$/, ".svg"))})`,
         "",
       );
     }
@@ -304,7 +314,7 @@ export const filesSection: GraphSection = {
     // link stays the path from this README. A table under `skills/` that
     // repeats `skills/` on every row says the same thing twice.
     const row = (f: string, under = "") =>
-      `| [\`${cell(under ? relative(under, f) : f)}\`](${f}) | ${cell(describe(root, f, assets))} | ${used(f)} |`;
+      `| [\`${cell(under ? relative(under, f) : f)}\`](${href(f)}) | ${cell(describe(root, f, assets))} | ${used(f)} |`;
     const head = ["| file | what it is | used by |", "|---|---|---|"];
 
     const lines: string[] = [];
@@ -332,7 +342,7 @@ export const filesSection: GraphSection = {
         "|---|---|---|",
         ...perDir.map(({ d, files }) => {
           const label = d.title ? ` ${cell(d.title)}` : "";
-          return `| [\`${cell(d.path)}\`](${readmeOf(d.path) ?? d.path})${label} | ${cell(d.description ? firstSentence(d.description) : "")} | ${files.length} |`;
+          return `| [\`${cell(d.path)}\`](${href(readmeOf(d.path) ?? d.path)})${label} | ${cell(d.description ? firstSentence(d.description) : "")} | ${files.length} |`;
         }),
         "",
       );
@@ -341,11 +351,11 @@ export const filesSection: GraphSection = {
 
     for (const { d, files } of perDir) {
       const r = readmeOf(d.path);
-      const heading = r ? `[\`${d.path}\`](${r})` : `\`${d.path}\``;
+      const heading = r ? `[\`${d.path}\`](${href(r)})` : `\`${d.path}\``;
       lines.push(`**${heading}**${d.description ? `: ${cell(firstSentence(d.description))}` : ""}`, "");
       const nested = files.some((f) => relative(d.path, f).includes("/"));
       if (nested && files.every((f) => f.endsWith(".json"))) {
-        lines.push(...head, `| [\`${d.path}\`](${d.path}) | ${files.length} files, in subdirectories | |`, "");
+        lines.push(...head, `| [\`${d.path}\`](${href(d.path)}) | ${files.length} files, in subdirectories | |`, "");
         continue;
       }
       lines.push(...head, ...files.map((f) => row(f, d.path)), "");
