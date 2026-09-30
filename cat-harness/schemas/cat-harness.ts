@@ -691,6 +691,8 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
   remoteGraphs?: RemoteGraph[];
   /** Harnesses this one is associated with and does not hold — {@link AssociatedHarness}. Issue #1146. */
   associatedHarnesses?: AssociatedHarness[];
+  /** External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — {@link Subscription}. Issue #1719. */
+  subscriptions?: Subscription[];
   /**
    * Sticky notes this layer contributes to the landing board.
    *
@@ -2053,6 +2055,65 @@ export const AssociatedHarnessSchema = z
   // without a word and leave ✎ pointing nowhere.
   .strict();
 
+/**
+ * A SUBSCRIPTION to an external Knowledge Graph — a **substrate**: a repository
+ * whose root declaration meets bootstrap's schema requirements and declares at
+ * least one harness. Issue #1719; the design is
+ * `docs/proposals/kg-subscriptions.md`.
+ *
+ * ## Between `associatedHarnesses` and `needs`, and it MOVES
+ *
+ * `needs` is fully loaded, with order, overlay and skill resolution.
+ * `associatedHarnesses` is never loaded. A subscription starts referenced and
+ * becomes materialised one part at a time, as the subscriber chooses. So this
+ * entry holds only the CHOICE and the PIN. Whether a chosen part is actually
+ * held is answered by that part's `MaterializationSchema` record, the one
+ * place that already answers "do we hold these bytes". Recording state here
+ * too would give two answers to that question.
+ *
+ * `ref` is a 40-character SHA and required, the rule `sync-remote-skills`
+ * already enforces. An unpinned subscription is how two subscribers see two
+ * graphs under one name. A subgraph not listed is REFERENCED, not absent.
+ */
+export interface Subscription {
+  /** Local name for the subscription; unique within this list. The substrate's own name, unless two pins of one substrate are ever needed. */
+  id: string;
+  /** Where the substrate lives, `owner/repo` (#1652). */
+  repository: RepoFullName;
+  /** The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases. */
+  ref: string;
+  /** Subgraph ids (the substrate's `directories[].id`) CHOSEN for materialisation. Everything else stays referenced. */
+  subgraphs?: string[];
+  /** How referenced binary assets are materialised. Each copy still passes `Process_MaterializeRemote`'s gates. */
+  assets?: { policy: "none" | "on-demand" | "all" };
+  /** Harness names from the substrate CHOSEN for instantiation. Instantiating writes `<name>.config.json`, which is what puts it in the navbar. */
+  harnesses?: string[];
+  /** One sentence a reader of the visualizer sees. */
+  note?: string;
+}
+
+const uniqueStrings = (label: string) =>
+  z
+    .array(z.string().min(1))
+    .refine((xs) => new Set(xs).size === xs.length, { message: `${label}: a value appears twice` });
+
+export const SubscriptionSchema = z
+  .object({
+    id: z.string().regex(INSTANCE_NAME),
+    repository: RepoFullNameSchema,
+    // A full SHA, and only that. A branch name moves under the subscriber;
+    // an abbreviated SHA is ambiguous by definition.
+    ref: z.string().regex(/^[0-9a-f]{40}$/, "ref must be a full 40-character commit SHA — pin, never follow a branch"),
+    subgraphs: uniqueStrings("subgraphs").optional(),
+    assets: z.object({ policy: z.enum(["none", "on-demand", "all"]) }).strict().optional(),
+    harnesses: z.array(z.string().regex(INSTANCE_NAME)).refine((xs) => new Set(xs).size === xs.length, { message: "harnesses: a name appears twice" }).optional(),
+    note: z.string().min(1).optional(),
+  })
+  // STRICT for the reason AssociatedHarnessSchema is: a misspelt `subgraph`
+  // would be dropped without a word, and the subscriber would believe it had
+  // chosen something it had not.
+  .strict();
+
 export const RemoteGraphSchema = z
   .object({
     id: z.string().min(1),
@@ -2475,6 +2536,15 @@ export const CatHarnessDeclarationSchema = z.object({
     .array(AssociatedHarnessSchema)
     .refine((xs) => new Set(xs.map((x) => x.name)).size === xs.length, { message: "associatedHarnesses: a name appears twice" })
     .optional(),
+  /**
+   * External Knowledge Graphs this one subscribes to — see {@link Subscription}.
+   * `.optional()` for the reason `associatedHarnesses` is. Ids are unique, and
+   * never also in `needs` or `associatedHarnesses` — refined below.
+   */
+  subscriptions: z
+    .array(SubscriptionSchema)
+    .refine((xs) => new Set(xs.map((x) => x.id)).size === xs.length, { message: "subscriptions: an id appears twice" })
+    .optional(),
   stickies: z.array(StickyContributionSchema).optional(),
   renderExemption: RenderExemptionSchema.optional(),
   /**
@@ -2563,6 +2633,26 @@ export const CatHarnessDeclarationSchema = z.object({
           code: z.ZodIssueCode.custom,
           path: ["associatedHarnesses", i, "name"],
           message: `\`${a.name}\` is in \`needs\`: an associated harness is referenced, not loaded (issue #1146)`,
+        });
+      }
+    });
+    // Issue #1719: one relation per remote thing. A subscription that is also
+    // in `needs` would be both loaded and chosen part by part; one that is
+    // also an associated harness would be both referenced-only and consumed.
+    const associated = new Set((d.associatedHarnesses ?? []).map((a) => a.name));
+    (d.subscriptions ?? []).forEach((sub, i) => {
+      if (needs.has(sub.id)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["subscriptions", i, "id"],
+          message: `\`${sub.id}\` is in \`needs\`: a subscription is consumed part by part, not loaded whole (issue #1719)`,
+        });
+      }
+      if (associated.has(sub.id)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["subscriptions", i, "id"],
+          message: `\`${sub.id}\` is also in \`associatedHarnesses\`: subscribe to it OR associate it, not both (issue #1719)`,
         });
       }
     });
