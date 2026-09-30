@@ -3316,6 +3316,20 @@ a.fa-tile[data-fa-readonly]:focus-visible {
 .fa-sticky-p-medium   { border-left-color: var(--fa-sticky-accent, rgba(128, 128, 128, 0.7)); }
 .fa-sticky-p-low      { border-left-color: var(--fa-sticky-edge, rgba(128, 128, 128, 0.35)); }
 
+/* A THEMED CARD WITH NO PRIORITY carries its accent as a thin TOP band.
+ * Owner ruling 2026-09-30 (bean `v8n5`): the accent reached a card only
+ * through `.fa-sticky-p-medium`, so a landing card, which has no priority,
+ * showed its theme as white with grey edges, and the IRIS blue appeared
+ * nowhere on the who-iris card. Generic by construction: it keys on the
+ * theme ATTRIBUTE, not on any theme's name.
+ *
+ * The TOP edge, not the left. The left edge is the priority channel, and
+ * medium already paints the accent there, so an accent left edge on a card
+ * with no priority would read as "medium". Two signals, two edges. */
+.fa-sticky[data-fa-sticky-theme]:not([class*="fa-sticky-p-"]) {
+  border-top: 3px solid var(--fa-sticky-accent, var(--fa-sticky-edge, rgba(128, 128, 128, 0.45)));
+}
+
 .fa-sticky-head {
   display: flex;
   flex-direction: column;
