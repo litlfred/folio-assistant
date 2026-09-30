@@ -2,6 +2,9 @@
  * `owner/name` — a forge repository's full name, in its own module so a
  * declaration schema can use it without importing the Tool type table
  * (`tool-types.ts` imports `cat-harness.ts`, which would make the cycle).
+ *
+ * @module schemas/repo-full-name
+ * @graphNode schema
  */
 import { z } from "zod";
 

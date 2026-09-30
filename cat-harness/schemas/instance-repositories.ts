@@ -12,6 +12,9 @@
  * Every entry keeps `name` alongside `repository` because the name is still
  * what `needs` edges, filenames and `declaredBy` resolve against; the
  * repository is the identity a reference outside the instance uses.
+ *
+ * @module schemas/instance-repositories
+ * @graphNode schema
  */
 import { relative, resolve } from "node:path";
 import { instanceRootsIn, readDeclaration, type InstanceLocation } from "./cat-harness.js";
