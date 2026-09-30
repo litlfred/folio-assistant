@@ -297,10 +297,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T10:45:08.370Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6cf7515ca78a3325d898e48b5f50dc82fb0afa44",
-  "sourceCommitSha": "6cf7515ca78a3325d898e48b5f50dc82fb0afa44",
-  "sourceCommitAt": "2026-09-30T12:41:29+02:00",
+  "generatedAt": "2026-09-30T11:02:45.212Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/54e38c5c0edb21857e3c26d69fcc2fe3e1374897",
+  "sourceCommitSha": "54e38c5c0edb21857e3c26d69fcc2fe3e1374897",
+  "sourceCommitAt": "2026-09-30T12:58:01+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2770,11 +2770,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "prepare-merge",
       "title": "Prepare-merge — get a feature branch ready to land",
+      "description": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\".",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/prepare-merge.md",
-      "instructionLines": 452,
+      "instructionLines": 463,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -43044,8 +43045,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "6cf7515ca78a3325d898e48b5f50dc82fb0afa44",
+    "sha": "54e38c5c0edb21857e3c26d69fcc2fe3e1374897",
     "pr": "main",
-    "run": "36703949255"
+    "run": "36705622666"
   }
 }

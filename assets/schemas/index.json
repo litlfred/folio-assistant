@@ -35925,6 +35925,13 @@
           "doc": "How many children the SOURCE says this container has — not how many are"
         },
         {
+          "name": "handle",
+          "type": "HandleSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The node's Handle, where the source mints one — PREFERRED over any host"
+        },
+        {
           "name": "libraryId",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -35955,6 +35962,7 @@
       "values": [],
       "refs": [
         "folio-assistant-core/schemas/catalogue.ts#BitstreamSchema",
+        "folio-assistant-core/schemas/catalogue.ts#HandleSchema",
         "folio-assistant-core/schemas/materialization.ts#MaterializationSchema"
       ],
       "unresolved": [],
@@ -36035,6 +36043,13 @@
           "type": "z.string().min(1).default(\"nodes\")",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "sourceLoss",
+          "type": "z .object({ container: z.string().min(1), referencedItem: z.string().min(1), materializedItem: z.string().min(1), }) .s…",
+          "optional": true,
+          "array": false,
+          "doc": "What survives if the SOURCE goes away, stated per node kind — not only"
         }
       ],
       "extendsNames": [],
@@ -36045,6 +36060,20 @@
         "CATALOGUE_SCHEMA_TAG",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/catalogue.ts#HandleSchema",
+      "name": "HandleSchema",
+      "module": "folio-assistant-core/schemas/catalogue.ts",
+      "kind": "zod-scalar",
+      "doc": "A Handle — `<prefix>/<suffix>`, e.g. `10665/332098` — the persistent",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -44996,6 +45025,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema",
+      "to": "folio-assistant-core/schemas/catalogue.ts#HandleSchema",
+      "via": "handle",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema",
