@@ -13,6 +13,63 @@
       "dcterms:source": "Schema fields of bootstrap-tools"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/graph-export.graphexportschema.comment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphExportSchema.comment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Says it is generated, and by what (owner, 2026-09-30)."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.comment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/graph-export.graphexportschema.generatedattime",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphExportSchema.generatedAtTime"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "PROV, only when built with `--provenance`: the publish build, never the tests."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.generatedAtTime",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/graph-export.graphexportschema.omitted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphExportSchema.omitted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Subgraphs declared but whose contents were not read — never an unexplained empty."
+        }
+      ],
+      "dcterms:source": "bootstrap-tools/schemas/graph-export.ts#GraphExportSchema.omitted",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/bootstrap-tools/ns#glossary/kg-schema-fields/model-registry.modelentryschema.id",
       "@type": "skos:Concept",
       "skos:inScheme": {

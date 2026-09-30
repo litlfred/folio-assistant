@@ -19,6 +19,9 @@ differs, the `@id` leads nowhere, in the one file whose purpose is to be looked
 up. So the publisher derives the published path from the `@id`, never the
 other way round, and there is exactly **one** publisher. Two publishers at
 one address means whichever runs last wins, and nobody can see it happen.
+That publisher is bootstrap-tools. Only the published build adds the commit
+and time it was made from (PROV, at the top level); a build for a check leaves
+them out, so two checks of one tree agree.
 
 The address follows the general pattern for anything a Harness publishes:
 `<base>/<harness name>/<file>`, with `bootstrap` as the Harness name.
