@@ -1044,6 +1044,7 @@ classDiagram
       <<ts: VerdictFile>>
       inspected_by [1] unknown
       inspected_at [1] string
+      attribution [0..1] Record~string,  inspected_by: unknown; inspected_at: string ~
       verdicts [1] Record~string, Record~string, Verdict~~
     }
     class cat_harness_library_folio_vector_labels_v1_folio_vector_labels_v1["folio-vector-labels/v1"] {

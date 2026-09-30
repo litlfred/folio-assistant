@@ -6451,7 +6451,7 @@ PDCrossing.strands <span class="fa-gloss-status">candidate, extracted</span>
 PdfStructureSchema.granularity <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Written by <code>pdf-pages.py</code>: the entry was ingested one section per page.</p>
+<p><code>page</code>: written by <code>pdf-pages.py</code>, one section per page. <code>slide</code>: written by <code>slides-structure.py</code>, one section per slide (bean <code>scfh</code>).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pdf-structure.ts"><code>cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.granularity</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--pdf-structure.pdfstructureschema.structure_note" data-fa-state="extracted" data-fa-gloss="">

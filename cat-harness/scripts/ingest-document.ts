@@ -57,6 +57,7 @@ import { fileURLToPath } from "node:url";
 import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
+import { SLIDE_MIMETYPES } from "../schemas/pdf-structure.ts";
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
 
 /**
@@ -199,7 +200,7 @@ export function libraryChoice(argv: string[]): string | undefined {
 
 /** Which rung a document needs, and the evidence that chose it. */
 export interface Plan {
-  rung: "archive" | "tabular" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
+  rung: "archive" | "tabular" | "slides" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
@@ -245,6 +246,21 @@ export function withDerivedArms(
   library: string,
 ): Plan {
   const PDF_RUNGS = ["pdf-structure", "pdf-pages", "pdf-ocr+pdf-pages"];
+  // A deck writes the same `structure.json` + `sections/` a paged PDF does, and
+  // its own `images.json` (the images are package members, so there is no
+  // raster layer to recover and no vector labels to read). So it takes the two
+  // arms that read what the rung wrote, and not the two that read a PDF.
+  // Measured on the #1614 deck, not assumed: bean `scfh`.
+  if (plan.rung === "slides") {
+    return {
+      ...plan,
+      steps: [
+        ...plan.steps,
+        ["bun", "run", tsHelper("l1-blocks.ts"), "-o", staging],
+        ["bun", "run", tsHelper("apply-image-verdicts.ts"), "--staging", staging, "--library", library],
+      ],
+    };
+  }
   if (!PDF_RUNGS.includes(plan.rung)) return plan;
   return {
     ...plan,
@@ -549,6 +565,17 @@ export function planFor(
       rung: "tabular",
       why: "no magic bytes, but the rows split consistently — delimited text",
       steps: [["python3", pyHelper("tabular-records.py"), "-o", lib, pdf]],
+    };
+  }
+
+  // A deck before an archive, for the same reason a workbook is: a .pptx and
+  // an .odp are zips that DECLARE what they are, and listing one as a bag of
+  // XML parts would file the slides as data. Bean `scfh`, issue #1614.
+  if (mime !== null && (SLIDE_MIMETYPES as readonly string[]).includes(mime)) {
+    return {
+      rung: "slides",
+      why: `the package declares ${mime} — a slide deck, one section per slide, titles read from title placeholders only`,
+      steps: [["python3", pyHelper("slides-structure.py"), "-o", lib, pdf]],
     };
   }
 

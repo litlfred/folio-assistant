@@ -188,6 +188,9 @@ export const ENTRY_SIDECARS: readonly string[] = [
   // A dataset's addressable values, written by an ingest tool beside its
   // tabular.jsonld (e.g. codata-ingest, bean uyp8; resolved by liquid-values).
   "values.json",
+  // A slide deck's accessibility report, written by `slides-structure.py`
+  // beside its structure.json (bean `scfh`, issue #1614).
+  "accessibility.json",
 ];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [

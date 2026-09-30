@@ -5,7 +5,8 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-30T14:32:51Z
-updated_at: 2026-09-30T14:33:12Z
+updated_at: 2026-09-30T14:54:51Z
+parent: folio-assistant-slw1
 ---
 
 Issue #1614. Owner supplied KG__folio-asst as .pptx and .odp. Add a slides rung to bun run ingest handling both, report accessibility, ingest the preferred (pptx) into library, list missing methodology sources, improve docs across layers.

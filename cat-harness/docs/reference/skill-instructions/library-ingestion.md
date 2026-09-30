@@ -101,6 +101,7 @@ of declaring one: navigable without being held.
 | `pdf-pages.py` | no outline | one section per **page** |
 | `pdf-ocr.py` | text extraction yields almost nothing | a text layer to then page-split |
 | `pdf-tables.py` | tables or figures matter | what `pdf-structure/v1`'s Section does not carry |
+| `slides-structure.py` | the package declares a **PPTX or ODP** deck | one section per **slide**, `images.json`, `accessibility.json` |
 
 **The decision is mechanical, and the corpus shows all three paths.** Measured
 2026-09-19 over the four entries in `library/`:
@@ -110,6 +111,49 @@ of declaring one: navigable without being held.
   `wpr-rdo-2020-003-eng`)
 - `toc_source: none`, `source.text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
   (`who-pub-tps-931`)
+
+## Slide decks — PPTX and ODP (bean `scfh`, issue #1614)
+
+A deck is a zip that **declares** its type (`[Content_Types].xml`, or ODF's
+`mimetype` member), so it routes on the sniff, before the archive rung, exactly
+as a workbook does. `slides-structure.py` writes the same `pdf-structure/v1`
+shape a paged PDF gets — one section per slide, `page_start == page_end ==
+<slide>`, `granularity: "slide"` — so `l1-blocks.ts`, the manifest and
+`check:l1-complete` read it unchanged. Two differences from the PDF rungs, both
+measured on the #1614 deck:
+
+- **A slide's title is its title placeholder, or it is `Slide N`.** Never the
+  largest text box: that is the inferred-TOC failure below in a new format. It is
+  also an accessibility finding, because a slide with no title placeholder cannot
+  be navigated to by name, so the two questions share one answer
+  (`title_source: placeholder | none` in each section's front matter).
+- **No image is a `page-scan`.** A full-bleed picture alone on a slide is the
+  slide's content, not a scan of text already extracted.
+
+`accessibility.json` reports, per check, what the package can answer — slide
+titles, alt text (with editor auto-captions such as *"Description automatically
+generated"* counted as **failing**, since nobody wrote them), decorative marks,
+language tags, document title, speaker notes — and says `undetermined` for the
+three it cannot: reading order, images of text, contrast. **It gives no overall
+score.** A single number would weigh a missing title against a missing alt text,
+and nothing supports that weighting.
+
+**Two copies of one deck? Compare before you choose which to ingest:**
+
+```sh
+python3 cat-harness/scripts/slides-structure.py --a11y-only DECK.pptx DECK.odp
+```
+
+On #1614 the two were Google Slides exports with identical image bytes. The PPTX
+kept per-run `lang` and the author's few alt texts; the ODP export dropped **all**
+alt text and kept the language only on the default style. Prefer the copy that
+wins the per-check comparison. An export can lose what the author wrote, and the
+format's reputation does not tell you which way this particular export went.
+
+Image descriptions go in the library's `image-verdicts.json` as for a PDF. Put
+the inspector in `attribution.<doc-id>` when they are not the file's
+`inspected_by`; without it the deck inherits the first inspector's name and
+date.
 
 ## An inferred chapter tree is refused, not guessed
 

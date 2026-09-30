@@ -11,6 +11,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `uploads`, holding `uploa
 | [`dusengumuremyi-2026-ai-mediated-raci.pdf`](dusengumuremyi-2026-ai-mediated-raci.pdf) | a file |  |
 | [`feng-2023-designing-with-language.pdf`](feng-2023-designing-with-language.pdf) | a file |  |
 | [`gurel-tat-2017-swot-analysis.pdf`](gurel-tat-2017-swot-analysis.pdf) | a file |  |
+| [`kg-folio-asst-2026-09-30.pptx`](kg-folio-asst-2026-09-30.pptx) | a file |  |
 | [`milnorlink.pdf`](milnorlink.pdf) | a file |  |
 | [`neubauer-2025-ai-assisted-schema-creation.pdf`](neubauer-2025-ai-assisted-schema-creation.pdf) | a file |  |
 | [`sammut-bonnici-galea-2015-swot-analysis.pdf`](sammut-bonnici-galea-2015-swot-analysis.pdf) | a file |  |

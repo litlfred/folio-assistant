@@ -6337,7 +6337,7 @@
     {
       "id": "pdf-structure.pdfstructureschema.granularity",
       "prefLabel": "PdfStructureSchema.granularity",
-      "definition": "Written by `pdf-pages.py`: the entry was ingested one section per page.",
+      "definition": "`page`: written by `pdf-pages.py`, one section per page. `slide`: written by `slides-structure.py`, one section per slide (bean `scfh`).",
       "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.granularity",
       "status": "candidate"
     },
