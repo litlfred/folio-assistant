@@ -55,12 +55,12 @@ ref:  ../../methodologies/dmn.md
 
 ## Done when
 
-- [ ] The 137 `ts-import` entries are split into scanner limitation vs genuinely
+- [x] The 137 `ts-import` entries are split into scanner limitation vs genuinely
       unresolvable — the first is a fix to the scanner, the second to the code,
       and reporting them as one number hides which.
 - [x] `kg:detangle` says whether its wrong-direction count is over all edges or
       only the resolving ones. Today a reader cannot tell.
-- [ ] The 28 `md-link` and 25 `bpmn-skill` entries are each fixed or recorded
+- [x] The 28 `md-link` and 25 `bpmn-skill` entries are each fixed or recorded
       with a reason.
 
 ## Not claimed
@@ -257,4 +257,4 @@ The cross-instance entries all run from **cat-harness**, which declares only `bo
 
 **Not fixed here**, because the obvious fix is a split decision: move the four processes into `large-datasets`, which then needs a declared `processes` directory that the workflow engine and `kg:audit` load. Put to the owner 2026-09-30.
 
-- [x] Box 3: every md-link and bpmn-skill entry is recorded with a reason. The wrong-direction 29 wait on the owner's ruling.
+**Box 3:** every md-link and bpmn-skill entry is recorded with a reason. The wrong-direction 29 wait on the owner's ruling.
