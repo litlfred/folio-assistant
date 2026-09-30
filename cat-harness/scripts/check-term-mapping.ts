@@ -48,8 +48,9 @@ import { QA_RESULTS_DIR, buildQaResult, writeQaResult } from "./qa-results.ts";
 const ROOT = resolve(import.meta.dir, "../..");
 const STEM = "term-mapping";
 
-/** The host OCL is served from. Named once, so the reason can quote it. */
-export const OCL_HOST = "api.openconceptlab.org";
+/** The pinned published IG the `fhir` half resolves against — owner, 2026-09-30. */
+export const FHIR_PIN = "cat-harness/external-schemas/who-smart-base.json";
+export const FHIR_SNAPSHOT = "cat-harness/external-schemas/who-smart-base.terminology.json";
 
 interface GlossTerm {
   id: string;
@@ -161,38 +162,109 @@ export function resolveSkos(
 }
 
 /**
- * The FHIR half. Open Concept Lab, and ONLY for FHIR — the owner's ruling.
+ * The FHIR half, resolved against a PUBLISHED IG AT A VERSION.
  *
- * `reachable` is injected so the undetermined path is testable without the
- * network, which is the path that actually runs here.
+ * Owner, 2026-09-30, choosing between the two assertions this could make:
+ * **"this code is in the published base IG at version X"**, not "this code is
+ * in the collection this organisation curates today". They can disagree, and
+ * only the first is checkable offline and reproducible from the repository.
+ *
+ * So OCL is not the resolver here. It remains the terminology-MANAGEMENT tool
+ * the owner named for the SMART Guidelines side (bean `ejug`) — a different
+ * job from answering "does this code exist in v1.0.0".
+ *
+ * Matching is on the concept's DISPLAY, normalised, because a glossary
+ * candidate is a label and a FHIR code is an identifier: the display is the
+ * only field the two share. A code match would be a coincidence of spelling.
  */
 export function resolveFhir(
   cands: { term: GlossTerm; scheme: string }[],
-  reason: string,
+  pinned: PinnedTerminology | string,
 ): TermMapping[] {
-  return cands.map(({ term, scheme }) => ({
-    term: term.id,
-    scheme,
-    target: "fhir" as const,
-    exact: "undetermined" as const,
-    concept: "undetermined" as const,
-    undetermined_reason: reason,
-  }));
+  if (typeof pinned === "string") {
+    // No snapshot: undetermined WITH the reason, never `unmapped`.
+    return cands.map(({ term, scheme }) => ({
+      term: term.id,
+      scheme,
+      target: "fhir" as const,
+      exact: "undetermined" as const,
+      concept: "undetermined" as const,
+      undetermined_reason: pinned,
+    }));
+  }
+  const idx = new Map<string, ConceptMatch[]>();
+  for (const c of pinned.concepts) {
+    const k = normaliseLabel(c.display);
+    if (!k) continue;
+    idx.set(k, [
+      ...(idx.get(k) ?? []),
+      {
+        uri: `${c.system}#${c.code}`,
+        predicate: "skos:closeMatch" as const,
+        via: c.display,
+        scheme: `who-smart-base@${pinned.version}`,
+      },
+    ]);
+  }
+  return cands.map(({ term, scheme }) => {
+    const hits = idx.get(normaliseLabel(term.prefLabel)) ?? [];
+    // `closeMatch`, never `exactMatch`: a label matching a code's display
+    // means the two are about the same thing, not that the glossary term IS
+    // that code. Claiming exactness across vocabularies is the overreach
+    // `vocabulary-authority` exists to prevent.
+    return {
+      term: term.id,
+      scheme,
+      target: "fhir" as const,
+      exact: "unmapped" as const,
+      concept: (hits.length ? "mapped" : "unmapped") as MatchState,
+      ...(hits.length ? { matches: hits } : {}),
+    };
+  });
 }
 
-async function oclReachable(): Promise<string | null> {
+export interface PinnedTerminology {
+  version: string;
+  concepts: { system: string; code: string; display: string }[];
+}
+
+/**
+ * The pinned snapshot, or the REASON there is none.
+ *
+ * Returns a string rather than throwing, because "no pinned terminology" is a
+ * determined state of this repository and belongs on every row as its
+ * `undetermined_reason` — not as a crash, and not as `unmapped`.
+ */
+export function pinnedTerminology(root: string): PinnedTerminology | string {
+  const rec = join(root, FHIR_PIN);
+  const snap = join(root, FHIR_SNAPSHOT);
+  if (!existsSync(rec)) return `${FHIR_PIN} is absent, so no published IG is pinned`;
+  let version: string | undefined;
   try {
-    const r = await fetch(`https://${OCL_HOST}/orgs/`, {
-      method: "HEAD",
-      signal: AbortSignal.timeout(15_000),
-    });
-    return r.ok ? null : `${OCL_HOST} answered HTTP ${r.status}`;
-  } catch (e) {
-    return `${OCL_HOST} could not be reached: ${e instanceof Error ? e.message : String(e)}`;
+    version = (JSON.parse(readFileSync(rec, "utf-8")) as { version?: string }).version;
+  } catch {
+    return `${FHIR_PIN} will not parse`;
+  }
+  if (!version || version === "unpinned") {
+    return `${FHIR_PIN} is \`unpinned\` — the fhir half asserts a published IG at a VERSION, and none is chosen`;
+  }
+  if (!existsSync(snap)) {
+    return `${FHIR_PIN} pins ${version} but ${FHIR_SNAPSHOT} is absent — run scripts/pin-smart-base-terminology.ts`;
+  }
+  try {
+    const d = JSON.parse(readFileSync(snap, "utf-8")) as PinnedTerminology;
+    if (d.version !== version) {
+      // The one way this could assert something false: a snapshot of a
+      // different version than the record names.
+      return `${FHIR_SNAPSHOT} holds ${d.version} while ${FHIR_PIN} pins ${version} — re-snapshot at the pinned tag`;
+    }
+    return d;
+  } catch {
+    return `${FHIR_SNAPSHOT} will not parse`;
   }
 }
 
-export async function run(root: string): Promise<{ mappings: TermMapping[]; scope: MappingScope[] }> {
+export function run(root: string): { mappings: TermMapping[]; scope: MappingScope[] } {
   const schemes = glossarySchemes(root);
   const cands = candidates(schemes);
   const idx = skosIndex(schemes);
@@ -200,7 +272,7 @@ export async function run(root: string): Promise<{ mappings: TermMapping[]; scop
     ...new Set(schemes.filter((s) => s.terms.some((t) => t.status === "authored")).map((s) => s.id)),
   ].sort();
 
-  const fhirReason = await oclReachable();
+  const pinned = pinnedTerminology(root);
   const scope: MappingScope[] = [
     {
       target: "skos",
@@ -209,27 +281,22 @@ export async function run(root: string): Promise<{ mappings: TermMapping[]; scop
     },
     {
       target: "fhir",
-      consulted: [],
-      via: `https://${OCL_HOST}`,
-      ...(fhirReason
+      consulted: typeof pinned === "string" ? [] : [`who-smart-base@${pinned.version}`],
+      via:
+        typeof pinned === "string"
+          ? FHIR_PIN
+          : `${FHIR_SNAPSHOT} — a published IG at a version, snapshotted offline`,
+      ...(typeof pinned === "string"
         ? {
             unreachable_reason:
-              `${fhirReason}. Every fhir row is therefore \`undetermined\`, NOT \`unmapped\` — ` +
-              "a terminology that could not answer has said nothing.",
+              `${pinned}. Every fhir row is therefore \`undetermined\`, NOT \`unmapped\` — ` +
+              "a terminology nobody consulted has said nothing.",
           }
         : {}),
     },
   ];
 
-  const mappings = [
-    ...resolveSkos(cands, idx),
-    ...(fhirReason
-      ? resolveFhir(cands, fhirReason)
-      : // A reachable OCL still resolves nothing until this instance declares
-        // which collections are in scope — an empty scope is a determined
-        // finding, and inventing collections to query would be worse.
-        resolveFhir(cands, `${OCL_HOST} is reachable, but no collections are declared in scope`)),
-  ];
+  const mappings = [...resolveSkos(cands, idx), ...resolveFhir(cands, pinned)];
   return { mappings, scope };
 }
 
@@ -282,9 +349,9 @@ function summarise(ms: TermMapping[], target: string): string {
   return `${of.length} candidate(s): ${n("mapped")} mapped, ${n("unmapped")} unmapped, ${n("undetermined")} undetermined`;
 }
 
-async function main(): Promise<number> {
+function main(): number {
   const check = process.argv.includes("--check");
-  const { mappings, scope } = await run(ROOT);
+  const { mappings, scope } = run(ROOT);
 
   const file = {
     $schema: "folio-term-mappings/v1" as const,
@@ -359,4 +426,4 @@ async function main(): Promise<number> {
   return 0;
 }
 
-if (import.meta.main) process.exit(await main());
+if (import.meta.main) process.exit(main());

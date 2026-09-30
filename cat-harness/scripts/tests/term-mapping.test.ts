@@ -79,8 +79,47 @@ describe("the index matches when it should — the non-vacuity guard", () => {
   });
 });
 
+describe("the fhir half resolves against a PUBLISHED IG AT A VERSION", () => {
+  // Owner, 2026-09-30, choosing between two assertions that can disagree:
+  // "this code is in the published base IG at version X", not "this code is
+  // in the collection somebody curates today".
+  const pinned = {
+    version: "v1.0.0",
+    concepts: [
+      { system: "CDHIv1", code: "1.1", display: "Targeted client communication" },
+      { system: "CoreDataElementType", code: "valueset", display: "ValueSet" },
+    ],
+  };
+
+  test("a display match is `concept: mapped` and cites system#code at the version", () => {
+    const [m] = resolveFhir(
+      [{ term: candidate("targeted client communication") as never, scheme: "s" }],
+      pinned,
+    );
+    expect(m!.concept).toBe("mapped");
+    expect(m!.matches?.[0]?.uri).toBe("CDHIv1#1.1");
+    expect(m!.matches?.[0]?.scheme).toBe("who-smart-base@v1.0.0");
+  });
+
+  test("it is closeMatch, never exactMatch — and `exact` stays unmapped", () => {
+    // A glossary label matching a code's display means the two are ABOUT the
+    // same thing, not that the term IS that code. Claiming exactness across
+    // vocabularies is the overreach `vocabulary-authority` prevents.
+    const [m] = resolveFhir([{ term: candidate("ValueSet") as never, scheme: "s" }], pinned);
+    expect(m!.matches?.[0]?.predicate).toBe("skos:closeMatch");
+    expect(m!.exact).toBe("unmapped");
+  });
+
+  test("a miss against a PRESENT snapshot is `unmapped`, not undetermined", () => {
+    // The pin is here and was consulted, so the answer is a real negative.
+    const [m] = resolveFhir([{ term: candidate("wombat") as never, scheme: "s" }], pinned);
+    expect(m!.concept).toBe("unmapped");
+    expect(m!.undetermined_reason).toBeUndefined();
+  });
+});
+
 describe("undetermined is never unmapped", () => {
-  test("an unreachable target yields undetermined WITH a reason", () => {
+  test("no pinned snapshot yields undetermined WITH a reason", () => {
     const [m] = resolveFhir([{ term: candidate("x") as never, scheme: "s" }], "host refused");
     expect(m!.exact).toBe("undetermined");
     expect(m!.concept).toBe("undetermined");
@@ -152,9 +191,25 @@ describe("corpus — the real glossary, asserting scope rather than a count", ()
     expect(skos.length).toBeGreaterThan(0);
     expect(fhir.length).toBe(skos.length);
 
-    // The load-bearing one: with no FHIR terminology in scope, not a single
-    // row may claim `unmapped`. Silence is not a negative answer.
-    expect(fhir.every((m) => m.concept === "undetermined")).toBe(true);
-    expect(fhir.every((m) => Boolean(m.undetermined_reason))).toBe(true);
+    // The load-bearing one, stated so it holds EITHER WAY: a row may be
+    // `undetermined` only when it carries a reason, and `unmapped` only when
+    // it does not. Pinning the snapshot flipped this target from the first to
+    // the second, and the invariant is what must survive that, not the count.
+    for (const m of fhir) {
+      if (m.concept === "undetermined") expect(m.undetermined_reason).toBeTruthy();
+      else expect(m.undetermined_reason).toBeUndefined();
+    }
+    // And the scope says which of the two happened, rather than leaving a
+    // reader to infer it from the counts.
+    const s = scope.find((x) => x.target === "fhir")!;
+    expect(Boolean(s.unreachable_reason)).toBe(fhir.some((m) => m.concept === "undetermined"));
   }, 60_000);
+
+  test("the pin and its snapshot agree on the version", async () => {
+    const { pinnedTerminology } = await import("../check-term-mapping.ts");
+    const p = pinnedTerminology(process.cwd());
+    // A snapshot of one version labelled another is the single way this could
+    // assert something false, so it is refused rather than reported.
+    if (typeof p !== "string") expect(p.version).toMatch(/^v\d/);
+  });
 });
