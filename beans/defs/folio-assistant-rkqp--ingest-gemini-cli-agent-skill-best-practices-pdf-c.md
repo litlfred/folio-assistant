@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-30T11:04:09Z
+updated_at: 2026-09-30T12:03:52Z
 parent: folio-assistant-slw1
 ---
 
@@ -156,3 +156,11 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
   - [ ] ingest it — the pipeline has NO rung for a Jupyter notebook (ingest reports the rung undetermined and refuses), so this needs a notebook rung: markdown cells to sections by heading, code cells kept as code. Then the OpenAI vendor voice.
   - Link the owner could allow for the canonical text: https://developers.openai.com/api/docs/guides/tools-skills (the notebook's own 'Skills documentation' link).
 - [ ] **Owner, 2026-09-30: 'vendors/<id>/ should be declared subgraphs along with vendors/'.** Reverses the 2026-09-22 reading ('one declaration; vendors nested inside it', schemas/voices.ts VOICE_VENDORS_DIR). The same owner ruling of 2026-09-22 (directory-conventions §'Nesting is declared FROM WITHIN') says HOW: a node inside the directory names its subdirectories — never the root declaration reaching down a path. What it left OPEN, recorded there as not an agent's to settle: **the node's name and kind**. Proposed default for the owner: reuse the beans/beans.json pattern positionally — skills/voices/voices.json declaring vendors/, and skills/voices/vendors/vendors.json declaring each <id>/, as ContentDirectory entries. Blocked on that answer.
+
+
+## 2026-09-30 — the OpenAI notebook needs a design decision before a rung
+Measured before building: structure.json is pdf-structure/v1 (cat-harness/schemas/pdf-structure.ts) — a LITERAL _schema tag, source.mimetype_sniffed, text_source embedded|ocr, toc_source's five states — and every consumer reads it through that schema (check:l1-complete, gen-library-jsonld, summaries, LSI). A notebook is not a PDF, so a rung must either:
+- (A) add notebook-structure/v1 — its own schema and entry kind; honest, and every consumer learns a second shape;
+- (B) generalise pdf-structure/v1 to 'document-structure' — one shape, a rename across the corpus;
+- (C) render the notebook to PDF first (nbconvert HTML → headless Chromium print, with a document outline) and run the existing PDF rungs — zero schema change, but the library would hold a DERIVED PDF, which structure_note must say.
+Also measured: image-descriptions accepts a determined empty images.json, and a notebook with image outputs can record images: null with its reason (the sidecar's own third state). Put to the owner as blocker 2 of this round.
