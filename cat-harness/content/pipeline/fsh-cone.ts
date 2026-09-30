@@ -489,6 +489,30 @@ export function nodesInFiles(g: FshGraph, files: Iterable<string>): Set<string> 
   return out;
 }
 
+/**
+ * File-level users: for each source file, the OTHER files declaring a node
+ * that depends directly on a node the file declares. Written as
+ * `fsh-file-users/v1` for the IG AST's incremental plan (`ast-export`'s
+ * `AstPlanCli -fsh-users`), which cannot otherwise tell what a changed
+ * RuleSet- or Alias-only file reaches: such a file declares no resource,
+ * so the AST holds nothing for it (bean `a9tx`).
+ *
+ * Direct users only. The plan follows users of users itself, and the AST's
+ * own dependency edges carry the cone from there.
+ */
+export function fileUsers(g: FshGraph): Record<string, string[]> {
+  const out = new Map<string, Set<string>>();
+  for (const node of g.nodes.values()) {
+    for (const d of g.dependents.get(node.name) ?? []) {
+      const user = g.nodes.get(d)?.file;
+      if (!user || user === node.file) continue;
+      if (!out.has(node.file)) out.set(node.file, new Set());
+      out.get(node.file)!.add(user);
+    }
+  }
+  return Object.fromEntries([...out].sort(([a], [b]) => a.localeCompare(b)).map(([f, us]) => [f, [...us].sort()]));
+}
+
 export interface ConeSizes {
   forward: Map<string, number>;
   backward: Map<string, number>;
@@ -669,7 +693,7 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const root = args.find((a) => !a.startsWith("--"));
   if (!root) {
-    console.error("usage: bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv] [--changed f1,f2,…]");
+    console.error("usage: bun run cat-harness/content/pipeline/fsh-cone.ts <ig-root> [--top N] [--csv out.csv] [--changed f1,f2,…] [--file-users out.json]");
     process.exit(2);
   }
   const opt = (name: string): string | undefined => {
@@ -696,5 +720,10 @@ if (import.meta.main) {
   if (csv) {
     writeFileSync(csv, toCsv(g));
     console.log(`\nwrote ${csv}`);
+  }
+  const fu = opt("--file-users");
+  if (fu) {
+    writeFileSync(fu, JSON.stringify({ $schema: "fsh-file-users/v1", root: g.root, users: fileUsers(g) }, null, 2) + "\n");
+    console.log(`\nwrote ${fu}`);
   }
 }

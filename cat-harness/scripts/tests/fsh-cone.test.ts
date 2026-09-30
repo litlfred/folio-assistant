@@ -23,6 +23,7 @@ import {
   changeImpact,
   coneSizes,
   filesOf,
+  fileUsers,
   forwardCone,
   historyImpact,
   historyReport,
@@ -283,5 +284,24 @@ describe("reports", () => {
     } finally {
       rmSync(empty, { recursive: true, force: true });
     }
+  });
+});
+
+describe("file-level users, for the IG AST's incremental plan (bean a9tx)", () => {
+  test("a RuleSet-only file names every file that inserts from it, and not itself", () => {
+    const u = fileUsers(g);
+    expect(u["input/fsh/rulesets/CommonMeta.fsh"]).toEqual([
+      "input/fsh/libraries/LibXLogic.fsh",
+      "input/fsh/libraries/LibY.fsh",
+      "input/fsh/plandefinitions/PlanX.fsh",
+    ]);
+    // PlanDefOuter inserts PlanDefInner in the SAME file: that is not a user.
+    expect(u["input/fsh/rulesets/PlanDefMeta.fsh"]).toEqual(["input/fsh/plandefinitions/PlanY.fsh"]);
+  });
+
+  test("a file nothing depends on has no entry, rather than an empty one", () => {
+    expect(fileUsers(g)["input/fsh/plandefinitions/PlanY.fsh"]).toBeUndefined();
+    // ...and a reference counts as use: Act1 names ExPerson.
+    expect(fileUsers(g)["input/fsh/examples/ExPerson.fsh"]).toEqual(["input/fsh/activitydefinitions/Act1.fsh"]);
   });
 });
