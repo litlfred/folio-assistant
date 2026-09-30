@@ -21330,6 +21330,215 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.conceptmatchschema.scheme",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConceptMatchSchema.scheme"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The scheme the concept belongs to."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#ConceptMatchSchema.scheme",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.conceptmatchschema.uri",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConceptMatchSchema.uri"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The concept's URI, or its in-repo term id where it has no URI yet."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#ConceptMatchSchema.uri",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.conceptmatchschema.via",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConceptMatchSchema.via"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The label that matched, so a reader can see WHY without re-deriving it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#ConceptMatchSchema.via",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.mappingscopeschema.consulted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MappingScopeSchema.consulted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The schemes or collections consulted. **May be empty**, and an empty list is a determined finding — this instance declares nothing to check against for that target — rather than a missing field."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#MappingScopeSchema.consulted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.mappingscopeschema.unreachable_reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MappingScopeSchema.unreachable_reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Present when the target could not be consulted at all."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#MappingScopeSchema.unreachable_reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.mappingscopeschema.via",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MappingScopeSchema.via"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How they were reached: `local` for in-repo schemes, a host for a service."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#MappingScopeSchema.via",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.termmappingschema.matches",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermMappingSchema.matches"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Present when either state is `mapped`; the concepts that matched."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#TermMappingSchema.matches",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.termmappingschema.scheme",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermMappingSchema.scheme"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The scheme the candidate came from — `kg-skills`, `kg-tools`, …"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#TermMappingSchema.scheme",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.termmappingschema.term",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermMappingSchema.term"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The candidate's id, as its glossary scheme records it."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#TermMappingSchema.term",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.termmappingschema.undetermined_reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermMappingSchema.undetermined_reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Required when either state is `undetermined`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#TermMappingSchema.undetermined_reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/term-mapping.termmappingsfileschema.scope",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermMappingsFileSchema.scope"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One entry per target, always both, so a reader sees what was NOT asked."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/term-mapping.ts#TermMappingsFileSchema.scope",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/test-run.hashbasisschema.hash",
       "@type": "skos:Concept",
       "skos:inScheme": {

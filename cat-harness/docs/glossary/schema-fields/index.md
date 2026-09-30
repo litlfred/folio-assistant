@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1480 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1491 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1647 terms and is 893 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1658 terms and is 899 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1647</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1658</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1850,6 +1850,27 @@ ComputeOptions.repoRoot <span class="fa-gloss-status">candidate, extracted</span
 <dd>
 <p>Repository holding the folio.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/changeset.ts"><code>folio-assistant-core/schemas/changeset.ts#ComputeOptions.repoRoot</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.conceptmatchschema.scheme" data-fa-state="extracted" data-fa-gloss="">
+ConceptMatchSchema.scheme <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The scheme the concept belongs to.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#ConceptMatchSchema.scheme</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.conceptmatchschema.uri" data-fa-state="extracted" data-fa-gloss="">
+ConceptMatchSchema.uri <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The concept's URI, or its in-repo term id where it has no URI yet.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#ConceptMatchSchema.uri</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.conceptmatchschema.via" data-fa-state="extracted" data-fa-gloss="">
+ConceptMatchSchema.via <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The label that matched, so a reader can see WHY without re-deriving it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#ConceptMatchSchema.via</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--types.conjectureblock.lean" data-fa-state="extracted" data-fa-gloss="">
 ConjectureBlock.lean <span class="fa-gloss-status">candidate, extracted</span>
@@ -5509,6 +5530,27 @@ Manuscript.repo <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>GitHub repository (owner/name).</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/formalization-types.ts"><code>cat-harness/schemas/formalization-types.ts#Manuscript.repo</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.mappingscopeschema.consulted" data-fa-state="extracted" data-fa-gloss="">
+MappingScopeSchema.consulted <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The schemes or collections consulted. **May be empty**, and an empty list is a determined finding — this instance declares nothing to check against for that target — rather than a missing field.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#MappingScopeSchema.consulted</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.mappingscopeschema.unreachable_reason" data-fa-state="extracted" data-fa-gloss="">
+MappingScopeSchema.unreachable_reason <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Present when the target could not be consulted at all.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#MappingScopeSchema.unreachable_reason</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.mappingscopeschema.via" data-fa-state="extracted" data-fa-gloss="">
+MappingScopeSchema.via <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How they were reached: `local` for in-repo schemes, a host for a service.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#MappingScopeSchema.via</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--catalogue.maskedregionschema.reason" data-fa-state="extracted" data-fa-gloss="">
 MaskedRegionSchema.reason <span class="fa-gloss-status">candidate, extracted</span>
@@ -9583,6 +9625,41 @@ TermGloss.seeAlso <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Site-relative page carrying the full treatment, when one exists.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/vocabulary.ts"><code>cat-harness/schemas/vocabulary.ts#TermGloss.seeAlso</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.termmappingschema.matches" data-fa-state="extracted" data-fa-gloss="">
+TermMappingSchema.matches <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Present when either state is `mapped`; the concepts that matched.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#TermMappingSchema.matches</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.termmappingschema.scheme" data-fa-state="extracted" data-fa-gloss="">
+TermMappingSchema.scheme <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The scheme the candidate came from — `kg-skills`, `kg-tools`, …</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#TermMappingSchema.scheme</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.termmappingschema.term" data-fa-state="extracted" data-fa-gloss="">
+TermMappingSchema.term <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The candidate's id, as its glossary scheme records it.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#TermMappingSchema.term</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.termmappingschema.undetermined_reason" data-fa-state="extracted" data-fa-gloss="">
+TermMappingSchema.undetermined_reason <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Required when either state is `undetermined`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#TermMappingSchema.undetermined_reason</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--term-mapping.termmappingsfileschema.scope" data-fa-state="extracted" data-fa-gloss="">
+TermMappingsFileSchema.scope <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One entry per target, always both, so a reader sees what was NOT asked.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/term-mapping.ts"><code>cat-harness/schemas/term-mapping.ts#TermMappingsFileSchema.scope</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--glossary.termschema.broader" data-fa-state="extracted" data-fa-gloss="">
 TermSchema.broader <span class="fa-gloss-status">candidate, extracted</span>

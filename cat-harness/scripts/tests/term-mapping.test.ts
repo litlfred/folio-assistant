@@ -1,0 +1,160 @@
+/**
+ * The mapping check, and the guard against it silently always saying zero.
+ *
+ * @module scripts/tests/term-mapping.test
+ * @graphNode none — a test
+ *
+ * Bean `7wou`. Run against the real corpus 2026-09-30 the check reports
+ * **0 mapped of 2 594** — the 7 authored concepts and the extracted
+ * candidates are disjoint vocabularies. That is a true finding and it is also
+ * exactly the shape that rots unnoticed: an index that stopped working would
+ * report the same zero. So the positive cases below run on fixtures with
+ * deliberate collisions, and the corpus case asserts the SCOPE rather than
+ * the count.
+ */
+import { describe, expect, test } from "bun:test";
+
+import {
+  MAPPING_TARGETS,
+  TermMappingSchema,
+  TermMappingsFileSchema,
+  normaliseLabel,
+} from "../../schemas/term-mapping.ts";
+import { candidates, resolveFhir, resolveSkos, skosIndex } from "../check-term-mapping.ts";
+
+const scheme = (id: string, terms: unknown[]) => ({ id, terms, file: `${id}.glossary.json` }) as never;
+const authored = (prefLabel: string, over: Record<string, unknown> = {}) => ({
+  id: prefLabel.toLowerCase().replace(/\s+/g, "-"),
+  prefLabel,
+  status: "authored",
+  ...over,
+});
+const candidate = (prefLabel: string) => ({
+  id: prefLabel.toLowerCase().replace(/\s+/g, "-"),
+  prefLabel,
+  status: "candidate",
+});
+
+describe("the index matches when it should — the non-vacuity guard", () => {
+  const schemes = [
+    scheme("platform", [
+      authored("Policy", { exactMatch: ["http://www.w3.org/ns/odrl/2/Policy"] }),
+      authored("Actor", { altLabel: ["Participant"] }),
+    ]),
+    scheme("kg-skills", [candidate("policy"), candidate("Participant"), candidate("Wombat")]),
+  ];
+  const results = resolveSkos(candidates(schemes), skosIndex(schemes));
+  const by = new Map(results.map((r) => [r.term, r]));
+
+  test("a prefLabel match is `exact: mapped`, and carries the external URI", () => {
+    const r = by.get("policy")!;
+    expect(r.exact).toBe("mapped");
+    expect(r.concept).toBe("mapped");
+    expect(r.matches?.[0]?.uri).toBe("http://www.w3.org/ns/odrl/2/Policy");
+    expect(r.matches?.[0]?.predicate).toBe("skos:exactMatch");
+  });
+
+  test("an altLabel match is `concept: mapped` but NOT `exact`", () => {
+    // The whole reason the two are a pair: the right idea under another name.
+    const r = by.get("participant")!;
+    expect(r.exact).toBe("unmapped");
+    expect(r.concept).toBe("mapped");
+    expect(r.matches?.[0]?.predicate).toBe("skos:closeMatch");
+  });
+
+  test("a genuine miss is `unmapped` on both, with no matches", () => {
+    const r = by.get("wombat")!;
+    expect(r.exact).toBe("unmapped");
+    expect(r.concept).toBe("unmapped");
+    expect(r.matches).toBeUndefined();
+  });
+
+  test("an authored term is not a candidate, so it never maps to itself", () => {
+    expect(results.some((r) => r.term === "actor")).toBe(false);
+  });
+
+  test("normalisation is substance, not typography", () => {
+    expect(normaliseLabel("  Policy. ")).toBe(normaliseLabel("policy"));
+    expect(normaliseLabel("task   run")).toBe("task run");
+  });
+});
+
+describe("undetermined is never unmapped", () => {
+  test("an unreachable target yields undetermined WITH a reason", () => {
+    const [m] = resolveFhir([{ term: candidate("x") as never, scheme: "s" }], "host refused");
+    expect(m!.exact).toBe("undetermined");
+    expect(m!.concept).toBe("undetermined");
+    expect(m!.undetermined_reason).toBe("host refused");
+    expect(TermMappingSchema.safeParse(m).success).toBe(true);
+  });
+
+  test("undetermined with NO reason is refused by the schema", () => {
+    const r = TermMappingSchema.safeParse({
+      term: "t", scheme: "s", target: "fhir", exact: "undetermined", concept: "undetermined",
+    });
+    expect(r.success).toBe(false);
+  });
+
+  test("`mapped` with nothing named is refused", () => {
+    const r = TermMappingSchema.safeParse({
+      term: "t", scheme: "s", target: "skos", exact: "mapped", concept: "mapped",
+    });
+    expect(r.success).toBe(false);
+  });
+
+  test("exact-mapped with concept-unmapped is unreachable and refused", () => {
+    const r = TermMappingSchema.safeParse({
+      term: "t", scheme: "s", target: "skos", exact: "mapped", concept: "unmapped",
+      matches: [{ uri: "u", predicate: "skos:exactMatch", via: "t", scheme: "s" }],
+    });
+    expect(r.success).toBe(false);
+  });
+});
+
+describe("a file must say what it did NOT ask", () => {
+  const body = {
+    $schema: "folio-term-mappings/v1",
+    checked_at: "2026-09-30",
+    mappings: [],
+  };
+
+  test("a scope missing a target is refused", () => {
+    const r = TermMappingsFileSchema.safeParse({
+      ...body,
+      scope: [{ target: "skos", consulted: [], via: "local" }],
+    });
+    expect(r.success).toBe(false);
+    expect(JSON.stringify(r)).toContain("fhir");
+  });
+
+  test("both targets, one of them with an empty consulted list, parses", () => {
+    // An empty list is a DETERMINED finding — nothing is declared for that
+    // target — not a missing field.
+    expect(
+      TermMappingsFileSchema.safeParse({
+        ...body,
+        scope: MAPPING_TARGETS.map((target) => ({ target, consulted: [], via: "local" })),
+      }).success,
+    ).toBe(true);
+  });
+});
+
+describe("corpus — the real glossary, asserting scope rather than a count", () => {
+  test("every candidate gets a row for BOTH targets, and fhir is never silently unmapped", async () => {
+    const { run } = await import("../check-term-mapping.ts");
+    const { mappings, scope } = await run(process.cwd());
+    expect(TermMappingsFileSchema.safeParse({
+      $schema: "folio-term-mappings/v1", checked_at: "2026-09-30", scope, mappings,
+    }).success).toBe(true);
+
+    const skos = mappings.filter((m) => m.target === "skos");
+    const fhir = mappings.filter((m) => m.target === "fhir");
+    expect(skos.length).toBeGreaterThan(0);
+    expect(fhir.length).toBe(skos.length);
+
+    // The load-bearing one: with no FHIR terminology in scope, not a single
+    // row may claim `unmapped`. Silence is not a negative answer.
+    expect(fhir.every((m) => m.concept === "undetermined")).toBe(true);
+    expect(fhir.every((m) => Boolean(m.undetermined_reason))).toBe(true);
+  }, 60_000);
+});

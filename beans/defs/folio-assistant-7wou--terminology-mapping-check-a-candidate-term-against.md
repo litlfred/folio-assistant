@@ -45,9 +45,53 @@ as a pair rather than as a boolean somebody widens later.
 
 ## Done when
 
-- [ ] which terminologies are in scope, and who decides
-- [ ] the three states in a schema, `undetermined` carrying its reason
-- [ ] exact and concept both reported, neither graded
-- [ ] the result is a SIDECAR beside the glossary, not a field inside a term,
-      so an unmapped term still renders and a re-extraction does not lose it
-- [ ] the glossary page shows the three states and grades none of them
+- [x] which terminologies are in scope — **owner, 2026-09-30: "OCL is only for
+      FHIR. not a constraint on SKOS."** So there are TWO targets, not one:
+      `skos` resolved against this instance's authored concepts (and the
+      external URIs they carry), `fhir` against a FHIR terminology service
+      with OCL named for the WHO SMART Guidelines side.
+- [x] the three states in a schema, `undetermined` carrying its reason —
+      refused structurally without one
+- [x] exact and concept both reported, neither graded
+- [x] the result is a sidecar, not a field inside a term — projected to
+      `cat-harness/test/results/term-mapping.qa-results.json`
+- [x] registered as a gate: `bun run check:term-mapping`, in package.json and
+      the gate workflow, verifying rather than writing
+- [ ] the glossary page shows the three states (the check exists; the page
+      does not read it yet)
+- [ ] declare FHIR collections in scope, once OCL is reachable and somebody
+      decides which
+
+## Built 2026-09-30 — and the first run's answer is zero
+
+`schemas/term-mapping.ts` + `scripts/check-term-mapping.ts`, 12 tests.
+
+| target | result |
+|---|---|
+| `skos` | 2 594 candidates: **0 mapped, 2 594 unmapped**, 0 undetermined |
+| `fhir` | 2 594 candidates: 0 mapped, 0 unmapped, **2 594 undetermined** |
+
+**The FHIR zero is the third state doing its job, not a failure.** This
+environment's network policy refuses `api.openconceptlab.org:443` — the proxy
+logs *"gateway answered 403 to CONNECT"* — so not one row may say `unmapped`.
+A terminology that could not answer has said nothing. The reason travels on
+every row and on the scope.
+
+**The SKOS zero is a real finding, and it was checked rather than assumed.**
+A check that always returns zero is indistinguishable from a broken one, so
+the index was probed directly: its 7 keys are `associated harness`, `policy`,
+`permission`, `task run`, `actor`, `role`, `glossary`, and no candidate's
+`prefLabel` normalises to any of them. Near-misses exist (`Glossary build`,
+`role-model`, `swimlane-glossary`) and are genuinely different terms. The
+positive cases are pinned on fixtures with deliberate collisions — a
+prefLabel hit that is `exact`, an altLabel hit that is `concept` but not
+`exact` — so the index cannot silently stop working.
+
+**What the zero says.** The authored glossary and the extracted one are
+disjoint vocabularies: 7 domain concepts against 2 594 names for assets —
+skills, Tool nodes, BPMN activities, schema fields. They are different KINDS
+of term, which is the question `a13a` was scrapped for having already been
+answered by `glossary-extract.ts`, now visible as a measurement.
+
+No ratio is computed and none should be. `m4xy`'s rule carries: an unmapped
+candidate may be a term this corpus is right to coin.
