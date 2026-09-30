@@ -6581,6 +6581,13 @@
           "doc": "This directory is what answers at the instance's own route, `/<instance>/`."
         },
         {
+          "name": "kindRouteRedirect",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`/<kind>/<instance>/` for this directory is a ONE-FILE REDIRECT to the"
+        },
+        {
           "name": "composed",
           "type": "z.boolean().optional()",
           "optional": true,
