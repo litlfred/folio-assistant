@@ -735,6 +735,7 @@ jobs:
           PR_BODY: ${{ github.event.pull_request.body }}
           # Raw branch name — the slug is sanitised, the branch is not.
           STAGING_BRANCH: ${{ steps.slug.outputs.branch }}
+          STAGING_SLUG: ${{ steps.slug.outputs.slug }}
         shell: bash
         run: |
           PR="${{ github.event.pull_request.number || 'n/a' }}"
@@ -795,6 +796,35 @@ jobs:
             --run-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --main-site "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
             $MAIN_PAGES_ARG
+
+          # The preview's own record — bean `6pfo`, owner's option A (2026-09-30):
+          # written at DEPLOY time, the only moment that knows the PR and the
+          # issue, onto the publish branch beside the preview, so it lands at
+          # STAGING/<slug>/staging-preview.json. `staging-record.ts` holds the
+          # rules (`schemas/staging-preview.ts`); this is a thin caller.
+          #
+          # The record already published for this preview is copied in FIRST,
+          # from the gh-pages fetch above: `create` keeps its `builtAt` (when
+          # the preview first appeared) and refuses to overwrite a RETIRED
+          # record. If `create` fails — a corrupt record is refused, never
+          # treated as absent — the copied original stays in the site, so the
+          # deploy cannot silently replace it; the failure is an annotation,
+          # not a blocked preview.
+          RECORD=./_site/staging-preview.json
+          git show "FETCH_HEAD:STAGING/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
+            || rm -f "$RECORD"
+          PR_ARG=""
+          if [ "$PR" != "n/a" ]; then PR_ARG="--pr $PR"; fi
+          # shellcheck disable=SC2086  # PR_ARG is a deliberate two-token flag or empty
+          bun run cat-harness/scripts/staging-record.ts create \
+            --out "$RECORD" \
+            --slug "$STAGING_SLUG" \
+            --branch "$STAGING_BRANCH" \
+            --commit "${GITHUB_SHA:0:7}" \
+            $PR_ARG \
+            ${ISSUE:+--issue "$ISSUE"} \
+            --host "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
+            || echo "::error title=staging-preview record::not written for STAGING/${STAGING_SLUG} — see the log above; any published record was kept as it was"
 
       # The branch's KG, published beside the branch's site, so the graph a
       # reviewer inspects is the one this PR produces rather than main's. The

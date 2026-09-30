@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6pfo
 title: Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T12:28:52Z
-updated_at: 2026-09-29T21:43:13Z
+updated_at: 2026-09-30T11:17:01Z
 parent: folio-assistant-zzmr
 ---
 
@@ -294,3 +294,12 @@ So the design is four pieces, and the last two are what "never delete" actually 
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+
+## 2026-09-30 — owner chose A (deploy time, on gh-pages); piece 1 wired
+Correction first: I put 6pfo to the owner as undecided having read only the top of this bean. The design below it — staging-record.ts + schemas/staging-preview.ts, retirement as a state — was already built (23d81a697c, 2026-09-20) and already IS option A. What was missing is the wiring: feature-staging.yml called none of it.
+- [x] **Piece 1 — the deploy writes the live record.** The 'Inject staging banner' step (which already computes PR and issue, and already fetches gh-pages) now copies the published STAGING/<slug>/staging-preview.json into _site first, then runs staging-record.ts create: builtAt is kept from the first deploy, the commit updates, a RETIRED record is refused as live, and a corrupt one is refused rather than replaced (the copied original stays; the failure is a ::error annotation, not a blocked preview). Simulated locally through all three cases; staging and workflow tests 535/535, check:workflow-refs and check:workflows pass. Verified for real only by this PR's next staging deploy — its log line 'staging-record: created|updated … STAGING/<slug>' is the evidence.
+- [ ] Piece 2 — cleanup retires the record into the retired store before rm -rf (runs only on PR close, so it cannot be verified from an open PR).
+- [ ] Piece 3 — restore-staging.ts carries the retired store: add it to CARRIED_PREFIXES (the list already names it as the next tenant).
+- [ ] Piece 4 — every removal path of a retired record guarded by the explicit confirmation input.
+- A second, JSON-LD copy (<stub>/staging.jsonld) was drafted and REVERTED before commit: a second record of the same facts is what this design exists to prevent. <base>/fsh-guts.jsonld already carries these records as fsh-guts nodes.
