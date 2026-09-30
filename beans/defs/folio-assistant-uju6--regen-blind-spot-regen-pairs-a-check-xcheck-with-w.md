@@ -49,3 +49,15 @@ Each of the four was **read** before it was paired, because the bean warned that
 `repairableGates` admitted only `:check`-SUFFIXED scripts, so a `check:`-prefixed gate was skipped outright, not even counted as `no-writer`. It now admits one when it has a declared writer, and regen prints the `NO_WRITER` set as "not asked, by declaration".
 
 **Falsified live:** I planted a workflow instance (`beans/workflows/zz-uju6-probe.json`), which made `check:prov-qaqc` STALE. One `bun run regen` reported "✓ check:prov-qaqc was stale — regenerated with `bun run prov:qaqc`" and "73 current, 2 regenerated, 0 unrepaired" in 2 passes, and the check then passed. The probe was removed and nothing it produced is committed.
+
+## Follow-up: the count of four was low; now MEASURED and guarded (2026-09-30)
+
+Main went red on `check:glossary` at 7bdda74, and `bun run regen` could not repair it: the fifth pair this bean's list of four had missed. So the set is now derived by **measurement**. Take every single-script `check:X` gate whose command is some script's command plus ` --check`.
+
+| gate | candidate | decision |
+|---|---|---|
+| `check:glossary` | `glossary:page` | **paired**: regenerates from sources |
+| `check:remote-skills` | `sync:remote-skills` | **paired**: re-materialises at the pinned commit |
+| `check:viewer-nav` | `viewer:nav:audit` | **NO_WRITER**: it writes the BASELINE, and the gate fails only on a regression, so running it would erase the regression and report a repair |
+
+A new test fails if any such gate is left **undecided**, neither paired nor recorded. Falsified by deleting the `check:glossary` pair: the test failed with "check:glossary is undecided", then passed when the pair was restored.
