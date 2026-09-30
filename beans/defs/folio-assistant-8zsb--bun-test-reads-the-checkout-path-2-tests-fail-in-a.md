@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T17:53:09Z
-updated_at: 2026-09-30T19:00:21Z
+updated_at: 2026-09-30T19:49:03Z
 parent: folio-assistant-1xhc
 ---
 
@@ -183,3 +183,23 @@ The code's own documentation leans towards **"the climb is not intended for the 
 **Is the climb intended?** No, not for the root instance. It is the pitfall that `siblingScopeFor`, `resolveCoveragePath` and `readVoicesGraph`'s own `repoRootIn` parameter each exist to avoid. The production callers pass the root explicitly. **No resolver change is made.** `rootForScope` and `declaredKindsEntryRoot` still compose `repoRootFor`, but no failure has been traced to them, so changing them would be speculative.
 
 **The change:** the test now asserts the DERIVATION (`repoRootFor(REPO) === dirname(REPO)`), which does not depend on what the parent holds, instead of what the wrong root happens to find. Falsified: from a checkout at `/tmp/wt-probe9`, `voice-skills.test.ts` went from 1 fail to 13 pass. It also passes 13 of 13 from `/home/user/wt-8zsb`.
+
+
+## Box 3 moved to `68k7` — owner ruled 2026-09-30
+
+Box 3 above (*is the parent climb intended?*) stays **unchecked on purpose**,
+and the owner's ruling is **leave it open until the call site is named**.
+
+It is tracked in **`68k7`** from now on, because this bean is `completed` and a
+completed bean's unchecked box is not reachable by `beans list`. That is this
+bean's own lesson — a finding needs somewhere to live that nobody has to
+already know about — applied to the bean that taught it.
+
+`68k7` carries what was established (`siblingScopeFor` and
+`resolveCoveragePath` both document the climb as NOT intended for the root
+instance, while `rootForScope` and `declaredKindsEntryRoot` still compose
+`repoRootFor` unconditionally) and what blocks a fix (which call on the
+`readVoicesGraph → directoriesForGraph → resolveDirectories → readDeclaration`
+stack actually climbs — not yet measured).
+
+Boxes 1, 2 and 4 landed in #1668 and are unaffected.

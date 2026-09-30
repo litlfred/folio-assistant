@@ -1,11 +1,11 @@
 ---
 # folio-assistant-s4sp
 title: 'B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-23T19:53:34Z
-updated_at: 2026-09-23T20:12:11Z
+updated_at: 2026-09-30T19:38:35Z
 parent: folio-assistant-tr05
 ---
 
@@ -22,3 +22,6 @@ Owner, 2026-09-23: "you'll need to fix tools". Tools are in scope for B: a Tool'
 - [ ] B2 merged
 - [ ] B3 merged
 - [ ] B4 merged
+
+## Closed on evidence (2026-09-30)
+All four sub-PRs are on main: B1 (ae7316bd24c merge), B2 (9696f788841), B3 (9daa52cecaf B3a, c9e1e76602d B3b), B4 (6431bbd9438).

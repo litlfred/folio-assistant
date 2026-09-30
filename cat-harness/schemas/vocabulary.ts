@@ -18,9 +18,9 @@
  *
  * ## What is NOT here, deliberately
  *
- * **The graph kinds.** `ToolGraph`, `KGraph`, `BeanGraph` and the rest
- * already carry a `summary` in `BASE_GRAPH_KINDS`, so `ns-export` reads it
- * from there. Restating them here would be a second answer to one question,
+ * **The graph kinds.** `tools`, `cat-harness`, `beans` and the rest are
+ * `GraphKind` individuals, not classes (bean `3r47`), and each already carries
+ * a `summary` in `BASE_GRAPH_KINDS`, so `ns-export` reads it from there. Restating them here would be a second answer to one question,
  * free to disagree — the drift this repository keeps paying for. A gloss below
  * for a term the registry already describes is a bug, and the completeness
  * test says so.
