@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-30T17:45:00Z
+updated_at: 2026-09-30T23:40:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -183,3 +183,54 @@ Owner's call: an agent with network access **claims this bean whole**
 (`bun run beans:claim folio-assistant-a9tx`), W3 and W4 included, rather than a
 child bean. W1 was un-ticked the same day. It had been ticked with the
 byte-identical check never run, which was a false tick.
+
+
+## Prepared for the agent with network, 2026-09-30
+
+Done while the network-enabled agent could not yet start. Everything here is
+built and unit-tested; **nothing is measured on a real IG yet.** Owner: no
+GitHub Actions for now, and any CI later **calls these same scripts and
+tools**. The one Actions run was cancelled while queued, and the workflow removed.
+
+**Fork** (`claude/ast-export`, `45ec95d`, 21 Java tests):
+- `inputs` in the manifest is now **exactly** folio-assistant's strict
+  `CompiledInputsSchema`: `inputDigest` is 64 bare hex characters, and an unknown
+  `sourceRevision` is omitted, with the reason in `inputsUnknown`. Before this, every AST
+  would have read as `cannot-tell`.
+- A golden-vector test for `InputDigest`
+  (`58871352…82f1`), which folio-assistant's TypeScript twin asserts too.
+- `-fsh-users <json>` on `AstPlanCli` / `IncrementalBuildCli`.
+- The scripts are in `ast-export/scripts/`: `run-real-igs.sh` and `w7-round.sh`.
+
+**folio-assistant** (PR #1708):
+- `fhir-harness/scripts/ig-ast.ts`: `list`, `validity` (`compiledValidity`),
+  `diff` (resources and edges, element-level differential), and `render`
+  (just-the-docs pages, every one carrying the provisional mark). 10 tests.
+- The skill `fhir-ig-base/ig-ast-delta`; six Tools in `fhir-harness/tools`.
+- `fsh-cone --file-users` (`fsh-file-users/v1`), declared on the `fsh-cone` tool.
+- `cat-harness/processes/ig-ast-delta-review.bpmn`, the review subprocess:
+  validity, then diff and render, then "every difference explained?". An
+  unexplained difference is noted here under W8 and ends in a full build. Its
+  placement in `ig-incremental-build.bpmn` (between Task_Merge and Task_Qa) is
+  **stated in the skill, not drawn**; that diagram is unchanged.
+- Corrected: the `ig-publisher-fork` skill and `fhir-harness.json` said the
+  logic-layer edges live in `org.hl7.fhir.core`.
+
+**Found, not used: FHIR packages on npm.** `registry.npmjs.org` is reachable
+here, and the npm account `grahamegrieve` publishes about 567 FHIR packages
+(`@hl7/hl7.fhir.r4.core`, `smart.who.int.base`, `who.ddcc`, the templates).
+The unscoped `hl7.fhir.r4.core` and `fhir.base.template` are npm
+**malicious-package placeholders**, so FHIR names on npm are not
+automatically HL7's. Nothing ties these tarballs to packages.fhir.org. IG
+templates also carry scripts that the Publisher runs, so loading an unverified
+one is code execution, not only data. **Not used.** Whether to use it for
+measurement only is the owner's call.
+
+**For the agent, in order:**
+1. `ast-export/scripts/run-real-igs.sh <work> --byte-identical`.
+2. Record W1 (layout, byte-identical diff) and W2 (per type, against 458).
+3. `bun run fhir-harness/scripts/ig-ast.ts validity <smart-immunizations>/output-ast --ig <smart-immunizations>`
+   must be `valid`. That is the first real cross-language check.
+4. `ast-export/scripts/w7-round.sh <work>`. Then
+   `ig-ast.ts diff <base> <work>/w7/ast --plan <work>/w7/plan.json --site <dir>` and
+   review it per `ig-ast-delta-review.bpmn`.
