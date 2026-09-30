@@ -3,7 +3,13 @@
  * Generate `themes.css` from the theme nodes.
  *
  * @module scripts/gen-themes-css
- * @covers themes
+ * @covers none — it reads `THEMES`, the PLATFORM's themes, which are declared
+ * in code (`schemas/themes.ts`) rather than in a graph directory — the same
+ * reason `gen-avatars-css` declares none. It resolves no `themes` directory.
+ * This line said `@covers themes` until 2026-09-30 (bean `z6xd`): written
+ * from this script's TITLE rather than its scan set, and then copied to two
+ * siblings. The who-iris declaration is explicit that the two are different
+ * things — *"These are NOT the platform's twelve themes"*.
  *
  * **The knowledge graph is the source; the stylesheet is a rendering of it.**
  * That is the whole of the owner's *"named css assets in KG rather than
