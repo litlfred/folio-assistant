@@ -1345,6 +1345,14 @@ jobs:
           # `imagesForRole` is layout-keyed and a mark declares no layout.
           bun run check:image-roles
           bun run check:bean-parents
+          # Does a bean's BODY name a parent its front matter does not carry?
+          # `check:bean-parents` validates the declared graph; this asks whether
+          # the declaration agrees with the bean's own prose. 4ccr's body named
+          # a parent while its front matter carried none, and GOAL 2's queue
+          # omitted 24 open items including ob3m (bean tlj9). The phrase set is
+          # narrow by measurement: 338 bean-id mentions in bodies, 1 in a
+          # placement phrase.
+          bun run check:bean-parent-prose:check
           # Bean `e8m3`, on the owner's VIEW ruling. `beans/defs/archive/` held 631
           # bean-defs while `beans/beans.json` declared it nowhere — the `dh4f`
           # family INVERTED, and invisible to check:declared-dirs and

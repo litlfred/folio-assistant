@@ -243,6 +243,10 @@ export const RULES: Rule[] = [
       // but this script reads no folio content — it validates a graph
       // against a schema the harness owns.
       "scripts/check-instance-themes.ts",
+      // HARNESS: its subject is this repository's own work plan, read
+      // through `scripts/beans.ts` — the one reader of the store. No folio
+      // content is opened.
+      "scripts/check-bean-parent-prose.ts",
       // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
       // LEAF so `state-visualizer.ts` can be a call site without importing
       // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one
