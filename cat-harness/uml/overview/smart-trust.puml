@@ -207,6 +207,25 @@ package "smart-trust/qa" as pkg_smart_trust_qa <<qa>> {
     auditor [1] : object
   }
 }
+package "smart-trust/smart-trust-themes" as pkg_smart_trust_smart_trust_themes <<themes>> {
+  class "Override" as smart_trust_smart_trust_themes_Override <<json: ThemeSchema>> #f4f4f1 {
+    field [1] : string
+    source [1] : string
+    reason [1] : string
+  }
+  class "Theme" as smart_trust_smart_trust_themes_Theme <<json: ThemeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-theme/v1'
+    id [1] : string
+    kind [1] : sticky | webpage | publication
+    inherits [0..1] : object
+    name [0..1] : string
+    description [0..1] : string
+    palette [0..1] : object
+    backdrop [0..1] : object
+    layouts [0..1] : object
+    overrides [0..*] : Override[]
+  }
+}
 
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
 smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
@@ -214,7 +233,9 @@ smart_trust_smart_trust_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_a
 smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Item : items
 smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_folio_ig_menu_v1 *-- "0..*" smart_trust_smart_trust_artifact_index_folio_ig_menu_v1_Group : groups
 smart_trust_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" smart_trust_qa_kg_qa_v1_Pair_attestation : pair_attestations
-' grid: portrait, 2 column(s) — pkg_smart_trust_smart_trust_artifact_index pkg_smart_trust_smart_trust_docs pkg_smart_trust_smart_trust_scripts pkg_smart_trust_qa
+smart_trust_smart_trust_themes_Theme *-- "0..*" smart_trust_smart_trust_themes_Override : overrides
+' grid: portrait, 2 column(s) — pkg_smart_trust_smart_trust_artifact_index pkg_smart_trust_smart_trust_docs pkg_smart_trust_smart_trust_scripts pkg_smart_trust_qa pkg_smart_trust_smart_trust_themes
 pkg_smart_trust_smart_trust_artifact_index -[hidden]down- pkg_smart_trust_smart_trust_scripts
 pkg_smart_trust_smart_trust_docs -[hidden]down- pkg_smart_trust_qa
+pkg_smart_trust_smart_trust_scripts -[hidden]down- pkg_smart_trust_smart_trust_themes
 @enduml
