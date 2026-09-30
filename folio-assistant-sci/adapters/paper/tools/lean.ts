@@ -11,7 +11,7 @@
  *   lean_build    — Trigger a Lean build (lake build)
  *   lean_check    — Quick type-check (lake check) — faster than full build
  *
- * @module folio-assistant/adapters/paper/tools/lean
+ * @module folio-assistant-sci/adapters/paper/tools/lean
  */
 
 import { z } from "zod";
@@ -19,7 +19,7 @@ import { execSync, spawnSync, type SpawnSyncReturns } from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
 import { join, resolve } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { LEAN_DIR, REPO_ROOT } from "../../document/paths.js";
+import { LEAN_DIR, REPO_ROOT } from "../../../../cat-harness/adapters/document/paths.js";
 
 /** Check if a command is available. */
 function hasCommand(cmd: string): boolean {
