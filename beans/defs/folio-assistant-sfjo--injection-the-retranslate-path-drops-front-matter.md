@@ -168,7 +168,7 @@ warned about. Verified rather than assumed.
 **But the explanatory comment block was NOT restored.** Measured across all five:
 6 comment lines inside the front matter at `3f0518b81ea`, **1** now. #1427 deleted
 the block explaining what `lang` and `nav_exclude` do and citing
-`skills/folio-core/translation-manager.md`. The keys came back; the documentation
+`skills/library/library-core/translation-manager.md`. The keys came back; the documentation
 did not. Not restored here — five files of authored prose is the owner's call, not
 an agent's.
 

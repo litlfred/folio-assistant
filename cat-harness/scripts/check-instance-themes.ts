@@ -38,13 +38,13 @@
  * theme that does not satisfy `ResolvedThemeSchema`. Both are broken
  * declarations with one repair.
  *
- * **Reported, never graded:** which KINDS an instance's themes carry. `v8n5`
- * and PR #1584 left open which theme may style who-iris's card and tile — the
- * board styles a card only from `sticky` themes, and who-iris owns a `webpage`
- * and a `publication` theme and no `sticky` one. That is an authoring decision
- * the owner reserved, so the kinds are printed with their denominator and no
- * verdict is attached. A check that failed on the missing `sticky` would be
- * answering a question its author was told not to.
+ * **Reported, never graded:** which KINDS an instance's themes carry. The
+ * board styles a card only from `sticky` themes, and whether an instance
+ * authors one is an authoring decision, not a defect: #1584 reserved it for
+ * the owner, who answered it for who-iris on 2026-09-30 ("author iris-sticky",
+ * bean `v8n5`) and for no other instance. So the kinds are printed with their
+ * denominator and no verdict is attached. A check that failed on a missing
+ * `sticky` would be answering a question its author was told not to.
  *
  * **Could-not-determine is never green** (bean `dh4f`): an instance whose
  * declaration will not load, or a themes module that throws, exits 2 rather

@@ -1,12 +1,13 @@
 import { describe, expect, test } from "bun:test";
 import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { CatHarnessDeclarationSchema, ExactVersionSchema } from "./cat-harness";
 import { dependsOnFor } from "./depends-on";
 import { applyBump, clearsFloor, comparable, diffSurface, surfaceOf } from "./version-bump";
-import { auditVersionBumps } from "../scripts/check-version-bump";
+import { auditVersionBumps, releaseTags } from "../scripts/check-version-bump";
 import { auditPublishable, formatReport } from "../scripts/check-publishable";
 
 /**
@@ -51,7 +52,7 @@ describe("publication is a STATE, and `published` is refused (§3.1, superseded 
    * say what is true — and it is what condemned the old model: all 17
    * instances reported `undecided` while the answer was known for every one.
    *
-   * `skills/folio-core/instance-publication.md`.
+   * `skills/kg/kg-core/instance-publication.md`.
    */
   test("absent `publication` is legal and means draft", () => {
     expect(CatHarnessDeclarationSchema.safeParse(decl()).success).toBe(true);
@@ -576,5 +577,34 @@ describe("version bump — computed from the surface, not claimed by a commit me
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
+  });
+});
+
+describe("release tags — `<name>-v` everywhere, plain `v` only in a standalone repository (owner 2026-09-30, Q4)", () => {
+  function repoWithTags(tags: string[]): string {
+    const dir = mkdtempSync(join(tmpdir(), "release-tags-"));
+    const git = (...a: string[]) => spawnSync("git", a, { cwd: dir, encoding: "utf-8" });
+    git("init", "-q");
+    git("-c", "user.email=t@t", "-c", "user.name=t", "commit", "-q", "--allow-empty", "-m", "x");
+    for (const t of tags) git("tag", t);
+    return dir;
+  }
+
+  test("a standalone repository's plain tags are its releases, newest first", () => {
+    const dir = repoWithTags(["v0.1.0", "v0.10.0", "v0.9.0", "vnext"]);
+    expect(releaseTags(dir, "bootstrap", true).map((t) => t.tag)).toEqual(["v0.10.0", "v0.9.0", "v0.1.0"]);
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("in a repository of several instances a plain tag names no instance, so it is not read", () => {
+    const dir = repoWithTags(["v1.0.0", "bootstrap-v0.2.0"]);
+    expect(releaseTags(dir, "bootstrap").map((t) => t.tag)).toEqual(["bootstrap-v0.2.0"]);
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  test("both spellings of one version are one release", () => {
+    const dir = repoWithTags(["v0.1.0", "bootstrap-v0.1.0"]);
+    expect(releaseTags(dir, "bootstrap", true).map((t) => t.version)).toEqual(["0.1.0"]);
+    rmSync(dir, { recursive: true, force: true });
   });
 });

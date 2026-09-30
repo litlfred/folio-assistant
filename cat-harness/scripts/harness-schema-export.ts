@@ -313,7 +313,8 @@ export function declaredArtefacts(): Map<string, { tool: string; source: string;
  * written against that coincidence and reported the first counterexample as
  * drift: `ns-vocabulary` and `content-context` maintain `ns/vocabulary.jsonld`
  * and `ns/content/v1.jsonld`, which `.github/workflows/docs-site.yml` publishes
- * — both declarations true, both flagged.
+ * — both declarations true, both flagged. (The union was retired on 2026-09-30;
+ * `ns-vocabulary` now maintains each layer's `<stub>/ns.jsonld`.)
  *
  * So the comparison now runs only over artefacts whose declaring Tool invokes
  * this command. That keeps the rot guarantee exactly where this script can

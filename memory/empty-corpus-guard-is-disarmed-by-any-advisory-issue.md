@@ -4,8 +4,9 @@ id: empty-corpus-guard-is-disarmed-by-any-advisory-issue
 label: trap
 summary: "validateObjects detects 'validated nothing' via issues.length === 0, so any advisory issue turns invalid into valid"
 createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
+references:
+  - kind: agent
+    id: content-pipeline-navigator
 archived: true
 ---
 > **Archived 2026-09-19, on arrival.** Written for

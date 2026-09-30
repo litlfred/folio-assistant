@@ -48,6 +48,7 @@
 import { z } from "zod";
 
 import { MATERIALIZATION_STATES } from "./materialization.js";
+import { ModelIdSchema } from "../../bootstrap-tools/schemas/model-registry.ts";
 
 export const ADJUDICATION_SCHEMA_TAG = "folio-adjudication/v1";
 
@@ -210,7 +211,7 @@ export const AdjudicationOutcomeSchema = z
         id: z.string().min(1),
         kind: z.enum(ADJUDICATOR_KINDS),
         /** An `agent` adjudicator must name its model, so a verdict can be re-examined. */
-        model: z.string().min(1).optional(),
+        model: ModelIdSchema.optional(),
       })
       .strict()
       .refine((b) => b.kind !== "agent" || b.model !== undefined, {

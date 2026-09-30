@@ -7,8 +7,9 @@ createdAt: 2026-09-19
 roles:
   - build-pipeline
   - validation-pipeline
-agents:
-  - ci-health-watcher
+references:
+  - kind: agent
+    id: ci-health-watcher
 ---
 **`bun run gates`** runs what CI runs, derived from the workflow at run time
 (`--all` adds the browser job). Never hand-list them: three checks are invoked

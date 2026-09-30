@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T10:38:48Z
-updated_at: 2026-09-30T00:38:14Z
+updated_at: 2026-09-30T16:12:48Z
 parent: folio-assistant-zzmr
 ---
 
@@ -40,3 +40,7 @@ Two tests fail in any worktree whose folder is not named `folio-assistant` and p
 - [x] The two worktree-failing tests CONFIRMED same class: folio-root.test.ts asserted repoRootFor(...).endsWith('folio-assistant') and instance-render.test.ts took the root path's last segment. Both now assert the root's declared name.
 
 _2026-09-30T00:35:22Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Seen again 2026-09-30
+
+A QA sweep ran `library:viz` in a worktree named `wt-repoqa`: every `instance`/`uploadInstance` in `cat-harness/docs/assets/library/index.json` became `wt-repoqa`, it wrote `docs/cat-harness/library/wt-repoqa/index.html` and pruned `.../library/folio-assistant/`. Reverted by hand. Same defect as the 09-26 `pr1290` sighting: a worktree is the normal way to work here, so this bites every parallel session.

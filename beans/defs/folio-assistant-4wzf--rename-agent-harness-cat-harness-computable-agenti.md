@@ -35,7 +35,7 @@ new vocabulary term**, and `stripJsonLd`/`forType` round-trip against it. Any
 already-published JSON-LD carrying `fa:AgentHarness` stops resolving. That
 needs a decision: alias the old term, or accept the break and say so.
 
-**In prose** — `AGENTS.md`, `skills/folio-core/directory-conventions.md` and
+**In prose** — `AGENTS.md`, `skills/kg/kg-core/directory-conventions.md` and
 its generated mirror, `docs/`, and the many bean bodies that reference the
 file by name. Bean bodies are history; rewriting them would falsify the
 record of what was decided when.

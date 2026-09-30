@@ -731,7 +731,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * Minting ids before then would bake the wrong scheme into artefacts the
    * schema itself calls *stable forever, never reused*.
    *
-   * `skills/folio-core/instance-publication.md` carries the namespace rule and
+   * `skills/kg/kg-core/instance-publication.md` carries the namespace rule and
    * why a mirror never takes its subject's identity.
    */
   id?: string;
@@ -766,7 +766,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * that a version reads as a publication claim. It does not — a version
    * distinguishes snapshots; whether anyone outside may depend on them is
    * {@link publication}, a separate question.
-   * `skills/folio-core/instance-publication.md`.
+   * `skills/kg/kg-core/instance-publication.md`.
    */
   version?: string;
 }
@@ -1430,6 +1430,27 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   instanceRoot: z.boolean().optional(),
   /**
+   * `/<kind>/<instance>/` for this directory is a ONE-FILE REDIRECT to the
+   * directory's declared viewer, because the directory itself is not mounted.
+   *
+   * The case it exists for is a directory that WAS mounted and stopped being:
+   * its kind route was a live URL, somebody may have linked it, and a route
+   * that simply vanishes turns every such link into a 404. Bean `2b5s`: an
+   * instance's `library/` held both its rendered pages and its corpus, the
+   * mount copied the corpus to two routes, and moving the pages out left
+   * `/library/<instance>/` with nothing to serve.
+   *
+   * **Declared, not inferred.** "Was this route ever published" is a fact
+   * about history, which a checkout does not hold; deriving the redirect from
+   * "has a published viewer and no index" instead would emit one stub per
+   * such directory in every instance — 38 declared entries on 2026-09-30, several at routes
+   * Jekyll already serves. `mount-instance-docs.ts` refuses the redirect,
+   * naming it, when the directory IS mountable (a route cannot be both a
+   * mount and a redirect) or declares no published viewer (a redirect to
+   * nowhere).
+   */
+  kindRouteRedirect: z.boolean().optional(),
+  /**
    * This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the
    * Jekyll source instead of mounting its built output.
    *
@@ -1653,7 +1674,7 @@ export interface Publication {
    * WHAT STATE this instance's publication is in. `draft`, always, today.
    *
    * **The discipline is in the skill, not here** —
-   * `skills/folio-core/instance-publication.md`. Owner's ruling, 2026-09-23:
+   * `skills/kg/kg-core/instance-publication.md`. Owner's ruling, 2026-09-23:
    * *"all assets get a version and are in 'draft' publication. formal
    * publication process needs to be deinfed/neeeds tools/depends on
    * instance."*
@@ -2503,7 +2524,7 @@ export const CatHarnessDeclarationSchema = z.object({
     // conditional left to check about them. What replaced the old branches:
     // §3.1 refused both unless `publishable: true`, and the owner's ruling of
     // 2026-09-23 makes them universal. See
-    // `skills/folio-core/instance-publication.md`.
+    // `skills/kg/kg-core/instance-publication.md`.
     //
     // `publication` is a literal union of one value, so `"published"` is
     // refused by the type rather than here — deliberately, because a refusal
@@ -4794,6 +4815,42 @@ export function kgQaHomeFor(
   // declared-path-literal: the base case for an instance that declares no `qa`
   // directory and is hosted by nobody — the same convention KG_QA_RESULTS_DIR names.
   return { root: join(instanceRoot, "test", "results"), by: "convention" };
+}
+
+/**
+ * Where an instance's swimlane-glossary retirement LEDGER lives — the same
+ * three answers as {@link kgQaHomeFor}, for the same reason.
+ *
+ * - **own** — the instance declares a `swimlane-glossary` directory.
+ * - **hosted** — it declares none, and `hostRoot` (the instance running the
+ *   export) does; the ledger lives in the host's directory under the
+ *   instance's stub, e.g. `cat-harness/glossary/bootstrap/`. The ledger is
+ *   harness state ABOUT bootstrap — `glossary-export` writes it, nothing in
+ *   bootstrap reads it — so it is hosted like the QA verdicts (owner,
+ *   2026-09-30, Q2 of bean `xsqm`).
+ * - **convention** — neither declares one; `<instance>/glossary/`.
+ *
+ * A hosted ledger sits in a stub-named subdirectory, so the host's own
+ * `glossary-ledger.json` and a guest's never share a path, and each file
+ * carries its `instance`, so a walker over the host's directory attributes it.
+ */
+export function glossaryHomeFor(
+  instanceRoot: string,
+  hostRoot?: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): { root: string; by: "own" | "hosted" | "convention" } {
+  const own = matchingDirectories(instanceRoot, "swimlane-glossary", registry)[0];
+  if (own !== undefined) return { root: own.absPath, by: "own" };
+  if (hostRoot !== undefined && resolve(hostRoot) !== resolve(instanceRoot)) {
+    const host = matchingDirectories(hostRoot, "swimlane-glossary", registry)[0];
+    const decl = readDeclaration(instanceRoot);
+    if (host !== undefined && decl !== undefined && decl !== null) {
+      return { root: join(host.absPath, artefactStub(decl)), by: "hosted" };
+    }
+  }
+  // declared-path-literal: the base case for an instance that declares no
+  // `swimlane-glossary` directory and is hosted by nobody — `GLOSSARY_DIR`'s convention.
+  return { root: join(instanceRoot, "glossary"), by: "convention" };
 }
 
 function matchingDirectories(

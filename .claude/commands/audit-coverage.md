@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /audit-coverage
 
-Run the `audit-coverage` skill. Read [`cat-harness/skills/folio-core/audit-coverage.md`](../../cat-harness/skills/folio-core/audit-coverage.md) and follow it.
+Run the `audit-coverage` skill. Read [`cat-harness/skills/kg/kg-core/audit-coverage.md`](../../cat-harness/skills/kg/kg-core/audit-coverage.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

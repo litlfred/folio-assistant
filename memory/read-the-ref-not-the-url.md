@@ -6,8 +6,9 @@ summary: "a 404 or a failed fetch is not evidence — read the publish ref"
 createdAt: 2026-09-19
 roles:
   - build-pipeline
-agents:
-  - ci-health-watcher
+references:
+  - kind: agent
+    id: ci-health-watcher
 ---
 **First check for a deployment or 404 question is the publish ref, not a
 fetch.** `git fetch origin gh-pages && git ls-tree -r --name-only FETCH_HEAD |

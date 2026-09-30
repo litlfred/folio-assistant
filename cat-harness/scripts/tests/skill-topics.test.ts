@@ -14,7 +14,7 @@ import { packageDirsIn, topicsOf, TOPICS_FILE } from "../skill-topics.ts";
 function tree(topics?: unknown): string {
   const root = mkdtempSync(join(tmpdir(), "skill-topics-"));
   for (const d of ["crdm", "kg/graph-management", "kg/kg-core", "memory"]) mkdirSync(join(root, d), { recursive: true });
-  if (topics !== undefined) writeFileSync(join(root, TOPICS_FILE), JSON.stringify(topics));
+  if (topics !== undefined) writeFileSync(join(root, TOPICS_FILE), JSON.stringify({ $schema: "skill-topics/v1", ...(topics as object) }));
   return root;
 }
 const KG = { id: "kg", path: "kg", title: "Knowledge graph", description: "Structure, management and use." };
@@ -42,6 +42,11 @@ describe("topicsOf refuses what it cannot verify", () => {
     const root = tree();
     writeFileSync(join(root, TOPICS_FILE), "{ not json");
     expect(() => topicsOf(root)).toThrow(/not valid JSON/);
+  });
+  test("a file that is not the skill-topics/v1 family throws", () => {
+    const root = tree();
+    writeFileSync(join(root, TOPICS_FILE), JSON.stringify({ topics: [KG] }));
+    expect(() => topicsOf(root)).toThrow(/\$schema/);
   });
   test("a topic missing a field throws", () => {
     expect(() => topicsOf(tree({ topics: [{ id: "kg", path: "kg", title: "K" }] }))).toThrow(/description/);

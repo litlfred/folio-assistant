@@ -1,5 +1,5 @@
 /**
- * The two WHO themes, bean `j66n`.
+ * The WHO themes — two measured (bean `j66n`), one derived from them (bean `v8n5`).
  *
  * @module who-iris/themes/themes
  * @graphNode themes
@@ -50,7 +50,9 @@ import {
   explainThemeFailure,
   resolveTheme,
   type ResolvedTheme,
+  type Theme,
 } from "../../cat-harness/schemas/theme.js";
+import { DEFAULT_THEME_ID, themeById } from "../../cat-harness/schemas/themes.js";
 
 /** The instance these themes belong to. `themeKey` keys on it; ids are not unique across instances. */
 export const THEME_INSTANCE = "who-iris";
@@ -231,22 +233,80 @@ export const WPRO_PRIMARY_PALETTE = [
   "#74CEE2", "#CBDB2A", "#FFF200",
 ] as const;
 
-const RAW = [IRIS_WEB, WHO_WPRO_PUBLICATION];
+/**
+ * `iris-sticky` — the IRIS palette on the NOTE BOARD. Bean `v8n5`, owner's
+ * ruling 2026-09-30: *"Author iris-sticky"*.
+ *
+ * ## Why a third theme rather than citing `iris-web`
+ *
+ * The note board styles a card only from a `sticky`-kind theme
+ * (`cat-harness/scripts/gen-themes-css.ts`: a webpage theme *"shares the
+ * geometry but not this stylesheet"*). `iris-web` is a `webpage` theme, so a
+ * who-iris card, board tile or navbar entry could not cite it without changing
+ * that platform rule. This theme is the sticky-kind face of the same palette.
+ *
+ * ## DERIVED, not measured — and the derivation is the mechanism, not a copy
+ *
+ * It `inherits` `iris-web`, so every palette role — `accent #008dc9`,
+ * `surface #ffffff`, `ink #212529`, `edge #ced4da` — arrives through
+ * `resolveTheme`'s field-by-field palette merge from the theme that was
+ * MEASURED off the captured DSpace stylesheet (`client-theme.css`, see
+ * {@link IRIS_WEB}). Not one colour is written here, so re-measuring
+ * `iris-web` re-colours this theme with no edit, and `themes.test.ts` asserts
+ * the resolved palette equals what the capture says — reading the zip, not
+ * this file.
+ *
+ * ## Geometry: the note board's own, because IRIS has no sticky notes
+ *
+ * `resolveTheme` resets geometry on a kind change (*"there is nothing shared
+ * to carry"*), so a sticky child must state its three viewports. IRIS declares
+ * no card surface to measure them from, and `iris-web`'s `1140px` is a page
+ * column: a note that wide would not be a note. So the layouts are READ from
+ * the platform's default sticky theme — the board's own furniture — rather
+ * than invented here or restated as literals.
+ *
+ * No `backdrop`: IRIS's own imagery is somebody else's artefact (`10s1`), and
+ * a palette-only card is a state the board already renders.
+ */
+const platformSticky = themeById(DEFAULT_THEME_ID);
+if (platformSticky?.kind !== "sticky") {
+  throw new Error(`iris-sticky: the platform default theme "${DEFAULT_THEME_ID}" is not a sticky theme, so there is no board geometry to take`);
+}
+const IRIS_STICKY: Theme = {
+  $schema: THEME_SCHEMA_TAG,
+  kind: "sticky",
+  id: "iris-sticky",
+  inherits: { instance: THEME_INSTANCE, themeId: IRIS_WEB.id },
+  name: "IRIS note",
+  description:
+    "The IRIS palette on a sticky note — derived from iris-web, itself measured from the captured DSpace stylesheet.",
+  layouts: platformSticky.layouts,
+};
+
+const RAW: readonly Theme[] = [IRIS_WEB, WHO_WPRO_PUBLICATION, IRIS_STICKY];
 
 /**
  * Resolved, through the platform's own resolver.
  *
- * Neither inherits, so resolution is a parse — but it goes through
- * `resolveTheme` rather than `ResolvedThemeSchema.parse` so that the day one
- * of them DOES inherit, the path is already the one being exercised.
+ * `iris-web` and `who-wpro-publication` inherit nothing, so for them
+ * resolution is a parse; `iris-sticky` inherits `iris-web`, which is why this
+ * goes through `resolveTheme` rather than `ResolvedThemeSchema.parse`.
  *
  * A missing layout throws here rather than degrading, which is `j66n`'s fourth
  * clause: *"Every layout still required; a missing layout stays INVALID, never
  * degraded."*
  */
-export const WHO_THEMES: readonly ResolvedTheme[] = RAW.map((t) => {
-  const declared = ThemeSchema.parse(t);
-  const r = resolveTheme({ instance: THEME_INSTANCE, theme: declared }, () => undefined);
+const DECLARED: readonly Theme[] = RAW.map((t) => ThemeSchema.parse(t));
+
+/** A parent within THIS instance — the only owner a who-iris theme inherits from today. */
+function ownParent(ref: { instance?: string; themeId: string }): { instance: string; theme: Theme } | undefined {
+  if (ref.instance !== undefined && ref.instance !== THEME_INSTANCE) return undefined;
+  const theme = DECLARED.find((t) => t.id === ref.themeId);
+  return theme ? { instance: THEME_INSTANCE, theme } : undefined;
+}
+
+export const WHO_THEMES: readonly ResolvedTheme[] = DECLARED.map((declared) => {
+  const r = resolveTheme({ instance: THEME_INSTANCE, theme: declared }, ownParent);
   if (!r.ok) throw new Error(`theme ${declared.id}: ${explainThemeFailure(r.failure)}`);
   return r.theme;
 });

@@ -103,7 +103,7 @@ writing swimlane roles into it — `code-reviewer`, `validation-pipeline`. So on
 field came to hold two vocabularies with no way to tell which a value belonged
 to except by looking each up.
 
-`skills/folio-core/library-ingestion.md` is the clearest specimen:
+`skills/library/library-core/library-ingestion.md` is the clearest specimen:
 `roles: [ingestion-agent, authoring-agent, collaborator, owner]` — two real
 roles and two tier words in one list.
 
@@ -191,15 +191,15 @@ in `.claude/skills/actors/` · **permission** resolves in
 |---|---|
 | `.claude/skills/local/language-trap-agent-audit.md` | ~~collaborator~~ |
 | `cat-harness/skills/folio-core/bean-coordination.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
-| `cat-harness/skills/folio-core/bib-human-review.md` | ~~collaborator~~ |
-| `cat-harness/skills/folio-core/bib-photo-ingestion-watcher.md` | ~~collaborator~~ |
-| `cat-harness/skills/folio-core/bib-qa.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
+| `cat-harness/skills/library/library-core/bib-human-review.md` | ~~collaborator~~ |
+| `cat-harness/skills/library/library-core/bib-photo-ingestion-watcher.md` | ~~collaborator~~ |
+| `cat-harness/skills/library/library-core/bib-qa.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/block-density.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/canonical-watcher.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/chapter-complexity-review.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
-| `cat-harness/skills/folio-core/code-node-review.md` | `code-reviewer`, _admin_ |
+| `cat-harness/skills/kg/kg-core/code-node-review.md` | `code-reviewer`, _admin_ |
 | `cat-harness/skills/folio-core/compute-integration-watcher.md` | ~~collaborator~~, ~~owner~~ |
-| `cat-harness/skills/folio-core/content-acquisition.md` | `ingestion-agent`, `authoring-agent`, ~~collaborator~~, ~~owner~~ |
+| `cat-harness/skills/library/library-core/content-acquisition.md` | `ingestion-agent`, `authoring-agent`, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/content-graph.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/continual-progress.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/coordinate.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
@@ -213,9 +213,9 @@ in `.claude/skills/actors/` · **permission** resolves in
 | `cat-harness/skills/folio-core/docs-generation.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/editor.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/exposition-swarm-drain.md` | ~~collaborator~~, ~~owner~~ |
-| `cat-harness/skills/folio-core/flushable-containers.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
+| `cat-harness/skills/kg/kg-core/flushable-containers.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/getting-started.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
-| `cat-harness/skills/folio-core/glossary-build.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
+| `cat-harness/skills/library/library-core/glossary-build.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/html-rendering-qc.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/idle-backlog.md` | ~~reader~~ |
 | `cat-harness/skills/folio-core/integration-audit.md` | ~~collaborator~~, ~~owner~~ |
@@ -223,18 +223,18 @@ in `.claude/skills/actors/` · **permission** resolves in
 | `cat-harness/skills/folio-core/integration-watch.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/integration-watcher.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/interaction-modality.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
-| `cat-harness/skills/folio-core/library-ingestion.md` | `ingestion-agent`, `authoring-agent`, ~~collaborator~~, ~~owner~~ |
+| `cat-harness/skills/library/library-core/library-ingestion.md` | `ingestion-agent`, `authoring-agent`, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/markdown-render-check.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/md-authoring.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/milnor-exposition-standard.md` | `author`, `editor`, `reviewer`, `narrative-reviewer` |
 | `cat-harness/skills/folio-core/one-voice-audit.md` | ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/one-voice-integration-watcher.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/one-voice-style-guide.md` | ~~reader~~, ~~collaborator~~ |
-| `cat-harness/skills/folio-core/ontologist.md` | ~~collaborator~~, ~~owner~~ |
+| `cat-harness/skills/library/library-core/ontologist.md` | ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/opening-brief.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/pending-show.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/pickup.md` | ~~collaborator~~ |
-| `cat-harness/skills/folio-core/placement.md` | `authoring-agent`, `code-reviewer` |
+| `cat-harness/skills/kg/kg-core/placement.md` | `authoring-agent`, `code-reviewer` |
 | `cat-harness/skills/folio-core/prepare-merge-auto.md` | ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/production-vs-exploratory-discipline.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/qa-report-signing.md` | `validation-pipeline`, `attestation-service`, `publication-manager` |
@@ -250,7 +250,7 @@ in `.claude/skills/actors/` · **permission** resolves in
 | `cat-harness/skills/folio-core/todo-manager.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/todo-review.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/turn-reporting.md` | ~~reader~~, ~~collaborator~~, ~~owner~~ |
-| `cat-harness/skills/folio-core/uploads-watch.md` | `ingestion-agent`, `authoring-agent`, ~~owner~~ |
+| `cat-harness/skills/library/library-core/uploads-watch.md` | `ingestion-agent`, `authoring-agent`, ~~owner~~ |
 | `cat-harness/skills/folio-core/uses-editorial-review.md` | ~~collaborator~~, ~~owner~~ |
 | `cat-harness/skills/folio-core/voice-authoring-guidance.md` | `author`, `authoring-agent`, `editor` |
 | `cat-harness/skills/folio-core/voice-editorial-review.md` | ~~collaborator~~, ~~owner~~, `editor` |

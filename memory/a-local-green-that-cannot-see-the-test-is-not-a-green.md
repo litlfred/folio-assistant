@@ -7,8 +7,9 @@ createdAt: 2026-09-19
 roles:
   - build-pipeline
   - validation-pipeline
-agents:
-  - ci-health-watcher
+references:
+  - kind: agent
+    id: ci-health-watcher
 ---
 A `pull_request` check runs against the **merge of head into base**. A test
 `main` gained *after* your last merge is in CI's tree and not in yours.
