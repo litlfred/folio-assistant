@@ -1,11 +1,11 @@
 ---
 # folio-assistant-p11x
 title: 'check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-27T09:52:20Z
-updated_at: 2026-09-27T09:52:59Z
+updated_at: 2026-09-30T11:01:23Z
 parent: folio-assistant-1xhc
 ---
 
@@ -87,3 +87,5 @@ against a triaged set, not against 8 untriaged hits.
 **Default if nothing is done:** `check:partition` keeps reporting 0, Phase I.1
 stays discharged on one instance's evidence, and the next PR to cite the number
 repeats the over-broad claim.
+
+_2026-09-30T11:01:23Z_ — Claimed by worktree-agent-a7a16afc216992bbf — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
