@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-27T07:47:30Z
-updated_at: 2026-09-30T08:27:48Z
+updated_at: 2026-09-30T08:57:59Z
 parent: folio-assistant-vke6
 ---
 
@@ -134,9 +134,11 @@ deletes the need for the part I proposed building.
     `external-schema` (3) -> ingest/materialisation (4) -> `dublin-core` +
     `adapters/document/` (2) -> `library-ref` (1) -> `changeset` (1) ->
     `glossary` (2+1) LAST
-[ ] `glossary` ruled on explicitly — it has 4 core importers and may genuinely
-    be shared platform vocabulary rather than content; treated as content
-    unless the owner says otherwise, and sequenced last for that reason
+[x] `glossary` ruled on explicitly — the owner ruled 2026-09-30 that it is
+    CONTENT: `build-glossary.ts` moves UP into `folio-assistant-core`, the
+    schema stays. Landed on `claude/yj6r-glossary-cluster` (PR #1541, issue
+    #1540). The four core importers turned out to be the whole of it — all
+    core's own glossary tooling — so it is not shared vocabulary
 [ ] the import axis reads 0 `cat-harness ->` sibling escapes, measured by
     resolved import specifier and not by name occurrence
 [ ] only THEN: `check:reference-direction` wired into a workflow, with a failing
@@ -217,3 +219,68 @@ deciding that per file is a bigger job than drawing subgraph boundaries.
 ## Claimed by `claude/yj6r-glossary-cluster` — the GLOSSARY cluster (2026-09-30)
 
 Claimed by branch `claude/yj6r-glossary-cluster` for the GLOSSARY cluster only, the last of the eight. No holder note existed on `main` when this was taken — `beans:claim` refused with `already-claimed` and no holder, which cannot tell a live sibling from an abandoned claim — so the open-PR list was read first: PR #1535 holds the ingest/materialisation tranche and nothing covered glossary. Recorded here so the next session does not have to repeat that check.
+
+
+## Summary of Changes — the GLOSSARY cluster, 2026-09-30
+
+Branch `claude/yj6r-glossary-cluster`, PR #1541, issue #1540. The eighth and
+last cluster. The bean is **not** marked completed: the gate-wiring half (the
+owner's "2 1" order) and the other seven clusters' tranche PRs are still open.
+
+**Escapes 12 -> 9**, measured by resolved import specifier on `origin/main`
+at `99371e88964`. PR #1535 is NOT merged into that base, which is why the
+before figure here is 12 rather than the 8 that PR reports after its own
+move. `check:partition` **0 before, 0 after**.
+
+Five files moved to `folio-assistant-core/scripts/`, beside the
+`schemas/glossary.ts` and `scripts/glossary-page.ts` they read:
+
+    build-glossary.ts             content/pipeline/ -> core/scripts/
+    build-glossary-skos.test.ts   content/pipeline/ -> core/scripts/
+    build-glossary-usage.test.ts  content/pipeline/ -> core/scripts/
+    codemod-refterm.ts            content/pipeline/ -> core/scripts/
+    codemod-refterm.test.ts       scripts/tests/    -> core/scripts/
+
+No schema moved down. The cheap fix this bean forbids was not taken and is
+not reachable from this diff.
+
+### Three things found by reading the code that the cluster list could not see
+
+1. **`codemod-refterm.ts` imports `buildGlossary` directly.** Moving the
+   builder alone trades one escape for another: 12 -> 10, not 12 -> 9. The
+   cluster list was derived from a grep for core imports, so a dependent that
+   reaches the boundary only through another file is invisible to it. It moved
+   with its subject, on the same evidence: Phase C of the same
+   `\defterm`/`\refterm` rollout the builder is Phase D of.
+
+2. **The partition rules already classified the whole cluster core.**
+   `scripts/partition/instance-rules.ts` assigns the `content/pipeline/`
+   prefix to the `core` repo, so `build-glossary.ts` has been a core module on
+   the module axis the entire time. That is a FOURTH piece of evidence for the
+   owner's ruling and it is independent of the other three. It is also why
+   `check:partition` reads 0 over this cluster and always did: its scan root is
+   `cat-harness/`, so an edge leaving that directory is never resolved and
+   never counted. A green `check:partition` was never evidence about these
+   three imports either way.
+
+3. **Both scripts are addressed by id, not by path,** through
+   `resolvePipelineScript` — the `glossary-build` Tool node, `glossary_check`,
+   and the `codemod` transform tool's `refterm` entry. That resolver searched
+   two places; it now searches `folio-assistant-core/scripts/` LAST, so a
+   folio's own fork still wins and the platform's copy still wins over
+   core's. Two tests pin it, because the failure without them is a tool
+   returning `pipeline script not found` — honest and inert, and no gate tells
+   that from a script nobody asked for.
+
+### Measured, both directions
+
+`check:reference-direction` went **798 -> 811 occurrences, 213 -> 216 files**
+— UP. That gate counts NAME occurrences in prose, and this change necessarily
+writes the string `folio-assistant-core` into `cat-harness/` files in order to
+say where the code went. That axis is explicitly out of scope for this bean;
+the import axis, which is not, went down by 3. Reported rather than smoothed.
+
+`check:reference-direction` **already exits 1 on `origin/main`** with the
+identical finding (`gen-object-model-uml.ts` no longer qualifies as PENDING).
+Verified by stashing and re-running on the clean base. Not mine, not fixed
+here.
