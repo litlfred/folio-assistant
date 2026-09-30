@@ -1399,25 +1399,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/assistant-types.skilldefinition.roles",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SkillDefinition.roles"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "by nothing. Kept optional so a downstream instance still validates."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.roles",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/assistant-types.skilldefinition.routingpatterns",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5975,6 +5956,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.theme",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.tile",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.tile"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How this directory's tile looks. See {@link TileSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.tile",
       "skos:note": "candidate"
     },
     {
@@ -20149,25 +20149,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema.sync",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/skill-package.skilldefinitionschema.roles",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SkillDefinitionSchema.roles"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "RETIRED 2026-09-20 (bean `y1w9`) — optional, and read by nothing."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema.roles",
       "skos:note": "candidate"
     },
     {

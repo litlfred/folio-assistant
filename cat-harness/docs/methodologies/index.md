@@ -6,6 +6,7 @@ renders:
   - folio-assistant-core/methodologies
   - folio-assistant-sci/methodologies
   - smart-base/methodologies
+rendered-by: methodologies-viewer
 ---
 <style>
 .mv-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;

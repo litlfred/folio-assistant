@@ -517,13 +517,6 @@
       "status": "candidate"
     },
     {
-      "id": "assistant-types.skilldefinition.roles",
-      "prefLabel": "SkillDefinition.roles",
-      "definition": "by nothing. Kept optional so a downstream instance still validates.",
-      "source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.roles",
-      "status": "candidate"
-    },
-    {
       "id": "assistant-types.skilldefinition.routingpatterns",
       "prefLabel": "SkillDefinition.routingPatterns",
       "definition": "Regex patterns for routing user requests to this skill.",
@@ -2201,6 +2194,13 @@
       "prefLabel": "ContentDirectoryShape.theme",
       "definition": "Which theme this subgraph renders on.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.theme",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.tile",
+      "prefLabel": "ContentDirectoryShape.tile",
+      "definition": "How this directory's tile looks. See {@link TileSchema}.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.tile",
       "status": "candidate"
     },
     {
@@ -7423,13 +7423,6 @@
       "prefLabel": "RemotePackageRefSchema.sync",
       "definition": "OPTIONAL, because a wrapper whose only job is to supply Docker requirements should not have to claim a sync strategy to be valid. Required until 2026-09-19, which is why both wrappers carry one.",
       "source": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema.sync",
-      "status": "candidate"
-    },
-    {
-      "id": "skill-package.skilldefinitionschema.roles",
-      "prefLabel": "SkillDefinitionSchema.roles",
-      "definition": "RETIRED 2026-09-20 (bean `y1w9`) — optional, and read by nothing.",
-      "source": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema.roles",
       "status": "candidate"
     },
     {

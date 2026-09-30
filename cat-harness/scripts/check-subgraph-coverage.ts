@@ -76,6 +76,7 @@ import {
   type CatHarnessDeclaration,
   visualisationsOf,
 } from "../schemas/cat-harness.js";
+import { withViewers } from "./viewer-declarations.js";
 
 /** The three obligations, in the order the owner named them. */
 export const CRITERIA = ["visualiser", "docs", "skill", "serialisations"] as const;
@@ -440,6 +441,8 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
   let decl: CatHarnessDeclaration | undefined;
   try {
     decl = readDeclaration(root);
+    // Viewers RESOLVED from the pages (#1168 B7a-2b).
+    if (decl) decl = { ...decl, directories: withViewers(decl.directories ?? [], root, repoRoot) };
   } catch (e) {
     return {
       instance,
