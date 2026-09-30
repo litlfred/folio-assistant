@@ -137,15 +137,17 @@ export const VoiceRuleSourceSchema = z
      *
      * **`milnor` was this field's worked example and is no longer one.** Its
      * hallmarks were named after Milnor's exposition without being extracted
-     * from his writing, so `kgRef` was the honest citation at the time. The
+     * from his writing, so `path` was the honest citation at the time. The
      * paper was then ingested and each hallmark traced to a page — the last on
      * 2026-09-21, bean `w0hi` — so all twelve rules now carry a `libraryId`.
      * The voice keeps `provenance: "house"` regardless, because the citations
      * are evidence FOR this project's standard rather than its source; see
-     * {@link VOICE_PROVENANCE}. `technical-writer` is the live `kgRef` case,
+     * {@link VOICE_PROVENANCE}. `technical-writer` is the live `path` case,
      * citing `skills/folio-core/technical-documentation.md`.
      */
-    kgRef: z.string().min(1).optional(),
+    // Named `kgRef` until #1168 B9d (owner, 2026-09-30): it holds a PATH, not
+    // a `{kind, id}` KG reference, and the old name said the other thing.
+    path: z.string().min(1).optional(),
     /**
      * The passage the rule was read from. Required: a citation with no quote
      * cannot be checked without re-reading the source, which is the cost this
@@ -156,10 +158,10 @@ export const VoiceRuleSourceSchema = z
   .refine(
     (src) =>
       (src.libraryId !== undefined && src.sectionId !== undefined) !==
-      (src.kgRef !== undefined),
+      (src.path !== undefined),
     {
       message:
-        "a rule cites EITHER an ingested source (libraryId + sectionId) OR a node of this instance's KG (kgRef) — exactly one, never both and never neither",
+        "a rule cites EITHER an ingested source (libraryId + sectionId) OR a node of this instance's KG (path) — exactly one, never both and never neither",
     },
   );
 export type VoiceRuleSource = z.infer<typeof VoiceRuleSourceSchema>;
@@ -241,7 +243,7 @@ export type VoiceRef = z.infer<typeof VoiceRefSchema>;
  *   the only one: a judgement about exposition, read off a named page of a
  *   named paper, is evidence in exactly the sense that matters here — somebody
  *   else can open the page. The apparatus already exists and is REQUIRED by
- *   {@link VoiceRuleSourceSchema}: a `libraryId` + `sectionId` or a `kgRef`,
+ *   {@link VoiceRuleSourceSchema}: a `libraryId` + `sectionId` or a `path`,
  *   plus the quote. Formalising `evidence` means naming that apparatus as what
  *   the value MEANS, not building a second one.
  * - `house` — a standard THIS PROJECT set for itself. The `milnor` voice is
@@ -335,10 +337,10 @@ export interface VoiceProvenanceFlag {
  */
 export function voiceProvenanceFlags(
   provenance: string,
-  rules: readonly { id: string; source?: { kgRef?: string } }[],
+  rules: readonly { id: string; source?: { path?: string } }[],
 ): VoiceProvenanceFlag[] {
   if (provenance === "house") return [];
-  const inside = rules.filter((r) => r.source?.kgRef !== undefined).map((r) => r.id);
+  const inside = rules.filter((r) => r.source?.path !== undefined).map((r) => r.id);
   if (inside.length === 0) return [];
   return [
     {
@@ -488,10 +490,10 @@ export const VoiceProfileSchema = z.object({
         title: z.string().min(1),
         /** The instance holding it, when not this one. See `VoiceRuleSourceSchema.instance`. */
         instance: z.string().min(1).optional(),
-        /** Absent for a house standard — see `VoiceRuleSourceSchema.kgRef`. */
+        /** Absent for a house standard — see `VoiceRuleSourceSchema.path`. */
         libraryId: z.string().min(1).optional(),
         /** The KG node stating the standard, for a voice with no ingested source. */
-        kgRef: z.string().min(1).optional(),
+        path: z.string().min(1).optional(),
         /** Where the document came from, for a reader who wants the original. */
         url: z.string().url().optional(),
         year: z.number().int().optional(),

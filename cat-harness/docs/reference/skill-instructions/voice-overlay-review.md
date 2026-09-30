@@ -27,7 +27,7 @@ bun run check:voices    # the voices, their rule counts, and that every citation
 
 Every voice rule carries a `source` that resolves to a real file — a
 `library/<doc>/sections/<section>.md` for a rule read from an ingested document,
-or a `kgRef` for a house standard. It also carries the `quote` the rule was read
+or a `path` for a house standard. It also carries the `quote` the rule was read
 from.
 
 **Open the citation before upholding a finding.** Two reasons, and the second is
