@@ -177,6 +177,25 @@ So every rendered check reports, beside its verdict:
 A check that cannot tell a styled page from a bare one is not a check. This
 is `dh4f` in a browser: could-not-determine rendered as a pass.
 
+### A COUNT over the built site needs its instrument validated first
+
+The same failure, scaled from one page to thousands. Before trusting any
+"N of M pages have X", run the instrument on **a known positive AND a known
+negative**, and on one positive of **each** way X can appear.
+
+Measured on bean `oi1y` (2026-09-24): counting navigated pages took five
+instruments, and four gave a confident wrong number. An exact class match
+missed the theme's sidebar. A substring match counted `fa-nav` quoted in
+**prose**. An element match was checked against one positive and no negative.
+A link count took a stylesheet `href` as a way out. The one that held was
+`<nav class="fa-nav"` OR `id="site-nav"`. It was checked on three positives
+(injected rail, mounted page, theme sidebar) and one negative.
+
+For a site-wide count, the `gh-pages` route above scales. Use a
+`--filter=blob:none --sparse` clone of `gh-pages`, with sparse patterns for
+the files counted, and exclude `STAGING/`. All HTML is about 1.7 GB and takes
+minutes; one directory takes seconds.
+
 ## Visible is not usable — hit-test the control's CENTRE
 
 The usability half of this skill, and the one a computed-style read cannot
