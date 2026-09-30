@@ -17,6 +17,17 @@ const REPO_ROOT = resolve(import.meta.dir, "..", "..", "..");
 const wf = (n: string) => readFileSync(join(REPO_ROOT, ".github", "workflows", n), "utf-8");
 
 describe("invocations", () => {
+  test("a bootstrap-tools script is its own obligation, and `--root` is its instance", () => {
+    const got = invocations(
+      "          bun run bootstrap-tools/scripts/export-graph.ts --root ./no-such-instance --out b.jsonld\n" +
+        "          bun run cat-harness/scripts/kg-export.ts --out a.jsonld\n",
+    );
+    expect(got).toEqual([
+      { script: "bootstrap-tools/export-graph", instance: "./no-such-instance" },
+      { script: "kg-export" },
+    ]);
+  });
+
   test("`kg-export` and `kg-export --instance X` are DIFFERENT obligations", () => {
     // The whole of `3jhq`: staging ran the exporter, just not for the foreign
     // instance. Collapsing the two is what let that pass unnoticed.
@@ -66,7 +77,10 @@ describe("invocations", () => {
     // property that was actually wanted. Naming a real-looking directory in a
     // fixture is what made it renameable in the first place.
     const got = invocations(wf("docs-site.yml"));
-    expect(got.some((i) => i.script === "kg-export" && i.instance === "./bootstrap")).toBe(true);
+    //
+    // Since 2026-09-30 (bean `xsqm`) that export is bootstrap-tools'
+    // `export-graph.ts --root ./bootstrap`, not `kg-export --instance`.
+    expect(got.some((i) => i.script === "bootstrap-tools/export-graph" && i.instance === "./bootstrap")).toBe(true);
   });
 });
 

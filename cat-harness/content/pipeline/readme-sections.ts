@@ -65,7 +65,7 @@ import {
   readDeclaration,
   workPlanGraphsIn,
 } from "../../schemas/cat-harness";
-import { filesSection, processesSection } from "../../../bootstrap-tools/scripts/readme-graph-sections.ts";
+import { filesSection, processesSection, rolesSection } from "../../../bootstrap-tools/scripts/readme-graph-sections.ts";
 
 // ── Section contract ────────────────────────────────────────────────────────
 
@@ -677,6 +677,7 @@ export const SECTIONS: readonly ReadmeSection[] = [
   workflowsSection,
   processesSection,
   filesSection,
+  rolesSection,
 ];
 
 // ── Sync ────────────────────────────────────────────────────────────────────

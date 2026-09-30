@@ -88,6 +88,7 @@ on:
       # Every file of bootstrap is published as it sits (`publish-instance-files.ts`,
       # bean `iwtn`), so a change to any of them changes the site.
       - 'bootstrap/**'
+      - 'bootstrap-tools/**'
       - '.github/workflows/docs-site.yml'
   workflow_dispatch:
 
@@ -404,8 +405,15 @@ jobs:
           # one: Pages has no media type for `.jsonld` and serves it as
           # octet-stream. The `.jsonld` stays canonical — it is what the `@id`
           # names — so this is an alias, not a rename.
+          #
+          # WRITTEN BY BOOTSTRAP-TOOLS since 2026-09-30 (owner, bean `xsqm`:
+          # "bootstrap.jsonld, should be in bootstrap-tools"): bootstrap's own
+          # graph in bootstrap's classes and standard properties, not
+          # cat-harness's exporter. Node ids are unchanged, so every
+          # `bootstrap.jsonld#skill/<id>` link cat-harness mints still lands.
           BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap)
-          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
+          SITE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
+          bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${SITE}/${BOOT_STUB}/" --provenance --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
 
           # The swimlane glossaries, beside the graphs whose role IRIs they
@@ -520,10 +528,15 @@ jobs:
           # defect bean `blv9` records and the cheapest one to have fixed.
           mkdir -p "./_site/ns/content"
           cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
-          bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
-          cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
+          # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
+          # each term is defined by its layer's own document, below, and the
+          # Glossary publishes SKOS for every scheme. bootstrap's document is
+          # bootstrap's own, written by bootstrap-tools and committed, so it is
+          # copied rather than rebuilt by a harness exporter.
+          mkdir -p "./_site/bootstrap"
+          for ext in "ns.jsonld" "ns" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
 
-          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
+          for pair in "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"

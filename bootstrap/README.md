@@ -55,6 +55,21 @@ the four [Roles](schemas/README.md#role) here are declared in [`scenarios/roles.
 | **Knowledge Graph Data Store** | a repository: the one being set up, and any a [Harness](schemas/README.md#harness) is read from |
 | **Logger** | the record of what you did. Here, it is the conversation you are in. |
 
+The same four, as [`scenarios/roles.json`](scenarios/roles.json) defines them, with every
+name each goes by: other names in use today, and former names with the day each
+was retired, so a name met in older text still leads to the right one.
+
+<!-- kg:roles:begin -->
+
+| Role | what it is | also called | formerly |
+|---|---|---|---|
+| **Bootstrapping Agent** | An agent asked to set up a [Harness](schemas/README.md#harness) with ONLY the knowledge bootstrap's README.md hands it. |  | Initiator (until 2026-09-23) |
+| **Knowledge Graph Data Store** | A git repository, reached either through the git CLI or through a forge's API. |  |  |
+| **Requestor** | Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any [Harness](schemas/README.md#harness) built on it. |  |  |
+| **Logger** | A machine that accepts log messages and puts them somewhere a person can read. |  |  |
+
+<!-- kg:roles:end -->
+
 As the Bootstrapping Agent you have no [Harness](schemas/README.md#harness) yet, so you have no
 tools (programs to call): a [Harness](schemas/README.md#harness) defines those, and bootstrap does not. If a step
 seems to need one, it belongs to the [Harness](schemas/README.md#harness) you are about to set up, not to
@@ -178,6 +193,7 @@ Process that reads a file, where a diagram says so.
 |---|---|---|
 | [`AGENTS.md`](AGENTS.md) | Phase one of two. |  |
 | [`README.md`](README.md) | The flow, with every term linked to the schema that defines it. |  |
+| [`ns.jsonld`](ns.jsonld) | Every term bootstrap defines, in order, and every Graph Kind it defines, as RDF and SKOS — the document bootstrap's namespace resolves to. |  |
 | [`bootstrap.json`](bootstrap.json) | Bootstrap |  |
 
 **[`skills/`](skills/README.md)**
@@ -199,7 +215,6 @@ Process that reads a file, where a diagram says so.
 |---|---|---|
 | [`discussion.input.schema.json`](schemas/discussion.input.schema.json) | Discussion Input |  |
 | [`discussion.output.schema.json`](schemas/discussion.output.schema.json) | Discussion Output |  |
-| [`glossary-ledger.schema.json`](schemas/glossary-ledger.schema.json) | Glossary Ledger |  |
 | [`graph.schema.json`](schemas/graph.schema.json) | Knowledge Graph declaration |  |
 | [`model-registry.schema.json`](schemas/model-registry.schema.json) | Model Registry |  |
 | [`requirement.schema.json`](schemas/requirement.schema.json) | Requirement |  |
@@ -220,18 +235,12 @@ Process that reads a file, where a diagram says so.
 | [`initialize-harness.svg`](processes/initialize-harness.svg) | the picture of `initialize-harness.bpmn`, generated from it |  |
 | [`log-message.bpmn`](processes/log-message.bpmn) | a Process: Log a message | "Initialize a harness" |
 | [`log-message.svg`](processes/log-message.svg) | the picture of `log-message.bpmn`, generated from it |  |
-| [`ns.jsonld`](processes/ns.jsonld) | data |  |
+| [`ns.jsonld`](processes/ns.jsonld) | bootstrap's diagram elements |  |
 
 **[`models/`](models/README.md)**: Which languages a model is good at, and whether anybody checked.
 
 | file | what it is | used by |
 |---|---|---|
 | [`models.json`](models/models.json) | Which languages a model is good at, and whether anybody checked. |  |
-
-**[`glossary/`](glossary/README.md)**: The swimlane glossary's retirement ledger.
-
-| file | what it is | used by |
-|---|---|---|
-| [`glossary-ledger.json`](glossary/glossary-ledger.json) | data |  |
 
 <!-- kg:files:end -->
