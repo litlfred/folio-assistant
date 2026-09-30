@@ -20,7 +20,17 @@ Issue #1682, owner 2026-09-30: theme the per-IG site at /<instance>/ig/ (bamf, #
 It sets --sidebar-color/--link-color/--border-color, which only folio-assistant's docs-ui.css reads. The /ig/ site is plain just-the-docs, so those would be inert there.
 
 ## Done when
-- [ ] scheme written from a declared palette, with tests
-- [ ] contrast chosen and reported
-- [ ] staged smart-trust site rendered locally with #1683's palette and screenshotted
+- [x] scheme written from a declared palette, with tests
+- [x] contrast chosen and reported
+- [x] staged smart-trust site rendered locally with #1683's palette and screenshotted
 - [ ] PR green
+
+## Round 1 (2026-09-30)
+
+Rendered locally: the real smart-trust source at 26635f7, with the palette resolved by `webpagePalette` against a checkout of #1683 (`who-smart-ig`: surface #f6f7f9, ink #000000, edge #eeeeee, accent #00477d). Computed styles: sidebar rgb(0,71,125), nav text rgb(246,247,249), body rgb(246,247,249), links rgb(0,71,125). Sidebar text is `surface` at 8.92:1. No contrast findings.
+
+Two defects the first render showed, which no test had caught:
+- the active nav item was light text on a light-grey highlight: just-the-docs imports its light scheme BEFORE ours, so `$feedback-color` was already derived from the default sidebar. Now re-derived from the palette.
+- the footer's "Just the Docs" link was accent on accent. Now takes the sidebar text colour.
+
+Until #1683 merges, smart-trust declares no webpage theme on main, so the staging site builds with the default scheme and the stage log says so. Nothing here names WHO: fhir-harness takes a palette.
