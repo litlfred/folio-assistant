@@ -29,5 +29,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holdin
 | [`sessions/`](sessions/) | 1 file | |
 | [`tools/`](tools/) | 19 files | |
 | [`upstream/`](upstream/) | 2 files | |
-| [`workflow/`](workflow/) | 13 files | |
+| [`workflow/`](workflow/) | 14 files | |
 <!-- kg:subgraph:end -->
