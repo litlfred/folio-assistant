@@ -1,5 +1,5 @@
 {
-  "_comment": "THE WHO ONE-VOICES, staged as a top-level directory ahead of becoming their own repository — the same arrangement as who-iris/, folio-assistant-sci/ and folio-assistant-core/. Owner, 2026-09-20: 'the 3 one-voices, should reference the 3 artefacts in the who-iris library, but the 3 one voices are derived from the cataloge and in their own repo/dir.' DERIVED FROM is the whole relation: each voice is read rule by rule out of one IRIS publication, every rule cites the page it came from, and the publication itself lives in who-iris. So this instance holds no corpus and declares no `library` — it declares VOICES, and every one of them resolves its evidence across the instance boundary. That cross-instance citation is what bean z7ev built and what r1lz predicted would be needed: 'a skill derived from a source text in another repo would cite evidence its own instance cannot resolve.' DECLARE ONLY WHAT EXISTS, per dh4f: `voices/` is the only entry because it is the only directory here.",
+  "_comment": "THE WHO ONE-VOICES, staged as a top-level directory ahead of becoming their own repository — the same arrangement as who-iris/, folio-assistant-sci/ and folio-assistant-core/. Owner, 2026-09-20: 'the 3 one-voices, should reference the 3 artefacts in the who-iris library, but the 3 one voices are derived from the cataloge and in their own repo/dir.' DERIVED FROM is the whole relation: each voice is read rule by rule out of one IRIS publication, every rule cites the page it came from, and the publication itself lives in who-iris. So this instance holds no corpus and declares no `library` — it declares VOICES, and every one of them resolves its evidence across the instance boundary. That cross-instance citation is what bean z7ev built and what r1lz predicted would be needed: 'a skill derived from a source text in another repo would cite evidence its own instance cannot resolve.' DECLARE ONLY WHAT EXISTS, per dh4f: `voices/`, `glossary/` and `test/results/` are the entries because they are the directories here.",
   "name": "who-style-guide",
   "version": "0.1.0",
   "description": "The WHO house voices — editorial style, guideline development, publication design — each derived from one IRIS publication and citing it by page.",
@@ -27,6 +27,15 @@
       "description": "Three `folio-voice-skill/v1` voice skills, one per WHO publication in the who-iris library, each a directory holding `voice.json` (the RULES, every one carrying the quote it was read from and a citation naming `{ instance: 'who-iris', libraryId, sectionId }`) and `SKILL.md` (how to USE them in authoring, review and QA). Under `skills/` because a voice IS a skill: it tells an actor what to do, it is bound to processes by name, and keeping its instructions anywhere else is what let the PLATFORM carry these rules as uncited prose (bean `btuv`). The instance is declared once per voice in `sources[]` and INHERITED by its rules rather than repeated on each. `bun run check:voices` resolves every citation through the target instance's own declaration.",
       "graphKinds": [
         "voices"
+      ]
+    },
+    {
+      "id": "glossary",
+      "path": "glossary/",
+      "dependents": "reproduce",
+      "description": "The WHO glossary: folio-glossary/v1 schemes of terms the WHO publications use under more than one name. Owner, 2026-09-30 (bean ftu0): who-style-guide owns it rather than who-iris, because the glossary is a HOUSE rule about wording, like the voices, while who-iris holds the publications themselves. An alternative label is recorded only where a publication STATES the equivalence, and each term cites that sentence in who-iris across the instance boundary; a count or a latent-semantic cosine is never the evidence. The scheme's own source is a who-style-guide voice, so its terms are minted in this instance's namespace. Rendered on the glossary/ page and checked by check:glossary, both of which read every instance's declared glossary directory.",
+      "graphKinds": [
+        "glossary"
       ]
     },
     {
