@@ -152,7 +152,6 @@ classDiagram
       invoke [1] object
       io [1] object
       satisfies [1..*] string[]
-      alternativeTo [0..*] string[]
       selection [0..1] object
       requires [0..1] object
       maintains [0..*] Maintain[]
