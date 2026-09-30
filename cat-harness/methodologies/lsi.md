@@ -201,7 +201,7 @@ composable").
 
 ## How it is performed here
 
-The skill is [`lsi-indexing`](../skills/graph-management/lsi-indexing.md); the
+The skill is [`lsi-indexing`](../skills/kg/graph-management/lsi-indexing.md); the
 engine is `content/pipeline/lsi.ts`, computed by Halko et al.'s randomized
 subspace iteration (their Algorithm 4.4: Gaussian test matrix, oversampling
 p = 10, re-orthonormalisation between every pass) and direct SVD of the small

@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/data-modelling.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/data-modelling.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/kg-core/data-modelling.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/data-modelling.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/data-modelling.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/data-modelling.md){: .fa-edit-source }
 
 {% raw %}
 # Data modelling — the entities, before the fields

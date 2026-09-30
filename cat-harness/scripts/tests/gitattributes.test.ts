@@ -55,7 +55,7 @@ describe("a sidecar whose producer reads it back is NOT marked", () => {
     expect(audit, "kg-audit no longer reads its sidecars back — re-examine this rule").toContain("readAttestations");
     for (const p of [
       "cat-harness/test/results/kg-qa/processes/adjudication.kg-qa.json",
-      "cat-harness/test/results/kg-qa/skills/folio-core/audit-coverage.kg-qa.json",
+      "cat-harness/test/results/kg-qa/skills/kg/kg-core/audit-coverage.kg-qa.json",
     ]) {
       expect(mergeAttr(p), `${p} is marked -merge, which would discard an attestation`).not.toBe("unset");
     }

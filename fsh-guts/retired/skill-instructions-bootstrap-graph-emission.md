@@ -15,7 +15,7 @@ summary: >-
 ---
 
 > **Retired 2026-09-23.** Moved here rather than deleted, per
-> `skills/folio-core/fsh-guts.md`. The original page follows verbatim,
+> `skills/kg/kg-core/fsh-guts.md`. The original page follows verbatim,
 > including its own front matter, fenced so it is not read as this node's.
 
 ````markdown
