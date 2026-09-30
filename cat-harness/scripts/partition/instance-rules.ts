@@ -1834,6 +1834,7 @@ export const RULES: Rule[] = [
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
       "scripts/l1-blocks.ts",               // staged entry → manifest + blocks/, the arm between the two
+      "scripts/notebook-structure.ts",      // the notebook rung: a folio's `.ipynb` → `notebook-structure/v1` (bean rkqp)
       // `scripts/extract-assets.ts` STOOD HERE and is GONE as of bean `yj6r`,
       // 2026-09-30, for the reason the materialisation trio above gives: it now
       // lives in `folio-assistant-core/scripts/` beside the

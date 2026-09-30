@@ -55,7 +55,7 @@ import { termLayer } from "../schemas/vocabulary.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
 import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
-import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
+import { type RoleDef, actorsDir, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   artefactStub,
@@ -1104,8 +1104,17 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
   // resolved beside the actor registry this function already reads by path.
   const grants = readPolicyGrants(join(ROOT, "policies"));
   for (const [group, type] of Object.entries(REGISTRY_GROUPS)) {
-    const abs = join(repoRootFor(ROOT), ".claude", "skills", group);
-    if (!existsSync(abs)) continue;
+    // Actors resolve from their DECLARED home inside `scenarios` (bean rqao).
+    // This read `.claude/skills/actors` and skipped it when absent, so the move
+    // exported ZERO actors while the run looked clean — a silent skip is
+    // `dh4f`, so a missing actor registry is now a problem, not a `continue`.
+    // The other registry groups are still where they were.
+    const abs =
+      group === "actors" ? actorsDir(repoRootFor(ROOT)) : join(repoRootFor(ROOT), ".claude", "skills", group);
+    if (abs === undefined || !existsSync(abs)) {
+      if (group === "actors") problems.push(`the actor registry has no home: ${abs ?? "no declared scenarios graph"}`);
+      continue;
+    }
     for (const f of readdirSync(abs)) {
       if (!f.endsWith(".json")) continue;
       try {

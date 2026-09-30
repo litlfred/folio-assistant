@@ -253,7 +253,12 @@ const SCENARIO_DIR = ownDirectoryById(root, "scenarios", "scenarios");
 const POLICY_DIR = ownDirectoryById(root, "policies", "policies");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
-const ACTOR_DIR = actorsDir(repoRootFor(root)) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })();
+// The actor registry's declared home (bean rqao). kg-audit runs over ANY
+// instance, fixtures included, where the platform may declare no `scenarios`
+// graph: that is "no actor registry here", which `readActors` answers with an
+// empty list and the actor criteria then report on. It was the same before the
+// move, when the probed `.claude/skills/actors` simply did not exist.
+const ACTOR_DIR = actorsDir(repoRootFor(root)) ?? "";
 const CAPABILITY_DIR = join(repoRootFor(root), ".claude", "skills", "capabilities");
 const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
 // declared-path-literal: the convention fallback, at the call site. Same

@@ -3,6 +3,7 @@
  * ("A+B", after a measured analysis).
  *
  * @module schemas/document-structure
+ * @graphNode schema
  *
  * ## Why a base, and why `pdf-structure/v1` is not renamed
  *
