@@ -16,6 +16,14 @@
  *   rather than the instance, one declaring `absent` may be missing, and an
  *   asset's README is found through {@link declaredAssetPath}, which honours
  *   the asset's scope too;
+ * - **resolving the governing process** a directory declares in
+ *   `coverage.process` (owner, 2026-09-29: *"show highlevel (sub)process bpmn
+ *   on the uploads page"*). The name, the diagrams and the site each diagram
+ *   renders into are all things this harness's declaration knows and
+ *   bootstrap's does not, so {@link governing-process} resolves them here and
+ *   the writer is handed a finished `ProcessView`. `check-subgraph-coverage`
+ *   shares that resolver, so the page and the axis cannot disagree about
+ *   whether a declaration points at anything;
  * - **recording the findings** as the committed QA sidecar
  *   `test/results/subgraph-readmes.qa-results.json`. Reported, not failed: a
  *   gap in a declaration is its owner's to fill, and failing on it would block
@@ -35,6 +43,7 @@ import {
   plan,
 } from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
 import { declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
+import { forDirectory, processIndex, resolveProcess, type ProcessIndex } from "./governing-process.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -48,6 +57,11 @@ const REPO = repoRootFor(ROOT);
  */
 export function harnessInstances(repo: string): InstanceInput[] {
   const out: InstanceInput[] = [];
+  // Built on FIRST USE, not up front: it reads every `.bpmn` in the
+  // repository, and a repository whose directories declare no process should
+  // not pay for a walk whose answer nothing asks for.
+  let processes: ProcessIndex | undefined;
+  const index = (): ProcessIndex => (processes ??= processIndex(repo));
   for (const inst of instanceRootsIn(repo)) {
     let decl;
     try {
@@ -62,14 +76,23 @@ export function harnessInstances(repo: string): InstanceInput[] {
       readme: declaredAssetPath(inst, INSTANCE_README_ROLE),
       dirs: (decl.directories ?? []).map((d) => {
         const base = (d as { scope?: string }).scope === "repository" ? repo : inst;
+        const abs = resolve(base, d.path);
+        // Absent declaration means the writer gets nothing and prints no
+        // section: a directory owes no process, so silence here is an answer
+        // rather than a gap. A declared name resolving to no diagram still
+        // gets a view, because the section has to say *could not determine*.
+        const declared = (d as { coverage?: { process?: string } }).coverage?.process;
         return {
           id: d.id,
           path: d.path,
-          abs: resolve(base, d.path),
+          abs,
           title: (d as { title?: string }).title,
           description: (d as { description?: string }).description,
           graphKinds: d.graphKinds as string[],
           mayBeAbsent: Boolean((d as { absent?: unknown }).absent),
+          ...(declared !== undefined
+            ? { process: forDirectory(resolveProcess(index(), declared), repo, abs) }
+            : {}),
         };
       }),
     });
@@ -105,6 +128,11 @@ export function qaResult(p: Plan) {
       summary: "READMEs that exist without the kg:subgraph markers, left untouched because somebody wrote them. Add the marker pair to adopt the generated section.",
       entries: p.findings["unmarked-readme"],
     },
+    "unresolved-process": {
+      summary:
+        "Directories whose `coverage.process` names a diagram no instance declares: the README says `could not determine` in place of the drawing. Declaring none is not here — a directory owes no process, and only a declaration that points at nothing is a finding.",
+      entries: p.findings["unresolved-process"],
+    },
   };
   return buildQaResult({
     script: "scripts/subgraph-readmes.ts",
@@ -137,7 +165,8 @@ if (import.meta.main) {
     `${p.writes.size} directory README(s); ${check ? `${stale} stale` : `${wrote} written`}. ` +
       `Findings: ${f["no-title"].length} no title, ${f["no-description"].length} no description, ` +
       `${f["long-description"].length} long description, ` +
-      `${f["absent-directory"].length} absent, ${f["unmarked-readme"].length} unmarked.`,
+      `${f["absent-directory"].length} absent, ${f["unmarked-readme"].length} unmarked, ` +
+      `${f["unresolved-process"].length} unresolved process.`,
   );
   if (check && stale) {
     console.error("\nRun `bun run readme:subgraphs` and commit.");
