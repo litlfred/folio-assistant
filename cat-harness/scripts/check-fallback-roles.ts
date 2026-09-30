@@ -60,6 +60,7 @@ import { kgRoots, workflowFiles } from "./known-skills.js";
 import { readRoleGraph } from "../schemas/role-graph.js";
 import { fulfilmentKindsForBpmnType } from "../schemas/role-graph.js";
 import { isActivity, loadProcessModel } from "../src/workflow/process-model.js";
+import { capabilitiesDir } from "../schemas/role-graph.ts";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -98,10 +99,11 @@ export interface CapabilityFacts {
 /** Every declared capability, by id. */
 export function declaredCapabilityFacts(root: string): Map<string, CapabilityFacts> {
   const out = new Map<string, CapabilityFacts>();
-  // `.claude/skills/capabilities/` is a convention rather than a declared
-  // graph — the same place `src/tools/capabilities.ts` reads.
+  // The declared home inside `scenarios` (bean rqao) — the same place
+  // `src/tools/capabilities.ts` reads. Both bases are still tried, because a
+  // caller may hand this an instance root or the repository root.
   for (const base of new Set([root, resolve(root, "..")])) {
-    const dir = join(base, ".claude", "skills", "capabilities");
+    const dir = capabilitiesDir(base) ?? "";
     let names: string[];
     try {
       names = readdirSync(dir);

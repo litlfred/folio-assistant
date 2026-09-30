@@ -8,10 +8,9 @@
  * rendered kind no directory declares is a claim about nothing.
  */
 import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { instanceRootsIn, declarationPathIn, isPublishedGraphKind } from "../../schemas/cat-harness.js";
+import { instanceRootsIn, instanceDirectories, isPublishedGraphKind } from "../../schemas/cat-harness.js";
 import { tools } from "../../tools/index.js";
 import { viewerPages } from "../viewer-declarations.js";
 
@@ -20,11 +19,10 @@ const REPO = resolve(import.meta.dir, "..", "..", "..");
 interface Dir { id: string; graphKinds?: string[]; coverage?: { visualiser?: unknown } }
 
 const dirs: { instance: string; dir: Dir }[] = [];
+// Own entries AND those declared from within (bean `cmsl`): `voices` is
+// declared only from `skills/skills.json` now.
 for (const root of instanceRootsIn(REPO)) {
-  const p = declarationPathIn(root);
-  if (!p) continue;
-  const decl = JSON.parse(readFileSync(p, "utf-8")) as { directories?: Dir[] };
-  for (const dir of decl.directories ?? []) dirs.push({ instance: root, dir });
+  for (const dir of instanceDirectories(root)) dirs.push({ instance: root, dir });
 }
 
 const renderers = tools().filter((t) => (t.renders ?? []).length > 0);

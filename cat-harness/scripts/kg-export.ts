@@ -57,7 +57,7 @@ import { DCTERMS_NS } from "../schemas/jsonld.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
 import { KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
-import { type RoleDef, readRoleGraph } from "../schemas/role-graph.js";
+import { type RoleDef, actorsDir, capabilitiesDir, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   artefactStub,
@@ -1083,7 +1083,7 @@ function registryFields(
     };
   }
   if (group === "capabilities") {
-    const { requires, fallbackTo, satisfies, ...other } = rest;
+    const { requires, fallbackTo, satisfies, setupSkill, ...other } = rest;
     return {
       ...other,
       // Not `satisfies`: that term is a LINK to a skill, and a Tool's. A
@@ -1099,6 +1099,9 @@ function registryFields(
       ...(typeof fallbackTo === "string"
         ? { fallbackToCapability: makeIri(doc, "capability", fallbackTo) }
         : {}),
+      // A LINK to the skill node, the same IRI a skill is exported under
+      // (bean rqao): the setup procedure for this capability.
+      ...(typeof setupSkill === "string" ? { setupBySkill: makeIri(doc, "skill", setupSkill) } : {}),
     };
   }
   return rest;
@@ -1112,8 +1115,23 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
   // resolved beside the actor registry this function already reads by path.
   const grants = readPolicyGrants(join(ROOT, "policies"));
   for (const [group, type] of Object.entries(REGISTRY_GROUPS)) {
-    const abs = join(repoRootFor(ROOT), ".claude", "skills", group);
-    if (!existsSync(abs)) continue;
+    // Actors resolve from their DECLARED home inside `scenarios` (bean rqao).
+    // This read `.claude/skills/actors` and skipped it when absent, so the move
+    // exported ZERO actors while the run looked clean — a silent skip is
+    // `dh4f`, so a missing actor registry is now a problem, not a `continue`.
+    // The other registry groups are still where they were.
+    const abs =
+      group === "actors"
+        ? actorsDir(repoRootFor(ROOT))
+        : group === "capabilities"
+          ? capabilitiesDir(repoRootFor(ROOT))
+          : join(repoRootFor(ROOT), ".claude", "skills", group);
+    if (abs === undefined || !existsSync(abs)) {
+      if (group === "actors" || group === "capabilities") {
+        problems.push(`the ${group} registry has no home: ${abs ?? "no declared scenarios graph"}`);
+      }
+      continue;
+    }
     for (const f of readdirSync(abs)) {
       if (!f.endsWith(".json")) continue;
       try {
