@@ -22,7 +22,9 @@ describe("instance repositories — this checkout (bean 6rmv)", () => {
   });
 
   test("every livesAt names the checkout's own repository as host", () => {
-    const host = map.entries.find((e) => e.livesAt === undefined);
+    // The instance AT the checkout root — not merely one without `livesAt`:
+    // a submodule instance has none either, and sits at its own root.
+    const host = map.entries.find((e) => resolve(e.root) === CHECKOUT);
     expect(host).toBeDefined();
     const hosts = new Set(map.entries.flatMap((e) => (e.livesAt ? [e.livesAt.repository] : [])));
     expect([...hosts]).toEqual([host!.repository]);

@@ -10,7 +10,15 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { WRITER_OVERRIDES, repairableGates, scriptOf, writerFor } from "../regen-after-merge.ts";
+import {
+  NO_WRITER,
+  WRITER_OVERRIDES,
+  regenToFixpoint,
+  repairableGates,
+  scriptOf,
+  writerFor,
+  type Runner,
+} from "../regen-after-merge.ts";
 import { loadGates } from "../gates.ts";
 import { repoRootFor } from "../../schemas/cat-harness.ts";
 
@@ -121,5 +129,91 @@ describe("a writer that is not <check minus :check> is DECLARED (bean eowd)", ()
   });
   test("every override names a writer that exists — a renamed writer is a finding, not a guess", () => {
     for (const w of Object.values(WRITER_OVERRIDES)) expect(SCRIPTS[w]).toBeDefined();
+  });
+});
+
+describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () => {
+  test("`check:prov-qaqc` is repaired by `prov:qaqc`", () => {
+    // #1550 went red on it while regen said "63 current, 0 regenerated": the
+    // gate is `check:`-prefixed, so the `X:check` convention never offered it.
+    expect(writerFor(SCRIPTS, "check:prov-qaqc")).toBe("prov:qaqc");
+    const pairs = repairableGates([{ job: "j", step: "s", command: "bun run check:prov-qaqc" }], SCRIPTS);
+    expect(pairs).toEqual([{ check: "check:prov-qaqc", writer: "prov:qaqc" }]);
+  });
+
+  test("every `check:X` that is some script's command plus ` --check` is decided — paired or recorded", () => {
+    // The measurement that found `check:glossary` (main red at 7bdda74) after
+    // uju6 had listed four. Composing the pair from the COMMAND, not the name,
+    // is how a fifth and sixth were found; this keeps a seventh from hiding.
+    const byCmd = new Map(Object.entries(SCRIPTS).map(([k, v]) => [String(v).trim(), k]));
+    const gates = loadGates(REPO, { all: false });
+    for (const g of gates) {
+      const c = scriptOf(g.command);
+      if (c === undefined || !c.startsWith("check:") || c.endsWith(":check")) continue;
+      const cmd = String(SCRIPTS[c] ?? "").trim();
+      if (!cmd.endsWith(" --check")) continue;
+      if (!byCmd.has(cmd.slice(0, -" --check".length).trim())) continue;
+      expect(WRITER_OVERRIDES[c] !== undefined || NO_WRITER[c] !== undefined, `${c} is undecided`).toBe(true);
+    }
+  });
+
+  test("the recorded non-writers are real scripts, and none is also paired", () => {
+    for (const check of Object.keys(NO_WRITER)) {
+      expect(SCRIPTS[check]).toBeDefined();
+      expect(WRITER_OVERRIDES[check]).toBeUndefined();
+      // Not guessed from the name either: `check:subgraphs` has a `subgraphs`
+      // script, and it only reports.
+      expect(writerFor(SCRIPTS, check)).toBeUndefined();
+    }
+  });
+});
+
+describe("regen runs to a FIXPOINT, not one pass — bean `14ve`", () => {
+  /**
+   * A tiny tree: writer B's output is an INPUT to check A, and A is asked
+   * first. Staleness is modelled as version numbers, so the test says exactly
+   * which write made which check current.
+   */
+  function tree() {
+    const v = { bInput: 1, bOut: 0, aOut: 0 };
+    const scripts: Record<string, () => boolean> = {
+      "a:check": () => v.aOut === v.bOut, // A is derived from B's output
+      a: () => ((v.aOut = v.bOut), true),
+      "b:check": () => v.bOut === v.bInput,
+      b: () => ((v.bOut = v.bInput), true),
+    };
+    const runner: Runner = (s) => scripts[s]!();
+    return { v, runner };
+  }
+  const pairs = [
+    { check: "a:check", writer: "a" },
+    { check: "b:check", writer: "b" },
+  ];
+
+  test("one pass leaves A stale; the fixpoint leaves every check current", () => {
+    const { v, runner } = tree();
+    const r = regenToFixpoint(pairs, runner);
+    expect(r.settled).toBe(true);
+    // Pass 1: A current (0 === 0), B stale → B writes 1. Pass 2: A stale →
+    // repaired. Pass 3: nothing ran.
+    expect(r.passes).toBe(3);
+    expect(v.aOut).toBe(v.bOut);
+    expect(r.results.map((x) => x.outcome)).toEqual(["regenerated", "regenerated"]);
+  });
+
+  test("a single pass really does leave it stale — the control", () => {
+    const { v, runner } = tree();
+    const r = regenToFixpoint(pairs, runner, 1);
+    expect(r.settled).toBe(false);
+    expect(v.aOut).not.toBe(v.bOut);
+  });
+
+  test("two writers that undo each other stop at the cap and say so", () => {
+    let x = 0;
+    const flip: Runner = (s) => (s.endsWith(":check") ? false : ((x = 1 - x), true));
+    const r = regenToFixpoint([{ check: "p:check", writer: "p" }], flip, 3);
+    expect(r.passes).toBe(3);
+    expect(r.settled).toBe(false);
+    expect(x === 0 || x === 1).toBe(true);
   });
 });

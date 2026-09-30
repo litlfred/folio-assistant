@@ -1,0 +1,165 @@
+/**
+ * One IG → one just-the-docs Jekyll source with `site.data.fhir` (bean
+ * `bamf`). Driven by a synthetic IG, so it names no real one.
+ */
+
+import { afterAll, beforeAll, describe, expect, test } from "bun:test";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { colourScheme, contrast, dedupeIds, includeTargets, pageNav, stageIgSite, type StageResult } from "./build-ig-site";
+
+let dir: string;
+let out: string;
+let r: StageResult;
+
+beforeAll(() => {
+  dir = mkdtempSync(join(tmpdir(), "ig-site-"));
+  const src = join(dir, "src");
+  for (const d of ["input/pagecontent", "input/includes", "input/images", "input/images-source"]) mkdirSync(join(src, d), { recursive: true });
+  writeFileSync(
+    join(src, "sushi-config.yaml"),
+    [
+      "id: example.ig",
+      "canonical: http://example.org/ig",
+      "name: ExampleIG",
+      "title: Example IG",
+      "status: draft",
+      "version: 0.1.0",
+      "fhirVersion: 4.0.1",
+      "publisher:",
+      "  name: Example Org",
+      "pages:",
+      "  index.md:",
+      "    title: Home",
+      "    overview.md:",
+      "      title: Overview",
+      "  changes.md:",
+      "    title: Change Log",
+      "",
+    ].join("\n"),
+  );
+  const pc = join(src, "input", "pagecontent");
+  writeFileSync(join(pc, "index.md"), "Package {{ site.data.fhir.packageId }}.\n{% include overview.md %}\n");
+  writeFileSync(join(pc, "overview.md"), "{% include flow.svg %}\n{% include notes.md %}\n");
+  writeFileSync(join(pc, "changes.md"), "Nothing yet.\n");
+  writeFileSync(join(pc, "orphan.md"), "Not in sushi-config.\n");
+  writeFileSync(join(src, "input", "includes", "notes.md"), "a note\n");
+  writeFileSync(join(src, "input", "images", "logo.png"), "png");
+  writeFileSync(join(src, "input", "images", "good.jsonld"), '{"@id": "x"}');
+  writeFileSync(join(src, "input", "images", "broken.jsonld"), '{"a: 1}');
+  writeFileSync(join(src, "input", "images-source", "flow.plantuml"), "@startuml\nA -> B\n@enduml\n");
+  out = join(dir, "site");
+  r = stageIgSite(src, out, { baseurl: "/site/example" });
+});
+afterAll(() => rmSync(dir, { recursive: true, force: true }));
+
+describe("staging one IG as one just-the-docs site", () => {
+  test("site.data.fhir is written from sushi-config, only what is sourced", () => {
+    const fhir = JSON.parse(readFileSync(join(out, "_data", "fhir.json"), "utf-8"));
+    expect(fhir.packageId).toBe("example.ig");
+    expect(fhir.ig.version).toBe("0.1.0");
+    expect(fhir.ig.publisher).toBe("Example Org");
+    expect(JSON.stringify(fhir)).not.toContain('""');
+  });
+
+  test("navigation comes from sushi-config pages: titles, parents, order", () => {
+    const nav = pageNav({ "index.md": { title: "Home", "overview.md": { title: "Overview" } }, "changes.md": { title: "Change Log" } });
+    expect(nav.get("index")).toEqual({ title: "Home", navOrder: 1 });
+    expect(nav.get("overview")).toEqual({ title: "Overview", parent: "Home", navOrder: 2 });
+    expect(nav.get("changes")).toEqual({ title: "Change Log", navOrder: 3 });
+    expect(readFileSync(join(out, "overview.md"), "utf-8")).toStartWith('---\ntitle: "Overview"\nparent: "Home"\nnav_order: 2\n---\n');
+  });
+
+  test("a page sushi-config does not list is kept, titled by file name, and reported", () => {
+    expect(r.unlisted).toEqual(["orphan.md"]);
+    expect(readFileSync(join(out, "orphan.md"), "utf-8")).toContain('title: "orphan"');
+  });
+
+  test("pages, includes and images land where Jekyll resolves them", () => {
+    expect(r.pages).toEqual(["changes.md", "index.md", "orphan.md", "overview.md"]);
+    for (const f of ["notes.md", "overview.md", "index.md"]) expect(readFileSync(join(out, "_includes", f), "utf-8").length).toBeGreaterThan(0);
+    expect(readFileSync(join(out, "logo.png"), "utf-8")).toBe("png");
+  });
+
+  test("a data file that does not parse is not published, and is reported", () => {
+    expect(existsSync(join(out, "good.jsonld"))).toBe(true);
+    expect(existsSync(join(out, "broken.jsonld"))).toBe(false);
+    expect(r.unparseable).toHaveLength(1);
+    expect(r.unparseable[0]).toStartWith("broken.jsonld (");
+  });
+
+  test("a diagram the Publisher renders, with no renderer given, is a VISIBLE marker and reported", () => {
+    expect(r.notRendered).toEqual(["flow.svg"]);
+    expect(r.rendered).toEqual([]);
+    expect(readFileSync(join(out, "_includes", "flow.svg"), "utf-8")).toContain("⟦not rendered: flow.svg⟧");
+  });
+
+  test("the config is one just-the-docs site at the given baseurl", () => {
+    const cfg = readFileSync(join(out, "_config.yml"), "utf-8");
+    expect(cfg).toContain('title: "Example IG"');
+    expect(cfg).toContain('baseurl: "/site/example"');
+    expect(cfg).toContain("theme: just-the-docs");
+  });
+
+  test("include targets are read from the page", () => {
+    expect(includeTargets("{% include a.svg %} x {%- include b.md -%}")).toEqual(["a.svg", "b.md"]);
+  });
+
+  test("a repeated id keeps its first copy and the rest are renamed, each reported", () => {
+    const r = dedupeIds(`<h3 id="x">a</h3><h3 id="x">b</h3><a id='x'></a><p id="y"></p>`);
+    expect(r.html).toBe(`<h3 id="x">a</h3><h3 id="x--2">b</h3><a id='x--3'></a><p id="y"></p>`);
+    expect(r.renamed).toEqual(["x -> x--2", "x -> x--3"]);
+  });
+
+  test("with no palette there is no scheme, and the report says so", () => {
+    expect(r.scheme).toBeUndefined();
+    expect(readFileSync(join(out, "_config.yml"), "utf-8")).not.toContain("color_scheme");
+  });
+});
+
+// A synthetic palette: a dark accent, so the sidebar must take the light role.
+const PALETTE = { surface: "#f7f7f7", ink: "#111111", edge: "#dddddd", accent: "#123456" };
+
+describe("the instance's palette as a just-the-docs colour scheme", () => {
+  test("WCAG contrast is computed as the spec defines it", () => {
+    expect(contrast("#000000", "#ffffff")).toBeCloseTo(21, 5);
+    expect(contrast("#fff", "#ffffff")).toBeCloseTo(1, 5);
+    expect(contrast("navy", "#ffffff")).toBeUndefined();
+  });
+
+  test("each role lands on the scheme variable just-the-docs reads", () => {
+    const s = colourScheme(PALETTE).scss;
+    expect(s).toContain("$feedback-color: darken($sidebar-color, 3%);");
+    expect(s).toContain("$body-background-color: #f7f7f7;");
+    expect(s).toContain("$body-text-color: #111111;");
+    expect(s).toContain("$link-color: #123456;");
+    expect(s).toContain("$border-color: #dddddd;");
+    expect(s).toContain("$sidebar-color: #123456;");
+  });
+
+  test("sidebar text is the palette role with more contrast on accent, never a literal", () => {
+    const dark = colourScheme(PALETTE);
+    expect(dark.sidebarText).toBe("surface");
+    expect(dark.scss).toContain("$nav-child-link-color: #f7f7f7;");
+    const light = colourScheme({ ...PALETTE, accent: "#eeeeaa" });
+    expect(light.sidebarText).toBe("ink");
+  });
+
+  test("a pairing below AA, or one that cannot be computed, is a finding", () => {
+    expect(colourScheme(PALETTE).findings).toEqual([]);
+    const low = colourScheme({ ...PALETTE, accent: "#999999" }).findings;
+    expect(low.some((f) => f.startsWith("accent on surface (links)"))).toBe(true);
+    const named = colourScheme({ ...PALETTE, accent: "navy" }).findings;
+    expect(named.some((f) => f.includes("not computable"))).toBe(true);
+  });
+
+  test("a staged site with a palette selects the scheme and ships its files", () => {
+    const o = join(dir, "themed");
+    const t = stageIgSite(join(dir, "src"), o, { palette: PALETTE });
+    expect(t.scheme?.sidebarText).toBe("surface");
+    expect(readFileSync(join(o, "_config.yml"), "utf-8")).toContain("color_scheme: ig");
+    expect(readFileSync(join(o, "_sass", "color_schemes", "ig.scss"), "utf-8")).toContain("$sidebar-color: #123456;");
+    expect(readFileSync(join(o, "_sass", "custom", "custom.scss"), "utf-8")).toContain("$nav-child-link-color");
+  });
+});

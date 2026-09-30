@@ -22,6 +22,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -49,6 +51,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -115,6 +119,8 @@ jobs:
     needs: verify-host-build
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: dtolnay/rust-toolchain@stable
         with:
@@ -198,6 +204,8 @@ jobs:
     if: ${{ github.event.inputs.publish == 'true' }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: actions/setup-node@v7
         with:

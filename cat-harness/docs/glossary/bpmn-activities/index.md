@@ -411,7 +411,7 @@ Answer, or decline <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The Requestor lane, filled by a person or by a sibling agent. Declining is a permitted move and not an error: it produces <code>outcome: unsettled</code> with what is still open, never a guess.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_Answer</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_Answer</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_renderlog.a_logremoved" data-fa-state="extracted" data-fa-gloss="">
 Append <code>removed</code> with the reason <span class="fa-gloss-status">candidate, extracted</span>
@@ -993,7 +993,7 @@ Compose the message <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Five required strings — timestamp, actor, process, task, message — and one optional markdown body. The five are required because each answers a question a reader of the log will otherwise have to guess, and a guessed answer in a log is worse than a missing one.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/log-message.bpmn"><code>bootstrap/processes/log-message.bpmn#A_Compose</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/log-message.bpmn"><code>bootstrap/processes/log-message.bpmn#A_Compose</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_igincremental.task_cone" data-fa-state="extracted" data-fa-gloss="">
 Compute the cone of the change (fsh-cone --changed) <span class="fa-gloss-status">candidate, extracted</span>
@@ -1035,7 +1035,7 @@ Confirm WHICH harness, and where <span class="fa-gloss-status">candidate, extrac
 </dt>
 <dd>
 <p>The only step needing a person, and the only place a judgement is made. IN, from the Bootstrapping Agent: a list of zero or more harnesses and a list of zero or more locations. OUT, from the Requestor: zero or ONE harness, and a list of zero or more locations. One at most — a list of two is not an answer, and the Bootstrapping Agent may not break the tie itself.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ConfirmHarness</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ConfirmHarness</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_review.task_consolidate" data-fa-state="extracted" data-fa-gloss="">
 Consolidate findings <span class="fa-gloss-status">candidate, extracted</span>
@@ -1551,7 +1551,7 @@ Follow them, at each location <span class="fa-gloss-status">candidate, extracted
 </dt>
 <dd>
 <p>The instructions belong to the harness being installed, not to bootstrap — bootstrap does not know what any Harness above it requires, and does not need to.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_Install</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_Install</code></a></p>
 </dd>
 <dt id="smart-base--kg-bpmn-activities--process_diig.a_formteam" data-fa-state="extracted" data-fa-gloss="">
 Form the team and establish goals <span class="fa-gloss-status">candidate, extracted</span>
@@ -1897,14 +1897,14 @@ List the harnesses this could be <span class="fa-gloss-status">candidate, extrac
 </dt>
 <dd>
 <p>Zero or more. The DEFAULT is bootstrap itself. Context may name others: &quot;please set up &lt;owner&gt;/&lt;repo&gt; here&quot; in a discussion names one, and so does any Harness built on bootstrap that the Requestor mentions. This step narrows; it does not decide.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ListHarnesses</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ListHarnesses</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_initializeharness.a_listlocations" data-fa-state="extracted" data-fa-gloss="">
 List the locations this could install to <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Zero or more. Is this a git repository already, or were one or more URLs to repositories supplied? Both are Knowledge Graph Data Stores; the difference is only how they are reached.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ListLocations</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ListLocations</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreampinwatch.task_queryupstream" data-fa-state="extracted" data-fa-gloss="">
 List upstream releases and compare to the pin <span class="fa-gloss-status">candidate, extracted</span>
@@ -1974,14 +1974,14 @@ Log the failure <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Both failure paths pass through here, so &quot;logged as failed&quot; is a step somebody performs rather than an adjective on an end event. The end event said the process ended logged; nothing said who logged it or with what. The two ways in are the reason it is ONE call rather than two: what differs between them is the message, which is an input, not the mechanism.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_LogFailure</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_LogFailure</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_initializeharness.a_loginstallstart" data-fa-state="extracted" data-fa-gloss="">
 Log the start of the install <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: <code>log-message</code> is an independent sub-process, one of bootstrap's own diagrams. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_LogInstallStart</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_LogInstallStart</code></a></p>
 </dd>
 </dl>
 
@@ -2122,7 +2122,7 @@ Narrow the candidates from context <span class="fa-gloss-status">candidate, extr
 </dt>
 <dd>
 <p>Before asking. A repository whose root already holds a declaration, <code>&lt;name&gt;.json</code>, is not a blank slate, and a question whose candidates the agent could have worked out itself wastes the one question it is entitled to.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_NarrowCandidates</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_NarrowCandidates</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_watchmainci" data-fa-state="extracted" data-fa-gloss="">
 Note the main-branch watch [watch] <span class="fa-gloss-status">candidate, extracted</span>
@@ -2536,7 +2536,7 @@ Put the question, with its candidates named <span class="fa-gloss-status">candid
 </dt>
 <dd>
 <p>Uses the <code>discuss</code> tool. One question where one will do — the Bootstrapping Agent's persona is &quot;asks exactly one question when it must&quot;. A question a reader must go and research is not ready to be asked.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_PutQuestion</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_PutQuestion</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_python" data-fa-state="extracted" data-fa-gloss="">
 Python: unused and wildcard imports (HARD) <span class="fa-gloss-status">candidate, extracted</span>
@@ -2635,7 +2635,7 @@ Read the harness's declaration and instructions <span class="fa-gloss-status">ca
 </dt>
 <dd>
 <p>Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: <code>&lt;stub&gt;/docs/bootstrap/initialization.md</code>, the same for every harness, which is what lets a Bootstrapping Agent be pointed at one nobody has written yet.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ReadDeclaration</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ReadDeclaration</code></a></p>
 </dd>
 <dt id="large-datasets--kg-bpmn-activities--process_copyoutmaterialized.task_readsource" data-fa-state="extracted" data-fa-gloss="">
 Read the original — and write nothing <span class="fa-gloss-status">candidate, extracted</span>
@@ -2684,7 +2684,7 @@ Read what each location already is <span class="fa-gloss-status">candidate, extr
 </dt>
 <dd>
 <p>Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. <code>&lt;name&gt;.json</code> present and parsing is the whole test, and <code>bootstrap-kg-navigation</code> says what the three answers mean — absent (not an instance yet, which is this process's case), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either. Before reading the chosen harness rather than after, deliberately: if the location is spoken for there is nothing to learn from the harness, and fetching it first only makes the failure more expensive.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ReadLocation</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ReadLocation</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_rebuildmain" data-fa-state="extracted" data-fa-gloss="">
 Rebuild main site <span class="fa-gloss-status">candidate, extracted</span>
@@ -2747,7 +2747,7 @@ Record it where a person can read it <span class="fa-gloss-status">candidate, ex
 </dt>
 <dd>
 <p>Performed by the Logger, which records and decides nothing. In bootstrap the one available destination is the discussion the human actor is already in.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/log-message.bpmn"><code>bootstrap/processes/log-message.bpmn#A_Record</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/log-message.bpmn"><code>bootstrap/processes/log-message.bpmn#A_Record</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_voicereview.task_recordonsidecar" data-fa-state="extracted" data-fa-gloss="">
 Record on the block's QA sidecar <span class="fa-gloss-status">candidate, extracted</span>
@@ -2796,7 +2796,7 @@ Record the determination <span class="fa-gloss-status">candidate, extracted</spa
 </dt>
 <dd>
 <p>Writes a document conforming to <code>discussion.output.schema.json</code>: the harness, the repositories as read-from / written-to pairs, <code>determinedBy</code>, and who answered. This artefact is what finishes the task.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_RecordDetermination</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_RecordDetermination</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_evidenceretrieval.task_recordgap" data-fa-state="extracted" data-fa-gloss="">
 Record the evidence gap [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
@@ -2859,7 +2859,7 @@ Record what is still open <span class="fa-gloss-status">candidate, extracted</sp
 </dt>
 <dd>
 <p>The declined route. <code>outcome: unsettled</code> with <code>stillOpen</code>, so the next actor resumes rather than restarts. An agent that reaches for a default here has produced a guess, not a determination.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_RecordUnsettled</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_RecordUnsettled</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codechangereview.task_closebean" data-fa-state="extracted" data-fa-gloss="">
 Record what was done, and close <span class="fa-gloss-status">candidate, extracted</span>
@@ -3960,7 +3960,7 @@ Write the root README, if it is not there <span class="fa-gloss-status">candidat
 </dt>
 <dd>
 <p>The repository now IS an instance of something, and nothing at its root says so. A person landing on the checkout — or an agent that arrives before it has found any declaration — reads README.md first, and until this step there was no guarantee one existed. It carries two things and no more: a LINK to the harness that was installed, and the OVERALL install status across every location A_Install touched. Not one line per location buried in a log — the status a reader wants is &quot;is this repository set up, and as what&quot;. WHEN ABSENT, never replacing. A repository that already has a README has one somebody wrote, and overwriting it would destroy authored content to state a fact that belongs in a generated region. Where a README is already there, the link and status go in a marker pair the harness's own README tool maintains. WRITING IT IS NOT A PROCESS WRITE. <code>instance-readme</code> declares <code>layer: context</code> — read at session start, never written by a running process — and this step writes one. Both hold, because INITIALISATION IS NOT PROCESS RUNTIME: the rule governs a process operating on an instance that exists, and this is the act that brings the instance into being. The harness states the same rule in its own skill on context and state.</p>
-<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_WriteRootReadme</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_WriteRootReadme</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_sessionstatemachine.a_updatesession" data-fa-state="extracted" data-fa-gloss="">
 Write what changed <span class="fa-gloss-status">candidate, extracted</span>

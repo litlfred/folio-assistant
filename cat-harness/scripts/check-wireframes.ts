@@ -40,7 +40,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { instanceRootsIn, readDeclaration, repoRootFor, siteDirFor, visualisationsOf } from "../schemas/cat-harness.ts";
+import { instanceDirectories, instanceRootsIn, repoRootFor, siteDirFor, visualisationsOf } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 import { withViewers } from "./viewer-declarations.js";
 
@@ -69,9 +69,9 @@ export interface WireframeReport {
 export function declaredVisualisers(repoRoot: string = REPO_ROOT): string[] {
   const refs = new Set<string>();
   for (const root of instanceRootsIn(repoRoot)) {
-    const decl = readDeclaration(root);
-    // Viewers RESOLVED from the pages (#1168 B7a-2b).
-    for (const d of withViewers(decl?.directories ?? [], root, repoRoot)) {
+    // Own entries AND those declared from within (bean `cmsl`); viewers
+    // RESOLVED from the pages (#1168 B7a-2b).
+    for (const d of withViewers(instanceDirectories(root), root, repoRoot)) {
       for (const v of visualisationsOf(d.coverage, d.id)) refs.add(v.ref);
     }
   }

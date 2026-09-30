@@ -55,9 +55,10 @@ import { join, relative } from "node:path";
 
 import type { QaCriterionEntry, QaReviewer } from "../schemas/block-qa.ts";
 import { isCheckerWitness, isCouldNotDispatch } from "../content/pipeline/untainted-verification.ts";
+import { actorsDir } from "../schemas/role-graph.ts";
 
 const ROOT = join(import.meta.dir, "..", "..");
-const ACTOR_DIR = join(ROOT, ".claude", "skills", "actors");
+const ACTOR_DIR = actorsDir(ROOT) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })();
 // declared-path-literal: the convention home of cat-harness's ODRL policies
 // (issue #1180), beside the actor registry this gate already reads by path.
 const POLICY_DIR = join(ROOT, "cat-harness", "policies");

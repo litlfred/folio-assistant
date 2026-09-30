@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "eb22fe6ed53a"
+    "script_hash": "70ec174e4c49"
   },
   "subject": {
     "kind": "graph",
     "id": "subgraph-readmes"
   },
-  "updated_at": "2026-09-30T19:57:23.878Z",
+  "updated_at": "2026-09-30T21:43:41.962Z",
   "families": {
     "absent-directory": {
       "summary": "Declared directories not on disk and not declared `absent`: a consumer scanning them finds nothing and may report a clean run.",
@@ -36,13 +36,13 @@
         },
         {
           "instance": "agent-skills",
-          "directory": "voices",
-          "path": "agent-skills/skills/voices"
+          "directory": "qa",
+          "path": "agent-skills/test/results"
         },
         {
           "instance": "agent-skills",
-          "directory": "qa",
-          "path": "agent-skills/test/results"
+          "directory": "voices",
+          "path": "agent-skills/skills/voices"
         },
         {
           "instance": "bootstrap",
@@ -251,11 +251,6 @@
         },
         {
           "instance": "folio-assistant-core",
-          "directory": "voices",
-          "path": "folio-assistant-core/skills/voices"
-        },
-        {
-          "instance": "folio-assistant-core",
           "directory": "core-scripts",
           "path": "folio-assistant-core/scripts"
         },
@@ -265,9 +260,9 @@
           "path": "folio-assistant-core/test/results"
         },
         {
-          "instance": "folio-assistant-sci",
+          "instance": "folio-assistant-core",
           "directory": "voices",
-          "path": "folio-assistant-sci/skills/voices"
+          "path": "folio-assistant-core/skills/voices"
         },
         {
           "instance": "folio-assistant-sci",
@@ -278,6 +273,11 @@
           "instance": "folio-assistant-sci",
           "directory": "qa",
           "path": "folio-assistant-sci/test/results"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "voices",
+          "path": "folio-assistant-sci/skills/voices"
         },
         {
           "instance": "large-datasets",
@@ -296,11 +296,6 @@
         },
         {
           "instance": "smart-base",
-          "directory": "voices",
-          "path": "smart-base/skills/voices"
-        },
-        {
-          "instance": "smart-base",
           "directory": "smart-base-artifact-index",
           "path": "smart-base/fhir-artifact-index"
         },
@@ -313,6 +308,11 @@
           "instance": "smart-base",
           "directory": "qa",
           "path": "smart-base/test/results"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "voices",
+          "path": "smart-base/skills/voices"
         },
         {
           "instance": "smart-dak",
@@ -391,11 +391,6 @@
         },
         {
           "instance": "who-style-guide",
-          "directory": "voices",
-          "path": "who-style-guide/skills/voices"
-        },
-        {
-          "instance": "who-style-guide",
           "directory": "glossary",
           "path": "who-style-guide/glossary"
         },
@@ -403,6 +398,11 @@
           "instance": "who-style-guide",
           "directory": "qa",
           "path": "who-style-guide/test/results"
+        },
+        {
+          "instance": "who-style-guide",
+          "directory": "voices",
+          "path": "who-style-guide/skills/voices"
         }
       ]
     },
@@ -424,7 +424,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 97,
+      "count": 98,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -443,13 +443,13 @@
         },
         {
           "instance": "agent-skills",
-          "directory": "voices",
-          "path": "agent-skills/skills/voices"
+          "directory": "qa",
+          "path": "agent-skills/test/results"
         },
         {
           "instance": "agent-skills",
-          "directory": "qa",
-          "path": "agent-skills/test/results"
+          "directory": "voices",
+          "path": "agent-skills/skills/voices"
         },
         {
           "instance": "bootstrap",
@@ -743,11 +743,6 @@
         },
         {
           "instance": "folio-assistant-core",
-          "directory": "voices",
-          "path": "folio-assistant-core/skills/voices"
-        },
-        {
-          "instance": "folio-assistant-core",
           "directory": "core-tools",
           "path": "folio-assistant-core/tools"
         },
@@ -762,9 +757,9 @@
           "path": "folio-assistant-core/test/results"
         },
         {
-          "instance": "folio-assistant-sci",
+          "instance": "folio-assistant-core",
           "directory": "voices",
-          "path": "folio-assistant-sci/skills/voices"
+          "path": "folio-assistant-core/skills/voices"
         },
         {
           "instance": "folio-assistant-sci",
@@ -775,6 +770,11 @@
           "instance": "folio-assistant-sci",
           "directory": "qa",
           "path": "folio-assistant-sci/test/results"
+        },
+        {
+          "instance": "folio-assistant-sci",
+          "directory": "voices",
+          "path": "folio-assistant-sci/skills/voices"
         },
         {
           "instance": "large-datasets",
@@ -798,11 +798,6 @@
         },
         {
           "instance": "smart-base",
-          "directory": "voices",
-          "path": "smart-base/skills/voices"
-        },
-        {
-          "instance": "smart-base",
           "directory": "smart-base-artifact-index",
           "path": "smart-base/fhir-artifact-index"
         },
@@ -815,6 +810,11 @@
           "instance": "smart-base",
           "directory": "qa",
           "path": "smart-base/test/results"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "voices",
+          "path": "smart-base/skills/voices"
         },
         {
           "instance": "smart-dak",
@@ -862,6 +862,11 @@
           "path": "smart-trust/test/results"
         },
         {
+          "instance": "smart-trust",
+          "directory": "smart-trust-themes",
+          "path": "smart-trust/themes"
+        },
+        {
           "instance": "who-iris",
           "directory": "who-iris-site",
           "path": "who-iris/site"
@@ -898,11 +903,6 @@
         },
         {
           "instance": "who-style-guide",
-          "directory": "voices",
-          "path": "who-style-guide/skills/voices"
-        },
-        {
-          "instance": "who-style-guide",
           "directory": "glossary",
           "path": "who-style-guide/glossary"
         },
@@ -910,6 +910,11 @@
           "instance": "who-style-guide",
           "directory": "qa",
           "path": "who-style-guide/test/results"
+        },
+        {
+          "instance": "who-style-guide",
+          "directory": "voices",
+          "path": "who-style-guide/skills/voices"
         }
       ]
     },
@@ -935,5 +940,5 @@
       "entries": []
     }
   },
-  "total": 178
+  "total": 179
 }

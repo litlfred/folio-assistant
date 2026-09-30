@@ -43,6 +43,8 @@ jobs:
         os: [ubuntu-24.04, macos-14]
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       # Linux: GMP/MPFR are pre-installed on ubuntu-24.04 runners.
       # macOS: install via brew.

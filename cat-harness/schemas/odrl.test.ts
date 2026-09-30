@@ -19,11 +19,12 @@ import {
 } from "./odrl.ts";
 import { ProvActivitySchema } from "./prov.ts";
 import { readActors, readPermissions } from "./role-graph.ts";
+import { actorsDir } from "./role-graph.ts";
 
 const INSTANCE = resolve(import.meta.dir, "..");
 const REPO = resolve(INSTANCE, "..");
 const POLICY_DIR = join(INSTANCE, "policies");
-const ACTOR_DIR = join(REPO, ".claude", "skills", "actors");
+const ACTOR_DIR = actorsDir(REPO)!;
 
 /**
  * Each actor's `permissions` list as the actor files carried it before the

@@ -89,7 +89,7 @@ export type TaskRef = z.infer<typeof TaskRefSchema>;
  *
  * The link to a declared actor is **optional on purpose**. Somebody who
  * comments on a pull request is a real person with a real outstanding item
- * whether or not `.claude/skills/actors/` has heard of them. `actor: undefined`
+ * whether or not `cat-harness/scenarios/actors/` has heard of them. `actor: undefined`
  * means **not linked** — a third state, never "anonymous", and never silently
  * resolved to a default actor.
  */

@@ -36,6 +36,9 @@ import {
   RequirementSchema,
   SkillDefinitionSchema,
 } from "../schemas/skill-package.js";
+import { actorsDir, capabilitiesDir } from "../schemas/role-graph.js";
+import { repoRootFor } from "../schemas/cat-harness.js";
+import { skillDefinitionDirs } from "../schemas/skill-definitions-dir.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const rootDir = join(__dirname, "..");
@@ -68,15 +71,18 @@ function validateDir(dir: string, schema: z.ZodType<unknown>, label: string): vo
 console.log("Validating skill framework files...\n");
 
 // Validate actors
+// From the DECLARED home (bean rqao). This read `<cat-harness>/.claude/skills/actors`,
+// a directory that never existed, so it validated zero actors while reporting
+// a clean run: the dh4f class. `repoRootFor(rootDir)` is the repository.
 validateDir(
-  join(rootDir, ".claude", "skills", "actors"),
+  actorsDir(repoRootFor(rootDir)) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })(),
   ActorDefinitionSchema,
   "actors",
 );
 
 // Validate capabilities
 validateDir(
-  join(rootDir, ".claude", "skills", "capabilities"),
+  capabilitiesDir(repoRootFor(rootDir)) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the capability registry (bean rqao) has no home to read"); })(),
   CapabilityDefinitionSchema,
   "capabilities",
 );
@@ -96,11 +102,10 @@ validateDir(
 // nothing would say so until something tried to load it. Only `.json` here —
 // the directory also holds `.md` instruction bodies, which `validateDir`
 // already filters out.
-validateDir(
-  join(rootDir, ".claude", "skills", "local"),
-  SkillDefinitionSchema,
-  "local",
-);
+// Split by theme across the instances that own them (bean `rqao`).
+for (const dir of skillDefinitionDirs(rootDir)) {
+  validateDir(dir, SkillDefinitionSchema, "skill-definitions");
+}
 
 // Validate skill package manifests
 //

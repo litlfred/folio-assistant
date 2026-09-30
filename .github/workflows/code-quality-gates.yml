@@ -80,6 +80,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       # HARD GATE: a bare `import Mathlib` (optionally trailing whitespace)
       # at the start of a line is forbidden in content Lean files. Use
@@ -138,6 +140,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: actions/setup-python@v7
         with:
@@ -234,6 +238,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -316,6 +322,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -761,6 +769,12 @@ jobs:
       # reader; both PDF rungs join them, and this says none came back.
       - name: no library section carries a soft hyphen
         run: bun run check:soft-hyphens
+
+      # Bean rkqp: structure.json has two variants (pdf, notebook) read through
+      # one accessor; a reader that builds the path itself learns one and
+      # misreads the next. The owner chose a literal allowlist (2026-09-30).
+      - name: structure.json is named only by its accessor
+        run: bun run check:structure-accessor
 
       - name: knowledge-graph audit
         run: bun run kg:audit:check
@@ -1971,6 +1985,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -2009,6 +2025,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       # WARN-ONLY ratchet: count non-test `use ...::*;` wildcard imports in
       # tools/. Test modules (`#[cfg(test)]` / `use super::*;`) are the bulk
@@ -2046,6 +2064,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.3.14
@@ -2078,6 +2098,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.3.14
