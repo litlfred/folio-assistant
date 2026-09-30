@@ -28,11 +28,11 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`block-qa/`](block-qa/) | 122 files | |
 | [`bootstrap/`](bootstrap/) | 16 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 3 files | |
-| [`detangle/`](detangle/) | 33 files | |
+| [`detangle/`](detangle/) | 31 files | |
 | [`kg-export.@litlfred/`](kg-export.%40litlfred/) | 1 file | |
 | [`kg-qa/`](kg-qa/) | 560 files | |
 | [`library-qa/`](library-qa/) | 47 files | |
-| [`lsi/`](lsi/) | 6 files | |
+| [`lsi/`](lsi/) | 4 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |
 | [`viewer-nav/`](viewer-nav/) | 1 file | |
 | [`witnesses/`](witnesses/) | 163 files | |
