@@ -10095,6 +10095,72 @@
     }
   }
 
+  /* A filter over every long table on the page -- bean 0fua.
+   *
+   * The glossary, processes, skills index and tools pages were each one flat
+   * table of 48 to 270 rows with no way to find a row but scrolling: 67,046px
+   * of it for the skills index at phone width, measured 2026-09-29. The owner
+   * chose ONE site-wide filter over a per-visualiser one (2026-09-30), so this
+   * lives here, where every page gets it, rather than in each generator.
+   *
+   * A table qualifies when it has more than TABLE_FILTER_MIN body rows at
+   * load. Tables built later by a viewer's own script are not seen, and that
+   * is deliberate: those viewers own their controls. `data-fa-no-filter` on
+   * the table, or on anything around it, opts out.
+   *
+   * Matching is on the row's text, case-insensitive, and every word typed must
+   * appear (AND), so "lean proof" narrows rather than widens. A hidden row is
+   * `hidden`, not removed, so clearing the box restores the table exactly. The
+   * count is a live region, because a sighted reader sees the table shrink and
+   * a screen-reader user otherwise hears nothing at all. */
+  var TABLE_FILTER_MIN = 25;
+
+  function mountTableFilters() {
+    var main = document.querySelector(".main-content");
+    if (!main) return;
+    var tables = main.querySelectorAll("table");
+    for (var i = 0; i < tables.length; i++) {
+      var table = tables[i];
+      if (table.closest("[data-fa-no-filter]") || table.getAttribute("data-fa-filtered")) continue;
+      var body = table.tBodies && table.tBodies[0];
+      if (!body || body.rows.length <= TABLE_FILTER_MIN) continue;
+      mountTableFilter(table, body, i);
+    }
+  }
+
+  function mountTableFilter(table, body, index) {
+    table.setAttribute("data-fa-filtered", "true");
+    var rows = Array.prototype.slice.call(body.rows);
+    var texts = rows.map(function (r) { return (r.textContent || "").toLowerCase(); });
+    var id = "fa-table-filter-" + index;
+    var box = el("div", { class: "fa-table-filter" });
+    var label = el("label", { for: id }, "Filter this table");
+    var input = el("input", { type: "search", id: id, autocomplete: "off", spellcheck: "false" });
+    var count = el("span", { class: "fa-table-filter-count", "aria-live": "polite" });
+    input.setAttribute("aria-describedby", id + "-count");
+    count.id = id + "-count";
+    box.appendChild(label);
+    box.appendChild(input);
+    box.appendChild(count);
+    function apply() {
+      var words = input.value.toLowerCase().split(/\s+/).filter(Boolean);
+      var shown = 0;
+      rows.forEach(function (row, n) {
+        var hit = words.every(function (w) { return texts[n].indexOf(w) !== -1; });
+        row.hidden = !hit;
+        if (hit) shown++;
+      });
+      count.textContent = shown + " of " + rows.length + " rows";
+    }
+    input.addEventListener("input", apply);
+    apply();
+    // just-the-docs wraps tables in `.table-wrapper` for horizontal scroll; the
+    // box goes before that, so it does not scroll sideways with the table.
+    var anchor = table.parentNode && table.parentNode.classList &&
+      table.parentNode.classList.contains("table-wrapper") ? table.parentNode : table;
+    anchor.parentNode.insertBefore(box, anchor);
+  }
+
   function init() {
     // RTL detection — Arabic pages get dir="rtl" on <html> which
     // triggers the CSS rules in docs-ui.css for smooth sidebar slide.
@@ -10144,6 +10210,7 @@
     mountLibraryPullouts();
     mountTodoStickies();
     mountPageLanguageBar();
+    mountTableFilters();
     // Figures are mounted only after the inlining settles, so the scan sees the
     // real <svg> rather than the <img> it replaces and does not wrap both.
     inlineDiagrams(mountFigures);

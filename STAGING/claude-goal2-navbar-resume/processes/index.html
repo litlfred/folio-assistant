@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/docs-ui.css?v=1790769261">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/docs-ui.css?v=1790773660">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/narrow-viewport.css?v=1790769261">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/narrow-viewport.css?v=1790773660">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/work-plan.css?v=1790769261">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/work-plan.css?v=1790773660">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/themes.css?v=1790769261">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/themes.css?v=1790773660">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/uml.css?v=1790769261">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/uml.css?v=1790773660">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/avatars.css?v=1790769261">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/css/avatars.css?v=1790773660">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/js/docs-ui.js?v=1790769261" defer></script>
+<script src="/folio-assistant/STAGING/claude-goal2-navbar-resume/assets/js/docs-ui.js?v=1790773660" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1228,416 +1228,416 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   </thead>
   <tbody>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">activity-log</code></td>
-      <td><code class="language-plaintext highlighter-rouge">activity-log.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/activity-log.html"><code class="language-plaintext highlighter-rouge">activity-log</code></a></td>
+      <td><a href="activity-log.html"><code class="language-plaintext highlighter-rouge">activity-log.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">adjudication</code></td>
-      <td><code class="language-plaintext highlighter-rouge">adjudication.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">criterion-adjudication.bpmn</code>, <code class="language-plaintext highlighter-rouge">ingest-l1-completeness-gate.bpmn</code>, <code class="language-plaintext highlighter-rouge">refresh-materialized.bpmn</code>, <code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code>, <code class="language-plaintext highlighter-rouge">translation-workflow.bpmn</code>, <code class="language-plaintext highlighter-rouge">voice-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication</code></a></td>
+      <td><a href="adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication.bpmn</code></a>, <a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="criterion-adjudication.html"><code class="language-plaintext highlighter-rouge">criterion-adjudication.bpmn</code></a>, <a href="ingest-l1-completeness-gate.html"><code class="language-plaintext highlighter-rouge">ingest-l1-completeness-gate.bpmn</code></a>, <a href="refresh-materialized.html"><code class="language-plaintext highlighter-rouge">refresh-materialized.bpmn</code></a>, <a href="review-narrative.html"><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></a>, <a href="translation-workflow.html"><code class="language-plaintext highlighter-rouge">translation-workflow.bpmn</code></a>, <a href="voice-review.html"><code class="language-plaintext highlighter-rouge">voice-review.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">adopt-methodology-from-source</code></td>
-      <td><code class="language-plaintext highlighter-rouge">methodology-from-source.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/adopt-methodology-from-source.html"><code class="language-plaintext highlighter-rouge">adopt-methodology-from-source</code></a></td>
+      <td><a href="methodology-from-source.html"><code class="language-plaintext highlighter-rouge">methodology-from-source.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">bean-blocking</code></td>
-      <td><code class="language-plaintext highlighter-rouge">kg-to-portal.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking</code></a></td>
+      <td><a href="kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">bean-coordination</code></td>
-      <td><code class="language-plaintext highlighter-rouge">bean-lifecycle.bpmn</code>, <code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a></td>
+      <td><a href="bean-lifecycle.html"><code class="language-plaintext highlighter-rouge">bean-lifecycle.bpmn</code></a>, <a href="code-change-review.html"><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">board-diagram-interchange</code></td>
-      <td><code class="language-plaintext highlighter-rouge">board-place-note.bpmn</code>, <code class="language-plaintext highlighter-rouge">board-relocate.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/board-diagram-interchange.html"><code class="language-plaintext highlighter-rouge">board-diagram-interchange</code></a></td>
+      <td><a href="board-place-note.html"><code class="language-plaintext highlighter-rouge">board-place-note.bpmn</code></a>, <a href="board-relocate.html"><code class="language-plaintext highlighter-rouge">board-relocate.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">board-windows</code></td>
-      <td><code class="language-plaintext highlighter-rouge">board-open-close.bpmn</code>, <code class="language-plaintext highlighter-rouge">board-relocate.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/board-windows.html"><code class="language-plaintext highlighter-rouge">board-windows</code></a></td>
+      <td><a href="board-open-close.html"><code class="language-plaintext highlighter-rouge">board-open-close.bpmn</code></a>, <a href="board-relocate.html"><code class="language-plaintext highlighter-rouge">board-relocate.bpmn</code></a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">bootstrap-kg-navigation</code></td>
-      <td><code class="language-plaintext highlighter-rouge">initialize-harness.bpmn</code></td>
+      <td><a href="initialize-harness.html"><code class="language-plaintext highlighter-rouge">initialize-harness.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></td>
-      <td><code class="language-plaintext highlighter-rouge">crdm-requirements-definition.bpmn</code>, <code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/bpmn-authoring.html"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a></td>
+      <td><a href="crdm-requirements-definition.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-definition.bpmn</code></a>, <a href="l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">ci-health</code></td>
-      <td><code class="language-plaintext highlighter-rouge">ci-health-watch.bpmn</code>, <code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">pr-checks-present.bpmn</code>, <code class="language-plaintext highlighter-rouge">repository-health-watch.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/ci-health.html"><code class="language-plaintext highlighter-rouge">ci-health</code></a></td>
+      <td><a href="ci-health-watch.html"><code class="language-plaintext highlighter-rouge">ci-health-watch.bpmn</code></a>, <a href="code-change-review.html"><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></a>, <a href="pr-checks-present.html"><code class="language-plaintext highlighter-rouge">pr-checks-present.bpmn</code></a>, <a href="repository-health-watch.html"><code class="language-plaintext highlighter-rouge">repository-health-watch.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">code-node-review</code></td>
-      <td><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">review-code.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/code-node-review.html"><code class="language-plaintext highlighter-rouge">code-node-review</code></a></td>
+      <td><a href="code-change-review.html"><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></a>, <a href="review-code.html"><code class="language-plaintext highlighter-rouge">review-code.bpmn</code></a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">confirm-harness</code></td>
-      <td><code class="language-plaintext highlighter-rouge">initialize-harness.bpmn</code></td>
+      <td><a href="initialize-harness.html"><code class="language-plaintext highlighter-rouge">initialize-harness.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-acquisition</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-acquisition.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/content-acquisition.html"><code class="language-plaintext highlighter-rouge">content-acquisition</code></a></td>
+      <td><a href="content-acquisition.html"><code class="language-plaintext highlighter-rouge">content-acquisition.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-author</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code>, <code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code>, <code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code>, <code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
+      <td><a href="authoring-a-paper.html"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a>, <a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="content-lifecycle.html"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a>, <a href="draft-to-publication.html"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a>, <a href="editing-hci-validation.html"><code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code></a>, <a href="evidence-retrieval.html"><code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-feedback</code></td>
-      <td><code class="language-plaintext highlighter-rouge">adjudication.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code>, <code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code>, <code class="language-plaintext highlighter-rouge">narrative-code-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
+      <td><a href="adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication.bpmn</code></a>, <a href="content-lifecycle.html"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a>, <a href="draft-to-publication.html"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a>, <a href="narrative-code-review.html"><code class="language-plaintext highlighter-rouge">narrative-code-review.bpmn</code></a>, <a href="review-narrative.html"><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-graph</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-requirements-definition.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/content-graph.html"><code class="language-plaintext highlighter-rouge">content-graph</code></a></td>
+      <td><a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="crdm-requirements-definition.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-definition.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-plan</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code>, <code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code>, <code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/content-plan.html"><code class="language-plaintext highlighter-rouge">content-plan</code></a></td>
+      <td><a href="authoring-a-document.html"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a>, <a href="authoring-a-paper.html"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a>, <a href="content-lifecycle.html"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a>, <a href="l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-publish</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code>, <code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code>, <code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code>, <code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code>, <code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
+      <td><a href="authoring-a-document.html"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a>, <a href="authoring-a-paper.html"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a>, <a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="content-lifecycle.html"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a>, <a href="draft-to-publication.html"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a>, <a href="ig-incremental-build.html"><code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code></a>, <a href="l3-fhir-pipeline.html"><code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-retire</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/content-retire.html"><code class="language-plaintext highlighter-rouge">content-retire</code></a></td>
+      <td><a href="content-lifecycle.html"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-review</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code>, <code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code>, <code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code>, <code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code>, <code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code>, <code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code>, <code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code>, <code class="language-plaintext highlighter-rouge">review-task.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
+      <td><a href="authoring-a-document.html"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a>, <a href="authoring-a-paper.html"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a>, <a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="content-lifecycle.html"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a>, <a href="draft-to-publication.html"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a>, <a href="editing-hci-validation.html"><code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code></a>, <a href="evidence-retrieval.html"><code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code></a>, <a href="l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></a>, <a href="review-narrative.html"><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></a>, <a href="review-task.html"><code class="language-plaintext highlighter-rouge">review-task.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-test</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code>, <code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code>, <code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code>, <code class="language-plaintext highlighter-rouge">qa-report-signing.bpmn</code>, <code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
+      <td><a href="content-lifecycle.html"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a>, <a href="draft-to-publication.html"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a>, <a href="editing-hci-validation.html"><code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code></a>, <a href="qa-report-signing.html"><code class="language-plaintext highlighter-rouge">qa-report-signing.bpmn</code></a>, <a href="upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-validate</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code>, <code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code>, <code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code>, <code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code>, <code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code>, <code class="language-plaintext highlighter-rouge">review-task.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
+      <td><a href="authoring-a-document.html"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a>, <a href="authoring-a-paper.html"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a>, <a href="content-lifecycle.html"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a>, <a href="draft-to-publication.html"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a>, <a href="editing-hci-validation.html"><code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code></a>, <a href="l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></a>, <a href="review-task.html"><code class="language-plaintext highlighter-rouge">review-task.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">continual-progress</code></td>
-      <td><code class="language-plaintext highlighter-rouge">actor-role-administration.bpmn</code>, <code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">kg-to-portal.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a></td>
+      <td><a href="actor-role-administration.html"><code class="language-plaintext highlighter-rouge">actor-role-administration.bpmn</code></a>, <a href="code-change-review.html"><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></a>, <a href="kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">copy-out-materialized</code></td>
-      <td><code class="language-plaintext highlighter-rouge">copy-out-materialized.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/copy-out-materialized.html"><code class="language-plaintext highlighter-rouge">copy-out-materialized</code></a></td>
+      <td><a href="copy-out-materialized.html"><code class="language-plaintext highlighter-rouge">copy-out-materialized.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">covered-is-not-reachable</code></td>
-      <td><code class="language-plaintext highlighter-rouge">review-code.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/covered-is-not-reachable.html"><code class="language-plaintext highlighter-rouge">covered-is-not-reachable</code></a></td>
+      <td><a href="review-code.html"><code class="language-plaintext highlighter-rouge">review-code.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">crdm-data-model</code></td>
-      <td><code class="language-plaintext highlighter-rouge">crdm-data-model.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/crdm-data-model.html"><code class="language-plaintext highlighter-rouge">crdm-data-model</code></a></td>
+      <td><a href="crdm-data-model.html"><code class="language-plaintext highlighter-rouge">crdm-data-model.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">crdm-detect</code></td>
-      <td><code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/crdm-detect.html"><code class="language-plaintext highlighter-rouge">crdm-detect</code></a></td>
+      <td><a href="crdm-requirements.html"><code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></td>
-      <td><code class="language-plaintext highlighter-rouge">crdm-close.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-issue-linking.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-needs.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-requirements-definition.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-signoff.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/crdm-requirements-workflow.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code></a></td>
+      <td><a href="crdm-close.html"><code class="language-plaintext highlighter-rouge">crdm-close.bpmn</code></a>, <a href="crdm-deliver.html"><code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code></a>, <a href="crdm-issue-linking.html"><code class="language-plaintext highlighter-rouge">crdm-issue-linking.bpmn</code></a>, <a href="crdm-needs.html"><code class="language-plaintext highlighter-rouge">crdm-needs.bpmn</code></a>, <a href="crdm-requirements-definition.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-definition.bpmn</code></a>, <a href="crdm-requirements.html"><code class="language-plaintext highlighter-rouge">crdm-requirements.bpmn</code></a>, <a href="crdm-signoff.html"><code class="language-plaintext highlighter-rouge">crdm-signoff.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">decision-audit</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-close.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-signoff.bpmn</code>, <code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code>, <code class="language-plaintext highlighter-rouge">options-analysis.bpmn</code>, <code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/decision-audit.html"><code class="language-plaintext highlighter-rouge">decision-audit</code></a></td>
+      <td><a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="crdm-close.html"><code class="language-plaintext highlighter-rouge">crdm-close.bpmn</code></a>, <a href="crdm-signoff.html"><code class="language-plaintext highlighter-rouge">crdm-signoff.bpmn</code></a>, <a href="editing-hci-validation.html"><code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code></a>, <a href="options-analysis.html"><code class="language-plaintext highlighter-rouge">options-analysis.bpmn</code></a>, <a href="upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">decision-comparison</code></td>
-      <td><code class="language-plaintext highlighter-rouge">crdm-requirements-definition.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/decision-comparison.html"><code class="language-plaintext highlighter-rouge">decision-comparison</code></a></td>
+      <td><a href="crdm-requirements-definition.html"><code class="language-plaintext highlighter-rouge">crdm-requirements-definition.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">deep-document-research</code></td>
-      <td><code class="language-plaintext highlighter-rouge">deep-document-research.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/deep-document-research.html"><code class="language-plaintext highlighter-rouge">deep-document-research</code></a></td>
+      <td><a href="deep-document-research.html"><code class="language-plaintext highlighter-rouge">deep-document-research.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></td>
-      <td><code class="language-plaintext highlighter-rouge">actor-role-administration.bpmn</code>, <code class="language-plaintext highlighter-rouge">board-relocate.bpmn</code>, <code class="language-plaintext highlighter-rouge">feature-staging.bpmn</code>, <code class="language-plaintext highlighter-rouge">graph-detanglement.bpmn</code>, <code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code>, <code class="language-plaintext highlighter-rouge">repository-health-watch.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a></td>
+      <td><a href="actor-role-administration.html"><code class="language-plaintext highlighter-rouge">actor-role-administration.bpmn</code></a>, <a href="board-relocate.html"><code class="language-plaintext highlighter-rouge">board-relocate.bpmn</code></a>, <a href="feature-staging.html"><code class="language-plaintext highlighter-rouge">feature-staging.bpmn</code></a>, <a href="graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement.bpmn</code></a>, <a href="kg-separation.html"><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></a>, <a href="repository-health-watch.html"><code class="language-plaintext highlighter-rouge">repository-health-watch.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">delivery-summary</code></td>
-      <td><code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code>, <code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/delivery-summary.html"><code class="language-plaintext highlighter-rouge">delivery-summary</code></a></td>
+      <td><a href="crdm-deliver.html"><code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code></a>, <a href="upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">discussion</code></td>
-      <td><code class="language-plaintext highlighter-rouge">discussion.bpmn</code></td>
+      <td><a href="discussion.html"><code class="language-plaintext highlighter-rouge">discussion.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">dispatch-agent</code></td>
-      <td><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/dispatch-agent.html"><code class="language-plaintext highlighter-rouge">dispatch-agent</code></a></td>
+      <td><a href="getting-started.html"><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">dmn-authoring</code></td>
-      <td><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/dmn-authoring.html"><code class="language-plaintext highlighter-rouge">dmn-authoring</code></a></td>
+      <td><a href="l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">document-authoring</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/document-authoring.html"><code class="language-plaintext highlighter-rouge">document-authoring</code></a></td>
+      <td><a href="authoring-a-document.html"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">document-intake</code></td>
-      <td><code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code>, <code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code>, <code class="language-plaintext highlighter-rouge">getting-started.bpmn</code>, <code class="language-plaintext highlighter-rouge">ingest-build-l1-kg.bpmn</code>, <code class="language-plaintext highlighter-rouge">ingest-derive-content.bpmn</code>, <code class="language-plaintext highlighter-rouge">ingest-extract-structure.bpmn</code>, <code class="language-plaintext highlighter-rouge">ingest-l1-completeness-gate.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/document-intake.html"><code class="language-plaintext highlighter-rouge">document-intake</code></a></td>
+      <td><a href="document-ingestion.html"><code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code></a>, <a href="evidence-retrieval.html"><code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code></a>, <a href="getting-started.html"><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code></a>, <a href="ingest-build-l1-kg.html"><code class="language-plaintext highlighter-rouge">ingest-build-l1-kg.bpmn</code></a>, <a href="ingest-derive-content.html"><code class="language-plaintext highlighter-rouge">ingest-derive-content.bpmn</code></a>, <a href="ingest-extract-structure.html"><code class="language-plaintext highlighter-rouge">ingest-extract-structure.bpmn</code></a>, <a href="ingest-l1-completeness-gate.html"><code class="language-plaintext highlighter-rouge">ingest-l1-completeness-gate.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">document-publishing</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/document-publishing.html"><code class="language-plaintext highlighter-rouge">document-publishing</code></a></td>
+      <td><a href="authoring-a-document.html"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">document-structure</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/document-structure.html"><code class="language-plaintext highlighter-rouge">document-structure</code></a></td>
+      <td><a href="authoring-a-document.html"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">evidence-appraisal</code></td>
-      <td><code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/evidence-appraisal.html"><code class="language-plaintext highlighter-rouge">evidence-appraisal</code></a></td>
+      <td><a href="evidence-retrieval.html"><code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">feature-staging</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code>, <code class="language-plaintext highlighter-rouge">docs-site-publish.bpmn</code>, <code class="language-plaintext highlighter-rouge">feature-staging.bpmn</code>, <code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/feature-staging.html"><code class="language-plaintext highlighter-rouge">feature-staging</code></a></td>
+      <td><a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="crdm-deliver.html"><code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code></a>, <a href="docs-site-publish.html"><code class="language-plaintext highlighter-rouge">docs-site-publish.bpmn</code></a>, <a href="feature-staging.html"><code class="language-plaintext highlighter-rouge">feature-staging.bpmn</code></a>, <a href="upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">fhir-validation</code></td>
-      <td><code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code>, <code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a></td>
+      <td><a href="ig-incremental-build.html"><code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code></a>, <a href="l3-fhir-pipeline.html"><code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">getting-started</code></td>
-      <td><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/getting-started.html"><code class="language-plaintext highlighter-rouge">getting-started</code></a></td>
+      <td><a href="getting-started.html"><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">graph-detanglement</code></td>
-      <td><code class="language-plaintext highlighter-rouge">graph-detanglement.bpmn</code>, <code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement</code></a></td>
+      <td><a href="graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement.bpmn</code></a>, <a href="kg-separation.html"><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">ig-publication</code></td>
-      <td><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code>, <code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code>, <code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
+      <td><a href="draft-to-publication.html"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a>, <a href="ig-incremental-build.html"><code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code></a>, <a href="l3-fhir-pipeline.html"><code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">instance-publication</code></td>
-      <td><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/instance-publication.html"><code class="language-plaintext highlighter-rouge">instance-publication</code></a></td>
+      <td><a href="kg-separation.html"><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">interaction-modality</code></td>
-      <td><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code>, <code class="language-plaintext highlighter-rouge">session-state-machine.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/interaction-modality.html"><code class="language-plaintext highlighter-rouge">interaction-modality</code></a></td>
+      <td><a href="getting-started.html"><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code></a>, <a href="session-state-machine.html"><code class="language-plaintext highlighter-rouge">session-state-machine.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">issue-working</code></td>
-      <td><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">pr-checks-present.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/issue-working.html"><code class="language-plaintext highlighter-rouge">issue-working</code></a></td>
+      <td><a href="code-change-review.html"><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></a>, <a href="pr-checks-present.html"><code class="language-plaintext highlighter-rouge">pr-checks-present.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">kg-contribution-offer</code></td>
-      <td><code class="language-plaintext highlighter-rouge">crdm-signoff.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/kg-contribution-offer.html"><code class="language-plaintext highlighter-rouge">kg-contribution-offer</code></a></td>
+      <td><a href="crdm-signoff.html"><code class="language-plaintext highlighter-rouge">crdm-signoff.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">kg-export</code></td>
-      <td><code class="language-plaintext highlighter-rouge">kg-to-portal.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/kg-export.html"><code class="language-plaintext highlighter-rouge">kg-export</code></a></td>
+      <td><a href="kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">kg-separation</code></td>
-      <td><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/kg-separation.html"><code class="language-plaintext highlighter-rouge">kg-separation</code></a></td>
+      <td><a href="kg-separation.html"><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">kg-to-portal</code></td>
-      <td><code class="language-plaintext highlighter-rouge">kg-to-portal.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal</code></a></td>
+      <td><a href="kg-to-portal.html"><code class="language-plaintext highlighter-rouge">kg-to-portal.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></td>
-      <td><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a></td>
+      <td><a href="l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></td>
-      <td><code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code>, <code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/l3-fhir-authoring.html"><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></a></td>
+      <td><a href="ig-incremental-build.html"><code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code></a>, <a href="l3-fhir-pipeline.html"><code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">latex-authoring</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a></td>
+      <td><a href="authoring-a-paper.html"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">lean-formalization</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a></td>
+      <td><a href="authoring-a-paper.html"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">library-ingestion</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-acquisition.bpmn</code>, <code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/library-ingestion.html"><code class="language-plaintext highlighter-rouge">library-ingestion</code></a></td>
+      <td><a href="content-acquisition.html"><code class="language-plaintext highlighter-rouge">content-acquisition.bpmn</code></a>, <a href="document-ingestion.html"><code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">literature-search</code></td>
-      <td><code class="language-plaintext highlighter-rouge">options-analysis.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/literature-search.html"><code class="language-plaintext highlighter-rouge">literature-search</code></a></td>
+      <td><a href="options-analysis.html"><code class="language-plaintext highlighter-rouge">options-analysis.bpmn</code></a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">log-message</code></td>
-      <td><code class="language-plaintext highlighter-rouge">initialize-harness.bpmn</code>, <code class="language-plaintext highlighter-rouge">log-message.bpmn</code></td>
+      <td><a href="initialize-harness.html"><code class="language-plaintext highlighter-rouge">initialize-harness.bpmn</code></a>, <a href="log-message.html"><code class="language-plaintext highlighter-rouge">log-message.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">materialize-remote</code></td>
-      <td><code class="language-plaintext highlighter-rouge">materialize-remote.bpmn</code>, <code class="language-plaintext highlighter-rouge">refresh-materialized.bpmn</code>, <code class="language-plaintext highlighter-rouge">sample-import.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/materialize-remote.html"><code class="language-plaintext highlighter-rouge">materialize-remote</code></a></td>
+      <td><a href="materialize-remote.html"><code class="language-plaintext highlighter-rouge">materialize-remote.bpmn</code></a>, <a href="refresh-materialized.html"><code class="language-plaintext highlighter-rouge">refresh-materialized.bpmn</code></a>, <a href="sample-import.html"><code class="language-plaintext highlighter-rouge">sample-import.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">methodology-adoption</code></td>
-      <td><code class="language-plaintext highlighter-rouge">methodology-from-source.bpmn</code>, <code class="language-plaintext highlighter-rouge">options-analysis.bpmn</code>, <code class="language-plaintext highlighter-rouge">swot-analysis.bpmn</code>, <code class="language-plaintext highlighter-rouge">diig-investment-path.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/methodology-adoption.html"><code class="language-plaintext highlighter-rouge">methodology-adoption</code></a></td>
+      <td><a href="methodology-from-source.html"><code class="language-plaintext highlighter-rouge">methodology-from-source.bpmn</code></a>, <a href="options-analysis.html"><code class="language-plaintext highlighter-rouge">options-analysis.bpmn</code></a>, <a href="swot-analysis.html"><code class="language-plaintext highlighter-rouge">swot-analysis.bpmn</code></a>, <a href="diig-investment-path.html"><code class="language-plaintext highlighter-rouge">diig-investment-path.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">narrative-asserts-code</code></td>
-      <td><code class="language-plaintext highlighter-rouge">narrative-code-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/narrative-asserts-code.html"><code class="language-plaintext highlighter-rouge">narrative-asserts-code</code></a></td>
+      <td><a href="narrative-code-review.html"><code class="language-plaintext highlighter-rouge">narrative-code-review.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">normative-statements</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a></td>
+      <td><a href="authoring-a-document.html"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">opening-brief</code></td>
-      <td><code class="language-plaintext highlighter-rouge">graph-detanglement.bpmn</code>, <code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code>, <code class="language-plaintext highlighter-rouge">options-analysis.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/opening-brief.html"><code class="language-plaintext highlighter-rouge">opening-brief</code></a></td>
+      <td><a href="graph-detanglement.html"><code class="language-plaintext highlighter-rouge">graph-detanglement.bpmn</code></a>, <a href="kg-separation.html"><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></a>, <a href="options-analysis.html"><code class="language-plaintext highlighter-rouge">options-analysis.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">package-release</code></td>
-      <td><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/package-release.html"><code class="language-plaintext highlighter-rouge">package-release</code></a></td>
+      <td><a href="kg-separation.html"><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">placement</code></td>
-      <td><code class="language-plaintext highlighter-rouge">crdm-signoff.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/placement.html"><code class="language-plaintext highlighter-rouge">placement</code></a></td>
+      <td><a href="crdm-signoff.html"><code class="language-plaintext highlighter-rouge">crdm-signoff.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">platform-gates</code></td>
-      <td><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">code-quality-gates.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
+      <td><a href="code-change-review.html"><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></a>, <a href="code-quality-gates.html"><code class="language-plaintext highlighter-rouge">code-quality-gates.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">prepare-merge</code></td>
-      <td><code class="language-plaintext highlighter-rouge">actor-role-administration.bpmn</code>, <code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code>, <code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a></td>
+      <td><a href="actor-role-administration.html"><code class="language-plaintext highlighter-rouge">actor-role-administration.bpmn</code></a>, <a href="code-change-review.html"><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></a>, <a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="crdm-deliver.html"><code class="language-plaintext highlighter-rouge">crdm-deliver.bpmn</code></a>, <a href="upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">prepare-merge-auto</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/prepare-merge-auto.html"><code class="language-plaintext highlighter-rouge">prepare-merge-auto</code></a></td>
+      <td><a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">proof-verification</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a></td>
+      <td><a href="authoring-a-paper.html"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">publish-verification</code></td>
-      <td><code class="language-plaintext highlighter-rouge">docs-site-publish.bpmn</code>, <code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code>, <code class="language-plaintext highlighter-rouge">publish-alert.bpmn</code>, <code class="language-plaintext highlighter-rouge">publish-verification.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/publish-verification.html"><code class="language-plaintext highlighter-rouge">publish-verification</code></a></td>
+      <td><a href="docs-site-publish.html"><code class="language-plaintext highlighter-rouge">docs-site-publish.bpmn</code></a>, <a href="kg-separation.html"><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></a>, <a href="publish-alert.html"><code class="language-plaintext highlighter-rouge">publish-alert.bpmn</code></a>, <a href="publish-verification.html"><code class="language-plaintext highlighter-rouge">publish-verification.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">qa-report-signing</code></td>
-      <td><code class="language-plaintext highlighter-rouge">qa-report-signing.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/qa-report-signing.html"><code class="language-plaintext highlighter-rouge">qa-report-signing</code></a></td>
+      <td><a href="qa-report-signing.html"><code class="language-plaintext highlighter-rouge">qa-report-signing.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">quality-control</code></td>
-      <td><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code>, <code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code>, <code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
+      <td><a href="draft-to-publication.html"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a>, <a href="ig-incremental-build.html"><code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code></a>, <a href="l3-fhir-pipeline.html"><code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">related-work-coordination</code></td>
-      <td><code class="language-plaintext highlighter-rouge">related-work.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/related-work-coordination.html"><code class="language-plaintext highlighter-rouge">related-work-coordination</code></a></td>
+      <td><a href="related-work.html"><code class="language-plaintext highlighter-rouge">related-work.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">render-logging</code></td>
-      <td><code class="language-plaintext highlighter-rouge">feature-staging.bpmn</code>, <code class="language-plaintext highlighter-rouge">staging-render-log.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/render-logging.html"><code class="language-plaintext highlighter-rouge">render-logging</code></a></td>
+      <td><a href="feature-staging.html"><code class="language-plaintext highlighter-rouge">feature-staging.bpmn</code></a>, <a href="staging-render-log.html"><code class="language-plaintext highlighter-rouge">staging-render-log.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">repo-conversion</code></td>
-      <td><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/repo-conversion.html"><code class="language-plaintext highlighter-rouge">repo-conversion</code></a></td>
+      <td><a href="getting-started.html"><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">review-comments</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/review-comments.html"><code class="language-plaintext highlighter-rouge">review-comments</code></a></td>
+      <td><a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">review-heatmap</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/review-heatmap.html"><code class="language-plaintext highlighter-rouge">review-heatmap</code></a></td>
+      <td><a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">role-model</code></td>
-      <td><code class="language-plaintext highlighter-rouge">actor-role-administration.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/role-model.html"><code class="language-plaintext highlighter-rouge">role-model</code></a></td>
+      <td><a href="actor-role-administration.html"><code class="language-plaintext highlighter-rouge">actor-role-administration.bpmn</code></a></td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">root-readme</code></td>
-      <td><code class="language-plaintext highlighter-rouge">initialize-harness.bpmn</code></td>
+      <td><a href="initialize-harness.html"><code class="language-plaintext highlighter-rouge">initialize-harness.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">sample-import</code></td>
-      <td><code class="language-plaintext highlighter-rouge">sample-import.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/sample-import.html"><code class="language-plaintext highlighter-rouge">sample-import</code></a></td>
+      <td><a href="sample-import.html"><code class="language-plaintext highlighter-rouge">sample-import.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">semantic-review-scoping</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">review-task.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/semantic-review-scoping.html"><code class="language-plaintext highlighter-rouge">semantic-review-scoping</code></a></td>
+      <td><a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="review-task.html"><code class="language-plaintext highlighter-rouge">review-task.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">session-context</code></td>
-      <td><code class="language-plaintext highlighter-rouge">session-state-machine.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/session-context.html"><code class="language-plaintext highlighter-rouge">session-context</code></a></td>
+      <td><a href="session-state-machine.html"><code class="language-plaintext highlighter-rouge">session-state-machine.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">site-presentation-assets</code></td>
-      <td><code class="language-plaintext highlighter-rouge">review-code.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/site-presentation-assets.html"><code class="language-plaintext highlighter-rouge">site-presentation-assets</code></a></td>
+      <td><a href="review-code.html"><code class="language-plaintext highlighter-rouge">review-code.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">skills-and-tools</code></td>
-      <td><code class="language-plaintext highlighter-rouge">review-code.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/skills-and-tools.html"><code class="language-plaintext highlighter-rouge">skills-and-tools</code></a></td>
+      <td><a href="review-code.html"><code class="language-plaintext highlighter-rouge">review-code.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">staging-review</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">feature-staging.bpmn</code>, <code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a></td>
+      <td><a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="feature-staging.html"><code class="language-plaintext highlighter-rouge">feature-staging.bpmn</code></a>, <a href="upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">swot-analysis</code></td>
-      <td><code class="language-plaintext highlighter-rouge">swot-analysis.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/swot-analysis.html"><code class="language-plaintext highlighter-rouge">swot-analysis</code></a></td>
+      <td><a href="swot-analysis.html"><code class="language-plaintext highlighter-rouge">swot-analysis.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">terminology-management</code></td>
-      <td><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/terminology-management.html"><code class="language-plaintext highlighter-rouge">terminology-management</code></a></td>
+      <td><a href="l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">theme-art-intake</code></td>
-      <td><code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code>, <code class="language-plaintext highlighter-rouge">ingest-theme.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/theme-art-intake.html"><code class="language-plaintext highlighter-rouge">theme-art-intake</code></a></td>
+      <td><a href="document-ingestion.html"><code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code></a>, <a href="ingest-theme.html"><code class="language-plaintext highlighter-rouge">ingest-theme.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">theme-ui-review</code></td>
-      <td><code class="language-plaintext highlighter-rouge">ingest-theme.bpmn</code>, <code class="language-plaintext highlighter-rouge">theme-ui-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/theme-ui-review.html"><code class="language-plaintext highlighter-rouge">theme-ui-review</code></a></td>
+      <td><a href="ingest-theme.html"><code class="language-plaintext highlighter-rouge">ingest-theme.bpmn</code></a>, <a href="theme-ui-review.html"><code class="language-plaintext highlighter-rouge">theme-ui-review.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">todo-manager</code></td>
-      <td><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code>, <code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code>, <code class="language-plaintext highlighter-rouge">bean-lifecycle.bpmn</code>, <code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code>, <code class="language-plaintext highlighter-rouge">crdm-signoff.bpmn</code>, <code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code>, <code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code>, <code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code>, <code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code>, <code class="language-plaintext highlighter-rouge">getting-started.bpmn</code>, <code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code>, <code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code>, <code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="authoring-a-document.html"><code class="language-plaintext highlighter-rouge">authoring-a-document.bpmn</code></a>, <a href="authoring-a-paper.html"><code class="language-plaintext highlighter-rouge">authoring-a-paper.bpmn</code></a>, <a href="bean-lifecycle.html"><code class="language-plaintext highlighter-rouge">bean-lifecycle.bpmn</code></a>, <a href="code-change-review.html"><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></a>, <a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="content-lifecycle.html"><code class="language-plaintext highlighter-rouge">content-lifecycle.bpmn</code></a>, <a href="crdm-signoff.html"><code class="language-plaintext highlighter-rouge">crdm-signoff.bpmn</code></a>, <a href="document-ingestion.html"><code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code></a>, <a href="draft-to-publication.html"><code class="language-plaintext highlighter-rouge">draft-to-publication.bpmn</code></a>, <a href="editing-hci-validation.html"><code class="language-plaintext highlighter-rouge">editing-hci-validation.bpmn</code></a>, <a href="evidence-retrieval.html"><code class="language-plaintext highlighter-rouge">evidence-retrieval.bpmn</code></a>, <a href="getting-started.html"><code class="language-plaintext highlighter-rouge">getting-started.bpmn</code></a>, <a href="ig-incremental-build.html"><code class="language-plaintext highlighter-rouge">ig-incremental-build.bpmn</code></a>, <a href="l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring.bpmn</code></a>, <a href="l3-fhir-pipeline.html"><code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">translation-manager</code></td>
-      <td><code class="language-plaintext highlighter-rouge">human-translation-workflow.bpmn</code>, <code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code>, <code class="language-plaintext highlighter-rouge">translation-workflow.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a></td>
+      <td><a href="human-translation-workflow.html"><code class="language-plaintext highlighter-rouge">human-translation-workflow.bpmn</code></a>, <a href="review-narrative.html"><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></a>, <a href="translation-workflow.html"><code class="language-plaintext highlighter-rouge">translation-workflow.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">untainted-verification</code></td>
-      <td><code class="language-plaintext highlighter-rouge">adjudication.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/untainted-verification.html"><code class="language-plaintext highlighter-rouge">untainted-verification</code></a></td>
+      <td><a href="adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">upload-routes</code></td>
-      <td><code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/upload-routes.html"><code class="language-plaintext highlighter-rouge">upload-routes</code></a></td>
+      <td><a href="document-ingestion.html"><code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">uploads-watch</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-acquisition.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/uploads-watch.html"><code class="language-plaintext highlighter-rouge">uploads-watch</code></a></td>
+      <td><a href="content-acquisition.html"><code class="language-plaintext highlighter-rouge">content-acquisition.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">upstream-version-adoption</code></td>
-      <td><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code>, <code class="language-plaintext highlighter-rouge">upstream-pin-watch.bpmn</code>, <code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption</code></a></td>
+      <td><a href="kg-separation.html"><code class="language-plaintext highlighter-rouge">kg-separation.bpmn</code></a>, <a href="upstream-pin-watch.html"><code class="language-plaintext highlighter-rouge">upstream-pin-watch.bpmn</code></a>, <a href="upstream-version-adoption.html"><code class="language-plaintext highlighter-rouge">upstream-version-adoption.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">uses-editorial-review</code></td>
-      <td><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/uses-editorial-review.html"><code class="language-plaintext highlighter-rouge">uses-editorial-review</code></a></td>
+      <td><a href="review-narrative.html"><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">visual-diff</code></td>
-      <td><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/visual-diff.html"><code class="language-plaintext highlighter-rouge">visual-diff</code></a></td>
+      <td><a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">voice-editorial-review</code></td>
-      <td><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/voice-editorial-review.html"><code class="language-plaintext highlighter-rouge">voice-editorial-review</code></a></td>
+      <td><a href="review-narrative.html"><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">voice-overlay-review</code></td>
-      <td><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code>, <code class="language-plaintext highlighter-rouge">voice-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/voice-overlay-review.html"><code class="language-plaintext highlighter-rouge">voice-overlay-review</code></a></td>
+      <td><a href="review-narrative.html"><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></a>, <a href="voice-review.html"><code class="language-plaintext highlighter-rouge">voice-review.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">watch</code></td>
-      <td><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code>, <code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/watch.html"><code class="language-plaintext highlighter-rouge">watch</code></a></td>
+      <td><a href="code-change-review.html"><code class="language-plaintext highlighter-rouge">code-change-review.bpmn</code></a>, <a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a></td>
     </tr>
     <tr>
-      <td><code class="language-plaintext highlighter-rouge">wireframe-design-review</code></td>
-      <td><code class="language-plaintext highlighter-rouge">wireframe-design-review.bpmn</code></td>
+      <td><a href="../reference/skill-instructions/wireframe-design-review.html"><code class="language-plaintext highlighter-rouge">wireframe-design-review</code></a></td>
+      <td><a href="wireframe-design-review.html"><code class="language-plaintext highlighter-rouge">wireframe-design-review.bpmn</code></a></td>
     </tr>
   </tbody>
 </table></div>
