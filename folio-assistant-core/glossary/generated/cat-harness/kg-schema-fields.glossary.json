@@ -1444,7 +1444,7 @@
     {
       "id": "block-qa.qareviewer.actor",
       "prefLabel": "QaReviewer.actor",
-      "definition": "The declared ACTOR this reviewer was acting as — an id in `.claude/skills/actors/`.",
+      "definition": "The declared ACTOR this reviewer was acting as — an id in `cat-harness/scenarios/actors/`.",
       "source": "cat-harness/schemas/block-qa.ts#QaReviewer.actor",
       "status": "candidate"
     },
@@ -2510,6 +2510,13 @@
       "prefLabel": "ResolvedDirectory.own",
       "definition": "True when the declaring instance is the root rather than a dependency.",
       "source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.own",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.resolveddirectory.within",
+      "prefLabel": "ResolvedDirectory.within",
+      "definition": "The id of the directory that declared this one FROM WITHIN (bean `cmsl`, owner 2026-09-30): an entry of its kind's declaration file, e.g. `skills/skills.json` naming `voices/`. Absent for an instance-level entry. `check:layout-norms` reads it: nesting declared this way is the sanctioned shape, not a root declaration reaching down.",
+      "source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.within",
       "status": "candidate"
     },
     {
@@ -3847,6 +3854,69 @@
       "prefLabel": "PlacementSchema.page",
       "definition": "The page it sits on, 1-based as a reader counts.",
       "source": "cat-harness/schemas/document-image.ts#PlacementSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.basestructure.raw",
+      "prefLabel": "BaseStructure.raw",
+      "definition": "The parsed variant, for the few readers that need its own fields.",
+      "source": "cat-harness/schemas/document-structure.ts#BaseStructure.raw",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksectionschema.cell_end",
+      "prefLabel": "NotebookSectionSchema.cell_end",
+      "definition": "Zero-based index of its last cell, inclusive.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.cell_end",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksectionschema.cell_start",
+      "prefLabel": "NotebookSectionSchema.cell_start",
+      "definition": "Zero-based index of the section's first cell, which is its heading cell.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.cell_start",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksectionschema.code_cells",
+      "prefLabel": "NotebookSectionSchema.code_cells",
+      "definition": "How many of those cells are code. Kept verbatim in the section text, never executed.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.code_cells",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksourceschema.language",
+      "prefLabel": "NotebookSourceSchema.language",
+      "definition": "The kernel language the notebook declares, or null when it declares none.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.language",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksourceschema.mimetype_sniffed",
+      "prefLabel": "NotebookSourceSchema.mimetype_sniffed",
+      "definition": "The same two fields every rung writes (bean `nso8`), so the L1 gate's `technical-metadata` requirement reads them as it does for a PDF. A notebook has no magic bytes, so its type is decided by CONTENT, and `mimetype_source` says exactly that rather than claiming a sniff.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.mimetype_sniffed",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksourceschema.nbformat",
+      "prefLabel": "NotebookSourceSchema.nbformat",
+      "definition": "A notebook is JSON; this is what the file declared (`nbformat`), not sniffed bytes.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.nbformat",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebookstructureschema.structure_note",
+      "prefLabel": "NotebookStructureSchema.structure_note",
+      "definition": "What the rung did NOT claim. Required when `toc_source` is `none`.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema.structure_note",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebookstructureschema.toc_source",
+      "prefLabel": "NotebookStructureSchema.toc_source",
+      "definition": "`headings`: sections come from markdown headings. `none`: the notebook has no markdown heading, so it is one section, and `structure_note` says so.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema.toc_source",
       "status": "candidate"
     },
     {
@@ -5852,6 +5922,13 @@
       "status": "candidate"
     },
     {
+      "id": "kg-qa.kgqareport.voice_reviews",
+      "prefLabel": "KgQaReport.voice_reviews",
+      "definition": "An agent's or a person's rule-by-rule review of a skill against a voice that judges skills — carried across runs like `pair_attestations`, and written by `voice:review`; see `scripts/skill-voice-review.ts`.",
+      "source": "cat-harness/schemas/kg-qa.ts#KgQaReport.voice_reviews",
+      "status": "candidate"
+    },
+    {
       "id": "kg-qa.kgsubject.id",
       "prefLabel": "KgSubject.id",
       "definition": "Stable id — the BPMN process id, the role id, `kg` for the roll-up.",
@@ -6029,7 +6106,7 @@
     {
       "id": "log-entry.logentryschema.actor",
       "prefLabel": "LogEntrySchema.actor",
-      "definition": "The actor id from `.claude/skills/actors/`, where one is known.",
+      "definition": "The actor id from `cat-harness/scenarios/actors/`, where one is known.",
       "source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.actor",
       "status": "candidate"
     },
@@ -7511,6 +7588,13 @@
       "status": "candidate"
     },
     {
+      "id": "skill-package.capabilitydefinitionschema.setupskill",
+      "prefLabel": "CapabilityDefinitionSchema.setupSkill",
+      "definition": "The skill that explains how to SET UP this capability — install it, configure it, verify it. Optional.",
+      "source": "cat-harness/schemas/skill-package.ts#CapabilityDefinitionSchema.setupSkill",
+      "status": "candidate"
+    },
+    {
       "id": "skill-package.remotepackagerefschema.sync",
       "prefLabel": "RemotePackageRefSchema.sync",
       "definition": "OPTIONAL, because a wrapper whose only job is to supply Docker requirements should not have to claim a sync strategy to be valid. Required until 2026-09-19, which is why both wrappers carry one.",
@@ -7522,6 +7606,13 @@
       "prefLabel": "SkillTopicSchema.path",
       "definition": "One plain segment: a topic is a direct subdirectory, never deeper.",
       "source": "cat-harness/schemas/skill-topics.ts#SkillTopicSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "skill-topics.skilltopicsschema.directories",
+      "prefLabel": "SkillTopicsSchema.directories",
+      "definition": "One node, two lists: the instance directories declared from within.",
+      "source": "cat-harness/schemas/skill-topics.ts#SkillTopicsSchema.directories",
       "status": "candidate"
     },
     {

@@ -62,6 +62,7 @@ import { governingSkills, skillGovernance } from "./skill-governance.js";
 import { processIndex, resolveProcess, type ProcessIndex } from "./governing-process.js";
 
 import {
+  instanceDirectories,
   AGENT_INSTRUCTIONS_ROLE,
   assetRolePurpose,
   INSTANCE_README_ROLE,
@@ -441,8 +442,10 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
   let decl: CatHarnessDeclaration | undefined;
   try {
     decl = readDeclaration(root);
-    // Viewers RESOLVED from the pages (#1168 B7a-2b).
-    if (decl) decl = { ...decl, directories: withViewers(decl.directories ?? [], root, repoRoot) };
+    // Own entries AND those declared from within (bean `cmsl`: `voices/` in
+    // `skills/skills.json`) — reading only `decl.directories` stopped auditing
+    // them the moment they moved; viewers RESOLVED from the pages (#1168 B7a-2b).
+    if (decl) decl = { ...decl, directories: withViewers(instanceDirectories(root, decl), root, repoRoot) };
   } catch (e) {
     return {
       instance,

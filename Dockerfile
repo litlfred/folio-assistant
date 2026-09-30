@@ -141,7 +141,7 @@ ENV PATH="/root/.elan/bin:${PATH}"
 #     at container runtime, not just at build time. A build-time-only egress
 #     policy will produce an image where `lake update` fails.
 #   * Nothing below is required for folio-assistant itself to run. Every
-#     dependent capability is probed (.claude/skills/capabilities/*.json) and
+#     dependent capability is probed (cat-harness/scenarios/capabilities/*.json) and
 #     degrades to `n/a` when absent — see the `--scan` fallback in
 #     content/pipeline/lean-atlas-ingest.ts.
 #

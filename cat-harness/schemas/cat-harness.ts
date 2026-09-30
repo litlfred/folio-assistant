@@ -3747,6 +3747,14 @@ export interface ResolvedDirectory extends ContentDirectory {
   absPath: string;
   /** True when the declaring instance is the root rather than a dependency. */
   own: boolean;
+  /**
+   * The id of the directory that declared this one FROM WITHIN (bean `cmsl`,
+   * owner 2026-09-30): an entry of its kind's declaration file, e.g.
+   * `skills/skills.json` naming `voices/`. Absent for an instance-level entry.
+   * `check:layout-norms` reads it: nesting declared this way is the sanctioned
+   * shape, not a root declaration reaching down.
+   */
+  within?: string;
 }
 
 /**
@@ -3845,7 +3853,105 @@ export function resolveDirectories(
     }
     }
 
+  // Directories declared FROM WITHIN (bean `cmsl`, owner 2026-09-30, round 4):
+  // an entry in a resolved directory's declaration file (`skills/skills.json`)
+  // that answers the `dependents` question is an INSTANCE directory, declared
+  // where the owner's #980 ruling says nesting must be. Entries that do not
+  // answer it (`beans/beans.json`'s `defs`, `docs/docs.json`'s `proposals`,
+  // `voices/voices.json`'s `vendors`) are parts of one graph rather than
+  // instance directories, and stay out of this list exactly as before.
+  // An instance-level entry with the same id wins, so a declaration can move
+  // inward without two answers existing at once.
+  for (const d of [...byId.values()]) promoteFromWithin(d, byId, registry, new Set(), rootLink);
+
   return [...byId.values()];
+}
+
+/**
+ * An instance's OWN sub-graphs: its declaration's entries as authored, then
+ * the ones it declares FROM WITHIN them (bean `cmsl`: `skills/skills.json`
+ * declaring `voices/`), with paths relative to the instance root.
+ *
+ * For a consumer that enumerates "the sub-graphs this instance has" — one
+ * diagram, one page, one visualiser per entry. Reading `decl.directories`
+ * alone silently drops every entry that moved inward: measured 2026-09-30,
+ * the UML overview deleted five voices diagrams and `check:wireframes`
+ * reported five voices pages as undeclared, with nothing else red.
+ *
+ * Unlike {@link nestedDirectories} this also reaches a nested declaration
+ * under a DEFAULT parent (agent-skills never declares `skills/`), and it
+ * returns only entries that answer `dependents` — the instance directories,
+ * not the parts of one graph (`voices.json`'s `vendors`).
+ */
+export function instanceDirectories(
+  root: string,
+  decl: CatHarnessDeclaration | undefined = readDeclaration(root),
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Array<ContentDirectory & { within?: string }> {
+  if (!decl) return [];
+  const authored = decl.directories ?? [];
+  const ids = new Set(authored.map((d) => d.id));
+  const inward = resolveDirectories([{ name: decl.name, root, own: true }], registry)
+    .filter((d) => d.own && d.within !== undefined && !ids.has(d.id))
+    .map(({ declaredBy: _b, absPath: _a, own: _o, ...rest }) => rest as ContentDirectory & { within?: string });
+  return [...authored, ...inward];
+}
+
+/** Add `d`'s from-within instance directories to `byId`, recursively. */
+function promoteFromWithin(
+  d: ResolvedDirectory,
+  byId: Map<string, ResolvedDirectory>,
+  registry: GraphKindRegistry,
+  seen: Set<string>,
+  rootLink: { name: string; own?: boolean } | undefined,
+): void {
+  if (seen.has(d.absPath)) return;
+  seen.add(d.absPath);
+  // Never through a MIRROR. A `scope: "repository"` entry is this instance
+  // pointing at another instance's directory (cmsl's group 2, the wrong-way
+  // arrow), and what that directory declares from within belongs to ITS owner.
+  // Following it made cat-harness resolve core's `voices/` as its own the
+  // moment core declared it from within (measured 2026-09-30).
+  if (d.scope === "repository") return;
+  const files = d.graphKinds
+    .map((g) => registry.get(g)?.declarationFile)
+    .filter((f): f is string => typeof f === "string");
+  for (const f of [...new Set(files)]) {
+    const p = join(d.absPath, f);
+    if (!existsSync(p)) continue;
+    let nested: { directories?: Array<Record<string, unknown>> };
+    try {
+      nested = JSON.parse(readFileSync(p, "utf-8"));
+    } catch {
+      continue; // `check:harness-dirs` owns an unparseable declaration and says so
+    }
+    for (const nd of nested.directories ?? []) {
+      if (typeof nd.id !== "string" || typeof nd.path !== "string" || nd.dependents === undefined) continue;
+      // An instance-level DECLARATION with this id wins; a built-in DEFAULT
+      // (`declaredBy: "(default)"`, e.g. `skills/voices`) is a convention, and
+      // a from-within declaration is stronger than a convention.
+      const existing = byId.get(nd.id);
+      if (existing !== undefined && existing.declaredBy !== "(default)") continue;
+      const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
+      // A DEFAULT parent (`skills/` that the instance never declared) is still
+      // a directory in the root link's own tree — the defaults are seeded
+      // against it — so the file that declares from within it was written by
+      // that instance. Inheriting `(default)`/`own: false` from the parent made
+      // agent-skills' and sci's `voices/` look like nobody's, and the UML
+      // overview dropped both (measured 2026-09-30).
+      const fromDefault = d.declaredBy === "(default)" && rootLink !== undefined;
+      const entry = {
+        ...(nd as unknown as ContentDirectory),
+        path: `${d.path.replace(/\/+$/, "")}/${sub}/`,
+        declaredBy: fromDefault ? rootLink.name : d.declaredBy,
+        absPath: join(d.absPath, sub),
+        own: fromDefault ? rootLink.own === true : d.own,
+        within: d.id,
+      } as ResolvedDirectory;
+      byId.set(nd.id, entry);
+      promoteFromWithin(entry, byId, registry, seen, rootLink);
+    }
+  }
 }
 
 /**

@@ -14,6 +14,7 @@ import { join, resolve } from "node:path";
 import { buildReport } from "../check-actor-reach";
 import { repoRootFor } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
+import { actorsDir } from "../../schemas/role-graph.ts";
 
 type Actor = Record<string, unknown>;
 
@@ -104,13 +105,14 @@ describe("buildReport", () => {
 
 describe("this repository's own registry", () => {
   test("is consistent, and the check examines something", () => {
-    // TWO ROOTS, and this call needs both. `.claude/skills/actors/` is the
-    // REPOSITORY's — agent-tool configuration at the top of the checkout —
-    // while the declaration `buildReport` reads is the INSTANCE's. They were
-    // one directory when this arrived from main, so one `ROOT` answered both;
-    // here it looked for actors under `cat-harness/.claude/` and examined none.
+    // The registry is resolved from the DECLARED `scenarios` graph (bean
+    // rqao), the same call the gate makes, never spelled as a path: a test
+    // that hardcodes the location passes over a registry the gate no longer
+    // reads. It was `.claude/skills/actors/` until 2026-09-30.
     const INSTANCE = resolve(import.meta.dir, "../..");
-    const r = buildReport(join(repoRootFor(INSTANCE), ".claude", "skills", "actors"), INSTANCE);
+    const dir = actorsDir(repoRootFor(INSTANCE));
+    expect(dir).toBeDefined();
+    const r = buildReport(dir!, INSTANCE);
     expect(r.actors.length).toBeGreaterThan(0);
     expect(r.conflicts).toEqual([]);
     // Not a count of declarers: that is a number this repo will change, and a

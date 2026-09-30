@@ -8,5 +8,6 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-ass
 | file | what it is | used by |
 |---|---|---|
 | [`deep-document-research.md`](deep-document-research.md) | Answer a question from a corpus this folio already holds, iteratively, and stop on a stated condition. |  |
+| [`skills.json`](skills.json) | data |  |
 | [`voices/`](voices/README.md) | 38 files | |
 <!-- kg:subgraph:end -->

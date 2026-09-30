@@ -11,6 +11,8 @@ import { join } from "node:path";
 
 import {
   readRoleGraph,
+  actorsDir,
+  capabilitiesDir,
   readActors,
   resolveRoleSkills,
   resolveRoleStack,
@@ -255,7 +257,7 @@ describe("this repository's own role graph", () => {
 });
 
 describe("this repository's actor registry, after the roles[] migration", () => {
-  const actors = readActors(join(import.meta.dir, "..", "..", ".claude", "skills", "actors"));
+  const actors = readActors(actorsDir(join(import.meta.dir, "..", ".."))!);
   const g = readRoleGraph(join(import.meta.dir, "..", "scenarios"))!;
 
   test("no entry still carries the deprecated `inherits`", () => {
@@ -285,7 +287,7 @@ describe("this repository's actor registry, after the roles[] migration", () => 
 
 describe("permissions are an actor property, not a role property", () => {
   const kg = join(import.meta.dir, "..", "skills");
-  const actorsDir = join(import.meta.dir, "..", "..", ".claude", "skills", "actors");
+  const actorsDirPath = actorsDir(join(import.meta.dir, "..", ".."))!;
 
   test("the vocabulary is declared and every id is unique", () => {
     const v = readPermissions(kg);
@@ -295,7 +297,7 @@ describe("permissions are an actor property, not a role property", () => {
 
   test("every permission an actor claims is declared", () => {
     const declared = new Set((readPermissions(kg)?.permissions ?? []).map((p) => p.id));
-    const bad = readActors(actorsDir).flatMap((a) =>
+    const bad = readActors(actorsDirPath).flatMap((a) =>
       (a.permissions ?? []).filter((p) => !declared.has(p)).map((p) => `${a.id}→${p}`),
     );
     expect(bad).toEqual([]);
@@ -304,11 +306,11 @@ describe("permissions are an actor property, not a role property", () => {
   test("`capabilities[]` now holds probes only — no permission and no skill leaked back in", async () => {
     const { readdirSync } = await import("node:fs");
     const probes = new Set(
-      readdirSync(join(import.meta.dir, "..", "..", ".claude", "skills", "capabilities")).map((f: string) =>
+      readdirSync(capabilitiesDir(join(import.meta.dir, "..", ".."))!).map((f: string) =>
         f.replace(/\.json$/, ""),
       ),
     );
-    const bad = readActors(actorsDir).flatMap((a) =>
+    const bad = readActors(actorsDirPath).flatMap((a) =>
       (a.capabilities ?? []).filter((c) => !probes.has(c)).map((c) => `${a.id}→${c}`),
     );
     expect(bad).toEqual([]);
@@ -319,7 +321,7 @@ describe("permissions are an actor property, not a role property", () => {
     // change makes every permission role-uniform, revisit the model; until
     // then, moving them to Role reintroduces the 36 conflicts. The grants are
     // read from the ODRL policies since issue #1180; the measurement is the same.
-    const actors = readActors(actorsDir, readPolicyGrants(join(import.meta.dir, "..", "policies")));
+    const actors = readActors(actorsDirPath, readPolicyGrants(join(import.meta.dir, "..", "policies")));
     const rolesOf = (perm: string) =>
       new Set(actors.filter((a) => (a.permissions ?? []).includes(perm)).flatMap((a) => a.roles ?? []));
     expect(rolesOf("content-authoring").size).toBeGreaterThan(1);
@@ -336,7 +338,7 @@ describe("permissions are an actor property, not a role property", () => {
 });
 
 describe("the actor kind is three-way: human, agentic, mechanical", () => {
-  const actorsDir = join(import.meta.dir, "..", "..", ".claude", "skills", "actors");
+  const actorsDirPath = actorsDir(join(import.meta.dir, "..", ".."))!;
 
   function withActor(entry: unknown): string {
     const dir = mkdtempSync(join(tmpdir(), "actors-"));
@@ -348,7 +350,7 @@ describe("the actor kind is three-way: human, agentic, mechanical", () => {
     // The measurement the split exists for. Before it every non-person actor
     // read `system`, so the agentic set was EMPTY and "can this actor be
     // handed a judgement" had no answer for eight of twenty-four entries.
-    const actors = readActors(actorsDir);
+    const actors = readActors(actorsDirPath);
     const by = (k: string) => actors.filter((a) => a.kind === k).map((a) => a.id).sort();
     expect(by("agent").length).toBeGreaterThan(0);
     // Named rather than counted: a bare count in a test is a claim that goes

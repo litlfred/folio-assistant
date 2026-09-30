@@ -24,7 +24,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 |---|---|---|
 | `no-actor` | 0 | the entry names nobody; no activity is emitted, because `prov:agent` is required and would have to be invented |
 | `no-role` | 0 | the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not) |
-| `undeclared-actor` | 1 | the actor is not declared in `.claude/skills/actors/` |
+| `undeclared-actor` | 1 | the actor is not declared in `cat-harness/scenarios/actors/` |
 | `not-eligible` | 2 | the actor's `roles` do not include the role the lane binds |
 | `unknown` | 62 | no ODRL policy grants `perform-task` here; `unknown` is never permit |
 | `deny` | 0 | an ODRL policy prohibits `perform-task` here |
