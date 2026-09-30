@@ -6,7 +6,7 @@ type: task
 priority: normal
 parent: folio-assistant-yj32
 created_at: 2026-09-21T20:00:52Z
-updated_at: 2026-09-30T10:16:57Z
+updated_at: 2026-09-30T10:16:59Z
 ---
 
 ## What
@@ -96,3 +96,16 @@ and the totals are right. But a reader acting on that table would double-count
 evidence.
 
 _2026-09-30T10:16:57Z_ — Claimed by claude/magical-archimedes-4qkfxp-2b5s — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Owner's ruling, 2026-09-30, and a conflict it raises
+
+Asked *"why two routes?"* and given the answer, the owner chose **"Separate them"**:
+- the 11 replica pages move out of `library/` into their own directory, which is the instance root;
+- `library/` holds corpus only;
+- `/library/who-iris/` becomes a one-file redirect to the library viewer at `/cat-harness/library/who-iris/`.
+
+**Held before building, because it meets an earlier ruling.** `who-iris/scripts/gen-iris-pages.ts` records the owner, 2026-09-21: *"the iris KG should be in who-iris/library (served by cat-harness/library) which may or may not inlude materialized content, the docs in who-iris/docs (served by cat-harness/docs)."* The session that implemented it read the replica as *"a RENDERING OF THE KG, and the KG is library-side"*, and put the pages in `library/`.
+
+Moving the pages departs from that reading, though arguably not from the owner's words: the words place the KG, meaning corpus and materialized content, in `library/`, and say nothing about where its rendering lives. That interpretation is put back to the owner instead of being decided here.
+
+**Covers.** The replica shows each item's cover, and the covers must stay where the catalogue's `localPath` names them (`library/<slug>-cover.png`, bean `yl5w`). If `library/` stops being mounted, the pages need the covers through a published route: the mount carrying the covers the pages reference, or the pages linking the covers where the site serves them.
