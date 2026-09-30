@@ -98,6 +98,7 @@ import {
 } from "../schemas/cat-harness.ts";
 import { withViewerNav } from "./viewer-page.ts";
 import { withInlineCode } from "../schemas/inline-code.ts";
+import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
 import { ownElementPattern } from "../schemas/namespaces.js";
 import { renderedPath, withRenders } from "./viewer-declarations.js";
 
@@ -719,12 +720,33 @@ const TABLE_FILTER_SCRIPT = `<script>
  * that line is what `orphanSubjectPages` reads to establish ownership before
  * pruning. A fourth marker would mean a fourth pruner.
  */
+/**
+ * Where a description's inline code may point when it is not a row on the
+ * page: a skill's instruction page, or a repository file's source. Both return
+ * `undefined` for a name they cannot resolve, and the code then stays plain.
+ */
+export interface CodeRefs {
+  skill(name: string): string | undefined;
+  file(path: string): string | undefined;
+}
+
+/** The resolver for a page written at `pageDir`: skill pages relative to it, files on GitHub. */
+export function codeRefsFor(site: string, pageDir: string, repoRoot: string, pages: ReadonlySet<string>): CodeRefs {
+  const fromPage = relative(site, join(pageDir, "index.html"));
+  return {
+    skill: (name) => skillPageHref(name, fromPage, pages),
+    file: (path) =>
+      /^[\w.@-]+(\/[\w.@-]+)+$/.test(path) && existsSync(join(repoRoot, path)) ? `${BLOB}/${path}` : undefined,
+  };
+}
+
 export function autoDocPage(
   type: AutoDocType,
   items: AutoDocItem[],
   scope: string,
   scopePath: string | undefined,
   siblings: Array<{ id: string; path: string; count: number }>,
+  refs?: CodeRefs,
 ): string {
   // A description naming ANOTHER artefact on this page links to its row (bean
   // `qgjh`): role descriptions say "Inherits `reviewer`", the reviewer is a row
@@ -742,7 +764,13 @@ export function autoDocPage(
   const linkCodes = (self: AutoDocItem, html: string) =>
     html.replace(/<code>([^<]+)<\/code>/g, (whole, text: string) => {
       const target = byKey.get(text);
-      return target && target !== self ? `<a href="#${esc(rowId(target))}">${whole}</a>` : whole;
+      if (target && target !== self) return `<a href="#${esc(rowId(target))}">${whole}</a>`;
+      // Not a row here: a skill with an instruction page, then a file this
+      // repository holds (bean `qgjh`, the 2026-09-30 re-run's 19 plain code
+      // references). A name that resolves to neither — a permission has no
+      // page — stays code rather than linking somewhere guessed.
+      const href = refs?.skill(text.replace(/\.md$/, "")) ?? refs?.file(text);
+      return href ? `<a href="${esc(href)}">${whole}</a>` : whole;
     });
   const rows = items
     .map((i) => {
@@ -948,12 +976,20 @@ if (import.meta.main) {
         return d ? [renderedPath(REPO_ROOT, d.absPath)] : [];
       });
     const { pageDir } = viewerPlacement(site, `${handler}/docs-auto/${type.id}`, "docs-auto");
-    emit(join(pageDir, "index.html"), withRenders(autoDocPage(type, items, "", undefined, siblings), drawn(populated), VIEWER_TOOL));
+    const skillPages = skillPagesOf(REPO_ROOT);
+    emit(
+      join(pageDir, "index.html"),
+      withRenders(autoDocPage(type, items, "", undefined, siblings, codeRefsFor(site, pageDir, REPO_ROOT, skillPages)), drawn(populated), VIEWER_TOOL),
+    );
     for (const id of populated) {
       const sub = viewerPlacement(site, `${handler}/docs-auto/${type.id}/${id}`, "docs-auto");
       emit(
         join(sub.pageDir, "index.html"),
-        withRenders(autoDocPage(type, byDir.get(id)!, id, dirs.find((d) => d.id === id)?.path, siblings), drawn([id]), VIEWER_TOOL),
+        withRenders(
+          autoDocPage(type, byDir.get(id)!, id, dirs.find((d) => d.id === id)?.path, siblings, codeRefsFor(site, sub.pageDir, REPO_ROOT, skillPages)),
+          drawn([id]),
+          VIEWER_TOOL,
+        ),
       );
     }
 

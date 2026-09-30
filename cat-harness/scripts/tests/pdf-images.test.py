@@ -66,11 +66,12 @@ CASES = [
 
 # (coverage, images_on_page, expected role) INSIDE a capture rung. Drawn from
 # the six browser prints under uploads/, measured 2026-09-21 -- not invented:
-# 0.000183 is the smallest of the 104 in `Agent Skills - Google Antigravity
-# Docs`, 0.005804 is the single image in `Skills in OpenAI API` and the LARGEST
-# nav-chrome value anywhere in the corpus, 0.139632 is the smallest real figure
-# (`Equipping agents... - Anthropic`) and 0.361098 the largest (`Skill
-# authoring best practices - Claude Platform Docs`).
+# 0.000183 is the smallest of the 104 in `Agent-Skills-Google-Antigravity-
+# Docs.pdf`, 0.005804 is the single image in `Skills-in-OpenAI-API.pdf` and the
+# LARGEST nav-chrome value anywhere in the corpus, 0.139632 is the smallest real
+# figure (`Equipping-agents-...-Anthropic.pdf`) and 0.361098 the largest
+# (`Skill-authoring-best-practices-Claude-Platform-Docs.pdf`). Names normalised
+# 2026-09-30 by `check:upload-names`; the measurements are unchanged.
 CAPTURE_CASES = [
     (0.000183, 26, "chrome"),
     (0.000936, 26, "chrome"),
@@ -191,17 +192,22 @@ def main() -> int:
         # `extract` now returns one entry per `xref` (bean `j820`, issue
         # #1234), so the honest number is 44 and the 104 lives in
         # `placements[]`, which the assertion below counts.
-        ("Agent Skills - Google Antigravity Docs.pdf", {"chrome": 44}),
+        ("Agent-Skills-Google-Antigravity-Docs.pdf", {"chrome": 44}),
         # The one that matters most: a browser print whose images are REAL
         # figures. If the bound ever drifts up, this is what goes red -- a
         # change that made everything chrome would pass the promotion gate and
         # be worse than the bug it fixed.
-        ("Equipping agents for the real world with Agent Skills _ Anthropic.pdf", {"figure": 6}),
+        ("Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf", {"figure": 6}),
     ]
     ran_capture = False
     for name, expected in captures:
         path = os.path.join(folio_root, "uploads", name)
         if not os.path.exists(path):
+            # A missing fixture SKIPS, and a skip here is indistinguishable
+            # from a pass (bean `1xhc`). On 2026-09-30 `check:upload-names`
+            # renamed both of these and this arm went quiet rather than red,
+            # so the absence is announced.
+            print(f"  NOTE uploads/{name} absent — that capture arm did not run")
             continue
         s2 = images.extract(Path(path), Path("library"), dry_run=True)
         if s2["images"] is None:
