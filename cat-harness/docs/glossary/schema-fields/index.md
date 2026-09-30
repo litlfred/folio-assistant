@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1480 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1480 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 151 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1647 terms and is 893 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1649 terms and is 894 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1647</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1649</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1228,6 +1228,13 @@ CatalogueNodeSchema.flavour <span class="fa-gloss-status">candidate, extracted</
 <p>The source system's own word for this node — `community`, `collection`, `set`, `prefix`. Display and provenance only; nothing branches on it.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/catalogue.ts"><code>folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.flavour</code></a></p>
 </dd>
+<dt id="folio-assistant-core--kg-schema-fields--catalogue.cataloguenodeschema.handle" data-fa-state="extracted" data-fa-gloss="">
+CatalogueNodeSchema.handle <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The node's Handle, where the source mints one — PREFERRED over any host URL for resolution (&#123;@link resolvableIri}). Recorded only when read off the source; never derived for a node that shows none (a DSpace community or collection has a Handle upstream, but none is recorded here until one is read).</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/catalogue.ts"><code>folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.handle</code></a></p>
+</dd>
 <dt id="folio-assistant-core--kg-schema-fields--catalogue.cataloguenodeschema.libraryid" data-fa-state="extracted" data-fa-gloss="">
 CatalogueNodeSchema.libraryId <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1255,6 +1262,13 @@ CatalogueSchema.sizeBasis <span class="fa-gloss-status">candidate, extracted</sp
 <dd>
 <p>How the numbers above were arrived at. A denominator with no provenance is a denominator nobody can check.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/catalogue.ts"><code>folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.sizeBasis</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--catalogue.catalogueschema.sourceloss" data-fa-state="extracted" data-fa-gloss="">
+CatalogueSchema.sourceLoss <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What survives if the SOURCE goes away, stated per node kind — not only for bytes already copied (bean `08u4`). The `sourceLoss` GATE is asked only of a materialization; a referenced node never meets it, so without this the answer for 10 of 13 nodes was silence.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/catalogue.ts"><code>folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.sourceLoss</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--catalogue.catalogueschema.system" data-fa-state="extracted" data-fa-gloss="">
 CatalogueSchema.system <span class="fa-gloss-status">candidate, extracted</span>

@@ -42,6 +42,8 @@ import { instanceId, loadInstance } from "../../cat-harness/src/workflow/store.t
 import { CatalogueNodeSchema, type CatalogueNode } from "../schemas/catalogue.js";
 import { PUBLICATION_GATES } from "../schemas/materialization.js";
 import { checkSampleImport, describeImportCheck } from "./sample-import-check.ts";
+import { probeLiveness, type Fetcher } from "./source-liveness.ts";
+import { resolvableIri } from "../schemas/catalogue.js";
 
 export type Handler = (args: Record<string, unknown>) => Promise<{ content: { text: string }[] }>;
 
@@ -68,6 +70,12 @@ export interface RunOptions {
    * `complete`) because a temp root has no GitHub identity to authorize.
    */
   tools?: Map<string, Handler>;
+  /**
+   * The liveness probe's network call (bean `08u4`). Default: the real one.
+   * A test injects a refusing fetcher so the verdict is could-not-determine
+   * without touching the network.
+   */
+  livenessFetcher?: Fetcher;
 }
 
 export interface RunResult {
@@ -176,6 +184,16 @@ export async function runSampleImport(opts: RunOptions): Promise<RunResult> {
         break;
       case "Task_Fetch": {
         const parts: string[] = [];
+        // Bean `08u4`: is the source still THERE? Asked of the resolvable IRI
+        // (the Handle first) before anything is fetched or substituted, and
+        // recorded whatever the answer — could-not-determine included.
+        const iri = resolvableIri(whole);
+        if (iri) {
+          const l = await probeLiveness(iri, opts.livenessFetcher);
+          parts.push(`LIVENESS of ${iri}: ${l.liveness} (${l.basis}).`);
+        } else {
+          parts.push("LIVENESS: could-not-determine — the item names no resolvable IRI.");
+        }
         for (const b of originals) {
           const up = (b.materialization?.provenance as { upstream?: string } | undefined)?.upstream;
           const host = up ? new URL(up).host : "(no upstream)";

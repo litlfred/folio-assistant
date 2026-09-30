@@ -3755,7 +3755,7 @@ Work, keeping the body current (this is 'edit') <span class="fa-gloss-status">ca
 WORKING what changed upstream <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late.</p>
+<p>Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late. Reachability is asked by `bun run sources:liveness &lt;instance&gt;` against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error (bean 08u4).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/refresh-materialized.bpmn"><code>cat-harness/processes/refresh-materialized.bpmn#Task_Upstream</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_buildl1kg.task_dublin" data-fa-state="extracted" data-fa-gloss="">

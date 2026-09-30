@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: refresh-materialized\n"
-"POT-Creation-Date: 2026-09-24T12:30:55.680Z\n"
+"POT-Creation-Date: 2026-09-30T00:23:00.522Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -51,7 +51,7 @@ msgstr ""
 
 #: processes/refresh-materialized.bpmn:86
 #. Diagram element documentation
-msgid "Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late."
+msgid "Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late. Reachability is asked by `bun run sources:liveness <instance>` against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error (bean 08u4)."
 msgstr ""
 
 #: processes/refresh-materialized.bpmn:36

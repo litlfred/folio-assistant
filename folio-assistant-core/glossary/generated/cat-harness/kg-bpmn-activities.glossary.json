@@ -3335,7 +3335,7 @@
     {
       "id": "process_refreshmaterialized.task_upstream",
       "prefLabel": "WORKING what changed upstream",
-      "definition": "Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late.",
+      "definition": "Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late. Reachability is asked by `bun run sources:liveness <instance>` against the node's resolvable IRI, its Handle first: live, gone, or could not determine, never live on an error (bean 08u4).",
       "notation": "Task_Upstream",
       "source": "cat-harness/processes/refresh-materialized.bpmn#Task_Upstream",
       "status": "candidate"

@@ -354,6 +354,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/catalogue.cataloguenodeschema.handle",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatalogueNodeSchema.handle"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The node's Handle, where the source mints one — PREFERRED over any host URL for resolution ({@link resolvableIri}). Recorded only when read off the source; never derived for a node that shows none (a DSpace community or collection has a Handle upstream, but none is recorded here until one is read)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.handle",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/catalogue.cataloguenodeschema.libraryid",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -427,6 +446,25 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.sizeBasis",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/catalogue.catalogueschema.sourceloss",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatalogueSchema.sourceLoss"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What survives if the SOURCE goes away, stated per node kind — not only for bytes already copied (bean `08u4`). The `sourceLoss` GATE is asked only of a materialization; a referenced node never meets it, so without this the answer for 10 of 13 nodes was silence."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.sourceLoss",
       "skos:note": "candidate"
     },
     {

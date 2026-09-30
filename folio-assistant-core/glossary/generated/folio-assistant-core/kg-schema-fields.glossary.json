@@ -132,6 +132,13 @@
       "status": "candidate"
     },
     {
+      "id": "catalogue.cataloguenodeschema.handle",
+      "prefLabel": "CatalogueNodeSchema.handle",
+      "definition": "The node's Handle, where the source mints one — PREFERRED over any host URL for resolution ({@link resolvableIri}). Recorded only when read off the source; never derived for a node that shows none (a DSpace community or collection has a Handle upstream, but none is recorded here until one is read).",
+      "source": "folio-assistant-core/schemas/catalogue.ts#CatalogueNodeSchema.handle",
+      "status": "candidate"
+    },
+    {
       "id": "catalogue.cataloguenodeschema.libraryid",
       "prefLabel": "CatalogueNodeSchema.libraryId",
       "definition": "The local library slug, where this item has been ingested. Present iff something under `library/` corresponds.",
@@ -157,6 +164,13 @@
       "prefLabel": "CatalogueSchema.sizeBasis",
       "definition": "How the numbers above were arrived at. A denominator with no provenance is a denominator nobody can check.",
       "source": "folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.sizeBasis",
+      "status": "candidate"
+    },
+    {
+      "id": "catalogue.catalogueschema.sourceloss",
+      "prefLabel": "CatalogueSchema.sourceLoss",
+      "definition": "What survives if the SOURCE goes away, stated per node kind — not only for bytes already copied (bean `08u4`). The `sourceLoss` GATE is asked only of a materialization; a referenced node never meets it, so without this the answer for 10 of 13 nodes was silence.",
+      "source": "folio-assistant-core/schemas/catalogue.ts#CatalogueSchema.sourceLoss",
       "status": "candidate"
     },
     {
