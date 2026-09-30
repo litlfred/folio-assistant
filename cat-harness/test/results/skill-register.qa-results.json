@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/skill-register.ts",
-    "script_hash": "ec684a29198f"
+    "script_hash": "4772ca2f93e5"
   },
   "subject": {
     "kind": "corpus",
     "id": "skill-registration-chain"
   },
-  "updated_at": "2026-09-30T17:51:52.853Z",
+  "updated_at": "2026-09-30T17:46:43.949Z",
   "families": {
     "declarations": {
       "summary": "Skills whose DECLARATIONS are wrong: present in no package manifest, carrying a retired front-matter key, or listed in a manifest with no file. Empty means audited and clean, not unaudited — the chain family above records whether the run happened. Only the retired key is repaired; the other two are the author's assertion to make and this command reports them rather than guessing.",
@@ -17,7 +17,7 @@
     },
     "registration-chain": {
       "summary": "Each artefact that adding a skill stales, with the verdict of its own `--check` run INDIVIDUALLY rather than through `bun run gates`. The distinction is the point: `bun test` runs the kg-audit and detangle writers, so a gates run repairs two of these before their checks read them and reports as current what is not (bean `ymsu`). `ran: false` means the step was listed but not run — what `--dry-run` produces — and is not a pass. It is emitted on every entry so that absence never carries that fact.",
-      "count": 8,
+      "count": 9,
       "entries": [
         {
           "verify": "skill:commands:check",
@@ -50,6 +50,12 @@
           "current": true
         },
         {
+          "verify": "lsi:viz:check",
+          "because": "the LSI index's VIEWER PAGE, which `lsi:skills` above stales and nothing here regenerated until 2026-09-30. Measured: adding one skill left `cat-harness/docs/lsi/index.md` stale while this chain reported \"8 artefact(s) current\" — so the claim to be at a fixed point was false in exactly the way this chain exists to prevent, and it reddened `main` through `lsi:viz:check` in the Repository-gates job. The index and its page are two artefacts, and a chain that writes one and verifies only the other is a chain with a hole in it",
+          "ran": true,
+          "current": true
+        },
+        {
           "verify": "kg:audit:check",
           "because": "the skill's kg-qa sidecar — masked inside `gates` by `bun test`",
           "ran": true,
@@ -70,5 +76,5 @@
       ]
     }
   },
-  "total": 8
+  "total": 9
 }
