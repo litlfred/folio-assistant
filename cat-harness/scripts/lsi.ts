@@ -46,6 +46,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { dirname, join, relative, resolve } from "node:path";
 import { declaredGraphs, instanceRootsIn } from "../schemas/cat-harness";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import { downstreamState, readToolRun, writeToolRun, UNKNOWN_FINGERPRINT, type DownstreamState } from "../schemas/tool-run.ts";
 import { specimenSections } from "../schemas/section-verdicts.ts";
 import {
   buildLsi,
@@ -63,6 +64,10 @@ import {
 
 const REPO = resolve(import.meta.dir, "../..");
 const RESULTS = join(REPO, "cat-harness/test/results/lsi");
+/** The instance whose Tool graph declares `lsi-index`; its run records live under its `qa` directory. */
+const HARNESS = join(REPO, "cat-harness");
+/** The Tool node whose runs this module records (`tools/index.ts`, `downstream`). */
+export const LSI_TOOL_ID = "lsi-index";
 /** Where `gen-lsi-viz.ts` writes; never a unit of any index (see `unitsOf`). */
 export const VIEWER_DIR = join(REPO, "cat-harness/docs/lsi") + "/";
 
@@ -247,11 +252,35 @@ export function index(t: GraphTarget, docs: string[] | undefined, opts: LsiOptio
   const out = sidecarPath(t, docs);
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, JSON.stringify(sidecar, null, 2) + "\n");
+  // The run record — only for a WHOLE-graph index, which is what the
+  // freshness verdict is about; a `--doc` subset is a different output.
+  if (!docs?.length) writeToolRun(HARNESS, { tool: LSI_TOOL_ID, target: targetOf(t), outcome: "succeeded", inputFingerprint: ix.fingerprint });
   console.log(
     `${t.instance}/${t.id}${docs ? ` [${docs.join(", ")}]` : ""}: ${units.length} units, ${ix.terms.length} terms, k=${ix.k}, retained ${(ix.retained * 100).toFixed(1)}%, ${ms} ms` +
       ` — ${f.dupes.length} near-duplicate pair(s), ${f.narrow.length} narrow dimension(s) → ${relative(REPO, out)}`,
   );
   return sidecar;
+}
+
+/** The run-record target for a graph: `<instance>/<graph>`. */
+export function targetOf(t: GraphTarget): string {
+  return `${t.instance}/${t.id}`;
+}
+
+/**
+ * Index a graph and RECORD the outcome either way — the downstream-tool
+ * contract (bean `fq5u`). A failure writes a `failed` record rather than
+ * nothing, so the audit reads "failed", which is never green, instead of a
+ * previous success over inputs that have since moved.
+ */
+export function indexRecorded(t: GraphTarget, docs: string[] | undefined, opts: LsiOptions = DEFAULT_OPTS): LsiSidecar {
+  try {
+    return index(t, docs, opts);
+  } catch (e) {
+    if (!docs?.length)
+      writeToolRun(HARNESS, { tool: LSI_TOOL_ID, target: targetOf(t), outcome: "failed", inputFingerprint: UNKNOWN_FINGERPRINT, detail: (e as Error).message });
+    throw e;
+  }
 }
 
 /**
@@ -269,7 +298,7 @@ export function refreshLibraryIndex(libraryDir: string, slug: string): string[] 
     const abs = resolve(libraryDir);
     const t = proseGraphs().find((g) => g.absPath === abs || g.absPath === abs + "/");
     if (!t) return [`  · lsi: ${relative(REPO, abs)} is not a declared prose graph — no index to refresh`];
-    const sc = index(t, undefined);
+    const sc = indexRecorded(t, undefined);
     const mine = (id: string) => id.includes(`/${slug}/`);
     const dupes = sc.findings.nearDuplicates.filter((d) => mine(d.a) || mine(d.b));
     const narrow = sc.findings.narrowDimensions.filter((d) => d.units.some(mine));
@@ -292,10 +321,13 @@ export interface GraphVerdict {
   stableDetail: string;
   units: number;
   words: number;
+  /** The downstream-run state when the graph is judged; absent for `n/a`. */
+  state?: DownstreamState;
 }
 
 /** Does this graph need an LSI index, and is the one it has fresh? One answer
- *  for `lsi:audit` and for kg:audit's `lsi-index-fresh`. */
+ *  for `lsi:audit` and for kg:audit's `tool-downstream-fresh` (the
+ *  `lsi-index` member, via `scripts/downstream-runs.ts`). */
 export function graphVerdict(t: GraphTarget): GraphVerdict {
   const us = unitsOf(t.absPath, t.graphKinds);
   const units = us.length;
@@ -305,13 +337,22 @@ export function graphVerdict(t: GraphTarget): GraphVerdict {
     return { result: "n/a", detail: `state graph — indexed on demand, never committed (${units} units)`, stableDetail: "state graph — indexed on demand, never committed", units, words };
   if (!(units >= NEED_UNITS && words >= NEED_WORDS))
     return { result: "n/a", detail: `below threshold (${units} units, ${words} words)`, stableDetail: "below the need-an-index threshold — not judged", units, words };
+  const run = `bun run lsi index --instance ${t.instance} --graph ${t.id}`;
   if (!existsSync(sc))
-    return { result: "fail", detail: `needs an index (${units} units, ${words} words) and has none`, stableDetail: `needs an LSI index and has none — run \`bun run lsi index --instance ${t.instance} --graph ${t.id}\``, units, words };
+    return { result: "fail", state: "not-run", detail: `needs an index (${units} units, ${words} words) and has none`, stableDetail: `needs an LSI index and has none — run \`${run}\``, units, words };
+  // FRESH needs a successful RUN RECORD over the current inputs, not just a
+  // sidecar whose fingerprint matches: the sidecar says what an index was
+  // built over, the record says the run that built it succeeded and is the
+  // latest. No record is `not-run`, never green (bean `fq5u`).
   const s = JSON.parse(readFileSync(sc, "utf8")) as LsiSidecar;
-  const fresh = fingerprintUnits(us, s.options) === s.fingerprint;
-  return fresh
-    ? { result: "pass", detail: `fresh (${units} units)`, stableDetail: "fresh", units, words }
-    : { result: "fail", detail: `stale — the graph changed since ${relative(REPO, sc)} was built`, stableDetail: `stale — re-run \`bun run lsi index --instance ${t.instance} --graph ${t.id}\``, units, words };
+  const state = downstreamState(readToolRun(HARNESS, LSI_TOOL_ID, targetOf(t)), fingerprintUnits(us, s.options));
+  const said: Record<DownstreamState, [string, string]> = {
+    fresh: [`fresh (${units} units)`, "fresh"],
+    stale: [`stale — the graph changed since ${relative(REPO, sc)} was built`, `stale — re-run \`${run}\``],
+    "not-run": [`no run record for ${relative(REPO, sc)} — not shown to be current`, `no successful run recorded — re-run \`${run}\``],
+    failed: [`the last index run FAILED — ${relative(REPO, sc)} is a previous run's output`, `the last run failed — re-run \`${run}\``],
+  };
+  return { result: state === "fresh" ? "pass" : "fail", state, detail: said[state][0], stableDetail: said[state][1], units, words };
 }
 
 function audit(strict: boolean): number {
@@ -344,6 +385,12 @@ function audit(strict: boolean): number {
         "index-stale": {
           summary: "An LSI index sidecar whose input fingerprint no longer matches the graph: built before the graph last changed.",
           entries: failed((d) => d.startsWith("stale")),
+        },
+        "index-run-unrecorded": {
+          summary:
+            "An LSI index sidecar with no successful run record over the current inputs — never run by the recording path, or its " +
+            "last run failed. Never green: a file on disk is not evidence the run that should keep it current succeeded (bean fq5u).",
+          entries: failed((d) => d.startsWith("no run record") || d.startsWith("the last index run")),
         },
       },
     }),
@@ -379,7 +426,7 @@ if (import.meta.main) {
   if (cmd === "index") {
     for (const t of targets()) {
       try {
-        index(t, args("doc"), opts);
+        indexRecorded(t, args("doc"), opts);
       } catch (e) {
         console.log(`${t.instance}/${t.id}: not indexed — ${(e as Error).message}`);
       }

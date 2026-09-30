@@ -562,6 +562,26 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "as where the answer lives — never `pass`. `n/a` for a Tool that maintains nothing.",
   },
   {
+    id: "tool-downstream-fresh",
+    applies: ["tool"],
+    scope: "instance",
+    // `minor` for the same reason as `tool-maintains-in-tree`: a member judged
+    // only in the published tree is ALWAYS `unknown` from a checkout, and
+    // `unknown` counts toward `worstSeverity`, so anything higher would put
+    // `kg:audit:strict` beyond the reach of any change to the repository.
+    severity: "minor",
+    // THE FAMILY, generalising `lsi-index-fresh` (bean `fq5u`, owner's design).
+    // A Tool declaring `downstream` records each run's outcome and input
+    // fingerprint (`folio-tool-run/v1`); this reads three states and only one
+    // of them is a pass. No record, or a failed last run, is never green —
+    // a file on disk is not evidence the run that keeps it current succeeded.
+    summary:
+      "A downstream Tool's output is not shown to be current: a target is STALE (a declared input changed since the " +
+      "recorded run), NOT-RUN (no run record) or FAILED (the last run failed). Only a successful run over the current " +
+      "input fingerprint passes. An output judged only in the assembled site records `unknown` naming its publish " +
+      "verifier — never `pass`. `n/a` for a Tool that declares no downstream output, or none of whose targets is judged.",
+  },
+  {
     id: "skill-ref-resolves",
     applies: ["process"],
     scope: "instance",
@@ -1220,16 +1240,20 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "unfalsifiable opt-out.",
   },
   {
-    id: "lsi-index-fresh",
+    id: "downstream-tool-declared",
     applies: ["graph"],
-    scope: "instance",
-    severity: "minor",
+    scope: "repo",
+    scopeBasis:
+      "Its three sources are platform-level: the member readers are code in `scripts/downstream-runs.ts`, the publish " +
+      "verifiers are `publish-verify`'s set, and run records live under the auditor's own `qa` directory. Asked per " +
+      "instance it would judge the platform's members against an instance's Tools and report every one as undeclared.",
+    // `major`: unlike a stale output, which is expected between runs, an
+    // undeclared downstream tool is a DECLARATION gap that one edit clears.
+    severity: "major",
     summary:
-      "A prose graph this instance owns is large enough to need a Latent Semantic Indexing index and has none, or has " +
-      "one built before the graph last changed (method `lsi`, step 7: an index is stale by construction once its corpus " +
-      "changes). The threshold is a HOUSE number with its basis in `scripts/lsi.ts`; below it the graph is not judged. " +
-      "`minor` because an index is a retrieval aid, not content: its absence costs recall on a vocabulary gap, never " +
-      "correctness. Bean `ansc`.",
+      "A downstream tool with no declaration (bean `fq5u`): a member reader, a `folio-tool-run/v1` record or a publish " +
+      "verifier names a Tool that declares no matching `downstream` output. Its runs are then recorded and read by " +
+      "nothing, or read and attributed to nothing — the invisible failure the family exists to end.",
   },
   {
     id: "manifest-skill-exists",

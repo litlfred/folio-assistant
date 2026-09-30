@@ -11,7 +11,7 @@
  * `processes/publish-alert.bpmn`, which every failing step after the publish
  * button shares.
  *
- *   bun run cat-harness/scripts/publish-verify.ts --dir ./_site [--report out.md] [--base <url>]... [--instance <dir>]
+ *   bun run cat-harness/scripts/publish-verify.ts --dir ./_site [--report out.md] [--base <url>]... [--instance <dir>] [--search-index borrowed]
  *
  * Exit 0 every in-scope document passed · 1 a verifier found a failure ·
  * 2 could not tell (nothing to verify, or a verifier could not run). The
@@ -25,7 +25,10 @@
  * expansion, because the graph was JSON-LD by convention and not by
  * construction — nothing had ever run a processor over it, and the first run
  * found two documents silently dropping a property. The second is unique ids
- * in built HTML (bean `uknu`) — a defect the source cannot show.
+ * in built HTML (bean `uknu`) — a defect the source cannot show. The third is
+ * the site search index (bean `fq5u`), a downstream output Jekyll writes and
+ * nothing had checked — `--search-index borrowed` on a staging preview, which
+ * serves the published index or a declared-empty one.
  *
  * ## What is in scope
  *
@@ -71,11 +74,25 @@ export interface VerifierResult {
 export interface VerifyContext {
   /** The addresses the site publishes under; an `@id` below one is ours. */
   bases: readonly string[];
+  /**
+   * Where the tree's search index came from. `built` (the default): this
+   * build wrote it, so it must cover this build's pages. `borrowed`: a
+   * staging preview serves the PUBLISHED index or a declared-empty `{}` with
+   * a banner saying so (`feature-staging.yml`), so only presence and parsing
+   * are asked of it.
+   */
+  searchIndex?: "built" | "borrowed";
 }
 
 export interface Verifier {
   id: string;
   asks: string;
+  /**
+   * The downstream Tool whose output this verifier judges, when it judges
+   * one. That Tool must declare `downstream` with `verifier` naming this id;
+   * `kg:audit`'s `downstream-tool-declared` reports a mismatch.
+   */
+  tool?: string;
   run(dir: string, ctx: VerifyContext): Promise<Omit<VerifierResult, "id" | "asks">>;
 }
 
@@ -224,8 +241,87 @@ export const HTML_UNIQUE_IDS: Verifier = {
   },
 };
 
+/** Where the just-the-docs theme writes the site's search index. */
+export const SEARCH_INDEX_PATH = "assets/js/search-data.json";
+
+/**
+ * The page-coverage floor: indexed pages must be at least this share of the
+ * pages that carry the theme's search box.
+ *
+ * **Basis: measured, then halved.** A local Jekyll build of this site on
+ * 2026-09-23 indexed 1,347 distinct pages and 1,347 pages carried the box —
+ * exactly one. The deployed tree adds pages mounted after Jekyll that may
+ * carry the box without being in this index, so the floor is set to catch
+ * what the bean asks for — an empty or truncated index — and not to fail a
+ * release on that difference.
+ */
+export const SEARCH_COVERAGE_FLOOR = 0.5;
+
+/**
+ * The site search index is a DOWNSTREAM output (bean `fq5u`): Jekyll writes
+ * it implicitly, nothing checked it, and an empty one would have shipped
+ * green. The Tool node is `site-search-index`; this is the verifier its
+ * declaration names.
+ *
+ * Asks, in order: present, parses as the theme's object of entries,
+ * non-empty, every indexed page resolves to a file in the tree, and the
+ * indexed pages are at least {@link SEARCH_COVERAGE_FLOOR} of the pages
+ * showing a search box. A tree with no search box anywhere is `could not
+ * tell` — nothing here says the site uses search at all.
+ */
+export const SEARCH_INDEX: Verifier = {
+  id: "search-index",
+  tool: "site-search-index",
+  asks:
+    "Is the site's search index present, parseable and non-empty, does every page it indexes exist, and does it " +
+    "cover the pages that offer a search box?",
+  async run(dir, ctx) {
+    const id = "search-index";
+    const boxPages = treeFiles(dir, ".html").filter((f) => readFileSync(f, "utf-8").includes('id="search-input"'));
+    if (boxPages.length === 0) throw new Error("no page in the tree carries the theme's search box");
+    const file = join(dir, SEARCH_INDEX_PATH);
+    const at = SEARCH_INDEX_PATH;
+    if (!existsSync(file)) return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: at, detail: `missing — ${boxPages.length} page(s) offer a search box that would search nothing` }] };
+    let data: unknown;
+    try {
+      data = JSON.parse(readFileSync(file, "utf-8"));
+    } catch (e) {
+      return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: at, detail: `not JSON: ${(e as Error).message}` }] };
+    }
+    if (data === null || typeof data !== "object" || Array.isArray(data))
+      return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: at, detail: "not an object of entries" }] };
+    const entries = Object.values(data as Record<string, unknown>);
+    // A borrowed index is the published one or a declared-empty `{}`; its
+    // coverage is the published site's, not this tree's.
+    if (ctx.searchIndex === "borrowed") return { checked: 1, outOfScope: 0, findings: [] };
+    if (entries.length === 0) return { checked: 1, outOfScope: 0, findings: [{ verifier: id, file: at, detail: `empty — ${boxPages.length} page(s) offer a search box that finds nothing` }] };
+    const pages = new Set<string>();
+    for (const e of entries) {
+      const rel = (e as { relUrl?: unknown })?.relUrl;
+      if (typeof rel === "string") pages.add(rel.split("#")[0]!);
+    }
+    const findings: Finding[] = [];
+    const resolves = (u: string) => {
+      let rel: string;
+      try {
+        rel = decodeURIComponent(u.replace(/^\/+/, ""));
+      } catch {
+        return false;
+      }
+      const p = join(dir, rel);
+      return [p, `${p}.html`, join(p, "index.html")].some((c) => existsSync(c) && statSync(c).isFile());
+    };
+    const dangling = [...pages].filter((u) => !resolves(u));
+    for (const u of dangling.slice(0, 20)) findings.push({ verifier: id, file: at, detail: `indexes ${u}, which is not in the tree` });
+    if (dangling.length > 20) findings.push({ verifier: id, file: at, detail: `…and ${dangling.length - 20} more indexed page(s) not in the tree` });
+    if (pages.size < SEARCH_COVERAGE_FLOOR * boxPages.length)
+      findings.push({ verifier: id, file: at, detail: `indexes ${pages.size} page(s) while ${boxPages.length} offer a search box — below the ${SEARCH_COVERAGE_FLOOR} floor, so the index is truncated or stale` });
+    return { checked: 1, outOfScope: 0, findings };
+  },
+};
+
 /** The set. Add a verifier here; nothing else changes. */
-export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, HTML_UNIQUE_IDS];
+export const VERIFIERS: readonly Verifier[] = [JSONLD_EXPAND, HTML_UNIQUE_IDS, SEARCH_INDEX];
 
 export async function verify(
   dir: string,
@@ -271,7 +367,8 @@ if (import.meta.main) {
   const given = argv.flatMap((a, i) => (a === "--base" && argv[i + 1] ? [argv[i + 1]!] : []));
   const declared = declaredBase(resolve(arg("--instance") ?? resolve(import.meta.dir, "..")));
   const bases = given.length > 0 ? given : declared ? [declared] : [];
-  const { results, exit } = await verify(dir, VERIFIERS, { bases });
+  const searchIndex = arg("--search-index") === "borrowed" ? "borrowed" : "built";
+  const { results, exit } = await verify(dir, VERIFIERS, { bases, searchIndex });
   const md = reportMarkdown(relative(process.cwd(), dir) || ".", results, bases);
   console.log(md);
   const report = arg("--report");
