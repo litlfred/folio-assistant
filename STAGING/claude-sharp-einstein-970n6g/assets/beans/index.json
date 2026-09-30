@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 459,
+      "count": 465,
       "unit": "beans"
     }
   },
@@ -53,14 +53,14 @@
     {
       "id": "folio-assistant-08u4",
       "title": "SURVIVAL PATH: every referenced IRIS node resolves by Handle, with a liveness check and a snapshot pointer",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:01:44Z",
-      "updatedAt": "2026-09-30T00:13:50Z",
+      "updatedAt": "2026-09-30T08:26:13Z",
       "preview": "From the `v048` roast, objections 6 + 7. Placed under `kupb` by the owner, 2026-09-24.\n\n**Measured:** every catalogue node id is a DSpace UUID or a path, and every upstream URL is `iris.who.int/…`. `hdl.handle.net` occurs **0** times in `who-iris/catalogue`, against `iris-dspace.md` R1: *\"Resolve by **Handle** where one exists… only the Handle is guaranteed outside WHO\"*. No step in `sample-import",
       "file": "beans/defs/folio-assistant-08u4--survival-path-every-referenced-iris-node-resolves.md"
     },
@@ -937,14 +937,14 @@
     {
       "id": "folio-assistant-4wzf",
       "title": "RENAME: agent-harness -> cat-harness (computable agentic testing harness)",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T19:24:30Z",
-      "updatedAt": "2026-09-18T19:24:30Z",
+      "updatedAt": "2026-09-30T10:23:23Z",
       "preview": "## The ask\n\nOwner, in chat 2026-09-18:\n\n> need to rename agent-harness to \"cat-harness\" for\n> \"computable-agentic-testing-harness\"\n\nQueued rather than done inline: it arrived mid-`g6yr`, and the standing\ninstruction is to queue new tasks rather than pivot.\n\n## Why it is bigger than a sed\n\nThe name is load-bearing in several distinct namespaces, and they do not all\nrename on the same schedule.\n\n**O",
       "file": "beans/defs/folio-assistant-4wzf--rename-agent-harness-cat-harness-computable-agenti.md"
     },
@@ -1227,6 +1227,20 @@
       "updatedAt": "2026-09-24T19:53:28Z",
       "preview": "`check-declaration-filename.test.ts` scans the whole markdown and workflow\ncorpus. **Measured 2026-09-24, directly, three runs per tree:**\n\n| tree | ms per `checkDeclarationFilename()` |\n|---|---|\n| clean `main` | **4476, 4198, 3927** |\n| `main` + ~150 lines of markdown (PR #1188) | **4927, 4216, 4249** |\n\nThe test budget is **5000 ms**. So on a clean `main`, before anybody adds\nanything, the scan",
       "file": "beans/defs/folio-assistant-6brk--flake-check-declaration-filenames-corpus-scan-runs.md"
+    },
+    {
+      "id": "folio-assistant-6dvy",
+      "title": "Witnessed values (:val): prose bug, just-the-docs substitution, namespacing by source",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:08:52Z",
+      "updatedAt": "2026-09-30T10:08:52Z",
+      "preview": "Owner 2026-09-30: fix the platform; first analyze consistency with the just-the-docs pipeline, and how to namespace values by source (paper, dataset e.g. CODATA with provenance via ingestion, FHIR IG metadata).\n\n## Done when\n- [x] prose :val resolves names with underscores (render-latex), tested and calibrated\n- [x] consistency analysis across PDF / just-the-docs / blueprint / FHIR IG, recorded (b",
+      "file": "beans/defs/folio-assistant-6dvy--witnessed-values-val-prose-bug-just-the-docs-subst.md"
     },
     {
       "id": "folio-assistant-6h47",
@@ -2127,6 +2141,20 @@
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
     },
     {
+      "id": "folio-assistant-bamf",
+      "title": "fhir-harness declares and populates FHIR IG Jekyll data (site.data.fhir.*) for the just-the-docs pipeline",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:16:18Z",
+      "updatedAt": "2026-09-30T10:16:18Z",
+      "preview": "Owner 2026-09-30: IG pages use Liquid site.data.fhir.* (IG Publisher convention, e.g. {{site.data.fhir.ig.version}}). Those should be available in the just-the-docs pipeline, with fhir-harness RESPONSIBLE for declaring and populating the FHIR metadata Jekyll data.\n\n## Measured 2026-09-30 (issue #1564 analysis)\n- Nothing in folio-assistant resolves site.data.fhir.*: only the IG Publisher does. dak-",
+      "file": "beans/defs/folio-assistant-bamf--fhir-harness-declares-and-populates-fhir-ig-jekyll.md"
+    },
+    {
       "id": "folio-assistant-bf5l",
       "title": "WRONG DIRECTION on main: cat-harness/schemas/intake.ts imports folio-assistant-core, and two of three checks cannot see it",
       "status": "completed",
@@ -2519,6 +2547,20 @@
       "updatedAt": "2026-09-24T19:50:21Z",
       "preview": "## Owner decisions 2026-09-24\n- \"B C, look to existing standards to restructure schema\" → then \"reduce reuse recycle\" → then \"Yes, red until you fill gates\".\n\n## Facts (measured)\n- No code writes `folio-intake/v1`: the 4 files under who-iris/uploads/*/intake.json are hand-authored. The registry's `writtenBy: scripts/library-graph.ts` is wrong — it only reads them.\n- `adapters/document/index.ts` wr",
       "file": "beans/defs/folio-assistant-d4lb--b6b-2-1168-folio-intakev1-rebuilt-from-existing-sc.md"
+    },
+    {
+      "id": "folio-assistant-d4m4",
+      "title": "MCP COMMANDS: the root .mcp.json named two moved scripts, and check:command-paths never read it",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:30:24Z",
+      "updatedAt": "2026-09-30T08:30:24Z",
+      "preview": "Found 2026-09-30. Issue #1542. The session host reported `sage` and `google-drive` as failing to connect: `ENOENT` on `scripts/sage-mcp.sh` and `scripts/google-drive-mcp.sh`. Both wrappers moved to `cat-harness/scripts/` in the split.\n\n`check:command-paths` reads the `command` fields in `.claude/settings.json`, from bean `b963`'s \"nobody types these\" reader, but not in `.mcp.json`. So the class th",
+      "file": "beans/defs/folio-assistant-d4m4--mcp-commands-the-root-mcpjson-named-two-moved-scri.md"
     },
     {
       "id": "folio-assistant-d5f1",
@@ -3461,6 +3503,20 @@
       "file": "beans/defs/folio-assistant-kn0t--phased-transition-ig-publisher-reduced-to-ast-qa-i.md"
     },
     {
+      "id": "folio-assistant-kott",
+      "title": "Harness-namespaced values: one dotted key <harness>.<subgraph...>.<name> for :val AND site.data",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:16:19Z",
+      "updatedAt": "2026-09-30T10:16:19Z",
+      "preview": "Owner 2026-09-30: 'can we do something like bootstrap.blah, cat-harness.blah.blah, etc...?' Extends the 12s9 ruling (prefix = the DECLARING Subgraph's path joined with dots) from BPMN/schema prefixes to VALUES, and supersedes the prefix:name proposal on #1564.\n\n## The design\n- One key per value: <harness>.<subgraph...>.<name>, e.g. cat-harness.build.version, fhir-harness.<ig>.ig.version, qou.compu",
+      "file": "beans/defs/folio-assistant-kott--harness-namespaced-values-one-dotted-key-harnesssu.md"
+    },
+    {
       "id": "folio-assistant-kpcl",
       "title": "STREAM 4/4: trust the instruments — the stale-claim sweep, CI that does not fire, and the QA record (1xhc + 1swy + ahvw, 43 open beans)",
       "status": "todo",
@@ -3505,14 +3561,14 @@
     {
       "id": "folio-assistant-kupb",
       "title": "IRIS CATALOGUE: a referenced import of who-iris into the KG, its themes, and the SDLC that tests a sample import",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-yg29",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T08:01:14Z",
-      "updatedAt": "2026-09-23T02:45:00Z",
+      "updatedAt": "2026-09-30T08:26:13Z",
       "preview": "Owner ask, 2026-09-20, three messages in one session.\n\nSOURCES, both uploaded to the repo root by the owner and both measured this session:\n- `549fb04` — a saved DSpace ITEM PAGE. The HTML declares `saved from url=https://iris.who.int/items/18892cf3-5a4f-42a4-923c-a93f4a594dec`; the sidecar zip carries `client-theme.css`, `styles.e55b0c9926626404.css`, `who_logo.svg`, `who_logo_white.svg`, `iris_l",
       "file": "beans/defs/folio-assistant-kupb--iris-catalogue-a-referenced-import-of-who-iris-int.md"
     },
@@ -4207,14 +4263,14 @@
     {
       "id": "folio-assistant-p11x",
       "title": "check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T09:52:20Z",
-      "updatedAt": "2026-09-27T09:52:59Z",
+      "updatedAt": "2026-09-30T11:01:23Z",
       "preview": "Opened 2026-09-27 because **`bf5l` asked for it and it did not exist.** That\nbean's closing section says, of making the blind checks see the edge it found:\n*\"Making the blind checks see it is NOT done here … it wants its own bean.\"* A\ncorpus-grep across `beans/defs/` and `beans/defs/archive/` found no such bean, so\n`bf5l` completed with its follow-up unrecorded.\n\n## What is measured\n\nVerified dire",
       "file": "beans/defs/folio-assistant-p11x--checkpartition-cannot-see-cross-instance-edges-its.md"
     },
@@ -5389,6 +5445,20 @@
       "file": "beans/defs/folio-assistant-v7bg--tool-113-task-publish-publication-export-34-files.md"
     },
     {
+      "id": "folio-assistant-v8n5",
+      "title": "HARNESS THEMING: the who-iris board tile, navbar and stickies render on the IRIS theme, not only its pages",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-yg29",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:43:50Z",
+      "updatedAt": "2026-09-30T11:02:54Z",
+      "preview": "Owner, 2026-09-30, answering the GOAL 3 goal review: keep GOAL 3 **open**, and theme the harness itself. The goal's words are *\"showing who-iris w/ existing materialized assets with themed harness\"*, and the owner reads \"themed harness\" as more than the pages.\n\n## What is true today (measured 2026-09-30)\n- The who-iris **pages** (`/who-iris/`, generated by `who-iris/scripts/gen-iris-pages.ts`) ren",
+      "file": "beans/defs/folio-assistant-v8n5--harness-theming-the-who-iris-board-tile-navbar-and.md"
+    },
+    {
       "id": "folio-assistant-v9ah",
       "title": "SELF-DECLARED-DONE NAMES ONLY MID-FLIGHT BEANS: every finding the check produces is one no session may act on, which is thux's o5qj shape unfixed on the second axis",
       "status": "todo",
@@ -5543,6 +5613,20 @@
       "updatedAt": "2026-09-20T18:47:55Z",
       "preview": "The owner's words, 2026-09-20 (session_017PqeiS4JYySSWGAYLedmus), kept verbatim\nbecause a goal paraphrased by an agent is a different goal:\n\n> get to separtion of repos into dir/repos with each harness instiatiatin w/\n> config and initation steps skilled, tooled, and tested (readme, creation of\n> directories, active vs static content -- beans todos fsh-guts,etc.)\n\nCreated on the owner's ruling for",
       "file": "beans/defs/folio-assistant-vuip--goal-1-separation-of-repos-into-dirrepos-each-harn.md"
+    },
+    {
+      "id": "folio-assistant-vwd8",
+      "title": "TYPESCRIPT 7: migrate from 6.0.3 (Dependabot #910)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:59:32Z",
+      "updatedAt": "2026-09-30T08:59:32Z",
+      "preview": "## What\n\nThe owner said **\"Try migration now\"** on 2026-09-30, which reopens the 2026-09-27\nhold recorded in `folio-assistant-u2ol`. This bean works option 3 from that bean,\n**side-by-side**, on branch `claude/magical-archimedes-4qkfxp-ts7`. TS 7 does the\ntypechecking. The TS 6 JS API stays installed for the code that imports it.\nMeasured 2026-09-30.\n\n## Why #910 has been red since 2026-09-23. It ",
+      "file": "beans/defs/folio-assistant-vwd8--typescript-7-migrate-from-603-dependabot-910.md"
     },
     {
       "id": "folio-assistant-vxho",
@@ -6023,14 +6107,14 @@
     {
       "id": "folio-assistant-xlg2",
       "title": "RUN THE SAMPLE IMPORT: one real end-to-end instance of sample-import.bpmn, recorded, with a test",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-kupb",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T18:01:44Z",
-      "updatedAt": "2026-09-29T22:26:13Z",
+      "updatedAt": "2026-09-30T00:13:47Z",
       "preview": "From the `v048` roast, objection 5. Placed under `kupb` by the owner, 2026-09-24.\n\n**Measured:** `sample-import.bpmn` loads and renders, with skills and roles bound, but `beans/workflows/` holds **no** instance of it or of `materialize-remote`, no `.ts` file names it, and the three worked items arrived as owner uploads, not through it. `hfwl`'s Done-when asked only for a diagram, a skill and a ren",
       "file": "beans/defs/folio-assistant-xlg2--run-the-sample-import-one-real-end-to-end-instance.md"
     },
