@@ -13,6 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
+          submodules: true
           ref: main
 
       - name: Sync skill packages

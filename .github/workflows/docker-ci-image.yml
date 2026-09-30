@@ -33,6 +33,8 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - name: Read Lean toolchain version
         id: toolchain

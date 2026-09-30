@@ -3144,11 +3144,45 @@ export function sourceLinks(
   branch: string,
 ): { viewHref: string; editHref: string } | undefined {
   if (repoUrl === undefined) return undefined;
-  const path = declaredIn.split("/").map(encodeURIComponent).join("/");
+  const at = forgeLocation(declaredIn, repoUrl);
+  repoUrl = at.repoUrl;
+  const path = at.path.split("/").map(encodeURIComponent).join("/");
   return {
     viewHref: `${repoUrl}/blob/${branch}/${path}`,
     editHref: `${repoUrl}/edit/${branch}/${path}`,
   };
+}
+
+/** The submodules this checkout carries, from `.gitmodules` at its root. */
+export function gitSubmodules(repoRoot: string = join(import.meta.dir, "..", "..")): Array<{ path: string; url: string }> {
+  let text: string;
+  try {
+    text = readFileSync(join(repoRoot, ".gitmodules"), "utf-8");
+  } catch {
+    return [];
+  }
+  const out: Array<{ path: string; url: string }> = [];
+  for (const block of text.split(/^\[submodule /m).slice(1)) {
+    const path = /^\s*path\s*=\s*(.+)$/m.exec(block)?.[1]?.trim();
+    const url = /^\s*url\s*=\s*(.+)$/m.exec(block)?.[1]?.trim();
+    if (path && url) out.push({ path, url: url.replace(/\.git$/, "") });
+  }
+  return out;
+}
+
+/**
+ * The repository that HOLDS `path` (repository-relative), and the path inside
+ * it. A file in a submodule lives in the submodule's own repository — since
+ * 2026-09-30 `bootstrap/` and `bootstrap-tools/` are `litlfred/bootstrap` and
+ * `litlfred/bootstrap-tools` (bean `xsqm`) — so a "view source" link to it
+ * must name that repository; this checkout's forge shows only a pointer
+ * there. Anything else is this repository's, at `repoUrl`.
+ */
+export function forgeLocation(path: string, repoUrl: string, repoRoot?: string): { repoUrl: string; path: string } {
+  for (const s of gitSubmodules(repoRoot)) {
+    if (path === s.path || path.startsWith(`${s.path}/`)) return { repoUrl: s.url, path: path.slice(s.path.length + 1) };
+  }
+  return { repoUrl, path };
 }
 
 /**

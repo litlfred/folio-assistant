@@ -98,10 +98,51 @@ export function gitCorpus(dir: string, pathspec: readonly string[] = []): string
     { cwd: dir, encoding: "utf-8", maxBuffer: GIT_LIST_MAX_BUFFER },
   );
   if (r.error !== undefined || r.status !== 0) return undefined;
+  const subs = submodulesUnder(dir);
+  const own = r.stdout
+    .split("\0")
+    .filter((p) => p.length > 0 && !subs.includes(p))
+    .map((p) => join(dir, p));
+  // A submodule's files are listed by ITS repository, and `--recurse-submodules`
+  // refuses `--others`, so each is asked on its own and prefixed. Since
+  // 2026-09-30 `bootstrap/` and `bootstrap-tools/` are submodules (bean `xsqm`),
+  // and a corpus that lost them would have every scanner report a clean run
+  // over files it never saw.
+  for (const s of subs) {
+    const spec = submodulePathspec(s, pathspec);
+    if (spec === undefined) continue;
+    const inner = gitCorpus(join(dir, s), spec);
+    if (inner === undefined) return undefined;
+    own.push(...inner);
+  }
+  return own;
+}
+
+/** The submodules whose gitlinks sit under `dir`, relative to it (mode 160000). */
+function submodulesUnder(dir: string): string[] {
+  const r = spawnSync("git", ["ls-files", "-z", "--stage"], { cwd: dir, encoding: "utf-8", maxBuffer: GIT_LIST_MAX_BUFFER });
+  if (r.error !== undefined || r.status !== 0) return [];
   return r.stdout
     .split("\0")
-    .filter((p) => p.length > 0)
-    .map((p) => join(dir, p));
+    .filter((l) => l.startsWith("160000 "))
+    .map((l) => l.split("\t")[1]!)
+    .filter((p) => existsSync(join(dir, p, ".git")));
+}
+
+/**
+ * The caller's pathspecs as seen from inside submodule `s`: a bare glob
+ * (`*.md`) applies unchanged, one under `s/` loses that prefix, and one
+ * elsewhere does not apply. `undefined` when none apply — skip the submodule.
+ */
+function submodulePathspec(s: string, pathspec: readonly string[]): string[] | undefined {
+  if (pathspec.length === 0) return [];
+  const out: string[] = [];
+  for (const p of pathspec) {
+    if (!p.includes("/")) out.push(p);
+    else if (p.startsWith(`${s}/`)) out.push(p.slice(s.length + 1) || ".");
+    else if (p === s) out.push(".");
+  }
+  return out.length ? out : undefined;
 }
 
 /**
