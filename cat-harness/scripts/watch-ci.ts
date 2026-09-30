@@ -5,6 +5,7 @@
  * bun run ci:watch <sha>                    # poll until decided
  * bun run ci:watch <sha> --branch main      # which branch explains a cancellation
  * bun run ci:watch <sha> --once             # one look, no polling
+ * bun run ci:watch --pr <n>                 # a PULL REQUEST: its head, and whether it is conflicted
  * ```
  *
  * Exit codes carry the third state, because a caller that reads "not 1" as
@@ -44,12 +45,14 @@ import { resolve } from "node:path";
 import {
   exitCodeFor,
   explainSuperseded,
+  prVerdict,
   verdictOf,
   type CheckRun,
 } from "../src/workflow/check-verdict.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 
-const USAGE = "Usage: cat-harness/scripts/watch-ci.ts <sha> [--branch <name>] [--once] [--interval <s>] [--max <n>]";
+const USAGE =
+  "Usage: cat-harness/scripts/watch-ci.ts <sha> | --pr <n>  [--branch <name>] [--once] [--interval <s>] [--max <n>]";
 
 /** `owner/repo` from the checkout's origin, so this is not hardcoded to one repository. */
 function slugOf(root: string): string | undefined {
@@ -81,6 +84,41 @@ async function fetchRuns(slug: string, sha: string): Promise<readonly CheckRun[]
   }
 }
 
+/**
+ * A pull request's head sha and `mergeable_state`, or `undefined` when the PR
+ * could not be read. Re-read on every poll: a merge of the base changes both.
+ */
+async function fetchPr(slug: string, n: string): Promise<{ sha: string; state: string | undefined } | undefined> {
+  // GitHub computes mergeability LAZILY: the first read of a PR starts the
+  // computation and answers `unknown`; a later read answers it. Measured
+  // 2026-09-30 — seven open PRs read `unknown`, and one of them read `clean`
+  // eight seconds later. Deciding on the first answer would let `unknown`
+  // stand in for `dirty`, which is the case this mode exists to catch.
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const got = await readPr(slug, n);
+    if (got === undefined || got.state !== "unknown" || attempt === 3) return got;
+    await Bun.sleep(3000);
+  }
+  return undefined;
+}
+
+async function readPr(slug: string, n: string): Promise<{ sha: string; state: string | undefined } | undefined> {
+  const token = process.env["GITHUB_TOKEN"] ?? process.env["GH_TOKEN"];
+  try {
+    const r = await fetch(`https://api.github.com/repos/${slug}/pulls/${n}`, {
+      headers: {
+        Accept: "application/vnd.github+json",
+        ...(token === undefined ? {} : { Authorization: `Bearer ${token}` }),
+      },
+    });
+    if (!r.ok) return undefined;
+    const body = (await r.json()) as { head?: { sha?: string }; mergeable_state?: string };
+    return typeof body.head?.sha === "string" ? { sha: body.head.sha, state: body.mergeable_state } : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 /** `git log <sha>..origin/<branch>`, oldest first — empty when the branch has not moved. */
 function commitsAfter(root: string, sha: string, branch: string): string[] {
   try {
@@ -106,8 +144,9 @@ if (import.meta.main) {
   // The ARGUMENT is tested before it is used, the order bean `1oqu` fixed
   // elsewhere: a missing SHA is "you did not tell me what to watch", which is
   // exit 2, not a crash.
-  const sha = argv.find((a) => !a.startsWith("--") && argv[argv.indexOf(a) - 1]?.startsWith("--") !== true);
-  if (sha === undefined) {
+  const pr = flag("pr");
+  const shaArg = argv.find((a) => !a.startsWith("--") && argv[argv.indexOf(a) - 1]?.startsWith("--") !== true);
+  if (shaArg === undefined && pr === undefined) {
     console.error(`${USAGE}\n  no commit given — nothing to watch`);
     process.exit(2);
   }
@@ -128,9 +167,21 @@ if (import.meta.main) {
   const max = Number(flag("max") ?? 40);
 
   for (let i = 0; i < max; i++) {
-    const v = verdictOf(await fetchRuns(slug, sha));
+    let sha = shaArg ?? "";
+    let mergeState: string | undefined;
+    if (pr !== undefined) {
+      const p = await fetchPr(slug, pr);
+      if (p === undefined) {
+        console.error(`  could not read pull request #${pr} — NOT a pass`);
+        process.exit(2);
+      }
+      sha = p.sha;
+      mergeState = p.state;
+    }
+    const v = prVerdict(mergeState, verdictOf(await fetchRuns(slug, sha)));
     const when = new Date().toISOString().slice(11, 19);
     const named = v.names.length > 0 ? `  ${v.names.slice(0, 4).join(", ")}` : "";
+    if (pr !== undefined) console.log(`  #${pr} mergeable_state: ${mergeState ?? "(absent)"}${mergeState === "unknown" ? " — not computed yet, so a conflict cannot be ruled out" : ""}`);
     console.log(`${when}  ${sha.slice(0, 11)}  ${v.state.toUpperCase()} — ${v.because}${named}`);
 
     if (v.state === "undetermined" && v.names.length > 0) {

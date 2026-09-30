@@ -17,6 +17,7 @@ import { describe, expect, test } from "bun:test";
 import {
   exitCodeFor,
   explainSuperseded,
+  prVerdict,
   verdictOf,
   type CheckRun,
 } from "../../src/workflow/check-verdict.js";
@@ -118,5 +119,36 @@ describe("exitCodeFor — undetermined has its OWN code, and it is never 0", () 
     // state as well as the report does.
     const states = ["pass", "fail", "pending", "undetermined"] as const;
     expect(states.filter((s) => exitCodeFor(s) === 0)).toEqual(["pass"]);
+  });
+});
+
+describe("a pull request's verdict: a conflicted PR is never its last run's result (52cz)", () => {
+  const green = verdictOf([{ name: "Repository gates (hard)", status: "completed", conclusion: "success" }]);
+  const red = verdictOf([{ name: "Repository gates (hard)", status: "completed", conclusion: "failure" }]);
+
+  test("dirty is undetermined and says conflicted — even over runs that all passed", () => {
+    // The incident: the runs on display were a superseded commit's. Green ones
+    // are the dangerous case, because they read as a pass.
+    const v = prVerdict("dirty", green);
+    expect(v.state).toBe("undetermined");
+    expect(v.because).toContain("conflicted");
+    expect(exitCodeFor(v.state)).toBe(2);
+    expect(prVerdict("dirty", red).state).toBe("undetermined");
+  });
+
+  test("the same PR resolved is judged on its real runs", () => {
+    expect(prVerdict("clean", green)).toEqual(green);
+    expect(prVerdict("unstable", red)).toEqual(red);
+  });
+
+  test("unknown cannot confirm a pass — the conflict is what has not been ruled out (h2s9)", () => {
+    // Measured on #1633: `unknown` through four reads, one green quick check,
+    // reported PASS by the first version.
+    expect(prVerdict("unknown", green).state).toBe("undetermined");
+    expect(prVerdict("unknown", green).because).toContain("not computed");
+    // ...but a failure is a failure whatever the merge state.
+    expect(prVerdict("unknown", red)).toEqual(red);
+    // No PR at all (a bare sha) is judged on its runs.
+    expect(prVerdict(undefined, green)).toEqual(green);
   });
 });

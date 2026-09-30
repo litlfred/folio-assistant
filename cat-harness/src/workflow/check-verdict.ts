@@ -151,6 +151,45 @@ export function explainSuperseded(newerCommits: readonly string[]): string {
   );
 }
 
+/**
+ * A PULL REQUEST's verdict: its head's check runs, unless the PR is conflicted.
+ *
+ * Bean `52cz`, measured on #1589: GitHub creates no `pull_request` run for a
+ * PR whose `mergeable_state` is `dirty`, because there is no merge commit to
+ * test. Pushes to such a PR produce no run at all, and whatever check results
+ * are on display describe an earlier commit nobody is testing — while a
+ * `check_suite.completed` notice truthfully says no suite failed, which reads
+ * like green. So `dirty` decides the verdict on its own: CI is not running,
+ * and no result for this head is coming until the base is merged in.
+ *
+ * `unknown` means GitHub has not computed the state yet (bean `h2s9`). It
+ * says nothing about the runs, so a failure or a pending run stands — but it
+ * cannot confirm a PASS, because a conflict is exactly what has not been
+ * ruled out. Measured: #1633 read `unknown` through four reads and its one
+ * quick check was green, which the first version reported as a pass.
+ */
+export function prVerdict(mergeableState: string | undefined, head: Verdict): Verdict {
+  if (mergeableState === "dirty") {
+    return {
+      state: "undetermined",
+      names: [],
+      because:
+        "conflicted — GitHub creates no pull_request run for a PR with a merge conflict, so nothing " +
+        "will judge this head until the base branch is merged in. Any result shown is an earlier commit's. NOT a pass",
+    };
+  }
+  if (mergeableState === "unknown" && head.state === "pass") {
+    return {
+      state: "undetermined",
+      names: [],
+      because:
+        "the runs passed, but GitHub has not computed whether the PR conflicts — a pass cannot be " +
+        "confirmed until it has. NOT a pass",
+    };
+  }
+  return head;
+}
+
 /** The process exit code for a state. `undetermined` is its own, never 0. */
 export function exitCodeFor(state: VerdictState): 0 | 1 | 2 {
   return state === "pass" ? 0 : state === "fail" ? 1 : 2;
