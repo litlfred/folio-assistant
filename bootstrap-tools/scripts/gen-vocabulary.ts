@@ -41,6 +41,7 @@
  * bun run bootstrap-tools/scripts/gen-vocabulary.ts [--check]
  * ```
  */
+import { TOOLS_REPOSITORY, generatedNote } from "./generated-by.ts";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -53,6 +54,7 @@ const W3 = {
   owl: "http://www.w3.org/2002/07/owl#",
   skos: "http://www.w3.org/2004/02/skos/core#",
   dcterms: "http://purl.org/dc/terms/",
+  prov: "http://www.w3.org/ns/prov#",
 };
 
 /** `NodeSchema` → `Node Schema`: the label a person reads. */
@@ -102,6 +104,7 @@ export function vocabulary(r: ReleaseIris): Record<string, unknown> {
       isDefinedBy: { "@id": "rdfs:isDefinedBy", "@type": "@id" },
       requires: { "@id": "dcterms:requires", "@type": "@id" },
       versionInfo: "owl:versionInfo",
+      wasAttributedTo: { "@id": "prov:wasAttributedTo", "@type": "@id" },
     },
     "@id": docIri,
     "@type": ["owl:Ontology", "skos:ConceptScheme"],
@@ -109,6 +112,8 @@ export function vocabulary(r: ReleaseIris): Record<string, unknown> {
     definition:
       "Every term bootstrap defines, in the order they are defined — each uses only terms above it — and every Graph Kind it defines.",
     versionInfo: r.version,
+    comment: generatedNote("scripts/gen-vocabulary.ts", "bootstrap's own terms", "change the terms in bootstrap-tools/schemas/graph.ts"),
+    wasAttributedTo: TOOLS_REPOSITORY,
     "@graph": [...terms, ...kinds],
   };
 }
