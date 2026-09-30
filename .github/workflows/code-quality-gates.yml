@@ -261,8 +261,16 @@ jobs:
       - name: bun run lint
         run: bun run lint
 
+      # TypeScript 7 typechecks; TypeScript 6 stays installed as `typescript`
+      # because typescript-eslint (8.x) requires the TS6 JS API and throws on
+      # TS >= 7, and TS7's `typescript` main export carries no compiler API.
+      # So `node_modules/.bin/tsc` is TS 6.0.3 (hoisted from
+      # @typescript/typescript6's own dependency) and `bunx tsc` would
+      # typecheck with the WRONG compiler while reading green. This step
+      # names the TS7 launcher by path, which can only be TS7 (same command
+      # as the `typecheck` script).
       - name: tsc --noEmit
-        run: bunx tsc --noEmit -p tsconfig.json
+        run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
 
       # Each step is a separate gate so the Actions UI names the one that
       # broke, rather than a single opaque "quality" failure. LAST on purpose —

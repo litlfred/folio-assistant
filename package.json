@@ -364,7 +364,7 @@
     "translation:index:check": "bun run cat-harness/content/pipeline/translation-index.ts --check",
     "translation:status": "bun run cat-harness/scripts/gen-translation-status.ts",
     "translation:status:check": "bun run cat-harness/scripts/gen-translation-status.ts --check",
-    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck": "bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json",
     "uml:overview": "bun run cat-harness/scripts/gen-uml-overview.ts",
     "uml:overview:check": "bun run cat-harness/scripts/gen-uml-overview.ts --check",
     "upload-step:docs": "bun run cat-harness/scripts/gen-upload-step-docs.ts",
@@ -397,7 +397,8 @@
     "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1",
     "remark-math": "^6.0.0",
-    "typescript": "^6.0.3",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
+    "typescript7": "npm:typescript@^7.0.2",
     "unist-util-visit": "^5.1.0",
     "zod": "^4.6.5"
   },
