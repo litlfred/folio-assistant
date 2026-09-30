@@ -309,6 +309,12 @@ export const RULES: Rule[] = [
       // too. It renders a model and reads no content object -- the model's
       // regions are composed by the caller from declarations.
       "scripts/lib/navbar.ts",
+      // How a GRAPH-KIND row in that navbar is marked and named (bean `yag0`):
+      // the kind's avatar glyph and hue, and the head of its registered
+      // summary as the accessible name. HARNESS beside `navbar.ts` for the
+      // same reason — it is the platform's chrome, read from the platform's
+      // kind and avatar registries, and both navbar callers share it.
+      "scripts/lib/graph-kind-nav.ts",
       // The geometry that navbar became a reader of, and the generator that
       // renders it to CSS (bean `sjic`). HARNESS for the same reason as
       // `navbar.ts` and one step more plainly: the numbers are the width of

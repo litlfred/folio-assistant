@@ -106,6 +106,7 @@ import { join, resolve } from "path";
 import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { injectRail, type NavItem } from "./lib/harness-rail.js";
+import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import { viewersOf } from "./viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
@@ -385,9 +386,12 @@ export function declaredGraphs(
       // mount table while the note came from the site, and those two are not
       // the pair that function makes exclusive.
       const note = href ? undefined : fallback?.note;
+      // A distinct glyph and a full accessible name per kind (bean `yag0`):
+      // `docs` and `library` were adjacent one-letter marks, and the owner
+      // clicked the wrong one.
       out.push({
         label: kind,
-        icon: kind.slice(0, 1).toUpperCase(),
+        ...graphKindRowDecor(kind, instanceDirName),
         ...(href ? { href } : {}),
         ...(note ? { note } : {}),
       });
