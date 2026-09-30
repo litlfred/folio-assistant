@@ -131,13 +131,13 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
 | 1 | 47.09 | bean, instance, session, graph, kind, branch, page, directory | *(none)* |
-| 2 | 27.77 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
+| 2 | 27.78 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
 | 3 | 22.36 | proof, watcher, lean, slot, blocks, witness, project, chapter | harness, node, instance, bean, directory, page, actor, bias |
 | 4 | 19.55 | session, branch, queue, prs, commits, coordination, beans, sibling | dpi, color, lean, grayscale, pdf, matplotlib, images, raster |
 | 5 | 18.64 | dpi, color, grayscale, contrast, matplotlib, raster, eps, fonts | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
 | 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
 | 7 | 16.28 | lean, mathlib, mcp, sorry, search, proof, page, theorem | watcher, slot, voice, backlog, queue, ledger, nesting, objection |
-| 8 | 15.37 | mathlib, lean, sorry, lake, mcp, oleans, subdirectory, sessions | slot, watcher, criterion, forward, band, major, backlog, avatar |
+| 8 | 15.37 | mathlib, lean, sorry, lake, mcp, oleans, subdirectory, sessions | slot, watcher, criterion, forward, band, backlog, major, avatar |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
