@@ -170,15 +170,21 @@ test("at the top of the page the band is hidden: the resting layout is unchanged
 
 test("the band sits behind the handle at its height, and stops at a FIXED side bar", async ({ page }) => {
   await open(page, 1280, 900);
+  // The rail AT REST: CI's Chrome rests the pointer on it, and a hovered rail
+  // widens to the open nav. That case has its own test below.
+  await page.mouse.move(700, 600);
   await scrollTo(page, 600);
+  expect(await page.evaluate(() => document.querySelector(".side-bar")!.matches(":hover"))).toBe(false);
   const hb = (await page.locator(handle).boundingBox())!;
   const bb = (await page.locator(band).boundingBox())!;
   const sb = (await page.locator(".side-bar").boundingBox())!;
   expect(Math.round(bb.y)).toBe(Math.round(hb.y));
   expect(Math.round(bb.height)).toBe(Math.round(hb.height));
   expect(Math.round(bb.x)).toBe(Math.round(sb.x + sb.width));
+  const mainLeft = await page.evaluate(() => document.querySelector(".main")!.getBoundingClientRect().left);
+  expect(Math.round(bb.x)).toBe(Math.round(mainLeft));
   // The rail's own control is still the thing a click lands on.
-  const hit = await page.evaluate(() => document.elementFromPoint(10, 10)?.closest(".side-bar") !== null);
+  const hit = await page.evaluate(() => document.elementFromPoint(10, 10)?.closest(".side-bar") != null);
   expect(hit).toBe(true);
   // And the handle is still on top of the band.
   const onTop = await page.evaluate(() => {
