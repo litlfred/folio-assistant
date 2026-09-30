@@ -305,10 +305,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T13:50:54.588Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/516665168bcce920980ea6b4dda5268dbe8f5ffa",
-  "sourceCommitSha": "516665168bcce920980ea6b4dda5268dbe8f5ffa",
-  "sourceCommitAt": "2026-09-30T13:47:09Z",
+  "generatedAt": "2026-09-30T14:02:02.360Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d1b421e6cb2e9f182f57262d5af34358bddcc630",
+  "sourceCommitSha": "d1b421e6cb2e9f182f57262d5af34358bddcc630",
+  "sourceCommitAt": "2026-09-30T13:58:22Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -323,7 +323,7 @@
     "Lane": 192,
     "ProcessNode": 888,
     "Tool": 107,
-    "Schema": 125,
+    "Schema": 127,
     "ExternalSchema": 17,
     "GraphKind": 35,
     "Role": 48,
@@ -3140,7 +3140,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 1122,
+      "instructionLines": 1124,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -44812,6 +44812,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/bib-verification"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#schema/binary-release",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "binary-release",
+      "title": "Binary releases — what was published, under what version, with what digest.",
+      "module": "schemas/binary-release.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/binary-release"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#schema/block-kinds",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "block-kinds",
@@ -45119,6 +45128,15 @@
       "module": "schemas/ig-menu.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#schema/ig-metadata-index",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "ig-metadata-index",
+      "title": "IG metadata indexes — the Publisher's own metadata exports, given somewhere",
+      "module": "schemas/ig-metadata-index.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-metadata-index"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#schema/inline-code",

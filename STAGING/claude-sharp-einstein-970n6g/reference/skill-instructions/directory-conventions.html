@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/docs-ui.css?v=1790776132">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/docs-ui.css?v=1790776830">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/narrow-viewport.css?v=1790776132">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/narrow-viewport.css?v=1790776830">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/work-plan.css?v=1790776132">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/work-plan.css?v=1790776830">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/themes.css?v=1790776132">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/themes.css?v=1790776830">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/uml.css?v=1790776132">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/uml.css?v=1790776830">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/avatars.css?v=1790776132">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/avatars.css?v=1790776830">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/docs-ui.js?v=1790776132" defer></script>
+<script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/docs-ui.js?v=1790776830" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1168,6 +1168,18 @@ decides it.</p>
       <td><code class="language-plaintext highlighter-rouge">fhir-artifact-index</code></td>
       <td><strong>harness</strong></td>
       <td>the artefact index of a published FHIR Implementation Guide, RECONSTRUCTED from its published output — every artefact by canonical URL and published representation, with the DAK API’s JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of. A SIBLING of <code class="language-plaintext highlighter-rouge">catalogue</code>, not a flavour of it: a catalogue node is a container or an item, while a FHIR artefact is a <code class="language-plaintext highlighter-rouge">resourceType</code> at a canonical URL published in several representations at once, in a versioned package, against a FHIR version. Shares <code class="language-plaintext highlighter-rouge">MaterializationSchema</code> with <code class="language-plaintext highlighter-rouge">catalogue</code>. Read with the <a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/reference/skill-instructions/ig-artifact-ingestion.html"><code class="language-plaintext highlighter-rouge">ig-artifact-ingestion</code></a> skill; shape in <code class="language-plaintext highlighter-rouge">folio-assistant-core/schemas/fhir-artifact-index.ts</code>.</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">ig-metadata-index</code></td>
+      <td><strong>harness</strong></td>
+      <td>the IG Publisher’s OWN metadata exports for one published IG, harvested verbatim — <code class="language-plaintext highlighter-rouge">valueset-ref-list.json</code>, <code class="language-plaintext highlighter-rouge">codesystem-ref-list.json</code> and <code class="language-plaintext highlighter-rouge">usage-stats.json</code>. A SIBLING of <code class="language-plaintext highlighter-rouge">fhir-artifact-index</code>, not an extension of it, and the line between them is the line between a RECONSTRUCTION and a TRANSCRIPTION: that index answers <em>what artefacts does this IG contain</em>, assembled from four partial views because no IG publishes such an index, while this answers <em>what did the toolchain say about them</em>, read from three files the IG does publish. Registered 2026-09-30 on the owner’s ruling (bean <code class="language-plaintext highlighter-rouge">rjug</code>, Option B); Option A would have hung a <code class="language-plaintext highlighter-rouge">metadataExports</code> block off the index, and the bean’s own objection to it is why it lost — <em>“Risks making the index a bag.”</em> <code class="language-plaintext highlighter-rouge">derived</code>: it does not stand on its own, and re-harvesting an unchanged IG gives the same file back — the clause that separates it from <code class="language-plaintext highlighter-rouge">binary-release</code>, where re-running produces a different release. Two measured findings from bean <code class="language-plaintext highlighter-rouge">nsbb</code> are carried as SHAPE rather than prose, because both are absences that must not read as zeros: <code class="language-plaintext highlighter-rouge">uses</code> is declared-and-never-populated in both IGs measured (a three-state <code class="language-plaintext highlighter-rouge">usesState</code>, where a bare array would erase the finding), and nothing exports Library / PlanDefinition / Measure edges at all (<code class="language-plaintext highlighter-rouge">IG_METADATA_UNREACHED_TYPES</code>, so silence over the decision-logic core reads as uninformative rather than clean). Shape in <code class="language-plaintext highlighter-rouge">schemas/ig-metadata-index.ts</code>.</td>
+      <td>no</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">binary-release</code></td>
+      <td><strong>harness</strong></td>
+      <td>published binary releases — one <code class="language-plaintext highlighter-rouge">folio-binary-release/v1</code> document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. <strong>Never the bytes</strong>: the schema is strict throughout. Registered 2026-09-30 on the owner’s ruling (bean <code class="language-plaintext highlighter-rouge">rjug</code>, Option A); Option B was reusing <code class="language-plaintext highlighter-rouge">materialization</code>, and bean <code class="language-plaintext highlighter-rouge">gpdo</code>’s <code class="language-plaintext highlighter-rouge">compiled</code> purpose landing since has sharpened that mismatch rather than softening it — all four materialization purposes are purposes of A COPY THIS INSTANCE HOLDS, while a release is a publication UPSTREAM that stays true after every local copy is gone. The two compose rather than substitute. <code class="language-plaintext highlighter-rouge">state</code>: the release pipeline writes it, and re-running produces a DIFFERENT release rather than the same one again, which is why this is not <code class="language-plaintext highlighter-rouge">derived</code> although <code class="language-plaintext highlighter-rouge">ig-metadata-index</code> above is. <code class="language-plaintext highlighter-rouge">recordsWork: false</code> — a published release is a completed fact, not something anybody is partway through. The case it exists for is the deploy purge: after the WHO deploy phase deletes its &gt;100 MB files, nothing else anywhere records that they existed, so a purged asset must still say where to fetch it and why it went — a removal with no recorded reason cannot be told from an accident. Shape in <code class="language-plaintext highlighter-rouge">schemas/binary-release.ts</code>.</td>
       <td>no</td>
     </tr>
     <tr>
