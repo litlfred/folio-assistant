@@ -8,9 +8,11 @@ descriptions.
 
 - **The words are text.** Most of the original's content was baked into
   pictures, which search, translation and screen readers cannot reach. Every
-  word below was read off those images and written out. Pictures remain only
-  where the repository **generates** them (the BPMN process, the UML model, the
-  theme art), so a picture here cannot be older than its source.
+  word below was read off those images and written out. The deck's own pictures
+  are kept beside that text. Where the repository **generates** a picture (the
+  BPMN process, the UML model), today's version is shown and the slide's version
+  sits collapsed beneath it, so the current one is never the one you have to
+  open.
 - **Each slide is checked against the knowledge graph.** Under every slide,
   **Sources** names the KG nodes it depends on. A **Misaligned** note says where
   the snapshot and today's KG disagree, and which one is right. The last

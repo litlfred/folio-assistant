@@ -117,4 +117,18 @@ describe("living deck: every claim about the KG still holds", () => {
     expect(assets.length).toBeGreaterThan(0);
     for (const a of assets) expect(existsSync(join(SITE, a)), a).toBe(true);
   });
+
+  test("every deck picture the page shows exists, and is the library entry's own image", () => {
+    const md = readdirSync(DECK).filter((f) => f.endsWith(".md")).map((f) => read(join(DECK, f))).join("\n");
+    const shown = [...new Set([...md.matchAll(/'\/(assets\/img\/kg-deck\/[^']+)' \| relative_url/g)].map((m) => m[1]!))];
+    expect(shown.length).toBeGreaterThan(0);
+    const entry = join(H, "library/kg-folio-asst-2026-09-30");
+    const raw = JSON.parse(read(join(entry, "images.json"))) as unknown;
+    const recs = (Array.isArray(raw) ? raw : (raw as { images: unknown[] }).images) as Array<{ file: string }>;
+    const held = new Set(recs.map((r) => resolve(entry, r.file)));
+    for (const a of shown) {
+      expect(existsSync(join(SITE, a)), a).toBe(true);
+      expect(held.has(join(SITE, a)), `${a} is not an image of the library entry`).toBe(true);
+    }
+  });
 });

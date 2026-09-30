@@ -35,9 +35,11 @@ descriptions.
 
 - **The words are text.** Most of the original's content was baked into
   pictures, which search, translation and screen readers cannot reach. Every
-  word below was read off those images and written out. Pictures remain only
-  where the repository **generates** them (the BPMN process, the UML model, the
-  theme art), so a picture here cannot be older than its source.
+  word below was read off those images and written out. The deck's own pictures
+  are kept beside that text. Where the repository **generates** a picture (the
+  BPMN process, the UML model), today's version is shown and the slide's version
+  sits collapsed beneath it, so the current one is never the one you have to
+  open.
 - **Each slide is checked against the knowledge graph.** Under every slide,
   **Sources** names the KG nodes it depends on. A **Misaligned** note says where
   the snapshot and today's KG disagree, and which one is right. The last
@@ -58,13 +60,15 @@ immediately from clinical, public health and data-use recommendations. SMART
 Guidelines systematize and accelerate the consistent application of recommended,
 life-saving interventions in the digital age.
 
-| level | | what it produces | who asks |
-|---|---|---|---|
-| **L1** Narrative | WHO guideline publications | a knowledge graph of literature and data sources | *content* |
-| **L2** Operational | the Digital Adaptation Kit | structured requirements | *content* |
-| **L3** Machine readable | FHIR implementation guides | fully computable assets | *tooling* |
-| **L4** Executable | reference software | customizable software | *apps* |
-| **L5** Dynamic | trained, optimised algorithms | advanced analytics for precision health | *apps* |
+<p class="kg-deck-actors"><img src="{{ '/assets/img/kg-deck/img-p001-1.webp' | relative_url }}" alt="" height="110" style="height:110px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> <img src="{{ '/assets/img/kg-deck/img-p001-2.webp' | relative_url }}" alt="" height="110" style="height:110px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> <img src="{{ '/assets/img/kg-deck/img-p001-14.webp' | relative_url }}" alt="" height="110" style="height:110px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"></p>
+
+| level | | what it produces | who asks | on the slide |
+|---|---|---|---|---|
+| **L1** Narrative | WHO guideline publications | a knowledge graph of literature and data sources | *content* | <a href="{{ '/assets/img/kg-deck/img-p001-3.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p001-3.webp' | relative_url }}" alt="Three overlapping covers of WHO guideline publications — among them intrapartum care for a positive childbirth experience, the Package of Essential Noncommunicable (PEN) Disease Interventions, a family-planning handbook and antenatal care for a positive pregnancy experience. On this slide it stands for SMART Guidelines layer L1, the narrative guideline." height="48" style="height:48px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"></a> |
+| **L2** Operational | the Digital Adaptation Kit | structured requirements | *content* | <img src="{{ '/assets/img/kg-deck/img-p001-5.webp' | relative_url }}" alt="Blue outline icon of a clipboard holding a checklist of five items. On this slide it marks structured requirements, the L2 operational layer (the Digital Adaptation Kit)." height="40" style="height:40px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> <img src="{{ '/assets/img/kg-deck/img-p001-6.webp' | relative_url }}" alt="A small, generic blue flowchart — rectangles, two decision diamonds and connecting arrows — standing for the business processes and decision logic of an L2 Digital Adaptation Kit." height="40" style="height:40px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> <img src="{{ '/assets/img/kg-deck/img-p001-10.webp' | relative_url }}" alt="Small teal circular icon of a person holding a document or card — a health worker or client persona marker." height="40" style="height:40px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> |
+| **L3** Machine readable | FHIR implementation guides | fully computable assets | *tooling* | <img src="{{ '/assets/img/kg-deck/img-p001-13.webp' | relative_url }}" alt="The HL7 FHIR logo (orange-red flame and the word FHIR), marking the L3 machine-readable layer&#x27;s standard." height="32" style="height:32px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> <img src="{{ '/assets/img/kg-deck/img-p001-11.webp' | relative_url }}" alt="Blue icon of a desktop monitor showing lines of text beside two gears — configurable or computable software, marking the fully-computable-assets step." height="40" style="height:40px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> <a href="{{ '/assets/img/kg-deck/img-p001-12.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p001-12.webp' | relative_url }}" alt="Screenshot of FHIR XML from a MeasureReport: type summary, a measure URL for HIV indicators, a reporter, a period in January 2018, and a group with coded strata and measureScore values. It illustrates the L3 machine-readable layer: an indicator expressed as FHIR." height="40" style="height:40px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"></a> |
+| **L4** Executable | reference software | customizable software | *apps* | <img src="{{ '/assets/img/kg-deck/img-p001-7.webp' | relative_url }}" alt="Blue icon of a desktop monitor and a mobile phone, each displaying a caduceus (the medical staff-and-serpents emblem). On this slide it stands for customizable health software built from the guideline — the L4 executable layer." height="40" style="height:40px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> <img src="{{ '/assets/img/kg-deck/img-p001-9.webp' | relative_url }}" alt="A cropped variant of the blue monitor-and-phone icon showing caduceus emblems, used as a second marker for executable, deployable software." height="40" style="height:40px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> <a href="{{ '/assets/img/kg-deck/img-p001-8.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p001-8.webp' | relative_url }}" alt="Screenshot of a DHIS2 web application (the red DHIS2 header bar is visible): a patient or event record form with a table of dated entries below it and side panels on the right. Text is too small to read at slide size. It illustrates a deployed consumer application built on SMART content." height="40" style="height:40px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"></a> |
+| **L5** Dynamic | trained, optimised algorithms | advanced analytics for precision health | *apps* | <img src="{{ '/assets/img/kg-deck/img-p001-4.webp' | relative_url }}" alt="Blue icon: a desktop monitor and a tablet, each showing a human head in profile with a circuit-board brain. On this slide it marks advanced analytics — the L5 dynamic layer&#x27;s precision-health use." height="40" style="height:40px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> |
 
 Two questions run under all five, asked by the human and the agentic actors
 alike: **how can I reliably author, review and adjudicate faster?** and **how am
@@ -100,6 +104,8 @@ origin (IRIS and the Data Hub) feeds an automated compile engine: folio-assistan
 builds, signs, snapshots and publishes. That engine feeds a public CDN, named on
 the slide as Cloudflare R2 storage and the Cloudflare edge network.
 
+<a href="{{ '/assets/img/kg-deck/img-p002-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p002-1.webp' | relative_url }}" alt="Infographic titled &quot;WHO Decoupled Architecture Workflow — secure, automated, trusted, globally accessible&quot;, in three columns joined by arrows. Left, &quot;Internal secure origin — trusted WHO data sources&quot;: Internal IRIS (DSpace), the WHO institutional repository, and the World Health Data Hub, global health datasets and resources. Middle, &quot;Automated compile engine — build, sign, snapshot, publish&quot;: folio-assistant (auto-sign and snapshot), feeding &quot;Cryptographic asset signing&quot; via the WHO Trust Network Gateway and Swiss Observatory schemas. Right, &quot;Zero-egress public CDN&quot;: Cloudflare R2 storage (10 TB) of signed static assets, then the Cloudflare CDN edge network for global low-latency delivery, reaching global researchers. The product names are the slide&#x27;s proposal, not a decision recorded in this repository." loading="lazy"></a>
+
 **Sources:** [`kg-to-portal`](reference/skill-instructions/kg-to-portal.html)
 (package and per-asset signatures; "a CDN is a LAYER");
 `large-datasets` (the WHO IRIS source descriptor); `who-iris` (the DSpace skill).
@@ -134,6 +140,8 @@ the slide as Cloudflare R2 storage and the Cloudflare edge network.
 
 The figure draws the tenth, **testing: test data and test harness**, beside the nine cards rather than as one of them.
 
+<a href="{{ '/assets/img/kg-deck/img-p003-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p003-1.webp' | relative_url }}" alt="The nine components of a WHO Digital Adaptation Kit, as numbered coloured cards: 1 Health interventions and recommendations (from the WHO guideline; informs DAK scope); 2 Generic personas (roles, responsibilities and interventions of targeted personas); 3 User scenarios (brief narratives of how personas engage with the system); 4 Business processes and workflows (generic clinical and non-clinical workflows; when data is collected and used); 5 Core data elements (for decision-making, indicators and other needs; inform forms and L3 interoperability); 6 Decision support logic (decision tables for counselling and treatment algorithms); 7 Scheduling logic (decision tables for scheduling per care plans — marked as previously combined with decision support logic); 8 Indicators and monitoring (numerator and denominator data elements; linking person-centred to aggregate data); 9 Functional and non-functional requirements. Note: the slide&#x27;s speaker notes still say eight components." loading="lazy"></a>
+
 **Sources:** the owner, 2026-09-30 (ten: the original eight plus scheduling
 logic and test scenarios); the SMART Base 1.0.0 `DAK` logical model;
 [the L2 artefacts and their skills](guides/who-smart-dak.html).
@@ -163,6 +171,12 @@ Core metadata set, and value sets such as the classification of digital health
 interventions. A source reference such as `DecisionSupportLogicSource` must give
 exactly one of `url`, `canonical` or an inline `instance`.
 
+<a href="{{ '/assets/img/kg-deck/img-p004-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p004-1.webp' | relative_url }}" alt="Screenshot of the SMART Base DAK API documentation page: sections 8.2.16–8.2.22 list ValueSet JSON schemas (digital health interventions for managers, providers and data services; SMART Guidelines authoring skills; service and application types), and section 8.3, &quot;Logical Model Schemas (25 available)&quot;, lists cards such as Decision-Support Logic, Health Interventions and Recommendations, Functional and Non-Functional Requirements, Program Indicator, Core Data Element, Dublin Core Metadata Element Set, SUSHI Configuration, User Scenario Source, Test Scenario Source, Persona and Business Process Workflow. Each card carries FHIR, JSON Schema and OpenAPI badges." loading="lazy"></a>
+
+<a href="{{ '/assets/img/kg-deck/img-p004-3.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p004-3.webp' | relative_url }}" alt="Screenshot of a JSON Schema (draft 2020-12) for &quot;Decision Support Logic Source&quot;, $id under worldhealthorganization.github.io/smart-base/branches/v1.0.0: an object whose properties are resourceType (const DecisionSupportLogicSource), url and canonical (both URI strings) — exactly one of url, canonical or an inline instance must be provided." loading="lazy"></a>
+
+<img src="{{ '/assets/img/kg-deck/img-p004-2.webp' | relative_url }}" alt="A QR code with a small pixel-art dinosaur in its centre. It was not decoded for this description; the slide prints https://smart.who.int/base/dak-api.html beside it." height="140" style="height:140px;width:auto;display:inline-block;vertical-align:middle" loading="lazy">
+
 **Source:** <https://smart.who.int/base/dak-api.html>; the ingested index
 `smart-base/fhir-artifact-index`.
 
@@ -182,6 +196,10 @@ component is held as a **source reference**, not inline: by URL, by canonical or
 as an instance. That indirection is what lets the kit's parts be nodes of a
 larger graph.
 
+<a href="{{ '/assets/img/kg-deck/img-p005-2.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p005-2.webp' | relative_url }}" alt="Screenshot of the SMART Base 1.0.0 page for the logical model Digital Adaptation Kit (DAK) — &quot;a complete DAK with metadata and all 9 DAK components&quot;. Its key-elements table lists id, name, title, description (string or URI), version, status, publicationUrl, previewUrl, canonicalUrl, license, copyrightYear, publisher (name, url) and the start of healthInterventions (HealthInterventionsSource, 0..*)." loading="lazy"></a>
+
+<a href="{{ '/assets/img/kg-deck/img-p005-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p005-1.webp' | relative_url }}" alt="Screenshot of the SMART Base 1.0.0 release page for the logical model Decision Support Logic Source (http://smart.who.int/base/StructureDefinition/DecisionSupportLogicSource, active as of 2026-08-27): the source reference must be exactly one of url, canonical or instance, it is used by the Digital Adaptation Kit (DAK) model, and its key-elements table lists url (0..1), canonical (0..1) and instance (0..1)." loading="lazy"></a>
+
 **Sources:** <https://smart.who.int/base/StructureDefinition-DAK.html>;
 [FHIR content — the DAK API surface](fhir-content.html#the-dak-surface).
 
@@ -197,15 +215,21 @@ execution anywhere on the deterministic-to-agentic spectrum.
 
 - **Role:** played by a human, agentic or mechanical actor; a swimlane in BPMN.
 - **Task:** a step in a process; a node in BPMN.
-- **Skill:** a gated capability with schema-defined inputs and outputs.
+- <img src="{{ '/assets/img/kg-deck/img-p006-4.webp' | relative_url }}" alt="" height="24" style="height:24px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> **Skill:** a gated capability with schema-defined inputs and outputs.
 - **Test:** used to compare models, or for author review.
-- **Agentic state:** *beans*, which agents use to coordinate and track their
+- <img src="{{ '/assets/img/kg-deck/img-p006-2.webp' | relative_url }}" alt="" height="24" style="height:24px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> **Agentic state:** *beans*, which agents use to coordinate and track their
   state within a process ("changes to the vaccination schedule ready for review in
   staging").
-- **Human state:** *todos*, attached to process steps or knowledge assets
+- <img src="{{ '/assets/img/kg-deck/img-p006-3.webp' | relative_url }}" alt="" height="24" style="height:24px;width:auto;display:inline-block;vertical-align:middle" loading="lazy"> **Human state:** *todos*, attached to process steps or knowledge assets
   ("please review this change in medication").
 
 ![Folio lifecycle — one cycle, plan to retire. A BPMN collaboration of six lanes: programme manager, work plan (beans shared by humans and agents), editors and authoring agents, validation and QA, review team and SMEs, publication manager. Tasks in order: plan scope, team and artefacts; seed the work plan; editing and HCI validation; integration test and QA sweep; draft, review and publish; triage published feedback; file feedback as beans; then a gateway, more content, which loops back to editing or ends in retire or archive.](assets/img/workflows/content-lifecycle.svg)
+
+<details markdown="1"><summary>The diagram as it appeared on the slide (2026-09-30)</summary>
+
+<a href="{{ '/assets/img/kg-deck/img-p006-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p006-1.webp' | relative_url }}" alt="BPMN diagram &quot;Folio lifecycle — one cycle, plan to retire&quot;, in six horizontal lanes. Programme manager: Folio initiative (start), Plan scope, team, artifacts [content-plan]. Work plan — beans (shared by humans and agents): Seed the work plan [todo-manager]. Editors + authoring agents: Editing and HCI validation [content-author], a subprocess. Validation and QA (mechanical + agents): Integration test and QA sweep [content-test], a service task. Publication manager: Draft, review and publish [content-publish], a subprocess. Review team and SMEs: Triage published feedback [content-feedback]. Work plan again: File feedback as beans [todo-manager]. Programme manager: gateway &quot;More content?&quot; — yes loops back to editing; no leads to Retire or archive [content-retire] and the end event Folio retired. Each bracketed name is the skill the task runs." loading="lazy"></a>
+
+</details>
 
 **Sources:** `processes/content-lifecycle.bpmn` (the picture above is generated
 from it); [beans and todos](beans-and-todos.html).
@@ -248,6 +272,12 @@ takes on roles, a role carries skills, a task sits in a lane of a role and uses
 a skill, a test run tests a skill, and a QA report audits any kind of subject.
 
 ![Harness schemas — UML class diagram generated from the JSON Schemas: packages test, process, scenario and schema, with the classes and relations described in the text above.](assets/img/uml/harness-schemas.svg)
+
+<details markdown="1"><summary>The diagram as it appeared on the slide (2026-09-30), without Voice Profile</summary>
+
+<a href="{{ '/assets/img/kg-deck/img-p008-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p008-1.webp' | relative_url }}" alt="UML class diagram &quot;Harness schemas — attributes derived from JSON Schema&quot;, in four packages. test: KG QA Report (kg-qa/v1; subject kind process|decision|role|requirement|skill|graph|tool, criteria, totals, pair_attestations) and Test Run (folio-test-run/v1; skill, subject, data and process hashes, outcome, cases). process: Task (process, task; BPMN callActivity, serviceTask, task and userTask) &#x27;in process&#x27; Process (external OMG BPMN 2.0; start and end events, gateways, lanes, sequence flows) — noted as XSD, not JSON Schema. scenario: Actor (id, title, kind person|agent|system|external, roles) &#x27;takes on roles&#x27; Role (persona, actorKinds, skills, inherits, actedUpon, judgementOnly); User Story (role, want, soThat) &#x27;as a role&#x27;; Role &#x27;carries skills&#x27; Skill (id, name, description, roles, requiredCapabilities, dependsOn, allowedTools, routingPatterns, tags, package, lifecycleStages plan|author|validate|review|test|publish|feedback|retire). schema: JSON Schema (draft-07, from Zod) and External Schema (authority OMG|DCMI|W3C|IETF|ISO|HL7|other; use conforms|reads|cites). Edges: KG QA Report audits subject kind; Test Run tests Skill; Task in lane of Role and uses Skill; every class conforms to JSON Schema." loading="lazy"></a>
+
+</details>
 
 **Source:** `bun run uml:overview` regenerates the picture above from the schemas.
 

@@ -13,6 +13,8 @@
 
 The figure draws the tenth, **testing: test data and test harness**, beside the nine cards rather than as one of them.
 
+<a href="{{ '/assets/img/kg-deck/img-p003-1.webp' | relative_url }}"><img src="{{ '/assets/img/kg-deck/img-p003-1.webp' | relative_url }}" alt="The nine components of a WHO Digital Adaptation Kit, as numbered coloured cards: 1 Health interventions and recommendations (from the WHO guideline; informs DAK scope); 2 Generic personas (roles, responsibilities and interventions of targeted personas); 3 User scenarios (brief narratives of how personas engage with the system); 4 Business processes and workflows (generic clinical and non-clinical workflows; when data is collected and used); 5 Core data elements (for decision-making, indicators and other needs; inform forms and L3 interoperability); 6 Decision support logic (decision tables for counselling and treatment algorithms); 7 Scheduling logic (decision tables for scheduling per care plans — marked as previously combined with decision support logic); 8 Indicators and monitoring (numerator and denominator data elements; linking person-centred to aggregate data); 9 Functional and non-functional requirements. Note: the slide&#x27;s speaker notes still say eight components." loading="lazy"></a>
+
 **Sources:** the owner, 2026-09-30 (ten: the original eight plus scheduling
 logic and test scenarios); the SMART Base 1.0.0 `DAK` logical model;
 [the L2 artefacts and their skills](guides/who-smart-dak.html).
