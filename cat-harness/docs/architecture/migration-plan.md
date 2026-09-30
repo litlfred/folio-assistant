@@ -117,6 +117,12 @@ meta-scripts were triaged by hand, and are reported with their own provenance so
 a judgement stays visible as a judgement). Full results in
 [current state](current-state.html#the-wrong-direction-edges--phase-is-worklist).
 
+**Scope, which this paragraph did not state until 2026-09-30 (bean `p11x`).**
+That scan's root is **one instance**, so its edge count is over modules under
+that instance only and says nothing about imports between the instances already
+sitting side by side in the checkout. The cross-instance axis is a separate
+question with a separate tool — see I.1b below.
+
 Two results change the plan below rather than merely confirming it:
 
 - **`smart-kg` partitions to zero modules.** There is no L1 code to move, so
@@ -164,8 +170,35 @@ archaeology.
 
 | # | work | gate |
 |---|---|---|
-| I.1 | Resolve each wrong-direction cross-edge from 0.2 — invert the dependency, move the module, or record why it is legitimate | the cross-edge list is empty or every survivor has a written reason |
-| I.1b | Gate the result: `bun run check:partition --strict` in CI | a new wrong-direction edge fails the PR that introduces it, rather than being found at extraction time |
+| I.1 | Resolve each wrong-direction cross-edge from 0.2 — invert the dependency, move the module, or record why it is legitimate | **both** axes below are empty, or every survivor has a written reason |
+| I.1a | The **within-instance** axis: modules under this instance's root, bucketed into the five proposed repos by path rule — `bun run check:partition`, enforcing in CI | a new wrong-direction edge among this instance's own modules fails the PR that introduces it |
+| I.1b | The **cross-instance** axis: edges between instances that already exist side by side, checked against each one's declared `needs` — `bun run kg:detangle:direction`, blocking in CI | a new edge from an instance into one that declares a dependency on it fails the PR that introduces it |
+
+**I.1 takes two gates, and it took one until 2026-09-30.** The row above read
+*"Gate the result: `bun run check:partition --strict` in CI"*, which was the
+whole gate — and `check:partition` resolves its `ROOT` to **one instance**, so
+every `0 wrong-direction edges` it prints is scoped to that instance's own
+modules and is silent about edges between the already-extracted siblings.
+I.1 was therefore discharged on one instance's evidence and reported as done.
+
+Bean `bf5l` measured the gap rather than arguing it. With a real
+wrong-direction import in place (`cat-harness/schemas/intake.ts` importing
+`folio-assistant-core`): `check:instance-graph` ✓ no cycle, `check:partition`
+**0**, `kg:detangle` **1**. Its own sentence — *"three green checks did not mean
+the layering held."*
+
+Bean `p11x`, owner's ruling of 2026-09-30 (**Option 2**): `check:partition`
+stays instance-scoped and `kg:detangle` owns the cross-instance axis, since it
+already sees it. The alternative — widening `check:partition`'s root to the
+checkout — was considered and rejected: its path rules are written against
+instance-relative paths, so it would have meant reclassifying ~17 instances'
+modules to reach a fact another tool already reports.
+
+**The two are not each other's second opinion.** `check:partition` partitions a
+**future** layout by path rule; `kg:detangle:direction` checks the **present**
+layout against declared `needs`. Either can be green while the other is red, and
+a survivor recorded against one says nothing about the other. Read
+`check:partition`'s count with the scope it now prints beside it.
 | I.2 | Introduce the `folio` schema (0.3); a folio holds 0..n content instances | `content_validate` passes on a zero-instance folio **and** a two-instance folio |
 | I.3 | Rename `content/` → `folio/` | no `content/` path literal survives outside intentional content-instance paths; full test suite green **and** a synthetic-folio run proves each moved tool still reads its corpus |
 | I.4 | LHS navbar renders a section per node in the folio instance | a two-instance folio shows two sections; a zero-instance folio renders without error |

@@ -115,8 +115,17 @@ it badly. Do not read 4 as "nearly done".
 ### The wrong-direction edges — Phase I's worklist
 
 **46 edges** import across a proposed boundary in a direction the dependency
-DAG forbids. Every module is classified, so this is a complete count rather
-than a floor:
+DAG forbids. Every module **this tool scans** is classified, so this is a
+complete count over that set rather than a floor:
+
+> **It is not a complete count over the checkout, and this passage read as if it
+> were until 2026-09-30 (bean `p11x`).** `check:partition`'s root is **one
+> instance**, so "every module is classified" means every module under that
+> instance. Imports between instances that already exist side by side are
+> outside the scan entirely, and `bf5l` measured one that this tool reports as
+> `0` while `kg:detangle` reports it as `1`. The cross-instance axis is
+> `bun run kg:detangle:direction`, blocking in CI since the owner's Option 2
+> ruling. The table below is the **within-instance** worklist.
 
 | importer | imports from | edges |
 |---|---|---:|
