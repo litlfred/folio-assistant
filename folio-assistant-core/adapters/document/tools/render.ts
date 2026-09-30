@@ -19,15 +19,15 @@
  * @module folio-assistant/adapters/document/tools/render
  */
 
-import { folioDir } from "../../../schemas/cat-harness.js";
+import { folioDir } from "../../../../cat-harness/schemas/cat-harness.js";
 import { z } from "zod";
 import { execSync, spawnSync } from "child_process";
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { join, resolve, dirname } from "path";
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import type { Paper } from "../../../schemas/types";
+import type { Paper } from "../../../../cat-harness/schemas/types";
 import { REPO_ROOT, BUILD_DIR, MAIN_TEX, CHAPTERS_DIR } from "../paths.js";
-import { expectedInstanceConfigPath } from "../../../schemas/harness-config";
+import { expectedInstanceConfigPath } from "../../../../cat-harness/schemas/harness-config";
 // Note: paths are resolved from the paper adapter's paths module.
 
 /** Check if a command is available on PATH. */
@@ -547,7 +547,7 @@ export function registerDocumentRenderTools(server: McpServer): void {
         return { content: [{ type: "text" as const, text: resolved }] };
       }
       try {
-        const { buildDocumentMarkdown } = await import("../../../content/pipeline/render-markdown.js");
+        const { buildDocumentMarkdown } = await import("../../../../cat-harness/content/pipeline/render-markdown.js");
         const result = await buildDocumentMarkdown(resolved.path);
         if (!existsSync(BUILD_DIR)) mkdirSync(BUILD_DIR, { recursive: true });
         const outPath = join(BUILD_DIR, `${resolved.slug}.md`);
@@ -597,7 +597,7 @@ export function registerDocumentRenderTools(server: McpServer): void {
         return { content: [{ type: "text" as const, text: resolved }] };
       }
       try {
-        const { buildDocumentMarkdown } = await import("../../../content/pipeline/render-markdown.js");
+        const { buildDocumentMarkdown } = await import("../../../../cat-harness/content/pipeline/render-markdown.js");
         const result = await buildDocumentMarkdown(resolved.path);
         if (!existsSync(BUILD_DIR)) mkdirSync(BUILD_DIR, { recursive: true });
         const mdPath = join(BUILD_DIR, `${resolved.slug}.md`);
@@ -686,7 +686,7 @@ export function registerDocumentRenderTools(server: McpServer): void {
         return { content: [{ type: "text" as const, text: resolved }] };
       }
       try {
-        const { buildDocumentMarkdown } = await import("../../../content/pipeline/render-markdown.js");
+        const { buildDocumentMarkdown } = await import("../../../../cat-harness/content/pipeline/render-markdown.js");
         const result = await buildDocumentMarkdown(resolved.path);
         if (!existsSync(BUILD_DIR)) mkdirSync(BUILD_DIR, { recursive: true });
         const mdPath = join(BUILD_DIR, `${resolved.slug}.md`);
