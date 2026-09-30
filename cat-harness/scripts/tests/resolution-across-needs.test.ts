@@ -197,6 +197,8 @@ describe("skill refs resolve across the `needs` chain", () => {
    * (`schemas/cat-harness.ts`; `schemas/layer-direction.ts` refuses the same
    * collapse for edges). MEASURED 2026-09-27: **5 of 16** instances here
    * declare no `needs`, so this governs a third of the subject.
+   * Re-measured 2026-09-30: **0**. #1508 declared them all, so this test now
+   * judges nothing on today's corpus, and the synthetic test below carries the proof.
    *
    * Such an instance cannot have a ref judged dangling: what it reaches was
    * never declared, so the honest answer is `unknown`. Reporting `fail` would
@@ -210,11 +212,14 @@ describe("skill refs resolve across the `needs` chain", () => {
    * by building the instance this corpus does not contain.
    */
   test("an instance that declares no `needs` reports unknown, never a dangling failure", async () => {
+    // MAY BE EMPTY, and on 2026-09-30 it is: #1508 declared `needs` for the
+    // five instances that had none, which is the state this suite wants. An
+    // earlier version asserted at least one undeclared instance existed, so the
+    // corpus reaching its goal turned `main` red. The mechanism does not depend
+    // on this corpus: "The third state, PROVED" below builds the undeclared
+    // instance itself. This loop stays, so an instance that STOPS declaring is
+    // judged here the day it does.
     const undeclared = INSTANCES.filter((i) => i !== ROOT_INSTANCE && !declaresLayering(i));
-    expect(
-      undeclared.length,
-      "every instance declares `needs` — the third state below is untested",
-    ).toBeGreaterThan(0);
 
     const offences: string[] = [];
     for (const inst of undeclared) {
