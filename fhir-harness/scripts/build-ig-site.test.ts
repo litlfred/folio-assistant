@@ -48,7 +48,7 @@ beforeAll(() => {
   writeFileSync(join(src, "input", "images", "logo.png"), "png");
   writeFileSync(join(src, "input", "images-source", "flow.plantuml"), "@startuml\nA -> B\n@enduml\n");
   out = join(dir, "site");
-  r = stageIgSite(src, out, "/site/example");
+  r = stageIgSite(src, out, { baseurl: "/site/example" });
 });
 afterAll(() => rmSync(dir, { recursive: true, force: true }));
 
@@ -77,7 +77,7 @@ describe("staging one IG as one just-the-docs site", () => {
   test("pages, includes and images land where Jekyll resolves them", () => {
     expect(r.pages).toEqual(["changes.md", "index.md", "orphan.md", "overview.md"]);
     for (const f of ["notes.md", "overview.md", "index.md"]) expect(readFileSync(join(out, "_includes", f), "utf-8").length).toBeGreaterThan(0);
-    expect(readFileSync(join(out, "images", "logo.png"), "utf-8")).toBe("png");
+    expect(readFileSync(join(out, "logo.png"), "utf-8")).toBe("png");
   });
 
   test("a diagram the Publisher renders, with no renderer given, is a VISIBLE marker and reported", () => {
