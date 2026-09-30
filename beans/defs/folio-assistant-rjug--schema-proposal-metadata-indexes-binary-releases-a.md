@@ -1,11 +1,11 @@
 ---
 # folio-assistant-rjug
 title: 'SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-29T20:03:11Z
+updated_at: 2026-09-30T10:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -119,3 +119,24 @@ registered for them. Their options stand as written above.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Claimed 2026-09-30 — by `claude/rjug-two-kinds`, and the holder note on `main` names the wrong branch
+
+`bun run beans:claim folio-assistant-rjug` was run once from the WRONG
+checkout. `cat-harness/scripts/claim-bean.ts` resolves its store from
+`process.cwd()` and reads the holder branch from `git rev-parse --abbrev-ref
+HEAD` in that same directory, so the claim landed correctly on `main`
+(`e1815ab372f`, 10:09:58Z) while recording the holder as
+**`claude/zhg2-direction-sidecar`** — the branch the OTHER checkout happened to
+be sitting on, which has nothing to do with this bean.
+
+Re-running it from the right worktree then refused `already-claimed by
+claude/zhg2-direction-sidecar`: the script compares `heldBy` against the
+current branch, and a mislabelled claim is indistinguishable from a sibling's.
+
+Recorded here rather than worked around silently, because the holder note is
+the only thing that tells a live claim from an abandoned one. **The real holder
+is `claude/rjug-two-kinds`**, and the mislabel is a defect in the claim script,
+not in this bean — filed separately as `ssfp` so this bean stays about the two
+graph kinds.
+
