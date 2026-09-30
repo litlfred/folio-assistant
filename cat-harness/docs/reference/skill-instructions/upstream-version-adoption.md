@@ -207,6 +207,7 @@ This skill has its own process: **[Adopting an upstream version bump](../../proc
 
 | process | step(s) that name it |
 |---|---|
+| [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | 11 · Parent consumes, additively (calls a sub-process) |
 | [Watching a pinned upstream dependency](../../processes/upstream-pin-watch.html) | Read the pin registry upstream-pins.json; List upstream releases and compare to the pin; Close the tracking issue; Open or EDIT the one tracking issue; Pick up the stale pin claim a bean; Adopt the version bump (calls a sub-process) |
 | [Adopting an upstream version bump](../../processes/upstream-version-adoption.html) | Scope the delta pinned → candidate; Impact analysis what of ours binds it; Record the hold or the decline |
 

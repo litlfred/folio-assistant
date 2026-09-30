@@ -39,6 +39,19 @@ forces the harness to claim one it does not have.
 So the general object is **an instance with directories, each holding a
 graph**. `folio` is one graph kind among several.
 
+## Node Kinds are declared: `nodeSchemas` (owner, 2026-09-29)
+
+An instance lists every `$schema` value its files carry, and the published
+schema that defines it, in its declaration's **`nodeSchemas`** — a path
+relative to the declaration, or an IRI for a published standard. It is
+bootstrap's field (`KnowledgeGraphDeclarationSchema` in `graph.ts`), so a
+reader with nothing installed can go from a file's `$schema` to its Node
+Schema without knowing any harness. The graph-kind registry's `nodeSchemas`
+is a different, harness-side table: it maps a tag to a TypeScript `validator`
+or `shape`, which only a harness can run. `graph.test.ts` fails on a bootstrap
+file whose `$schema` is not declared, and on a declared local schema that does
+not fix that very tag.
+
 ## The graph kinds
 
 The vocabulary is **open**, and split across two layers.

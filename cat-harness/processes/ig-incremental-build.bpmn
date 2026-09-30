@@ -2,9 +2,10 @@
 <!--
   folio-assistant — the incremental IG build: how one change moves through the
   review and publish pipeline once the derived artefacts are cached by dependency
-  cone. Companion to docs/proposals/ig-incremental-build.md and
-  docs/proposals/ig-incremental-build-overview.md; the as-is L3 pipeline is
-  l3-fhir-pipeline.bpmn.
+  cone. Companion to the proposal and its change register, exported from
+  docs/proposals/ to issue #199 on 2026-09-17
+  (https://github.com/litlfred/folio-assistant/issues/199); the as-is L3
+  pipeline is l3-fhir-pipeline.bpmn.
 
   Source of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other
   BPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it
@@ -33,7 +34,7 @@
   <bpmn:process id="Process_IgIncremental" name="Incremental IG build" isExecutable="false">
     <bpmn:documentation>
       One change — a PR push or a push to main — through the incremental IG build
-      of docs/proposals/ig-incremental-build.md: restore the derived state, compute
+      proposed in issue #199: restore the derived state, compute
       the change's dependency cone, compile and validate only the cone against the
       warm validator, re-render the cone's records, rebuild the meta-index, assemble
       the site, gate on QA, then deploy — and, on main or a release only, seed the
