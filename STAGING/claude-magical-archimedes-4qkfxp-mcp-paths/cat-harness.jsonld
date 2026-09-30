@@ -297,10 +297,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T09:04:27.786Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7bb62c0e8acc5e40dbd92250941480c683000257",
-  "sourceCommitSha": "7bb62c0e8acc5e40dbd92250941480c683000257",
-  "sourceCommitAt": "2026-09-30T09:01:27Z",
+  "generatedAt": "2026-09-30T09:50:02.304Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6cf892c2de8c04d3be03ce95b31ce05a014fe439",
+  "sourceCommitSha": "6cf892c2de8c04d3be03ce95b31ce05a014fe439",
+  "sourceCommitAt": "2026-09-30T09:39:54Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2082,7 +2082,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-mcp-paths/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-build.md",
-      "instructionLines": 137,
+      "instructionLines": 147,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4150,7 +4150,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-mcp-paths/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/content-validation.md",
-      "instructionLines": 294,
+      "instructionLines": 296,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40072,7 +40072,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run cat-harness/content/pipeline/build-glossary.ts"
+        "shell": "bun run folio-assistant-core/scripts/build-glossary.ts"
       },
       "io": {
         "inputs": [
@@ -45727,8 +45727,8 @@
   ],
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-mcp-paths",
-    "sha": "a0d58bdb9c23860bc48f826a1d4d05c78b946a89",
+    "sha": "b0e4124b68230eb20be6375e767f67f0670c0a64",
     "pr": "1544/merge",
-    "run": "36693483112"
+    "run": "36698291868"
   }
 }
