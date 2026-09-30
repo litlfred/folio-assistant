@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/docs-ui.css?v=1790777406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/docs-ui.css?v=1790778256">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/narrow-viewport.css?v=1790777406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/narrow-viewport.css?v=1790778256">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/work-plan.css?v=1790777406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/work-plan.css?v=1790778256">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/themes.css?v=1790777406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/themes.css?v=1790778256">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/uml.css?v=1790777406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/uml.css?v=1790778256">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/avatars.css?v=1790777406">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/avatars.css?v=1790778256">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/docs-ui.js?v=1790777406" defer></script>
+<script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/docs-ui.js?v=1790778256" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -866,6 +866,42 @@ reported in its own column, never read as clean. The function stops at
 direction: whether an allowed edge is a <em>restatement</em> or <em>essential</em> is the
 adjudicator’s call, so those edges stay <code class="language-plaintext highlighter-rouge">unclassified</code> with the verdict as
 their basis.</p>
+
+<p><strong>The direction count is the one detangle number that is GRADED</strong>, and it is
+graded in a gate of its own — <code class="language-plaintext highlighter-rouge">bun run kg:detangle:direction</code>, blocking in CI
+since the owner’s Option 2 ruling on bean <code class="language-plaintext highlighter-rouge">p11x</code> (2026-09-30). Everything else
+this tool measures stays <strong>pinned</strong>: <code class="language-plaintext highlighter-rouge">kg:detangle:check</code> fails on a stale or
+orphaned sidecar and never on a number, because the carve is an adjudication a
+person makes and grading it would be the tool overruling the adjudicator.</p>
+
+<p>The line between them is not a matter of degree. A module’s <strong>bucket</strong> is taste.
+An edge whose target layer is not among what the source layer’s
+<code class="language-plaintext highlighter-rouge">&lt;instance&gt;.json</code> says it may reach is a <strong>contradiction between two
+declarations</strong>, and no adjudication makes it consistent — so it is the one thing
+here a machine may refuse. Two flags, two npm scripts, two CI steps, so a red
+run says which question broke.</p>
+
+<p>Two things that gate <strong>reports and refuses to grade</strong>, both because grading them
+would be grading a could-not-determine:</p>
+
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">undetermined</code> edges</strong> — an endpoint’s instance declares no <code class="language-plaintext highlighter-rouge">needs</code>. Failing
+on these would be the gate deciding a layering nobody declared.</li>
+  <li><strong>the denominator</strong> — the count is over the edges that <strong>resolve</strong>. Dangling
+refs (bean <code class="language-plaintext highlighter-rouge">blv9</code>) are excluded before any edge is classified, so a <code class="language-plaintext highlighter-rouge">0</code> is
+<em>“0 among the edges that resolve”</em>, which is the weaker claim. The gate prints
+the excluded count and its breakdown, because a blocking gate that hides its
+denominator can pass because an edge failed to resolve rather than because the
+layering held. Bean <code class="language-plaintext highlighter-rouge">cjvs</code> owns triaging them.</li>
+</ul>
+
+<p><strong>It is not <code class="language-plaintext highlighter-rouge">check:partition</code>’s second opinion.</strong> That tool’s root is one
+instance, so it partitions a <strong>future</strong> layout by path rule among that
+instance’s own modules; this checks the <strong>present</strong> layout against declared
+<code class="language-plaintext highlighter-rouge">needs</code> across instances. <code class="language-plaintext highlighter-rouge">bf5l</code> measured them disagreeing — a real
+<code class="language-plaintext highlighter-rouge">cat-harness → folio-assistant-core</code> import gave <code class="language-plaintext highlighter-rouge">check:partition</code> <code class="language-plaintext highlighter-rouge">0</code> and this
+<code class="language-plaintext highlighter-rouge">1</code>. Either can be green while the other is red, and Phase I.1 of the migration
+plan now needs both.</p>
 
 <p><strong>At term scale</strong> — a glossary declared <code class="language-plaintext highlighter-rouge">ordered</code> (owner, 2026-09-29, of
 bootstrap’s terms: <em>“logically tight, non self-referential”</em>). Each term’s
