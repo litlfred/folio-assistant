@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 192,
+      "count": 191,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -178,14 +178,6 @@
       "name": "board",
       "graphNode": "schema",
       "summary": "A board — the surface a folio's notes and its content are read on together.",
-      "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/bootstrap-graph.ts",
-      "instance": "cat-harness",
-      "name": "bootstrap-graph",
-      "graphNode": "schema",
-      "summary": "The document bootstrap owes instead of a visualiser: its own graph, as Zod.",
       "isTest": false
     },
     {
@@ -3300,7 +3292,7 @@
         },
         {
           "name": "model",
-          "type": "z.string().optional()",
+          "type": "ModelIdSchema.optional()",
           "optional": true,
           "array": false
         },
@@ -3332,6 +3324,7 @@
       "unresolved": [],
       "external": [
         "ATTRIBUTION_KINDS",
+        "ModelIdSchema",
         "z"
       ],
       "exported": true
@@ -5531,155 +5524,6 @@
       "unresolved": [],
       "external": [
         "BOARD_SCHEMA_TAG",
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocument",
-      "name": "BootstrapGraphDocument",
-      "module": "cat-harness/schemas/bootstrap-graph.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema",
-      "name": "BootstrapGraphDocumentSchema",
-      "module": "cat-harness/schemas/bootstrap-graph.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "@context",
-          "type": "z.unknown()",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "@id",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false,
-          "doc": "Must equal the path the document is published at (bootstrap-graph-publication)."
-        },
-        {
-          "name": "@type",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "repository",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "The instance's declared name."
-        },
-        {
-          "name": "omitted",
-          "type": "z.array(z.string().min(1))",
-          "optional": false,
-          "array": true,
-          "doc": "The instance-bound collectors that were NOT run. \"Has no tools\" and \"tools"
-        },
-        {
-          "name": "problems",
-          "type": "z.array(z.string()).optional()",
-          "optional": true,
-          "array": true,
-          "doc": "Sources that could not be read, counted rather than silently dropped."
-        },
-        {
-          "name": "counts",
-          "type": "z.record(z.string(), z.number().int().nonnegative()).optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "generatedAt",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "sourceCommit",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "sourceCommitSha",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "sourceCommitAt",
-          "type": "z.string().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "sourceTreeDirty",
-          "type": "z.boolean().optional()",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "sourceCommitUnavailable",
-          "type": "z.unknown().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "Said instead of `sourceCommit*` when the build could not read git."
-        },
-        {
-          "name": "@graph",
-          "type": "z.array(BootstrapGraphNodeSchema)",
-          "optional": false,
-          "array": true
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema",
-      "name": "BootstrapGraphNodeSchema",
-      "module": "cat-harness/schemas/bootstrap-graph.ts",
-      "kind": "zod-object",
-      "doc": "One node of the graph. Only the two keys every node carries are required.",
-      "fields": [
-        {
-          "name": "@id",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "@type",
-          "type": "z.union([z.string().min(1), z.array(z.string().min(1)).min(1)])",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
         "z"
       ],
       "exported": true
@@ -25143,7 +24987,7 @@
         },
         {
           "name": "draftedBy",
-          "type": "z.object({ kind: z.string(), id: z.string(), model: z.string().optional() }).strict().optional()",
+          "type": "z.object({ kind: z.string(), id: z.string(), model: ModelIdSchema.optional() }).strict().optional()",
           "optional": true,
           "array": false
         },
@@ -25173,6 +25017,7 @@
         "SUMMARY_STATUSES"
       ],
       "external": [
+        "ModelIdSchema",
         "z"
       ],
       "exported": true
@@ -29442,6 +29287,49 @@
       "refs": [
         "cat-harness/schemas/theme.ts#ThemeLayout"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/theme-by-ref.ts#OwnedStickyTheme",
+      "name": "OwnedStickyTheme",
+      "module": "cat-harness/schemas/theme-by-ref.ts",
+      "kind": "interface",
+      "doc": "One instance-declared sticky theme, with the instance that owns it.",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "theme",
+          "type": "Extract<ResolvedTheme, { kind: \"sticky\" }>",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/theme.ts#ResolvedTheme"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/theme-by-ref.ts#StickyThemeConflict",
+      "name": "StickyThemeConflict",
+      "module": "cat-harness/schemas/theme-by-ref.ts",
+      "kind": "type-alias",
+      "doc": "Why an instance's sticky theme was NOT emitted — each a finding, never a silent drop.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -37133,6 +37021,7 @@
       "external": [
         "ADJUDICATION_SCHEMA_TAG",
         "ADJUDICATOR_KINDS",
+        "ModelIdSchema",
         "z"
       ],
       "exported": true
@@ -41746,14 +41635,6 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema",
-      "to": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphNodeSchema",
-      "via": "@graph",
-      "kind": "field",
-      "optional": false,
-      "array": true
-    },
-    {
       "from": "cat-harness/schemas/carried-note.ts#CarriedNoteSchema",
       "to": "cat-harness/schemas/carried-note.ts#NoteTagsSchema",
       "via": "tags",
@@ -45621,6 +45502,14 @@
       "from": "cat-harness/schemas/theme-art-intake.ts#ThemeArtWarning",
       "to": "cat-harness/schemas/theme.ts#ThemeLayout",
       "via": "layout",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/theme-by-ref.ts#OwnedStickyTheme",
+      "to": "cat-harness/schemas/theme.ts#ResolvedTheme",
+      "via": "theme",
       "kind": "field",
       "optional": false,
       "array": false
