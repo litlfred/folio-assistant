@@ -2,10 +2,10 @@
 /**
  * Reconstruct a published FHIR IG's artefact index.
  *
- * @module scripts/ingest-ig-artifacts
+ * @module folio-assistant-core/scripts/ingest-ig-artifacts
  *
  * ```sh
- * bun run cat-harness/scripts/ingest-ig-artifacts.ts \
+ * bun run folio-assistant-core/scripts/ingest-ig-artifacts.ts \
  *   --source /path/to/gh-pages --kind gh-pages --id smart-trust \
  *   --base https://worldhealthorganization.github.io/smart-trust \
  *   --out smart-trust --materialize-dak
@@ -50,7 +50,7 @@ import {
   type Representation,
   type UnboundSidecar,
   type IgSourceKind,
-} from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+} from "../schemas/fhir-artifact-index.js";
 
 /** The IG publisher's per-artefact representations, by extension. */
 const FORMATS = ["json", "xml", "ttl", "html"] as const;
