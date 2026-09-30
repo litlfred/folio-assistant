@@ -64,6 +64,8 @@ import { z } from "zod";
 
 import { kgNodeLabelShape, type KgNodeLabels } from "./kg-node";
 import { directoryForGraph } from "./cat-harness.js";
+import { BLOCK_KINDS } from "./block-kinds.js";
+import { ProcessElementIdSchema } from "./process-element-id.js";
 
 /** Which aspect of the prose (or of its presentation) a rule governs. */
 export const VOICE_RULE_CATEGORIES = [
@@ -135,15 +137,17 @@ export const VoiceRuleSourceSchema = z
      *
      * **`milnor` was this field's worked example and is no longer one.** Its
      * hallmarks were named after Milnor's exposition without being extracted
-     * from his writing, so `kgRef` was the honest citation at the time. The
+     * from his writing, so `path` was the honest citation at the time. The
      * paper was then ingested and each hallmark traced to a page — the last on
      * 2026-09-21, bean `w0hi` — so all twelve rules now carry a `libraryId`.
      * The voice keeps `provenance: "house"` regardless, because the citations
      * are evidence FOR this project's standard rather than its source; see
-     * {@link VOICE_PROVENANCE}. `technical-writer` is the live `kgRef` case,
+     * {@link VOICE_PROVENANCE}. `technical-writer` is the live `path` case,
      * citing `skills/folio-core/technical-documentation.md`.
      */
-    kgRef: z.string().min(1).optional(),
+    // Named `kgRef` until #1168 B9d (owner, 2026-09-30): it holds a PATH, not
+    // a `{kind, id}` KG reference, and the old name said the other thing.
+    path: z.string().min(1).optional(),
     /**
      * The passage the rule was read from. Required: a citation with no quote
      * cannot be checked without re-reading the source, which is the cost this
@@ -154,10 +158,10 @@ export const VoiceRuleSourceSchema = z
   .refine(
     (src) =>
       (src.libraryId !== undefined && src.sectionId !== undefined) !==
-      (src.kgRef !== undefined),
+      (src.path !== undefined),
     {
       message:
-        "a rule cites EITHER an ingested source (libraryId + sectionId) OR a node of this instance's KG (kgRef) — exactly one, never both and never neither",
+        "a rule cites EITHER an ingested source (libraryId + sectionId) OR a node of this instance's KG (path) — exactly one, never both and never neither",
     },
   );
 export type VoiceRuleSource = z.infer<typeof VoiceRuleSourceSchema>;
@@ -239,7 +243,7 @@ export type VoiceRef = z.infer<typeof VoiceRefSchema>;
  *   the only one: a judgement about exposition, read off a named page of a
  *   named paper, is evidence in exactly the sense that matters here — somebody
  *   else can open the page. The apparatus already exists and is REQUIRED by
- *   {@link VoiceRuleSourceSchema}: a `libraryId` + `sectionId` or a `kgRef`,
+ *   {@link VoiceRuleSourceSchema}: a `libraryId` + `sectionId` or a `path`,
  *   plus the quote. Formalising `evidence` means naming that apparatus as what
  *   the value MEANS, not building a second one.
  * - `house` — a standard THIS PROJECT set for itself. The `milnor` voice is
@@ -333,10 +337,10 @@ export interface VoiceProvenanceFlag {
  */
 export function voiceProvenanceFlags(
   provenance: string,
-  rules: readonly { id: string; source?: { kgRef?: string } }[],
+  rules: readonly { id: string; source?: { path?: string } }[],
 ): VoiceProvenanceFlag[] {
   if (provenance === "house") return [];
-  const inside = rules.filter((r) => r.source?.kgRef !== undefined).map((r) => r.id);
+  const inside = rules.filter((r) => r.source?.path !== undefined).map((r) => r.id);
   if (inside.length === 0) return [];
   return [
     {
@@ -380,11 +384,12 @@ export const VoiceApplicabilitySchema = z
   .object({
     /**
      * BPMN process ids, as `<bpmn:process id>` spells them —
-     * `Process_CrdmRequirements`, not a filename. Resolved against the
-     * diagrams the `cat-harness` graph carries, so a typo is a dangling
-     * reference rather than a voice that quietly never activates.
+     * `Process_CRDM_Requirements`, not a filename (#1168, B8: the element
+     * id, as `calledElement` uses it). Resolved against the loaded diagrams
+     * by `process-refs.test.ts`, so a typo is a dangling reference rather
+     * than a voice that quietly never activates.
      */
-    processes: z.array(z.string().min(1)).min(1).optional(),
+    processes: z.array(ProcessElementIdSchema).min(1).optional(),
     /**
      * The roles this voice addresses — the reader it is written FOR.
      *
@@ -444,6 +449,19 @@ export const VoiceSupersessionSchema = z
 export type VoiceSupersession = z.infer<typeof VoiceSupersessionSchema>;
 
 /** A named voice profile. */
+/**
+ * Artefact kinds a voice may audit, beside block kinds.
+ *
+ * #1168 B8, owner 2026-09-30 (*"union type"*): `appliesTo` was documented as
+ * block kinds while the technical-writer voice named `docs`, `skill`, `readme`
+ * and `specification` — whole artefacts, not blocks. Declared here so a typo
+ * in either vocabulary fails rather than silently auditing nothing.
+ */
+export const VOICE_ARTEFACT_KINDS = ["docs", "skill", "readme", "specification"] as const;
+
+/** One thing a voice audits: a block kind or a declared artefact kind. */
+export const VoiceTargetSchema = z.union([z.enum(BLOCK_KINDS), z.enum(VOICE_ARTEFACT_KINDS)]);
+
 export const VoiceProfileSchema = z.object({
   /**
    * EITHER tag, because a voice skill IS a profile plus the skill half.
@@ -472,10 +490,10 @@ export const VoiceProfileSchema = z.object({
         title: z.string().min(1),
         /** The instance holding it, when not this one. See `VoiceRuleSourceSchema.instance`. */
         instance: z.string().min(1).optional(),
-        /** Absent for a house standard — see `VoiceRuleSourceSchema.kgRef`. */
+        /** Absent for a house standard — see `VoiceRuleSourceSchema.path`. */
         libraryId: z.string().min(1).optional(),
         /** The KG node stating the standard, for a voice with no ingested source. */
-        kgRef: z.string().min(1).optional(),
+        path: z.string().min(1).optional(),
         /** Where the document came from, for a reader who wants the original. */
         url: z.string().url().optional(),
         year: z.number().int().optional(),
@@ -506,8 +524,8 @@ export const VoiceProfileSchema = z.object({
    * answer. A voice that means something else says so.
    */
   overlaySeverity: z.enum(["critical", "major", "minor"]).optional(),
-  /** Block kinds this voice audits. Absent means every kind the folio has. */
-  appliesTo: z.array(z.string().min(1)).optional(),
+  /** What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has. */
+  appliesTo: z.array(VoiceTargetSchema).optional(),
   /**
    * Where this voice's rules come from, epistemically. See
    * {@link VOICE_PROVENANCE} for why it is required and has no default.

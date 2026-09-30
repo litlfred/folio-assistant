@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T12:28:52Z
-updated_at: 2026-09-19T15:49:43Z
+updated_at: 2026-09-30T11:16:57Z
 parent: folio-assistant-zzmr
 ---
 
@@ -288,3 +288,11 @@ So the design is four pieces, and the last two are what "never delete" actually 
 2. `cleanup`, before `rm -rf`, retires it into the retired store.
 3. `restore-staging.ts` carries the retired store across a full replace — unconditionally, NOT gated on open pull requests, since a retired record's PR is closed.
 4. Every removal path is guarded: the slug-collision case refused outright, and any deliberate removal of a retired record requires the explicit confirmation input, the same shape `cleanup-dispatch` already uses.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+_2026-09-30T11:16:57Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

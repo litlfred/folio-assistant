@@ -56,6 +56,7 @@ import { processArrowFindings, schemaArrowFindings } from "./arrow-direction.js"
 import { classifyName, diagramProse, generalDeclarationProse, namedFiles } from "./prose-names.js";
 import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
+import { deriveAlternatives } from "../schemas/tool.js";
 import { tools, toolsOf } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
@@ -114,8 +115,8 @@ import {
   remotePackageDeclarations,
   remotePackageSkills,
 } from "./known-skills.js";
-import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX,  resolveDirectories, instanceDirectoriesForGraph, readDeclaration} from "../schemas/cat-harness.js";
+import { LOCAL_PACKAGES } from "./skill-packages.js";
+import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
@@ -233,12 +234,9 @@ const root = resolve(instanceArg(process.argv.slice(2)) ?? AUDITOR_ROOT);
  * longer exists is worse than none, which is the only reason this is five
  * lines instead of one.
  */
-function ownDirectoryById(root: string, id: string, fallback: string): string {
-  const found = resolveDirectories([{ name: "(local)", root, own: true }]).find(
-    (d) => d.id === id && d.own && d.scope !== "repository",
-  );
-  return found?.absPath ?? join(root, fallback);
-}
+// `ownDirectoryById` moved to `schemas/cat-harness.ts` (2026-09-30) when
+// `content/pipeline/translation-index.ts` became its second caller. The
+// reasoning for the BY-ID lookup travelled with it.
 
 // declared-path-literal: the convention fallback, at the call site — an
 // instance that declares no `processes` directory still needs a sidecar home
@@ -295,6 +293,15 @@ function allUnknown(kind: KgSubjectKind, reason: string): Record<string, KgCrite
  * does instead of silently suppressing five criteria.
  */
 const INSTANCE_RUN = root !== AUDITOR_ROOT;
+
+/**
+ * Where this run's verdicts go: the instance's own `qa` directory, or — for an
+ * instance that declares none, such as bootstrap — the auditor's, under the
+ * instance's stub. `kgQaHomeFor` says why; everything below writes, reads and
+ * sweeps through these two paths and composes no other.
+ */
+const QA_HOME = kgQaHomeFor(root, INSTANCE_RUN ? AUDITOR_ROOT : undefined);
+const KG_QA_TREE = join(QA_HOME.root, "kg-qa");
 
 /**
  * How many criteria this run did not evaluate because they are `repo`-scoped.
@@ -1226,9 +1233,9 @@ function auditSkills(): KgQaReport[] {
  *
  * ## The two states that are not `pass`
  *
- * `n/a` where the property does not apply — a Tool declaring no
- * `alternativeTo` has no alternative to dangle, and recording that as a pass
- * would count 60-odd non-answers as evidence.
+ * `n/a` where the property does not apply — a Tool with no derived
+ * alternative has no choice to explain, and recording that as a pass would
+ * count 100-odd non-answers as evidence.
  *
  * `unknown` for `tool-maintains-in-tree`, ALWAYS, from a checkout: the
  * artefact's presence is a fact about `_site/`, which does not exist here. The
@@ -1265,8 +1272,8 @@ function auditTools(instance?: string): KgQaReport[] {
   const unmet = by(check.unmetContracts);
   const types = by(check.unknownTypes);
   const unsafe = by(check.unsafeArgs);
-  const altDangling = by(check.danglingAlternatives);
-  const altAsym = by(check.asymmetricAlternatives);
+  const unselectable = by(check.unselectableAlternatives);
+  const alternatives = deriveAlternatives(instance === undefined ? tools() : toolsOf(instance));
   const unreadable = new Set(check.unreadableContracts);
 
   const out: KgQaReport[] = [];
@@ -1316,13 +1323,10 @@ function auditTools(instance?: string): KgQaReport[] {
           "tool-args-shell-safe": entry(
             f((unsafe.get(t.id) ?? []).map((r) => ({ detail: `command-line input "${r.port}" is ${r.type}, which can carry a shell payload` }))),
           ),
-          "tool-alternative-resolves": entry(
-            [
-              ...f((altDangling.get(t.id) ?? []).map((r) => ({ detail: `alternativeTo names ${JSON.stringify(r)}, which does not exist` }))),
-              ...f((altAsym.get(t.id) ?? []).map((r) => ({ detail: `alternativeTo is not symmetric: ${JSON.stringify(r)}` }))),
-            ],
-            // `n/a` rather than a pass when there is no alternative declared.
-            (t.alternativeTo ?? []).length > 0,
+          "tool-alternative-selectable": entry(
+            f((unselectable.get(t.id) ?? []).map((r) => ({ detail: `has alternatives ${r.alternatives.join(", ")} and no \`selection\`` }))),
+            // `n/a` rather than a pass when the Tool has no derived alternative.
+            alternatives.has(t.id),
           ),
           "tool-maintains-in-tree":
             (t.maintains ?? []).length === 0
@@ -2298,7 +2302,7 @@ function sidecarPath(r: KgQaReport): string {
   const stem = r.subject.path ? basename(r.subject.path).replace(/\.(bpmn|dmn|json|md)$/, "") : r.subject.id;
   const name = r.subject.kind === "role" || r.subject.kind === "requirement" ? r.subject.id : stem;
   const dir = r.subject.path ? dirname(join(root, r.subject.path)) : dirFor[r.subject.kind];
-  return kgQaSidecarPath(root, dir, name);
+  return kgQaSidecarPath(root, dir, name, KG_QA_TREE);
 }
 
 function serialise(r: KgQaReport): string {
@@ -2565,11 +2569,12 @@ const manifest: KgQaManifest = {
     engine_version: ENGINE_VERSION,
   },
 };
-const manifestPath = join(root, KG_QA_MANIFEST_PATH);
+const manifestPath =
+  QA_HOME.by === "hosted" ? join(QA_HOME.root, "kg-qa.manifest.json") : join(root, KG_QA_MANIFEST_PATH);
 const manifestText = `${JSON.stringify(manifest, null, 2)}\n`;
 if (check) {
   const current = existsSync(manifestPath) ? readFileSync(manifestPath, "utf-8") : undefined;
-  if (current !== manifestText) stale.push(KG_QA_MANIFEST_PATH);
+  if (current !== manifestText) stale.push(relative(root, manifestPath));
 } else {
   mkdirSync(join(manifestPath, ".."), { recursive: true });
   writeFileSync(manifestPath, manifestText);
@@ -2616,7 +2621,7 @@ function relocateSidecars(
   root: string,
   targets: ReadonlyMap<string, string>,
 ): Relocation[] {
-  const orphans = sweepOrphans(root, new Set(targets.values()));
+  const orphans = sweepOrphans(root, new Set(targets.values()), KG_QA_TREE);
   const byIdentity = new Map<string, OrphanSidecar[]>();
   for (const o of orphans) {
     // Condition 1 and 2: confirmed gone, and carrying an identity to match on.
@@ -2710,7 +2715,7 @@ for (const r of reports) {
 // process is simply not discovered from this root. Deleting on that
 // evidence would destroy a verdict to hide a declaration gap.
 // `deletion-requires-confirmation` — the agent reports, a person decides.
-const orphans = sweepOrphans(root, written);
+const orphans = sweepOrphans(root, written, KG_QA_TREE);
 if (orphans.length > 0) {
   const gone = orphans.filter((o) => o.subjectExists === false);
   const present = orphans.filter((o) => o.subjectExists === true);

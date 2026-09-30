@@ -527,10 +527,18 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * for why it lives on the directory and why the methodologies take
    * `analyst`.
    */
-  theme?: string;
+  theme?: ThemeRef;
 }
 
 /** An instance's root declaration. */
+/** How an instance's values are addressed in Liquid — {@link CatHarnessDeclaration.liquid}. */
+export interface LiquidPrefix {
+  /** The first path segment(s); default the instance's `name`. */
+  prefix?: string;
+  /** Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher). */
+  passThrough?: boolean;
+}
+
 export interface CatHarnessDeclaration extends KgNodeLabels {
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
@@ -676,6 +684,21 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * than computed, and why it is optional.
    */
   needs?: string[];
+  /**
+   * The Liquid prefix this instance's VALUES are addressed by in authored
+   * text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the
+   * platform resolves it or passes it through.
+   *
+   * Owner, 2026-09-30 (bean `kott`, issue #1564): *"{{ site.data...}} is
+   * declared for fhir-harness only... it declares its site prefix. bootstrap is
+   * {{ bootstrap.blah }} ... so existing IG publisher works as is."*
+   *
+   * **Absent means the default: the prefix is the instance's `name`, resolved
+   * by the platform.** `passThrough: true` hands the prefix to the downstream
+   * engine untouched — fhir-harness declares `site.data`, which Jekyll and the
+   * IG Publisher resolve themselves.
+   */
+  liquid?: LiquidPrefix;
 
 
   /**
@@ -978,8 +1001,8 @@ export const VisualisationSchema = z.object({
    * nowhere — which is `reader-filter.ts`'s rule on another surface.
    */
   hidden: z.boolean().optional(),
-  /** The tile's theme. Absent means the directory's, then the instance's. */
-  theme: z.string().min(1).optional(),
+  /** The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's. */
+  theme: ThemeRefSchema.optional(),
   /**
    * WHICH GLYPH the tile wears, by NAME. Absent falls back to the generic
    * node-graph glyph every tile shared before this field existed.
@@ -1157,12 +1180,63 @@ export const SubgraphCoverageSchema = z.object({
    * belongs here.
    */
   serialisations: z.string().min(1).optional(),
+  /**
+   * The BPMN process that GOVERNS this directory — a diagram's basename,
+   * without `.bpmn`, as `document-ingestion`.
+   *
+   * Owner, 2026-09-29: *"show highlevel (sub)process bpmn on the uploads
+   * page."* The uploads page is the generated subgraph README, and this is the
+   * field that tells it which diagram to draw.
+   *
+   * ## DECLARED, and the temptation not to is the whole reason it exists
+   *
+   * `document-ingestion.bpmn` opens on a start event named *"A file lands in
+   * uploads/"*. The directory is right there in the prose, so the link could
+   * be inferred by matching the path against every start event's name — and
+   * that is exactly the inference this repository keeps paying for. An event's
+   * name is EDITORIAL text: rewording it to *"a source is dropped"* would be
+   * an improvement to the diagram and would silently unlink the page, with no
+   * gate able to tell the unlinking from a directory that never had a process.
+   * The same argument `check-subgraph-coverage`'s header already makes about
+   * `visualiser`: *a declaration inside the file is the contract*.
+   *
+   * It is also many-to-one in the direction inference cannot see. A diagram
+   * may touch several directories (`document-ingestion` reads `uploads/` and
+   * writes `library/`) while only ONE of them is the directory the process is
+   * *about*. Name-matching would give `library/` the same claim.
+   *
+   * ## Absent means NOT DECLARED, never "no process"
+   *
+   * The standing rule, and the same one `readOnly` states two fields down.
+   * A directory that says nothing has not asserted that no process governs it;
+   * it has not answered. So a directory declaring none gets no process section
+   * on its README and is **not** a finding — unlike `visualiser`, this is not
+   * an obligation every directory owes, and treating silence as a gap would
+   * put 20-odd rows in a report that means nothing by them.
+   *
+   * What IS a finding is a declared name that resolves to no diagram:
+   * somebody said, and what they said points at nothing.
+   * `check:subgraph-coverage` reports that as `unresolvable`, naming the
+   * directory and the process, and the generated README says *could not
+   * determine* rather than quietly dropping the section — a printed absence
+   * and a real absence must not look alike.
+   *
+   * ## No `exempt.process`
+   *
+   * A waiver records a considered "we are not doing this" against an
+   * obligation. There is no obligation here, so there is nothing to waive:
+   * declaring nothing already IS the silence, and an `exempt` entry would be a
+   * second spelling of it, free to disagree.
+   */
+  process: z.string().min(1).optional(),
   exempt: z
     .object({
       visualiser: z.string().min(1).optional(),
       docs: z.string().min(1).optional(),
       skill: z.string().min(1).optional(),
       // NO `serialisations` — see the field above. Not an omission.
+      // NO `process` either, and for the opposite reason: there is no
+      // obligation to waive. Declaring nothing already means "not declared".
     })
     .optional(),
 });
@@ -1206,9 +1280,24 @@ export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
 export const VISUALISER_KINDS = ["folio"] as const;
 export type VisualiserKind = (typeof VISUALISER_KINDS)[number];
 
+/**
+ * How a directory's tile looks — everything a {@link Visualisation} carries
+ * except the page it opens.
+ *
+ * #1168 B7a-2b, owner 2026-09-24 (*"split: page derived"*): the PAGE is read
+ * from the viewer pages, each of which names the directories it draws
+ * (`scripts/viewer-declarations.ts`); a directory no longer points at its
+ * viewer. What stays with the directory is presentation, which is the
+ * directory's own business.
+ */
+export const TileSchema = VisualisationSchema.omit({ ref: true });
+export type Tile = z.infer<typeof TileSchema>;
+
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
+  /** How this directory's tile looks. See {@link TileSchema}. */
+  tile: TileSchema.optional(),
   /**
    * HOW this graph is shown, and what can be done to it.
    *
@@ -1392,8 +1481,12 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * reader, and that reader is what the site build, the gates and every
    * consumer of a `harness.json` go through. An unknown theme is a rendering
    * finding, not a parse error.
+   *
+   * A `ThemeRef` since #1168 B8 (owner, 2026-09-30: *"migrate to ThemeRef"*):
+   * still open — the shape is `{instance?, themeId}`, not an enum — but a
+   * cross-instance theme now says whose theme it is.
    */
-  theme: z.string().min(1).optional(),
+  theme: ThemeRefSchema.optional(),
 });
 
 /** As {@link GraphNodeDirectorySchema}, for an instance's own directories. */
@@ -2255,6 +2348,30 @@ export const CatHarnessDeclarationSchema = z.object({
   navbarIcons: NavbarIconsSchema.optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
+  /**
+   * The address this instance's IRIs are minted under, BEFORE the version —
+   * bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits.
+   *
+   * Not `canonicalUrl`, and the difference is the version. `canonicalUrl`
+   * says where documents are PUBLISHED, and `kg-export` mints a document's
+   * `@id` from it; `iriBase` says what the vocabulary's identifiers ARE, and
+   * those carry the release: `<iriBase><version>/…` for anything an agent
+   * reads (namespaces, schema `$id`s), `<iriBase>v<major>/…` for pages a
+   * person reads (owner, 2026-09-29). `releaseIris` in `bootstrap-tools/schemas/release-iri.ts`
+   * composes both; `iri:sync` keeps every literal copy at the declared version.
+   */
+  iriBase: z.string().url().optional(),
+  /**
+   * The instance's Node Kinds, declared: each `$schema` tag its files may
+   * carry → the JSON Schema that defines it (an IRI, or a path relative to
+   * the declaration). Bootstrap's field (`graph.ts`, owner 2026-09-29: the
+   * schema-reference table "should be in bootstrap"), inherited here because
+   * this declaration is a Subkind of bootstrap's. The graph-kind registry's
+   * `nodeSchemas` keeps the harness's TypeScript-backed forms (`validator`,
+   * `shape`); this one names only published schemas, which is all a reader
+   * with nothing installed can follow.
+   */
+  nodeSchemas: z.record(z.string().min(1), z.string().min(1)).optional(),
   previewUrl: z.string().url().optional(),
   publication: PublicationSchema.optional(),
   topology: TopologySchema.optional(),
@@ -2310,6 +2427,14 @@ export const CatHarnessDeclarationSchema = z.object({
    * in this schema, and a path would break the moment a directory moved.
    */
   needs: z.array(z.string().min(1)).optional(),
+  /** See {@link CatHarnessDeclaration.liquid}. */
+  liquid: z
+    .object({
+      prefix: z.string().regex(/^[a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)*$/, "a dotted, lower-case Liquid path").optional(),
+      passThrough: z.boolean().optional(),
+    })
+    .strict()
+    .optional(),
   /**
    * The package identity an EXTERNAL consumer depends on — reverse-DNS.
    *
@@ -3548,6 +3673,36 @@ export interface ResolvedDirectory extends ContentDirectory {
  */
 export const RENAMED_DIRECTORY_IDS: Readonly<Record<string, string>> = { "cat-harness": "skills" };
 
+/**
+ * The absolute path of a directory this instance declares by `id`, or the
+ * convention fallback joined to `root`.
+ *
+ * **`scope: "repository"` entries are excluded on purpose.** An instance may
+ * declare two entries with the same `path` and different scopes — this
+ * repository declares `docs` (instance-scoped, resolving under
+ * `cat-harness/`) and `root-docs` (`scope: "repository"`, resolving under the
+ * REPOSITORY root). They are different directories wearing one path, so a
+ * caller asking for "this instance's own `docs`" must not be handed the
+ * repository's.
+ *
+ * Lifted out of `scripts/kg-audit.ts` (2026-09-30) when a second caller
+ * appeared. Its reasoning there is kept because it is the reason the lookup is
+ * BY ID rather than by kind: *"a by-kind lookup that happens to work while one
+ * directory exists is a call that starts throwing the day a second is
+ * declared, and it would be asking the wrong question even while it worked."*
+ * The `docs`/`root-docs` pair is that second directory, and it exists now.
+ *
+ * @param root the instance root to resolve against
+ * @param id the declared entry's `id`
+ * @param fallback a path relative to `root`, used when nothing is declared
+ */
+export function ownDirectoryById(root: string, id: string, fallback: string): string {
+  const found = resolveDirectories([{ name: "(local)", root, own: true }]).find(
+    (d) => d.id === id && d.own && d.scope !== "repository",
+  );
+  return found?.absPath ?? join(root, fallback);
+}
+
 export function resolveDirectories(
   chain: Array<{ name: string; root: string; own?: boolean }>,
   registry: GraphKindRegistry = defaultGraphKinds,
@@ -4588,6 +4743,44 @@ export function localeDirIn(
 }
 
 /** Every directory this instance declares as holding `graph`, in declaration order. */
+/**
+ * Where an instance's `kg-audit` results live: the directory holding its
+ * `kg-qa/` tree and its `kg-qa.manifest.json`.
+ *
+ * Three answers, and the caller is told which, as {@link translationsHomeFor}
+ * does for translations:
+ *
+ * - **own** — the instance declares a `qa` directory; its results live there.
+ * - **hosted** — it declares none, and `hostRoot` (the auditor's instance)
+ *   does; the results live in the host's `qa` directory under the instance's
+ *   stub, e.g. `cat-harness/test/results/bootstrap/`. This is how bootstrap
+ *   keeps its QA sidecars out of its own tree (owner, 2026-09-29, decision 2 of
+ *   bean `r3gy`): a verdict ABOUT bootstrap is harness output, and bootstrap is
+ *   the layer that must read cleanly with no harness present.
+ * - **convention** — neither declares one; `<instance>/test/results/`.
+ *
+ * A hosted home sits BESIDE the host's own `kg-qa/` tree, never inside it, so
+ * the host's orphan sweep cannot claim another instance's sidecars as its own.
+ */
+export function kgQaHomeFor(
+  instanceRoot: string,
+  hostRoot?: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): { root: string; by: "own" | "hosted" | "convention" } {
+  const own = matchingDirectories(instanceRoot, "qa", registry)[0];
+  if (own !== undefined) return { root: own.absPath, by: "own" };
+  if (hostRoot !== undefined && resolve(hostRoot) !== resolve(instanceRoot)) {
+    const host = matchingDirectories(hostRoot, "qa", registry)[0];
+    const decl = readDeclaration(instanceRoot);
+    if (host !== undefined && decl !== undefined && decl !== null) {
+      return { root: join(host.absPath, artefactStub(decl)), by: "hosted" };
+    }
+  }
+  // declared-path-literal: the base case for an instance that declares no `qa`
+  // directory and is hosted by nobody — the same convention KG_QA_RESULTS_DIR names.
+  return { root: join(instanceRoot, "test", "results"), by: "convention" };
+}
+
 function matchingDirectories(
   root: string,
   graph: string,
@@ -5172,3 +5365,4 @@ import "./folio-graph-kind.js";
 // Core's `glossary` kind, registered the same way and for the same reason
 // (issue: owner 2026-09-23, "put glossary into folio-assistant-core").
 import "./glossary-graph-kind.js";
+import { ThemeRefSchema, type ThemeRef } from "./theme";

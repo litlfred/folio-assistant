@@ -65,7 +65,7 @@ import {
   readDeclaration,
   workPlanGraphsIn,
 } from "../../schemas/cat-harness";
-import { filesSection, processesSection } from "./readme-graph-sections";
+import { filesSection, processesSection } from "../../../bootstrap-tools/scripts/readme-graph-sections.ts";
 
 // ── Section contract ────────────────────────────────────────────────────────
 

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j6t3
 title: 'INSTALL SKILLS AS TOOLS AT RENDER TIME: 34 skills declare user_invocable, 4 are reachable — options for Claude Code, Antigravity and any MCP host'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T21:42:35Z
-updated_at: 2026-09-21T23:15:22Z
+updated_at: 2026-09-30T11:02:04Z
 parent: folio-assistant-vuip
 ---
 
@@ -114,11 +114,11 @@ ruling that should not be quietly reopened by an implementation.
 
 ## Done when
 
-- [ ] Each option has a cost in files-touched and hosts-covered, measured
-- [ ] The 4-of-34 number is RE-MEASURED rather than quoted from this bean
-- [ ] Whatever ships is derived from `user_invocable`, so the list cannot
+- [x] Each option has a cost in files-touched and hosts-covered, measured (2026-09-30, below)
+- [x] The 4-of-34 number is RE-MEASURED rather than quoted from this bean — 40 declared, 3 reachable (2026-09-30)
+- [x] Whatever ships is derived from `user_invocable`, so the list cannot
       drift from the declarations again
-- [ ] The owner's "reminder now, gate later" ruling is either honoured or
+- [x] The owner's "reminder now, gate later" ruling is either honoured or
       explicitly revisited with them — never stepped over by a tool that
       happens to enforce
 
@@ -234,3 +234,64 @@ declaring `user_invocable`") would not produce it, and would not notice.
 Worth folding into this bean's options rather than opening a fifth: whatever
 generates commands has to reconcile BOTH directions, or the next count is
 wrong again in the other one.
+
+_2026-09-30T08:27:11Z_ — Claimed by claude/magical-archimedes-4qkfxp-08u4 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## RE-MEASURED 2026-09-30 — 40 declared, 3 reachable; and a sixth option the list missed
+
+Issue #1545.
+
+Measured on `main` by reading every `.md` under a `skills/` directory for `^user_invocable: true` and matching each `name:` against `.claude/commands/<name>.md` and `.claude/skills/<name>/`:
+
+| | 2026-09-21 | 2026-09-22 | **2026-09-30** |
+|---|---|---|---|
+| skills declaring `user_invocable: true` | 34 | 35 | **40** |
+| reachable as a slash command, by name | "4" | 3 | **3**: `goal-review`, `staging-review`, `watch` |
+| a host skill directory (`.claude/skills/<name>/SKILL.md`) | — | — | **1**: `interaction-modality` |
+| a command with no declaration behind it | — | 1 | **1**: `prepare-merge` (still no front matter) |
+
+The gap is **37**, up from 32, and it grows by about one per working day. That rate is the argument against any hand-kept list.
+
+### Two facts that change the options
+
+1. **The skill files are already in Claude Code's SKILL.md shape.** Each carries `name`, `description` and `allowed-tools` front matter. For Claude Code, option C is therefore a pointer per skill (a stub or a link at `.claude/skills/<name>/SKILL.md`), not a format conversion. Two things are **not verified**: whether Claude Code honours this repository's `user_invocable` key or its own spelling, and whether it follows a symlink there. Both need a one-skill trial before anything is generated.
+2. **MCP has a primitive for exactly this, and option B picked the wrong one.** Option B says *"a human cannot type `/name` at an MCP tool, so it serves the agent rather than the person"*. That is true of *tools*. MCP **prompts** are the protocol's user-invoked primitive: a host lists them and a person picks one. Claude Code exposes them as `/mcp__<server>__<prompt>` slash commands. `cat-harness/src/` registers **zero** prompts today. They also keep the owner's *"keep tools and skills separate!"* ruling by construction, because a prompt is not a Tool node and nothing is written into `tools/`.
+
+### F. Serve `user_invocable` skills as MCP prompts
+
+*For:* one implementation, derived from the same `skill_list` the server already has. Host-agnostic for every MCP host that supports prompts. A person can type it. No generated files to go stale.
+*Against:* the name is namespaced (`/mcp__folio-assistant__coordinate`, not `/coordinate`). Prompt support varies by host, and Antigravity's is **not verified**. It only reaches a repository whose `.mcp.json` registers the server. `init-folio` writes that for every folio, but **this platform repository's own root `.mcp.json` does not register it** (measured today), so its own sessions would not see the prompts.
+
+### Cost, measured in files and hosts
+
+| option | files touched | generated files that can go stale | hosts reached |
+|---|---|---|---|
+| **A** generate `.claude/commands/` | 1 generator + 1 gate | 40, one per skill | Claude Code |
+| **C** generate `.claude/skills/<name>/SKILL.md` | 1 generator + 1 gate | 40 | Claude Code (other hosts need their own emitter) |
+| **B** an invoke *tool* | 1 server module + test | 0 | every MCP host, agent-only |
+| **F** MCP *prompts* | 1 server module + test (+1 line in root `.mcp.json`) | 0 | every MCP host with prompt support, person-invocable |
+| **D** hook enforcement | — | — | owner ruled "reminder now, gate later"; not reopened here |
+| **E** installable bundle | a manifest + publish step | 1 | distribution, not reachability |
+
+Recommendation, which the owner may overrule: **F as the spine, and A for the short names.** Both are derived from `user_invocable`, and one gate reconciles both directions: a declaration with no surface, and a surface (`prepare-merge`) with no declaration. That gate is Done-when clause 3.
+
+Also found while measuring, and fixed separately: the root `.mcp.json`'s two server paths were dead (bean `d4m4`, PR #1544).
+
+## BUILT 2026-09-30 — F + A, on the owner's choice
+
+The owner chose **"F + A (Rec.)"** on 2026-09-30.
+
+- **F** — `cat-harness/src/tools/skill-prompts.ts`: `userInvocableSkills()` is the one derivation, and `registerSkillPrompts()` registers each skill as an MCP **prompt**. It is registered beside `skill_fetch` in the document adapter. Checked end to end: the real server started over stdio lists **41** prompts, and `getPrompt("coordinate")` returns the skill's own body. No tool is registered and nothing is written into `tools/`, which keeps *"keep tools and skills separate!"*.
+- **A** — `cat-harness/scripts/gen-skill-commands.ts` (`skill:commands`, `skill:commands:check`) writes `.claude/commands/<name>.md` as a **pointer** to the skill, never a copy. It reports four findings: missing, stale, orphaned (its own output, which it removes) and **undeclared** (a hand-written command with no declared skill, reported and never touched). Falsified before the fix: 37 missing plus `prepare-merge` undeclared, exit 1. It is a CI gate and the first step of `skill:register`'s chain, since a new `user_invocable` skill now owes a command.
+- **`prepare-merge`** gained the front matter it never had (`name`, `description`, `user_invocable: true`), so the command and the declaration now agree.
+- **Clause 4:** the ruling is honoured, not stepped over. Nothing here gates how an agent asks; the only gate checks the *set* of declarations against the set of commands.
+
+**Deliberately not decided here.** All 41 declared skills get a command, including the watchers the 2026-09-21 tiering called noise. The declaration is the source of truth. A skill that should not be in the menu should stop declaring `user_invocable`, and that is the owner's call per skill; this generator will not hide what a skill declares.
+
+- [x] The root `.mcp.json` registers the folio-assistant server, so this repository's own sessions get the prompts. Waits on PR #1544, which edits the same file.
+
+## Summary of Changes
+
+- **F** (MCP prompts) and **A** (generated `.claude/commands/` pointers, with a two-way check) landed in PR #1546, merged as `54e38c5`. `prepare-merge` now declares itself.
+- The root `.mcp.json` now registers the `folio-assistant` server (`bun run cat-harness/src/index.ts --stdio --repo .`), so this repository's own sessions get the prompts. Started with that exact command, it lists **42** prompts, and `getPrompt("coordinate")` returns the skill's body. `check:command-paths` judges the new `args` path, which resolves.
+- Every Done-when box is ticked. The owner's "reminder now, gate later" ruling was honoured: nothing here gates how an agent asks.

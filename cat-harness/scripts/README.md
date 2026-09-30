@@ -1,0 +1,23 @@
+<!-- kg:subgraph:begin -->
+# cat-harness-scripts
+
+The platform's executable surface -- generators, checkers and the gate runner. THE LARGEST UNDECLARED DIRECTORY IN THE REPOSITORY until 2026-09-22 (bean `ylj7`): it holds more code than every declared directory here put together, and nothing declared it, so every consumer fanning out over declared directories skipped it and reported a clean run. Declared where it is rather than moved: these are ENTRY POINTS, named by path in `package.json` and in the CI workflows, which `check:ci-invocations` and `check:command-paths` exist to guard -- so a relocation is a large invocation surface for nothing the declaration does not already buy.
+
+Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-scripts`, holding `code`.
+
+_403 files directly here, too many to list: 283 .ts, 44 .sh, 33 .bat, 26 .py, 14 .json, 1 .txt, 1 .ps1, 1 .mjs._
+
+| file | what it is | used by |
+|---|---|---|
+| [`ci/`](ci/) | 1 file | |
+| [`docker-latex-build/`](docker-latex-build/) | 3 files | |
+| [`eval/`](eval/) | 2 files | |
+| [`git-hooks/`](git-hooks/) | 5 files | |
+| [`knot-plots/`](knot-plots/) | 10 files | |
+| [`lib/`](lib/) | 10 files | |
+| [`partition/`](partition/) | 2 files | |
+| [`render-tex/`](render-tex/) | 2 files | |
+| [`templates/`](templates/) | 1 file | |
+| [`tests/`](tests/) | 479 files | |
+| [`translation/`](translation/README.md) | 14 files | |
+<!-- kg:subgraph:end -->

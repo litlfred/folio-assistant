@@ -39,6 +39,19 @@ forces the harness to claim one it does not have.
 So the general object is **an instance with directories, each holding a
 graph**. `folio` is one graph kind among several.
 
+## Node Kinds are declared: `nodeSchemas` (owner, 2026-09-29)
+
+An instance lists every `$schema` value its files carry, and the published
+schema that defines it, in its declaration's **`nodeSchemas`** — a path
+relative to the declaration, or an IRI for a published standard. It is
+bootstrap's field (`KnowledgeGraphDeclarationSchema` in `graph.ts`), so a
+reader with nothing installed can go from a file's `$schema` to its Node
+Schema without knowing any harness. The graph-kind registry's `nodeSchemas`
+is a different, harness-side table: it maps a tag to a TypeScript `validator`
+or `shape`, which only a harness can run. `graph.test.ts` fails on a bootstrap
+file whose `$schema` is not declared, and on a declared local schema that does
+not fix that very tag.
+
 ## The graph kinds
 
 The vocabulary is **open**, and split across two layers.
@@ -140,6 +153,8 @@ decides it.
 | `uploads` | **harness** | the incoming queue — raw files as dropped, before ingestion. NOT L1, and not greppable as corpus. | no |
 | `catalogue` | **harness** | a remote catalogue modelled BY REFERENCE — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), and there is **no default**. Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is. Shape in `folio-assistant-core/schemas/catalogue.ts`. | no |
 | `fhir-artifact-index` | **harness** | the artefact index of a published FHIR Implementation Guide, RECONSTRUCTED from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of. A SIBLING of `catalogue`, not a flavour of it: a catalogue node is a container or an item, while a FHIR artefact is a `resourceType` at a canonical URL published in several representations at once, in a versioned package, against a FHIR version. Shares `MaterializationSchema` with `catalogue`. Read with the [`ig-artifact-ingestion`](ig-artifact-ingestion.md) skill; shape in `folio-assistant-core/schemas/fhir-artifact-index.ts`. | no |
+| `ig-metadata-index` | **harness** | the IG Publisher's OWN metadata exports for one published IG, harvested verbatim — `valueset-ref-list.json`, `codesystem-ref-list.json` and `usage-stats.json`. A SIBLING of `fhir-artifact-index`, not an extension of it, and the line between them is the line between a RECONSTRUCTION and a TRANSCRIPTION: that index answers *what artefacts does this IG contain*, assembled from four partial views because no IG publishes such an index, while this answers *what did the toolchain say about them*, read from three files the IG does publish. Registered 2026-09-30 on the owner's ruling (bean `rjug`, Option B); Option A would have hung a `metadataExports` block off the index, and the bean's own objection to it is why it lost — *"Risks making the index a bag."* `derived`: it does not stand on its own, and re-harvesting an unchanged IG gives the same file back — the clause that separates it from `binary-release`, where re-running produces a different release. Two measured findings from bean `nsbb` are carried as SHAPE rather than prose, because both are absences that must not read as zeros: `uses` is declared-and-never-populated in both IGs measured (a three-state `usesState`, where a bare array would erase the finding), and nothing exports Library / PlanDefinition / Measure edges at all (`IG_METADATA_UNREACHED_TYPES`, so silence over the decision-logic core reads as uninformative rather than clean). Shape in `schemas/ig-metadata-index.ts`. | no |
+| `binary-release` | **harness** | published binary releases — one `folio-binary-release/v1` document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. **Never the bytes**: the schema is strict throughout. Registered 2026-09-30 on the owner's ruling (bean `rjug`, Option A); Option B was reusing `materialization`, and bean `gpdo`'s `compiled` purpose landing since has sharpened that mismatch rather than softening it — all four materialization purposes are purposes of A COPY THIS INSTANCE HOLDS, while a release is a publication UPSTREAM that stays true after every local copy is gone. The two compose rather than substitute. `state`: the release pipeline writes it, and re-running produces a DIFFERENT release rather than the same one again, which is why this is not `derived` although `ig-metadata-index` above is. `recordsWork: false` — a published release is a completed fact, not something anybody is partway through. The case it exists for is the deploy purge: after the WHO deploy phase deletes its >100 MB files, nothing else anywhere records that they existed, so a purged asset must still say where to fetch it and why it went — a removal with no recorded reason cannot be told from an accident. Shape in `schemas/binary-release.ts`. | no |
 | `library` | **harness** | L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where scanned, `ocr/page-NNN.txt`. | no |
 | `voices` | **harness** | editorial voice profiles — one JSON each, `"$schema": "folio-voice/v1"`. Every rule cites its source. **Opt-in**: shipping a voice does not apply it. | no |
 | `themes` | **harness** | themes an instance DERIVED from a source it holds — a served stylesheet, or a style guide's stated rules. One Theme node each, carrying `kind: sticky \| webpage \| publication`; the palette vocabulary is shared across every kind and only the geometry varies. Every value cites where it was measured. NOT the platform's own twelve themes, which are furniture in `cat-harness/schemas/themes.ts` — a palette read off a WHO style guide is subject matter. | no |
@@ -661,6 +676,48 @@ What is still true and worth reading off it: its `cat-harness` id points at
 declares nothing it does not have. A `library` entry appears in `who-iris`'s
 declaration only when the corpus moves there, because a declared-but-absent
 directory makes every consumer scan nothing and report a clean run over it.
+
+## Authoring an entry — the checklist
+
+The rules are argued elsewhere in this skill and its neighbours; this is the
+list to run down when you add or edit a `directories[]` entry, with where each
+one is argued.
+
+1. **`id`, `path`, `graphKinds`** — required. Refer to the entry by `id`
+   everywhere else; **ids are stable, paths are not** (§"Declare what exists",
+   §"Inheritance"). Pick each kind by what a process does with it
+   ([`content-context-and-state-graphs`](content-context-and-state-graphs.md)).
+2. **`title`** — a short noun phrase a reader would put on a tab. It is the
+   directory README's heading; absent, the heading falls back to the id and
+   `subgraph-readmes` records a `no-title` finding.
+3. **`description`** — one or two sentences **for a reader**: what the
+   directory holds and what it is for, **60 words at most**
+   (`DESCRIPTION_WORDS`, finding `long-description`). It is printed under the
+   README heading. History, rulings, measurements and argument go in a
+   `_description_comment` on the same entry (the `_<field>_comment` convention
+   the entries already use) — `_` keys are annotations every loader drops
+   (§"Node schemas, one per `$schema` family").
+4. **Declare only what exists**, or say why not with `absent: { reason }`.
+5. **`coverage`** — the `skill` that governs it, the `docs` that say what it is
+   for, the `visualiser` that renders it; an opt-out carries its reason
+   (`SubgraphCoverageSchema`). Without a skill the directory is unreachable
+   by an agent even where a person can read it.
+6. **The files inside declare what they are** — front matter, a `$schema`, a
+   leading comment — never an extension or a location
+   (§"A sub-sub-graph", §"Every other marker"). The README's "what it is"
+   column reads exactly that, so a file that says nothing shows as a gap.
+7. **Generated or authored — say which, in the file.** A generated file
+   carries the markers of the region it owns
+   ([`readme-sections`](readme-sections.md)) or a header naming the command
+   that wrote it, is never hand-edited, and has a `--check` twin in CI.
+8. **A missing fact is a QA finding, never a blank or a guess** — the three
+   states of §"Three states, as everywhere else here". Record it in a
+   committed sidecar under `test/results/`; do not fill it with a plausible
+   default.
+9. **Then regenerate**: `bun run readme:subgraphs` renders the directory's
+   README from this entry ([`liquid-templates`](liquid-templates.md)), and
+   `bun run kg:export` publishes the entry as a Directory node
+   ([`kg-export`](kg-export.md)).
 
 ## Naming — a self-identifying declaration, stub-named artefacts (STRICT)
 

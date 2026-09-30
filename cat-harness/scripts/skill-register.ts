@@ -74,10 +74,11 @@
  * **Only an isolated run of one check against a known tree measures anything**,
  * which is why the table below cites per-check runs and not a `gates` summary.
  *
- * ## The six, each measured alone, red before and green after
+ * ## The seven, each measured alone, red before and green after
  *
  * | writer | the check it clears |
  * |---|---|
+ * | `skill:commands` | `skill:commands:check` — added 2026-09-30 (`j6t3`): red with 37 missing and one undeclared, green after |
  * | `skills:docs` | `skills:docs:check` |
  * | `glossary:page` | `check:glossary` |
  * | `docs:auto` | `docs:auto:check` |
@@ -204,6 +205,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { kgDirectories } from "./known-skills.js";
+import { packageDirsIn } from "./skill-topics.js";
 import { buildQaResult, writeQaResult } from "./qa-results.js";
 
 /**
@@ -243,7 +245,7 @@ export interface SkillPackage {
  * one key that keeps coming back. A key retired for a graph kind this command
  * does not touch has no business here.
  */
-const STRIPPABLE = ["roles"] as const;
+const STRIPPABLE = ["roles", "package"] as const;
 
 /**
  * Skill packages, found in the directories the INSTANCE_ROOT DECLARES.
@@ -267,9 +269,8 @@ const STRIPPABLE = ["roles"] as const;
 export function skillPackages(instance: string = INSTANCE_ROOT): SkillPackage[] {
   const out: SkillPackage[] = [];
   for (const graph of kgDirectories(instance)) {
-    for (const d of readdirSync(graph.absPath, { withFileTypes: true })) {
-      if (!d.isDirectory()) continue;
-      const dir = join(graph.absPath, d.name);
+    for (const d of packageDirsIn(graph.absPath)) {
+      const dir = d.dir;
       const manifest = join(dir, "package-manifest.json");
       if (!existsSync(manifest)) continue;
       const parsed = JSON.parse(readFileSync(manifest, "utf-8")) as { skills?: string[] };
@@ -474,6 +475,11 @@ export interface Step {
  * correct pairing. A convention test can enforce a defect.
  */
 export const STEPS: readonly Step[] = [
+  {
+    write: ["skill:commands"],
+    verify: ["skill:commands:check"],
+    because: "a skill declaring `user_invocable: true` owes a slash command (bean `j6t3`)",
+  },
   {
     write: ["skills:docs"],
     verify: ["skills:docs:check"],

@@ -44,25 +44,65 @@
  *   bun run voices:viz          # write
  *   bun run voices:viz:check    # fail if either artefact is stale
  */
-import { rmSync } from "node:fs";
-import { basename, join } from "node:path";
+import { existsSync, rmSync } from "node:fs";
+import { basename, join, relative, sep } from "node:path";
 
 import { readVoicesGraph, type VoicesGraph } from "./voices-graph.ts";
 import { orphanSubjectPages, viewerPlacement } from "./gen-schema-viz.ts";
 import {
   directoriesForGraph,
+  instanceRootsIn,
   readDeclaration,
   repoRootFor,
   siteDirFor,
+  sourceLinks,
 } from "../schemas/cat-harness.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { withRenders } from "./viewer-declarations.js";
+import { libraryResolver, type LibraryResolver } from "./lib/library-links.ts";
+import { SKILL_PAGES_DIR, skillPagesOf } from "./lib/skill-pages.ts";
+import { detectRepoUrl } from "../src/core/git-refs.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "voices-viewer";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
 
-/** The projection. Everything the reader found; it is already small. */
-export function projection(g: VoicesGraph): unknown {
+/**
+ * The projection. Everything the reader found; it is already small.
+ *
+ * `links`, when given, resolves a LIBRARY citation to the three places the
+ * owner asked a library reference to go (bean `qgjh`, `lib/library-links.ts`):
+ * the viewer opened on the item, the item's README, and its upstream record.
+ * Each rule gets `links` only where its citation resolves, so an unresolved one
+ * stays text on the page rather than becoming a 404.
+ */
+export function projection(
+  g: VoicesGraph,
+  links?: LibraryResolver,
+  kgLinks?: (kgPath: string, instance: string | undefined) => { viewer?: string; source?: string } | undefined,
+): unknown {
+  const linked =
+    links === undefined
+      ? g
+      : {
+          ...g,
+          voices: g.voices.map((v) => ({
+            ...v,
+            rules: v.rules.map((r) => {
+              if (r.cites === undefined) return r;
+              const l =
+                r.citation === "library"
+                  ? links.links(r.cites.split("#")[0]!, r.citesInstance)
+                  : r.citation === "kg-node"
+                    ? kgLinks?.(r.cites, r.citesInstance)
+                    : undefined;
+              return l === undefined ? r : { ...r, links: l };
+            }),
+          })),
+        };
   return {
     $schema: "folio-voices-index/v1",
     // `totals.voices`, which the graph already computes for the badge row, so
@@ -70,7 +110,7 @@ export function projection(g: VoicesGraph): unknown {
     // which would be the same number arrived at twice. `directories` is the
     // container the voices were found in, not a count of voices.
     ...tileCounts({ voices: [g.totals.voices, "voices"] }),
-    ...g,
+    ...linked,
   };
 }
 
@@ -195,6 +235,10 @@ footer { padding:14px 16px; border-top:1px solid var(--line); color:var(--muted)
 <footer id="foot"></footer>
 <script>
 var SCOPE = "${scope}";
+// The site root, from where this page reads its data (assets/voices/),
+// so a site-relative library link works under any base — the bare site, the
+// project baseurl, or a staging preview.
+var SITE_ROOT = (function (h) { var i = h.lastIndexOf("assets/"); return i < 0 ? "" : h.slice(0, i); })("${dataHref}");
 var DATA = null;
 var esc = function (s) {
   return String(s === undefined || s === null ? "" : s)
@@ -340,9 +384,14 @@ function renderRule(r) {
     ? '<p class="nocite">This rule cites nothing. The schema requires a source, ' +
       "so something is loading voices without validating them.</p>"
     : "<blockquote>" + esc(r.quote) + '<span class="cite">' +
-      (r.citation === "library" ? "" : "KG node ") + esc(r.cites) +
+      (r.citation === "library" ? "" : "KG node ") +
+      (r.links && r.links.viewer
+        ? '<a href="' + esc(SITE_ROOT + r.links.viewer) + '">' + esc(r.cites) + "</a>"
+        : esc(r.cites)) +
       (r.pages ? ", p" + esc(r.pages) : "") +
       (r.citesInstance ? " \\u2014 in " + esc(r.citesInstance) : "") +
+      (r.links && r.links.readme ? ' \\u00b7 <a href="' + esc(r.links.readme) + '">item page</a>' : "") +
+      (r.links && r.links.source ? ' \\u00b7 <a href="' + esc(r.links.source) + '">source</a>' : "") +
       "</span></blockquote>";
 
   return '<div class="rule"><span class="rtitle">' + esc(r.title) +
@@ -417,9 +466,32 @@ if (import.meta.main) {
     process.exit(0);
   }
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
-  emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
+  // A KG-node citation is a file in the cited instance (bean `qgjh`): it links
+  // to that file on the repository host, and a skill also to its published
+  // instruction page. Resolved against the instance's root, and only where
+  // the file exists; anything else stays text.
+  const skillPages = skillPagesOf(repoRoot);
+  const repoUrl = detectRepoUrl(repoRoot);
+  const roots = new Map(instanceRootsIn(repoRoot).map((r) => [readDeclaration(r)?.name ?? basename(r), r]));
+  const kgLinks = (kgPath: string, instance: string | undefined) => {
+    const root = instance === undefined ? undefined : roots.get(instance);
+    if (root === undefined || !existsSync(join(root, kgPath))) return undefined;
+    const rel = relative(repoRoot, join(root, kgPath)).split(sep).join("/");
+    const out: { viewer?: string; source?: string } = { source: sourceLinks(repoUrl, rel, "main")?.viewHref };
+    const skill = kgPath.endsWith(".md") ? basename(kgPath, ".md") : undefined;
+    if (skill !== undefined && skillPages.has(skill)) out.viewer = `${SKILL_PAGES_DIR}/${skill}.html`;
+    return out.source === undefined && out.viewer === undefined ? undefined : out;
+  };
+  emit(
+    join(dataDir, "index.json"),
+    JSON.stringify(projection(g, libraryResolver(repoRoot, ROOT), kgLinks), null, 2) + "\n",
+  );
   const nav = { built: basename(ROOT), docsRoot: site };
-  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref));
+  // Each page says which directories it draws (#1168 B7a-2): the voices
+  // directories present — every one here, the subject's own on a subject page.
+  const drawn = (subject?: string): string[] =>
+    g.directories.filter((d) => d.present && (subject === undefined || d.instance === subject)).map((d) => d.dir);
+  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
 
   // One page per SUBJECT — the instances whose voices this handler renders.
   // Read from the VOICES rather than from the directory list, so the instance
@@ -433,7 +505,7 @@ if (import.meta.main) {
     // who-style-guide's voices and the rail should offer who-style-guide's
     // library and docs. The generator holds the subject; nothing is parsed
     // back out of the path it just composed.
-    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), viewerHtml(sub.dataHref, subject));
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
   }
 
   // ── ORPHANS (bean `ankg`) ──────────────────────────────────────────────

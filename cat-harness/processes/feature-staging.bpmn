@@ -3,7 +3,7 @@
                   xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
                   xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
                   xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
                   xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Definitions_Process_FeatureStaging" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
                   exporter="folio-assistant" exporterVersion="1">
@@ -22,7 +22,9 @@ EVERY PATH THAT CHANGES `STAGING/` WRITES TO THE RENDER LOG, and the two removal
 The single human step is the dispatch confirmation. Everything else is mechanical, which is what makes `build-pipeline` the right lane rather than a convenient one.</bpmn:documentation>
     <bpmn:laneSet id="LaneSet_Process_FeatureStaging">
       <bpmn:lane id="Lane_Ci" name="CI/CD Pipeline">
-        <bpmn:documentation>Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.</bpmn:documentation>
+        <bpmn:documentation>Runs all three entry points — stage, cleanup, cleanup-dispatch — as one actor because none of the work in any of them needs judgement; the one step that does, confirming a dispatch deletion, was carved out into Lane_Human rather than left here. Every path that changes `STAGING/` writes its render-log entry in the SAME commit as the change, because a log push that can fail on its own is exactly how a preview vanishes with nothing on the branch saying why.
+
+A FOURTH trigger starts none of them, and that is deliberate rather than an omission from this diagram. `merge_group` is declared on the workflow so it REPORTS in the merge queue — a required check that never reports on a `merge_group` event leaves every queued pull request pending forever — and all three jobs skip on it. A preview exists for the reviewers of a pull request; a queue entry has none and lives for minutes. Without the skip, `stage`'s existing guards all pass on a queue run (`github.event.action` is empty and the event is not a dispatch), so it would publish `STAGING/&lt;slug&gt;/` named after the ephemeral `gh-readonly-queue/...` ref, and nothing would ever remove it — `Start_Closed` below fires on `pull_request_target: closed`, and a queue branch is never a pull request that closes. That is the `plj1` shape arriving once per MERGE rather than once per pull request.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Start_PR</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_Build</bpmn:flowNodeRef>

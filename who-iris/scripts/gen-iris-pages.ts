@@ -46,16 +46,19 @@
  *   bun run who-iris/scripts/gen-iris-pages.ts --check
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "fs";
-import { basename, dirname, join, relative, resolve, sep } from "path";
+import { basename, dirname, join, posix, relative, resolve, sep } from "path";
 
-import { readDeclaration, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
+import { readDeclaration, repoRootFor, siteDirFor } from "../../cat-harness/schemas/cat-harness.js";
 import { fragment as folioMountFragment } from "../../cat-harness/scripts/folio-mount.ts";
 import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
+import { withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
+import { libraryResolver } from "../../cat-harness/scripts/lib/library-links.ts";
 import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
-import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
+import { resolvableIri, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 import { publicationBlockers } from "../../folio-assistant-core/schemas/materialization.js";
+import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 
 
 const INSTANCE = resolve(import.meta.dir, "..");
@@ -996,6 +999,13 @@ function page(
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
     table.items thead { display: none; }
     table.items td { border-bottom: none; padding: 0.25rem 0; }
+    /* Stacked, a download cell is a line of its own, so the desktop
+       \`nowrap\` that kept a size beside its link now holds a whole sentence
+       ("held here, not published — copyright: refused, …") on one line: the
+       page was 537 px wide at 390 (bean \`g9r2\`). Wrap it here; the size
+       stays whole, because \`code\` keeps its own nowrap. */
+    .dl { white-space: normal; }
+    .dl code { white-space: nowrap; }
     table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
     table.reqs, table.reqs tbody, table.reqs tr, table.reqs td, table.reqs th { display: block; width: auto; }
     table.reqs thead { display: none; }
@@ -1130,6 +1140,26 @@ function verdictBadge(verdict: string): string {
   return `<span class="state ${tone}">${esc(verdict)}</span>`;
 }
 
+/**
+ * A "held as" library id, linked the way every library reference is (bean
+ * `qgjh`, `lib/library-links.ts`): the library viewer opened on the item, the
+ * item's page and its source, each only where it resolves. The viewer link is
+ * made relative to this page. An id nothing resolves stays code.
+ */
+function heldAs(id: string): string {
+  const l = LIBRARY_LINKS.links(id, SUBJECT);
+  const code = `<code>${esc(id)}</code>`;
+  if (l === undefined) return code;
+  const from = subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, "");
+  const parts = [l.viewer === undefined ? code : (() => {
+    const [path, hash] = l.viewer!.split("#");
+    return `<a href="${esc(`${posix.relative(from, path!)}/#${hash}`)}">${code}</a>`;
+  })()];
+  if (l.readme !== undefined) parts.push(`<a href="${esc(l.readme)}">item page</a>`);
+  if (l.source !== undefined) parts.push(`<a href="${esc(l.source)}">source</a>`);
+  return parts.join(" &middot; ");
+}
+
 function cataloguePage(all: Node[]): string {
   const c = catalogue();
   const byState = (s: string): Node[] => all.filter((n) => (n.materialization?.state ?? "unknown") === s);
@@ -1169,13 +1199,13 @@ function cataloguePage(all: Node[]): string {
   const nodeRows = all
     .map((n) => {
       const state = n.materialization?.state ?? "unknown";
-      const held = n.libraryId ? `<code>${esc(n.libraryId)}</code>` : "—";
+      const held = n.libraryId ? heldAs(n.libraryId) : "—";
       const rec = n.metadataRef ? "yes" : "—";
       const bs = (n.bitstreams ?? []).length;
       return `<tr>
   <td>${stateBadge(state)}</td>
   <td><code>${esc(n.flavour ?? n.kind ?? "?")}</code></td>
-  <td>${esc(n.title)}<br><code class="dim">${esc(n.id)}</code></td>
+  <td>${replicaPageOf(n) ? `<a href="${esc(`${REPLICA_FROM_CATALOGUE}/${replicaPageOf(n)}`)}">${esc(n.title)}</a>` : esc(n.title)}<br><code class="dim">${esc(n.id)}</code></td>
   <td>${held}</td>
   <td>${rec}</td>
   <td>${bs || "—"}</td>
@@ -1360,6 +1390,33 @@ function slug(id: string): string {
 }
 
 /**
+ * The replica page this run writes for a node, or `undefined` for a flavour
+ * that has none. ONE answer for the writer below and for the catalogue page's
+ * links (bean `qgjh`), so a link cannot name a page nobody wrote.
+ */
+function replicaPageOf(n: Node): string | undefined {
+  if (n.flavour === "collection") return `collection-${slug(n.id)}.html`;
+  if (n.flavour === "item") return `item-${slug(n.id)}.html`;
+  return undefined;
+}
+
+/**
+ * The catalogue page's way to the replica, relative (bean `qgjh`). The
+ * replica mounts at its KIND route, `<kind>/<instance>`, which
+ * `withRoutes` defines and which every mounted instance has — unlike the
+ * themed root, which only one kind can claim. Relative, so it holds under the
+ * bare site, the project baseurl and a staging preview alike.
+ */
+const LIBRARY_LINKS = libraryResolver(repoRootFor(HARNESS_ROOT), HARNESS_ROOT);
+
+const REPLICA_FROM_CATALOGUE = (() => {
+  const { candidates } = withRoutes([{ name: SUBJECT, kind: "library", dir: "library/", instanceRoot: true }]);
+  const route = candidates.find((c) => c.route.includes("/"))!.route;
+  const from = subjectPage(HANDLER, CATALOGUE_KIND, SUBJECT).replace(/^\/|\/$/g, "");
+  return posix.relative(from, route);
+})();
+
+/**
  * The item's upstream URI, or undefined when it has none.
  *
  * **Undefined is the common case and it must survive to the page.** Two of the
@@ -1379,8 +1436,9 @@ function slug(id: string): string {
  * question the function is actually asking, so the heuristic is gone.
  */
 function sourceOf(n: Node): string | undefined {
-  const b = n.bitstreams?.find((x) => x.materialization?.provenance?.upstream);
-  return b?.materialization?.provenance?.upstream ?? n.materialization?.provenance?.upstream;
+  // Bean `08u4`: the Handle IRI first (it outlives the host), the host URL
+  // second, never the front page — one definition, in the schema.
+  return resolvableIri(n);
 }
 
 /**
@@ -1559,7 +1617,7 @@ function collectionPage(c: Node, all: Node[]): string {
   ${c.materialization?.provenance?.upstream ? `<a href="${esc(c.materialization.provenance.upstream)}">${esc(c.materialization.provenance.upstream)}</a>` : `<span class="none">none recorded</span>`}
   ${stateBadge(c.materialization?.state ?? "unknown")}</p>
 
-${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was established.</strong> ${esc(c.materialization.note)}</p></div>` : ""}
+${c.materialization?.note ? `<div class="caveat"><p><strong>How this node was established.</strong> ${withInlineCode(c.materialization.note, esc)}</p></div>` : ""}
 
 <h2>Items in this Collection</h2>
 <p>Now showing 1 – ${items.length} of ${items.length} <em>modelled</em>. The upstream
@@ -2266,14 +2324,14 @@ function main(): number {
 
   for (const c of all.filter((n) => n.flavour === "collection")) {
     files.set(
-      `library/collection-${slug(c.id)}.html`,
+      `library/${replicaPageOf(c)!}`,
       page(c.title, [{ label: "Home", href: "community-list.html" }, { label: c.title }], collectionPage(c, all), "library"),
     );
   }
 
   for (const n of all.filter((x) => x.flavour === "item")) {
     files.set(
-      `library/item-${slug(n.id)}.html`,
+      `library/${replicaPageOf(n)!}`,
       page(n.title, [{ label: "Home", href: "community-list.html" }, { label: n.title }], itemPage(n, all), "library"),
     );
   }

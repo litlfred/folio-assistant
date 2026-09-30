@@ -151,6 +151,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [KG → package → distribution → portal](kg-to-portal.html) | `kg-to-portal` | — | A knowledge graph is in a repository. A portal — a Moodle site, a ministry's |
 | [Rendering the knowledge graph](kg-viewer.html) | `kg-viewer` | — | `kg-export` serialises the instance's graph to one JSON-LD document. This skill |
 | [Library ingestion](library-ingestion.html) | `library-ingestion` | — | `uploads/` and `library/` are two stages of **one** pipeline. `uploads/` is the |
+| [Liquid templates](liquid-templates.html) | `liquid-templates` | — | Two engines run Liquid here, and they produce different kinds of output. Know |
 | [Literature search](literature-search.html) | `literature-search` | — | A node cites a source. Nothing in any declared library holds it. This skill is |
 | [Markdown Render Check](markdown-render-check.html) | `markdown-render-check` | — | git diff HEAD~1 HEAD --name-only -- '*.md' |
 | [MCP assembly](mcp-assembly.html) | `mcp-assembly` | — | [`mcp-projection`](mcp-projection.md) maps **one** Tool node to one MCP tool. |
@@ -213,6 +214,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Untainted verification](untainted-verification.html) | `untainted-verification` | — | > Skill id: `untainted-verification` · Capability: `quality-assurance` · Package: `folio-core` |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
 | [Never encode a constraint you have not verified](unverified-constraints.html) | `unverified-constraints` | — | Owner, 2026-09-19: **"dont encode rules against a working setup."** |
+| [Two mechanisms and a persona](upload-routes.html) | `upload-routes` | — | [`content-acquisition`](content-acquisition.md) decides *what channel* a |
 | [Watching the queue](uploads-watch.html) | `uploads-watch` | — | `uploads/` is the acquisition queue — |
 | [Adopting an upstream version bump](upstream-version-adoption.html) | `upstream-version-adoption` | — | An unpinned dependency is an unreviewed commit from a stranger, merged on every |
 | [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
@@ -295,6 +297,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Edge kinds and blast radius](edge-kinds-and-blast-radius.html) | `edge-kinds-and-blast-radius` | — | > Skill id: `edge-kinds-and-blast-radius` · Capability: `architecture` · Package: `graph-management` |
 | [Graph detanglement](graph-detanglement.html) | `graph-detanglement` | — | > Skill id: `graph-detanglement` · Capability: `architecture` · Package: `graph-management` |
 | [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Capability: `architecture` · Package: `graph-management` |
+| [Knowledge Graph separation](kg-separation.html) | `kg-separation` | — | > Skill id: `kg-separation` · Capability: `architecture` · Package: `graph-management` |
 
 ## Synced from claude-scientific-skills (pinned, read-only)
 
@@ -370,6 +373,18 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Playing a state machine](session-state-machine.html) | `session-state-machine` | — | > **An agent could also play a (non-deterministic) state machine as a tool. |
 | [Specification-compiled agents](specification-compiled-agents.html) | `specification-compiled-agents` | — | Renders [`methodologies/specification-compiled-agents.md`](https://github.com/litlfred/folio-assista |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
+
+## Science layer: Lean tooling (folio-assistant-sci)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Lean formal edges (elaborated)](lean-formal-edges.html) | `lean-formal-edges` | — | bun run folio-assistant-sci/content/pipeline/formal-edges.ts \ |
+
+## Science layer: reference data (folio-assistant-sci)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Reference dataset ingestion](reference-dataset-ingestion.html) | `reference-dataset-ingestion` | — |  |
 
 ## Content layer (folio-assistant-core)
 

@@ -30,7 +30,7 @@ import { join, resolve } from "node:path";
 import { declarationPathIn } from "../../schemas/cat-harness.js";
 import { docsLayers } from "../compose-docs.js";
 import { docsPages, documentingPages } from "../docs-declarations.js";
-import { page, pageRelPath, skillIds, toolRows } from "../gen-tools-viz.js";
+import { page, publishedPage, pageRelPath, skillIds, toolRows } from "../gen-tools-viz.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 /**
@@ -193,6 +193,14 @@ describe("the rendered page", () => {
     for (const r of rows) expect(html).toContain(`\`${r.id}\``);
   });
 
+  it("carries no Liquid syntax, because Jekyll renders it as a page", () => {
+    // A Tool description quoting a Liquid include tag reached this page and
+    // Jekyll tried to execute it: the staging build died on `tools/index.md`
+    // while every repository gate was green (PR #1489). Say it in words.
+    const body = html.replace(/^---\n[\s\S]*?\n---\n/, "");
+    expect(body).not.toMatch(/\{%|\{\{/);
+  });
+
   it("is markdown, not HTML wearing front matter", () => {
     const body = html.replace(/^---\n[\s\S]*?\n---\n/, "").replace(/<style>[\s\S]*?<\/style>/g, "");
     expect(body).toMatch(/^## /m);
@@ -219,6 +227,29 @@ describe("the generator writes where the declaration says", () => {
     // The gate runs this too; asserting it here means a stale page fails the
     // unit suite rather than only the gate, which is where it is noticed first.
     const rel = pageRelPath(REPO)!;
-    expect(readFileSync(join(DOCS, rel), "utf-8")).toBe(page(rows, skillIds(REPO)));
+    expect(readFileSync(join(DOCS, rel), "utf-8")).toBe(publishedPage(rows, skillIds(REPO)));
+  });
+});
+
+/**
+ * Bean `qgjh`: a `satisfies` that names a skill with a published instruction
+ * page is a link; one without a page stays code rather than a link that 404s.
+ */
+describe("satisfies links what resolves (qgjh)", () => {
+  const TOOLS_PAGE = pageRelPath(REPO)!;
+  const withSkill = rows.find((r) => r.satisfies.length > 0)!;
+  const s = withSkill.satisfies[0]!;
+  const line = (md: string): string => md.split("\n").find((l) => l.startsWith(`| \`${withSkill.id}\``))!;
+
+  it("links a skill whose page exists, relative to the page it sits on", () => {
+    expect(line(page(rows, new Set([s]), new Set([s]), TOOLS_PAGE))).toContain(
+      `[\`${s}\`](../reference/skill-instructions/${s}.html)`,
+    );
+  });
+
+  it("leaves a skill with no page as code", () => {
+    const l = line(page(rows, new Set([s]), new Set(), TOOLS_PAGE));
+    expect(l).toContain(`\`${s}\``);
+    expect(l).not.toContain(`[\`${s}\`]`);
   });
 });

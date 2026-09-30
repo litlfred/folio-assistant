@@ -59,6 +59,7 @@ import { join, resolve } from "node:path";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { docsPages, documentingPages } from "./docs-declarations.js";
 import { governingSkills, skillGovernance } from "./skill-governance.js";
+import { processIndex, resolveProcess, type ProcessIndex } from "./governing-process.js";
 
 import {
   AGENT_INSTRUCTIONS_ROLE,
@@ -75,6 +76,7 @@ import {
   type CatHarnessDeclaration,
   visualisationsOf,
 } from "../schemas/cat-harness.js";
+import { withViewers } from "./viewer-declarations.js";
 
 /** The three obligations, in the order the owner named them. */
 export const CRITERIA = ["visualiser", "docs", "skill", "serialisations"] as const;
@@ -94,6 +96,30 @@ const ASKS: Record<Criterion, string> = {
   serialisations: "serves its json, jsonld and schema.json",
 };
 export type Criterion = (typeof CRITERIA)[number];
+
+/**
+ * Criteria asked ONLY of a directory that declares them.
+ *
+ * `CRITERIA` above are OBLIGATIONS: every declared directory owes a
+ * visualiser, documentation, a governing skill and its serialisations, so
+ * silence there is the finding. `coverage.process` is not an obligation —
+ * most directories are not the subject of a BPMN process, and reporting the
+ * twenty-odd that are not would be the wall this file's own header says
+ * somebody switches off.
+ *
+ * So there is exactly one question to ask here, and it is the `unresolvable`
+ * half: somebody DID say, and what they said names no diagram. That is never
+ * a backlog item. It is also the half a reader cannot see from the generated
+ * README alone — the page prints *could not determine*, which is honest and
+ * easy to scroll past.
+ *
+ * Kept as its own list rather than folded into `CRITERIA` with a skip, so the
+ * `ASKS` lookup and the "one missing criterion, one finding" test below both
+ * keep meaning what they say.
+ */
+export const DECLARED_ONLY_CRITERIA = ["process"] as const;
+export type DeclaredOnlyCriterion = (typeof DECLARED_ONLY_CRITERIA)[number];
+export type AnyCriterion = Criterion | DeclaredOnlyCriterion;
 
 export type Severity = "major" | "minor";
 
@@ -123,7 +149,7 @@ export type Unmet = "undeclared" | "unresolvable";
 export interface CoverageFinding {
   instance: string;
   directory: string;
-  criterion: Criterion;
+  criterion: AnyCriterion;
   severity: Severity;
   unmet: Unmet;
   detail: string;
@@ -383,6 +409,24 @@ function trackedFiles(repoRoot: string): string[] {
   return files;
 }
 
+/**
+ * The `.bpmn` index, built at most once per repository per run.
+ *
+ * It reads every diagram in the repository, and `auditAll` calls
+ * `auditInstance` once per instance — sixteen here — so building it inside
+ * the audit would read the corpus sixteen times over. Cached on the repo root
+ * for the same reason `trackedFiles` above is.
+ */
+const processIndexCache = new Map<string, ProcessIndex>();
+function processes(repoRoot: string): ProcessIndex {
+  let idx = processIndexCache.get(repoRoot);
+  if (idx === undefined) {
+    idx = processIndex(repoRoot);
+    processIndexCache.set(repoRoot, idx);
+  }
+  return idx;
+}
+
 /** The roots an instance depends on; none when its graph cannot be resolved. */
 function dependencyRoots(root: string): string[] {
   try {
@@ -397,6 +441,8 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
   let decl: CatHarnessDeclaration | undefined;
   try {
     decl = readDeclaration(root);
+    // Viewers RESOLVED from the pages (#1168 B7a-2b).
+    if (decl) decl = { ...decl, directories: withViewers(decl.directories ?? [], root, repoRoot) };
   } catch (e) {
     return {
       instance,
@@ -527,6 +573,28 @@ export function auditInstance(root: string, repoRoot: string = repoRootFor(root)
                 `"${broken.join('", "')}"`,
         });
       }
+    }
+    // The DECLARED-ONLY criteria. A directory that declares no governing
+    // process is asked nothing — see {@link DECLARED_ONLY_CRITERIA} — so
+    // this loop starts from the declaration rather than from the criterion.
+    for (const criterion of DECLARED_ONLY_CRITERIA) {
+      const declared = dir.coverage?.[criterion];
+      if (declared === undefined) continue;
+      // Resolved by the SAME function the README generator uses, so the page
+      // and this axis cannot disagree about whether the name points at a
+      // diagram. A second resolution here would be a second answer.
+      const resolved = resolveProcess(processes(repoRoot), declared);
+      if (resolved.bpmn !== undefined) continue;
+      findings.push({
+        instance,
+        directory: dir.id,
+        criterion,
+        severity: "major",
+        unmet: "unresolvable",
+        detail:
+          `declares process \`${declared}\` and no instance in this repository declares ` +
+          `\`${declared}.bpmn\` — \`${dir.path}\`'s README says "could not determine" where the diagram should be`,
+      });
     }
   }
 

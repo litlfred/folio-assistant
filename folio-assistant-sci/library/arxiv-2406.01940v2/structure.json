@@ -1,0 +1,876 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2406.01940v2",
+ "source": {
+  "file": "2406.01940v2.pdf",
+  "sha256": "1cfc906589df5afc7de61141cfd3e3ad5d4cdda659b60c41111a3b84bc0bdf10",
+  "bytes": 813780,
+  "pages": 32,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-29T21:41:01Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2406.01940",
+   "version": "2",
+   "primary_class": "cs.CL",
+   "stamp_date": "14 Oct 2024"
+  },
+  "doi": null,
+  "title": "Work in progress PROCESS-DRIVEN AUTOFORMALIZATION IN LEAN 4",
+  "authors_raw": "Jianqiao Lu1\u2217, Yingjia Wan2\u2217, Zhengying Liu3, Yinya Huang4, Jing Xiong1",
+  "title_lines": [
+   "Work in progress",
+   "PROCESS-DRIVEN AUTOFORMALIZATION IN LEAN 4"
+  ],
+  "abstract": "Autoformalization, the conversion of natural language mathematics into formal languages, offers significant potential for advancing mathematical reasoning. How- ever, existing efforts are limited to formal languages with substantial online corpora and struggle to keep pace with rapidly evolving languages like Lean 4. To bridge this gap, we propose a large-scale dataset Formalization for Lean 4 (FORML4) de- signed to comprehensively evaluate the autoformalization capabilities of large lan- guage models (LLMs), encompassing both statements and proofs in natural and for- mal languages. Additionally, we introduce the Process-Driven Autoformalization (PDA) framework that leverages the precise feedback from Lean 4 compilers to enhance autoformalization. Extensive experiments demonstrate that PDA improves autoformalization, enabling higher compiler accuracy and human-evaluation scores using less filtered training data. Moreover, when fine-tuned with data containing detailed process information, PDA exhibits enhanced data utilization, resulting in more substantial improvements in autoformalization for Lean 4.",
+  "docinfo": {
+   "Producer": "pdfTeX-1.40.25",
+   "Creator": "LaTeX with hyperref",
+   "CreationDate": "D:20241015012915Z"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "FormL4: Dataset Construction",
+   "page": 3,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Data Source",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Informalization",
+   "page": 4,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Curation Process",
+   "page": 5,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Comparing FormL4 with Existing Autoformalization Datasets",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Method: Process-Driven Autoformalization",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Verification Model",
+   "page": 6,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Further Enhancement with Back-Propagated Process Feedback",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Experiments",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Autoformalization Enhancement",
+   "page": 7,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Experimental Setup",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Enhanced Autoformalizer Performance",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Further Enhanced Verifier Performance",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Human Evaluation on Autoformalizer Performances",
+   "page": 10,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 11,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Future Directions",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "More Related Works",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Detailed Decomposition Strategy",
+   "page": 20,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Prompt for Informalization",
+   "page": 21,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Human Evaluation: Comparative Model Selection",
+   "page": 23,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Annotation Protocol for Informalization Model Comparison",
+   "page": 23,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Introduction",
+   "page": 23,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "File Structure",
+   "page": 23,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Task",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 3,
+   "title": "Quality Criteria",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Annotation Results for Informalization Model Comparison",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Human Evaluation: PDA Dataset Quality",
+   "page": 24,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Case Visualization in Comparision with existing datasets",
+   "page": 25,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Human Evaluation: Autoformalization Performance Evaluation",
+   "page": 25,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Experimental Details",
+   "page": 25,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Training Settings",
+   "page": 25,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Generation Settings",
+   "page": 26,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Lean 4 Compilation",
+   "page": 27,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Comprehensive Evaluation of the Enhanced Autoformalizer",
+   "page": 27,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Model Selection Process",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Detailed Dataset Comparison Analysis",
+   "page": 28,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Analysis for Training and Test Data in FormL4",
+   "page": 29,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Autoformalization on Real-World Mathematical Reasonings",
+   "page": 29,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Data Construction Details",
+   "page": 30,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Data Preprocessing",
+   "page": 30,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Dataset Split",
+   "page": 30,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Data Postprocessing",
+   "page": 31,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Details of Automated Autoformalization Evaluation",
+   "page": 31,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Prompt",
+   "page": 31,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Preprocessing and Evaluation",
+   "page": 31,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Detailed Analyses of Existing LLMs on FormL4",
+   "page": 32,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1708,
+   "n_words": 222
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 3,
+   "n_chars": 7745,
+   "n_words": 1140
+  },
+  {
+   "id": "sec-001-related-work",
+   "number": null,
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 2714,
+   "n_words": 398
+  },
+  {
+   "id": "sec-002-forml4-dataset-construction",
+   "number": null,
+   "title": "FormL4: Dataset Construction",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 630,
+   "n_words": 87
+  },
+  {
+   "id": "sec-003-informalization",
+   "number": null,
+   "title": "Informalization",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 571,
+   "n_words": 74
+  },
+  {
+   "id": "sec-004-data-source",
+   "number": null,
+   "title": "Data Source",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 18,
+   "n_words": 4
+  },
+  {
+   "id": "sec-005-curation-process",
+   "number": null,
+   "title": "Curation Process",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 6,
+   "n_chars": 9590,
+   "n_words": 1426
+  },
+  {
+   "id": "sec-006-comparing-forml4-with-existing-autoformalization",
+   "number": null,
+   "title": "Comparing FormL4 with Existing Autoformalization Datasets",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 769,
+   "n_words": 96
+  },
+  {
+   "id": "sec-007-method-process-driven-autoformalization",
+   "number": null,
+   "title": "Method: Process-Driven Autoformalization",
+   "level": 1,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 386,
+   "n_words": 54
+  },
+  {
+   "id": "sec-008-verification-model",
+   "number": null,
+   "title": "Verification Model",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 2894,
+   "n_words": 497
+  },
+  {
+   "id": "sec-009-further-enhancement-with-back-propagated-process",
+   "number": null,
+   "title": "Further Enhancement with Back-Propagated Process Feedback",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 1669,
+   "n_words": 228
+  },
+  {
+   "id": "sec-010-experiments",
+   "number": null,
+   "title": "Experiments",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-011-autoformalization-enhancement",
+   "number": null,
+   "title": "Autoformalization Enhancement",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 98,
+   "n_words": 11
+  },
+  {
+   "id": "sec-012-experimental-setup",
+   "number": null,
+   "title": "Experimental Setup",
+   "level": 3,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 2559,
+   "n_words": 375
+  },
+  {
+   "id": "sec-013-enhanced-autoformalizer-performance",
+   "number": null,
+   "title": "Enhanced Autoformalizer Performance",
+   "level": 3,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 2342,
+   "n_words": 333
+  },
+  {
+   "id": "sec-014-further-enhanced-verifier-performance",
+   "number": null,
+   "title": "Further Enhanced Verifier Performance",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 2845,
+   "n_words": 417
+  },
+  {
+   "id": "sec-015-human-evaluation-on-autoformalizer-performances",
+   "number": null,
+   "title": "Human Evaluation on Autoformalizer Performances",
+   "level": 2,
+   "page_start": 10,
+   "page_end": 11,
+   "n_chars": 3156,
+   "n_words": 462
+  },
+  {
+   "id": "sec-016-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 19,
+   "n_chars": 34319,
+   "n_words": 4307
+  },
+  {
+   "id": "sec-017-future-directions",
+   "number": null,
+   "title": "Future Directions",
+   "level": 1,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 901,
+   "n_words": 114
+  },
+  {
+   "id": "sec-018-more-related-works",
+   "number": null,
+   "title": "More Related Works",
+   "level": 1,
+   "page_start": 19,
+   "page_end": 20,
+   "n_chars": 5813,
+   "n_words": 856
+  },
+  {
+   "id": "sec-019-detailed-decomposition-strategy",
+   "number": null,
+   "title": "Detailed Decomposition Strategy",
+   "level": 1,
+   "page_start": 20,
+   "page_end": 21,
+   "n_chars": 1982,
+   "n_words": 296
+  },
+  {
+   "id": "sec-020-prompt-for-informalization",
+   "number": null,
+   "title": "Prompt for Informalization",
+   "level": 1,
+   "page_start": 21,
+   "page_end": 23,
+   "n_chars": 6631,
+   "n_words": 1286
+  },
+  {
+   "id": "sec-021-human-evaluation-comparative-model-selection",
+   "number": null,
+   "title": "Human Evaluation: Comparative Model Selection",
+   "level": 1,
+   "page_start": 23,
+   "page_end": 23,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-022-annotation-protocol-for-informalization-model-co",
+   "number": null,
+   "title": "Annotation Protocol for Informalization Model Comparison",
+   "level": 2,
+   "page_start": 23,
+   "page_end": 23,
+   "n_chars": 5,
+   "n_words": 1
+  },
+  {
+   "id": "sec-023-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 3,
+   "page_start": 23,
+   "page_end": 23,
+   "n_chars": 98,
+   "n_words": 14
+  },
+  {
+   "id": "sec-024-task",
+   "number": null,
+   "title": "Task",
+   "level": 3,
+   "page_start": 23,
+   "page_end": 23,
+   "n_chars": 608,
+   "n_words": 97
+  },
+  {
+   "id": "sec-025-file-structure",
+   "number": null,
+   "title": "File Structure",
+   "level": 3,
+   "page_start": 23,
+   "page_end": 24,
+   "n_chars": 1364,
+   "n_words": 201
+  },
+  {
+   "id": "sec-026-quality-criteria",
+   "number": null,
+   "title": "Quality Criteria",
+   "level": 3,
+   "page_start": 24,
+   "page_end": 24,
+   "n_chars": 651,
+   "n_words": 97
+  },
+  {
+   "id": "sec-027-annotation-results-for-informalization-model-com",
+   "number": null,
+   "title": "Annotation Results for Informalization Model Comparison",
+   "level": 2,
+   "page_start": 24,
+   "page_end": 24,
+   "n_chars": 332,
+   "n_words": 45
+  },
+  {
+   "id": "sec-028-human-evaluation-pda-dataset-quality",
+   "number": null,
+   "title": "Human Evaluation: PDA Dataset Quality",
+   "level": 1,
+   "page_start": 24,
+   "page_end": 25,
+   "n_chars": 1997,
+   "n_words": 299
+  },
+  {
+   "id": "sec-029-case-visualization-in-comparision-with-existing",
+   "number": null,
+   "title": "Case Visualization in Comparision with existing datasets",
+   "level": 1,
+   "page_start": 25,
+   "page_end": 25,
+   "n_chars": 1838,
+   "n_words": 293
+  },
+  {
+   "id": "sec-030-human-evaluation-autoformalization-performance-e",
+   "number": null,
+   "title": "Human Evaluation: Autoformalization Performance Evaluation",
+   "level": 1,
+   "page_start": 25,
+   "page_end": 25,
+   "n_chars": 254,
+   "n_words": 36
+  },
+  {
+   "id": "sec-031-experimental-details",
+   "number": null,
+   "title": "Experimental Details",
+   "level": 1,
+   "page_start": 25,
+   "page_end": 25,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-032-training-settings",
+   "number": null,
+   "title": "Training Settings",
+   "level": 2,
+   "page_start": 25,
+   "page_end": 26,
+   "n_chars": 1999,
+   "n_words": 326
+  },
+  {
+   "id": "sec-033-generation-settings",
+   "number": null,
+   "title": "Generation Settings",
+   "level": 2,
+   "page_start": 26,
+   "page_end": 27,
+   "n_chars": 757,
+   "n_words": 119
+  },
+  {
+   "id": "sec-034-lean-4-compilation",
+   "number": null,
+   "title": "Lean 4 Compilation",
+   "level": 2,
+   "page_start": 27,
+   "page_end": 27,
+   "n_chars": 2231,
+   "n_words": 298
+  },
+  {
+   "id": "sec-035-comprehensive-evaluation-of-the-enhanced-autofor",
+   "number": null,
+   "title": "Comprehensive Evaluation of the Enhanced Autoformalizer",
+   "level": 1,
+   "page_start": 27,
+   "page_end": 28,
+   "n_chars": 1204,
+   "n_words": 172
+  },
+  {
+   "id": "sec-036-model-selection-process",
+   "number": null,
+   "title": "Model Selection Process",
+   "level": 1,
+   "page_start": 28,
+   "page_end": 28,
+   "n_chars": 1336,
+   "n_words": 181
+  },
+  {
+   "id": "sec-037-detailed-dataset-comparison-analysis",
+   "number": null,
+   "title": "Detailed Dataset Comparison Analysis",
+   "level": 1,
+   "page_start": 28,
+   "page_end": 29,
+   "n_chars": 2287,
+   "n_words": 310
+  },
+  {
+   "id": "sec-038-analysis-for-training-and-test-data-in-forml4",
+   "number": null,
+   "title": "Analysis for Training and Test Data in FormL4",
+   "level": 1,
+   "page_start": 29,
+   "page_end": 29,
+   "n_chars": 2403,
+   "n_words": 384
+  },
+  {
+   "id": "sec-039-autoformalization-on-real-world-mathematical-rea",
+   "number": null,
+   "title": "Autoformalization on Real-World Mathematical Reasonings",
+   "level": 1,
+   "page_start": 29,
+   "page_end": 30,
+   "n_chars": 1034,
+   "n_words": 171
+  },
+  {
+   "id": "sec-040-data-construction-details",
+   "number": null,
+   "title": "Data Construction Details",
+   "level": 1,
+   "page_start": 30,
+   "page_end": 30,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-041-data-preprocessing",
+   "number": null,
+   "title": "Data Preprocessing",
+   "level": 2,
+   "page_start": 30,
+   "page_end": 30,
+   "n_chars": 990,
+   "n_words": 164
+  },
+  {
+   "id": "sec-042-dataset-split",
+   "number": null,
+   "title": "Dataset Split",
+   "level": 2,
+   "page_start": 30,
+   "page_end": 31,
+   "n_chars": 2435,
+   "n_words": 350
+  },
+  {
+   "id": "sec-043-data-postprocessing",
+   "number": null,
+   "title": "Data Postprocessing",
+   "level": 2,
+   "page_start": 31,
+   "page_end": 31,
+   "n_chars": 712,
+   "n_words": 114
+  },
+  {
+   "id": "sec-044-details-of-automated-autoformalization-evaluatio",
+   "number": null,
+   "title": "Details of Automated Autoformalization Evaluation",
+   "level": 1,
+   "page_start": 31,
+   "page_end": 31,
+   "n_chars": 3,
+   "n_words": 1
+  },
+  {
+   "id": "sec-045-prompt",
+   "number": null,
+   "title": "Prompt",
+   "level": 2,
+   "page_start": 31,
+   "page_end": 31,
+   "n_chars": 418,
+   "n_words": 61
+  },
+  {
+   "id": "sec-046-preprocessing-and-evaluation",
+   "number": null,
+   "title": "Preprocessing and Evaluation",
+   "level": 2,
+   "page_start": 31,
+   "page_end": 32,
+   "n_chars": 2503,
+   "n_words": 400
+  },
+  {
+   "id": "sec-047-detailed-analyses-of-existing-llms-on-forml4",
+   "number": null,
+   "title": "Detailed Analyses of Existing LLMs on FormL4",
+   "level": 2,
+   "page_start": 32,
+   "page_end": 32,
+   "n_chars": 2151,
+   "n_words": 308
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 48,
+  "toc_inferred_entries": 0,
+  "sections": 49,
+  "chars_total": 118962
+ }
+}

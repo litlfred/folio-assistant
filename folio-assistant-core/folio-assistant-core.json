@@ -25,7 +25,9 @@
       "_comment": "THEME `grumpy-cat` since 2026-09-24, the plain grumpy cat in the sage hoodie, handed down from cat-harness when that harness took the sled art — the owner: \"use this for the cat-harness theme, the current plain grump cat them it is using should be for folio-assisnt-core\". It was `library` before that; the librarian theme stays in the registry for any note an author chooses it for. SCOPE is stated in the body rather than left to the reader, per \"also some guidance what is its scope\".",
       "id": "folio-assist-core",
       "order": 20,
-      "theme": "grumpy-cat",
+      "theme": {
+        "themeId": "grumpy-cat"
+      },
       "summary": "What a folio is",
       "body": "The knowledge graph is four sub-graphs, and an instance declares which of them it holds.\n\n**Content** is what somebody authors and a reader reads — this layer's subject. **Skills** are the instructions an agent follows to do the work. **Processes** are the BPMN diagrams that say who does what, in which order, and where the gates are — they are executable, not illustrations. **Tools** are what an agent can call.\n\nGetting anything in is **acquisition**: unstructured and semi-structured sources arrive through `uploads/` or through the conversation, and are ingested into `library/`. It is a step rather than a graph kind of its own — there is no fifth directory to look for.\n\n**Scope:** the content model — what a folio IS. Not the skills and tools that operate on it, and not any particular folio's chapters.",
       "links": [
@@ -76,14 +78,12 @@
       "id": "core-schemas",
       "path": "schemas/",
       "dependents": "skip",
-      "description": "The content layer's own schema nodes. Three today, and they are one chain: `dublin-core` is what a source system SAYS about an item, `catalogue` is the shape of the collection that item sits in, and `materialization` is whether any of its bytes are actually here. The third is the load-bearing one — see its module doc for why bootstrap fetching a harness and who-iris fetching three items out of 361.55 GB are the same process with two names.",
+      "description": "The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.",
+      "_description_comment": "The content layer's own schema nodes. Three today, and they are one chain: `dublin-core` is what a source system SAYS about an item, `catalogue` is the shape of the collection that item sits in, and `materialization` is whether any of its bytes are actually here. The third is the load-bearing one — see its module doc for why bootstrap fetching a harness and who-iris fetching three items out of 361.55 GB are the same process with two names.",
       "graphKinds": [
         "schemas",
         "cat-harness"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html"
-      }
+      ]
     },
     {
       "id": "folios",
@@ -113,10 +113,7 @@
       "description": "Voice skills this layer owns. `technical-writer` is the whole of it: an SDO register (W3C, IHE) with RFC 2119 requirement levels, read from the two ingested RFCs and constrained by RFC 8174. PLACED HERE BY JUDGEMENT, on the owner's ruling of 2026-09-21: *\"voices should be associated to appropriate home semantically/by judgement\"*. It arrived on `main` in `cat-harness/voices/` while the migration to `<instance>/skills/voices/` was in flight (bean `btuv`), and the two obvious mechanical homes are both wrong — the PLATFORM holds no voice content, and `agent-skills` merely holds the RFCs it cites, which has never decided ownership (`who-editorial` cites who-iris's library and lives in who-style-guide). What settles it is what the voice is ABOUT: how to write technical documentation of a standard, software or a knowledge asset — which is what this layer is for.",
       "graphKinds": [
         "voices"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/voices/folio-assistant-core/index.html"
-      }
+      ]
     },
     {
       "id": "core-tools",
@@ -131,7 +128,7 @@
       "id": "core-scripts",
       "path": "scripts/",
       "dependents": "skip",
-      "description": "The review-comment Tool and its move helper, with their tests beside them. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.",
+      "description": "Core's own executable surface, with every test beside its subject: the review-comment Tool and its move helper, the glossary extractors, the sample-import pair, and \u2014 since bean `yj6r`, 2026-09-30 \u2014 two tranches of escapes that moved UP out of `cat-harness/`. The materialisation trio (`check-materialized-fixity`, `backfill-materialized-fixity`, `cache-index`) and the FHIR IG artefact-index pair (`ingest-ig-artifacts`, `check-artifact-index`) came first, to sit beside the `schemas/materialization.ts` and `schemas/fhir-artifact-index.ts` they read. The glossary CLUSTER followed \u2014 `build-glossary.ts`, its `:refterm` codemod `codemod-refterm.ts`, and all three of their tests \u2014 because walking a paper's blocks to collect `defines[]` and emit a `folio-glossary/v1` scheme is CONTENT machinery, and the harness (`needs: [\"bootstrap\"]`) was importing upward into this instance's `schemas/glossary.ts` and `scripts/glossary-page.ts` \u2014 an import against its own declaration, and a circular dependency between repositories after the split. The partition rules already classified `content/pipeline/` as core, so the classification did not change; the DIRECTORY caught up with it. They are still addressed as pipeline scripts by id, and `resolvePipelineScript` searches the folio, then the platform, then here. The LAST FOUR clusters followed on the same day and in the same tranche, taking the `cat-harness ->` sibling-import count from 5 to 2: `extract-assets.ts` (a container a folio was given \u2192 a `folio-extraction/v1` record, reading `schemas/extraction.ts`), `check-voices.ts` (every voice rule's citation resolved through `schemas/library-ref.ts` into a folio's `library/`), and `build-document-site.ts` WITH its test, which reads `schemas/changeset.ts`. The last is the one with an invocation surface: a DOCUMENT folio's generated staging workflow names it by path, so `init-folio.ts` now writes `folio-assistant-core/scripts/build-document-site.ts` and `init-folio.test.ts` pins that string \u2014 the same instance-relative property this entry records for `review-comments.ts`, arrived at from the other direction. The partition rules had already classified all four `core` by exact entry, so again only the DIRECTORY moved; each dead entry was removed with its reasoning kept in place, because a rule naming a path its own scan can no longer see fires on nothing while reading as an adjudication. What did NOT move, and deliberately: `adapters/document/intake-records.ts` and its test, the last two escapes. Its module doc carries the measurement \u2014 hoisting `adapters/document/` here would remove 2 escapes and create 15, because the paper adapter extends the document one from a third layer again. That closure needs its own ruling. This sentence listed only the review-comment pair until then, by which point four other tools were already here \u2014 a directory description that names its founding file rather than its contents goes stale the first time anything lands. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.",
       "graphKinds": [
         "code"
       ]
@@ -147,7 +144,9 @@
     },
     {
       "id": "core-methodologies",
-      "theme": "analyst",
+      "theme": {
+        "themeId": "analyst"
+      },
       "path": "methodologies/",
       "dependents": "skip",
       "description": "The methodologies core adopts from its own corpus. Separate from `cat-harness/methodologies/` for the reason `smart-base-methodologies` is separate from both: a method belongs to the layer whose job it describes, so the directory lifts out with this instance and nothing else moves. Core's job, per this instance's AGENTS.md, is what a folio HOLDS, where it CAME FROM and how much is PRESENT — which is why a document-ingestion method is core's and not the harness's.",

@@ -7,7 +7,6 @@ description: >-
   kept beneath it, and the dispensation that records the reason — scoped to a
   version, never precedent.
 capability: review
-package: folio-core
 ---
 
 # Adjudication — judgement, when the mechanism ran out of facts

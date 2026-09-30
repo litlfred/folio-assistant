@@ -39,11 +39,10 @@
  *   bun run cat-harness/scripts/gen-external-schemas-viz.ts
  *   bun run cat-harness/scripts/gen-external-schemas-viz.ts --check
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
 import { loadSpecs, namespacesInUse } from "./external-schemas.js";
 import { specUsers, type SpecUse, type SpecUseForm, type SpecUsers } from "./spec-users.js";
@@ -53,6 +52,12 @@ import {
   unusedNamespaces,
   type ExternalSchema,
 } from "../schemas/external-schema.js";
+import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
+import { sourceLinks } from "../schemas/cat-harness.ts";
+import { detectRepoUrl } from "../src/core/git-refs.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "external-schemas-viewer";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO = resolve(INSTANCE_ROOT, "..");
@@ -67,25 +72,12 @@ export function declaredUsers(specs: readonly ExternalSchema[], repoRoot = REPO)
   return specUsers(repoRoot, files, specs, BASE_GRAPH_KINDS, "cat-harness");
 }
 
-/** Where the page goes, read from the declaration that renders it. */
+/**
+ * Where the page goes: the declared directory's own name (#1168 B7a-2b,
+ * `conventionalPage`). Never a literal — `site-dir-single-answer` refuses one.
+ */
 export function pageRelPath(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
-  };
-  for (const e of d.directories ?? []) {
-    if (!(e.graphKinds ?? []).includes(KIND)) continue;
-    const v = e.coverage?.visualiser;
-    for (const one of Array.isArray(v) ? v : [v]) {
-      const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
-      if (!ref) continue;
-      const rel = relative(baseDocs(repo), resolve(repo, ref));
-      if (rel.startsWith("..") || rel === "") return undefined;
-      return rel;
-    }
-  }
-  return undefined;
+  return conventionalPage(join(repo, "cat-harness"), KIND);
 }
 
 /** The base docs layer — the same answer `compose-docs.ts` uses. */
@@ -147,11 +139,21 @@ function cell(v: string): string {
   return v.replace(/\|/g, "\\|").replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
 }
 
+/**
+ * `fileHref`, when given, turns a dependent's repository path into a link to
+ * that file (bean `qgjh`: references are links wherever the target resolves).
+ * It returns `undefined` for a path that is not a file here, which stays code.
+ */
 export function page(
   specs: readonly ExternalSchema[],
   users: SpecUsers,
   inUse: readonly string[],
+  fileHref: (repoPath: string) => string | undefined = () => undefined,
 ): string {
+  const userCell = (u: string): string => {
+    const h = fileHref(u);
+    return h === undefined ? `\`${cell(u)}\`` : `[\`${cell(u)}\`](${h})`;
+  };
   // One row per user and spec; a `.bpmn` per diagram would bury the rest, so
   // `xmlns` users are counted per directory.
   const bySpec = new Map<string, SpecUse[]>();
@@ -287,7 +289,7 @@ export function page(
       b.push("**What depends on it.** Nothing here declares it.", "");
     } else {
       b.push("**What depends on it.**", "", "| user | declared by |", "|---|---|");
-      for (const r of rows) b.push(`| \`${cell(r.user)}\` | ${FORM[r.form]}${r.via ? ` (\`${cell(r.via)}\`)` : ""} |`);
+      for (const r of rows) b.push(`| ${userCell(r.user)} | ${FORM[r.form]}${r.via ? ` (${userCell(r.via)})` : ""} |`);
       b.push("");
     }
 
@@ -338,7 +340,19 @@ if (import.meta.main) {
   }
 
   const users = declaredUsers(specs);
-  const rendered = page(specs, users, namespacesInUse());
+  // The page says which directories it draws (#1168 B7a-2).
+  // A dependent links to its file on the repository host, and only when that
+  // file exists here: a directory or a path gone since stays code.
+  const repoUrl = detectRepoUrl(REPO);
+  const fileHref = (repoPath: string): string | undefined => {
+    const abs = join(REPO, repoPath);
+    return existsSync(abs) && statSync(abs).isFile() ? sourceLinks(repoUrl, repoPath, "main")?.viewHref : undefined;
+  };
+  const rendered = withRendersFrontMatter(
+    page(specs, users, namespacesInUse(), fileHref),
+    handledDirectories(REPO, INSTANCE_ROOT, KIND),
+    VIEWER_TOOL,
+  );
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {

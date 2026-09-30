@@ -46,10 +46,15 @@
  *   bun run cat-harness/scripts/gen-tools-viz.ts --check
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { join, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
+import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
+import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "tools-viewer";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 /** The graph kind this renders. A KIND, never a path. */
@@ -161,25 +166,12 @@ function instanceDeclarations(repo: string): string[] {
   return out;
 }
 
-/** Where the page goes, read from the declaration that renders it. */
+/**
+ * Where the page goes: the declared directory's own name (#1168 B7a-2b,
+ * `conventionalPage`). Never a literal — `site-dir-single-answer` refuses one.
+ */
 export function pageRelPath(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
-  };
-  for (const e of d.directories ?? []) {
-    if (!(e.graphKinds ?? []).includes(KIND)) continue;
-    const v = e.coverage?.visualiser;
-    for (const one of Array.isArray(v) ? v : [v]) {
-      const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
-      if (!ref) continue;
-      const rel = relative(baseDocs(repo), resolve(repo, ref));
-      if (rel.startsWith("..") || rel === "") return undefined;
-      return rel;
-    }
-  }
-  return undefined;
+  return conventionalPage(join(repo, "cat-harness"), KIND);
 }
 
 /** The base docs layer — the same answer `compose-docs.ts` uses. */
@@ -192,10 +184,18 @@ function baseDocs(repo: string): string {
 const CSS = `
 .tg-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
   font-weight:600;white-space:nowrap;border:1px solid currentColor;margin-right:.2rem}
-.tg-shell{color:#0d6e5e}
-.tg-mcp{color:#6b5b95}
-.tg-inproc{color:#1d5fa8}
-.tg-manual{color:#a8430f}
+/* Bean rtuo: these inks were chosen for a LIGHT page and measured 2.33-2.54:1
+   on this site's default dark one (#27262b), under the 4.5:1 text floor. The
+   dark inks are the default; the site's light scheme keeps the originals,
+   which clear 5.9:1 on white. Every ratio computed, not eyeballed. */
+.tg-shell{color:#5cd3bd}   /* 8.23:1 on #27262b */
+.tg-mcp{color:#b9a8ec}     /* 7.06:1 */
+.tg-inproc{color:#86b8f2}  /* 7.26:1 */
+.tg-manual{color:#f5a070}  /* 7.25:1 */
+:root[data-fa-scheme="light"] .tg-shell{color:#0d6e5e}
+:root[data-fa-scheme="light"] .tg-mcp{color:#6b5b95}
+:root[data-fa-scheme="light"] .tg-inproc{color:#1d5fa8}
+:root[data-fa-scheme="light"] .tg-manual{color:#a8430f}
 .tg-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
 .tg-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
 .tg-stat b{display:block;font-size:1.25rem;line-height:1.2}
@@ -218,7 +218,20 @@ function cell(v: string): string {
   return v.replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
 }
 
-export function page(rows: readonly ToolRow[], known: ReadonlySet<string>): string {
+/**
+ * `skillPages` is the set of skills with a published instruction page
+ * (`lib/skill-pages.ts`): a `satisfies` naming one is a link, anything else
+ * stays code — bean `qgjh`. `fromPage` is where this page is published, as
+ * {@link pageRelPath} reads it from the declaration, so the link is relative
+ * to it rather than assumed. With no `skillPages` nothing is linked, so its
+ * default does not matter.
+ */
+export function page(
+  rows: readonly ToolRow[],
+  known: ReadonlySet<string>,
+  skillPages: ReadonlySet<string> = new Set(),
+  fromPage = "",
+): string {
   const invoke = new Map<string, number>();
   const install = new Map<string, number>();
   for (const r of rows) {
@@ -311,7 +324,12 @@ export function page(rows: readonly ToolRow[], known: ReadonlySet<string>): stri
   b.push("## Every tool", "", "| tool | what it does | invoked | satisfies | i/o |", "|---|---|---|---|---|");
   for (const r of rows) {
     const sat = r.satisfies.length
-      ? r.satisfies.map((s) => `\`${cell(s)}\``).join("<br>")
+      ? r.satisfies
+          .map((s) => {
+            const href = skillPageHref(s, fromPage, skillPages);
+            return href === undefined ? `\`${cell(s)}\`` : `[\`${cell(s)}\`](${href})`;
+          })
+          .join("<br>")
       : "**—**";
     b.push(
       `| \`${cell(r.id)}\`<br>${cell(r.title)} | ${cell(r.description)} | ` +
@@ -320,6 +338,19 @@ export function page(rows: readonly ToolRow[], known: ReadonlySet<string>): stri
   }
   b.push("");
   return b.join("\n").trimEnd() + "\n";
+}
+
+/** The page as committed: {@link page} plus the directories it draws (#1168 B7a-2). */
+export function publishedPage(rows: Parameters<typeof page>[0], known: Parameters<typeof page>[1], repo = REPO): string {
+  // With no declared page there is no base to link from: render codes, never
+  // guess a location.
+  const rel = pageRelPath(repo);
+  const skillPages = rel === undefined ? new Set<string>() : skillPagesOf(repo);
+  return withRendersFrontMatter(
+    page(rows, known, skillPages, rel ?? ""),
+    handledDirectories(repo, join(repo, "cat-harness"), KIND),
+    VIEWER_TOOL,
+  );
 }
 
 if (import.meta.main) {
@@ -337,7 +368,7 @@ if (import.meta.main) {
     console.error(`::error::gen-tools-viz: no visualiser declared for graph kind '${KIND}'`);
     process.exit(1);
   }
-  const rendered = page(rows, skillIds(REPO));
+  const rendered = publishedPage(rows, skillIds(REPO));
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {

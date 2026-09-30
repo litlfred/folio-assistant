@@ -53,6 +53,22 @@ export const RepoPathSchema = z
   .refine((p) => !p.split("/").includes(".."), "a repo path may not contain a `..` segment")
   .describe("A path relative to the repository root. No `..` segments.");
 
+/**
+ * A repository path to a delimited text file (CSV or TSV).
+ *
+ * Distinct from {@link WorkbookPathSchema} because the Tools taking them read
+ * different formats: typed alike, they read as interchangeable, and
+ * `deriveAlternatives` (#1168, B9a) would call them alternatives.
+ *
+ * The same shape as `RepoPath`, and NOT refined by extension: a CSV has no
+ * magic bytes, and routing one must not become an extension guess (bean
+ * `p67i`). The distinction is the NAME — what the Tool is declared to read.
+ */
+export const DelimitedTextPathSchema = RepoPathSchema.describe("A repository path to a delimited text (CSV or TSV) file.");
+
+/** A repository path to a spreadsheet workbook. See {@link DelimitedTextPathSchema}. */
+export const WorkbookPathSchema = RepoPathSchema.describe("A repository path to a spreadsheet workbook.");
+
 /** An absolute http(s) URL. */
 export const UrlSchema = z.string().url().describe("An absolute http(s) URL");
 
@@ -117,6 +133,24 @@ export const SkillNameSchema = z
   .min(1)
   .regex(/^[a-z][a-z0-9-]*$/, "a skill name is lowercase alphanumerics and hyphens, starting with a letter")
   .describe("A skill name, e.g. todo-manager");
+
+/**
+ * A reference to a skill: a bare name, or `package/name`.
+ *
+ * #1168 B8, owner 2026-09-30 (*"both; qualify if ambiguous"*): a bare name is
+ * enough while it names one skill, and `package/name` says which when two
+ * packages hold a skill of that name. `resolveSkillRef` in
+ * `scripts/known-skills.ts` resolves either form and reports an ambiguous bare
+ * name rather than picking one.
+ */
+export const SkillRefSchema = z
+  .string()
+  .min(1)
+  .regex(
+    /^(?:[a-z][a-z0-9-]*\/)?[a-z][a-z0-9-]*$/,
+    "a skill reference is a skill name, optionally qualified by its package: `name` or `package/name`",
+  )
+  .describe("A skill reference, e.g. todo-manager or folio-core/todo-manager");
 
 /** A skill package — the directory under `skills/`, e.g. `folio-core`. */
 export const PackageNameSchema = z
@@ -528,6 +562,8 @@ export const TOOL_TYPES = {
   Flag: FlagSchema,
   BeanStatus: BeanStatusSchema,
   RepoPath: RepoPathSchema,
+  DelimitedTextPath: DelimitedTextPathSchema,
+  WorkbookPath: WorkbookPathSchema,
   Url: UrlSchema,
   Branch: BranchSchema,
   RepoFullName: RepoFullNameSchema,

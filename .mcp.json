@@ -1,16 +1,26 @@
 {
   "mcpServers": {
     "sage": {
-      "command": "scripts/sage-mcp.sh",
+      "command": "cat-harness/scripts/sage-mcp.sh",
       "args": [],
       "env": {
         "SAGE_DOCKER_IMAGE": "sagemath/sagemath:latest"
       }
     },
     "google-drive": {
-      "command": "scripts/google-drive-mcp.sh",
+      "command": "cat-harness/scripts/google-drive-mcp.sh",
       "args": [],
       "env": {}
+    },
+    "folio-assistant": {
+      "command": "bun",
+      "args": [
+        "run",
+        "cat-harness/src/index.ts",
+        "--stdio",
+        "--repo",
+        "."
+      ]
     }
   }
 }

@@ -5,6 +5,7 @@ import { join } from "node:path";
 import { readFolioGraph, projection, viewerHtml } from "../gen-folio-viz.ts";
 import { MARKER } from "../folio-mount.ts";
 import { repoRootFor, siteDirFor } from "../../schemas/cat-harness.ts";
+import { viewersOf, type ViewedDirectory } from "../viewer-declarations.js";
 
 /**
  * The folio graph has a view of its own. Bean `7ofc`.
@@ -84,15 +85,16 @@ describe("the generated artefacts are the ones declared", () => {
     expect(existsSync(data), `${data} missing`).toBe(true);
   });
 
-  test("the declaration's `visualiser` points at the page that exists", () => {
-    // A declared path that resolves to nothing is `pb04` aimed at a
-    // declaration: the coverage reads as met and the link is dead.
+  test("the folio directory's viewer — read from the pages — is the page that exists", () => {
+    // A viewer that resolves to nothing is `pb04`: the coverage reads as met
+    // and the link is dead. Since #1168 B7a-2b the page names the directory it
+    // draws, and the directory no longer names its page.
     const decl = JSON.parse(readFileSync(join(ROOT, "cat-harness.json"), "utf-8")) as {
-      directories: Array<{ id: string; coverage?: Record<string, unknown> }>;
+      directories: ViewedDirectory[];
     };
     const folio = decl.directories.find((d) => d.id === "folio");
     expect(folio).toBeDefined();
-    const vis = folio!.coverage?.visualiser as string | undefined;
+    const vis = viewersOf(folio!, ROOT, REPO)[0]?.ref;
     expect(vis).toBeDefined();
     expect(existsSync(join(REPO, vis!)), `${vis} does not resolve`).toBe(true);
   });
@@ -152,5 +154,31 @@ describe("the committed projection is MACHINE-INDEPENDENT", () => {
     const b = readFolioGraph([ROOT, REPO], REPO)!;
     expect(a.nodes.map((n) => n.file)).toEqual(b.nodes.map((n) => n.file));
     expect(a.nodes.every((n) => n.file.includes("cat-harness/folio/"))).toBe(true);
+  });
+});
+
+/**
+ * Bean `qgjh`: a node's links are links. The page's own link resolver, run as
+ * the page runs it: absolute http(s) passes, a site-rooted href is resolved
+ * against the site root found from the data href, anything else is text.
+ */
+describe("node links resolve on the page (qgjh)", () => {
+  const html = viewerHtml("../../assets/folio/index.json");
+  const script = html.match(/<script>([\s\S]*?)<\/script>/g)!.map((s) => s.replace(/<\/?script>/g, "")).join("\n");
+  const start = script.indexOf("var SITE_ROOT");
+  const end = script.indexOf("\n}\n", script.indexOf("function linkHref")) + 3;
+  const linkHref = new Function(
+    `var DATA_HREF = "../../assets/folio/index.json";\n${script.slice(start, end)}\nreturn linkHref;`,
+  )() as (h: string) => string;
+
+  test("an absolute http(s) link is used as it is", () => {
+    expect(linkHref("https://github.com/x")).toBe("https://github.com/x");
+  });
+  test("a site-rooted link resolves against the site root", () => {
+    expect(linkHref("/agentic-harness.html")).toBe("../../agentic-harness.html");
+  });
+  test("a protocol-relative or unknown href stays text", () => {
+    expect(linkHref("//evil.example/x")).toBe("");
+    expect(linkHref("javascript:alert(1)")).toBe("");
   });
 });

@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-24T06:06:37Z
-updated_at: 2026-09-24T18:27:03Z
+updated_at: 2026-09-30T10:58:02Z
 parent: folio-assistant-1xhc
 ---
 
@@ -38,3 +38,92 @@ The mitigation in use today is fixing forward fast: #1249 and #1257 each fixed a
 
 ## Summary of Changes
 The first diagnosis ("regen misses test-enforced checks") was wrong: `check:prov-qaqc` is a workflow step. The measured cause was merge skew. #1245's branch lacked #1190's workflow instance, so main was red at #1245's own merge (`08fe2c68`), one merge before the one that got blamed. The owner chose **fix forward** over a merge queue or an up-to-date requirement. `continual-progress` gains a section on it: watch main after every merge you make, fix a red main you find in a small PR of its own, and check the parent before blaming the last merge.
+
+## Five more witnesses in one session, 2026-09-30 — the rate, not just the shape
+
+2026-09-24 measured this once. A session that merged **seventeen** PRs on
+2026-09-30 turned `main` red **five** times, and four are this bean's shape:
+a corpus-walking artefact staled by the merge sequence rather than by any
+diff in it.
+
+| # | what went red | cause |
+|---|---|---|
+| 1 | `readme:subgraphs:check` | a GitHub **web-UI** upload added 3 PDFs to `uploads/` and ran no generator |
+| 2 | `check-bean-parents` | bean `14ve` landed with no `parent` |
+| 3 | `readme:subgraphs:check` | `beans/README.md`, `scripts/README.md` — merges, shifting bases |
+| 4 | `voices:viz` `folio:viz` `docs:auto` `kg:detangle` | four projections — same |
+| 5 | `audit:coverage:strict` + `:require-all` | sidecar recorded 177 gates; a gate had been added, making 178 |
+
+**Incident 2 is the one that costs the most to diagnose**, and it is why the
+shape matters more than the count: the failing job was `TypeScript — tests,
+lint, types (hard)`, on two pull requests whose diffs were **bean markdown and
+nothing else**. The check walks the real corpus, so the failure belonged to no
+diff. A reader who trusts the job name looks for a TypeScript regression that
+is not there.
+
+**Incident 1 adds a route this bean did not have.** A web-UI commit runs no
+generator AND, committed straight to `main`, skips the pull request where CI
+would have caught it. Neither remedy this bean names — merge queue, or
+require-up-to-date — touches that route, because there is no branch to be out
+of date.
+
+### What this does NOT change
+
+The diagnosis stands and the remedy is still a repository setting the owner
+picks. Nothing here argues for one over the other; it measures the rate at
+which the gap bites when several sessions merge in one window, which is the
+number the choice actually turns on.
+
+`bun run regen` remains the manual remedy and it works — incidents 3, 4 and 5
+were each fixed by running it and committing. **Nothing automates it after a
+merge**: `grep -rn regen .github/workflows/` finds no invocation. Whether that
+should change is part of the same open decision.
+
+
+## The ruling REVERSED, 2026-09-30 — merge queue, not fix-forward
+
+This bean closed with *"the owner chose **fix forward** over a merge queue or an
+up-to-date requirement"*. **That is no longer the ruling.** Asked again on
+2026-09-30 after a day of measured skew, the owner chose **turn on the merge
+queue**. Recorded here rather than in a new bean because a superseded decision
+left standing in a completed bean is exactly how the next agent implements the
+old one.
+
+### What changed between the two rulings is a rate, not an argument
+
+2026-09-24 had **two** skew incidents, each fixed within minutes (#1249, #1257),
+and fix-forward was a proportionate answer to that.
+
+2026-09-30 had **nine** red-`main` incidents in one day. Of those, **five were
+corpus-walking artefacts staled by the merge *sequence*** — each branch green
+alone, the combination stale, which is this bean's mechanism exactly and not a
+new one. Three `Unblock main:` PRs were needed in a week (#1563, #1568, #1570).
+Fix-forward did not stop scaling gracefully; the *number of sequences* did.
+
+Two of the nine were mine, both from merging with `bun run gates` still in
+flight — which is a discipline failure rather than skew, and is not counted
+toward the argument above.
+
+### Why fix-forward specifically cannot catch this class
+
+Bean `ymsu`: a gate that repairs the tree it is being judged on **cannot fail
+inside the runner**. So a branch that would stale a shared artefact reads green
+on its own PR, every time, and the staleness first becomes visible on `main`.
+Fix-forward is by construction the only thing that *can* work once the merge has
+happened — the queue is the only intervention available **before** it does.
+
+### Readiness, measured
+
+The repository is already queue-ready: `merge_group` is declared on both
+`code-quality-gates.yml` and `jsonld-gen-check.yml`, so **no code change is
+required**. What remains is a repository-settings change (branch protection on
+`main` → require merge queue), which no tool available to an agent in this
+session can make — the GitHub MCP server here exposes no branch-protection or
+ruleset tool, checked 2026-09-30. It is the owner's click.
+
+### What does NOT change
+
+`continual-progress`'s section on watching `main` after every merge you make,
+and fixing a red `main` in a small PR of its own. A queue makes that rarer; it
+does not make it unnecessary, and the parent-before-blame rule this bean added
+is unaffected.

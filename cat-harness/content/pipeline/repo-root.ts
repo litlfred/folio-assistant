@@ -91,6 +91,30 @@ export function findContentRepoRoot(): string {
 }
 
 /**
+ * The root whose declaration lists the folio's DEPENDENCIES, i.e. where
+ * `loadContributions` must start.
+ *
+ * Contributions (checkers, tools) come from what the FOLIO declares, so the
+ * answer is normally `findContentRepoRoot()`. But that falls back to this
+ * platform's own `cat-harness/` when no ancestor holds a folio, as in the
+ * platform's own repository, and `cat-harness/` declares no dependencies.
+ * Loading from there registers nothing, which is indistinguishable from
+ * "nothing to contribute". In that case the instance actually running is the
+ * repository root above it, so that is returned.
+ *
+ * Measured 2026-09-29 (folio-assistant#1492): qa-sweep loaded from
+ * `cat-harness/` and registered 0 contributed checkers, so
+ * folio-assistant-sci's `proof-compile-cost` and `proof-no-cost-regression`
+ * never ran in a real sweep, while `qa-checker-discovery.test.ts`, which
+ * loads from the repository root, found both.
+ */
+export function contributionsRoot(): string {
+  const platformInstance = resolve(import.meta.dir, "..", "..");
+  const folioRoot = findContentRepoRoot();
+  return folioRoot === platformInstance ? resolve(platformInstance, "..") : folioRoot;
+}
+
+/**
  * Discover the folio's papers: directories under `content/` that carry a
  * same-named manifest (`content/<paper>/<paper>.ts`).
  *

@@ -261,8 +261,16 @@ jobs:
       - name: bun run lint
         run: bun run lint
 
+      # TypeScript 7 typechecks; TypeScript 6 stays installed as `typescript`
+      # because typescript-eslint (8.x) requires the TS6 JS API and throws on
+      # TS >= 7, and TS7's `typescript` main export carries no compiler API.
+      # So `node_modules/.bin/tsc` is TS 6.0.3 (hoisted from
+      # @typescript/typescript6's own dependency) and `bunx tsc` would
+      # typecheck with the WRONG compiler while reading green. This step
+      # names the TS7 launcher by path, which can only be TS7 (same command
+      # as the `typecheck` script).
       - name: tsc --noEmit
-        run: bunx tsc --noEmit -p tsconfig.json
+        run: bun node_modules/typescript7/bin/tsc --noEmit -p tsconfig.json
 
       # Each step is a separate gate so the Actions UI names the one that
       # broke, rather than a single opaque "quality" failure. LAST on purpose —
@@ -843,6 +851,52 @@ jobs:
       - name: detangle measurements are current
         run: bun run kg:detangle:check
 
+      # THE CROSS-INSTANCE WRONG-DIRECTION AXIS, and it is a SECOND step
+      # rather than a third flag on the one above — same reasoning as
+      # `audit:coverage:require-all` / `audit:coverage:strict` a few steps
+      # back: the two lock different things and a reader should be able to see
+      # which broke. Here the difference is sharper than there, because the
+      # two steps stand on opposite sides of the pinned/graded line:
+      #
+      #   - the step ABOVE grades NOTHING. It fails on a stale or orphaned
+      #     sidecar, because the carve is an adjudication a person makes
+      #     (`detangle.ts`, "taste is a declared step"). That ruling stands.
+      #   - this step grades exactly ONE number. A module's BUCKET is taste;
+      #     an import pointing at an instance that declares a dependency on
+      #     you is a contradiction between two `<instance>.json` files, and no
+      #     adjudication makes it consistent.
+      #
+      # Owner's ruling on bean `p11x`, 2026-09-30, Option 2: leave
+      # `check:partition` instance-scoped and make `kg:detangle` the
+      # cross-instance gate, "since it already sees the axis (it is the one
+      # check that caught `bf5l`'s sabotage)". `check:partition` resolves its
+      # ROOT to `<checkout>/cat-harness`, so its 0 is scoped to ONE instance
+      # and is silent about edges between already-extracted siblings. `bf5l`
+      # measured the discriminator: with `cat-harness/schemas/intake.ts`
+      # importing `folio-assistant-core`, `check:instance-graph` and
+      # `check:partition` were both green and this axis reported 1.
+      #
+      # It is wired as BLOCKING because the count is 0 today, which is the
+      # repository's standing precedent for switching a reporter into an
+      # enforcer (the ruff comment, and `repo-partition.ts`'s own per-axis
+      # history): a check is an error only once its count is zero, because
+      # turning a red gate on just teaches the next agent to append `|| true`.
+      #
+      # It WRITES NOTHING, so it does not inherit `ymsu` — that defect is
+      # `bun test` repairing a sidecar a later gate then compares against
+      # itself, and a live-computed edge count has no sidecar to repair.
+      # `ymsu` is open and was NOT fixed here; the owner accepted that cost
+      # when ruling Option 2 over the "fix `ymsu` first" variant.
+      #
+      # Two things it reports rather than grades, both because grading them
+      # would mean grading a could-not-determine: `undetermined` edges (no
+      # declaration settles their direction) and the dangling refs its
+      # denominator excludes (bean `cjvs`). Both counts are PRINTED by the
+      # step; no number for either is written down here, because a count in a
+      # comment is a claim that outlives its measurement.
+      - name: no wrong-direction edges across declared instances
+        run: bun run kg:detangle:direction
+
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
       # 2026-09-19 nothing served that stem at all — the dead-link walk in
@@ -871,6 +925,16 @@ jobs:
       - name: bootstrap schemas are current
         run: bun run bootstrap:schemas:check
 
+      # The second half of the same render pipeline (owner, 2026-09-29: "need
+      # Zod usage in bootstrap tools as part of validation in rendering
+      # pipeline"; ported from PR #1514, bean `81tw`): the step above judges
+      # the SCHEMAS against their Zod; this judges the DOCUMENTS bootstrap
+      # carries — its declaration, its model registry, any discussion
+      # document — against the same Zod. A run that cannot find bootstrap, or
+      # validates nothing, fails.
+      - name: bootstrap documents parse against their Zod
+        run: bun run bootstrap:validate
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and
@@ -880,6 +944,25 @@ jobs:
         run: |
           bun run cat-harness/scripts/gen-schema-docs.ts --check
           bun run skills:docs:check
+
+      # Document ingestion's FIRST step, generated from the Tool nodes that
+      # implement it (owner, 2026-09-29: "generate documentation from Tool
+      # documentation of the upload Task/Skill as first step of document
+      # ingestion process"). Its own step rather than a line appended to the
+      # one above, so a reader sees WHICH generator went stale: it derives the
+      # step, its skill and its Tools from `document-ingestion.bpmn` and the
+      # tools graph, so an edit to either of two graphs stales it and neither
+      # of those graphs' own gates would notice.
+      - name: the upload step's page is current
+        run: bun run upload-step:docs:check
+
+      # Every skill that declares `user_invocable: true` has a slash command,
+      # and every command has a declared skill (bean `j6t3`). Measured
+      # 2026-09-30: 40 declared, 3 reachable, and `/prepare-merge` a command
+      # whose skill declared nothing. BOTH directions fail, because a check
+      # that only asked the first would never have found the second.
+      - name: every user-invocable skill has a command, and every command a skill
+        run: bun run skill:commands:check
 
       # The README's AUTHORED half. `readme-sections.ts` owns the marked
       # regions; this owns every other link, and `AGENTS.md` claims that
@@ -920,6 +1003,39 @@ jobs:
       # `render:bpmn:check`; this checks the README that shows them.
       - name: bootstrap's README generated sections are current
         run: bun run readme:sync:bootstrap:check
+
+      # One README per LIBRARY ITEM, from its own manifest (bean `qgjh`, owner
+      # 2026-09-30: "like bootstrap readmes"). BEFORE the directory READMEs:
+      # a library's README links each item row to the item's README only once
+      # it exists, so `regen`, which asks these in order, must write it first.
+      - name: Every library item's README is current
+        run: bun run library:readmes:check
+
+      # One README per declared directory, generated from the declaration by
+      # `subgraph-readmes` (owner, 2026-09-29). The pre-commit hook runs the
+      # same check; this is the gate a commit that skipped the hook still meets.
+      - name: Every declared directory's README is current
+        run: bun run readme:subgraphs:check
+
+      # An instance's IRIs are `<iriBase><version>/…` for programs and
+      # `<iriBase>v<major>/…` for people (owner, 2026-09-29). The copies that
+      # cannot be derived at read time — BPMN xmlns, code-list values, fixture
+      # strings — must match the declared version; `bun run iri:sync` fixes them.
+      - name: Every literal release IRI is at its declared version
+        run: bun run iri:sync:check
+
+      # bootstrap-tools may depend on bootstrap and nothing above it (bean
+      # `xsqm`): its own files, zod and the runtime. Tested with planted
+      # violations, because a boundary check never seen failing checks nothing.
+      - name: bootstrap-tools imports nothing above bootstrap
+        run: bun run check:tools-closure
+
+      # A published node's own identifier ($id, or a JSON-LD @id) under an
+      # instance's release base must name the path its file actually sits at,
+      # so publishing files where they sit serves every identifier (owner,
+      # 2026-09-29: "make QA gate for KG nodes").
+      - name: Every published node's identifier is its file's path
+        run: bun run check:node-iris
 
       # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code

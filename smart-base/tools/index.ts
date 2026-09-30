@@ -197,7 +197,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "python3 input/scripts/generate_logical_model_schemas.py" },
       io: {
         inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true, description: "The Publisher's `output/`." }],
-        outputs: [{ name: "schemas", schema: t("RepoPath"), description: "`schemas/<stem>.schema.json`." }],
+        outputs: [{ name: "logicalModelSchemas", schema: t("RepoPath"), description: "`schemas/<stem>.schema.json`, one per logical model." }],
       },
       satisfies: ["dak-postprocessing", "ig-artifact-ingestion"],
       selection: {
@@ -217,7 +217,10 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       invoke: { shell: "python3 input/scripts/generate_valueset_schemas.py" },
       io: {
         inputs: [{ name: "igOutput", schema: t("RepoPath"), required: true }],
-        outputs: [{ name: "schemas", schema: t("RepoPath") }],
+        // Named for what it is (#1168, B9a): as `schemas` it matched
+        // `logical-model-schemas` port for port, and the two would derive as
+        // alternatives when they write different schema families.
+        outputs: [{ name: "valueSetSchemas", schema: t("RepoPath"), description: "One schema per ValueSet, plus the enumeration-response schemas at the IG root." }],
       },
       // `terminology-management` dropped 2026-09-22 (bean p0za): that skill's
       // contract requires `operation`, which this Tool does not accept. Never

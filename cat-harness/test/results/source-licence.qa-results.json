@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-source-licence.ts",
-    "script_hash": "975fc31d7855"
+    "script_hash": "378851790c7e"
   },
   "subject": {
     "kind": "corpus",
     "id": "library-source-licences"
   },
-  "updated_at": "2026-09-29T23:15:04.114Z",
+  "updated_at": "2026-09-30T11:16:39.790Z",
   "families": {
     "malformed": {
       "summary": "A licence record that claims something it cannot back. This is the only family that fails the check.",
@@ -17,7 +17,7 @@
     },
     "not-recorded": {
       "summary": "No licence recorded at all: nobody has looked yet. Reported, not gated; the field is new.",
-      "count": 37,
+      "count": 34,
       "entries": [
         {
           "entry": "agent-skills/library/agent-skill-best-practices---gemini-cli"
@@ -68,9 +68,6 @@
           "entry": "cat-harness/library/arxiv-2508.05192v2"
         },
         {
-          "entry": "cat-harness/library/arxiv-2508.21620v2"
-        },
-        {
           "entry": "cat-harness/library/arxiv-2605.03537v1"
         },
         {
@@ -80,9 +77,6 @@
           "entry": "cat-harness/library/arxiv-2607.14456v1"
         },
         {
-          "entry": "cat-harness/library/arxiv-2607.20636v1"
-        },
-        {
           "entry": "cat-harness/library/dusengumuremyi-2026-ai-mediated-raci"
         },
         {
@@ -90,9 +84,6 @@
         },
         {
           "entry": "cat-harness/library/sammut-bonnici-galea-2015-swot-analysis"
-        },
-        {
-          "entry": "cat-harness/library/wang-rangaiah-2026-mcdm-aggregation"
         },
         {
           "entry": "folio-assistant-core/library/arxiv-2510.21603v1"
@@ -139,9 +130,30 @@
     },
     "unknown": {
       "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
-      "count": 0,
-      "entries": []
+      "count": 4,
+      "entries": [
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2406.01940v2",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2601.22554v1",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2602.16554v1",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/codata-2022",
+          "searched": 2,
+          "note": "CODATA values are published by NIST as Standard Reference Data; whether the SRD Act (15 U.S.C. 290e) or U.S. government-work status governs reuse is NOT established here. Next place to look: NIST's CODATA terms-of-use page, from an environment that can reach physics.nist.gov."
+        }
+      ]
     }
   },
-  "total": 37
+  "total": 38
 }

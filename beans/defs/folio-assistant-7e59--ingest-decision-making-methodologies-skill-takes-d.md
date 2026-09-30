@@ -76,6 +76,8 @@ cover**, which is the same rule its own output already follows for `not-for`.
 - [x] the selector declares the families it does NOT cover (2026-09-30)
 - [ ] owner's call on the `250906388v1` slug
 
+_2026-09-30T00:16:22Z_ — Claimed by claude/magical-dijkstra-19yvml — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## 2026-09-30 — three defects found by checking, not by reading
 
 Measured against the ingested text, not against the skill's own claims.

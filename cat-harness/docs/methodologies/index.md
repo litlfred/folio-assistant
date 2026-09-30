@@ -1,13 +1,24 @@
 ---
 title: "Methodologies"
 description: "The methodologies this repository has adopted — what each is for, where it came from, and whether the source it rests on is held here."
+renders:
+  - cat-harness/methodologies
+  - folio-assistant-core/methodologies
+  - folio-assistant-sci/methodologies
+  - smart-base/methodologies
+rendered-by: methodologies-viewer
 ---
 <style>
 .mv-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
   font-weight:600;white-space:nowrap;border:1px solid currentColor}
-.mv-ingested{color:#0d6e5e}
-.mv-cited{color:#8a6100}
-.mv-dangling{color:#a8200f}
+/* Bean rtuo: light-page inks measured 2.06-2.71:1 on the default dark page
+   (#27262b). Dark inks by default; the light scheme keeps the originals. */
+.mv-ingested{color:#5cd3bd}  /* 8.23:1 on #27262b */
+.mv-cited{color:#e6bd52}     /* 8.41:1 */
+.mv-dangling{color:#ff9486}  /* 7.03:1 */
+:root[data-fa-scheme="light"] .mv-ingested{color:#0d6e5e}
+:root[data-fa-scheme="light"] .mv-cited{color:#8a6100}
+:root[data-fa-scheme="light"] .mv-dangling{color:#a8200f}
 .mv-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
 .mv-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
 .mv-stat b{display:block;font-size:1.25rem;line-height:1.2}
@@ -28,7 +39,7 @@ column answers.
 <div class="mv-stat"><b>16</b><span>adopted methodologies</span></div>
 <div class="mv-stat"><b>11</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>5</b><span>cited, not ingested</span></div>
-<div class="mv-stat"><b>3</b><span>instance(s) declaring the graph</span></div>
+<div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
 
 ## Choosing one
@@ -39,7 +50,8 @@ agent picks by resemblance, which is why the schema requires the field.
 
 | methodology | applies when | origin held? | declared by |
 |---|---|---|---|
-| **[Adequacy-for-purpose modelling — a model is judged against what it is FOR, not against reality](#adequacy-for-purpose-modelling)**<br>`adequacy-for-purpose-modelling` | **A formal model is being built, and somebody will later ask whether it is right.** Use it when the artefact is a mathematical model of a process — a… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Bidirectional agentic autoformalization — extract, compile-fix, check faithfulness, then informalize back without the source](#bidirectional-agentic-autoformalization)**<br>`bidirectional-agentic-autoformalization` | **A whole paper, not a single theorem, is being formalised with an agent doing the Lean**, and the question is how to organise the run: what to extra… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-sci` |
+| **[Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work](#blueprint-driven-formalization)**<br>`blueprint-driven-formalization` | **A formalization is large enough that its state has to be tracked node by node** — many interdependent definitions and theorems, several contributor… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-sci` |
 | **[Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score](#consensus-grounded-subject-evaluation)**<br>`consensus-grounded-subject-evaluation` | **Judging how good a set of controlled-vocabulary assignments is, when qualified people would themselves disagree about the exact answer.** Use it to… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[DIIG — Digital Implementation Investment Guide](#diig)**<br>`diig` | Planning, costing and monitoring a DIGITAL HEALTH IMPLEMENTATION inside a health programme — from forming the team through to the budget and the moni… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-base` |
 | **[DMN — Decision Model and Notation](#dmn)**<br>`dmn` | The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
@@ -47,8 +59,7 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it](#hybrid-llm-deterministic)**<br>`hybrid-llm-deterministic` | **An agent must produce an artefact that something downstream will act on.** Use it when a language model is in the loop and a wrong output would be… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Kepner-Tregoe Decision Analysis](#kepner-tregoe)**<br>`kepner-tregoe` | A decision with several candidate options and no recurring rule — a platform choice, an architecture question, which of three fixes to take. Contextu… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
-| **[Aggregation-type MCDM — an alternatives-criteria matrix collapsed to one score per alternative](#mcdm-aggregation)**<br>`mcdm-aggregation` | **A FIXED, FINITE set of alternatives is to be ranked against several explicit criteria, all known up front.** The input is an alternatives-criteria… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
-| **[Probabilistic decision-making algorithms — and what their regret bounds are claims ABOUT](#probabilistic-decision-analysis)**<br>`probabilistic-decision-analysis` | **The alternatives can be TRIED, repeatedly, and what you learn from one try changes what you should try next.** Bandits, Bayesian optimisation and t… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Process-driven autoformalization — judge a formalised statement by compiling it WITH a proof, and read the first error as the step signal](#process-driven-autoformalization)**<br>`process-driven-autoformalization` | **A natural-language statement is being turned into a Lean statement and the question is how to test the candidate**, or… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-sci` |
 | **[RACI — who is involved in an activity, and in which of four ways](#raci)**<br>`raci` | **Who is involved in an activity, and how.** Use it when a process or a breakdown exists and the question is participation — who answers for this, wh… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[RASCI — RACI plus Supportive, for when doing the work and owning it come apart](#rasci)**<br>`rasci` | **Who is involved, when a role does the work without owning the deliverable.** Use it where a separate *Supportive* party is real — someone who contr… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Skill-pipeline subject indexing — one policy-grounded stage per cognitive step, each output inspectable](#skill-pipeline-subject-indexing)**<br>`skill-pipeline-subject-indexing` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
@@ -67,19 +78,33 @@ nothing. **Citation does not resolve** is neither: the node claims a source
 and the slug names nothing, which reads as evidence in every listing and is
 strictly worse than declaring none.
 
-### Adequacy-for-purpose modelling — a model is judged against what it is FOR, not against reality
+### Bidirectional agentic autoformalization — extract, compile-fix, check faithfulness, then informalize back without the source
 
-<a id="adequacy-for-purpose-modelling"></a>
+<a id="bidirectional-agentic-autoformalization"></a>
 
-`adequacy-for-purpose-modelling` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+`bidirectional-agentic-autoformalization` — declared by `folio-assistant-sci` — <span class="mv-tag mv-ingested">source held</span>
 
-**Applies when.** **A formal model is being built, and somebody will later ask whether it is right.** Use it when the artefact is a mathematical model of a process — agents, action and reward spaces, update rules — and the question is what the model is allowed to claim. It answers *what would count as this model succeeding*, and nothing else. Reach for it BEFORE the model is written, because its whole force is that the purpose is declared first and the evaluation follows from it. Reaching for it afterwards turns it into a defence of whatever the model happens to do. Do NOT reach for it to choose between options (`kepner-tregoe`), to grade evidence, to settle a recurring rule (`dmn`), or to pick an algorithm (`probabilistic-decision-analysis`, `mcdm-aggregation`). It is not a decision method at all: it is a rule for judging a model, and it is filed here because `methodology-adoption` routes "how do we evaluate X" to a methodology node.
+**Applies when.** **A whole paper, not a single theorem, is being formalised with an agent doing the Lean**, and the question is how to organise the run: what to extract first, how the compile-fix loop is bounded, what happens to a statement the agent cannot prove, and how a mathematician who does not read Lean reviews what came out. Do NOT use it to decide that a formalisation is faithful because the pipeline's own faithfulness step said so (see §3 and §"Refusals"). Not for choosing an axiom policy — this platform already has one, and it is stricter.
 
-**Origin.** Kavya Ravichandran, "Algorithmic Approaches to Sequential Decision-Making and Social Epistemology", PhD thesis, Toyota Technological Institute at Chicago, August 2026; arXiv:2607.20636v1 [cs.DS], 22 July 2026. Chapter 5, "Why Algorithmic Approaches" — an essay inside the thesis rather than a result of it. Open access, ingested whole. The view it builds on is Wendy Parker's (2020) "adequacy-for-purpose", quoted directly in that chapter; the how-possibly / how-actually distinction is from the philosophy-of-explanation literature the chapter cites, and the confirmatory / applied prediction split is Elliott-Graves'. Ravichandran's contribution adopted here is the ORDERED three-purpose taxonomy and the evaluation rule that follows from it.
+**Origin.** Yuanjie Ren, Jinzheng Li and Yidi Qi, "MerLean: An Agentic Framework for Autoformalization in Quantum Computation" (arXiv:2602.16554v1 [cs.LO], Massachusetts Institute of Technology and Northeastern University, 18 February 2026). Open access. A SYSTEM paper: it reports one agent pipeline run on three quantum-computing papers. What is adopted below is the method; several of its steps are REFUSED here, and §"Refusals" says which and why.
 
 **Ingested sources:**
 
-- `library/arxiv-2607.20636v1`
+- [`library/arxiv-2602.16554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2602.16554v1/README.md) · [source](https://arxiv.org/abs/2602.16554v1)
+
+### Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work
+
+<a id="blueprint-driven-formalization"></a>
+
+`blueprint-driven-formalization` — declared by `folio-assistant-sci` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **A formalization is large enough that its state has to be tracked node by node** — many interdependent definitions and theorems, several contributors or agents, and partial progress that someone must be able to read at a glance. Use it to decide where dependency and completion status are RECORDED and who may write them, and to decompose a target into units an automated prover can attempt one at a time. Do NOT use it to decide whether a Lean statement says what the prose says: a blueprint records that a node is `sorry`-free, never that it is faithful. That question belongs to the equivalence and vacuity audits, and this method makes it MORE pressing, not less (see §4). Not for a single-theorem formalization, where the graph has one node and the bookkeeping costs more than it saves.
+
+**Origin.** Thomas Zhu, Pietro Monticone, Jeremy Avigad and Sean Welleck, "LeanArchitect: Automating Blueprint Generation for Humans and AI" (arXiv:2601.22554v1 [cs.LO], Carnegie Mellon University and University of Trento, 30 January 2026). Open access. The blueprint itself is older and is not this paper's: it is Patrick Massot's `leanblueprint` (2020), a plasTeX plugin whose `\uses`, `\lean` and `\leanok` macros this paper builds on (its §2, ref. [16]). `leanblueprint` is NOT ingested here, so everything this node says about it is SECOND-HAND, through the LeanArchitect paper. The LeanArchitect paper is a TOOL paper: it presents a method through one Lean package. What is adopted below is the method; §"Where this rendering stops" says which parts were left behind.
+
+**Ingested sources:**
+
+- [`library/arxiv-2601.22554v1`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2601.22554v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2601.22554v1/README.md) · [source](https://arxiv.org/abs/2601.22554v1)
 
 ### Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score
 
@@ -93,8 +118,8 @@ strictly worse than declaring none.
 
 **Ingested sources:**
 
-- `library/arxiv-2606.04382v1`
-- `library/arxiv-2504.07199v3`
+- [`library/arxiv-2606.04382v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2606.04382v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2606.04382v1/README.md) · [source](https://arxiv.org/abs/2606.04382v1)
+- [`library/arxiv-2504.07199v3`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2504.07199v3) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2504.07199v3/README.md) · [source](https://arxiv.org/abs/2504.07199v3)
 
 ### DIIG — Digital Implementation Investment Guide
 
@@ -136,7 +161,7 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2510.21603v1`
+- [`library/arxiv-2510.21603v1`](../cat-harness/library/folio-assistant-core/#folio-assistant-core%2Farxiv-2510.21603v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/library/arxiv-2510.21603v1/README.md) · [source](https://arxiv.org/abs/2510.21603v1)
 
 ### Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it
 
@@ -150,7 +175,7 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2508.05192v2`
+- [`library/arxiv-2508.05192v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2508.05192v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2508.05192v2/README.md) · [source](https://arxiv.org/abs/2508.05192v2)
 
 ### Kepner-Tregoe Decision Analysis
 
@@ -180,33 +205,19 @@ these.
 checkout holds it. `literature-search` is the skill that closes one of
 these.
 
-### Aggregation-type MCDM — an alternatives-criteria matrix collapsed to one score per alternative
+### Process-driven autoformalization — judge a formalised statement by compiling it WITH a proof, and read the first error as the step signal
 
-<a id="mcdm-aggregation"></a>
+<a id="process-driven-autoformalization"></a>
 
-`mcdm-aggregation` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+`process-driven-autoformalization` — declared by `folio-assistant-sci` — <span class="mv-tag mv-ingested">source held</span>
 
-**Applies when.** **A FIXED, FINITE set of alternatives is to be ranked against several explicit criteria, all known up front.** The input is an alternatives-criteria matrix: every alternative scored on every criterion, with weights obtainable. The output is a ranking. Use it when the decision is made ONCE, from data already in hand. Choose within the family by what you can supply. SAW and MEW need only weights and normalised scores. AHP needs pairwise comparisons, which grow as the square of the criteria count, and gives a consistency ratio in return. ANP needs those plus the interdependence structure, and is the only member that admits feedback between criteria. COPRAS, MOORA, FUCA and WASPAS sit between SAW and AHP in what they ask for. Do NOT reach for it when the alternatives are explored REPEATEDLY and information accrues as you go — that is `probabilistic-decision-analysis`. Do not use it for a recurring rule (`dmn`), for a decision whose criteria are MUSTs and WANTs rather than weighted scores (`kepner-tregoe`), or for grading evidence. It also assumes the criteria set is complete: a criterion nobody wrote down is weighted zero, silently.
+**Applies when.** **A natural-language statement is being turned into a Lean statement and the question is how to test the candidate**, or **a Lean statement is being turned into prose** (a blueprint, a docstring, a narrative) and the question is how to keep that prose independent of the Lean it came from. Use it for the two checks it names — compile the statement together with a proof, and decompose informalization so the result is not a paraphrase of the syntax. Do NOT use it as evidence that a statement is FAITHFUL. The paper says itself that the compiler "can only validate the formal proof's correctness, not its semantic correspondence to the original natural language" (§5.1.2). Not for choosing, training or ranking models: the numbers in it are about the authors' models on the authors' dataset.
 
-**Origin.** Zhiyuan Wang (Singapore University of Social Sciences) and Gade Pandu Rangaiah (National University of Singapore; Vellore Institute of Technology), "Multi-Criteria Decision-Making: Aggregation-Type Methods", Chapter 8 of a forthcoming volume; arXiv:2509.06388v1, 2026. **The copy ingested is the authors' preliminary draft manuscript**, produced in Word and carrying no arXiv stamp, headed "Preliminary Draft Manuscript" and paginated 8-1 onward. `_pdf_doc_id.py` reads the arXiv id off page one's text layer, so this copy derived no `arxiv-` slug and fell back to the basename. Filed instead under the author-year convention the repository's other non-arXiv entries use (owner, 2026-09-29), which is why the bib-slug and the citation differ: **cite arXiv:2509.06388v1**; the slug is a filing key and nothing more.
-
-**Ingested sources:**
-
-- `library/wang-rangaiah-2026-mcdm-aggregation`
-
-### Probabilistic decision-making algorithms — and what their regret bounds are claims ABOUT
-
-<a id="probabilistic-decision-analysis"></a>
-
-`probabilistic-decision-analysis` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
-
-**Applies when.** **The alternatives can be TRIED, repeatedly, and what you learn from one try changes what you should try next.** Bandits, Bayesian optimisation and tree search all live here. The defining features are that the alternative set is sampled rather than scored, that information is gathered adaptively, and that each trial costs something — the monograph's motivating setting is scientific discovery, *"where experiments are costly"*. Reach for it also when the question is not which algorithm to run but **what an existing bound entitles anyone to say**: the monograph is an analysis text first, so it is the right source for reading a regret guarantee rather than quoting one. Do NOT reach for it for a one-shot choice from a fixed matrix — that is `mcdm-aggregation` — nor for a recurring rule (`dmn`), a MUST/WANT decision (`kepner-tregoe`), or grading evidence. And do not reach for it when you cannot actually run the alternatives: adaptivity is the whole premise, and without it every guarantee in the book is vacuous.
-
-**Origin.** Agustinus Kristiadi (Western University and Vector Institute, Canada), "Introduction to the Analysis of Probabilistic Decision-Making Algorithms"; arXiv:2508.21620v2 [cs.LG], 23 May 2026. A monograph, open access, ingested whole. Its stated aim is accessibility: *"theoretical analyses in the literature are often inaccessible to non-experts"*, and it assumes only basic probability and statistics plus some Gaussian processes.
+**Origin.** Jianqiao Lu, Yingjia Wan, Zhengying Liu, Yinya Huang, Jing Xiong, Chengwu Liu, Jianhao Shen, Hui Jin, Jipeng Zhang, Haiming Wang, Zhicheng Yang, Jing Tang and Zhijiang Guo, "Process-Driven Autoformalization in Lean 4" (arXiv:2406.01940v2 [cs.CL], 14 October 2024; version 1, June 2024). The paper labels itself "Work in progress". Open access. It is a MACHINE-LEARNING paper: it contributes a dataset (FormL4, built by informalizing Mathlib 4 theorems) and a training loop (an autoformalizer and a verifier fine-tuned against Lean compiler feedback). This platform trains no models, so what is adopted below is the small part of the method that survives without training; §"Where this rendering stops" is long on purpose.
 
 **Ingested sources:**
 
-- `library/arxiv-2508.21620v2`
+- [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
 
 ### RACI — who is involved in an activity, and in which of four ways
 
@@ -220,7 +231,7 @@ these.
 
 **Ingested sources:**
 
-- `library/dusengumuremyi-2026-ai-mediated-raci`
+- [`library/dusengumuremyi-2026-ai-mediated-raci`](../cat-harness/library/cat-harness/#cat-harness%2Fdusengumuremyi-2026-ai-mediated-raci) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/dusengumuremyi-2026-ai-mediated-raci/README.md)
 
 ### RASCI — RACI plus Supportive, for when doing the work and owning it come apart
 
@@ -248,9 +259,9 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2605.03537v1`
-- `library/arxiv-2504.19675v2`
-- `library/arxiv-2504.21474v1`
+- [`library/arxiv-2605.03537v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2605.03537v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2605.03537v1/README.md) · [source](https://arxiv.org/abs/2605.03537v1)
+- [`library/arxiv-2504.19675v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2504.19675v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2504.19675v2/README.md) · [source](https://arxiv.org/abs/2504.19675v2)
+- [`library/arxiv-2504.21474v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2504.21474v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2504.21474v1/README.md) · [source](https://arxiv.org/abs/2504.21474v1)
 
 ### Specification-compiled agents — the control flow comes from the diagram, not from the model's plan
 
@@ -264,7 +275,7 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2607.14456v1`
+- [`library/arxiv-2607.14456v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.14456v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.14456v1/README.md)
 
 ### SWOT — situation analysis over internal and external factors
 
@@ -278,8 +289,8 @@ these.
 
 **Ingested sources:**
 
-- `library/gurel-tat-2017-swot-analysis`
-- `library/sammut-bonnici-galea-2015-swot-analysis`
+- [`library/gurel-tat-2017-swot-analysis`](../cat-harness/library/cat-harness/#cat-harness%2Fgurel-tat-2017-swot-analysis) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/gurel-tat-2017-swot-analysis/README.md)
+- [`library/sammut-bonnici-galea-2015-swot-analysis`](../cat-harness/library/cat-harness/#cat-harness%2Fsammut-bonnici-galea-2015-swot-analysis) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/sammut-bonnici-galea-2015-swot-analysis/README.md)
 
 ### WireGen: wireframing from a written design intent
 
@@ -293,7 +304,7 @@ these.
 
 **Ingested sources:**
 
-- `library/arxiv-2312.07755v1`
+- [`library/arxiv-2312.07755v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2312.07755v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2312.07755v1/README.md) · [source](https://arxiv.org/abs/2312.07755v1)
 
 ## Files in the graph that are not methodology nodes
 

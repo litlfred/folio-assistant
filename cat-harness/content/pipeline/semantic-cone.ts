@@ -62,7 +62,7 @@
 
 import { folioDir } from "../../schemas/cat-harness.js";
 import { join } from "path";
-import { buildContentGraph, type ContentGraph, type FormalSource } from "./content-graph";
+import { buildContentGraph, isElaborated, type ContentGraph, type FormalSource } from "./content-graph";
 import { findContentRepoRoot } from "./repo-root";
 import { walkBlocks, loadQaReport, hashBlockFiles, entryIsFresh, freshnessKeys } from "./qa-utils";
 import { QA_CRITERIA_REGISTRY, QA_CRITERIA_BY_ID } from "./qa-criteria-registry";
@@ -261,7 +261,7 @@ the reduction. Confidence follows the formal graph's source; a "scan" or
     );
   } else {
     console.log(`semantic cone — confidence: ${cone.confidence}`);
-    if (cone.confidence !== "atlas") {
+    if (!isElaborated(cone.confidence)) {
       console.log(
         cone.confidence === "editorial-only"
           ? `  !! No formal graph. This is the EDITORIAL (uses[]) cone, which\n` +

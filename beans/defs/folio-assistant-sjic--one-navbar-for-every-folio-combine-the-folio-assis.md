@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T21:26:39Z
-updated_at: 2026-09-24T12:00:07Z
+updated_at: 2026-09-29T17:59:40Z
 parent: folio-assistant-p5wm
 ---
 
@@ -318,3 +318,7 @@ green** (`gates --all`, 128/128 incl. 459 browser tests). The gap is between
 ## Note, 2026-09-23 — left to stream 2, by the owner's choice
 
 While going through beans, the owner chose **"Leave to stream 2"**. The one open item, switching the Jekyll sidebar to the renderer, follows `603s`, which is in #1133 (`claude/stream-2-goal2-surface`). This bean unblocks when #1133 merges. It is not claimed from here.
+
+
+
+Claimed by claude/goal2-navbar-resume — 2026-09-29, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq (GOAL 2 resume after the 09-25 usage-limit stall).

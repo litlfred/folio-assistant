@@ -6,7 +6,6 @@ description: >-
   the verifier set, how to add a verifier, what is in scope, and how the
   publication manager triages the one alert.
 capability: review
-package: folio-core
 ---
 
 # Publish verification, and the one alert

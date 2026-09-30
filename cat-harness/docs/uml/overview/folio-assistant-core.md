@@ -83,7 +83,7 @@ classDiagram
       title [1] string
       instance [0..1] string
       libraryId [0..1] string
-      kgRef [0..1] string
+      path [0..1] string
       url [0..1] string~uri~
       year [0..1] integer
     }
@@ -120,7 +120,7 @@ classDiagram
       sources [1..*] Source[]
       rules [1..*] Rule[]
       overlaySeverity [0..1] critical | major | minor
-      appliesTo [0..*] string[]
+      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification~
       provenance [1] assertion | evidence | house
       extends [0..1] object
       activeIn [0..1] object
@@ -143,7 +143,6 @@ classDiagram
       invoke [1] object
       io [1] object
       satisfies [1..*] string[]
-      alternativeTo [0..*] string[]
       selection [0..1] object
       requires [0..1] object
       maintains [0..*] Maintain[]
@@ -181,7 +180,7 @@ classDiagram
       title [1] string
       instance [0..1] string
       libraryId [0..1] string
-      kgRef [0..1] string
+      path [0..1] string
       url [0..1] string~uri~
       year [0..1] integer
     }
@@ -218,7 +217,7 @@ classDiagram
       sources [1..*] Source[]
       rules [1..*] Rule[]
       overlaySeverity [0..1] critical | major | minor
-      appliesTo [0..*] string[]
+      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification~
       provenance [1] assertion | evidence | house
       extends [0..1] object
       activeIn [0..1] object

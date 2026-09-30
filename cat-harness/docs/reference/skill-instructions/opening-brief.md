@@ -235,5 +235,6 @@ to begin.
 | process | step(s) that name it |
 |---|---|
 | [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Brief the topic before touching anything |
+| [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Brief, and claim the bean |
 | [Options analysis](../../processes/options-analysis.html) | Frame the decision and check the trigger |
 

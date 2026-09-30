@@ -100,7 +100,7 @@ describe("the engine checks an adjudication's codes against the list it names", 
       p,
       `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#" targetNamespace="urn:t">
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#" targetNamespace="urn:t">
   <bpmn:process id="Process_T" isExecutable="false">
     <bpmn:startEvent id="Start_T"/>
     <bpmn:task id="A_T" name="Adjudicate">

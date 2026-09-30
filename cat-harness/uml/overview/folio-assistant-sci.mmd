@@ -14,6 +14,13 @@ classDiagram
       inspected_at [1] string
       verdicts [1] Record~string, Record~string, Verdict~~
     }
+    class folio_assistant_sci_library_folio_vector_labels_v1_folio_vector_labels_v1["folio-vector-labels/v1"] {
+      <<json: VectorLabelsSidecarSchema>>
+      $schema [1] 'folio-vector-labels/v1'
+      doc_id [1] string
+      pages [1] object[] | null
+      undetermined_reason [0..1] string
+    }
   }
   namespace folio_assistant_sci__voices {
     class folio_assistant_sci_voices_Source["Source"] {
@@ -21,7 +28,7 @@ classDiagram
       title [1] string
       instance [0..1] string
       libraryId [0..1] string
-      kgRef [0..1] string
+      path [0..1] string
       url [0..1] string~uri~
       year [0..1] integer
     }
@@ -58,11 +65,16 @@ classDiagram
       sources [1..*] Source[]
       rules [1..*] Rule[]
       overlaySeverity [0..1] critical | major | minor
-      appliesTo [0..*] string[]
+      appliesTo [0..*] list~enum(16) | docs | skill | readme | specification~
       provenance [1] assertion | evidence | house
       extends [0..1] object
       activeIn [0..1] object
       superseded [0..1] object
+    }
+  }
+  namespace folio_assistant_sci__sci_methodologies {
+    class n_folio_assistant_sci_sci_methodologies_methodology["methodology: no node schema"] {
+      <<could not determine>>
     }
   }
   namespace folio_assistant_sci__qa {
@@ -93,6 +105,7 @@ classDiagram
   }
   cssClass "folio_assistant_sci_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "folio_assistant_sci_library_folio_image_verdicts_v1" fa_uml_kind_library
+  cssClass "folio_assistant_sci_library_folio_vector_labels_v1_folio_vector_labels_v1" fa_uml_kind_library
   folio_assistant_sci_voices_VoiceProfile *-- "1..*" folio_assistant_sci_voices_Source : sources
   folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Pattern : patterns
   folio_assistant_sci_voices_Rule *-- "0..*" folio_assistant_sci_voices_Terminology : terminology
@@ -102,6 +115,8 @@ classDiagram
   cssClass "folio_assistant_sci_voices_Terminology" fa_uml_kind_voices
   cssClass "folio_assistant_sci_voices_Rule" fa_uml_kind_voices
   cssClass "folio_assistant_sci_voices_VoiceProfile" fa_uml_kind_voices
+  cssClass "n_folio_assistant_sci_sci_methodologies_methodology" fa_uml_kind_methodology
+  cssClass "n_folio_assistant_sci_sci_methodologies_methodology" fa_uml_undetermined
   folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" folio_assistant_sci_qa_kg_qa_v1_Pair_attestation : pair_attestations
   cssClass "folio_assistant_sci_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
   cssClass "folio_assistant_sci_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa

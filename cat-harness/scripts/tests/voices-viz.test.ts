@@ -14,7 +14,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 
 import { readVoicesGraph, type VoicesGraph } from "../voices-graph.ts";
-import { viewerHtml } from "../gen-voices-viz.ts";
+import { projection, viewerHtml } from "../gen-voices-viz.ts";
 import { shippedVoices, overlaySeverityOf } from "../../content/pipeline/voice-criteria.ts";
 import { overlayCriterionId } from "../../content/pipeline/voice-criteria.ts";
 import { directoriesForGraph, instanceRootsIn, repoRootFor } from "../../schemas/cat-harness.ts";
@@ -279,7 +279,7 @@ describe("vendor overrides live in a reserved sub-sub-graph", () => {
           description: "A voice with no rules does not parse, so the fixture carries one.",
           category: "structure",
           severity: "minor",
-          source: { kgRef: "skills/folio-core/technical-documentation.md", quote: "a fixture quote" },
+          source: { path: "skills/folio-core/technical-documentation.md", quote: "a fixture quote" },
         },
       ],
     });
@@ -349,5 +349,32 @@ describe("vendor overrides live in a reserved sub-sub-graph", () => {
     } finally {
       rmSync(root, { recursive: true, force: true });
     }
+  });
+});
+
+/**
+ * Bean `qgjh`: every citation that resolves carries its links — a library
+ * source through the library resolver, a KG node through the file resolver —
+ * and one that does not resolve carries none.
+ */
+describe("citations carry their links (qgjh)", () => {
+  const rule = (citation: string, cites: string) => ({ id: "r", citation, cites, citesInstance: "x" });
+  const g = {
+    totals: { voices: 1 },
+    voices: [{ rules: [rule("library", "lib-item#s1"), rule("kg-node", "skills/a.md"), rule("kg-node", "gone.md")] }],
+  };
+  const lib = { links: (id: string) => (id === "lib-item" ? { viewer: "v/#x%2Flib-item" } : undefined) };
+  const kg = (ref: string) => (ref === "skills/a.md" ? { source: "https://host/skills/a.md" } : undefined);
+  const out = projection(g as never, lib, kg) as { voices: { rules: { links?: unknown }[] }[] };
+  const [a, b, c] = out.voices[0]!.rules;
+
+  test("a library citation carries the library resolver's links", () => {
+    expect(a!.links).toEqual({ viewer: "v/#x%2Flib-item" });
+  });
+  test("a KG-node citation carries its file link", () => {
+    expect(b!.links).toEqual({ source: "https://host/skills/a.md" });
+  });
+  test("a citation nothing resolves carries no links", () => {
+    expect(c!.links).toBeUndefined();
   });
 });

@@ -50,6 +50,7 @@ import {
 import { allowedFromNeeds, directionOf, type LayerRule } from "../../schemas/layer-direction.js";
 import { ancestorsOf, flattenDependencies } from "../../schemas/dependency-order.js";
 import { ownElementPattern } from "../../schemas/namespaces.js";
+import { isDirectoryReadme } from "../../schemas/kg-node.ts";
 
 const ROOT = resolve(import.meta.dir, "../../..");
 
@@ -197,7 +198,12 @@ const byId = new Map<string, string>(); // id -> absolute path
 const byName = new Map<string, string[]>();
 
 for (const { path } of SCAN) {
-  const scanned = corpusOf(join(ROOT, path));
+  // A README is documentation ABOUT a directory, never a node IN it — the
+  // rule `isSkillMd` states for the skill scan. It mattered little while
+  // READMEs were rare; `subgraph-readmes` writes one into every declared
+  // directory, and counting them would add a node to every group and tilt
+  // `groupDepthFor`'s here-vs-nested count at every root.
+  const scanned = corpusOf(join(ROOT, path)).filter((p) => !isDirectoryReadme(p));
   const groupDepth = groupDepthFor(path, scanned);
   for (const abs of scanned) {
     const id = relative(ROOT, abs);
@@ -448,7 +454,10 @@ function writeSidecars(): { written: string[]; stale: { path: string; fields: st
     }
     const fields = staleFields(committed, fresh);
     if (fields.length > 0) stale.push({ path: rel, fields });
-    if (!checking) {
+    // `--gate-direction` reads the tree and grades it; it must not also
+    // rewrite the pinned record it is not grading. A gate that mutates its
+    // own subject is the shape this repository keeps paying for.
+    if (!checking && !gatingDirection) {
       mkdirSync(dirname(abs), { recursive: true });
       writeFileSync(abs, JSON.stringify(fresh, null, 2) + "\n", "utf-8");
     }
@@ -491,10 +500,55 @@ function sweepOrphans(accountedFor: string[]): string[] {
 }
 
 const checking = process.argv.includes("--check");
+
+/**
+ * `--gate-direction` — the CROSS-INSTANCE wrong-direction gate. Bean `p11x`,
+ * the owner's Option 2 ruling of 2026-09-30.
+ *
+ * ## What it grades, and what it deliberately does not
+ *
+ * Everything else this script reports is **pinned, not graded**: the carve is
+ * an adjudication a person makes (`detangle.ts`, "taste is a declared step"),
+ * so `--check` fails on a STALE or ORPHANED sidecar and never on a number
+ * being wrong. **That ruling stands and this flag does not touch it.**
+ *
+ * The one number that is not taste is this one. A module's BUCKET is a
+ * judgement; an import pointing at an instance that declares a dependency on
+ * you is a contradiction between two declarations, and no amount of taste
+ * makes it consistent. So the direction count is graded and the rest is not,
+ * and the two live behind DIFFERENT FLAGS with different npm scripts and
+ * different CI steps — because a reader looking at a red run has to be able
+ * to tell "somebody moved a file and did not re-pin" from "somebody inverted
+ * the layering", and a third behaviour on `--check` would report both as one.
+ *
+ * ## Why this axis is here rather than in `check:partition`
+ *
+ * `check:partition` resolves its ROOT to `<checkout>/cat-harness`, so the
+ * wrong-direction count it prints is scoped to ONE instance and is silent
+ * about edges between already-extracted siblings. `bf5l` measured the
+ * discriminator: with `cat-harness/schemas/intake.ts` importing
+ * `folio-assistant-core` in place, `check:instance-graph` and
+ * `check:partition` were both green and this script reported 1. A node's
+ * layer HERE is the instance it lives in, which is why it can see the axis at
+ * all.
+ *
+ * ## It writes nothing, and that is load-bearing twice over
+ *
+ * A gate that mutates the tree it is judging is not a gate, and this one runs
+ * in CI. It also means the flag does not inherit `ymsu` — that defect is
+ * `bun test` repairing a SIDECAR that a later gate then compares against
+ * itself, and a live-computed edge count has no sidecar to repair. `ymsu` is
+ * open and untouched (the owner accepted that cost when ruling Option 2);
+ * what is claimed here is only that this particular flag is outside its
+ * mechanism, which is checkable: nothing below reads a committed file.
+ */
+const gatingDirection = process.argv.includes("--gate-direction");
 const { written: sidecarsWritten, stale: staleSidecars } = writeSidecars();
 const orphanSidecars = sweepOrphans(sidecarsWritten);
 
-if (process.argv.includes("--json")) {
+if (gatingDirection) {
+  gateDirection();
+} else if (process.argv.includes("--json")) {
   console.log(JSON.stringify({ thresholds: DEFAULT_THRESHOLDS, results, dangling }, null, 2));
 } else {
   console.log(`\nDetangle — ${nodes.length} nodes, ${edges.length} edges, ${dangling.length} dangling\n`);
@@ -559,8 +613,157 @@ if (process.argv.includes("--json")) {
   );
 }
 
+/**
+ * The cross-instance direction verdict — see {@link gatingDirection}.
+ *
+ * Prints its own short report rather than the candidate table. The table ends
+ * with "Nothing here decides anything", which is true of it and false of this,
+ * and putting a verdict under that sentence is how a reader learns to discount
+ * both.
+ */
+function gateDirection(): void {
+  const offenders = results.filter((r) => r.wrongDirection > 0);
+  const total = offenders.reduce((n, r) => n + r.wrongDirection, 0);
+  const undetermined = results.reduce((n, r) => n + r.undeterminedDirection, 0);
+
+  console.log(`\nCross-instance direction — ${nodes.length} nodes, ${edges.length} edges\n`);
+
+  // ── THE DENOMINATOR, stated before the numerator. Bean `cjvs`, Done-when 2:
+  // *"`kg:detangle` says whether its wrong-direction count is over all edges
+  // or only the resolving ones. Today a reader cannot tell."*
+  //
+  // It is over the RESOLVING ones, and that has to be said by a gate that
+  // BLOCKS on the number. A dangling ref is a link-shaped value that does not
+  // dereference (`blv9`), and it is excluded from the graph before any edge is
+  // classified — so a `0` here is `0 among the edges that resolve`, which is a
+  // weaker claim than `0`. Left unstated, this gate could go green because an
+  // edge failed to resolve rather than because the layering held, which is
+  // `1xhc` arriving through the back door of its own remedy.
+  //
+  // REPORTED, NOT GRADED, and the split is the same one this whole flag is
+  // built on: whether a dangling ref would have been a wrong-direction edge is
+  // NOT KNOWABLE from the count, so failing on it would be grading a
+  // could-not-determine. `cjvs` owns triaging them; this only refuses to let
+  // the number be read as if they were not there.
+  const danglingByVia = new Map<string, number>();
+  for (const d of dangling) danglingByVia.set(d.via, (danglingByVia.get(d.via) ?? 0) + 1);
+  const viaBreakdown = [...danglingByVia].sort((a, b) => b[1] - a[1]).map(([v, n]) => `${n} ${v}`).join(", ");
+  console.log(`  denominator: the ${edges.length} edge(s) that RESOLVE. ${dangling.length} dangling ref(s) are excluded`);
+  console.log(`  before any edge is classified${viaBreakdown ? ` (${viaBreakdown})` : ""}, so the count below is`);
+  console.log(`  "0 among the edges that resolve" and not "0". Whether a dangling ref would have been a`);
+  console.log(`  wrong-direction edge is not knowable from here — reported, never graded (bean cjvs).`);
+  console.log("");
+
+  // SCOPE FIRST, because a bare count is exactly the over-broad claim this
+  // gate exists to stop being made (`p11x`; corrected by comment on #1465).
+  // The axis is only as wide as SCAN, and saying so is not a disclaimer — a
+  // directory missing from that list reads as "nothing to report" rather than
+  // as a gap, which is `1xhc` with a smaller blast radius.
+  console.log(`  scope: the ${SCAN.length} declared scan target(s) below, as WHOLE INSTANCES —`);
+  console.log(`  a node's layer is the instance it lives in, and what a layer may reach is its`);
+  console.log(`  declared \`needs\`, transitively. This is the axis \`check:partition\` cannot see:`);
+  console.log(`  that tool's ROOT is one instance, so its count is silent about edges between them.`);
+  for (const s of SCAN) console.log(`    ${s.path}${absentScanTargets.includes(s.path) ? "   (absent — measured as a determined empty)" : ""}`);
+  console.log("");
+
+  // ── THE INSTANCE-LEVEL DENOMINATOR, and it is the one that matters most.
+  //
+  // `cjvs` made the gate state its EDGE denominator. This is the same demand
+  // one level up: how many of the checkout's instances the axis actually
+  // reaches. Without it a `0` is read as "the layering holds" when it may
+  // only mean "the two instances I looked at agree".
+  //
+  // It is worse than an ordinary blind spot, because SCAN's coverage is
+  // asymmetric and the two halves fail differently:
+  //
+  //   - an importer outside SCAN is not a node, so its edges are never
+  //     extracted at all and appear NOWHERE, not even as dangling;
+  //   - an importer inside SCAN reaching a target outside it produces a
+  //     DANGLING ref, which the denominator above already excludes.
+  //
+  // Either way the edge cannot be wrong-direction however blocking this gate
+  // is made. Measured 2026-09-30: `cat-harness/` imports from
+  // `bootstrap-tools/` — a SIBLING instance (both declare `needs:
+  // ["bootstrap"]`, so neither is the other's ancestor) which `cat-harness`
+  // does not declare needing, and which no `permits` entry exempts because
+  // the repository declares none. 20 import statements across 24 files; 10 of
+  // those files are under `cat-harness/schemas` and in SCAN, 14 are under
+  // `scripts`/`content` and are not; 6 surface as dangling refs and the rest
+  // are invisible. `check:partition` cannot see them either (its ROOT is one
+  // instance) and `check:instance-graph` reports ✓ because it judges
+  // declarations and never imports — `bf5l`'s three-green-checks table with a
+  // fourth row.
+  //
+  // NOT FIXED HERE, and deliberately not fixed by adding `bootstrap-tools` to
+  // SCAN: that would add nodes and edges to a set of PINNED adjudications
+  // mid-flight, and whether `cat-harness` should declare it among its `needs`
+  // or `bootstrap-tools` should fold into `bootstrap` is a declaration ruling
+  // for the owner, not a side effect of wiring a gate. What this block does
+  // is refuse to let the omission read as clean — the unreached instances are
+  // DERIVED from the checkout and named, so one added tomorrow shows up here
+  // without an edit, and a `0` can never again be mistaken for a verdict over
+  // instances this axis never looked at.
+  const declaredInstances = readdirSync(ROOT, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && !e.name.startsWith("."))
+    .map((e) => e.name)
+    .filter((n) => existsSync(join(ROOT, n, `${n}.json`)))
+    .sort();
+  const unreached = declaredInstances.filter((n) => !layerNeeds.has(n));
+  console.log(`  instance denominator: ${layerNeeds.size} of the checkout's ${declaredInstances.length} declared instance(s)`);
+  console.log(`  contribute nodes to this graph. The verdict below is over THOSE, and no others.`);
+  if (unreached.length > 0) {
+    console.log("");
+    console.log(`  ! ${unreached.length} declared instance(s) are NOT REACHED by any scan target, so this gate has`);
+    console.log(`    no opinion whatever about edges into or out of them — not "clean", NOT MEASURED:`);
+    console.log(`      ${unreached.join(", ")}`);
+    console.log(`    An import from an unscanned directory is never extracted; an import INTO an`);
+    console.log(`    unscanned one becomes a dangling ref and is excluded above. Either way it cannot`);
+    console.log(`    be wrong-direction here, however blocking this gate is. Reported, never graded:`);
+    console.log(`    widening SCAN changes a set of pinned adjudications and is a person's decision.`);
+  }
+  console.log("");
+
+  if (corpusFallbacks.length > 0) {
+    console.log(`  ? git could not enumerate ${corpusFallbacks.length} scanned directory(ies); a bare walk was`);
+    console.log(`    used, so their edges may include untracked residue: ${corpusFallbacks.join(", ")}`);
+    console.log("");
+  }
+
+  // Reported, never graded. `undetermined` means no declaration settles the
+  // direction — failing on it would be this gate deciding a layering nobody
+  // declared, which is the opposite of what it is for. Printed so that
+  // could-not-determine is never rendered as clean.
+  if (undetermined > 0) {
+    console.log(`  ? ${undetermined} outbound edge(s) have an UNDETERMINED direction — an endpoint's instance`);
+    console.log(`    declares no \`needs\`, so nothing here settles which way they run. Reported, not graded:`);
+    console.log(`    grading them would be this gate deciding a layering nobody has declared.`);
+    console.log("");
+  }
+
+  if (total === 0) {
+    console.log(`  ✓ 0 wrong-direction edges across the scanned instances.`);
+    return;
+  }
+
+  console.error(`  ✗ ${total} wrong-direction edge(s) across the scanned instances:\n`);
+  for (const r of offenders) {
+    for (const e of r.classified.filter((c) => c.kind === "wrong-direction")) {
+      console.error(`    ${e.from}  ->  ${e.to}   [${e.via}]`);
+      console.error(`        ${e.basis}`);
+    }
+  }
+  console.error(
+    `\n    An instance may not reference one that declares a dependency on it. Either the` +
+      `\n    IMPORT is wrong, or the two \`<instance>.json\` \`needs\` declarations are — check the` +
+      `\n    target's declaration before the importer's.` +
+      `\n\n    This is the only detangle number that is GRADED. The rest are pinned, because the` +
+      `\n    carve is an adjudication; a contradiction between two declarations is not.`,
+  );
+  process.exit(1);
+}
+
 // ── Report the pinned record, after the table so it reads as a footnote to it.
-if (!process.argv.includes("--json")) {
+if (!process.argv.includes("--json") && !gatingDirection) {
   const where = relative(process.cwd(), RESULTS_DIR);
   if (checking) {
     if (staleSidecars.length === 0 && orphanSidecars.length === 0) {

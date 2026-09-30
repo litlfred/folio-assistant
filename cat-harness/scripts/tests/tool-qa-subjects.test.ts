@@ -31,7 +31,7 @@
  * | break | result |
  * |---|---|
  * | `tool-maintains-in-tree` returns `pass` instead of `unknown` | **fails** |
- * | `tool-alternative-resolves` returns `pass` instead of `n/a` | **fails** |
+ * | `tool-alternative-selectable` returns `pass` instead of `n/a` | **fails** |
  * | `tool` removed from `KG_SUBJECT_KINDS` | does not compile |
  * | restored | all pass |
  */
@@ -47,6 +47,7 @@ import {
   worstSeverity,
 } from "../../schemas/kg-qa.ts";
 import { tools } from "../../tools/index.ts";
+import { deriveAlternatives } from "../../schemas/tool.js";
 
 const INSTANCE = resolve(import.meta.dir, "../..");
 const SIDECARS = join(INSTANCE, "test", "results", "kg-qa", "tools");
@@ -102,7 +103,8 @@ describe("the criteria project, they do not decide", () => {
 
 describe("the two results that are not `pass`", () => {
   const withMaintains = tools().filter((t) => (t.maintains ?? []).length > 0);
-  const withoutAlternatives = tools().filter((t) => (t.alternativeTo ?? []).length === 0);
+  const derived = deriveAlternatives(tools());
+  const withoutAlternatives = tools().filter((t) => !derived.has(t.id));
 
   test("there are tools of each shape — otherwise the assertions below are vacuous", () => {
     expect(withMaintains.length).toBeGreaterThan(0);
@@ -121,10 +123,10 @@ describe("the two results that are not `pass`", () => {
   });
 
   test("a Tool with no alternative records `n/a`, not a pass", () => {
-    // 60-odd non-answers counted as evidence is how a projection starts
+    // 100-odd non-answers counted as evidence is how a projection starts
     // reading as more coverage than it has.
     for (const t of withoutAlternatives.slice(0, 5)) {
-      expect(sidecar(t.id).criteria["tool-alternative-resolves"]!.result).toBe("n/a");
+      expect(sidecar(t.id).criteria["tool-alternative-selectable"]!.result).toBe("n/a");
     }
   });
 });

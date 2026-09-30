@@ -7,7 +7,6 @@ description: >-
   seventeen moves that were measured rather than argued, and the failures each
   one cost.
 capability: architecture
-package: graph-management
 ---
 
 # Graph detanglement — the practice, not the migration
@@ -57,9 +56,53 @@ direction: whether an allowed edge is a *restatement* or *essential* is the
 adjudicator's call, so those edges stay `unclassified` with the verdict as
 their basis.
 
-Same rule, three scales, two vocabularies. **Prune, merge, or factor into a
+**The direction count is the one detangle number that is GRADED**, and it is
+graded in a gate of its own — `bun run kg:detangle:direction`, blocking in CI
+since the owner's Option 2 ruling on bean `p11x` (2026-09-30). Everything else
+this tool measures stays **pinned**: `kg:detangle:check` fails on a stale or
+orphaned sidecar and never on a number, because the carve is an adjudication a
+person makes and grading it would be the tool overruling the adjudicator.
+
+The line between them is not a matter of degree. A module's **bucket** is taste.
+An edge whose target layer is not among what the source layer's
+`<instance>.json` says it may reach is a **contradiction between two
+declarations**, and no adjudication makes it consistent — so it is the one thing
+here a machine may refuse. Two flags, two npm scripts, two CI steps, so a red
+run says which question broke.
+
+Two things that gate **reports and refuses to grade**, both because grading them
+would be grading a could-not-determine:
+
+- **`undetermined` edges** — an endpoint's instance declares no `needs`. Failing
+  on these would be the gate deciding a layering nobody declared.
+- **the denominator** — the count is over the edges that **resolve**. Dangling
+  refs (bean `blv9`) are excluded before any edge is classified, so a `0` is
+  *"0 among the edges that resolve"*, which is the weaker claim. The gate prints
+  the excluded count and its breakdown, because a blocking gate that hides its
+  denominator can pass because an edge failed to resolve rather than because the
+  layering held. Bean `cjvs` owns triaging them.
+
+**It is not `check:partition`'s second opinion.** That tool's root is one
+instance, so it partitions a **future** layout by path rule among that
+instance's own modules; this checks the **present** layout against declared
+`needs` across instances. `bf5l` measured them disagreeing — a real
+`cat-harness → folio-assistant-core` import gave `check:partition` `0` and this
+`1`. Either can be green while the other is red, and Phase I.1 of the migration
+plan now needs both.
+
+**At term scale** — a glossary declared `ordered` (owner, 2026-09-29, of
+bootstrap's terms: *"logically tight, non self-referential"*). Each term's
+`requires` must point UP, and `checkDeclaredOrder` in
+`schemas/dependency-order.ts` names every forward, self and missing use. It is
+the block-scale rule with terms for blocks: a forward `requires` is a forward
+edge, and two terms defined by each other are a cycle **no ordering removes**,
+so the moves are the same three — drop the use, merge the two terms, or factor
+the shared idea into a term above both. The rule and its form on the page are
+in [`glossary-terms`](../folio-core/glossary-terms.md) §"Ordered glossaries".
+
+Same rule, four scales, two vocabularies. **Prune, merge, or factor into a
 third** are the only three moves, and "the classification is wrong" is the
-fourth possibility the block-scale version does not have because a block's
+fourth possibility the block- and term-scale versions do not have because a block's
 chapter is not in doubt the way a module's layer is.
 
 Everything below is machinery for finding out which of the four you are looking
@@ -108,6 +151,10 @@ graph document.
 Only once edges are zero and the declaration stands alone. A directory move
 rather than a file-by-file sift. The five-point gate is in
 `docs/architecture/migration-plan.md` Phase II and is not restated here.
+For a Knowledge Graph leaving as its own repositories — a content repository
+and a tools repository — the rest of the method, from splitting the tools out
+to the cutover, is [`kg-separation`](kg-separation.md) and its process
+`kg-separation.bpmn`.
 
 ## The seventeen moves
 

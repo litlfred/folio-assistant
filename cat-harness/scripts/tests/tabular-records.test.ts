@@ -297,18 +297,23 @@ describe("the gate fires on a workbook with no record", () => {
 });
 
 describe("the real corpus", () => {
-  test("four PDFs, zero datasets, said per entry rather than left silent", () => {
+  test("every entry says whether it is tabular; the one dataset is CODATA 2022", () => {
+    // Zero datasets until 2026-09-30, when CODATA 2022 became the first
+    // tabular entry (bean uyp8). Pinned by SLUG rather than by count, so a
+    // second dataset is a deliberate edit here, not a silent pass.
     // `undefined` means no `library` graph was declared, which is NOT an
     // empty corpus — a test computed over it has checked nothing.
     const reports = checkAll(ROOT);
     expect(reports, "no `library` declared under ROOT — this test would be vacuous").toBeDefined();
     if (reports === undefined) return;
     expect(reports.length).toBeGreaterThan(0);
+    const tabular: string[] = [];
     for (const r of reports) {
       const q = r.requirements.find((x) => x.name === "tabular-records");
       expect(`${r.slug}: ${q?.state}`).toBe(`${r.slug}: met`);
-      expect(q?.detail).toContain("not tabular");
+      if (!q?.detail.includes("not tabular")) tabular.push(r.slug);
     }
+    expect(tabular).toEqual(["codata-2022"]);
   });
 });
 

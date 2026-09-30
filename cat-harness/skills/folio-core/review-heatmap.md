@@ -8,7 +8,6 @@ description: >-
   reviewer or author asks "where do I start", reads a number off the heat map,
   or asks why coverage or QA say "no data"; and before adding a column.
 capability: review
-package: folio-core
 user_invocable: true
 allowed-tools: Read Grep Glob
 ---

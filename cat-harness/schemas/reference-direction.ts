@@ -25,10 +25,13 @@
  * — a count that ROSE from 43 to 49 because the measurement improved, which
  * is only legible because ONE tool owned the number.
  *
- * ## Four verdicts, because three of them are not "clean"
+ * ## Five verdicts, because four of them are not "clean"
  *
- * `allowed`, `exempt`, `wrong-direction` and `undetermined` — mirroring
- * `layer-direction.ts` deliberately, so a reader who knows one knows both.
+ * `allowed`, `exempt`, `wrong-direction`, `names-repository` and
+ * `undetermined` — the first four mirroring `layer-direction.ts`
+ * deliberately, so a reader who knows one knows both, plus the one this axis
+ * needs that the import axis cannot: a NAME can name a repository, an import
+ * path cannot.
  *
  * `undetermined` is the load-bearing one and it carries `zlmp`'s discipline
  * verbatim: *"these are not cross-edges — they are edges this tool declined
@@ -38,29 +41,50 @@
  *   - an instance that declares no `needs` (absent is nobody-has-said, never
  *     "may reach nothing" and never "may reach anything"), which
  *     `allowedFromNeeds` already reports; and
- *   - a target whose name is ALSO the repository's name — see below, because
- *     it is 59 % of every occurrence in this repository and getting it wrong
- *     is the difference between a report somebody acts on and one they switch
- *     off on the first run.
+ *   - a target whose name is ALSO the repository's name AND whose occurrence
+ *     gives nothing to tell the two apart — see below, because the blanket
+ *     version of this test was 78 % of every occurrence in this repository
+ *     and getting it wrong is the difference between a report somebody acts
+ *     on and one they switch off on the first run.
  *
- * ## The repository-name rule, which is structural rather than a heuristic
+ * ## The repository-name collision, and why it is no longer a blanket
  *
  * An instance rooted AT the repository root shares its name with the
  * repository. Here that is `folio-assistant`: the repository, the published
- * product, and the root instance all carry that string, and no name match can
- * tell the three apart. Worse, every relative path in the tree resolves inside
- * that instance's root, so even "does the reference resolve into its files?"
- * — the test that would settle any other instance — answers yes for all of
- * them.
+ * product, and the root instance all carry that string, so the STRING alone
+ * cannot tell the three apart. Every relative path in the tree resolves
+ * inside that instance's root too, so even "does the reference resolve into
+ * its files?" — the test that would settle any other instance — answers yes
+ * for all of them.
  *
- * So the question is not hard, it is **undecidable by name**, and the honest
- * verdict is `undetermined` rather than a guess in either direction. Measured
- * 2026-09-23: 2,137 of 3,651 occurrences. Calling them violations would put a
- * four-figure backlog in front of a reader on day one; calling them clean
- * would assert something nothing checked.
+ * Until 2026-09-29 the conclusion drawn from that was that the whole question
+ * was undecidable, and every occurrence of a colliding name returned
+ * `undetermined` in one move. Measured on main that day: **11,090 of 14,299
+ * occurrences**, 78 % of everything the checker read. And it was measurably
+ * wrong about nearly all of them, because the occurrence carries more than
+ * the name. Of 13,160 word-bounded occurrences of `folio-assistant` under
+ * `cat-harness/`, 11,419 sit inside an `http(s)` URL, 11,831 appear as the
+ * path prefix `folio-assistant/`, 4,909 as `litlfred/folio-assistant` — and
+ * **14** as a path into a directory the root instance actually declares. A
+ * URL is an address and `<owner>/<name>` is a repository slug; the repository
+ * is not a layer, so it owes no direction, and saying so is not a guess.
  *
- * `sharesNameWithRepository` is passed IN rather than derived here, so this
- * module stays free of paths and its tests need no tree on disk.
+ * Hence {@link NameCollision}, decided per OCCURRENCE rather than per name:
+ *
+ *   - `"instance"` — the occurrence points INTO a directory the colliding
+ *     instance declares, so it is a reference to the instance and is judged
+ *     by the arrow like any other, `wrong-direction` included;
+ *   - `"repository"` — it names the repository or the product address, and
+ *     {@link ReferenceVerdict}'s `names-repository` says exactly that;
+ *   - `"unknown"` — a bare prose mention, with no path and no URL. **This is
+ *     the honest residue and it stays `undetermined`.** It is not dead code
+ *     and must not be optimised away: the ambiguity was real, it was just
+ *     never 78 % of the corpus.
+ *
+ * The resolver is passed IN rather than derived here, so this module stays
+ * free of paths and its tests need no tree on disk. Which occurrence shapes
+ * map to which collision is the CALLER's question, because it is the caller
+ * that read the declaration.
  *
  * @module schemas/reference-direction
  * @graphNode none — a classification function: it defines no schema
@@ -100,7 +124,29 @@ export type ReferenceVerdict =
   | { verdict: "allowed"; basis: string }
   | { verdict: "exempt"; basis: string; exemption: ReferenceExemption }
   | { verdict: "wrong-direction"; basis: string }
+  /**
+   * The string found names the REPOSITORY (or its published address), not the
+   * instance that shares its name. A repository is not a layer, so no
+   * direction is owed — which is a different statement from `allowed` (a
+   * reference that follows the arrow), from `exempt` (a reference the arrow
+   * refuses, excused) and from `undetermined` (a question declined). It gets
+   * its own line in the report for that reason and is never folded into any
+   * of the three.
+   */
+  | { verdict: "names-repository"; basis: string }
   | { verdict: "undetermined"; basis: string };
+
+/**
+ * What a target name colliding with the repository's name turned out to BE,
+ * at one occurrence.
+ *
+ * Three values because there are three answers and collapsing any two loses
+ * the distinction the collision was blocking. `undefined` from the resolver
+ * is a fourth thing entirely — no collision at all — and not a member here,
+ * so "the name does not collide" cannot be confused with "it collides and we
+ * could not tell".
+ */
+export type NameCollision = "instance" | "repository" | "unknown";
 
 /**
  * Every bounded occurrence of `name` in `text`, as 1-based line numbers.
@@ -129,11 +175,17 @@ export function occurrencesOf(text: string, name: string): { line: number; text:
 /**
  * Classify one occurrence.
  *
- * `sharesNameWithRepository` asks of the TARGET, not the source: an
- * occurrence is undecidable when the string found could be the repository's
- * own name. Checked BEFORE the direction rule, because an undecidable target
- * makes the direction question moot rather than answerable-then-excused —
- * which is also why it is `undetermined` and not an exemption.
+ * `collision` asks about THIS OCCURRENCE of the target's name, not about the
+ * name: `undefined` when the target's name does not collide with the
+ * repository's, and otherwise which of the three things the occurrence turned
+ * out to be ({@link NameCollision}).
+ *
+ * It is consulted BEFORE the direction rule for the two answers that make the
+ * direction question moot rather than answerable-then-excused — which is also
+ * why neither is an exemption. `"instance"` falls THROUGH, so a genuine
+ * reference to an instance whose name collides is judged by the arrow like
+ * every other: it can be `wrong-direction`, `allowed` or `exempt`. The blanket
+ * that preceded this could reach none of those three.
  *
  * An exemption is consulted only for an occurrence the rule would refuse, so
  * one sitting on an allowed line is never "honoured". That is what lets a
@@ -143,10 +195,17 @@ export function occurrencesOf(text: string, name: string): { line: number; text:
 export function classifyReference(
   occ: Occurrence,
   rule: LayerRule,
-  sharesNameWithRepository: (instance: string) => boolean,
+  collision: (occ: Occurrence) => NameCollision | undefined,
   exemptions: readonly ReferenceExemption[] = [],
 ): ReferenceVerdict {
-  if (sharesNameWithRepository(occ.to)) {
+  const collides = collision(occ);
+  if (collides === "repository") {
+    return {
+      verdict: "names-repository",
+      basis: `the occurrence names the repository '${occ.to}' (or its published address) rather than the instance that shares its name, and a repository is not a layer, so no direction is owed`,
+    };
+  }
+  if (collides === "unknown") {
     return {
       verdict: "undetermined",
       basis: `'${occ.to}' is also the repository's name — a name match cannot tell the instance from the repository`,

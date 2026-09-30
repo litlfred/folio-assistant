@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
 title: Authoring a WHO SMART DAK (L2)
 parent: Authoring guides
 nav_order: 2

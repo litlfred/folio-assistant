@@ -1,0 +1,188 @@
+{
+  "$schema": "folio-document-images/v1",
+  "doc_id": "arxiv-2601.22554v1",
+  "images": [
+    {
+      "id": "img-p008-1",
+      "file": "images/img-p008-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-20",
+        "saw": "Figure 2(a), the blueprint dependency graph of the multivariate Taylor case study, the initial blueprint drafted by the language model",
+        "page": 8
+      },
+      "narrative": {
+        "text": "Figure 2(a): the first blueprint produced for multivariate Taylor's theorem in integral form, before any automated proving. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Most theorem nodes are light blue (unproved); only taylor_integral_one_shot, integrationByParts_smul and ftoc_bochner_wrapper are dark green.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-20"
+      }
+    },
+    {
+      "id": "img-p008-2",
+      "file": "images/img-p008-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-20",
+        "saw": "Figure 2(b), the same graph after the automated prover's first pass",
+        "page": 8
+      },
+      "narrative": {
+        "text": "Figure 2(b): the same initial blueprint after the automated prover's sorry-filling pass. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. The leaf lemmas taylorKernel_deriv_t, taylorKernel_at_right and taylorRemainder_eq_explicit have turned dark green; taylor_integral_kernel and lineCurve_iteratedDeriv remain light blue, and taylor_integral_explicit and frechet_taylor_integral are filled a lighter green; the caption distinguishes only blue (unproved) from green (proved), so what the two shades of green separate is not stated in the paper.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-20"
+      }
+    },
+    {
+      "id": "img-p008-3",
+      "file": "images/img-p008-3.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-20",
+        "saw": "Figure 2(c), the refined blueprint with extra intermediate lemmas, all unproved",
+        "page": 8
+      },
+      "narrative": {
+        "text": "Figure 2(c): the refined blueprint after the planner model decomposed the stuck nodes further. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. New intermediate nodes appear -- taylor_remainder_by_parts, taylor_integral_kernel_base, taylorPoly_succ, ftoc_bochner_on_uIcc and lineCurve_contDiffOn_onSeg -- and every theorem node is light blue, i.e. nothing is yet proved in this version.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-20"
+      }
+    },
+    {
+      "id": "img-p008-4",
+      "file": "images/img-p008-4.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-20",
+        "saw": "Figure 2(d), the refined graph after the second prover pass with three nodes left",
+        "page": 8
+      },
+      "narrative": {
+        "text": "Figure 2(d): the refined blueprint after the prover's second pass. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Nearly every lemma is dark green; three remain light blue -- taylor_remainder_by_parts, lineCurve_iteratedDeriv and frechet_taylor_integral -- which are the nodes the text says were left for a human. taylor_integral_kernel, taylor_integral_explicit and taylor_integral_one_shot are a lighter green.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-20"
+      }
+    },
+    {
+      "id": "img-p008-5",
+      "file": "images/img-p008-5.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-20",
+        "saw": "Figure 2(e), the completed graph with every node dark green",
+        "page": 8
+      },
+      "narrative": {
+        "text": "Figure 2(e): the completed formalization after a human proved the remaining nodes. Rectangles are definitions and ellipses are theorems; dashed arrows mark a statement-level use and solid arrows a proof-level use. Definition nodes taylorKernel, taylorRemainderKernel, taylorPoly, lineMap and lineCurve sit at the top; the target frechet_taylor_integral is the sink at the bottom. Every theorem node is dark green, meaning the whole graph, including the target frechet_taylor_integral, is proved without sorry.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-20"
+      }
+    },
+    {
+      "id": "img-p012-1",
+      "file": "images/img-p012-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-20",
+        "saw": "Figure 3(a), the rendered blueprint document of the MyNat example",
+        "page": 12
+      },
+      "narrative": {
+        "text": "Figure 3(a): the web blueprint generated from the appendix's MyNat example. It lists Definition 1 (Natural numbers) and Definition 2 (Natural number addition), each with a check mark; Theorem 3, for any natural number a, 0 + a = a, where + is definition 2, with a check mark and a collapsed proof; Theorem 4, (a + 1) + b = (a + b) + 1, with no check mark and the proof text 'Proof by induction on b'; and Theorem 5, a + b = b + a, with no check mark and a proof reading 'The base case follows from theorem 3. The inductive case follows from theorem 4.', both references rendered as links.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-20"
+      }
+    },
+    {
+      "id": "img-p012-2",
+      "file": "images/img-p012-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "at": "2026-09-20",
+        "saw": "Figure 3(b), the dependency graph of the MyNat example",
+        "page": 12
+      },
+      "narrative": {
+        "text": "Figure 3(b): the dependency graph of the MyNat example. Green rectangles MyNat and nat-add at the top, with dashed arrows from nat-add to a blue-bordered rectangle MyNat.mul and to the ellipses MyNat.succ_add (light blue) and MyNat.zero_add (dark green); solid arrows run from both of those into MyNat.add_comm (light blue), and a dashed arrow from MyNat.mul to a white ellipse MyNat.mul_comm, whose outgoing edge is cut off at the bottom of the image.",
+        "state": "draft",
+        "drafted_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "drafted_at": "2026-09-20"
+      }
+    }
+  ]
+}

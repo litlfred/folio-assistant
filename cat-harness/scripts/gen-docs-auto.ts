@@ -91,14 +91,21 @@ import {
   findDeclarationFile,
   instanceRootsIn,
   readDeclaration,
+  repoRootFor,
   resolveDirectories,
   siteDirFor,
   visualisationsOf,
 } from "../schemas/cat-harness.ts";
 import { withViewerNav } from "./viewer-page.ts";
+import { withInlineCode } from "../schemas/inline-code.ts";
 import { ownElementPattern } from "../schemas/namespaces.js";
+import { renderedPath, withRenders } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "docs-auto-viewer";
 
 const ROOT = join(import.meta.dir, "..");
+const REPO_ROOT = repoRootFor(ROOT);
 const REPO = join(ROOT, "..");
 const check = process.argv.includes("--check");
 
@@ -671,6 +678,24 @@ export function autoDocPage(
   scopePath: string | undefined,
   siblings: Array<{ id: string; path: string; count: number }>,
 ): string {
+  // A description naming ANOTHER artefact on this page links to its row (bean
+  // `qgjh`): role descriptions say "Inherits `reviewer`", the reviewer is a row
+  // here, and the relation the sentence states could not be followed. The key
+  // is the last segment of the artefact's fragment (`#role/reviewer` →
+  // `reviewer`), exact, and only when ONE row on the page carries it — a
+  // name two rows share has no row it could honestly point at, and stays code.
+  const keyOf = (i: AutoDocItem) => i.path.split("#", 2)[1]?.split("/").pop() ?? "";
+  const rowId = (i: AutoDocItem) => `a-${i.path.replace(/[^A-Za-z0-9_-]+/g, "-")}`;
+  const byKey = new Map<string, AutoDocItem | null>();
+  for (const i of items) {
+    const k = keyOf(i);
+    if (k) byKey.set(k, byKey.has(k) ? null : i);
+  }
+  const linkCodes = (self: AutoDocItem, html: string) =>
+    html.replace(/<code>([^<]+)<\/code>/g, (whole, text: string) => {
+      const target = byKey.get(text);
+      return target && target !== self ? `<a href="#${esc(rowId(target))}">${whole}</a>` : whole;
+    });
   const rows = items
     .map((i) => {
       const facts = i.facts
@@ -678,9 +703,9 @@ export function autoDocPage(
             .map(([k, v]) => `<div class="f"><span class="k">${esc(k)}</span> ${esc(v)}</div>`)
             .join("")
         : "";
-      return `<tr>
+      return `<tr${keyOf(i) ? ` id="${esc(rowId(i))}"` : ""}>
   <td><a href="${esc(`${BLOB}/${i.path}`)}"><code>${esc(i.name)}</code></a><br><span class="p">${esc(i.path)}</span></td>
-  <td>${i.summary ? esc(i.summary) : '<span class="none">no description in the artefact</span>'}${facts}</td>
+  <td>${i.summary ? linkCodes(i, withInlineCode(i.summary, esc)) : '<span class="none">no description in the artefact</span>'}${facts}</td>
 </tr>`;
     })
     .join("\n");
@@ -865,13 +890,20 @@ if (import.meta.main) {
       count: byDir.get(id)!.length,
     }));
 
+    // Each page says which directories it draws (#1168 B7a-2): every
+    // populated sub-graph on the type's page, its own on a sub-graph page.
+    const drawn = (ids: readonly string[]): string[] =>
+      ids.flatMap((id) => {
+        const d = dirs.find((x) => x.id === id);
+        return d ? [renderedPath(REPO_ROOT, d.absPath)] : [];
+      });
     const { pageDir } = viewerPlacement(site, `${handler}/docs-auto/${type.id}`, "docs-auto");
-    emit(join(pageDir, "index.html"), autoDocPage(type, items, "", undefined, siblings));
+    emit(join(pageDir, "index.html"), withRenders(autoDocPage(type, items, "", undefined, siblings), drawn(populated), VIEWER_TOOL));
     for (const id of populated) {
       const sub = viewerPlacement(site, `${handler}/docs-auto/${type.id}/${id}`, "docs-auto");
       emit(
         join(sub.pageDir, "index.html"),
-        autoDocPage(type, byDir.get(id)!, id, dirs.find((d) => d.id === id)?.path, siblings),
+        withRenders(autoDocPage(type, byDir.get(id)!, id, dirs.find((d) => d.id === id)?.path, siblings), drawn([id]), VIEWER_TOOL),
       );
     }
 

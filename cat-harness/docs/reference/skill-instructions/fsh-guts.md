@@ -1,7 +1,7 @@
 ---
 layout: default
 generated: scripts/gen-skill-docs.ts — do not hand-edit; edit the skill
-title: '`fsh-guts/`'
+title: 'fsh-guts/'
 parent: Skill instructions
 ---
 

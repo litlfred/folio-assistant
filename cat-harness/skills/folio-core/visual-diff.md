@@ -8,7 +8,6 @@ description: >-
   figure look like now", when a table's markup diff is unreadable, or when a
   staging preview's pictures are missing.
 capability: review
-package: folio-core
 user_invocable: true
 allowed-tools: Read Grep Glob Bash
 ---

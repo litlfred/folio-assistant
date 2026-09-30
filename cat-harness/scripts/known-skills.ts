@@ -29,6 +29,8 @@ import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schema
  */
 const OWN_INSTANCE = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 import { readRoleGraph, type RoleGraph } from "../schemas/role-graph.js";
+import { orderedDependencies } from "../schemas/harness-config.js";
+import { packageDirsIn } from "./skill-topics.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
@@ -391,10 +393,10 @@ export function skillMdDirs(root: string): string[][] {
     if (holdsMarkdown(d.absPath)) dirs.push(rel(d.absPath));
     // ...and its immediate subdirectories, which is how `skills/` is laid out
     // today: one package per subdirectory.
-    for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
-      if (!e.isDirectory()) continue;
-      const inner = join(d.absPath, e.name);
-      if (holdsMarkdown(inner)) dirs.push(rel(inner));
+    // ...or two, inside a topic the directory's `skills.json` declares
+    // (bean `9umr`) — so the package name is the LAST segment, not `p[1]`.
+    for (const p of packageDirsIn(d.absPath)) {
+      if (holdsMarkdown(p.dir)) dirs.push(rel(p.dir));
     }
   }
   // Not under `skills/`, so not reachable by the scan above.
@@ -789,4 +791,74 @@ export function workflowFiles(root: string): string[] {
   // overlapping directories this function never chose, and the same file
   // reached twice is a duplicate `@id` downstream either way.
   return [...new Set(out)].sort();
+}
+
+/**
+ * Every servable skill name, with the packages that hold one of that name.
+ *
+ * {@link knownSkills} collapses names into a set, so two packages holding the
+ * same name read as one skill. This keeps them apart, which is what lets
+ * {@link resolveSkillRef} say "ambiguous" instead of picking (#1168 B8).
+ * A package is the declared directory's last segment, e.g. `folio-core`.
+ */
+export function skillIndex(root: string): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  for (const parts of skillMdDirs(root)) {
+    const dir = join(root, ...parts);
+    if (!existsSync(dir)) continue;
+    const pkg = parts[parts.length - 1] ?? "";
+    for (const f of readdirSync(dir)) {
+      if (!f.endsWith(".md") || !isSkillMd(join(dir, f))) continue;
+      const name = f.slice(0, -3);
+      const held = out.get(name) ?? [];
+      if (!held.includes(pkg)) held.push(pkg);
+      out.set(name, held);
+    }
+  }
+  return out;
+}
+
+/**
+ * {@link skillIndex} over this instance AND everything it `needs`.
+ *
+ * Resolution follows `needs` downward — the rule `kg-audit.ts` applies to
+ * `<skill ref>` (`resolvableSkills`) and `check-tools.ts` to `satisfies`
+ * (`satisfiableSkills`): a Tool here may satisfy a skill that lives in
+ * `bootstrap`, and "not in my overlay is not does not exist" (`pve3`).
+ * `orderedDependencies` walks the chain, so this adds no second walker.
+ */
+export function resolvableSkillIndex(root: string): Map<string, string[]> {
+  const out = skillIndex(root);
+  for (const dep of orderedDependencies(root)) {
+    for (const [name, pkgs] of skillIndex(dep.rootPath)) {
+      const held = out.get(name) ?? [];
+      for (const p of pkgs) if (!held.includes(p)) held.push(p);
+      out.set(name, held);
+    }
+  }
+  return out;
+}
+
+/** What a skill reference names. */
+export type SkillRefResolution =
+  | { kind: "ok"; name: string; package: string }
+  | { kind: "missing"; ref: string }
+  /** A bare name more than one package holds: qualify it as `package/name`. */
+  | { kind: "ambiguous"; ref: string; packages: string[] };
+
+/**
+ * Resolve `name` or `package/name` against a {@link skillIndex}.
+ *
+ * Owner, 2026-09-30 (*"both; qualify if ambiguous"*): a bare name that more
+ * than one package holds is reported, never resolved to whichever came first.
+ */
+export function resolveSkillRef(ref: string, index: ReadonlyMap<string, readonly string[]>): SkillRefResolution {
+  const slash = ref.indexOf("/");
+  const pkg = slash === -1 ? undefined : ref.slice(0, slash);
+  const name = slash === -1 ? ref : ref.slice(slash + 1);
+  const held = index.get(name) ?? [];
+  if (pkg !== undefined) return held.includes(pkg) ? { kind: "ok", name, package: pkg } : { kind: "missing", ref };
+  if (held.length === 0) return { kind: "missing", ref };
+  if (held.length > 1) return { kind: "ambiguous", ref, packages: [...held].sort() };
+  return { kind: "ok", name, package: held[0]! };
 }

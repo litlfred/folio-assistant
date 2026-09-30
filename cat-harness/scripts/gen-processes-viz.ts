@@ -74,6 +74,7 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
+import { skillPagesOf } from "./lib/skill-pages.ts";
 import { workflowFiles, kgRoots } from "./known-skills.js";
 import { loadProcessModel, isActivity, isDecision, branchesOf } from "../src/workflow/process-model.js";
 import {
@@ -86,6 +87,10 @@ import {
 } from "../schemas/role-graph.js";
 import { ownElementPattern } from "../schemas/namespaces.js";
 import { processPresentations, type Presentation } from "./process-presentations.js";
+import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "processes-viewer";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const KIND = "processes";
@@ -460,7 +465,14 @@ export function skillToProcesses(rows: readonly ProcessRow[]): Map<string, strin
 
 const esc = (s: string): string => s.replace(/\|/g, "\\|");
 
-export function page(rows: readonly ProcessRow[]): string {
+/**
+ * `skillPages` is the set of skills with a generated instruction page, as for
+ * {@link processPage}: a skill with one is a LINK, a skill without one stays
+ * code rather than becoming a link that 404s (bean `qgjh` — "emit links
+ * wherever the target resolves"). Empty by default, so a caller that has not
+ * looked renders every skill as code, as this table did before.
+ */
+export function page(rows: readonly ProcessRow[], skillPages: ReadonlySet<string> = new Set()): string {
   const ok = rows.filter((r) => r.loadError === undefined);
   const broken = rows.filter((r) => r.loadError !== undefined);
   const byGroup = new Map<string, number>();
@@ -522,7 +534,17 @@ export function page(rows: readonly ProcessRow[]): string {
   L.push("");
   L.push("| skill | run by |");
   L.push("|---|---|");
-  for (const [s, fs] of join) L.push(`| \`${esc(s)}\` | ${fs.map((f) => `\`${esc(basename(f))}\``).join(", ")} |`);
+  // A diagram in "run by" links to its own page — the one the first table
+  // links — found by FILE, the key `skillToProcesses` joins on. A file with no
+  // loaded row publishes no page, so it stays code.
+  const pageOf = new Map(ok.map((r) => [r.file, r.stem]));
+  const skillCell = (s: string): string =>
+    skillPages.has(s) ? `[\`${esc(s)}\`](../reference/skill-instructions/${s}.html)` : `\`${esc(s)}\``;
+  const runBy = (f: string): string => {
+    const stem = pageOf.get(f);
+    return stem === undefined ? `\`${esc(basename(f))}\`` : `[\`${esc(basename(f))}\`](${stem}.html)`;
+  };
+  for (const [s, fs] of join) L.push(`| ${skillCell(s)} | ${fs.map(runBy).join(", ")} |`);
   L.push("");
 
   L.push("## Who appears in a process?");
@@ -791,25 +813,29 @@ export function processPage(
   return `${L.join("\n")}\n`;
 }
 
-/** Where the declaration says this page goes. Never a literal — `site-dir-single-answer` refuses one. */
+/**
+ * Where the page goes: the declared directory's own name (#1168 B7a-2b,
+ * `conventionalPage`). Never a literal — `site-dir-single-answer` refuses one.
+ */
 export function pageRelPath(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
-  };
-  for (const e of d.directories ?? []) {
-    if (!(e.graphKinds ?? []).includes(KIND)) continue;
-    const v = e.coverage?.visualiser;
-    for (const one of Array.isArray(v) ? v : [v]) {
-      const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
-      if (!ref) continue;
-      const rel = relative(baseDocs(repo), resolve(repo, ref));
-      if (rel.startsWith("..") || rel === "") return undefined;
-      return rel;
-    }
-  }
-  return undefined;
+  return conventionalPage(join(repo, "cat-harness"), KIND);
+}
+
+/**
+ * The index as committed: {@link page} plus the directories it draws
+ * (#1168 B7a-2) — every instance's declared processes directories, because
+ * every instance's diagrams are on it.
+ */
+export function publishedIndex(
+  rows: Parameters<typeof page>[0],
+  repo = REPO,
+  skillPages: ReadonlySet<string> = skillPagesOf(repo),
+): string {
+  return withRendersFrontMatter(
+    page(rows, skillPages),
+    instanceRoots(repo).flatMap((r) => handledDirectories(repo, r, KIND)),
+    VIEWER_TOOL,
+  );
 }
 
 if (import.meta.main) {
@@ -830,11 +856,8 @@ if (import.meta.main) {
     console.error("✗ no BPMN diagrams found — refusing to write an index over nothing");
     process.exit(1);
   }
-  const html = page(rows);
-  const skillDir = join(baseDocs(REPO), "reference", "skill-instructions");
-  const skillPages = new Set(
-    existsSync(skillDir) ? readdirSync(skillDir).filter((f) => f.endsWith(".md")).map((f) => basename(f, ".md")) : [],
-  );
+  const skillPages = skillPagesOf(REPO);
+  const html = publishedIndex(rows, REPO, skillPages);
   // Which page sections present each diagram, keyed repository-relative so it
   // matches `row.file` — a page spells its source relative to its OWN instance.
   const presented = new Map<string, Presentation[]>();

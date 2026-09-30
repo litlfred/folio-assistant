@@ -76,6 +76,10 @@ import {
   siteDirFor,
 } from "../schemas/cat-harness.js";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { withRenders } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "folio-viewer";
 
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
@@ -160,7 +164,13 @@ export function readFolioGraph(roots: string[], repo?: string): FolioGraph | nul
         g.nodes.push({
           id: String(raw.id ?? basename(name, ".json")),
           summary: String(raw.summary ?? ""),
-          theme: raw.theme == null ? null : String(raw.theme),
+          // A ThemeRef `{instance?, themeId}` since #1168 B8; the page shows the id.
+          theme:
+            raw.theme == null
+              ? null
+              : typeof raw.theme === "object"
+                ? String((raw.theme as { themeId?: unknown }).themeId ?? "")
+                : String(raw.theme),
           anchor: anchor?.kind ? `${anchor.kind}:${anchor.page ?? ""}` : null,
           declaredIn: raw.declaredIn == null ? null : String(raw.declaredIn),
           links: Array.isArray(raw.links)
@@ -237,6 +247,17 @@ export function viewerHtml(dataHref: string, mount = ""): string {
 </div>
 <script>
 var DATA_HREF = ${JSON.stringify(dataHref)};
+// Bean "qgjh": a node's links are LINKS. An absolute http(s) href is used as
+// it is; a site-rooted one ("/agentic-harness.html") is resolved against this
+// site's root, found from where the page reads its data, so it works under the
+// bare site, the project baseurl and a staging preview alike. Anything else
+// stays text rather than becoming a link that 404s.
+var SITE_ROOT = (function (h) { var i = h.lastIndexOf("assets/"); return i < 0 ? "" : h.slice(0, i); })(DATA_HREF);
+function linkHref(h) {
+  if (/^https?:[/][/]/.test(h)) return h;
+  if (h.charAt(0) === "/" && h.charAt(1) !== "/") return SITE_ROOT + h.slice(1);
+  return "";
+}
 function $(id){ return document.getElementById(id); }
 function esc(s){ return String(s == null ? "" : s)
   .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -274,7 +295,10 @@ fetch(DATA_HREF).then(function(r){ if(!r.ok) throw new Error(r.status + " " + r.
         "<td>" + (n.theme ? esc(n.theme) : '<span class="muted">none</span>') + "</td>" +
         "<td><code class=\\"muted\\">" + esc(n.declaredIn || "\\u2014") + "</code></td>" +
         "<td>" + (n.links.length
-          ? n.links.map(function(l){ return esc(l.label); }).join("<br>")
+          ? n.links.map(function(l){
+              var h = linkHref(l.href);
+              return h ? '<a href="' + esc(h) + '">' + esc(l.label) + "</a>" : esc(l.label);
+            }).join("<br>")
           : '<span class="muted">none</span>') + "</td>" +
         '<td class="muted">' + n.chars.toLocaleString() + " chars</td>" +
       "</tr>";
@@ -329,7 +353,11 @@ if (import.meta.main) {
 
   emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
-  emitPage(nav)(join(pageDir, "index.html"), viewerHtml(dataHref, mount));
+  // The page says which directories it draws (#1168 B7a-2).
+  emitPage(nav)(
+    join(pageDir, "index.html"),
+    withRenders(viewerHtml(dataHref, mount), g.directories.filter((d) => d.present).map((d) => d.dir), VIEWER_TOOL),
+  );
 
   const absent = g.directories.filter((d) => !d.present).length;
   console.log(

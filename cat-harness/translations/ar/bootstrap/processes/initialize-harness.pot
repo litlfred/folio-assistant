@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: initialize-harness\n"
-"POT-Creation-Date: 2026-09-29T19:21:06.158Z\n"
+"POT-Creation-Date: 2026-09-29T22:05:46.655Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: ar\n"
@@ -156,7 +156,7 @@ msgstr ""
 
 #: processes/initialize-harness.bpmn:99
 #. Diagram element documentation
-msgid "REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: `log-message` is an independent sub-process, the second and last diagram in bootstrap. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy."
+msgid "REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: `log-message` is an independent sub-process, one of bootstrap's own diagrams. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy."
 msgstr ""
 
 #: processes/initialize-harness.bpmn:109

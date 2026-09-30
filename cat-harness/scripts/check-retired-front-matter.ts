@@ -98,6 +98,15 @@ export const RETIRED: Retired[] = [
       "needs has to be declared before it is written. NOTE the exemption: in a " +
       "`folio-memory/v1` entry `roles:` is a live axis, not this field.",
   },
+  {
+    key: "package",
+    scope: "skill markdown",
+    record: "retired/skill-package-front-matter.md",
+    because:
+      "18 annotations, read by nothing, and each equal to the directory the file sits in — " +
+      "package membership is the directory and the package manifest, and " +
+      "`skill:register:check` already holds those two to agreement (#1168 B8).",
+  },
 ];
 
 /**

@@ -46,7 +46,7 @@ import {
 } from "../schemas/cat-harness.js";
 import { detectRepoUrl } from "../src/core/git-refs.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
-import { themeById } from "../schemas/themes.js";
+import { themeByRef } from "../schemas/theme-by-ref.js";
 import { readLandingStickies } from "./ensure-landing-sticky.js";
 import { isExternalLink } from "../schemas/landing-sticky.js";
 
@@ -182,7 +182,11 @@ function defaultCloud(layout: string): unknown {
 }
 
 const stickies = readLandingStickies(ROOT).map((st) => {
-  const theme = themeById(st.theme);
+  // By REFERENCE, owner first (bean `v8n5`): a card citing another
+  // instance's theme resolves against that instance's declared themes, and a
+  // bare id against the contributing instance's own, then the platform's.
+  const found = themeByRef(st.theme, repoRootFor(ROOT), st.contributedBy);
+  const theme = found.ok ? found.theme : undefined;
   const resolved = theme ? resolveThemeBackdrop(theme, decl?.images) : undefined;
   const art: Record<string, unknown> = {};
   if (resolved && resolved.art.size > 0) {
@@ -207,7 +211,8 @@ const stickies = readLandingStickies(ROOT).map((st) => {
     id: st.id,
     summary: st.summary,
     comment: st.comment,
-    theme: st.theme,
+    // The ID, not the reference: `stickies.json` is read by the browser.
+    theme: st.theme.themeId,
     // WHICH LAYER contributed this card. Carried through to the data file rather
     // than left in the node, because the board is composed and "which layer put
     // this here" is the first question anyone debugging it asks — and the answer

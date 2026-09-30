@@ -252,6 +252,13 @@
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
     table.items thead { display: none; }
     table.items td { border-bottom: none; padding: 0.25rem 0; }
+    /* Stacked, a download cell is a line of its own, so the desktop
+       `nowrap` that kept a size beside its link now holds a whole sentence
+       ("held here, not published — copyright: refused, …") on one line: the
+       page was 537 px wide at 390 (bean `g9r2`). Wrap it here; the size
+       stays whole, because `code` keeps its own nowrap. */
+    .dl { white-space: normal; }
+    .dl code { white-space: nowrap; }
     table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
     table.reqs, table.reqs tbody, table.reqs tr, table.reqs td, table.reqs th { display: block; width: auto; }
     table.reqs thead { display: none; }
@@ -320,7 +327,7 @@
   <a href="https://iris.who.int/communities/ebd3b191-c322-4754-9415-469a1a0eb0c3">https://iris.who.int/communities/ebd3b191-c322-4754-9415-469a1a0eb0c3</a>
   <span class="state referenced">referenced</span></p>
 
-<div class="caveat"><p><strong>How this node was established.</strong> Measured from the breadcrumb on the captured item page: 'Home &gt; 7. Regional Office for the ... &gt; Regional Office for the W... &gt; Information products'. FOUR levels, of which the middle two are communities -- which is why `parents` is a list of PATHS rather than a single id. The collection's own UUID is NOT in anything captured and iris.who.int is egress-blocked from this environment (CONNECT tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier.</p></div>
+<div class="caveat"><p><strong>How this node was established.</strong> Measured from the breadcrumb on the captured item page: 'Home &gt; 7. Regional Office for the ... &gt; Regional Office for the W... &gt; Information products'. FOUR levels, of which the middle two are communities -- which is why <code>parents</code> is a list of PATHS rather than a single id. The collection's own UUID is NOT in anything captured and iris.who.int is egress-blocked from this environment (CONNECT tunnel failed, response 403 -- the same block bean r1lz recorded on 2026-09-19), so the node is keyed by its path rather than by an invented identifier.</p></div>
 
 <h2>Items in this Collection</h2>
 <p>Now showing 1 – 1 of 1 <em>modelled</em>. The upstream
@@ -332,7 +339,7 @@ collection is larger; this catalogue holds what was materialised, and says so pe
 <tr>
   <td><a href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Publication and information products style guide</a><br><code>wpr-rdo-2020-003-eng</code></td>
   <td><span class="state materialized">materialized</span></td>
-  <td class="dl"><a href="https://iris.who.int/handle/10665/332098">IRIS source &rarr;</a><br><a href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Local replica &rarr;</a></td>
+  <td class="dl"><a href="https://hdl.handle.net/10665/332098">IRIS source &rarr;</a><br><a href="item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Local replica &rarr;</a></td>
   <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">WPR-RDO-2020-003-eng.pdf</a> &middot; <a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/uploads/wpr-rdo-2020-003-eng/WPR-RDO-2020-003-eng.pdf">via CDN</a> &middot; <code>2.68 MB</code></td>
   <td class="dl"><a href="https://raw.githubusercontent.com/litlfred/folio-assistant/main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">Download wpr-rdo-2020-003-eng.dc.json</a>
       <br><a class="cdn" href="https://cdn.jsdelivr.net/gh/litlfred/folio-assistant@main/who-iris/catalogue/records/wpr-rdo-2020-003-eng.dc.json">via CDN</a>

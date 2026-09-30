@@ -5,7 +5,7 @@
     "id": "Process_DocsSite",
     "path": "processes/docs-site-publish.bpmn"
   },
-  "source_hash": "sha256:38d0aa6a10d5fc908842557f7569dddf740c8fa6de787ea710bcf6af2bb56085",
+  "source_hash": "sha256:8e5582a0fbd67e7bf7595a06e9ed290bea82baebf18a032836151657b9a6c3ce",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -109,13 +109,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/docs-site.yml",
-          "detail": ".github/workflows/docs-site.yml changed since cat-harness/processes/docs-site-publish.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -123,8 +118,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 2,
+    "pass": 17,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   },
@@ -133,8 +128,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/docs-site-publish.bpmn",
       "code": ".github/workflows/docs-site.yml",
-      "prose_hash": "38d0aa6a10d5",
-      "code_hash": "963586be770e",
+      "prose_hash": "8e5582a0fbd6",
+      "code_hash": "e8b1b9b00a2d",
       "by": "baseline"
     }
   ]
