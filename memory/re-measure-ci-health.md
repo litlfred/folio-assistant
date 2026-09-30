@@ -7,8 +7,9 @@ createdAt: 2026-09-19
 roles:
   - build-pipeline
   - validation-pipeline
-agents:
-  - ci-health-watcher
+references:
+  - kind: agent
+    id: ci-health-watcher
 ---
 Nothing about workflow state should ever be quoted from this file. Run
 `bun run check:ci-health` and report what it returns today.

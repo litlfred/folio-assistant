@@ -1208,6 +1208,9 @@ export const RULES: Rule[] = [
       // and the workflow engine, stop importing from a Tool. Harness beside
       // `known-skills.ts`, which it builds on.
       "scripts/skill-packages.ts",
+      // The user-invocable skill list, moved out of the `skill-prompts` Tool
+      // (bean `w2gr`) so `gen-skill-commands` stops importing from a Tool.
+      "scripts/invocable-skills.ts",
       // ...and the topic level it walks through (bean `9umr`): which
       // subdirectories of a skills directory are topics, from `skills.json`.
       "scripts/skill-topics.ts",
