@@ -21,7 +21,7 @@ Done: three graph kinds (`todos`, `todo-items`, `todo-feedback`),
 `schemas/todo-graph.ts` (directory declaration, same shape as `bean-graph.ts`),
 `schemas/todo.ts` (the node plus `TodoTags` — roles, processes, tasks,
 identities — and `resolveTodoTags` with its three states). 26 tests.
-Documented in `skills/folio-core/directory-conventions.md`.
+Documented in `skills/kg/kg-core/directory-conventions.md`.
 
 ## What remains, and why it was not done in the same change
 

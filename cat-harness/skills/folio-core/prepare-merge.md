@@ -38,7 +38,7 @@ any of them. Owner's rule, 2026-09-19.
 `scripts/tests/fsh-guts-unpublished.test.ts` asserts it against the built
 artefact and runs in `bun test`, so this is checked rather than remembered.
 The mechanism, and the three separate emitters that had to be filtered, are
-in [`kg-export`](kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
+in [`kg-export`](../kg/kg-core/kg-export.md) §"`fsh-guts` NEVER reaches a published graph".
 
 ## Recipe
 

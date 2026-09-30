@@ -189,7 +189,7 @@ prose. *Fix:* a mermaid label extractor modelled on `bpmn-translate.ts`, which
 already separates labels from ids. The captions come from G4.
 
 **G8: The skill describes a pipeline that is not there.**
-`skills/folio-core/translation-manager.md` has five such claims:
+`skills/library/library-core/translation-manager.md` has five such claims:
 
 - `:82` and `:84`: block titles and chapter and section titles are
   translatable "from `.ts` manifests". Nothing extracts them (G4).

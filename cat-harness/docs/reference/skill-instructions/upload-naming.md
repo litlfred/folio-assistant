@@ -6,12 +6,20 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/upload-naming.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/upload-naming.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/library-core/upload-naming.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/upload-naming.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/upload-naming.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/upload-naming.md){: .fa-edit-source }
 
 {% raw %}
 # Upload naming — the name is normalised, not the link escaped
+
+> **Lives in `library-core`, not `folio-core`.** It was written into
+> `folio-core` on 2026-09-30 and moved the same day, when bean `9umr` carved
+> the library topic out: `library-core` is *"acquisition, ingestion and
+> archiving of sources (arXiv, web pages, photos, uploads)"*, and what an
+> ingested file may be CALLED is that topic's question. It sits beside
+> `uploads-watch` and `library-ingestion`, which is where somebody looking for
+> it will look.
 
 **A file in an `uploads` or `library` graph is named by whoever uploaded it, and
 that name reaches a generated Markdown link.** So the name is an interface, not
@@ -100,6 +108,32 @@ is OK."* Downstream references are expected to churn; that is accepted, not
 worked around. The ruling is why this check exists — not main being red, which
 the encoder had already fixed by the time it merged.
 
+**"OK" means repaired, not abandoned.** The 33 renames left dangling
+references in **30 hand-maintained files** — 26 carrying structured-data path
+fields and 4 carrying a path in code or prose — plus everything generated. The
+counts below are from `git status` over the repair, not from recall:
+
+| kind | where | how it was repaired |
+|---|---|---|
+| `files[].path` | 3 × `who-iris/uploads/*/intake.json` | repointed from the git map |
+| `container`, `assets[].path` | 7 × `*.extraction.json` | repointed; an asset path equal to the container's own basename moves with it |
+| `provenance.source` | 3 × `who-iris/catalogue/records/*.dc.json` | repointed |
+| `file`, `source_file` | 6 × `structure.json`, 6 × `manifest.jsonld` | repointed |
+| a hardcoded path | `who-iris/themes/themes.test.ts` | **threw at module load**, which is why bun reported `1 error` with an empty failure list |
+| two test fixtures | `cat-harness/scripts/tests/pdf-images.test.py` | the arm **skipped silently** — `1xhc` — so the skip now announces itself |
+| prose paths | `gen-iris-pages.ts`, `pdf-pages.py`, two `_comment` fields | repointed |
+
+Everything else regenerates, and **in dependency order**: `library:graph` →
+`library:viz` → `library:readmes` → `readme:subgraphs`, then `skill:register`.
+Run out of order and a later writer stales an earlier one's output, which reads
+exactly like a real failure.
+
+**One thing deliberately NOT changed:** `cat-harness/docs/wireframes/uploads/as-is.html`
+still shows the old names in its table. It is a hand-authored wireframe, so
+what it depicts is a design decision rather than a rename consequence.
+
+
+
 ## A sidecar suffix is not an extension
 
 `X.pdf` pairs with `X.pdf.extraction.json`. Two ways to break that:
@@ -110,11 +144,32 @@ the encoder had already fixed by the time it merged.
 So the fixer **strips the sidecar suffix first, normalises the remaining name by
 the one rule, and restores the suffix.** The pair moves together by
 construction rather than by care. Measured before it shipped: 10 pairs, 0
-orphans; after 34 renames, 10 pairs, 0 orphans.
+orphans; after the renames, 10 pairs, 0 orphans.
 
 `slugify` applied to a whole filename destroys the extension —
 `…(2).pdf` → `…-2-pdf` — which is why the stem is slugged and the extension
 left alone.
+
+## How big the rename actually was — findings are not paths
+
+**33 paths**, measured from `git diff --name-status -M` rather than re-derived:
+26 primaries and 7 `.extraction.json` sidecars; 23 in the root `uploads` graph
+and 10 across four who-iris captures.
+
+A run's finding count is **not** this number and must not be quoted as it. The
+check reports only what is *still* unnormalised, so once part of the corpus has
+been renamed the count is the tail of the work rather than its size. Both `34`
+and `10` were written down as "the renames" during this work, from two
+different runs of a rule that was narrowed in between, and both were wrong
+about the corpus.
+
+**And the reference sweep must read the same map.** A first attempt piped
+`git diff --name-status -M` through `awk '{print $2}'`, whose default field
+splitting breaks on the spaces *inside the very filenames being renamed* — so
+the old-name list came out empty, the sweep matched nothing, and it reported no
+dangling references. That is `dh4f` committed by the instrument built to refuse
+it. `awk -F'\t'` is the fix; the lesson is that a sweep which finds nothing
+must be shown to have had something to look for.
 
 ## The one case it refuses
 

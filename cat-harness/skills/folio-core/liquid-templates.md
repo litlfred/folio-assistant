@@ -76,7 +76,7 @@ A version typed into a template is stale on the next bump. Read it:
   `_data/harness.json` under the `docs:harness:check` gate.
 
 Link a person to `human`, never `agent`: the full-version address is for
-programs, which pin exactly ([`instance-publication`](instance-publication.md)
+programs, which pin exactly ([`instance-publication`](../kg/kg-core/instance-publication.md)
 §"Release IRIs").
 
 ## The leading comment IS the file's description

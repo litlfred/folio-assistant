@@ -9,7 +9,7 @@
  * ## Authoritative, and the only authority
  *
  * Zod here, JSON Schema and JSON-LD generated from it — the carrier decision in
- * `skills/folio-core/directory-conventions.md` §"What lives in the `schemas`
+ * `skills/kg/kg-core/directory-conventions.md` §"What lives in the `schemas`
  * graph". The TypeScript type is `z.infer`, never declared alongside, because
  * two declarations of one shape drift and the drift is invisible until
  * something reads the stale one.

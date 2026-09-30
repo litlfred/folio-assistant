@@ -345,7 +345,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
 
   it("the classification of the kinds a reader would guess wrong is pinned", () => {
     // Named individually rather than counted, so a failure says WHICH moved.
-    // Reasoning: skills/folio-core/content-context-and-state-graphs.md.
+    // Reasoning: skills/kg/kg-core/content-context-and-state-graphs.md.
     expect({
       // Read during a process, never written by one. The owner's ruling on
       // bean `mhh9`, 2026-09-20 — and the kind the third layer exists for.

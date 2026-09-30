@@ -1,0 +1,33 @@
+{
+  "name": "library-core",
+  "version": "0.1.0",
+  "description": "Library and information management: acquisition, ingestion and archiving of sources (arXiv, web pages, photos, uploads), bibliography QA, Dublin Core filing, code lists, glossaries, tabular metadata and translation. Moved out of folio-core into the library topic (bean 9umr, owner ruling 2026-09-30).",
+  "skills": [
+    "adopt-methodology-from-source",
+    "archiving-arxiv",
+    "archiving-web-pages",
+    "asset-extraction",
+    "bib-human-review",
+    "bib-photo-ingestion-watcher",
+    "bib-qa",
+    "code-lists",
+    "content-acquisition",
+    "filing-dublin-core",
+    "glossary-build",
+    "glossary-terms",
+    "library-ingestion",
+    "literature-search",
+    "ontologist",
+    "tabular-metadata",
+    "translation-manager",
+    "upload-naming",
+    "uploads-watch"
+  ],
+  "docker": {
+    "baseImage": "ubuntu:24.04",
+    "aptPackages": []
+  },
+  "providesCapabilities": [],
+  "requiresCapabilities": [],
+  "lifecycleStages": []
+}

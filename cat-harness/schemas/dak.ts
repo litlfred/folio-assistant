@@ -60,7 +60,7 @@ import { SMART_BASE_NS } from "./jsonld";
  *
  * Fixed, not stub-named, for the same reason `harness.json` is: a consumer
  * bootstrapping into a repository it knows nothing about needs one filename to
- * open first. See `skills/folio-core/directory-conventions.md` §Naming.
+ * open first. See `skills/kg/kg-core/directory-conventions.md` §Naming.
  *
  * ## `dak.config.json` → `dak.config.json`, 2026-09-22
  *

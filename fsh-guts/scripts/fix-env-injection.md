@@ -15,7 +15,7 @@ tree: the random-delimiter form it writes appears **34 times** across
 `.github/workflows/`.
 
 Moved here rather than deleted, per
-[`fsh-guts`](../../skills/folio-core/fsh-guts.md) — delete means relocate, and
+[`fsh-guts`](../../skills/kg/kg-core/fsh-guts.md) — delete means relocate, and
 actual deletion needs the owner's explicit word.
 
 ## What it did
