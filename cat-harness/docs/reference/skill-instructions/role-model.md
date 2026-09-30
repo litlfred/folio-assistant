@@ -517,7 +517,7 @@ instance is the auditor's output, and bootstrap is the layer that must read
 cleanly with no harness present (owner, 2026-09-29, decision 2 of bean
 `r3gy`). The same holds once bootstrap is its own repository: the verdicts stay
 with the harness that computed them, against the pinned bootstrap
-([`kg-separation`](kg-separation.md) §"The pair").
+([`kg-separation`](../graph-management/kg-separation.md) §"The pair").
 
 ### Three states, and what `unknown` costs
 
