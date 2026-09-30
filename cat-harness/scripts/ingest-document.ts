@@ -202,7 +202,7 @@ export function libraryChoice(argv: string[]): string | undefined {
 
 /** Which rung a document needs, and the evidence that chose it. */
 export interface Plan {
-  rung: "archive" | "tabular" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
+  rung: "archive" | "tabular" | "notebook" | "pdf-structure" | "pdf-pages" | "pdf-ocr+pdf-pages" | "undetermined";
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
@@ -582,6 +582,20 @@ export function tabularDelimiter(file: string): string | null {
   }
 }
 
+/**
+ * Is this file a Jupyter notebook, by its CONTENT? A reason-free boolean,
+ * because an unreadable file or one that is not JSON is simply not a notebook
+ * and falls through to the next question, as a non-CSV does.
+ */
+export function isNotebook(file: string): boolean {
+  try {
+    const j = JSON.parse(readFileSync(file, "utf-8")) as { nbformat?: unknown; cells?: unknown };
+    return typeof j.nbformat === "number" && Array.isArray(j.cells);
+  } catch {
+    return false;
+  }
+}
+
 export function planFor(
   pdf: string,
   p: Probe | undefined = undefined,
@@ -612,6 +626,20 @@ export function planFor(
       rung: "tabular",
       why: `the package declares ${mime} — a workbook, read for its sheets and headers`,
       steps: [["python3", pyHelper("tabular-records.py"), "-o", lib, pdf]],
+    };
+  }
+
+  // A Jupyter notebook is JSON text, so it has no magic bytes either, and the
+  // same rule applies: ask the content, never the `.ipynb` extension. It is a
+  // notebook when it parses as JSON with a numeric `nbformat` and a `cells`
+  // array. Checked BEFORE the delimited-text test, which a notebook's lines
+  // could satisfy by accident. Bean `rkqp`: the notebook variant of the shared
+  // document-structure base (`schemas/document-structure.ts`).
+  if (mime === null && isNotebook(pdf)) {
+    return {
+      rung: "notebook",
+      why: "JSON with a numeric nbformat and a cells array — a Jupyter notebook, read by its own headings",
+      steps: [["bun", "run", pyHelper("notebook-structure.ts"), "-o", lib, pdf]],
     };
   }
 

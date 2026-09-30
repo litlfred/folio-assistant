@@ -1,4 +1,7 @@
 import { describe, expect, test } from "bun:test";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 import { buildEntry, openingHeading } from "../notebook-structure.ts";
 import { structureOf } from "../../schemas/document-structure.ts";
@@ -51,5 +54,36 @@ describe("what opens a section", () => {
     expect(openingHeading(md("## A heading"))).toEqual({ level: 2, title: "A heading" });
     expect(openingHeading(md("text\n# later heading"))).toBeUndefined();
     expect(openingHeading(code("# a python comment"))).toBeUndefined();
+  });
+});
+
+describe("ingest-document routes a notebook by its CONTENT (bean rkqp)", () => {
+  test("JSON with nbformat and cells goes to the notebook rung, whatever its name", async () => {
+    const { planFor } = await import("../ingest-document.ts");
+    const dir = mkdtempSync(join(tmpdir(), "nb-route-"));
+    try {
+      // Named .txt on purpose: the extension is a claim, the content decides.
+      const f = join(dir, "not-called-ipynb.txt");
+      writeFileSync(f, JSON.stringify(nb([md("# T")])));
+      const p = planFor(f, undefined, dir, null);
+      expect(p.rung).toBe("notebook");
+      expect(p.steps[0]!.join(" ")).toContain("notebook-structure.ts");
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  test("JSON that is not a notebook is not routed there", async () => {
+    const { isNotebook } = await import("../ingest-document.ts");
+    const dir = mkdtempSync(join(tmpdir(), "nb-route-"));
+    try {
+      const f = join(dir, "x.ipynb");
+      writeFileSync(f, JSON.stringify({ cells: [] }));
+      expect(isNotebook(f)).toBe(false);
+      writeFileSync(f, "not json at all");
+      expect(isNotebook(f)).toBe(false);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });
