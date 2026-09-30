@@ -81,7 +81,7 @@ a failure.
 
 ## What this skill does not cover
 
-- **Prose voice and tone** — [`one-voice-style-guide`](../../folio-core/one-voice-style-guide.md).
+- **Prose voice and tone** — [`one-voice-style-guide`](../../authoring/authoring-core/one-voice-style-guide.md).
 - **Whether a rendered block LOOKS right** — that is a content question, and the
   rendering auditor's.
 - **How a link is spelled** —

@@ -61,7 +61,7 @@ changing agent guidance.
 
 - **Skill instructions** (`docs/reference/skill-instructions/*.md`) are also
   generated — never hand-edit them. Edit the skill bodies under
-  `skills/content-lifecycle/*.md` or `src/skills/*.md` and regenerate:
+  `skills/authoring/content-lifecycle/*.md` or `src/skills/*.md` and regenerate:
 
   ```sh
   bun run scripts/gen-skill-docs.ts
