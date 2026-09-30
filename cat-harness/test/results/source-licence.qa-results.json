@@ -8,7 +8,7 @@
     "kind": "corpus",
     "id": "library-source-licences"
   },
-  "updated_at": "2026-09-30T16:02:30.082Z",
+  "updated_at": "2026-09-30T17:19:21.354Z",
   "families": {
     "malformed": {
       "summary": "A licence record that claims something it cannot back. This is the only family that fails the check.",
@@ -17,7 +17,7 @@
     },
     "not-recorded": {
       "summary": "No licence recorded at all: nobody has looked yet. Reported, not gated; the field is new.",
-      "count": 42,
+      "count": 39,
       "entries": [
         {
           "entry": "agent-skills/library/agent-skill-best-practices---gemini-cli"
@@ -74,9 +74,6 @@
           "entry": "cat-harness/library/arxiv-2508.05192v2"
         },
         {
-          "entry": "cat-harness/library/arxiv-2508.21620v2"
-        },
-        {
           "entry": "cat-harness/library/arxiv-2605.03537v1"
         },
         {
@@ -84,9 +81,6 @@
         },
         {
           "entry": "cat-harness/library/arxiv-2607.14456v1"
-        },
-        {
-          "entry": "cat-harness/library/arxiv-2607.20636v1"
         },
         {
           "entry": "cat-harness/library/deerwester-1990-indexing-by-lsa"
@@ -105,9 +99,6 @@
         },
         {
           "entry": "cat-harness/library/sammut-bonnici-galea-2015-swot-analysis"
-        },
-        {
-          "entry": "cat-harness/library/wang-rangaiah-2026-mcdm-aggregation"
         },
         {
           "entry": "folio-assistant-core/library/arxiv-2510.21603v1"
@@ -149,8 +140,14 @@
     },
     "stated": {
       "summary": "The licence is known, and the record says where it is stated.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "entry": "agent-skills/library/skills-in-openai-api-notebook",
+          "id": "MIT",
+          "basis": "https://raw.githubusercontent.com/openai/openai-cookbook/main/LICENSE — the repository's LICENSE, 'MIT License, Copyright (c) 2025 OpenAI', read 2026-09-30"
+        }
+      ]
     },
     "unknown": {
       "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
@@ -179,5 +176,5 @@
       ]
     }
   },
-  "total": 46
+  "total": 44
 }

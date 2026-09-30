@@ -47,23 +47,10 @@ import { basename, join, resolve } from "node:path";
 // copy of every prose block: 91 of them across four documents when measured
 // (2026-09-23). Two naming rules for one block is one rule too many.
 import { blockId, sectionKey } from "../content/pipeline/gen-library-jsonld.ts";
+import { STRUCTURE_FILENAME, pagesOf, readStructure } from "../schemas/document-structure.ts";
 
 /** The `@context` every ingested node already carries. Read from a sibling, never retyped. */
 const CONTEXT = "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld";
-
-interface StructureSection {
-  id: string;
-  title?: string | null;
-  page_start?: number | null;
-  page_end?: number | null;
-}
-
-interface Structure {
-  doc_id: string;
-  sections?: StructureSection[];
-  source?: { file?: string; sha256?: string };
-  granularity?: string;
-}
 
 /**
  * The `library/<id>/…` stem every `@id` is written against.
@@ -103,10 +90,14 @@ export interface BuildResult {
  * which every consumer then resolves past and reports a clean run over.
  */
 export function buildL1(dir: string, write = true): BuildResult {
-  const sPath = join(dir, "structure.json");
-  if (!existsSync(sPath)) throw new Error(`${dir}: no structure.json — this is not a staged entry`);
-  const st = JSON.parse(readFileSync(sPath, "utf-8")) as Structure;
-  const declared = st.sections ?? [];
+  if (!existsSync(join(dir, STRUCTURE_FILENAME))) throw new Error(`${dir}: no structure.json — this is not a staged entry`);
+  // Through the shared accessor (bean rkqp), so a notebook entry builds its
+  // blocks like a PDF's and a variant nobody declared is refused, not guessed.
+  const read = readStructure(dir);
+  if ("reason" in read) throw new Error(`${dir}: ${read.reason}`);
+  const raw = read.raw as { granularity?: string; source: { file: string; sha256: string } };
+  const st = { doc_id: read.doc_id, granularity: raw.granularity, source: raw.source };
+  const declared = read.sections;
   if (declared.length === 0) throw new Error(`${dir}: structure.json declares no sections`);
 
   const onDisk = sectionsOnDisk(dir);
@@ -125,8 +116,9 @@ export function buildL1(dir: string, write = true): BuildResult {
       "@type": ["folio-assistant-core:Prose", "doco:Section"],
       kind: "prose",
       title: s.title ?? s.id,
-      ...(s.page_start != null ? { pageStart: s.page_start } : {}),
-      ...(s.page_end != null ? { pageEnd: s.page_end } : {}),
+      // Pages only where the format has them: a notebook section is located
+      // by cells, and a cell index is never written as a page number.
+      ...(pagesOf(s) ? { pageStart: pagesOf(s)!.start, pageEnd: pagesOf(s)!.end } : {}),
       text: `../sections/${s.id}.md`,
       derivedFrom: `${base}/manifest`,
       sourceDocument: `${base}/manifest`,

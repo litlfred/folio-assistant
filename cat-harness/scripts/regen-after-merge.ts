@@ -87,59 +87,19 @@ export function scriptOf(command: string): string | undefined {
 }
 
 /**
- * The writer for a verifying script, when the pair exists.
+ * The writer for a `:check` script, when the pair exists.
  *
- * TWO conventions, because this repository uses two and only one was read
- * until 2026-09-30:
- *
- *   - **suffix** — `X` writes, `X:check` verifies. The common one.
- *   - **prefix** — `X` writes, `check:X` verifies. Measured: three gates
- *     name themselves this way and every one has a real writer running the
- *     same script:
- *
- *     ```
- *     check:raci        → raci          (raci-chart.ts, --check vs not)
- *     check:subgraphs   → subgraphs     (check-subgraphs.ts, --check vs not)
- *     check:term-mapping → term:mapping (check-term-mapping.ts)
- *     ```
- *
- * **The prefix half was a false clean, not a missing feature.** `regen`
- * reported *"73 current, 0 regenerated"* — a fixed point — on a tree where
- * `check:term-mapping` was stale, because a gate it never offered cannot be
- * reported as `no-writer` either. So the one line this command exists to be
- * trusted on was wrong, in the direction that reads as success. Found when CI
- * failed on a gate `regen` had just declared current.
- *
- * `term:mapping` also shows why the base cannot be derived by swapping
- * separators: the writer is `term:mapping` where the check is
- * `check:term-mapping`, so the lookup tries the hyphenated and the
- * colon-separated spelling and takes whichever `package.json` actually has.
- *
- * Still read from `package.json` rather than assumed: a check whose writer
- * was renamed must come back as `no-writer` — a reported gap — and not as a
- * command that silently runs nothing.
+ * The convention this repository already follows everywhere: `X` writes and
+ * `X:check` verifies. Read from `package.json` rather than assumed, because a
+ * check whose writer was renamed must come back as `no-writer` — a reported
+ * gap — and not as a command that silently runs nothing.
  */
 export function writerFor(scripts: Record<string, string>, check: string): string | undefined {
   const override = WRITER_OVERRIDES[check];
   if (override !== undefined) return scripts[override] === undefined ? undefined : override;
-
-  if (check.endsWith(":check")) {
-    const base = check.slice(0, -":check".length);
-    return scripts[base] === undefined ? undefined : base;
-  }
-
-  if (check.startsWith("check:")) {
-    const rest = check.slice("check:".length);
-    // `check:term-mapping`'s writer is `term:mapping`, so the hyphen may be
-    // the separator the writer spells with a colon. Both are tried and
-    // neither is invented — whichever package.json declares is the answer.
-    for (const base of [rest, rest.replace(/-/g, ":")]) {
-      if (scripts[base] !== undefined) return base;
-    }
-    return undefined;
-  }
-
-  return undefined;
+  if (!check.endsWith(":check")) return undefined;
+  const base = check.slice(0, -":check".length);
+  return scripts[base] === undefined ? undefined : base;
 }
 
 /**
@@ -161,6 +121,38 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   "translate-bpmn:check": "translate-bpmn:extract",
   "audit:coverage:strict": "audit:coverage",
   "audit:coverage:require-all": "audit:coverage",
+  // Bean `uju6`: a `check:X` gate is `check:`-PREFIXED, so the convention never
+  // offered it and regen skipped it outright. It did not even count it as
+  // `no-writer`. #1550 went red on this one while regen reported "63 current,
+  // 0 regenerated". `prov-qaqc.ts` without `--check` rewrites the page.
+  "check:prov-qaqc": "prov:qaqc",
+  // Same bean, one gate later: `check:term-mapping` arrived with #1633 and is
+  // a genuine pair — `check-term-mapping.ts` without `--check` REWRITES
+  // `test/results/term-mapping.qa-results.json`, which the `--check` form
+  // compares against. Declared here rather than inferred from the name,
+  // because the writer is spelled `term:mapping` where the check is spelled
+  // `check:term-mapping`, and because inference is what got `check:raci` and
+  // `check:subgraphs` wrong: an earlier version of this fix on #1633 paired
+  // both by name, ran commands that repair nothing, and reported `unrepaired`
+  // — the verdict about the tool that `NO_WRITER` below exists to prevent.
+  "check:term-mapping": "term:mapping",
+};
+
+/**
+ * `check:`-prefixed gates whose same-named script exists but is NOT a writer —
+ * bean `uju6`, each read before being listed. Pairing them by name would run a
+ * command that repairs nothing and then report `unrepaired`, a verdict about
+ * the tool rather than the tree. So they are recorded here, and not asked.
+ *
+ * - `raci-chart.ts` without `--check` only PRINTS the chart.
+ * - `check-subgraphs.ts` without `--check` only changes the exit code.
+ * - `harness-dirs.ts` materialises declared DIRECTORIES; `check-harness-dirs`
+ *   compares two config files and has nothing to regenerate.
+ */
+export const NO_WRITER: Readonly<Record<string, string>> = {
+  "check:raci": "raci-chart.ts only prints; it writes nothing",
+  "check:subgraphs": "check-subgraphs.ts only reports",
+  "check:harness-dirs": "compares two config files; harness:dirs makes directories, not what it compares",
 };
 
 export type Outcome = "current" | "regenerated" | "unrepaired" | "no-writer";
@@ -180,18 +172,9 @@ export function repairableGates(gates: readonly Gate[], scripts: Record<string, 
   const out: { check: string; writer: string | undefined }[] = [];
   for (const g of gates) {
     const script = scriptOf(g.command);
-    // Eligibility has to admit BOTH naming conventions, not just the one
-    // `writerFor` resolves. Teaching `writerFor` the `check:X` prefix alone
-    // changed nothing — measured: still "73 pair(s)" — because a gate filtered
-    // out here is never asked. Two halves of one rule, and fixing the half
-    // that reads better is how the false clean survived a first attempt.
-    if (script === undefined) continue;
-    const named = script.endsWith(":check") || script.startsWith("check:");
-    if (!named && WRITER_OVERRIDES[script] === undefined) continue;
-    // A `check:X` with no writer is still not a pair — most of the `check:*`
-    // family are pure verifiers with nothing to regenerate, and listing them
-    // as `no-writer` would drown the one line this command exists for.
-    if (!script.endsWith(":check") && WRITER_OVERRIDES[script] === undefined && writerFor(scripts, script) === undefined) continue;
+    if (script === undefined || (!script.endsWith(":check") && WRITER_OVERRIDES[script] === undefined)) continue;
+    // `check:X` gates have `:check` nowhere at the end, so only a DECLARED
+    // writer brings one in. NO_WRITER records the rest, with reasons.
     if (seen.has(script)) continue;
     seen.add(script);
     out.push({ check: script, writer: writerFor(scripts, script) });
@@ -202,6 +185,82 @@ export function repairableGates(gates: readonly Gate[], scripts: Record<string, 
 function run(root: string, script: string): boolean {
   const r = spawnSync("bun", ["run", script], { cwd: root, encoding: "utf-8" });
   return r.status === 0;
+}
+
+/** Runs one npm script and says whether it exited 0. Injected in tests. */
+export type Runner = (script: string) => boolean;
+
+/**
+ * Ask every pair once: current, or stale and repaired, or not.
+ *
+ * `writerRan` is the set of writers this pass ran. The caller needs it to know
+ * whether another pass could change anything.
+ */
+export function regenPass(
+  pairs: readonly { check: string; writer: string | undefined }[],
+  runner: Runner,
+  dryRun = false,
+): { results: Result[]; writerRan: string[] } {
+  const results: Result[] = [];
+  const writerRan: string[] = [];
+  for (const { check, writer } of pairs) {
+    if (runner(check)) {
+      results.push({ check, writer, outcome: "current" });
+      continue;
+    }
+    if (writer === undefined) {
+      results.push({ check, outcome: "no-writer" });
+      continue;
+    }
+    if (dryRun) {
+      results.push({ check, writer, outcome: "regenerated" });
+      continue;
+    }
+    runner(writer);
+    writerRan.push(writer);
+    // Ask AGAIN. A writer that ran is not a repair that worked, and reporting
+    // it as one would be the false-clean this whole command is about.
+    results.push({ check, writer, outcome: runner(check) ? "regenerated" : "unrepaired" });
+  }
+  return { results, writerRan };
+}
+
+/**
+ * Passes until one runs NO writer, at most `maxPasses` — bean `14ve`.
+ *
+ * One pass asks each check once, in workflow order. When writer B's output is
+ * an INPUT to check A and A comes first, A reads current before B runs, B then
+ * changes A's input, and A is stale when regen exits. Measured on #1530:
+ * "60 current, 2 regenerated, 0 unrepaired", then `audit:coverage:require-all`
+ * failed in CI.
+ *
+ * So a pass that ran any writer is followed by another. Each check's FINAL
+ * outcome is its last pass's, except that `regenerated` in an earlier pass is
+ * kept over a later `current`, because the repair happened. The cap keeps two
+ * writers that undo each other from looping for ever. The last pass still ran a
+ * writer, so its results are reported as they are, not as settled.
+ */
+export function regenToFixpoint(
+  pairs: readonly { check: string; writer: string | undefined }[],
+  runner: Runner,
+  maxPasses = 3,
+): { results: Result[]; passes: number; settled: boolean } {
+  const final = new Map<string, Result>();
+  let passes = 0;
+  let settled = false;
+  while (passes < maxPasses) {
+    passes++;
+    const { results, writerRan } = regenPass(pairs, runner);
+    for (const r of results) {
+      const prev = final.get(r.check);
+      final.set(r.check, prev?.outcome === "regenerated" && r.outcome === "current" ? prev : r);
+    }
+    if (writerRan.length === 0) {
+      settled = true;
+      break;
+    }
+  }
+  return { results: pairs.map((p) => final.get(p.check)!), passes, settled };
 }
 
 if (import.meta.main) {
@@ -217,32 +276,34 @@ if (import.meta.main) {
       `${all ? "whole" : "fast"} gate set (of ${gates.length} gate(s))`,
   );
 
-  const results: Result[] = [];
-  for (const { check, writer } of repairable) {
-    if (run(repoRoot, check)) {
-      results.push({ check, writer, outcome: "current" });
-      continue;
-    }
-    if (writer === undefined) {
-      results.push({ check, outcome: "no-writer" });
-      console.error(`  ✗ ${check} fails and has NO writer counterpart — not staleness`);
-      continue;
-    }
-    if (dryRun) {
-      results.push({ check, writer, outcome: "regenerated" });
-      console.log(`  · ${check} is stale — would run \`bun run ${writer}\``);
-      continue;
-    }
-    run(repoRoot, writer);
-    // Ask AGAIN. A writer that ran is not a repair that worked, and reporting
-    // it as one would be the false-clean this whole command is about.
-    const fixed = run(repoRoot, check);
-    results.push({ check, writer, outcome: fixed ? "regenerated" : "unrepaired" });
+  const runner: Runner = (script) => run(repoRoot, script);
+  let results: Result[];
+  if (dryRun) {
+    results = regenPass(repairable, runner, true).results;
+  } else {
+    const fx = regenToFixpoint(repairable, runner);
+    results = fx.results;
     console.log(
-      fixed
-        ? `  ✓ ${check} was stale — regenerated with \`bun run ${writer}\``
-        : `  ✗ ${check} STILL fails after \`bun run ${writer}\` — a real defect, not staleness`,
+      `  ${fx.passes} pass(es)` +
+        (fx.settled ? "" : " — CAP REACHED: the last pass still ran a writer, so the tree may not be settled"),
     );
+  }
+  for (const r of results) {
+    if (r.outcome === "regenerated") {
+      console.log(
+        dryRun
+          ? `  · ${r.check} is stale — would run \`bun run ${r.writer}\``
+          : `  ✓ ${r.check} was stale — regenerated with \`bun run ${r.writer}\``,
+      );
+    } else if (r.outcome === "unrepaired") {
+      console.log(`  ✗ ${r.check} STILL fails after \`bun run ${r.writer}\` — a real defect, not staleness`);
+    } else if (r.outcome === "no-writer") {
+      console.error(`  ✗ ${r.check} fails and has NO writer counterpart — not staleness`);
+    }
+  }
+  const unasked = gates.map((g) => scriptOf(g.command)).filter((c): c is string => c !== undefined && NO_WRITER[c] !== undefined);
+  if (unasked.length > 0) {
+    console.log(`  (not asked — no writer, by declaration: ${[...new Set(unasked)].join(", ")})`);
   }
 
   const by = (o: Outcome): Result[] => results.filter((r) => r.outcome === o);

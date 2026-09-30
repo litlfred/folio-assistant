@@ -12,14 +12,14 @@ permalink: /glossary/skills/
 
 Candidate terms extracted from every skill's front matter: `name` as the label, `description` as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 1 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 274 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 6 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 2 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 1 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 275 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 6 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 2 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 295 terms and is 215 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 296 terms and is 216 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
 <thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>295</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>295</td><td>0</td><td>—</td></tr></tbody>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>296</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>296</td><td>0</td><td>—</td></tr></tbody>
 </table>
 <p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
 A vocabulary that could not be reached has said nothing, and the column above keeps that 
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">295</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">296</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -162,28 +162,28 @@ bootstrap-contract-semver <span class="fa-gloss-status">candidate, extracted</sp
 </dt>
 <dd>
 <p>What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's <code>schemas/*.schema.json</code> are generated from, and before publishing one.</p>
-<p class="fa-gloss-meta">Skills of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/skills/bootstrap-contract-semver.md"><code>bootstrap-tools/skills/bootstrap-contract-semver.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap-tools · source <a href="https://github.com/litlfred/bootstrap-tools/blob/main/skills/bootstrap-contract-semver.md"><code>bootstrap-tools/skills/bootstrap-contract-semver.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--bootstrap-graph-emission" data-fa-state="extracted" data-fa-gloss="">
 bootstrap-graph-emission <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>What bootstrap's own Knowledge Graph must be when it is written out as a data file, <code>.jsonld</code> with a <code>.json</code> copy. bootstrap renders no pages for a person to browse, so this file is how it shows it is a Knowledge Graph at all.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-emission.md"><code>bootstrap/skills/bootstrap-graph-emission.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/bootstrap-graph-emission.md"><code>bootstrap/skills/bootstrap-graph-emission.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--bootstrap-graph-publication" data-fa-state="extracted" data-fa-gloss="">
 bootstrap-graph-publication <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where bootstrap's Knowledge Graph file is published, why its <code>@id</code> must be exactly that address, why a <code>.json</code> copy sits beside the <code>.jsonld</code>, and why the file is not kept in the repository.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-graph-publication.md"><code>bootstrap/skills/bootstrap-graph-publication.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/bootstrap-graph-publication.md"><code>bootstrap/skills/bootstrap-graph-publication.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--bootstrap-kg-navigation" data-fa-state="extracted" data-fa-gloss="">
 bootstrap-kg-navigation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it. Named <code>bootstrap-</code> so it cannot be confused with a navigation Skill of a Harness that is installed.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/bootstrap-kg-navigation.md"><code>bootstrap/skills/bootstrap-kg-navigation.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/bootstrap-kg-navigation.md"><code>bootstrap/skills/bootstrap-kg-navigation.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--bpmn-authoring" data-fa-state="extracted" data-fa-gloss="">
 bpmn-authoring <span class="fa-gloss-status">candidate, extracted</span>
@@ -313,7 +313,7 @@ confirm-harness <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Narrow the harnesses and locations this could be, then have the Requestor settle it. Takes a list; returns at most ONE harness. It needs a person: the Requestor settles it, never the agent.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/confirm-harness.md"><code>bootstrap/skills/confirm-harness.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/confirm-harness.md"><code>bootstrap/skills/confirm-harness.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--confirmation-waiver" data-fa-state="extracted" data-fa-gloss="">
 confirmation-waiver <span class="fa-gloss-status">candidate, extracted</span>
@@ -632,7 +632,7 @@ discussion <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/discussion.md"><code>bootstrap/skills/discussion.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/discussion.md"><code>bootstrap/skills/discussion.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--dispatch-agent" data-fa-state="extracted" data-fa-gloss="">
 dispatch-agent <span class="fa-gloss-status">candidate, extracted</span>
@@ -1234,7 +1234,7 @@ log-message <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Say what you are doing, to the Logger, in a form a reader can act on. Five required fields and one optional body; an incomplete message is not logged. Callable from any task in any process, and required by some.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/log-message.md"><code>bootstrap/skills/log-message.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/log-message.md"><code>bootstrap/skills/log-message.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--lsi-indexing" data-fa-state="extracted" data-fa-gloss="">
 lsi-indexing <span class="fa-gloss-status">candidate, extracted</span>
@@ -1699,7 +1699,7 @@ root-readme <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Write the repository's root README when there is none, carrying a link to the harness that was installed and the overall install status. Never replaces one that exists. It runs only once the install has succeeded.</p>
-<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/skills/root-readme.md"><code>bootstrap/skills/root-readme.md</code></a></p>
+<p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/root-readme.md"><code>bootstrap/skills/root-readme.md</code></a></p>
 </dd>
 </dl>
 
@@ -1809,6 +1809,13 @@ skill-registration <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Adding a skill is never a one-file change. What a new skill file owes, the one command that performs the derived half, the one declaration it deliberately leaves to you, why running it once is not enough, and the two orphan directions it reports rather than fixes. Read this before adding, renaming or removing a skill.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/skill-registration.md"><code>cat-harness/skills/kg/kg-core/skill-registration.md</code></a></p>
+</dd>
+<dt id="cat-harness--kg-skills--skill-voice-review" data-fa-state="extracted" data-fa-gloss="">
+skill-voice-review <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Reviews a skill against a voice that judges skills — the base <code>agent-skill-authoring</code> voice or a vendor override such as Claude's, Gemini CLI's or OpenAI's — rule by rule, with each rule's citation open, and records the verdicts with <code>voice:review</code>. Use when <code>skill-voice-review-current</code> reports a skill never reviewed or reviewed before the skill or the voice changed, or when asked whether a skill follows a vendor's authoring guidance. The agent half of that axis; the mechanical half, in <code>scripts/skill-voice-review.ts</code>, only says whether a current review exists.</p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/skill-voice-review.md"><code>cat-harness/skills/kg/kg-core/skill-voice-review.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--skills-and-tools" data-fa-state="extracted" data-fa-gloss="">
 skills-and-tools <span class="fa-gloss-status">candidate, extracted</span>

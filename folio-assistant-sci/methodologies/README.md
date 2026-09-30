@@ -9,5 +9,5 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-ass
 |---|---|---|
 | [`bidirectional-agentic-autoformalization.md`](bidirectional-agentic-autoformalization.md) | Bidirectional agentic autoformalization |  |
 | [`blueprint-driven-formalization.md`](blueprint-driven-formalization.md) | Blueprint-driven formalization |  |
-| [`process-driven-autoformalization.md`](process-driven-autoformalization.md) | [Process](../../bootstrap/schemas/README.md#process)-driven autoformalization |  |
+| [`process-driven-autoformalization.md`](process-driven-autoformalization.md) | [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process)-driven autoformalization |  |
 <!-- kg:subgraph:end -->

@@ -505,10 +505,17 @@ package "cat-harness/skills" as pkg_cat_harness_skills <<skills>> {
     title [1] : string
     description [1] : string
   }
+  class "Directory" as cat_harness_skills_skill_topics_v1_Directory <<json: SkillTopicsSchema>> #e8f0ee {
+    id [1] : string
+    path [1] : string
+    dependents [1] : string
+    graphKinds [1..*] : string[]
+  }
   class "skill-topics/v1" as cat_harness_skills_skill_topics_v1_skill_topics_v1 <<json: SkillTopicsSchema>> #e8f0ee {
     $schema [1] : 'skill-topics/v1'
     _comment [0..1] : string
     topics [0..*] : Topic[]
+    directories [0..*] : Directory[]
   }
 }
 package "cat-harness/scenarios" as pkg_cat_harness_scenarios <<scenarios>> {
@@ -611,6 +618,20 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     by [1] : baseline | agent | human
     reason [0..1] : string
   }
+  class "Verdict" as cat_harness_qa_kg_qa_v1_Verdict <<json: KgQaReportSchema>> #f4e6e6 {
+    rule [1] : string
+    result [1] : pass | fail | n/a
+    note [0..1] : string
+  }
+  class "Voice_review" as cat_harness_qa_kg_qa_v1_Voice_review <<json: KgQaReportSchema>> #f4e6e6 {
+    voice [1] : string
+    instance [1] : string
+    skill_hash [1] : string
+    voice_hash [1] : string
+    by [1] : agent | human
+    at [1] : string
+    verdicts [0..*] : Verdict[]
+  }
   class "kg-qa/v1" as cat_harness_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa/v1'
     subject [1] : object
@@ -618,6 +639,7 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     criteria [1] : map<object>
     totals [1] : map<number>
     pair_attestations [0..*] : Pair_attestation[]
+    voice_reviews [0..*] : Voice_review[]
   }
   class "kg-qa-manifest/v1" as cat_harness_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
     $schema [1] : 'kg-qa-manifest/v1'
@@ -1686,6 +1708,7 @@ cat_harness_schemas_skills_quality_control_output_schema_json_Quality_Control_Ou
 cat_harness_schemas_skills_terminology_management_output_schema_json_Terminology_Management_Output *-- "0..*" cat_harness_schemas_skills_terminology_management_output_schema_json_Resource : resources
 cat_harness_skills_folio_remote_skill_v1_folio_remote_skill_v1 *-- "1..*" cat_harness_skills_folio_remote_skill_v1_File : files
 cat_harness_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" cat_harness_skills_skill_topics_v1_Topic : topics
+cat_harness_skills_skill_topics_v1_skill_topics_v1 *-- "0..*" cat_harness_skills_skill_topics_v1_Directory : directories
 cat_harness_scenarios_Role *-- "0..*" cat_harness_scenarios_FormerName : formerNames
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Role : roles
 cat_harness_scenarios_RoleGraph *-- "0..*" cat_harness_scenarios_Actor : actors
@@ -1694,6 +1717,8 @@ cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Permission : per
 cat_harness_policies_Prohibition *-- "0..*" cat_harness_policies_Constraint : constraint
 cat_harness_policies_OdrlPolicy *-- "0..*" cat_harness_policies_Prohibition : prohibition
 cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
+cat_harness_qa_kg_qa_v1_Voice_review *-- "0..*" cat_harness_qa_kg_qa_v1_Verdict : verdicts
+cat_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" cat_harness_qa_kg_qa_v1_Voice_review : voice_reviews
 cat_harness_qa_folio_test_run_v1_folio_test_run_v1 *-- "0..*" cat_harness_qa_folio_test_run_v1_Case : cases
 cat_harness_qa_viewer_nav_qa_v1_viewer_nav_qa_v1 *-- "0..*" cat_harness_qa_viewer_nav_qa_v1_Page : pages
 cat_harness_health_Check *-- "0..*" cat_harness_health_Threshold : thresholds

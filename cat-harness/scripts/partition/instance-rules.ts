@@ -1206,6 +1206,7 @@ export const RULES: Rule[] = [
       // Its one cross-run criterion — declared prose ↔ code pairs and their
       // attestations (bean `cuxx`). Same side as the auditor that calls it.
       "scripts/prose-code-pairs.ts",
+      "scripts/skill-voice-review.ts",     // skills reviewed against the skill voices, carried in kg-qa (bean rkqp)
       // ...and stage A, what that prose SAYS about the code (bean `ca4a`).
       "scripts/pair-claims.ts",
       "scripts/known-skills.ts",
@@ -1894,8 +1895,10 @@ export const RULES: Rule[] = [
       // `schemas/tabular-records.ts` — all core — and bought four
       // wrong-direction edges for the tidiness of one homogeneous list.
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
+      "scripts/check-structure-accessor.ts", // `structure.json` is named only by its accessor (bean rkqp)
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
       "scripts/l1-blocks.ts",               // staged entry → manifest + blocks/, the arm between the two
+      "scripts/notebook-structure.ts",      // the notebook rung: a folio's `.ipynb` → `notebook-structure/v1` (bean rkqp)
       // `scripts/extract-assets.ts` STOOD HERE and is GONE as of bean `yj6r`,
       // 2026-09-30, for the reason the materialisation trio above gives: it now
       // lives in `folio-assistant-core/scripts/` beside the

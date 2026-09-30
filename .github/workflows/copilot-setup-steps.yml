@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          submodules: true
 
       # ── uv (Python package manager / uvx runner) ──────────────────────
       - name: Install uv

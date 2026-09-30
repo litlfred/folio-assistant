@@ -10,7 +10,15 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { WRITER_OVERRIDES, repairableGates, scriptOf, writerFor } from "../regen-after-merge.ts";
+import {
+  NO_WRITER,
+  WRITER_OVERRIDES,
+  regenToFixpoint,
+  repairableGates,
+  scriptOf,
+  writerFor,
+  type Runner,
+} from "../regen-after-merge.ts";
 import { loadGates } from "../gates.ts";
 import { repoRootFor } from "../../schemas/cat-harness.ts";
 
@@ -66,15 +74,7 @@ describe("the set comes from the WORKFLOW, not from package.json", () => {
   });
 
   test("...and a STRICT subset of package.json's check scripts", () => {
-    // BOTH naming conventions, `X:check` and `check:X`. This filter carried
-    // only the first until 2026-09-30 and so encoded the very narrowness that
-    // let `regen` report a fixed point over a stale `check:term-mapping` —
-    // the test agreeing with the code about a rule both had wrong. (Same
-    // shape as `staging-only-publish.test.ts` earlier in this arc: a test
-    // that restates its subject's rule cannot falsify it.)
-    const allChecks = Object.keys(SCRIPTS).filter(
-      (s) => s.endsWith(":check") || s.startsWith("check:") || WRITER_OVERRIDES[s] !== undefined,
-    );
+    const allChecks = Object.keys(SCRIPTS).filter((s) => s.endsWith(":check") || WRITER_OVERRIDES[s] !== undefined);
     expect(pairs.length).toBeLessThan(allChecks.length);
     for (const p of pairs) expect(allChecks).toContain(p.check);
   });
@@ -132,62 +132,72 @@ describe("a writer that is not <check minus :check> is DECLARED (bean eowd)", ()
   });
 });
 
-/*
- * THE PREFIX CONVENTION, and it was a false clean rather than a missing
- * feature.
- *
- * This repository names a verifying script two ways — `X:check` and
- * `check:X` — and `regen` read only the first. So on 2026-09-30 it printed
- *
- *   73 current, 0 regenerated, 0 unrepaired, 0 without a writer
- *
- * over a tree where `check:term-mapping` was stale, and CI then failed on
- * exactly that gate. A gate the discovery never offers cannot even be
- * reported as `no-writer`, so the one line this command exists to be trusted
- * on was wrong in the direction that reads as success.
- *
- * Two halves had to change, and the first attempt fixed only the readable
- * one: teaching `writerFor` the prefix left the count at 73, because
- * `repairableGates` filters on the name BEFORE asking for a writer. Both are
- * asserted here for that reason.
- */
-describe("check:X is a pair too — bean `q7ey`'s CI failure", () => {
-  test("writerFor resolves the prefix form, in both separator spellings", () => {
-    // Same script, --check vs not.
-    expect(writerFor(SCRIPTS, "check:raci")).toBe("raci");
-    expect(writerFor(SCRIPTS, "check:subgraphs")).toBe("subgraphs");
-    // The writer spells with a colon where the check spells with a hyphen,
-    // which is why the lookup tries both rather than swapping separators.
-    expect(writerFor(SCRIPTS, "check:term-mapping")).toBe("term:mapping");
+describe("a `check:X` gate is paired only by DECLARATION — bean `uju6`", () => {
+  test("`check:prov-qaqc` is repaired by `prov:qaqc`", () => {
+    // #1550 went red on it while regen said "63 current, 0 regenerated": the
+    // gate is `check:`-prefixed, so the `X:check` convention never offered it.
+    expect(writerFor(SCRIPTS, "check:prov-qaqc")).toBe("prov:qaqc");
+    const pairs = repairableGates([{ job: "j", step: "s", command: "bun run check:prov-qaqc" }], SCRIPTS);
+    expect(pairs).toEqual([{ check: "check:prov-qaqc", writer: "prov:qaqc" }]);
   });
 
-  test("a check:X with no writer is still not a pair", () => {
-    // Most of the `check:*` family are pure verifiers. Inventing a writer for
-    // them would turn a correct silence into a command that runs nothing.
-    expect(writerFor({ "check:thing": "x" }, "check:thing")).toBeUndefined();
-    expect(writerFor(SCRIPTS, "check:partition")).toBeUndefined();
-  });
-
-  test("repairableGates OFFERS the prefix pairs — the half the first fix missed", () => {
-    const gates = loadGates(REPO, {});
-    const pairs = repairableGates(gates, SCRIPTS);
-    const byCheck = new Map(pairs.map((p) => [p.check, p.writer]));
-    for (const [check, writer] of [
-      ["check:term-mapping", "term:mapping"],
-      ["check:raci", "raci"],
-      ["check:subgraphs", "subgraphs"],
-    ] as const) {
-      expect(byCheck.has(check), `${check} is not offered, so it can never be repaired OR reported`).toBe(true);
-      expect(byCheck.get(check)).toBe(writer);
+  test("the recorded non-writers are real scripts, and none is also paired", () => {
+    for (const check of Object.keys(NO_WRITER)) {
+      expect(SCRIPTS[check]).toBeDefined();
+      expect(WRITER_OVERRIDES[check]).toBeUndefined();
+      // Not guessed from the name either: `check:subgraphs` has a `subgraphs`
+      // script, and it only reports.
+      expect(writerFor(SCRIPTS, check)).toBeUndefined();
     }
   });
+});
 
-  test("a pure check:* verifier is not listed as a pair at all", () => {
-    const gates = loadGates(REPO, {});
-    const checks = new Set(repairableGates(gates, SCRIPTS).map((p) => p.check));
-    // Listing these as `no-writer` would drown the finding the command exists
-    // to surface, so they must be absent rather than present-and-empty.
-    expect(checks.has("check:partition")).toBe(false);
-    expect(checks.has("check:glossary")).toBe(false);
+describe("regen runs to a FIXPOINT, not one pass — bean `14ve`", () => {
+  /**
+   * A tiny tree: writer B's output is an INPUT to check A, and A is asked
+   * first. Staleness is modelled as version numbers, so the test says exactly
+   * which write made which check current.
+   */
+  function tree() {
+    const v = { bInput: 1, bOut: 0, aOut: 0 };
+    const scripts: Record<string, () => boolean> = {
+      "a:check": () => v.aOut === v.bOut, // A is derived from B's output
+      a: () => ((v.aOut = v.bOut), true),
+      "b:check": () => v.bOut === v.bInput,
+      b: () => ((v.bOut = v.bInput), true),
+    };
+    const runner: Runner = (s) => scripts[s]!();
+    return { v, runner };
+  }
+  const pairs = [
+    { check: "a:check", writer: "a" },
+    { check: "b:check", writer: "b" },
+  ];
+
+  test("one pass leaves A stale; the fixpoint leaves every check current", () => {
+    const { v, runner } = tree();
+    const r = regenToFixpoint(pairs, runner);
+    expect(r.settled).toBe(true);
+    // Pass 1: A current (0 === 0), B stale → B writes 1. Pass 2: A stale →
+    // repaired. Pass 3: nothing ran.
+    expect(r.passes).toBe(3);
+    expect(v.aOut).toBe(v.bOut);
+    expect(r.results.map((x) => x.outcome)).toEqual(["regenerated", "regenerated"]);
+  });
+
+  test("a single pass really does leave it stale — the control", () => {
+    const { v, runner } = tree();
+    const r = regenToFixpoint(pairs, runner, 1);
+    expect(r.settled).toBe(false);
+    expect(v.aOut).not.toBe(v.bOut);
+  });
+
+  test("two writers that undo each other stop at the cap and say so", () => {
+    let x = 0;
+    const flip: Runner = (s) => (s.endsWith(":check") ? false : ((x = 1 - x), true));
+    const r = regenToFixpoint([{ check: "p:check", writer: "p" }], flip, 3);
+    expect(r.passes).toBe(3);
+    expect(r.settled).toBe(false);
+    expect(x === 0 || x === 1).toBe(true);
   });
 });

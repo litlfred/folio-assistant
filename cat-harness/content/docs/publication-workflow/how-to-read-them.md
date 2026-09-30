@@ -1,5 +1,5 @@
 - **A lane is a role.** Every lane maps to an actor in
-  [`.claude/skills/actors/`](https://github.com/litlfred/folio-assistant/tree/main/.claude/skills/actors) —
+  [`cat-harness/scenarios/actors/`](https://github.com/litlfred/folio-assistant/tree/main/cat-harness/scenarios/actors) —
   see [Who is who](#who-is-who).
 - **`[skill-name]` under an activity** is the folio-assistant skill that
   implements it. The same reference is carried machine-readably as a

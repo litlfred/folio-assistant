@@ -313,6 +313,10 @@
           "detail": "nested instance \"agent-skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
+          "where": "agent-skills/skills/skills.json",
+          "detail": "nested instance \"agent-skills/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
           "where": "agent-skills/skills/voices/voices.json",
           "detail": "nested instance \"agent-skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
@@ -341,8 +345,16 @@
           "detail": "nested instance \"folio-assistant-core\" declares its own graph, and this audit does not read it — 1 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
+          "where": "folio-assistant-core/skills/skills.json",
+          "detail": "nested instance \"folio-assistant-core/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
           "where": "folio-assistant-sci/folio-assistant-sci.json",
           "detail": "nested instance \"folio-assistant-sci\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "folio-assistant-sci/skills/skills.json",
+          "detail": "nested instance \"folio-assistant-sci/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
           "where": "folio-assistant.json",
@@ -351,6 +363,10 @@
         {
           "where": "large-datasets/large-datasets.json",
           "detail": "nested instance \"large-datasets\" declares its own graph, and this audit does not read it — 4 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "smart-base/skills/skills.json",
+          "detail": "nested instance \"smart-base/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
           "where": "smart-base/smart-base.json",
@@ -383,6 +399,10 @@
         {
           "where": "who-iris/who-iris.json",
           "detail": "nested instance \"who-iris\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+        },
+        {
+          "where": "who-style-guide/skills/skills.json",
+          "detail": "nested instance \"who-style-guide/skills\" declares its own graph, and this audit does not read it — 0 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
           "where": "who-style-guide/who-style-guide.json",

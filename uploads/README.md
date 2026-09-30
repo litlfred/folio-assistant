@@ -46,6 +46,7 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | [`formal-13-12-09.pdf`](formal-13-12-09.pdf) | a file |  |
 | [`formal-24-01-01.pdf`](formal-24-01-01.pdf) | a file |  |
 | [`ihris_admin_handbook_sep_17_2010.pdf`](ihris_admin_handbook_sep_17_2010.pdf) | a file |  |
+| [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/) | 2 files | |
 <!-- kg:subgraph:end -->
 
 ## What the process does not cover — how a file gets here
