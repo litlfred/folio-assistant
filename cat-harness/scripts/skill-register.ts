@@ -501,6 +501,12 @@ export const STEPS: readonly Step[] = [
     because: "the skills graph's LSI index — a new or edited skill changes its fingerprint, and kg:audit's `lsi-index-fresh` reads it next",
   },
   {
+    write: ["lsi:viz"],
+    verify: ["lsi:viz:check"],
+    because:
+      "the LSI index's VIEWER PAGE, which `lsi:skills` above stales and nothing here regenerated until 2026-09-30. Measured: adding one skill left `cat-harness/docs/lsi/index.md` stale while this chain reported \"8 artefact(s) current\" — so the claim to be at a fixed point was false in exactly the way this chain exists to prevent, and it reddened `main` through `lsi:viz:check` in the Repository-gates job. The index and its page are two artefacts, and a chain that writes one and verifies only the other is a chain with a hole in it",
+  },
+  {
     write: ["kg:audit"],
     verify: ["kg:audit:check"],
     because: "the skill's kg-qa sidecar — masked inside `gates` by `bun test`",

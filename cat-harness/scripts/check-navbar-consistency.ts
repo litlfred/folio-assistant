@@ -52,6 +52,29 @@
  * the two must name the same glyph constant, or one artefact has two pictures
  * depending on which surface you opened.
  *
+ * ## Not a second answer to either navbar gate already here
+ *
+ * Two sibling gates touch the navbar, and this asks neither of their
+ * questions. Checked by reading them, 2026-09-30, after `bun run gates`
+ * surfaced both — a hand-picked check list had hidden them:
+ *
+ * | gate | its question | bean |
+ * |---|---|---|
+ * | `navbar:geometry:check` | do the WIDTHS agree between `lib/navbar-geometry.ts` and the stylesheet rendered from it | `sjic` |
+ * | `check:viewer-nav` | WHICH PAGES carry a nav rail at all, gated on regressions only | `edx7` |
+ * | this | are the ICONS registered, and do the registry and the instance declaration AGREE | — |
+ *
+ * Geometry, presence, iconography. They come apart in every direction: a
+ * navbar can be the right width with an unregistered icon, a page can be
+ * railed with no icon at all, and an icon can be registered on a page that
+ * carries no rail. So none subsumes another, and a reader who finds one
+ * should not conclude the other two are covered.
+ *
+ * This paragraph exists because "a second answer to the same question, free
+ * to disagree with the first" is the defect this repository names most often,
+ * and a gate that has not said which question it is answering leaves the next
+ * author to guess.
+ *
  * ## Could-not-determine is never green (bean `dh4f`)
  *
  * If either registry literal cannot be located, this **refuses** rather than
@@ -405,4 +428,9 @@ function main(): number {
   return (check || strict) && fail ? 1 : 0;
 }
 
-process.exit(main());
+// GUARDED so the module can be imported. Without this, a test importing an
+// exported helper runs the CLI and exits the test runner — which is exactly
+// what happened to `upload-names.test.ts`: the report printed and the run
+// died with no tally. `if (import.meta.main)` is the idiom every other
+// importable script here uses.
+if (import.meta.main) process.exit(main());
