@@ -48,6 +48,7 @@ import ts from "typescript";
 
 import {
   defaultGraphKinds,
+  declaresInstance,
   instanceRootsIn,
   readDeclaration,
   repoRootFor,
@@ -255,21 +256,23 @@ export function rootOf(instance: string | undefined, instanceRoot: string): stri
     byName = new Map();
     for (const root of instanceRootsIn(repo)) {
       try {
-        const name = readDeclaration(root)?.name;
-        if (name) byName.set(name, root);
+        const decl = readDeclaration(root);
+        if (decl?.name) byName.set(decl.name, root);
+        // Also by planned repository — the form a reference takes (bean `6rmv`).
+        if (decl?.repository) byName.set(decl.repository, root);
       } catch {
         // an unreadable declaration names nothing
       }
     }
     rootsByName.set(repo, byName);
   }
-  if (readDeclarationName(instanceRoot) === instance) return instanceRoot;
+  if (declaresInstance(readOwnDeclaration(instanceRoot), instance)) return instanceRoot;
   return byName.get(instance);
 }
 
-function readDeclarationName(root: string): string | undefined {
+function readOwnDeclaration(root: string): { name?: string; repository?: string } | undefined {
   try {
-    return readDeclaration(root)?.name;
+    return readDeclaration(root);
   } catch {
     return undefined;
   }

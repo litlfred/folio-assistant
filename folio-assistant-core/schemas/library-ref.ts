@@ -90,8 +90,12 @@ export function instanceRoots(repoRoot: string): Map<string, string> {
     const decl = declarationPathIn(dir)!;
     if (!existsSync(decl)) return;
     try {
-      const name = JSON.parse(readFileSync(decl, "utf8"))?.name;
+      const parsed = JSON.parse(readFileSync(decl, "utf8"));
+      const name = parsed?.name;
       if (typeof name === "string" && name.length > 0 && !out.has(name)) out.set(name, dir);
+      // Also by planned repository, the form a reference takes (bean `6rmv`).
+      const repository = parsed?.repository;
+      if (typeof repository === "string" && repository.length > 0 && !out.has(repository)) out.set(repository, dir);
     } catch {
       // A declaration that does not parse is not this module's error to raise:
       // `readDeclaration` already throws on one, with a better message. Skipping

@@ -23,7 +23,7 @@ import { explainFailure, resolveLibraryRef } from "../schemas/library-ref.js";
 import { join, relative, resolve } from "node:path";
 
 import { loadVoices, unionRules, voicesPresent } from "../../cat-harness/schemas/voices";
-import { instanceRootsIn, readDeclaration, repoRootFor, resolveDirectories } from "../../cat-harness/schemas/cat-harness.ts";
+import { declaresInstance, instanceRootsIn, readDeclaration, repoRootFor, resolveDirectories } from "../../cat-harness/schemas/cat-harness.ts";
 import { readRoleGraph, type RoleGraph } from "../../cat-harness/schemas/role-graph";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -117,7 +117,7 @@ function instanceRootFor(instance: string | undefined, ownRoot: string): string 
   if (instance === undefined) return ownRoot;
   const repo = repoRootFor(ownRoot);
   for (const root of instanceRootsIn(repo)) {
-    if (readDeclaration(root)?.name === instance) return root;
+    if (declaresInstance(readDeclaration(root), instance)) return root;
   }
   return undefined;
 }

@@ -773,6 +773,15 @@ overlay, and it throws when two instances claim one repository.
 - every `livesAt.path` is where the instance actually sits;
 - every `livesAt` names one host.
 
+**A reference to another instance names its `repository`, never its
+`name`.** The `instance` field of a voice rule's source, a voice's
+`sources[]`, a `RoleRef`, a `ThemeRef` and an `AssetSource` is typed
+`RepoFullName`, so a bare name no longer parses. Every resolver matches the
+reference through `declaresInstance`, which accepts either form, because
+`needs` edges and internal callers still speak in names.
+`instance-repositories.test.ts` checks that every committed reference
+resolves.
+
 ### Every other marker: THE TYPE DECLARES ITS OWN FILENAME (STRICT)
 
 Settled by the owner 2026-09-20, bean `79t3` question 1. The rule above covers
