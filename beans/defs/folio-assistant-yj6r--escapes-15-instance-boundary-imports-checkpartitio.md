@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-27T07:47:30Z
-updated_at: 2026-09-30T08:57:59Z
+updated_at: 2026-09-30T10:28:59Z
 parent: folio-assistant-vke6
 ---
 
@@ -468,3 +468,16 @@ enumerating scripts -> 65**. Correct for cat-harness, but core runs no equivalen
 census, so the row is now counted nowhere. The ingest/materialisation tranche
 reported the identical shape at 68 -> 67 — twice now, which makes it a property of
 moving anything up rather than an accident of one file.
+
+
+
+### The coverage loss now has its own bean — `tqv4`
+
+The two "one coverage loss, reported rather than papered over" boxes above
+(68 -> 67, then 66 -> 65) are one defect reported twice. Filed 2026-09-30 as
+`folio-assistant-tqv4`, with the sharper half measured: the census's headline
+family `seeded-at-root-not-git-aware` reads **0 of 0**, and the repository's
+only instance of that shape — `folio-assistant-core/scripts/check-artifact-index.ts`,
+a `readdirSync(ROOT)` with no git call — is in the instance the census does not
+scan. The family is empty because its subject moved out, not because the shape
+was eliminated.
