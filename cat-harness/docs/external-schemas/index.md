@@ -50,7 +50,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[SKOS Simple Knowledge Organization System Reference](#w3c-skos)**<br>`w3c-skos` | W3C | [2009-08-18](https://www.w3.org/TR/2009/REC-skos-reference-20090818/) | `conforms` — this repository's artefacts are valid against it |
 | **[Web Annotation Vocabulary](#w3c-web-annotation)**<br>`w3c-web-annotation` | W3C | [2017-02-23](https://www.w3.org/TR/annotation-vocab/) | `conforms` — this repository's artefacts are valid against it |
 | **[XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes](#w3c-xsd11-datatypes)**<br>`w3c-xsd11-datatypes` | W3C | [2012-04-05](https://www.w3.org/TR/xmlschema11-2/) | `conforms` — this repository's artefacts are valid against it |
-| **[WHO SMART Guidelines base IG](#who-smart-base)**<br>`who-smart-base` | other | [unpinned](https://smart.who.int/base/) | `reads` — this repository parses documents written in it |
+| **[WHO SMART Guidelines base IG](#who-smart-base)**<br>`who-smart-base` | other | [v1.0.0](https://smart.who.int/base/) | `reads` — this repository parses documents written in it |
 
 ## Who declares each specification
 
@@ -572,13 +572,13 @@ graph. That is a determined zero, not an unfilled field.
 
 ### WHO SMART Guidelines base IG {#who-smart-base}
 
-`who-smart-base` — other, edition [unpinned](https://smart.who.int/base/) — `reads`, meaning this repository parses documents written in it.
+`who-smart-base` — other, edition [v1.0.0](https://smart.who.int/base/) — `reads`, meaning this repository parses documents written in it.
 
 **Namespaces.**
 
 - `http://smart.who.int/base/StructureDefinition/`
 
-**Note.** Tracks the canonical smart-base's sushi-config.yaml declares (http://smart.who.int/base); its logical models publish under StructureDefinition/. `reads`: the platform references those models; it does not publish them.
+**Note.** Tracks the canonical smart-base's sushi-config.yaml declares (http://smart.who.int/base); its logical models publish under StructureDefinition/. `reads`: the platform references those models; it does not publish them. PINNED 2026-09-30 to v1.0.0 (sushi-config `version: 1.0.0`, `releaseLabel: release` — a published release, not a ci-build), on the owner's ruling that `check:term-mapping`'s fhir half asserts a published IG AT A VERSION. Its terminology is snapshotted beside this record in who-smart-base.terminology.json; move the pin and re-run scripts/pin-smart-base-terminology.ts to update both together.
 
 **What depends on it.**
 

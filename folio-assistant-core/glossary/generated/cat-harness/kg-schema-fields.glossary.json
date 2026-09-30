@@ -6278,6 +6278,34 @@
       "status": "candidate"
     },
     {
+      "id": "pinned-terminology.pinnedconceptschema.display",
+      "prefLabel": "PinnedConceptSchema.display",
+      "definition": "The human label, and the ONLY field a glossary candidate can match on.",
+      "source": "cat-harness/schemas/pinned-terminology.ts#PinnedConceptSchema.display",
+      "status": "candidate"
+    },
+    {
+      "id": "pinned-terminology.pinnedconceptschema.system",
+      "prefLabel": "PinnedConceptSchema.system",
+      "definition": "The code system's id inside the IG — its identity there, not a URL.",
+      "source": "cat-harness/schemas/pinned-terminology.ts#PinnedConceptSchema.system",
+      "status": "candidate"
+    },
+    {
+      "id": "pinned-terminology.pinnedterminologyschema.pin",
+      "prefLabel": "PinnedTerminologySchema.pin",
+      "definition": "The external-schema record this version is read from.",
+      "source": "cat-harness/schemas/pinned-terminology.ts#PinnedTerminologySchema.pin",
+      "status": "candidate"
+    },
+    {
+      "id": "pinned-terminology.pinnedterminologyschema.version",
+      "prefLabel": "PinnedTerminologySchema.version",
+      "definition": "The pinned version, which must equal that record's.",
+      "source": "cat-harness/schemas/pinned-terminology.ts#PinnedTerminologySchema.version",
+      "status": "candidate"
+    },
+    {
       "id": "precision-scalar.precisionscalar.dps",
       "prefLabel": "precisionScalar.dps",
       "definition": "Significant decimal digits in `value`.",

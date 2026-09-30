@@ -11,9 +11,9 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1491 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1495 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1658 terms and is 900 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1662 terms and is 902 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -27,7 +27,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1658</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1662</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -6476,6 +6476,34 @@ PermitRequest.actorRoles <span class="fa-gloss-status">candidate, extracted</spa
 <dd>
 <p>The roles the actor may act as (`ActorDef.roles`); empty or absent means unconstrained.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/odrl.ts"><code>cat-harness/schemas/odrl.ts#PermitRequest.actorRoles</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pinned-terminology.pinnedconceptschema.display" data-fa-state="extracted" data-fa-gloss="">
+PinnedConceptSchema.display <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The human label, and the ONLY field a glossary candidate can match on.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pinned-terminology.ts"><code>cat-harness/schemas/pinned-terminology.ts#PinnedConceptSchema.display</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pinned-terminology.pinnedconceptschema.system" data-fa-state="extracted" data-fa-gloss="">
+PinnedConceptSchema.system <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The code system's id inside the IG — its identity there, not a URL.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pinned-terminology.ts"><code>cat-harness/schemas/pinned-terminology.ts#PinnedConceptSchema.system</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pinned-terminology.pinnedterminologyschema.pin" data-fa-state="extracted" data-fa-gloss="">
+PinnedTerminologySchema.pin <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The external-schema record this version is read from.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pinned-terminology.ts"><code>cat-harness/schemas/pinned-terminology.ts#PinnedTerminologySchema.pin</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--pinned-terminology.pinnedterminologyschema.version" data-fa-state="extracted" data-fa-gloss="">
+PinnedTerminologySchema.version <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The pinned version, which must equal that record's.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/pinned-terminology.ts"><code>cat-harness/schemas/pinned-terminology.ts#PinnedTerminologySchema.version</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--document-image.placementschema.coverage" data-fa-state="extracted" data-fa-gloss="">
 PlacementSchema.coverage <span class="fa-gloss-status">candidate, extracted</span>
