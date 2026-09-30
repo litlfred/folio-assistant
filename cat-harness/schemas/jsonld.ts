@@ -98,6 +98,8 @@ export const OA_NS = "http://www.w3.org/ns/oa#";
 export const PROV_NS = "http://www.w3.org/ns/prov#";
 export const SKOS_NS = "http://www.w3.org/2004/02/skos/core#";
 export const DCTERMS_NS = "http://purl.org/dc/terms/";
+/** OMG BPMN 2.0's model namespace — its element and attribute names as IRIs (`sourceRef`, `incoming`, …). */
+export const BPMN_MODEL_NS = "http://www.omg.org/spec/BPMN/20100524/MODEL#";
 /** HL7 FHIR — the health-policy semantics of the ingest side. */
 export const FHIR_NS = "http://hl7.org/fhir/";
 

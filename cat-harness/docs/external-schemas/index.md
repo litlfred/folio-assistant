@@ -28,8 +28,8 @@ depends on it**, and **which of its terms this repository branches on**.
 
 <div class="xs-grid">
 <div class="xs-stat"><b>17</b><span>specifications</span></div>
-<div class="xs-stat"><b>104</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>191</b><span>declared uses</span></div>
+<div class="xs-stat"><b>101</b><span>operative terms in the graph</span></div>
+<div class="xs-stat"><b>195</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -53,7 +53,7 @@ depends on it**, and **which of its terms this repository branches on**.
 | **[SKOS Simple Knowledge Organization System Reference](#w3c-skos)**<br>`w3c-skos` | W3C | [2009-08-18](https://www.w3.org/TR/2009/REC-skos-reference-20090818/) | `conforms` — this repository's artefacts are valid against it |
 | **[Web Annotation Vocabulary](#w3c-web-annotation)**<br>`w3c-web-annotation` | W3C | [2017-02-23](https://www.w3.org/TR/annotation-vocab/) | `conforms` — this repository's artefacts are valid against it |
 | **[XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes](#w3c-xsd11-datatypes)**<br>`w3c-xsd11-datatypes` | W3C | [2012-04-05](https://www.w3.org/TR/xmlschema11-2/) | `conforms` — this repository's artefacts are valid against it |
-| **[WHO SMART Guidelines base IG](#who-smart-base)**<br>`who-smart-base` | other | [v1.0.0](https://smart.who.int/base/) | `reads` — this repository parses documents written in it |
+| **[WHO SMART Guidelines base IG](#who-smart-base)**<br>`who-smart-base` | other | [unpinned](https://smart.who.int/base/) | `reads` — this repository parses documents written in it |
 
 ## Who declares each specification
 
@@ -74,7 +74,7 @@ vocabulary shows up here instead of going unnoticed.
 
 Every namespace the corpus declares is covered by a record above.
 
-**17 declared and not in use.** Not a defect on its own: a
+**18 declared and not in use.** Not a defect on its own: a
 record may cover a namespace only some artefacts carry. It is here because
 a registry nobody prunes is one that stops describing the repository.
 
@@ -85,6 +85,7 @@ a registry nobody prunes is one that stops describing the repository.
 - `http://purl.org/spar/deo/`
 - `http://purl.org/spar/doco/`
 - `http://smart.who.int/base/StructureDefinition/`
+- `http://www.omg.org/spec/BPMN/20100524/MODEL#`
 - `http://www.w3.org/1999/02/22-rdf-syntax-ns#`
 - `http://www.w3.org/2000/01/rdf-schema#`
 - `http://www.w3.org/2001/XMLSchema#`
@@ -113,6 +114,8 @@ a registry nobody prunes is one that stops describing the repository.
 
 | user | declared by |
 |---|---|
+| [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
+| [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
 | [`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts) | `@conformsTo` tag |
 | `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
 | `folio-dublin-core/v1 nodes` | through the module that types it ([`folio-assistant-core/schemas/dublin-core.ts`](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/dublin-core.ts)) |
@@ -178,9 +181,10 @@ a subset of the edition rather than a transcription of it.
 **Namespaces.**
 
 - `http://www.omg.org/spec/BPMN/20100524/MODEL`
+- `http://www.omg.org/spec/BPMN/20100524/MODEL#`
 - `http://www.omg.org/spec/BPMN/20100524/DI`
 
-**Note.** The `20100524` in every namespace is BPMN 2.0's release date and is how the edition is identified in an instance document — the diagrams have carried it since the first one was drawn, and until 2026-09-20 nothing in this repository said which specification that was. `conforms` rather than `reads`: these are OUR instance documents, so a version bump is a migration of the corpus rather than a compatibility question. NO XSD IS HELD and none is fetched — `referenced`, per the owner's "dont need to materalize, but should reference specific version being used". That means nothing validates a diagram STRUCTURALLY against OMG's schema; `check:workflows` and `kg:audit` check the things this repository cares about (lanes bind declared roles, activities name skills) and are not a substitute for it.
+**Note.** The `20100524` in every namespace is BPMN 2.0's release date and is how the edition is identified in an instance document — the diagrams have carried it since the first one was drawn, and until 2026-09-20 nothing in this repository said which specification that was. `conforms` rather than `reads`: these are OUR instance documents, so a version bump is a migration of the corpus rather than a compatibility question. NO XSD IS HELD and none is fetched — `referenced`, per the owner's "dont need to materalize, but should reference specific version being used". That means nothing validates a diagram STRUCTURALLY against OMG's schema; `check:workflows` and `kg:audit` check the things this repository cares about (lanes bind declared roles, activities name skills) and are not a substitute for it. The `MODEL#` form is the RDF spelling of the same namespace: OMG publishes no RDF vocabulary for BPMN, so a graph that states a sequence flow's `sourceRef`/`targetRef` or a node's `incoming`/`outgoing` (kg-export, and bootstrap-tools' `export-graph.ts`) names BPMN's own attribute by appending `#` to its XML namespace — the model's name for the relation, rather than a second one minted here (owner, 2026-09-30, bean `xsqm`).
 
 **What depends on it.**
 
@@ -188,6 +192,7 @@ a subset of the edition rather than a transcription of it.
 |---|---|
 | `bootstrap/processes/*.bpmn (3)` | `xmlns` binding |
 | `cat-harness/processes/*.bpmn (70)` | `xmlns` binding |
+| [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | [`cat-harness/src/workflow/process-model.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/src/workflow/process-model.ts) | `@conformsTo` tag |
 | `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
@@ -425,6 +430,7 @@ a subset of the edition rather than a transcription of it.
 
 | user | declared by |
 |---|---|
+| [`bootstrap-tools/scripts/export-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/scripts/export-graph.ts) | `@conformsTo` tag |
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/gen-bootstrap-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/gen-bootstrap-graph.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
@@ -508,7 +514,7 @@ a subset of the edition rather than a transcription of it.
 | [`cat-harness/scripts/glossary-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/glossary-export.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/ns-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/ns-export.ts) | `@conformsTo` tag |
 
-**Operative terms (20).** The terms this repository acts on —
+**Operative terms (17).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
 a subset of the edition rather than a transcription of it.
 
@@ -519,12 +525,10 @@ a subset of the edition rather than a transcription of it.
 | `skos:ConceptScheme` | The glossary document IS the scheme; there is no separate `…#scheme` IRI, because that would name a set that already has a name and would not dereference (`blv9`). |
 | `skos:OrderedCollection` | derived from the corpus; what this repository does with it is not yet described |
 | `skos:altLabel` | The other names one concept is drawn under. `build-pipeline` is labelled ten ways across the corpus; nine are altLabels, which is what makes "Reviewer / SME" findable as "Reviewer" rather than a rival entry. |
-| `skos:broadMatch` | Declared as one of the four mapping predicates `vocabulary-authority` names, and NOT YET emitted by anything: `check:term-mapping` resolves label equality, which cannot establish that one concept is broader than another. Recorded as available rather than used, so a reader does not infer from its presence that a hierarchy has been computed. |
 | `skos:broader` | A glossary term's `broader`: a local term id or an external IRI, emitted as a link (folio-glossary/v1). |
 | `skos:changeNote` | Retirement. A term whose defining role is gone is deprecated and dated in the ledger, never deleted — a derived document has no memory, so the ledger is what makes "reported and never deleted" implementable. |
-| `skos:closeMatch` | A candidate matched through a concept's `altLabel` rather than its `prefLabel` — the right idea under another name. It is the `concept`-but-not-`exact` case, and the asymmetry is the whole reason `check:term-mapping` records the two states as a pair rather than one boolean. |
 | `skos:definition` | What the term MEANS, taken from the role's authored `description` — one author, one place to fix. Absent by design on a lane whose performer varies, which is honest rather than indistinguishable from a lane nobody bound. |
-| `skos:exactMatch` | A candidate glossary term matched to a concept by its `prefLabel` — the `exact` half of `check:term-mapping`'s pair. Also what an authored term carries to an external vocabulary (`policy` to ODRL's), which is how a match against a local concept reports the external IRI behind it rather than only an in-repo id. |
+| `skos:hiddenLabel` | a role's former names (`formerNames` in roles.json), emitted by glossary-export: findable by a reader holding an old name, never offered as current |
 | `skos:inScheme` | Binds a concept to its instance's glossary document. Each concept's `inScheme` names that document's own published URL, so a preview that publishes the graph without the glossary serves a 404ing scheme IRI — which `check:invocation-parity` refuses. |
 | `skos:member` | The external concept IRIs of a glossary's `members` Collection. |
 | `skos:memberList` | derived from the corpus; what this repository does with it is not yet described |
@@ -532,7 +536,6 @@ a subset of the edition rather than a transcription of it.
 | `skos:note` | The status of a glossary term that is not `authored` (`candidate`, or `could-not-extract` with its reason), so a SKOS-only reader can tell it is not a curated definition (bean `lqo9`). |
 | `skos:prefLabel` | The one name a concept is published under. AUTHORITATIVE for a concept's name — where a node is both a resource and a concept, `dcterms:title` is the derived copy and this is the source. |
 | `skos:related` | A glossary term's `related`: a local term id or an external IRI. |
-| `skos:relatedMatch` | The fourth mapping predicate, and like `broadMatch` not yet emitted. Relatedness is a judgement no label comparison can reach, so it waits for an adjudication step (bean `2i5f`) rather than being approximated. |
 | `skos:scopeNote` | What a lane is accountable for IN ONE PROCESS. Carried on the LaneUsage node, never the concept: of 26 lane names appearing in more than one diagram, 26 of 26 document themselves differently per occurrence, so ten unattributed notes on one concept would read as ten contradictions. Stored verbatim, because the note is a `.pot` msgid. |
 
 ### Web Annotation Vocabulary {#w3c-web-annotation}
@@ -574,13 +577,13 @@ graph. That is a determined zero, not an unfilled field.
 
 ### WHO SMART Guidelines base IG {#who-smart-base}
 
-`who-smart-base` — other, edition [v1.0.0](https://smart.who.int/base/) — `reads`, meaning this repository parses documents written in it.
+`who-smart-base` — other, edition [unpinned](https://smart.who.int/base/) — `reads`, meaning this repository parses documents written in it.
 
 **Namespaces.**
 
 - `http://smart.who.int/base/StructureDefinition/`
 
-**Note.** Tracks the canonical smart-base's sushi-config.yaml declares (http://smart.who.int/base); its logical models publish under StructureDefinition/. `reads`: the platform references those models; it does not publish them. PINNED 2026-09-30 to v1.0.0 (sushi-config `version: 1.0.0`, `releaseLabel: release` — a published release, not a ci-build), on the owner's ruling that `check:term-mapping`'s fhir half asserts a published IG AT A VERSION. Its terminology is snapshotted beside this record in who-smart-base.terminology.json; move the pin and re-run scripts/pin-smart-base-terminology.ts to update both together.
+**Note.** Tracks the canonical smart-base's sushi-config.yaml declares (http://smart.who.int/base); its logical models publish under StructureDefinition/. `reads`: the platform references those models; it does not publish them.
 
 **What depends on it.**
 

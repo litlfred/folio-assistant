@@ -10,6 +10,5 @@ source_sha256: bfcd856e3ad7ab20
 ---
 After scoping the proposed guideline (see Chapter 2) and crafting the key 
 questions (see Chapter 7), the next step in guideline development is to identify 
-one or more systematic reviews to address each key question. Existing system­
-atic reviews will inform the guideline development process, whether or not 
+one or more systematic reviews to address each key question. Existing systematic reviews will inform the guideline development process, whether or not 
 a new systematic review or an update of an existing review will be required.

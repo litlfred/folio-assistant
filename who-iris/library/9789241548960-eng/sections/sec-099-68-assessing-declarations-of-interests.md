@@ -63,15 +63,13 @@ individuals under consideration
 should declare in writing all 
 interests and activities potentially 
 resulting in a COI.
-DOIs should reflect all current and planned com­
-mercial, non-commercial, intellectual, institutional, 
+DOIs should reflect all current and planned commercial, non-commercial, intellectual, institutional, 
 and private/public activities pertinent to the 
 potential scope of the guideline.
 Obtain and assess DOI
 Disclosures of relevant interests 
 should be assessed and managed 
-according to explicit and trans­
-parent criteria developed a priori.
+according to explicit and transparent criteria developed a priori.
 See Table 6.3.
 Avoid COI when at all possible
 Whenever possible, COIs, both 
@@ -80,8 +78,7 @@ be avoided in GDG members.
 Significant financial COIs should always be avoided.
 Minimize and appropriately 
 manage COIs
-Members with COIs should rep­
-resent not more than a minority 
+Members with COIs should represent not more than a minority 
 of the GDG.
 Minimize and appropriately 
 manage COIs in order to minimize 
@@ -90,8 +87,7 @@ making and to maximize the
 guideline’s credibility.
 It may be necessary to balance strong opinions if it 
 is not possible to eliminate intellectual COIs among 
-GDG members. When GDG members with intel­
-lectual COIs are deemed essential, members with 
+GDG members. When GDG members with intellectual COIs are deemed essential, members with 
 diverse perspectives and experiences should be 
 included in the GDG.
 The chair, co-chairs or vice-chair 
@@ -102,8 +98,7 @@ COIs and nonfinancial COIs should
 be avoided if possible.
 If nonfinancial COIs in the GDG chairs are inevitable, 
 then the co-chairs should have disparate interests. 
-Consider having as chair or co-chair a methodolo­
-gist with no intellectual or financial COI.
+Consider having as chair or co-chair a methodologist with no intellectual or financial COI.
 COI: conflict of interest; DOI: declarations of interest; GDG: guideline development group.
 a Adapted from Institute of Medicine, National Academies Press; (United States) 2011 standards (1).
 66
@@ -118,30 +113,24 @@ interest
 Monetary or other 
 value to the recipient
 The higher the monetary value, the greater the effect may be on the 
-recipient’s decisions. However, even small gifts can change the behav­
-iour of the recipient.
+recipient’s decisions. However, even small gifts can change the behaviour of the recipient.
 Effect may depend on whether the payment is direct to the individual 
 (e.g. an honorarium) or indirect (e.g. to an academic institution).
 Scope of the relationship
 Duration and depth 
 of the relationship 
-between the individ­
-ual and the secondary 
+between the individual and the secondary 
 interest
 Relationships that are longer and/or closer may increase the risk of bias 
 in decision-making. For example, a one-time relationship, such as a 
-presentation for industry, is less concerning that a long-term relation­
-ship, such as employment by a relevant company.
+presentation for industry, is less concerning that a long-term relationship, such as employment by a relevant company.
 Extent of discretion
-The amount of discre­
-tion or authority the 
+The amount of discretion or authority the 
 conflicted individual 
-has in making impor­
-tant decisions
+has in making important decisions
 The role of the conflicted individual in decision-making and the amount 
 of oversight of that individual and of the guideline process in general 
-affect the risk of bias. For example, the chair generally has more discre­
-tion, so her or his COIs may have a greater effect than those of other 
+affect the risk of bias. For example, the chair generally has more discretion, so her or his COIs may have a greater effect than those of other 
 GDG members.
 Seriousness of the possible harm from the conflict of interest
 Value of the primary 
@@ -150,8 +139,7 @@ The potential effect of
 the recommendations 
 on individuals and 
 populations
-Requires an assessment of the intended outcomes of the recommenda­
-tions in the guideline. Recommendations that affect health outcomes 
+Requires an assessment of the intended outcomes of the recommendations in the guideline. Recommendations that affect health outcomes 
 such as survival or quality of life, can cause significant harm to the 
 recipients of an intervention if the balance of benefits and harms has 
 not been assessed in an unbiased manner.
@@ -159,13 +147,11 @@ Scope of the
 consequences
 The potential for 
 harms caused by an 
-invalid (biased) rec­
-ommendation across 
+invalid (biased) recommendation across 
 populations
 The more individuals that are potentially effected by a recommendation 
 or guideline, the greater is the potential effect of any COI. For example, 
-recommendations that impact the health or well-being of large popula­
-tions can have tremendous health consequences.
+recommendations that impact the health or well-being of large populations can have tremendous health consequences.
 The consequences of a COI in the individuals developing a guideline also 
 include diminished trust in these individuals and in the organization 
 sponsoring the guideline (i.e. WHO).

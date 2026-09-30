@@ -245,7 +245,7 @@ export interface SkillPackage {
  * one key that keeps coming back. A key retired for a graph kind this command
  * does not touch has no business here.
  */
-const STRIPPABLE = ["roles", "package"] as const;
+const STRIPPABLE = ["roles", "package", "capability"] as const;
 
 /**
  * Skill packages, found in the directories the INSTANCE_ROOT DECLARES.
@@ -494,6 +494,11 @@ export const STEPS: readonly Step[] = [
     write: ["docs:auto"],
     verify: ["docs:auto:check"],
     because: "the generated docs index",
+  },
+  {
+    write: ["lsi:skills"],
+    verify: ["lsi:skills:check"],
+    because: "the skills graph's LSI index — a new or edited skill changes its fingerprint, and kg:audit's `lsi-index-fresh` reads it next",
   },
   {
     write: ["kg:audit"],

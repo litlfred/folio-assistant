@@ -7,6 +7,7 @@
   "specUrl": "https://www.omg.org/spec/BPMN/2.0/",
   "namespaces": [
     "http://www.omg.org/spec/BPMN/20100524/MODEL",
+    "http://www.omg.org/spec/BPMN/20100524/MODEL#",
     "http://www.omg.org/spec/BPMN/20100524/DI"
   ],
   "use": "conforms",
@@ -100,5 +101,5 @@
       "operative": "derived from the corpus; what this repository does with it is not yet described"
     }
   ],
-  "note": "The `20100524` in every namespace is BPMN 2.0's release date and is how the edition is identified in an instance document — the diagrams have carried it since the first one was drawn, and until 2026-09-20 nothing in this repository said which specification that was. `conforms` rather than `reads`: these are OUR instance documents, so a version bump is a migration of the corpus rather than a compatibility question. NO XSD IS HELD and none is fetched — `referenced`, per the owner's \"dont need to materalize, but should reference specific version being used\". That means nothing validates a diagram STRUCTURALLY against OMG's schema; `check:workflows` and `kg:audit` check the things this repository cares about (lanes bind declared roles, activities name skills) and are not a substitute for it."
+  "note": "The `20100524` in every namespace is BPMN 2.0's release date and is how the edition is identified in an instance document — the diagrams have carried it since the first one was drawn, and until 2026-09-20 nothing in this repository said which specification that was. `conforms` rather than `reads`: these are OUR instance documents, so a version bump is a migration of the corpus rather than a compatibility question. NO XSD IS HELD and none is fetched — `referenced`, per the owner's \"dont need to materalize, but should reference specific version being used\". That means nothing validates a diagram STRUCTURALLY against OMG's schema; `check:workflows` and `kg:audit` check the things this repository cares about (lanes bind declared roles, activities name skills) and are not a substitute for it. The `MODEL#` form is the RDF spelling of the same namespace: OMG publishes no RDF vocabulary for BPMN, so a graph that states a sequence flow's `sourceRef`/`targetRef` or a node's `incoming`/`outgoing` (kg-export, and bootstrap-tools' `export-graph.ts`) names BPMN's own attribute by appending `#` to its XML namespace — the model's name for the relation, rather than a second one minted here (owner, 2026-09-30, bean `xsqm`)."
 }

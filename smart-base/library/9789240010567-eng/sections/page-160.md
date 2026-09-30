@@ -67,9 +67,7 @@ people with disabilities, such as sight or hearing impairment.
 Ensure that any sensitive content or personal data transmitted and stored are held on a secure server 
 with protocols in place for destroying the data when appropriate.
 OPPORTUNITIES 
-FOR INTEROPERA­
-BILITY AND LINK­
-AGES TO OTHER 
+FOR INTEROPERABILITY AND LINKAGES TO OTHER 
 DIGITAL HEALTH 
 INTERVENTIONS
 Link with the digital health record as a mechanism to tailor messages and content delivered to clients.

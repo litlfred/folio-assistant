@@ -57,9 +57,7 @@ barrier in the consultation.
 	» Improve awareness among staff and supervisors about the value of portable devices, and develop 
 ground rules or codes of conduct for when and how devices should be used.
 OPPORTUNITIES 
-FOR INTEROPERA­
-BILITY AND LINK­
-AGES TO OTHER 
+FOR INTEROPERABILITY AND LINKAGES TO OTHER 
 DIGITAL HEALTH 
 INTERVENTIONS
 Consider integrating decision-support tools with patient health records, such as digital health records 

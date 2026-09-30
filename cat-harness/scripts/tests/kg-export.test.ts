@@ -312,7 +312,11 @@ describe("kg export", () => {
     // `holdsGraph` is a LIST: `graph` became `graphs[]` upstream because a
     // directory may hold more than one graph — `schemas/` holds both its own
     // and `kg`. Every entry must still land on a GraphKind node.
-    for (const dir of typed("Directory")) {
+    // `Subgraph` — bootstrap's word — since 2026-09-30; it was `Directory`,
+    // and a loop over a type nothing carries any more passes over nothing.
+    const dirs = typed("Subgraph");
+    expect(dirs.length).toBeGreaterThan(0);
+    for (const dir of dirs) {
       const held = dir.holdsGraph as string[];
       expect(Array.isArray(held)).toBe(true);
       expect(held.length).toBeGreaterThan(0);
@@ -647,11 +651,9 @@ describe("every self-URL the export publishes resolves to something published", 
       // lives in the document `<base>/ns`. The `.jsonld` and `.json` are the
       // canonical-extension and correct-Content-Type aliases, exactly as for
       // the graph itself.
-      // `ns/` is a directory: the union vocabulary and the content context
-      // live inside it. There is deliberately no file at `ns` — see
-      // `vocabularyIri()`.
-      "ns/vocabulary.jsonld",
-      "ns/vocabulary.json",
+      // `ns/` is a directory holding the content context. There is
+      // deliberately no file at `ns`, and no all-layers union inside it any
+      // more (retired 2026-09-30) — each layer's vocabulary is `<stub>/ns`.
       "ns/content/v1.jsonld",
       // The generated stylesheets, reached because `themes-css` and
       // `avatars-css` DECLARE them through `maintains` and the export publishes

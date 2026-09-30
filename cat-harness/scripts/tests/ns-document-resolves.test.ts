@@ -49,10 +49,19 @@ function pairsIn(workflow: string): Array<{ layer: Layer; dir: string }> {
   const yaml = readFileSync(join(REPO, workflow), "utf-8");
   const line = yaml.split("\n").find((l) => l.includes("for pair in"));
   if (!line) throw new Error(`${workflow}: no \`for pair in …\` loop — has the publishing step been renamed?`);
-  return [...line.matchAll(/"([a-z-]+):([a-z0-9-]+)"/g)].map((m) => ({
+  const looped = [...line.matchAll(/"([a-z-]+):([a-z0-9-]+)"/g)].map((m) => ({
     layer: m[1] as Layer,
     dir: m[2]!,
   }));
+  // bootstrap's document is bootstrap's OWN, written by bootstrap-tools and
+  // committed (owner, 2026-09-30, bean `xsqm`), so the workflow COPIES it
+  // rather than building it in the loop. Read that line too: where it lands
+  // is the same question the loop answers for the other layers.
+  const copied = [...yaml.matchAll(/cp \.\/bootstrap\/ns\.jsonld "\.\/_site\/([a-z0-9-]+)\//g)].map((m) => ({
+    layer: "bootstrap" as Layer,
+    dir: m[1]!,
+  }));
+  return [...copied.slice(0, 1), ...looped];
 }
 
 /** The path segment a layer's namespace IRI names, e.g. `folio-assistant-core`. */

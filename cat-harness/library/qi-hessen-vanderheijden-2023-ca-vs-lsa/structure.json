@@ -1,0 +1,449 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
+ "source": {
+  "file": "qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf",
+  "sha256": "c1816a290472bb83073637f2e1e75d5ac72bfa78a95c151c293f420839a3207b",
+  "bytes": 717437,
+  "pages": 22,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-29T19:04:24Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": null,
+  "doi": "10.1007/s10844-023-00815-y",
+  "title": "RESEARCH Improving information retrieval through correspondence analysis instead of latent semantic analysis Qianqian Qi1 \u00b7 David J. Hessen1 \u00b7 Peter G.M. van der Heijden1,2 \u00a9 The Author(s) 2023",
+  "authors_raw": null,
+  "title_lines": [
+   "RESEARCH",
+   "Improving information retrieval through correspondence",
+   "analysis instead of latent semantic analysis",
+   "Qianqian Qi1 \u00b7 David J. Hessen1 \u00b7 Peter G.M. van der Heijden1,2",
+   "\u00a9 The Author(s) 2023"
+  ],
+  "abstract": "The initial dimensions extracted by latent semantic analysis (LSA) of a document-term matrix have been shown to mainly display marginal effects, which are irrelevant for information retrieval. To improve the performance of LSA, usually the elements of the raw document- term matrix are weighted and the weighting exponent of singular values can be adjusted. An alternative information retrieval technique that ignores the marginal effects is correspon- dence analysis (CA). In this paper, the information retrieval performance of LSA and CA is empirically compared. Moreover, it is explored whether the two weightings also improve the performance of CA. The results for four empirical datasets show that CA always performs better than LSA. Weighting the elements of the raw data matrix can improve CA; however, it is data dependent and the improvement is small. Adjusting the singular value weighting exponent often improves the performance of CA; however, the extent of the improvement depends on the dataset and the number of dimensions.",
+  "docinfo": {
+   "Producer": "Acrobat Distiller 22.0 (Windows)",
+   "Creator": "LaTeX with hyperref package",
+   "CreationDate": "D:20230909090509Z"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Improving information retrieval through correspondence analysis instead of latent semantic analysis",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": "1"
+  },
+  {
+   "level": 2,
+   "title": "LSA and CA",
+   "page": 3,
+   "source": "outline",
+   "number": "2"
+  },
+  {
+   "level": 3,
+   "title": "LSA",
+   "page": 3,
+   "source": "outline",
+   "number": "2.1"
+  },
+  {
+   "level": 3,
+   "title": "CA",
+   "page": 5,
+   "source": "outline",
+   "number": "2.2"
+  },
+  {
+   "level": 2,
+   "title": "Methodology",
+   "page": 6,
+   "source": "outline",
+   "number": "3"
+  },
+  {
+   "level": 3,
+   "title": "CA of a document-term matrix of weighted frequencies",
+   "page": 6,
+   "source": "outline",
+   "number": "3.1"
+  },
+  {
+   "level": 3,
+   "title": "Changing the contributions of the initial dimensions in SVD",
+   "page": 6,
+   "source": "outline",
+   "number": "3.2"
+  },
+  {
+   "level": 3,
+   "title": "Design",
+   "page": 8,
+   "source": "outline",
+   "number": "3.3"
+  },
+  {
+   "level": 3,
+   "title": "Datasets",
+   "page": 9,
+   "source": "outline",
+   "number": "3.4"
+  },
+  {
+   "level": 3,
+   "title": "Evaluation",
+   "page": 10,
+   "source": "outline",
+   "number": "3.5"
+  },
+  {
+   "level": 2,
+   "title": "Results for Euclidean distance",
+   "page": 11,
+   "source": "outline",
+   "number": "4"
+  },
+  {
+   "level": 3,
+   "title": "Comparing LSA and CA for information retrieval",
+   "page": 11,
+   "source": "outline",
+   "number": "4.1"
+  },
+  {
+   "level": 4,
+   "title": "MAP as a function of the number of dimensions for the four versions of LSA  with the standard weighting exponent \u03b1= 1 and for CA",
+   "page": 11,
+   "source": "outline",
+   "number": "4.1.1"
+  },
+  {
+   "level": 4,
+   "title": "MAP as a function of the weighting exponent \u03b1 for LSA compared with MAP  for CA under varying numbers of dimensions",
+   "page": 12,
+   "source": "outline",
+   "number": "4.1.2"
+  },
+  {
+   "level": 3,
+   "title": "Adjusting CA using weighting",
+   "page": 13,
+   "source": "outline",
+   "number": "4.2"
+  },
+  {
+   "level": 4,
+   "title": "Weighting the elements of the raw document-term matrix for CA",
+   "page": 13,
+   "source": "outline",
+   "number": "4.2.1"
+  },
+  {
+   "level": 4,
+   "title": "MAP as a function of the weighting exponent \u03b1 for CA",
+   "page": 16,
+   "source": "outline",
+   "number": "4.2.2"
+  },
+  {
+   "level": 2,
+   "title": "Results for dot similarity and cosine similarity",
+   "page": 17,
+   "source": "outline",
+   "number": "5"
+  },
+  {
+   "level": 2,
+   "title": "Conclusions and discussions",
+   "page": 18,
+   "source": "outline",
+   "number": "6"
+  },
+  {
+   "level": 2,
+   "title": "Acknowledgements",
+   "page": 19,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "References",
+   "page": 20,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 94,
+   "n_words": 7
+  },
+  {
+   "id": "sec-000-improving-information-retrieval-through-correspo",
+   "number": null,
+   "title": "Improving information retrieval through correspondence analysis instead of latent semantic analysis",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 204,
+   "n_words": 36
+  },
+  {
+   "id": "sec-001-abstract",
+   "number": null,
+   "title": "Abstract",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1158,
+   "n_words": 174
+  },
+  {
+   "id": "sec-002-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 660,
+   "n_words": 91
+  },
+  {
+   "id": "sec-003-21-lsa",
+   "number": "2.1",
+   "title": "LSA",
+   "level": 3,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 4470,
+   "n_words": 680
+  },
+  {
+   "id": "sec-004-2-lsa-and-ca",
+   "number": "2",
+   "title": "LSA and CA",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 3588,
+   "n_words": 635
+  },
+  {
+   "id": "sec-005-22-ca",
+   "number": "2.2",
+   "title": "CA",
+   "level": 3,
+   "page_start": 4,
+   "page_end": 6,
+   "n_chars": 5721,
+   "n_words": 1121
+  },
+  {
+   "id": "sec-006-3-methodology",
+   "number": "3",
+   "title": "Methodology",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 248,
+   "n_words": 39
+  },
+  {
+   "id": "sec-007-31-ca-of-a-document-term-matrix-of-weighted-freq",
+   "number": "3.1",
+   "title": "CA of a document-term matrix of weighted frequencies",
+   "level": 3,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 1057,
+   "n_words": 190
+  },
+  {
+   "id": "sec-008-32-changing-the-contributions-of-the-initial-dim",
+   "number": "3.2",
+   "title": "Changing the contributions of the initial dimensions in SVD",
+   "level": 3,
+   "page_start": 6,
+   "page_end": 8,
+   "n_chars": 3853,
+   "n_words": 695
+  },
+  {
+   "id": "sec-009-33-design",
+   "number": "3.3",
+   "title": "Design",
+   "level": 3,
+   "page_start": 8,
+   "page_end": 9,
+   "n_chars": 1614,
+   "n_words": 324
+  },
+  {
+   "id": "sec-010-34-datasets",
+   "number": "3.4",
+   "title": "Datasets",
+   "level": 3,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 3179,
+   "n_words": 488
+  },
+  {
+   "id": "sec-011-35-evaluation",
+   "number": "3.5",
+   "title": "Evaluation",
+   "level": 3,
+   "page_start": 10,
+   "page_end": 11,
+   "n_chars": 2797,
+   "n_words": 487
+  },
+  {
+   "id": "sec-012-4-results-for-euclidean-distance",
+   "number": "4",
+   "title": "Results for Euclidean distance",
+   "level": 2,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-013-41-comparing-lsa-and-ca-for-information-retrieva",
+   "number": "4.1",
+   "title": "Comparing LSA and CA for information retrieval",
+   "level": 3,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-014-411-map-as-a-function-of-the-number-of-dimension",
+   "number": "4.1.1",
+   "title": "MAP as a function of the number of dimensions for the four versions of LSA  with the standard weighting exponent \u03b1= 1 and for CA",
+   "level": 4,
+   "page_start": 11,
+   "page_end": 12,
+   "n_chars": 3453,
+   "n_words": 633
+  },
+  {
+   "id": "sec-015-412-map-as-a-function-of-the-weighting-exponent",
+   "number": "4.1.2",
+   "title": "MAP as a function of the weighting exponent \u03b1 for LSA compared with MAP  for CA under varying numbers of dimensions",
+   "level": 4,
+   "page_start": 12,
+   "page_end": 13,
+   "n_chars": 2697,
+   "n_words": 487
+  },
+  {
+   "id": "sec-016-42-adjusting-ca-using-weighting",
+   "number": "4.2",
+   "title": "Adjusting CA using weighting",
+   "level": 3,
+   "page_start": 13,
+   "page_end": 13,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-017-421-weighting-the-elements-of-the-raw-document-t",
+   "number": "4.2.1",
+   "title": "Weighting the elements of the raw document-term matrix for CA",
+   "level": 4,
+   "page_start": 13,
+   "page_end": 16,
+   "n_chars": 3806,
+   "n_words": 817
+  },
+  {
+   "id": "sec-018-422-map-as-a-function-of-the-weighting-exponent",
+   "number": "4.2.2",
+   "title": "MAP as a function of the weighting exponent \u03b1 for CA",
+   "level": 4,
+   "page_start": 16,
+   "page_end": 17,
+   "n_chars": 2471,
+   "n_words": 504
+  },
+  {
+   "id": "sec-019-5-results-for-dot-similarity-and-cosine-similari",
+   "number": "5",
+   "title": "Results for dot similarity and cosine similarity",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 18,
+   "n_chars": 1444,
+   "n_words": 244
+  },
+  {
+   "id": "sec-020-6-conclusions-and-discussions",
+   "number": "6",
+   "title": "Conclusions and discussions",
+   "level": 2,
+   "page_start": 18,
+   "page_end": 19,
+   "n_chars": 5972,
+   "n_words": 950
+  },
+  {
+   "id": "sec-021-acknowledgements",
+   "number": null,
+   "title": "Acknowledgements",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 20,
+   "n_chars": 2110,
+   "n_words": 298
+  },
+  {
+   "id": "sec-022-references",
+   "number": null,
+   "title": "References",
+   "level": 2,
+   "page_start": 20,
+   "page_end": 22,
+   "n_chars": 9974,
+   "n_words": 1228
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 23,
+  "toc_inferred_entries": 0,
+  "sections": 24,
+  "chars_total": 60570
+ }
+}

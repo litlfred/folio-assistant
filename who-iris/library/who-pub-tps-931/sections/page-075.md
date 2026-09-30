@@ -10,7 +10,7 @@ source_sha256: ecc88eee99756755
 text_source: ocr
 granularity: page
 ---
-WHO Editorial Style Manval
+WHO Editorial Style Manual
 
 should not be included in listings bearing the title “country”. Nor-
 mally, the heading “country or area” can be used in table headings, etc.

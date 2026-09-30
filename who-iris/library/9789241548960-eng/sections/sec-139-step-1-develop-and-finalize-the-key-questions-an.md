@@ -37,11 +37,7 @@ Chapter 8 
 Evidence retrieval and synthesis
 99
 by both groups, and adopted by consensus agreement between them. The 
-responsible technical officer may also ask the GDG to provide input. Inclu­
-sion/exclusion criteria can be conceptualized using the PICO format, with 
-additional inclusion of: (1) the time frame for outcome measures or the dura­
-tion of the intervention; (2) further specification of setting and subpopu­
-lations; (3) study design (i.e. randomized controlled trials only, or various 
-types of nonrandomized experimental or observational studies); (4) publica­
-tion language; (5) a date range for publications; and additional specifications 
+responsible technical officer may also ask the GDG to provide input. Inclusion/exclusion criteria can be conceptualized using the PICO format, with 
+additional inclusion of: (1) the time frame for outcome measures or the duration of the intervention; (2) further specification of setting and subpopulations; (3) study design (i.e. randomized controlled trials only, or various 
+types of nonrandomized experimental or observational studies); (4) publication language; (5) a date range for publications; and additional specifications 
 that are relevant to a given topic.

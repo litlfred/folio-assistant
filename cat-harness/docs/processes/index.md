@@ -58,7 +58,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [CRDM Phase 5 — beans and sign-off](crdm-signoff.html) | 6 | — |
 | [Criterion adjudication](criterion-adjudication.html) | 4 | — |
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 8 | — |
-| [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 11 | — |
+| [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 12 | — |
 | [Draft, review and publish](draft-to-publication.html) | 11 | — |
 | [Editing and HCI validation](editing-hci-validation.html) | 17 | — |
 | [Evidence for a recommendation](evidence-retrieval.html) | 10 | — |
@@ -356,9 +356,9 @@ Every one of the **75** diagrams has a rendered SVG.
 
 ### Activities carrying no `<bootstrap.processes:skill ref>` — a census, not a gap list
 
-**43** across **25** diagram(s). This section reported them as defects in its first version, and that was wrong: beans `luke` and `uuhu` worked this corpus from 90 down to this remainder and settled what is left. `luke`: *"coverage is deliberately NOT gated — a human sign-off step has no skill"*. `uuhu` added the call-activity exemption and recorded that its own remainder *"are not gaps"*.
+**42** across **24** diagram(s). This section reported them as defects in its first version, and that was wrong: beans `luke` and `uuhu` worked this corpus from 90 down to this remainder and settled what is left. `luke`: *"coverage is deliberately NOT gated — a human sign-off step has no skill"*. `uuhu` added the call-activity exemption and recorded that its own remainder *"are not gaps"*.
 
-**16** are call activities, which delegate to a subprocess — the skill is named there, and naming it twice would be one fact in two places. The other **27** are listed by lane, because the lane is what says whether a person, a pipeline or an agent performs the step, and only the last of those has a skill to run.
+**15** are call activities, which delegate to a subprocess — the skill is named there, and naming it twice would be one fact in two places. The other **27** are listed by lane, because the lane is what says whether a person, a pipeline or an agent performs the step, and only the last of those has a skill to run.
 
 | lane | steps |
 |---|---|

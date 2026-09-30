@@ -5,14 +5,13 @@ description: >-
   extraction and injection, TranslationNode manifests as KG nodes,
   official vs unofficial translations, staleness tracking, sign-off workflow,
   automatic badge rendering, and the poSources fallback resolution chain.
-capability: translation
 graph-kinds:
   - translation-sources
 ---
 
 # Translation manager
 
-> Skill id: `translation-manager` · Capability: `translation` · Package:
+> Skill id: `translation-manager` · Package:
 > `folio-core`
 
 Manage the translation lifecycle for folio content. This skill covers the full
@@ -606,6 +605,16 @@ The `translations/` directory contains **only** three file types:
 **Do not** put `.md`, `.qa.json`, or `status.json` files in `translations/`.
 Rendered output lives in `docs/<locale>/`; QA and status are properties of
 the TranslationNode manifest.
+
+**An instance with no `translations` directory of its own is hosted.**
+`translationsHomeFor` (`schemas/cat-harness.ts`) puts its templates in the
+extracting harness's `translations/<locale>/<stub>/` —
+`cat-harness/translations/<locale>/bootstrap/processes/*.pot` for bootstrap's
+three diagrams — rather than inside the instance, which holds no translation
+machinery. The templates are extracted from the bootstrap the harness has
+pinned; when bootstrap is its own repository they stay here, since a
+template is the harness's work over bootstrap's text, not part of it
+([`kg-separation`](../graph-management/kg-separation.md) §"The pair").
 
 ## WHO smart-base integration
 

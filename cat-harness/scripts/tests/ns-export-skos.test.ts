@@ -183,9 +183,23 @@ describe("the folio vocabulary emits SKOS", () => {
       .map((c) => String(c["@id"]));
     expect(broken).toEqual([]);
 
+    // A term is a class or a property — or, since bootstrap's vocabulary names
+    // its Graph Kinds (2026-09-30), a named INDIVIDUAL typed by its class,
+    // `bootstrap:GraphKind`: `skills` is a Graph Kind, not a class of things.
     const rdfsTyped = concepts.filter((c) =>
-      typesOf(c).some((t) => t === "rdfs:Class" || t === "rdf:Property"),
+      typesOf(c).some((t) => t === "rdfs:Class" || t === "rdf:Property" || t === "bootstrap:GraphKind"),
     );
     expect(rdfsTyped).toHaveLength(concepts.length);
+  });
+});
+
+describe("bootstrap's terms have ONE source (owner, 2026-09-30: how can it not drift?)", () => {
+  test("every bootstrap node the harness build holds IS bootstrap's own file's node", async () => {
+    const { bootstrapVocabulary } = await import("../ns-export.ts");
+    const file = bootstrapVocabulary()["@graph"];
+    const built = (buildVocabulary().doc as { "@graph": Record<string, unknown>[] })["@graph"].filter((n) =>
+      String(n["@id"]).startsWith("bootstrap:"),
+    );
+    expect(built.map(({ layer: _layer, ...n }) => n)).toEqual(file);
   });
 });

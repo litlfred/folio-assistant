@@ -78,16 +78,24 @@ import { existsSync, readdirSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 
 /**
- * How much `git ls-files` output a corpus listing may produce.
+ * Room for a whole-checkout `ls-files -z`; node's 1 MiB default is not.
  *
- * Node's default is 1 MiB, and on ENOBUFS `spawnSync` sets `error` rather
- * than writing a truncated list — so the symptom is total, not partial. That
- * is the one mercy here: a caller sees "git could not answer" instead of a
- * quietly short corpus. It is still wrong, because several callers FALL BACK
- * to a filesystem walk, and a walk is a different corpus with different
- * exclusions.
+ * Measured 2026-09-30, the day it started mattering:
+ *
+ * | | bytes of PATH NAMES |
+ * |---|---:|
+ * | `origin/main` at `874d4c9bfb8` | 1,005,252 |
+ * | the next branch to merge, +740 ingested library files | 1,058,420 |
+ * | node's default | 1,048,576 |
+ *
+ * So `main` was 43 KB from the cliff and one ordinary ingest went over it.
+ * The size of a repository's file list is not something a caller can reason
+ * about, which is why this is a constant rather than a judgement per call
+ * site. `trackedPaths` in `scripts/check-portable-paths.ts` had already been
+ * given the same 64 MiB in isolation — that is the evidence this is a class,
+ * and the reason the fix is a shared constant rather than a third literal.
  */
-const MAX_CORPUS_BYTES = 64 * 1024 * 1024;
+export const GIT_LIST_MAX_BUFFER = 64 * 1024 * 1024;
 
 /**
  * The files git accounts for under {@link dir}, as absolute paths — or
@@ -101,14 +109,14 @@ export function gitCorpus(dir: string, pathspec: readonly string[] = []): string
   const r = spawnSync(
     "git",
     ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...pathspec],
-    // `maxBuffer` is not defensive padding — without it this returns `undefined`
-    // on a corpus whose PATH NAMES exceed node's 1 MiB default, and the size of
-    // a repository's file list is not something a caller can reason about.
-    // Measured 2026-09-30: this repository listed 1,058,420 bytes and every
-    // caller lost git, 43 KB after `main` was still under. `trackedPaths` in
-    // `scripts/check-portable-paths.ts` had already been given the same 64 MiB
-    // in isolation, which is the evidence this is a class rather than a one-off.
-    { cwd: dir, encoding: "utf-8", maxBuffer: MAX_CORPUS_BYTES },
+    // On ENOBUFS `spawnSync` sets `error` rather than truncating, so the
+    // symptom is total: every caller reads "git could not answer", a false
+    // could-not-determine. The ones that then FALL BACK to a filesystem walk
+    // are the danger — a walk is a different corpus with different
+    // exclusions (#1609 measured that direction turning 21 archived beans
+    // into findings), so crossing this buffer rescopes a check rather than
+    // stopping it, and nothing reports that.
+    { cwd: dir, encoding: "utf-8", maxBuffer: GIT_LIST_MAX_BUFFER },
   );
   if (r.error !== undefined || r.status !== 0) return undefined;
   return r.stdout
