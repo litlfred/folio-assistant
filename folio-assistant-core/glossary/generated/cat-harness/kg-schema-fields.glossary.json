@@ -2044,6 +2044,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.knownsubstrates",
+      "prefLabel": "CatHarnessDeclaration.knownSubstrates",
+      "definition": "Substrates known to exist or planned that NO declaration here names — {@link KnownSubstrate}. Issue #1719.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.knownSubstrates",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.liquid",
       "prefLabel": "CatHarnessDeclaration.liquid",
       "definition": "The Liquid prefix this instance's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through.",
@@ -2167,6 +2174,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.iriBase",
       "definition": "The address this instance's IRIs are minted under, BEFORE the version — bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.knownsubstrates",
+      "prefLabel": "CatHarnessDeclarationSchema.knownSubstrates",
+      "definition": "See {@link KnownSubstrate}. Names are unique.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.knownSubstrates",
       "status": "candidate"
     },
     {
@@ -2384,6 +2398,48 @@
       "prefLabel": "InstanceLocation.repository",
       "definition": "The repository that holds the instance today, `owner/name`.",
       "source": "cat-harness/schemas/cat-harness.ts#InstanceLocation.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.name",
+      "prefLabel": "KnownSubstrate.name",
+      "definition": "The substrate's instance name, as its declaration gives it or will.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.name",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.note",
+      "prefLabel": "KnownSubstrate.note",
+      "definition": "One sentence a reader of the visualizer sees.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.note",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.repository",
+      "prefLabel": "KnownSubstrate.repository",
+      "definition": "`owner/repo`, when one exists or is planned.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.status",
+      "prefLabel": "KnownSubstrate.status",
+      "definition": "Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release).",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.status",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.title",
+      "prefLabel": "KnownSubstrate.title",
+      "definition": "Human title.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.title",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.knownsubstrate.toolsrepository",
+      "prefLabel": "KnownSubstrate.toolsRepository",
+      "definition": "Its paired tools repository, when the `kg-separation` pattern gives it one.",
+      "source": "cat-harness/schemas/cat-harness.ts#KnownSubstrate.toolsRepository",
       "status": "candidate"
     },
     {
