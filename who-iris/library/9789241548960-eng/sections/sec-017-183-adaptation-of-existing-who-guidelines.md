@@ -10,10 +10,8 @@ source_sha256: bfcd856e3ad7ab20
 ---
 WHO guidelines originally intended for one setting may be adapted for use 
 in another. For example, guidelines on routine obstetric care can be adapted 
-for emergency settings. Adaptations of WHO guidelines must follow stand­
-ard GRC procedures, including GRC review of the planning proposal and the 
-final guideline. Guidelines may also be adapted in emergency or urgent situ­
-ations, when existing guidelines need to be quickly identified and assessed. 
+for emergency settings. Adaptations of WHO guidelines must follow standard GRC procedures, including GRC review of the planning proposal and the 
+final guideline. Guidelines may also be adapted in emergency or urgent situations, when existing guidelines need to be quickly identified and assessed. 
 The GRC Secretariat is developing further guidance on when and how to 
 adapt existing guidelines in such situations.
 Chapter 1 

@@ -601,6 +601,7 @@ export const GRAPH_KIND_TYPE_LAYERS: Readonly<Record<string, TermLayer>> = {
   ModelGraph: "bootstrap",
   SwimlaneGlossaryGraph: "bootstrap",
   VoiceGraph: "core",
+  VoiceVendorsGraph: "core",
   LibraryGraph: "core",
   UploadsGraph: "core",
   TodoGraph: "core",

@@ -6,7 +6,6 @@ description: >-
   signals first — staleness and resolvable claims — and settles what is left
   in one of three ways, sending a disagreement with a checker to adjudication.
   General: the Lean case is a specialisation with its own skill.
-capability: review
 ---
 
 # Does the prose say what the code does?

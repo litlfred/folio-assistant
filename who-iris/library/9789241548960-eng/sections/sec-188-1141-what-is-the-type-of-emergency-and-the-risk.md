@@ -10,20 +10,15 @@ source_sha256: bfcd856e3ad7ab20
 ---
 health?
 The first step is to examine the public health event that is driving the request 
-for a rapid advice guideline. Emergencies may be classified as natural, techno­
-logical, or conflict-related and may be of sudden onset (e.g. earthquakes, tsu­
-namis, chemical crises) or more gradual onset (e.g. deteriorating situations in 
+for a rapid advice guideline. Emergencies may be classified as natural, technological, or conflict-related and may be of sudden onset (e.g. earthquakes, tsunamis, chemical crises) or more gradual onset (e.g. deteriorating situations in 
 armed conflict, progressive disease outbreaks, drought or food insecurities). 
 All types of emergencies can evolve into prolonged or protracted situations.
 WHO and Member States use the manual entitled Rapid risk assessment 
 of acute public health events to assess “any outbreak or other rapidly evolving 
 situation that may have negative consequences for human health and requires 
 immediate assessment and action” (5). Risk is characterized by level and is 
-based on broad descriptive definitions of likelihood and consequences, repre­
-sented in the form of risk matrices. The WHO Emergency Response Frame­
-work describes WHO’s roles and responsibilities between the initial alert of 
+based on broad descriptive definitions of likelihood and consequences, represented in the form of risk matrices. The WHO Emergency Response Framework describes WHO’s roles and responsibilities between the initial alert of 
 an event and its subsequent classification based upon verification and risk 
-assessment (6). WHO categorizes emergencies from Grade 1 (those with min­
-imal expected public health consequences) to Grade 3 (those involving events 
+assessment (6). WHO categorizes emergencies from Grade 1 (those with minimal expected public health consequences) to Grade 3 (those involving events 
 in one or more countries and having significant public health consequences 
 that call for a substantial regional response and/or international response).

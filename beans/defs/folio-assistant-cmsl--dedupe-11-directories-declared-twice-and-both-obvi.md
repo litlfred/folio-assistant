@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-09-21T19:21:24Z
+updated_at: 2026-09-30T13:54:32Z
 parent: folio-assistant-zzmr
 ---
 
@@ -83,3 +83,22 @@ option 1, from the other end.
 todo. The measurement is done and reproducible
 (`instanceRootsIn` + `readDeclaration`, resolving `scope: repository` against
 the repo root). The design is not taken.
+
+## 2026-09-30 — owner chose "dependencies block"; measured: it would create cycles
+needs graph today: cat-harness→bootstrap; folio-assistant-core→cat-harness; fhir-harness→folio-assistant-core; smart-base→fhir-harness; who-iris, large-datasets, agent-skills, folio-assistant-sci need nothing.
+Of cat-harness's 23 scope:repository mirrors, 7 reach into folio-assistant-core (skills, schemas, processes, methodologies, library), fhir-harness (skills) or smart-base (library, methodologies, processes) — every one a DEPENDENT of cat-harness. Declaring them as cat-harness dependencies closes a cycle (core needs cat-harness needs core).
+The relation is the reverse of a dependency: the platform READS its dependents' graphs (to audit, render and index them). It needs its own spelling — a `reaches` / `reads` list naming <instance>#<directory id>, resolved through the owner's declaration — which is the bean's original "explicit relation field", not a dependencies block. Not built; back to the owner.
+
+
+## 2026-09-30 — the analysis the owner asked for
+Owner: 'analyze and characterize the 23 externals. why? options for relocation/changing arrow directions? schema issues/location issues?' — written up as cat-harness/docs/proposals/cmsl-external-directories-2026-09-30.md. In short: 24 entries in THREE groups — 7 checkout-level state graphs at the repo root that nothing else declares (a location issue, not duplication); 16 content graphs of instances that all depend on cat-harness (an arrow issue: the platform names its dependents; 5 ids and 4 dependents values already drifted); 1 directory only cat-harness declares (folio-assistant-sci/skills/lean/ — an ownership defect in folio-assistant-sci). Recommendation A: the CHECKOUT (root instance) aggregates — it needs every instance and declares the root state; corpus-wide tools resolve kinds over its dependency overlay; cat-harness declares only its own subtree. Awaiting the owner's pick.
+
+
+
+## Owner, 2026-09-30 (round 3): option A — the checkout aggregates
+In the three steps of the proposal: (1) folio-assistant-sci declares its own `skills/lean/`; (2) the root instance declares the checkout-level state (ids unchanged); (3) an overlay helper, the call-site switch, the mirrors removed, and a check against re-mirroring. The falsifier (a split checkout sees less) is to be confirmed before step 3.
+
+
+
+## 2026-09-30 — step 1 reverted: it is a NESTING question, not only an ownership one
+Declaring `skills/lean/` in folio-assistant-sci.json put a declared directory inside that instance's inherited `skills/`. `check:layout-norms` rejected it: "folio-assistant-sci: skills contains skills/lean". Its baseline only ever shrinks, so adding the pair to it is not a fix. The mirror in cat-harness.json does not trip the check, because there it is not inside that instance's own `skills/`. Under the owner's 2026-09-22 ruling, the correct shape is a declaration INSIDE sci's `skills/` naming `lean/`. That needs a `declarationFile` on the `skills` (kg) kind, the mechanism `voices` gained in this change (bean rkqp), whose reader now recurses. So step 1 becomes: give `skills` a from-within declaration file, then declare `lean/` there. The mirror stays until then.

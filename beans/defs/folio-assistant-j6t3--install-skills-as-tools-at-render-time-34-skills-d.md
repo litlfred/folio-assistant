@@ -295,3 +295,5 @@ The owner chose **"F + A (Rec.)"** on 2026-09-30.
 - **F** (MCP prompts) and **A** (generated `.claude/commands/` pointers, with a two-way check) landed in PR #1546, merged as `54e38c5`. `prepare-merge` now declares itself.
 - The root `.mcp.json` now registers the `folio-assistant` server (`bun run cat-harness/src/index.ts --stdio --repo .`), so this repository's own sessions get the prompts. Started with that exact command, it lists **42** prompts, and `getPrompt("coordinate")` returns the skill's body. `check:command-paths` judges the new `args` path, which resolves.
 - Every Done-when box is ticked. The owner's "reminder now, gate later" ruling was honoured: nothing here gates how an agent asks.
+
+_2026-09-30_ — The 2026-09-29 re-parent to `d308` above (LSI epic filing, bean ansc) is **superseded**: the session that claimed this bean on 2026-09-30 filed it under `vuip`, a later and deliberate choice by its holder.

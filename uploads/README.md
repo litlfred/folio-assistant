@@ -23,7 +23,7 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | Derive content from the assets [document-intake] | `document-intake` | [`ingest-derive-content.bpmn`](../cat-harness/processes/ingest-derive-content.bpmn) |
 | Ingest the theme [theme-art-intake] | `theme-art-intake` | [`ingest-theme.bpmn`](../cat-harness/processes/ingest-theme.bpmn) |
 | Build the L1 knowledge graph [document-intake] | `document-intake` | [`ingest-build-l1-kg.bpmn`](../cat-harness/processes/ingest-build-l1-kg.bpmn) |
-| L1 completeness gate |  | [`ingest-l1-completeness-gate.bpmn`](../cat-harness/processes/ingest-l1-completeness-gate.bpmn) |
+| L1 completeness gate | `library-ingestion` | [`ingest-l1-completeness-gate.bpmn`](../cat-harness/processes/ingest-l1-completeness-gate.bpmn) |
 
 ## Files
 

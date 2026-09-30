@@ -17,10 +17,8 @@ equity, human rights, gender and the influence of social determinants is
 important. Doing so will help to better understand the needs and gaps to be 
 addressed and may lead to interventions that are more effective in the longer 
 term and that will evoke a feeling of “ownership” in the targeted group or 
-community. This will be particularly relevant when the request for a guide­
-line relates to the accomplishment of global and national public health goals, 
-or if it responds to a specific recommendation emerging from the moni­
-toring mechanisms of the international human rights framework (“treaty 
+community. This will be particularly relevant when the request for a guideline relates to the accomplishment of global and national public health goals, 
+or if it responds to a specific recommendation emerging from the monitoring mechanisms of the international human rights framework (“treaty 
 bodies”) (13).
 Chapter 5 
 Equity, human rights, gender and social determinants
@@ -47,8 +45,7 @@ policy frameworks that could marginalize or exclude certain populations.
 The composition of the various groups involved in developing guidelines and 
 the views of their members influence the contents and perspectives of the final 
 guideline, especially the extent to which WHO’s values, and the needs of the 
-populations whose health WHO seeks to protect, are reflected in the recommen­
-dations. GDGs should include individuals who understand how to take equity, 
+populations whose health WHO seeks to protect, are reflected in the recommendations. GDGs should include individuals who understand how to take equity, 
 human rights, gender and social determinants into account in efforts to promote 
 better health and who have expertise in doing so. In addition, in line with the 
 human rights principle of greater participation, it is important to ensure that the 
@@ -67,11 +64,9 @@ WHO handbook for guideline development
 Careful selection of key questions is pivotal for integrating equity, human 
 rights, gender and social determinants into the guideline development process 
 and the content of the guideline. Background questions should encompass 
-both the average effects resulting from an intervention and the distribu­
-tion of effects across subpopulations. These questions should also address 
+both the average effects resulting from an intervention and the distribution of effects across subpopulations. These questions should also address 
 specific human rights and other issues related to laws, policies, standards, 
-protocols and guidelines (see also Box 5.1, item 2). Key (foreground) ques­
-tions concerning the effectiveness of interventions must take into account 
+protocols and guidelines (see also Box 5.1, item 2). Key (foreground) questions concerning the effectiveness of interventions must take into account 
 the potential for differences in uptake and benefits as a function of social 
 position. In applying PICO to develop key questions, the following must be 
 considered: under P (population), social position and other PROGRESS-Plus 

@@ -372,7 +372,12 @@ export type PotEntryKind =
   // whose shape it cannot check.
   | "bpmn-label"
   | "manifest-title"
-  | "ui-string";
+  | "ui-string"
+  // A glossary term's label, alternative label or definition
+  // (`folio-assistant-core/scripts/glossary-pot.ts`). Declared 2026-09-30: that
+  // producer predates `kind` and never decided, which compiled only because its
+  // directory is outside tsconfig's include list.
+  | "glossary-term";
 
 /** A single translatable entry extracted from a source file. */
 export interface PotEntry {

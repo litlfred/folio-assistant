@@ -10,5 +10,4 @@ source_sha256: bfcd856e3ad7ab20
 ---
 implemented?
 The purpose of WHO guidelines is to improve the health and well-being of 
-individuals and populations. To accomplish that, guidelines need to be dis­
-seminated, adopted or adapted, and their recommendations implemented.
+individuals and populations. To accomplish that, guidelines need to be disseminated, adopted or adapted, and their recommendations implemented.

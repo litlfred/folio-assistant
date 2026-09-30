@@ -11,25 +11,19 @@ source_sha256: bfcd856e3ad7ab20
 guideline development process
 Appropriate management of disclosures and conflicts of interest does not 
 end with the assessment of the declarations and the formulation of a plan for 
-the management of conflicts. The responsible technical officer and the steer­
-ing group have additional and continuous responsibilities.
+the management of conflicts. The responsible technical officer and the steering group have additional and continuous responsibilities.
 ■■
 Although GDG members participate in guideline development at 
-WHO in an individual capacity, they must all provide their institu­
-tional affiliations, along with the goals and purpose of their institu­
-tions at the beginning of each GDG meeting.
+WHO in an individual capacity, they must all provide their institutional affiliations, along with the goals and purpose of their institutions at the beginning of each GDG meeting.
 ■■
-The declarations of interests made by GDG members should be pro­
-vided to all participants at meetings (whether an in-person or a virtual 
-meeting) as one of the first items on the agenda. In addition, all mem­
-bers should be given the opportunity to update or otherwise revise 
+The declarations of interests made by GDG members should be provided to all participants at meetings (whether an in-person or a virtual 
+meeting) as one of the first items on the agenda. In addition, all members should be given the opportunity to update or otherwise revise 
 their declarations of interest at that time. If there are any changes to 
 previously declared interests, WHO staff should record those changes 
 and request that a new declaration of interests form be completed. 
 WHO staff will then need to judge whether any new declarations are 
 relevant to the guideline topic and, if so, what the best way to manage 
-any conflicts of interest might be. All decisions should be clearly docu­
-mented and shared with the GDG.
+any conflicts of interest might be. All decisions should be clearly documented and shared with the GDG.
 Chapter 6 
 Declaration and management of interests
 73
@@ -44,8 +38,7 @@ not contain this information.
 The following are examples of how conflicts of interest should be reported 
 in the guideline:
 ■■
-Dr N.C. reported being an investigator on trials for GlaxoSmith­
-Kline, Quintiles, Uriach and Biomarin, but not for any products 
+Dr N.C. reported being an investigator on trials for GlaxoSmithKline, Quintiles, Uriach and Biomarin, but not for any products 
 or products related to those being considered in this guideline. 
 She also reported holding shares in Biota (valued at more than 
 US$ 5000), which makes antiviral drug X. She was therefore 
@@ -54,9 +47,7 @@ and treatment and from the formulation of recommendations on
 antiviral agents.
 ■■
 Dr M.R. reported having been a consultant for Roche on drug research 
-and development. He is currently a member of a data safety and moni­
-toring board for Roche; receives royalties through the National Insti­
-tutes of Health (United States) from the use of gossypol for cancer; 
+and development. He is currently a member of a data safety and monitoring board for Roche; receives royalties through the National Institutes of Health (United States) from the use of gossypol for cancer; 
 and is a consultant to several start-up companies, none of which has 
 products on the market. Since no products related to any of these items 
 were under consideration in this guideline, no action was taken.
@@ -67,8 +58,7 @@ review of the evidence and discussion of recommendations on drug
 X, made by Merck.
 The completed declaration of interests forms are kept confidential at 
 WHO in the custody of a senior officer for at least 10 years, and must not be 
-distributed or made public. The responsible technical officer can make avail­
-able to people outside WHO a summary of the forms’ contents, but the forms 
+distributed or made public. The responsible technical officer can make available to people outside WHO a summary of the forms’ contents, but the forms 
 themselves can only be released into the public domain under the explicit 
 direction of WHO’s Director-General.
 74

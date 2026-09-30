@@ -99,6 +99,8 @@ function publish(bare: string, siteDir: string, opts: { keepFiles: boolean }): s
 }
 
 const BRANCH = { branch: "gh-pages", prefix: "STAGING" };
+/** No fixture below seeds a retired record unless it says so. */
+const RETIRED_ABSENT = { prefix: "STAGING/_retired", state: "absent" } as const;
 
 describe("a full-replace deploy with the restore in front of it", () => {
   /** The state of the branch before any of this: one live page, one about to be deleted, two previews. */
@@ -337,7 +339,7 @@ describe("the render log is carried UNCONDITIONALLY — the property previews do
 
     const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
     expect(restored.state).toBe("empty");
-    expect(restored.carried).toEqual([{ prefix: "_render-log", state: "carried" }]);
+    expect(restored.carried).toEqual([{ prefix: "_render-log", state: "carried" }, RETIRED_ABSENT]);
 
     const after = publish(bare, built, { keepFiles: false });
     expect(after).toContain(LOG);
@@ -375,7 +377,7 @@ describe("the render log is carried UNCONDITIONALLY — the property previews do
 
     const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
     expect(restored.state).toBe("restored");
-    expect(restored.carried).toEqual([{ prefix: "_render-log", state: "absent" }]);
+    expect(restored.carried).toEqual([{ prefix: "_render-log", state: "absent" }, RETIRED_ABSENT]);
     expect(exitCodeFor(restored)).toBe(0);
   });
 
@@ -462,7 +464,7 @@ describe("the verifier checks the CARRIED prefixes, not only the previews", () =
     const built = site({ "index.html": "<p>new home</p>" });
 
     const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
-    expect(restored.carried).toEqual([{ prefix: "_render-log", state: "carried" }]);
+    expect(restored.carried).toEqual([{ prefix: "_render-log", state: "carried" }, RETIRED_ABSENT]);
     publish(bare, built, { keepFiles: false });
 
     const v = verifyStaging({ repo, remote: bare, site: built, ...BRANCH }, [], ["_render-log"]);
@@ -478,7 +480,7 @@ describe("the verifier checks the CARRIED prefixes, not only the previews", () =
     const built = site({ "index.html": "<p>new home</p>" });
 
     const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
-    expect(restored.carried).toEqual([{ prefix: "_render-log", state: "absent" }]);
+    expect(restored.carried).toEqual([{ prefix: "_render-log", state: "absent" }, RETIRED_ABSENT]);
     publish(bare, built, { keepFiles: false });
 
     // Only the `carried` ones are passed, so this list is empty.
@@ -497,5 +499,45 @@ describe("the verifier checks the CARRIED prefixes, not only the previews", () =
     const text = describeOutcome(v);
     expect(text).toContain("_render-log");
     expect(text).toContain("NOT recoverable");
+  });
+});
+
+describe("the retired-record store is carried unconditionally and is not a preview — bean 6pfo", () => {
+  // A retired record describes a CLOSED pull request's preview. The previews
+  // are carried by liveness; the store must not be, or the full replace drops
+  // exactly the records it exists to keep.
+  const REC = "STAGING/_retired/claude-pr-7.json";
+  const BODY = `{"kind":"staging-preview"}\n`;
+
+  test("with no previews at all, the store survives the full replace", () => {
+    const bare = remoteWith({ "index.html": "<p>home</p>", [REC]: BODY });
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    // `empty`, not `restored`: the store is not a preview.
+    expect(restored.state).toBe("empty");
+    expect(restored.carried).toContainEqual({ prefix: "STAGING/_retired", state: "carried" });
+
+    const after = publish(bare, built, { keepFiles: false });
+    expect(after).toContain(REC);
+  });
+
+  test("beside a live preview, `_retired` is not counted among the previews", () => {
+    const bare = remoteWith({
+      "index.html": "<p>home</p>",
+      "STAGING/claude-pr-9/index.html": "<p>preview</p>",
+      [REC]: BODY,
+    });
+    const repo = checkout();
+    const built = site({ "index.html": "<p>new home</p>" });
+
+    const restored = restoreStaging({ repo, remote: bare, site: built, ...BRANCH });
+    expect(restored.state).toBe("restored");
+    expect(restored.previews).toEqual(["claude-pr-9"]);
+
+    publish(bare, built, { keepFiles: false });
+    const v = verifyStaging({ repo, remote: bare, site: built, ...BRANCH }, ["claude-pr-9"], ["STAGING/_retired"]);
+    expect(v.state).toBe("ok");
   });
 });

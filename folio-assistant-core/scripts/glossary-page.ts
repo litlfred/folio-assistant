@@ -75,6 +75,8 @@ import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { GlossarySchema, schemeIri, toSkos, termIri, type Glossary, type LangText } from "../schemas/glossary.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
+import { GLOSSARY_SUBDIR, potPath, sourceText, templateName, translationsDir } from "./glossary-pot.ts";
+import { parsePo } from "../../cat-harness/content/pipeline/po-inject.ts";
 
 const CORE = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(CORE);
@@ -803,6 +805,167 @@ ${FILTER_SCRIPT}
   );
 }
 
+// ── Per-locale pages — bean `c592` ───────────────────────────────
+//
+// Owner, 2026-09-30: *"do full translation, show it all works, do the builds,
+// all machinery/tools/skills/assets."* The templates (`glossary-pot.ts`) sit in
+// the declared translation-sources directory, one per scheme per locale; a
+// translator's `.po` beside a template is what this reads. Nothing is
+// translated until a `.po` exists, and an entry with no translation renders
+// its SOURCE text marked untranslated — never silently English, and never
+// omitted, which would make a partial translation read as a complete one.
+//
+// Every `.po` here is UNOFFICIAL until a person signs it off (issue #206), so
+// every page says so in its front matter (`translation_status: unverified`),
+// as the other translated pages do.
+
+/** A locale's translations for one scheme: source text → translation. */
+export type SchemeTranslations = ReadonlyMap<string, string>;
+
+/**
+ * Every locale that has at least one glossary `.po`, with its translations
+ * per template name. Reads the SAME paths `glossary-pot.ts` writes, through
+ * its own `potPath`, so the reader cannot look somewhere the writer does not.
+ */
+export function readGlossaryTranslations(dir: string = translationsDir()): Map<string, Map<string, SchemeTranslations>> {
+  const out = new Map<string, Map<string, SchemeTranslations>>();
+  if (!existsSync(dir)) return out;
+  for (const locale of readdirSync(dir).sort()) {
+    const sub = join(dir, locale, GLOSSARY_SUBDIR);
+    if (!existsSync(sub)) continue;
+    for (const f of readdirSync(sub).filter((x) => x.endsWith(".po")).sort()) {
+      const name = f.slice(0, -".po".length);
+      // Only a .po beside its template counts: an orphan .po translates
+      // nothing the page shows, and `glossary:pot:check` reports it.
+      if (!existsSync(potPath(dir, locale, name))) continue;
+      const m = parsePo(readFileSync(join(sub, f), "utf-8"));
+      const byScheme = out.get(locale) ?? new Map<string, SchemeTranslations>();
+      byScheme.set(name, m);
+      out.set(locale, byScheme);
+    }
+  }
+  return out;
+}
+
+/** Where a locale's glossary page is written. */
+export function localePagePath(locale: string): string {
+  return join(SITE, locale, "glossary", "index.md");
+}
+
+/** The text in a locale, or the source marked untranslated. */
+function inLocale(src: string, t: SchemeTranslations | undefined): { text: string; translated: boolean } {
+  const v = t?.get(src);
+  return v ? { text: v, translated: true } : { text: src, translated: false };
+}
+
+/**
+ * The locale page's own words — headings, table labels, the status line — as
+ * gettext msgids (`ui-string` entries in the `glossary-page` template), the
+ * pattern `kg-viewer-strings.ts` set for the KG viewer. The page is translated
+ * chrome and all, or it marks what is not.
+ */
+export const LOCALE_PAGE_STRINGS = {
+  pages: "Pages",
+  pagesNote: "Extracted candidates are not translated: they are lifted verbatim from knowledge-graph assets and uncurated. Their pages are in the source language.",
+  authored: "Authored terms",
+  everyOther: "Every other authored term, A–Z",
+  sources: "Sources",
+  sourcesAuthored: "Authored",
+  sourcesExtracted: "Extracted from knowledge-graph assets",
+  term: "term",
+  altLabels: "alternative labels",
+  definition: "definition",
+  untranslated: "untranslated",
+  status: "These translations are unofficial: drafted by an agent and not yet signed off by a person (issue #206). Text marked untranslated is the source, shown rather than hidden.",
+  fullyTranslated: "authored terms fully translated",
+  sourcePage: "The glossary in the source language, with every extracted term",
+} as const;
+
+/** The template the locale page's strings live in, beside the schemes' templates. */
+export const LOCALE_PAGE_TEMPLATE = "glossary-page";
+
+/** One locale's glossary page: the SOURCE page's structure, every authored term translated where a .po says so. */
+export function renderLocalePage(
+  c: ReturnType<typeof collect>,
+  locale: string,
+  byScheme: ReadonlyMap<string, SchemeTranslations>,
+  locales: readonly string[],
+): string {
+  const esc = (x: string) => x.replace(/\|/g, "\\|").replace(/\n/g, " ");
+  const ui = byScheme.get(LOCALE_PAGE_TEMPLATE);
+  const u = (k: keyof typeof LOCALE_PAGE_STRINGS) => inLocale(LOCALE_PAGE_STRINGS[k], ui);
+  const untr = u("untranslated").text;
+  const mark = (x: { text: string; translated: boolean }) => (x.translated ? esc(x.text) : `${esc(x.text)} _(${untr})_`);
+  const rawTitle = [...byScheme.values()].map((m) => m.get("glossary")).find((v) => v) ?? "Glossary";
+  // The term is lower-case in running text; as a title its first letter is
+  // capitalised in the locale's own rules (a no-op for scripts without case).
+  const titleTerm = rawTitle.charAt(0).toLocaleUpperCase(locale) + rawTitle.slice(1);
+  let terms = 0;
+  let translated = 0;
+  const table = (s: GlossarySource): string[] => {
+    const t = byScheme.get(templateName(s));
+    const out = [`| ${mark(u("term"))} | ${mark(u("altLabels"))} | ${mark(u("definition"))} |`, "|---|---|---|"];
+    for (const term of s.glossary.terms.filter((x) => x.status === "authored")) {
+      const label = inLocale(sourceText(term.prefLabel), t);
+      const alts = (term.altLabel ?? []).map((x) => inLocale(x, t));
+      const def = term.definition ? inLocale(sourceText(term.definition), t) : undefined;
+      terms++;
+      if (label.translated && (!def || def.translated) && alts.every((x) => x.translated)) translated++;
+      out.push(`| **${mark(label)}** | ${alts.map(mark).join("; ") || "—"} | ${def ? mark(def) : "—"} |`);
+    }
+    return out;
+  };
+  const schemes = [...c.glossaries]
+    .filter((g) => !g.extracted && g.glossary.terms.some((t) => t.status === "authored"))
+    .sort((x, y) => templateName(x).localeCompare(templateName(y)));
+  // The SOURCE page's structure (translation-drift compares it): ordered
+  // schemes each under their own ###, then every other authored term together.
+  const ordered = schemes.filter((s) => s.glossary.ordered);
+  const rest = schemes.filter((s) => !s.glossary.ordered);
+  const body: string[] = [];
+  for (const s of ordered) body.push(`### ${esc(s.glossary.title)}`, "", ...table(s), "");
+  if (ordered.length) body.push(`### ${mark(u("everyOther"))}`, "");
+  for (const s of rest) body.push(`**${esc(s.glossary.title)}**`, "", ...table(s), "");
+  const L = [
+    "---",
+    "layout: default",
+    `title: "${titleTerm.replace(/"/g, '\\"')}"`,
+    `lang: ${locale}`,
+    "nav_exclude: true",
+    GENERATED_FM,
+    "translation_status: unverified",
+    "translation_source: glossary/index.md",
+    `available_locales: [${["en", ...locales].map((l) => `"${l}"`).join(", ")}]`,
+    `description: "${locale}: ${translated}/${terms} — ${u("fullyTranslated").text.replace(/"/g, "'")}"`,
+    "---",
+    "",
+    GENERATED,
+    "",
+    `# ${esc(titleTerm)}`,
+    "",
+    `**${translated} / ${terms}** ${mark(u("fullyTranslated"))}. ${mark(u("status"))}`,
+    "",
+    `## ${mark(u("pages"))}`,
+    "",
+    `${mark(u("pagesNote"))} [${mark(u("sourcePage"))}]({{ '/glossary/' | relative_url }}).`,
+    "",
+    `## ${mark(u("authored"))}`,
+    "",
+    ...body,
+    `## ${mark(u("sources"))}`,
+    "",
+    `### ${mark(u("sourcesAuthored"))}`,
+    "",
+    ...schemes.map((s) => `- \`${templateName(s)}\` — ${esc(s.file)}`),
+    "",
+    `### ${mark(u("sourcesExtracted"))}`,
+    "",
+    `[${mark(u("sourcePage"))}]({{ '/glossary/' | relative_url }})`,
+    "",
+  ];
+  return L.join("\n") + "\n";
+}
+
 /** Every asset type's page, rendered. The index reads their sizes. */
 export function typePagesOf(c: ReturnType<typeof collect>): Map<AssetType, string> {
   return new Map(ASSET_TYPES.map((t) => [t, renderTypePage(c, t)] as const));
@@ -813,9 +976,42 @@ export function renderPages(c: ReturnType<typeof collect>): Map<PageKey, string>
   const types = typePagesOf(c);
   return new Map<PageKey, string>([["index", renderIndex(c, types)], ...types]);
 }
+/**
+ * A scheme with every translated label and definition folded in as
+ * per-language text (`{ en: source, fr: … }`), which `toSkos` already emits as
+ * language-tagged `skos:prefLabel` / `skos:definition` (bean c592). Only what
+ * a `.po` translates is added; the source stays `en`. Alternative labels stay
+ * source-only: `altLabel` is a plain string list in `folio-glossary/v1`.
+ */
+export function withTranslations(
+  s: GlossarySource,
+  translations: ReadonlyMap<string, ReadonlyMap<string, SchemeTranslations>>,
+): Glossary {
+  const name = templateName(s);
+  const per = [...translations].map(([loc, m]) => [loc, m.get(name)] as const).filter(([, m]) => m !== undefined) as [string, SchemeTranslations][];
+  if (per.length === 0) return s.glossary;
+  const lang = (t: LangText): LangText => {
+    const src = sourceText(t);
+    const extra = Object.fromEntries(per.map(([loc, m]) => [loc, m.get(src)]).filter(([, v]) => v));
+    return Object.keys(extra).length ? { en: src, ...extra } : t;
+  };
+  return {
+    ...s.glossary,
+    terms: s.glossary.terms.map((t) =>
+      t.status !== "authored" ? t : { ...t, prefLabel: lang(t.prefLabel), ...(t.definition ? { definition: lang(t.definition) } : {}) },
+    ),
+  };
+}
+
 /** Every file this generator owns, path → content. */
-export function outputs(c: ReturnType<typeof collect>): Map<string, string> {
+export function outputs(
+  c: ReturnType<typeof collect>,
+  translations: ReadonlyMap<string, ReadonlyMap<string, SchemeTranslations>> = readGlossaryTranslations(),
+): Map<string, string> {
   const out = new Map<string, string>([...renderPages(c)].map(([k, page]) => [pagePath(k), page] as const));
+  // One page per locale that has a translation (bean c592).
+  const locales = [...translations.keys()];
+  for (const [locale, byScheme] of translations) out.set(localePagePath(locale), renderLocalePage(c, locale, byScheme, locales));
   for (const s of c.glossaries) {
     // `_generated` SECOND, not first: `@context` and `$schema` each have a
     // reader that looks for them at the head — a JSON-LD processor and every
@@ -824,7 +1020,7 @@ export function outputs(c: ReturnType<typeof collect>): Map<string, string> {
     // which is what makes that free. On the SKOS side `_generated` is an
     // UNMAPPED term: the `@context` declares `skos` and `dcterms` and no
     // `@vocab`, so a JSON-LD processor drops it and the graph is unchanged.
-    const skos = toSkos(s.glossary, s.ns);
+    const skos = toSkos(s.extracted ? s.glossary : withTranslations(s, translations), s.ns);
     const { "@context": context, ...skosRest } = skos;
     out.set(join(SITE, skosAsset(s)), `${JSON.stringify({ "@context": context, _generated: GENERATED_JSON, ...skosRest }, null, 2)}\n`);
     if (s.extracted) {
@@ -857,7 +1053,13 @@ if (import.meta.main) {
   // scheme. Both directories are this generator's alone.
   // The glossary's own pages directory is this generator's too: a page for
   // an asset type that is no longer extracted is an orphan.
-  const orphans = [...filesUnder(ASSETS), ...filesUnder(generatedDir()), ...filesUnder(dirname(PAGE))].filter((p) => !files.has(p));
+  // Each locale's glossary directory is this generator's own too (bean c592):
+  // a locale whose last .po is removed leaves an orphan page.
+  const localeDirs = readdirSync(SITE, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && existsSync(join(SITE, e.name, "glossary", "index.md")))
+    .map((e) => join(SITE, e.name, "glossary"));
+  const orphans = [...filesUnder(ASSETS), ...filesUnder(generatedDir()), ...filesUnder(dirname(PAGE)), ...localeDirs.flatMap(filesUnder)]
+    .filter((p) => !files.has(p));
   const stale = [...files].filter(([p, s]) => !existsSync(p) || readFileSync(p, "utf-8") !== s).map(([p]) => p);
   const n = counts(c);
   const summary = `${n.authored} authored + ${n.extracted} extracted terms, ${c.glossaries.length} scheme(s), ${c.ledgers.length} swimlane ledger(s), ${c.external.length} external scheme(s)`;

@@ -1042,7 +1042,7 @@ function renderListItem(item: ListItem): string {
 // ── Block → LaTeX rendering ──────────────────────────────────────
 
 /** LaTeX environment names for each block kind. */
-const ENV_NAMES: Record<string, string> = {
+export const ENV_NAMES: Record<string, string> = {
   definition: "definition",
   theorem: "theorem",
   lemma: "lemma",
