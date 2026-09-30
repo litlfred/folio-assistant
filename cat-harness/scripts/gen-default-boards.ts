@@ -52,6 +52,7 @@ import { BOARD_SCHEMA_TAG, wholeFolioBoard } from "../schemas/board.js";
 import { isExemptFrom, readDeclaration } from "../schemas/cat-harness.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../schemas/todo-graph.js";
+import { gitTopLevelDirs } from "../schemas/git-corpus.ts";
 import { TODO_ROOT } from "./todos.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -105,10 +106,18 @@ export function defaultBoard(name: string, title: string): string {
 
 if (import.meta.main) {
   const dir = boardsDir(REPO_ROOT);
-  const names = readdirSync(REPO_ROOT, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && !d.name.startsWith(".") && d.name !== "node_modules")
-    .map((d) => d.name)
-    .sort();
+  // ASKED OF GIT (bean `qrlc`). The hand-written filter below admitted **26**
+  // top-level names on this container and `_kg` was the first: a gitignored
+  // directory of knowledge-graph exports that a clean checkout does not have.
+  // Git's answer is 24 — it drops `_kg` and `test-results`, both gitignored,
+  // and gains nothing.
+  //
+  // Latent today, and by a DIFFERENT mechanism from `xd1g`'s eleven: the
+  // committed output carries 0 mentions of `_kg` because a later predicate
+  // drops anything without a declaration. The walk was contaminated and the
+  // artefact was not — which is luck a reader cannot see from the walk, and
+  // the argument for asking git here rather than trusting the filter behind.
+  const names = gitTopLevelDirs(REPO_ROOT).names;
   const owed = harnessesOwedABoard(REPO_ROOT, names);
 
   let stale = 0;
