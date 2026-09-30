@@ -205,7 +205,19 @@ still open and is asked as a selectable question rather than assumed.
       explained
 - [x] It renders on the IRIS theme rather than the default
 - [x] `check:voices` is green across the instance boundary
-- [ ] `kupb` closes — blocked on **two** open children, `08u4` and `xlg2`, both
+- [x] `kupb` closes — completed 2026-09-30 in PR #1528, with its last two children. It was blocked on **two** open children, `08u4` and `xlg2`, both
       genuine IRIS-catalogue work. The re-parenting this clause used to wait on
       is DONE (2026-09-26, commit `9fe74a7be8d`); nothing here waits on the
       owner any more.
+
+## 2026-09-30 — every Done-when box is ticked, and the milestone is left OPEN
+
+`kupb` completed in PR #1528, together with `08u4` and `xlg2`. Re-measured today:
+- `check:voices` green;
+- `check:catalogue` exit 0;
+- `iris:pages:check` current.
+
+The live published site could **not** be fetched from the measuring container (github.io egress is blocked), so the rendering clauses rest on the generated pages.
+
+Closing a GOAL milestone is left to the owner. The goal review of 2026-09-30 put that question to them, along with the one reading of the goal's words the boxes do not test: whether *"themed harness"* means the harness's own surfaces (board tile, navbar) or only the who-iris pages.
+

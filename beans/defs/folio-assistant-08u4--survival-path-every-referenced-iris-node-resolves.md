@@ -1,11 +1,11 @@
 ---
 # folio-assistant-08u4
 title: 'SURVIVAL PATH: every referenced IRIS node resolves by Handle, with a liveness check and a snapshot pointer'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-24T18:01:44Z
-updated_at: 2026-09-30T00:13:50Z
+updated_at: 2026-09-30T08:26:13Z
 parent: folio-assistant-kupb
 ---
 
@@ -19,3 +19,13 @@ From the `v048` roast, objections 6 + 7. Placed under `kupb` by the owner, 2026-
 - [x] what happens on source loss is stated per node kind (a snapshot pointer, or an explicit "lost with the source"), not only for bytes already copied
 
 _2026-09-30T00:13:50Z_ — Claimed by claude/magical-archimedes-4qkfxp-08u4 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Summary of Changes
+
+Landed in PR #1528.
+- `HandleSchema`, `handleIri`, `handleFromUrl` and `resolvableIri` in `folio-assistant-core/schemas/catalogue.ts`. The three items carry their Handle, and `resolvableIri` prefers it over the host URL.
+- `check-catalogue.ts` check 5 compares a node's Handle with the Handles in its upstream URLs and record, in both directions (mutation-tested). Check 6 requires a `sourceLoss` statement.
+- `sourceLoss` in `who-iris/catalogue/catalogue.json` states source loss per node kind: container, referenced item and materialized item.
+- `bun run sources:liveness` (`source-liveness.ts`, 11 tests) reports three states per node, plus a Wayback snapshot probe. "Could not determine" exits 2 and is never live.
+- `refresh-materialized.bpmn` Task_Upstream names the check, and `sample-import-run.ts`'s Task_Fetch records a liveness probe of the Handle IRI.
+- The item pages now link through hdl.handle.net.
