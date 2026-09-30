@@ -4,7 +4,8 @@ import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { CatHarnessDeclarationSchema } from "./cat-harness";
-import { instanceRepositories, locationMismatch, resolveInstance } from "./instance-repositories";
+import { instanceRepositories, locationMismatch, repositoryNamespaces, resolveInstance } from "./instance-repositories";
+import { ownNamespace } from "./namespaces";
 
 const CHECKOUT = resolve(import.meta.dir, "../..");
 
@@ -55,6 +56,26 @@ describe("instance references are owner/repo and resolve (bean 6rmv, phase 2)", 
 
   test("every one resolves through the derived map, by owner/repo", () => {
     expect(refs.filter(({ ref }) => !map.byRepository.has(ref))).toEqual([]);
+  });
+});
+
+describe("the owner/repo → namespace map is derived and agrees with the list (bean 6rmv, phase 3)", () => {
+  const ns = repositoryNamespaces(CHECKOUT);
+
+  test("every declared instance has a namespace", () => {
+    expect(ns.size).toBe(instanceRepositories(CHECKOUT).entries.length);
+  });
+
+  // The code list still NAMES each vocabulary namespace, because code reads
+  // them by code; what it may no longer do is SPELL one differently from the
+  // declaration it belongs to. Code → the repository whose namespace it is.
+  const LISTED: Array<[code: string, repository: string]> = [
+    ["cat-bootstrap", "litlfred/bootstrap"],
+    ["cat-harness", "litlfred/cat-harness"],
+    ["folio-assistant-core", "litlfred/folio-assistant-core"],
+  ];
+  test.each(LISTED)("own-namespaces %s is what %s's declaration derives", (code, repository) => {
+    expect(ns.get(repository)).toBe(ownNamespace(code));
   });
 });
 

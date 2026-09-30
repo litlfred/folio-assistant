@@ -22,7 +22,7 @@ the declarations alone.
 A Harness **MUST** own the visualisation published at `<baseurl>/<stub>`. The
 stem every published artefact is named with is computed in exactly one place —
 `artefactStub`, which returns the declared `stub` when there is one and the
-`name` otherwise — so the site build, the KGraph export and any future artefact
+`name` otherwise — so the site build, the Knowledge Graph export and any future artefact
 cannot disagree about what an instance is called.
 
 > **The stub is intended to be free of the definition's name.** A Harness

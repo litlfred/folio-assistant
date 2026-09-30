@@ -70,9 +70,8 @@ import {
   repoRootFor,
   resolveDirectories,
 } from "../../cat-harness/schemas/cat-harness.ts";
-import { LEGACY_FOLIO_NS } from "../../cat-harness/schemas/namespaces.ts";
 import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
-import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
+import { instanceNamespace } from "../../cat-harness/schemas/instance-repositories.ts";
 import { GlossarySchema, schemeIri, toSkos, termIri, type Glossary, type LangText } from "../schemas/glossary.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
 import type { SchemeState } from "../../cat-harness/scripts/check-term-mapping.ts";
@@ -118,16 +117,13 @@ export interface Findings {
   invalid: string[];
 }
 
-/** The instance's namespace, `<stem><stub>/ns#`: bean `lqo9` puts a term's IRI there, never in the asset. */
-/** The platform's publication root, read from the namespace registry rather than written again here. */
-const NS_STEM = LEGACY_FOLIO_NS.replace(/ns#$/, "");
+/**
+ * The instance's namespace: bean `lqo9` puts a term's IRI there, never in the
+ * asset. The rule is `instanceNamespace` (`schemas/instance-repositories.ts`),
+ * shared with the `owner/repo → IRI` map so the two cannot disagree (bean `6rmv`).
+ */
 export function instanceNs(name: string, stub?: string, decl?: { iriBase?: string; version?: string }): string {
-  // An instance that declares an iriBase mints under its own release, as its
-  // vocabulary does (`release-iri.ts`): bootstrap's glossary terms are then
-  // `<iriBase><version>/ns#glossary/…`, the same namespace as its terms, and
-  // not a second address under this site that nothing else uses.
-  const release = releaseIris(decl);
-  return release ? `${release.agent}ns#` : `${NS_STEM}${stub ?? name}/ns#`;
+  return instanceNamespace({ name, stub, iriBase: decl?.iriBase, version: decl?.version });
 }
 
 // ── Who owns a term ─────────────────────────────────────────────

@@ -28,7 +28,7 @@ a path breaks the moment a directory moves.
 ### Three relations, and they are not interchangeable
 
 Between repositories — as opposed to between layers in one checkout — the
-[KGraph page](kgraph.html#repositories) sets out three relations, and a fourth, **associated**, needs no order at all. Each has its
+[Knowledge Graph page](knowledge-graph.html#repositories) sets out three relations, and a fourth, **associated**, needs no order at all. Each has its
 own carrier here:
 
 | relation | runs | carried by |
