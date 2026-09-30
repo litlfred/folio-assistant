@@ -146,3 +146,5 @@ holds here as everywhere else in this repository.
 - [ ] STILL OPEN — carry the intake licence into the promoted manifest's meta.licence, so check:source-licence sees it (today no manifest records one: every current document is 'undetermined').
 - [ ] STILL OPEN — the marker sweep over the seven existing activities; same rule as b5f0.
 Found in passing: bean eowd (regen cannot repair translate-bpmn:check).
+
+_2026-09-30T09:25:32Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
