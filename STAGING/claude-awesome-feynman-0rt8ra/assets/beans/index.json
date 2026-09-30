@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 525,
+      "count": 528,
       "unit": "beans"
     }
   },
@@ -329,6 +329,20 @@
       "updatedAt": "2026-09-26T14:34:12Z",
       "preview": "Measured on pristine main f850f721a06, 2026-09-26. The failing checks were glossary-page, gen-skill-docs, gen-docs-pages, docs:auto, translation:index, check:ci-invocations (which re-runs the two generators), check:subgraphs, state:visualizer and docs:harness. Every open PR inherited them through its merge ref.\n\nCauses:\n- **2c295f8**, committed straight to main, rewrote skill script paths as `../.",
       "file": "beans/defs/folio-assistant-1h6u--main-red-after-2c295f8-translation-batches-1404140.md"
+    },
+    {
+      "id": "folio-assistant-1hjm",
+      "title": "merge queue is UNAVAILABLE on this repo — three workflows carry merge_group triggers that can never fire",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T22:29:45Z",
+      "updatedAt": "2026-09-30T22:47:27Z",
+      "preview": "Measured 2026-09-30, after the owner asked for the merge queue to be turned on.\n\n## What was found\n\nThe repository's **New branch ruleset** form offers thirteen rules. **`Require\nmerge queue` is not one of them**:\n\n```\nRestrict creations · Restrict updates · Restrict deletions\nRequire linear history · Require deployments to succeed · Require signed commits\nRequire a pull request before merging · R",
+      "file": "beans/defs/folio-assistant-1hjm--merge-queue-is-unavailable-on-this-repo-three-work.md"
     },
     {
       "id": "folio-assistant-1l13",
@@ -699,14 +713,14 @@
     {
       "id": "folio-assistant-3432",
       "title": "BRANCH-ONLY RULING REQUEST: r0tm is a draft decision with a recommendation and a safe default, reachable from no ancestor of main",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T11:33:55Z",
-      "updatedAt": "2026-09-30T19:50:14Z",
+      "updatedAt": "2026-09-30T23:08:28Z",
       "preview": "## The finding, and how it was measured\n\n`beans/defs/folio-assistant-r0tm--adapters-closure-*.md` exists on exactly one\nref — `origin/claude/yj6r-adapters-closure-plan` — and its commit\n(`974a0eac0ce`) is **not an ancestor of `origin/main`**:\n\n    git merge-base --is-ancestor 974a0eac0ce origin/main   -> non-zero\n    git branch -a --contains 974a0eac0ce                   -> that one branch\n\nIt is ",
       "file": "beans/defs/folio-assistant-3432--branch-only-ruling-request-r0tm-is-a-draft-decisio.md"
     },
@@ -720,7 +734,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T06:06:37Z",
-      "updatedAt": "2026-09-30T10:58:02Z",
+      "updatedAt": "2026-09-30T22:33:44Z",
       "preview": "Measured 2026-09-24. Main went red on 10b48aed (the #1246 merge) in `TypeScript — tests, lint, types`: the test `prov-qaqc: the real repository > the committed page and logs are current (what check:prov-qaqc gates)` failed. #1245 had added the report; 172b558d (#1190) then committed a new workflow instance without regenerating it. It was fixed by a pure regeneration in #1249.\n\n**Why `bun run regen",
       "file": "beans/defs/folio-assistant-391j--regen-blind-spot-a-check-enforced-by-a-bun-test-no.md"
     },
@@ -4091,6 +4105,20 @@
       "file": "beans/defs/folio-assistant-l9d5--bootstrap-tools-port-contract-semver-skill-zod-val.md"
     },
     {
+      "id": "folio-assistant-l9v6",
+      "title": "DECISION (proposed): which CDN layer, if any, in front of the WHO L1 corpus (slide 2, #1614)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T17:47:45Z",
+      "updatedAt": "2026-09-30T17:47:45Z",
+      "preview": "MADR decision record for slide 2 of the owner's deck `cat-harness/library/kg-folio-asst-2026-09-30` (\"Accessing WHO L1 corpus\"). Issue #1614. Parent: `xies` (publish to CDN).\n\n## Status\n\n**Proposed — no outcome.** Owner, 2026-09-30: record the options, decide later. Nothing has been measured at the scale slide 2 names, so an outcome here would be a guess.\n\n## Context and problem statement\n\nSlide 2",
+      "file": "beans/defs/folio-assistant-l9v6--decision-proposed-which-cdn-layer-if-any-in-front.md"
+    },
+    {
       "id": "folio-assistant-lfxa",
       "title": "QA: write the proof-no-placeholder-stub checker (and drop the QOU literal from its description)",
       "status": "todo",
@@ -4284,7 +4312,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T13:25:16Z",
-      "updatedAt": "2026-09-29T20:52:41Z",
+      "updatedAt": "2026-09-30T22:34:00Z",
       "preview": "Found by getting it wrong on [#1064](https://github.com/litlfred/folio-assistant/pull/1064),\nand written down because the mistake is cheap to repeat.\n\n## What happened\n\n`main` absorbed **31, 13, 11 and 12** commits under one branch in about\nseventy minutes. Each time, the PR went `dirty`, and each time the response\nwas: merge `origin/main`, resolve, `bun run gates`, push. Four rounds.\n\n**`get_stat",
       "file": "beans/defs/folio-assistant-mc8h--merge-forward-treadmill-re-merging-main-faster-tha.md"
     },
@@ -4468,7 +4496,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T07:38:20Z",
-      "updatedAt": "2026-09-26T14:17:46Z",
+      "updatedAt": "2026-09-30T22:33:45Z",
       "preview": "## What this is\n\n`v625`'s open item, both halves: *\"the chain is written down somewhere an author\nadding a skill will find it — or, better, one command performs it.\"* Neither\nexisted. `#1383`'s author reached the same conclusion and left it deliberately —\n*\"a pre-merge gate … is the actual fix, and it's a separate decision I have not\ntaken here\"* — and the owner took it on 2026-09-26.\n\n## The defe",
       "file": "beans/defs/folio-assistant-nfv3--skill-registration-one-command-performs-the-artefa.md"
     },
@@ -5485,6 +5513,20 @@
       "file": "beans/defs/folio-assistant-sa8y--qa-wording-a-graph-scoped-finding-worded-absolutel.md"
     },
     {
+      "id": "folio-assistant-scfh",
+      "title": "INGEST SLIDES: pptx+odp rung, a11y probe, KG/folio-asst deck into library, methodology gaps, docs (#1614)",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T14:32:51Z",
+      "updatedAt": "2026-09-30T15:01:31Z",
+      "preview": "Issue #1614. Owner supplied KG__folio-asst as .pptx and .odp. Add a slides rung to bun run ingest handling both, report accessibility, ingest the preferred (pptx) into library, list missing methodology sources, improve docs across layers.\n\n## Done when\n- [ ] slides-structure.py rung + ingest-document.ts routing + tests\n- [ ] library-ingestion skill updated\n- [ ] deck ingested to a library with a11",
+      "file": "beans/defs/folio-assistant-scfh--ingest-slides-pptxodp-rung-a11y-probe-kgfolio-asst.md"
+    },
+    {
       "id": "folio-assistant-sff8",
       "title": "Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main",
       "status": "in-progress",
@@ -5925,14 +5967,14 @@
     {
       "id": "folio-assistant-u3cd",
       "title": "IG SITE THEME: build-ig-site dresses each IG's own just-the-docs site in the palette its instance declares",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-o3xy",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T21:48:48Z",
-      "updatedAt": "2026-09-30T22:04:49Z",
+      "updatedAt": "2026-09-30T23:42:12Z",
       "preview": "Issue #1682, owner 2026-09-30: theme the per-IG site at /<instance>/ig/ (bamf, #1670) reusing the webpage theme #1683 declares, not a second copy.\n\n## Approach\n- stage-ig-sites resolves the instance's ONE declared webpage theme through instanceThemes (platform, generic: fhir-harness never names WHO).\n- build-ig-site writes it as a just-the-docs colour scheme (_sass/color_schemes/<instance>.scss + ",
       "file": "beans/defs/folio-assistant-u3cd--ig-site-theme-build-ig-site-dresses-each-igs-own-j.md"
     },
