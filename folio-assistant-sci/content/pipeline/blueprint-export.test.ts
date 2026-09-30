@@ -105,4 +105,10 @@ describe("blueprint export", () => {
     const tex = TEX.replace(/\\begin\{proof\}\nDone\.\n\\end\{proof\}\n/, "");
     expect(exportBlueprint(tex, view()).valueWithoutProof).toEqual(["thm:cauchy"]);
   });
+
+  test("a self-edge is dropped: plasTeX's dependency graph recurses on it without end", () => {
+    const self = exportBlueprint(TEX, view({ typeDeps: new Map([["thm:lagrange", ["thm:lagrange", "def:group"]]]), valueDeps: new Map() }));
+    expect(self.tex).toContain("\\uses{def:group}");
+    expect(self.tex).not.toMatch(/\\uses\{[^}]*thm:lagrange/);
+  });
 });

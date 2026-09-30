@@ -199,7 +199,7 @@ export const VoiceSkillSchema = z
           title: z.string().min(1),
           instance: z.string().min(1).optional(),
           libraryId: z.string().min(1).optional(),
-          kgRef: z.string().min(1).optional(),
+          path: z.string().min(1).optional(),
           url: z.string().url().optional(),
           year: z.number().int().optional(),
         }),

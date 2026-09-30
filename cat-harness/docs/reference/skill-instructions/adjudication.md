@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Adjudication — judgement, when the mechanism ran out of facts
 
-> Skill id: `adjudication` · Capability: `review` · Package: `folio-core`
+> Skill id: `adjudication` · Package: `folio-core`
 
 ## Why this exists
 

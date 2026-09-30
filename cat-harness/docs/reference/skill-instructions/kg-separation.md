@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Knowledge Graph separation — the method
 
-> Skill id: `kg-separation` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `kg-separation` · Package: `graph-management`
 > Process: [`kg-separation.bpmn`](../../processes/kg-separation.html)
 
 Owner, 2026-09-29: *"need replicable process for when KG gets too large to

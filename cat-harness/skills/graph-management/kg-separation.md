@@ -10,12 +10,11 @@ description: >-
   and rollback. graph-detanglement owns stages 1–3; this skill owns the rest.
   Bootstrap + bootstrap-tools is the worked example; cat-harness +
   cat-harness-tools is next.
-capability: architecture
 ---
 
 # Knowledge Graph separation — the method
 
-> Skill id: `kg-separation` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `kg-separation` · Package: `graph-management`
 > Process: [`kg-separation.bpmn`](../../processes/kg-separation.bpmn)
 
 Owner, 2026-09-29: *"need replicable process for when KG gets too large to

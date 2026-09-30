@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # smart-base Toolchain
 
-> Skill id: `smart-base-tools` · Capability: `smart-base` · Package:
+> Skill id: `smart-base-tools` · Package:
 > `authoring-who-smart-guidelines`
 
 Run WHO's DAK toolchain from a `smart-base` checkout. **Load it; never vendor

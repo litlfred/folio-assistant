@@ -53,7 +53,7 @@ package scenario {
     id [1] : string
     title [1] : string
     description [1] : string
-    sources [1..*] : {title, instance, libraryId, kgRef, url, year}[]
+    sources [1..*] : {title, instance, libraryId, path, url, year}[]
     rules [1..*] : {id, title, description, category, severity, source, patterns, terminology, judgementOnly}[]
     overlaySeverity [0..1] : critical | major | minor
     {field} appliesTo [0..*] : list<enum(16) | docs | skill | readme | specification>

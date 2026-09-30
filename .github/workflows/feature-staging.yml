@@ -59,6 +59,16 @@ on:
       # gates — the wildcard makes the preview available while that is
       # diagnosed.
       - '.github/workflows/feature-staging.yml'
+  # The MERGE QUEUE — present so this workflow REPORTS in a `merge_group` run,
+  # not so it stages one. A required check that never reports on a
+  # `merge_group` event leaves every queued PR pending forever, which is the
+  # one way turning the queue on can hang the repository.
+  #
+  # `merge_group` takes no `paths:` filter, so this fires on every queue entry
+  # while the `pull_request` trigger above stays filtered. That asymmetry is
+  # deliberate: the queue needs a verdict from this workflow on every entry,
+  # and the `stage` job below skips, so the verdict costs nothing.
+  merge_group:
   pull_request_target:
     types: [closed]
   workflow_dispatch:
@@ -113,7 +123,25 @@ jobs:
     # A cleanup dispatch is not a staging request. `github.event.action` is
     # empty on `workflow_dispatch`, so without the second clause a run asked to
     # REMOVE a preview would deploy one as well.
-    if: github.event.action != 'closed' && (github.event_name != 'workflow_dispatch' || inputs.cleanup_slug == '')
+    #
+    # A MERGE-QUEUE entry is not a staging request either, and the third clause
+    # is what stops the queue creating orphan previews. A preview exists for
+    # the reviewers of a pull request; a queue entry has none, and it lives for
+    # minutes. Without this clause every guard above passes on a `merge_group`
+    # run — `github.event.action` is empty and the event is not a dispatch — so
+    # the job would deploy `STAGING/<slug>/` named after the ephemeral
+    # `gh-readonly-queue/...` ref. Nothing would ever remove it: `cleanup`
+    # fires on `pull_request_target: closed`, and a queue branch is never a
+    # pull request that closes. That is the `plj1` shape — previews
+    # accumulating on `gh-pages` with no owner and no deletion path — arriving
+    # once per merge rather than once per PR.
+    #
+    # A skipped job reports `skipped`, which satisfies a required check, so the
+    # queue gets its verdict without a deployment.
+    if: >-
+      github.event.action != 'closed'
+      && (github.event_name != 'workflow_dispatch' || inputs.cleanup_slug == '')
+      && github.event_name != 'merge_group'
     runs-on: ubuntu-latest
     # NO shared `gh-pages-push` group. This job keeps only the per-branch
     # workflow-level group above, plus the retry on its push.

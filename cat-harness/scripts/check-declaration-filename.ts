@@ -82,6 +82,7 @@
  */
 
 import { readdirSync, readFileSync } from "node:fs";
+import { gitCorpus } from "../schemas/git-corpus.js";
 import { join, relative, resolve } from "node:path";
 
 import { instanceRootsIn, siteDirFor } from "../schemas/cat-harness.js";
@@ -378,9 +379,36 @@ function scanMarkdown(root: string): MarkdownRef[] {
   const generated = generatedPrefixes(root);
   const out: MarkdownRef[] = [];
   const skip = new Set([".git", "node_modules"]);
+  // ASKED OF GIT, not walked — and this walk skipped NO dot-directory, so it
+  // descended into `.claude/worktrees/<id>/`, where a worktree-isolated agent
+  // keeps a complete second checkout of this repository. Measured 2026-09-30
+  // with one worktree live: 528 stale-path findings, whose paths begin
+  // `.claude/worktrees/agent-...`, on a branch that touched none of them.
+  //
+  // `.claude/worktrees/` is gitignored (`.gitignore:31`) and untracked, so
+  // `git ls-files --cached --others --exclude-standard` never lists it. Bean
+  // `vpek` fixed the same class in eslint and left the general question open;
+  // this is the second of two sweeps that answer it yes.
+  //
+  // The fallback is NOT silent: `gitCorpus` returns `undefined` when git
+  // cannot answer rather than an empty list, and an empty corpus here would
+  // make this check vacuously pass — the `dh4f` shape. So the walk survives
+  // for that case and the caller is told which enumeration ran.
+  const listed = gitCorpus(root, ["*.md"]);
+  if (listed !== undefined) {
+    for (const abs of listed.sort()) {
+      const rel = relative(root, abs).split("\\").join("/");
+      const lines = readFileSync(abs, "utf8").split("\n");
+      for (const [i, line] of lines.entries()) {
+        const klass = classifyMarkdownLine(rel, line, records, paragraphAt(lines, i), generated);
+        if (klass) out.push({ file: rel, line: i + 1, text: line.trim(), klass });
+      }
+    }
+    return out;
+  }
   const walkMd = (dir: string): void => {
     for (const e of readdirSync(dir, { withFileTypes: true })) {
-      if (skip.has(e.name)) continue;
+      if (skip.has(e.name) || e.name === ".claude") continue;
       const abs = join(dir, e.name);
       if (e.isDirectory()) {
         walkMd(abs);

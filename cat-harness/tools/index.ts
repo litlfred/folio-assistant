@@ -2346,19 +2346,24 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       install: { cli: "npm install -g release-please (or the GitHub Action googleapis/release-please-action@v4)" },
       invoke: { shell: "release-please release-pr" },
       requires: { runtime: ["node", "release-please"], network: true },
+      // The same I/O as `package-release-manual`, stated at the level of the
+      // RELEASE (owner, 2026-09-30: "Align I/O, pair"): a package in, its tag
+      // out. So `deriveAlternatives` pairs the two (#1168, B9a). The release PR
+      // is this mechanism's intermediate step — merging it creates the tag —
+      // and the config file is its own setup, in `selection.limits`.
       io: {
         inputs: [
-          { name: "repo", schema: t("RepoFullName"), required: true, arg: { flag: "--repo-url" }, description: "owner/name of the repository whose packages are released." },
-          { name: "config", schema: t("RepoPath"), required: false, arg: { flag: "--config-file" }, description: "The release config. Must exist: a missing one falls back to defaults that find nothing." },
+          { name: "package", schema: t("PackageName"), required: true, description: "The package being released. release-please proposes every package it is configured for; this is the one whose tag is wanted." },
+          { name: "repo", schema: t("RepoFullName"), required: false, arg: { flag: "--repo-url" }, description: "owner/name of the repository the release is made in; the current one when absent." },
         ],
-        outputs: [{ name: "releasePr", schema: t("Url"), description: "The release PR it opened or updated. Merging it is the approval." }],
+        outputs: [{ name: "tag", schema: t("Text"), description: "The tag created when the release PR merges, `<package>-v<version>`." }],
       },
       satisfies: ["package-release"],
       selection: {
         when:
           "A repository whose commits follow conventional-commit messages and that releases often enough that doing it by hand is the bottleneck. Several packages in one repository, each with its own tag, is its strength.",
         limits:
-          "The bump comes from commit MESSAGES, not from what changed: a `feat:` that removed something gives a minor bump. Check it against the surface diff (skill step 1). With the default token it cannot open PRs unless the repository allows Actions to (bean `frq2`).",
+          "The bump comes from commit MESSAGES, not from what changed: a `feat:` that removed something gives a minor bump. Check it against the surface diff (skill step 1). With the default token it cannot open PRs unless the repository allows Actions to (bean `frq2`). It needs a config file (`--config-file`); a missing one falls back to defaults that find nothing. The tag appears only when its release PR is merged.",
         cost: "Not configured here. One config file and one manifest per repository; each run is a few seconds of API calls.",
       },
     }),
@@ -2372,6 +2377,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       io: {
         inputs: [
           { name: "package", schema: t("PackageName"), required: true, description: "The package being released." },
+          { name: "repo", schema: t("RepoFullName"), required: false, description: "owner/name of the repository the release is made in; the current one when absent." },
         ],
         outputs: [{ name: "tag", schema: t("Text"), description: "The tag created, `<package>-v<version>`." }],
       },
