@@ -1692,7 +1692,11 @@ export const RULES: Rule[] = [
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
+    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
+    // `blueprint/` STOOD in the prefixes above until 2026-09-30 (bean `vov0`):
+    // it held a hand-written QOU blueprint, folio content in the platform, and
+    // is removed now that `blueprint-layout.ts` generates a paper's
+    // `blueprint/src` from its manifest (#1598).
     exact: [
       // `scripts/build-document-site.ts` STOOD HERE and is GONE as of bean
       // `yj6r`, 2026-09-30: it now lives in `folio-assistant-core/scripts/`
