@@ -11,9 +11,9 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { anchor, renderSchemaPage, rules, spaced } from "../bootstrap-schema-page.ts";
+import { anchor, renderSchemaPage, rules, spaced } from "./bootstrap-schema-page.ts";
 
-const SCHEMAS = join(import.meta.dir, "..", "..", "..", "bootstrap", "schemas");
+const SCHEMAS = join(import.meta.dir, "..", "..", "bootstrap", "schemas");
 
 const doc = {
   file: "x.schema.json",

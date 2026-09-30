@@ -32,7 +32,7 @@
  */
 import { join } from "node:path";
 
-import { readDeclaration, repoRootFor } from "./cat-harness.js";
+import { readKnowledgeGraphDeclaration } from "./declaration.ts";
 
 /** MAJOR.MINOR.PATCH, nothing else: no ranges, no pre-release, no `v`. */
 export const SEMVER = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
@@ -69,9 +69,13 @@ export function releaseIri(r: ReleaseIris, path: string, audience: "agent" | "hu
   return `${audience === "agent" ? r.agent : r.human}${path.replace(/^\/+/, "")}`;
 }
 
-/** bootstrap's release, read from `bootstrap/bootstrap.json` — a harness may read bootstrap, never the reverse. */
-export function bootstrapRelease(repoRoot: string = repoRootFor(join(import.meta.dir, ".."))): ReleaseIris {
-  const r = releaseIris(readDeclaration(join(repoRoot, "bootstrap")));
+/**
+ * bootstrap's release, read from its declaration. `bootstrapDir` is the
+ * bootstrap checkout: beside bootstrap-tools here, and wherever a consumer
+ * put it after the split — a caller that knows passes it.
+ */
+export function bootstrapRelease(bootstrapDir: string = join(import.meta.dir, "..", "..", "bootstrap")): ReleaseIris {
+  const r = releaseIris(readKnowledgeGraphDeclaration(bootstrapDir));
   if (!r) throw new Error("bootstrap/bootstrap.json declares no iriBase");
   return r;
 }

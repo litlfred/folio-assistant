@@ -145,7 +145,7 @@ failing anything**. A gate that stops covering something still reports green.
 ## `kg:processes` and `kg:files` — an instance's diagrams and files, from its declaration
 
 Two sections any instance's README may carry, both read from the instance's
-own declaration and the files it names (`content/pipeline/readme-graph-sections.ts`).
+own declaration and the files it names (`bootstrap-tools/scripts/readme-graph-sections.ts`).
 Owner, 2026-09-29: *"display bpmn(s) etc in README.md"*, *"part of readme.md
 generation is to do rendering"*, and the file list at the end must be *"a
 skill and tool in cat-harness"*.
@@ -188,8 +188,10 @@ heading is the directory's declared `title`, the paragraph its `description`,
 the kinds its `graphKinds`, each file row what the file says it is, and "used
 by" only a relation a diagram records.
 
-**The layout is Liquid**, in `tools/templates/readme/`, part of the tools
-graph and found through the `tools` declaration. Templates may `{% include %}` one another, Jekyll
+**The layout is Liquid**, in `bootstrap-tools/scripts/templates/readme/`,
+beside the writer in the tools repository (bean `xsqm`). cat-harness's
+`readme:subgraphs` resolves its own Extensions — a directory's `scope`, an
+`absent` directory, the declared README — and calls that writer. Templates may `{% include %}` one another, Jekyll
 style, and read any declared field through `kg`. Change a template, run the
 command, commit the result. How to write one is
 [`liquid-templates`](liquid-templates.md).
@@ -221,7 +223,7 @@ s"*. A capitalized term bootstrap defines links to its row in
 use — so a reader who lands mid-page is one click from the definition.
 
 - **Generated READMEs** link them as they are written: `subgraph-readmes` runs
-  `linkTerms` (`content/pipeline/term-links.ts`) over each declared
+  `linkTerms` (`bootstrap-tools/scripts/term-links.ts`) over each declared
   description and each file's description, with links made relative to the
   README by `bootstrapTermTargets`.
 - **Hand-written READMEs** are not rewritten by a generator — the folio owns

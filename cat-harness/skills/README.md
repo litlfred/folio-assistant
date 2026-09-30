@@ -15,7 +15,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`folio-document-adapter/`](folio-document-adapter/) | 6 files | |
 | [`folio-paper-adapter/`](folio-paper-adapter/) | 66 files | |
 | [`framework/`](framework/) | 1 file | |
-| [`graph-management/`](graph-management/) | 7 files | |
+| [`graph-management/`](graph-management/) | 8 files | |
 | [`hypothesis-generation/`](hypothesis-generation/) | 30 files | |
 | [`kg-navigation/`](kg-navigation/) | 2 files | |
 | [`permissions/`](permissions/) | 1 file | |

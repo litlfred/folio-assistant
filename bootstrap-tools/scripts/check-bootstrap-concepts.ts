@@ -18,14 +18,13 @@
  *
  * ## Beside bean `iwtn`'s test, not instead of it
  *
- * `cat-harness/schemas/graph.test.ts` holds ALL of `bootstrap/` to a stricter
+ * `bootstrap-tools/schemas/graph.test.ts` holds ALL of `bootstrap/` to a stricter
  * list — no layer above it may be named either (`cat-harness`, `folio`),
  * because bootstrap is self-definitional. This check covers the narrower
  * rule, no OUTSIDE concept, and applies it to one thing that test does not
- * read: the Zod SOURCES bootstrap's schemas are generated from. Those moved
- * into `cat-harness/schemas/` when the `bootstrap-tools` instance was retired
- * (bean `319n`), where they may name cat-harness, but still may not name an
- * outside concept, since their text becomes the published schema.
+ * read: the Zod SOURCES bootstrap's schemas are generated from. Those live in
+ * `bootstrap-tools/schemas/` (bean `xsqm`, reversing `319n`), and still may
+ * not name an outside concept, since their text becomes the published schema.
  *
  * ## Which files
  *
@@ -75,7 +74,7 @@ function filesUnder(dir: string): string[] {
     const p = join(dir, name);
     if (statSync(p).isDirectory()) out.push(...filesUnder(p));
     // A TEST is not a schema, and one that lists the forbidden names in order
-    // to forbid them (`cat-harness/schemas/graph.test.ts`) is not a leak.
+    // to forbid them (`bootstrap-tools/schemas/graph.test.ts`) is not a leak.
     else if (/\.(ts|json)$/.test(name) && !/\.test\.ts$/.test(name)) out.push(p);
   }
   return out;
@@ -98,14 +97,14 @@ export function bootstrapSchemaDirs(repo: string): string[] {
 
 /** The Zod modules the bootstrap schemas are GENERATED from, read off the generator's imports. */
 export function bootstrapSchemaSources(repo: string): string[] {
-  const gen = join(repo, "cat-harness", "scripts", "gen-bootstrap-schemas.ts");
+  const gen = join(repo, "bootstrap-tools", "scripts", "gen-bootstrap-schemas.ts");
   const text = readFileSync(gen, "utf8");
   const out = new Set<string>();
   // Only a module imported FOR A SCHEMA is a source: the generator also
-  // imports `cat-harness.ts` for its instance helpers, and that module's text
+  // imports `declaration.ts` for its instance helpers, and that module's text
   // never reaches a published document.
   for (const m of text.matchAll(/import\s*\{([^}]*)\}\s*from\s+"\.\.\/schemas\/([a-z0-9-]+\.ts)"/g)) {
-    if (/\b\w+Schema\b/.test(m[1]!)) out.add(join(repo, "cat-harness", "schemas", m[2]!));
+    if (/\b\w+Schema\b/.test(m[1]!)) out.add(join(repo, "bootstrap-tools", "schemas", m[2]!));
   }
   return [...out].sort();
 }

@@ -146,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 429,
+      "count": 441,
       "unit": "beans"
     },
     {
@@ -1690,6 +1690,60 @@
       ]
     },
     {
+      "name": "bootstrap-tools",
+      "title": "Bootstrap tools",
+      "label": "Bootstrap tools",
+      "description": "The Zod source of bootstrap's schemas, the generators that write bootstrap's JSON Schemas, schema page and READMEs, and the checks bootstrap's content must pass — runnable by an agent, with zod, liquidjs, Playwright and bpmn-js as its dependencies.",
+      "footer": false,
+      "needs": [
+        "bootstrap"
+      ],
+      "icon": null,
+      "tone": 0,
+      "reads": "a question mark — no avatar is declared for this kind",
+      "genericAvatar": true,
+      "instantiated": false,
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 2
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 2
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 0
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "schemas",
+          "note": "no viewer yet"
+        }
+      ],
+      "findings": [
+        "bootstrap-tools: declares 2 graph(s) with no published viewer — code, schemas. Declared and not rendered is a gap, not a dead link.",
+        "bootstrap-tools: no avatar declared for this instance — showing the generic mark."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
+    {
       "name": "bootstrap",
       "title": "Bootstrap",
       "label": "Bootstrap",
@@ -1942,6 +1996,12 @@
       "major": 0,
       "agent": "https://litlfred.github.io/bootstrap/0.1.0/",
       "human": "https://litlfred.github.io/bootstrap/v0/"
+    },
+    "bootstrap-tools": {
+      "version": "0.1.0",
+      "major": null,
+      "agent": "",
+      "human": ""
     },
     "cat-harness": {
       "version": "0.1.0",
@@ -2840,6 +2900,44 @@
         ]
       },
       {
+        "name": "bootstrap-tools",
+        "title": "Bootstrap tools",
+        "group": "checkout",
+        "declaredIn": "bootstrap-tools/bootstrap-tools.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/bootstrap-tools.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/bootstrap-tools/bootstrap-tools.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "bootstrap-tools"
+          },
+          {
+            "key": "title",
+            "summary": "Bootstrap tools"
+          },
+          {
+            "key": "description",
+            "summary": "The Zod source of bootstrap's schemas, the generators that write bootstrap's JSON Schemas…"
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "directories",
+            "summary": "2: bootstrap-tools-schemas, bootstrap-tools-scripts"
+          },
+          {
+            "key": "needs",
+            "summary": "bootstrap"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
+      {
         "name": "bootstrap",
         "title": "Bootstrap",
         "group": "instantiated",
@@ -2907,7 +3005,8 @@
     "findings": [
       "`topology`: no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
       "who-iris: declares `folioMount`, which the declaration schema does not have and silently drops.",
-      "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops."
+      "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops.",
+      "bootstrap-tools: declares `supports`, which the declaration schema does not have and silently drops."
     ]
   }
 }

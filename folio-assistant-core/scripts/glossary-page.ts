@@ -71,7 +71,7 @@ import {
   resolveDirectories,
 } from "../../cat-harness/schemas/cat-harness.ts";
 import { LEGACY_FOLIO_NS } from "../../cat-harness/schemas/namespaces.ts";
-import { releaseIris } from "../../cat-harness/schemas/release-iri.ts";
+import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { GlossarySchema, schemeIri, toSkos, termIri, type Glossary, type LangText } from "../schemas/glossary.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
 

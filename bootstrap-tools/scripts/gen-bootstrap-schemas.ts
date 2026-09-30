@@ -41,7 +41,7 @@
  * currently REJECTS. That is a contract weakened invisibly, which is the
  * failure this repository works hardest against, so the conditionals are
  * re-applied from `JSON_SCHEMA_CONDITIONALS` and
- * `cat-harness/schemas/discussion.test.ts` proves it with documents
+ * `bootstrap-tools/schemas/discussion.test.ts` proves it with documents
  * that must fail.
  *
  * Usage:
@@ -53,7 +53,7 @@ import { join, relative } from "node:path";
 
 import { z } from "zod";
 
-import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.ts";
+import { readKnowledgeGraphDeclaration, supportsContent } from "../schemas/declaration.ts";
 
 
 import {
@@ -99,17 +99,26 @@ const check = process.argv.includes("--check");
  * singular question has no answer — the `wggr` guard, correctly.
  */
 function bootstrapRoot(): string {
-  for (const root of instanceRootsIn(ROOT)) {
-    try {
-      if (readDeclaration(root)?.name === "bootstrap") return root;
-    } catch {
-      // An unreadable sibling declaration is not this generator's to report.
-      continue;
+  // `--root <dir>` names the bootstrap checkout; beside bootstrap-tools by
+  // default, which is where it sits in this repository and in a checkout of
+  // the pair. No sibling scan: the tool is handed the checkout it works on.
+  const at = process.argv.indexOf("--root");
+  const dir = at >= 0 && process.argv[at + 1] ? process.argv[at + 1]! : join(ROOT, "bootstrap");
+  const decl = readKnowledgeGraphDeclaration(dir);
+  if (decl?.name === "bootstrap") {
+    // A toolset handles the content majors it lists, and refuses others.
+    const tools = readKnowledgeGraphDeclaration(join(import.meta.dir, ".."));
+    if (!tools || !supportsContent(tools, "bootstrap", decl.version)) {
+      throw new Error(
+        `bootstrap ${decl.version ?? "(no version)"} is not a major these tools support ` +
+          `(bootstrap-tools.json \`supports.bootstrap\`). Use a bootstrap-tools release that lists it.`,
+      );
     }
+    return dir;
   }
   throw new Error(
-    "no instance declares itself `bootstrap` — cannot place the generated schemas. " +
-      "That is a missing or renamed declaration, not a missing directory.",
+    `${dir} holds no declaration naming itself \`bootstrap\` — cannot place the generated schemas. ` +
+      "Pass the bootstrap checkout as --root <dir>.",
   );
 }
 
@@ -119,12 +128,15 @@ const BOOTSTRAP = bootstrapRoot();
 const TARGETS = [
   {
     // declared-path-literal: the convention fallback, at the call site. The
-    // documents moved from `skills/` to the declared `schemas/` on
-    // 2026-09-21; the `$id` below did NOT move with them, and must not —
-    // it is half of a published contract cited from five languages'
-    // catalogues, and ids are stable across a relocation while paths are not.
+    // documents moved from `skills/` to `schemas/` on 2026-09-21 and their
+    // `$id` stayed at `skills/discussion/…`, a path no file sits at — so
+    // publishing files where they sit could never serve it. Owner, 2026-09-29:
+    // the `$id` becomes the file's path, before 0.1.0 is ever served, and
+    // `check:node-iris` now fails on any identifier that is not its file's
+    // path. (The translation catalogues cite the FILENAME, not the `$id`,
+    // checked before changing it.)
     file: "schemas/discussion.input.schema.json",
-    id: releaseIri(RELEASE, "skills/discussion/input.schema.json", "agent"),
+    id: releaseIri(RELEASE, "schemas/discussion.input.schema.json", "agent"),
     title: "Discussion Input",
     description:
       "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — a Bootstrapping Agent has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
@@ -135,7 +147,7 @@ const TARGETS = [
   {
     // declared-path-literal: as above — path moved, `$id` deliberately not.
     file: "schemas/discussion.output.schema.json",
-    id: releaseIri(RELEASE, "skills/discussion/output.schema.json", "agent"),
+    id: releaseIri(RELEASE, "schemas/discussion.output.schema.json", "agent"),
     title: "Discussion Output",
     description:
       "What the exchange determined: which harness, which repositories, on whose word, and by what means. This document existing and conforming is what finishes the task — not that a conversation took place.",

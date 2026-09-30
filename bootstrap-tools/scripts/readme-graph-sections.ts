@@ -2,7 +2,7 @@
  * README sections an instance renders from its own declaration: its Processes,
  * drawn, and every file it holds.
  *
- * @module content/pipeline/readme-graph-sections
+ * @module bootstrap-tools/scripts/readme-graph-sections
  *
  * Owner, 2026-09-29, on `bootstrap/README.md`: *"display bpmn(s) etc in
  * README.md"*, *"cat-harness renders svg, part of readme.md generation is to
@@ -14,6 +14,15 @@
  * So both are sections of the `readme_sync` tool (`readme-sections.ts`), each
  * derived from the instance's declaration and the files it names — never from
  * a list kept here. Run against an instance with `--dir <instance>`.
+ *
+ * ## Why this lives in bootstrap-tools
+ *
+ * One copy of the README writers, in the tools repository of the Knowledge
+ * Graph whose READMEs they write (owner, 2026-09-29, bean `xsqm`), which
+ * cat-harness calls. So it reads the declaration with bootstrap's own shape
+ * (`../schemas/declaration.ts`), asks git itself (`./git-files.ts`), and
+ * states the section types structurally below rather than importing them
+ * from the harness registry that lists it.
  *
  * ## Marker names
  *
@@ -28,12 +37,32 @@
  * writing a broken image; an unreadable declaration does the same. Neither is
  * reported as "this instance has no Processes".
  */
-import { existsSync, readdirSync, readFileSync, statSync } from "fs";
-import { basename, join, relative } from "path";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { basename, join, relative } from "node:path";
 
-import { findDeclarationFile, readDeclaration } from "../../schemas/cat-harness";
-import { gitCorpus } from "../../schemas/git-corpus";
-import type { ReadmeSection, SectionOutput } from "./readme-sections";
+import { declarationFileIn, readKnowledgeGraphDeclaration } from "../schemas/declaration.ts";
+import { gitFiles } from "./git-files.ts";
+
+/** What a section renders. The same shape as the harness's `SectionOutput`. */
+export interface SectionOutput {
+  markdown: string;
+  /** Operator-facing remarks: what was empty, what could not be read. */
+  notes: string[];
+  /** "I could not determine this" — leave whatever the README already has. */
+  skip?: boolean;
+}
+
+/**
+ * A README section keyed by its marker. The harness's `ReadmeSection` passes
+ * a richer context; these two read only `root`, so they fit its registry.
+ */
+export interface GraphSection {
+  /** Marker name; the README carries `<!-- <marker>:begin -->` … `:end`. */
+  marker: string;
+  /** One line, shown by `--list`. */
+  summary: string;
+  render(ctx: { root: string }): SectionOutput;
+}
 
 /** Escape the cell separator so a value containing `|` cannot break a table. */
 const cell = (text: string): string => text.replace(/\|/g, "\\|");
@@ -53,7 +82,7 @@ export function firstSentence(text: string): string {
  */
 function filesUnder(root: string, dir: string): string[] {
   if (!existsSync(dir) || !statSync(dir).isDirectory()) return [];
-  const corpus = gitCorpus(dir);
+  const corpus = gitFiles(dir);
   if (corpus !== undefined) {
     return corpus
       .filter((p) => existsSync(p) && !relative(dir, p).split("/").some((s) => s.startsWith(".")))
@@ -126,7 +155,7 @@ function ordered(g: Graph): Graph["bpmn"] {
 /** The declared directories, or `undefined` when the declaration cannot be read. */
 function declaredDirs(root: string): { id: string; path: string; title?: string; description?: string }[] | undefined {
   try {
-    const decl = readDeclaration(root);
+    const decl = readKnowledgeGraphDeclaration(root);
     if (!decl) return undefined;
     return (decl.directories ?? []).map((d) => ({ id: d.id, path: d.path, title: d.title, description: d.description }));
   } catch {
@@ -147,7 +176,7 @@ const skip = (why: string): SectionOutput => ({ markdown: "", notes: [`left unch
  * Rendering needs a browser, so it stays in the renderer, and `readme:sync`
  * for such an instance runs the renderer first (`package.json`).
  */
-export const processesSection: ReadmeSection = {
+export const processesSection: GraphSection = {
   marker: "kg:processes",
   summary: "Every Process the instance declares, drawn — the SVG beside each .bpmn",
   render(ctx) {
@@ -241,17 +270,22 @@ export function describe(root: string, file: string, assets: Map<string, string>
  * blank otherwise rather than guessed. A directory of results collapses to
  * one row with its count.
  */
-export const filesSection: ReadmeSection = {
+export const filesSection: GraphSection = {
   marker: "kg:files",
   summary: "Every file the instance holds, grouped by declared directory, each described from itself",
   render(ctx) {
     const root = ctx.root;
     const dirs = declaredDirs(root);
-    const declFile = findDeclarationFile(root);
-    if (!dirs || !declFile) return skip("no readable declaration at this root");
-    let decl: ReturnType<typeof readDeclaration>;
+    let declFile: string | undefined;
     try {
-      decl = readDeclaration(root);
+      declFile = declarationFileIn(root);
+    } catch {
+      declFile = undefined;
+    }
+    if (!dirs || !declFile) return skip("no readable declaration at this root");
+    let decl: ReturnType<typeof readKnowledgeGraphDeclaration>;
+    try {
+      decl = readKnowledgeGraphDeclaration(root);
     } catch {
       return skip("declaration does not parse");
     }
@@ -269,8 +303,7 @@ export const filesSection: ReadmeSection = {
     const head = ["| file | what it is | used by |", "|---|---|---|"];
 
     const lines: string[] = [];
-    // `findDeclarationFile` answers with a name or a path depending on its
-    // caller's layout; either way the row is the file's name at this root.
+    // The row is the declaration's file name at this root.
     const top = [...assets.keys(), basename(declFile)].filter((f) => existsSync(join(root, f)));
     lines.push("**At the top**", "", ...head, ...top.map((f) => row(f)), "");
 

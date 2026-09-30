@@ -12,11 +12,11 @@ import {
   RequirementRefSchema,
   RequirementSchema,
   requirementRef,
-} from "../../schemas/requirement.ts";
+} from "../../../bootstrap-tools/schemas/requirement.ts";
 import { RequirementSchema as HarnessRequirementSchema } from "../../schemas/skill-package.ts";
 import { TestRunSchema } from "../../schemas/test-run.ts";
 import { checkRequirementPage, collisions, declaredDirFor } from "../check-requirements.ts";
-import { bootstrapSchemaDirs, bootstrapSchemaSources, scan } from "../check-bootstrap-concepts.ts";
+import { bootstrapSchemaDirs, bootstrapSchemaSources, scan } from "../../../bootstrap-tools/scripts/check-bootstrap-concepts.ts";
 
 const REPO = join(import.meta.dir, "..", "..", "..");
 
