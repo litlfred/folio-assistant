@@ -52,10 +52,8 @@ consistency
 •	 Standards 
 adherence 
 (terminology, 
-interoperabili­
-ty, security)
-•	 User satisfac­
-tion
+interoperability, security)
+•	 User satisfaction
 •	 Workflow “fit”
 •	 Learning curve 
 (design)
@@ -79,21 +77,18 @@ environment
 •	 Reduction of 
 cost
 •	 Total cost of 
-implementa­
-tion
+implementation
 •	 Error rates
 •	 Learning curve 
 of users
-•	 Improve­
-ments in 
+•	 Improvements in 
 coverage
 •	 Changes 
 in policy, 
 practices 
 attributable 
 to system
-•	 Extendabil­
-ity to new 
+•	 Extendability to new 
 use-cases
 •	 Adaptability 
 to other 

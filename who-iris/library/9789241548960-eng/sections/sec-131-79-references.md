@@ -22,8 +22,7 @@ Guyatt GH, Oxman AD, Santesso N, Helfand M, Vist G, Kunz R, et al. GRADE guideli
 Preparing summary of findings tables-binary outcomes. J Clin Epidemiol. 2013;66(2):158–
 72. doi: http://dx.doi.org/10.1016/j.jclinepi.2012.01.012 PMID: 22609141
 4.	
-Woolf SH, DiGuiseppi CG, Atkins D, Kamerow DB. Developing evidence-based clinical prac­
-tice guidelines: lessons learned by the US Preventive Services Task Force. Annu Rev Public 
+Woolf SH, DiGuiseppi CG, Atkins D, Kamerow DB. Developing evidence-based clinical practice guidelines: lessons learned by the US Preventive Services Task Force. Annu Rev Public 
 Health. 1996;17(1):511–38. doi: http://dx.doi.org/10.1146/annurev.pu.17.050196.002455 
 PMID: 8724238
 5.	

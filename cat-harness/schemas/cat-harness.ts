@@ -519,6 +519,9 @@ export interface ContentDirectory extends GraphNodeDirectory {
   /** Why — required whenever {@link readOnly} is declared, either value. See the schema field. */
   readOnlyBasis?: string;
 
+  /** Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`). */
+  summaries?: "drain" | "held";
+
   /**
    * Which theme this subgraph renders on — one answer for every surface that
    * renders it (navbar section, board panel, sticky).
@@ -1298,6 +1301,18 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   coverage: SubgraphCoverageSchema.optional(),
   /** How this directory's tile looks. See {@link TileSchema}. */
   tile: TileSchema.optional(),
+  /**
+   * Whether the agent summary drain may draft summaries for a `library`
+   * directory's prose blocks (bean `x80s`). Absent means `drain`.
+   *
+   * `held` keeps every entry out of `summaries:next` and out of the backlog,
+   * and the listing names it as held rather than dropping it — "never
+   * offered" must not read as "nothing to do". A property of the directory,
+   * declared by the instance that OWNS it: the owner held agent-skills'
+   * library back on 2026-09-24, and while that lived only as prose on the
+   * bean, `summaries:next` handed its blocks out FIRST.
+   */
+  summaries: z.enum(["drain", "held"]).optional(),
   /**
    * HOW this graph is shown, and what can be done to it.
    *
@@ -5304,6 +5319,10 @@ export function declaredKinds(
       }
     }
   }
+  // Deeper levels: a nested entry whose own kind names a declaration file
+  // (`voices/vendors/vendors.json`, bean `rkqp`). The loop above reads one
+  // level only.
+  for (const n of nestedDirectories(root, decl, registry)) for (const g of n.graphKinds) kinds.add(g);
   return kinds;
 }
 
@@ -5336,32 +5355,56 @@ export function nestedDirectories(
 ): Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> {
   const out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }> = [];
   for (const d of decl.directories ?? []) {
-    const files = (d.graphKinds ?? [])
-      .map((g) => registry.get(g)?.declarationFile)
-      .filter((f): f is string => typeof f === "string");
-    for (const f of [...new Set(files)]) {
-      const p = join(declaredKindsEntryRoot(root, d), f);
-      if (!existsSync(p)) continue;
-      let nested: { directories?: Array<{ id?: string; path?: string; graphKinds?: string[]; description?: string }> };
-      try {
-        nested = JSON.parse(readFileSync(p, "utf-8"));
-      } catch {
-        continue;
-      }
-      const parent = d.path.replace(/\/+$/, "");
-      for (const nd of nested.directories ?? []) {
-        if (!nd.id || !nd.path) continue;
-        out.push({
-          id: `${d.id}/${nd.id}`,
-          path: `${parent}/${nd.path.replace(/^\.\//, "").replace(/\/+$/, "")}/`,
-          graphKinds: nd.graphKinds ?? [],
-          ...(nd.description ? { description: nd.description } : {}),
-          parentId: d.id,
-        });
-      }
-    }
+    const parent = d.path.replace(/\/+$/, "");
+    walkNested(declaredKindsEntryRoot(root, d), parent, d.id, d.graphKinds ?? [], registry, out, new Set());
   }
   return out;
+}
+
+/**
+ * One level of {@link nestedDirectories}, then the next: a nested entry whose
+ * OWN kind names a `declarationFile` is read in turn. Bean `rkqp` (owner
+ * 2026-09-30): `voices/voices.json` declares `vendors/`, and
+ * `vendors/vendors.json` declares each `vendors/<id>/`. That is two levels, and
+ * the one-level read stopped at the first. The chain ends where a directory
+ * carries no declaration, which is the "structure is inherited" of the #980
+ * ruling. `seen` guards a declaration that names its own directory.
+ */
+function walkNested(
+  abs: string,
+  rel: string,
+  id: string,
+  kinds: readonly string[],
+  registry: GraphKindRegistry,
+  out: Array<{ id: string; path: string; graphKinds: string[]; description?: string; parentId: string }>,
+  seen: Set<string>,
+): void {
+  if (seen.has(abs)) return;
+  seen.add(abs);
+  const files = kinds.map((g) => registry.get(g)?.declarationFile).filter((f): f is string => typeof f === "string");
+  for (const f of [...new Set(files)]) {
+    const p = join(abs, f);
+    if (!existsSync(p)) continue;
+    let nested: { directories?: Array<{ id?: string; path?: string; graphKinds?: string[]; description?: string }> };
+    try {
+      nested = JSON.parse(readFileSync(p, "utf-8"));
+    } catch {
+      continue;
+    }
+    for (const nd of nested.directories ?? []) {
+      if (!nd.id || !nd.path) continue;
+      const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
+      const entry = {
+        id: `${id}/${nd.id}`,
+        path: `${rel}/${sub}/`,
+        graphKinds: nd.graphKinds ?? [],
+        ...(nd.description ? { description: nd.description } : {}),
+        parentId: id,
+      };
+      out.push(entry);
+      walkNested(join(abs, sub), `${rel}/${sub}`, entry.id, entry.graphKinds, registry, out, seen);
+    }
+  }
 }
 
 // ── Core's kinds, registered ────────────────────────────────────

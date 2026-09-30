@@ -6132,6 +6132,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.summaries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectory.summaries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.summaries",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.theme",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6224,6 +6243,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.summaries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.summaries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the agent summary drain may draft summaries for a `library` directory's prose blocks (bean `x80s`). Absent means `drain`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.summaries",
       "skos:note": "candidate"
     },
     {
@@ -14948,6 +14986,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakeschema.licence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeSchema.licence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The licence the uploader established, as the SAME record a library manifest carries in `meta.licence` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema.licence",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakeschema.record",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -19410,6 +19467,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/script-qa.ts#ScriptQaReport.updated_at",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/section-verdicts.sectionverdictfileschema.verdicts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SectionVerdictFileSchema.verdicts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "entry slug → section id (the `sections/<id>.md` stem) → verdict."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictFileSchema.verdicts",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/section-verdicts.sectionverdictschema.saw",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SectionVerdictSchema.saw"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the inspector SAW — the reason for the role, checkable against the page."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictSchema.saw",
       "skos:note": "candidate"
     },
     {

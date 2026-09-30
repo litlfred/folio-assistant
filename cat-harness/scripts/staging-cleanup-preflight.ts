@@ -53,6 +53,7 @@
  */
 import { previewLiveness, type BranchEvidenceSet, type Probe } from "../test/health/checks.ts";
 import { originSlug, probeBranches, probeOpenPrHeads } from "../test/health/probes.ts";
+import { RETIRED_DIR } from "./restore-staging.ts";
 
 /**
  * What a slug may contain.
@@ -72,6 +73,7 @@ export function slugProblem(slug: string): string | undefined {
     return `\`${slug}\` is not a staging slug: the workflow's own sed pipeline can only produce [A-Za-z0-9._-].`;
   }
   if (slug === "." || slug === "..") return `\`${slug}\` is a path, not a preview.`;
+  if (slug === RETIRED_DIR) return `\`${slug}\` is the retired-record store (bean 6pfo), not a preview.`;
   return undefined;
 }
 

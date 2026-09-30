@@ -8,21 +8,15 @@ pages: 41-45
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-Systematic reviews of the evidence are the basis for most types of recommen­
-dations (see Chapter 8). Because WHO staff usually lack the time to perform 
+Systematic reviews of the evidence are the basis for most types of recommendations (see Chapter 8). Because WHO staff usually lack the time to perform 
 these reviews, they normally commission them from external contractors. 
-These contractors should be identified very early in the guideline develop­
-ment process because they have expertise in the development of key ques­
-tions and can help the steering group to establish a reasonable scope that 
+These contractors should be identified very early in the guideline development process because they have expertise in the development of key questions and can help the steering group to establish a reasonable scope that 
 conforms to the available budget and timeline.
-Systematic reviews can be commissioned from any group with the nec­
-essary expertise and no financial conflicts of interest. The Cochrane Collab­
-oration (4) and the Campbell Collaboration (5) have editorial teams whose 
+Systematic reviews can be commissioned from any group with the necessary expertise and no financial conflicts of interest. The Cochrane Collaboration (4) and the Campbell Collaboration (5) have editorial teams whose 
 expertise covers a broad range of topics relevant to WHO guidelines. These 
 teams may be interested in updating an existing review or in performing a 
 review de novo. They can be located via their organizational websites, or the 
-GRC Secretariat can help to identify the appropriate contact person. System­
-atic review teams that are interested in working with WHO are listed on the 
+GRC Secretariat can help to identify the appropriate contact person. Systematic review teams that are interested in working with WHO are listed on the 
 GRC intranet site (6).
 30
 Table 3.1.	
@@ -49,8 +43,7 @@ Require
 DOI?
 Steering 
 group
-Oversee the guide­
-line development 
+Oversee the guideline development 
 process
 Administration; 
 draft the scope; 
@@ -66,11 +59,9 @@ At the first step, as
 soon as a decision is 
 made to develop a 
 guideline
-The WHO techni­
-cal unit that 
+The WHO technical unit that 
 initiated the 
-guideline identi­
-fies members 
+guideline identifies members 
 Responsible 
 technical 
 officer 
@@ -80,8 +71,7 @@ the guideline topic;
 systematic review and 
 guideline methods
 Members include 
-representa­
-tives from all 
+representatives from all 
 relevant WHO 
 technical units at 
 headquarters and 
@@ -91,15 +81,11 @@ offices
 As dictated 
 by WHO 
 rules and 
-regula­
-tions (1)
-Guide­
-line 
-devel­
-opment 
+regulations (1)
+Guideline 
+development 
 group
-Formulate recom­
-mendations; the 
+Formulate recommendations; the 
 general scope and 
 content of the 
 guideline
@@ -108,8 +94,7 @@ into the scope
 and key (PICO) 
 questions; attend 
 GDG meeting(s); 
-formulate recom­
-mendations; 
+formulate recommendations; 
 critically review 
 the final guideline 
 document
@@ -131,17 +116,14 @@ personal experience
 with the condition or 
 will be affected by the 
 recommendations; 
-methods for develop­
-ing evidence-based 
+methods for developing evidence-based 
 guidelines
 Gender balanced 
 and broad 
-geographic repre­
-sentation from all 
+geographic representation from all 
 WHO regions
 10–20, 
-occasion­
-ally more
+occasionally more
 Yes
 External 
 review 
@@ -167,21 +149,18 @@ As for the GDG
 As for the GDG; 
 can complement 
 any missing 
-diversity or per­
-spectives in the 
+diversity or perspectives in the 
 GDG
 5–20, 
 depending 
 on their 
 role and 
-the guide­
-line topic
+the guideline topic
 Yes for 
 individuals, 
 no for peer 
 reviewers 
-represent­
-ing their 
+representing their 
 organization
 continues ...
 Chapter 3 
@@ -207,8 +186,7 @@ of
 members
 Require 
 DOI?
-Sys­
-tematic 
+Systematic 
 review 
 team
 Provide a 
@@ -239,8 +217,7 @@ approach to guideline
 development
 Experience 
 developing 
-high-quality sys­
-tematic reviews 
+high-quality systematic reviews 
 on public health 
 topics; ability to 
 understand the 
@@ -248,14 +225,11 @@ guideline topic
 area
 2–6 or 
 more 
-depend­
-ing on the 
+depending on the 
 scope
 Yes
-Guide­
-line 
-method­
-ologist
+Guideline 
+methodologist
 Oversee the process 
 of developing 
 recommendations 
@@ -278,8 +252,7 @@ questions
 Selected by the 
 steering group 
 None
-Development of recom­
-mendations based on 
+Development of recommendations based on 
 evidence; systematic 
 review methods; 
 GRADE
@@ -292,18 +265,15 @@ guideline topic
 area
 One
 Yes
-Observ­
-ers at 
+Observers at 
 the GDG 
 meeting
 Observe
-Ensure the trans­
-parency of the 
+Ensure the transparency of the 
 processes; engage 
 partners; facilitate 
 implementation
-When the GDG meet­
-ing is being planned
+When the GDG meeting is being planned
 Selected by the 
 steering group 
 with input from 
@@ -340,12 +310,10 @@ Require
 DOI?
 Funder
 None with respect 
-to process of devel­
-opment or content 
+to process of development or content 
 of the guideline
 Provide funding
-After the techni­
-cal unit decides to 
+After the technical unit decides to 
 proceed with guideline 
 development
 Identified by the 
@@ -353,18 +321,15 @@ steering group
 None
 None
 WHO does not 
-accept any com­
-mercial support 
+accept any commercial support 
 for guideline 
 development
 One or 
 more 
-depend­
-ing on the 
+depending on the 
 scope
 No (it must 
-be deter­
-mined that 
+be determined that 
 they do not 
 receive any 
 funds from 

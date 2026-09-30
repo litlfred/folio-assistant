@@ -50,6 +50,11 @@ classDiagram
       superseded [0..1] object
     }
   }
+  namespace who_style_guide__glossary {
+    class n_who_style_guide_glossary_glossary["glossary: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace who_style_guide__qa {
     class who_style_guide_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
       <<json: KgQaReportSchema>>
@@ -85,6 +90,8 @@ classDiagram
   cssClass "who_style_guide_voices_Terminology" fa_uml_kind_voices
   cssClass "who_style_guide_voices_Rule" fa_uml_kind_voices
   cssClass "who_style_guide_voices_VoiceProfile" fa_uml_kind_voices
+  cssClass "n_who_style_guide_glossary_glossary" fa_uml_kind_glossary
+  cssClass "n_who_style_guide_glossary_glossary" fa_uml_undetermined
   who_style_guide_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" who_style_guide_qa_kg_qa_v1_Pair_attestation : pair_attestations
   cssClass "who_style_guide_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
   cssClass "who_style_guide_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa

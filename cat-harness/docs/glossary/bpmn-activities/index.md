@@ -12,13 +12,13 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 521 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 522 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 550 terms and is 425 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 551 terms and is 426 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">550</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">551</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1423,6 +1423,13 @@ Establish origin and licence <span class="fa-gloss-status">candidate, extracted<
 <p>Authors, publication, identifier, and the licence the source itself states. No stated licence means reference only: headings, page ranges and a summary in our own words; the file stays in uploads/ (git-ignored) pinned by checksum. A method with no origin is a house process; write a skill instead.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/methodology-from-source.bpmn"><code>cat-harness/processes/methodology-from-source.bpmn#A_Origin</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_ingestion.task_licence" data-fa-state="extracted" data-fa-gloss="">
+Establish the licence from the upload alone [document-intake] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>EARLY, by the owner's ruling on bean 7bg9 (2026-09-20): before any derivation, because library/ is holds: content and anything derived first is committed, so refusing it later is a deletion nobody may take unasked. This step sees only the upload itself — the licence recorded in its intake.json (the same stated / unknown record a library manifest carries) and whether a LICENSE file sits beside it. It never infers a licence from extracted text. The verdict is stated, unknown, or UNDETERMINED, and undetermined is never reported as cleared: the pipeline proceeds and says so, because a licence that only extraction can reveal is a later check's to find.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/document-ingestion.bpmn"><code>cat-harness/processes/document-ingestion.bpmn#Task_Licence</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_sessionstatemachine.a_identifyactor" data-fa-state="extracted" data-fa-gloss="">
 Establish who is acting <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1798,7 +1805,7 @@ Keep the local edit, and re-pin so it stops being asked <span class="fa-gloss-st
 L1 completeness gate <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named <code>paper-relevance-triage</code>, which has never existed, and is not <code>proof-triage</code> (that one triages proofs). Left uncovered until the skill is written. The gate contains one adjudication (Task_FlagDrift: <code>real</code>, <code>spurious</code> or <code>source-wrong</code>), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.</p>
+<p>See ingest-l1-completeness-gate.bpmn. Skill-backed by <code>library-ingestion</code> (2026-09-30, bean 7bg9): its section &quot;What a complete L1 entry holds&quot; names <code>check:l1-complete</code> as the gate and states its three results. Until then this step named <code>paper-relevance-triage</code>, which never existed, and was left uncovered rather than bound to a guess. The gate contains one adjudication (Task_FlagDrift: <code>real</code>, <code>spurious</code> or <code>source-wrong</code>), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/document-ingestion.bpmn"><code>cat-harness/processes/document-ingestion.bpmn#CallActivity_Gate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_sampleimport.task_library" data-fa-state="extracted" data-fa-gloss="">

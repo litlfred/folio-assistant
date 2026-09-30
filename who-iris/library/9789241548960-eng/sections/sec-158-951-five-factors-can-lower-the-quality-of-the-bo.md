@@ -11,14 +11,12 @@ source_sha256: bfcd856e3ad7ab20
 each outcome
 A body of evidence based on RCTs is rated as being of high quality at the 
 outset; evidence from nonrandomized trials or observational studies is 
-rated as being of low quality. For both types of studies, these initial rat­
-ings can be adjusted in light of five factors: limitations in study design and 
+rated as being of low quality. For both types of studies, these initial ratings can be adjusted in light of five factors: limitations in study design and 
 execution; indirectness; imprecision; inconsistency; and publication bias 
 (see Fig. 9.1). For a given body of evidence, the ratings are conducted for 
 each outcome. This requires detailed knowledge of the individual studies 
 included in the body of evidence. The factor “limitations in study design 
-and execution” is assessed initially as the risk of bias at the level of the indi­
-vidual study and then across studies, while the other four factors that can 
+and execution” is assessed initially as the risk of bias at the level of the individual study and then across studies, while the other four factors that can 
 lower the quality of the evidence are assessed for each outcome across all 
 the included studies.
 The criteria used to downgrade the quality of the evidence and the reason 
@@ -55,8 +53,7 @@ each factor up or down, the overall quality of the evidence for each outcome
 is rated after considering all criteria.
 9.5.1.1 Limitations in study design and execution
 For RCTs, several criteria are used to assess any limitations in study design 
-and execution (i.e. risk of bias). The following characteristics are the distin­
-guishing features of the studies that yield the best quality evidence (9, 10):
+and execution (i.e. risk of bias). The following characteristics are the distinguishing features of the studies that yield the best quality evidence (9, 10):
 ■■
 random sequence generation;
 ■■
@@ -93,8 +90,7 @@ the overall quality rating by one level (e.g. “high” becomes “moderate”
 for RCTs or “low” becomes “very low” for observational studies).
 ■■
 Very serious limitations ‒ the risk of bias may have a strong influence 
-on the estimate of effect and study limitations are present in the major­
-ity of studies contributing data on a given outcome in the review. This 
+on the estimate of effect and study limitations are present in the majority of studies contributing data on a given outcome in the review. This 
 typically results in a lowering of the quality by two levels.
 WHO handbook for guideline development
 116
@@ -103,8 +99,7 @@ Inconsistency is present when the results for a given outcome are not similar
 across studies (11). Some inconsistency will always be present. The magnitude of 
 the differences in the direction and size of the effect observed in different studies, 
 the significance of such differences, and whether any of these differences can be 
-explained guide the decision as to whether important inconsistency exists. Incon­
-sistency may arise from random variation or from differences across studies in 
+explained guide the decision as to whether important inconsistency exists. Inconsistency may arise from random variation or from differences across studies in 
 the populations, interventions, comparators or outcomes. To explore the sources 
 of inconsistency one may have to conduct sensitivity or subgroup analyses.
 Important inconsistency is present if:
@@ -113,12 +108,9 @@ the point estimates vary widely across studies;
 ■■
 confidence intervals show minimal overlap or none; or
 ■■
-in the case of a meta-analysis, the test for heterogeneity yields a statis­
-tically significant result and the I2 value is high (12).
-If all the results of the studies on a single outcome show overlapping con­
-fidence intervals, important inconsistency is not likely to exist. If the results 
-are inconsistent − for example, when the results of the largest trial contra­
-dict those of the smaller trials − the overall quality of the evidence may be 
+in the case of a meta-analysis, the test for heterogeneity yields a statistically significant result and the I2 value is high (12).
+If all the results of the studies on a single outcome show overlapping confidence intervals, important inconsistency is not likely to exist. If the results 
+are inconsistent − for example, when the results of the largest trial contradict those of the smaller trials − the overall quality of the evidence may be 
 lowered by one level. If the results are very inconsistent, the evidence may be 
 downgraded for the particular outcome involved by two levels. If only one 
 study exists for a given outcome, inconsistency is not present and the quality 
@@ -147,28 +139,22 @@ intermediate and surrogate outcomes are generally rated down because
 of indirectness, as they do not provide direct evidence on the health 
 outcomes that ultimately matter to individuals and populations.
 ■■
-Indirectness also occurs when no direct comparison of the interven­
-tion of interest with an alternative approach of interest (comparator) is 
-available. For example, if the guideline panel is interested in compar­
-ing intervention A with intervention B but only studies comparing A 
+Indirectness also occurs when no direct comparison of the intervention of interest with an alternative approach of interest (comparator) is 
+available. For example, if the guideline panel is interested in comparing intervention A with intervention B but only studies comparing A 
 with C and B with C are found, A can only be compared with B from 
 indirect evidence. Such indirect evidence would be of lower quality 
 than the evidence derived from a direct comparison of A and B and 
 would be rated down.
 9.5.1.4 Imprecision
-In general, results are imprecise when studies include relatively few partici­
-pants and few events and thus large uncertainty (i.e. wide confidence inter­
-vals) surrounds the estimate of effect (8, 15). For GDGs, if the confidence 
+In general, results are imprecise when studies include relatively few participants and few events and thus large uncertainty (i.e. wide confidence intervals) surrounds the estimate of effect (8, 15). For GDGs, if the confidence 
 interval for the pooled estimate of effect crosses the threshold established 
-for making one decision versus another, then the body of evidence is impre­
-cise for the particular outcome in question and the quality of the evidence is 
+for making one decision versus another, then the body of evidence is imprecise for the particular outcome in question and the quality of the evidence is 
 lower than it would be otherwise owing to uncertainty in the results.
 Systematic review teams can use the 95% confidence interval for the 
 pooled estimate of effect as the primary criterion for judging the presence of 
 imprecision. Alternatively, they can use the optimal information size which 
 is determined using a conventional calculation of the sample size needed 
-for a single adequately powered trial to detect the minimum effect of inter­
-est (15). If the total number of patients included in a systematic review is 
+for a single adequately powered trial to detect the minimum effect of interest (15). If the total number of patients included in a systematic review is 
 less than the number of patients generated by a conventional sample size 
 calculation, one should consider downgrading the quality of the evidence 
 for imprecision.
@@ -176,15 +162,13 @@ GRADE defines the quality of the evidence somewhat differently for
 systematic reviews and for guidelines, especially in terms of the criteria for 
 downgrading for imprecision. This is because GDGs need to consider the 
 context when making a recommendation, whereas in systematic reviews 
-judgements in connection with specific outcomes are usually made with­
-out regard to context. Thus, GDGs should carefully examine the systematic 
+judgements in connection with specific outcomes are usually made without regard to context. Thus, GDGs should carefully examine the systematic 
 review authors’ judgments about imprecision.
 In formulating a recommendation, all outcomes are considered 
 together, with attention to whether they are critical, or important but not 
 critical for decision-making. The decision to downgrade the quality of the 
 evidence for imprecision depends on the threshold established as the basis 
-for a decision or a recommendation and on the trade-off between desir­
-WHO handbook for guideline development
+for a decision or a recommendation and on the trade-off between desirWHO handbook for guideline development
 118
 able and undesirable consequences. Determining the acceptable threshold 
 involves an explicit judgement.
@@ -204,26 +188,20 @@ determine if the criteria for the optimal information size are met. If the
 answer is yes, one would not downgrade the evidence for imprecision.
 ■■
 Alternatively, if the event rate is very low and the sample size is very 
-large across studies for the outcome of interest (at least 2000 partici­
-pants), one would not downgrade the evidence for imprecision.
-When event rates are very few, 95% confidence intervals around rela­
-tive effects can be very wide, but 95% confidence intervals around absolute 
-effects may be narrow. In the latter case, the quality should not be down­
-graded for imprecision.
+large across studies for the outcome of interest (at least 2000 participants), one would not downgrade the evidence for imprecision.
+When event rates are very few, 95% confidence intervals around relative effects can be very wide, but 95% confidence intervals around absolute 
+effects may be narrow. In the latter case, the quality should not be downgraded for imprecision.
 The same logic for downgrading the quality of the evidence because of 
 imprecision applies to continuous variables, where the optimal information 
 size will require a sample size calculation for the continuous variable. If the 
 sample size exceeds 400, imprecision is unlikely to be present.
 9.5.1.5 Publication bias
 Publication bias is the systematic underestimate or overestimate of the 
-underlying beneficial or harmful effect of an intervention or exposure result­
-ing from the selective publication of studies based on the study results; stud­
-ies in which no effect is found are less likely to be published. Searches of trial 
+underlying beneficial or harmful effect of an intervention or exposure resulting from the selective publication of studies based on the study results; studies in which no effect is found are less likely to be published. Searches of trial 
 registries and the grey literature can help to identify unpublished studies 
 and thus minimize the risk of bias (see Chapter 7). The risk of publication 
 bias may be assessed using funnel plots and appropriate statistical tests. The 
-limitations of such tests should be noted, however: the existence or nonex­
-istence of publication bias cannot be confirmed – it can only be suspected. 
+limitations of such tests should be noted, however: the existence or nonexistence of publication bias cannot be confirmed – it can only be suspected. 
 When publication bias is suspected, the quality of the evidence should be 
 downgraded by one level (16).
 Chapter 9 

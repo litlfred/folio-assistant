@@ -28,12 +28,10 @@ Barnes DE, Bero LA. Why review articles on the health effects of passive smoking
 different conclusions. JAMA. 1998;279(19):1566–70. doi: http://dx.doi.org/10.1001/
 jama.279.19.1566 PMID: 9605902
 6.	
-Norris SL, Holmer HK, Ogden LA, Burda BU. Conflict of interest in clinical practice guide­
-line development: a systematic review. PLoS ONE. 2011;6(10):e25153. doi: http://dx.doi.
+Norris SL, Holmer HK, Ogden LA, Burda BU. Conflict of interest in clinical practice guideline development: a systematic review. PLoS ONE. 2011;6(10):e25153. doi: http://dx.doi.
 org/10.1371/journal.pone.0025153 PMID: 22039406
 7.	
-WHO eManual/VIII - Information Products/VIII.7 Ethical Issues/VIII.7.1 Conflicts of inter­
-est [intranet site: available to WHO staff only]. Geneva: World Health Organization; 2011 
+WHO eManual/VIII - Information Products/VIII.7 Ethical Issues/VIII.7.1 Conflicts of interest [intranet site: available to WHO staff only]. Geneva: World Health Organization; 2011 
 (http://emanual.who.int/p08/s07/Pages/VIII71Conflictsofinterest.aspx, accessed 11 
 November 2014).
 Chapter 6 
@@ -61,8 +59,7 @@ of interest contribute to conflicting guidelines for screening mammography. J Cl
 Ensuring the integrity of clinical practice guidelines: a tool for protecting patients. BMJ. 
 2013;347:f5535. doi: http://dx.doi.org/10.1136/bmj.f5535 PMID: 24046286
 The formulation of the questions that the guideline needs to address strongly 
-influences the final recommendations, so getting this right is crucial. The ques­
-tions are used to systematically search the evidence base for answers in the areas 
+influences the final recommendations, so getting this right is crucial. The questions are used to systematically search the evidence base for answers in the areas 
 of uncertainty or controversy that the guideline seeks to clarify. In the course of 
 exploring the scope of the guideline, identifying potential topics, and discussing 
 areas of uncertainty and controversy, the questions that need to be asked should 

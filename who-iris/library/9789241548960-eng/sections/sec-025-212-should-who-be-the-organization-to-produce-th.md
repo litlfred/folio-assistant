@@ -10,4 +10,4 @@ source_sha256: bfcd856e3ad7ab20
 ---
 Have WHO’s governing bodies requested the guideline? Is WHO in the best 
 position to issue guidance on this topic? Does the topic fall within the scope 
-of WHO’s remit? Is another organization better suited to produce this guide­
+of WHO’s remit? Is another organization better suited to produce this guide

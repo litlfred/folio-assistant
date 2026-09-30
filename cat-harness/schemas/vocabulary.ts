@@ -571,6 +571,7 @@ export function termLayer(name: string): TermLayer {
  */
 export const GRAPH_KIND_TYPE_LAYERS: Readonly<Record<string, TermLayer>> = {
   VoiceGraph: "core",
+  VoiceVendorsGraph: "core",
   LibraryGraph: "core",
   UploadsGraph: "core",
   TodoGraph: "core",
