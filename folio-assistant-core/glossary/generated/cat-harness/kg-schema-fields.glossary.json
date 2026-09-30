@@ -518,13 +518,6 @@
       "status": "candidate"
     },
     {
-      "id": "assistant-types.skilldefinition.roles",
-      "prefLabel": "SkillDefinition.roles",
-      "definition": "by nothing. Kept optional so a downstream instance still validates.",
-      "source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.roles",
-      "status": "candidate"
-    },
-    {
       "id": "assistant-types.skilldefinition.routingpatterns",
       "prefLabel": "SkillDefinition.routingPatterns",
       "definition": "Regex patterns for routing user requests to this skill.",
@@ -2118,6 +2111,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.needs",
       "definition": "The instances this one is BUILT ON — its layer stack, foundation first.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.needs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.nodeschemas",
+      "prefLabel": "CatHarnessDeclarationSchema.nodeSchemas",
+      "definition": "The instance's Node Kinds, declared: each `$schema` tag its files may carry → the JSON Schema that defines it (an IRI, or a path relative to the declaration). Bootstrap's field (`graph.ts`, owner 2026-09-29: the schema-reference table \"should be in bootstrap\"), inherited here because this declaration is a Subkind of bootstrap's. The graph-kind registry's `nodeSchemas` keeps the harness's TypeScript-backed forms (`validator`, `shape`); this one names only published schemas, which is all a reader with nothing installed can follow.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.nodeSchemas",
       "status": "candidate"
     },
     {
@@ -5819,7 +5819,7 @@
     {
       "id": "log-entry.logentryschema.bean",
       "prefLabel": "LogEntrySchema.bean",
-      "definition": "The bean this work is claimed against, where there is one.",
+      "definition": "The bean this work is claimed against, where there is one. A typed id (#1168 B8).",
       "source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.bean",
       "status": "candidate"
     },
@@ -6045,55 +6045,6 @@
       "prefLabel": "MethodologyFrontMatterSchema.title",
       "definition": "What a reader sees. Not the id with capitals — it may name the acronym's expansion.",
       "source": "cat-harness/schemas/methodology.ts#MethodologyFrontMatterSchema.title",
-      "status": "candidate"
-    },
-    {
-      "id": "model-registry.modelentryschema.id",
-      "prefLabel": "ModelEntrySchema.id",
-      "definition": "The model identifier, exactly as the runtime reports it.",
-      "source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.id",
-      "status": "candidate"
-    },
-    {
-      "id": "model-registry.modelentryschema.note",
-      "prefLabel": "ModelEntrySchema.note",
-      "definition": "Anything a reader needs that the fields above cannot carry.",
-      "source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.note",
-      "status": "candidate"
-    },
-    {
-      "id": "model-registry.modelentryschema.preferredlanguages",
-      "prefLabel": "ModelEntrySchema.preferredLanguages",
-      "definition": "BCP 47 tags, best first.",
-      "source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.preferredLanguages",
-      "status": "candidate"
-    },
-    {
-      "id": "model-registry.modelentryschema.title",
-      "prefLabel": "ModelEntrySchema.title",
-      "definition": "Human-readable name, for a report a person reads.",
-      "source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.title",
-      "status": "candidate"
-    },
-    {
-      "id": "model-registry.modelentryschema.validatedby",
-      "prefLabel": "ModelEntrySchema.validatedBy",
-      "definition": "Who checked, when `validation` is `human-validated`.",
-      "source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.validatedBy",
-      "status": "candidate"
-    },
-    {
-      "id": "model-registry.modelentryschema.validatedon",
-      "prefLabel": "ModelEntrySchema.validatedOn",
-      "definition": "ISO date of that check. A validation with no date cannot go stale.",
-      "source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.validatedOn",
-      "status": "candidate"
-    },
-    {
-      "id": "model-registry.modelentryschema.validation",
-      "prefLabel": "ModelEntrySchema.validation",
-      "definition": "How the list above came to be believed. Required — see the header.",
-      "source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.validation",
       "status": "candidate"
     },
     {
@@ -6664,41 +6615,6 @@
       "status": "candidate"
     },
     {
-      "id": "release-iri.releaseiris.agent",
-      "prefLabel": "ReleaseIris.agent",
-      "definition": "`<iriBase><version>/` — what a program reads.",
-      "source": "cat-harness/schemas/release-iri.ts#ReleaseIris.agent",
-      "status": "candidate"
-    },
-    {
-      "id": "release-iri.releaseiris.human",
-      "prefLabel": "ReleaseIris.human",
-      "definition": "`<iriBase>v<major>/` — what a person reads.",
-      "source": "cat-harness/schemas/release-iri.ts#ReleaseIris.human",
-      "status": "candidate"
-    },
-    {
-      "id": "release-iri.releaseiris.iribase",
-      "prefLabel": "ReleaseIris.iriBase",
-      "definition": "The declared `iriBase`, ending in `/`.",
-      "source": "cat-harness/schemas/release-iri.ts#ReleaseIris.iriBase",
-      "status": "candidate"
-    },
-    {
-      "id": "release-iri.releaseiris.major",
-      "prefLabel": "ReleaseIris.major",
-      "definition": "`MAJOR` alone, as a number.",
-      "source": "cat-harness/schemas/release-iri.ts#ReleaseIris.major",
-      "status": "candidate"
-    },
-    {
-      "id": "release-iri.releaseiris.version",
-      "prefLabel": "ReleaseIris.version",
-      "definition": "The declared version, `MAJOR.MINOR.PATCH`.",
-      "source": "cat-harness/schemas/release-iri.ts#ReleaseIris.version",
-      "status": "candidate"
-    },
-    {
       "id": "render-log.renderlogentryschema.branch",
       "prefLabel": "RenderLogEntrySchema.branch",
       "definition": "Branch the render came from.",
@@ -6822,97 +6738,6 @@
       "prefLabel": "RenderTargetDeclaration.validateExport",
       "definition": "Export checking rendered output is structurally sound, if there is one.",
       "source": "cat-harness/schemas/render-targets.ts#RenderTargetDeclaration.validateExport",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementfields.derivedfrom",
-      "prefLabel": "RequirementFields.derivedFrom",
-      "definition": "Broader requirements this one specialises, by id.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementFields.derivedFrom",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementfields.id",
-      "prefLabel": "RequirementFields.id",
-      "definition": "`req:<slug>`.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementFields.id",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementfields.proposedin",
-      "prefLabel": "RequirementFields.proposedIn",
-      "definition": "WHERE IT CAME FROM — the proposal it was filed from, as a path, when it began as one. Kept after the proposal is moved, so the history can be followed back through `git log --follow`.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementFields.proposedIn",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementfields.supersededby",
-      "prefLabel": "RequirementFields.supersededBy",
-      "definition": "When `superseded`: what replaced it.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementFields.supersededBy",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementstatementfields.activity",
-      "prefLabel": "RequirementStatementFields.activity",
-      "definition": "FUNCTIONAL — the activity the statement is part of.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.activity",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementstatementfields.actors",
-      "prefLabel": "RequirementStatementFields.actors",
-      "definition": "The roles it is about, by id in the harness's own role registry.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.actors",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementstatementfields.benefit",
-      "prefLabel": "RequirementStatementFields.benefit",
-      "definition": "FUNCTIONAL — why (\"so that …\").",
-      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.benefit",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementstatementfields.capability",
-      "prefLabel": "RequirementStatementFields.capability",
-      "definition": "FUNCTIONAL — what the actor wants to be able to do (\"I want …\").",
-      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.capability",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementstatementfields.category",
-      "prefLabel": "RequirementStatementFields.category",
-      "definition": "NON-FUNCTIONAL — which quality it constrains.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.category",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementstatementfields.conformance",
-      "prefLabel": "RequirementStatementFields.conformance",
-      "definition": "How strongly it binds. Named `conformance` — the word the harness's requirement files have used since they were first written — so that building them on this base moved no file.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.conformance",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementstatementfields.dependson",
-      "prefLabel": "RequirementStatementFields.dependsOn",
-      "definition": "Other statements this one presupposes, by {@link requirementRef}.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.dependsOn",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementstatementfields.key",
-      "prefLabel": "RequirementStatementFields.key",
-      "definition": "Unique within its requirement; with the requirement's id it is the statement's address.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.key",
-      "status": "candidate"
-    },
-    {
-      "id": "requirement.requirementstatementfields.requirement",
-      "prefLabel": "RequirementStatementFields.requirement",
-      "definition": "The statement itself, as one sentence a reviewer can say yes or no to.",
-      "source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.requirement",
       "status": "candidate"
     },
     {
@@ -7331,7 +7156,7 @@
     {
       "id": "site-indexes.beanindexitemschema.parent",
       "prefLabel": "BeanIndexItemSchema.parent",
-      "definition": "`\"\"` when the bean has no parent.",
+      "definition": "`\"\"` when the bean has no parent; otherwise a typed bean id (#1168 B8).",
       "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent",
       "status": "candidate"
     },
@@ -7424,13 +7249,6 @@
       "prefLabel": "RemotePackageRefSchema.sync",
       "definition": "OPTIONAL, because a wrapper whose only job is to supply Docker requirements should not have to claim a sync strategy to be valid. Required until 2026-09-19, which is why both wrappers carry one.",
       "source": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema.sync",
-      "status": "candidate"
-    },
-    {
-      "id": "skill-package.skilldefinitionschema.roles",
-      "prefLabel": "SkillDefinitionSchema.roles",
-      "definition": "RETIRED 2026-09-20 (bean `y1w9`) — optional, and read by nothing.",
-      "source": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema.roles",
       "status": "candidate"
     },
     {

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: folio\n"
-"POT-Creation-Date: 2026-09-29T23:14:50.619Z\n"
+"POT-Creation-Date: 2026-09-30T00:31:03.550Z\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language: es\n"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/changing-these-diagrams.md\" } QA… TR"
 msgstr ""
 
-#: docs/publication-workflow.md:39
+#: docs/publication-workflow.md:38
 msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/every-workflow-in-the-repo.md\" } QA… TR"
 msgstr ""
 
@@ -58,7 +58,7 @@ msgstr ""
 msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/mechanical-vs-non-mechanical-validation.md\" } QA… TR"
 msgstr ""
 
-#: docs/publication-workflow.md:28
+#: docs/publication-workflow.md:27
 msgid "✎ Edit{: .fa-node-edit title=\"Edit content/docs/publication-workflow/overview.md\" } QA… TR"
 msgstr ""
 
@@ -122,7 +122,7 @@ msgstr ""
 msgid "A content package may relax a base step by declaring it in  with a reason — an unexplained relaxation does not load, so the file is the record of what was waived and why. Five steps refuse to be relaxed at all: ,  and  (the editor seeing the findings, the decision, the write), plus  and  (the  SHALL). If those were negotiable the base would not be strict, it would be a suggestion."
 msgstr ""
 
-#: docs/publication-workflow.md:51
+#: docs/publication-workflow.md:50
 msgid "A count in prose is a claim; a derived index is evidence. So the number lives in the derived process index, which is generated from the declaration by , gated in CI, and cannot drift from the diagrams it counts. This page's job is the half that cannot be generated — what each process is for, when you would be in it, and which neighbouring one you actually want."
 msgstr ""
 
@@ -130,7 +130,11 @@ msgstr ""
 msgid "A decision with alternatives: which adopted methodology applies here, what were the options, and why did the rejected ones lose? Called as a subprocess, and its trigger is 's — irreversibility and surprise, not size — so a reversible choice leaves at the first task and an irreversible one cannot skip it. It does not decide: it produces the options and a recommendation, and the authorisation belongs to the calling step."
 msgstr ""
 
-#: docs/publication-workflow.md:131
+#: docs/publication-workflow.md:147
+msgid "A detangled Knowledge Graph becomes its own pair of repositories: content (files to read, no code) and  (the code that writes and checks it). It continues where  stops. Each stage is a gate rather than a checklist item: identity (, ), hosted outputs moved out, the tools' import cone cut (), the publication plan, and a standalone rehearsal. The Detangle step is a plain task rather than a call to , because that process ends in its own extraction and authorisation, which this process owns from stage 9 on. Authorising, seeding and the cutover sit in the Administrator lane: nothing is committed to a new repository until the owner says so. The first release calls , and each later release is adopted through . Skill:"
+msgstr ""
+
+#: docs/publication-workflow.md:130
 msgid "A feature request arrived. How is it turned into agreed requirements, and who signs off? The outer process; its six phases are the call activities below. See CRDM methodology"
 msgstr ""
 
@@ -158,7 +162,7 @@ msgstr ""
 msgid "A release ships"
 msgstr ""
 
-#: docs/publication-workflow.md:97
+#: docs/publication-workflow.md:96
 msgid "A sub-process, never an entry point — reached by a call activity, never started, which is why bootstrap's README can still say there is one process you begin. Callable optionally from any task (an actor logging what it is doing needs no permission) or required by a diagram that draws the call explicitly; same sub-process either way, and the difference is whether the caller drew it. It lives in bootstrap rather than the harness because bootstrap may not import the harness, so a logger defined upstream would be unusable by the actor with the most need to say what it is doing"
 msgstr ""
 
@@ -196,7 +200,7 @@ msgstr ""
 msgid "Agent onboarding — orientation for an agent dropped into a folio"
 msgstr ""
 
-#: docs/publication-workflow.md:126
+#: docs/publication-workflow.md:125
 msgid "Agent process — how an agent works, rather than how content is authored. These run alongside the content processes rather than inside them:"
 msgstr ""
 
@@ -212,15 +216,15 @@ msgstr ""
 msgid "Also  — see Upstream dependencies below. The declaration was added when the coverage check was written; the diagram already documented that workflow step for step"
 msgstr ""
 
-#: docs/publication-workflow.md:94
+#: docs/publication-workflow.md:93
 msgid "An agent has been pointed at a repository and knows nothing. Is this already an instance — load it — or not, in which case what should it become? The only input is an instance reference; the harness type, the knowledge graph and the voice are read from that instance's declaration. See  and the proposal"
 msgstr ""
 
-#: docs/publication-workflow.md:95
+#: docs/publication-workflow.md:94
 msgid "An agent has been pointed at a repository and knows nothing. The only process in bootstrap an actor STARTS — a Bootstrapping Agent that has read  is at its start event and has nowhere else to begin. Three lanes: Bootstrapping Agent, Requestor, and the Knowledge Graph Data Store. See  and the proposal"
 msgstr ""
 
-#: docs/publication-workflow.md:141
+#: docs/publication-workflow.md:140
 msgid "An agent playing a state machine, keeping a session's context current across a discussion. The shape is strict — the interpreter supports nine element types and throws on the rest — and what varies is which enabled branch the agent takes. Both gateways carry , the marker added with this diagram so that \"no table because this is somebody's call\" stops being indistinguishable from \"no table yet\". The machine records that a bean was claimed; it never claims one"
 msgstr ""
 
@@ -244,9 +248,9 @@ msgstr ""
 msgid "Answer a question from a corpus this folio ALREADY holds, iteratively, and stop on a stated condition. Renders Doc-Researcher (arXiv:2510.21603v1, Dong et al.) as a process: filter the corpus and choose the granularity, search, refine, then judge sufficiency. Two ways out and both are load-bearing — a threshold alone never terminates on a question the corpus cannot answer, a cap alone stops an answerable one early and returns something that looks complete — and which one fired is carried to the report. ONE lane, not the paper's four agents: they are four questions under one accountability, and this repo's role model makes a swimlane an accountability.  is not relaxable, because a search that ended quietly looks exactly like one that succeeded"
 msgstr ""
 
-#: docs/publication-workflow.md:92
-#: docs/publication-workflow.md:109
-#: docs/publication-workflow.md:129
+#: docs/publication-workflow.md:91
+#: docs/publication-workflow.md:108
+#: docs/publication-workflow.md:128
 #: docs/publication-workflow.md:154
 #: docs/publication-workflow.md:176
 #: docs/publication-workflow.md:186
@@ -273,15 +277,15 @@ msgstr ""
 msgid "Are the  siblings still in sync with their  manifests? Deliberately small, and says so: one job, no branch, nothing the YAML does not already show. It earns a diagram for drift detection — without one its job names no node, so a job added here would tell nobody — not for exposition"
 msgstr ""
 
-#: docs/publication-workflow.md:145
+#: docs/publication-workflow.md:144
 msgid "Attesting a QA report, by one of two routes chosen from declared facts: an API signer where the performing actor can reach out, a human release authority where it cannot. Bean , for the case the owner raised — \"an API wouldnt wokr and a human actor is needed\". The branch is computed by , which reads the actor's reach and whether an endpoint is configured; undeclared reach is  and routes to the person, because a gateway that guessed \"connected\" would produce an unsigned report that looks signed"
 msgstr ""
 
-#: docs/publication-workflow.md:122
+#: docs/publication-workflow.md:121
 msgid "Authoring a WHO SMART DAK"
 msgstr ""
 
-#: docs/publication-workflow.md:123
+#: docs/publication-workflow.md:122
 msgid "Authoring a WHO SMART IG"
 msgstr ""
 
@@ -303,7 +307,7 @@ msgstr ""
 msgid "Beans are not sidecars. Machine-generated queues (QA , witness files, watcher queues) stay bulk JSON; they never become beans."
 msgstr ""
 
-#: docs/publication-workflow.md:76
+#: docs/publication-workflow.md:75
 msgid "Before any of the rest — the process a person meets first, and the only one that runs when there is no folio yet."
 msgstr ""
 
@@ -311,7 +315,7 @@ msgstr ""
 msgid "Before new work takes shape, what does it touch? Search beans, issues and open PRs; categorize and summarize every hit; ask the user whether and how to coordinate. Judgement sorts the hits and the user decides (#1023). Called from  when a requirement is initiated or updated in chat, and from"
 msgstr ""
 
-#: docs/publication-workflow.md:135
+#: docs/publication-workflow.md:134
 msgid "Between requirements and sign-off: entities from the BPA and the requirements, cardinalities stated both ways, looping until the BA recognises the entities AND the stakeholders have answered every cardinality"
 msgstr ""
 
@@ -319,7 +323,7 @@ msgstr ""
 msgid "Boards — a board is a diagram of a folio, in the OMG sense: the folio carries what is true,  carries where it was drawn, and the arrow runs one way. All three exist because the discipline is a property a future edit breaks silently — two mechanisms that look like one, a control that looks like a delete, and two writes that look like one."
 msgstr ""
 
-#: docs/publication-workflow.md:62
+#: docs/publication-workflow.md:61
 msgid "Bootstrap's diagrams are deliberately outside that index, and their absence is a fact rather than a gap.  is declared by  and not by the root, because declaring it there re-carries bootstrap's process into the root's published graph — which  removed on purpose and a test still guards. Bean  holds that choice: both halves of bootstrap, or neither. So the derived index covers what the root declares, and the three bootstrap diagrams are named in the table below instead."
 msgstr ""
 
@@ -351,7 +355,7 @@ msgstr ""
 msgid "Changing these diagrams"
 msgstr ""
 
-#: docs/publication-workflow.md:146
+#: docs/publication-workflow.md:145
 msgid "Changing who can do what: add an actor and declare its kind, open or close a role, grant or revoke a permission, retire an actor without deleting it — then audit. Bean : the join is clean (31 of 31 roles bind a lane, no dangling reference), so this was a missing process, not a broken one. It calls  for the branch, gates and review rather than restating them, and adds the three things specific to editing the substrate every other diagram binds to. The  role waited for the owner to say administration is a swimlane — a role is never invented to make a diagram drawable"
 msgstr ""
 
@@ -391,7 +395,7 @@ msgstr ""
 msgid "Conceptual composition, no time axis"
 msgstr ""
 
-#: docs/publication-workflow.md:111
+#: docs/publication-workflow.md:110
 msgid "Content lifecycle —"
 msgstr ""
 
@@ -399,7 +403,7 @@ msgstr ""
 msgid "Content lifecycle overview"
 msgstr ""
 
-#: docs/publication-workflow.md:118
+#: docs/publication-workflow.md:117
 msgid "Content type"
 msgstr ""
 
@@ -407,11 +411,11 @@ msgstr ""
 msgid "Content types — the linear lifecycle and what each type produces"
 msgstr ""
 
-#: docs/publication-workflow.md:105
+#: docs/publication-workflow.md:104
 msgid "Content-agnostic — these three apply to every folio, and the outer ones reference the inner ones as call activities, so each process is described once and reused:"
 msgstr ""
 
-#: docs/publication-workflow.md:115
+#: docs/publication-workflow.md:114
 msgid "Content-type specific — how a particular kind of folio is authored. These sit inside level 3's , and live with their guides:"
 msgstr ""
 
@@ -448,10 +452,10 @@ msgstr ""
 msgid "Describe the intended change"
 msgstr ""
 
-#: docs/publication-workflow.md:92
-#: docs/publication-workflow.md:109
-#: docs/publication-workflow.md:118
-#: docs/publication-workflow.md:129
+#: docs/publication-workflow.md:91
+#: docs/publication-workflow.md:108
+#: docs/publication-workflow.md:117
+#: docs/publication-workflow.md:128
 #: docs/publication-workflow.md:154
 #: docs/publication-workflow.md:176
 #: docs/publication-workflow.md:186
@@ -467,7 +471,7 @@ msgstr ""
 msgid "Diagram"
 msgstr ""
 
-#: docs/publication-workflow.md:120
+#: docs/publication-workflow.md:119
 msgid "Documents & policy guidance"
 msgstr ""
 
@@ -483,7 +487,7 @@ msgstr ""
 msgid "Domain-authoring roles that appear inside  rather than as their own lane:  (L2 DAK),  (L3 FHIR),  (code systems and value sets),  (localisation)."
 msgstr ""
 
-#: docs/publication-workflow.md:112
+#: docs/publication-workflow.md:111
 msgid "Draft → publication —"
 msgstr ""
 
@@ -499,7 +503,7 @@ msgstr ""
 msgid "Dublin Core, manifest, assets, binding, linking"
 msgstr ""
 
-#: docs/publication-workflow.md:71
+#: docs/publication-workflow.md:70
 msgid "Each is a real BPMN 2.0 document with diagram interchange — open it in bpmn.io, Camunda Modeler, or any BPMN tool. The SVGs throughout the docs are generated from these files by ; never hand-edit an SVG."
 msgstr ""
 
@@ -507,7 +511,7 @@ msgstr ""
 msgid "Each request is opened as its own bean"
 msgstr ""
 
-#: docs/publication-workflow.md:113
+#: docs/publication-workflow.md:112
 msgid "Editing & HCI validation —"
 msgstr ""
 
@@ -537,7 +541,7 @@ msgstr ""
 msgid "Every process in the docs is BPMN. The diagrams that remain Mermaid are not processes, and BPMN would be the wrong notation for them — a pool with lanes implies actors performing activities over time, which none of these have:"
 msgstr ""
 
-#: docs/publication-workflow.md:36
+#: docs/publication-workflow.md:35
 msgid "Every workflow in the repo"
 msgstr ""
 
@@ -589,7 +593,7 @@ msgstr ""
 msgid "Home — documentation map"
 msgstr ""
 
-#: docs/publication-workflow.md:30
+#: docs/publication-workflow.md:29
 msgid "How a change gets from an editor had an idea to the folio is officially published — expressed as BPMN 2.0 swimlane diagrams, with the roles, the validation gate, the skills, and the shared work plan all named."
 msgstr ""
 
@@ -597,11 +601,11 @@ msgstr ""
 msgid "How a knowledge graph reaches readers the repository never hears about: select → serialize → package → sign → distribute → verify.  has no default branch on purpose — the owner stated the ingestion method as undetermined, so the diagram reaches a decision and stops; drawing one branch as the obvious one would record a decision nobody made. A CDN is not a lane: it is what  may put in front of the origin, because modelling a cache as a participant makes its URL look like the published one, and a published URL is a promise (bean , \"EXTREME care in URL handling\"). Two gateways refuse rather than warn — over budget is an end event, not a warning, and a failed verification serves the previous version rather than nothing, since a portal that goes blank has turned an integrity problem into an outage"
 msgstr ""
 
-#: docs/publication-workflow.md:41
+#: docs/publication-workflow.md:40
 msgid "How many BPMN 2.0 files are there? This page no longer says, and that is the fix rather than an evasion."
 msgstr ""
 
-#: docs/publication-workflow.md:112
+#: docs/publication-workflow.md:111
 msgid "How the corpus becomes an officially published folio"
 msgstr ""
 
@@ -658,7 +662,7 @@ msgstr ""
 msgid "It is shared state, not session state.  is committed, so the plan survives a resumed session and is visible to sibling agents working other branches. An agent's ephemeral in-memory to-do list is not."
 msgstr ""
 
-#: docs/publication-workflow.md:100
+#: docs/publication-workflow.md:99
 msgid "Its intent gateway is computed, not chosen:  returns the branch, and  is one of the outcomes it can return — which is what makes the question obligatory rather than a courtesy. See Getting started."
 msgstr ""
 
@@ -671,7 +675,7 @@ msgstr ""
 msgid "Lean 4 proof checking and diagnostics over MCP."
 msgstr ""
 
-#: docs/publication-workflow.md:109
+#: docs/publication-workflow.md:108
 msgid "Level"
 msgstr ""
 
@@ -683,7 +687,7 @@ msgstr ""
 msgid "Log findings on the bean"
 msgstr ""
 
-#: docs/publication-workflow.md:124
+#: docs/publication-workflow.md:123
 msgid "Making the build incremental · the overview"
 msgstr ""
 
@@ -741,15 +745,15 @@ msgstr ""
 msgid "Nothing reaches the corpus before the editor has seen the findings. The authoring agent produces a proposed change, not a commit. That proposal fans out through the HCI validation pipeline, the results are collated into one report, and the editor decides — accept, revise, or discard. The  activity sits after that decision, in its own lane, and is the only step that writes content."
 msgstr ""
 
-#: docs/publication-workflow.md:19
+#: docs/publication-workflow.md:18
 msgid "On this page"
 msgstr ""
 
-#: docs/publication-workflow.md:143
+#: docs/publication-workflow.md:142
 msgid "One author's change, from description through staging to review-committee approval"
 msgstr ""
 
-#: docs/publication-workflow.md:111
+#: docs/publication-workflow.md:110
 msgid "One cycle of a folio, plan → retire"
 msgstr ""
 
@@ -775,7 +779,7 @@ msgstr ""
 msgid "Out to a public portal — the stage after publishing, and the one this repository had built twice without naming. A portal that is not this repository — a Moodle site, a ministry intranet, a department page — needs the graph's contents, and the path there is six stages rather than a deploy:"
 msgstr ""
 
-#: docs/publication-workflow.md:147
+#: docs/publication-workflow.md:146
 msgid "Part of a repository wants to leave — size, or a semantic reason. The four stages are gates rather than advice, and that is the whole reason this is a diagram:  says \"nothing moves until the stage before it measures zero\" in prose, and prose is what an agent under pressure talks itself past. All three gateways are DMN-backed, so completion refuses a hand-supplied outcome and the branch is computed from counts a tool already produced. The sharpest is , and it is sharp because of its RULE ORDER —  returns  before the cross-edge rule is ever reached, so a zero cross-edge count over an unjudged corpus cannot be read as a pass. Every gate has a third state and none of them renders it as clean: both  paths are a REFUSAL to advance rather than a warning.  sits in the Administrator lane because moving durable artefacts out of a repository is a person's decision — the agent reports what would move and waits, per"
 msgstr ""
 
@@ -783,19 +787,19 @@ msgstr ""
 msgid "People"
 msgstr ""
 
-#: docs/publication-workflow.md:133
+#: docs/publication-workflow.md:132
 msgid "Phase 1: identify stakeholders, synthesise the needs statement, loop until it is recognised"
 msgstr ""
 
-#: docs/publication-workflow.md:136
+#: docs/publication-workflow.md:135
 msgid "Phase 5: requirements become beans, the BA signs off, the branch is announced on the issue"
 msgstr ""
 
-#: docs/publication-workflow.md:137
+#: docs/publication-workflow.md:136
 msgid "Phase 6: implement, review the increment, share the MVP, take stakeholder findings. One phase, because all three loops route back into implementation"
 msgstr ""
 
-#: docs/publication-workflow.md:134
+#: docs/publication-workflow.md:133
 msgid "Phases 2–4: map the current workflow, define requirements and their impact, loop until approved"
 msgstr ""
 
@@ -826,7 +830,7 @@ msgstr ""
 msgid "Publication manager"
 msgstr ""
 
-#: docs/publication-workflow.md:14
+#: docs/publication-workflow.md:13
 msgid "Publication workflow"
 msgstr ""
 
@@ -898,7 +902,7 @@ msgstr ""
 msgid "Run publication QA gates"
 msgstr ""
 
-#: docs/publication-workflow.md:132
+#: docs/publication-workflow.md:131
 msgid "Scan for a matching issue, then link or ask — an issue is never created without the BA's permission"
 msgstr ""
 
@@ -906,7 +910,7 @@ msgstr ""
 msgid "Schema and constraint checks"
 msgstr ""
 
-#: docs/publication-workflow.md:121
+#: docs/publication-workflow.md:120
 msgid "Scientific papers & books"
 msgstr ""
 
@@ -959,7 +963,7 @@ msgstr ""
 msgid "Some decisions are computed, not judged"
 msgstr ""
 
-#: docs/publication-workflow.md:98
+#: docs/publication-workflow.md:97
 msgid "Somebody said \"create a folio\". Which of the five things did they mean, and what has to be true before anything is written?"
 msgstr ""
 
@@ -979,7 +983,7 @@ msgstr ""
 msgid "Something is offered unprompted, or is needed and has to be asked for — and through which channel:  is one, the conversation is another, and the set is open"
 msgstr ""
 
-#: docs/publication-workflow.md:138
+#: docs/publication-workflow.md:137
 msgid "Stakeholder sign-off, BA confirmation, and only then the close — an agent never assumes completion"
 msgstr ""
 
@@ -999,7 +1003,7 @@ msgstr ""
 msgid "Text layer, OCR, sections, structure, claim candidates"
 msgstr ""
 
-#: docs/publication-workflow.md:58
+#: docs/publication-workflow.md:57
 msgid "That division is the  skill's rule, and this page is the worked example of it: the index says what exists and what each diagram declares about itself; everything below says what the index structurally cannot."
 msgstr ""
 
@@ -1091,7 +1095,7 @@ msgstr ""
 msgid "The roles in the lanes, and the actor definition each one maps to. Roles inherit ( →  →  → ). What an actor may do is not a property of its role: it is an ODRL rule in , and before every task the BPMN executor checks that the actor is authenticated, eligible for the lane's role, permitted by policy and allowed to touch the content (, issue #1207)."
 msgstr ""
 
-#: docs/publication-workflow.md:85
+#: docs/publication-workflow.md:84
 msgid "The rows are correct now. The diagrams are still invisible to the tooling, and deliberately so pending a decision:  is declared by  but not by the root, and declaring it there re-carries bootstrap's process into the root's published graph — which  removed on purpose and a test still guards. Bean  holds that choice: both halves of bootstrap, or neither."
 msgstr ""
 
@@ -1099,7 +1103,7 @@ msgstr ""
 msgid "The same cycle when a human translator and an SME reviewer are in it"
 msgstr ""
 
-#: docs/publication-workflow.md:144
+#: docs/publication-workflow.md:143
 msgid "The same loop for a change to the platform rather than to content: claim, branch, run the gates, open the PR at the first commit, drive CI green, answer review, merge. Drawn for bean  after an audit found INTEGRATION and VERIFICATION unowned — not for want of vocabulary, but because the diagram above takes a content change as its subject. No deployment lane: that is the one part whose activities differ per topology"
 msgstr ""
 
@@ -1107,7 +1111,7 @@ msgstr ""
 msgid "The same shape one level out — the repository rather than the workflows. It reports and never acts: there is no removal task on the diagram, and its absence is  being followed rather than an omission"
 msgstr ""
 
-#: docs/publication-workflow.md:44
+#: docs/publication-workflow.md:43
 msgid "The sentence that used to open here carried a count, and it was wrong five times in a row — \"six\", then \"nineteen\", then \"thirty\", then \"thirty-two, all under \", then \"thirty-nine\" — each for long enough to be wrong, and each time discovered by somebody who happened to run . The last of those was wrong by sixteen when it was finally checked: it claimed thirty-nine against fifty-five."
 msgstr ""
 
@@ -1151,11 +1155,11 @@ msgstr ""
 msgid "This list is checked, not maintained by hand.  fails when a  under  is absent from this page. It was added because the page opened by counting nineteen files and then listed eight — the eleven above were present in the repository and invisible here, which is the same defect as a table of contents that stops halfway."
 msgstr ""
 
-#: docs/publication-workflow.md:26
+#: docs/publication-workflow.md:25
 msgid "This page is generated from  — each section below links to its own source."
 msgstr ""
 
-#: docs/publication-workflow.md:79
+#: docs/publication-workflow.md:78
 msgid "This table named  until 2026-09-20 — a file that does not exist, renamed to  long before — while all three real diagrams went unnamed. A dangling reference hiding behind a directory nothing scanned, which is exactly what the not-indexed check exists to catch and could not, because it could not see the directory either (bean )."
 msgstr ""
 
@@ -1163,7 +1167,7 @@ msgstr ""
 msgid "Three things to note:"
 msgstr ""
 
-#: docs/publication-workflow.md:17
+#: docs/publication-workflow.md:16
 msgid "TR"
 msgstr ""
 
@@ -1175,7 +1179,7 @@ msgstr ""
 msgid "Try a sample of a remote source before committing to it: scope it (which items, which store, permanent or trial?), let  gate it — called, never copied — land it in the library or, for a trial, the kept unpublished trashcan, then import it and test the import. A check that could not run is a failure. Its second entry calls  for permanent samples only"
 msgstr ""
 
-#: docs/publication-workflow.md:96
+#: docs/publication-workflow.md:95
 msgid "Two facts have no answer in any file a Bootstrapping Agent can reach — which harness this repository should become, and which repositories are read from and written to. They are judgements held by whoever asked for the harness, so no instruction body produces them. Entered from within  when such a fact is needed, which is why bootstrap holds a second process at all: it is presupposed by every task rather than indicated by one"
 msgstr ""
 
@@ -1203,7 +1207,7 @@ msgstr ""
 msgid "What changed upstream, what changed locally, and what to do when both. An archival copy is never refreshed — re-fetching discards the state it exists to keep — so it gets a fixity check instead"
 msgstr ""
 
-#: docs/publication-workflow.md:113
+#: docs/publication-workflow.md:112
 msgid "What happens to one proposed change to one content block"
 msgstr ""
 
@@ -1227,11 +1231,11 @@ msgstr ""
 msgid "What you hand over, not what you do"
 msgstr ""
 
-#: docs/publication-workflow.md:140
+#: docs/publication-workflow.md:139
 msgid "When does an agent create, edit or scrap a bean — and why is one never deleted? See Beans and todos"
 msgstr ""
 
-#: docs/publication-workflow.md:142
+#: docs/publication-workflow.md:141
 msgid "When does an agent write a log entry, and when is one kept? Persistence is off by default, and the gateway reads a three-valued setting — , ,  — rather than assuming. Emptying the log is the one exception to the never-delete rule that governs the rest of"
 msgstr ""
 
@@ -1243,7 +1247,7 @@ msgstr ""
 msgid "Where in the workflow"
 msgstr ""
 
-#: docs/publication-workflow.md:118
+#: docs/publication-workflow.md:117
 msgid "Where it is shown"
 msgstr ""
 
@@ -1263,19 +1267,19 @@ msgstr ""
 msgid "Who is who"
 msgstr ""
 
-#: docs/publication-workflow.md:122
+#: docs/publication-workflow.md:121
 msgid "WHO SMART Guidelines DAK (L2)"
 msgstr ""
 
-#: docs/publication-workflow.md:124
+#: docs/publication-workflow.md:123
 msgid "WHO SMART IG (L3) — the build lane, incremental by dependency cone (proposed)"
 msgstr ""
 
-#: docs/publication-workflow.md:123
+#: docs/publication-workflow.md:122
 msgid "WHO SMART Implementation Guide (L3)"
 msgstr ""
 
-#: docs/publication-workflow.md:139
+#: docs/publication-workflow.md:138
 msgid "WHO's Digital Implementation Investment Guide as a process: nine chapters from forming the team to the value proposition, with the Guide's OWN progress checks at 4.5 and 8.5 as gateways rather than gates added here. Chapter 3 builds on CRDM, which is why it sits beside the diagrams above. Lives in , because a domain method belongs to the repository that owns the domain"
 msgstr ""
 
@@ -1300,11 +1304,11 @@ msgstr ""
 msgid "Work plan"
 msgstr ""
 
-#: docs/publication-workflow.md:120
+#: docs/publication-workflow.md:119
 msgid "Writing a document"
 msgstr ""
 
-#: docs/publication-workflow.md:121
+#: docs/publication-workflow.md:120
 msgid "Writing a paper"
 msgstr ""
 
