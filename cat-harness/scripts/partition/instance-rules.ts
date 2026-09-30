@@ -892,6 +892,10 @@ export const RULES: Rule[] = [
       // everything else in that tree and wrong for these two.
       "schemas/theme.ts",
       "schemas/themes.ts",
+      // Resolves a ThemeRef against its owner's declared themes (bean `v8n5`):
+      // the same sticky-note theme layer as the two above, reached through a
+      // declaration rather than an import, so it holds no folio's values.
+      "schemas/theme-by-ref.ts",
       // Exposed by moving `test/health/` here — the same reveal-on-move
       // pattern, third time in this pass. Both are harness by their own
       // headers: "Repository health reports — what the daily sweep under

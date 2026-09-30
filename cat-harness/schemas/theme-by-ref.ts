@@ -3,6 +3,7 @@
  * instance that owns it, not only against the platform's own table.
  *
  * @module cat-harness/schemas/theme-by-ref
+ * @graphNode none — a resolver over theme nodes declared elsewhere; it defines no schema of its own
  *
  * Bean `v8n5`. #1168 B8 (owner, 2026-09-30: *"migrate to ThemeRef"*) gave
  * every theme reference an `instance`, so *"a cross-instance theme now says
