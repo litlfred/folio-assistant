@@ -14,7 +14,17 @@ Candidate terms extracted from every skill's front matter: `name` as the label, 
 
 From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 1 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 274 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 6 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 2 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 295 terms and is 214 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 295 terms and is 215 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+
+<table class="fa-gloss-mapping">
+<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
+<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>295</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>295</td><td>0</td><td>—</td></tr></tbody>
+</table>
+<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
+A vocabulary that could not be reached has said nothing, and the column above keeps that 
+apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
+be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
