@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/docs-ui.css?v=1790791807">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/docs-ui.css?v=1790793338">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/narrow-viewport.css?v=1790791807">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/narrow-viewport.css?v=1790793338">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/work-plan.css?v=1790791807">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/work-plan.css?v=1790793338">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/themes.css?v=1790791807">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/themes.css?v=1790793338">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/uml.css?v=1790791807">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/uml.css?v=1790793338">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/avatars.css?v=1790791807">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/css/avatars.css?v=1790793338">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/docs-ui.js?v=1790791807" defer></script>
+<script src="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/js/docs-ui.js?v=1790793338" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1134,18 +1134,6 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td> </td>
     </tr>
     <tr>
-      <td><a href="board-diagram-interchange.html">Relationship first, visualisation later</a></td>
-      <td><code class="language-plaintext highlighter-rouge">board-diagram-interchange</code></td>
-      <td>—</td>
-      <td><strong>One sentence, and it is the owner’s:</strong></td>
-    </tr>
-    <tr>
-      <td><a href="board-windows.html">Start in the avatar, open into a window</a></td>
-      <td><code class="language-plaintext highlighter-rouge">board-windows</code></td>
-      <td>—</td>
-      <td>The owner, 2026-09-20 and 2026-09-21:</td>
-    </tr>
-    <tr>
       <td><a href="canonical-watcher.html">/canonical-watcher</a></td>
       <td><code class="language-plaintext highlighter-rouge">canonical-watcher</code></td>
       <td>—</td>
@@ -1272,18 +1260,6 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td>The expensive failure mode of multi-agent dispatch is <strong>going dark</strong>: you</td>
     </tr>
     <tr>
-      <td><a href="docs-auto.html">docs-auto</a></td>
-      <td><code class="language-plaintext highlighter-rouge">docs-auto</code></td>
-      <td>—</td>
-      <td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;handler&gt;/docs-auto/&lt;auto-doc-type&gt;/&lt;sub-graph&gt;/</code> is an index of what</td>
-    </tr>
-    <tr>
-      <td><a href="docs-generation.html">Documentation Generation</a></td>
-      <td><code class="language-plaintext highlighter-rouge">docs-generation</code></td>
-      <td>—</td>
-      <td>cd content &amp;&amp; bun run pipeline/build.ts \</td>
-    </tr>
-    <tr>
       <td><a href="editor.html">Editor</a></td>
       <td><code class="language-plaintext highlighter-rouge">editor</code></td>
       <td>—</td>
@@ -1338,28 +1314,10 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td>Authored 2026-09-20 from a live session (bean <code class="language-plaintext highlighter-rouge">mgta</code>, issue #578): the owner</td>
     </tr>
     <tr>
-      <td><a href="harness-tiles.html">A tile is the harness’s, not the node’s</a></td>
-      <td><code class="language-plaintext highlighter-rouge">harness-tiles</code></td>
-      <td>—</td>
-      <td>The owner, 2026-09-20, correcting the question rather than answering it:</td>
-    </tr>
-    <tr>
-      <td><a href="html-rendering-qc.html">HTML Rendering QC</a></td>
-      <td><code class="language-plaintext highlighter-rouge">html-rendering-qc</code></td>
-      <td>—</td>
-      <td>grep -rn ‘\operatorname’ content/<em>*/</em>.md</td>
-    </tr>
-    <tr>
       <td><a href="idle-backlog.html">idle-backlog</a></td>
       <td><code class="language-plaintext highlighter-rouge">idle-backlog</code></td>
       <td>—</td>
       <td>Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that</td>
-    </tr>
-    <tr>
-      <td><a href="incremental-render.html">Incremental render</a></td>
-      <td><code class="language-plaintext highlighter-rouge">incremental-render</code></td>
-      <td>—</td>
-      <td>Owner, 2026-09-20, bean <code class="language-plaintext highlighter-rouge">9c34</code>:</td>
     </tr>
     <tr>
       <td><a href="integration-audit.html">/integration-audit</a></td>
@@ -1396,24 +1354,6 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td><code class="language-plaintext highlighter-rouge">issue-working</code></td>
       <td>—</td>
       <td>Two rules. Both exist because **your view of an issue and everyone else’s</td>
-    </tr>
-    <tr>
-      <td><a href="kg-viewer.html">Rendering the knowledge graph</a></td>
-      <td><code class="language-plaintext highlighter-rouge">kg-viewer</code></td>
-      <td>—</td>
-      <td><code class="language-plaintext highlighter-rouge">kg-export</code> serialises the instance’s graph to one JSON-LD document. This skill</td>
-    </tr>
-    <tr>
-      <td><a href="liquid-templates.html">Liquid templates</a></td>
-      <td><code class="language-plaintext highlighter-rouge">liquid-templates</code></td>
-      <td>—</td>
-      <td>Two engines run Liquid here, and they produce different kinds of output. Know</td>
-    </tr>
-    <tr>
-      <td><a href="markdown-render-check.html">Markdown Render Check</a></td>
-      <td><code class="language-plaintext highlighter-rouge">markdown-render-check</code></td>
-      <td>—</td>
-      <td>git diff HEAD~1 HEAD –name-only – ‘*.md’</td>
     </tr>
     <tr>
       <td><a href="mcp-assembly.html">MCP assembly</a></td>
@@ -1548,28 +1488,10 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td> </td>
     </tr>
     <tr>
-      <td><a href="readme-sections.html">A folio’s README</a></td>
-      <td><code class="language-plaintext highlighter-rouge">readme-sections</code></td>
-      <td>—</td>
-      <td>Two tools divide the file between them, and **between them no link in a folio</td>
-    </tr>
-    <tr>
       <td><a href="related-work-coordination.html">Related work: find it, sort it, ask</a></td>
       <td><code class="language-plaintext highlighter-rouge">related-work-coordination</code></td>
       <td>—</td>
       <td>Owner, 2026-09-23 (issue #1023): *“when CRDM is initiated/updated through human agent chat discussio</td>
-    </tr>
-    <tr>
-      <td><a href="render-logging.html">Render logging</a></td>
-      <td><code class="language-plaintext highlighter-rouge">render-logging</code></td>
-      <td>—</td>
-      <td>Owner, 2026-09-20: *“a specialised Logger skill for the gh-pages rendering</td>
-    </tr>
-    <tr>
-      <td><a href="render-order.html">Render order</a></td>
-      <td><code class="language-plaintext highlighter-rouge">render-order</code></td>
-      <td>—</td>
-      <td>Two things live here, and they are deliberately one skill: **the general</td>
     </tr>
     <tr>
       <td><a href="rendered-verification.html">/rendered-verification</a></td>
@@ -1612,12 +1534,6 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td><code class="language-plaintext highlighter-rouge">scientific-accuracy</code></td>
       <td>—</td>
       <td> </td>
-    </tr>
-    <tr>
-      <td><a href="serving-renderings.html">Serving a rendering</a></td>
-      <td><code class="language-plaintext highlighter-rouge">serving-renderings</code></td>
-      <td>—</td>
-      <td>A <strong>rendering</strong> is what an instance publishes about itself. Running it produces</td>
     </tr>
     <tr>
       <td><a href="session-intent.html">/session-intent</a></td>
@@ -1680,12 +1596,6 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td>bun test                              # from scripts/tests/</td>
     </tr>
     <tr>
-      <td><a href="theme-ui-review.html">At ingestion, and only at ingestion</a></td>
-      <td><code class="language-plaintext highlighter-rouge">theme-ui-review</code></td>
-      <td>—</td>
-      <td><strong>The owner, 2026-09-23 and 2026-09-24</strong>, settling bean <code class="language-plaintext highlighter-rouge">9fdi</code>:</td>
-    </tr>
-    <tr>
       <td><a href="todo-manager.html">Session Task Manager (<code class="language-plaintext highlighter-rouge">beans</code>)</a></td>
       <td><code class="language-plaintext highlighter-rouge">todo-manager</code></td>
       <td>—</td>
@@ -1702,12 +1612,6 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td><code class="language-plaintext highlighter-rouge">turn-reporting</code></td>
       <td>—</td>
       <td>Split out of <code class="language-plaintext highlighter-rouge">todo-manager.md</code> on 2026-09-19 (bean <code class="language-plaintext highlighter-rouge">tdmg</code>), which had reached</td>
-    </tr>
-    <tr>
-      <td><a href="ui-accessibility.html">All UI must follow accessibility guidelines</a></td>
-      <td><code class="language-plaintext highlighter-rouge">ui-accessibility</code></td>
-      <td>—</td>
-      <td>This is a <strong>rule</strong>, stated as one by the owner, and it binds every surface this</td>
     </tr>
     <tr>
       <td><a href="untainted-verification.html">Untainted verification</a></td>
@@ -1786,12 +1690,6 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td><code class="language-plaintext highlighter-rouge">where-does-this-go</code></td>
       <td>—</td>
       <td>&gt; Skill id: <code class="language-plaintext highlighter-rouge">where-does-this-go</code> · Package: <code class="language-plaintext highlighter-rouge">folio-core</code></td>
-    </tr>
-    <tr>
-      <td><a href="wireframe-design-review.html">Wireframe design review</a></td>
-      <td><code class="language-plaintext highlighter-rouge">wireframe-design-review</code></td>
-      <td>—</td>
-      <td>Method: [<code class="language-plaintext highlighter-rouge">wiregen</code>](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/</td>
     </tr>
   </tbody>
 </table></div>
@@ -2749,6 +2647,129 @@ roles, and how they compose with the LLM, see <a href="../../skills.html">Skills
       <td><code class="language-plaintext highlighter-rouge">theming</code></td>
       <td>—</td>
       <td>**Every file here is named for the skill it declares, and that is load-bearing</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="rendering-ui-and-publication-surfaces-ui-core">
+  
+  
+    <a href="#rendering-ui-and-publication-surfaces-ui-core" class="anchor-heading" aria-labelledby="rendering-ui-and-publication-surfaces-ui-core"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Rendering, UI and publication surfaces (ui-core)
+  
+  
+</h2>
+    
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>Skill</th>
+      <th>Id</th>
+      <th>Schema</th>
+      <th>Summary</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="board-diagram-interchange.html">Relationship first, visualisation later</a></td>
+      <td><code class="language-plaintext highlighter-rouge">board-diagram-interchange</code></td>
+      <td>—</td>
+      <td><strong>One sentence, and it is the owner’s:</strong></td>
+    </tr>
+    <tr>
+      <td><a href="board-windows.html">Start in the avatar, open into a window</a></td>
+      <td><code class="language-plaintext highlighter-rouge">board-windows</code></td>
+      <td>—</td>
+      <td>The owner, 2026-09-20 and 2026-09-21:</td>
+    </tr>
+    <tr>
+      <td><a href="docs-auto.html">docs-auto</a></td>
+      <td><code class="language-plaintext highlighter-rouge">docs-auto</code></td>
+      <td>—</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;base&gt;/&lt;handler&gt;/docs-auto/&lt;auto-doc-type&gt;/&lt;sub-graph&gt;/</code> is an index of what</td>
+    </tr>
+    <tr>
+      <td><a href="docs-generation.html">Documentation Generation</a></td>
+      <td><code class="language-plaintext highlighter-rouge">docs-generation</code></td>
+      <td>—</td>
+      <td>cd content &amp;&amp; bun run pipeline/build.ts \</td>
+    </tr>
+    <tr>
+      <td><a href="harness-tiles.html">A tile is the harness’s, not the node’s</a></td>
+      <td><code class="language-plaintext highlighter-rouge">harness-tiles</code></td>
+      <td>—</td>
+      <td>The owner, 2026-09-20, correcting the question rather than answering it:</td>
+    </tr>
+    <tr>
+      <td><a href="html-rendering-qc.html">HTML Rendering QC</a></td>
+      <td><code class="language-plaintext highlighter-rouge">html-rendering-qc</code></td>
+      <td>—</td>
+      <td>grep -rn ‘\operatorname’ content/<em>*/</em>.md</td>
+    </tr>
+    <tr>
+      <td><a href="incremental-render.html">Incremental render</a></td>
+      <td><code class="language-plaintext highlighter-rouge">incremental-render</code></td>
+      <td>—</td>
+      <td>Owner, 2026-09-20, bean <code class="language-plaintext highlighter-rouge">9c34</code>:</td>
+    </tr>
+    <tr>
+      <td><a href="kg-viewer.html">Rendering the knowledge graph</a></td>
+      <td><code class="language-plaintext highlighter-rouge">kg-viewer</code></td>
+      <td>—</td>
+      <td><code class="language-plaintext highlighter-rouge">kg-export</code> serialises the instance’s graph to one JSON-LD document. This skill</td>
+    </tr>
+    <tr>
+      <td><a href="liquid-templates.html">Liquid templates</a></td>
+      <td><code class="language-plaintext highlighter-rouge">liquid-templates</code></td>
+      <td>—</td>
+      <td>Two engines run Liquid here, and they produce different kinds of output. Know</td>
+    </tr>
+    <tr>
+      <td><a href="markdown-render-check.html">Markdown Render Check</a></td>
+      <td><code class="language-plaintext highlighter-rouge">markdown-render-check</code></td>
+      <td>—</td>
+      <td>git diff HEAD~1 HEAD –name-only – ‘*.md’</td>
+    </tr>
+    <tr>
+      <td><a href="readme-sections.html">A folio’s README</a></td>
+      <td><code class="language-plaintext highlighter-rouge">readme-sections</code></td>
+      <td>—</td>
+      <td>Two tools divide the file between them, and **between them no link in a folio</td>
+    </tr>
+    <tr>
+      <td><a href="render-logging.html">Render logging</a></td>
+      <td><code class="language-plaintext highlighter-rouge">render-logging</code></td>
+      <td>—</td>
+      <td>Owner, 2026-09-20: *“a specialised Logger skill for the gh-pages rendering</td>
+    </tr>
+    <tr>
+      <td><a href="render-order.html">Render order</a></td>
+      <td><code class="language-plaintext highlighter-rouge">render-order</code></td>
+      <td>—</td>
+      <td>Two things live here, and they are deliberately one skill: **the general</td>
+    </tr>
+    <tr>
+      <td><a href="serving-renderings.html">Serving a rendering</a></td>
+      <td><code class="language-plaintext highlighter-rouge">serving-renderings</code></td>
+      <td>—</td>
+      <td>A <strong>rendering</strong> is what an instance publishes about itself. Running it produces</td>
+    </tr>
+    <tr>
+      <td><a href="theme-ui-review.html">At ingestion, and only at ingestion</a></td>
+      <td><code class="language-plaintext highlighter-rouge">theme-ui-review</code></td>
+      <td>—</td>
+      <td><strong>The owner, 2026-09-23 and 2026-09-24</strong>, settling bean <code class="language-plaintext highlighter-rouge">9fdi</code>:</td>
+    </tr>
+    <tr>
+      <td><a href="ui-accessibility.html">All UI must follow accessibility guidelines</a></td>
+      <td><code class="language-plaintext highlighter-rouge">ui-accessibility</code></td>
+      <td>—</td>
+      <td>This is a <strong>rule</strong>, stated as one by the owner, and it binds every surface this</td>
+    </tr>
+    <tr>
+      <td><a href="wireframe-design-review.html">Wireframe design review</a></td>
+      <td><code class="language-plaintext highlighter-rouge">wireframe-design-review</code></td>
+      <td>—</td>
+      <td>Method: [<code class="language-plaintext highlighter-rouge">wiregen</code>](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/</td>
     </tr>
   </tbody>
 </table></div>
