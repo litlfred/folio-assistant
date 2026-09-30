@@ -214,3 +214,58 @@ wrong.
   rows.
 - `skills/graph-management/graph-detanglement.md` — the graded/pinned line,
   what the gate refuses to grade and why.
+
+### The gate's own coverage, measured and printed — 3 of 19 instances
+
+The `0` above is not a verdict over the checkout. `kg-detangle.ts`'s `SCAN` is
+a list of directories, and the graph reaches only the instances those
+directories sit in. **Measured 2026-09-30: 3 of the checkout's 19 declared
+instances contribute nodes.** The gate now prints that ratio and NAMES the 16
+it does not reach, derived from the checkout so one added tomorrow appears
+without an edit here.
+
+That was found by a concrete case rather than by inspection.
+**`cat-harness/` imports from `bootstrap-tools/`, an instance it does not
+declare needing**, and nothing sees it:
+
+| | |
+|---|---|
+| `cat-harness.json` | `needs: ["bootstrap"]` |
+| `bootstrap-tools.json` | `needs: ["bootstrap"]` — a **sibling**, not an ancestor |
+
+`allowedFromNeeds` gives `cat-harness` the set `{cat-harness, bootstrap}`, and
+`DirectionPermit` exists in `layer-direction.ts` but **no `permits` entry is
+declared anywhere in the repository**. So by the declared rule these are
+wrong-direction edges.
+
+Measured here independently, and my numbers refine rather than contradict the
+20 reported:
+
+| measurement | value |
+|---|---|
+| import statements naming `bootstrap-tools/` under `cat-harness/` | **20** |
+| files carrying them | 24 — **10** under `cat-harness/schemas` (in `SCAN`), **13** under `scripts`, **1** under `content` (not in `SCAN`) |
+| how many reach `kg:detangle` at all | **6**, and only as **dangling refs** |
+| `check:partition` verdict | 0 — its `ROOT` is `cat-harness/`, which is this bean |
+| `check:instance-graph` verdict | ✓ — it judges declarations, never imports |
+
+**Why the blocking gate cannot catch them however blocking it is made**, and
+the two halves fail differently:
+
+- an importer **outside** `SCAN` is not a node, so its edges are never
+  extracted and appear **nowhere**, not even as dangling;
+- an importer **inside** `SCAN` reaching a target outside it produces a
+  **dangling** ref, which the edge denominator already excludes.
+
+That is `bf5l`'s three-green-checks table with a fourth row.
+
+**NOT FIXED HERE, and deliberately not fixed by adding `bootstrap-tools` to
+`SCAN`** — that would add nodes and edges to a set of pinned adjudications
+mid-flight, the same reason the extractor was left alone. Whether
+`cat-harness` should declare `bootstrap-tools` among its `needs`, or
+`bootstrap-tools` should fold into `bootstrap` for this purpose, is a
+declaration ruling for the owner. Bean `xsqm` moved that code out and the
+`needs` was very likely not updated with it. Filed separately.
+
+What this bean's change does about it is refuse to let the omission read as
+clean: **not "clean", NOT MEASURED**, named instance by instance.

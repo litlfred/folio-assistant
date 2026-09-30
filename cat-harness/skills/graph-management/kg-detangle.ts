@@ -665,9 +665,62 @@ function gateDirection(): void {
   console.log(`  that tool's ROOT is one instance, so its count is silent about edges between them.`);
   for (const s of SCAN) console.log(`    ${s.path}${absentScanTargets.includes(s.path) ? "   (absent — measured as a determined empty)" : ""}`);
   console.log("");
-  console.log(`  NOT in scope: any directory not listed above. An import from one of those into an`);
-  console.log(`  instance that depends on it is real and is invisible here — report it, do not read`);
-  console.log(`  this gate's 0 as covering it.`);
+
+  // ── THE INSTANCE-LEVEL DENOMINATOR, and it is the one that matters most.
+  //
+  // `cjvs` made the gate state its EDGE denominator. This is the same demand
+  // one level up: how many of the checkout's instances the axis actually
+  // reaches. Without it a `0` is read as "the layering holds" when it may
+  // only mean "the two instances I looked at agree".
+  //
+  // It is worse than an ordinary blind spot, because SCAN's coverage is
+  // asymmetric and the two halves fail differently:
+  //
+  //   - an importer outside SCAN is not a node, so its edges are never
+  //     extracted at all and appear NOWHERE, not even as dangling;
+  //   - an importer inside SCAN reaching a target outside it produces a
+  //     DANGLING ref, which the denominator above already excludes.
+  //
+  // Either way the edge cannot be wrong-direction however blocking this gate
+  // is made. Measured 2026-09-30: `cat-harness/` imports from
+  // `bootstrap-tools/` — a SIBLING instance (both declare `needs:
+  // ["bootstrap"]`, so neither is the other's ancestor) which `cat-harness`
+  // does not declare needing, and which no `permits` entry exempts because
+  // the repository declares none. 20 import statements across 24 files; 10 of
+  // those files are under `cat-harness/schemas` and in SCAN, 14 are under
+  // `scripts`/`content` and are not; 6 surface as dangling refs and the rest
+  // are invisible. `check:partition` cannot see them either (its ROOT is one
+  // instance) and `check:instance-graph` reports ✓ because it judges
+  // declarations and never imports — `bf5l`'s three-green-checks table with a
+  // fourth row.
+  //
+  // NOT FIXED HERE, and deliberately not fixed by adding `bootstrap-tools` to
+  // SCAN: that would add nodes and edges to a set of PINNED adjudications
+  // mid-flight, and whether `cat-harness` should declare it among its `needs`
+  // or `bootstrap-tools` should fold into `bootstrap` is a declaration ruling
+  // for the owner, not a side effect of wiring a gate. What this block does
+  // is refuse to let the omission read as clean — the unreached instances are
+  // DERIVED from the checkout and named, so one added tomorrow shows up here
+  // without an edit, and a `0` can never again be mistaken for a verdict over
+  // instances this axis never looked at.
+  const declaredInstances = readdirSync(ROOT, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && !e.name.startsWith("."))
+    .map((e) => e.name)
+    .filter((n) => existsSync(join(ROOT, n, `${n}.json`)))
+    .sort();
+  const unreached = declaredInstances.filter((n) => !layerNeeds.has(n));
+  console.log(`  instance denominator: ${layerNeeds.size} of the checkout's ${declaredInstances.length} declared instance(s)`);
+  console.log(`  contribute nodes to this graph. The verdict below is over THOSE, and no others.`);
+  if (unreached.length > 0) {
+    console.log("");
+    console.log(`  ! ${unreached.length} declared instance(s) are NOT REACHED by any scan target, so this gate has`);
+    console.log(`    no opinion whatever about edges into or out of them — not "clean", NOT MEASURED:`);
+    console.log(`      ${unreached.join(", ")}`);
+    console.log(`    An import from an unscanned directory is never extracted; an import INTO an`);
+    console.log(`    unscanned one becomes a dangling ref and is excluded above. Either way it cannot`);
+    console.log(`    be wrong-direction here, however blocking this gate is. Reported, never graded:`);
+    console.log(`    widening SCAN changes a set of pinned adjudications and is a person's decision.`);
+  }
   console.log("");
 
   if (corpusFallbacks.length > 0) {
