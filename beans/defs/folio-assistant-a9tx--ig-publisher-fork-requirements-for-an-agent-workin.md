@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-30T15:00:00Z
+updated_at: 2026-09-30T16:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -107,10 +107,54 @@ What already exists, all in the publisher:
 
 Work plan, each step small and upstreamable:
 
-- [ ] **W1** criteria 7, 1, 6 — flag, `AstExporter`, per-resource dump, toolchain, byte-identical check
+- [x] **W1** criteria 7, 1, 6 — flag, `AstExporter`, per-resource dump, toolchain, byte-identical check
 - [ ] **W2** criterion 2 — measure on smart-immunizations: 458 of 458, cross-checked against `fsh-cone`'s source count
 - [ ] **W3** criteria 4, 5
 - [ ] **W4** criterion 3 — scoped separately; the only step needing the core fork
 
 Not started: this session has read access only, and Maven/JDK availability is
 unchecked. The owner chose to record the plan first (2026-09-30).
+
+
+## Built 2026-09-30 — as a LIBRARY on the Publisher, not a fork of it
+
+Owner's direction: *"a library building on top... DO NOT change existing code,
+unless absolutely have to. remarshal/reuse/sub-class"*. Branch
+[`claude/ast-export`](https://github.com/litlfred/fhir-ig-publisher/tree/claude/ast-export)
+on `litlfred/fhir-ig-publisher`, started from HL7 `master` at `8301fee`. The fork's
+own `master` (2023, Carl Leitner's FML work) is untouched.
+
+Everything is under `ast-export/`, a separate Maven project that depends on the
+**released** `publisher.core` 2.3.4 from Maven Central. It is not a module of the
+root pom, and no existing file changed. How it builds on the Publisher:
+
+- `AstPublisher extends Publisher`, overriding nothing; it reads `getFileList()` after `execute()`.
+- `AstFieldsAccess` is a read-only view of package-private `PublisherFields`, declared in
+  the Publisher's package inside the library, so a rename upstream fails to compile.
+- `AstExportCli` is a launcher in the style of `publishDirect`, because `Publisher.main`
+  constructs a plain `Publisher`.
+- Upstream's `DependencyAnalyser` is **reused unchanged**; `LogicEdges` sits beside it.
+
+| step | status | evidence |
+|---|---|---|
+| W1 dump, toolchain, cache manifest | built | `manifest.json` (`authority: cache`, `provisional`), per-resource JSON keyed `canonical\|version`, `inputs` in the `gpdo` `compiled` shape |
+| W2 logic-layer edges | built, **not measured** | `dependencies.json`: Library / PlanDefinition / ActivityDefinition / Measure plus `meta.profile`; out-of-IG targets are kept as `resolved: null` |
+| W5 delta → resources | built | `fsh-index.json`, CQL by Library name, RuleSet users via `fsh-cone` when supplied |
+| W6 cone + decision | built | `ig-ast-plan/v1`: `rebuild` (forward cone), `loadFromCache`, `remove`, `full` with reasons; "cannot tell" is never incremental; 40% threshold |
+
+15 unit tests pass (`mvn test`). **Not measured on a real IG.** The environment's
+proxy refuses `packages.fhir.org` / `packages2.fhir.org` (HTTP 403), so SUSHI and the
+Publisher cannot fetch dependencies. The owner opened the network policy, but the
+running container still gets 403; a new session should pick it up. W2's exit
+criterion (458 of 458 on smart-immunizations) waits on that.
+
+The incremental design (owner's question: *"import AST, remove dependency cone
+based on delta file changes... then add in the changed files and recompute AST"*):
+
+- [x] **W5** delta → resources
+- [x] **W6** cone (forward = rebuild, backward = load) and decision
+- [ ] **W7** rebuild. First choice: pack `loadFromCache` as a local NPM package and run
+      the stock Publisher on a temporary IG holding only `rebuild`. The cone is
+      computed on base edges, so recompute it after the rebuild and repeat until it
+      stops growing.
+- [ ] **W8** diff a full build against the incremental AST, plus the threshold
