@@ -208,11 +208,11 @@ wrong.
 - `cat-harness/scripts/repo-partition.ts` — header docblock, the report's own
   output, the failure message, and the "both axes are now zero and both are
   enforced" enforcement comment that was the sentence being over-read.
-- `skills/graph-management/kg-separation.md` — the signal table listed
+- `skills/kg/graph-management/kg-separation.md` — the signal table listed
   `kg:detangle:check` under "wrong-direction edges", which was itself part of
   the confusion: that script grades staleness, not direction. Split into three
   rows.
-- `skills/graph-management/graph-detanglement.md` — the graded/pinned line,
+- `skills/kg/graph-management/graph-detanglement.md` — the graded/pinned line,
   what the gate refuses to grade and why.
 
 ### The gate's own coverage, measured and printed — 3 of 19 instances

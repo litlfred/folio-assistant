@@ -21,7 +21,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { groupDepthFor } from "../../skills/graph-management/group-depth.ts";
+import { groupDepthFor } from "../../skills/kg/graph-management/group-depth.ts";
 
 const ROOT = resolve(import.meta.dir, "..", "..", "..");
 /** Absolute paths, the way `corpusOf` hands them over. */
@@ -111,7 +111,7 @@ describe("importing the rule must not run the tool", () => {
    * source forbids a module from explaining itself.
    */
   const code = readFileSync(
-    join(ROOT, "cat-harness/skills/graph-management/group-depth.ts"),
+    join(ROOT, "cat-harness/skills/kg/graph-management/group-depth.ts"),
     "utf-8",
   ).replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
 

@@ -120,7 +120,7 @@ a no**, and §4 gives the answer it was reaching for from somewhere better.
 ### 3.1 ~~Publishability is declared~~ — SUPERSEDED 2026-09-23
 
 > **This section's rule was reversed by the owner and now lives in a skill:**
-> [`skills/folio-core/instance-publication.md`](../../skills/folio-core/instance-publication.md).
+> [`skills/kg/kg-core/instance-publication.md`](../../skills/kg/kg-core/instance-publication.md).
 > It is not restated here — a rule in two places is a rule free to drift, and
 > `kn0t` drifted from its skill in four places within a day.
 

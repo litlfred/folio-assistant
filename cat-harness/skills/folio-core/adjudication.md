@@ -247,7 +247,7 @@ from `todo-manager` and is silent about verdicts — is the seam it fits into.
 **The narrative-asserts-code axis.** Whether prose asserts what an artefact
 actually does is a different question, currently answered only for Lean
 (`proof-narrative-lean-equiv`, beans `nrv8` and `qusg`).
-[`code-node-review`](code-node-review.md) asks whether a NODE is correct — that
+[`code-node-review`](../kg/kg-core/code-node-review.md) asks whether a NODE is correct — that
 it declares what it is, that its references resolve — not whether the prose
 matches. Generalising that is a separate and larger decision, and this skill
 deliberately stops short of it.
@@ -258,7 +258,7 @@ deliberately stops short of it.
   each is given. Adjudication is what happens when they disagree.
 - [`q-usage-watcher`](../folio-paper-adapter/q-usage-watcher.md) — the
   dispensation mechanism, documented where it was first applied.
-- [`code-node-review`](code-node-review.md), [`voice-editorial-review`](voice-editorial-review.md),
+- [`code-node-review`](../kg/kg-core/code-node-review.md), [`voice-editorial-review`](voice-editorial-review.md),
   [`voice-overlay-review`](voice-overlay-review.md) — the reviews that produce
   the findings this settles.
 - `schemas/block-qa.ts` — the reviewer kinds, and why a model's own claim is

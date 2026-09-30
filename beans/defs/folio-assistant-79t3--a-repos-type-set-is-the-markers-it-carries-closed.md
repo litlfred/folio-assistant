@@ -131,7 +131,7 @@ Option 1 collapses layer 1 into layer 3.
 ## DECIDED 2026-09-20 — question 1 is option 3
 
 The owner: *"each type declaring its own filename/rule conventions"*. Written
-into `skills/folio-core/directory-conventions.md` §"Every other marker: THE
+into `skills/kg/kg-core/directory-conventions.md` §"Every other marker: THE
 TYPE DECLARES ITS OWN FILENAME (STRICT)", with the two rejected alternatives
 and the measurements that rejected them.
 
