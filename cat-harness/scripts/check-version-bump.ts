@@ -52,6 +52,7 @@ import { tmpdir } from "node:os";
 import { join, relative, resolve } from "node:path";
 
 import { instanceRootFor, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { qaResultPath, qaResultState, readQaResult, type QaResultState } from "./qa-results.js";
 import {
   type Bump,
   type SurfaceSubject,
@@ -83,6 +84,15 @@ export interface BumpReport {
   rows: BumpRow[];
   /** Why no row was produced, when none was. */
   note?: string;
+  /**
+   * The committed `kg-export` QA sidecar, against what this run computed.
+   *
+   * Carried here rather than folded into a row because it is not a fact about
+   * any instance's version — it is a fact about an artefact this gate USED to
+   * repair silently (bean `ymsu`). `undefined` is could-not-determine: the
+   * exporter wrote no sidecar to compare, or it never ran.
+   */
+  qaSidecar?: QaResultState;
 }
 
 function git(repoRoot: string, ...args: string[]): { ok: boolean; out: string } {
@@ -173,16 +183,56 @@ export function surfaceAtRef(repoRoot: string, ref: string): SurfaceSubject[] | 
   }
 }
 
-/** Export the surface of the working tree as it stands. */
-export function surfaceAtHead(repoRoot: string): SurfaceSubject[] | undefined {
-  const out = join(mkdtempSync(join(tmpdir(), "vbump-head-")), "surface.jsonld");
+/**
+ * Export the surface of the working tree as it stands.
+ *
+ * ## It runs the exporter IN this checkout, so it must not write into it
+ *
+ * Bean `ymsu`. Unlike {@link surfaceAtRef}, which exports inside a throwaway
+ * worktree, this one runs the repository's own exporter with `cwd: repoRoot` —
+ * and `kg-export.ts` writes a COMMITTED QA sidecar as well as the document.
+ * `--out` governed only the document, so this gate regenerated
+ * `test/results/kg-export.qa-results.json` in the tree it was judging.
+ *
+ * Measured on `origin/main` `e718627f198` with `producer.script_hash` staled to
+ * `deadbeefdead`: this gate exited **0** and the hash came back repaired to
+ * `0456470f68c8`. A gate that repairs its own subject cannot fail on it.
+ *
+ * So both destinations are temp now. The gate answers a question about the
+ * surface; producing the sidecar is the exporter's job when somebody runs it
+ * deliberately, and never a side effect of being asked.
+ */
+export function surfaceAtHead(
+  repoRoot: string,
+): { subjects: SurfaceSubject[]; qa: QaResultState | undefined } | undefined {
+  const tmp = mkdtempSync(join(tmpdir(), "vbump-head-"));
+  const out = join(tmp, "surface.jsonld");
   const script = ["cat-harness/scripts/kg-export.ts", "scripts/kg-export.ts"].find((c) =>
     existsSync(join(repoRoot, c)),
   );
   if (script === undefined) return undefined;
-  const r = spawnSync("bun", ["run", script, "--out", out], { cwd: repoRoot, encoding: "utf-8", timeout: 600_000 });
+  const r = spawnSync("bun", ["run", script, "--out", out, "--qa-root", tmp], { cwd: repoRoot, encoding: "utf-8", timeout: 600_000 });
   if (r.status !== 0 || !existsSync(out)) return undefined;
-  return surfaceOf(JSON.parse(readFileSync(out, "utf-8")));
+  // ── REPLACING the repair with a comparison, not just removing it ─────────
+  //
+  // Sending the sidecar to `tmp` stops this gate rewriting a committed file it
+  // is not judging. On its own that would be a WEAKENING: before this change a
+  // stale sidecar surfaced — accidentally, and only as the runner's mutation
+  // guard reporting that this gate had changed the tree. Take the write away
+  // and nothing sees it at all, which is a worse gate wearing a cleaner run.
+  //
+  // So the freshly computed sidecar is read back out of `tmp` and compared with
+  // the committed one. That is the whole of bean `ymsu`'s prescription —
+  // compute into a temp directory and REPORT rather than repair — and it is why
+  // this returns a state rather than swallowing it.
+  //
+  // `undefined` means the exporter wrote no sidecar to read, which is a fact
+  // about the exporter and is reported as could-not-determine, never as
+  // agreement.
+  const instance = instanceRootFor(join(repoRoot, script));
+  const fresh = readQaResult(qaResultPath(tmp, "kg-export"));
+  const qa = fresh === undefined ? undefined : qaResultState(qaResultPath(instance, "kg-export"), fresh);
+  return { subjects: surfaceOf(JSON.parse(readFileSync(out, "utf-8"))), qa };
 }
 
 export function auditVersionBumps(repoRoot: string): BumpReport {
@@ -219,7 +269,8 @@ export function auditVersionBumps(repoRoot: string): BumpReport {
   // Exported ONCE and reused: the surface is a property of the working tree,
   // not of the instance being scored, and re-exporting per instance would
   // multiply the slowest step by the number of publishable instances.
-  const head = surfaceAtHead(repoRoot);
+  const headExport = surfaceAtHead(repoRoot);
+  const head = headExport?.subjects;
 
   for (const { root, name, version } of publishable) {
     const where = relative(repoRoot, root) || ".";
@@ -287,7 +338,7 @@ export function auditVersionBumps(repoRoot: string): BumpReport {
     rows.push(clearsFloor(version, floor) ? base : { ...base, state: "under" });
   }
 
-  return { rows };
+  return { rows, qaSidecar: headExport?.qa };
 }
 
 export function formatReport(report: BumpReport): string {
@@ -320,6 +371,29 @@ export function formatReport(report: BumpReport): string {
   );
   if (count("undetermined") > 0) {
     out.push("UNDETERMINED IS NOT A PASS — those comparisons were never made. See each row's reason above.");
+  }
+  // ── The sidecar this gate used to repair on its way past (bean `ymsu`) ───
+  //
+  // REPORTED, never fixed and never failed on. Two halves to that, and they
+  // pull in opposite directions, so both are stated:
+  //
+  // Reported, because until this change the gate rewrote the file instead, and
+  // a stale committed artefact that nothing mentions is the state this bean
+  // exists about. Removing the write without adding this would have traded a
+  // repaired artefact for an unwatched one.
+  //
+  // Not FAILED on, because the currency of a QA sidecar is not this gate's
+  // subject — versions are — and a gate that reddens for something a reader did
+  // not ask it about teaches them to stop reading it. That leaves the host
+  // sidecar with no gate that OWNS it, and that is a real gap rather than a
+  // tidy ending: `kg:export` is a writer with no `:check` anywhere in the set.
+  // Recorded on the bean; inventing a gate for it here would be a second
+  // subject smuggled into this change.
+  if (report.qaSidecar !== undefined && report.qaSidecar !== "current") {
+    out.push(
+      `  ? the committed \`kg-export.qa-results.json\` is ${report.qaSidecar.toUpperCase()} against this run. ` +
+        "This gate no longer rewrites it — run `bun run kg:export` and commit the result.",
+    );
   }
   out.push(
     "A rename reads as MAJOR (the old id is removed, a new one added). That is the conservative direction, " +

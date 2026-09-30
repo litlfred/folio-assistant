@@ -273,7 +273,7 @@ them, `readme:audit` for the authored half — or the `readme_sync` / `readme_au
 MCP tools, registered among the **generic** tools.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/readme-sections.md`](cat-harness/skills/folio-core/readme-sections.md)
+[`skills/ui/ui-core/readme-sections.md`](cat-harness/skills/ui/ui-core/readme-sections.md)
 carries the opt-in contract, the third state ("could not determine" leaves the
 region untouched, and an empty directory is still a determined empty), why every
 link is resolved rather than composed, why `raw` is not the private-repo answer,
@@ -287,14 +287,14 @@ carries where it was drawn, and the arrow runs `folio → board → position →
 note` and never back. A folio is complete with no board.
 
 **The discipline is in the skills, not here** —
-[`board-diagram-interchange`](cat-harness/skills/folio-core/board-diagram-interchange.md)
+[`board-diagram-interchange`](cat-harness/skills/ui/ui-core/board-diagram-interchange.md)
 carries that split, why a note holds no coordinate, and how an orphan is swept
 from the LAYER;
-[`board-windows`](cat-harness/skills/folio-core/board-windows.md) carries the
+[`board-windows`](cat-harness/skills/ui/ui-core/board-windows.md) carries the
 two mechanisms that must not be conflated — semantic zoom is automatic and
 driven by size, open and close are a person's — and the `l4zi` rule that an
 action whose inverse is not reachable is not a toggle;
-[`harness-tiles`](cat-harness/skills/folio-core/harness-tiles.md) carries why a
+[`harness-tiles`](cat-harness/skills/ui/ui-core/harness-tiles.md) carries why a
 tile belongs to the **harness** rather than to a node, why `instantiated` is a
 different question from `declared`, and the two gaps it reports rather than
 hides.

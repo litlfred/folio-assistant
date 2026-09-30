@@ -9,8 +9,10 @@
  *
  * @module src/tools/degradation.test
  */
-import { describe, expect, test } from "bun:test";
-import { resolve } from "node:path";
+import { afterAll, describe, expect, test } from "bun:test";
+import { existsSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join, resolve } from "node:path";
 
 import {
   allSkillAvailability,
@@ -139,6 +141,74 @@ describe("the guards", () => {
 
   test("an empty corpus says it checked nothing rather than printing a tick", () => {
     expect(formatSkillAvailability([])).toContain("nothing was checked");
+  });
+});
+
+describe("loading the graph must not RUN it (bean `ymsu`)", () => {
+  /**
+   * The defect, in one sentence: importing a module executes it, and a
+   * knowledge-graph root holds SCRIPTS as well as declarations. So
+   * `loadSkillNeeds` — whose whole job is to read one field off some modules —
+   * used to execute `skills/graph-management/kg-detangle.ts`, which writes 28
+   * committed sidecars under `test/results/detangle/`.
+   *
+   * That made `bun test` repair an artefact 1140 lines before
+   * `kg:detangle:check` read it inside the same `bun run gates` run, which is
+   * the whole of bean `ymsu`.
+   *
+   * The first two tests are a PAIR and neither is worth much alone: one says a
+   * file declaring nothing is never imported, the other says one that declares
+   * something still is. A loader that imported nothing would pass the first and
+   * fail the second.
+   */
+  const made: string[] = [];
+  afterAll(() => {
+    for (const d of made.splice(0)) rmSync(d, { recursive: true, force: true });
+  });
+
+  function graphWith(files: Record<string, string>): string {
+    const root = mkdtempSync(join(tmpdir(), "kg-import-"));
+    made.push(root);
+    for (const [name, body] of Object.entries(files)) writeFileSync(join(root, name), body);
+    return root;
+  }
+
+  test("a module that declares no capabilities is NEVER imported, so its side effects never run", async () => {
+    const root = graphWith({
+      // A script, exactly like `kg-detangle.ts`: it does its work at top level.
+      // If the loader imports it, the marker appears.
+      "script.ts":
+        'import { writeFileSync } from "node:fs";\n' +
+        'import { join } from "node:path";\n' +
+        'writeFileSync(join(import.meta.dir, "RAN"), "x");\n',
+    });
+    const { skills } = await loadSkillNeeds([root]);
+    expect(skills).toEqual([]);
+    // The assertion that would have caught the bug. It fails on origin/main.
+    expect(existsSync(join(root, "RAN"))).toBe(false);
+  });
+
+  test("...and one that DOES declare them is still imported, so the filter has not eaten the feature", async () => {
+    const root = graphWith({
+      "skill.ts": 'export const s = { id: "probe", requiredCapabilities: [{ capabilityId: "c" }] };\n',
+    });
+    const { skills, unreadable } = await loadSkillNeeds([root]);
+    expect(unreadable).toEqual([]);
+    expect(skills.map((s) => s.id)).toEqual(["probe"]);
+  });
+
+  test("a module that names the field and will not import is REPORTED, not skipped", async () => {
+    // The direction the prefilter could have broken: moving the "looks like a
+    // skill" test above the import must not turn a broken skill into a silent
+    // absence. A broken skill and a skill with nothing to require are different
+    // answers, and `unreadable` is what keeps them apart.
+    const root = graphWith({
+      "broken.ts": 'export const s = { id: "x", requiredCapabilities: [] };\nthis is not typescript(\n',
+    });
+    const { skills, unreadable } = await loadSkillNeeds([root]);
+    expect(skills).toEqual([]);
+    expect(unreadable).toHaveLength(1);
+    expect(unreadable[0]!.file).toContain("broken.ts");
   });
 });
 

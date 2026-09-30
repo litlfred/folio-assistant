@@ -469,7 +469,45 @@ function writeSidecars(): { written: string[]; stale: { path: string; fields: st
     // `--gate-direction` reads the tree and grades it; it must not also
     // rewrite the pinned record it is not grading. A gate that mutates its
     // own subject is the shape this repository keeps paying for.
-    if (!checking && !gatingDirection) {
+    //
+    // ── `import.meta.main` is the THIRD condition, and it is bean `ymsu`'s
+    //    clause 1 ────────────────────────────────────────────────────────
+    //
+    // This module is a SCRIPT: everything outside a function runs on import,
+    // including the call to this writer. That is fine for `bun run kg:detangle`
+    // and it is a defect for every other way the module can be loaded — and
+    // there is one, measured rather than imagined.
+    //
+    // `src/tools/degradation.ts#loadSkillNeeds` walks every declared knowledge-
+    // graph root and `await import()`s each `.ts` to read the skills that
+    // declare the capabilities they require. This file is in one of those
+    // roots, so capability detection EXECUTED the detangler, and `src/tools/
+    // degradation.test.ts` does it three times over the real corpus. Measured
+    // 2026-09-30 on `origin/main` `e718627f198`, with `folio-core`'s `internal`
+    // hand-staled to 999:
+    //
+    //     bun run kg:detangle:check   alone     -> exit 1, "STALE … — internal"
+    //     bun run gates               same tree -> that check PASSED, and the
+    //                                              runner's own guard reported
+    //                                              `bun test` reverting the file
+    //
+    // So the writer ran 1140 lines before its own checker and handed it a
+    // repaired copy — the whole of this bean, arriving through a consumer that
+    // has no idea it is running a script.
+    //
+    // The guard is here rather than only at that consumer because the property
+    // belongs to THIS file: a module in a knowledge-graph directory is
+    // importable by anything that scans the graph, so its side effects have to
+    // be conditional on being the entry point. Fixing only `loadSkillNeeds`
+    // would leave the next scanner to rediscover this.
+    //
+    // The paragraph above deliberately does NOT spell the field name
+    // `loadSkillNeeds` selects on: that loader now reads a file's source and
+    // skips one that does not mention it, so writing the literal here would put
+    // this script back in its candidate set. A docblock documenting a tag
+    // necessarily contains the tag — `audit-coverage` records the same trap, and
+    // this comment is how it was hit the first time the guard was measured.
+    if (!checking && !gatingDirection && import.meta.main) {
       mkdirSync(dirname(abs), { recursive: true });
       writeFileSync(abs, JSON.stringify(fresh, null, 2) + "\n", "utf-8");
     }
