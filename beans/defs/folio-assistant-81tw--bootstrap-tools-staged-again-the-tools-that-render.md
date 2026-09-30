@@ -22,11 +22,16 @@ Move, with history (`git mv`):
 - their tests: `bootstrap-schema-page.test.ts`, `bootstrap-graph.test.ts`, and the `check:bootstrap-concepts` block of `requirements.test.ts`
 
 ## Done when
-- [ ] `bootstrap-tools/bootstrap-tools.json` declared, `needs: ["cat-harness"]`, with AGENTS.md/CLAUDE.md/README; nothing in cat-harness imports or names it (check:partition, check:reference-direction green)
-- [ ] files moved with history; every path reference updated (package scripts, CI workflow, artefact-verification, declared-path baseline, schema viewer, glossaries — regenerated, never hand-edited)
-- [ ] IRIs: own namespace `…/bootstrap-tools/ns#` minted in own-namespaces.json; moved schema nodes resolve under the bootstrap-tools document IRI; no stale `cat-harness.jsonld#schema/{discussion,bootstrap-graph}` reference remains
-- [ ] the 5 published `bootstrap/schemas/*.schema.json` are BYTE-IDENTICAL before and after (their `$id`s are a published contract)
-- [ ] Zod validation runs as a step of the bootstrap render pipeline (owner: "need Zod usage in bootstrap tools as part of validation in rendering pipeline")
-- [ ] SEMVER skill in bootstrap-tools — owner, 2026-09-29, chose **"Bootstrap contract semver"**: a skill defining major/minor/patch for bootstrap's PUBLISHED schemas and graph, with the bump COMPUTED by the bootstrap-tools pipeline from a diff of the generated schemas (in the spirit of the instance-versioning proposal, #592: "a version bump COMPUTED by diffing the exported graph rather than asserted"). Not the every-instance version, and the release skills stay where they are.
-- [ ] cat-harness carries bootstrap's publication as a worked SDLC example — owner, 2026-09-29: *"in cat-harness, bootstrap publication can be an SDLC example"* — the lifecycle Zod change → generate → validate → computed semver bump → publish, placed in cat-harness's SDLC/release guidance, WITHOUT cat-harness code importing bootstrap-tools (check:reference-direction decides whether prose may name it)
+- [x] `bootstrap-tools/bootstrap-tools.json` declared, `needs: ["cat-harness"]`, with AGENTS.md/CLAUDE.md/README; nothing in cat-harness imports or names it (check:partition, check:reference-direction green)
+- [x] files moved with history; every path reference updated (package scripts, CI workflow, artefact-verification, declared-path baseline, schema viewer, glossaries — regenerated, never hand-edited)
+- [x] IRIs: own namespace `…/bootstrap-tools/ns#` minted in own-namespaces.json; moved schema nodes resolve under the bootstrap-tools document IRI; no stale `cat-harness.jsonld#schema/{discussion,bootstrap-graph}` reference remains
+- [x] the 5 published `bootstrap/schemas/*.schema.json` are BYTE-IDENTICAL before and after (their `$id`s are a published contract)
+- [x] Zod validation runs as a step of the bootstrap render pipeline (owner: "need Zod usage in bootstrap tools as part of validation in rendering pipeline")
+- [x] SEMVER skill in bootstrap-tools — owner, 2026-09-29, chose **"Bootstrap contract semver"**: a skill defining major/minor/patch for bootstrap's PUBLISHED schemas and graph, with the bump COMPUTED by the bootstrap-tools pipeline from a diff of the generated schemas (in the spirit of the instance-versioning proposal, #592: "a version bump COMPUTED by diffing the exported graph rather than asserted"). Not the every-instance version, and the release skills stay where they are.
+- [x] cat-harness carries bootstrap's publication as a worked SDLC example — owner, 2026-09-29: *"in cat-harness, bootstrap publication can be an SDLC example"* — the lifecycle Zod change → generate → validate → computed semver bump → publish, placed in cat-harness's SDLC/release guidance, WITHOUT cat-harness code importing bootstrap-tools (check:reference-direction decides whether prose may name it)
 - [ ] `bun run gates` green apart from the known local-only `.claude/worktrees` failures
+
+## Progress (2026-09-30)
+- Root visibility is by DISCOVERY (`instanceRootsIn`), with no entry in `cat-harness.json`; see `_visibility_comment` in `bootstrap-tools/bootstrap-tools.json`.
+- `partition/instance-rules.ts` got NO repo entry for this instance: `check:partition` scans only `cat-harness/` (bean `p11x`), so an entry would name bootstrap-tools from cat-harness code and enforce nothing. The direction is held by `check:reference-direction`, where cat-harness -> bootstrap-tools is 1 occurrence: the owner-mandated `own-namespaces.json` code.
+- After merging main (release-minted `$id`s), `bootstrap:validate` reads the discussion `$id`s from the published schemas, and `bootstrap:semver` treats a `$id` moving to the next release version as no change.
