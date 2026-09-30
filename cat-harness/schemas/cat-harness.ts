@@ -5055,6 +5055,50 @@ export function checkoutResolvedDirectories(
   return matchingDirectories(checkout, graph, registry);
 }
 
+/**
+ * THE CHECKOUT OVERLAY: this instance's resolved directories, then every other
+ * instance's in the same checkout, de-duplicated by absolute path (first wins,
+ * so this instance's own entry keeps its id).
+ *
+ * For a CORPUS-WIDE tool — one whose question is about the whole checkout,
+ * like "does any link dangle" — run from one instance. Until bean `cmsl` (issue
+ * #1694) such a tool got the checkout by accident: `cat-harness.json` mirrored
+ * other instances' directories with `scope: "repository"`. Moving the
+ * checkout's state to the root instance (step 2) and deleting the mirrors
+ * (step 3) takes that away, and measured, `check:subgraphs` went from 4078
+ * files scanned to 2880 with nothing red. This is the one place the union is
+ * composed. A fixture outside a checkout (its parent declares nothing and holds
+ * no instance) gets only its own directories.
+ */
+export function checkoutDirectories(
+  root: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): ResolvedDirectory[] {
+  const out = new Map<string, ResolvedDirectory>();
+  const ids = new Set<string>();
+  const add = (inst: string, qualify: boolean) => {
+    const name = qualify ? readDeclaration(inst, registry)?.name : undefined;
+    for (const d of resolveDirectories([{ name: "(local)", root: inst, own: true }], registry)) {
+      const key = resolve(d.absPath);
+      if (out.has(key)) continue;
+      // An id is unique within ONE instance, not across a checkout: four
+      // instances each call theirs `skills`. A consumer keying on the id would
+      // attribute one instance's files to another's directory, so a colliding
+      // id is qualified by its instance — the spelling the old mirrors used
+      // (`folio-assistant-core-skills`), so ids a reader already knows survive.
+      const id = ids.has(d.id) && name !== undefined ? `${name}-${d.id}` : d.id;
+      ids.add(id);
+      out.set(key, id === d.id ? d : { ...d, id });
+    }
+  };
+  add(root, false);
+  const checkout = repoRootFor(root);
+  if (resolve(checkout) !== resolve(root) && existsSync(join(checkout, ".git"))) {
+    for (const inst of instanceRootsIn(checkout)) if (resolve(inst) !== resolve(root)) add(inst, true);
+  }
+  return [...out.values()];
+}
+
 /** {@link checkoutResolvedDirectories}, as absolute paths. */
 export function checkoutDirectoriesForGraph(
   root: string,

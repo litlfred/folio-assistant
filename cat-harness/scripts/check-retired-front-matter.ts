@@ -184,6 +184,18 @@ function sweepRoots(instance: string, repo: string): string[] {
     // consumer does.
     dirs.push(...kgRoots(instance));
   }
+  // THE CHECKOUT ROOT'S OWN DIRECTORIES too. `beans/`, `memory/`, `fsh-guts/`
+  // and the root `docs/` overlay were swept through cat-harness's
+  // `scope: "repository"` entries until cmsl step 2 (issue #1694) moved them
+  // into the root instance's declaration; reading only this instance's then
+  // swept none of them (measured: the real-tree exemption test found 0). Only
+  // when `repo` is a different directory that declares itself — a fixture
+  // passing `scan(root, root)` is its own repository and gets nothing extra.
+  const rootDecl = resolve(repo) !== resolve(instance) ? declarationPathIn(repo) : undefined;
+  if (rootDecl !== undefined && existsSync(rootDecl)) {
+    const r = JSON.parse(readFileSync(rootDecl, "utf-8")) as { directories?: { path?: string }[] };
+    for (const d of r.directories ?? []) if (typeof d.path === "string") dirs.push(resolve(repo, d.path));
+  }
   // `.claude/skills/` is a local convention rather than a declared graph,
   // and since #437 it sits beside the instance rather than inside it.
   // Checking one place would silently skip it.

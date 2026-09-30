@@ -113,7 +113,7 @@ describe("the two namespaces stay separate", () => {
   });
 
   test("an unregistered TILE icon fails (a name absent from the registry)", () => {
-    withEdit(DECL, (s) => s.replace('"icon": "beans"', '"icon": "no-such-glyph"'), () => {
+    withEdit(DECL, (s) => s.replace('"icon": "uploads"', '"icon": "no-such-glyph"'), () => {
       const { status, out } = run("--check");
       expect(out).toContain("unregistered-tile-icon");
       expect(status).toBe(1);
