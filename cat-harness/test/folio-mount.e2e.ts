@@ -178,20 +178,37 @@ test.describe("the replica is unchanged with the glass closed", () => {
   /**
    * Every element's computed box and colour, keyed by a stable path. Compared
    * between the page with the mount and the same page without it.
+   *
+   * POSITIONS ARE MEASURED FROM THE TOP OF BODY'S CONTENT, not the viewport —
+   * bean `g9r2`, owner 2026-09-29: "Band on replicas". The top-centre handle
+   * (`2vne`) covered the ingested-copy banner, and the owner chose to reserve
+   * a band above the replica rather than move the handle. That band is body
+   * `padding-top`, so the replica as a whole sits lower and nothing inside it
+   * changes. Measured from the viewport, this test would call every element
+   * "moved"; measured from the content edge it still fails on a restyle, a
+   * resize, or any shift that is not the whole page at once. The band itself
+   * is asserted separately below, so it cannot grow unseen.
    */
   const snapshot = async (page: import("@playwright/test").Page) =>
     page.evaluate(() => {
       const out: Record<string, string> = {};
+      const b = document.body.getBoundingClientRect();
+      const bs = getComputedStyle(document.body);
+      const ox = b.x + parseFloat(bs.paddingLeft);
+      const oy = b.y + parseFloat(bs.paddingTop);
       const walk = (el: Element, path: string) => {
         // The folio's own chrome is not the replica and is excluded by name;
         // everything else the page renders is compared.
         if (el.className && String(el.className).indexOf("fa-") === 0) return;
         const c = getComputedStyle(el);
         const r = el.getBoundingClientRect();
+        // BODY carries the band, so its padding and height are the band's
+        // business and are asserted on their own; its colours still count.
+        const isBody = el === document.body;
         out[path] =
           [c.color, c.backgroundColor, c.fontFamily, c.fontSize, c.fontWeight, c.lineHeight,
-            c.margin, c.padding, c.border, c.display, c.textDecorationLine].join("|") +
-          "#" + [r.x, r.y, r.width, r.height].map((n) => Math.round(n)).join(",");
+            c.margin, isBody ? "" : c.padding, c.border, c.display, c.textDecorationLine].join("|") +
+          "#" + (isBody ? [r.width] : [r.x - ox, r.y - oy, r.width, r.height]).map((n) => Math.round(n)).join(",");
         let i = 0;
         for (const kid of Array.from(el.children)) walk(kid, `${path}/${kid.tagName}[${i++}]`);
       };
@@ -216,10 +233,45 @@ test.describe("the replica is unchanged with the glass closed", () => {
     expect(Object.keys(before).length).toBeGreaterThan(20);
   });
 
+  test("the band above the replica is the handle's, and clears it", async ({ page }) => {
+    await serve(page, "/who-iris/community-list.html");
+    const handle = page.locator(".fa-glass-handle");
+    await expect(handle).toBeVisible();
+    const [band, handleBottom, bannerTop] = await page.evaluate(() => [
+      parseFloat(getComputedStyle(document.body).paddingTop),
+      document.querySelector(".fa-glass-handle")!.getBoundingClientRect().bottom,
+      document.querySelector(".ingested")!.getBoundingClientRect().top,
+    ]);
+    // 2.25rem, the viewers' band: one reservation, not a second number.
+    expect(band).toBe(36);
+    // The point of the band: the banner starts below the handle.
+    expect(bannerTop).toBeGreaterThanOrEqual(handleBottom);
+  });
+
   test("the ingested-copy banner — who-iris requirement 1 — still reads as itself", async ({ page }) => {
     await serve(page, "/who-iris/community-list.html");
     const banner = page.locator(".ingested").first();
     await expect(banner).toBeVisible();
     await expect(banner).toHaveCSS("background-color", "rgb(0, 102, 102)");
+  });
+});
+
+/**
+ * A REPLICA ON A PHONE does not pan sideways — bean `g9r2`. Measured
+ * 2026-09-29 on this page: 537 px wide at 390, because a stacked download
+ * cell kept the desktop `nowrap` on a whole sentence. The glass is mounted
+ * here, as a reader has it; the fidelity test above already proves the
+ * mount itself moves nothing.
+ */
+test.describe("the replica at phone width", () => {
+  test.use({ viewport: { width: 390, height: 844 } });
+
+  test("the page is no wider than the screen", async ({ page }) => {
+    await serve(page, "/who-iris/community-list.html");
+    const [scroll, client] = await page.evaluate(() => [
+      document.documentElement.scrollWidth,
+      document.documentElement.clientWidth,
+    ]);
+    expect(scroll, "the page scrolls sideways at 390 px").toBeLessThanOrEqual(client);
   });
 });
