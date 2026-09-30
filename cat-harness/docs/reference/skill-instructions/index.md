@@ -372,6 +372,12 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Specification-compiled agents](specification-compiled-agents.html) | `specification-compiled-agents` | — | Renders [`methodologies/specification-compiled-agents.md`](https://github.com/litlfred/folio-assista |
 | [State in a running process](workflow-state.html) | `workflow-state` | — | A process instance is not self-contained. It walks a diagram that lives |
 
+## Science layer: Lean tooling (folio-assistant-sci)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Lean formal edges (elaborated)](lean-formal-edges.html) | `lean-formal-edges` | — | bun run folio-assistant-sci/content/pipeline/formal-edges.ts \ |
+
 ## Content layer (folio-assistant-core)
 
 | Skill | Id | Schema | Summary |

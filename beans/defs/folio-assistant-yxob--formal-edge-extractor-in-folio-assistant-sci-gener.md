@@ -19,7 +19,7 @@ Tracks litlfred/folio-assistant#1492. Owner decisions (2026-09-29): the hybrid, 
 - [x] folio-assistant-sci/lean/formal-edges.lean.tmpl: LeanArchitect's collectUsed rule over a tagged SET (the lean.ref targets); reports missing names
 - [x] folio-assistant-sci/content/pipeline/formal-edges.ts: driver that collects lean.ref targets, imports every built module, runs `lake env lean`, and ingests with --source elaborated; unit tests
 - [x] MCP Tool contributed through folio-assistant-sci/contributions.ts, plus wiring ContributionRegistry.registerTools into the MCP server (today no production caller)
-- [ ] skill in folio-assistant-sci (directory declared); core lean-formal-graph.md points to it
+- [x] skill in folio-assistant-sci (directory declared); core lean-formal-graph.md points to it
 - [ ] generated leanblueprint export (paper adapter), formal \uses, --check
 - [ ] fix or remove the 2 broken blueprint workflows
 - [ ] docs-site graph and Lean status page

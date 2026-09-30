@@ -831,6 +831,16 @@
       ]
     },
     {
+      "id": "folio-assistant-sci-lean-skills",
+      "path": "folio-assistant-sci/skills/lean/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The SCIENCE layer's Lean tooling skills: `lean-formal-edges`, which runs the elaborated formal-edge extractor (folio-assistant#1492). Under the science layer, not core, per the owner's cut 'f-a-core has high level processes only, no tooling'. A subdirectory of `folio-assistant-sci/skills/` rather than that directory itself, because `skills/voices/` is already declared as the `voices` kind, and one directory declared under two kinds would be scanned twice. Repository-scoped, like `folio-assistant-core-skills`, so the consumers that resolve a skill ref from this root can see it.",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
       "id": "folio-assistant-core-skills",
       "path": "folio-assistant-core/skills/",
       "scope": "repository",
