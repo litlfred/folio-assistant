@@ -22985,6 +22985,101 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-run.toolrunrecordschema.detail",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolRunRecordSchema.detail"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For a failure: what went wrong, for a reader who has only the file."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.detail",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-run.toolrunrecordschema.inputfingerprint",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolRunRecordSchema.inputFingerprint"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The tool's own fingerprint of the inputs the run read, or `unknown` when the run failed before it could compute one. `unknown` matches nothing."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.inputFingerprint",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-run.toolrunrecordschema.target",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolRunRecordSchema.target"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which of the tool's outputs — one tool may keep several (LSI: one per graph)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.target",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool-run.toolrunrecordschema.tool",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolRunRecordSchema.tool"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The Tool node id whose run this records. @ref ToolDefinitionSchema"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.tool",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.downstream",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolDefinitionSchema.downstream"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A downstream output this Tool keeps current, with its declared inputs. See {@link ToolDownstreamSchema}. Optional because most Tools keep no derived output; a run record or a publish verifier naming a Tool that does not declare one is a finding (`downstream-tool-declared`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.downstream",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.maintains",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -23058,6 +23153,63 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.tooldownstreamschema.inputs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolDownstreamSchema.inputs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What it is derived from, so a reader can see what makes it stale."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDownstreamSchema.inputs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.tooldownstreamschema.output",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolDownstreamSchema.output"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the Tool keeps current — repo-relative for `checkout`, site-relative for `published`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDownstreamSchema.output",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.tooldownstreamschema.verifier",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolDownstreamSchema.verifier"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`published` only: the `publish-verify` verifier id that judges the output."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDownstreamSchema.verifier",
       "skos:note": "candidate"
     },
     {
