@@ -26949,7 +26949,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "BPMN process ids, as `<bpmn:process id>` spells them — `Process_CrdmRequirements`, not a filename. Resolved against the diagrams the `cat-harness` graph carries, so a typo is a dangling reference rather than a voice that quietly never activates."
+          "@value": "BPMN process ids, as `<bpmn:process id>` spells them — `Process_CRDM_Requirements`, not a filename (#1168, B8: the element id, as `calledElement` uses it). Resolved against the loaded diagrams by `process-refs.test.ts`, so a typo is a dangling reference rather than a voice that quietly never activates."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema.processes",
