@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 465,
+      "count": 466,
       "unit": "beans"
     }
   },
@@ -75,7 +75,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:14Z",
       "updatedAt": "2026-09-23T10:36:14Z",
-      "preview": "Pages of 46 to 240+ rows are one flat list with no search, filter or grouping, so finding an entry means scrolling tens of thousands of pixels on a phone. Add a filter and grouping in the shared list component.\n\nObserved on: `glossary`, `processes`, `skills-index`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.",
+      "preview": "Pages of 46 to 240+ rows are one flat list with no search, filter or grouping, so finding an entry means scrolling tens of thousands of pixels on a phone. Add a filter and grouping in the shared list component.\n\nObserved on: `glossary`, `processes`, `skills-index`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Re",
       "file": "beans/defs/folio-assistant-0fua--long-flat-lists-with-no-search-or-filter.md"
     },
     {
@@ -461,15 +461,15 @@
     {
       "id": "folio-assistant-2e39",
       "title": "B9b (#1168): a BPMN lane is its own node; performedBy points at the registry role",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:54:25Z",
-      "updatedAt": "2026-09-30T10:54:25Z",
-      "preview": "Owner, 2026-09-30: Lane node. kg-export mints role/<lane name> per lane, so one role can get two nodes or merge by accident. Emit process/<p>/lane/<id> (type Lane) with bindsRole; performedBy goes to role/<roleRef>.\n\n## Done when\n- [ ] lanes exported as Lane nodes, not Role nodes\n- [ ] performedBy resolves to registry Role nodes, 0 dangling",
+      "updatedAt": "2026-09-30T11:21:30Z",
+      "preview": "Owner, 2026-09-30: Lane node. kg-export mints role/<lane name> per lane, so one role can get two nodes or merge by accident. Emit process/<p>/lane/<id> (type Lane) with bindsRole; performedBy goes to role/<roleRef>.\n\n## Done when\n- [ ] lanes exported as Lane nodes, not Role nodes\n- [ ] performedBy resolves to registry Role nodes, 0 dangling\n\n_2026-09-30T11:21:30Z_ — Claimed by claude/sharp-einstei",
       "file": "beans/defs/folio-assistant-2e39--b9b-1168-a-bpmn-lane-is-its-own-node-performedby-p.md"
     },
     {
@@ -2913,6 +2913,20 @@
       "file": "beans/defs/folio-assistant-g5o5--checkglossary-calls-kg-skills-stale-in-ci-and-curr.md"
     },
     {
+      "id": "folio-assistant-g9r2",
+      "title": "who-iris replica: top-centre handle covers the INGESTED COPY banner and a link; 3 replica pages scroll sideways at 390",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T23:07:47Z",
+      "updatedAt": "2026-09-29T23:07:47Z",
+      "preview": "Measured 2026-09-29 on a local build of main 35402147f.\n\n1. **The handle is back over the replica's own banner.** 2vne (owner 2026-09-27) moved the ▾ Folio handle back to top-centre as a short pill. On `who-iris/collection-collection-hq-publications.html` at 390×844 it covers the \"INGESTED COPY — not WHO\" text, which is 269z's original defect. At 1280×800 its box contains the centre of the \"folio-",
+      "file": "beans/defs/folio-assistant-g9r2--who-iris-replica-top-centre-handle-covers-the-inge.md"
+    },
+    {
       "id": "folio-assistant-ga3q",
       "title": "WAIVER: a human can waive a confirmation right, scoped to a session or a process run",
       "status": "todo",
@@ -3829,14 +3843,14 @@
     {
       "id": "folio-assistant-mylx",
       "title": "Raw Markdown backticks show in rendered text",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:13Z",
-      "updatedAt": "2026-09-29T22:51:20Z",
+      "updatedAt": "2026-09-29T23:05:45Z",
       "preview": "Descriptions carried from Markdown front matter or prose are rendered as plain text, so the backticks show. Render inline code (or strip the markers) in the shared text path.\n\nObserved on: `fsh-guts`, `glossary`, `methodologies`, `navbar`, `skills-index`, `voices` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n_2026-09-29T22",
       "file": "beans/defs/folio-assistant-mylx--raw-markdown-backticks-show-in-rendered-text.md"
     },
