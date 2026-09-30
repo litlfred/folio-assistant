@@ -293,18 +293,18 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T09:08:22.303Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/27090a171c2b8c02fd276df3264c662196610a5f",
-  "sourceCommitSha": "27090a171c2b8c02fd276df3264c662196610a5f",
-  "sourceCommitAt": "2026-09-30T11:04:28+02:00",
+  "generatedAt": "2026-09-30T09:57:02.164Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0f12e0e697367db5702f07163379c657db9f0664",
+  "sourceCommitSha": "0f12e0e697367db5702f07163379c657db9f0664",
+  "sourceCommitAt": "2026-09-30T11:52:54+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 283,
+    "Skill": 284,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 22,
+    "SkillPackage": 23,
     "Decision": 9,
     "Process": 72,
     "SequenceFlow": 940,
@@ -314,7 +314,7 @@
     "Schema": 123,
     "ExternalSchema": 17,
     "GraphKind": 35,
-    "Directory": 46,
+    "Directory": 47,
     "Asset": 3
   },
   "@graph": [
@@ -1595,7 +1595,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/associate-harness.md",
-      "instructionLines": 74,
+      "instructionLines": 90,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4017,7 +4017,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/lean-formal-graph.md",
-      "instructionLines": 100,
+      "instructionLines": 109,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4666,6 +4666,22 @@
       "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-formal-edges",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "lean-formal-edges",
+      "title": "Lean formal edges (elaborated)",
+      "description": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations — the trustworthy replacement for the lexical `--scan` cache. Use when the formal graph matters (impact analysis, staleness, a blueprint's \\uses), when `lean-formal-graph` reports source \"scan\", or before trusting a type/value split.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/lean"
+      ],
+      "instructionsPath": "../folio-assistant-sci/skills/lean/lean-formal-edges.md",
+      "instructionLines": 117,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-lean-skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/deep-document-research",
@@ -5920,6 +5936,14 @@
         "typescript",
         "python"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/lean",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "lean",
+      "path": "../folio-assistant-sci/skills/lean",
+      "hasManifest": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-lean-skills"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/skills",
@@ -43139,6 +43163,16 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/methodology"
       ],
       "description": "The methodologies the SCIENCE layer adopts from its own corpus -- external methods for formalising mathematics in Lean (blueprint-driven formalization, process-driven autoformalization, bidirectional agentic autoformalization), each citing a paper held in `folio-assistant-sci/library/`. Declared beside `smart-base-methodologies` and `folio-assistant-core-methodologies` and for the same reason: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a method for formalising mathematics belongs to the layer that exists for folios that formalise mathematics. Repository-scoped so it resolves against the repository root, like its siblings. Bean h3rw."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-lean-skills",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "name": "folio-assistant-sci-lean-skills",
+      "path": "folio-assistant-sci/skills/lean/",
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/skills"
+      ],
+      "description": "The SCIENCE layer's Lean tooling skills: `lean-formal-edges`, which runs the elaborated formal-edge extractor (folio-assistant#1492). Under the science layer, not core, per the owner's cut 'f-a-core has high level processes only, no tooling'. A subdirectory of `folio-assistant-sci/skills/` rather than that directory itself, because `skills/voices/` is already declared as the `voices` kind, and one directory declared under two kinds would be scanned twice. Repository-scoped, like `folio-assistant-core-skills`, so the consumers that resolve a skill ref from this root can see it."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-core-skills",
