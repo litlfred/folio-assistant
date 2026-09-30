@@ -6066,6 +6066,13 @@
           "doc": "The address this instance's IRIs are minted under, BEFORE the version —"
         },
         {
+          "name": "nodeSchemas",
+          "type": "z.record(z.string().min(1), z.string().min(1)).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The instance's Node Kinds, declared: each `$schema` tag its files may"
+        },
+        {
           "name": "previewUrl",
           "type": "z.string().url().optional()",
           "optional": true,
@@ -11310,6 +11317,39 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/dependency-order.ts#OrderViolation",
+      "name": "OrderViolation",
+      "module": "cat-harness/schemas/dependency-order.ts",
+      "kind": "interface",
+      "doc": "One way an AUTHORED order breaks its own promise: an item uses one that",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "uses",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "\"forward\" | \"self\" | \"missing\"",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/dependency-order.ts#RunRecord",
       "name": "RunRecord",
       "module": "cat-harness/schemas/dependency-order.ts",
@@ -15543,6 +15583,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/graph.ts#DependencySchema",
+      "name": "DependencySchema",
+      "module": "cat-harness/schemas/graph.ts",
+      "kind": "zod-scalar",
+      "doc": "A `needs` entry: the other Knowledge Graph's name.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/graph.ts#GraphKindSchema",
       "name": "GraphKindSchema",
       "module": "cat-harness/schemas/graph.ts",
@@ -15600,6 +15654,18 @@
           "array": true
         },
         {
+          "name": "needs",
+          "type": "z.array(DependencySchema).optional().describe(\"Its Dependencies: the Knowledge Graphs it may refer into.\")",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "nodeSchemas",
+          "type": "z .record(z.string().min(1), z.string().min(1)) .optional() .describe( \"Its Node Kinds: each `$schema` value its Node I…",
+          "optional": true,
+          "array": false
+        },
+        {
           "name": "assets",
           "type": "z.array(AssetSchema).optional()",
           "optional": true,
@@ -15610,6 +15676,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/graph.ts#AssetSchema",
+        "cat-harness/schemas/graph.ts#DependencySchema",
         "cat-harness/schemas/graph.ts#SubgraphSchema"
       ],
       "unresolved": [],
@@ -38715,6 +38782,13 @@
           "array": true
         },
         {
+          "name": "ordered",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The terms are in a LOGICAL order, each defined only by terms above it,"
+        },
+        {
           "name": "members",
           "type": "z.array(Iri).optional()",
           "optional": true,
@@ -38869,6 +38943,20 @@
           "type": "z.array(Iri).optional()",
           "optional": true,
           "array": true
+        },
+        {
+          "name": "requires",
+          "type": "z.array(z.string().min(1)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Local ids of the terms this definition USES — what a reader must know"
+        },
+        {
+          "name": "isDefinedBy",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The schema or standard that defines the term (rdfs:isDefinedBy)."
         },
         {
           "name": "source",
@@ -42983,6 +43071,14 @@
     },
     {
       "from": "cat-harness/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
+      "to": "cat-harness/schemas/graph.ts#DependencySchema",
+      "via": "needs",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
       "to": "cat-harness/schemas/graph.ts#SubgraphSchema",
       "via": "directories",
       "kind": "field",
@@ -46356,6 +46452,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "isDefinedBy",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",

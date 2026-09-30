@@ -46,17 +46,17 @@ gives its name and lists its
 <a href="schemas/README.html#subgraph">Subgraphs</a> (<a href="schemas/graph.schema.json#/$defs/Subgraph">src</a>), the named directories
 it is divided into.</p>
 <p>A <a href="schemas/README.html#harness">Harness</a> (<a href="schemas/graph.schema.json#/$defs/Harness">src</a>) is what you use to work
-with a Knowledge Graph. A Harness is a Knowledge Graph too, declared the same
-way. This directory is the first Harness, <code>bootstrap</code>, declared by
+with a <a href="schemas/README.html#knowledge-graph">Knowledge Graph</a>. A <a href="schemas/README.html#harness">Harness</a> is a <a href="schemas/README.html#knowledge-graph">Knowledge Graph</a> too, declared the same
+way. This directory is the first <a href="schemas/README.html#harness">Harness</a>, <code>bootstrap</code>, declared by
 <a href="bootstrap.json"><code>bootstrap.json</code></a>.</p>
 <p><strong>Setting up a repository means instantiating one or more different kinds of
-Knowledge Graph Harness on the data in the repository.</strong> A person chooses which
+<a href="schemas/README.html#knowledge-graph">Knowledge Graph</a> <a href="schemas/README.html#harness">Harness</a> on the data in the repository.</strong> A person chooses which
 ones, and the choice is hard to undo.</p>
 <hr>
 <h2>Who takes part</h2>
 <p>An <a href="schemas/README.html#actor">Actor</a> (<a href="schemas/graph.schema.json#/$defs/Actor">src</a>) is a person, an agent or a
-program. Each Actor takes a <a href="schemas/README.html#role">Role</a> (<a href="schemas/graph.schema.json#/$defs/Role">src</a>), and
-the four Roles here are declared in <a href="scenarios/roles.json"><code>scenarios/roles.json</code></a>:</p>
+program. Each <a href="schemas/README.html#actor">Actor</a> takes a <a href="schemas/README.html#role">Role</a> (<a href="schemas/graph.schema.json#/$defs/Role">src</a>), and
+the four <a href="schemas/README.html#role">Roles</a> here are declared in <a href="scenarios/roles.json"><code>scenarios/roles.json</code></a>:</p>
 <table>
 <thead>
 <tr>
@@ -71,11 +71,11 @@ the four Roles here are declared in <a href="scenarios/roles.json"><code>scenari
 </tr>
 <tr>
 <td><strong>Requestor</strong></td>
-<td>the person who asked for it. Only the Requestor chooses the Harness.</td>
+<td>the person who asked for it. Only the Requestor chooses the <a href="schemas/README.html#harness">Harness</a>.</td>
 </tr>
 <tr>
 <td><strong>Knowledge Graph Data Store</strong></td>
-<td>a repository: the one being set up, and any a Harness is read from</td>
+<td>a repository: the one being set up, and any a <a href="schemas/README.html#harness">Harness</a> is read from</td>
 </tr>
 <tr>
 <td><strong>Logger</strong></td>
@@ -83,25 +83,25 @@ the four Roles here are declared in <a href="scenarios/roles.json"><code>scenari
 </tr>
 </tbody>
 </table>
-<p>As the Bootstrapping Agent you have no Harness yet, so you have no
-<a href="schemas/README.html#tool">Tools</a> (<a href="schemas/graph.schema.json#/$defs/Tool">src</a>) (programs to call). If a step
-seems to need one, it belongs to the Harness you are about to set up, not to
+<p>As the Bootstrapping Agent you have no <a href="schemas/README.html#harness">Harness</a> yet, so you have no
+tools (programs to call): a <a href="schemas/README.html#harness">Harness</a> defines those, and bootstrap does not. If a step
+seems to need one, it belongs to the <a href="schemas/README.html#harness">Harness</a> you are about to set up, not to
 this one.</p>
 <hr>
 <h2>User story</h2>
 <blockquote>
 <p><strong>As</strong> the Bootstrapping Agent, <strong>I want</strong> to set up the repository I was handed as
-the Harness the Requestor chooses, <strong>so that</strong> everything added to it later
-is built on the right Harness.</p>
+the <a href="schemas/README.html#harness">Harness</a> the Requestor chooses, <strong>so that</strong> everything added to it later
+is built on the right <a href="schemas/README.html#harness">Harness</a>.</p>
 </blockquote>
-<p>The story ends in one of two ways, and both are acceptable: the Harness is set
+<p>The story ends in one of two ways, and both are acceptable: the <a href="schemas/README.html#harness">Harness</a> is set
 up, or the reason it could not be is recorded.</p>
 <hr>
 <h2>Steps</h2>
 <p>The steps are drawn as a
 <a href="schemas/README.html#process">Process</a> (<a href="schemas/graph.schema.json#/$defs/Process">src</a>),
 <a href="processes/initialize-harness.bpmn"><code>initialize-harness.bpmn</code></a>. It is the only
-Process you start. Each step names the
+<a href="schemas/README.html#process">Process</a> you start. Each step names the
 <a href="schemas/README.html#skill">Skill</a> (<a href="schemas/graph.schema.json#/$defs/Skill">src</a>) to read and the Functional
 Requirement it must meet (see the next section).</p>
 <pre><code class="language-text"> 1  Learn how to open files here
@@ -118,7 +118,7 @@ Requirement it must meet (see the next section).</p>
 
     At any step: something cannot be found or read  --->  record it and stop
 </code></pre>
-<p>The same steps, and the Processes they start, as the diagrams themselves:</p>
+<p>The same steps, and the <a href="schemas/README.html#process">Processes</a> they start, as the diagrams themselves:</p>
 <!-- kg:processes:begin -->
 <p><strong>Determine the harness and repositories</strong>: <a href="processes/discussion.bpmn"><code>processes/discussion.bpmn</code></a>, the one you start.</p>
 <p><img src="processes/discussion.svg" alt="Determine the harness and repositories"></p>
