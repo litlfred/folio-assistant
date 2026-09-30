@@ -20,7 +20,7 @@
  * - **`${{ }}` inside a `run:` body**, where the expression is substituted into
  *   the script TEXT before the shell parses it. Trusted contexts are allowed;
  *   anything attacker-controlled is an error. See
- *   `skills/folio-core/untrusted-input.md`.
+ *   `skills/conduct/conduct-core/untrusted-input.md`.
  * - **A job that pushes `gh-pages` with no protection against the race.**
  *   Either the shared `gh-pages-push` concurrency group, or a retry. One or
  *   the other, because they all contend for a single ref.

@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /symbiotic-interaction
 
-Run the `symbiotic-interaction` skill. Read [`cat-harness/skills/folio-core/symbiotic-interaction.md`](../../cat-harness/skills/folio-core/symbiotic-interaction.md) and follow it.
+Run the `symbiotic-interaction` skill. Read [`cat-harness/skills/conduct/conduct-core/symbiotic-interaction.md`](../../cat-harness/skills/conduct/conduct-core/symbiotic-interaction.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

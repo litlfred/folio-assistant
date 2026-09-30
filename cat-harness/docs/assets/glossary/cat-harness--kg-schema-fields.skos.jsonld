@@ -5562,6 +5562,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.livesat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.livesAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the instance lives TODAY when that is not the root of {@link repository} — the host repository and the directory within it. Absent means it already lives at the root of its own repository."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.livesAt",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.name",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5695,6 +5714,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The repository this instance IS — `owner/name`, its PLANNED home once the pre-split repository is broken apart (owner, 2026-09-30, bean `6rmv`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.repository",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.stickies",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5711,25 +5749,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stickies",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.stub",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "CatHarnessDeclaration.stub"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The repository's short name, used as the **filename stem of every artefact this instance publishes** — `<stub>.jsonld` for the knowledge graph, `<stub>.schema.json` for its schema. Defaults to `name`."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stub",
       "skos:note": "candidate"
     },
     {
@@ -6376,6 +6395,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.instancelocation.path",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InstanceLocation.path"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance's directory within it, repository-relative, no leading `./`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#InstanceLocation.path",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.instancelocation.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InstanceLocation.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The repository that holds the instance today, `owner/name`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#InstanceLocation.repository",
       "skos:note": "candidate"
     },
     {
@@ -13314,6 +13371,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.layer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.layer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whose namespace the kind is named in, when it is not the harness's: `core` for the folio's own furniture (`voices`, `library`, `todos`, …). A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_KINDS`). The kind IS its individual, `<ns>graphKind/<name>` ({@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphKind` individual, and the harness now does the same."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.layer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.nodeschemas",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -13387,25 +13463,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.type",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "GraphKindDef.type"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The `@type` IRI this kind projects to."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.type",
       "skos:note": "candidate"
     },
     {
@@ -14812,6 +14869,120 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/instance-repositories.instancerepository.livesat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InstanceRepository.livesAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where it sits today, when not at the root of `repository`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.livesAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/instance-repositories.instancerepository.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InstanceRepository.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declaration's machine name — what `needs` resolves against."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/instance-repositories.instancerepository.namespace",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InstanceRepository.namespace"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The vocabulary namespace its terms are minted under — {@link instanceNamespace}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.namespace",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/instance-repositories.instancerepository.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InstanceRepository.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The planned repository, `owner/name` — the identity references use."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.repository",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/instance-repositories.instancerepository.root",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InstanceRepository.root"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absolute path of the instance root in this checkout or overlay."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.root",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/instance-repositories.instancerepositorymap.undeclared",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InstanceRepositoryMap.undeclared"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Roots whose declaration names no `repository` — reported, never guessed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/instance-repositories.ts#InstanceRepositoryMap.undeclared",
       "skos:note": "candidate"
     },
     {
@@ -22180,7 +22351,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Declared instance name. Absent means the citing instance's own."
+          "@value": "The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own."
         }
       ],
       "dcterms:source": "cat-harness/schemas/theme.ts#ThemeRefSchema.instance",
@@ -27424,7 +27595,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declared name of the instance holding it. Absent means this one."
+          "@value": "The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceRefSchema.instance",
@@ -27481,7 +27652,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The DECLARED NAME of the instance holding the corpus, when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged."
+          "@value": "The instance holding the corpus, as its planned `owner/repo` (bean `6rmv`; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.instance",

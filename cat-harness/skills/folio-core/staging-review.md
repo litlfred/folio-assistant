@@ -454,7 +454,7 @@ N × ~38 MB. What changed is that the floor now **falls on its own** as work
 merges, instead of being carried forever.
 
 **This is not a relaxation of
-[`deletion-requires-confirmation`](deletion-requires-confirmation.md) — it is
+[`deletion-requires-confirmation`](../conduct/conduct-core/deletion-requires-confirmation.md) — it is
 that rule applied more precisely.** The merge *is* the confirmation: a person
 decided this content belongs on `main`, which says more about the preview than
 a label does. What the label still guards is the case where nobody decided
@@ -489,7 +489,7 @@ sweep's `staging-preview-orphans` finding can only ever name a preview whose PR
 is already closed, so the remedy it documented was unreachable for every orphan
 it could report. If you find yourself reaching for a hand-pushed `gh-pages`
 commit instead, stop: that is the unilateral removal
-[`deletion-requires-confirmation`](deletion-requires-confirmation.md) exists to
+[`deletion-requires-confirmation`](../conduct/conduct-core/deletion-requires-confirmation.md) exists to
 stop, and option 2 exists so you do not have to.
 
 ### A closed PR is not an abandoned preview

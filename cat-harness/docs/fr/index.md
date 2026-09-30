@@ -118,7 +118,7 @@ plan de travail partagé.
 - **[Référence du schéma de compétences](../reference/skills/)** — contrats d'entrée/sortie générés pour chaque compétence.
 - **[Référence de l'API TypeScript](../api/)** — le modèle d'objets de contenu (`Block`, `Chapter`, `Paper`, builders, contraintes Zod).
 - **[Architecture](../architecture.html)** — adaptateurs, serveur MCP, RBAC, le modèle de blocs.
-- **[Le KGraph](../kgraph.html)** — la taxonomie des sous-graphes, le sens dans lequel les références s'exécutent, et la manière dont les dépôts répartissent le travail.
+- **[Le graphe de connaissances](../knowledge-graph.html)** — la taxonomie des sous-graphes, le sens dans lequel les références s'exécutent, et la manière dont les dépôts répartissent le travail.
 - **[Le Harness](../harness.html)** — instanciation, le parcours des dépendances, et ce à quoi oblige le harnachement d'un répertoire.
 
 Deux compétences méritent d'être lues avant les pages ci-dessus, car tout le reste

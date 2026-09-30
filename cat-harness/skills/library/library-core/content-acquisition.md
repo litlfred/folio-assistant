@@ -54,8 +54,8 @@ link or a description to whatever will resolve it.
    consolation prize.
 3. **Only then ask for an upload**, with the place to put it — see below.
 4. **Say what happens if they do nothing**, per
-   [`decision-comparison`](../../folio-core/decision-comparison.md) and
-   [`interaction-modality`](../../folio-core/interaction-modality.md) §4.1: which is usually that
+   [`decision-comparison`](../../conduct/conduct-core/decision-comparison.md) and
+   [`interaction-modality`](../../conduct/conduct-core/interaction-modality.md) §4.1: which is usually that
    the work proceeds without the resource and says so.
 
 Asking for all of it at once is what turns a request into a form. Asking for the

@@ -12,13 +12,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1483 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1492 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1684 terms and is 924 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1693 terms and is 930 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1684</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1693</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1348,6 +1348,13 @@ CatHarnessDeclaration.liquid <span class="fa-gloss-status">candidate, extracted<
 <p>The Liquid prefix this instance's VALUES are addressed by in authored text — <code>&#123;&#123; &lt;prefix&gt;.&lt;directory-id&gt;.&lt;entry&gt;.&lt;path&gt; }}</code> — and whether the platform resolves it or passes it through.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.liquid</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.livesat" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.livesAt <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where the instance lives TODAY when that is not the root of &#123;@link repository} — the host repository and the directory within it. Absent means it already lives at the root of its own repository.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.livesAt</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.name" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.name <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1397,19 +1404,19 @@ CatHarnessDeclaration.renderExemption <span class="fa-gloss-status">candidate, e
 <p>What this instance is excused from rendering, and what it carries instead.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.renderExemption</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.repository" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The repository this instance IS — <code>owner/name</code>, its PLANNED home once the pre-split repository is broken apart (owner, 2026-09-30, bean <code>6rmv</code>).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.repository</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.stickies" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.stickies <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Sticky notes this layer contributes to the landing board.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stickies</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.stub" data-fa-state="extracted" data-fa-gloss="">
-CatHarnessDeclaration.stub <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The repository's short name, used as the **filename stem of every artefact this instance publishes** — <code>&lt;stub&gt;.jsonld</code> for the knowledge graph, <code>&lt;stub&gt;.schema.json</code> for its schema. Defaults to <code>name</code>.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stub</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.topology" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.topology <span class="fa-gloss-status">candidate, extracted</span>
@@ -3905,6 +3912,13 @@ GraphKindDef.holds <span class="fa-gloss-status">candidate, extracted</span>
 <p>Does a graph of this kind say what the instance **IS**, or where something **GOT TO**?</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.holds</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.layer" data-fa-state="extracted" data-fa-gloss="">
+GraphKindDef.layer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whose namespace the kind is named in, when it is not the harness's: <code>core</code> for the folio's own furniture (<code>voices</code>, <code>library</code>, <code>todos</code>, …). A kind bootstrap defines is bootstrap's whatever this says (<code>BOOTSTRAP_GRAPH_KINDS</code>). The kind IS its individual, <code>&lt;ns&gt;graphKind/&lt;name&gt;</code> (&#123;@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean <code>3r47</code>): &quot;Drop per-kind classes&quot; — bootstrap names a kind as one <code>GraphKind</code> individual, and the harness now does the same.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.layer</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.nodeschemas" data-fa-state="extracted" data-fa-gloss="">
 GraphKindDef.nodeSchemas <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3932,13 +3946,6 @@ GraphKindDef.schema <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Where the shape of a node in this graph is defined — a repo-relative module path, or a <code>$schema</code> tag the files themselves carry.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.type" data-fa-state="extracted" data-fa-gloss="">
-GraphKindDef.type <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The <code>@type</code> IRI this kind projects to.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.type</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.validator" data-fa-state="extracted" data-fa-gloss="">
 GraphKindDef.validator <span class="fa-gloss-status">candidate, extracted</span>
@@ -4626,6 +4633,62 @@ InstanceGraph.order <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Every dependency the root reaches, EACH ONCE, deepest first and the root's direct dependencies last. The root itself is not in it.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#InstanceGraph.order</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.instancelocation.path" data-fa-state="extracted" data-fa-gloss="">
+InstanceLocation.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The instance's directory within it, repository-relative, no leading <code>./</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#InstanceLocation.path</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.instancelocation.repository" data-fa-state="extracted" data-fa-gloss="">
+InstanceLocation.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The repository that holds the instance today, <code>owner/name</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#InstanceLocation.repository</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.livesat" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepository.livesAt <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where it sits today, when not at the root of <code>repository</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.livesAt</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.name" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepository.name <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The declaration's machine name — what <code>needs</code> resolves against.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.name</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.namespace" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepository.namespace <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The vocabulary namespace its terms are minted under — &#123;@link instanceNamespace}.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.namespace</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.repository" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepository.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The planned repository, <code>owner/name</code> — the identity references use.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.repository</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.root" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepository.root <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Absolute path of the instance root in this checkout or overlay.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.root</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepositorymap.undeclared" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepositoryMap.undeclared <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Roots whose declaration names no <code>repository</code> — reported, never guessed.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepositoryMap.undeclared</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--intake.intakefileschema.role" data-fa-state="extracted" data-fa-gloss="">
 IntakeFileSchema.role <span class="fa-gloss-status">candidate, extracted</span>
@@ -10184,7 +10247,7 @@ ThemeOverrideNoteSchema.source <span class="fa-gloss-status">candidate, extracte
 ThemeRefSchema.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Declared instance name. Absent means the citing instance's own.</p>
+<p>The owning instance, as <code>owner/repo</code> (bean <code>6rmv</code>). Absent means the citing instance's own.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/theme.ts"><code>cat-harness/schemas/theme.ts#ThemeRefSchema.instance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--theme.themeschema.backdrop" data-fa-state="extracted" data-fa-gloss="">
@@ -11536,7 +11599,7 @@ VoiceProvenanceFlag.ruleIds <span class="fa-gloss-status">candidate, extracted</
 VoiceRefSchema.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The declared name of the instance holding it. Absent means this one.</p>
+<p>The instance holding it, as <code>owner/repo</code> (bean <code>6rmv</code>). Absent means this one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceRefSchema.instance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voiceruleschema.judgementonly" data-fa-state="extracted" data-fa-gloss="">
@@ -11557,7 +11620,7 @@ VoiceRuleSchema.title <span class="fa-gloss-status">candidate, extracted</span>
 VoiceRuleSourceSchema.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The DECLARED NAME of the instance holding the corpus, when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.</p>
+<p>The instance holding the corpus, as its planned <code>owner/repo</code> (bean <code>6rmv</code>; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.instance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voicerulesourceschema.libraryid" data-fa-state="extracted" data-fa-gloss="">

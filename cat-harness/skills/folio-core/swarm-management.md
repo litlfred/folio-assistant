@@ -38,7 +38,7 @@ plainly cover the swarm in front of you does not cover it.
 Acting under one, name it in the turn report and quote its words — a waived
 swarm is an announced swarm. And a waiver removes the **asking**, never the
 sizing, the decomposition or the stopping condition below.
-[`confirmation-waiver.md`](confirmation-waiver.md).
+[`confirmation-waiver.md`](../conduct/conduct-core/confirmation-waiver.md).
 
 
 ## First ask whether you need one

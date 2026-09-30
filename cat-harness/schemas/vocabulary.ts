@@ -18,9 +18,9 @@
  *
  * ## What is NOT here, deliberately
  *
- * **The graph kinds.** `ToolGraph`, `KGraph`, `BeanGraph` and the rest
- * already carry a `summary` in `BASE_GRAPH_KINDS`, so `ns-export` reads it
- * from there. Restating them here would be a second answer to one question,
+ * **The graph kinds.** `tools`, `cat-harness`, `beans` and the rest are
+ * `GraphKind` individuals, not classes (bean `3r47`), and each already carries
+ * a `summary` in `BASE_GRAPH_KINDS`, so `ns-export` reads it from there. Restating them here would be a second answer to one question,
  * free to disagree — the drift this repository keeps paying for. A gloss below
  * for a term the registry already describes is a bug, and the completeness
  * test says so.
@@ -262,6 +262,14 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     layer: "core",
     gloss:
       "A graph of SKOS terms (folio-glossary/v1): local terms with definitions and codes, linked to external SKOS concepts rather than copying them. Registered by core, not the harness.",
+  },
+  // A DOCUMENT class, not a kind class: it types the published fsh-guts
+  // export, as RoleGraph and PreviewGraph type theirs. It was defined only
+  // through the `fsh-guts` kind's per-kind class until those went (bean
+  // `3r47`); the document still needs its type defined.
+  FshGutsGraph: {
+    gloss:
+      "The published export of an instance's fsh-guts tree: deprecated and throwaway structured content, reachable by name only.",
   },
   PreviewGraph: {
     layer: "core",
@@ -548,34 +556,9 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
  * the base depend on something above it.
  */
 export function termLayer(name: string): TermLayer {
-  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? GRAPH_KIND_TYPE_LAYERS[name] ?? "harness";
+  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? "harness";
 }
 
-/**
- * Which layer owns each graph kind's TYPE, keyed by the type's local name.
- *
- * The ONE table. It was two, and they disagreed (bean `r3gy`, D1): this file
- * gave every graph kind `harness`, so `termIri("SchemaGraph")` minted a
- * cat-harness IRI, while `ns-export.ts` kept its own map publishing `schemas`
- * as bootstrap's. A term published by one layer and minted by another is the
- * leak the layering rule forbids. `ns-export` now asks {@link termLayer}.
- *
- * bootstrap has NO rows, since 2026-09-30 (owner, bean `xsqm`): bootstrap's
- * vocabulary is exactly its defined terms, and `SkillGraph`, `ProcessGraph`
- * and the rest are the harness's classes for a directory holding a kind — not
- * terms bootstrap defines. The kinds themselves are bootstrap's, and are
- * named in its vocabulary as `bootstrap:graphKind/<kind>` (`graphKindNamespace`). The `core` rows are the folio's own furniture, which the
- * owner named as NOT bootstrap: "we shouldnt need voicegraph or librarygrph or
- * previewgrapjh in bootstrap!!". An absent kind is `harness`, the safe
- * direction, for the reason given on `termLayer`.
- */
-export const GRAPH_KIND_TYPE_LAYERS: Readonly<Record<string, TermLayer>> = {
-  VoiceGraph: "core",
-  VoiceVendorsGraph: "core",
-  LibraryGraph: "core",
-  UploadsGraph: "core",
-  TodoGraph: "core",
-  TodoItemsGraph: "core",
-  TodoFeedbackGraph: "core",
-  ReviewVerdictsGraph: "core",
-};
+// There is no per-kind class, so no layer table for one: a graph kind states
+// its own layer (`GraphKindDef.layer`) and is named by its individual,
+// `<ns>graphKind/<name>` (owner, 2026-09-30, bean `3r47`).

@@ -252,7 +252,7 @@ deleted one leaves a sibling unable to tell abandonment from accident.
 
 **That is one instance of a general rule, and the general rule is the source of
 truth** —
-[`deletion-requires-confirmation.md`](cat-harness/skills/folio-core/deletion-requires-confirmation.md):
+[`deletion-requires-confirmation.md`](cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md):
 an agent never removes a durable artefact on its own initiative; it reports what
 would go, with sizes and ages, and waits to be told. The bean case is the
 strictest because a bean id is referenced from commits, issues and other beans.
@@ -350,7 +350,7 @@ fails. `bun run health:list` says what the checks are.
 
 **It reports and never acts.** Four of the five checks are about artefacts
 accumulating, and every finding's action names something a *person* does. That
-is [`deletion-requires-confirmation`](cat-harness/skills/folio-core/deletion-requires-confirmation.md)
+is [`deletion-requires-confirmation`](cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md)
 applied to the tool that most wants to break it — the skill's own worked
 example is `plj1`, a workflow whose shape deleted every open PR's preview
 without anybody deciding it.
@@ -432,7 +432,7 @@ Subagents declared under [`.claude/agents/`](.claude/agents/) carry
 lines only**, with the overflow dropped silently.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/agent-memory.md`](cat-harness/skills/folio-core/agent-memory.md) carries
+[`skills/conduct/conduct-core/agent-memory.md`](cat-harness/skills/conduct/conduct-core/agent-memory.md) carries
 the three entry labels and what each promises, why entries are authored as nodes
 under `memory/` rather than in the generated file, the two ways the
 injection budget has to be checked, archiving as the third state between
@@ -539,7 +539,7 @@ reports "no instance recorded" as a **finding** rather than as silence.
 same as recording it" carries that rule, and the rest of that skill carries the
 five detectors for being out of process and the recovery that confirms with the
 user before re-entering — a confirmation the owner may waive for a session or a
-process run ([`confirmation-waiver`](cat-harness/skills/folio-core/confirmation-waiver.md)).
+process run ([`confirmation-waiver`](cat-harness/skills/conduct/conduct-core/confirmation-waiver.md)).
 
 ## Working an issue — announce, then re-check
 
@@ -589,7 +589,7 @@ question is not ready. A link is where somebody goes for *more*; it is never
 where the terms are defined.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/interaction-modality.md`](cat-harness/skills/folio-core/interaction-modality.md)
+[`skills/conduct/conduct-core/interaction-modality.md`](cat-harness/skills/conduct/conduct-core/interaction-modality.md)
 §4.1 carries the six parts, the surfaces this binds that do not feel like asking
 (the end-of-turn "next" line, a bean's `## Done when`, a PR body, an issue
 comment), why feature work breaks it more than content work, and a worked
@@ -621,7 +621,7 @@ to spend the words: **do not start the topic.**
 ## More
 
 - **Not sure where a thing goes? There is a router now** —
-  [`where-does-this-go`](cat-harness/skills/folio-core/where-does-this-go.md).
+  [`where-does-this-go`](cat-harness/skills/conduct/conduct-core/where-does-this-go.md).
   This repository answers "where does this file?" nine separate times, each
   well and each in its own skill, and until 2026-09-22 nothing said WHICH
   question you were asking. The router answers none of them: every row is a

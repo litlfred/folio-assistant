@@ -237,7 +237,7 @@ use — so a reader who lands mid-page is one click from the definition.
 `README.md` and `AGENTS.md` are **declared assets with a declared purpose**
 (`ASSET_ROLES` in `schemas/cat-harness.ts` — one place, per ROLE, not
 per asset). Keeping them true is part of
-[`agent-memory`](../../folio-core/agent-memory.md), and the owner put them there:
+[`agent-memory`](../../conduct/conduct-core/agent-memory.md), and the owner put them there:
 
 > it is an asset and has a defined purpose (that is part of skills of mantiaing
 > agent memroies)

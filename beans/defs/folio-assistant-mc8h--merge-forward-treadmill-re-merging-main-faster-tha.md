@@ -145,3 +145,7 @@ it is simply no longer propped up by a claim about what CI did not do.
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
 _2026-09-29_ — **Re-parented `1swy` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Re-merging main faster than CI answers means no verdict at all — CI reliability, not QA verdict content.
+
+## OWNER DECISION, 2026-09-30: no merge queue for now — keep merging forward by hand
+
+Asked in session https://claude.ai/code/session_01SiFEMuTciyB681XP5WfcbB, with the measurement behind it. Main moves every 5.4 min (median); a full CI run takes 6.1 min (median); and #1665 needed four merges of main in one afternoon because it touches generated files. **The owner chose to keep hand-merging, not to enable GitHub's merge queue or require up-to-date branches.** So the treadmill stays an agent cost, and this bean's mitigations (the fast merge path, merging the moment CI is green) remain the operating procedure. It is not a finding to re-raise on every PR. Re-ask only if the cost changes materially.

@@ -66,6 +66,7 @@ import {
 } from "node:fs";
 import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
+import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
 
 import {
   KgAssetSchema,
@@ -77,7 +78,7 @@ import {
   type KgImage,
   type KgNodeLabels,
 } from "./kg-node";
-import { NS_PREFIXES, termIri } from "./namespaces";
+import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
 
 /**
@@ -308,7 +309,9 @@ export * from "./graph-kind-registry.js";
 // forwards a name; it does not bring it into local scope.
 import {
   defaultGraphKinds,
+  graphKindIri,
   REGISTRATION_MODULE,
+  resolveGraphKind,
   type GraphKind,
   type GraphKindRegistry,
   type GraphLayer,
@@ -542,6 +545,29 @@ export interface LiquidPrefix {
   passThrough?: boolean;
 }
 
+/**
+ * Where an instance sits today inside a HOST repository — the pre-split case,
+ * where `cat-harness` declares `litlfred/cat-harness` but is the
+ * `cat-harness/` directory of `litlfred/folio-assistant` (bean `6rmv`).
+ */
+export interface InstanceLocation {
+  /** The repository that holds the instance today, `owner/name`. */
+  repository: RepoFullName;
+  /** The instance's directory within it, repository-relative, no leading `./`. */
+  path: string;
+}
+
+export const InstanceLocationSchema = z
+  .object({
+    repository: RepoFullNameSchema,
+    path: z
+      .string()
+      .min(1)
+      .regex(/^[A-Za-z0-9._-]+(?:\/[A-Za-z0-9._-]+)*$/, "a repository-relative directory, no leading ./ or trailing /")
+      .refine((p) => !p.split("/").includes(".."), "a location may not climb with `..`"),
+  })
+  .strict();
+
 export interface CatHarnessDeclaration extends KgNodeLabels {
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
@@ -595,6 +621,24 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * consumer must be able to find the config without already knowing the
    * repository's name; the artefacts it *describes* are free to be named.
    */
+  /**
+   * The repository this instance IS — `owner/name`, its PLANNED home once the
+   * pre-split repository is broken apart (owner, 2026-09-30, bean `6rmv`).
+   *
+   * The identity every cross-instance reference resolves through: a bare
+   * `name` says nothing about which forge or owner, and two owners may both
+   * publish a `smart-base`. Planned rather than current so that an IRI keyed
+   * by it survives the split — where the instance sits TODAY is {@link livesAt}.
+   * `instanceRepositories` in `schemas/instance-repositories.ts` derives the
+   * `owner/repo ↔ name ↔ root` map from these; nothing keeps a list by hand.
+   */
+  repository?: RepoFullName;
+  /**
+   * Where the instance lives TODAY when that is not the root of
+   * {@link repository} — the host repository and the directory within it.
+   * Absent means it already lives at the root of its own repository.
+   */
+  livesAt?: InstanceLocation;
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
@@ -1604,7 +1648,7 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   { id: "tools", path: "tools/", dependents: "skip", graphKinds: ["tools"] },
   { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas", "cat-harness"] },
   { id: "skills", path: "skills/", dependents: "skip", graphKinds: ["skills"] },
-  // THE CONVENTION, as of 2026-09-21: an instance's KGraph is five sibling
+  // THE CONVENTION, as of 2026-09-21: an instance's Knowledge Graph is five sibling
   // directories rather than one with subdirectories. `scenarios/` and
   // `processes/` were `skills/roles/` and `skills/workflows/`, found by
   // walking down from the skills root.
@@ -2382,6 +2426,8 @@ export const CatHarnessDeclarationSchema = z.object({
    * that deliberately wants a bare navbar.
    */
   navbarIcons: NavbarIconsSchema.optional(),
+  repository: RepoFullNameSchema.optional(),
+  livesAt: InstanceLocationSchema.optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   /**
@@ -2804,6 +2850,19 @@ export function findInstanceRoot(start: string): string | undefined {
     if (up === dir) return undefined;
     dir = up;
   }
+}
+
+/**
+ * Whether a declaration is the instance a reference names — by its planned
+ * repository (`owner/name`, the form references take since bean `6rmv`) or
+ * by its machine `name`, which internal callers and `needs` edges still use.
+ * One predicate so every resolver answers "which instance is this" alike.
+ */
+export function declaresInstance(
+  decl: { name?: string; repository?: string } | undefined,
+  ref: string,
+): boolean {
+  return decl !== undefined && (decl.name === ref || (decl.repository !== undefined && decl.repository === ref));
 }
 
 /**
@@ -3525,19 +3584,20 @@ function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
     o.directories = o.directories.map((d) => {
       if (typeof d !== "object" || d === null) return d;
       const e = { ...(d as Record<string, unknown>) };
-      // `@type` recovers `graphs`, and handles both projected forms: a single
-      // type stays a string, several become a list. A type the registry does
-      // not know is DROPPED rather than guessed — recovering the wrong kind is
+      // `holdsGraph` recovers `graphKinds`, in both projected forms: one stays
+      // a string, several become a list. An individual the registry does not
+      // know is DROPPED rather than guessed — recovering the wrong kind is
       // worse than recovering none, because the reader has no way to tell.
-      if (e.graphKinds === undefined && e["@type"] !== undefined) {
-        const types = Array.isArray(e["@type"]) ? e["@type"] : [e["@type"]];
-        const kinds = types
+      if (e.graphKinds === undefined && e.holdsGraph !== undefined) {
+        const iris = Array.isArray(e.holdsGraph) ? e.holdsGraph : [e.holdsGraph];
+        const kinds = iris
           .filter((t): t is string => typeof t === "string")
-          .map((t) => registry.forType(t))
+          .map((t) => registry.forIri(t))
           .filter((k): k is string => k !== undefined);
         if (kinds.length > 0) e.graphKinds = kinds;
       }
       delete e["@type"];
+      delete e.holdsGraph;
       if (typeof e["@id"] === "string" && e.id === undefined) e.id = (e["@id"] as string).replace(/^#/, "");
       delete e["@id"];
       return e;
@@ -4186,7 +4246,7 @@ export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = ["skills", KG_GRAPH_
  * three kinds split out of it.
  *
  * Distinct from {@link SKILL_BEARING_GRAPH_KINDS}, and the difference is the
- * whole point of the split: a consumer asking "is this the KGraph?" wants all
+ * whole point of the split: a consumer asking "is this the Knowledge Graph?" wants all
  * four, while one asking "may I scan this for skill bodies?" wants two. One
  * list serving both questions is what made `cat-harness` ambiguous.
  */
@@ -4221,7 +4281,7 @@ export function isKgOnlyDirectory(d: ContentDirectory): boolean {
  * kinds?
  *
  * **Wider than {@link isKgOnlyDirectory}, and the two must not be merged.**
- * This one answers "is there a KGraph node in here at all" — which is what a
+ * This one answers "is there a Knowledge Graph node in here at all" — which is what a
  * consumer looking for roles, BPMN or requirements needs. The narrow one
  * answers "may I read every `.md` in here as a Skill body", which is false for
  * `workflows/` (51 `.bpmn`) and `scenarios/` (one `roles.json`).
@@ -5232,6 +5292,9 @@ export function toJsonLd(
       directories: termIri("scans"),
       scope: termIri("scope"),
       dependents: termIri("dependents"),
+      // What a directory holds, as the kinds' own individuals — the same
+      // property kg-export writes (`dcterms:type`, via `propertyIri`).
+      holdsGraph: { "@id": propertyIri("holdsGraph"), "@type": "@id" },
     },
     "@type": termIri("Harness"),
     name: decl.name,
@@ -5251,13 +5314,16 @@ export function toJsonLd(
         }
       : {}),
     directories: decl.directories.map((d) => {
-      const types = d.graphKinds.map((g) => registry.get(g)?.type ?? termIri("UnknownGraph"));
+      // A directory is a Subgraph, and says what it holds only through
+      // `holdsGraph` → each kind's individual (owner, 2026-09-30, bean `3r47`:
+      // "Drop per-kind classes"). A kind the registry does not know still
+      // gets an individual in the harness's namespace rather than vanishing.
+      const kinds = d.graphKinds.map((g) => graphKindIri(resolveGraphKind(g).kind, registry.get(g)));
       return {
         "@id": `#${d.id}`,
-        // One type stays a string, several become a list — JSON-LD permits
-        // both, and emitting a one-element array for the common case would
-        // make every existing published form look changed.
-        "@type": types.length === 1 ? types[0] : types,
+        "@type": termIri("Subgraph"),
+        // One stays a string, several become a list — JSON-LD permits both.
+        holdsGraph: kinds.length === 1 ? kinds[0] : kinds,
         path: d.path,
         // `dependents` is REQUIRED, so a projection that dropped it produced a
         // document that no longer parses as a declaration — caught by the

@@ -34,7 +34,7 @@
       "prefLabel": "agent-memory",
       "definition": "Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as the third state between \"reaches everybody\" and \"deleted\".",
       "notation": "agent-memory",
-      "source": "cat-harness/skills/folio-core/agent-memory.md",
+      "source": "cat-harness/skills/conduct/conduct-core/agent-memory.md",
       "status": "candidate"
     },
     {
@@ -249,7 +249,7 @@
       "prefLabel": "communication-language",
       "definition": "Determine the language an agent SPEAKS IN — the language of a turn, as against the language of content. Covers the four inputs and their order, why a model's own languages are never the answer, the boundary between speaking to the person and writing durable artefacts, where the determination is recorded so a sibling session does not re-ask, and when to re-ask.",
       "notation": "communication-language",
-      "source": "cat-harness/skills/folio-core/communication-language.md",
+      "source": "cat-harness/skills/conduct/conduct-core/communication-language.md",
       "status": "candidate"
     },
     {
@@ -281,7 +281,7 @@
       "prefLabel": "confirmation-waiver",
       "definition": "A human may waive a confirmation they are owed — for a session, for a process run, or until a stated time. Covers what a waiver is made of, where it is recorded (the context graph, never the work plan), the gates that can be waived and the rules that cannot, why every waiver carries an expiry, and the one thing an agent may never do: grant itself one.",
       "notation": "confirmation-waiver",
-      "source": "cat-harness/skills/folio-core/confirmation-waiver.md",
+      "source": "cat-harness/skills/conduct/conduct-core/confirmation-waiver.md",
       "status": "candidate"
     },
     {
@@ -519,7 +519,7 @@
       "prefLabel": "decision-comparison",
       "definition": "Lay a decision out as a comparison before you ask it — what each option does, its pro, its con, what it changes downstream, and how reversible it is — in the prose that precedes the question, never inside the option labels. Required whenever a choice is handed to a person.",
       "notation": "decision-comparison",
-      "source": "cat-harness/skills/folio-core/decision-comparison.md",
+      "source": "cat-harness/skills/conduct/conduct-core/decision-comparison.md",
       "status": "candidate"
     },
     {
@@ -543,7 +543,7 @@
       "prefLabel": "deletion-requires-confirmation",
       "definition": "An agent never removes a durable artefact on its own initiative. Report what would go, with sizes and ages, and wait for the user to say so. Covers what counts as durable, the non-destructive move for each kind, and the rule that a workflow whose shape deletes something counts as a deletion nobody decided.",
       "notation": "deletion-requires-confirmation",
-      "source": "cat-harness/skills/folio-core/deletion-requires-confirmation.md",
+      "source": "cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md",
       "status": "candidate"
     },
     {
@@ -774,7 +774,7 @@
       "prefLabel": "getting-started",
       "definition": "Triage what a person means when they ask to create a folio, and route them. Five requests share one sentence — a folio in a new repo, folio-assistant overlaid on an existing repo, a second folio in an instance that already has one, a content object they called a folio, or something the filesystem cannot tell apart. Reads the repository facts, runs them through the folio-intent decision table, asks a selectable question for what facts cannot settle, scaffolds, and reports the published URL. Use whenever a user asks to create, start, set up, or initialise a folio, a paper, a DAK, an IG, or \"folio-assistant\" itself.",
       "notation": "getting-started",
-      "source": "cat-harness/skills/folio-core/getting-started.md",
+      "source": "cat-harness/skills/conduct/conduct-core/getting-started.md",
       "status": "candidate"
     },
     {
@@ -906,7 +906,7 @@
       "prefLabel": "injection-boundaries",
       "definition": "Where a value becomes program rather than data — workflow expressions, shell strings, and archive members. What the gate covers, why a step output carries a severity rather than having one, and the argv rule.",
       "notation": "injection-boundaries",
-      "source": "cat-harness/skills/security/injection-boundaries.md",
+      "source": "cat-harness/skills/conduct/security/injection-boundaries.md",
       "status": "candidate"
     },
     {
@@ -962,7 +962,7 @@
       "prefLabel": "interaction-modality",
       "definition": "Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice durably so every later session and sibling agent honours it. Covers the accessibility rules a conversational agent can actually keep, the settings surface in the published site, and how to drive a question set from DMN so the SAME logic serves every modality. Use at first contact with a new user, when a user reports difficulty answering, whenever a question is about to be asked, and before any long free-text prompt.",
       "notation": "interaction-modality",
-      "source": "cat-harness/skills/folio-core/interaction-modality.md",
+      "source": "cat-harness/skills/conduct/conduct-core/interaction-modality.md",
       "status": "candidate"
     },
     {
@@ -1313,7 +1313,7 @@
       "prefLabel": "path-containment",
       "definition": "Turning a value from outside into a path. The two different questions — a URL path versus a single identifier — why collapsing them is a defect, and the three sinks in this repository that had neither check.",
       "notation": "path-containment",
-      "source": "cat-harness/skills/security/path-containment.md",
+      "source": "cat-harness/skills/conduct/security/path-containment.md",
       "status": "candidate"
     },
     {
@@ -1604,7 +1604,7 @@
       "prefLabel": "repo-conversion",
       "definition": "Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it. Scans the tree read-only, classifies candidate files into library (external source) and content (authored here) with an explicit third bucket for what it cannot classify, puts the three questions the scan cannot answer to the author as selections, and hands ingestion to one agent or a small swarm. Use when a user wants an existing repo converted to a folio, asks to import what is already there, or asks whether their PDFs/notes/drafts can come along.",
       "notation": "repo-conversion",
-      "source": "cat-harness/skills/folio-core/repo-conversion.md",
+      "source": "cat-harness/skills/conduct/conduct-core/repo-conversion.md",
       "status": "candidate"
     },
     {
@@ -1612,7 +1612,7 @@
       "prefLabel": "retry-backoff",
       "definition": "Every error gets a falling-off retry rate — each wait doubles, with jitter. Read before writing any call that can fail transiently, and before deciding that a failure is worth retrying at all. Exhausting the retries does not change the verdict.",
       "notation": "retry-backoff",
-      "source": "cat-harness/skills/folio-core/retry-backoff.md",
+      "source": "cat-harness/skills/conduct/conduct-core/retry-backoff.md",
       "status": "candidate"
     },
     {
@@ -1683,7 +1683,7 @@
       "prefLabel": "security",
       "definition": "The security sub-KG's entry point. What the boundaries are, which machinery already guards each one, and the single rule that unifies them — refuse, never repair. Read this before adding a check, so the answer that already exists is reused rather than rebuilt in a fourth place.",
       "notation": "security",
-      "source": "cat-harness/skills/security/security.md",
+      "source": "cat-harness/skills/conduct/security/security.md",
       "status": "candidate"
     },
     {
@@ -1839,7 +1839,7 @@
       "prefLabel": "symbiotic-interaction",
       "definition": "Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coactive-learning measurement spec (per-arc correction quality and turns-to-convergence) and the prompt-lexicon convention. Carries the STRICT rule that a steer correcting a RULE is written into the skill that governs it, in the same turn, quoted and dated — use whenever the author corrects, settles or overrules anything. Generic folio-assistant platform skill.",
       "notation": "symbiotic-interaction",
-      "source": "cat-harness/skills/folio-core/symbiotic-interaction.md",
+      "source": "cat-harness/skills/conduct/conduct-core/symbiotic-interaction.md",
       "status": "candidate"
     },
     {
@@ -2005,7 +2005,7 @@
       "prefLabel": "untrusted-input",
       "definition": "Keep attacker-controlled values out of program text — in GitHub Actions, in command lines, in anything that is parsed before it runs. Read before interpolating any value into a script, and before giving a Tool a command-line input.",
       "notation": "untrusted-input",
-      "source": "cat-harness/skills/folio-core/untrusted-input.md",
+      "source": "cat-harness/skills/conduct/conduct-core/untrusted-input.md",
       "status": "candidate"
     },
     {
@@ -2013,7 +2013,7 @@
       "prefLabel": "unverified-constraints",
       "definition": "Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule. Read before adding a check to a schema, a validator, a gate or an incompatibility table, and whenever you are about to write down that something \"is not supported\".",
       "notation": "unverified-constraints",
-      "source": "cat-harness/skills/folio-core/unverified-constraints.md",
+      "source": "cat-harness/skills/conduct/conduct-core/unverified-constraints.md",
       "status": "candidate"
     },
     {
@@ -2124,7 +2124,7 @@
       "prefLabel": "where-does-this-go",
       "definition": "The router for filing decisions. This repository answers \"where does this go?\" nine separate times, each well, and nothing says WHICH question you are asking — so an agent who does not know a rule exists cannot look it up. One discriminating question per row, and the skill that owns the answer.",
       "notation": "where-does-this-go",
-      "source": "cat-harness/skills/folio-core/where-does-this-go.md",
+      "source": "cat-harness/skills/conduct/conduct-core/where-does-this-go.md",
       "status": "candidate"
     },
     {

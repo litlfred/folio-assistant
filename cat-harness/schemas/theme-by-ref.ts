@@ -35,7 +35,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 
-import { instanceDirectoriesForGraph, instanceRootsIn, readDeclaration } from "./cat-harness.js";
+import { declaresInstance, instanceDirectoriesForGraph, instanceRootsIn, readDeclaration } from "./cat-harness.js";
 import type { ResolvedTheme, ThemeRef } from "./theme.js";
 import { themeById } from "./themes.js";
 
@@ -70,7 +70,7 @@ export type ThemeRefResult = { ok: true; theme: ResolvedTheme; owner: string | u
  * generator actually renders from — so `check:instance-themes` calls this.
  */
 export function instanceThemes(repoRoot: string, instance: string): { ok: true; themes: readonly ResolvedTheme[] } | { ok: false; miss: ThemeRefMiss } {
-  const root = instanceRootsIn(repoRoot).find((r) => readDeclaration(r)?.name === instance);
+  const root = instanceRootsIn(repoRoot).find((r) => declaresInstance(readDeclaration(r), instance));
   if (root === undefined) return { ok: false, miss: { kind: "no-such-instance", instance } };
   const dirs = instanceDirectoriesForGraph(root, THEMES_GRAPH_KIND);
   if (dirs.length === 0) return { ok: false, miss: { kind: "no-themes-directory", instance } };
@@ -106,7 +106,10 @@ export function instanceThemes(repoRoot: string, instance: string): { ok: true; 
  * @param platform       the platform instance's name; its themes are {@link THEMES}
  */
 export function themeByRef(ref: ThemeRef, repoRoot: string, citingInstance?: string, platform = PLATFORM_THEME_OWNER): ThemeRefResult {
-  const owner = ref.instance ?? citingInstance;
+  // A reference names the owner by `owner/repo` (bean `6rmv`); the platform
+  // and every caller's `citingInstance` are names, so compare in names.
+  const cited = ref.instance === undefined ? undefined : instanceNameIn(repoRoot, ref.instance);
+  const owner = cited ?? citingInstance;
   if (owner === undefined || owner === platform) {
     const theme = themeById(ref.themeId);
     return theme ? { ok: true, theme, owner } : { ok: false, miss: { kind: "no-such-theme", instance: owner ?? platform, themeId: ref.themeId } };
@@ -128,6 +131,13 @@ export function themeByRef(ref: ThemeRef, repoRoot: string, citingInstance?: str
     if (theme) return { ok: true, theme, owner: platform };
   }
   return { ok: false, miss: { kind: "no-such-theme", instance: owner, themeId: ref.themeId } };
+}
+
+/** The declared `name` of the instance `ref` identifies, or `ref` itself when none does. */
+function instanceNameIn(repoRoot: string, ref: string): string {
+  if (!ref.includes("/")) return ref;
+  const root = instanceRootsIn(repoRoot).find((r) => declaresInstance(readDeclaration(r), ref));
+  return (root === undefined ? undefined : readDeclaration(root)?.name) ?? ref;
 }
 
 /** One instance-declared sticky theme, with the instance that owns it. */

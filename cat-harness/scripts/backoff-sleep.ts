@@ -3,7 +3,7 @@
  *
  * ## Why this exists at all
  *
- * `cat-harness/skills/folio-core/retry-backoff.md` records an owner rule —
+ * `cat-harness/skills/conduct/conduct-core/retry-backoff.md` records an owner rule —
  * *"as rule, use logarithmic fall-off on all errors. core best practice."* —
  * and `src/core/retry.ts` is that rule as code. The skill is explicit that a
  * call site should use it rather than write a loop, because *"a retry policy

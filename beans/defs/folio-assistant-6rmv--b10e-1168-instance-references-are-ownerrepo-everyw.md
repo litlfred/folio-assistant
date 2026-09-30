@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6rmv
 title: 'B10e (#1168): instance references are owner/repo everywhere'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T14:59:54Z
-updated_at: 2026-09-30T17:45:49Z
+updated_at: 2026-09-30T19:28:44Z
 parent: folio-assistant-tr05
 ---
 
@@ -23,3 +23,13 @@ So: an owner/repo → IRI-base map DERIVED from each instance's declaration and 
 Pre-split, cat-harness, smart-base, bootstrap, folio-assistant-core… are directories of ONE repo (litlfred/folio-assistant); owner/repo alone cannot tell them apart. Their planned own repos (AssetSource's doc says litlfred/cat-harness), or owner/repo + path?
 
 _2026-09-30T17:45:49Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Owner decision 2026-09-30
+
+Planned own repo (Rec.): each instance declares its PLANNED repo (e.g. cat-harness → litlfred/cat-harness), plus a separate 'lives today at' field (litlfred/folio-assistant, path cat-harness/) so links resolve pre-split. IRIs keyed by the planned repo, so they survive the split.
+
+## Done (2026-09-30)
+- #1652: repository + livesAt on every declaration; instanceRepositories() derives owner/repo ↔ name ↔ root over the checkout and the dependency overlay; gate.
+- #1672: 136 references converted; seven instance fields typed RepoFullName; declaresInstance() used by every resolver; gate that every committed reference resolves.
+- B10e-3: instanceNamespace() is the ONE namespace rule; repositoryNamespaces() is the derived owner/repo → IRI map; gate that own-namespaces.json agrees with it. No IRI changed.
+- Left to the owner: moving cat-harness / folio-assistant-core namespaces to their planned repos' own hosts (breaking) — bean filed; and the smart-* planned repos.

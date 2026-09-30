@@ -47,7 +47,7 @@
  * health check that shares its logic. There, "could not determine" means *do
  * not accuse*; here it means *do not delete*. Both err away from removal,
  * which is the only direction that is recoverable:
- * `skills/folio-core/deletion-requires-confirmation.md`.
+ * `skills/conduct/conduct-core/deletion-requires-confirmation.md`.
  *
  * @module scripts/staging-cleanup-preflight
  */

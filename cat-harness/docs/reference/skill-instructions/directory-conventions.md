@@ -755,6 +755,54 @@ word.
 - **The renderable site lives at `docs/<stub>/`.** Compute it with
   `siteDir(d)` or `siteDirFor(root)`, never by writing the path out.
 
+### Identity: `repository` and `livesAt` (owner, 2026-09-30, bean `6rmv`)
+
+`name` is what `needs` edges and filenames resolve against, but it is not an
+identity outside the instance: it names no forge or owner, and two owners may
+each publish a `smart-base`. So the declaration also says which repository the
+instance **is**:
+
+| field | meaning |
+|---|---|
+| `repository` | `owner/name`: the **planned** home, e.g. `litlfred/cat-harness` |
+| `livesAt` | `{ repository, path }`: where it sits **today**, when not at the root of `repository` |
+
+It is **planned** rather than current because IRIs are keyed by it and must
+survive the split. The pre-split fact lives in `livesAt`: `cat-harness` is
+the `cat-harness/` directory of `litlfred/folio-assistant`. Leaving `livesAt`
+out asserts that the instance already sits at its own repository's root.
+
+**Never keep an `owner/repo` table by hand.**
+`instanceRepositories(checkoutRoot, folioRoot?)` in
+`schemas/instance-repositories.ts` derives the `owner/repo ↔ name ↔ root`
+map. It reads the declarations in the checkout and in the folio's dependency
+overlay, and it throws when two instances claim one repository.
+`instance-repositories.test.ts` is the gate. It checks three things:
+- every instance declares `repository`;
+- every `livesAt.path` is where the instance actually sits;
+- every `livesAt` names one host.
+
+**A reference to another instance names its `repository`, never its
+`name`.** The `instance` field of a voice rule's source, a voice's
+`sources[]`, a `RoleRef`, a `ThemeRef` and an `AssetSource` is typed
+`RepoFullName`, so a bare name no longer parses. Every resolver matches the
+reference through `declaresInstance`, which accepts either form, because
+`needs` edges and internal callers still speak in names.
+`instance-repositories.test.ts` checks that every committed reference
+resolves.
+
+**The `owner/repo → IRI` map is derived too.** `repositoryNamespaces()` gives
+each repository's vocabulary namespace. One rule, `instanceNamespace`,
+produces it, and the glossary uses the same rule:
+- an instance that declares `iriBase` mints under its own release,
+  `<iriBase><version>/ns#`;
+- one that declares none mints under the platform site, `<stem><stub>/ns#`.
+
+`code-lists/own-namespaces.json` still lists these namespaces, because code
+reads them by code. The gate fails when the list spells one differently from
+what the declaration derives. So moving an instance's IRIs is one edit, to
+its declaration's `iriBase`, and the list follows.
+
 ### Every other marker: THE TYPE DECLARES ITS OWN FILENAME (STRICT)
 
 Settled by the owner 2026-09-20, bean `79t3` question 1. The rule above covers
