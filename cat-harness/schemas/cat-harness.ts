@@ -639,6 +639,12 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * Absent means it already lives at the root of its own repository.
    */
   livesAt?: InstanceLocation;
+  /**
+   * Which half of a kg-separation pair the planned {@link repository} is —
+   * see `separation` on {@link CatHarnessDeclarationSchema}. Absent is "has
+   * not said". Bean `eayu`.
+   */
+  separation?: "content" | "tools";
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
