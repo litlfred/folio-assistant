@@ -73,6 +73,28 @@ of LeanArchitect v4.25.0's edges reproduced with 30 % tagged, plus 2
 `structure`-field edges LeanArchitect omits. Those are the paper's and our
 measurements of a tool, not mathematical claims about the folio.
 
+## Feed a blueprint
+
+`blueprint-export.ts` turns the paper's rendered LaTeX into a leanblueprint
+document whose markers are generated, never hand-synced:
+
+```sh
+bun run folio-assistant-sci/content/pipeline/blueprint-export.ts \
+  --tex main-flat.tex --out blueprint.tex [--root <content root>] [--check]
+```
+
+- `\lean{decl}` from the block's `lean.ref`.
+- `\leanok` from the status the render already put in `\blockannot[…]` (the
+  PDF's ∀ mark), so the two cannot disagree: a statement once stated
+  (`drafted` or `compiled`), a proof once `compiled`.
+- `\uses` from these **formal** edges: `type_deps` in the statement,
+  `value_deps` in the proof that follows it. The render's editorial `\uses`
+  (from `uses[]`) are **removed** — a blueprint graph is the formal one.
+- The formal source is stamped on line 1. `--check` fails unless it is
+  elaborated: with no cache, or a `scan` cache, the graph is not publishable.
+- Formal targets not rendered in the document are dropped and listed; so are
+  statements with proof dependencies but no proof environment.
+
 ## Known limits
 
 - **`lean_path` needs the formal-ref layer.** With no formalism layer
