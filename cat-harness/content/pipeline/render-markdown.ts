@@ -31,6 +31,7 @@
  * @module content/pipeline/render-markdown
  */
 
+import { resolveLiquidValues } from "./liquid-values";
 import { existsSync, readFileSync } from "fs";
 import { dirname, isAbsolute, join, resolve } from "path";
 
@@ -134,7 +135,10 @@ export function renderBlockMarkdown(
     lines.push("");
   }
 
-  const body = mdContent.trim();
+  // Same resolver as the LaTeX path (`liquid-values.ts`, bean kott), so the
+  // site and the PDF print one number; pass-through prefixes (`site.data`)
+  // are left for Jekyll / the IG Publisher.
+  const body = resolveLiquidValues(mdContent).trim();
   if (body) lines.push(body);
 
   return lines.join("\n");

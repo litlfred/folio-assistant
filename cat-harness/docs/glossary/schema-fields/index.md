@@ -12,13 +12,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 25 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1456 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 154 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 25 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1460 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 154 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1653 terms and is 898 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1657 terms and is 901 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1653</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1657</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1376,6 +1376,13 @@ CatHarnessDeclaration.images <span class="fa-gloss-status">candidate, extracted<
 <p>Images this instance names — its marks, in the graph rather than beside it.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.images</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.liquid" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.liquid <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The Liquid prefix this instance's VALUES are addressed by in authored text — `&#123;&#123; &lt;prefix&gt;.&lt;directory-id&gt;.&lt;entry&gt;.&lt;path&gt; }}` — and whether the platform resolves it or passes it through.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.liquid</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.name" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.name <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1480,6 +1487,13 @@ CatHarnessDeclarationSchema.iriBase <span class="fa-gloss-status">candidate, ext
 <dd>
 <p>The address this instance's IRIs are minted under, BEFORE the version — bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.liquid" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.liquid <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>See &#123;@link CatHarnessDeclaration.liquid}.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.liquid</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.navbaricons" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.navbarIcons <span class="fa-gloss-status">candidate, extracted</span>
@@ -5289,6 +5303,20 @@ LibraryRef.instance <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>The DECLARED NAME of the instance holding the corpus — not a path.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/library-ref.ts"><code>folio-assistant-core/schemas/library-ref.ts#LibraryRef.instance</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.liquidprefix.passthrough" data-fa-state="extracted" data-fa-gloss="">
+LiquidPrefix.passThrough <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Leave `&#123;&#123; &lt;prefix&gt;.… }}` for the downstream engine (Jekyll, IG Publisher).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#LiquidPrefix.passThrough</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.liquidprefix.prefix" data-fa-state="extracted" data-fa-gloss="">
+LiquidPrefix.prefix <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The first path segment(s); default the instance's `name`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#LiquidPrefix.prefix</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--role-graph.loadedactor.capabilities" data-fa-state="extracted" data-fa-gloss="">
 LoadedActor.capabilities <span class="fa-gloss-status">candidate, extracted</span>

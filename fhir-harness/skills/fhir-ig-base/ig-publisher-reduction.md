@@ -58,6 +58,17 @@ invoked *for these*, not the Publisher gone.
 
 ### P0 is a re-point, not a build
 
+**The metadata half now exists (bean `bamf`, 2026-09-30):** the `ig-site-data`
+tool writes `site.data.fhir` (`ig.*` from the ImplementationGuide resource,
+`packageId`, `canonical`) for one IG from `sushi-config.yaml` or a published
+IG's `fhir-artifact-index`, lists every field it cannot source instead of
+writing an empty string, and refuses a source describing another package.
+fhir-harness declares `site.data` as a **pass-through Liquid prefix**, so the
+platform's value resolver leaves `{{ site.data.fhir.… }}` for Jekyll and the
+Publisher alike. The `smart__`-style per-artefact variables below are still P0's
+open half.
+
+
 `generate_smart_liquid.py` already computes `IG metadata → Liquid variables`
 from `output/`, emitting `smart__<ResourceType>__<id>__<category>__<key>` across
 `url__canonical`, `url__page`, `url__json`, `text__display`, `link__html` and

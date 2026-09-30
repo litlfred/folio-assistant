@@ -504,6 +504,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // The science layer's Lean tooling (folio-assistant#1492): tooling lives in
   // folio-assistant-sci, never in core.
   "folio-assistant-sci-lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
+  "folio-assistant-sci-data-skills": "Science layer: reference data (folio-assistant-sci)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
   // The `fhir-harness` instance's two packages, keyed by BASENAME because they
