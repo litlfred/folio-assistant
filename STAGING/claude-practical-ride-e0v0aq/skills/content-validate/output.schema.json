@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-practical-ride-e0v0aq/skills/content-validate/output.schema.json",
+  "title": "Content Validate Output",
+  "description": "Output schema for content validation results.",
+  "type": "object",
+  "required": [
+    "overallStatus",
+    "results"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warnings",
+        "errors"
+      ]
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "rule",
+          "status"
+        ],
+        "properties": {
+          "rule": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "warning",
+              "skipped"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/practical-ride-e0v0aq",
+    "sha": "39aaf886e2facd84bf18096744eefd884158ea3d",
+    "pr": "1615/merge",
+    "run": "36750168277"
+  }
+}
