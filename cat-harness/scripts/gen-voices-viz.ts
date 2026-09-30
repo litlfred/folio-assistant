@@ -82,7 +82,7 @@ const check = process.argv.includes("--check");
 export function projection(
   g: VoicesGraph,
   links?: LibraryResolver,
-  kgLinks?: (kgRef: string, instance: string | undefined) => { viewer?: string; source?: string } | undefined,
+  kgLinks?: (kgPath: string, instance: string | undefined) => { viewer?: string; source?: string } | undefined,
 ): unknown {
   const linked =
     links === undefined
@@ -473,12 +473,12 @@ if (import.meta.main) {
   const skillPages = skillPagesOf(repoRoot);
   const repoUrl = detectRepoUrl(repoRoot);
   const roots = new Map(instanceRootsIn(repoRoot).map((r) => [readDeclaration(r)?.name ?? basename(r), r]));
-  const kgLinks = (kgRef: string, instance: string | undefined) => {
+  const kgLinks = (kgPath: string, instance: string | undefined) => {
     const root = instance === undefined ? undefined : roots.get(instance);
-    if (root === undefined || !existsSync(join(root, kgRef))) return undefined;
-    const rel = relative(repoRoot, join(root, kgRef)).split(sep).join("/");
+    if (root === undefined || !existsSync(join(root, kgPath))) return undefined;
+    const rel = relative(repoRoot, join(root, kgPath)).split(sep).join("/");
     const out: { viewer?: string; source?: string } = { source: sourceLinks(repoUrl, rel, "main")?.viewHref };
-    const skill = kgRef.endsWith(".md") ? basename(kgRef, ".md") : undefined;
+    const skill = kgPath.endsWith(".md") ? basename(kgPath, ".md") : undefined;
     if (skill !== undefined && skillPages.has(skill)) out.viewer = `${SKILL_PAGES_DIR}/${skill}.html`;
     return out.source === undefined && out.viewer === undefined ? undefined : out;
   };
