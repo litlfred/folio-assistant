@@ -15246,7 +15246,7 @@
         },
         {
           "name": "bean",
-          "type": "z.string().min(1).optional()",
+          "type": "BeanIdSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "The work-plan item this was written under, where there is one."
@@ -15260,7 +15260,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/tool-types.ts#BeanIdSchema"
+      ],
       "unresolved": [],
       "external": [
         "FSH_GUTS_SCHEMA_ID",
@@ -19028,10 +19030,10 @@
         },
         {
           "name": "bean",
-          "type": "z.string().min(1).optional()",
+          "type": "BeanIdSchema.optional()",
           "optional": true,
           "array": false,
-          "doc": "The bean this work is claimed against, where there is one."
+          "doc": "The bean this work is claimed against, where there is one. A typed id (#1168 B8)."
         },
         {
           "name": "session",
@@ -19073,7 +19075,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/log-entry.ts#LogExecutionSchema",
-        "cat-harness/schemas/log-entry.ts#LogReferenceSchema"
+        "cat-harness/schemas/log-entry.ts#LogReferenceSchema",
+        "cat-harness/schemas/tool-types.ts#BeanIdSchema"
       ],
       "unresolved": [],
       "external": [
@@ -24905,10 +24908,10 @@
         },
         {
           "name": "parent",
-          "type": "z.string()",
+          "type": "z.union([z.literal(\"\"), BeanIdSchema])",
           "optional": false,
           "array": false,
-          "doc": "`\"\"` when the bean has no parent."
+          "doc": "`\"\"` when the bean has no parent; otherwise a typed bean id (#1168 B8)."
         },
         {
           "name": "blocking",
@@ -24952,7 +24955,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/site-indexes.ts#StringList"
+        "cat-harness/schemas/site-indexes.ts#StringList",
+        "cat-harness/schemas/tool-types.ts#BeanIdSchema"
       ],
       "unresolved": [],
       "external": [
@@ -24980,7 +24984,7 @@
         },
         {
           "name": "findings",
-          "type": "z.array( z .object({ kind: z.enum([\"blocked-without-expiry\", \"blocker-closed\", \"blocking-unknown\"]), bean: z.string(), …",
+          "type": "z.array( z .object({ kind: z.enum([\"blocked-without-expiry\", \"blocker-closed\", \"blocking-unknown\"]), bean: BeanIdSchema…",
           "optional": false,
           "array": true
         }
@@ -24988,7 +24992,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema"
+        "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
+        "cat-harness/schemas/tool-types.ts#BeanIdSchema"
       ],
       "unresolved": [],
       "external": [
@@ -26255,7 +26260,8 @@
       "refs": [
         "cat-harness/schemas/skill-package.ts#DockerRequirementsSchema",
         "cat-harness/schemas/skill-package.ts#LifecycleStageSchema",
-        "cat-harness/schemas/skill-package.ts#RemoteSyncConfigSchema"
+        "cat-harness/schemas/skill-package.ts#RemoteSyncConfigSchema",
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema"
       ],
       "unresolved": [],
       "external": [
@@ -26278,7 +26284,7 @@
         },
         {
           "name": "skill",
-          "type": "z.string().min(1)",
+          "type": "SkillNameSchema",
           "optional": false,
           "array": false
         },
@@ -26321,7 +26327,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -26843,7 +26851,7 @@
         },
         {
           "name": "skills",
-          "type": "z.array(z.string())",
+          "type": "z.array(SkillNameSchema)",
           "optional": false,
           "array": true
         },
@@ -26882,7 +26890,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/skill-package.ts#DockerRequirementsSchema",
-        "cat-harness/schemas/skill-package.ts#LifecycleStageSchema"
+        "cat-harness/schemas/skill-package.ts#LifecycleStageSchema",
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema"
       ],
       "unresolved": [],
       "external": [
@@ -26935,14 +26944,16 @@
         },
         {
           "name": "skills",
-          "type": "z.array(z.string())",
+          "type": "z.array(SkillNameSchema)",
           "optional": false,
           "array": true
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -30514,7 +30525,7 @@
         },
         {
           "name": "skill",
-          "type": "z.string().min(1)",
+          "type": "SkillNameSchema",
           "optional": false,
           "array": false,
           "doc": "The skill this run was exercising — one the Tool `satisfies`."
@@ -30582,7 +30593,8 @@
       "refs": [
         "cat-harness/schemas/tool-invocation.ts#InvocationAuthoritySchema",
         "cat-harness/schemas/tool-invocation.ts#InvocationContextSchema",
-        "cat-harness/schemas/tool-invocation.ts#InvocationOutcomeSchema"
+        "cat-harness/schemas/tool-invocation.ts#InvocationOutcomeSchema",
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema"
       ],
       "unresolved": [],
       "external": [
@@ -31345,7 +31357,7 @@
         },
         {
           "name": "satisfies",
-          "type": "z.array(z.string().min(1)).min(1, \"a Tool must satisfy at least one skill\")",
+          "type": "z.array(SkillNameSchema).min(1, \"a Tool must satisfy at least one skill\")",
           "optional": false,
           "array": true,
           "doc": "Skills this Tool can satisfy. One skill may have several Tools."
@@ -31388,6 +31400,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema",
         "cat-harness/schemas/tool.ts#ToolId",
         "cat-harness/schemas/tool.ts#ToolInputSchema",
         "cat-harness/schemas/tool.ts#ToolInstallSchema",
@@ -42929,6 +42942,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/fsh-guts.ts#FshGutsNodeSchema",
+      "to": "cat-harness/schemas/tool-types.ts#BeanIdSchema",
+      "via": "bean",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/glossary-ledger.ts#LedgerSchema",
       "to": "cat-harness/schemas/glossary-ledger.ts#LedgerEntrySchema",
       "via": "concepts",
@@ -43471,6 +43492,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/log-entry.ts#LogEntrySchema",
+      "to": "cat-harness/schemas/tool-types.ts#BeanIdSchema",
+      "via": "bean",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/memory.ts#MemoryNodeSchema",
@@ -44209,9 +44238,25 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
+      "to": "cat-harness/schemas/tool-types.ts#BeanIdSchema",
+      "via": "parent",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
       "to": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema",
       "via": "items",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/site-indexes.ts#BeanIndexSchema",
+      "to": "cat-harness/schemas/tool-types.ts#BeanIdSchema",
+      "via": "findings",
       "kind": "field",
       "optional": false,
       "array": true
@@ -44521,6 +44566,22 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "wrapper",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/skill-package.ts#RemoteSkillRecordSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "skill",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/skill-package.ts#RemoteSyncConfigSchema",
       "to": "cat-harness/schemas/skill-package.ts#RemoteSyncStrategySchema",
       "via": "strategy",
@@ -44638,6 +44699,22 @@
       "via": "lifecycleStages",
       "kind": "field",
       "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/skill-package.ts#SkillPackageManifestSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "skills",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/skill-package.ts#SkillPackageRefSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "skills",
+      "kind": "field",
+      "optional": false,
       "array": true
     },
     {
@@ -45127,6 +45204,22 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-invocation.ts#ToolInvocationSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "skill",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "satisfies",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
