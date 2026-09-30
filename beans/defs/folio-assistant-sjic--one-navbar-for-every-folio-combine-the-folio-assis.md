@@ -1,7 +1,7 @@
 ---
 # folio-assistant-sjic
 title: 'ONE NAVBAR FOR EVERY FOLIO: combine the folio-assistant sidebar and the who-iris rail into a single component — fixed top, scrollable KG stack, fixed bottom'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-21T21:26:39Z
@@ -74,8 +74,9 @@ So this bean RECORDS the spec and claims nothing. Sequencing is the owner's.
 
 ## Done when
 
-- [ ] One renderer produces the navbar for a Jekyll page and for a mounted
+- [x] One renderer produces the navbar for a Jekyll page and for a mounted
       page, with the difference DECLARED rather than branched on
+      — `gen-navbar-include.ts` (`8a31c89d3`, PR #1264); verified on `gh-pages` 2026-09-30
       — **STILL OPEN after PR #959.** The sidebar shares the GEOMETRY (one
       generated region, gated) and the BEHAVIOUR, so the two can no longer
       disagree about a width. It is still Liquid plus CSS and does not call
@@ -322,3 +323,35 @@ While going through beans, the owner chose **"Leave to stream 2"**. The one open
 
 
 Claimed by claude/goal2-navbar-resume — 2026-09-29, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq (GOAL 2 resume after the 09-25 usage-limit stall).
+
+## Summary of Changes — closed 2026-09-30 on evidence
+
+The owner re-confirmed the shape on 2026-09-30: **"Generated include"**, chosen
+over overriding the theme's `sidebar.html`. It was already built.
+`8a31c89d3` (PR #1264, 2026-09-24) made `nav_footer_custom.html` a single
+`{% include generated/navbar-footer.html %}`, written by
+`gen-navbar-include.ts` through `navbarRegionsHtml`, which is the same function
+`navbarHtml` wraps for the rail. The box was never ticked.
+
+**Verified on the real CI build**, `gh-pages` built from `main` `f2d58d67b`:
+
+| page | `site-nav` | `fa-nav` landmark | `fa-nav-top` / `-bottom` | `fa-nav-graphs` | open inputs |
+|---|---|---|---|---|---|
+| `index.html` (Jekyll) | 1 | 0 | 2 / 2 | 0 | 1 |
+| `getting-started.html` (Jekyll) | 1 | 0 | 2 / 2 | 0 | 1 |
+| `api/index.html` (injected rail) | 0 | 1 | 1 / 1 | 1 | 1 |
+
+The doubled regions are just-the-docs including its footer extension point
+twice, with one checkbox (`uknu`). The differences are all DECLARED fields of
+`NavbarModel`: `hrefs: "liquid"`, `openControl: "labels"`, and `graphs`
+absent where the theme's `site-nav` owns the middle. `navbar:include --check`
+is current.
+
+**Two residuals, recorded, not hidden:**
+
+- The open document's index reaches only the rail. Jekyll pages have no
+  supplier. This is now bean `tbdl`.
+- The sidebar TITLE (`_includes/title.html`) is still Liquid. It is the
+  theme's site header, not part of the navbar component, and it uses the same
+  solved `avatarRegion` crop as the rail's `mark()`: one declaration, two
+  renderers. Worth a bean only if the two marks are ever seen to differ.
