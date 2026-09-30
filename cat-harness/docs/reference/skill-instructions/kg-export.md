@@ -140,9 +140,17 @@ Owner, 2026-09-23: *"prefix -> match stub"*. Each of our namespaces is
 
 | namespace | prefix |
 |---|---|
-| `…/bootstrap/ns#` | `bootstrap` |
-| `…/cat-harness/ns#` | `cat-harness` |
-| `…/folio-assistant-core/ns#` | `folio-assistant-core` |
+| `https://litlfred.github.io/bootstrap/0.1.0/ns#` | `bootstrap` |
+| `…/folio-assistant/cat-harness/ns#` | `cat-harness` |
+| `…/folio-assistant/folio-assistant-core/ns#` | `folio-assistant-core` |
+
+bootstrap's row is the exception to the `<canonical>/<stub>/` shape, and says
+so: its namespace sits under bootstrap's own `iriBase` and carries the
+release version (bean `r3gy` E), because bootstrap is published from its own
+repository and an agent reading it pins a release. The prefix is still the
+stub. The address is written once, in `cat-harness/code-lists/own-namespaces.json` (read as
+`CAT_BOOTSTRAP_NS`), and `iri:sync` keeps every literal copy — this table's
+included — at bootstrap's declared version.
 
 One word in three places — path segment, stub, prefix — instead of three
 words that must agree. `NS_PREFIXES` in `schemas/namespaces.ts` is the one

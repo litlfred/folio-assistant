@@ -218,17 +218,35 @@ Three rules follow from the table:
   discussion schemas failed it until 2026-09-29.
 - **No two artefacts may publish to one path.** A generated alias that lands on
   an authored file's path hides the authored file — the exported graph's
-  `.json` copy at `bootstrap/bootstrap.json` did exactly that to bootstrap's
-  own declaration.
-- **Output about the instance is published by whoever produces it.** Harness
-  output about bootstrap — its exported graph, glossary, QA verdicts — is the
-  harness's to publish, at the harness's address, naming bootstrap as its
-  subject ([`kg-separation`](kg-separation.md) §"The pair").
+  `.json` copy at `bootstrap/bootstrap.json` does exactly that to bootstrap's
+  own declaration on this site today (the workflow keeps the graph at that
+  address and says so). On bootstrap's own site the collision cannot occur,
+  because the exported graph is not published there (next rule).
+- **An instance's own site serves only what its tools generate** (owner,
+  2026-09-30, Q3 of bean `xsqm`). For bootstrap that is bootstrap's files as
+  they sit, the schemas and diagram vocabulary among them, the `bs:` term
+  vocabulary, and the person-facing pages — all produced by bootstrap-tools.
+  **Output a harness computes ABOUT the instance stays on the harness's site,
+  under the harness's addresses, naming the instance as its subject**: the
+  exported graph `bootstrap.jsonld`, the swimlane glossary, the QA verdicts,
+  the translation templates. So a new toolset over the same content never has
+  to reproduce a harness's output to publish the content, and a harness's
+  output never takes the instance's identity
+  ([`kg-separation`](kg-separation.md) §"The pair").
 
 `publish-instance-files.ts` is the step that copies an instance's files into a
 site today — each file as it sits, `.md` also as `.html`, `README.md` as
 `index.html`. It serves bootstrap under this site until bootstrap's own
-repository publishes itself.
+repository publishes itself, at which point the job is bootstrap-tools'.
+
+### Tags
+
+A standalone repository — one instance, declared at its root — tags a release
+plainly, `v<major>.<minor>.<patch>`; a repository of several instances tags
+`<name>-v<major>.<minor>.<patch>`, because a plain tag could not say which
+instance it released (owner, 2026-09-30). `check:version-bump` reads both
+accordingly. The tag is what a site deploy writes `/<version>/` from, so an
+untagged commit is never an agent-facing release.
 
 ## What a consumer may assume of a draft
 

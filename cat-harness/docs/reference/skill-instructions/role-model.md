@@ -507,6 +507,18 @@ committed, under `kg-qa/` beside whatever they audit, so the diff says exactly
 which findings a change introduced. Same argument and same file shape as the
 block sweep's `*.qa.json` and the script sweep's `*.script-qa.json`.
 
+### Where the sidecars for another instance go — hosted, not written into it
+
+An instance that declares no `qa` directory does not receive sidecars inside
+its own tree: `kgQaHomeFor` (`schemas/cat-harness.ts`) puts them in the
+auditing harness's `qa` directory under the instance's stub —
+`cat-harness/test/results/bootstrap/` for bootstrap. A verdict ABOUT an
+instance is the auditor's output, and bootstrap is the layer that must read
+cleanly with no harness present (owner, 2026-09-29, decision 2 of bean
+`r3gy`). The same holds once bootstrap is its own repository: the verdicts stay
+with the harness that computed them, against the pinned bootstrap
+([`kg-separation`](kg-separation.md) §"The pair").
+
 ### Three states, and what `unknown` costs
 
 A criterion returns `pass`, `fail`, `n/a` (does not apply to this subject) or
