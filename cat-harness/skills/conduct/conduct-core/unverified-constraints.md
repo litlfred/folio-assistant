@@ -73,4 +73,4 @@ answer.
 |---|---|
 | the three states, and never rendering the third as clean | [`ci-health`](../../folio-core/ci-health.md) |
 | where a new rule belongs before you write it | [`placement`](../../kg/kg-core/placement.md) |
-| re-measure rather than quoting a number | [`uses-editorial-review`](../../folio-core/uses-editorial-review.md) |
+| re-measure rather than quoting a number | [`uses-editorial-review`](../../authoring/authoring-core/uses-editorial-review.md) |

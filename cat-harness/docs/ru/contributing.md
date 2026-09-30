@@ -63,7 +63,7 @@ Gemini CLI, Antigravity, Cursor, Copilot). `CLAUDE.md` / `GEMINI.md` — тон�
 
 - **Инструкции навыков** (`docs/reference/skill-instructions/*.md`) также
   генерируются автоматически — никогда не редактируйте их вручную. Редактируйте тела навыков в
-  `skills/content-lifecycle/*.md` или `src/skills/*.md` и запускайте повторную генерацию:
+  `skills/authoring/content-lifecycle/*.md` или `src/skills/*.md` и запускайте повторную генерацию:
 
   ```sh
   bun run scripts/gen-skill-docs.ts

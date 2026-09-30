@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-paper-adapter/lean-witness-audit.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/lean-witness-audit.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/folio-paper-adapter/lean-witness-audit.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/folio-paper-adapter/lean-witness-audit.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-paper-adapter/lean-witness-audit.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/folio-paper-adapter/lean-witness-audit.md){: .fa-edit-source }
 
 {% raw %}
 # Lean Witness Audit Skill

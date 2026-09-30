@@ -255,7 +255,7 @@ of them makes it worse and the other makes it catchable.
 six the change actually stales:
 
 ```
-cat-harness/test/results/kg-qa/skills/folio-paper-adapter/lean-generation.kg-qa.json
+cat-harness/test/results/kg-qa/skills/authoring/folio-paper-adapter/lean-generation.kg-qa.json
 
   "prose-claims-resolve":
 -   "result": "unknown"          +  "result": "fail"
