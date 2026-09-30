@@ -40,6 +40,7 @@
  * `--check` exits 1 on any finding, 0 when every declared skill has a command
  * and every command has a declared skill.
  *
+ * @covers skills
  * @module cat-harness/scripts/gen-skill-commands
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
