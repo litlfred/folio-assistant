@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-source-licence.ts",
-    "script_hash": "975fc31d7855"
+    "script_hash": "378851790c7e"
   },
   "subject": {
     "kind": "corpus",
     "id": "library-source-licences"
   },
-  "updated_at": "2026-09-29T21:56:29.598Z",
+  "updated_at": "2026-09-30T02:15:30.012Z",
   "families": {
     "malformed": {
       "summary": "A licence record that claims something it cannot back. This is the only family that fails the check.",
@@ -17,7 +17,7 @@
     },
     "not-recorded": {
       "summary": "No licence recorded at all: nobody has looked yet. Reported, not gated; the field is new.",
-      "count": 37,
+      "count": 34,
       "entries": [
         {
           "entry": "agent-skills/library/agent-skill-best-practices---gemini-cli"
@@ -89,15 +89,6 @@
           "entry": "folio-assistant-core/library/arxiv-2510.21603v1"
         },
         {
-          "entry": "folio-assistant-sci/library/arxiv-2406.01940v2"
-        },
-        {
-          "entry": "folio-assistant-sci/library/arxiv-2601.22554v1"
-        },
-        {
-          "entry": "folio-assistant-sci/library/arxiv-2602.16554v1"
-        },
-        {
           "entry": "folio-assistant-sci/library/milnorlink"
         },
         {
@@ -139,8 +130,24 @@
     },
     "unknown": {
       "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
-      "count": 0,
-      "entries": []
+      "count": 3,
+      "entries": [
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2406.01940v2",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2601.22554v1",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2602.16554v1",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        }
+      ]
     }
   },
   "total": 37
