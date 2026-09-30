@@ -1,15 +1,15 @@
 /**
  * The cache index keeps its three states apart, and eviction never acts — bean `54rk`.
  *
- * @module cat-harness/scripts/tests/cache-index.test
+ * @module folio-assistant-core/scripts/cache-index.test
  */
 import { describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { cacheRows, evictionCandidates, summarise } from "../cache-index.js";
-import type { MaterializedRecord } from "../check-materialized-fixity.js";
+import { cacheRows, evictionCandidates, summarise } from "./cache-index.js";
+import type { MaterializedRecord } from "./check-materialized-fixity.js";
 
 function fixtures(): MaterializedRecord[] {
   const dir = mkdtempSync(join(tmpdir(), "cache-index-"));

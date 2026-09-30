@@ -41,8 +41,14 @@
     </bpmn:extensionElements>
     <bpmn:laneSet id="Process_Ingestion_LaneSet">
       <bpmn:lane id="Lane_0" name="Contributor (human or agent)">
+        <bpmn:documentation>Whoever puts the file in the queue. UNDOCUMENTED UNTIL 2026-09-30, and legitimately so until then: the lane held nothing but a start event, and a lane with no activity has no performer to describe. Task_Place gave it one.
+
+"HUMAN OR AGENT" IS A MEASUREMENT, NOT A HEDGE. Over this repository's own history both have stood here: files have reached a queue in commits authored by `Carl Leitner` (including 16 made through the forge's web form, committer `GitHub`) and in commits authored by `Claude`. That is why Task_Place is a plain `bpmn:task` rather than a `userTask` — asserting a human performs it would contradict the lane's own role graph, which is what `activity-fulfilment-kind` exists to catch.
+
+WHAT THE LANE IS ACCOUNTABLE FOR, and where it ends. Choosing a route, writing the bytes into the DECLARED queue of the instance that will own them, and discharging afterwards whatever that route could not — the web form has no working tree, so no pre-commit hook and no generator runs on it. The lane does NOT ingest and does not clean the queue: it hands over, and Lane_1 takes it from there. `upload-routes` carries the routes and their obligations.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="user"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>StartEvent_Dropped</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Place</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_1" name="Ingestion Engine (agent, runs unattended)">
         <bpmn:documentation>Runs the whole pipeline from Task_Detect through Task_Promote, and then Task_SummaryQueue, where it drains a few prose blocks of the advisory summary queue — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.</bpmn:documentation>
@@ -70,14 +76,34 @@
         <bpmn:flowNodeRef>EndEvent_Ingested</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:startEvent id="StartEvent_Dropped" name="A file lands in uploads/">
+    <bpmn:startEvent id="StartEvent_Dropped" name="A contributor has a
+file for the folio">
       <bpmn:documentation>ONE OF TWO ENTRY POINTS, and this said "the only" one until 2026-09-20. A drop during an editing session triggers ingestion in the background; the contributor does not wait for it.
 
 THE OTHER is materialization: an asset listed in a remote graph that this instance, or one of its dependencies, declares in `remoteGraphs`. Owner, 2026-09-20: "things can enter library through uploads/ -&gt; library/ document ingestion or through retrieval / materialization of asset known through listed external KG in one of the dependent harnesses."
 
-That path runs materialize-remote.bpmn FIRST -- purpose, then the five gates -- and re-enters this process at "Extract structure" with a file that already carries its provenance and its fixity. It does NOT pass through uploads/, and that is deliberate: uploads/ is a queue for things somebody dropped, and a materialized asset was never dropped. Recording it as an upload would lose the one fact that distinguishes the two, which is that somebody decided it could be held.</bpmn:documentation>
+That path runs materialize-remote.bpmn FIRST -- purpose, then the five gates -- and re-enters this process at "Extract structure" with a file that already carries its provenance and its fixity. It does NOT pass through uploads/, and that is deliberate: uploads/ is a queue for things somebody dropped, and a materialized asset was never dropped. Recording it as an upload would lose the one fact that distinguishes the two, which is that somebody decided it could be held.
+
+RENAMED 2026-09-30, and the id is deliberately unchanged. This event was named "A file lands in uploads/" — an ARRIVAL, which is why the owner could say the chain's first link was missing: the process began after the file was already in the queue, so nothing in it modelled, governed or documented how the file got there. Task_Place is that step, and an event named for the arrival could not sit in front of it without contradicting it. The id stays `StartEvent_Dropped` because it is referenced from `skills/folio-core/content-acquisition.md` and from five translation catalogues, and an id is an identifier rather than a description.</bpmn:documentation>
       <bpmn:outgoing>Flow_i1</bpmn:outgoing>
     </bpmn:startEvent>
+    <bpmn:task id="Task_Place" name="Place it in uploads/
+by a declared route
+[upload-routes]">
+      <bpmn:documentation>THE FIRST LINK, and it did not exist until 2026-09-30. Everything downstream of here takes a file that is already in the queue: `document-intake` triggers on "User drops a file into `uploads/`", and both ingest Tools type their first input as "The upload to ingest, under the declared `uploads` graph". So the act of PUTTING it there was performed by three different mechanisms and governed by none of them.
+
+WHAT THIS STEP IS. Choosing an arrival route, writing the bytes into the declared queue of the instance that will own them, and discharging what that route does not discharge for you. The routes, what each writer owes, and the two that are mechanisms against the one that is a persona are in the `upload-routes` skill; `upload-url` composes the forge URL for the web route from the declaration rather than from a literal, because a hand-written one 404'd.
+
+WHY A PLAIN `bpmn:task` AND NOT A `userTask`. A `userTask` asserts a human performs it, and this lane is named "Contributor (human or agent)" precisely because both do — measured over this repository's own history, files have reached `uploads/` in commits authored by `Carl Leitner` and in commits authored by `Claude`. Asserting human-only here would be the `activity-fulfilment-kind` contradiction written deliberately: the diagram saying one thing and the lane's role graph another. A plain task asserts nothing about the performer, which is the truth.
+
+WHY THE BEAN OP IS `note` AND NOT `claim`. Placing a file claims nothing; it adds to a queue. What it owes the work plan is visibility — three batches of PDFs arrived through the forge's web UI (`c8349950fa5`, `f4ddfc65c8d`, `b8549160bb1`) with no bean, no PR and no note, and the first sibling to notice was a generator going stale. A note against the ingestion bean is what makes the queue's growth something another session can see.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="upload-routes" />
+        <cat-harness.processes:bean op="note" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_i1</bpmn:incoming>
+      <bpmn:outgoing>Flow_i1a</bpmn:outgoing>
+    </bpmn:task>
     <bpmn:serviceTask id="Task_Detect" name="Detect media type
 and mint a doc id
 [document-intake]">
@@ -212,7 +238,8 @@ as an L1 source">
     <bpmn:endEvent id="EndEvent_Ingested" name="Ingested">
       <bpmn:incoming>Flow_i11</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_i1" sourceRef="StartEvent_Dropped" targetRef="Task_Detect" />
+    <bpmn:sequenceFlow id="Flow_i1" sourceRef="StartEvent_Dropped" targetRef="Task_Place" />
+    <bpmn:sequenceFlow id="Flow_i1a" sourceRef="Task_Place" targetRef="Task_Detect" />
     <bpmn:sequenceFlow id="Flow_i2" sourceRef="Task_Detect" targetRef="CallActivity_Extract" />
     <bpmn:sequenceFlow id="Flow_i3" sourceRef="CallActivity_Extract" targetRef="CallActivity_Derive" />
     <bpmn:sequenceFlow id="Flow_i4" sourceRef="CallActivity_Derive" targetRef="Gateway_ThemeSource" />
@@ -232,7 +259,8 @@ as an L1 source">
       <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true"><dc:Bounds x="190" y="260" width="2410" height="180" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2" isHorizontal="true"><dc:Bounds x="190" y="440" width="2410" height="180" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_3_di" bpmnElement="Lane_3" isHorizontal="true"><dc:Bounds x="190" y="620" width="2410" height="180" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="StartEvent_Dropped_di" bpmnElement="StartEvent_Dropped"><dc:Bounds x="277" y="152" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_Dropped_di" bpmnElement="StartEvent_Dropped"><dc:Bounds x="227" y="152" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Place_di" bpmnElement="Task_Place"><dc:Bounds x="310" y="130" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Detect_di" bpmnElement="Task_Detect"><dc:Bounds x="410" y="310" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="CallActivity_Extract_di" bpmnElement="CallActivity_Extract"><dc:Bounds x="600" y="310" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="CallActivity_Derive_di" bpmnElement="CallActivity_Derive"><dc:Bounds x="790" y="310" width="150" height="80" /></bpmndi:BPMNShape>
@@ -249,7 +277,8 @@ as an L1 source">
       <bpmndi:BPMNShape id="Task_SummaryQueue_di" bpmnElement="Task_SummaryQueue"><dc:Bounds x="2080" y="310" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Citeable_di" bpmnElement="Task_Citeable"><dc:Bounds x="2270" y="670" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_Ingested_di" bpmnElement="EndEvent_Ingested"><dc:Bounds x="2517" y="692" width="36" height="36" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_i1_di" bpmnElement="Flow_i1"><di:waypoint x="313" y="170" /><di:waypoint x="380" y="170" /><di:waypoint x="380" y="350" /><di:waypoint x="410" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i1_di" bpmnElement="Flow_i1"><di:waypoint x="263" y="170" /><di:waypoint x="310" y="170" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i1a_di" bpmnElement="Flow_i1a"><di:waypoint x="385" y="210" /><di:waypoint x="385" y="350" /><di:waypoint x="410" y="350" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i2_di" bpmnElement="Flow_i2"><di:waypoint x="560" y="350" /><di:waypoint x="600" y="350" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i3_di" bpmnElement="Flow_i3"><di:waypoint x="750" y="350" /><di:waypoint x="790" y="350" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i4_di" bpmnElement="Flow_i4"><di:waypoint x="940" y="350" /><di:waypoint x="1320" y="350" /></bpmndi:BPMNEdge>

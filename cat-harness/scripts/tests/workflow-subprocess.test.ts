@@ -11,12 +11,60 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { complete, enabled, positionOf, startInstance, WorkflowError } from "../../src/workflow/instance";
+import {
+  complete,
+  enabled,
+  positionOf,
+  startInstance,
+  WorkflowError,
+  type InstanceState,
+} from "../../src/workflow/instance";
 import { checkGate } from "../../src/workflow/gate";
-import { findInModel, loadProcessModel, UnsupportedBpmn } from "../../src/workflow/process-model";
+import {
+  findInModel,
+  loadProcessModel,
+  UnsupportedBpmn,
+  type ProcessModel,
+} from "../../src/workflow/process-model";
 
 const WORKFLOWS = resolve(import.meta.dir, "../../processes");
 const bpmn = (stem: string): string => join(WORKFLOWS, `${stem}.bpmn`);
+
+/**
+ * Advance a fresh `document-ingestion` instance to the point where the Extract
+ * phase has been entered — which is what every test below is actually about.
+ *
+ * These tests ran `complete(…, "Task_Detect")` directly, because `Task_Detect`
+ * was the first activity. It is not any more: `Task_Place` was inserted ahead
+ * of it on 2026-09-30, so the engine correctly refused with *"Task_Detect is
+ * not enabled … Enabled now: Task_Place"* and six tests went red at once.
+ *
+ * The prefix is walked rather than named, so the next step inserted ahead of
+ * the phase moves these tests instead of breaking them. It is **bounded and it
+ * refuses**: a diagram that never reaches `CallActivity_Extract`, or that puts
+ * a decision in front of it, fails here with a message about the diagram
+ * rather than looping or silently asserting less. Nothing is skipped — the
+ * property each test pins is unchanged, and only the walk to the subject is.
+ */
+function toExtract(model: ProcessModel, state: InstanceState): void {
+  for (let guard = 0; !state.tokens.includes("CallActivity_Extract"); guard++) {
+    if (guard > 10) {
+      throw new Error(
+        "document-ingestion did not reach CallActivity_Extract within 10 steps of its start " +
+          `event; enabled now: ${enabled(model, state).map((e) => e.node).join(", ")}`,
+      );
+    }
+    const step = enabled(model, state)[0];
+    if (!step) throw new Error("document-ingestion enabled nothing before CallActivity_Extract");
+    if (step.kind === "decision") {
+      throw new Error(
+        `${step.node} is a decision on the way to CallActivity_Extract; these tests walk a ` +
+          "linear prefix and must not choose a branch on the diagram's behalf",
+      );
+    }
+    complete(model, state, step.node);
+  }
+}
 
 describe("a call activity resolves to the process it names", () => {
   test("document-ingestion's four phases are loaded, not left as bare ids", async () => {
@@ -86,7 +134,7 @@ describe("entering a subprocess", () => {
   test("the phase opens by itself, and its steps are what is enabled", async () => {
     const model = await loadProcessModel(bpmn("document-ingestion"));
     const state = startInstance(model, { id: "ing-1", subject: "uploads/a.pdf" });
-    complete(model, state, "Task_Detect");
+    toExtract(model, state);
 
     // The parent's token sits on the call activity …
     expect(state.tokens).toEqual(["CallActivity_Extract"]);
@@ -104,7 +152,7 @@ describe("entering a subprocess", () => {
   test("completing the call activity itself is refused, and it says what to do instead", async () => {
     const model = await loadProcessModel(bpmn("document-ingestion"));
     const state = startInstance(model, { id: "ing-2", subject: "uploads/a.pdf" });
-    complete(model, state, "Task_Detect");
+    toExtract(model, state);
     const inside = enabled(model, state).map((e) => e.node);
 
     expect(() => complete(model, state, "CallActivity_Extract")).toThrow(WorkflowError);
@@ -120,7 +168,7 @@ describe("entering a subprocess", () => {
   test("the parent advances when the child finishes, and keeps the record", async () => {
     const model = await loadProcessModel(bpmn("document-ingestion"));
     const state = startInstance(model, { id: "ing-3", subject: "uploads/a.pdf" });
-    complete(model, state, "Task_Detect");
+    toExtract(model, state);
 
     for (let guard = 0; state.tokens.includes("CallActivity_Extract"); guard++) {
       if (guard > 50) throw new Error("the extract phase did not finish");
@@ -139,7 +187,7 @@ describe("the step a caller names is the leaf", () => {
   test("completing a child's step by its own id works from the parent", async () => {
     const model = await loadProcessModel(bpmn("document-ingestion"));
     const state = startInstance(model, { id: "ing-4", subject: "uploads/a.pdf" });
-    complete(model, state, "Task_Detect");
+    toExtract(model, state);
 
     const leaf = enabled(model, state)[0];
     // The leaf is not a node of the PARENT process at all.
@@ -162,7 +210,7 @@ describe("the gate answers for a step inside a phase", () => {
   test("a subprocess step is allowed when it is enabled, and says which phase", async () => {
     const model = await loadProcessModel(bpmn("document-ingestion"));
     const state = startInstance(model, { id: "ing-6", subject: "uploads/a.pdf" });
-    complete(model, state, "Task_Detect");
+    toExtract(model, state);
     const leaf = enabled(model, state)[0];
 
     const verdict = checkGate(model, state, leaf.node, []);
@@ -173,7 +221,7 @@ describe("the gate answers for a step inside a phase", () => {
   test("a step of a phase not yet entered is refused, not reported as unknown", async () => {
     const model = await loadProcessModel(bpmn("document-ingestion"));
     const state = startInstance(model, { id: "ing-7", subject: "uploads/a.pdf" });
-    complete(model, state, "Task_Detect");
+    toExtract(model, state);
     const later = [...model.children.get("CallActivity_Gate")!.nodes.values()].find(
       (n) => n.kind === "activity",
     )!;
@@ -189,7 +237,7 @@ describe("positionOf", () => {
   test("reports the leaf and the phases above it, from state alone", async () => {
     const model = await loadProcessModel(bpmn("document-ingestion"));
     const state = startInstance(model, { id: "ing-8", subject: "uploads/a.pdf" });
-    complete(model, state, "Task_Detect");
+    toExtract(model, state);
 
     const position = positionOf(state);
     expect(position.length).toBeGreaterThan(0);
