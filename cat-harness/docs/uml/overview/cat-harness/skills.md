@@ -71,7 +71,7 @@ classDiagram
       <<json: SkillTopicsSchema>>
       id [1] string
       path [1] string
-      dependents [1] string
+      subgraph [1] true
       graphKinds [1..*] string[]
     }
     class cat_harness_skills_skill_topics_v1_skill_topics_v1["skill-topics/v1"] {

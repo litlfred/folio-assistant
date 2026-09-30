@@ -80,7 +80,6 @@ describe("a declared directory that is not there is a ROW, not a silence", () =>
             id: "voices",
             path: "skills/voices/",
             graphKinds: ["voices"],
-            dependents: "skip",
             description: "declared and deliberately absent — the fixture for this test",
           },
         ],
