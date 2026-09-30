@@ -54,7 +54,7 @@ import { subjectPage } from "../../cat-harness/scripts/harness-tiles.js";
 import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
 import { bytesFor, repoRelative } from "./lib/bytes.js";
-import type { CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
+import { resolvableIri, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 import { publicationBlockers } from "../../folio-assistant-core/schemas/materialization.js";
 
 
@@ -1379,8 +1379,9 @@ function slug(id: string): string {
  * question the function is actually asking, so the heuristic is gone.
  */
 function sourceOf(n: Node): string | undefined {
-  const b = n.bitstreams?.find((x) => x.materialization?.provenance?.upstream);
-  return b?.materialization?.provenance?.upstream ?? n.materialization?.provenance?.upstream;
+  // Bean `08u4`: the Handle IRI first (it outlives the host), the host URL
+  // second, never the front page — one definition, in the schema.
+  return resolvableIri(n);
 }
 
 /**

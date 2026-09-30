@@ -1,3 +1,14 @@
+---
+name: prepare-merge
+description: >
+  Take a feature branch to a clean, conflict-free, green, pushed state so it can
+  be merged with no surprises: base merged in, generated files regenerated, the
+  folio's content-type gates run, then pushed. It does NOT merge and does NOT
+  push to the default branch. Use for "prepare-merge", "make it mergeable",
+  "ship it".
+user_invocable: true
+---
+
 # Prepare-merge — get a feature branch ready to land
 
 Canonical, repo-agnostic skill for taking a `claude/*` (or any feature) branch
