@@ -11,5 +11,4 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-adapters`, h
 | [`manifest-entries.ts`](manifest-entries.ts) | a file |  |
 | [`document/`](document/) | 12 files | |
 | [`mcp-server/`](mcp-server/) | 16 files | |
-| [`paper/`](paper/) | 2 files | |
 <!-- kg:subgraph:end -->

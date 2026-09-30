@@ -8,12 +8,10 @@ pages: 122-122
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-Once the evidence has been retrieved and synthesized through a well con­
-ducted systematic review, its quality needs to be assessed. In the context of 
+Once the evidence has been retrieved and synthesized through a well conducted systematic review, its quality needs to be assessed. In the context of 
 evidence syntheses, the GRADE working group defines the quality of the 
 evidence as the “extent to which one can be confident that an estimate of 
-the effect or association is correct” (6). In the context of guideline develop­
-ment, the quality of the evidence reflects the confidence that the estimates of 
+the effect or association is correct” (6). In the context of guideline development, the quality of the evidence reflects the confidence that the estimates of 
 an effect are adequate to support a particular decision or recommendation. 
 Alternative terms to describe the quality of the evidence are “certainty of the 
 evidence” or “confidence in the estimates of effect”.

@@ -14,7 +14,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { declaredKinds, instancesIn, renderInstance } from "../check-instance-render.ts";
-import { repoRootFor, declarationPathIn } from "../../schemas/cat-harness.js";
+import { repoRootFor, declarationPathIn, readDeclaration } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
 
 const made: string[] = [];
@@ -147,7 +147,10 @@ describe("this repository's own instances", () => {
     // from `instanceRootsIn` would make the test agree with the function by
     // construction, which is exactly how the `["cat-harness", "bootstrap"]`
     // literal passed for the whole period it was wrong.
-    const found = instancesIn(REPO).map((p) => p.split("/").pop());
+    // The root by its DECLARED name (bean `t5dm`): its last path segment is
+    // the clone's folder, which a worktree names anything. Every other
+    // instance is a path inside the repository and the same in every clone.
+    const found = instancesIn(REPO).map((p) => (resolve(p) === resolve(REPO) ? readDeclaration(p)?.name : p.split("/").pop()));
     expect(found).toEqual([
       "folio-assistant",
       "agent-skills",

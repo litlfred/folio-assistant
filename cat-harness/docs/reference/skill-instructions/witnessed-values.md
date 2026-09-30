@@ -187,6 +187,20 @@ Rules run as a phase of the project validator:
 The last is **informational**: the renderer never blocks on it. It lets
 the witness-staleness audit pick up the implicit dependency.
 
+**Liquid references get the same rules** (`val-resolves`,
+`val-precision-bounded`, `val-block-computation`, plus `val-filter` for an
+unknown filter), so migrating from `:val` keeps a folio's validation rather
+than trading it for a `⟦unresolved⟧` marker in the rendered output. A
+dataset value (`<entry>/values.json`) is not a computation and asks for no
+`computation:` link; `site.*`, `page.*` and pass-through prefixes are
+Jekyll's and are not checked here.
+
+**Migrating a folio:** convert a reference only where the platform renders
+it to byte-identical LaTeX both ways. Two cases cannot convert, and stay on
+`:val`: a witness path with characters a dotted key cannot carry, and a
+prose value WITH units — Markdown reads `\,` as an escaped comma, so the
+thin space `:val` emits before a unit has no prose spelling.
+
 ## Codemod (mass migration)
 
 A codemod rewrites known literals inside math contexts to their

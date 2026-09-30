@@ -9,7 +9,8 @@
 #
 # Uses the canonical leanblueprint + docgen-action pipeline:
 #   1. Build the Lean package (leanprover/lean-action)
-#   2. Compile the blueprint (plasTeX → HTML + PDF)
+#   2. Generate blueprint/src from the paper manifest (blueprint-layout.ts),
+#      then compile it (plasTeX → HTML + PDF)
 #   3. Generate doc-gen4 interactive documentation
 #   4. Validate \lean{} declaration names (lake exe checkdecls)
 #   5. Deploy to the gh-pages branch, one directory per paper
@@ -149,16 +150,26 @@ jobs:
           cd "{{assistant}}"
           bun install --frozen-lockfile
 
+      # Chapters only: the blueprint is generated from them below, and a
+      # main.tex would need the folio's preamble, which nothing here uses.
       - name: Build content objects to LaTeX chapters
         continue-on-error: true
         run: |
           bun run "{{assistant}}/cat-harness/content/pipeline/build.ts" \
             "{{folio}}/$PAPER/$PAPER.ts" \
-            --out-dir "$FOLIO_BUILD_DIR/chapters" \
-            --generate-main \
-            --main-out "$FOLIO_BUILD_DIR/main.tex"
+            --out-dir "$FOLIO_BUILD_DIR/chapters"
           echo "Generated chapters:"
           ls -la "$FOLIO_BUILD_DIR"/chapters/*.tex 2>/dev/null || echo "  (none)"
+
+      # The blueprint docgen-action builds below: <paper>/lean/blueprint/src/,
+      # GENERATED from the manifest — \lean, \leanok and the formal \uses come
+      # from the blocks, never a hand-synced copy (bean a1ku, #1492). Not
+      # continue-on-error: without it there is no blueprint to build.
+      - name: Generate the blueprint layout
+        run: |
+          bun run "{{assistant}}/folio-assistant-sci/content/pipeline/blueprint-layout.ts" \
+            --paper "{{folio}}/$PAPER/$PAPER.ts" \
+            --out "{{folio}}/$PAPER/lean/blueprint/src"
 
       - name: Extract proof objects from LaTeX
         continue-on-error: true

@@ -5,8 +5,8 @@ status: completed
 type: feature
 priority: normal
 created_at: 2026-09-24T05:12:16Z
-updated_at: 2026-09-29T17:59:40Z
-parent: folio-assistant-p5wm
+updated_at: 2026-09-29T20:52:40Z
+parent: folio-assistant-yj32
 ---
 
 Owner, 2026-09-24, after `edx7` shipped: *"do edx7 navbar on mounted pages too"* —
@@ -93,6 +93,7 @@ Jekyll never laid out"* is post-build injection, which is what
       — `rendered-verification` §"A COUNT over the built site needs its instrument validated first", owner's choice 2026-09-30
 
 
+_2026-09-29_ — **Re-parented `p5wm` → `yj32`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Pages with no navigation are a defect of the harness's default rendering (LHS + docs/); 4ccr (wireframe findings) was the runner-up, but only 23 of the 33 pages are wireframes.
 
 Claimed by claude/goal2-navbar-resume — 2026-09-29, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq (GOAL 2 resume after the 09-25 usage-limit stall).
 

@@ -1,10 +1,10 @@
 ---
 # folio-assistant-izqr
 title: 'BOOTSTRAP ON AN EMPTY REPO: seed main first, then bootstrap onto it'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-22T22:56:13Z
-updated_at: 2026-09-22T22:56:13Z
+updated_at: 2026-09-30T14:55:25Z
 parent: folio-assistant-vke6
 ---
 
@@ -34,3 +34,5 @@ Related: zmdo (prove an empty-repo bootstrap), which this is a precondition of. 
 - [ ] it seeds `main` with a minimal commit, then bootstraps on a branch and opens the bootstrap as a PR
 - [ ] a repo with commits but no `main` is reported, not seeded
 - [ ] a test runs bootstrap against a freshly `git init`-ed repo with a bare remote, and asserts `main` exists before the bootstrap branch
+
+_2026-09-30T14:55:25Z_ — Claimed by claude/magical-archimedes-4qkfxp-izqr — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

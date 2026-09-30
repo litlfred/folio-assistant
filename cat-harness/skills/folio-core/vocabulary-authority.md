@@ -6,12 +6,11 @@ description: >-
   here, the pros and cons behind each ruling, how DC and SKOS overlap and what
   stops them drifting, and the normalisation-first rule for any modelling or
   mapping exercise.
-capability: schema
 ---
 
 # Vocabulary authority — one fact, one home, N renderings
 
-> Skill id: `vocabulary-authority` · Capability: `schema` · Package: `folio-core`
+> Skill id: `vocabulary-authority` · Package: `folio-core`
 
 ## The rule
 

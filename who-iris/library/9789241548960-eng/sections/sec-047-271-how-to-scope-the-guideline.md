@@ -8,19 +8,15 @@ pages: 33-34
 source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
-Scoping a guideline involves a series of steps, generally performed or coor­
-dinated by the responsible technical officer.
+Scoping a guideline involves a series of steps, generally performed or coordinated by the responsible technical officer.
 ■■
-Draft the potential scope ‒ Draft a proposed scope and a list of poten­
-tial priority topics.
+Draft the potential scope ‒ Draft a proposed scope and a list of potential priority topics.
 ■■
 Set up the WHO guideline steering group (“steering group” for the 
-remainder of the text) ‒ Convene a small group of WHO staff, includ­
-ing representatives of all relevant departments, to provide feedback on 
+remainder of the text) ‒ Convene a small group of WHO staff, including representatives of all relevant departments, to provide feedback on 
 the proposed scope of the guideline.
 ■■
-Refine the list of priority topics ‒ Identify the key issues: this deter­
-mines the breadth and depth of the work. Do not try to include 
+Refine the list of priority topics ‒ Identify the key issues: this determines the breadth and depth of the work. Do not try to include 
 everything; resist the temptation to write a textbook. Concentrate on 
 the interventions or policies in which a change in practice is desired 
 and feasible, and on areas where inequity, controversy or uncertainty 
@@ -32,8 +28,7 @@ WHO handbook for guideline development
 22
 ■■
 Search the literature ‒ Do a preliminary search of the literature to 
-identify relevant information, including existing guidelines and sys­
-tematic reviews, health technology assessment reports and economic 
+identify relevant information, including existing guidelines and systematic reviews, health technology assessment reports and economic 
 evaluations of the guideline topic. At this stage the search should not 
 be exhaustive; once questions and draft recommendations have been 
 formulated, rigorous systematic reviews will be conducted to retrieve 
@@ -49,7 +44,6 @@ the search for evidence and are best developed using the “population,
 intervention, comparator and outcome” (PICO) format (see Chapter 7).
 ■■
 •Equity, human rights and gender ‒ Will the recommendations affect 
-equity, human rights and gender? Are the relevant subpopulations con­
-sidered in the key questions? These issues should be considered early 
+equity, human rights and gender? Are the relevant subpopulations considered in the key questions? These issues should be considered early 
 and throughout the guideline development process (see Chapter 5).
 ■■

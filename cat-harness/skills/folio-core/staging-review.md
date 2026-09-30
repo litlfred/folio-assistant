@@ -8,14 +8,13 @@ description: >-
   after (STAGING) pairs so reviewers can compare rather than guess. Used by the
   CRDM feature development workflow, content authoring review sessions, and
   whenever a staging preview deploys or someone asks to see it.
-capability: review
 user_invocable: true
 allowed-tools: Bash(git*) Read Grep Glob mcp__github__pull_request_read mcp__github__issue_read
 ---
 
 # Staging review — before/after comparison
 
-> Skill id: `staging-review` · Capability: `review` · Package: `folio-core`
+> Skill id: `staging-review` · Package: `folio-core`
 
 Provide before/after URL pairs whenever rendered content has changed in a
 feature branch. This is part of every review or feedback session involving

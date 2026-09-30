@@ -13,6 +13,5 @@ scope of a proposed guideline and the methods and resources involved in
 developing it. The proposal includes many of the components of a protocol for 
 a systematic review and guideline, plus additional information on the groups 
 contributing to guideline development and the administrative steps required 
-for WHO guidelines. The responsible technical officer must submit a plan­
-ning proposal to the GRC for each guideline to be developed and the GRC’s 
+for WHO guidelines. The responsible technical officer must submit a planning proposal to the GRC for each guideline to be developed and the GRC’s 
 approval is required for guideline development to proceed to completion.

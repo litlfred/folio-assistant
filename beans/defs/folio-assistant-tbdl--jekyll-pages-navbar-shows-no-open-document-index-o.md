@@ -6,7 +6,7 @@ type: task
 priority: normal
 created_at: 2026-09-30T11:23:09Z
 updated_at: 2026-09-30T11:23:09Z
-parent: folio-assistant-p5wm
+parent: folio-assistant-yj32
 ---
 
 Found closing `sjic`, 2026-09-29/30, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq.
@@ -34,3 +34,5 @@ Option 1 looks right. It is recorded here, not decided.
 - [ ] a page without headings shows no empty group
 - [ ] verified on a built page, before and after
 - [ ] `bun run gates` green
+
+_2026-09-30_ — Filed under `yj32`, not `p5wm`: on this date `main` re-parented its siblings `sjic` and `oi1y` there by subject (bean `ansc`, todo-manager §"WHICH parent"), and this bean is the same subject.

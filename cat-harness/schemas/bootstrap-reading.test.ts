@@ -31,11 +31,18 @@ describe("every declaration in this repository is a Knowledge Graph declaration"
 describe("the harness reads bootstrap's terms and kinds as bootstrap states them", () => {
   const own = Object.keys(BOOTSTRAP_GRAPH_KINDS);
   test("the published vocabulary uses bootstrap's definitions, and bootstrap's terms link nowhere above", () => {
-    for (const [cls, term] of [["Actor", "Actor"], ["Role", "Role"], ["Skill", "Skill"], ["Process", "Process"], ["Directory", "Subgraph"], ["Harness", "Harness"]] as const) {
-      expect(CLASS_GLOSSES[cls]!.gloss).toBe(BOOTSTRAP_TERMS[term]);
-      // A term bootstrap defines is bootstrap's, IRI included (v3: Harness moved).
-      expect(CLASS_GLOSSES[cls]!.layer, cls).toBe("bootstrap");
+    // EVERY term bootstrap defines is a bootstrap-layer class glossed with
+    // bootstrap's sentence (owner, 2026-09-30, bean `xsqm`: the `bs:`
+    // vocabulary is exactly bootstrap's terms) — not a hand-picked six.
+    for (const [term, gloss] of Object.entries(BOOTSTRAP_TERMS)) {
+      const cls = term.replace(/\s+/g, "");
+      expect(CLASS_GLOSSES[cls]?.gloss, cls).toBe(gloss);
+      expect(CLASS_GLOSSES[cls]?.layer, cls).toBe("bootstrap");
     }
+    // …and nothing else is: `Directory` was bootstrap-layer while being no
+    // bootstrap term, and is gone (its word is Subgraph).
+    const bootstrapClasses = Object.entries(CLASS_GLOSSES).filter(([, g]) => g.layer === "bootstrap").map(([n]) => n).sort();
+    expect(bootstrapClasses).toEqual(Object.keys(BOOTSTRAP_TERMS).map((t) => t.replace(/\s+/g, "")).sort());
     // Owner, 2026-09-29: "no tools in bootstrap". A Harness defines Tool.
     expect("Tool" in BOOTSTRAP_TERMS).toBe(false);
     expect(CLASS_GLOSSES.Tool!.layer ?? "harness").toBe("harness");
@@ -43,13 +50,18 @@ describe("the harness reads bootstrap's terms and kinds as bootstrap states them
     expect(bootstrapLinks.map(([n]) => n)).toEqual([]);
   });
 
-  test("the harness's registry reads bootstrap's sentence, and mints the type in bootstrap's layer", () => {
+  test("the harness's registry reads bootstrap's sentence; the class it types a directory with is its own", () => {
+    expect(own.length).toBeGreaterThan(0);
     for (const k of own) {
       const def = BASE_GRAPH_KINDS[k as keyof typeof BASE_GRAPH_KINDS];
       expect(def, k).toBeDefined();
       expect(def.summary).toBe(BOOTSTRAP_GRAPH_KINDS[k as keyof typeof BOOTSTRAP_GRAPH_KINDS]);
+      // The per-kind class (`SkillGraph`…) is the HARNESS's, not a term
+      // bootstrap defines (owner, 2026-09-30); the kind itself stays
+      // bootstrap's individual, `bootstrap:graphKind/<kind>`. Bean `3r47`
+      // drops the classes altogether.
       const local = def.type.split("#").pop()!;
-      expect(termLayer(local), `${k} → ${local}`).toBe("bootstrap");
+      expect(termLayer(local), `${k} → ${local}`).toBe("harness");
     }
   });
 });
