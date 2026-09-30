@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 442,
+      "count": 443,
       "unit": "beans"
     }
   },
@@ -242,7 +242,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T23:42:28Z",
-      "updatedAt": "2026-09-29T23:58:17Z",
+      "updatedAt": "2026-09-29T23:55:52Z",
       "preview": "Measured 2026-09-29 on claude/sharp-einstein-970n6g (PR #1511), after merging main:\n\n- `bun run regen` pass 1: \"58 current, 4 regenerated, 0 unrepaired\", exit 0.\n- `navbar:include:check` still failed, and so did `gen-navbar-include.test.ts` (\"the writer is a fixpoint over the real data\").\n- Cause: the navbar include is generated from `cat-harness/docs/_data/harness.json`, which `docs:harness` writ",
       "file": "beans/defs/folio-assistant-14ve--regen-not-a-fixpoint-bun-run-regen-asks-each-check.md"
     },
@@ -2785,6 +2785,20 @@
       "updatedAt": "2026-09-26T11:23:18Z",
       "preview": "Split out of `v625` rather than blocking it: the command itself, its flags and\nits QA sidecar all landed, so the parent has work that can proceed. What cannot\nproceed without a decision is **whether the chain gets a CI gate, and where** —\nbecause every placement available today is either masked or red on arrival.\n\n## Why the obvious placement does not work\n\n`skill:register:check` runs the five `--",
       "file": "beans/defs/folio-assistant-fjwi--where-can-the-registration-chain-check-go-in-ci-ev.md"
+    },
+    {
+      "id": "folio-assistant-fq5u",
+      "title": "DOWNSTREAM TOOLS IN QA: a run record per downstream tool, and QA goes stale when its inputs change — LSI first",
+      "status": "todo",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T23:46:01Z",
+      "updatedAt": "2026-09-29T23:46:01Z",
+      "preview": "**Owner, 2026-09-29:** *\"also how do we know tools like LSI are run succesfully... not primary to pieple, but downstream. should be part of QA process (dependences = stall QA)\"* — then chose **\"Generalize after #1483\"**.\n\n## What exists (measured 2026-09-29)\n- LSI (latent semantic index) is draft PR #1483 / issue #1482 / bean `ansc`, branch `claude/brave-hawking-511rrx`, NOT merged. It adds kg:aud",
+      "file": "beans/defs/folio-assistant-fq5u--downstream-tools-in-qa-a-run-record-per-downstream.md"
     },
     {
       "id": "folio-assistant-fx5r",
