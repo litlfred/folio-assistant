@@ -106,7 +106,7 @@ folio-assistant 是**可插拔的**——每种内容类型都由一个内容*�
 - **[技能模式参考 (Skill schema reference)](../reference/skills/)** — 为每项技能生成的输入/输出契约。
 - **[TypeScript API 参考 (TypeScript API reference)](../api/)** — 内容对象模型（`Block`、`Chapter`、`Paper`、构建器、Zod 约束）。
 - **[架构 (Architecture)](../architecture.html)** — 适配器、MCP 服务器、RBAC、块模型。
-- **[知识图谱 (The KGraph)](../kgraph.html)** — 子图分类法、引用的流向以及仓库之间如何划分工作。
+- **[知识图谱 (The Knowledge Graph)](../knowledge-graph.html)** — 子图分类法、引用的流向以及仓库之间如何划分工作。
 - **[测试框架 (The Harness)](../harness.html)** — 实例化、依赖遍历以及对目录进行测试封装所承担的义务。
 
 在阅读上述页面之前，有两项技能值得先行了解，因为其他所有内容都以它们为前提：[`getting-started`](../reference/skill-instructions/getting-started.html) 用于指引你实际要完成的目标，而 [`placement`](../reference/skill-instructions/placement.html) 则在创建新节点之前确定其归属位置。

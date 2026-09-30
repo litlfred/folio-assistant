@@ -1,10 +1,11 @@
 ---
 # folio-assistant-3r47
 title: 'Drop the per-kind graph classes (KGraph, SkillGraph, VoiceGraph, …): a directory is a Subgraph holding GraphKind individuals'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-09-30T10:04:38Z
-updated_at: 2026-09-30T19:12:28Z
+updated_at: 2026-09-30T20:04:55Z
 parent: folio-assistant-xsqm
 ---
 
@@ -24,7 +25,7 @@ Asked *"KGraph needs better name? CatHarness? … what is bootstrap's? consisten
 - [x] The registry identifies a kind by its individual IRI, not a class; the `kg`/`cat-harness` alias still resolves to one kind.
 - [x] No `*Graph` class is minted for a kind (RoleGraph/PreviewGraph/FshGutsGraph etc. that type a DOCUMENT, not a directory, are reviewed separately and kept only if they are not a kind).
 - [x] `ns-export`, the declaration projection, the UML/overview generators and their tests read the individual.
-- [ ] Docs prose that says "KGraph" for the concept (`content/docs/kgraph/`, `harness/`) is reviewed against bootstrap's term Knowledge Graph.
+- [x] Docs prose that says "KGraph" for the concept (`content/docs/kgraph/`, `harness/`) is reviewed against bootstrap's term Knowledge Graph.
 
 ## Not now
 
@@ -56,5 +57,17 @@ The `KGraph` docs chapter (`content/docs/kgraph/`, published at `/kgraph.html`,
 linked from 5 translated index pages) defines KGraph as "everything this
 harness knows about itself is one graph" — bootstrap's term Knowledge Graph
 under a coined name. Owner chose **rename, keep a redirect**: the chapter
-becomes "Knowledge Graph" at `/knowledge-graph.html`, `/kgraph.html` redirects,
-and the translated link texts are flagged for re-translation. Next change.
+becomes "Knowledge Graph" at `/knowledge-graph.html`, and the translated link
+texts are drafted and left unverified. Then, 2026-09-30: "dont maintain [the
+redirect] ... excise" — `/kgraph.html` is removed, not redirected.
+
+## Summary of Changes
+
+- #1678: the 48 per-kind classes are gone; a kind is its `GraphKind`
+  individual (`graphKindIri`), with an explicit `layer`; directories are
+  `Subgraph` + `holdsGraph`; ns-export publishes the individuals.
+- This change: the "KGraph" docs chapter is "The Knowledge Graph" at
+  `/knowledge-graph.html` (bootstrap's term), with no redirect (owner:
+  "excise"); links in the harness chapter and the 5 translated landing
+  pages updated (translations drafted, left unverified); stale code comments
+  corrected, owner quotes left verbatim.

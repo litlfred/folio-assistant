@@ -1,4 +1,4 @@
-The taxonomy above is what the KGraph is *for*. What the registry can actually
+The taxonomy above is what the Knowledge Graph is *for*. What the registry can actually
 produce is narrower, and the gap is worth stating plainly: a reader who takes
 the taxonomy for an inventory will go looking for directories that are not
 there.
