@@ -10,7 +10,7 @@ import {
   igMetadataVerdict,
   type IgMetadataIndex,
 } from "./ig-metadata-index";
-import { defaultGraphKinds, graphLayer, isDerivedGraph, isRenderable, processMayWrite } from "./cat-harness";
+import { defaultGraphKinds, graphKindIri, graphLayer, isDerivedGraph, isRenderable, processMayWrite } from "./cat-harness";
 
 /**
  * A harvest of one IG, in the shape the three Publisher exports actually take.
@@ -164,7 +164,7 @@ describe("the graph kind it is held under", () => {
     // A reconstruction and a transcription. The test is here so a later
     // tidy-up that folds them cannot pass silently — which is exactly the
     // Option A the owner rejected as "making the index a bag".
-    const kinds = ["fhir-artifact-index", "ig-metadata-index"].map((k) => defaultGraphKinds.get(k)?.type);
+    const kinds = ["fhir-artifact-index", "ig-metadata-index"].map((k) => (defaultGraphKinds.has(k) ? graphKindIri(k, defaultGraphKinds.get(k)) : undefined));
     expect(new Set(kinds).size).toBe(2);
   });
 });

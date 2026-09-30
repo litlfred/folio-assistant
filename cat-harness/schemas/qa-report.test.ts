@@ -7,7 +7,7 @@ import {
   qaReportVerdict,
   type QaReport,
 } from "./qa-report";
-import { defaultGraphKinds, graphLayer, isRenderable, processMayWrite } from "./cat-harness";
+import { defaultGraphKinds, graphKindIri, graphLayer, isRenderable, processMayWrite } from "./cat-harness";
 
 /**
  * A report in the shape the upstream `QAReporter` writes, plus the wrapper
@@ -305,7 +305,7 @@ describe("the graph kind it is held under", () => {
   test("it is a DIFFERENT kind from `qa` and `health`, on purpose", () => {
     // Three subjects: an artefact, a repository, an execution. The test is
     // here so that a later tidy-up that folds them cannot pass silently.
-    const kinds = ["qa", "health", "qa-report"].map((k) => defaultGraphKinds.get(k)?.type);
+    const kinds = ["qa", "health", "qa-report"].map((k) => (defaultGraphKinds.has(k) ? graphKindIri(k, defaultGraphKinds.get(k)) : undefined));
     expect(new Set(kinds).size).toBe(3);
   });
 });
