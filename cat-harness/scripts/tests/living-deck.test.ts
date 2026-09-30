@@ -44,6 +44,15 @@ describe("living deck: every claim about the KG still holds", () => {
     expect(read(join(SITE, "assets/img/uml/harness-schemas.svg"))).toContain("VoiceProfileSchema");
   });
 
+  test("slide 2 — the CDN decision is recorded, MADR-shaped, with at least two real options", () => {
+    const bean = readdirSync(join(REPO, "beans/defs")).find((f) => f.startsWith("folio-assistant-l9v6"));
+    expect(bean, "bean l9v6 (the CDN decision record) is missing").toBeDefined();
+    const body = read(join(REPO, "beans/defs", bean!));
+    const opts = body.split("## Considered options")[1]!.split("\n## ")[0]!.match(/^- /gm) ?? [];
+    expect(opts.length).toBeGreaterThanOrEqual(2);
+    expect(body).toContain("## Decision outcome");
+  });
+
   test("slide 4 — the ingested SMART Base index still holds 25 StructureDefinition pages", () => {
     const ids = new Set<string>();
     const walk = (d: string) => {

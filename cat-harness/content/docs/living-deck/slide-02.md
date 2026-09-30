@@ -21,6 +21,9 @@ the slide as Cloudflare R2 storage and the Cloudflare edge network.
 > **Misaligned — proposal, not decision:** the repository treats the CDN as a
 > swappable layer. `kg-to-portal` and `large-datasets`' artifact store name
 > Cloudflare and R2 only as examples beside GitHub Pages, jsDelivr and S3. The
-> slide names Cloudflare as *the* choice. The 10 TB figure, the World Health
-> Data Hub and "Swiss Observatory schemas" appear nowhere else in the
-> repository. Until a decision record exists, read this slide as a proposal.
+> slide names Cloudflare as *the* choice. Before this deck, the 10 TB figure,
+> the World Health Data Hub and "Swiss Observatory schemas" appeared nowhere in
+> the repository. The decision is now recorded, as **proposed, with no outcome yet**, in bean
+> `l9v6` (MADR form). It holds the drivers, three real options (Cloudflare R2 +
+> CDN, GitHub Pages alone, another object store + CDN) and what has to be
+> measured before one is chosen. Read this slide as that proposal.

@@ -107,9 +107,12 @@ the slide as Cloudflare R2 storage and the Cloudflare edge network.
 > **Misaligned — proposal, not decision:** the repository treats the CDN as a
 > swappable layer. `kg-to-portal` and `large-datasets`' artifact store name
 > Cloudflare and R2 only as examples beside GitHub Pages, jsDelivr and S3. The
-> slide names Cloudflare as *the* choice. The 10 TB figure, the World Health
-> Data Hub and "Swiss Observatory schemas" appear nowhere else in the
-> repository. Until a decision record exists, read this slide as a proposal.
+> slide names Cloudflare as *the* choice. Before this deck, the 10 TB figure,
+> the World Health Data Hub and "Swiss Observatory schemas" appeared nowhere in
+> the repository. The decision is now recorded, as **proposed, with no outcome yet**, in bean
+> `l9v6` (MADR form). It holds the drivers, three real options (Cloudflare R2 +
+> CDN, GitHub Pages alone, another object store + CDN) and what has to be
+> measured before one is chosen. Read this slide as that proposal.
 
 ## 3 — The nine components of an L2 DAK
 {: #slide-03 data-fa-label="sec:living-deck-slide-03" }
@@ -360,7 +363,7 @@ repository: <https://github.com/litlfred/folio-assistant>
 | slide | what disagrees | which is right | state |
 |---|---|---|---|
 | 1 | docs said SMART has three layers | five (Mehl et al. 2021, the primary source) | fixed on this branch |
-| 2 | Cloudflare named as *the* CDN; 10 TB, Data Hub, "Swiss Observatory" appear nowhere else | undecided — the repo keeps the CDN swappable | needs a decision record |
+| 2 | Cloudflare named as *the* CDN; 10 TB, Data Hub, "Swiss Observatory" appear nowhere else | undecided — the repo keeps the CDN swappable | recorded as proposed: bean `l9v6` |
 | 3 | speaker notes: 8 components | 9 (SMART Base `DAK`) | snapshot only |
 | 8 | UML lacks Voice Profile | the generated diagram | page shows current |
 | 9 | target repository names | the monorepo today | target vs current |
