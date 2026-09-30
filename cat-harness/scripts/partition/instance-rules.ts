@@ -238,6 +238,12 @@ export const RULES: Rule[] = [
       // content — the declarations it reads are the harness's, and the glyph
       // registries it compares are the harness's own furniture.
       "scripts/check-navbar-consistency.ts",
+      // HARNESS for the same reason: it asks the runtime's own question
+      // through `schemas/theme-by-ref.ts` over this repository's declared
+      // instances. The THEMES it loads are an instance's subject matter,
+      // but this script reads no folio content — it validates a graph
+      // against a schema the harness owns.
+      "scripts/check-instance-themes.ts",
       // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
       // LEAF so `state-visualizer.ts` can be a call site without importing
       // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one

@@ -54,8 +54,19 @@ export type ThemeRefMiss =
 
 export type ThemeRefResult = { ok: true; theme: ResolvedTheme; owner: string | undefined } | { ok: false; miss: ThemeRefMiss };
 
-/** The themes an instance declares, or why it declares none that can be read. */
-function instanceThemes(repoRoot: string, instance: string): { ok: true; themes: readonly ResolvedTheme[] } | { ok: false; miss: ThemeRefMiss } {
+/**
+ * The themes an instance declares, or why it declares none that can be read.
+ *
+ * **Exported so a GATE can ask the same question the runtime asks.** Bean
+ * `z6xd`: three gates declared `@covers themes` while none of them resolved a
+ * `themes` directory — they audit the platform's `THEMES` constants and the
+ * declared theme ART, which the who-iris declaration is explicit are different
+ * things (*"These are NOT the platform's twelve themes"*). A gate that reached
+ * the graph by re-deriving this resolution would be a second answer to
+ * "which themes does this instance own", free to disagree with the one every
+ * generator actually renders from — so `check:instance-themes` calls this.
+ */
+export function instanceThemes(repoRoot: string, instance: string): { ok: true; themes: readonly ResolvedTheme[] } | { ok: false; miss: ThemeRefMiss } {
   const root = instanceRootsIn(repoRoot).find((r) => readDeclaration(r)?.name === instance);
   if (root === undefined) return { ok: false, miss: { kind: "no-such-instance", instance } };
   const dirs = instanceDirectoriesForGraph(root, THEMES_GRAPH_KIND);
