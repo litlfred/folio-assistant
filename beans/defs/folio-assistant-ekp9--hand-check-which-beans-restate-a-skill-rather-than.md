@@ -312,7 +312,7 @@ discharged. Anyone reading the skill builds `check:docs-populated` a second time
 **Authoritative: the skill's table.** Measured — `confirmation-waiver` is
 referenced by `deletion-requires-confirmation`, `swarm-management`,
 `issue-working` and `bean-coordination`, and **not** by
-`skills/workflow/process-state.md`. Five of six.
+`skills/process/workflow/process-state.md`. Five of six.
 
 **What it would cost.** Smallest of the five. An agent that has fallen out of
 process reads `process-state`, finds the confirm-before-re-entering rule and no

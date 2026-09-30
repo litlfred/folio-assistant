@@ -146,7 +146,7 @@ repeating the usual story as fact.
 ## Related
 
 - [`library-ingestion`](library-ingestion.md) — the next step, once a file exists
-- [`methodology-adoption`](../../folio-core/methodology-adoption.md) — what requires an origin in
+- [`methodology-adoption`](../../process/process-core/methodology-adoption.md) — what requires an origin in
   the first place, and the selection question this feeds
 - [`evidence-appraisal`](../../content-lifecycle/evidence-appraisal.md) — appraising
   what was found

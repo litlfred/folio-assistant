@@ -135,5 +135,5 @@ who performs an activity.
 That application, its three declared edge kinds, the `cat-harness.processes:raci` extension
 element, the `check:raci` gate, and the procedure for running a RACI exercise
 when initiating a project are in the skill:
-[`skills/raci/raci.md`](../skills/raci/raci.md). The method lives here once;
+[`skills/process/raci/raci.md`](../skills/process/raci/raci.md). The method lives here once;
 the skill names it and does not restate it.

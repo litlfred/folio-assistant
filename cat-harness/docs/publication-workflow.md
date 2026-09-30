@@ -614,7 +614,7 @@ The roles in the lanes, and the actor definition each one maps to. Roles
 **do** is not a property of its role: it is an ODRL rule in `policies/`, and
 before every task the BPMN executor checks that the actor is authenticated,
 eligible for the lane's role, permitted by policy and allowed to touch the
-content ([`task-authorization`](../skills/folio-core/task-authorization.md),
+content ([`task-authorization`](../skills/process/process-core/task-authorization.md),
 issue #1207).
 
 ### People

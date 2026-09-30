@@ -278,5 +278,5 @@ grep over zero Lean files printing OK, a ruff scan of missing paths, and
 | `folio-assistant-ind9` | the same category error, **fixed** — split the field, give the fact a home |
 | `folio-assistant-qif9` | the same error found again in skill front matter, and still inert |
 | `folio-assistant-y1w9` | 110 skills bound to no role or process — the skill-side twin of §4 |
-| [`role-model.md`](../../skills/folio-core/role-model.md) | actor / role / skill / permission, and why merging compositions gives a closure too broad to audit |
+| [`role-model.md`](../../skills/process/process-core/role-model.md) | actor / role / skill / permission, and why merging compositions gives a closure too broad to audit |
 | [Deployment topologies](deployment-topologies.html) | the `network` axis this proposal puts at the wrong granularity for one case |

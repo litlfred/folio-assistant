@@ -397,6 +397,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "library-core": "Library and information management (library-core)",
   "ui-core": "Rendering, UI and publication surfaces (ui-core)",
   "conduct-core": "Agent conduct (conduct-core)",
+  "process-core": "Process model — roles, authorization, methodology (process-core)",
   theming: "Theming (theming)",
   // Keyed by basename: a package subdirectory of the declared `skills/`,
   // like `theming` above. Bean `6bhf`, owner 2026-09-25 — "bean as
@@ -441,7 +442,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // never match, and the generator throws naming the id it wanted, which is
   // how this was caught rather than shipped as two uncategorised packages.
   crdm: "CRDM requirements methodology (skills/crdm)",
-  raci: "RACI involvement model (skills/raci)",
+  raci: "RACI involvement model (skills/process/raci)",
   "spec-kit": "Spec Kit spec-driven development (skills/spec-kit)",
   // Synced from claude-scientific-skills at a pinned commit (issue #556):
   // somebody else's bytes, one package per skill so upstream's relative links
@@ -703,7 +704,7 @@ function withParts(
 /**
  * A skill body's relative links, re-expressed for the FLAT output directory.
  *
- * Skills are authored in PACKAGES — `skills/workflow/process-state.md` links
+ * Skills are authored in PACKAGES — `skills/process/workflow/process-state.md` links
  * to a sibling package as `](../folio-core/task-authorization.md)` — and this
  * generator publishes every one of them into a single flat directory. The
  * link is correct where it is written and wrong once the page moves, so a
