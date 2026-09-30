@@ -32,11 +32,12 @@
  * silently returned zero would read exactly like a clean run, which is the
  * shape this repository has paid for twice (`dh4f`, `xom7`).
  */
-import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { FhirArtifactIndexSchema, materializationCensus } from "../schemas/fhir-artifact-index.js";
 import { declarationPathIn, repoRootFor } from "../../cat-harness/schemas/cat-harness.js";
+import { gitTopLevelDirs } from "../../cat-harness/schemas/git-corpus.js";
 
 const ROOT = repoRootFor(join(import.meta.dir, ".."));
 
@@ -47,11 +48,16 @@ const ROOT = repoRootFor(join(import.meta.dir, ".."));
  * declares a directory holding the `fhir-artifact-index` graph — resolved from
  * the DECLARATION, never from a hardcoded path, so relocating an instance does
  * not silently take it out of the scan.
+ *
+ * The top level is ASKED OF GIT (`gitTopLevelDirs`), not walked: a bare
+ * directory listing of the root here was the repository's one scan seeded at a root
+ * constant without git awareness, found once `root-scan-census` covered this
+ * instance (bean `tqv4`). A gitignored directory holding a stray declaration
+ * would otherwise be checked as though it were committed.
  */
 function declaredIndexes(): string[] {
   const out: string[] = [];
-  for (const entry of readdirSync(ROOT).sort()) {
-    if (!statSync(join(ROOT, entry)).isDirectory()) continue;
+  for (const entry of gitTopLevelDirs(ROOT).names) {
     // RESOLVED, never composed: since #695 an instance declares itself in
     // `<name>.config.json`, so there is no single filename to join. Composing
     // one is how a reader stops seeing every instance the moment the
