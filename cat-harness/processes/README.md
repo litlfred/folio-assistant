@@ -56,7 +56,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`materialize-remote.bpmn`](materialize-remote.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Materialize remote content — the shared subprocess | "Sample import into a structured data store" |
 | [`methodology-from-source.bpmn`](methodology-from-source.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Adopt a methodology from a source document |  |
 | [`narrative-code-review.bpmn`](narrative-code-review.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Prose and the code it describes | "Review task" |
-| [`ns.jsonld`](ns.jsonld) | data |  |
+| [`ns.jsonld`](ns.jsonld) | cat-harness's diagram elements |  |
 | [`options-analysis.bpmn`](options-analysis.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Options analysis | "Content Change and Review", "CRDM Phase 6 — implement, MVP, acceptance", "Editing and HCI validation", "Adopting an upstream version bump", "Wireframe design review" |
 | [`pr-checks-present.bpmn`](pr-checks-present.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Which open pull requests have no CI run on their head? |  |
 | [`publish-alert.bpmn`](publish-alert.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Alert the publication manager | "Publishing the docs site, and keeping the previews alive" |

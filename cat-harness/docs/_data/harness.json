@@ -1879,12 +1879,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 5
         },
         {
           "id": "views",
@@ -1912,14 +1912,10 @@
         {
           "kind": "skills",
           "note": "no viewer by design"
-        },
-        {
-          "kind": "swimlane-glossary",
-          "note": "no viewer by design"
         }
       ],
       "findings": [
-        "bootstrap: 5 graph(s) render no viewer — models, scenarios, schemas, skills, swimlane-glossary — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+        "bootstrap: 4 graph(s) render no viewer — models, scenarios, schemas, skills — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
         "bootstrap: has no docs/ of its own, so the tile opens a kind handler's viewer (/processes/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -3082,7 +3078,7 @@
           },
           {
             "key": "assets",
-            "summary": "2: agent-instructions, readme"
+            "summary": "3: agent-instructions, readme, vocabulary"
           },
           {
             "key": "iriBase",
@@ -3090,11 +3086,11 @@
           },
           {
             "key": "nodeSchemas",
-            "summary": "{ model-registry/1.0.0, glossary-ledger/1.0.0, http://json-schema.org/draft-07/schema# }"
+            "summary": "{ model-registry/1.0.0, http://json-schema.org/draft-07/schema# }"
           },
           {
             "key": "directories",
-            "summary": "6: skills, schemas, scenarios, processes, models, swimlane-glossary"
+            "summary": "5: skills, schemas, scenarios, processes, models"
           },
           {
             "key": "stickies",
