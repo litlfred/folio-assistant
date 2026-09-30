@@ -239,9 +239,27 @@ if (import.meta.main) {
   const args = process.argv.slice(2);
   const write = args.includes("--write");
   const positional = args.filter(a => !a.startsWith("--"));
-  const target = resolve(positional[0] || "");
-  if (!target || !existsSync(target)) {
+  // The ARGUMENT is tested before it is resolved, and that order is the fix —
+  // the same one `build-glossary.ts` took under bean `1oqu`, whose comment
+  // states the mechanism: `resolve("")` returns the CWD, which is truthy and
+  // exists, so `resolve(positional[0] || "")` made the guard below unreachable
+  // for the no-argument case. A bare `bun run folio-assistant-core/scripts/codemod-refterm.ts` fell through
+  // into `resolveChapters`, which threw `Manifest not found:
+  // <cwd>/<cwd-basename>.ts` and exited with a stack trace. The usage line
+  // never printed, and the exit code said "it broke" rather than "you did not
+  // tell me which paper" — the could-not-determine state this repository is
+  // otherwise careful about everywhere.
+  //
+  // Two scripts, one defect, fixed eight days apart: this pair moved together
+  // out of `cat-harness/content/pipeline/` (bean `yj6r`), and the move is what
+  // put them side by side for long enough to notice the second.
+  if (positional.length === 0) {
     console.error(`Usage: codemod-refterm.ts <paper-or-chapter-dir> [--write]`);
+    process.exit(2);
+  }
+  const target = resolve(positional[0]!);
+  if (!existsSync(target)) {
+    console.error(`Usage: codemod-refterm.ts <paper-or-chapter-dir> [--write]\n  no such directory: ${target}`);
     process.exit(2);
   }
 
