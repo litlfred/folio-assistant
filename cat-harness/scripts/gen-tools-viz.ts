@@ -184,10 +184,18 @@ function baseDocs(repo: string): string {
 const CSS = `
 .tg-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.72rem;
   font-weight:600;white-space:nowrap;border:1px solid currentColor;margin-right:.2rem}
-.tg-shell{color:#0d6e5e}
-.tg-mcp{color:#6b5b95}
-.tg-inproc{color:#1d5fa8}
-.tg-manual{color:#a8430f}
+/* Bean rtuo: these inks were chosen for a LIGHT page and measured 2.33-2.54:1
+   on this site's default dark one (#27262b), under the 4.5:1 text floor. The
+   dark inks are the default; the site's light scheme keeps the originals,
+   which clear 5.9:1 on white. Every ratio computed, not eyeballed. */
+.tg-shell{color:#5cd3bd}   /* 8.23:1 on #27262b */
+.tg-mcp{color:#b9a8ec}     /* 7.06:1 */
+.tg-inproc{color:#86b8f2}  /* 7.26:1 */
+.tg-manual{color:#f5a070}  /* 7.25:1 */
+:root[data-fa-scheme="light"] .tg-shell{color:#0d6e5e}
+:root[data-fa-scheme="light"] .tg-mcp{color:#6b5b95}
+:root[data-fa-scheme="light"] .tg-inproc{color:#1d5fa8}
+:root[data-fa-scheme="light"] .tg-manual{color:#a8430f}
 .tg-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
 .tg-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
 .tg-stat b{display:block;font-size:1.25rem;line-height:1.2}

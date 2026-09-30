@@ -188,9 +188,14 @@ const BADGE: Record<DeclState, string> = {
 const CSS = `
 .fg-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
   font-weight:600;white-space:nowrap;border:1px solid currentColor}
-.fg-ok{color:#0d6e5e}
-.fg-side{color:#6b5b95}
-.fg-gap{color:#a8430f}
+/* Bean rtuo: light-page inks measured 2.19-2.29:1 on the default dark page
+   (#27262b). Dark inks by default; the light scheme keeps the originals. */
+.fg-ok{color:#5cd3bd}    /* 8.23:1 on #27262b */
+.fg-side{color:#b9a8ec}  /* 7.06:1 */
+.fg-gap{color:#f5a070}   /* 7.25:1 */
+:root[data-fa-scheme="light"] .fg-ok{color:#0d6e5e}
+:root[data-fa-scheme="light"] .fg-side{color:#6b5b95}
+:root[data-fa-scheme="light"] .fg-gap{color:#a8430f}
 `;
 
 /** Escape a cell so a filename containing a pipe cannot break the table. */
