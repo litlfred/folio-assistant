@@ -15,7 +15,7 @@ consumer and silently damages the rest. Ask of every change: **does this
 name, assume, or default to one folio?**
 
 **Archived 2026-09-19** (bean `folio-assistant-4kiw`). Superseded by
-`skills/folio-core/placement.md` Step 1, which asks this entry's question
+`skills/kg/kg-core/placement.md` Step 1, which asks this entry's question
 verbatim — *"Does this name, assume, or default to one folio?"* — and adds
 what a reader could not get from here: the enumeration of what counts as
 naming one folio, and the three-destination table (platform / the folio's

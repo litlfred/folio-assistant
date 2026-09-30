@@ -21,7 +21,7 @@ Three stores here accumulate **by design**, so none is fixable by writing less:
 `fsh-guts` (the trashcan that is kept), the staging previews under
 `STAGING/<slug>/` on the publish branch, and a run's console log. Each has
 grown its own ad-hoc answer to "it is too big now". They want one contract, and
-the contract is written: [`skills/folio-core/flushable-containers.md`](../../cat-harness/skills/folio-core/flushable-containers.md).
+the contract is written: [`skills/kg/kg-core/flushable-containers.md`](../../cat-harness/skills/kg/kg-core/flushable-containers.md).
 
 The skill exists because the three differ in exactly the places a shared
 implementation would paper over:
@@ -260,7 +260,7 @@ closing delimiter and there is no escape for it. Same asymmetry
 
 ## Done when
 
-- [x] `skills/folio-core/flushable-containers.md` written and registered in
+- [x] `skills/kg/kg-core/flushable-containers.md` written and registered in
       `package-manifest.json`; `kg:audit:check` clean.
 - [x] Staging measured, liveness re-verified immediately before the act, the two
       genuine orphans identified with sizes and ages.

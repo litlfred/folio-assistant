@@ -441,7 +441,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/schemas/ig-chrome.ts", names: 6 },
   { file: "cat-harness/schemas/cat-harness.ts", names: 2 },
   { file: "cat-harness/skills/authoring-who-smart-guidelines/dak-postprocessing.md", names: 5 },
-  { file: "cat-harness/skills/folio-core/directory-conventions.md", names: 2 },
+  { file: "cat-harness/skills/kg/kg-core/directory-conventions.md", names: 2 },
   // declared-path-literal: a FINDING's location, recorded repo-root-relative because that is
   // what `analyse` reports. No declaration can answer where a finding is, and this one does not
   // resolve from THIS instance's root because the file is in another instance — which is the
@@ -451,7 +451,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/schemas/jsonld.ts", names: 2 },
   { file: "fhir-harness/AGENTS.md", names: 4 },
   { file: "cat-harness/skills/authoring-who-smart-guidelines/dak-preprocessing.md", names: 3 },
-  { file: "cat-harness/skills/folio-core/kg-export.md", names: 2 },
+  { file: "cat-harness/skills/kg/kg-core/kg-export.md", names: 2 },
   { file: "cat-harness/schemas/graph-kind-registry.ts", names: 2 },
   { file: "cat-harness/scripts/dak-pdf.ts", names: 2 },
   { file: "cat-harness/scripts/external-schemas.ts", names: 3 },

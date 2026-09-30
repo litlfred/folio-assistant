@@ -59,7 +59,7 @@ going to be wrong about half the corpus anyway.
 - [ ] both shapes tested from fixtures — a workbook AND a CSV
 - [ ] a consumer that walks `contains` is shown to handle both, rather than
       assumed to
-- [ ] the rule is in `skills/folio-core/tabular-metadata.md`, not only here
+- [ ] the rule is in `skills/library/library-core/tabular-metadata.md`, not only here
 - [ ] `p67i`'s manifest Done-when is met
 
 ## What still cannot be verified

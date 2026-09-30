@@ -37,7 +37,7 @@ cost lands on whoever opens the next PR.
   declarations via `kgDirectories`, never a hardcoded `skills/`.
 - `skills:docs` / `skills:docs:check` — `gen-skill-docs.ts` had no package script,
   which is the gap `check:ci-invocations` exists to report. Closed on the way past.
-- `skills/folio-core/skill-registration.md` — the discipline, registered by the
+- `skills/kg/kg-core/skill-registration.md` — the discipline, registered by the
   command it documents (267 → 268 skills).
 - `tests/register-skills.test.ts` — 19 tests, every finder falsified on a synthetic
   package, anti-vacuity floor on the real corpus.

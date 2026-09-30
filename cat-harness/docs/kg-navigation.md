@@ -7,7 +7,7 @@ lang: en
 
 # kg-navigation
 
-> The skill itself is [`skills/kg-navigation/kg-navigation.md`](../skills/kg-navigation/kg-navigation.md).
+> The skill itself is [`skills/kg/kg-navigation/kg-navigation.md`](../skills/kg/kg-navigation/kg-navigation.md).
 > This page was that package's README and AGENTS.md, moved here when it was
 > folded into cat-harness (bean `byql`): a skill package holds skills only.
 
@@ -28,7 +28,7 @@ is not:
 | where | precondition |
 |---|---|
 | [`bootstrap/skills/bootstrap-kg-navigation.md`](../../bootstrap/skills/bootstrap-kg-navigation.md) | **nothing installed** — no MCP server, no `skill_fetch`, no `beans`, no build |
-| [`kg-navigation.md`](../skills/kg-navigation/kg-navigation.md) | the tooling is reachable — the MCP pair, and the filesystem fallback |
+| [`kg-navigation.md`](../skills/kg/kg-navigation/kg-navigation.md) | the tooling is reachable — the MCP pair, and the filesystem fallback |
 
 The line counts that used to be in this table are gone: a count in prose is a
 claim nothing checks, and both had already drifted.
@@ -94,7 +94,7 @@ which is the exact failure this layer is about.
 | where | precondition |
 |---|---|
 | [`bootstrap/skills/bootstrap-kg-navigation.md`](../../bootstrap/skills/bootstrap-kg-navigation.md) | **nothing installed** — no MCP server, no `skill_fetch`, no `beans`, no build |
-| [`kg-navigation.md`](../skills/kg-navigation/kg-navigation.md) | the tooling is reachable — the MCP pair, and the filesystem fallback |
+| [`kg-navigation.md`](../skills/kg/kg-navigation/kg-navigation.md) | the tooling is reachable — the MCP pair, and the filesystem fallback |
 
 They answer the same question **under different preconditions**, so neither is
 a copy of the other and merging them would leave one caller unable to run what
