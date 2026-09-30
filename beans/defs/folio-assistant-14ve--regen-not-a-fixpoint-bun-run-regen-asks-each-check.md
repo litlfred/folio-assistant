@@ -24,3 +24,13 @@ Loop the ask-and-regenerate pass until one pass regenerates nothing, capped at a
 ## Done when
 - [ ] after a merge that leaves harness.json stale, one `bun run regen` leaves every check current
 - [ ] a unit test covers a two-step dependency: writer B's output is an input to check A, and A is asked first
+
+## Measured again, 2026-09-30 (PR #1530 merge of main)
+
+`bun run regen` reported `60 current, 2 regenerated (skill:register,
+readme:subgraphs), 0 unrepaired`, yet the next `bun run gates` failed
+`audit:coverage:require-all` and `audit:coverage:strict`: the committed
+`audit-coverage.qa-results.json` disagreed with the run. Running
+`bun run audit:coverage` once fixed both. Consistent with an ORDER
+dependence: audit-coverage was asked before the later writers changed the
+files it counts, so one pass is not a fixpoint.
