@@ -5,8 +5,8 @@
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
     "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
-    "cat-harness": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
-    "folio-assistant-core": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
+    "cat-harness": "https://litlfred.github.io/cat-harness/0.1.0/ns#",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#",
     "label": "rdfs:label",
     "prefLabel": "skos:prefLabel",
     "altLabel": "skos:altLabel",
@@ -27,19 +27,19 @@
       "@type": "@id"
     },
     "usage": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#hasLaneUsage",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#hasLaneUsage",
       "@type": "@id"
     },
     "ofConcept": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ofConcept",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#ofConcept",
       "@type": "@id"
     },
     "inProcess": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#inProcess",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#inProcess",
       "@type": "@id"
     },
-    "actedUpon": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actedUpon",
-    "performerVaries": "https://litlfred.github.io/folio-assistant/cat-harness/ns#performerVaries"
+    "actedUpon": "https://litlfred.github.io/cat-harness/0.1.0/ns#actedUpon",
+    "performerVaries": "https://litlfred.github.io/cat-harness/0.1.0/ns#performerVaries"
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap-glossary.jsonld",
   "@type": "skos:ConceptScheme",
@@ -64,7 +64,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#glossary-usage/Process_Discussion/Lane_BootstrappingAgent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "label": "Bootstrapping Agent",
@@ -73,7 +73,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_BootstrappingAgent",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "label": "Bootstrapping Agent",
@@ -94,7 +94,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_DataStore",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "label": "Knowledge Graph Data Store",
@@ -115,7 +115,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#glossary-usage/Process_Discussion/Lane_Requestor",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#role/requestor",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "label": "Requestor",
@@ -124,7 +124,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_Requestor",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#role/requestor",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "label": "Requestor",
@@ -145,7 +145,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#glossary-usage/Process_LogMessage/Lane_Logger",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#role/logger",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "label": "Logger",
@@ -165,7 +165,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#glossary-usage/Process_LogMessage/Lane_Actor",
-      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "label": "Actor",
