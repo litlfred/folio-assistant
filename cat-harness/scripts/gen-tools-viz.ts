@@ -213,14 +213,16 @@ function cell(v: string): string {
 /**
  * `skillPages` is the set of skills with a published instruction page
  * (`lib/skill-pages.ts`): a `satisfies` naming one is a link, anything else
- * stays code — bean `qgjh`. `fromPage` is where this page is published, so
- * the link is relative to it rather than assumed.
+ * stays code — bean `qgjh`. `fromPage` is where this page is published, as
+ * {@link pageRelPath} reads it from the declaration, so the link is relative
+ * to it rather than assumed. With no `skillPages` nothing is linked, so its
+ * default does not matter.
  */
 export function page(
   rows: readonly ToolRow[],
   known: ReadonlySet<string>,
   skillPages: ReadonlySet<string> = new Set(),
-  fromPage = "tools/index.md",
+  fromPage = "",
 ): string {
   const invoke = new Map<string, number>();
   const install = new Map<string, number>();
@@ -332,8 +334,12 @@ export function page(
 
 /** The page as committed: {@link page} plus the directories it draws (#1168 B7a-2). */
 export function publishedPage(rows: Parameters<typeof page>[0], known: Parameters<typeof page>[1], repo = REPO): string {
+  // With no declared page there is no base to link from: render codes, never
+  // guess a location.
+  const rel = pageRelPath(repo);
+  const skillPages = rel === undefined ? new Set<string>() : skillPagesOf(repo);
   return withRendersFrontMatter(
-    page(rows, known, skillPagesOf(repo), pageRelPath(repo) ?? "tools/index.md"),
+    page(rows, known, skillPages, rel ?? ""),
     handledDirectories(repo, join(repo, "cat-harness"), KIND),
     VIEWER_TOOL,
   );
