@@ -62,7 +62,9 @@
       "_comment": "THE ROOT INSTANCE'S OWN CARD. Owner, 2026-09-23: \"engineer for root\". A theme is reached THROUGH a sticky -- an instance contributes a card, the card names a theme, the theme names an imageRole, and the images carrying that role supply the art. So this exists for the navbar mark, and it also puts the root on the landing board; that is inherent to the mechanism rather than a side effect nobody chose. THE ART IS CAT-HARNESS'S, not this instance's: the root declares no images, and `landing-engineer` is declared one level down. That is the supplier-is-not-the-subject case `bootstrap` already relies on, and the reason theme art resolves against the site owner's image set as a fallback. ORDER 5, ahead of cat-harness's 10: this instance IS the repository, so it reads first. `STICKY_ORDER_LEADING` is 10 and `STICKY_ORDER_TRAILING` 90, so 5 sits outside the leading slot deliberately rather than tying with it -- an absent order is a tie with everything, and so is a duplicated one.",
       "id": "folio-assistant",
       "order": 5,
-      "theme": "engineer",
+      "theme": {
+        "themeId": "engineer"
+      },
       "summary": "The repository, acting as an initialized instance",
       "bodyFrom": "description"
     }

@@ -47,6 +47,7 @@ import {
   VoiceApplicabilitySchema,
   VoiceSupersessionSchema,
   VOICE_PROVENANCE,
+  VoiceTargetSchema,
 } from "./voices.ts";
 
 /**
@@ -224,7 +225,7 @@ export const VoiceSkillSchema = z
     overlaySeverity: z.enum(["critical", "major", "minor"]).optional(),
 
     // ── scoping, unchanged from VoiceProfileSchema ──────────────────────
-    appliesTo: z.array(z.string().min(1)).optional(),
+    appliesTo: z.array(VoiceTargetSchema).optional(),
     activeIn: VoiceApplicabilitySchema.optional(),
     extends: VoiceRefSchema.optional(),
     superseded: VoiceSupersessionSchema.optional(),

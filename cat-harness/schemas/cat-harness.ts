@@ -527,7 +527,7 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * for why it lives on the directory and why the methodologies take
    * `analyst`.
    */
-  theme?: string;
+  theme?: ThemeRef;
 }
 
 /** An instance's root declaration. */
@@ -978,8 +978,8 @@ export const VisualisationSchema = z.object({
    * nowhere — which is `reader-filter.ts`'s rule on another surface.
    */
   hidden: z.boolean().optional(),
-  /** The tile's theme. Absent means the directory's, then the instance's. */
-  theme: z.string().min(1).optional(),
+  /** The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's. */
+  theme: ThemeRefSchema.optional(),
   /**
    * WHICH GLYPH the tile wears, by NAME. Absent falls back to the generic
    * node-graph glyph every tile shared before this field existed.
@@ -1407,8 +1407,12 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * reader, and that reader is what the site build, the gates and every
    * consumer of a `harness.json` go through. An unknown theme is a rendering
    * finding, not a parse error.
+   *
+   * A `ThemeRef` since #1168 B8 (owner, 2026-09-30: *"migrate to ThemeRef"*):
+   * still open — the shape is `{instance?, themeId}`, not an enum — but a
+   * cross-instance theme now says whose theme it is.
    */
-  theme: z.string().min(1).optional(),
+  theme: ThemeRefSchema.optional(),
 });
 
 /** As {@link GraphNodeDirectorySchema}, for an instance's own directories. */
@@ -5249,3 +5253,4 @@ import "./folio-graph-kind.js";
 // Core's `glossary` kind, registered the same way and for the same reason
 // (issue: owner 2026-09-23, "put glossary into folio-assistant-core").
 import "./glossary-graph-kind.js";
+import { ThemeRefSchema, type ThemeRef } from "./theme";

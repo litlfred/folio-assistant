@@ -21,7 +21,7 @@ import { SubgraphCoverageSchema, visualisationsOf } from "../../schemas/cat-harn
 const dir = (id: string, coverage?: unknown, theme?: string): TiledDirectory => ({
   id,
   ...(coverage === undefined ? {} : { coverage: SubgraphCoverageSchema.parse(coverage) }),
-  ...(theme === undefined ? {} : { theme }),
+  ...(theme === undefined ? {} : { theme: { themeId: theme } }),
 });
 
 describe("a bare string still parses — the widening is additive", () => {
@@ -140,7 +140,7 @@ describe("visibility and theme default, and may be overridden", () => {
     // that states nothing is complete, and absent means the instance's.
     expect(graphTiles([dir("x", { visualiser: "a.html" }, "library")])[0]?.theme).toBe("library");
     expect(
-      graphTiles([dir("x", { visualiser: [{ ref: "a.html", theme: "own" }] }, "library")])[0]?.theme,
+      graphTiles([dir("x", { visualiser: [{ ref: "a.html", theme: { themeId: "own" } }] }, "library")])[0]?.theme,
     ).toBe("own");
     expect(graphTiles([dir("x", { visualiser: "a.html" })])[0]?.theme).toBeUndefined();
   });

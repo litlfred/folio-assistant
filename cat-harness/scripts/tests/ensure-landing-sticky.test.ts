@@ -47,20 +47,20 @@ const DECL = `{
     {
       "id": "landing",
       "order": 10,
-      "theme": "engineer",
+      "theme": { "themeId": "engineer" },
       "bodyFrom": "description",
       "onboardingLinks": true
     },
     {
       "id": "cat-harness",
       "order": 20,
-      "theme": "grumpy-cat",
+      "theme": { "themeId": "grumpy-cat" },
       "body": "a cat"
     },
     {
       "id": "subgraphs",
       "order": 30,
-      "theme": "engineer",
+      "theme": { "themeId": "engineer" },
       "body": "the graphs"
     }
   ],
@@ -305,7 +305,7 @@ describe("a nested instance contributes its own stickies", () => {
           name: "outer",
           description: "the outer layer",
           stickies: [
-            { id: "landing", order: 10, theme: "engineer", bodyFrom: "description" },
+            { id: "landing", order: 10, theme: { themeId: "engineer" }, bodyFrom: "description" },
           ],
           // Mirrors the live shape rather than a convenient one: the declared
           // entry is the nested instance's GRAPH directory, one level inside it,
@@ -324,7 +324,7 @@ describe("a nested instance contributes its own stickies", () => {
           name: "inner",
           description: "the inner layer",
           stickies: [
-            { id: "inner-card", order: 90, theme: "pale-sage", bodyFrom: "description" },
+            { id: "inner-card", order: 90, theme: { themeId: "pale-sage" }, bodyFrom: "description" },
           ],
           directories: [],
         },
@@ -421,8 +421,8 @@ describe("a sticky is an initiation RECEIPT", () => {
           name: "a-folio",
           description: "one line",
           stickies: [
-            { id: "landing", order: 10, theme: "engineer", bodyFrom: "description" },
-            { id: "other", order: 20, theme: "engineer", body: "another card" },
+            { id: "landing", order: 10, theme: { themeId: "engineer" }, bodyFrom: "description" },
+            { id: "other", order: 20, theme: { themeId: "engineer" }, body: "another card" },
           ],
           directories: [],
         },

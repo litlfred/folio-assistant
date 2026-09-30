@@ -168,7 +168,7 @@ function demoSticky(
 export function wornBy(root: string): Map<string, string[]> {
   const out = new Map<string, string[]>();
   for (const d of declaredContributions(root)) {
-    const t = d.contribution.theme;
+    const t = d.contribution.theme.themeId;
     out.set(t, [...(out.get(t) ?? []), d.contribution.id]);
   }
   return out;

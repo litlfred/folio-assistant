@@ -11017,7 +11017,7 @@ VisualisationSchema.surfaces <span class="fa-gloss-status">candidate, extracted<
 VisualisationSchema.theme <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The tile's theme. Absent means the directory's, then the instance's.</p>
+<p>The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#VisualisationSchema.theme</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.visualisationschema.title" data-fa-state="extracted" data-fa-gloss="">
@@ -11234,7 +11234,7 @@ VoiceProfileSchema.activeIn <span class="fa-gloss-status">candidate, extracted</
 VoiceProfileSchema.appliesTo <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Block kinds this voice audits. Absent means every kind the folio has.</p>
+<p>What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceProfileSchema.appliesTo</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voiceprofileschema.extends" data-fa-state="extracted" data-fa-gloss="">

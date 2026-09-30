@@ -6732,7 +6732,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The tile's theme. Absent means the directory's, then the instance's."
+          "@value": "The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.theme",
@@ -26701,7 +26701,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Block kinds this voice audits. Absent means every kind the folio has."
+          "@value": "What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceProfileSchema.appliesTo",

@@ -164,7 +164,13 @@ export function readFolioGraph(roots: string[], repo?: string): FolioGraph | nul
         g.nodes.push({
           id: String(raw.id ?? basename(name, ".json")),
           summary: String(raw.summary ?? ""),
-          theme: raw.theme == null ? null : String(raw.theme),
+          // A ThemeRef `{instance?, themeId}` since #1168 B8; the page shows the id.
+          theme:
+            raw.theme == null
+              ? null
+              : typeof raw.theme === "object"
+                ? String((raw.theme as { themeId?: unknown }).themeId ?? "")
+                : String(raw.theme),
           anchor: anchor?.kind ? `${anchor.kind}:${anchor.page ?? ""}` : null,
           declaredIn: raw.declaredIn == null ? null : String(raw.declaredIn),
           links: Array.isArray(raw.links)

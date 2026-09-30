@@ -2479,7 +2479,7 @@
     {
       "id": "cat-harness.visualisationschema.theme",
       "prefLabel": "VisualisationSchema.theme",
-      "definition": "The tile's theme. Absent means the directory's, then the instance's.",
+      "definition": "The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's.",
       "source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.theme",
       "status": "candidate"
     },
@@ -9836,7 +9836,7 @@
     {
       "id": "voices.voiceprofileschema.appliesto",
       "prefLabel": "VoiceProfileSchema.appliesTo",
-      "definition": "Block kinds this voice audits. Absent means every kind the folio has.",
+      "definition": "What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has.",
       "source": "cat-harness/schemas/voices.ts#VoiceProfileSchema.appliesTo",
       "status": "candidate"
     },

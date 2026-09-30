@@ -91,6 +91,7 @@ import {
   type Initiation,
   type StickyLink,
 } from "./sticky-contribution.js";
+import { ThemeRefSchema } from "./theme.js";
 
 /**
  * The link shape, and the external-link test, **re-exported**.
@@ -142,7 +143,7 @@ export const LandingStickySchema = CarriedNoteSchema.extend({
    * set, which a note cannot see. Resolution happens at render time, where a
    * missing theme degrades rather than failing the page.
    */
-  theme: z.string().regex(/^[a-z][a-z0-9-]*$/, "a theme id is lowercase kebab-case"),
+  theme: ThemeRefSchema,
   /**
    * The links this sticky offers, in the order a reader should meet them.
    *

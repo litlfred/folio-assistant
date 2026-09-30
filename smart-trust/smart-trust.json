@@ -74,7 +74,9 @@
       "_comment": "THE INSTANCE'S OWN CARD, and the reason it exists is the navbar rather than the landing board. Owner, 2026-09-22: \"now do smart-trust and folio-assistant-core avatars\", then \"operations\" chosen from three cards that already carry a measured avatarRegion. A THEME IS REACHED THROUGH A STICKY -- an instance contributes a card, the card names a theme, the theme names an imageRole, and the instance's images (or its supplier's) carry that role per layout. So a harness cannot have a theme avatar without contributing a card, and THIS CARD THEREFORE ALSO APPEARS ON THE LANDING BOARD. That is a visible consequence of asking for an avatar and is stated here rather than discovered: every other instance with an avatar has a landing card for the same reason. `bodyFrom: description` so the words are read from this declaration's own `description` and cannot drift from it.",
       "id": "smart-trust",
       "order": 30,
-      "theme": "operations",
+      "theme": {
+        "themeId": "operations"
+      },
       "summary": "A published IG, read back as a graph",
       "bodyFrom": "description"
     }

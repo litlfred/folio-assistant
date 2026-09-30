@@ -3,8 +3,9 @@
 title: 'B8 (#1168): string-to-reference sweep — typed refs on ~25 bare-string fields; delete SkillDefinition.roles and front-matter package:'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-23T21:12:05Z
-updated_at: 2026-09-29T23:45:53Z
+updated_at: 2026-09-30T08:06:07Z
 parent: folio-assistant-tr05
 ---
 
@@ -14,3 +15,11 @@ Mechanical sweep from the string-to-reference analysis (#1168 comment 5803006038
 - every listed field uses its typed helper and a check resolves it
 - kg-export emits links, not literals, for actor roles and role skills
 - SkillDefinition.roles and front-matter package: are gone
+
+
+
+## Owner decisions, 2026-09-30 (the four B8 blockers)
+1. Skill refs: accept `name` and `package/name`; a check resolves each and fails on an ambiguous bare name.
+2. Process identity: the BPMN element id; typed element-id helper checked against loaded diagrams.
+3. Themes: migrate the 18 string values to ThemeRef {instance?, themeId}.
+4. Voice appliesTo: union of block kinds and declared artefact kinds.
