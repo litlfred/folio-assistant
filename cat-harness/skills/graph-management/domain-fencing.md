@@ -5,7 +5,6 @@ description: >-
   the opt-in axis mechanism, the one criterion that should use it and does not,
   and the test for whether a rule generalizes at all.
 capability: architecture
-package: graph-management
 ---
 
 # Domain fencing — keeping one folio's rules out of everybody's platform
