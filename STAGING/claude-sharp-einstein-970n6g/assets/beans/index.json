@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 512,
+      "count": 513,
       "unit": "beans"
     }
   },
@@ -489,14 +489,14 @@
     {
       "id": "folio-assistant-2c2b",
       "title": "CI WATCH IS TWO-STATE: cancelled read as failure and reported a green main red — bun run ci:watch, three states with undetermined never collapsing",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T14:56:30Z",
-      "updatedAt": "2026-09-30T14:56:30Z",
+      "updatedAt": "2026-09-30T19:42:58Z",
       "preview": "Issue #1624. Owner asked for this as a repo tool rather than session-local\nscratch tooling, 2026-09-30.\n\n## The defect, measured\n\nAn agent's CI poll folded `cancelled` into the failure set and reported **`main`\nred** on `3d2c7fbe869`, whose every hard gate had passed:\n\n```\nsuccess   Repository gates (hard)\nsuccess   TypeScript — tests, lint, types (hard)\nsuccess   End-to-end + accessibility (hard)",
       "file": "beans/defs/folio-assistant-2c2b--ci-watch-is-two-state-cancelled-read-as-failure-an.md"
     },
@@ -804,7 +804,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:04:38Z",
-      "updatedAt": "2026-09-30T19:12:25Z",
+      "updatedAt": "2026-09-30T19:12:28Z",
       "preview": "## The ruling, owner 2026-09-30\n\nAsked *\"KGraph needs better name? CatHarness? … what is bootstrap's? consistent? why not just CatHarness? why need graph?\"*, then chose **\"Drop per-kind classes\"** over renaming.\n\n## Why (measured 2026-09-30)\n\n- bootstrap has no class per kind: a kind is a word (`skills`, `processes`) and one `bootstrap:GraphKind` individual, `bootstrap:graphKind/<kind>`; a declare",
       "file": "beans/defs/folio-assistant-3r47--drop-the-per-kind-graph-classes-kgraph-skillgraph.md"
     },
@@ -1093,12 +1093,12 @@
       "title": "A CONFLICTED PR CREATES NO pull_request RUN, and g62s's headUnjudged cannot see it — the one absent-run case that needs no glob evaluation",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T14:07:18Z",
-      "updatedAt": "2026-09-30T18:23:03Z",
+      "updatedAt": "2026-09-30T18:25:48Z",
       "preview": "## The incident, measured\n\nPR #1589, 2026-09-30. `Repository gates (hard)` failed on `86e403cdfdd`. I\nfixed the cause (`readme:subgraphs`, two stale directory READMEs), pushed twice,\nand **no `Code-quality gates` run was ever created for either new head.** The\nPR went on showing a red from a superseded commit.\n\nThe cause was not the queue and not a path filter. The PR was\n**`mergeable_state: \"dirt",
       "file": "beans/defs/folio-assistant-52cz--a-conflicted-pr-creates-no-pull-request-run-and-g6.md"
     },
@@ -1905,7 +1905,7 @@
     {
       "id": "folio-assistant-8zsb",
       "title": "bun test reads the CHECKOUT PATH: 2 tests fail in any worktree not named folio-assistant",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
@@ -4543,7 +4543,7 @@
     {
       "id": "folio-assistant-oi1y",
       "title": "STANDALONE PAGES JEKYLL COPIES THROUGH HAVE NO NAVIGATION: 33 published pages (23 wireframes + 10 bootstrap) carry no rail and no way out",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -5317,14 +5317,14 @@
     {
       "id": "folio-assistant-s4sp",
       "title": "B: data model — Role.voice out, Voice->Role, lanes carry role ref, typed refs, skill input/output schema refs, test conformance",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:53:34Z",
-      "updatedAt": "2026-09-23T20:12:11Z",
+      "updatedAt": "2026-09-30T19:38:35Z",
       "preview": "See #1168 plan B. Migrates cat-harness roles and voices; changes audit criteria role-declares-voice and role-has-use-cases.\n\nOwner, 2026-09-23: \"you'll need to fix tools\". Tools are in scope for B: a Tool's io ports reference the skill's input/output schemas (typed KG refs, not t(\"Text\")), and check-tools checks port TYPES against the skill contract, not only names (today contractRequires compares",
       "file": "beans/defs/folio-assistant-s4sp--b-data-model-rolevoice-out-voice-role-lanes-carry.md"
     },
@@ -5387,7 +5387,7 @@
     {
       "id": "folio-assistant-sjic",
       "title": "ONE NAVBAR FOR EVERY FOLIO: combine the folio-assistant sidebar and the who-iris rail into a single component — fixed top, scrollable KG stack, fixed bottom",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
@@ -5595,6 +5595,20 @@
       "updatedAt": "2026-09-29T20:52:41Z",
       "preview": "Measured 2026-09-26. `main` is RED on `translation-drift`, independently of\nanything else, and it is the SECOND of two unrelated breakages on `main` this\nmorning.\n\n## The failure, and that it is `main`'s\n\n```\n(fail) the real corpus — and the gate can actually fail > no NEW drift, and\n       nothing unreadable\nExpected 0, Received 27\n   error ar/accessibility: published with no `.po` catalogue and ",
       "file": "beans/defs/folio-assistant-tbdg--main-is-red-on-translation-drift-1374-published-27.md"
+    },
+    {
+      "id": "folio-assistant-tbdl",
+      "title": "Jekyll pages' navbar shows no open-document index — only the injected rail supplies documentIndex",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-yj32",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T11:23:09Z",
+      "updatedAt": "2026-09-30T11:23:09Z",
+      "preview": "Found closing `sjic`, 2026-09-29/30, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq.\n\nThe owner's spec (in `sjic`): *\"when a document or other indexed object is opened, the document index/idices are shown in a navbar tab/menu.\"*\n\n## Measured\n\n- `NavbarModel.documentIndex` has ONE supplier: `harness-rail.ts:118`, which calls `documentIndexOf(html)` on a finished page. So mounted an",
+      "file": "beans/defs/folio-assistant-tbdl--jekyll-pages-navbar-shows-no-open-document-index-o.md"
     },
     {
       "id": "folio-assistant-tc95",

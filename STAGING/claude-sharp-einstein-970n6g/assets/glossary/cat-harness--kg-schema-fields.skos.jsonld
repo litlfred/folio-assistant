@@ -13371,6 +13371,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.layer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.layer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whose namespace the kind is named in, when it is not the harness's: `core` for the folio's own furniture (`voices`, `library`, `todos`, …). A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_KINDS`). The kind IS its individual, `<ns>graphKind/<name>` ({@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphKind` individual, and the harness now does the same."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.layer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.nodeschemas",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -13444,25 +13463,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.type",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "GraphKindDef.type"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The `@type` IRI this kind projects to."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.type",
       "skos:note": "candidate"
     },
     {
@@ -14907,6 +14907,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/instance-repositories.instancerepository.namespace",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "InstanceRepository.namespace"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The vocabulary namespace its terms are minted under — {@link instanceNamespace}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.namespace",
       "skos:note": "candidate"
     },
     {

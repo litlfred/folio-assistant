@@ -655,7 +655,7 @@
    * real bug. This is per-viewer and per-browser, in localStorage, and it never
    * reaches an agent — a reader who is not the author picking large type must
    * not silently reconfigure how an agent talks to the author. The agent-facing
-   * record is the committed file; see skills/folio-core/interaction-modality.md.
+   * record is the committed file; see skills/conduct/conduct-core/interaction-modality.md.
    *
    * Every read and write is wrapped: localStorage throws in a private window
    * with site data blocked, and the panel must still work when it does.
