@@ -1,11 +1,11 @@
 ---
 # folio-assistant-eowd
 title: 'REGEN CANNOT REPAIR translate-bpmn:check: its derived writer ''translate-bpmn'' needs --extract, so regen reports a stale template as ''a real defect'''
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-30T09:25:14Z
-updated_at: 2026-09-30T10:05:44Z
+updated_at: 2026-09-30T10:10:12Z
 parent: folio-assistant-1xhc
 ---
 
@@ -23,3 +23,9 @@ Same class as 14ve: regen's verdict ('a real defect') is wrong about a plain sta
 
 
 *2026-09-30, same day* — a SECOND check regen does not repair: audit:coverage:strict / audit:coverage:require-all. After a regen that reported '65 current, 0 regenerated', audit:coverage:strict still failed ('the committed sidecar … disagrees with this run'); 'bun run audit:coverage' fixed it at once. Its writer is not derivable by dropping ':strict' / ':require-all', so regen never runs it. Seen three times in this session. The Done-when test should cover every check whose writer is not '<check minus :check>'.
+
+
+## Summary of changes (2026-09-30)
+- regen-after-merge.ts: WRITER_OVERRIDES — the declared exceptions to '<check minus :check>': translate-bpmn:check → translate-bpmn:extract (new package.json script, '--extract'), audit:coverage:strict and audit:coverage:require-all → audit:coverage. writerFor consults it first and still refuses a writer package.json does not have (a renamed writer is 'no-writer', never a guess); repairableGates admits the two non-':check' gates.
+- [x] regen repairs translate-bpmn:check — verified end to end: a deliberately staled fr/document-ingestion.pot came back '✓ translate-bpmn:check was stale — regenerated with bun run translate-bpmn:extract', differing from the committed file only in POT-Creation-Date (which the check ignores); restored.
+- [x] a test pins it — regen-after-merge.test.ts: each override maps to a writer that exists, translate-bpmn:extract carries --extract, and the audit-coverage gates are offered with audit:coverage as writer. Not done: running every writer against a fresh stale fixture (the second Done-when as literally written) — the override table makes each exception a declared, tested line instead.
