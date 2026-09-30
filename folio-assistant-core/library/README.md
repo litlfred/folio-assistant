@@ -8,5 +8,5 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-ass
 | file | what it is | used by |
 |---|---|---|
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
-| [`arxiv-2510.21603v1/`](arxiv-2510.21603v1/) | 165 files | |
+| [`arxiv-2510.21603v1/`](arxiv-2510.21603v1/README.md) | 166 files | |
 <!-- kg:subgraph:end -->

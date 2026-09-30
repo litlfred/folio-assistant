@@ -35,6 +35,7 @@ import type { Block, Chapter, Section, RenderOptions } from "../../schemas/types
 import { isCrossPaperRef, leanStatusBucket } from "../../schemas/types";
 import { parseLeanRef } from "../../schemas/lean-packages";
 import { parseMdCached } from "./markdown-ast";
+import { resolveLiquidValues } from "./liquid-values";
 import { extractCitations } from "./citations";
 import {
   renderValue,
@@ -371,7 +372,9 @@ function terminateRunInHeadings(latex: string): string {
 }
 
 export function markdownToLatex(md: string): string {
-  const tree = parseMdCached(md);
+  // Liquid value references resolve BEFORE parsing, the same way for every
+  // target (`liquid-values.ts`, bean kott): the PDF and the site print one number.
+  const tree = parseMdCached(resolveLiquidValues(md));
   return terminateRunInHeadings(renderMdastNode(tree).trim());
 }
 
@@ -381,7 +384,7 @@ export function markdownToLatex(md: string): string {
  * lists, prose, and formatting are skipped.
  */
 export function extractMathContent(md: string): string {
-  const tree = parseMdCached(md);
+  const tree = parseMdCached(resolveLiquidValues(md));
   const parts: string[] = [];
 
   for (const child of tree.children) {

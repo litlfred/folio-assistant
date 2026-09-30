@@ -156,3 +156,29 @@ describe("the committed projection is MACHINE-INDEPENDENT", () => {
     expect(a.nodes.every((n) => n.file.includes("cat-harness/folio/"))).toBe(true);
   });
 });
+
+/**
+ * Bean `qgjh`: a node's links are links. The page's own link resolver, run as
+ * the page runs it: absolute http(s) passes, a site-rooted href is resolved
+ * against the site root found from the data href, anything else is text.
+ */
+describe("node links resolve on the page (qgjh)", () => {
+  const html = viewerHtml("../../assets/folio/index.json");
+  const script = html.match(/<script>([\s\S]*?)<\/script>/g)!.map((s) => s.replace(/<\/?script>/g, "")).join("\n");
+  const start = script.indexOf("var SITE_ROOT");
+  const end = script.indexOf("\n}\n", script.indexOf("function linkHref")) + 3;
+  const linkHref = new Function(
+    `var DATA_HREF = "../../assets/folio/index.json";\n${script.slice(start, end)}\nreturn linkHref;`,
+  )() as (h: string) => string;
+
+  test("an absolute http(s) link is used as it is", () => {
+    expect(linkHref("https://github.com/x")).toBe("https://github.com/x");
+  });
+  test("a site-rooted link resolves against the site root", () => {
+    expect(linkHref("/agentic-harness.html")).toBe("../../agentic-harness.html");
+  });
+  test("a protocol-relative or unknown href stays text", () => {
+    expect(linkHref("//evil.example/x")).toBe("");
+    expect(linkHref("javascript:alert(1)")).toBe("");
+  });
+});
