@@ -196,8 +196,8 @@ describe("bootstrap has its OWN cat, not cat-harness's", () => {
   test("its theme resolves to its OWN art, not the default cloud's", () => {
     const images = decl("cat-harness").images ?? [];
     for (const b of BOOT) {
-      const theme = THEMES.find((t) => t.id === b.contribution.theme);
-      expect(theme, `no theme "${b.contribution.theme}"`).toBeDefined();
+      const theme = THEMES.find((t) => t.id === b.contribution.theme.themeId);
+      expect(theme, `no theme "${b.contribution.theme.themeId}"`).toBeDefined();
       const resolved = resolveThemeBackdrop(theme!, images);
       expect(resolved.none).toBe(false);
       expect(resolved.art.size).toBe(3);
@@ -219,7 +219,7 @@ describe("bootstrap has its OWN cat, not cat-harness's", () => {
     // incomplete backdrop WHOLESALE, so "resolved 3 layouts" is the only state
     // that renders art at all.
     const images = decl("cat-harness").images ?? [];
-    const used = new Set(ALL.map((c) => c.contribution.theme));
+    const used = new Set(ALL.map((c) => c.contribution.theme.themeId));
     for (const id of used) {
       const theme = THEMES.find((t) => t.id === id)!;
       if (!theme.backdrop) continue;
@@ -247,7 +247,7 @@ describe("order is DECLARED, not inherited from dependency resolution", () => {
 
   test("a tie breaks on layer then id, so the board is never read-order dependent", () => {
     const tie = (declaredBy: string, id: string): DeclaredContribution => ({
-      contribution: StickyContributionSchema.parse({ id, order: 50, theme: "pale-sage", body: "w" }),
+      contribution: StickyContributionSchema.parse({ id, order: 50, theme: { themeId: "pale-sage" }, body: "w" }),
       declaredBy,
       declaredIn: `${declaredBy}/harness.json`,
     });
@@ -273,7 +273,7 @@ describe("two layers cannot claim one sticky id", () => {
       contribution: StickyContributionSchema.parse({
         id: "landing",
         order: 1,
-        theme: "pale-sage",
+        theme: { themeId: "pale-sage" },
         body: "w",
       }),
       declaredBy,
@@ -287,7 +287,7 @@ describe("two layers cannot claim one sticky id", () => {
       contribution: StickyContributionSchema.parse({
         id: "landing",
         order: 1,
-        theme: "pale-sage",
+        theme: { themeId: "pale-sage" },
         body: "w",
       }),
       declaredBy,
@@ -313,7 +313,7 @@ describe("`body` and `bodyFrom` are exclusive — both is a contradiction, neith
       StickyContributionSchema.parse({
         id: "x",
         order: 1,
-        theme: "pale-sage",
+        theme: { themeId: "pale-sage" },
         body: "w",
         bodyFrom: "description",
       }),
@@ -322,7 +322,7 @@ describe("`body` and `bodyFrom` are exclusive — both is a contradiction, neith
 
   test("neither is refused", () => {
     expect(() =>
-      StickyContributionSchema.parse({ id: "x", order: 1, theme: "pale-sage" }),
+      StickyContributionSchema.parse({ id: "x", order: 1, theme: { themeId: "pale-sage" } }),
     ).toThrow();
   });
 
@@ -331,7 +331,7 @@ describe("`body` and `bodyFrom` are exclusive — both is a contradiction, neith
       StickyContributionSchema.parse({
         id: "x",
         order: 1,
-        theme: "pale-sage",
+        theme: { themeId: "pale-sage" },
         body: "w",
         onboardingLink: true,
       }),
@@ -376,7 +376,7 @@ describe("`bodyFrom: description` reads the DECLARING layer's description", () =
         contribution: StickyContributionSchema.parse({
           id: "x",
           order: 1,
-          theme: "pale-sage",
+          theme: { themeId: "pale-sage" },
           bodyFrom: "description",
         }),
         declaredBy: "some-instance",
@@ -393,7 +393,7 @@ describe("`bodyFrom: description` reads the DECLARING layer's description", () =
         contribution: StickyContributionSchema.parse({
           id: "x",
           order: 1,
-          theme: "pale-sage",
+          theme: { themeId: "pale-sage" },
           bodyFrom: "description",
         }),
         declaredBy: "some-instance",
@@ -667,7 +667,7 @@ describe("the cat's introduction keeps the owner's own words", () => {
     // `grumpy-cyborg-agents` since 2026-09-24 — the same hoodie, on a sled pulled by robot
     // cats: "use this for the cat-harness theme, the current plain grump cat
     // them it is using should be for folio-assisnt-core".
-    const themes = new Set(CAT.map((c) => c.contribution.theme));
+    const themes = new Set(CAT.map((c) => c.contribution.theme.themeId));
     expect([...themes]).toEqual(["grumpy-cyborg-agents"]);
   });
 
