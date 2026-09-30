@@ -8,7 +8,7 @@
     "kind": "graph",
     "id": "subgraph-readmes"
   },
-  "updated_at": "2026-09-30T15:38:31.966Z",
+  "updated_at": "2026-09-30T21:15:13.300Z",
   "families": {
     "absent-directory": {
       "summary": "Declared directories not on disk and not declared `absent`: a consumer scanning them finds nothing and may report a clean run.",
@@ -403,12 +403,17 @@
     },
     "no-description": {
       "summary": "Declared directories with no `description`: their README says so instead of saying what they hold.",
-      "count": 2,
+      "count": 3,
       "entries": [
         {
           "instance": "bootstrap",
           "directory": "skills",
           "path": "bootstrap/skills"
+        },
+        {
+          "instance": "smart-trust",
+          "directory": "smart-trust-themes",
+          "path": "smart-trust/themes"
         },
         {
           "instance": "who-iris",
@@ -419,7 +424,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 96,
+      "count": 97,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -852,6 +857,11 @@
           "path": "smart-trust/test/results"
         },
         {
+          "instance": "smart-trust",
+          "directory": "smart-trust-themes",
+          "path": "smart-trust/themes"
+        },
+        {
           "instance": "who-iris",
           "directory": "who-iris-site",
           "path": "who-iris/site"
@@ -925,5 +935,5 @@
       "entries": []
     }
   },
-  "total": 176
+  "total": 178
 }
