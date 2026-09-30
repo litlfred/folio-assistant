@@ -201,6 +201,7 @@ asserted is only that building 2 first buys a green light over an empty set.
 3. [ ] `bean-coordination` records the convention, INCLUDING the declared
        marker 2 will read.
 
+_2026-09-30T23:08:28Z_ — Claimed by claude/cool-fermi-htir5p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ## 2026-09-30 — done-when 3 DONE; done-when 2 stays with the owner
 
