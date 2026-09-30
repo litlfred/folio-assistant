@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 458,
+      "count": 465,
       "unit": "beans"
     }
   },
@@ -457,6 +457,20 @@
       "updatedAt": "2026-09-30T10:16:57Z",
       "preview": "## What\n\n`mount-instance-docs.ts` mounts a directory when it carries an `index.html`\n**at its own root**, and then copies **everything beneath it**. For\n`who-iris/library/` that is 1,378 files, of which 11 are pages:\n\n| | count | what |\n|---|---|---|\n| pages | 11 | 7 `.html` (index, community-list, 2 collections, 3 items), 3 cover `.png`, `image-verdicts.json` |\n| L1 corpus | 1,367 | 813 `.jsonld`",
       "file": "beans/defs/folio-assistant-2b5s--mount-copies-a-directory-wholesale-who-iris-publis.md"
+    },
+    {
+      "id": "folio-assistant-2e39",
+      "title": "B9b (#1168): a BPMN lane is its own node; performedBy points at the registry role",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T10:54:25Z",
+      "preview": "Owner, 2026-09-30: Lane node. kg-export mints role/<lane name> per lane, so one role can get two nodes or merge by accident. Emit process/<p>/lane/<id> (type Lane) with bindsRole; performedBy goes to role/<roleRef>.\n\n## Done when\n- [ ] lanes exported as Lane nodes, not Role nodes\n- [ ] performedBy resolves to registry Role nodes, 0 dangling",
+      "file": "beans/defs/folio-assistant-2e39--b9b-1168-a-bpmn-lane-is-its-own-node-performedby-p.md"
     },
     {
       "id": "folio-assistant-2j09",
@@ -1215,6 +1229,20 @@
       "file": "beans/defs/folio-assistant-6brk--flake-check-declaration-filenames-corpus-scan-runs.md"
     },
     {
+      "id": "folio-assistant-6dvy",
+      "title": "Witnessed values (:val): prose bug, just-the-docs substitution, namespacing by source",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:08:52Z",
+      "updatedAt": "2026-09-30T10:08:52Z",
+      "preview": "Owner 2026-09-30: fix the platform; first analyze consistency with the just-the-docs pipeline, and how to namespace values by source (paper, dataset e.g. CODATA with provenance via ingestion, FHIR IG metadata).\n\n## Done when\n- [x] prose :val resolves names with underscores (render-latex), tested and calibrated\n- [x] consistency analysis across PDF / just-the-docs / blueprint / FHIR IG, recorded (b",
+      "file": "beans/defs/folio-assistant-6dvy--witnessed-values-val-prose-bug-just-the-docs-subst.md"
+    },
+    {
       "id": "folio-assistant-6h47",
       "title": "RENDER STAGE 3: the dynamic-state export has a position but no filename — the owner left it open on purpose",
       "status": "todo",
@@ -1275,14 +1303,14 @@
     {
       "id": "folio-assistant-6pfo",
       "title": "Staging previews on gh-pages carry metadata that exists only at runtime — publish it as a KG graph",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-19T12:28:52Z",
-      "updatedAt": "2026-09-29T21:43:13Z",
+      "updatedAt": "2026-09-30T11:16:57Z",
       "preview": "Owner, 2026-09-19: *\"metadata on ghpages staging should be avalabale in KG\"*.\n\nQueued, not started — raised mid-turn while the preview cleanup was running,\nand the standing instruction is to queue rather than pivot.\n\n## The ask, as I read it\n\nEvery staging preview under `STAGING/<slug>` on `gh-pages` has facts attached\nto it: which branch it was built from, which commit, which pull request and\niss",
       "file": "beans/defs/folio-assistant-6pfo--staging-previews-on-gh-pages-carry-metadata-that-e.md"
     },
@@ -2111,6 +2139,20 @@
       "updatedAt": "2026-09-20T21:55:00Z",
       "preview": "## The register — the shapes have NAMES, not numbers\n\n*2026-09-20T23:1xZ, on the owner's instruction (\"2 resolve\").*\n\nThe ordinals collided: this bean numbered **shapes** in discovery order, while\n`7iog` called itself \"a fourth class beyond `b963`'s three\" — numbering\nsomething else entirely, the **readers** `check:command-paths` had at the\ntime. Two incompatible schemes, one word. And by the time",
       "file": "beans/defs/folio-assistant-b963--cold-start-the-entry-documents-named-scripts-for-t.md"
+    },
+    {
+      "id": "folio-assistant-bamf",
+      "title": "fhir-harness declares and populates FHIR IG Jekyll data (site.data.fhir.*) for the just-the-docs pipeline",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:16:18Z",
+      "updatedAt": "2026-09-30T10:16:18Z",
+      "preview": "Owner 2026-09-30: IG pages use Liquid site.data.fhir.* (IG Publisher convention, e.g. {{site.data.fhir.ig.version}}). Those should be available in the just-the-docs pipeline, with fhir-harness RESPONSIBLE for declaring and populating the FHIR metadata Jekyll data.\n\n## Measured 2026-09-30 (issue #1564 analysis)\n- Nothing in folio-assistant resolves site.data.fhir.*: only the IG Publisher does. dak-",
+      "file": "beans/defs/folio-assistant-bamf--fhir-harness-declares-and-populates-fhir-ig-jekyll.md"
     },
     {
       "id": "folio-assistant-bf5l",
@@ -3461,6 +3503,20 @@
       "file": "beans/defs/folio-assistant-kn0t--phased-transition-ig-publisher-reduced-to-ast-qa-i.md"
     },
     {
+      "id": "folio-assistant-kott",
+      "title": "Harness-namespaced values: one dotted key <harness>.<subgraph...>.<name> for :val AND site.data",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:16:19Z",
+      "updatedAt": "2026-09-30T10:16:19Z",
+      "preview": "Owner 2026-09-30: 'can we do something like bootstrap.blah, cat-harness.blah.blah, etc...?' Extends the 12s9 ruling (prefix = the DECLARING Subgraph's path joined with dots) from BPMN/schema prefixes to VALUES, and supersedes the prefix:name proposal on #1564.\n\n## The design\n- One key per value: <harness>.<subgraph...>.<name>, e.g. cat-harness.build.version, fhir-harness.<ig>.ig.version, qou.compu",
+      "file": "beans/defs/folio-assistant-kott--harness-namespaced-values-one-dotted-key-harnesssu.md"
+    },
+    {
       "id": "folio-assistant-kpcl",
       "title": "STREAM 4/4: trust the instruments — the stale-claim sweep, CI that does not fire, and the QA record (1xhc + 1swy + ahvw, 43 open beans)",
       "status": "todo",
@@ -4207,14 +4263,14 @@
     {
       "id": "folio-assistant-p11x",
       "title": "check:partition cannot see cross-instance edges: its ROOT is cat-harness/, so every 0 it reports is scoped to one instance",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-1xhc",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T09:52:20Z",
-      "updatedAt": "2026-09-27T09:52:59Z",
+      "updatedAt": "2026-09-30T11:01:23Z",
       "preview": "Opened 2026-09-27 because **`bf5l` asked for it and it did not exist.** That\nbean's closing section says, of making the blind checks see the edge it found:\n*\"Making the blind checks see it is NOT done here … it wants its own bean.\"* A\ncorpus-grep across `beans/defs/` and `beans/defs/archive/` found no such bean, so\n`bf5l` completed with its follow-up unrecorded.\n\n## What is measured\n\nVerified dire",
       "file": "beans/defs/folio-assistant-p11x--checkpartition-cannot-see-cross-instance-edges-its.md"
     },
@@ -4685,6 +4741,20 @@
       "file": "beans/defs/folio-assistant-rnfl--phase-i-3-rename-content-to-folio-2408-occurrences.md"
     },
     {
+      "id": "folio-assistant-rogk",
+      "title": "B9a (#1168): alternatives are DERIVED — delete Tool.alternativeTo",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T11:00:04Z",
+      "preview": "Owner, 2026-09-30: \"why tools need alternativeTo? skills and tools are associated, the alternatives should be derivable\" — chose Derive + fix 3.\n\nRule: two Tools are alternatives iff they share a satisfied skill AND have the same full io signature (input name/schema/required, output name/schema) AND the same renders/maintains. Measured over 118 tools: 8 pairs, recovering all 5 declared (beans-cli/",
+      "file": "beans/defs/folio-assistant-rogk--b9a-1168-alternatives-are-derived-delete-toolalter.md"
+    },
+    {
       "id": "folio-assistant-rq8s",
       "title": "A SESSION BLOCKED ON THE OWNER IS INVISIBLE: four sessions held verbatim questions that only the session API could see, and nothing durable records one",
       "status": "todo",
@@ -4715,14 +4785,14 @@
     {
       "id": "folio-assistant-rtuo",
       "title": "State tags and badges fail colour contrast on the dark theme",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:13Z",
-      "updatedAt": "2026-09-23T10:36:13Z",
+      "updatedAt": "2026-09-30T11:11:43Z",
       "preview": "Tag and badge colours are fixed hex values that measure about 2.0–2.7:1 on the dark ground, below the WCAG 4.5:1 minimum for small text. Move them onto theme tokens that are validated in both schemes.\n\nObserved on: `external-schemas`, `fsh-guts`, `kg-viewer`, `methodologies`, `navbar`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task u",
       "file": "beans/defs/folio-assistant-rtuo--state-tags-and-badges-fail-colour-contrast-on-the.md"
     },
@@ -5377,14 +5447,14 @@
     {
       "id": "folio-assistant-v8n5",
       "title": "HARNESS THEMING: the who-iris board tile, navbar and stickies render on the IRIS theme, not only its pages",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-yg29",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:43:50Z",
-      "updatedAt": "2026-09-30T08:43:50Z",
+      "updatedAt": "2026-09-30T11:02:54Z",
       "preview": "Owner, 2026-09-30, answering the GOAL 3 goal review: keep GOAL 3 **open**, and theme the harness itself. The goal's words are *\"showing who-iris w/ existing materialized assets with themed harness\"*, and the owner reads \"themed harness\" as more than the pages.\n\n## What is true today (measured 2026-09-30)\n- The who-iris **pages** (`/who-iris/`, generated by `who-iris/scripts/gen-iris-pages.ts`) ren",
       "file": "beans/defs/folio-assistant-v8n5--harness-theming-the-who-iris-board-tile-navbar-and.md"
     },
@@ -5993,6 +6063,20 @@
       "file": "beans/defs/folio-assistant-xgd8--schema-visualiser-schemas-is-a-content-kind-with-n.md"
     },
     {
+      "id": "folio-assistant-xha9",
+      "title": "B9c (#1168): KgRef.kind is an enum of registered node kinds",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T10:54:25Z",
+      "preview": "Owner, 2026-09-30: Enum. KgRef.kind is a free string (todo.ts, carried-note.ts), so 'skil' parses. Build the enum from the graph-kind registry.\n\n## Done when\n- [ ] KgRefSchema.kind is an enum; every committed KgRef parses",
+      "file": "beans/defs/folio-assistant-xha9--b9c-1168-kgrefkind-is-an-enum-of-registered-node-k.md"
+    },
+    {
       "id": "folio-assistant-xies",
       "title": "PUBLISH TO CDN: editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE not the design",
       "status": "todo",
@@ -6411,6 +6495,20 @@
       "updatedAt": "2026-09-18T17:24:16Z",
       "preview": "## The ask\n\nOwner, in chat 2026-09-18, verbatim intent:\n\n> when we get to an MVP for agent-harness and folio-assist-core, create\n> the two repo as forks of folio-asst. then delete/modify the new repos\n> until we get to a state we can test under a new/empty repo \"bootstrap a\n> litlfred/folio-assistant here\"\n\nSo: **fork twice, subtract, then prove the result bootstraps from nothing.**\n\n## Why fork-a",
       "file": "beans/defs/folio-assistant-zmdo--split-bootstrap-agentic-harness-folio-assistant-co.md"
+    },
+    {
+      "id": "folio-assistant-zmm2",
+      "title": "B9d (#1168): rename voice source kgRef → path, skill front matter capability: → requiresCapability",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T10:54:25Z",
+      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected",
+      "file": "beans/defs/folio-assistant-zmm2--b9d-1168-rename-voice-source-kgref-path-skill-fron.md"
     },
     {
       "id": "folio-assistant-zru7",

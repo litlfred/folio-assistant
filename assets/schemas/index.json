@@ -29619,6 +29619,24 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-types.ts#DelimitedTextPathSchema",
+      "name": "DelimitedTextPathSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-object",
+      "doc": "A repository path to a delimited text file (CSV or TSV).",
+      "fields": [],
+      "extendsNames": [
+        "RepoPathSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool-types.ts#RepoPathSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-types.ts#DpiSchema",
       "name": "DpiSchema",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -30178,6 +30196,24 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-types.ts#WorkbookPathSchema",
+      "name": "WorkbookPathSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-object",
+      "doc": "A repository path to a spreadsheet workbook. See {@link DelimitedTextPathSchema}.",
+      "fields": [],
+      "extendsNames": [
+        "RepoPathSchema"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool-types.ts#RepoPathSchema"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool.ts#SchemaRef",
       "name": "SchemaRef",
       "module": "cat-harness/schemas/tool.ts",
@@ -30270,18 +30306,11 @@
           "doc": "Skills this Tool can satisfy. One skill may have several Tools."
         },
         {
-          "name": "alternativeTo",
-          "type": "z.array(ToolId).optional()",
-          "optional": true,
-          "array": true,
-          "doc": "Other Tools that do the SAME job by a different mechanism."
-        },
-        {
           "name": "selection",
           "type": "ToolSelectionSchema.optional()",
           "optional": true,
           "array": false,
-          "doc": "Why to reach for this one. REQUIRED once `alternativeTo` is non-empty —"
+          "doc": "Why to reach for this one. REQUIRED when the Tool has a derived"
         },
         {
           "name": "requires",
@@ -44107,19 +44136,27 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/tool-types.ts#DelimitedTextPathSchema",
+      "to": "cat-harness/schemas/tool-types.ts#RepoPathSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-types.ts#WorkbookPathSchema",
+      "to": "cat-harness/schemas/tool-types.ts#RepoPathSchema",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
       "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
       "via": "satisfies",
       "kind": "field",
       "optional": false,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
-      "to": "cat-harness/schemas/tool.ts#ToolId",
-      "via": "alternativeTo",
-      "kind": "field",
-      "optional": true,
       "array": true
     },
     {

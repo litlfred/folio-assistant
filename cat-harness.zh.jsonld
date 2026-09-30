@@ -297,10 +297,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T11:02:49.052Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/54e38c5c0edb21857e3c26d69fcc2fe3e1374897",
-  "sourceCommitSha": "54e38c5c0edb21857e3c26d69fcc2fe3e1374897",
-  "sourceCommitAt": "2026-09-30T12:58:01+02:00",
+  "generatedAt": "2026-09-30T11:24:21.164Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c907abf03af0d3661d726c2c3bf3acf5b2e61500",
+  "sourceCommitSha": "c907abf03af0d3661d726c2c3bf3acf5b2e61500",
+  "sourceCommitAt": "2026-09-30T13:21:17+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1121,7 +1121,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/covered-is-not-reachable.md",
-      "instructionLines": 273,
+      "instructionLines": 272,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2345,7 +2345,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 369,
+      "instructionLines": 382,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -36261,7 +36261,7 @@
         ],
         "outputs": [
           {
-            "name": "pages",
+            "name": "schemaReference",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
             "description": "The generated reference directory. Never hand-edited."
           }
@@ -36303,7 +36303,7 @@
         ],
         "outputs": [
           {
-            "name": "pages",
+            "name": "skillInstructions",
             "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/RepoPath",
             "description": "The generated instruction directory. Never hand-edited."
           }
@@ -37883,7 +37883,7 @@
         "inputs": [
           {
             "name": "file",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/DelimitedTextPath",
             "description": "Path to the delimited text file.",
             "required": true
           }
@@ -37919,7 +37919,7 @@
         "inputs": [
           {
             "name": "file",
-            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/tool-types.schema.json#/$defs/WorkbookPath",
             "description": "Path to the workbook.",
             "required": true
           }
