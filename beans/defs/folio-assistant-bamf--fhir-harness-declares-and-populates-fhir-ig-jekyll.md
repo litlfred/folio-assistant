@@ -3,8 +3,9 @@
 title: fhir-harness declares and populates FHIR IG Jekyll data (site.data.fhir.*) for the just-the-docs pipeline
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-30T10:16:18Z
-updated_at: 2026-09-30T10:16:18Z
+updated_at: 2026-09-30T18:48:48Z
 parent: folio-assistant-zzmr
 ---
 
@@ -27,3 +28,16 @@ Owner 2026-09-30: IG pages use Liquid site.data.fhir.* (IG Publisher convention,
 - **Finding:** `smart-base/fhir-artifact-index/chrome.json` describes `smart.who.int.trust` 1.8.0 while `index.json` is `smart.who.int.base` 0.3.0 — a mis-filed chrome. The tool refuses it rather than publishing another IG's status; the file itself is not changed here.
 - Tests 5, calibrated (bypassing the package check fails the refusal test). Uses the REAL smart-base index, so it is not vacuous.
 - **Open:** no IG render in this checkout calls it yet — there is no `input/pages/` IG here (P0's page half), so the "just-the-docs build runs it" box stays open.
+
+
+## Round 2, 2026-09-30: one Jekyll site per IG (owner's choice)
+- The owner chose one site per IG over per-page resolution and over namespacing: pages keep `{{ site.data.fhir.* }}` unchanged, as under the Publisher.
+- `fhir-harness/scripts/build-ig-site.ts` and Tool `build-ig-site` stage an IG source repository as ONE just-the-docs Jekyll source. It carries pagecontent with title, parent and order from sushi-config `pages:`; the includes the Publisher resolves; images; `_data/fhir.json` via ig-site-data; and `_config.yml`. PlantUML sources are rendered with `--plantuml-jar`, otherwise a VISIBLE marker stands in and is reported.
+- Measured on smart-trust's real source (WorldHealthOrganization/smart-trust@30d55b3), built with Jekyll 4.4.1 and just-the-docs 0.12:
+  - all 42 pages render;
+  - feedback.html resolves `{{ site.data.fhir.packageId | split: '.' | last }}` to the trust repository link;
+  - 2 diagrams are rendered;
+  - 3 Publisher-generated fragments are markers (dependency-table.xhtml, list-structuremaps.xhtml, actordefinition-short-summary.liquid);
+  - 7 pages are absent from sushi-config pages.
+- Screenshots were sent to the owner. Tests: 7, calibrated.
+- **Still open:** CI does not run it yet. The IG SOURCE is not in this repository, and where it comes from (a declared source in the instance, or a workflow clone) is the owner's call.
