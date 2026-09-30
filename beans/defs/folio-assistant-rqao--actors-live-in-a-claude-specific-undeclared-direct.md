@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T08:19:40Z
-updated_at: 2026-09-30T13:38:24Z
+updated_at: 2026-09-30T19:55:31Z
 parent: folio-assistant-tr05
 ---
 
@@ -31,3 +31,6 @@ Nine readers hardcode `.claude/skills/actors`: check-actor-reach, check-qa-revie
 
 ## Owner, 2026-09-30 (round 3): `cat-harness/scenarios/actors/`
 Actors move beside `roles.json`, inside the already-declared `scenarios` graph. Capabilities and requirements are still to be decided, each on its own.
+
+## Owner decision 2026-09-30
+Actors move BESIDE roles.json: cat-harness/scenarios/ (the declared kg directory holding roles.json and stories.json). Capabilities/requirements each decided separately.
