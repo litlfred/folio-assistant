@@ -275,3 +275,25 @@ test.describe("the replica at phone width", () => {
     expect(scroll, "the page scrolls sideways at 390 px").toBeLessThanOrEqual(client);
   });
 });
+
+/**
+ * ...AND ON A DESKTOP. The phone case above let the desktop one through: the
+ * 2026-09-30 QA re-run measured community-list.html 1475 px wide at 1280 and
+ * 1405 px at 1024, because the "Metadata record" column kept `nowrap` on its
+ * longest file name at every width but a phone's. Same page, same assertion,
+ * the two widths that overflowed.
+ */
+for (const width of [1024, 1280]) {
+  test.describe("the replica at " + width + " px", () => {
+    test.use({ viewport: { width, height: 800 } });
+
+    test("the page is no wider than the screen", async ({ page }) => {
+      await serve(page, "/who-iris/community-list.html");
+      const [scroll, client] = await page.evaluate(() => [
+        document.documentElement.scrollWidth,
+        document.documentElement.clientWidth,
+      ]);
+      expect(scroll, "the page scrolls sideways at " + width + " px").toBeLessThanOrEqual(client);
+    });
+  });
+}

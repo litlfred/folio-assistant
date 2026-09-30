@@ -1,13 +1,14 @@
 ---
 # folio-assistant-2uui
 title: WHO IRIS replica pages scroll sideways at desktop width
-status: todo
+status: completed
 type: bug
+priority: normal
 tags:
     - wireframe-findings
     - ui
 created_at: 2026-09-30T16:12:48Z
-updated_at: 2026-09-30T16:12:48Z
+updated_at: 2026-09-30T17:17:27Z
 parent: folio-assistant-4ccr
 ---
 
@@ -21,3 +22,6 @@ Cause: the download / 'Metadata record' cells do not wrap. #1592 (g9r2) made the
 
 ## Done when
 - [ ] No replica page's scrollWidth exceeds clientWidth at 1280, 1024 or 390, measured on a built page.
+
+## Landed
+gen-iris-pages: `.dl` wraps at every width (long file names break inside the link; the short format/size label stays whole). Measured on the regenerated pages with Playwright: no replica wider than its viewport at 1280, 1024 or 390 (before: community-list 1475/1405, hq-publications 1338/1268, wpro 1162 at 1024). folio-mount.e2e gains 1024 and 1280 cases, shown to FAIL against the old pages and pass on the new.

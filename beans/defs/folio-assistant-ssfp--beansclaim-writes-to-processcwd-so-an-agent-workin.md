@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ssfp
 title: beans:claim writes to process.cwd(), so an agent working in a git worktree claims in the WRONG checkout
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-30T10:11:53Z
-updated_at: 2026-09-30T10:58:22Z
+updated_at: 2026-09-30T17:47:07Z
 parent: folio-assistant-ahvw
 ---
 
@@ -120,3 +120,5 @@ all, so the existing population is large and (1) does nothing for it.
 `main`'s mislabelled note on `rjug` was left in place through the merge. Erasing
 it would erase the evidence, and `deletion-requires-confirmation` applies to a
 record of a mistake as much as to anything else.
+
+_2026-09-30T17:47:07Z_ — Claimed by claude/magical-archimedes-4qkfxp-ssfp — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
