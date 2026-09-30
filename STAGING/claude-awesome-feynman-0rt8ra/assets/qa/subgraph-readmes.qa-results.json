@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "df1842707af2"
+    "script_hash": "855d46b512fc"
   },
   "subject": {
     "kind": "graph",
     "id": "subgraph-readmes"
   },
-  "updated_at": "2026-09-29T22:46:02.937Z",
+  "updated_at": "2026-09-29T23:19:43.342Z",
   "families": {
     "absent-directory": {
       "summary": "Declared directories not on disk and not declared `absent`: a consumer scanning them finds nothing and may report a clean run.",
@@ -17,7 +17,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 73,
+      "count": 72,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -53,11 +53,6 @@
           "instance": "bootstrap",
           "directory": "swimlane-glossary",
           "path": "bootstrap/glossary"
-        },
-        {
-          "instance": "bootstrap",
-          "directory": "qa",
-          "path": "bootstrap/test/results"
         },
         {
           "instance": "cat-harness",
@@ -404,7 +399,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 93,
+      "count": 92,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -460,11 +455,6 @@
           "instance": "bootstrap",
           "directory": "swimlane-glossary",
           "path": "bootstrap/glossary"
-        },
-        {
-          "instance": "bootstrap",
-          "directory": "qa",
-          "path": "bootstrap/test/results"
         },
         {
           "instance": "cat-harness",
@@ -890,5 +880,5 @@
       ]
     }
   },
-  "total": 170
+  "total": 168
 }

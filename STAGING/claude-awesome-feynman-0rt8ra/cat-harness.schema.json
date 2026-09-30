@@ -211,6 +211,10 @@
           "type": "string",
           "format": "uri"
         },
+        "iriBase": {
+          "type": "string",
+          "format": "uri"
+        },
         "previewUrl": {
           "type": "string",
           "format": "uri"
@@ -401,6 +405,44 @@
                         "minLength": 1
                       }
                     }
+                  }
+                }
+              },
+              "tile": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "surfaces": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "navbar",
+                        "board",
+                        "glass"
+                      ]
+                    }
+                  },
+                  "hidden": {
+                    "type": "boolean"
+                  },
+                  "theme": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "icon": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "publish": {
+                    "type": "string",
+                    "enum": [
+                      "staging-only"
+                    ]
                   }
                 }
               },
@@ -713,8 +755,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld",
   "staging": {
     "branch": "claude/awesome-feynman-0rt8ra",
-    "sha": "717aa1a705e71f57eba1af2deba07fa05f3c160b",
+    "sha": "bddbc7dbef76ce4424adc87fb21c79ec9892f3cc",
     "pr": "1515/merge",
-    "run": "36647366994"
+    "run": "36648246405"
   }
 }
