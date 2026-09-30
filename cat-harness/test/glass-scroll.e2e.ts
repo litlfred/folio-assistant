@@ -120,7 +120,16 @@ function visibleTextUnderHandle(page: Page) {
           const xx = Math.min(Math.max(x, 0), window.innerWidth - 1);
           const top = document.elementFromPoint(xx, cy);
           if (top && !top.closest(".fa-glass-band, .fa-glass-handle")) {
-            out.push(Math.round(b.top) + "px: " + n.nodeValue.trim().slice(0, 30));
+            // Say what the reader sees there and where the band is, so a
+            // failure in a browser we cannot run locally names its cause.
+            const bandEl = document.querySelector(".fa-glass-band") as HTMLElement | null;
+            const br = bandEl && bandEl.getBoundingClientRect();
+            const bandState = !bandEl ? "no band" : bandEl.hidden ? "band hidden"
+              : "band " + [br!.left, br!.top, br!.width, br!.height].map(Math.round).join(",");
+            out.push(Math.round(b.top) + "px: " + n.nodeValue.trim().slice(0, 30) +
+              " | at x" + Math.round(xx) + " top=" + top.tagName.toLowerCase() +
+              (top.className ? "." + String(top.className).split(" ")[0] : "") +
+              " | " + bandState + " | handle " + [hb.left, hb.top, hb.width, hb.height].map(Math.round).join(","));
             break;
           }
         }
