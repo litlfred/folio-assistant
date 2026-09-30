@@ -297,10 +297,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T09:32:00.687Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d0d7e13e03650c4e100899d6caaebe1c7aa529d1",
-  "sourceCommitSha": "d0d7e13e03650c4e100899d6caaebe1c7aa529d1",
-  "sourceCommitAt": "2026-09-30T09:28:43Z",
+  "generatedAt": "2026-09-30T09:36:56.211Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4d962ff1a36a6402c15f10d881d1f47aee416e99",
+  "sourceCommitSha": "4d962ff1a36a6402c15f10d881d1f47aee416e99",
+  "sourceCommitAt": "2026-09-30T09:34:28Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -315,7 +315,7 @@
     "Role": 149,
     "ProcessNode": 888,
     "Tool": 107,
-    "Schema": 123,
+    "Schema": 124,
     "ExternalSchema": 17,
     "GraphKind": 35,
     "Directory": 46,
@@ -43044,6 +43044,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/precision-scalar"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#schema/process-element-id",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "process-element-id",
+      "title": "The id a BPMN `<process>` element declares — `Process_CRDM`,",
+      "module": "schemas/process-element-id.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/process-element-id"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness.jsonld#schema/property-skills",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "property-skills",
@@ -45727,8 +45736,8 @@
   ],
   "staging": {
     "branch": "claude/sharp-einstein-970n6g",
-    "sha": "c8abe8159b1439dfcd526dc73ce654d91b87064f",
+    "sha": "52b12c966f346dc8fd46ce843651dc3205f4e637",
     "pr": "1550/merge",
-    "run": "36696436674"
+    "run": "36696995955"
   }
 }
