@@ -13,5 +13,6 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `smart-bas
 | [`9789240120747-eng/`](9789240120747-eng/README.md) | 221 files | |
 | [`9789241509510-eng/`](9789241509510-eng/README.md) | 586 files | |
 | [`9789241511766-eng/`](9789241511766-eng/README.md) | 580 files | |
+| [`mehl-2021-who-smart-guidelines/`](mehl-2021-who-smart-guidelines/README.md) | 12 files | |
 | [`who-rhr-1806-eng/`](who-rhr-1806-eng/README.md) | 65 files | |
 <!-- kg:subgraph:end -->

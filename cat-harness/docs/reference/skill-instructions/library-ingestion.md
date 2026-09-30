@@ -272,6 +272,8 @@ of declaring one: navigable without being held.
 | `pdf-pages.py` | no outline | one section per **page** |
 | `pdf-ocr.py` | text extraction yields almost nothing | a text layer to then page-split |
 | `pdf-tables.py` | tables or figures matter | what `pdf-structure/v1`'s Section does not carry |
+| `slides-structure.py` | the package declares a **PPTX or ODP** deck | one section per **slide**, `images.json`, `accessibility.json` |
+| `referenced-source.py` | `--reference` given: the **licence forbids a copy** | `referenced.json` only — identity, sha256, outline; no text |
 | `notebook-structure.ts` | the file is JSON with a numeric `nbformat` and a `cells` array — a **Jupyter notebook**, decided by content, never by the `.ipynb` name | `notebook-structure/v1`: one section per markdown heading, located by **cell** range; code kept as fenced code and never run; outputs not kept, and `structure_note` says so |
 
 **A notebook is a variant, not a PDF with odd pages** (bean `rkqp`, owner
@@ -290,6 +292,74 @@ index mistaken for a page number.
   `wpr-rdo-2020-003-eng`)
 - `toc_source: none`, `source.text_source: ocr` → `pdf-ocr` then `pdf-pages --from-ocr`
   (`who-pub-tps-931`)
+
+## Slide decks — PPTX and ODP (bean `scfh`, issue #1614)
+
+A deck is a zip that **declares** its type (`[Content_Types].xml`, or ODF's
+`mimetype` member), so it routes on the sniff, before the archive rung, exactly
+as a workbook does. `slides-structure.py` writes the same `pdf-structure/v1`
+shape a paged PDF gets — one section per slide, `page_start == page_end ==
+<slide>`, `granularity: "slide"` — so `l1-blocks.ts`, the manifest and
+`check:l1-complete` read it unchanged. Two differences from the PDF rungs, both
+measured on the #1614 deck:
+
+- **A slide's title is its title placeholder, or it is `Slide N`.** Never the
+  largest text box: that is the inferred-TOC failure below in a new format. It is
+  also an accessibility finding, because a slide with no title placeholder cannot
+  be navigated to by name, so the two questions share one answer
+  (`title_source: placeholder | none` in each section's front matter).
+- **No image is a `page-scan`.** A full-bleed picture alone on a slide is the
+  slide's content, not a scan of text already extracted.
+
+`accessibility.json` reports, per check, what the package can answer — slide
+titles, alt text (with editor auto-captions such as *"Description automatically
+generated"* counted as **failing**, since nobody wrote them), decorative marks,
+language tags, document title, speaker notes — and says `undetermined` for the
+three it cannot: reading order, images of text, contrast. **It gives no overall
+score.** A single number would weigh a missing title against a missing alt text,
+and nothing supports that weighting.
+
+**Two copies of one deck? Compare before you choose which to ingest:**
+
+```sh
+python3 cat-harness/scripts/slides-structure.py --a11y-only DECK.pptx DECK.odp
+```
+
+On #1614 the two were Google Slides exports with identical image bytes. The PPTX
+kept per-run `lang` and the author's few alt texts; the ODP export dropped **all**
+alt text and kept the language only on the default style. Prefer the copy that
+wins the per-check comparison. An export can lose what the author wrote, and the
+format's reputation does not tell you which way this particular export went.
+
+Image descriptions go in the library's `image-verdicts.json` as for a PDF. Put
+the inspector in `attribution.<doc-id>` when they are not the file's
+`inspected_by`; without it the deck inherits the first inspector's name and
+date.
+
+## A source whose licence forbids a copy — record it, do not ingest it (bean `scfh`)
+
+Some sources may be read but not reposted. The OMG BPMN and DMN specifications
+permit use on condition that a copy "will not be copied or posted on any
+network computer or broadcast in any media". A normal ingest commits every
+section's text to a public repository, which breaks that condition. It does so
+silently, because nothing in the text layer says so.
+
+```sh
+bun run ingest FILE.pdf --reference IDENTITY.json --library <name>
+```
+
+`IDENTITY.json` holds the title, version, document number, date, publisher,
+URL and the licence clause, **read off the document**. A missing field is
+refused, never guessed. The entry holds `referenced.json` — the exact bytes'
+sha256, the embedded outline (clause titles and pages, so a citation can still
+name a clause), a `folio-materialization/v1` record in state `referenced`, and
+why the text is withheld — plus a manifest with an empty `contains`, and a
+`licence.json` quoting the clause.
+
+**The choice is the caller's, never inferred.** Whether a licence permits
+posting is a reading of the licence, not of the bytes. `check:l1-complete`
+knows the kind, and **refuses** a `referenced` entry that holds `sections/`,
+`blocks/` or `images/`. That would be the copy this kind exists not to make.
 
 ## An inferred chapter tree is refused, not guessed
 

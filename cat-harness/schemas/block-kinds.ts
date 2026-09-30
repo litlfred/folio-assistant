@@ -491,8 +491,13 @@ export const DAK_LABEL_PREFIXES: Record<DakBlockKind, string> = {
  * | `smart-ig-starter-kit` `l2_dak_authoring.md`, **the intro prose** | A different nine: scheduling logic promoted to #7, test scenarios absent — stale, and contradicted by the table directly beneath it |
  * | `sgex` `.github/copilot-instructions.md` | Eight (predates test scenarios), *plus* a second list of artefact types that is not the components at all |
  *
- * Three of the four agree, including both machine-readable ones, so that is
- * what this encodes. Anything counting components against an older source is
+ * Three of the four agree, including both machine-readable ones — but the
+ * owner ruled, 2026-09-30, that the DAK has **ten**: the original eight, plus
+ * scheduling logic and test scenarios (issue #1614). Scheduling logic is
+ * authored as DMN decision tables but is not yet formalized as its own L2
+ * logical-model field or L3 artefact, so it is listed here AND named in
+ * {@link DAK_UNFORMALIZED_COMPONENTS}; the other nine match `DAK.fsh`
+ * field for field. Anything counting components against one source alone is
  * off by one, silently.
  *
  * Published guidance:
@@ -512,12 +517,22 @@ export const DAK_COMPONENTS = [
   "generic-business-processes-and-workflows",
   "core-data-elements",
   "decision-support-logic",
+  "scheduling-logic",
   "programme-indicators",
   "functional-and-non-functional-requirements",
   "test-scenarios",
 ] as const;
 
 export type DakComponent = (typeof DAK_COMPONENTS)[number];
+
+/**
+ * Components the owner counts that WHO's `DAK` logical model does not yet
+ * declare as a field of their own (owner, 2026-09-30, #1614). Each still has a
+ * {@link DAK_COMPONENT_FIELDS} entry — the name the field would take — so a
+ * `dak.config.json` can carry it; the check against `DAK.fsh` skips these and
+ * checks the rest field for field. When WHO formalizes one, it leaves this list.
+ */
+export const DAK_UNFORMALIZED_COMPONENTS: readonly DakComponent[] = ["scheduling-logic"];
 
 /**
  * The field each component occupies in WHO's own `DAK` logical model.
@@ -534,6 +549,8 @@ export const DAK_COMPONENT_FIELDS: Record<DakComponent, string> = {
   "generic-business-processes-and-workflows": "businessProcesses",
   "core-data-elements": "dataElements",
   "decision-support-logic": "decisionLogic",
+  // Not in `DAK.fsh` yet — see DAK_UNFORMALIZED_COMPONENTS.
+  "scheduling-logic": "schedulingLogic",
   "programme-indicators": "indicators",
   "functional-and-non-functional-requirements": "requirements",
   "test-scenarios": "testScenarios",
@@ -553,6 +570,8 @@ export const DAK_COMPONENT_DESCRIPTIONS: Record<DakComponent, string> = {
     "Lists required variables mapped to international terminology standards like ICD.",
   "decision-support-logic":
     "Outlines logical rules, alerts, and algorithms for clinical guidance.",
+  "scheduling-logic":
+    "Decision tables (DMN) that schedule follow-up visits and services by care plan; not yet formalized as its own L2 or L3 artefact.",
   "programme-indicators":
     "Specifies metrics used to evaluate health program performance and reporting.",
   "functional-and-non-functional-requirements":
@@ -569,11 +588,11 @@ export const DAK_COMPONENT_DESCRIPTIONS: Record<DakComponent, string> = {
  * - `functional-and-non-functional-requirements` is one WHO component that
  *   this repo splits into two kinds, because the component's own name is a
  *   conjunction and the two halves have different reviewers.
- * - `decision-support-logic` gains `scheduling-logic`. WHO's authoring SOP
- *   calls scheduling logic "a specific type of decision-support logic" and
- *   documents it inside that component's row; `DAK.fsh` likewise gives it no
- *   field of its own. Only the SOP's stale intro prose promotes it, so it stays
- *   a kind rather than becoming a tenth component.
+ * - `scheduling-logic` is its own component (owner, 2026-09-30), holding the
+ *   `scheduling-logic` kind. It was folded into `decision-support-logic` until
+ *   then, because WHO's SOP table and `DAK.fsh` both keep it there; the owner
+ *   counts it separately because it is authored separately, as its own DMN
+ *   decision tables, even though no L2/L3 artefact formalizes it yet.
  * - `core-data-elements` collects everything describing a variable's shape,
  *   including the L3 `structure-map` that transforms between two of them.
  *
@@ -595,7 +614,8 @@ export const DAK_COMPONENT_KINDS: Record<DakComponent, readonly DakBlockKind[]> 
     "questionnaire",
     "structure-map",
   ],
-  "decision-support-logic": ["decision-table", "scheduling-logic", "cql-library"],
+  "decision-support-logic": ["decision-table", "cql-library"],
+  "scheduling-logic": ["scheduling-logic"],
   "programme-indicators": ["indicator", "measure"],
   "functional-and-non-functional-requirements": [
     "functional-requirement",

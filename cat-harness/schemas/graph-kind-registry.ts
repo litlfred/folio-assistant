@@ -1382,6 +1382,10 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // Written by the instance's generator from its licence gates; the mount
       // validates it with this schema and refuses to mount if it cannot.
       "folio-withheld/v1": { validator: "schemas/withheld.ts#WithheldSchema" },
+      // A slide deck's accessibility report, per check (bean `scfh`).
+      "folio-slides-accessibility/v1": { validator: "schemas/slides-accessibility.ts#SlidesAccessibilitySchema" },
+      // A source recorded and not held, its text withheld by licence (bean `scfh`).
+      "folio-referenced-source/v1": { validator: "schemas/referenced-source.ts#ReferencedSourceSchema" },
     },
     summary:
       "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, " +
