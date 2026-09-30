@@ -166,6 +166,16 @@ if [ "${PREVIEW_NO_MOUNT:-}" != "1" ]; then
   bun run "$here/mount-instance-docs.ts" --site "$dest" --built cat-harness 2>&1 | sed 's/^/  /' || true
 fi
 
+# `set-html-lang.ts --site ./_site` in CI, right after the mount (bean `zru7`).
+# The pinned theme writes `<html lang="en-US">` on EVERY page and no `dir`;
+# this pass puts each page's own locale back from its `fa-translation-meta`
+# block. Without it the preview shows every translated page as English and
+# Arabic as left-to-right — a defect the published site does not have. Measured
+# cost, 2026-09-30: a high-priority accessibility bean (`c1lo`) filed against
+# exactly that, a duplicate of the fixed `zru7`, scrapped once CI's pass was run.
+echo "preview-site: putting each page's own locale on <html>"
+bun run "$here/set-html-lang.ts" --site "$dest" 2>&1 | sed 's/^/  /' || true
+
 # `cp -rT cat-harness/test/results/witnesses ./_site/assets/qa` in CI. The QA
 # witnesses are COMMITTED under `test/results/` (provenance) and SERVED from
 # `/assets/qa/` (what every `data-qa-src` says). Without the copy every badge
