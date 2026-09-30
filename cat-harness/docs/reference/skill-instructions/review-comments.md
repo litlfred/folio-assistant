@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Review comments — from a PR comment to a structured todo
 
-> Skill id: `review-comments` · Capability: `review` · Package: `folio-core`
+> Skill id: `review-comments` · Package: `folio-core`
 > Tools: `folio-review-comments` (ingest), `folio-review-comment-move` (record a decision) · Bean: `423d` · Epic: `q4jm`
 
 A reviewer comments on **one block** of a folio by writing an ordinary comment

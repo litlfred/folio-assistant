@@ -1460,6 +1460,13 @@ jobs:
           # ungated until 2026-09-24 because `landing-architecture` had no mobile
           # crop; the owner supplied it, so a refusal here is now a regression.
           bun run check:theme-art:check
+          # Every harness's LHS navbar entry: does its declared `icon` resolve,
+          # and does one artefact wear one glyph across the two registries that
+          # draw it? `:check` and NOT `:strict`, deliberately — the advisory
+          # family is "art declared, no icon named", which is the owner's call
+          # about whether an instance wants a mark at all, not a regression.
+          # Same line `check:theme-art` drew above, for the same reason.
+          bun run check:navbar-consistency:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.

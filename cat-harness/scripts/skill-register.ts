@@ -245,7 +245,7 @@ export interface SkillPackage {
  * one key that keeps coming back. A key retired for a graph kind this command
  * does not touch has no business here.
  */
-const STRIPPABLE = ["roles", "package"] as const;
+const STRIPPABLE = ["roles", "package", "capability"] as const;
 
 /**
  * Skill packages, found in the directories the INSTANCE_ROOT DECLARES.

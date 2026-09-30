@@ -8,11 +8,11 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-30T14:36:21.565Z",
+  "updated_at": "2026-09-30T14:29:11.665Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 48 of 48 declared kind(s), 185 gate(s), 70 criteria.",
-      "count": 48,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 47 of 47 declared kind(s), 183 gate(s), 69 criteria.",
+      "count": 47,
       "entries": [
         {
           "kind": "bean-defs",
@@ -53,8 +53,7 @@
             "bun run check:bean-rollup",
             "bun run check:harness-dirs",
             "bun run check:ready-to-close",
-            "bun run check:stale-paths",
-            "bun run lsi:skills:check"
+            "bun run check:stale-paths"
           ],
           "typed": true,
           "hasFiles": true
@@ -107,7 +106,6 @@
             "actor-roles-resolve",
             "arrow-direction",
             "consulted-skill-not-performed",
-            "lsi-index-fresh",
             "manifest-skill-exists",
             "nested-instance-audited",
             "prose-names-resolve",
@@ -272,7 +270,6 @@
             "bun run gen:jsonld:check",
             "bun run handler:index:check",
             "bun run landing:data:check",
-            "bun run lsi:skills:check",
             "bun run readme:audit",
             "bun run readme:audit:root",
             "bun run readme:sync:bootstrap:check",
@@ -330,8 +327,7 @@
             "bun run folio:viz:check",
             "bun run gen:jsonld:check",
             "bun run landing:data:check",
-            "bun run landing:sticky:check",
-            "bun run lsi:skills:check"
+            "bun run landing:sticky:check"
           ],
           "typed": false,
           "hasFiles": true
@@ -354,8 +350,7 @@
           "kind": "glossary",
           "state": "covered",
           "directories": [
-            "folio-assistant-core/glossary",
-            "who-style-guide/glossary"
+            "folio-assistant-core/glossary"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -363,8 +358,7 @@
             "bun run check:glossary",
             "bun run glossary:check",
             "bun run glossary:check:bootstrap",
-            "bun run glossary:pot:check",
-            "bun run lsi:skills:check"
+            "bun run glossary:pot:check"
           ],
           "typed": false,
           "hasFiles": true
@@ -438,10 +432,8 @@
             "bun run check:l1-complete",
             "bun run check:l1-complete -- --check",
             "bun run check:methodology-evidence",
-            "bun run check:soft-hyphens",
             "bun run check:source-licence",
-            "bun run gen:jsonld:check",
-            "bun run lsi:skills:check"
+            "bun run gen:jsonld:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -455,8 +447,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run agent-memory:check",
-            "bun run lsi:skills:check"
+            "bun run agent-memory:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -474,7 +465,6 @@
           "subjectKinds": [],
           "gates": [
             "bun run check:methodology-evidence",
-            "bun run lsi:skills:check",
             "bun run methodologies:viz:check"
           ],
           "typed": false,
@@ -505,8 +495,7 @@
           "subjectKinds": [],
           "gates": [
             "bun run check:prov-qaqc",
-            "bun run check:qa-reviewer-permission",
-            "bun run lsi:skills:check"
+            "bun run check:qa-reviewer-permission"
           ],
           "typed": true,
           "hasFiles": true
@@ -609,7 +598,6 @@
             "bun run check:artefact-verification",
             "bun run check:orphan-verdicts",
             "bun run check:tabular-stubs",
-            "bun run lsi:viz:check",
             "bun run translation:block-qa:check"
           ],
           "typed": true,
@@ -777,7 +765,6 @@
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
             "bun run kg:detangle:direction",
-            "bun run lsi:skills:check",
             "bun run skill:commands:check",
             "bun run skill:register:check",
             "bun run skills:docs:check"
@@ -940,16 +927,6 @@
           "hasFiles": true
         },
         {
-          "kind": "voice-vendors",
-          "state": "no-directory",
-          "directories": [],
-          "criteria": [],
-          "subjectKinds": [],
-          "gates": [],
-          "typed": true,
-          "hasFiles": false
-        },
-        {
           "kind": "voices",
           "state": "covered",
           "directories": [
@@ -1009,7 +986,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 15,
+      "count": 14,
       "entries": [
         {
           "kind": "bean-defs",
@@ -1094,11 +1071,6 @@
           "gates": []
         },
         {
-          "kind": "voice-vendors",
-          "criteria": 0,
-          "gates": []
-        },
-        {
           "kind": "workflow-state",
           "criteria": 0,
           "gates": [
@@ -1113,10 +1085,10 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 185 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 183 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
   },
-  "total": 63
+  "total": 61
 }

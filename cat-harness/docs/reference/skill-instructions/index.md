@@ -37,7 +37,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [l2-dak-authoring](l2-dak-authoring.html) | `l2-dak-authoring` | [schema](../skills/l2-dak-authoring.html) | > Skill id: `l2-dak-authoring` · Package: `authoring-who-smart-guidelines` · |
 | [l3-fhir-authoring](l3-fhir-authoring.html) | `l3-fhir-authoring` | [schema](../skills/l3-fhir-authoring.html) | > Skill id: `l3-fhir-authoring` · Package: `authoring-who-smart-guidelines` · |
 | [quality-control](quality-control.html) | `quality-control` | [schema](../skills/quality-control.html) | > Skill id: `quality-control` · Package: `authoring-who-smart-guidelines` · |
-| [smart-base Toolchain](smart-base-tools.html) | `smart-base-tools` | — | > Skill id: `smart-base-tools` · Capability: `smart-base` · Package: |
+| [smart-base Toolchain](smart-base-tools.html) | `smart-base-tools` | — | > Skill id: `smart-base-tools` · Package: |
 | [smart-stack-layering](smart-stack-layering.html) | `smart-stack-layering` | — | > Skill id: `smart-stack-layering` · Package: `authoring-who-smart-guidelines` |
 | [terminology-management](terminology-management.html) | `terminology-management` | [schema](../skills/terminology-management.html) | > Skill id: `terminology-management` · Package: `authoring-who-smart-guidelines` · |
 | [toolchain-ownership](toolchain-ownership.html) | `toolchain-ownership` | — | > Skill id: `toolchain-ownership` · Package: `authoring-who-smart-guidelines` · |
@@ -73,7 +73,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Activity log](activity-log.html) | `activity-log` | — | **Write an entry when you start a task, when you end one, and whenever you |
-| [Adjudication](adjudication.html) | `adjudication` | — | > Skill id: `adjudication` · Capability: `review` · Package: `folio-core` |
+| [Adjudication](adjudication.html) | `adjudication` | — | > Skill id: `adjudication` · Package: `folio-core` |
 | [Adopt a methodology from a source document](adopt-methodology-from-source.html) | `adopt-methodology-from-source` | — | The adoption **rules** are [`methodology-adoption`](methodology-adoption.md). This skill is the **op |
 | [Subagent memory](agent-memory.html) | `agent-memory` | — | A subagent declaring project memory gets its own directory; the first **200 |
 | [Materializing from arXiv](archiving-arxiv.html) | `archiving-arxiv` | — | arXiv is the easiest case to get *nearly* right, which is why it is worth its |
@@ -120,7 +120,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [docs-auto](docs-auto.html) | `docs-auto` | — | `<base>/<handler>/docs-auto/<auto-doc-type>/<sub-graph>/` is an index of what |
 | [Documentation Generation](docs-generation.html) | `docs-generation` | — | cd content && bun run pipeline/build.ts \ |
 | [Editor](editor.html) | `editor` | — |  |
-| [Evidence review](evidence-review.html) | `evidence-review` | — | > Skill id: `evidence-review` · Capability: `quality-assurance` · Package: `folio-core` |
+| [Evidence review](evidence-review.html) | `evidence-review` | — | > Skill id: `evidence-review` · Package: `folio-core` |
 | [/exposition-swarm-drain](exposition-swarm-drain.html) | `exposition-swarm-drain` | — | Bring every narrative block up to the **Milnor exposition standard** |
 | [Feature-branch staging](feature-staging.html) | `feature-staging` | — |  |
 | [Filing a source: what Dublin Core carries, and what it does not](filing-dublin-core.html) | `filing-dublin-core` | — | This is the **librarian's** half of intake, not the ingestion engine's. A file |
@@ -129,7 +129,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | ["NOT clean" is a verdict about the RUN, not about your diff](gate-tree-mutation.html) | `gate-tree-mutation` | — | `bun run gates` snapshots the tree before the first gate and after every one, so |
 | [Generalise the fix, then attack the generalisation](generalise-the-fix.html) | `generalise-the-fix` | — | A fix that repairs one instance and leaves its siblings is half a fix. A fix |
 | [/getting-started](getting-started.html) | `getting-started` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html). |
-| [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Capability: `review` · Package: `folio-core` |
+| [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Package: `folio-core` |
 | [Glossary Build](glossary-build.html) | `glossary-build` | — |  |
 | [Glossary terms](glossary-terms.html) | `glossary-terms` | — | The owner, 2026-09-23: *"put glossary into folio-assistant-core"*, *"it should |
 | [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
@@ -185,8 +185,8 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
 | [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
 | [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
-| [Review comments](review-comments.html) | `review-comments` | — | > Skill id: `review-comments` · Capability: `review` · Package: `folio-core` |
-| [Review heat map](review-heatmap.html) | `review-heatmap` | — | > Skill id: `review-heatmap` · Capability: `review` · Package: `folio-core` · Bean: `qbfi` · Epic: ` |
+| [Review comments](review-comments.html) | `review-comments` | — | > Skill id: `review-comments` · Package: `folio-core` |
+| [Review heat map](review-heatmap.html) | `review-heatmap` | — | > Skill id: `review-heatmap` · Package: `folio-core` · Bean: `qbfi` · Epic: `q4jm` |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
 | [Managing a schema](schema-management.html) | `schema-management` | — | **This skill does not restate where schemas live or how they are laid out.** |
 | [Scientific Accuracy](scientific-accuracy.html) | `scientific-accuracy` | — |  |
@@ -194,7 +194,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
 | [Adding a](skill-registration.html) | `skill-registration` | — | One command, before you commit: |
 | [Skills and Tools](skills-and-tools.html) | `skills-and-tools` | — | **A skill is a capability stated generically. A Tool content node is one |
-| [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Capability: `review` · Package: `folio-core` |
+| [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Package: `folio-core` |
 | [Surprise to corpus](surprise-to-corpus.html) | `surprise-to-corpus` | — | > Skill id: `surprise-to-corpus` · Package: `folio-core` |
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [Swimlane Glossary](swimlane-glossary.html) | `swimlane-glossary` | — |  |
@@ -207,19 +207,19 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [At ingestion, and only at ingestion](theme-ui-review.html) | `theme-ui-review` | — | **The owner, 2026-09-23 and 2026-09-24**, settling bean `9fdi`: |
 | [Session Task Manager (`beans`)](todo-manager.html) | `todo-manager` | — | > **Disambiguation:** |
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
-| [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Capability: `translation` · Package: |
+| [Translation manager](translation-manager.html) | `translation-manager` | — | > Skill id: `translation-manager` · Package: |
 | [Turn reporting](turn-reporting.html) | `turn-reporting` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [All UI must follow accessibility guidelines](ui-accessibility.html) | `ui-accessibility` | — | This is a **rule**, stated as one by the owner, and it binds every surface this |
 | [UML overview: generated from declarations and schemas, never drawn](uml-overview.html) | `uml-overview` | — | **Every UML diagram here is generated.** Nothing in a class box is typed by |
-| [Untainted verification](untainted-verification.html) | `untainted-verification` | — | > Skill id: `untainted-verification` · Capability: `quality-assurance` · Package: `folio-core` |
+| [Untainted verification](untainted-verification.html) | `untainted-verification` | — | > Skill id: `untainted-verification` · Package: `folio-core` |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
 | [Never encode a constraint you have not verified](unverified-constraints.html) | `unverified-constraints` | — | Owner, 2026-09-19: **"dont encode rules against a working setup."** |
 | [Two mechanisms and a persona](upload-routes.html) | `upload-routes` | — | [`content-acquisition`](content-acquisition.md) decides *what channel* a |
 | [Watching the queue](uploads-watch.html) | `uploads-watch` | — | `uploads/` is the acquisition queue — |
 | [Adopting an upstream version bump](upstream-version-adoption.html) | `upstream-version-adoption` | — | An unpinned dependency is an unreviewed commit from a stranger, merged on every |
 | [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
-| [Visual diff](visual-diff.html) | `visual-diff` | — | > Skill id: `visual-diff` · Capability: `review` · Package: `folio-core` · Bean: `0rxe` · Epic: `q4j |
-| [Vocabulary authority](vocabulary-authority.html) | `vocabulary-authority` | — | > Skill id: `vocabulary-authority` · Capability: `schema` · Package: `folio-core` |
+| [Visual diff](visual-diff.html) | `visual-diff` | — | > Skill id: `visual-diff` · Package: `folio-core` · Bean: `0rxe` · Epic: `q4jm` |
+| [Vocabulary authority](vocabulary-authority.html) | `vocabulary-authority` | — | > Skill id: `vocabulary-authority` · Package: `folio-core` |
 | [Voice authoring guidance](voice-authoring-guidance.html) | `voice-authoring-guidance` | — |  |
 | [Voice editorial review](voice-editorial-review.html) | `voice-editorial-review` | — |  |
 | [Voice overlay review](voice-overlay-review.html) | `voice-overlay-review` | — |  |
@@ -293,12 +293,11 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
-| [Domain fencing](domain-fencing.html) | `domain-fencing` | — | > Skill id: `domain-fencing` · Capability: `architecture` · Package: `graph-management` |
-| [Edge kinds and blast radius](edge-kinds-and-blast-radius.html) | `edge-kinds-and-blast-radius` | — | > Skill id: `edge-kinds-and-blast-radius` · Capability: `architecture` · Package: `graph-management` |
-| [Graph detanglement](graph-detanglement.html) | `graph-detanglement` | — | > Skill id: `graph-detanglement` · Capability: `architecture` · Package: `graph-management` |
-| [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Capability: `architecture` · Package: `graph-management` |
-| [Knowledge Graph separation](kg-separation.html) | `kg-separation` | — | > Skill id: `kg-separation` · Capability: `architecture` · Package: `graph-management` |
-| [LSI indexing](lsi-indexing.html) | `lsi-indexing` | — | **The method is the node, not this file.** [`lsi`](https://github.com/litlfred/folio-assistant/blob/ |
+| [Domain fencing](domain-fencing.html) | `domain-fencing` | — | > Skill id: `domain-fencing` · Package: `graph-management` |
+| [Edge kinds and blast radius](edge-kinds-and-blast-radius.html) | `edge-kinds-and-blast-radius` | — | > Skill id: `edge-kinds-and-blast-radius` · Package: `graph-management` |
+| [Graph detanglement](graph-detanglement.html) | `graph-detanglement` | — | > Skill id: `graph-detanglement` · Package: `graph-management` |
+| [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Package: `graph-management` |
+| [Knowledge Graph separation](kg-separation.html) | `kg-separation` | — | > Skill id: `kg-separation` · Package: `graph-management` |
 
 ## Synced from claude-scientific-skills (pinned, read-only)
 

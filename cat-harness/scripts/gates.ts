@@ -959,6 +959,18 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
   },
   {
+    script: "check:navbar-consistency",
+    kind: "report",
+    reason:
+      "prints each instance's icon resolution and the two glyph registries' overlap; `check:navbar-consistency:check` is the gating form and is wired",
+  },
+  {
+    script: "check:navbar-consistency:strict",
+    kind: "report",
+    reason:
+      "fails on the two ADVISORY families as well — declared tiles on the fallback glyph, and art shipped without an `icon`. Both are editorial calls (`glyphFor`'s fallback is deliberate), so the gate runs `:check`; this form exists for a sweep that wants the coverage gap to be fatal",
+  },
+  {
     script: "check:undeclared-files",
     kind: "report",
     reason:
