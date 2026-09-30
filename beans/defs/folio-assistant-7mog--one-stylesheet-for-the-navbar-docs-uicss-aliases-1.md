@@ -5,8 +5,8 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T17:39:39Z
-updated_at: 2026-09-29T17:59:40Z
-parent: folio-assistant-p5wm
+updated_at: 2026-09-29T20:52:40Z
+parent: folio-assistant-o3xy
 ---
 
 The owner chose "1 2" on 2026-09-24: land the low-risk version first, then single-source the CSS. This is the 2.
@@ -132,6 +132,7 @@ grows is a test failure and a decision — not something somebody notices.
 - [x] `bun run gates` green
 
 
+_2026-09-29_ — **Re-parented `p5wm` → `o3xy`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Navbar stylesheet guard: a UI/accessibility subject; o3xy already sits under GOAL 2.
 
 Claimed by claude/goal2-navbar-resume — 2026-09-29, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq (GOAL 2 resume after the 09-25 usage-limit stall).
 

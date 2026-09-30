@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1xrg
 title: state:visualizer:check cannot fail on a declaration that points at its own page (the '4 of 7 render a shell' premise was a FALSE FINDING — retracted)
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-22T06:48:40Z
-updated_at: 2026-09-22T10:33:45Z
+updated_at: 2026-09-30T09:03:42Z
 parent: folio-assistant-zzmr
 ---
 
@@ -181,3 +181,7 @@ across it. I found it by opening the page, not by running the gate.
 The three other Done-when items rest on the retracted premise and are left
 unticked rather than rewritten: whoever picks this up should re-derive what,
 if anything, they should say now.
+
+## Closed on evidence (2026-09-30) — #1168 B7a-2b removed the defect class
+The last open item was that state:visualizer:check cannot catch a declaration pointing at its own page. That shape needed a DIRECTORY to name its viewer; since B7a-2b (773bc1032, on main) a directory no longer does — the viewer is derived from the page's own `renders:` / `rendered-by:` — and only three directories keep a declared viewer (cat-harness/fsh-guts, who-iris/who-iris-catalogue, folio-assistant-core/glossary), none of them a state graph. viewer-declarations.test.ts ('a directory declares its viewer only where no platform page draws it') fails on any fourth, so a self-referential declaration now fails a test instead of needing a person to notice.
+Checked on the generated pages, not assumed: of the 7 state pages, only swimlane-glossary (→ ../cat-harness/docs-auto/glossary/swimlane-glossary/) and uploads (→ ../cat-harness/uploads/cat-harness/) say "rendered elsewhere", and neither links to itself.

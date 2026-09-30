@@ -91,6 +91,15 @@ const PLACEHOLDER_BASE = "https://example.invalid/gate-stand-in";
  */
 const INVOCATION = /kg-export\.ts\s+--instance\s+(\S+)([^\n]*)/g;
 
+/**
+ * A content repository's OWN tools exporting its graph — bootstrap-tools'
+ * `export-graph.ts --root <path>`, which writes `bootstrap.jsonld` since
+ * 2026-09-30 (owner, bean `xsqm`). The same question as above — does the
+ * command the deploy runs succeed, and emit something — for a publisher that
+ * is not cat-harness's.
+ */
+const TOOLS_INVOCATION = /bootstrap-tools\/scripts\/export-graph\.ts\s+--root\s+(\S+)([^\n]*)/g;
+
 export interface Invocation {
   /** The workflow file that runs it, basename only. */
   workflow: string;
@@ -98,6 +107,8 @@ export interface Invocation {
   instance: string;
   /** True when the workflow passes a `--base-url` this gate had to stand in for. */
   standInBase: boolean;
+  /** Which exporter: cat-harness's, or the content's own tools'. */
+  tool?: "kg-export" | "export-graph";
 }
 
 export interface ExportResult {
@@ -133,11 +144,20 @@ export interface PublishedExportReport {
  * that does not, and the report must not present them as the same evidence.
  */
 export function publishedInstances(workflowText: string, workflow = ""): Invocation[] {
-  return [...workflowText.matchAll(INVOCATION)].map((m) => ({
-    workflow,
-    instance: m[1]!,
-    standInBase: /--base-url/.test(m[2] ?? ""),
-  }));
+  return [
+    ...[...workflowText.matchAll(INVOCATION)].map((m) => ({
+      workflow,
+      instance: m[1]!,
+      standInBase: /--base-url/.test(m[2] ?? ""),
+      tool: "kg-export" as const,
+    })),
+    ...[...workflowText.matchAll(TOOLS_INVOCATION)].map((m) => ({
+      workflow,
+      instance: m[1]!,
+      standInBase: true,
+      tool: "export-graph" as const,
+    })),
+  ];
 }
 
 /**
@@ -154,7 +174,8 @@ export function publishedInstances(workflowText: string, workflow = ""): Invocat
  * question is what the command a workflow runs actually produced.
  */
 function nodesEmitted(stdout: string): number | undefined {
-  const m = /^\s*(\d+)\s+total\s*$/m.exec(stdout);
+  // kg-export's summary ends `<n> total`; export-graph's says `: <n> nodes`.
+  const m = /^\s*(\d+)\s+total\s*$/m.exec(stdout) ?? /: (\d+) nodes\b/.exec(stdout);
   return m ? Number(m[1]) : undefined;
 }
 
@@ -188,11 +209,15 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
     };
   }
   const stub = `${inv.workflow}-${inv.instance}`.replace(/[^a-zA-Z0-9]+/g, "-");
-  const args = ["run", join("cat-harness", "scripts", "kg-export.ts"), "--instance", inv.instance];
+  const args =
+    inv.tool === "export-graph"
+      ? ["run", join("bootstrap-tools", "scripts", "export-graph.ts"), "--root", inv.instance, "--base-url", `${PLACEHOLDER_BASE}/instance/`]
+      : ["run", join("cat-harness", "scripts", "kg-export.ts"), "--instance", inv.instance];
   // Only when the workflow passes one. Supplying a base where the workflow
   // does not would skip the declaration fallback entirely — the exact path
-  // that broke the deploy — and report a pass over it.
-  if (inv.standInBase) args.push("--base-url", PLACEHOLDER_BASE);
+  // that broke the deploy — and report a pass over it. (export-graph always
+  // takes one: it has no fallback to skip.)
+  if (inv.tool !== "export-graph" && inv.standInBase) args.push("--base-url", PLACEHOLDER_BASE);
   args.push("--out", join(outDir, `${stub}.jsonld`));
 
   const r = spawnSync("bun", args, { cwd: REPO_ROOT, encoding: "utf-8" });

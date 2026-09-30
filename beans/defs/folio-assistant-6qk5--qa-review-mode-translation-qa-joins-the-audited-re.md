@@ -5,8 +5,8 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T08:55:36Z
-updated_at: 2026-09-19T08:55:36Z
-parent: folio-assistant-5a3l
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-1swy
 ---
 
 From [#363](https://github.com/litlfred/folio-assistant/issues/363): "qa review
@@ -51,3 +51,6 @@ whose auditor and criterion are not recorded cannot be audited, only read.
 `folio-assistant-2634` (QA outputs live under test/results — verdicts and
 witnesses both, by provenance) is the parent move. Check it before starting;
 this may be a child of it rather than a peer.
+
+
+_2026-09-29_ — **Re-parented `5a3l` → `1swy`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Translation QA joining the audited review record is QA's subject; nothing here is deployment.

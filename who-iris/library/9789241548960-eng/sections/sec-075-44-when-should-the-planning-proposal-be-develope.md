@@ -9,19 +9,15 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 and finalized?
-The planning proposal is the first major product of the guideline develop­
-ment process, and its preparation starts as soon as the technical unit decides 
+The planning proposal is the first major product of the guideline development process, and its preparation starts as soon as the technical unit decides 
 to develop a guideline. The responsible technical officer should strive to 
-develop and submit the proposal to the GRC for review as quickly as possi­
-ble, but with sufficient consideration and preparation of the many elements 
+develop and submit the proposal to the GRC for review as quickly as possible, but with sufficient consideration and preparation of the many elements 
 in the proposal. The most difficult and time-consuming part of the planning 
 proposal is formulating the key questions (in PICO format). These questions 
-need to be well developed in the planning proposal, and the proposal is sub­
-mitted to the GRC only when this has been completed.
+need to be well developed in the planning proposal, and the proposal is submitted to the GRC only when this has been completed.
 4.5 Preparing the planning proposal
 Table 4.1 provides a list of all the topics that should be considered when writing 
-a planning proposal, and the GRC intranet site (1) provides detailed instruc­
-tions for reporting on each topic. The purpose of these tables is not to provide 
+a planning proposal, and the GRC intranet site (1) provides detailed instructions for reporting on each topic. The purpose of these tables is not to provide 
 instructions for each and every step in the guideline development process, but 
 rather to indicate what should be reported in the planning proposal; specific 
 instructions on how to develop a guideline are contained in this handbook.
@@ -35,8 +31,7 @@ derived from this template are available on the GRC intranet site (1). The
 responsible technical officer must complete and submit the checklist with 
 the planning proposal for review by the GRC.
 Planning proposals will only be reviewed by the GRC once they have 
-been approved in the WHO electronic clearance system (ePub) by the direc­
-tor of the responsible technical unit.
+been approved in the WHO electronic clearance system (ePub) by the director of the responsible technical unit.
 41
 42
 Table 4.1.	

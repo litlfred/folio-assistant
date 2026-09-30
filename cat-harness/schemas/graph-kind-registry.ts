@@ -903,6 +903,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // now a directory of this harness (bean `byql`), so the shape is an
       // ordinary instance-relative path under `schemas/` and needs no `detangle:` qualifier.
       "folio-detangle-sidecar/v1": { shape: "schemas/detangle-sidecar.ts#DetangleSidecar" },
+      // The per-graph LSI index sidecar (bean `ansc`): fingerprint, pole terms,
+      // neighbours and findings — never the vectors.
+      "folio-lsi-index/v1": { shape: "scripts/lsi.ts#LsiSidecar" },
       // The viewer-navbar audit (bean `edx7`). A VERDICT PER PAGE rather than
       // a count, because the owner's rule has two clauses -- present unless
       // EXPLICITLY removed -- and a count cannot tell a deliberate removal
@@ -1061,7 +1064,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "glossary-ledger/1.0.0": { validator: "bootstrap-tools:schemas/glossary-ledger.ts#LedgerSchema" },
+      "glossary-ledger/1.0.0": { validator: "schemas/glossary-ledger.ts#LedgerSchema" },
     },
     // NOT work. A bean is something somebody is partway through; this is a
     // record that a term exists, true whether or not anybody is doing
@@ -1069,11 +1072,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // decided, and it was right to: "state" alone does not say whether a
     // reader is looking at a queue or at a fact.
     recordsWork: false,
-    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
-    // The harness's detail, formerly in the summary: written by
+    // cat-harness's own kind since 2026-09-30 (owner, bean `xsqm`): the
+    // ledger is harness state, hosted here for every instance it exports,
+    // so the kind moved up from bootstrap with it. Written by
     // scripts/glossary-export.ts; the glossary document itself is derived and
     // not stored here — only the ledger, the one fact that cannot be re-derived.
-    summary: BOOTSTRAP_GRAPH_KINDS["swimlane-glossary"],
+    summary:
+      "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused.",
   },
   models: {
     type: termIri("ModelGraph"),
@@ -1339,6 +1344,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     nodeSchemas: {
       "folio-document-images/v1": { validator: "schemas/document-image.ts#ImagesSidecarSchema" },
       "folio-image-verdicts/v1": { shape: "scripts/apply-image-verdicts.ts#VerdictFile" },
+      // The section analogue of image verdicts (bean `fnqn`): which sections are
+      // mostly SAMPLE text. Read by summaries and the LSI units.
+      "folio-section-verdicts/v1": { validator: "schemas/section-verdicts.ts#SectionVerdictFileSchema" },
       // The OTHER layer of the same page — bean `a8wy`. `folio-document-images`
       // holds what the PDF PLACES; this holds the positioned text of a figure
       // the PDF DRAWS, for which there is no image object to place. Two
@@ -1624,6 +1632,11 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   voices: {
     type: termIri("VoiceGraph"),
     renderable: false,
+    // THE FROM-WITHIN NODE, as on `docs` (owner 2026-09-30, bean `rkqp`:
+    // "vendors/<id>/ should be declared subgraphs along with vendors/").
+    // `skills/voices/voices.json` names the sub-graphs a voices directory
+    // holds; only those are read as part of it. Absent means none.
+    declarationFile: "voices.json",
     // An authored rule set. A voice is true whether or not any prose has been
     // written against it.
     holds: "content",
@@ -1633,6 +1646,26 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary:
       "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. " +
       "Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
+  },
+  // ── SUB-GRAPH OF `voices` — bean `rkqp`, owner 2026-09-30 ──────────────
+  //
+  // A vendor voice specialises a base voice for one agent vendor (Claude,
+  // Gemini CLI, ...). ONE kind serves both levels: `vendors/` and each
+  // `vendors/<id>/` hold the same thing, vendor voice profiles, and a kind
+  // says what is held rather than how deep. `vendors/vendors.json` declares
+  // each `<id>/`; the chain stops where a directory carries no declaration.
+  "voice-vendors": {
+    type: termIri("VoiceVendorsGraph"),
+    renderable: false,
+    within: "voices",
+    declarationFile: "vendors.json",
+    holds: "content",
+    // declared-path-literal: this table IS the declaration, as on `voices`.
+    validator: "schemas/voices.ts#VoiceProfileSchema",
+    summary:
+      "Vendor voice profiles — a base voice specialised for one agent vendor, " +
+      "`folio-voice/v1` with `extends` naming the base. A sub-graph of `voices`, " +
+      "declared from within by `voices.json`, each vendor declared by `vendors.json`.",
   },
   // Themes an instance DERIVED from a source it holds — a served stylesheet or
   // a style guide's stated rules. A separate kind from `folio` because a theme

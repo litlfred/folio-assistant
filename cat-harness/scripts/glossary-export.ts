@@ -123,14 +123,14 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-skos
  */
-import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../../bootstrap-tools/schemas/glossary-ledger.ts";
+import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
 import { tagCompatible } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 import { NS_PREFIXES, ownElementPattern, termIri } from "../schemas/namespaces.js";
 import { laneBinding, readRoleGraph, type LaneBinding, type RoleDef, type RoleGraph } from "../schemas/role-graph.js";
-import { repoRootFor } from "../schemas/cat-harness.js";
+import { glossaryHomeFor, repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 import { exportIdentity, makeIri } from "./kg-export.js";
 import { codeListDirs, loadCodeLists } from "../schemas/code-list.js";
@@ -148,7 +148,7 @@ export const GLOSSARY_DIR = "glossary";
 /** The ledger's filename — the one non-derivable fact this module stores. */
 export const LEDGER_FILENAME = "glossary-ledger.json";
 /** Tagged so the file declares what it is, per the directory conventions. */
-export { LEDGER_SCHEMA } from "../../bootstrap-tools/schemas/glossary-ledger.ts";
+export { LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
 
 // ── The corpus ──────────────────────────────────────────────────
 
@@ -261,8 +261,13 @@ export interface Ledger {
   readonly concepts: Record<string, LedgerEntry>;
 }
 
+/**
+ * The ledger's file: in the instance's own `swimlane-glossary` directory, or —
+ * for an instance that declares none, as bootstrap does not since 2026-09-30 —
+ * hosted in this harness's under the instance's stub ({@link glossaryHomeFor}).
+ */
 export function ledgerPath(instanceRoot: string): string {
-  return join(instanceRoot, GLOSSARY_DIR, LEDGER_FILENAME);
+  return join(glossaryHomeFor(instanceRoot, ROOT).root, LEDGER_FILENAME);
 }
 
 export function readLedger(instanceRoot: string, stub: string): Ledger {
@@ -293,6 +298,15 @@ export interface GlossaryReport {
   readonly usages: number;
   /** Declared roles no task-containing lane in this instance draws. */
   readonly undrawn: string[];
+  /**
+   * ...of those, the ones a lane OUTSIDE this instance binds by
+   * `<folio:role ref>`, with the diagrams that draw them. Bean `nafz`: the
+   * walk is scoped to one instance (a glossary is published per instance), so
+   * "no swimlane draws" is a fact about the WALK, and a role drawn in a
+   * dependent's diagram must not read like one drawn nowhere. Informational —
+   * it does not change the glossary, only what the report claims.
+   */
+  readonly drawnElsewhere: ReadonlyArray<{ role: string; files: string[] }>;
   /** Lanes whose binding is dangling or contradictory — reported, not gated. */
   readonly problems: string[];
   /** True when the ledger on disk differs from the one this run computed. */
@@ -357,6 +371,12 @@ export function buildGlossary(opts: {
   }
   const merged: RoleGraph | undefined = graphs.length > 0 ? { name: id.stub, roles } : undefined;
 
+  // THIS instance's diagrams only — not the dependency overlay
+  // `translate-bpmn` walks (bean `nafz`). A glossary is published per
+  // instance and each dependent builds its own, so a role drawn only in a
+  // dependent's diagram is reported in `drawnElsewhere`, not bound here.
+  // Never widen this walk: skill `swimlane-glossary` §"Run it once per
+  // instance", and `instance-graph-isolation.test.ts` (`7u3g`).
   const lanes = readLanes(instanceRoot, repoRoot);
   const swimlanes = lanes.filter((l) => l.activities > 0);
 
@@ -449,7 +469,18 @@ export function buildGlossary(opts: {
     // A declared role with no lane in THIS instance is still a declared term
     // — omitting it would be `dh4f`, a glossary silently short of the
     // vocabulary it claims to index. It is reported in `undrawn` instead.
-    const altLabels = [...new Set(ls.map((l) => l.laneName).filter((n): n is string => typeof n === "string" && n !== r.title))].sort();
+    // Alternative labels from two sources, merged: the names the role's lanes
+    // are drawn with, and the role's own authored `otherNames` (smart-base's
+    // Generic Persona field, owner 2026-09-30). Retired names are NOT here —
+    // `formerNames` become `hiddenLabel`: findable, never offered as current.
+    const altLabels = [
+      ...new Set(
+        [...ls.map((l) => l.laneName), ...(r.otherNames ?? [])].filter(
+          (n): n is string => typeof n === "string" && n !== r.title,
+        ),
+      ),
+    ].sort();
+    const hiddenLabels = [...new Set((r.formerNames ?? []).map((f) => f.name))].sort();
     live.set(localPart, r.title);
     nodes.push({
       "@id": iri,
@@ -457,6 +488,7 @@ export function buildGlossary(opts: {
       prefLabel: r.title,
       ...(r.description ? { definition: r.description } : {}),
       ...(altLabels.length > 0 ? { altLabel: altLabels } : {}),
+      ...(hiddenLabels.length > 0 ? { hiddenLabel: hiddenLabels } : {}),
       notation: r.id,
       inScheme: schemeIri,
       // `actedUpon` is not decoration: `Work plan — beans`, `Corpus` and
@@ -497,6 +529,15 @@ export function buildGlossary(opts: {
   }
 
   // ── Retirement ────────────────────────────────────────────────
+  // A retired name a role now lists among its `formerNames` was RENAMED, not
+  // dropped: its deprecated concept says which role replaced it, so a reader
+  // holding the old name from old text is sent to the current one.
+  const renamedTo = new Map<string, { iri: string; title: string }>();
+  for (const r of roles) {
+    for (const f of r.formerNames ?? []) {
+      renamedTo.set(f.name.trim().toLowerCase(), { iri: makeIri(id.docIri, "role", r.id), title: r.title });
+    }
+  }
   const prior = readLedger(instanceRoot, id.stub);
   const concepts: Record<string, LedgerEntry> = {};
   const retired: string[] = [];
@@ -530,7 +571,12 @@ export function buildGlossary(opts: {
       // REPORTED, NEVER DELETED. `owl:deprecated` is the machine-readable
       // half; the change note is the half a person reads.
       deprecated: true,
-      changeNote: `Retired ${retiredOn}: no swimlane in this instance derives this term.`,
+      ...(() => {
+        const to = renamedTo.get(was.prefLabel.trim().toLowerCase());
+        return to === undefined
+          ? { changeNote: `Retired ${retiredOn}: no swimlane in this instance derives this term.` }
+          : { changeNote: `Retired ${retiredOn}: renamed ${to.title}.`, isReplacedBy: to.iri };
+      })(),
     });
   }
 
@@ -545,6 +591,20 @@ export function buildGlossary(opts: {
   for (const r of roles) {
     if (!occurrences.has(r.id)) undrawn.push(r.id);
   }
+  // Which of those another instance draws (bean `nafz`). Read the whole
+  // repository's diagrams, drop this instance's own, and match only an
+  // explicit `<folio:role ref>` — a lane NAME that happens to equal a role's
+  // is not a binding, and claiming one would be the report inventing a fact.
+  const drawnElsewhere: Array<{ role: string; files: string[] }> = [];
+  if (undrawn.length > 0) {
+    const own = relative(repoRoot, instanceRoot);
+    const inOwn = (f: string) => own === "" || f === own || f.startsWith(own + "/");
+    const outside = readLanes(repoRoot, repoRoot).filter((l) => l.activities > 0 && !inOwn(l.file));
+    for (const role of undrawn) {
+      const files = [...new Set(outside.filter((l) => l.roleRef === role).map((l) => l.file))].sort();
+      if (files.length > 0) drawnElsewhere.push({ role, files });
+    }
+  }
 
   const schemeLabel = `${id.stub} swimlane glossary`;
   const doc = {
@@ -557,6 +617,8 @@ export function buildGlossary(opts: {
       label: "rdfs:label",
       prefLabel: "skos:prefLabel",
       altLabel: "skos:altLabel",
+      hiddenLabel: "skos:hiddenLabel",
+      isReplacedBy: { "@id": "dcterms:isReplacedBy", "@type": "@id" },
       definition: "skos:definition",
       scopeNote: "skos:scopeNote",
       changeNote: "skos:changeNote",
@@ -603,6 +665,7 @@ export function buildGlossary(opts: {
       restored,
       usages,
       undrawn,
+      drawnElsewhere,
       problems,
       ledgerStale,
     },
@@ -629,7 +692,15 @@ if (import.meta.main) {
   if (report.retired.length > 0) console.log(`  ${report.retired.length} retired (kept, never deleted)`);
   for (const k of report.newlyRetired) console.log(`    NEWLY RETIRED: ${k}`);
   if (report.undrawn.length > 0) {
-    console.log(`  ${report.undrawn.length} declared role(s) no swimlane draws: ${report.undrawn.join(", ")}`);
+    // Scoped wording (bean `nafz`): the walk covers THIS instance's diagrams
+    // only, so say so, and separate a role drawn in another instance from one
+    // no diagram in the repository draws.
+    const where = relative(repoRootFor(ROOT), instanceDir) || ".";
+    const elsewhere = new Map(report.drawnElsewhere.map((d) => [d.role, d.files]));
+    const nowhere = report.undrawn.filter((r) => !elsewhere.has(r));
+    console.log(`  ${report.undrawn.length} declared role(s) no swimlane in ${where}/ draws:`);
+    for (const [role, files] of elsewhere) console.log(`    ${role} — drawn in another instance: ${files.join(", ")}`);
+    if (nowhere.length > 0) console.log(`    drawn by no diagram in the repository: ${nowhere.join(", ")}`);
   }
   for (const p of report.problems) console.log(`  PROBLEM: ${p}`);
 

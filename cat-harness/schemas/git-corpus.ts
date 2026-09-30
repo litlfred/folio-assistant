@@ -84,12 +84,18 @@ import { join, relative, resolve, sep } from "node:path";
  * @param dir       directory to ask about; its repository is inferred
  * @param pathspec  optional git pathspecs, e.g. `["*.md"]`. Omitted means all.
  */
+/** Room for a whole-checkout `ls-files -z`; the 1 MiB default is not. */
+export const GIT_LIST_MAX_BUFFER = 64 * 1024 * 1024;
+
 export function gitCorpus(dir: string, pathspec: readonly string[] = []): string[] | undefined {
   if (!existsSync(dir)) return undefined;
   const r = spawnSync(
     "git",
     ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...pathspec],
-    { cwd: dir, encoding: "utf-8" },
+    // spawnSync's default maxBuffer is 1 MiB, and this checkout's listing
+    // crossed it on 2026-09-30 — past that the call fails with ENOBUFS and
+    // every caller reads "git could not answer", a false could-not-determine.
+    { cwd: dir, encoding: "utf-8", maxBuffer: GIT_LIST_MAX_BUFFER },
   );
   if (r.error !== undefined || r.status !== 0) return undefined;
   return r.stdout

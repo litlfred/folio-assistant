@@ -9,8 +9,7 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 of recommendations
-Four main factors determine the direction and strength of a recommenda­
-tion in public health (1–5):
+Four main factors determine the direction and strength of a recommendation in public health (1–5):
 ■■
 the confidence in the estimates of effect of the evaluated evidence (i.e. 
 the quality of the evidence) (see Chapter 9);

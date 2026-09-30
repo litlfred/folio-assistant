@@ -54,6 +54,7 @@ WHAT THE LANE IS ACCOUNTABLE FOR, and where it ends. Choosing a route, writing t
         <bpmn:documentation>Runs the whole pipeline from Task_Detect through Task_Promote, and then Task_SummaryQueue, where it drains a few prose blocks of the advisory summary queue — including the theme branch, which stays in THIS lane rather than dipping into Lane_2: deciding a document is a theme source is the engine asking its author a question, not a write to the shared work plan. It does not stop at a gap: Gateway_Complete's 'gap' branch leaves this lane only long enough for Lane_2 to record the bean, then Flow_i8 returns control here at CallActivity_Derive rather than ending the run — so an incomplete L1 build is this lane's problem to keep working until Gateway_Complete says otherwise.</bpmn:documentation>
         <bpmn:extensionElements><bootstrap.processes:role ref="ingestion-agent"/></bpmn:extensionElements>
         <bpmn:flowNodeRef>Task_Detect</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Licence</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>CallActivity_Extract</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>CallActivity_Derive</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_ThemeSource</bpmn:flowNodeRef>
@@ -114,13 +115,23 @@ and mint a doc id
       <bpmn:incoming>Flow_i1</bpmn:incoming>
       <bpmn:outgoing>Flow_i2</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_Licence" name="Establish the licence
+from the upload alone
+[document-intake]">
+      <bpmn:documentation>EARLY, by the owner's ruling on bean 7bg9 (2026-09-20): before any derivation, because library/ is holds: content and anything derived first is committed, so refusing it later is a deletion nobody may take unasked. This step sees only the upload itself — the licence recorded in its intake.json (the same stated / unknown record a library manifest carries) and whether a LICENSE file sits beside it. It never infers a licence from extracted text. The verdict is stated, unknown, or UNDETERMINED, and undetermined is never reported as cleared: the pipeline proceeds and says so, because a licence that only extraction can reveal is a later check's to find.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="document-intake" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_i2</bpmn:incoming>
+      <bpmn:outgoing>Flow_i2a</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:callActivity id="CallActivity_Extract" name="Extract structure
 [document-intake]" calledElement="Process_ExtractStructure">
       <bpmn:documentation>See ingest-extract-structure.bpmn.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="document-intake" />
       </bpmn:extensionElements>
-      <bpmn:incoming>Flow_i2</bpmn:incoming>
+      <bpmn:incoming>Flow_i2a</bpmn:incoming>
       <bpmn:outgoing>Flow_i3</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:callActivity id="CallActivity_Derive" name="Derive content
@@ -172,12 +183,14 @@ knowledge graph
     <bpmn:callActivity id="CallActivity_Gate" name="L1 completeness gate" calledElement="Process_L1Gate">
       <bpmn:documentation>See ingest-l1-completeness-gate.bpmn.
 
-NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has
-never existed, and is not `proof-triage` (that one triages proofs). Left
-uncovered until the skill is written.
+Skill-backed by `library-ingestion` (2026-09-30, bean 7bg9): its section
+"What a complete L1 entry holds" names `check:l1-complete` as the gate and
+states its three results. Until then this step named `paper-relevance-triage`,
+which never existed, and was left uncovered rather than bound to a guess.
 
 The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.</bpmn:documentation>
       <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="library-ingestion" />
         <cat-harness.processes:adjudication accepts="real spurious source-wrong"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i5</bpmn:incoming>
@@ -240,7 +253,8 @@ as an L1 source">
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_i1" sourceRef="StartEvent_Dropped" targetRef="Task_Place" />
     <bpmn:sequenceFlow id="Flow_i1a" sourceRef="Task_Place" targetRef="Task_Detect" />
-    <bpmn:sequenceFlow id="Flow_i2" sourceRef="Task_Detect" targetRef="CallActivity_Extract" />
+    <bpmn:sequenceFlow id="Flow_i2" sourceRef="Task_Detect" targetRef="Task_Licence" />
+    <bpmn:sequenceFlow id="Flow_i2a" sourceRef="Task_Licence" targetRef="CallActivity_Extract" />
     <bpmn:sequenceFlow id="Flow_i3" sourceRef="CallActivity_Extract" targetRef="CallActivity_Derive" />
     <bpmn:sequenceFlow id="Flow_i4" sourceRef="CallActivity_Derive" targetRef="Gateway_ThemeSource" />
     <bpmn:sequenceFlow id="Flow_i5" sourceRef="CallActivity_BuildKg" targetRef="CallActivity_Gate" />
@@ -254,42 +268,44 @@ as an L1 source">
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_Ingestion">
     <bpmndi:BPMNPlane id="Plane_Ingestion" bpmnElement="Collaboration_Ingestion">
-      <bpmndi:BPMNShape id="Participant_Ingestion_di" bpmnElement="Participant_Ingestion" isHorizontal="true"><dc:Bounds x="160" y="80" width="2440" height="720" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0_di" bpmnElement="Lane_0" isHorizontal="true"><dc:Bounds x="190" y="80" width="2410" height="180" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true"><dc:Bounds x="190" y="260" width="2410" height="180" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2" isHorizontal="true"><dc:Bounds x="190" y="440" width="2410" height="180" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_3_di" bpmnElement="Lane_3" isHorizontal="true"><dc:Bounds x="190" y="620" width="2410" height="180" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_Ingestion_di" bpmnElement="Participant_Ingestion" isHorizontal="true"><dc:Bounds x="160" y="80" width="2630" height="720" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0_di" bpmnElement="Lane_0" isHorizontal="true"><dc:Bounds x="190" y="80" width="2600" height="180" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1_di" bpmnElement="Lane_1" isHorizontal="true"><dc:Bounds x="190" y="260" width="2600" height="180" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_2_di" bpmnElement="Lane_2" isHorizontal="true"><dc:Bounds x="190" y="440" width="2600" height="180" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_3_di" bpmnElement="Lane_3" isHorizontal="true"><dc:Bounds x="190" y="620" width="2600" height="180" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_Dropped_di" bpmnElement="StartEvent_Dropped"><dc:Bounds x="227" y="152" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Place_di" bpmnElement="Task_Place"><dc:Bounds x="310" y="130" width="150" height="80" /></bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_Detect_di" bpmnElement="Task_Detect"><dc:Bounds x="410" y="310" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="CallActivity_Extract_di" bpmnElement="CallActivity_Extract"><dc:Bounds x="600" y="310" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="CallActivity_Derive_di" bpmnElement="CallActivity_Derive"><dc:Bounds x="790" y="310" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_ThemeSource_di" bpmnElement="Gateway_ThemeSource" isMarkerVisible="true"><dc:Bounds x="980" y="325" width="50" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="CallActivity_IngestTheme_di" bpmnElement="CallActivity_IngestTheme"><dc:Bounds x="1080" y="310" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_theme_yes_di" bpmnElement="Flow_theme_yes"><di:waypoint x="1030" y="350" /><di:waypoint x="1080" y="350" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_theme_join_di" bpmnElement="Flow_theme_join"><di:waypoint x="1230" y="350" /><di:waypoint x="1320" y="350" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_theme_no_di" bpmnElement="Flow_theme_no"><di:waypoint x="1005" y="375" /><di:waypoint x="1005" y="415" /><di:waypoint x="1395" y="415" /><di:waypoint x="1395" y="390" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="CallActivity_BuildKg_di" bpmnElement="CallActivity_BuildKg"><dc:Bounds x="1320" y="310" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="CallActivity_Gate_di" bpmnElement="CallActivity_Gate"><dc:Bounds x="1510" y="310" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_Complete_di" bpmnElement="Gateway_Complete" isMarkerVisible="true"><dc:Bounds x="1750" y="325" width="50" height="50" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_OpenBean_di" bpmnElement="Task_OpenBean"><dc:Bounds x="1700" y="490" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_Promote_di" bpmnElement="Task_Promote"><dc:Bounds x="1890" y="310" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_SummaryQueue_di" bpmnElement="Task_SummaryQueue"><dc:Bounds x="2080" y="310" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_Citeable_di" bpmnElement="Task_Citeable"><dc:Bounds x="2270" y="670" width="150" height="80" /></bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_Ingested_di" bpmnElement="EndEvent_Ingested"><dc:Bounds x="2517" y="692" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Licence_di" bpmnElement="Task_Licence"><dc:Bounds x="600" y="310" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_Extract_di" bpmnElement="CallActivity_Extract"><dc:Bounds x="790" y="310" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_Derive_di" bpmnElement="CallActivity_Derive"><dc:Bounds x="980" y="310" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_ThemeSource_di" bpmnElement="Gateway_ThemeSource" isMarkerVisible="true"><dc:Bounds x="1170" y="325" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_IngestTheme_di" bpmnElement="CallActivity_IngestTheme"><dc:Bounds x="1270" y="310" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_theme_yes_di" bpmnElement="Flow_theme_yes"><di:waypoint x="1220" y="350" /><di:waypoint x="1270" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_theme_join_di" bpmnElement="Flow_theme_join"><di:waypoint x="1420" y="350" /><di:waypoint x="1510" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_theme_no_di" bpmnElement="Flow_theme_no"><di:waypoint x="1195" y="375" /><di:waypoint x="1195" y="415" /><di:waypoint x="1585" y="415" /><di:waypoint x="1585" y="390" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="CallActivity_BuildKg_di" bpmnElement="CallActivity_BuildKg"><dc:Bounds x="1510" y="310" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_Gate_di" bpmnElement="CallActivity_Gate"><dc:Bounds x="1700" y="310" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Complete_di" bpmnElement="Gateway_Complete" isMarkerVisible="true"><dc:Bounds x="1940" y="325" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_OpenBean_di" bpmnElement="Task_OpenBean"><dc:Bounds x="1890" y="490" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Promote_di" bpmnElement="Task_Promote"><dc:Bounds x="2080" y="310" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_SummaryQueue_di" bpmnElement="Task_SummaryQueue"><dc:Bounds x="2270" y="310" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Citeable_di" bpmnElement="Task_Citeable"><dc:Bounds x="2460" y="670" width="150" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_Ingested_di" bpmnElement="EndEvent_Ingested"><dc:Bounds x="2707" y="692" width="36" height="36" /></bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_i1_di" bpmnElement="Flow_i1"><di:waypoint x="263" y="170" /><di:waypoint x="310" y="170" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i1a_di" bpmnElement="Flow_i1a"><di:waypoint x="385" y="210" /><di:waypoint x="385" y="350" /><di:waypoint x="410" y="350" /></bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_i2_di" bpmnElement="Flow_i2"><di:waypoint x="560" y="350" /><di:waypoint x="600" y="350" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i3_di" bpmnElement="Flow_i3"><di:waypoint x="750" y="350" /><di:waypoint x="790" y="350" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i4_di" bpmnElement="Flow_i4"><di:waypoint x="940" y="350" /><di:waypoint x="1320" y="350" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i5_di" bpmnElement="Flow_i5"><di:waypoint x="1470" y="350" /><di:waypoint x="1510" y="350" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i6_di" bpmnElement="Flow_i6"><di:waypoint x="1660" y="350" /><di:waypoint x="1750" y="350" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i7_di" bpmnElement="Flow_i7"><di:waypoint x="1800" y="350" /><di:waypoint x="1670" y="350" /><di:waypoint x="1670" y="530" /><di:waypoint x="1700" y="530" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i8_di" bpmnElement="Flow_i8"><di:waypoint x="1775" y="570" /><di:waypoint x="1775" y="595" /><di:waypoint x="865" y="595" /><di:waypoint x="865" y="390" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i9_di" bpmnElement="Flow_i9"><di:waypoint x="1800" y="350" /><di:waypoint x="1890" y="350" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i10_di" bpmnElement="Flow_i10"><di:waypoint x="2040" y="350" /><di:waypoint x="2080" y="350" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i12_di" bpmnElement="Flow_i12"><di:waypoint x="2230" y="350" /><di:waypoint x="2240" y="350" /><di:waypoint x="2240" y="710" /><di:waypoint x="2270" y="710" /></bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_i11_di" bpmnElement="Flow_i11"><di:waypoint x="2420" y="710" /><di:waypoint x="2517" y="710" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i2a_di" bpmnElement="Flow_i2a"><di:waypoint x="750" y="350" /><di:waypoint x="790" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i3_di" bpmnElement="Flow_i3"><di:waypoint x="940" y="350" /><di:waypoint x="980" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i4_di" bpmnElement="Flow_i4"><di:waypoint x="1130" y="350" /><di:waypoint x="1510" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i5_di" bpmnElement="Flow_i5"><di:waypoint x="1660" y="350" /><di:waypoint x="1700" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i6_di" bpmnElement="Flow_i6"><di:waypoint x="1850" y="350" /><di:waypoint x="1940" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i7_di" bpmnElement="Flow_i7"><di:waypoint x="1990" y="350" /><di:waypoint x="1860" y="350" /><di:waypoint x="1860" y="530" /><di:waypoint x="1890" y="530" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i8_di" bpmnElement="Flow_i8"><di:waypoint x="1965" y="570" /><di:waypoint x="1965" y="595" /><di:waypoint x="1055" y="595" /><di:waypoint x="1055" y="390" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i9_di" bpmnElement="Flow_i9"><di:waypoint x="1990" y="350" /><di:waypoint x="2080" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i10_di" bpmnElement="Flow_i10"><di:waypoint x="2230" y="350" /><di:waypoint x="2270" y="350" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i12_di" bpmnElement="Flow_i12"><di:waypoint x="2420" y="350" /><di:waypoint x="2430" y="350" /><di:waypoint x="2430" y="710" /><di:waypoint x="2460" y="710" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_i11_di" bpmnElement="Flow_i11"><di:waypoint x="2610" y="710" /><di:waypoint x="2707" y="710" /></bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

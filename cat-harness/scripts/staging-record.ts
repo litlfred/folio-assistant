@@ -3,6 +3,7 @@
  * Write or retire the `staging-preview` record for one preview.
  *
  * @module scripts/staging-record
+ * @covers none — a WRITER the deploy calls, not an audit: it records a preview, and judges nothing
  *
  * Bean `6pfo`. `feature-staging.yml` is the only thing that knows a preview's
  * pull request and issue, and it already fires at both ends of a preview's
