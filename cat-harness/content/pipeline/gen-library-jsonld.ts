@@ -77,6 +77,7 @@ import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.
 import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
 import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";
 import { readStructure, STRUCTURE_FILENAME } from "../../schemas/document-structure.ts";
+import type { INGEST_RUNGS } from "../../schemas/site-indexes.ts";
 
 interface StructureSection {
   id: string;
@@ -385,7 +386,7 @@ function readJson<T>(path: string): T | undefined {
 }
 
 /** Which ingest rung an entry is on — bean `p67i`. */
-export type IngestRung = "paged" | "tabular" | "referenced" | "none";
+export type IngestRung = (typeof INGEST_RUNGS)[number];
 
 /**
  * The input file that puts an entry on each rung, in precedence order.

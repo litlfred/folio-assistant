@@ -19,6 +19,7 @@ import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS } from "../../schemas/block-kinds.ts";
 import { ActorDefSchema } from "../../schemas/role-graph.ts";
 import { ownKgRoots } from "../known-skills.ts";
+import { DAK_CARDS, DAK_FIGURE_PATH, renderDakComponentsSvg } from "../gen-dak-components-figure.ts";
 
 const H = resolve(import.meta.dir, "../..");
 const REPO = resolve(H, "..");
@@ -80,6 +81,16 @@ describe("living deck: every claim about the KG still holds", () => {
     expect(DAK_COMPONENTS).toHaveLength(10);
     expect(DAK_COMPONENTS).toContain("test-scenarios");
     expect(DAK_UNFORMALIZED_COMPONENTS).toEqual(["scheduling-logic"]);
+  });
+
+  test("slide 3 — the squares figure has one card per component and is current", () => {
+    expect(Object.keys(DAK_CARDS).sort()).toEqual([...DAK_COMPONENTS].sort());
+    const svg = renderDakComponentsSvg();
+    // One number badge per component, in vocabulary order.
+    for (let i = 1; i <= DAK_COMPONENTS.length; i++) expect(svg).toContain(`>${i}</text>`);
+    expect(svg).toContain("Not yet its own DAK model field");
+    expect(read(DAK_FIGURE_PATH), "run cat-harness/scripts/gen-dak-components-figure.ts").toBe(svg);
+    expect(read(join(DECK, "slide-03.md"))).toContain("](assets/img/dak-components.svg)");
   });
 
   test("slide 4 — the ingested SMART Base index still holds 25 StructureDefinition pages", () => {

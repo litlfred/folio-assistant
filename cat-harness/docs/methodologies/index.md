@@ -163,7 +163,7 @@ these.
 
 **Ingested sources:**
 
-- `library/omg-2024-dmn-1-5`
+- [`library/omg-2024-dmn-1-5`](../cat-harness/library/cat-harness/#cat-harness%2Fomg-2024-dmn-1-5) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/omg-2024-dmn-1-5/README.md)
 
 ### Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold
 
@@ -310,8 +310,8 @@ these.
 **Ingested sources:**
 
 - [`library/arxiv-2607.14456v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2607.14456v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2607.14456v1/README.md)
-- `library/kg-folio-asst-2026-09-30`
-- `library/omg-2013-bpmn-2-0-2`
+- [`library/kg-folio-asst-2026-09-30`](../cat-harness/library/cat-harness/#cat-harness%2Fkg-folio-asst-2026-09-30) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/kg-folio-asst-2026-09-30/README.md)
+- [`library/omg-2013-bpmn-2-0-2`](../cat-harness/library/cat-harness/#cat-harness%2Fomg-2013-bpmn-2-0-2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/omg-2013-bpmn-2-0-2/README.md)
 
 ### SWOT — situation analysis over internal and external factors
 
