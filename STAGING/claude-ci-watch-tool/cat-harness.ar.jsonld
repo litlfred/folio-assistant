@@ -305,25 +305,25 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T15:00:12.742Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/fdb583697d4d6dd5de5359987cc7a7b843b3295c",
-  "sourceCommitSha": "fdb583697d4d6dd5de5359987cc7a7b843b3295c",
-  "sourceCommitAt": "2026-09-30T14:56:48Z",
+  "generatedAt": "2026-09-30T15:04:20.859Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6eacd161b4d3d56bf5d917738486fb5502603686",
+  "sourceCommitSha": "6eacd161b4d3d56bf5d917738486fb5502603686",
+  "sourceCommitAt": "2026-09-30T15:01:50Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 285,
+    "Skill": 286,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
     "SkillPackage": 24,
     "Decision": 9,
     "Process": 72,
-    "SequenceFlow": 940,
+    "SequenceFlow": 941,
     "Lane": 192,
-    "ProcessNode": 888,
-    "Tool": 107,
-    "Schema": 127,
+    "ProcessNode": 889,
+    "Tool": 109,
+    "Schema": 129,
     "ExternalSchema": 17,
     "GraphKind": 35,
     "Role": 48,
@@ -1657,7 +1657,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-terms.md",
-      "instructionLines": 236,
+      "instructionLines": 263,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2264,7 +2264,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/swimlane-glossary.md",
-      "instructionLines": 170,
+      "instructionLines": 177,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2417,7 +2417,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/todo-manager.md",
-      "instructionLines": 540,
+      "instructionLines": 556,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3009,7 +3009,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/directory-conventions.md",
-      "instructionLines": 1124,
+      "instructionLines": 1125,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4265,7 +4265,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/document-intake.md",
-      "instructionLines": 438,
+      "instructionLines": 460,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4440,6 +4440,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/kg-separation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/lsi-indexing",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "lsi-indexing",
+      "title": "LSI indexing — the platform's application of `methodologies/lsi.md`",
+      "description": "Build, read and audit a Latent Semantic Indexing index over a declared prose graph — a library, the skills, the beans, docs — to find units that discuss the same thing in different words, near-duplicates, outlier clusters, and a proposed home for unfiled work. Every output is a proposal; LSI never writes a relation.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#package/graph-management"
+      ],
+      "instructionsPath": "skills/graph-management/lsi-indexing.md",
+      "instructionLines": 203,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lsi-indexing"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/hypothesis-generation",
@@ -6780,7 +6797,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/edge-kinds-and-blast-radius",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/graph-detanglement",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/graph-rendering",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/kg-separation"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/kg-separation",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/lsi-indexing"
       ],
       "providesCapability": [],
       "requiresCapability": [],
@@ -24358,8 +24376,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/node/StartEvent_Dropped"
       ],
-      "nodeCount": 15,
-      "flowCount": 16,
+      "nodeCount": 16,
+      "flowCount": 17,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -24425,9 +24443,18 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/node/Task_Detect",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Extract",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/node/Task_Licence",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i2a",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/node/Task_Licence",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Extract",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i2a"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i3",
@@ -24624,6 +24651,29 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_Detect"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/node/Task_Licence",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Establish the licence from the upload alone",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/lane/Lane_1",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/document-intake"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i2a"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_Ingestion/node/Task_Licence"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/node/CallActivity_Extract",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": {
@@ -24641,7 +24691,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i2"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i2a"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/flow/Flow_i3"
@@ -24760,7 +24810,9 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#role/ingestion-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#process/Process_Ingestion/lane/Lane_1",
-      "implementedBy": [],
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/library-ingestion"
+      ],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
@@ -42760,6 +42812,49 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/library-viewer"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#tool/lsi-viewer",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "lsi-viewer",
+      "title": "Latent semantic index viewer",
+      "description": "Render every committed LSI index — dimensions as two poles, narrow-dimension and near-duplicate findings — and which declared prose graphs still need one.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run lsi:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/lsi-viewer"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#tool/methodologies-viewer",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
       "name": "methodologies-viewer",
@@ -43533,6 +43628,70 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/docs-generation"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/readme-audit"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#tool/lsi-query",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Tool",
+      "name": "lsi-query",
+      "title": "Latent Semantic Indexing over a prose graph",
+      "description": "Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run lsi query",
+        "mcp": {
+          "tool": "lsi_query"
+        },
+        "inProcess": {
+          "module": "src/tools/lsi-query.ts"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/tool-types.schema.json#/$defs/Text",
+            "description": "The query, in any words, on STDIN — free text never goes on a command line.",
+            "required": true,
+            "arg": {
+              "stdin": true
+            }
+          },
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/tool-types.schema.json#/$defs/Slug",
+            "description": "Instance declaring the graph, e.g. `who-iris`.",
+            "required": false,
+            "arg": {
+              "flag": "--instance"
+            }
+          },
+          {
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/tool-types.schema.json#/$defs/Slug",
+            "description": "Graph id within the instance, e.g. `library`.",
+            "required": false,
+            "arg": {
+              "flag": "--graph"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "report",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/tool-types.schema.json#/$defs/Markdown",
+            "description": "Per graph: the top hits by cosine, each marked lexical+latent or latent only."
+          }
+        ]
+      },
+      "requirements": {
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#skill/lsi-indexing"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/lsi-query"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#tool/render-order",
@@ -45425,6 +45584,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/script-qa"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#schema/section-verdicts",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "section-verdicts",
+      "title": "Section verdicts — which ingested sections are not PROSE. Bean `fnqn`.",
+      "module": "schemas/section-verdicts.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/section-verdicts"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#schema/semantic-zoom",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "semantic-zoom",
@@ -45468,6 +45636,15 @@
       "module": "schemas/skill-package.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/skill-package"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#schema/source-licence",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "source-licence",
+      "title": "A source's licence, as one record wherever it is written — bean `7bg9`.",
+      "module": "schemas/source-licence.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/source-licence"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld#schema/source-provenance",

@@ -487,6 +487,13 @@
                   }
                 }
               },
+              "summaries": {
+                "type": "string",
+                "enum": [
+                  "drain",
+                  "held"
+                ]
+              },
               "visualisedAs": {
                 "type": "string",
                 "enum": [
@@ -835,8 +842,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-ci-watch-tool/cat-harness.jsonld",
   "staging": {
     "branch": "claude/ci-watch-tool",
-    "sha": "3f6861877e052a03b5c1755af9bf78f78c303496",
+    "sha": "50e51b32712fd15b3036adda88fc043b79703cf2",
     "pr": "1625/merge",
-    "run": "36733020395"
+    "run": "36733625677"
   }
 }
