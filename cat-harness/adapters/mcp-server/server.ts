@@ -70,7 +70,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from 
 import { join, relative, resolve, extname, basename } from "path";
 import { loadContributions } from "../../schemas/harness-config";
 import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions";
-import { findContentRepoRoot } from "../../content/pipeline/repo-root";
+import { contributionsRoot } from "../../content/pipeline/repo-root";
 import Anthropic from "@anthropic-ai/sdk";
 
 // ── Access control ───────────────────────────────────────────
@@ -3572,19 +3572,13 @@ for (const o of await registerMcpToolGroups(server)) {
 // folio-assistant-sci). A contribution that cannot load is REPORTED and the
 // server still starts, the same stance as a failed tool group above.
 try {
-  // The FOLIO's root, not this platform's: contributions are what the folio
-  // declares as its dependencies. `cat-harness/` declares none, so loading
-  // from here would register nothing and look exactly like "nothing to add".
-  //
-  // `findContentRepoRoot()` FALLS BACK to the platform's own `cat-harness/`
-  // when no ancestor holds a folio — which is the case in the platform's own
-  // repository. There the instance actually running is the repository root
-  // above it (whose declaration lists folio-assistant-sci), so that is the
-  // root used; `qa-checker-discovery.test.ts` loads from the same place.
-  const platformInstance = resolve(import.meta.dir, "..", "..");
-  const folioRoot = findContentRepoRoot();
+  // `contributionsRoot()` (#1523): the FOLIO's root, which is what declares
+  // the dependencies that contribute. It falls back to the repository root
+  // where a lookup would land on the platform's own `cat-harness/`, which
+  // declares none, so loading from there would register nothing and look
+  // exactly like "nothing to add". qa-sweep uses the same helper.
   const contributions = await loadContributions<FolioContribution, ContributionRegistry>(
-    folioRoot === platformInstance ? resolve(platformInstance, "..") : folioRoot,
+    contributionsRoot(),
     new ContributionRegistry(),
   );
   contributions.registerTools(server);
