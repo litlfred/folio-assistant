@@ -285,3 +285,17 @@ because they live on unmerged branches. **Checking the store is not sufficient
 when the store is branch-local** — the claim's own §"A claim is branch-local"
 says a claim announces rather than reserves until the PR exists, and this is
 the same fact biting from the other side.
+
+## Re-derived 2026-09-30 — every PR precondition but one is gone
+
+Measured against the forge on 2026-09-30, not carried forward from this body:
+
+| clause | now |
+|---|---|
+| #954, #938 | both **closed**; neither is open |
+| #951, #944 | both **closed** |
+| #731, #750, #737, #231 | all **closed** |
+| "the 10 dependabot PRs" | **1** is open: #910, `typescript` 6.0.3 → 7.0.2, a **major** bump to the Go-native compiler. It has been red on 3 hard checks since 2026-09-23 (TypeScript, E2E, `.jsonld` sync), each failing in about 10 seconds. That is the shape of a toolchain break, not a test regression. |
+| `vuip` critical path | `check:stale-paths` reports nothing for `vuip` |
+
+So this stream's remaining precondition is **one owner decision** on #910: migrate, pin below 7 with a Dependabot ignore, or close. It was put to the owner on 2026-09-30. The first clause is left unticked because it asks for the `zzmr` path as well, and that was not re-derived here.
