@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-laughing-thompson-vjcmlx/skills/l2-dak-authoring/output.schema.json",
+  "title": "L2 DAK Authoring Output",
+  "description": "Output schema for L2 DAK authoring.",
+  "type": "object",
+  "required": [
+    "artifacts",
+    "status"
+  ],
+  "properties": {
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "type"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "bpmn",
+              "dmn",
+              "spreadsheet",
+              "markdown",
+              "fsh"
+            ]
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready-for-review",
+        "approved"
+      ]
+    },
+    "validationIssues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/laughing-thompson-vjcmlx",
+    "sha": "741e8824dbb73affc8df19c8c9685ccd68a22c3b",
+    "pr": "1537/merge",
+    "run": "36658312689"
+  }
+}
