@@ -2768,6 +2768,36 @@ if (import.meta.main) {
   // document the root's own graph LINKS TO, and a link that names a document
   // nothing publishes is a 404 with a `@id` in front of it.
   const instanceRoot = arg("--instance");
+  // ── `--qa-root <dir>` — where the COMMITTED QA sidecar goes (bean `ymsu`) ──
+  //
+  // This script writes two things: the JSON-LD document, whose destination
+  // `--out` has always governed, and a QA sidecar under
+  // `<root>/test/results/`, whose destination nothing did. So a caller that
+  // only wants the computation — and both callers below are exactly that —
+  // pointed `--out` at a temp directory and still wrote a tracked file into
+  // the tree it was about to judge.
+  //
+  // Measured on `origin/main` `e718627f198`, one gate at a time, with
+  // `producer.script_hash` hand-staled to `deadbeefdead`:
+  //
+  //   check:version-bump                  exit 0, hash REPAIRED to 0456470f68c8
+  //   check:published-instance-exports    exit 0, hash REPAIRED to 0456470f68c8
+  //
+  // A gate that repairs its own subject cannot fail on it, and it takes the
+  // evidence with it. Worse on that same tree, `kg-export.bootstrap.qa-results
+  // .json` was ALREADY stale at `b539167517cb` — so `main` was carrying a wrong
+  // recorded hash that no verdict reported, only the runner's mutation guard.
+  //
+  // The flag is explicit rather than an environment variable, and a directory
+  // rather than a boolean, because that is the pattern this repository already
+  // has: `content/pipeline/profile-conformance-axis.test.ts` builds its root
+  // with `mkdtempSync` and passes it in. A second mechanism for "compute
+  // somewhere else" would be a second answer to one question.
+  //
+  // It defaults to `ROOT`, so `bun run kg:export` and the deploy are unchanged:
+  // the producer still writes the committed sidecar, and only a caller that
+  // says otherwise gets a different destination.
+  const qaRoot = arg("--qa-root") ?? ROOT;
   const { stub, docPath } = exportIdentity({ baseUrl, instanceRoot });
   // Named after the repository, per the stub convention — `<stub>.jsonld`,
   // never a generic `kg.json`. `.jsonld` because it IS JSON-LD; the extension
@@ -2850,7 +2880,7 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
   // own stub.
   const hostStub = artefactStub(readDeclaration(ROOT)!);
   const qaStem = stub === hostStub ? "kg-export" : `kg-export.${stub}`;
-  const resultPath = writeQaResult(ROOT, qaStem, buildQaResult({
+  const resultPath = writeQaResult(qaRoot, qaStem, buildQaResult({
     script: "scripts/kg-export.ts",
     scriptAbsPath: join(ROOT, "scripts", "kg-export.ts"),
     // `docPath`, not `${stub}.jsonld`: a foreign instance's document sits at
@@ -2881,7 +2911,10 @@ const out = arg("--out") ?? join(repoRootFor(ROOT), "_kg", `${stub}.jsonld`);
       },
     },
   }));
-  console.log(`QA result → ${relative(ROOT, resultPath)}`);
+  // Relative to the root it was WRITTEN under, not to `ROOT`. With `--qa-root`
+  // pointing elsewhere the latter prints a pile of `../`, and a reader chasing
+  // a sidecar has to resolve it by hand to find out it is in a temp directory.
+  console.log(`QA result → ${relative(qaRoot, resultPath)}`);
 
   const collisions = keywordCollisions(data["@graph"]);
   if (collisions.length > 0) {
