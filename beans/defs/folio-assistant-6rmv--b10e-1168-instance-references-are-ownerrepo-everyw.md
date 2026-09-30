@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6rmv
 title: 'B10e (#1168): instance references are owner/repo everywhere'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T14:59:54Z
-updated_at: 2026-09-30T17:02:48Z
+updated_at: 2026-09-30T17:45:49Z
 parent: folio-assistant-tr05
 ---
 
@@ -21,3 +21,5 @@ Owner 2026-09-30: owner/repo everywhere (over the recommended instance names). 1
 So: an owner/repo → IRI-base map DERIVED from each instance's declaration and its dependency overlay (orderedDependencies), not a hand-kept list; namespaces and minted IRIs keyed through it.
 ## Open question to put to the owner before starting
 Pre-split, cat-harness, smart-base, bootstrap, folio-assistant-core… are directories of ONE repo (litlfred/folio-assistant); owner/repo alone cannot tell them apart. Their planned own repos (AssetSource's doc says litlfred/cat-harness), or owner/repo + path?
+
+_2026-09-30T17:45:49Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
