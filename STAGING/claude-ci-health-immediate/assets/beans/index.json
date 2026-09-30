@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 527,
+      "count": 529,
       "unit": "beans"
     }
   },
@@ -4119,6 +4119,20 @@
       "file": "beans/defs/folio-assistant-l9d5--bootstrap-tools-port-contract-semver-skill-zod-val.md"
     },
     {
+      "id": "folio-assistant-l9v6",
+      "title": "DECISION (proposed): which CDN layer, if any, in front of the WHO L1 corpus (slide 2, #1614)",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-5a3l",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T17:47:45Z",
+      "updatedAt": "2026-09-30T17:47:45Z",
+      "preview": "MADR decision record for slide 2 of the owner's deck `cat-harness/library/kg-folio-asst-2026-09-30` (\"Accessing WHO L1 corpus\"). Issue #1614. Parent: `xies` (publish to CDN).\n\n## Status\n\n**Proposed — no outcome.** Owner, 2026-09-30: record the options, decide later. Nothing has been measured at the scale slide 2 names, so an outcome here would be a guess.\n\n## Context and problem statement\n\nSlide 2",
+      "file": "beans/defs/folio-assistant-l9v6--decision-proposed-which-cdn-layer-if-any-in-front.md"
+    },
+    {
       "id": "folio-assistant-lfxa",
       "title": "QA: write the proof-no-placeholder-stub checker (and drop the QOU literal from its description)",
       "status": "todo",
@@ -5511,6 +5525,20 @@
       "updatedAt": "2026-09-26T00:00:00Z",
       "preview": "A finding scoped to one graph but **worded absolutely** sent this session to a\nwrong fix, and the wrong fix was caught only by a test written the day before.\n\n## What the report says, and what is true\n\n`kg:audit` at the repo root reports:\n\n> skill \"confirm-harness\" is listed by no package manifest, carried by no role\n> and named by no activity.\n\nEach clause is true **of the root instance's graph**",
       "file": "beans/defs/folio-assistant-sa8y--qa-wording-a-graph-scoped-finding-worded-absolutel.md"
+    },
+    {
+      "id": "folio-assistant-scfh",
+      "title": "INGEST SLIDES: pptx+odp rung, a11y probe, KG/folio-asst deck into library, methodology gaps, docs (#1614)",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T14:32:51Z",
+      "updatedAt": "2026-09-30T15:01:31Z",
+      "preview": "Issue #1614. Owner supplied KG__folio-asst as .pptx and .odp. Add a slides rung to bun run ingest handling both, report accessibility, ingest the preferred (pptx) into library, list missing methodology sources, improve docs across layers.\n\n## Done when\n- [ ] slides-structure.py rung + ingest-document.ts routing + tests\n- [ ] library-ingestion skill updated\n- [ ] deck ingested to a library with a11",
+      "file": "beans/defs/folio-assistant-scfh--ingest-slides-pptxodp-rung-a11y-probe-kgfolio-asst.md"
     },
     {
       "id": "folio-assistant-sff8",

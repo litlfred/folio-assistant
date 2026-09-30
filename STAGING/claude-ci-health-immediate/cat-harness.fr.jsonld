@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T23:29:16.310Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/db482459d57574a14d0810024c3b4c358d71826e",
-  "sourceCommitSha": "db482459d57574a14d0810024c3b4c358d71826e",
-  "sourceCommitAt": "2026-09-30T23:25:45Z",
+  "generatedAt": "2026-09-30T23:57:37.964Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5902e0a38e600e5a3893508f3e7d1aef4ce12de1",
+  "sourceCommitSha": "5902e0a38e600e5a3893508f3e7d1aef4ce12de1",
+  "sourceCommitAt": "2026-09-30T23:54:39Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -318,7 +318,7 @@
     "Lane": 192,
     "ProcessNode": 889,
     "Tool": 111,
-    "Schema": 135,
+    "Schema": 137,
     "ExternalSchema": 17,
     "GraphKind": 36,
     "Role": 48,
@@ -3993,7 +3993,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-health-immediate/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 554,
+      "instructionLines": 624,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -45722,6 +45722,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/refactor-strategy"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-health-immediate/cat-harness.jsonld#schema/referenced-source",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "referenced-source",
+      "title": "`referenced.json`: a library entry that RECORDS a source and holds none of",
+      "module": "schemas/referenced-source.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-health-immediate/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/referenced-source"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-health-immediate/cat-harness.jsonld#schema/render-log",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "render-log",
@@ -45846,6 +45855,15 @@
       "module": "schemas/skill-topics.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-health-immediate/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/skill-topics"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-health-immediate/cat-harness.jsonld#schema/slides-accessibility",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "slides-accessibility",
+      "title": "`accessibility.json`: a slide deck's accessibility report, written by",
+      "module": "schemas/slides-accessibility.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-health-immediate/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/slides-accessibility"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-health-immediate/cat-harness.jsonld#schema/source-licence",
