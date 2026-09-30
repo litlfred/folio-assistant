@@ -126,7 +126,14 @@
   table.items td:first-child, table.items th:first-child { min-width: 13rem; }
   table.items td:nth-child(2) { min-width: 9rem; }
   table.items code { font-size: 0.86rem; color: var(--iris-muted); }
-  .dl { white-space: nowrap; }
+  /* Wraps at EVERY width (bean on the 2026-09-30 QA re-run): nowrap held the
+     "Metadata record" column to its longest file name, so collection pages ran
+     1338-1475px wide at 1280 and 1162-1405px at 1024. #1592 fixed this only
+     below 640px. A long file name breaks inside the link; the short
+     format/size label stays on one line. */
+  .dl { white-space: normal; }
+  .dl a { overflow-wrap: anywhere; }
+  .dl code { white-space: nowrap; }
 
   /* ── IRIS home replica ────────────────────────────────────────────────
      Bands in the capture's order: hero, search, Recent Submissions. Measured
@@ -254,13 +261,9 @@
     table.items, table.items tbody, table.items tr, table.items td { display: block; width: 100%; }
     table.items thead { display: none; }
     table.items td { border-bottom: none; padding: 0.25rem 0; }
-    /* Stacked, a download cell is a line of its own, so the desktop
-       `nowrap` that kept a size beside its link now holds a whole sentence
-       ("held here, not published — copyright: refused, …") on one line: the
-       page was 537 px wide at 390 (bean `g9r2`). Wrap it here; the size
-       stays whole, because `code` keeps its own nowrap. */
-    .dl { white-space: normal; }
-    .dl code { white-space: nowrap; }
+    /* The download-cell wrap that g9r2 put here (537 px wide at 390) now
+       applies at every width, in the `.dl` rule above: desktop overflowed
+       the same way, one column wider. */
     table.items tr { border-bottom: 1px solid var(--iris-edge); padding: 0.7rem 0; }
     table.reqs, table.reqs tbody, table.reqs tr, table.reqs td, table.reqs th { display: block; width: auto; }
     table.reqs thead { display: none; }
@@ -495,7 +498,7 @@ said yes, and collapsing the two would turn an open question into a clearance.</
 <tr>
   <td><span class="state referenced">referenced</span></td>
   <td><code>collection</code></td>
-  <td><a href="../../../library/who-iris/collection-collection-hq-publications.html">Publications</a><br><code class="dim">collection/hq-publications</code></td>
+  <td><a href="../../../who-iris/collection-collection-hq-publications.html">Publications</a><br><code class="dim">collection/hq-publications</code></td>
   <td>—</td>
   <td>—</td>
   <td>—</td>
@@ -503,7 +506,7 @@ said yes, and collapsing the two would turn an open question into a clearance.</
 <tr>
   <td><span class="state referenced">referenced</span></td>
   <td><code>collection</code></td>
-  <td><a href="../../../library/who-iris/collection-collection-wpro-information-products.html">Information products</a><br><code class="dim">collection/wpro-information-products</code></td>
+  <td><a href="../../../who-iris/collection-collection-wpro-information-products.html">Information products</a><br><code class="dim">collection/wpro-information-products</code></td>
   <td>—</td>
   <td>—</td>
   <td>—</td>
@@ -575,7 +578,7 @@ said yes, and collapsing the two would turn an open question into a clearance.</
 <tr>
   <td><span class="state materialized">materialized</span></td>
   <td><code>item</code></td>
-  <td><a href="../../../library/who-iris/item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Publication and information products style guide</a><br><code class="dim">item/18892cf3-5a4f-42a4-923c-a93f4a594dec</code></td>
+  <td><a href="../../../who-iris/item-item-18892cf3-5a4f-42a4-923c-a93f4a594dec.html">Publication and information products style guide</a><br><code class="dim">item/18892cf3-5a4f-42a4-923c-a93f4a594dec</code></td>
   <td><a href="../../library/who-iris/#who-iris%2Fwpr-rdo-2020-003-eng"><code>wpr-rdo-2020-003-eng</code></a> &middot; <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/wpr-rdo-2020-003-eng/README.md">item page</a></td>
   <td>yes</td>
   <td>2</td>
@@ -583,7 +586,7 @@ said yes, and collapsing the two would turn an open question into a clearance.</
 <tr>
   <td><span class="state materialized">materialized</span></td>
   <td><code>item</code></td>
-  <td><a href="../../../library/who-iris/item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html">WHO handbook for guideline development</a><br><code class="dim">item/63e14c27-7448-41ec-be08-a96a25a47db6</code></td>
+  <td><a href="../../../who-iris/item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html">WHO handbook for guideline development</a><br><code class="dim">item/63e14c27-7448-41ec-be08-a96a25a47db6</code></td>
   <td><a href="../../library/who-iris/#who-iris%2F9789241548960-eng"><code>9789241548960-eng</code></a> &middot; <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/README.md">item page</a></td>
   <td>yes</td>
   <td>2</td>
@@ -591,7 +594,7 @@ said yes, and collapsing the two would turn an open question into a clearance.</
 <tr>
   <td><span class="state materialized">materialized</span></td>
   <td><code>item</code></td>
-  <td><a href="../../../library/who-iris/item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html">WHO editorial style manual</a><br><code class="dim">item/b08c6c19-315a-41a4-a9cb-8edabdbc6791</code></td>
+  <td><a href="../../../who-iris/item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html">WHO editorial style manual</a><br><code class="dim">item/b08c6c19-315a-41a4-a9cb-8edabdbc6791</code></td>
   <td><a href="../../library/who-iris/#who-iris%2Fwho-pub-tps-931"><code>who-pub-tps-931</code></a> &middot; <a href="https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md">item page</a></td>
   <td>yes</td>
   <td>2</td>

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 503,
+      "count": 508,
       "unit": "beans"
     }
   },
@@ -445,6 +445,20 @@
       "file": "beans/defs/folio-assistant-269z--folio-handle-covers-the-who-iris-replicas-ingested.md"
     },
     {
+      "id": "folio-assistant-279l",
+      "title": "B10b (#1168): glossary ledger keys lanes by BPMN id; SKOS altLabel for renames; key pattern enforced + QA gate",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T14:59:53Z",
+      "updatedAt": "2026-09-30T17:02:44Z",
+      "preview": "Owner 2026-09-30: do as rec + QA gate + use SKOS for rename/alternate name. lane/<name> → process/<p>/lane/<laneId> (kg-export's identity); propertyNames pattern; a gate that fails on an off-pattern key; a renamed lane keeps its key and the old name becomes skos:altLabel (not a new term).\n## Done when\n- [ ] ledger keys match ^(role|process)/…; lane/Actor migrated\n- [ ] rename handled as altLabel/h",
+      "file": "beans/defs/folio-assistant-279l--b10b-1168-glossary-ledger-keys-lanes-by-bpmn-id-sk.md"
+    },
+    {
       "id": "folio-assistant-27u0",
       "title": "check:anchor-names was blind to 2 of 4 base spellings: 75 ascents unseen, 9 real findings, and it printed a green check",
       "status": "completed",
@@ -461,14 +475,14 @@
     {
       "id": "folio-assistant-2b5s",
       "title": "MOUNT COPIES A DIRECTORY WHOLESALE: /who-iris/ publishes 1,367 corpus files as pages, and /library/who-iris/ publishes all 1,378 a second time",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T20:00:52Z",
-      "updatedAt": "2026-09-30T10:16:57Z",
+      "updatedAt": "2026-09-30T13:57:36Z",
       "preview": "## What\n\n`mount-instance-docs.ts` mounts a directory when it carries an `index.html`\n**at its own root**, and then copies **everything beneath it**. For\n`who-iris/library/` that is 1,378 files, of which 11 are pages:\n\n| | count | what |\n|---|---|---|\n| pages | 11 | 7 `.html` (index, community-list, 2 collections, 3 items), 3 cover `.png`, `image-verdicts.json` |\n| L1 corpus | 1,367 | 813 `.jsonld`",
       "file": "beans/defs/folio-assistant-2b5s--mount-copies-a-directory-wholesale-who-iris-publis.md"
     },
@@ -573,14 +587,14 @@
     {
       "id": "folio-assistant-2uui",
       "title": "WHO IRIS replica pages scroll sideways at desktop width",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T16:12:48Z",
-      "updatedAt": "2026-09-30T16:12:48Z",
+      "updatedAt": "2026-09-30T17:17:27Z",
       "preview": "Found 2026-09-30 by the wireframe QA re-run on main 3779d5d27 (1280×800 and 1024).\n\n- who-iris/collection-collection-hq-publications.html: document 1366px wide at a 1280 viewport.\n- who-iris/community-list.html: 1503px at 1280.\n- A third page is too wide at 1024.\n\nCause: the download / 'Metadata record' cells do not wrap. #1592 (g9r2) made them wrap only below 640px, so phones are fixed and deskto",
       "file": "beans/defs/folio-assistant-2uui--who-iris-replica-pages-scroll-sideways-at-desktop.md"
     },
@@ -681,6 +695,20 @@
       "updatedAt": "2026-09-30T10:58:02Z",
       "preview": "Measured 2026-09-24. Main went red on 10b48aed (the #1246 merge) in `TypeScript — tests, lint, types`: the test `prov-qaqc: the real repository > the committed page and logs are current (what check:prov-qaqc gates)` failed. #1245 had added the report; 172b558d (#1190) then committed a new workflow instance without regenerating it. It was fixed by a pure regeneration in #1249.\n\n**Why `bun run regen",
       "file": "beans/defs/folio-assistant-391j--regen-blind-spot-a-check-enforced-by-a-bun-test-no.md"
+    },
+    {
+      "id": "folio-assistant-3clc",
+      "title": "B10c (#1168): ModelId type + advisory check against the model registry",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T14:59:53Z",
+      "updatedAt": "2026-09-30T15:20:06Z",
+      "preview": "Owner 2026-09-30: Type + advisory. 532 free-string model ids across 5 fields; not-disclosed a declared value; bootstrap/models/models.json seeded with the 4 ids as validation: unverified.\n## Done when\n- [ ] ModelIdSchema on every model field\n- [ ] advisory check resolves ids against the registry\n\n\n\n## 2026-09-30 progress\n- [x] ModelIdSchema (bootstrap-tools/schemas/model-registry.ts) + NOT_DISCLOS",
+      "file": "beans/defs/folio-assistant-3clc--b10c-1168-modelid-type-advisory-check-against-the.md"
     },
     {
       "id": "folio-assistant-3dci",
@@ -1439,6 +1467,20 @@
       "updatedAt": "2026-09-29T20:52:41Z",
       "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"qa review\nmode: test results go under things like test/results and same for trnslations\nb/c Q&A is part of an audited review process\".\n\n## Half of this has landed; the bean is the other half\n\nMeasured 2026-09-19 against `harness.json`: `test/results/` **is** declared, as\nthe `qa` graph, holding three kinds distinguished by their",
       "file": "beans/defs/folio-assistant-6qk5--qa-review-mode-translation-qa-joins-the-audited-re.md"
+    },
+    {
+      "id": "folio-assistant-6rmv",
+      "title": "B10e (#1168): instance references are owner/repo everywhere",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T14:59:54Z",
+      "updatedAt": "2026-09-30T14:59:54Z",
+      "preview": "Owner 2026-09-30: owner/repo everywhere (over the recommended instance names). 137 instance values (136 names, 1 owner/repo) across AssetSource.instance, ThemeRef, voices, role refs, session-context, tool-invocation, site-indexes. Needs the instance→repo mapping from each <instance>.json.\n## Done when\n- [ ] every instance-reference field is RepoFullName-typed and every value converted",
+      "file": "beans/defs/folio-assistant-6rmv--b10e-1168-instance-references-are-ownerrepo-everyw.md"
     },
     {
       "id": "folio-assistant-6xaz",
@@ -3361,6 +3403,20 @@
       "file": "beans/defs/folio-assistant-hajp--interaction-the-asking-rule-is-enforced-by-three-l.md"
     },
     {
+      "id": "folio-assistant-hh7g",
+      "title": "B10a (#1168): memory front matter agents: → references (kind agent), like todos",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T14:59:53Z",
+      "updatedAt": "2026-09-30T15:07:20Z",
+      "preview": "Owner 2026-09-30: Rename, like todos. 32 memory files; shared front-matter parser learns object lists; archived: \"true\" (11) → true.\n## Done when\n- [ ] no memory entry carries agents:; references: [{kind: agent, id}] read by agent-memory.ts\n- [ ] archived is a boolean everywhere\n\n\n\n## Done\n32 entries: agents: → references [{kind: agent, id}]; 11 archived: \"true\" → true. front-matter.ts gains mappi",
+      "file": "beans/defs/folio-assistant-hh7g--b10a-1168-memory-front-matter-agents-references-ki.md"
+    },
+    {
       "id": "folio-assistant-hj9d",
       "title": "B3b (#1168): a skill names its input/output contracts; check-tools compares types",
       "status": "completed",
@@ -4793,6 +4849,20 @@
       "updatedAt": "2026-09-30T11:33:55Z",
       "preview": "## The finding, and how it was measured\n\n`cat-harness/scripts/check-theme-art.ts`, line 24, in its own module docblock:\n\n> So: `--check` exits non-zero on a refusal, and nothing runs `--check` in CI\n\n`.github/workflows/code-quality-gates.yml`, line 1384:\n\n>           bun run check:theme-art:check\n\nand `package.json:169` binds that script to `check-theme-art.ts --check`. So CI\nhas run it since the ",
       "file": "beans/defs/folio-assistant-q885--docblock-claims-checkagents-claims-reaches-agentsm.md"
+    },
+    {
+      "id": "folio-assistant-q90t",
+      "title": "B10d (#1168): skill front matter inherits: is a typed SkillRef",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T14:59:54Z",
+      "updatedAt": "2026-09-30T15:00:28Z",
+      "preview": "Owner 2026-09-30: Typed SkillRef. 7 files → folio-core/integration-watcher (6 used local/, 1 bare); resolved by resolveSkillRef in a check.\n## Done when\n- [ ] all 7 values resolve; a check fails on one that does not\n\n\n\n## Done\n7 values → folio-core/integration-watcher; skill-refs.test resolves every skill inherits: (local/integration-watcher resolves missing, verified).",
+      "file": "beans/defs/folio-assistant-q90t--b10d-1168-skill-front-matter-inherits-is-a-typed-s.md"
     },
     {
       "id": "folio-assistant-qbfi",
