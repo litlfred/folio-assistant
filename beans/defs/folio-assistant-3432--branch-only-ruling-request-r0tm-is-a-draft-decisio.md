@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3432
 title: 'BRANCH-ONLY RULING REQUEST: r0tm is a draft decision with a recommendation and a safe default, reachable from no ancestor of main'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T11:33:55Z
-updated_at: 2026-09-30T19:50:14Z
+updated_at: 2026-09-30T23:17:23Z
 parent: folio-assistant-ahvw
 ---
 
@@ -200,3 +200,26 @@ asserted is only that building 2 first buys a green light over an empty set.
        keyed on prose it is 1-to-190 arbitrary and 0-for-1 precise.
 3. [ ] `bean-coordination` records the convention, INCLUDING the declared
        marker 2 will read.
+
+
+## 2026-09-30 — done-when 3 DONE; done-when 2 stays with the owner
+
+`bean-coordination` now carries §"A DECISION bean you will not land soon — put
+the question where a person reads": post the question to the issue, and say ON
+THE BEAN where you posted it. Both halves, and the section records that it is
+written down **because it worked here** — `r0tm` was answered because the
+question sat on issue #1558 and PR #1581, not because anyone found the bean.
+
+It also carries the two things NOT to rely on, with the measurements from this
+bean: `status: draft` used by 0 of 518 beans though the schema allows it
+(`1xhc`), and prose recognisers spanning 1 to 190 candidates (`vq8g`).
+
+**Done-when 2 is not built, deliberately.** It needs a DECLARED marker for a
+check to read, and minting one changes what a decision bean looks like — a
+convention, and conventions here are the owner's. Recorded in the new section
+as unanswered rather than decided, which is `surprise-to-corpus` pointed at my
+own proposal: the agent does not write corpus guidance unasked.
+
+- [x] 1. The `r0tm` ruling request reaches the owner.
+- [ ] 2. The check — **blocked on a convention decision**, not on effort.
+- [x] 3. `bean-coordination` records the convention.
