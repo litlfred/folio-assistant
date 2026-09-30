@@ -5,7 +5,8 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T09:23:19Z
-updated_at: 2026-09-30T09:24:02Z
+updated_at: 2026-09-30T09:37:40Z
+parent: folio-assistant-1swy
 ---
 
 ## State — delivered, green, PR open. Not merged.
