@@ -116,7 +116,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 5 | 18.63 | dpi, color, grayscale, contrast, matplotlib, raster, eps, fonts | proof, lean, glossary, declaration, term, theorem, mathlib, sorry |
 | 6 | 16.77 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
 | 7 | 16.25 | lean, mathlib, mcp, sorry, search, proof, page, theorem | watcher, slot, voice, backlog, ledger, queue, objection, nesting |
-| 8 | 15.36 | mathlib, lean, sorry, lake, mcp, subdirectory, oleans, sessions | slot, watcher, criterion, forward, band, major, avatar, backlog |
+| 8 | 15.35 | mathlib, lean, sorry, lake, mcp, subdirectory, oleans, sessions | slot, watcher, criterion, forward, band, major, avatar, backlog |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
