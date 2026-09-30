@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-30T13:38:24Z
+updated_at: 2026-09-30T13:43:41Z
 parent: folio-assistant-slw1
 ---
 
@@ -171,3 +171,15 @@ _2026-09-30T10:39:35Z_ — Claimed by claude/brave-hawking-511rrx — pushed to 
 
 ## Owner, 2026-09-30 (round 3): vendors — the beans.json pattern
 `skills/voices/voices.json` declares `vendors/`, and `skills/voices/vendors/vendors.json` declares each `<id>/`. Both are ContentDirectory entries, like `beans/beans.json`. Notebook shape: the owner asked about combining A and B; the follow-up is below.
+
+
+
+## Owner, 2026-09-30 (round 3, after a measured analysis): notebook shape — A+B
+A shared `document-structure` base with two variants. `pdf-structure/v1` stays unchanged as one variant, and `notebook-structure/v1` is new. Readers of `structure.json` measured: 17 in total. Nine read only shared fields. Three are page-aware and already null-safe (gen-library-jsonld, l1-blocks, library-graph). One is a strict validator, check-l1-complete, which breaks under any option. Four are PDF-only tools (pdf-tables, extract-candidates, document-image, and materialization fixity, whose sha256 check still works).
+Plan:
+- [ ] base schema plus a `structureOf()` accessor returning a `{pages}|{cells}` locator
+- [ ] check-l1-complete and the three page-aware readers switched to the accessor
+- [ ] PDF-only tools skip a notebook with a stated reason
+- [ ] a check refusing a direct parse of structure.json outside the accessor
+- [ ] a notebook rung in ingest-document (markdown cells become sections by heading, code cells kept with their language)
+- [ ] ingest the OpenAI notebook, then write the OpenAI vendor voice
