@@ -3587,6 +3587,36 @@ export interface ResolvedDirectory extends ContentDirectory {
  */
 export const RENAMED_DIRECTORY_IDS: Readonly<Record<string, string>> = { "cat-harness": "skills" };
 
+/**
+ * The absolute path of a directory this instance declares by `id`, or the
+ * convention fallback joined to `root`.
+ *
+ * **`scope: "repository"` entries are excluded on purpose.** An instance may
+ * declare two entries with the same `path` and different scopes — this
+ * repository declares `docs` (instance-scoped, resolving under
+ * `cat-harness/`) and `root-docs` (`scope: "repository"`, resolving under the
+ * REPOSITORY root). They are different directories wearing one path, so a
+ * caller asking for "this instance's own `docs`" must not be handed the
+ * repository's.
+ *
+ * Lifted out of `scripts/kg-audit.ts` (2026-09-30) when a second caller
+ * appeared. Its reasoning there is kept because it is the reason the lookup is
+ * BY ID rather than by kind: *"a by-kind lookup that happens to work while one
+ * directory exists is a call that starts throwing the day a second is
+ * declared, and it would be asking the wrong question even while it worked."*
+ * The `docs`/`root-docs` pair is that second directory, and it exists now.
+ *
+ * @param root the instance root to resolve against
+ * @param id the declared entry's `id`
+ * @param fallback a path relative to `root`, used when nothing is declared
+ */
+export function ownDirectoryById(root: string, id: string, fallback: string): string {
+  const found = resolveDirectories([{ name: "(local)", root, own: true }]).find(
+    (d) => d.id === id && d.own && d.scope !== "repository",
+  );
+  return found?.absPath ?? join(root, fallback);
+}
+
 export function resolveDirectories(
   chain: Array<{ name: string; root: string; own?: boolean }>,
   registry: GraphKindRegistry = defaultGraphKinds,

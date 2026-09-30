@@ -14,7 +14,7 @@ import { registerFolioGraphKind } from "./folio-graph-kind";
 import { THEMES } from "./themes";
 import { BEAN_GRAPH_FILE } from "./bean-graph";
 import { TODO_GRAPH_FILE } from "./todo-graph";
-import { defaultGraphKinds, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, GraphNodeDirectorySchema, instanceRootsIn, toJsonLd, type ResolvedDirectory } from "./cat-harness";
+import { defaultGraphKinds, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, GraphNodeDirectorySchema, instanceRootsIn, ownDirectoryById, toJsonLd, type ResolvedDirectory } from "./cat-harness";
 import { writeDeclaration } from "../test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
@@ -1220,5 +1220,46 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     const decl = readDeclaration(join(repo, "cat-harness"));
     const all = decl?.directories ?? [];
     expect(all.filter((d) => d.theme !== undefined).length).toBeLessThan(all.length);
+  });
+});
+
+describe("ownDirectoryById — two entries, one path, different scopes", () => {
+  /**
+   * The case this exists for is real and in this repository: `cat-harness.json`
+   * declares `docs` (instance-scoped) and `root-docs` (`scope: "repository"`),
+   * both with `path: "docs/"`. They resolve against different roots, so a
+   * caller asking for the instance's own `docs` must not be handed the
+   * repository's. `content/pipeline/translation-index.ts` is that caller —
+   * everything it computes is instance-relative.
+   */
+  const tree = (dirs: unknown[]): string => {
+    const root = mkdtempSync(join(tmpdir(), "own-dir-by-id-"));
+    mkdirSync(join(root, "docs"), { recursive: true });
+    writeFileSync(
+      join(root, "probe.json"),
+      JSON.stringify({ name: "probe", version: "0.1.0", directories: dirs }, null, 2),
+    );
+    return root;
+  };
+
+  test("picks the instance-scoped entry over a repository-scoped one at the same path", () => {
+    const root = tree([
+      { id: "root-docs", path: "docs/", scope: "repository", graphKinds: ["docs"], dependents: "reproduce" },
+      { id: "docs", path: "docs/", graphKinds: ["docs"], dependents: "reproduce" },
+    ]);
+    expect(ownDirectoryById(root, "docs", "NOPE")).toBe(join(root, "docs"));
+  });
+
+  test("a repository-scoped entry is NOT returned even when its id matches", () => {
+    // The falsifier. If the scope filter is dropped, this returns the entry
+    // and the caller silently resolves against the wrong root — which is the
+    // failure mode, not an exception.
+    const root = tree([{ id: "docs", path: "docs/", scope: "repository", graphKinds: ["docs"], dependents: "reproduce" }]);
+    expect(ownDirectoryById(root, "docs", "fallback")).toBe(join(root, "fallback"));
+  });
+
+  test("falls back to the convention path when nothing is declared", () => {
+    const root = tree([]);
+    expect(ownDirectoryById(root, "docs", "docs")).toBe(join(root, "docs"));
   });
 });
