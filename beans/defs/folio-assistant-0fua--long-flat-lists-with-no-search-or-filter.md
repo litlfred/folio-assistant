@@ -1,14 +1,15 @@
 ---
 # folio-assistant-0fua
 title: Long flat lists with no search or filter
-status: in-progress
+status: completed
 type: bug
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - cross-cutting
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-30T12:08:24Z
+updated_at: 2026-09-30T12:44:34Z
 parent: folio-assistant-4ccr
 ---
 
@@ -26,3 +27,8 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — Long flat list, no search/filter/grouping — tools: The main table has 104 rows (tool|what it does|invoked|satisfies|i/o). The only input is site search. docH 11,690px at 1280 and 22,497px at 390. (lists.mjs)
 
 _2026-09-30T12:08:24Z_ — Claimed by claude/charming-curie-n04agq — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Landed
+Merged in #1592 (e8bfa25b5) on 2026-09-30, CI green on head 0b795ca.
+
+Scope: the FILTER half, which the owner chose as one site-wide control (2026-09-30). GROUPING (folder headings, A–Z jumps) is not done here: it is per page, and the bean body routes per-page detail to each visualiser's task under 4ccr.

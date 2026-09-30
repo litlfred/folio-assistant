@@ -40,11 +40,11 @@
  * @module folio-assistant/workflow/gate
  */
 
-import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { join, relative } from "node:path";
 import { findInModel, type ProcessModel } from "./process-model.js";
 import { enabled, resolveStep, type InstanceState } from "./instance.js";
-import { kgRoots } from "../../scripts/known-skills.js";
+import { discoverLocalPackages } from "../../scripts/skill-packages.js";
 
 export class PolicyError extends Error {}
 
@@ -66,29 +66,31 @@ const POLICY_FILE = "workflow-policy.json";
 /**
  * Read every content package's declared relaxations.
  *
- * Packages live under `skills/<name>/`. A package with no policy file relaxes
- * nothing, which is the correct default: silence means the base applies.
+ * A package with no policy file relaxes nothing, which is the correct default:
+ * silence means the base applies.
+ *
+ * Packages are the ones `discoverLocalPackages` finds — every declared skill
+ * directory, dependencies included — not the children of `kgRoots()[0]`. That
+ * read only the FIRST knowledge-graph root and assumed each package sat
+ * directly under it, so a package anywhere else relaxed nothing, silently
+ * (bean `9umr`: the concern subgraphs move packages).
  */
 export function loadRelaxations(repoRoot: string): Relaxation[] {
-  // declared-path-literal: the convention fallback, at the call site so the
-  // choice is visible.
-  const skillsDir = kgRoots(repoRoot)[0] ?? join(repoRoot, "skills");
-  if (!existsSync(skillsDir)) return [];
   const out: Relaxation[] = [];
 
-  for (const pkg of readdirSync(skillsDir)) {
-    const file = join(skillsDir, pkg, POLICY_FILE);
+  for (const [pkg, dir] of Object.entries(discoverLocalPackages(repoRoot))) {
+    const file = join(dir, POLICY_FILE);
     if (!existsSync(file)) continue;
 
     let parsed: { package?: string; relaxations?: unknown[] };
     try {
       parsed = JSON.parse(readFileSync(file, "utf-8"));
     } catch (e) {
-      throw new PolicyError(`skills/${pkg}/${POLICY_FILE} is not valid JSON: ${String(e)}`);
+      throw new PolicyError(`${relative(repoRoot, file)} is not valid JSON: ${String(e)}`);
     }
     if (parsed.package && parsed.package !== pkg) {
       throw new PolicyError(
-        `skills/${pkg}/${POLICY_FILE} declares package "${parsed.package}" but sits in "${pkg}"`,
+        `${relative(repoRoot, file)} declares package "${parsed.package}" but sits in "${pkg}"`,
       );
     }
     for (const [i, raw] of (parsed.relaxations ?? []).entries()) {
@@ -96,7 +98,7 @@ export function loadRelaxations(repoRoot: string): Relaxation[] {
       for (const field of ["process", "activity", "reason"] as const) {
         if (typeof r[field] !== "string" || r[field]!.trim() === "") {
           throw new PolicyError(
-            `skills/${pkg}/${POLICY_FILE}: relaxation ${i + 1} has no \`${field}\`. ` +
+            `${relative(repoRoot, file)}: relaxation ${i + 1} has no \`${field}\`. ` +
               (field === "reason"
                 ? `A relaxation without a stated reason is a loophole, not a policy.`
                 : `Name the process and activity it relaxes.`),

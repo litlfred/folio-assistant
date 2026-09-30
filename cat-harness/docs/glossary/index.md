@@ -29,7 +29,7 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <thead><tr><th>page</th><th>holds</th><th>terms</th><th>size</th></tr></thead>
 <tbody>
 <tr><td>this page</td><td>authored terms, counts and sources</td><td>37</td><td>50 KB</td></tr>
-<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>293</td><td>211 KB</td></tr>
+<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>293</td><td>212 KB</td></tr>
 <tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>123</td><td>81 KB</td></tr>
 <tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>550</td><td>425 KB</td></tr>
 <tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>7 KB</td></tr>
@@ -127,7 +127,7 @@ The terms Bootstrap defines, in order: each is defined only by terms above it, a
 <span class="fa-gloss-n">11.</span> Asset
 </dt>
 <dd>
-<p>A file entry of a Declaration: one file about the repository itself, whose <code>role</code> field says what it is for.</p>
+<p>A file entry of a Declaration: one file about the repository itself, whose <a href="#bootstrap--terms--role"><code>role</code></a> field says what it is for.</p>
 <p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a></p>
 <p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/asset</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Asset">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Asset</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Asset</code></a></p>
 </dd>

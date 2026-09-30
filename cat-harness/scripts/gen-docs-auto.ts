@@ -678,6 +678,24 @@ export function autoDocPage(
   scopePath: string | undefined,
   siblings: Array<{ id: string; path: string; count: number }>,
 ): string {
+  // A description naming ANOTHER artefact on this page links to its row (bean
+  // `qgjh`): role descriptions say "Inherits `reviewer`", the reviewer is a row
+  // here, and the relation the sentence states could not be followed. The key
+  // is the last segment of the artefact's fragment (`#role/reviewer` →
+  // `reviewer`), exact, and only when ONE row on the page carries it — a
+  // name two rows share has no row it could honestly point at, and stays code.
+  const keyOf = (i: AutoDocItem) => i.path.split("#", 2)[1]?.split("/").pop() ?? "";
+  const rowId = (i: AutoDocItem) => `a-${i.path.replace(/[^A-Za-z0-9_-]+/g, "-")}`;
+  const byKey = new Map<string, AutoDocItem | null>();
+  for (const i of items) {
+    const k = keyOf(i);
+    if (k) byKey.set(k, byKey.has(k) ? null : i);
+  }
+  const linkCodes = (self: AutoDocItem, html: string) =>
+    html.replace(/<code>([^<]+)<\/code>/g, (whole, text: string) => {
+      const target = byKey.get(text);
+      return target && target !== self ? `<a href="#${esc(rowId(target))}">${whole}</a>` : whole;
+    });
   const rows = items
     .map((i) => {
       const facts = i.facts
@@ -685,9 +703,9 @@ export function autoDocPage(
             .map(([k, v]) => `<div class="f"><span class="k">${esc(k)}</span> ${esc(v)}</div>`)
             .join("")
         : "";
-      return `<tr>
+      return `<tr${keyOf(i) ? ` id="${esc(rowId(i))}"` : ""}>
   <td><a href="${esc(`${BLOB}/${i.path}`)}"><code>${esc(i.name)}</code></a><br><span class="p">${esc(i.path)}</span></td>
-  <td>${i.summary ? withInlineCode(i.summary, esc) : '<span class="none">no description in the artefact</span>'}${facts}</td>
+  <td>${i.summary ? linkCodes(i, withInlineCode(i.summary, esc)) : '<span class="none">no description in the artefact</span>'}${facts}</td>
 </tr>`;
     })
     .join("\n");

@@ -487,9 +487,9 @@ function termEntry({ s, t, label }: Row): string {
   const frag = t.source?.split("#", 2)[1];
   const code = t.notation && t.notation !== label && t.notation !== frag ? ` <code>${esc(t.notation)}</code>` : "";
   const definition = t.definition
-    ? `<p>${withInlineCode(first(t.definition), esc)}</p>`
+    ? `<p>${linkTermCodes(s, t.id, withInlineCode(first(t.definition), esc))}</p>`
     : t.reason
-      ? `<p>${withInlineCode(t.reason, esc)}</p>`
+      ? `<p>${linkTermCodes(s, t.id, withInlineCode(t.reason, esc))}</p>`
       : s.extracted
         ? `<p><em>The asset carries no description.</em></p>`
         : `<p><em>No definition yet.</em></p>`;
@@ -523,6 +523,26 @@ function termEntry({ s, t, label }: Row): string {
     ...(matches.length ? [`<ul class="fa-gloss-matches">${matches.join("")}</ul>`] : []),
     `</dd>`,
   ].join("\n");
+}
+
+/**
+ * A description's inline code that names ANOTHER term of the same scheme
+ * becomes a link to that term's entry (bean `qgjh`). Role descriptions say
+ * "Inherits `reviewer`" — the reviewer is on the page, with an anchor, and the
+ * relation the sentence states could not be followed.
+ *
+ * Exact id only, and the same scheme only: the anchor is
+ * `instance--scheme--id`, so a word that merely looks like a term in another
+ * scheme (`adjudication` is a PERMISSION, not a role) has no anchor it could
+ * honestly point at, and stays code. A term never links to itself.
+ */
+export function linkTermCodes(s: GlossarySource, self: string, html: string): string {
+  const ids = new Set(s.glossary.terms.map((x) => x.id));
+  return html.replace(/<code>([^<]+)<\/code>/g, (whole, text: string) => {
+    const id = text.replace(/&amp;/g, "&");
+    if (id === self || !ids.has(id)) return whole;
+    return `<a href="#${esc(`${s.instance}--${s.glossary.id}--${id}`)}">${whole}</a>`;
+  });
 }
 
 /** A term's label, by its local id within its scheme. */
