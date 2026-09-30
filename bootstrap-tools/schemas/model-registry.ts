@@ -94,8 +94,15 @@ export const ModelEntrySchema = z.object({
    * absence: it says somebody looked and found no language this model is
    * notably strong in, which is different from nobody having looked. That
    * second state is `validation: "unverified"`.
+   *
+   * ABSENT only on an `unverified` entry, which then records the model's
+   * IDENTITY and claims nothing about its languages (#1168 B10c, owner
+   * 2026-09-30: "resolve properly"). That is what lets a record's model id
+   * resolve to a registry node without anybody asserting language evidence —
+   * the thing this registry forbids an agent to supply. A `self-reported` or
+   * `human-validated` entry IS a language claim, so it must carry the list.
    */
-  preferredLanguages: z.array(z.string().min(2)),
+  preferredLanguages: z.array(z.string().min(2)).optional(),
   /** How the list above came to be believed. Required — see the header. */
   validation: z.enum(VALIDATION_STATES),
   /** Who checked, when `validation` is `human-validated`. */
@@ -104,6 +111,9 @@ export const ModelEntrySchema = z.object({
   validatedOn: z.string().optional(),
   /** Anything a reader needs that the fields above cannot carry. */
   note: z.string().optional(),
+}).refine((m) => m.validation === "unverified" || m.preferredLanguages !== undefined, {
+  message: "a self-reported or human-validated entry is a language claim, and must state preferredLanguages",
+  path: ["preferredLanguages"],
 });
 
 export type ModelEntry = z.infer<typeof ModelEntrySchema>;
@@ -142,7 +152,7 @@ export const MODEL_REGISTRY_FILENAME = "models.json";
  * it was.
  */
 export function validatedLanguages(entry: ModelEntry): readonly string[] | undefined {
-  return entry.validation === "human-validated" ? entry.preferredLanguages : undefined;
+  return entry.validation === "human-validated" ? (entry.preferredLanguages ?? []) : undefined;
 }
 
 /**

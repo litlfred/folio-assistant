@@ -5,9 +5,9 @@
 import { describe, expect, test } from "bun:test";
 import { resolve } from "node:path";
 
-import { ModelIdSchema, NOT_DISCLOSED } from "../../../bootstrap-tools/schemas/model-registry.js";
+import { ModelEntrySchema, ModelIdSchema, NOT_DISCLOSED } from "../../../bootstrap-tools/schemas/model-registry.js";
 import { AttributionSchema } from "../../schemas/attribution.js";
-import { unregisteredModelIds } from "../check-model-languages.js";
+import { checkModelLanguages, unregisteredModelIds } from "../check-model-languages.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
@@ -43,5 +43,23 @@ describe("unregistered model ids are reported, advisory", () => {
 
   test("every recorded id has the model-id shape", () => {
     expect(all.filter((u) => !ModelIdSchema.safeParse(u.id).success)).toEqual([]);
+  });
+});
+
+describe("an identity-only entry lets an id resolve without a language claim", () => {
+  test("unverified may omit preferredLanguages; a language claim may not", () => {
+    expect(ModelEntrySchema.safeParse({ id: "m", title: "m", validation: "unverified" }).success).toBe(true);
+    expect(ModelEntrySchema.safeParse({ id: "m", title: "m", validation: "self-reported" }).success).toBe(false);
+    expect(ModelEntrySchema.safeParse({ id: "m", title: "m", validation: "human-validated" }).success).toBe(false);
+  });
+
+  test("every model id the corpus records resolves to a registry entry", () => {
+    const r = checkModelLanguages();
+    const known = new Set([...r.usable, ...r.selfReported, ...r.unverified].map((m) => m.id));
+    expect(unregisteredModelIds(REPO, known)).toEqual([]);
+  });
+
+  test("no identity-only entry is read as language evidence", () => {
+    expect(checkModelLanguages().usable).toEqual([]);
   });
 });

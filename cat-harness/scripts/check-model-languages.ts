@@ -111,7 +111,7 @@ export function checkModelLanguages(instanceRoot = DEFAULT_INSTANCE): ModelLangu
   for (const m of reg.models) {
     if (validatedLanguages(m) !== undefined) {
       usable.push(m);
-      if (m.preferredLanguages.length === 0) {
+      if ((m.preferredLanguages ?? []).length === 0) {
         // A DETERMINED empty — somebody looked and found none notable. Said
         // out loud so a reader does not take it for a missing field.
         problems.push(`${m.id}: human-validated with an EMPTY language list (a determined empty — confirm that is meant)`);
