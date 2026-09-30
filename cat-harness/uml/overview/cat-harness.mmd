@@ -916,6 +916,12 @@ classDiagram
       pages [1] object[] | null
       undetermined_reason [0..1] string
     }
+    class cat_harness_library_folio_figure_descriptions_v1_folio_figure_descriptions_v1["folio-figure-descriptions/v1"] {
+      <<json: FigureDescriptionsFileSchema>>
+      $schema [1] 'folio-figure-descriptions/v1'
+      _comment [0..1] string
+      descriptions [1] map~object[]~
+    }
     class cat_harness_library_folio_block_summaries_v1_Superseded["Superseded"] {
       <<json: BlockSummariesSidecarSchema>>
       text [1] string | null
@@ -1949,6 +1955,7 @@ classDiagram
   cssClass "cat_harness_library_folio_document_images_v1_folio_document_images_v1" fa_uml_kind_library
   cssClass "cat_harness_library_folio_image_verdicts_v1" fa_uml_kind_library
   cssClass "cat_harness_library_folio_vector_labels_v1_folio_vector_labels_v1" fa_uml_kind_library
+  cssClass "cat_harness_library_folio_figure_descriptions_v1_folio_figure_descriptions_v1" fa_uml_kind_library
   cssClass "cat_harness_library_folio_block_summaries_v1_Superseded" fa_uml_kind_library
   cssClass "cat_harness_library_folio_block_summaries_v1_Summary" fa_uml_kind_library
   cssClass "cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1" fa_uml_kind_library

@@ -1336,6 +1336,16 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // measure coverage on, no `xref` to dedupe by and no pixel to inspect,
       // so `role` and `basis` would each mean two things.
       "folio-vector-labels/v1": { validator: "schemas/vector-labels.ts#VectorLabelsSidecarSchema" },
+      // The JUDGEMENT half of the vector arm — bean `a8wy`. Stands to
+      // `folio-vector-labels` as `folio-image-verdicts` stands to
+      // `folio-document-images`: the measurement says where every text line
+      // sits, this says what somebody reading them concluded, and its
+      // required `basis` records whether they rendered the page. A
+      // labels-only reading gets the nouns right and the relations wrong, so
+      // a reader has to be able to tell the two apart.
+      "folio-figure-descriptions/v1": {
+        validator: "schemas/figure-description.ts#FigureDescriptionsFileSchema",
+      },
       // Agent summaries of prose blocks, beside the blocks rather than in
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.

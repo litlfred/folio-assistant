@@ -3758,6 +3758,55 @@
       "status": "candidate"
     },
     {
+      "id": "figure-description.figuredescriptionschema.described_by",
+      "prefLabel": "FigureDescriptionSchema.described_by",
+      "definition": "Who looked, and when.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.described_by",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionschema.figure",
+      "prefLabel": "FigureDescriptionSchema.figure",
+      "definition": "The figure as the document names it — `\"Figure 2\"`, `\"Fig. 8.4(a)\"`.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.figure",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionschema.narrative",
+      "prefLabel": "FigureDescriptionSchema.narrative",
+      "definition": "The description itself, in the standard narrative state machine.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.narrative",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionschema.page",
+      "prefLabel": "FigureDescriptionSchema.page",
+      "definition": "1-based, matching `VectorFigurePage.page` so the two join.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionschema.unread",
+      "prefLabel": "FigureDescriptionSchema.unread",
+      "definition": "What the describer could NOT read, in their own words.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.unread",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionsfileschema._comment",
+      "prefLabel": "FigureDescriptionsFileSchema._comment",
+      "definition": "Free prose about this file as a whole, as `image-verdicts.json` carries.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionsFileSchema._comment",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionsfileschema.descriptions",
+      "prefLabel": "FigureDescriptionsFileSchema.descriptions",
+      "definition": "doc-id → the figures described in that document.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionsFileSchema.descriptions",
+      "status": "candidate"
+    },
+    {
       "id": "formal-ref.formalrefresolution.basename",
       "prefLabel": "FormalRefResolution.basename",
       "definition": "The basename a whole-tree scan should look for (`<declName>.lean` for the Lean resolver). Kept separate from `declName` so core does not have to know the file extension of somebody else's formalism.",

@@ -10196,6 +10196,139 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/figure-description.figuredescriptionschema.described_by",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FigureDescriptionSchema.described_by"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who looked, and when."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.described_by",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/figure-description.figuredescriptionschema.figure",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FigureDescriptionSchema.figure"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The figure as the document names it — `\"Figure 2\"`, `\"Fig. 8.4(a)\"`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.figure",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/figure-description.figuredescriptionschema.narrative",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FigureDescriptionSchema.narrative"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The description itself, in the standard narrative state machine."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.narrative",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/figure-description.figuredescriptionschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FigureDescriptionSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "1-based, matching `VectorFigurePage.page` so the two join."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/figure-description.figuredescriptionschema.unread",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FigureDescriptionSchema.unread"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the describer could NOT read, in their own words."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.unread",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/figure-description.figuredescriptionsfileschema._comment",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FigureDescriptionsFileSchema._comment"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Free prose about this file as a whole, as `image-verdicts.json` carries."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/figure-description.ts#FigureDescriptionsFileSchema._comment",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/figure-description.figuredescriptionsfileschema.descriptions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FigureDescriptionsFileSchema.descriptions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "doc-id → the figures described in that document."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/figure-description.ts#FigureDescriptionsFileSchema.descriptions",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/formal-ref.formalrefresolution.basename",
       "@type": "skos:Concept",
       "skos:inScheme": {

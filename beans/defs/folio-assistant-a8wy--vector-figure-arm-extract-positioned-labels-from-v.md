@@ -91,11 +91,11 @@ appends a sentence to `image-descriptions`' detail and nothing more.
 - [x] an inspector describes a figure from its labels — done once, 2026-09-30,
       and the result is below: the labels are sufficient for the NOUNS and
       insufficient for the RELATIONS, demonstrated rather than asserted
-- [ ] **owner:** where does a vector figure's description LIVE? `images.json`
-      has no entry to hang it on (no raster image was placed) and
-      `vector-labels.json` is a measurement sidecar — adding a narrative to it
-      would make one file both the measurement and the judgement, which is the
-      split `image-verdicts.json` exists to keep
+- [x] **owner ruled 2026-09-30: a third sidecar.**
+      `<library>/figure-descriptions.json`, `folio-figure-descriptions/v1`,
+      beside `image-verdicts.json` and standing to `vector-labels.json`
+      exactly as the verdicts file stands to `images.json`. Schema, registry
+      entry, ten tests, and the Annif Figure 2 description written into it.
 
 
 
@@ -156,3 +156,32 @@ independently one layer over.
 filter.** 13 of 110 on this page is a clean cut; on `9789240010567-eng` p25 the
 same test is false for 30 labels that are plainly figure content. Two pages,
 opposite verdicts, which is why it is recorded and never applied.
+
+## The sidecar, and the field that justifies it
+
+`schemas/figure-description.ts`, one file per LIBRARY (keyed by doc id), the
+same shape and placement as `image-verdicts.json`:
+
+| | measurement, machine-derived | judgement, someone looked |
+|---|---|---|
+| raster | `<entry>/images.json` | `<library>/image-verdicts.json` |
+| vector | `<entry>/vector-labels.json` | `<library>/figure-descriptions.json` |
+
+**`basis` is required and closed** — `labels-only` or `labels-and-render`, no
+default and no third value — and it is the whole reason this is a schema
+rather than a convention. The worked case above is what it encodes: a
+labels-only reading of Annif's Figure 2 got every proper name right and every
+relation wrong. A reader must be able to tell which kind of description they
+are holding without re-deriving it.
+
+**`unread` is required at `labels-only`.** At that basis there is always
+something invisible — arrows, nesting, glyph-only columns — and saying nothing
+about it reads as its absence. At `labels-and-render` an empty gap list is a
+real finding rather than an omission, so the field is optional there.
+
+The first entry is deliberately recorded at `labels-and-render` **with its
+labels-only reading preserved in `unread`**, because the gap between the two
+is the finding rather than a draft to be tidied away.
+
+`NarrativeSchema` is reused unchanged: an agent writes `draft`, only a human
+confirms, and `confirmed_by.kind` must be `"human"` structurally.

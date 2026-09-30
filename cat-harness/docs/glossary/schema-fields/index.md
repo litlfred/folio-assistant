@@ -11,13 +11,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 1473 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 1480 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 149 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1640 terms and is 889 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1647 terms and is 893 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1640</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1647</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -3353,6 +3353,55 @@ FigureBlock.page <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Which page of the source document it sits on, 1-based as a reader counts.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/types.ts"><code>cat-harness/schemas/types.ts#FigureBlock.page</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--figure-description.figuredescriptionschema.described_by" data-fa-state="extracted" data-fa-gloss="">
+FigureDescriptionSchema.described_by <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Who looked, and when.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/figure-description.ts"><code>cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.described_by</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--figure-description.figuredescriptionschema.figure" data-fa-state="extracted" data-fa-gloss="">
+FigureDescriptionSchema.figure <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The figure as the document names it — `&quot;Figure 2&quot;`, `&quot;Fig. 8.4(a)&quot;`.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/figure-description.ts"><code>cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.figure</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--figure-description.figuredescriptionschema.narrative" data-fa-state="extracted" data-fa-gloss="">
+FigureDescriptionSchema.narrative <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The description itself, in the standard narrative state machine.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/figure-description.ts"><code>cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.narrative</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--figure-description.figuredescriptionschema.page" data-fa-state="extracted" data-fa-gloss="">
+FigureDescriptionSchema.page <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>1-based, matching `VectorFigurePage.page` so the two join.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/figure-description.ts"><code>cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.page</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--figure-description.figuredescriptionschema.unread" data-fa-state="extracted" data-fa-gloss="">
+FigureDescriptionSchema.unread <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What the describer could NOT read, in their own words.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/figure-description.ts"><code>cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.unread</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--figure-description.figuredescriptionsfileschema._comment" data-fa-state="extracted" data-fa-gloss="">
+FigureDescriptionsFileSchema._comment <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Free prose about this file as a whole, as `image-verdicts.json` carries.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/figure-description.ts"><code>cat-harness/schemas/figure-description.ts#FigureDescriptionsFileSchema._comment</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--figure-description.figuredescriptionsfileschema.descriptions" data-fa-state="extracted" data-fa-gloss="">
+FigureDescriptionsFileSchema.descriptions <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>doc-id → the figures described in that document.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/figure-description.ts"><code>cat-harness/schemas/figure-description.ts#FigureDescriptionsFileSchema.descriptions</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--reader-filter.filterablenode.properties" data-fa-state="extracted" data-fa-gloss="">
 FilterableNode.properties <span class="fa-gloss-status">candidate, extracted</span>
