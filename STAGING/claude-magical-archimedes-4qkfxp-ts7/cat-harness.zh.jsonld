@@ -297,10 +297,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T09:17:23.202Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/06f8425f8eab4f4e50e1b4cb0229defe3333963b",
-  "sourceCommitSha": "06f8425f8eab4f4e50e1b4cb0229defe3333963b",
-  "sourceCommitAt": "2026-09-30T09:09:50Z",
+  "generatedAt": "2026-09-30T09:50:04.828Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/35ba5a3351ac544bc9fb623c864b8969e85d8451",
+  "sourceCommitSha": "35ba5a3351ac544bc9fb623c864b8969e85d8451",
+  "sourceCommitAt": "2026-09-30T09:39:55Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2082,7 +2082,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-ts7/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-build.md",
-      "instructionLines": 137,
+      "instructionLines": 147,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4150,7 +4150,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-ts7/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/content-validation.md",
-      "instructionLines": 294,
+      "instructionLines": 296,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -40090,7 +40090,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run cat-harness/content/pipeline/build-glossary.ts"
+        "shell": "bun run folio-assistant-core/scripts/build-glossary.ts"
       },
       "io": {
         "inputs": [

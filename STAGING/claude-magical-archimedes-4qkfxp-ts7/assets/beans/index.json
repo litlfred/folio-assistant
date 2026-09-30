@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 451,
+      "count": 452,
       "unit": "beans"
     }
   },
@@ -1373,14 +1373,14 @@
     {
       "id": "folio-assistant-7bg9",
       "title": "INGESTION: a licence check subprocess, and the marker coverage the ingest family is missing",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:25:27Z",
-      "updatedAt": "2026-09-20T15:25:27Z",
+      "updatedAt": "2026-09-30T09:25:32Z",
       "preview": "Owner, 2026-09-20: *\"liscence check task (subprocess) is part of document/asset\ningestion pipeline\"*.\n\nQueued rather than started, per the standing instruction to queue new topics in\nparallel and not pivot.\n\n## The gap is real, and the shape already fits\n\nMeasured 2026-09-20 against `origin/main` at `dc78e7ccf`:\n\n    cat-harness/processes/document-ingestion.bpmn\n      \"Document ingestion — uploads",
       "file": "beans/defs/folio-assistant-7bg9--ingestion-a-licence-check-subprocess-and-the-marke.md"
     },
@@ -4951,6 +4951,20 @@
       "file": "beans/defs/folio-assistant-t5dm--instance-name-from-the-checkout-folder-library-gra.md"
     },
     {
+      "id": "folio-assistant-t7fl",
+      "title": "uploads/README shows the high-level document-ingestion BPMN, via a DECLARED coverage.process",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T23:47:39Z",
+      "updatedAt": "2026-09-30T00:25:28Z",
+      "preview": "Owner, 2026-09-29: *\"show highlevel (sub)process bpmn on the uploads page.\"*\n\nThe uploads page is `uploads/README.md`, the generated subgraph README written\nby `cat-harness/scripts/subgraph-readmes.ts` through the `subgraph` Liquid\ntemplate in the tools graph.\n\n## What is being added\n\nA new optional declared field on `SubgraphCoverageSchema` naming the BPMN\nprocess that GOVERNS a directory, declar",
+      "file": "beans/defs/folio-assistant-t7fl--uploadsreadme-shows-the-high-level-document-ingest.md"
+    },
+    {
       "id": "folio-assistant-t8g3",
       "title": "Translation support foundation (issue #206)",
       "status": "todo",
@@ -6142,7 +6156,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T07:47:30Z",
-      "updatedAt": "2026-09-30T00:40:00Z",
+      "updatedAt": "2026-09-30T08:57:59Z",
       "preview": "Found 2026-09-27 while answering the owner's question *\"how resolve/gate/qa escape\nimports?\"* — sibling to `zlmp` under the same SPLIT epic, and **not** a reopening\nof it.\n\n## Two axes, and only one of them has ever been driven to zero\n\n`zlmp` drove the MODULE axis to zero: `check:partition` reports **0**\nwrong-direction edges today, and that is correct on its own terms — it measures\nedges between",
       "file": "beans/defs/folio-assistant-yj6r--escapes-15-instance-boundary-imports-checkpartitio.md"
     },
