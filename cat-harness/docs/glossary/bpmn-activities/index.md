@@ -11,13 +11,13 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 503 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 520 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 532 terms and is 407 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 549 terms and is 418 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">532</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">549</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -43,6 +43,41 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <dd>
 <p>Scope the paper: chapters, the blocks each needs, what gets formalised.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Plan</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_detangle" data-fa-state="extracted" data-fa-gloss="">
+1–3 · Declare, detangle, isolate <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The graph-detanglement practice, all of its gates: declared in place, zero wrong-direction edges on every axis, and standing alone with its own declaration, namespace and artefact. A plain task on purpose, not a call to graph-detanglement.bpmn: that process ends in its own authorise-and-extract steps, which here are stages 9-13 of this one, and calling it would run them twice.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Detangle</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_seed" data-fa-state="extracted" data-fa-gloss="">
+10 · Seed both repositories <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Seed main, then bring the content and the tools in as reviewed pull requests with their history, so neither repository's first commit is unreviewable.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Seed</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_consume" data-fa-state="extracted" data-fa-gloss="">
+11 · Parent consumes, additively <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The parent pins the pair (a commit while staging, a version once released), repoints its imports, and keeps its own copy until it is green with the dependency declared.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Consume</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_release" data-fa-state="extracted" data-fa-gloss="">
+12 · First release <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Tag each repository, publish /&lt;version&gt;/ and /v&lt;major&gt;/. From here the two are versioned independently; a tools release lists the content majors it supports.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Release</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_cutover" data-fa-state="extracted" data-fa-gloss="">
+13 · Cutover: delete the parent's copy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Cutover</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_seedplan" data-fa-state="extracted" data-fa-gloss="">
 2 · Seed the work plan [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
@@ -114,6 +149,13 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <p>Only once edges are zero and the declaration stands alone: move the sub-graph out as one directory move, not a file-by-file sift. Its nested declaration resolves paths against its own directory, so moving the folder moves the graph. The five-point gate is in migration-plan.md Phase II.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Extract</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_identity" data-fa-state="extracted" data-fa-gloss="">
+4 · Identity: version, iriBase, nodeSchemas <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The declaration carries name, version, iriBase, needs and nodeSchemas. A base move is `bun run iri:sync -- --from &lt;old base&gt;`, once; then `iri:sync:check` and `check:node-iris` are green.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Identity</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_profilecheck" data-fa-state="extracted" data-fa-gloss="">
 5 · Check the profile [content-validate] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -127,6 +169,20 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <dd>
 <p>Give each formal block (definition, theorem, lemma, proposition, corollary, conjecture, proof) a .lean sibling that Lean 4 accepts, in the order lean-formalization sets out. A compiling declaration is not a formalised claim: check vacuity and narrative drift before calling it done, and record the status with proof-verification.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Formalize</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_hosted" data-fa-state="extracted" data-fa-gloss="">
+5 · Move harness output about it to the host <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>QA verdicts, translation templates, the exported graph and the glossary ledger are harness output ABOUT the graph: they live with the harness (kgQaHomeFor, translationsHomeFor). The content keeps only what its own checks need; the leak test's pending list is empty.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Hosted</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_split" data-fa-state="extracted" data-fa-gloss="">
+6 · Split content from tools <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Create &lt;name&gt;-tools as a sibling directory and move the code: the Zod source, the generators, the README and diagram writers, the content checks. Cut its import cone to its own files and declared packages. Both start at the content's version.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Split</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_validate" data-fa-state="extracted" data-fa-gloss="">
 6 · Validate [content-validate] <span class="fa-gloss-status">candidate, extracted</span>
@@ -142,6 +198,13 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <p>Run content validation over the folio: schemas, the content profile (formal kinds only in a paper), cross-block consistency and that the Lean builds. Loop back rather than rendering over a failure.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Validate</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_plan" data-fa-state="extracted" data-fa-gloss="">
+7 · Plan publication <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every identifier the content mints is a file some step publishes: /&lt;version&gt;/ for what programs read, kept for every version; /v&lt;major&gt;/ for pages people read. Name collisions between published files are resolved here.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Plan</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_render" data-fa-state="extracted" data-fa-gloss="">
 7 · Render MD / HTML / PDF [document-publishing] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -156,6 +219,13 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <p>Typeset the paper through LaTeX to PDF and HTML. Run latex_preflight first — missing packages, fonts or engine — rather than discovering them twenty minutes in. The preamble, class and macros belong to the folio, never to the platform.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Render</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_rehearse" data-fa-state="extracted" data-fa-gloss="">
+8 · Rehearse standalone <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Copy the content and the tools alone into a temporary directory, with nothing else on the path, and run the tools' checks there. An empty tree must exit non-zero, so a rehearsal over nothing cannot pass.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Rehearse</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_review" data-fa-state="extracted" data-fa-gloss="">
 8 · Review and feedback [content-review] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -169,6 +239,13 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <dd>
 <p>Review the rendered paper, not a description of it, and record the feedback. The outcome is iterate — back to authoring — or approved for the publication path.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Review</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_authorise" data-fa-state="extracted" data-fa-gloss="">
+9 · Authorise the extraction <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A repository cut changes the substrate every other process binds to; that is a person's decision. Declining leaves the graph declared, detangled, isolated and split in place.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Authorise</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_publish" data-fa-state="extracted" data-fa-gloss="">
 9 · Publish [content-publish] <span class="fa-gloss-status">candidate, extracted</span>
@@ -576,6 +653,13 @@ Brief the topic before touching anything <span class="fa-gloss-status">candidate
 <dd>
 <p>What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration — this practice's own fired, took edges 5 to 12, and rewrote the plan.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Brief</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_brief" data-fa-state="extracted" data-fa-gloss="">
+Brief, and claim the bean <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What is separating and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. Claim the bean so a sibling session sees the work.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Brief</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_buildgates" data-fa-state="extracted" data-fa-gloss="">
 Build and QA gates [content-test] <span class="fa-gloss-status">candidate, extracted</span>
@@ -987,6 +1071,13 @@ Create the bean (agent CLI, not an engine op) <span class="fa-gloss-status">cand
 <p>`beans create &quot;&lt;title&gt;&quot;`. This is the AGENT's call. The workflow engine has no `create` op — its vocabulary is claim, note and resolve, all of which act on an instance's existing bean.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/bean-lifecycle.bpmn"><code>cat-harness/processes/bean-lifecycle.bpmn#Task_Create</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_create" data-fa-state="extracted" data-fa-gloss="">
+Create the repositories <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The owner creates the content and tools repositories and their Pages. Nothing is committed to them before this.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Create</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_gettingstarted.task_createrepo" data-fa-state="extracted" data-fa-gloss="">
 Create the repository <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1337,6 +1428,13 @@ Establish who is acting <span class="fa-gloss-status">candidate, extracted</span
 <dd>
 <p>The first step and not a formality: `actor` is the one field of the record that nothing else can supply. Every other field is recoverable by reading the repository; who is acting is not.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>cat-harness/processes/session-state-machine.bpmn#A_IdentifyActor</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_verify" data-fa-state="extracted" data-fa-gloss="">
+Every identifier dereferences <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>After the release is live, every published identifier resolves to the file it names.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Verify</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_methodologyfromsource.a_tools" data-fa-state="extracted" data-fa-gloss="">
 Every skill and tool used becomes a Tool <span class="fa-gloss-status">candidate, extracted</span>
@@ -1922,6 +2020,13 @@ Materialize remote content (the five gates) <span class="fa-gloss-status">candid
 <dd>
 <p>The shared subprocess. It resolves the request against the source descriptor, then asks size, restrictions, copyright, retention and source loss, and either fetches with fixity or leaves the content referenced. This process does not restate any of that; it waits for the outcome.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sample-import.bpmn"><code>cat-harness/processes/sample-import.bpmn#Call_Materialize</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_measure" data-fa-state="extracted" data-fa-gloss="">
+Measure the signals <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Files and bytes per instance, clone cost (`bun run health`), gate time, merge contention, the candidate's cohesion and cut (`kg:detangle`), wrong-direction edges, and the would-be tools package's import cone. Recorded in the bean; none alone is a trigger.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Measure</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_wireframedesignreview.d_check" data-fa-state="extracted" data-fa-gloss="">
 Mechanical checks, both viewports <span class="fa-gloss-status">candidate, extracted</span>
@@ -2881,6 +2986,13 @@ Report the capture state <span class="fa-gloss-status">candidate, extracted</spa
 <p>Capture is off or unknown, so nothing is committed. Say which of the two it is: off is somebody's decision, unknown means nobody could tell, and an agent that believes it has an audit trail when it has none acts on a false belief.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/activity-log.bpmn"><code>cat-harness/processes/activity-log.bpmn#A_ReportCaptureState</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_propose" data-fa-state="extracted" data-fa-gloss="">
+Report what moves — sizes, what breaks <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The agent reports and waits: what moves, how large, what in the parent breaks, and the rollback. It never relocates a durable artefact on its own initiative.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Propose</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_propose" data-fa-state="extracted" data-fa-gloss="">
 Report what would move — sizes, and what breaks <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3409,6 +3521,13 @@ Select the methodology by context <span class="fa-gloss-status">candidate, extra
 <dd>
 <p>Ask the selection question in order, first yes decides: do the criteria RECUR with the same inputs having to produce the same answer; is this the CERTAINTY of a body of evidence behind a recommendation; is the context a BEAN recording a decision; otherwise a one-off choice among candidates. If none fits, that is a finding — say which question the decision is and that no adopted methodology covers it. Do not improvise one and do not stretch the nearest fit. The declared set is the contents of the `methodology` graph. Ask for it; do not remember it.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/options-analysis.bpmn"><code>cat-harness/processes/options-analysis.bpmn#A_Select</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_decide" data-fa-state="extracted" data-fa-gloss="">
+Separate this graph? <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The owner decides from the measured signals, and also decides the address base for its identifiers, where verdicts about it live, and what its tools repository owns. Declining is a real outcome: the graph stays where it is.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Decide</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.a_serialize" data-fa-state="extracted" data-fa-gloss="">
 Serialize to JSON-LD <span class="fa-gloss-status">candidate, extracted</span>

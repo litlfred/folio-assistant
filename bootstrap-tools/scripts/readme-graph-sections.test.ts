@@ -2,7 +2,7 @@
  * `kg:processes` and `kg:files` — an instance's README sections drawn from its
  * own declaration.
  *
- * @module scripts/tests/readme-graph-sections
+ * @module bootstrap-tools/scripts/readme-graph-sections.test
  * @graphNode none — a test
  *
  * Each test builds its own instance in a temporary directory rather than
@@ -13,7 +13,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { filesSection, firstSentence, processesSection } from "../../content/pipeline/readme-graph-sections";
+import { filesSection, firstSentence, processesSection } from "./readme-graph-sections.ts";
 
 const bpmn = (id: string, name: string, body = "") =>
   `<?xml version="1.0"?><bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:x="urn:x">` +
@@ -53,7 +53,7 @@ function instance(withPictures: boolean): string {
   return root;
 }
 
-const ctx = (root: string) => ({ root, cfg: {} as never, fetch: false });
+const ctx = (root: string) => ({ root });
 
 describe("kg:processes", () => {
   test("entry process first, each with its picture and who starts it", () => {

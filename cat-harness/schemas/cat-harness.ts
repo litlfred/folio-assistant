@@ -2279,10 +2279,21 @@ export const CatHarnessDeclarationSchema = z.object({
    * `@id` from it; `iriBase` says what the vocabulary's identifiers ARE, and
    * those carry the release: `<iriBase><version>/…` for anything an agent
    * reads (namespaces, schema `$id`s), `<iriBase>v<major>/…` for pages a
-   * person reads (owner, 2026-09-29). `releaseIris` in `release-iri.ts`
+   * person reads (owner, 2026-09-29). `releaseIris` in `bootstrap-tools/schemas/release-iri.ts`
    * composes both; `iri:sync` keeps every literal copy at the declared version.
    */
   iriBase: z.string().url().optional(),
+  /**
+   * The instance's Node Kinds, declared: each `$schema` tag its files may
+   * carry → the JSON Schema that defines it (an IRI, or a path relative to
+   * the declaration). Bootstrap's field (`graph.ts`, owner 2026-09-29: the
+   * schema-reference table "should be in bootstrap"), inherited here because
+   * this declaration is a Subkind of bootstrap's. The graph-kind registry's
+   * `nodeSchemas` keeps the harness's TypeScript-backed forms (`validator`,
+   * `shape`); this one names only published schemas, which is all a reader
+   * with nothing installed can follow.
+   */
+  nodeSchemas: z.record(z.string().min(1), z.string().min(1)).optional(),
   previewUrl: z.string().url().optional(),
   publication: PublicationSchema.optional(),
   topology: TopologySchema.optional(),

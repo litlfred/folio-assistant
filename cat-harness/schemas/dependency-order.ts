@@ -309,3 +309,11 @@ export function findConflicts(
   }
   return conflicts;
 }
+
+/**
+ * `checkDeclaredOrder` — does an AUTHORED order keep its promise? — lives in
+ * bootstrap-tools, because bootstrap's own term list is the first thing that
+ * needs it and bootstrap-tools may import nothing above bootstrap. Re-exported
+ * here so a harness caller asks one module about order either way.
+ */
+export { checkDeclaredOrder, type OrderViolation } from "../../bootstrap-tools/schemas/declared-order.ts";

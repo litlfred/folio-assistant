@@ -9,13 +9,13 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2603 terms: **7 authored** in 2 glossaries, on this page, and **2596 extracted** from knowledge-graph assets in 18 generated schemes, one page per asset type, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2645 terms: **29 authored** in 3 glossaries, on this page, and **2616 extracted** from knowledge-graph assets in 19 generated schemes, one page per asset type, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
-<tr><td>authored</td><td>A person wrote or approved the definition.</td><td>7</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2596</td></tr>
+<tr><td>authored</td><td>A person wrote or approved the definition.</td><td>29</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2616</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
@@ -27,17 +27,198 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <div style="overflow-x:auto"><table>
 <thead><tr><th>page</th><th>holds</th><th>terms</th><th>size</th></tr></thead>
 <tbody>
-<tr><td>this page</td><td>authored terms, counts and sources</td><td>7</td><td>16 KB</td></tr>
-<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>288</td><td>205 KB</td></tr>
+<tr><td>this page</td><td>authored terms, counts and sources</td><td>29</td><td>41 KB</td></tr>
+<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>289</td><td>206 KB</td></tr>
 <tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>120</td><td>76 KB</td></tr>
-<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>532</td><td>407 KB</td></tr>
+<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>549</td><td>418 KB</td></tr>
 <tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>7 KB</td></tr>
-<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1647</td><td>893 KB</td></tr>
+<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1649</td><td>895 KB</td></tr>
 </tbody></table></div>
 
-**Size:** this page holds 7 terms and is 16 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 29 terms and is 41 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 ## Authored terms
+
+### Bootstrap terms
+
+The terms Bootstrap defines, in order: each is defined only by terms above it, and never itself. Read from the schema that defines them, bootstrap/schemas/graph.schema.json, so this glossary cannot say anything that schema does not. <a href="{{ '/assets/glossary/bootstrap--terms.skos.jsonld' | relative_url }}">SKOS</a>.
+
+<dl class="fa-gloss fa-gloss-ordered">
+<dt id="bootstrap--terms--node" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">1.</span> Node
+</dt>
+<dd>
+<p>One file, or one part of a file addressable by an IRI fragment, named by an IRI.</p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node</code> · defined by <a href="https://www.w3.org/TR/json-ld11/#node-objects">www.w3.org/TR/json-ld11/#node-objects</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Node</code></a></p>
+</dd>
+<dt id="bootstrap--terms--reference" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">2.</span> Reference
+</dt>
+<dd>
+<p>A Node's naming of another Node by its IRI.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node">Node</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/reference</code> · defined by <a href="https://www.rfc-editor.org/rfc/rfc3987">www.rfc-editor.org/rfc/rfc3987</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Reference</code></a></p>
+</dd>
+<dt id="bootstrap--terms--node-schema" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">3.</span> Node Schema
+</dt>
+<dd>
+<p>A schema a Node can be checked against: a JSON Schema, or a published external schema such as BPMN's.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node">Node</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-schema</code> · defined by <a href="http://json-schema.org/draft-07/schema#">json-schema.org/draft-07/schema#</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/NodeSchema</code></a></p>
+</dd>
+<dt id="bootstrap--terms--node-kind" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">4.</span> Node Kind
+</dt>
+<dd>
+<p>A name paired with a Node Schema.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node-schema">Node Schema</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-kind</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/properties/nodeSchemas">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/properties/nodeSchemas</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/NodeKind</code></a></p>
+</dd>
+<dt id="bootstrap--terms--subkind" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">5.</span> Subkind
+</dt>
+<dd>
+<p>A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node that satisfies it satisfies the other too.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node-kind">Node Kind</a>, <a href="#bootstrap--terms--node-schema">Node Schema</a>, <a href="#bootstrap--terms--node">Node</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/subkind</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Subkind">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Subkind</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Subkind</code></a></p>
+</dd>
+<dt id="bootstrap--terms--node-instance" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">6.</span> Node Instance
+</dt>
+<dd>
+<p>A Node that names its Node Kind, in `$schema` or front matter, and satisfies that kind's Node Schema.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node">Node</a>, <a href="#bootstrap--terms--node-kind">Node Kind</a>, <a href="#bootstrap--terms--node-schema">Node Schema</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/NodeInstance">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/NodeInstance</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/NodeInstance</code></a></p>
+</dd>
+<dt id="bootstrap--terms--graph-kind" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">7.</span> Graph Kind
+</dt>
+<dd>
+<p>A named set of Node Kinds.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node-kind">Node Kind</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/graph-kind</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/GraphKind">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/GraphKind</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/GraphKind</code></a></p>
+</dd>
+<dt id="bootstrap--terms--declaration" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">8.</span> Declaration
+</dt>
+<dd>
+<p>A JSON document, `&lt;name&gt;.json`, that gives a name and lists directory entries and file entries.</p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Declaration</code></a></p>
+</dd>
+<dt id="bootstrap--terms--extension" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">9.</span> Extension
+</dt>
+<dd>
+<p>A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/extension</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Extension">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Extension</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Extension</code></a></p>
+</dd>
+<dt id="bootstrap--terms--subgraph" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">10.</span> Subgraph
+</dt>
+<dd>
+<p>A directory entry of a Declaration: an id, a directory, and the Graph Kinds its Node Instances' kinds belong to.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a>, <a href="#bootstrap--terms--graph-kind">Graph Kind</a>, <a href="#bootstrap--terms--node-instance">Node Instance</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/subgraph</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Subgraph">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Subgraph</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Subgraph</code></a></p>
+</dd>
+<dt id="bootstrap--terms--asset" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">11.</span> Asset
+</dt>
+<dd>
+<p>A file entry of a Declaration: one file about the repository itself, whose `role` field says what it is for.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/asset</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Asset">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Asset</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Asset</code></a></p>
+</dd>
+<dt id="bootstrap--terms--knowledge-graph" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">12.</span> Knowledge Graph
+</dt>
+<dd>
+<p>The Node Schemas, Node Instances and Assets one Declaration lists, as of one version of the repository. Published as JSON-LD, the statements of each Subgraph's Node Instances form one named graph.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node-schema">Node Schema</a>, <a href="#bootstrap--terms--node-instance">Node Instance</a>, <a href="#bootstrap--terms--asset">Asset</a>, <a href="#bootstrap--terms--declaration">Declaration</a>, <a href="#bootstrap--terms--subgraph">Subgraph</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/knowledge-graph</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/KnowledgeGraph</code></a></p>
+</dd>
+<dt id="bootstrap--terms--dependency" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">13.</span> Dependency
+</dt>
+<dd>
+<p>A Declaration's `needs` entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--declaration">Declaration</a>, <a href="#bootstrap--terms--knowledge-graph">Knowledge Graph</a>, <a href="#bootstrap--terms--reference">Reference</a>, <a href="#bootstrap--terms--node-instance">Node Instance</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/dependency</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Dependency">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Dependency</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Dependency</code></a></p>
+</dd>
+<dt id="bootstrap--terms--content" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">14.</span> Content
+</dt>
+<dd>
+<p>Node Instances that describe the subject matter of a Knowledge Graph, such as records, documents, catalogues and their terms, rather than how to work with it.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node-instance">Node Instance</a>, <a href="#bootstrap--terms--knowledge-graph">Knowledge Graph</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/content</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Content">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Content</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Content</code></a></p>
+</dd>
+<dt id="bootstrap--terms--task" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">15.</span> Task
+</dt>
+<dd>
+<p>A unit of work, stated by what it needs to begin and what it produces.</p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/task</code> · defined by <a href="https://www.omg.org/spec/BPMN/2.0/#task">www.omg.org/spec/BPMN/2.0/#task</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Task</code></a></p>
+</dd>
+<dt id="bootstrap--terms--actor" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">16.</span> Actor
+</dt>
+<dd>
+<p>A person, an agent or a program that can carry out Tasks.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--task">Task</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/actor</code> · defined by <a href="http://www.w3.org/ns/prov#Agent">www.w3.org/ns/prov#Agent</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Actor</code></a></p>
+</dd>
+<dt id="bootstrap--terms--skill" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">17.</span> Skill
+</dt>
+<dd>
+<p>A Node Instance holding natural-language instructions an Actor follows to carry out a Task.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node-instance">Node Instance</a>, <a href="#bootstrap--terms--actor">Actor</a>, <a href="#bootstrap--terms--task">Task</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/skill</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Skill">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Skill</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Skill</code></a></p>
+</dd>
+<dt id="bootstrap--terms--role" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">18.</span> Role
+</dt>
+<dd>
+<p>A Node Instance naming a part an Actor takes on to carry out Tasks, and listing the Skills that part needs.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node-instance">Node Instance</a>, <a href="#bootstrap--terms--actor">Actor</a>, <a href="#bootstrap--terms--task">Task</a>, <a href="#bootstrap--terms--skill">Skill</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/role</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Role">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json#/$defs/Role</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Role</code></a></p>
+</dd>
+<dt id="bootstrap--terms--process-node" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">19.</span> Process Node
+</dt>
+<dd>
+<p>A BPMN flow node: an activity (a task or call activity), a gateway, or an event.</p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process-node</code> · defined by <a href="https://www.omg.org/spec/BPMN/2.0/#flowNode">www.omg.org/spec/BPMN/2.0/#flowNode</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/ProcessNode</code></a></p>
+</dd>
+<dt id="bootstrap--terms--sequence-flow" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">20.</span> Sequence Flow
+</dt>
+<dd>
+<p>A directed connection in a BPMN process from one Process Node to the next.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--process-node">Process Node</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/sequence-flow</code> · defined by <a href="https://www.omg.org/spec/BPMN/2.0/#sequenceFlow">www.omg.org/spec/BPMN/2.0/#sequenceFlow</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/SequenceFlow</code></a></p>
+</dd>
+<dt id="bootstrap--terms--process" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">21.</span> Process
+</dt>
+<dd>
+<p>A Node Instance holding a BPMN process that coordinates Tasks: its Process Nodes, joined by Sequence Flows, sit in lanes that each name a Role.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--node-instance">Node Instance</a>, <a href="#bootstrap--terms--task">Task</a>, <a href="#bootstrap--terms--process-node">Process Node</a>, <a href="#bootstrap--terms--sequence-flow">Sequence Flow</a>, <a href="#bootstrap--terms--role">Role</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process</code> · defined by <a href="https://www.omg.org/spec/BPMN/2.0/#process">www.omg.org/spec/BPMN/2.0/#process</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Process</code></a></p>
+</dd>
+<dt id="bootstrap--terms--harness" data-fa-state="authored" data-fa-gloss="">
+<span class="fa-gloss-n">22.</span> Harness
+</dt>
+<dd>
+<p>A Knowledge Graph whose Subgraphs hold Skills, Roles or Processes: what an Actor uses to work with a Knowledge Graph, including itself.</p>
+<p class="fa-gloss-uses">Uses: <a href="#bootstrap--terms--knowledge-graph">Knowledge Graph</a>, <a href="#bootstrap--terms--subgraph">Subgraph</a>, <a href="#bootstrap--terms--skill">Skill</a>, <a href="#bootstrap--terms--role">Role</a>, <a href="#bootstrap--terms--process">Process</a>, <a href="#bootstrap--terms--actor">Actor</a></p>
+<p class="fa-gloss-meta">Bootstrap terms · <code>https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/harness</code> · defined by <a href="https://litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json">litlfred.github.io/bootstrap/0.1.0/schemas/graph.schema.json</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/schemas/graph.schema.json"><code>bootstrap/schemas/graph.schema.json#/$defs/Harness</code></a></p>
+</dd>
+</dl>
+
+### Every other authored term, A–Z
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -125,6 +306,7 @@ task run
 ### Authored
 
 <ul>
+<li><strong>Bootstrap terms</strong> (bootstrap, 22 terms) · <a href="{{ '/assets/glossary/bootstrap--terms.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>bootstrap/schemas/graph.schema.json</code></li>
 <li><strong>Folio Assistant platform terms (cat-harness)</strong> (cat-harness, 6 terms) · <a href="{{ '/assets/glossary/cat-harness--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/cat-harness.glossary.json</code></li>
 <li><strong>Folio Assistant platform terms</strong> (folio-assistant-core, 1 term) · <a href="{{ '/assets/glossary/folio-assistant-core--platform.skos.jsonld' | relative_url }}">SKOS JSON-LD</a> · <code>folio-assistant-core/glossary/folio-assistant-core.glossary.json</code></li>
 <li><strong>Swimlane roles</strong> (bootstrap, 6 terms) · <a href="{{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}">rendered here</a> · <code>bootstrap/glossary/glossary-ledger.json</code></li>
@@ -139,13 +321,14 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <thead><tr><th>instance</th><th><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></th><th><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></th><th><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></th><th><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></th><th><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></th></tr></thead>
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
-<tr><td>cat-harness</td><td>270 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>105 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>503 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1478 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>bootstrap-tools</td><td>—</td><td>—</td><td>—</td><td>—</td><td>25 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>271 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>105 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>520 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1454 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>6 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>2 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>151 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>152 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>18 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>288</strong></td><td><strong>120</strong></td><td><strong>532</strong></td><td><strong>9</strong></td><td><strong>1647</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>289</strong></td><td><strong>120</strong></td><td><strong>549</strong></td><td><strong>9</strong></td><td><strong>1649</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">
@@ -156,9 +339,21 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
  "hasDefinedTerm": [
   {
    "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/actor",
+   "name": "Actor",
+   "description": "A person, an agent or a program that can carry out Tasks."
+  },
+  {
+   "@type": "DefinedTerm",
    "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/actor",
    "name": "actor",
    "description": "A concrete participant, human, agentic or mechanical, that persists across every process and takes on roles. Which login is which actor is the data store's to know."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/asset",
+   "name": "Asset",
+   "description": "A file entry of a Declaration: one file about the repository itself, whose `role` field says what it is for."
   },
   {
    "@type": "DefinedTerm",
@@ -168,9 +363,75 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/content",
+   "name": "Content",
+   "description": "Node Instances that describe the subject matter of a Knowledge Graph, such as records, documents, catalogues and their terms, rather than how to work with it."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration",
+   "name": "Declaration",
+   "description": "A JSON document, `<name>.json`, that gives a name and lists directory entries and file entries."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/dependency",
+   "name": "Dependency",
+   "description": "A Declaration's `needs` entry naming another Knowledge Graph. References may point from this graph's Node Instances into the named one, never back."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/extension",
+   "name": "Extension",
+   "description": "A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning."
+  },
+  {
+   "@type": "DefinedTerm",
    "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/glossary",
    "name": "glossary",
    "description": "An instance's terms and what they mean, as a SKOS concept scheme: local terms linked to external concepts, plus external concepts listed without being copied."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/graph-kind",
+   "name": "Graph Kind",
+   "description": "A named set of Node Kinds."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/harness",
+   "name": "Harness",
+   "description": "A Knowledge Graph whose Subgraphs hold Skills, Roles or Processes: what an Actor uses to work with a Knowledge Graph, including itself."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/knowledge-graph",
+   "name": "Knowledge Graph",
+   "description": "The Node Schemas, Node Instances and Assets one Declaration lists, as of one version of the repository. Published as JSON-LD, the statements of each Subgraph's Node Instances form one named graph."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node",
+   "name": "Node",
+   "description": "One file, or one part of a file addressable by an IRI fragment, named by an IRI."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance",
+   "name": "Node Instance",
+   "description": "A Node that names its Node Kind, in `$schema` or front matter, and satisfies that kind's Node Schema."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-kind",
+   "name": "Node Kind",
+   "description": "A name paired with a Node Schema."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-schema",
+   "name": "Node Schema",
+   "description": "A schema a Node can be checked against: a JSON Schema, or a published external schema such as BPMN's."
   },
   {
    "@type": "DefinedTerm",
@@ -186,9 +447,63 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process",
+   "name": "Process",
+   "description": "A Node Instance holding a BPMN process that coordinates Tasks: its Process Nodes, joined by Sequence Flows, sit in lanes that each name a Role."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process-node",
+   "name": "Process Node",
+   "description": "A BPMN flow node: an activity (a task or call activity), a gateway, or an event."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/reference",
+   "name": "Reference",
+   "description": "A Node's naming of another Node by its IRI."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/role",
+   "name": "Role",
+   "description": "A Node Instance naming a part an Actor takes on to carry out Tasks, and listing the Skills that part needs."
+  },
+  {
+   "@type": "DefinedTerm",
    "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/role",
    "name": "role",
    "description": "The swimlane: a persona an actor takes on because of the lane it is acting in, carrying the skills that lane's activities need."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/sequence-flow",
+   "name": "Sequence Flow",
+   "description": "A directed connection in a BPMN process from one Process Node to the next."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/skill",
+   "name": "Skill",
+   "description": "A Node Instance holding natural-language instructions an Actor follows to carry out a Task."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/subgraph",
+   "name": "Subgraph",
+   "description": "A directory entry of a Declaration: an id, a directory, and the Graph Kinds its Node Instances' kinds belong to."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/subkind",
+   "name": "Subkind",
+   "description": "A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node that satisfies it satisfies the other too."
+  },
+  {
+   "@type": "DefinedTerm",
+   "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/task",
+   "name": "Task",
+   "description": "A unit of work, stated by what it needs to begin and what it produces."
   },
   {
    "@type": "DefinedTerm",

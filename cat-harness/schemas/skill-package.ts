@@ -39,8 +39,9 @@ import {
   RequirementStatementFields,
   refineRequirement,
   refineStatement,
-} from "./requirement.ts";
+} from "../../bootstrap-tools/schemas/requirement.ts";
 import { NETWORK_REACHES } from "./cat-harness";
+import { SkillNameSchema } from "./tool-types.js";
 
 // ─── Enumerations ────────────────────────────────────────────────────────────
 
@@ -280,7 +281,7 @@ export const RequirementStatementRefSchema = z
 
 /*
  * BUILT ON THE BOOTSTRAP BASE (issue #1164, owner: "1 + 2"). The base in
- * `bootstrap/schemas/requirement.schema.json` (Zod source: `cat-harness/schemas/requirement.ts`) is what every harness gets — the
+ * `bootstrap/schemas/requirement.schema.json` (Zod source: `bootstrap-tools/schemas/requirement.ts`) is what every harness gets — the
  * statement, its level, the functional and non-functional fields. Neither
  * lists what satisfies a statement: that pointer is held by the satisfier
  * (`satisfies:`, above). The base's refinements are re-applied, because a
@@ -303,7 +304,7 @@ export const SkillPackageRefSchema = z.object({
   repo: z.string(),
   path: z.string(),
   ref: z.string(),
-  skills: z.array(z.string()),
+  skills: z.array(SkillNameSchema),
 });
 
 export const HookCommandSchema = z.object({
@@ -342,7 +343,7 @@ export const SkillPackageManifestSchema = z.object({
   name: z.string().min(1),
   version: z.string(),
   description: z.string(),
-  skills: z.array(z.string()),
+  skills: z.array(SkillNameSchema),
   docker: DockerRequirementsSchema,
   providesCapabilities: z.array(z.string()).optional(),
   requiresCapabilities: z.array(z.string()).optional(),
@@ -417,7 +418,7 @@ export const RemotePackageRefSchema = z.object({
     description: z.string(),
     docker: DockerRequirementsSchema,
     providesCapabilities: z.array(z.string()).optional(),
-    skills: z.array(z.string()),
+    skills: z.array(SkillNameSchema),
     lifecycleStages: z.array(LifecycleStageSchema).optional(),
   }),
 }).superRefine((w, ctx) => {
@@ -445,7 +446,7 @@ export const RemotePackageRefSchema = z.object({
  */
 export const RemoteSkillRecordSchema = z.object({
   $schema: z.literal("folio-remote-skill/v1"),
-  skill: z.string().min(1),
+  skill: SkillNameSchema,
   package: z.string().min(1),
   repo: z.string().url(),
   ref: z.string().regex(/^[0-9a-f]{40}$/, "a synced skill is pinned to a full commit SHA"),

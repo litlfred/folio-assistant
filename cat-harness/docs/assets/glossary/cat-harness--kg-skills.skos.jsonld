@@ -1,7 +1,8 @@
 {
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
-    "dcterms": "http://purl.org/dc/terms/"
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
   "@graph": [
     {
@@ -2424,6 +2425,26 @@
       ],
       "skos:notation": "kg-navigation",
       "dcterms:source": "cat-harness/skills/kg-navigation/kg-navigation.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/kg-separation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "kg-separation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Separate a Knowledge Graph into its own repository — as a CONTENT repository (files to read, no code) and a TOOLS repository (the code that writes and checks it) — once it is too large, or its consumers or cadence differ. The end-to-end method: the signals that trigger it, the preconditions, eleven stages each with the command that gates it, the owner's decision points, how identifiers, QA and publication move, how the parent consumes the result, and rollback. graph-detanglement owns stages 1–3; this skill owns the rest. Bootstrap + bootstrap-tools is the worked example; cat-harness + cat-harness-tools is next."
+        }
+      ],
+      "skos:notation": "kg-separation",
+      "dcterms:source": "cat-harness/skills/graph-management/kg-separation.md",
       "skos:note": "candidate"
     },
     {
