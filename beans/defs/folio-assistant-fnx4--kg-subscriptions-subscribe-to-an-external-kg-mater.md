@@ -1,10 +1,11 @@
 ---
 # folio-assistant-fnx4
 title: 'KG SUBSCRIPTIONS: subscribe to an external KG, materialise chosen subgraphs, assets and harnesses; known substrates; visualizer'
-status: todo
+status: in-progress
 type: epic
+priority: normal
 created_at: 2026-09-30T22:54:31Z
-updated_at: 2026-09-30T22:54:31Z
+updated_at: 2026-09-30T23:04:05Z
 parent: folio-assistant-vuip
 ---
 

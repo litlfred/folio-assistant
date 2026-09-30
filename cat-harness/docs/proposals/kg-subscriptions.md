@@ -109,7 +109,7 @@ per substrate:
 |---|---|---|---|
 | iHRIS | `litlfred/ihris` | **exists** | `associatedHarnesses` in `cat-harness.json` |
 | WHO IRIS | `litlfred/who-iris` | **exists, empty**; the staged instance is `who-iris/` | `who-iris.json` → `repository` |
-| WHO style guide | `litlfred/who-style-guide` | planned; `needs` who-iris | `who-style-guide.json` → `repository` |
+| WHO style guide | none; **merging into who-iris as a subgraph** | owner, 2026-09-30: *"who voices style guide is derivative KG content from who-iris, merge content into subgraph. including docs."* | not a separate substrate |
 | WHO World Health Data Hub | none yet | proposed (owner, 2026-09-30) | hand-entered, `status: proposed` |
 | every other staged instance | its planned `repository` | planned | `instanceRepositories()` |
 
