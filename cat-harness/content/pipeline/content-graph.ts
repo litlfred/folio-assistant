@@ -151,9 +151,40 @@ export interface ContentNode {
  *   misses `simp`/instance/unfolding dependencies and can over-report a
  *   coincidental name match. Good enough for advisory signals; not good
  *   enough to drive staleness invalidation.
- * - `mixed` — both, per-declaration.
+ * - `elaborated` — folio-assistant-sci's formal-edge extractor
+ *   (`folio-assistant-sci/content/pipeline/formal-edges.ts`): the same
+ *   elaborated type/value split as `atlas`, computed with LeanArchitect's
+ *   dependency rule over the folio's `lean.ref` targets. As trustworthy as
+ *   `atlas`; see `isElaborated`.
+ * - `mixed` — some entries `scan`, the rest elaborated. Only `scan` makes a
+ *   cache mixed: `atlas` beside `elaborated` is still fully elaborated.
  */
-export type FormalSource = "atlas" | "scan" | "mixed";
+export type FormalSource = "atlas" | "elaborated" | "scan" | "mixed";
+
+/**
+ * True when a formal edge set was elaborated rather than lexically scanned,
+ * i.e. its type/value split is real. Consumers branch on THIS, never on
+ * `=== "atlas"`, so a second elaborated source cannot be silently treated as
+ * a scan.
+ */
+export function isElaborated(source: string | undefined): boolean {
+  return source === "atlas" || source === "elaborated";
+}
+
+/**
+ * The cache-level summary of per-entry sources. ONE rule, used both where the
+ * cache is written (`lean-atlas-ingest.ts` `saveCache`) and where it is read
+ * without a summary, so the two cannot disagree. Empty is `scan` (nothing
+ * elaborated has been recorded); any `scan` beside an elaborated entry is
+ * `mixed`; `atlas` beside `elaborated` is still fully elaborated.
+ */
+export function summarizeSources(sources: Iterable<string | undefined>): FormalSource {
+  const s = new Set([...sources].map((x) => x ?? "scan"));
+  const elaborated = [...s].some((x) => isElaborated(x));
+  if (s.size === 0 || (s.has("scan") && !elaborated)) return "scan";
+  if (s.has("scan")) return "mixed";
+  return s.has("elaborated") ? "elaborated" : "atlas";
+}
 
 /** On-disk shape of the formal dependency cache. */
 interface AtlasCache {
@@ -169,7 +200,7 @@ interface AtlasCache {
       value_deps?: string[];
       /** 12-char SHA of the owning `.lean` at extraction time. */
       lean_sha?: string;
-      source?: "atlas" | "scan";
+      source?: "atlas" | "elaborated" | "scan";
     }
   >;
 }
@@ -300,7 +331,8 @@ export class ContentGraph {
    * Consumers must branch on this where confidence matters. In
    * particular, anything that invalidates downstream work on the
    * strength of a **type** vs **value** edge (staleness propagation)
-   * requires `"atlas"`; under `"scan"` the split is a lexical guess and
+   * requires an elaborated source (`isElaborated`: `"atlas"` or
+   * `"elaborated"`); under `"scan"` the split is a lexical guess and
    * must be treated as unavailable rather than trusted.
    */
   formalSource?: FormalSource;
@@ -512,8 +544,7 @@ export function buildContentGraph(rootDir: string, repoRoot?: string): ContentGr
   const perEntry = new Set(
     Object.values(cache.decls ?? {}).map((d) => d.source ?? "scan"),
   );
-  g.formalSource =
-    cache.source ?? (perEntry.size > 1 ? "mixed" : ((perEntry.values().next().value ?? "scan") as FormalSource));
+  g.formalSource = cache.source ?? summarizeSources(perEntry);
 
   for (const [decl, entry] of Object.entries(cache.decls ?? {})) {
     const fromLabel = declToLabel.get(refToDecl(decl)!);
