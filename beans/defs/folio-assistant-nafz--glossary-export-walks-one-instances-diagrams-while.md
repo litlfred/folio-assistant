@@ -95,3 +95,5 @@ Option 1 (phrase the finding by scope) — the only option that decides nothing,
 - [x] wording says which corpus was walked — glossary-export now prints 'N declared role(s) no swimlane in <instance>/ draws:' and splits: 'deep-researcher — drawn in another instance: folio-assistant-core/processes/deep-document-research.bpmn' vs 'drawn by no diagram in the repository: librarian, …'. New report field drawnElsewhere (explicit <folio:role ref> only; a lane NAME match is not a binding). Nothing outside the instance is bound or emitted.
 - [x] the reason translate-bpmn and glossary-export differ is written on both walks.
 Test: glossary-export.test.ts 'an undrawn role another instance draws is told apart from one drawn nowhere'.
+
+_2026-09-30T00:33:54Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

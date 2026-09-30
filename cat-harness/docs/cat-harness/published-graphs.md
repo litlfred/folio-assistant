@@ -62,9 +62,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 6 published.
+0 of 7 published.
 {: .fa-hx-dim }
 
+- Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 - Folio Assistant — *declared, not published*
 - folio-assistant-core — *declared, not published*
@@ -245,10 +246,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `schemas`
 
-3 of 4 published.
+3 of 5 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
+- Bootstrap tools — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/schemas/cat-harness/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }})
 - [large-datasets]({{ '/cat-harness/schemas/large-datasets/' | relative_url }})

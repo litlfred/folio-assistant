@@ -9,5 +9,5 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `glossary`, hold
 |---|---|---|
 | [`cat-harness.glossary.json`](cat-harness.glossary.json) | Folio Assistant platform terms (cat-harness) |  |
 | [`folio-assistant-core.glossary.json`](folio-assistant-core.glossary.json) | Folio Assistant platform terms |  |
-| [`generated/`](generated/) | 18 files | |
+| [`generated/`](generated/) | 19 files | |
 <!-- kg:subgraph:end -->

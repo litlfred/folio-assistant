@@ -16,6 +16,28 @@
  * tool over a checkout, split the way `repo-partition.ts` splits from
  * `partition/engine.ts`.
  *
+ * ## The repository-name collision, and what {@link collisionOf} decides
+ *
+ * The root instance's name IS the repository's name, and until 2026-09-29 that
+ * made every occurrence of it `undetermined` in one move: **11,090 of 14,299
+ * occurrences on main, 78 % of everything read.** The ambiguity was in the
+ * INSTRUMENT rather than in the architecture. An occurrence carries more than
+ * the name it matched — a URL around it, an owner in front of it, a path
+ * segment after it — and of 13,160 word-bounded occurrences of the root's name
+ * under `cat-harness/`, 11,419 sit inside an `http(s)` URL and 14 point into a
+ * directory the root instance actually declares. So the resolver built here
+ * answers, per occurrence, which of three things the string is; the verdict
+ * `names-repository` carries the answer for the repository case, and the
+ * genuinely ambiguous residue is still `undetermined`.
+ *
+ * It reads the root's DECLARED directories to decide, which is the same
+ * discipline as {@link GENERATOR_WRITTEN} below and holds for the same reason:
+ * a directory added to the declaration tomorrow is recognised without an edit
+ * here. **The file's own principle is unchanged** — a file that merely
+ * MENTIONS a name cannot exempt itself, and nothing here lets it: the three
+ * collision answers are read off the occurrence's shape, not off anything the
+ * file claims about itself.
+ *
  * Usage:
  *   bun run cat-harness/scripts/check-reference-direction.ts            # summary
  *   … --findings           # every wrong-direction occurrence
@@ -41,6 +63,7 @@ import { allowedFromNeeds, type LayerRule } from "../schemas/layer-direction.js"
 import {
   classifyReference,
   occurrencesOf,
+  type NameCollision,
   type Occurrence,
   type ReferenceExemption,
   type ReferenceVerdict,
@@ -137,14 +160,21 @@ const GENERATOR_WRITTEN: ReadonlySet<string> = new Set(
 /**
  * Does the file SAY a generator wrote it, in its own first lines?
  *
- * Two conventions already in the corpus, both self-declarations rather than
+ * Two conventions in the corpus, both self-declarations rather than
  * inferences from a path:
  *
- *  - a top-level `"_generated"` key in JSON, which `sync-docs-harness.ts`
- *    has emitted into `docs/_data/harness.json` all along (84 occurrences);
- *  - a `generated:` front-matter key in Markdown, which `gen-skill-docs.ts`
- *    and `gen-schema-docs.ts` now emit into the `docs/reference/**` mirrors
- *    (145 occurrences across 31 pages).
+ *  - a top-level `"_generated"` key in JSON — `sync-docs-harness.ts` into
+ *    `docs/_data/harness.json` all along, and `glossary-page.ts` into the
+ *    SKOS assets and the extracted glossary schemes (bean `ws99`);
+ *  - a `generated:` front-matter key in Markdown — `gen-skill-docs.ts` and
+ *    `gen-schema-docs.ts` into the `docs/reference/**` mirrors (#1222),
+ *    `gen-uml-overview.ts` into `docs/uml/`, and `glossary-page.ts` and
+ *    `gen-docs-pages.ts` into their own pages (`ws99`).
+ *
+ * No count of either: the summary line prints how many files take this route
+ * on the run in front of you, and a number written down here is a claim about
+ * a corpus that changes whenever a generator gains a page. This paragraph
+ * carried two such numbers and both were stale within four days.
  *
  * The mirrors are the clearest case for reading a declaration rather than a
  * path: each is a COPY of a skill that sits one directory away, so a finding
@@ -154,16 +184,43 @@ const GENERATOR_WRITTEN: ReadonlySet<string> = new Set(
  *
  * Front matter only, and only the first lines: a page that DISCUSSES
  * generation must not be able to exempt itself by mentioning the word.
+ *
+ * JSON is read the way {@link isGeneratorWritten} reads it — PARSED, and
+ * `_generated` taken from the top level wherever it sits. It was a regex
+ * anchored to the first key until bean `ws99`, which is a different rule than
+ * the one this docblock states: it made POSITION part of the contract, so a
+ * file whose first key is `$schema` or `@context` could not declare itself
+ * without moving the key that says what it IS. Both are worth keeping first —
+ * `$schema` because every validator looks for it there, `@context` because a
+ * JSON-LD reader does — so the position requirement cost the declaration
+ * rather than buying anything. The principle the regex was defending is
+ * unchanged and is met better by parsing, in the words of this file's own
+ * {@link isGeneratorWritten}: *"Parsing and reading the top level is the
+ * difference between what a file IS and what it mentions."* A `_generated`
+ * nested inside a projection of another file is still not this file's
+ * declaration, and a whole-text scan would have read it as one.
+ *
+ * Markdown keeps the head-only front-matter route unchanged: there is no
+ * top level to read in prose, so the first lines are the only place a page
+ * can speak about itself rather than about its subject.
  */
-function declaresGenerated(abs: string): boolean {
-  let head: string;
+export function declaresGenerated(abs: string): boolean {
+  let text: string;
   try {
-    head = readFileSync(abs, "utf-8").slice(0, 2000);
+    text = readFileSync(abs, "utf-8");
   } catch {
     return false;
   }
-  if (/^\s*\{\s*"_generated"\s*:/.test(head)) return true;
-  const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(head);
+  if (abs.endsWith(".json") || abs.endsWith(".jsonld")) {
+    try {
+      const top = JSON.parse(text) as unknown;
+      if (typeof top !== "object" || top === null || Array.isArray(top)) return false;
+      return (top as { _generated?: unknown })._generated !== undefined;
+    } catch {
+      return false; // unparseable is not a licence to skip it
+    }
+  }
+  const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text.slice(0, 2000));
   return fm !== null && /^generated:\s*\S/m.test(fm[1]!);
 }
 
@@ -261,6 +318,15 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
  *
  * **It compares as a SET.** A new multi-target file fails, and so does a
  * FIXED one — a PENDING that only grows stops meaning anything.
+ *
+ * That half fired on bean `ws99`, which is the first evidence it works.
+ * `cat-harness/docs/ig-publisher.md` and `cat-harness/docs/publication-workflow.md`
+ * were held here as prose naming two or three instances with no single
+ * destination. They are not prose: `gen-docs-pages.ts` writes both, and once it
+ * began saying so in their front matter they stopped being read at all. Their
+ * entries were DELETED rather than left, because an entry recording a choice
+ * nobody has to make any more is a question the owner would be asked twice.
+ * Neither file was edited to earn that — the generator was.
  */
 const PENDING: readonly { file: string; names: number }[] = [
   // THIS FILE, and it is listed rather than exempted on purpose.
@@ -284,7 +350,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/scripts/partition/instance-rules.ts", names: 2 },
   { file: "cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md", names: 2 },
   { file: "cat-harness/skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md", names: 2 },
-  { file: "cat-harness/scripts/ingest-ig-artifacts.ts", names: 3 },
+  { file: "folio-assistant-core/scripts/ingest-ig-artifacts.ts", names: 3 },
   { file: "cat-harness/schemas/ig-chrome.ts", names: 6 },
   { file: "cat-harness/schemas/cat-harness.ts", names: 2 },
   { file: "cat-harness/skills/authoring-who-smart-guidelines/dak-postprocessing.md", names: 5 },
@@ -309,12 +375,10 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/scripts/kg-export.ts", names: 2 },
   { file: "cat-harness/scripts/layout-norms-baseline.json", names: 2 },
   { file: "cat-harness/tools/discover.ts", names: 2 },
-  { file: "cat-harness/docs/ig-publisher.md", names: 3 },
   { file: "cat-harness/skills/folio-core/harness-tiles.md", names: 2 },
   { file: "cat-harness/schemas/harness-config.ts", names: 3 },
   { file: "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md", names: 2 },
   { file: "cat-harness/scripts/check-context-emission.ts", names: 3 },
-  { file: "cat-harness/scripts/check-artifact-index.ts", names: 2 },
   { file: "cat-harness/scripts/harness-schema-export.ts", names: 2 },
   { file: "cat-harness/docs/wireframes/voices/intent.md", names: 2 },
   { file: "smart-ig/README.md", names: 2 },
@@ -326,9 +390,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md", names: 2 },
   { file: "cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md", names: 2 },
   { file: "cat-harness/scripts/ingest-ig-chrome.ts", names: 2 },
-  { file: "cat-harness/scripts/gen-object-model-uml.ts", names: 2 },
   { file: "cat-harness/docs/processes/index.md", names: 2 },
-  { file: "cat-harness/docs/publication-workflow.md", names: 2 },
   { file: "smart-ig/smart-ig.json", names: 2 },
 ];
 
@@ -340,6 +402,26 @@ interface Instance {
   needs: readonly string[] | undefined;
   /** Absolute paths this instance declares as holding machine-written graphs. */
   machineWritten: string[];
+  /**
+   * The directory paths this instance DECLARES, exactly as declared — relative
+   * segments like `uploads/` or `tools/`, not absolute and not resolved.
+   *
+   * Unresolved on purpose, because what they answer is a question about TEXT:
+   * given an occurrence of this instance's name, does the text go on to name
+   * one of the instance's own directories? That is the one test that
+   * distinguishes `<name>/uploads/x.pdf` — a reference to the instance — from
+   * `<name>/docs/guides/x.md`, which is a path in the repository. The root
+   * instance's own name is written `<name>` here rather than spelled out, for
+   * the reason the module docblock gives about this file's own text: an
+   * example that spells it out is itself a wrong-direction reference, and a
+   * gate whose documentation breaches it is the shape this repository already
+   * carves `declared-path-literal` for. Resolving them to absolute paths
+   * would answer a different
+   * question (does this file exist), and for the root instance every relative
+   * path in the tree resolves inside its root, so that question answers yes
+   * for everything.
+   */
+  declaredPaths: string[];
 }
 
 /** True when EVERY kind the directory declares is machine-written — conservative, so a directory that also holds authored content keeps being read. */
@@ -370,7 +452,10 @@ function instances(repoRoot: string): Instance[] {
     // A declaration with no `name` cannot be a reference TARGET (nothing to
     // match) and cannot own files by name either, so it is skipped rather
     // than given a fallback that would invent an instance.
-    return { root, name: decl.name ?? "", needs: decl.needs, machineWritten };
+    const declaredPaths = (decl.directories ?? [])
+      .map((d) => d.path)
+      .filter((d): d is string => d !== undefined && d !== "");
+    return { root, name: decl.name ?? "", needs: decl.needs, machineWritten, declaredPaths };
   });
 }
 
@@ -440,7 +525,62 @@ export function analyse(root = REPO_ROOT): ReferenceReport {
   const above = new Map<string, string[]>(
     all.map((i) => [i.name, all.filter((u) => anc.get(u.name)?.has(i.name)).map((u) => u.name)]),
   );
-  const sharesNameWithRepository = (name: string): boolean => byName.get(name)?.root === root;
+  /**
+   * What THIS occurrence of a name that collides with the repository's name
+   * actually names.
+   *
+   * `undefined` for the ordinary case — the target's name is not the
+   * repository's, so nothing here applies and the arrow decides. Only an
+   * instance rooted AT the repository root collides, because only then is the
+   * instance's name the repository's name.
+   *
+   * The three answers, in the order they are tested, and the order is the
+   * substance:
+   *
+   *  1. **`"instance"`** — the text carries `<name>/<declared directory>`, so
+   *     it points into a directory this instance actually DECLARES. Tested
+   *     FIRST, so `https://…/<name>/uploads/x.pdf` is the instance rather than
+   *     an address: a URL into an instance's own directory is still a
+   *     reference to that instance, and putting the URL test first would have
+   *     excused it. (`<name>` rather than the root's actual name, for the
+   *     reason {@link Instance}'s `declaredPaths` gives: the spelled-out
+   *     example would be a wrong-direction reference in this very file.)
+   *  2. **`"repository"`** — the name sits inside an `http(s)` URL (an
+   *     ADDRESS), or appears as `<owner>/<name>` (a repository slug), or as
+   *     `<name>/` followed by any other path segment (a path in the
+   *     repository, not in the instance).
+   *  3. **`"unknown"`** — a bare prose mention: no path, no URL, nothing to
+   *     tell the repository from the instance. Still `undetermined`, and that
+   *     is the honest residue rather than a case to be eliminated.
+   *
+   * It reads the DECLARATION rather than a path literal, which is this
+   * repository's standing rule for the generated-file question two functions
+   * up and holds for the same reason: `uploads/` and `tools/` are what the
+   * root declares TODAY, and a fourth directory added tomorrow is recognised
+   * without an edit here.
+   */
+  const collisionOf = (occ: Occurrence): NameCollision | undefined => {
+    const target = byName.get(occ.to);
+    if (target === undefined || target.root !== root) return undefined;
+    const { text } = occ;
+    const name = occ.to.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    // Bounded at BOTH ends, for the reason `occurrencesOf` is: an unbounded
+    // `<name>/tools` also matches `<name>/toolsmiths`, and an unbounded left
+    // edge matches a longer instance name ending in the target's.
+    for (const declared of target.declaredPaths) {
+      const seg = declared.replace(/^\.?\/+/, "").replace(/\/+$/, "");
+      if (seg === "") continue;
+      const esc = seg.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      if (new RegExp(`(?<![A-Za-z0-9_-])${name}/${esc}(?![A-Za-z0-9_-])`).test(text)) return "instance";
+    }
+    const inUrl = (text.match(/https?:\/\/\S+/g) ?? []).some((u) =>
+      new RegExp(`(?<![A-Za-z0-9_-])${name}(?![A-Za-z0-9_-])`).test(u),
+    );
+    if (inUrl) return "repository";
+    if (new RegExp(`[A-Za-z0-9_.-]+/${name}(?![A-Za-z0-9_-])`).test(text)) return "repository";
+    if (new RegExp(`(?<![A-Za-z0-9_-])${name}/[A-Za-z0-9_.@-]`).test(text)) return "repository";
+    return "unknown";
+  };
 
   // Every declared machine-written directory, across every instance. Flat
   // rather than per-instance because an instance may declare a directory
@@ -477,7 +617,7 @@ export function analyse(root = REPO_ROOT): ReferenceReport {
     for (const to of targets) {
       for (const hit of occurrencesOf(text, to)) {
         const occurrence: Occurrence = { file, line: hit.line, text: hit.text.trim(), from, to };
-        classified.push({ occurrence, verdict: classifyReference(occurrence, rule, sharesNameWithRepository, EXEMPTIONS) });
+        classified.push({ occurrence, verdict: classifyReference(occurrence, rule, collisionOf, EXEMPTIONS) });
       }
     }
   }
@@ -505,10 +645,15 @@ function main(): void {
   const wrong = of("wrong-direction");
   const undet = of("undetermined");
   const exempt = of("exempt");
+  const namesRepo = of("names-repository");
 
   console.log(`Reference direction — ${report.instances} instances, ${report.classified.length} name occurrences pointing up the dependency arrow\n`);
   console.log(`  wrong-direction   ${String(wrong.length).padStart(5)}   in ${new Set(wrong.map((c) => c.occurrence.file)).size} files`);
   console.log(`  exempt            ${String(exempt.length).padStart(5)}   ${EXEMPTIONS.length} exemptions, each with a stated reason`);
+  // Its OWN line, never folded into `allowed` and never into the two skipped
+  // counts below. It is a different statement from all three: the occurrence
+  // was read, it was judged, and what it names owes no direction.
+  console.log(`  names-repository  ${String(namesRepo.length).padStart(5)}   names the repository or its address, which is not a layer`);
   console.log(`  undetermined      ${String(undet.length).padStart(5)}   declined to judge — NOT clean`);
   console.log(`\n  Not read, both answered from a declaration rather than a path:`);
   console.log(`    ${report.skippedMachineWritten} file(s) — their DIRECTORY declares a graph a process writes (holds state/derived)`);
@@ -532,16 +677,23 @@ function main(): void {
   // The three-state discipline, stated in the output rather than left to a
   // reader's charity — `zlmp`'s tool says the same sentence about its own
   // unjudged edges, and that sentence is the reason its 43 → 49 is legible.
-  console.log("\nUndetermined is not a pass. Two things land there:");
-  if (report.undeclared.length > 0) {
-    console.log(`  · ${report.undeclared.length} instance(s) declare no \`needs\`, so nothing about their layer is known: ${report.undeclared.join(", ")}`);
-  }
-  const rootNamed = new Set(undet.map((c) => c.occurrence.to));
-  if (rootNamed.size > 0) {
-    console.log(`  · the target's name is also the repository's name (${[...rootNamed].join(", ")}), so a name match cannot tell the instance from the repository`);
-  }
-  if (args.includes("--undetermined")) {
-    for (const c of undet.slice(0, 200)) console.log(`    ${c.occurrence.file}:${c.occurrence.line}  ${c.verdict.basis}`);
+  // Still printed, and still in these words, for as long as ANY occurrence is
+  // undetermined. Narrowing the repository-name case from a blanket to the
+  // occurrences that really are ambiguous shrank this bucket; it did not
+  // retire it, and a reader who stops seeing the sentence would reasonably
+  // conclude that it had.
+  if (undet.length > 0) {
+    console.log("\nUndetermined is not a pass. Two things land there:");
+    if (report.undeclared.length > 0) {
+      console.log(`  · ${report.undeclared.length} instance(s) declare no \`needs\`, so nothing about their layer is known: ${report.undeclared.join(", ")}`);
+    }
+    const rootNamed = new Set(undet.map((c) => c.occurrence.to));
+    if (rootNamed.size > 0) {
+      console.log(`  · the target's name is also the repository's name (${[...rootNamed].join(", ")}) and the occurrence is a bare mention — no path and no URL — so a name match cannot tell the instance from the repository`);
+    }
+    if (args.includes("--undetermined")) {
+      for (const c of undet.slice(0, 200)) console.log(`    ${c.occurrence.file}:${c.occurrence.line}  ${c.verdict.basis}`);
+    }
   }
 
   // PENDING is checked BOTH ways, which is the half that makes it honest.

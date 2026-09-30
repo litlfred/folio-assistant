@@ -83,10 +83,39 @@ Jekyll never laid out"* is post-build injection, which is what
 
 ## Done when
 
-- [ ] every standalone page the site publishes carries navigation, by one pass rather than by 33 edits
-- [ ] `api/` decided separately — it has its own navigation, so it is a layout question and not a gap (the owner's second stream)
-- [ ] verified on the BUILT site, with an instrument validated on positives and negatives
+- [x] every standalone page the site publishes carries navigation, by one pass rather than by 33 edits
+      — `rail-standalone-pages.ts`, PR #1232; 3429/3429 on `gh-pages`, 2026-09-29
+- [x] `api/` decided separately — it has its own navigation, so it is a layout question and not a gap (the owner's second stream)
+      — decided by rendering: railed, toolbar reflows beside the 56px strip, PR #1236 (`a48aaa8bf`)
+- [x] verified on the BUILT site, with an instrument validated on positives and negatives
+      — 2026-09-29, see §"Verified on the published site" below
 - [ ] the five-instrument lesson written where the next agent measuring coverage will find it
 
 
 _2026-09-29_ — **Re-parented `p5wm` → `yj32`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Pages with no navigation are a defect of the harness's default rendering (LHS + docs/); 4ccr (wireframe findings) was the runner-up, but only 23 of the 33 pages are wireframes.
+
+Claimed by claude/goal2-navbar-resume — 2026-09-29, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq (GOAL 2 resume after the 09-25 usage-limit stall).
+
+## Verified on the published site, 2026-09-29
+
+`gh-pages` at `e956325` (built from `main` `f2d58d67b`), read through git
+because the proxy refuses `litlfred.github.io`: a `--filter=blob:none --sparse`
+clone, sparse set to every `*.html` outside `STAGING/`.
+
+Instrument: the final one from the table above — `<nav class="fa-nav"` OR
+`id="site-nav"`. Negative control: a bare `<html><body>x</body></html>` →
+0 matches. Positives: `index.html` (theme sidebar) and `api/index.html`
+(injected rail).
+
+```
+3429 / 3429 published pages carry navigation   (excluding STAGING/)
+  wireframes/  45 of 45    bootstrap/  11 of 11    api/  1989 of 1989
+  detangle.html  navigated
+```
+
+Was 1301 of 3151 on 2026-09-24. The site grew by 278 pages in five days and
+none of them is stranded — which is the "24th wireframe" argument the one-pass
+shape was chosen for, now observed rather than argued.
+
+**Cost, for the next agent:** the sparse checkout of all HTML is 1.7 GB and
+takes a few minutes; `api/` is most of it. A family-only check is seconds.

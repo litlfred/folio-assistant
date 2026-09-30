@@ -7,7 +7,6 @@ description: >-
   proposed home for unfiled work. Every output is a proposal; LSI never writes
   a relation.
 capability: architecture
-package: graph-management
 graph-kinds:
   - library
   - skills

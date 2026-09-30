@@ -123,8 +123,8 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-skos
  */
-import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
-import { tagCompatible } from "../schemas/release-iri.ts";
+import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../../bootstrap-tools/schemas/glossary-ledger.ts";
+import { tagCompatible } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
@@ -148,7 +148,7 @@ export const GLOSSARY_DIR = "glossary";
 /** The ledger's filename — the one non-derivable fact this module stores. */
 export const LEDGER_FILENAME = "glossary-ledger.json";
 /** Tagged so the file declares what it is, per the directory conventions. */
-export { LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
+export { LEDGER_SCHEMA } from "../../bootstrap-tools/schemas/glossary-ledger.ts";
 
 // ── The corpus ──────────────────────────────────────────────────
 

@@ -54,3 +54,5 @@ Re-derived against HEAD, not taken from a commit message:
 - [x] printed recipe — the 'run the remaining arms' line no longer exists; withDerivedArms (cat-harness/scripts/ingest-document.ts) runs every arm in code, handing each the directory it wants (comment at the stage-mode report explains the deletion). Nothing left to copy-paste wrong.
 - [x] conventions stated — pdf-images.py --help: '-o OUT library root; the sidecar lands in <out>/<doc-id>/'; l1-blocks.ts usage: '-o <staged-entry-dir>'. Not reconciled, but each --help says which it takes, and the only caller passes the right one.
 - [x] a test pins it — cat-harness/scripts/tests/ingest-and-l1.test.ts:614-626 asserts pdf-images and pdf-vector-labels get the staging ROOT and l1-blocks the ENTRY dir.
+
+_2026-09-30T00:27:58Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

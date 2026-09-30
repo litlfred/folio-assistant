@@ -28,6 +28,7 @@
 import { z } from "zod";
 
 import { type FrontMatter, parseFrontMatter, scalar } from "./front-matter.ts";
+import { BeanIdSchema } from "./tool-types.ts";
 
 /** The `$schema` tag every node of the trashcan carries. */
 export const FSH_GUTS_SCHEMA_ID = "folio-fsh-guts/v1";
@@ -72,9 +73,10 @@ export const FshGutsNodeSchema = z.object({
    *
    * Declared rather than left to pass through as an unknown key: `z.object`
    * strips what it does not name, so an undeclared `bean:` in front matter
-   * reads fine in the source and is absent from the exported node.
+   * reads fine in the source and is absent from the exported node. A typed
+   * bean id since #1168 B8; `fsh-guts-bean-refs.test.ts` resolves every one.
    */
-  bean: z.string().min(1).optional(),
+  bean: BeanIdSchema.optional(),
   summary: z.string().min(1).optional(),
 })
   /**

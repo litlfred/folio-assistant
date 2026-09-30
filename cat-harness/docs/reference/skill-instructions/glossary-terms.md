@@ -161,6 +161,32 @@ comment. One scheme per asset type per instance (`kg-skills`, `kg-tools`,
   each carries the "candidate, extracted" badge. Only authored terms go into
   the schema.org `DefinedTermSet`, which is on the index.
 
+## Ordered glossaries — logical order, not A–Z (owner, 2026-09-29)
+
+Some glossaries are read top to bottom: each term is defined only by terms
+above it, and never itself. Bootstrap's are the first. Sorting those A–Z
+throws away the one property the definitions were written to have.
+
+- **`ordered: true`** on a glossary says its `terms` array IS the order. Each
+  term's **`requires`** lists the local ids its definition uses; the schema
+  refuses one that is later, itself, or not in the glossary.
+  `checkDeclaredOrder` (`schemas/dependency-order.ts`) is the same check for
+  any authored order.
+- **In SKOS** the order is a `skos:OrderedCollection` (`memberList` as an
+  RDF list), each use is `dcterms:requires`, and **`isDefinedBy`** — the
+  schema or standard that defines the term — is `rdfs:isDefinedBy`.
+- **On the page** an ordered scheme is its own numbered section at the top of
+  the index, with its "Uses" links, and is not repeated under the A–Z bar.
+- **A schema whose `$defs` carry `uses` IS an ordered glossary**, read by
+  `termsOfSchema` in `glossary-page.ts`: the definitions stay in one place,
+  the schema, and the glossary cannot drift from it. They are `authored`,
+  not `candidate`: a person wrote and approved them in the schema's source,
+  and the collector only reads them out. That is not an extractor promoting
+  its own output, which the rule above still forbids.
+- **The uses list is authored, not inferred.** A text matcher over the
+  definitions is a guard that the list and the prose agree (`graph.test.ts`);
+  a word can appear without being used as a term.
+
 ## Translation: authored terms only (bean `lqo9`, owner 2026-09-24)
 
 `bun run glossary:pot` writes one gettext template per scheme that has an

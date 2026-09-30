@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>3</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>990</b><span>units indexed</span></div>
+<div class="lv-stat"><b>992</b><span>units indexed</span></div>
 <div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -97,7 +97,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**304** units · **7543** terms · k = **100** · retains **69.0 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**306** units · **7566** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -105,14 +105,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.26 | bean, session, graph, kind, branch, instance, page, agent | *(none)* |
-| 2 | 27.70 | bias, studies, study, effect, statistical, causation, validity, causal | bean, instance, harness, directory, node, graph, kind, session |
+| 1 | 46.39 | bean, session, graph, branch, instance, kind, page, agent | *(none)* |
+| 2 | 27.71 | bias, studies, study, effect, statistical, causation, validity, causal | bean, instance, harness, directory, node, graph, kind, session |
 | 3 | 22.21 | proof, lean, watcher, slot, blocks, project, witness, chapter | harness, node, bean, instance, page, directory, actor, process |
-| 4 | 19.45 | dpi, color, grayscale, matplotlib, images, raster, pdf, fonts | session, prs, queue, branch, sibling, commits, coordination, beans |
-| 5 | 18.50 | dpi, color, grayscale, session, matplotlib, contrast, raster, eps | lean, proof, declaration, glossary, mathlib, theorem, sorry, chapter |
-| 6 | 16.77 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, consider, solutions, description, correlation |
-| 7 | 16.13 | lean, mathlib, mcp, sorry, proof, search, bean, lake | watcher, slot, backlog, voice, ledger, queue, nesting, idle |
-| 8 | 15.29 | mathlib, lean, sorry, subdirectory, lake, mcp, nesting, oleans | slot, forward, major, edges, criterion, reader, section, band |
+| 4 | 19.49 | dpi, color, grayscale, matplotlib, images, raster, pdf, fonts | session, queue, branch, prs, commits, sibling, coordination, beans |
+| 5 | 18.55 | dpi, color, grayscale, matplotlib, contrast, raster, eps, session | lean, proof, glossary, declaration, mathlib, theorem, sorry, chapter |
+| 6 | 16.76 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, consider, solutions, description, correlation |
+| 7 | 16.13 | lean, mathlib, mcp, sorry, proof, search, bean, theorem | watcher, slot, backlog, voice, ledger, queue, nesting, idle |
+| 8 | 15.28 | mathlib, lean, sorry, subdirectory, lake, mcp, nesting, sessions | slot, forward, major, edges, criterion, reader, prose, band |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

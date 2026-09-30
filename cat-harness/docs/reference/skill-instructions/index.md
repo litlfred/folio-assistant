@@ -214,6 +214,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Untainted verification](untainted-verification.html) | `untainted-verification` | — | > Skill id: `untainted-verification` · Capability: `quality-assurance` · Package: `folio-core` |
 | [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
 | [Never encode a constraint you have not verified](unverified-constraints.html) | `unverified-constraints` | — | Owner, 2026-09-19: **"dont encode rules against a working setup."** |
+| [Two mechanisms and a persona](upload-routes.html) | `upload-routes` | — | [`content-acquisition`](content-acquisition.md) decides *what channel* a |
 | [Watching the queue](uploads-watch.html) | `uploads-watch` | — | `uploads/` is the acquisition queue — |
 | [Adopting an upstream version bump](upstream-version-adoption.html) | `upstream-version-adoption` | — | An unpinned dependency is an unreviewed commit from a stranger, merged on every |
 | [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
@@ -296,6 +297,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Edge kinds and blast radius](edge-kinds-and-blast-radius.html) | `edge-kinds-and-blast-radius` | — | > Skill id: `edge-kinds-and-blast-radius` · Capability: `architecture` · Package: `graph-management` |
 | [Graph detanglement](graph-detanglement.html) | `graph-detanglement` | — | > Skill id: `graph-detanglement` · Capability: `architecture` · Package: `graph-management` |
 | [Graph rendering: one set of rules for every drawn graph](graph-rendering.html) | `graph-rendering` | — | > Skill id: `graph-rendering` · Capability: `architecture` · Package: `graph-management` |
+| [Knowledge Graph separation](kg-separation.html) | `kg-separation` | — | > Skill id: `kg-separation` · Capability: `architecture` · Package: `graph-management` |
 | [LSI indexing](lsi-indexing.html) | `lsi-indexing` | — | **The method is the node, not this file.** [`lsi`](https://github.com/litlfred/folio-assistant/blob/ |
 
 ## Synced from claude-scientific-skills (pinned, read-only)

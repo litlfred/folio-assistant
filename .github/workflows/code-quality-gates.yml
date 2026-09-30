@@ -889,6 +889,17 @@ jobs:
           bun run cat-harness/scripts/gen-schema-docs.ts --check
           bun run skills:docs:check
 
+      # Document ingestion's FIRST step, generated from the Tool nodes that
+      # implement it (owner, 2026-09-29: "generate documentation from Tool
+      # documentation of the upload Task/Skill as first step of document
+      # ingestion process"). Its own step rather than a line appended to the
+      # one above, so a reader sees WHICH generator went stale: it derives the
+      # step, its skill and its Tools from `document-ingestion.bpmn` and the
+      # tools graph, so an edit to either of two graphs stales it and neither
+      # of those graphs' own gates would notice.
+      - name: the upload step's page is current
+        run: bun run upload-step:docs:check
+
       # The README's AUTHORED half. `readme-sections.ts` owns the marked
       # regions; this owns every other link, and `AGENTS.md` claims that
       # "between the two tools no link in a folio README is unaccounted for".
@@ -941,6 +952,19 @@ jobs:
       # strings — must match the declared version; `bun run iri:sync` fixes them.
       - name: Every literal release IRI is at its declared version
         run: bun run iri:sync:check
+
+      # bootstrap-tools may depend on bootstrap and nothing above it (bean
+      # `xsqm`): its own files, zod and the runtime. Tested with planted
+      # violations, because a boundary check never seen failing checks nothing.
+      - name: bootstrap-tools imports nothing above bootstrap
+        run: bun run check:tools-closure
+
+      # A published node's own identifier ($id, or a JSON-LD @id) under an
+      # instance's release base must name the path its file actually sits at,
+      # so publishing files where they sit serves every identifier (owner,
+      # 2026-09-29: "make QA gate for KG nodes").
+      - name: Every published node's identifier is its file's path
+        run: bun run check:node-iris
 
       # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code

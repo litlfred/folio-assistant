@@ -56,3 +56,5 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 - **Attribution** (owner: options B+C, after the model field was explained in full). model stays REQUIRED for an agent (C); MODEL_NOT_DISCLOSED = 'not-disclosed' is now DECLARED in schemas/attribution.ts (B) and requires a session URL so the model stays recoverable. 28 earlier figure descriptions already used it. The viewer says 'model not disclosed (recoverable from its session)'. Drafts from sessions that may not write a model identifier can now be recorded honestly.
 - [ ] drain the rest a few blocks at a time (unblocked)
 - [ ] a person reviews the drafts (bun run narratives)
+
+_2026-09-30T08:24:12Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

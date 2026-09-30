@@ -321,3 +321,5 @@ While going through beans, the owner chose **"Leave to stream 2"**. The one open
 
 
 _2026-09-29_ — **Re-parented `p5wm` → `yj32`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). One navbar for every folio is the LHS rendering yj32 defines; LSI's first guess (6lb8, folio board) is weaker — this is the sidebar, not the board.
+
+Claimed by claude/goal2-navbar-resume — 2026-09-29, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq (GOAL 2 resume after the 09-25 usage-limit stall).
