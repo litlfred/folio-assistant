@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "process",
-    "id": "Process_RefreshMaterialized",
-    "path": "processes/refresh-materialized.bpmn"
+    "id": "Process_MaterializeRemote",
+    "path": "../large-datasets/processes/materialize-remote.bpmn"
   },
-  "source_hash": "sha256:45eb28d3543dd6b7529cf6fa6bff33182baae240015d714e5a5330fb004f26ec",
+  "source_hash": "sha256:9441deead01e405397e1729440cbfd2b648489b89eb8d607186586a9ee4cf4d4",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -35,39 +35,43 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_Fixity",
+          "where": "Task_Purpose",
           "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_Upstream",
+          "where": "Task_Enumerate",
           "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_Local",
+          "where": "Task_Size",
           "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_Adjudicate",
+          "where": "Task_Restrictions",
           "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_Adjudicate",
-          "detail": "names skill \"adjudication\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
-          "where": "Task_Reconcile",
+          "where": "Task_Copyright",
           "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_Apply",
+          "where": "Task_Retention",
           "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_KeepLocal",
+          "where": "Task_SourceLoss",
           "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_RecordConflict",
+          "where": "Task_Fetch",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Declare",
+          "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_StayRef",
           "detail": "names skill \"materialize-remote\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         }
       ]
@@ -101,11 +105,28 @@
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Restrictions",
+          "detail": "\"RESTRICTIONS unknown is an answer, not a green light\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
+        },
+        {
+          "where": "Task_Copyright",
+          "detail": "\"COPYRIGHT per bitstream, and for the derived work\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
+        },
+        {
+          "where": "Task_Retention",
+          "detail": "\"RETENTION what expires this copy\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
+        },
+        {
+          "where": "Task_SourceLoss",
+          "detail": "\"SOURCE LOSS what survives if the origin goes\" — a UserTask is performed by person, but its lane's role \"ingestion-agent\" admits only agent. Either the task type is wrong, the lane is wrong, or the step really does admit that kind — in which case say so with <cat-harness.processes:fulfilment kinds=\"…\" reason=\"…\"/>."
+        }
+      ]
     },
     "call-activity-resolves": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "process-diagram-published": {
@@ -146,9 +167,9 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 1,
-    "n/a": 8,
+    "pass": 14,
+    "fail": 2,
+    "n/a": 9,
     "unknown": 0
   }
 }
