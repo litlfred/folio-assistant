@@ -3,8 +3,9 @@
 title: 'Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)'
 status: in-progress
 type: epic
+priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-09-30T12:47:36Z
+updated_at: 2026-09-30T13:55:08Z
 parent: folio-assistant-vuip
 ---
 
@@ -23,3 +24,11 @@ Risks already checked: only workflow/gate.ts:75 takes kgRoots()[0]; four skill s
 - [ ] Remaining groups moved one cluster per PR
 
 _2026-09-30T12:47:36Z_ — Claimed by claude/charming-curie-n04agq — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Owner ruling 2026-09-30: option A
+
+A topic directory HOLDS packages: skills/<topic>/<package>/ (e.g. skills/kg/graph-management/). skills/skills.json labels the topic level; package names, which skill_fetch takes, do not change; discovery descends only into topics skills.json declares.
+
+Step 1 landed in #1594: discovery is in scripts/skill-packages.ts, gate.ts no longer assumes kgRoots()[0], and skill_fetch serves a moved skill from its one holder.
+
+Next, the mechanism: one helper, packageDirsIn(kgDir), replacing the six one-level walks — skill-packages.ts:156, known-skills.ts:395, kg-export.ts:1236, gen-skill-docs.ts:583, validate-skills.ts:112, skill-register.ts:271 — plus skill-coverage.test.ts's p[1].

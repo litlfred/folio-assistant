@@ -27,6 +27,7 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync, statSy
 import { join, resolve, basename, relative, isAbsolute, sep } from "path";
 
 import { isSkillMd, kgDirectories } from "./known-skills.js";
+import { packageDirsIn } from "./skill-topics.js";
 import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
 import { stripInlineCode } from "../schemas/inline-code.ts";
@@ -505,6 +506,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // The science layer's Lean tooling (folio-assistant#1492): tooling lives in
   // folio-assistant-sci, never in core.
   "folio-assistant-sci-lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
+  "folio-assistant-sci-data-skills": "Science layer: reference data (folio-assistant-sci)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
   // The `fhir-harness` instance's two packages, keyed by BASENAME because they
@@ -579,9 +581,8 @@ function discoverGroups(): Group[] {
       if (direct === undefined) undeclared.push(decl.id);
       else out.push({ category: direct, dir: skillsRoot, repoPrefix: repoRelative(skillsRoot) });
     }
-    for (const d of readdirSync(skillsRoot, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
-      if (!d.isDirectory()) continue;
-      const dir = join(skillsRoot, d.name);
+    for (const d of packageDirsIn(skillsRoot)) {
+      const dir = d.dir;
       // No SKILL `.md` means it is not a skill package: `workflows/`,
       // `roles/`, `permissions/`, `requirements/`, `framework/`,
       // `remote-packages/` and `memory/` are other node kinds.

@@ -157,6 +157,11 @@ export const LIBRARY_BLOCK_ORIGIN: Record<string, "extracted" | "authored"> = {
   // of a description it may not even have would demand an attribution for the
   // pixels, which nobody wrote.
   figure: "extracted",
+  // A tabular source's sheet (bean `uyp8`: the first one, CODATA 2022). Its
+  // headers and values are the source table's own, lifted verbatim, so it is
+  // extracted exactly as prose is; a dataset narrative, when one is written,
+  // carries its own attribution, as a figure's does.
+  table: "extracted",
 };
 
 /** True when blocks of this kind are somebody's account rather than the source's text. */

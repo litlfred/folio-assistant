@@ -7,6 +7,14 @@
   "source": "Tools of fhir-harness",
   "terms": [
     {
+      "id": "ig-site-data",
+      "prefLabel": "Populate site.data.fhir for a just-the-docs IG render",
+      "definition": "Write the IG Publisher's Jekyll variables (`site.data.fhir.ig.*`, `packageId`, `canonical`) for ONE implementation guide, from `sushi-config.yaml` or a published IG's `fhir-artifact-index`, so pages written for the Publisher render on just-the-docs unchanged. fhir-harness declares `site.data` as a pass-through Liquid prefix; this is what Jekyll then reads (bean `bamf`).",
+      "notation": "ig-site-data",
+      "source": "fhir-harness/tools/index.ts#ig-site-data",
+      "status": "candidate"
+    },
+    {
       "id": "strip-library-binaries",
       "prefLabel": "Strip binary payloads from Library resources",
       "definition": "Remove base64 `content.data` from published `Library` resources, so an IG embedding compiled CQL does not ship the bytes twice.",

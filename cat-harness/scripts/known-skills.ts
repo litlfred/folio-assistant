@@ -30,6 +30,7 @@ import { resolveDirectories, repoRootFor, isKgContentDirectory } from "../schema
 const OWN_INSTANCE = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 import { readRoleGraph, type RoleGraph } from "../schemas/role-graph.js";
 import { orderedDependencies } from "../schemas/harness-config.js";
+import { packageDirsIn } from "./skill-topics.js";
 import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-matter.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
 // does NOT import that registration: a library's edge is inherited by every
@@ -392,10 +393,10 @@ export function skillMdDirs(root: string): string[][] {
     if (holdsMarkdown(d.absPath)) dirs.push(rel(d.absPath));
     // ...and its immediate subdirectories, which is how `skills/` is laid out
     // today: one package per subdirectory.
-    for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
-      if (!e.isDirectory()) continue;
-      const inner = join(d.absPath, e.name);
-      if (holdsMarkdown(inner)) dirs.push(rel(inner));
+    // ...or two, inside a topic the directory's `skills.json` declares
+    // (bean `9umr`) — so the package name is the LAST segment, not `p[1]`.
+    for (const p of packageDirsIn(d.absPath)) {
+      if (holdsMarkdown(p.dir)) dirs.push(rel(p.dir));
     }
   }
   // Not under `skills/`, so not reachable by the scan above.

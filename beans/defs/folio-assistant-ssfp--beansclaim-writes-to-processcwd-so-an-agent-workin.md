@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-30T10:11:53Z
-updated_at: 2026-09-30T10:11:53Z
+updated_at: 2026-09-30T10:58:22Z
 parent: folio-assistant-ahvw
 ---
 
@@ -73,3 +73,50 @@ mechanisms.
 
 Not proposed here: whether `--repo` should become required. That is a
 usability call with its own cost, and this bean is the measurement.
+
+
+## My proposed fix was wrong on the half that did the damage — corrected 2026-09-30
+
+I suggested comparing the target store against `git rev-parse --show-toplevel`.
+A sibling agent that hit this live checked it and the objection is right:
+
+> **A worktree's toplevel *is* the worktree, so that check passes in exactly this
+> case: the store was correct, the branch name was not.**
+
+That is worth stating plainly because it inverts what the bean looked like. The
+`process.cwd()` dependency is in **two** places in `claim-bean.ts` — the store
+(~lines 185, 426) and the holder branch (`git rev-parse --abbrev-ref HEAD` in
+that same directory) — and the damaging one is the **label**, not the store.
+Measured on `rjug`: the claim **did** land correctly on `main` (`e1815ab372f`,
+2026-09-30 10:09:58Z) and was not lost; it recorded `heldBy` as
+`claude/zhg2-direction-sidecar`, the branch the main checkout happened to be on.
+Re-running from the correct worktree then refused `already-claimed by
+claude/zhg2-direction-sidecar`, because the script compares `heldBy` against the
+current branch and **a mislabelled claim is indistinguishable from a sibling's.**
+
+So a store-only guard would have reported everything fine while producing the
+exact failure this bean is about.
+
+### The narrower fix, and a second guard worth having on its own
+
+1. **Derive the holder branch from the repository the bean's store was found
+   in**, not from the process cwd — `git -C <dirname of the store> rev-parse
+   --abbrev-ref HEAD`. Then store and label cannot disagree, which is the
+   invariant actually wanted; the store's own location becomes irrelevant to
+   correctness rather than something to police.
+2. **When `heldBy` names a branch that does not exist on the remote, say so**
+   instead of reporting a flat `already-claimed`. That is the case that
+   currently reads identically to a live sibling, and it is the reason a
+   mislabelled claim costs a second agent time rather than being self-evident.
+   Independent of (1) and useful even after it.
+
+Whether `ssfp` takes one or both is open. (1) alone fixes the cause; (2) alone
+fixes the *symptom* for every mislabelled claim already on `main` — of which
+`c3d7` measured 97 out of 100 `in-progress` beans recording no usable holder at
+all, so the existing population is large and (1) does nothing for it.
+
+### Kept, not erased
+
+`main`'s mislabelled note on `rjug` was left in place through the merge. Erasing
+it would erase the evidence, and `deletion-requires-confirmation` applies to a
+record of a mistake as much as to anything else.
