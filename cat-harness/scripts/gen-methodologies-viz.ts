@@ -56,7 +56,7 @@
  *   bun run cat-harness/scripts/gen-methodologies-viz.ts --check
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
+import { dirname, join, relative, resolve, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { docsLayers } from "./compose-docs.js";
@@ -66,6 +66,7 @@ import {
   type EvidenceReport,
   type MethodologyNode,
 } from "./check-methodology-evidence.js";
+import { libraryResolver, type LibraryResolver } from "./lib/library-refs.ts";
 import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -230,7 +231,33 @@ export function short(v: string, n = 150): string {
   return cut.trimEnd() + "…";
 }
 
-export function page(rows: readonly MethodologyRow[], report: EvidenceReport): string {
+/**
+ * One ingested-source line. A `library/<slug>` reference links to the owner's
+ * three targets where each resolves (bean `qgjh`, `lib/library-refs.ts`); the
+ * viewer link is made relative to `fromPage`, where this page is published.
+ * Anything it cannot place stays code, never a link that 404s.
+ */
+export function evidenceLine(e: string, links?: LibraryResolver, fromPage = ""): string {
+  const m = /^library\/([^/#]+)/.exec(e);
+  const l = m && links ? links.links(m[1]!) : undefined;
+  if (l === undefined) return `- \`${cell(e)}\``;
+  const parts: string[] = [];
+  if (l.viewer !== undefined) {
+    const [path, hash] = l.viewer.split("#");
+    const rel = posix.relative(posix.dirname(fromPage), path!) || ".";
+    parts.push(`[\`${cell(e)}\`](${rel}/#${hash})`);
+  } else parts.push(`\`${cell(e)}\``);
+  if (l.readme !== undefined) parts.push(`[item page](${l.readme})`);
+  if (l.source !== undefined) parts.push(`[source](${l.source})`);
+  return `- ${parts.join(" · ")}`;
+}
+
+export function page(
+  rows: readonly MethodologyRow[],
+  report: EvidenceReport,
+  links?: LibraryResolver,
+  fromPage = "",
+): string {
   const byState = (s: MethodologyRow["state"]): number => rows.filter((r) => r.state === s).length;
   const instances = [...new Set(rows.map((r) => r.instance))].sort();
 
@@ -309,7 +336,7 @@ export function page(rows: readonly MethodologyRow[], report: EvidenceReport): s
           ? "**Cited sources — at least one does not resolve:**"
           : "**Ingested sources:**",
         "",
-        ...r.evidence.map((e) => `- \`${cell(e)}\``),
+        ...r.evidence.map((e) => evidenceLine(e, links, fromPage)),
         "",
       );
     } else {
@@ -384,7 +411,11 @@ if (import.meta.main) {
   }
 
   // The page says which directories it draws (#1168 B7a-2).
-  const rendered = withRendersFrontMatter(page(rows, report), handledDirectories(REPO, INSTANCE_ROOT, KIND), VIEWER_TOOL);
+  const rendered = withRendersFrontMatter(
+    page(rows, report, libraryResolver(REPO, INSTANCE_ROOT), PAGE),
+    handledDirectories(REPO, INSTANCE_ROOT, KIND),
+    VIEWER_TOOL,
+  );
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {
