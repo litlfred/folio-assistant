@@ -95,3 +95,17 @@ answered by `glossary-extract.ts`, now visible as a measurement.
 
 No ratio is computed and none should be. `m4xy`'s rule carries: an unmapped
 candidate may be a term this corpus is right to coin.
+
+## A reachable route for the `fhir` half — `ejug`, 2026-09-30
+
+The FHIR target is `undetermined` here because `api.openconceptlab.org` is
+refused by network policy. Checked on the owner's steer that "OCL source in
+github": `OpenConceptLab/oclapi2` is readable but is the SERVICE'S SOURCE
+CODE, not terminology. `WorldHealthOrganization/smart-base` — the SMART
+Guidelines base IG, FHIR 4.0.1, CC-BY-SA-3.0-IGO — IS readable and does hold
+FHIR terminology in git.
+
+So the `undetermined` here is a transport fact, not a permanent one, and the
+resolver has somewhere to point. Which authority the row should assert is on
+`ejug` and is the owner's: a published IG at a version, or a live curated
+collection, are different claims that can disagree.
