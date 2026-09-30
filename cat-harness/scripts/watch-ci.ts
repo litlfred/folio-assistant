@@ -5,6 +5,7 @@
  * bun run ci:watch <sha>                    # poll until decided
  * bun run ci:watch <sha> --branch main      # which branch explains a cancellation
  * bun run ci:watch <sha> --once             # one look, no polling
+ * bun run ci:watch --pr <n>                 # follow a PR's head, re-read every poll
  * ```
  *
  * Exit codes carry the third state, because a caller that reads "not 1" as
@@ -57,7 +58,8 @@ import { repoRootFor } from "../schemas/cat-harness.js";
 import { coverageFor, mergeStateForHead, resolveCommit, runsForHead } from "./check-head-has-run.js";
 import { scanTriggers } from "../src/core/workflow-events.js";
 
-const USAGE = "Usage: cat-harness/scripts/watch-ci.ts <sha> [--branch <name>] [--once] [--interval <s>] [--max <n>]";
+const USAGE =
+  "Usage: cat-harness/scripts/watch-ci.ts <sha> | --pr <n>  [--branch <name>] [--once] [--interval <s>] [--max <n>]";
 
 /** `owner/repo` from the checkout's origin, so this is not hardcoded to one repository. */
 function slugOf(root: string): string | undefined {
@@ -161,6 +163,32 @@ async function completeness(
   }
 }
 
+/**
+ * A pull request's head commit, read from `refs/pull/<n>/head` — the same ref
+ * family `mergeStateForHead` reads, so `--pr` and the conflict probe cannot
+ * disagree about which commit is the head. `undefined` when the ref is absent
+ * or unreadable, which the caller reports as could-not-determine.
+ *
+ * Re-read on every poll, because merging the base in moves the head (bean
+ * `52cz`). Deliberately NOT `mergeable_state` from the REST API: GitHub computes
+ * it lazily (`unknown` on a first read) and can serve it stale — a pre-merge
+ * value 45 minutes after the merge (bean `fx5r`) — while the merge ref is the
+ * forge's own answer.
+ */
+function prHead(root: string, n: string): string | undefined {
+  if (!/^\d+$/.test(n)) return undefined;
+  try {
+    const out = execFileSync("git", ["ls-remote", "origin", `refs/pull/${n}/head`], {
+      cwd: root,
+      encoding: "utf-8",
+    }).trim();
+    const sha = out.split(/\s+/)[0];
+    return sha !== undefined && /^[0-9a-f]{40}$/.test(sha) ? sha : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const flag = (name: string): string | undefined => {
@@ -170,8 +198,9 @@ if (import.meta.main) {
   // The ARGUMENT is tested before it is used, the order bean `1oqu` fixed
   // elsewhere: a missing SHA is "you did not tell me what to watch", which is
   // exit 2, not a crash.
-  const sha = argv.find((a) => !a.startsWith("--") && argv[argv.indexOf(a) - 1]?.startsWith("--") !== true);
-  if (sha === undefined) {
+  const pr = flag("pr");
+  const given = argv.find((a) => !a.startsWith("--") && argv[argv.indexOf(a) - 1]?.startsWith("--") !== true);
+  if (given === undefined && pr === undefined) {
     console.error(`${USAGE}\n  no commit given — nothing to watch`);
     process.exit(2);
   }
@@ -192,6 +221,12 @@ if (import.meta.main) {
   const max = Number(flag("max") ?? 40);
 
   for (let i = 0; i < max; i++) {
+    const sha = pr === undefined ? given : prHead(root, pr);
+    if (sha === undefined) {
+      console.error(`  could not read the head of PR #${pr} from refs/pull/${pr}/head — NOT a pass`);
+      process.exit(2);
+    }
+    if (pr !== undefined) console.log(`  PR #${pr} head ${sha.slice(0, 11)}`);
     const { owed, merge } = await completeness(root, slug, sha);
     const v = verdictForCommit(verdictOf(await fetchRuns(slug, sha)), owed, merge);
     const when = new Date().toISOString().slice(11, 19);
