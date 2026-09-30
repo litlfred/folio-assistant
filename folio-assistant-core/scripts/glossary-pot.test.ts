@@ -12,7 +12,7 @@ import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 
 import { GlossarySchema } from "../schemas/glossary.ts";
-import { collect, type GlossarySource } from "./glossary-page.ts";
+import { LOCALE_PAGE_STRINGS, LOCALE_PAGE_TEMPLATE, collect, type GlossarySource } from "./glossary-page.ts";
 import { potEntries, potPath, sourceText, templateName, templates, translationsDir } from "./glossary-pot.ts";
 
 const c = collect();
@@ -36,7 +36,11 @@ describe("glossary .pot: authored terms only", () => {
       ...(t.definition ? [sourceText(t.definition)] : []),
     ]),
   );
-  const got = new Set([...tpl.values()].flat().map((e) => e.msgid));
+  // The TERM templates. The locale page's own chrome (bean c592) is a separate
+  // template of ui-strings, pinned by the test after this block.
+  const got = new Set(
+    [...tpl.entries()].filter(([name]) => name !== LOCALE_PAGE_TEMPLATE).flatMap(([, es]) => es.map((e) => e.msgid)),
+  );
 
   it("has a floor: at least the 7 core terms, each with a label and a definition", () => {
     expect(authored.length).toBeGreaterThanOrEqual(7);
@@ -73,6 +77,14 @@ describe("glossary .pot: authored terms only", () => {
         expect([...msgidsIn(readFileSync(p, "utf-8"))].sort()).toEqual([...new Set(entries.map((e) => e.msgid))].sort());
       }
     }
+  });
+});
+
+describe("the locale page's chrome template (bean c592)", () => {
+  it("holds exactly the page's own strings, as ui-strings, and no term text", () => {
+    const page = tpl.get(LOCALE_PAGE_TEMPLATE) ?? [];
+    expect(page.map((e) => e.msgid).sort()).toEqual(Object.values(LOCALE_PAGE_STRINGS).sort());
+    expect(page.every((e) => e.kind === "ui-string")).toBe(true);
   });
 });
 

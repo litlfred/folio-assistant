@@ -4,12 +4,11 @@ description: >-
   How a domain-specific rule is kept out of the platform without being lost —
   the opt-in axis mechanism, the one criterion that should use it and does not,
   and the test for whether a rule generalizes at all.
-capability: architecture
 ---
 
 # Domain fencing — keeping one folio's rules out of everybody's platform
 
-> Skill id: `domain-fencing` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `domain-fencing` · Package: `graph-management`
 
 Detangling a repository and detangling a *rule set* are the same practice. A
 platform accumulates rules that were true of one folio, and they are harder to

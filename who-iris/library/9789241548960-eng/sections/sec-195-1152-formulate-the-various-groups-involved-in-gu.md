@@ -17,10 +17,8 @@ interest and availability within the set time frame. Ideally one or more key
 members of the GDG should be available immediately to provide feedback 
 on the proposed scope and key questions. If the draft final guideline is to 
 undergo peer review, potential reviewers − individuals or organizations − 
-should also be identified early in the process and their declarations of inter­
-ests should be collected.
-Public health emergencies frequently pose ethical, social and legal dilem­
-mas, and it is critically important to include individuals with expertise in 
+should also be identified early in the process and their declarations of interests should be collected.
+Public health emergencies frequently pose ethical, social and legal dilemmas, and it is critically important to include individuals with expertise in 
 these areas on the GDG as well as expertise in issues related to equity, gender 
 WHO handbook for guideline development
 138
@@ -91,11 +89,9 @@ Systematic review team
 Perform systematic reviews of the evidence 
 for each key question.
 The contractor needs to be identified from the 
-outset and involved in the scoping and devel­
-opment of key questions: they can advise on 
+outset and involved in the scoping and development of key questions: they can advise on 
 what is feasible in the given time frame.
-Evaluate evidence quality for each impor­
-tant outcome, using GRADE as appropriate.
+Evaluate evidence quality for each important outcome, using GRADE as appropriate.
 The process is the same as for a standard 
 guideline.
 Steering group
@@ -112,8 +108,7 @@ Rapid advice guidelines in the setting of a public health emergency
 and human rights. Although the responsible technical officer may consider 
 these issues peripheral when dealing with the health problem addressed by 
 the rapid advice guideline (e.g. in the case of a disease outbreak), critical 
-human rights issues often come to light and must be addressed in the ini­
-tial stages of a response. An awareness of gender-related influences in the 
+human rights issues often come to light and must be addressed in the initial stages of a response. An awareness of gender-related influences in the 
 affected population groups can help target interventions more strategically.
 ... continued
 Primary contributor
@@ -124,8 +119,7 @@ Formulate recommendations using the
 GRADE framework.
 The general methods are the same as for a 
 standard guideline. The evidence may be 
-sparse, so the other factors that inform the rec­
-ommendations must be transparent and based 
+sparse, so the other factors that inform the recommendations must be transparent and based 
 on evidence and on equity, human rights and 
 gender considerations when possible.
 Steering group

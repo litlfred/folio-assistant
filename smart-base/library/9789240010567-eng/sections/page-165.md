@@ -69,9 +69,7 @@ to modules gradually before adding new ones.
 	» Improve awareness among staff and supervisors about the value of portable devices, and develop 
 ground rules or codes of conduct for when and how devices should be used.
 OPPORTUNITIES 
-FOR INTEROPERA­
-BILITY AND LINK­
-AGES TO OTHER 
+FOR INTEROPERABILITY AND LINKAGES TO OTHER 
 DIGITAL HEALTH 
 INTERVENTIONS
 Link to unique identifiers, such as a local or national ID system, to provide a foundational digital 

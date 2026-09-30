@@ -81,6 +81,7 @@ from _pypdf_compat import import_pypdf  # noqa: E402
 # than defined here because `pdf-ocr.py` must spell all three identically —
 # bean `rlp5`, where `-o` meant two different things and the OCR step did not
 # compose with this one.
+from _pdf_text import join_soft_hyphens  # noqa: E402
 from _pdf_doc_id import (  # noqa: E402
     derive_doc_id,
     find_ocr_cache,
@@ -1254,6 +1255,9 @@ def _process(path: str, outdir: str | None = None, use_ocr: bool = False,
         cached = ocr_pages(path, outdir)
         if cached:
             pages, ocr_used = cached, True
+    # Soft hyphens joined before anything splits the text into sections, so
+    # every downstream reader sees whole words (bean `3spu`).
+    pages = [join_soft_hyphens(p) for p in pages]
 
     outline = _toc_entries(reader.raw_toc())
     # An inferred table of contents is asked to justify itself; an outline is
