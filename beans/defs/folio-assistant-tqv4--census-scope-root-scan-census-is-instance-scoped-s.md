@@ -1,11 +1,11 @@
 ---
 # folio-assistant-tqv4
 title: 'CENSUS SCOPE: root-scan-census is instance-scoped, so scripts moved up to core are counted nowhere — and its headline family reads 0 of 0 while the only instance of the shape sits outside it'
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-30T10:28:50Z
-updated_at: 2026-09-30T10:28:50Z
+updated_at: 2026-09-30T13:51:27Z
 parent: folio-assistant-vke6
 ---
 
@@ -98,3 +98,13 @@ Whether `check-artifact-index.ts` should be made git-aware. The census reports
 and never fails (owner's ruling, 2026-09-27); this bean is about the
 measurement losing its subject, not about the subject. Fixing the script while
 the census still cannot see it would remove the evidence and leave the gap.
+
+## Summary of Changes
+
+Done 2026-09-30, branch `claude/magical-archimedes-4qkfxp-tqv4`.
+
+1. **Decided: repository-wide.** One census over every declared instance's `scripts/` (`censusRepository` over `instanceRootsIn`), written down in the module docblock. Not per-instance, because a per-instance census needs each instance to remember to run one — the same counted-nowhere gap one step later.
+2. **folio-assistant-core/scripts/ is covered**, and `check-artifact-index.ts` is now the headline family's one entry: **1 of 1** seeded-at-root-not-git-aware, where main read **0 of 0**. It is not fixed here, as the bean asked.
+3. **The denominator cannot shrink silently**: a new `scope` family lists every declared instance as `scanned` (with its count) or `no-scripts-dir` — neither finding nor pass — and the console prints the same line. Measured: 17 declared instances, 8 with a scripts/ dir; cat-harness 66, folio-assistant-core 2, who-iris 1; 69 enumerating in all, 12 ask git.
+
+Tests: three new cases in `root-scan-census.test.ts` — a script in a second instance is counted, the sidecar carries the scope, and folio-assistant-core is in scope over this repository.

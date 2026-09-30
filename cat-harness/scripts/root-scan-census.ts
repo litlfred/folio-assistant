@@ -58,11 +58,11 @@
  * @graphNode tool
  */
 import { existsSync, readFileSync } from "node:fs";
-import { join, relative, resolve } from "node:path";
+import { basename, join, relative, resolve } from "node:path";
 
 import * as gitCorpusModule from "../schemas/git-corpus.ts";
 import { gitCorpus } from "../schemas/git-corpus.ts";
-import { repoRootFor } from "../schemas/cat-harness.ts";
+import { instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { QA_RESULTS_DIR, buildQaResult, writeQaResult, type QaResult } from "./qa-results.js";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -153,7 +153,7 @@ export interface ScanRow {
 }
 
 /** Every filesystem-enumerating script under `dir`, classified. */
-export function census(dir: string): ScanRow[] {
+export function census(dir: string, repo: string = REPO): ScanRow[] {
   // ASKED OF GIT, which is the rule this file reports on — a version that
   // walked would exempt itself from its own census and would sweep a stray
   // `.ts` in build residue as a scanner to judge.
@@ -170,12 +170,72 @@ export function census(dir: string): ScanRow[] {
     }
     if (!ROOT_BOUND.test(src) || !ENUMERATES.test(src)) continue;
     out.push({
-      file: relative(REPO, abs).split(/[\\/]/).join("/"),
+      file: relative(repo, abs).split(/[\\/]/).join("/"),
       seededAtRoot: SEEDED_AT_ROOT.some((r) => r.test(src)),
       gitAware: GIT_AWARE.test(src),
     });
   }
   return out;
+}
+
+/**
+ * ## Repository-wide, with its scope carried in the sidecar — bean `tqv4`
+ *
+ * This census used to scan `cat-harness/scripts/` only, because that is where
+ * it lives. Every script the instance-boundary work moved UP into
+ * `folio-assistant-core/` then left the measurement and was counted nowhere:
+ * 68 → 67 → 65 enumerating scripts, each drop reading as an improvement. And
+ * the headline family read **0 of 0** while the one script with its shape,
+ * `check-artifact-index.ts`, sat in the instance it did not scan — the `dh4f`
+ * failure through a different door: the scan worked, its SUBJECT narrowed.
+ *
+ * Decided: ONE census over every declared instance's `scripts/`, rather than a
+ * census per instance. The question is about the repository's scanners, and a
+ * per-instance census would need every instance to remember to run one — the
+ * same "counted nowhere" gap, one step later.
+ *
+ * And the denominator cannot shrink silently: every declared instance is
+ * listed in the `scope` family as `scanned` (with its count) or
+ * `no-scripts-dir` — which is neither a finding nor a pass, only a statement
+ * that there was nothing there to census. A script moving between instances
+ * now changes WHICH row it is counted under, never whether it is counted.
+ */
+export interface InstanceScope {
+  /** The instance's declared `name`, or its directory name if it declares none. */
+  instance: string;
+  /** Its `scripts/` directory, repository-relative. */
+  path: string;
+  state: "scanned" | "no-scripts-dir";
+  /** Enumerating scripts found there; 0 when not scanned. */
+  enumerating: number;
+}
+
+/** Census every declared instance under `repo`, and say which were scanned. */
+export function censusRepository(repo: string): { rows: ScanRow[]; scope: InstanceScope[] } {
+  const rows: ScanRow[] = [];
+  const scope: InstanceScope[] = [];
+  const seen = new Set<string>();
+  for (const root of instanceRootsIn(repo).sort()) {
+    const dir = join(root, "scripts");
+    if (seen.has(dir)) continue;
+    seen.add(dir);
+    let name = basename(root);
+    try {
+      name = readDeclaration(root)?.name ?? name;
+    } catch {
+      // An unreadable declaration still has a directory to census; its name
+      // is the one thing this row can do without.
+    }
+    const path = relative(repo, dir).split(/[\\/]/).join("/");
+    if (!existsSync(dir)) {
+      scope.push({ instance: name, path, state: "no-scripts-dir", enumerating: 0 });
+      continue;
+    }
+    const found = census(dir, repo);
+    rows.push(...found);
+    scope.push({ instance: name, path, state: "scanned", enumerating: found.length });
+  }
+  return { rows, scope };
 }
 
 function comparable(r: QaResult): string {
@@ -193,7 +253,9 @@ function sidecarState(fresh: QaResult): "absent" | "stale" | "current" {
   }
 }
 
-export function build(rows: readonly ScanRow[]): QaResult {
+export function build(rows: readonly ScanRow[], scope: readonly InstanceScope[] = []): QaResult {
+  const scanned = scope.filter((s) => s.state === "scanned");
+  const where = `across ${scanned.length} instance(s)' scripts/ (${scanned.map((s) => s.instance).join(", ")})`;
   const exposed = rows.filter((r) => r.seededAtRoot && !r.gitAware);
   const seeded = rows.filter((r) => r.seededAtRoot);
   return buildQaResult({
@@ -205,7 +267,7 @@ export function build(rows: readonly ScanRow[]): QaResult {
         summary:
           `The shape that actually costs something: a scan whose start argument IS a root ` +
           `constant, that does not ask git. ${exposed.length} of ${seeded.length} such scans, ` +
-          `${rows.length} enumerating scripts in all. Reported and NEVER failed — the owner's ` +
+          `${rows.length} enumerating scripts in all, ${where}. Reported and NEVER failed — the owner's ` +
           `ruling of 2026-09-27, over the objection that a check which cannot fail is the ` +
           `1xhc pattern; what CAN fail here is the sidecar going stale.`,
         entries: exposed.map((r) => ({ file: r.file })),
@@ -222,13 +284,21 @@ export function build(rows: readonly ScanRow[]): QaResult {
           `\`scripts/tests/git-corpus-conversions.test.ts\` instead.`,
         entries: rows.map((r) => ({ file: r.file, seededAtRoot: r.seededAtRoot, gitAware: r.gitAware })),
       },
+      scope: {
+        summary:
+          `Which instances this census covered — the denominator, so a drop in enumerating ` +
+          `scripts can be told from a drop in scope (bean \`tqv4\`). Every declared instance is ` +
+          `a row: \`scanned\` with its count, or \`no-scripts-dir\`, which is neither a finding nor ` +
+          `a pass. ${scanned.length} of ${scope.length} declared instance(s) have a scripts/ directory.`,
+        entries: scope.map((s) => ({ instance: s.instance, path: s.path, state: s.state, enumerating: s.enumerating })),
+      },
     },
   });
 }
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const rows = census(resolve(INSTANCE_ROOT, "scripts"));
+  const { rows, scope } = censusRepository(REPO);
 
   // A sweep prints its own denominator. A census over zero scripts passes
   // every assertion below and has measured nothing — `could not determine` is
@@ -243,6 +313,7 @@ if (import.meta.main) {
   const exposed = seeded.filter((r) => !r.gitAware);
   console.log(
     `root-scan census — ${rows.length} enumerating script(s), ${gitAware} ask git.\n` +
+      `  scope: ${scope.map((s) => (s.state === "scanned" ? `${s.instance} ${s.enumerating}` : `${s.instance} (no scripts/)`)).join(", ")}\n` +
       `  seeded AT a root constant: ${seeded.length}; of those, not git-aware: ${exposed.length}`,
   );
   for (const r of exposed) console.log(`    · ${r.file}`);
@@ -253,7 +324,7 @@ if (import.meta.main) {
       "  between them is the finding, not either number.",
   );
 
-  const result = build(rows);
+  const result = build(rows, scope);
   const state = sidecarState(result);
   if (!check) writeQaResult(INSTANCE_ROOT, "root-scan-census", result);
   if (state !== "current") {
