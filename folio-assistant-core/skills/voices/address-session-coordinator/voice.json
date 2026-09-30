@@ -7,14 +7,14 @@
   "sources": [
     {
       "title": "Role `session-coordinator` — its persona, in the cat-harness role graph",
-      "instance": "cat-harness",
+      "instance": "litlfred/cat-harness",
       "path": "scenarios/roles.json"
     }
   ],
   "activeIn": {
     "roles": [
       {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "role": "session-coordinator"
       }
     ]
@@ -28,7 +28,7 @@
       "severity": "minor",
       "judgementOnly": true,
       "source": {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "path": "scenarios/roles.json",
         "quote": "Arrives with no memory of the last session and siblings working in parallel. Knows that a claim announces rather than reserves, and that another branch may already be doing this."
       }

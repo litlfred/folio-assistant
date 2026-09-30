@@ -117,7 +117,7 @@ Same rule as everywhere here, and it is easy to lose in a generator:
   cannot be a payload: `BeanStatus` is an enum, `BeanId` is `^[a-z0-9-]+$`. A
   Tool with a free-text argv input is **omitted with a reason**, and free prose
   goes on stdin. Full rule, and the GitHub Actions form of the same defect:
-  [`untrusted-input`](untrusted-input.md).
+  [`untrusted-input`](../conduct/conduct-core/untrusted-input.md).
 - **Do not let the projection become the source of truth.** The generated
   server is a rendering, like the JSON Schema and the JSON-LD. A fix lands in
   `schemas/tool.ts` or the Tool node, never in the emitted server — see

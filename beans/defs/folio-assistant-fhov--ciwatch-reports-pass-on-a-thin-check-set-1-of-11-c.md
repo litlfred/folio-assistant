@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fhov
 title: 'ci:watch reports PASS on a THIN check set: 1 of 11 checks looks identical to all green'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T19:07:23Z
-updated_at: 2026-09-30T19:07:46Z
+updated_at: 2026-09-30T19:48:42Z
 parent: folio-assistant-1xhc
 ---
 
@@ -89,3 +89,47 @@ Why #1671's `pull_request` workflows never fired. That is a separate question
 from this one, and conflating them would let a tool fix stand in for an
 infrastructure answer. This bean is about the REPORT being wrong, which would
 matter even if every workflow always fired.
+
+
+## CLOSED by evidence — `main` already fixed this, independently
+
+Recorded 2026-09-30. Closed on **evidence, not authorship**
+(`bean-coordination` §"Closing a bean whose work has already landed").
+
+`main` carries **`32779147214`** — *"ci:watch reads a partial check set as
+green — ask the machinery that already answers it (#1646)"*. Another session
+found the same defect and fixed it, on an owner ruling from 2026-09-24:
+*"derive the owed workflows"* rather than list them — which is (2) of the three
+options weighed above, and for the reason given there: a list is a thing that
+drifts.
+
+### The evidence, from a live run rather than from reading the commit
+
+The fix reported on my own PR while I was still writing this bean:
+
+```
+19:20:39  67d1d9432a2  UNDETERMINED — every registered run is clean, but
+          1 workflow(s) OWED for this event have no run — a partial check set,
+          not a green one   Code-quality gates
+```
+
+That is this bean's subject, caught, named, and given the third state. A green
+run also now says *"and every workflow owed for this event ran"*, so the
+denominator is stated rather than implied — which is the third `Done when`
+above, met.
+
+### What I got wrong, recorded because it is the useful part
+
+I wrote this bean claiming an open defect **while the fix was already on
+`main`**, and only noticed when its output appeared in my own terminal. That is
+the third time in one hour I duplicated a sibling session's work, and the
+common cause is not the tool: it is that I did not re-read before acting.
+
+### Not closed by this
+
+**Why #1671's `pull_request` workflows never fired.** Separate question,
+answered separately and NOT conflated with the report being wrong: the PR was
+`mergeable_state: dirty`, so GitHub could not compute a merge commit and the
+workflows had nothing to test. The report would still have been wrong if every
+workflow always fired — which is why this bean was worth writing even though
+its fix already existed.

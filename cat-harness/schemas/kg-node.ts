@@ -48,6 +48,7 @@
  */
 
 import { z } from "zod";
+import { RepoFullNameSchema } from "./repo-full-name.js";
 
 /** The fields a translation pass may offer, in the order a reader meets them. */
 export const KG_NODE_LABEL_FIELDS = ["title", "description"] as const;
@@ -302,7 +303,7 @@ export const KgImageSchema = z
  */
 export const AssetSourceSchema = z.object({
   /** The instance it came from, as a reference — `litlfred/cat-harness`. */
-  instance: z.string().min(1),
+  instance: RepoFullNameSchema,
   /** Path within that instance. */
   path: z.string().min(1),
   /** The ref it was taken at, when known. Absent means "not recorded". */

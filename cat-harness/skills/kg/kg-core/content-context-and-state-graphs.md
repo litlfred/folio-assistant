@@ -91,7 +91,7 @@ holds structured material that *could* be rendered — which is what makes it
 hard — and the fact it carries is *where something got to*: abandoned,
 superseded, decided against. But **no running step writes it**. Relocating
 something there is a human-directed act, and
-[`deletion-requires-confirmation`](../../folio-core/deletion-requires-confirmation.md) is the
+[`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md) is the
 skill that says so in as many words. Read, never written by a process. It was
 `state` for the few hours between the axis landing and `mhh9` being settled,
 and the refinement moved it by the same criterion that moved memory.
@@ -246,7 +246,7 @@ the copy that drifted — it says so itself.
 
 - [`directory-conventions`](directory-conventions.md) — what a declaration is
   and how a path resolves. This page is the axis; that one is the mechanism.
-- [`agent-memory`](../../folio-core/agent-memory.md) — what a memory entry promises, and the
+- [`agent-memory`](../../conduct/conduct-core/agent-memory.md) — what a memory entry promises, and the
   injection budget. This page says what layer it is on.
 - [`process-state`](../../workflow/process-state.md), [`bpmn-processes`](../../workflow/bpmn-processes.md) —
   the largest writer of a live-state graph: a workflow instance is a token's

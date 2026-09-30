@@ -63,7 +63,7 @@ option name, a "your call", a "needing X vs Y" — and for each one:
 
 - **carries its options with their costs, a recommendation and a default** → send it;
 - **does not** → delete the name and put a count in its place
-  ([`interaction-modality.md` §4.1](interaction-modality.md) §"More than one
+  ([`interaction-modality.md` §4.1](../conduct/conduct-core/interaction-modality.md) §"More than one
   decision pending");
 - **you are unsure whether it reads as a question** → treat it as one. The
   framing sentence does not decide this; the reader's next keystroke does.
@@ -189,7 +189,7 @@ terseness. Rule 4 replaces it.
 
 Rules 1 and 5 above say the next item needs a gloss and a reason. This is the
 stronger form for the case where **next** also hands over a *decision*:
-[`interaction-modality.md` §4.1](interaction-modality.md)
+[`interaction-modality.md` §4.1](../conduct/conduct-core/interaction-modality.md)
 governs it — context → options → recommendation → question — and the test is
 whether the author can answer **without opening anything**.
 

@@ -14,7 +14,7 @@ Candidate terms extracted from every schema field with a doc comment: `<Declarat
 
 From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1491 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1692 terms and is 929 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1692 terms and is 930 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -3912,6 +3912,13 @@ GraphKindDef.holds <span class="fa-gloss-status">candidate, extracted</span>
 <p>Does a graph of this kind say what the instance **IS**, or where something **GOT TO**?</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.holds</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.layer" data-fa-state="extracted" data-fa-gloss="">
+GraphKindDef.layer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whose namespace the kind is named in, when it is not the harness's: <code>core</code> for the folio's own furniture (<code>voices</code>, <code>library</code>, <code>todos</code>, …). A kind bootstrap defines is bootstrap's whatever this says (<code>BOOTSTRAP_GRAPH_KINDS</code>). The kind IS its individual, <code>&lt;ns&gt;graphKind/&lt;name&gt;</code> (&#123;@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean <code>3r47</code>): &quot;Drop per-kind classes&quot; — bootstrap names a kind as one <code>GraphKind</code> individual, and the harness now does the same.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.layer</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.nodeschemas" data-fa-state="extracted" data-fa-gloss="">
 GraphKindDef.nodeSchemas <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3939,13 +3946,6 @@ GraphKindDef.schema <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Where the shape of a node in this graph is defined — a repo-relative module path, or a <code>$schema</code> tag the files themselves carry.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.type" data-fa-state="extracted" data-fa-gloss="">
-GraphKindDef.type <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The <code>@type</code> IRI this kind projects to.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.type</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.validator" data-fa-state="extracted" data-fa-gloss="">
 GraphKindDef.validator <span class="fa-gloss-status">candidate, extracted</span>
@@ -10240,7 +10240,7 @@ ThemeOverrideNoteSchema.source <span class="fa-gloss-status">candidate, extracte
 ThemeRefSchema.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Declared instance name. Absent means the citing instance's own.</p>
+<p>The owning instance, as <code>owner/repo</code> (bean <code>6rmv</code>). Absent means the citing instance's own.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/theme.ts"><code>cat-harness/schemas/theme.ts#ThemeRefSchema.instance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--theme.themeschema.backdrop" data-fa-state="extracted" data-fa-gloss="">
@@ -11592,7 +11592,7 @@ VoiceProvenanceFlag.ruleIds <span class="fa-gloss-status">candidate, extracted</
 VoiceRefSchema.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The declared name of the instance holding it. Absent means this one.</p>
+<p>The instance holding it, as <code>owner/repo</code> (bean <code>6rmv</code>). Absent means this one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceRefSchema.instance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voiceruleschema.judgementonly" data-fa-state="extracted" data-fa-gloss="">
@@ -11613,7 +11613,7 @@ VoiceRuleSchema.title <span class="fa-gloss-status">candidate, extracted</span>
 VoiceRuleSourceSchema.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The DECLARED NAME of the instance holding the corpus, when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.</p>
+<p>The instance holding the corpus, as its planned <code>owner/repo</code> (bean <code>6rmv</code>; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.instance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voicerulesourceschema.libraryid" data-fa-state="extracted" data-fa-gloss="">

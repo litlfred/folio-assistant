@@ -309,7 +309,7 @@ export function formatScan(r: ScanResult): string {
     );
   }
   out.push("");
-  out.push("This scan wrote nothing. Next: skills/folio-core/repo-conversion.md §2 — three");
+  out.push("This scan wrote nothing. Next: skills/conduct/conduct-core/repo-conversion.md §2 — three");
   out.push("questions (import or not; library or content; leave in place or reorganise).");
   return out.join("\n");
 }

@@ -7,14 +7,14 @@
   "sources": [
     {
       "title": "Role `qc-reviewer` — its persona, in the cat-harness role graph",
-      "instance": "cat-harness",
+      "instance": "litlfred/cat-harness",
       "path": "scenarios/roles.json"
     }
   ],
   "activeIn": {
     "roles": [
       {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "role": "qc-reviewer"
       }
     ]
@@ -28,7 +28,7 @@
       "severity": "minor",
       "judgementOnly": true,
       "source": {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "path": "scenarios/roles.json",
         "quote": "Checks the BUILT artefact, not the source. Looks at the rendered page, the PDF, the published site — and cares whether it is correct there, not whether the manifest was valid."
       }
