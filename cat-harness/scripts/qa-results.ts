@@ -74,8 +74,13 @@ export interface QaResult {
   };
   /** The artefact the findings are ABOUT — not an authored subject. */
   subject: { kind: string; id: string };
-  /** ISO-8601 UTC. */
-  updated_at: string;
+  // No `updated_at`, on purpose (bean `y7b3`, #1707). A committed file that
+  // records WHEN it was produced conflicts on every pair of concurrent changes:
+  // both branches change findings, each writes a new stamp, and that one line
+  // collides while the body merges cleanly. Measured over 300 merges:
+  // `skill-register.qa-results.json` conflicted in 89, and 80 of its 86
+  // conflicting lines were this field. `git log` already records when a file
+  // changed, and no reader consumed it — every comparison held it out.
   /** Finding families, keyed by name. */
   families: Record<string, QaResultFamily>;
   /** Total findings across every family, so "clean" is one read. */
@@ -111,7 +116,6 @@ export function buildQaResult(args: {
   scriptAbsPath: string;
   subject: { kind: string; id: string };
   families: Record<string, { summary: string; entries: unknown[] }>;
-  now?: Date;
 }): QaResult {
   const families: Record<string, QaResultFamily> = {};
   let total = 0;
@@ -126,22 +130,22 @@ export function buildQaResult(args: {
     $schema: "qa-results/v1",
     producer: { script: args.script, script_hash: sourceHashOf(args.scriptAbsPath) },
     subject: args.subject,
-    updated_at: (args.now ?? new Date()).toISOString(),
     families,
     total,
   };
 }
 
 /**
- * Everything about a result except WHEN it was produced.
+ * The comparison key for {@link writeQaResult}'s churn guard and
+ * {@link qaResultState}: the whole document, exactly.
  *
- * The comparison key for {@link writeQaResult}'s churn guard. `updated_at`
- * is the only field that changes when nothing changed, so it is the only one
- * held out.
+ * It used to hold `updated_at` out. With the field gone (`y7b3`) nothing is
+ * held out, and an old file that still carries a stamp now compares STALE —
+ * which is what regenerates it away, rather than leaving it to linger as
+ * "current" forever.
  */
-function withoutTimestamp(r: QaResult): string {
-  const { updated_at: _when, ...rest } = r;
-  return JSON.stringify(rest);
+function key(r: QaResult): string {
+  return JSON.stringify(r);
 }
 
 /**
@@ -149,9 +153,9 @@ function withoutTimestamp(r: QaResult): string {
  *
  * ## It does NOT rewrite a result whose findings are unchanged
  *
- * `updated_at` moves on every run, so an unconditional write made every QA
- * producer dirty the working tree whenever anybody ran it — a one-line diff
- * with identical findings. Measured 2026-09-19 across
+ * An unconditional write once made every QA producer dirty the working tree
+ * whenever anybody ran it — a one-line diff (then a timestamp) with identical
+ * findings. Measured 2026-09-19 across
  * `kg-export.qa-results.json` and `avatar-coverage.qa-results.json`: run the
  * check, get a modified file, commit nothing of substance.
  *
@@ -161,8 +165,8 @@ function withoutTimestamp(r: QaResult): string {
  * `check-workflow-refs` paid for. A file that always appears changed has
  * given up the property it was created to have.
  *
- * So the timestamp answers "when were these findings established", not "when
- * did somebody last run the script". It moves when the findings move.
+ * The document carries no timestamp (`y7b3`), so an unchanged result is
+ * byte-identical and this guard only avoids a pointless write.
  */
 export function writeQaResult(root: string, stem: string, result: QaResult): string {
   const out = join(root, QA_RESULTS_DIR, `${stem}.qa-results.json`);
@@ -171,10 +175,8 @@ export function writeQaResult(root: string, stem: string, result: QaResult): str
   if (existsSync(out)) {
     try {
       const prior = JSON.parse(readFileSync(out, "utf-8")) as QaResult;
-      // Unchanged findings: keep the file exactly as it is, timestamp and
-      // all. Rewriting with the OLD timestamp would be just as clean and
-      // would lie about the bytes on disk having been reconsidered.
-      if (withoutTimestamp(prior) === withoutTimestamp(result)) return out;
+      // Unchanged findings: leave the file alone.
+      if (key(prior) === key(result)) return out;
     } catch {
       // An unreadable previous result is not a reason to skip the write —
       // it is a reason to replace it.
@@ -235,12 +237,11 @@ export function readQaResult(path: string): QaResult | undefined {
  * So the repair is replaced by a COMPARISON, which is the bean's own
  * prescription: compute into a temp directory and **report** rather than repair.
  *
- * ## `updated_at` is held out, and nothing else is
+ * ## Every field is compared
  *
- * The same field {@link writeQaResult}'s churn guard holds out, for the same
- * reason: it moves on every run, so comparing it would report staleness forever
- * and the report would be ignored within a day. Every other field — including
- * `producer.script_hash`, the one actually wrong on `main` — is compared.
+ * Including `producer.script_hash`, the one actually wrong on `main`. The
+ * document once carried `updated_at`, held out here because it moved on every
+ * run; it is gone (`y7b3`), so nothing is held out.
  *
  * ## The two non-verdicts are not agreement
  *
@@ -255,5 +256,5 @@ export function qaResultState(committedPath: string, fresh: QaResult): QaResultS
   if (!existsSync(committedPath)) return "absent";
   const committed = readQaResult(committedPath);
   if (committed === undefined) return "unreadable";
-  return withoutTimestamp(committed) === withoutTimestamp(fresh) ? "current" : "stale";
+  return key(committed) === key(fresh) ? "current" : "stale";
 }
