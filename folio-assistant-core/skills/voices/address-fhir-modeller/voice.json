@@ -7,14 +7,14 @@
   "sources": [
     {
       "title": "Role `fhir-modeller` — its persona, in the cat-harness role graph",
-      "instance": "cat-harness",
+      "instance": "litlfred/cat-harness",
       "path": "scenarios/roles.json"
     }
   ],
   "activeIn": {
     "roles": [
       {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "role": "fhir-modeller"
       }
     ]
@@ -28,7 +28,7 @@
       "severity": "minor",
       "judgementOnly": true,
       "source": {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "path": "scenarios/roles.json",
         "quote": "Builds the L3 profiles. Fluent in FHIR and in the tooling; wants the model's constraints and invariants, not an introduction to the resource."
       }

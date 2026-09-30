@@ -57,6 +57,9 @@ import { DEFAULT_THEME_ID, themeById } from "../../cat-harness/schemas/themes.js
 /** The instance these themes belong to. `themeKey` keys on it; ids are not unique across instances. */
 export const THEME_INSTANCE = "who-iris";
 
+/** The same instance as a REFERENCE names it — its planned `owner/repo` (bean `6rmv`). */
+export const THEME_REPOSITORY = "litlfred/who-iris";
+
 /**
  * Contradictions in the WHO style guide, kept as data.
  *
@@ -276,7 +279,7 @@ const IRIS_STICKY: Theme = {
   $schema: THEME_SCHEMA_TAG,
   kind: "sticky",
   id: "iris-sticky",
-  inherits: { instance: THEME_INSTANCE, themeId: IRIS_WEB.id },
+  inherits: { instance: THEME_REPOSITORY, themeId: IRIS_WEB.id },
   name: "IRIS note",
   description:
     "The IRIS palette on a sticky note — derived from iris-web, itself measured from the captured DSpace stylesheet.",
@@ -300,7 +303,7 @@ const DECLARED: readonly Theme[] = RAW.map((t) => ThemeSchema.parse(t));
 
 /** A parent within THIS instance — the only owner a who-iris theme inherits from today. */
 function ownParent(ref: { instance?: string; themeId: string }): { instance: string; theme: Theme } | undefined {
-  if (ref.instance !== undefined && ref.instance !== THEME_INSTANCE) return undefined;
+  if (ref.instance !== undefined && ref.instance !== THEME_REPOSITORY && ref.instance !== THEME_INSTANCE) return undefined;
   const theme = DECLARED.find((t) => t.id === ref.themeId);
   return theme ? { instance: THEME_INSTANCE, theme } : undefined;
 }
