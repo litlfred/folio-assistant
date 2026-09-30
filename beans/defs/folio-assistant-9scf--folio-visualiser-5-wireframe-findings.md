@@ -3,12 +3,13 @@
 title: 'folio visualiser: 5 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-folio
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-23T10:36:14Z
+updated_at: 2026-09-30T16:12:46Z
 parent: folio-assistant-4ccr
 ---
 
@@ -33,3 +34,13 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — Links are not links: Node table 'links' column: 0 a[href] in any cell; cat-harness cell is 6 labels joined by <br>; no word 'resolv*' anywhere on page.
 - **STILL-PRESENT** — Long cells stretch the rows: Node-table row heights at 1280: 63/245/154/63/63 px (cat-harness row ~4x); at 390: 222/427/405/359/268.
 - **STILL-PRESENT** — Tables have no caption or heading: Both tables: no <caption>, no aria-label; preceding sibling is a DIV (stat line / previous table), not a heading.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 2 still present, 3 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **FIXED** — Horizontal scroll at phone width: Still fixed. At 390 the scrollWidth is 390. The node table has overflow-x:auto, with scrollWidth 560 inside a 296px box. — 76b34f8ec (rv-folio.mjs)
+- **FIXED** — The mount handle covers the heading: Still fixed. The h1 text box is x127–325 y64–91 at 1280 and x75–273 y64–91 at 390. .fa-glass-handle is at y0–28 (x596–684 / x151–239), with no overlap at either width. (rv-folio.mjs)
+- **FIXED** — Links are not links: Changed since 2026-09-29. The node table's 'links' column now holds 14 a[href] in 3 of 5 rows (4 to GitHub, 10 to site pages such as agentic-harness.html and beans-and-todos.html). All 9 local targets return 200. The other 2 rows read 'none'. — #1592 (rv-folio.mjs, linkcheck.mjs)
+- **STILL-PRESENT** — Long cells stretch the rows: Node-table row heights are 63/245/154/63/63px at 1280 and 222/427/405/359/268px at 390, unchanged. (rv-folio.mjs)
+- **STILL-PRESENT** — Tables have no caption or heading: Neither table has a <caption> or aria-label. The preceding sibling is a DIV (stat line or previous table), not a heading. (rv-folio.mjs)

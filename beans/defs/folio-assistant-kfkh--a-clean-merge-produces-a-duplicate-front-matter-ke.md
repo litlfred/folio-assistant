@@ -263,7 +263,7 @@ insertions coexist."*
 
 Dropping was not a live option: the convention is stated in two places —
 `skill-register.ts:678` prints *"Add the slug to its `package-manifest.json`
-`skills` list, sorted"* and `skills/folio-core/skill-registration.md:57` says
+`skills` list, sorted"* and `skills/kg/kg-core/skill-registration.md:57` says
 *"you add the slug, sorted"*. Dropping would mean deleting a correct instruction
 from both.
 

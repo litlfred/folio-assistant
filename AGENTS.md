@@ -45,7 +45,7 @@ are thin stubs pointing here.
 >   (`schemas/cat-harness.ts`) and read from the directory it names.
 >
 > Conventions for the declaration and its graph kinds:
-> [`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md).
+> [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).
 >
 > **A dependency's skills ARE reachable** — `resolveSkillDirs` in
 > `schemas/harness-config.ts` computes the cross-instance overlay and
@@ -183,7 +183,7 @@ tag, instance state was identifiable only by SHAPE. **Extension is a
 coincidence; a declaration inside the file is the contract.**
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md)
+[`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md)
 carries the declaration schema and every graph kind, path resolution and the
 dot-prefix guard that tests **every** segment, and the rule that an unavoidable
 duplicate is fine while an unchecked one is not. In this instance
@@ -374,7 +374,7 @@ be *typed*. This asks who *judges* it, and the two come apart: a kind can be
 perfectly typed and audited by nothing.
 
 **The discipline is in the skill, not here** —
-[`audit-coverage`](cat-harness/skills/folio-core/audit-coverage.md)
+[`audit-coverage`](cat-harness/skills/kg/kg-core/audit-coverage.md)
 carries why the gate half is **declared** rather than inferred
 (a grep fails in both directions), the four per-kind states that must not
 collapse into one zero — including why `typed-only` is still a **finding**,
@@ -629,7 +629,7 @@ to spend the words: **do not start the topic.**
   nine answers would be nine summaries free to drift from nine skills. It is
   for the moment you notice yourself about to guess, not for every turn. Its
   companion is
-  [`surprise-to-corpus`](cat-harness/skills/folio-core/surprise-to-corpus.md)
+  [`surprise-to-corpus`](cat-harness/skills/kg/kg-core/surprise-to-corpus.md)
   — notice what was logically unexpected, filter it by whether the next agent
   in that process would hit it too, and then **prompt**: the agent never
   writes corpus guidance unasked, which is
@@ -693,7 +693,7 @@ to spend the words: **do not start the topic.**
   Both are required, so a kind that has not decided does not compile, and a
   step writing to a `context` graph is a defect rather than an update.
   **The discipline is in the skill, not here** —
-  [`skills/folio-core/content-context-and-state-graphs.md`](cat-harness/skills/folio-core/content-context-and-state-graphs.md)
+  [`skills/kg/kg-core/content-context-and-state-graphs.md`](cat-harness/skills/kg/kg-core/content-context-and-state-graphs.md)
   carries the one question that settles a kind, the two that settle a hard
   case, the kinds whose layer is not obvious from their name, what a consumer
   may assume of each, and why agent memory is `context` while its mirror
@@ -723,7 +723,7 @@ to spend the words: **do not start the topic.**
   argument for its first clause, and the reason no count is given here on
   purpose: a count in prose is the same failure one turn later. Schema:
   `schemas/cat-harness.ts`; conventions:
-  [`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md).
+  [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - **Adding one is never a one-file change** — `bun run skill:register` performs
@@ -733,7 +733,7 @@ to spend the words: **do not start the topic.**
   your skill, so the cause is invisible from the symptom** — which is why the
   remedy is a command rather than a list. **The discipline is in the skill, not
   here** —
-  [`skill-registration`](cat-harness/skills/folio-core/skill-registration.md)
+  [`skill-registration`](cat-harness/skills/kg/kg-core/skill-registration.md)
   carries what a skill owes and why the feedback arrives on somebody else's PR,
   the ONE declaration the command deliberately leaves to you (which package a
   file belongs to is your assertion, not a derivable fact), why the chain cannot

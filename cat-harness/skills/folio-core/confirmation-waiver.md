@@ -70,7 +70,7 @@ skill that owns it, argued and landed — not a waiver.
 
 A waiver is **context**: read at the start of a turn, consulted by whatever gate
 is about to fire, and never produced by the work it governs. That is the
-`context` layer as [`content-context-and-state-graphs`](content-context-and-state-graphs.md)
+`context` layer as [`content-context-and-state-graphs`](../kg/kg-core/content-context-and-state-graphs.md)
 defines it, so a waiver is a node under `memory/waivers/` — the same graph an
 agent's durable memory lives in, which is what the owner meant by *"should be
 in memories"*.

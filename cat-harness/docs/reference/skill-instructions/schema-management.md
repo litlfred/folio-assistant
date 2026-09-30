@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/schema-management.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/schema-management.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/kg-core/schema-management.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/schema-management.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/schema-management.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/schema-management.md){: .fa-edit-source }
 
 {% raw %}
 # Managing a schema — the graph, the viewer, and the three answers that are not "fine"

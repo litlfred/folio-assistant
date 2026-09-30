@@ -3,12 +3,13 @@
 title: 'tools visualiser: 6 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-tools
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-23T10:36:15Z
+updated_at: 2026-09-30T16:12:47Z
 parent: folio-assistant-4ccr
 ---
 
@@ -33,3 +34,14 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — Mobile: 5-column table in 358px column, off-screen columns, no scroll cue: At 390x844 page scrollWidth 390, but .table-wrapper scrollWidth 570 vs clientWidth 362; headers at x: invoked 263, satisfies 370, i/o 477 (last two off-screen). Wrapper mask-image none (narrow-viewport.css cue excludes .table-wrapper > table). 'what it does' column 138px; tallest row 536px.
 - **STILL-PRESENT** — '▾ Folio' handle overlaps top of content column: .fa-glass-handle position:fixed, top centre: 1280 → rect (594,0,93x28), min-height now 28px; #main-content starts y=140 so no overlap with content, only the empty header. 390 → rect (154,0,82x25) overlaps a.site-title 'C@T Harness' box (0,2,244x49) in the top bar. Improved on desktop, still over the top bar on mobile.
 - **STILL-PRESENT** — 'On this page' (4 entries) only in the opened sidebar: details.fa-doc-index (4 links): at 390 summary visible at rest (y=96, hit-test true) — fixed on mobile. At 1280 summary at (0,299,55x58) in the collapsed strip fails hit-test (covered) and is not visible at rest.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 5 still present, 1 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — No way to find one tool except page search; stat boxes not links: Narrowed since 2026-09-29: the main table (107 rows) now has a 'Filter this table' input ('beans' → 3 of 107). The stat boxes are still not links, and the only in-page anchors in main are the 3 heading permalinks. — #1592 (D/p_tools.js, filt2.mjs)
+- **STILL-PRESENT** — Skills and tool ids are not links: Narrowed since 2026-09-29: 105 of 107 'satisfies' cells now link to skill pages (136 links, all 61 targets return 200). 0 of 107 tool-id cells contain an <a>. — #1592 (D/p_tools.js, qgjh.mjs, linkcheck.mjs)
+- **FIXED** — Invocation tags fail contrast on dark scheme: Changed since 2026-09-29. Dark (cell bg rgb(48,45,54)): .tg-shell 7.40, .tg-mcp 6.35, .tg-inproc 6.53, .tg-manual 6.53 :1 at 11.52px (10.08px at 390). Light is unchanged and passes: 6.16/5.91/6.45/6.04. — #1592 / rtuo (D/p_tools.js, contrast.mjs)
+- **STILL-PRESENT** — Mobile: 5-column table in 358px column, off-screen columns, no scroll cue: At 390×844 the page scrollWidth is 390, and .table-wrapper has scrollWidth 570 vs clientWidth 362. The headers are at x invoked 263, satisfies 370, i/o 477 (the last two off-screen). The wrapper has mask-image none. The 'what it does' column is 138px, and the tallest row is now 788px (was 536). (D/p_tools.js, D/p_tw.js)
+- **STILL-PRESENT** — '▾ Folio' handle overlaps top of content column: At 1280 the handle rect is (594,0,93×28) and #main-content starts at y=140, so there is no overlap with content. At 390 the rect is (154,0,82×25), over a.site-title 'C@T Harness' (0,2,244×49) in the top bar. (D/p_tools.js, D/p_handle.js)
+- **STILL-PRESENT** — 'On this page' (4 entries) only in the opened sidebar: details.fa-doc-index (4 links). At 390 the summary is visible at rest (y=96, hit-test true). At 1280 the summary is at (0,299,55×58) in the collapsed strip and fails the hit-test. (D/p_tools.js)

@@ -37,7 +37,7 @@ text:
 - **A directory is declared or it does not exist.** Add one to
   [`cat-harness.json`](cat-harness.json) with its graph kinds in the same change;
   a declared-but-absent directory makes a consumer scan nothing and report a
-  clean run. `folio-core/directory-conventions`.
+  clean run. `kg-core/directory-conventions`.
 - **The discipline lives in the skill.** Changing how agents behave means
   editing the skill, not a Markdown file at a root. Where a skill and any
   `AGENTS.md` disagree, **the skill wins and the file is wrong** — fix it.

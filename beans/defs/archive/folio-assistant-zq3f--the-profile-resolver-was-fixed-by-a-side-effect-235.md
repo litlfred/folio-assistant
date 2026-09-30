@@ -12,7 +12,7 @@ parent: folio-assistant-vke6
 Found 2026-09-21 while clearing `vzur`'s retired-filename backlog, and **not
 fixed there**: it is a question about QA verdicts, not about prose.
 
-[`domain-fencing`](../../../cat-harness/skills/graph-management/domain-fencing.md)
+[`domain-fencing`](../../../cat-harness/skills/kg/graph-management/domain-fencing.md)
 records a defect under §"Two things the fencing turned up". Re-measuring it to
 fix the filename in the quoted output showed the measurement itself had moved.
 

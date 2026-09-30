@@ -21,4 +21,4 @@ property of a FORMAT within a content type (`schemas/translation-tools.ts`,
 its content (e.g. markdown, bpmn) should be translatable"*. `nav_exclude: true`
 is the half JS cannot do — just-the-docs builds the nav once, for every
 reader, before anybody picks a locale. Full rule:
-`skills/folio-core/translation-manager.md#the-navbar-filters-by-locale`.
+`skills/library/library-core/translation-manager.md#the-navbar-filters-by-locale`.

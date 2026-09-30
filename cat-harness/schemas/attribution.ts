@@ -73,7 +73,7 @@ export interface Attribution {
   session?: string;
   /** ISO-8601 date the content was authored. */
   date?: string;
-  /** The skill or tool that dispatched the authoring, e.g. `folio-core/library-ingestion`. */
+  /** The skill or tool that dispatched the authoring, e.g. `library-core/library-ingestion`. */
   skill?: string;
 }
 

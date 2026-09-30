@@ -3,12 +3,13 @@
 title: 'skills-index visualiser: 7 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-skills-index
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-23T10:36:15Z
+updated_at: 2026-09-30T16:12:48Z
 parent: folio-assistant-4ccr
 ---
 
@@ -35,3 +36,15 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — 5. Markdown shows through (literal backticks): 24 descriptions contain literal backticks, e.g. 'Declare a harness this one knows about and does not hold (`associatedHarnesses`)…'.
 - **STILL-PRESENT** — 6. Phone layout favours the path: On the main skills page at 390 the balance flipped: name+path cell 89px, description 255px. The path breaks anywhere (overflow-wrap:anywhere, 'latex-/authori/ng'). On the small siblings it is still path-heavy: who-iris-skills 180px vs 115px description, large-datasets-skills 184px vs 112px.
 - **STILL-PRESENT** — 7. Small siblings get the same heavy page shell: 1 row, still preceded by the lede, the note and a now 5-row sibling list. At 390 the only row starts at y≈811 (was ≈655). Same for large-datasets-skills (3 rows, first at y≈811).
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 7 still present, 0 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — 1. Horizontal scroll at phone width; descriptions cut: 390×844: the document does not scroll sideways (scrollWidth 390). The table is overflow-x:auto with a right-edge fade mask (scrollWidth 344 vs clientWidth 296). The description cell is at left 164, width 255, right edge 419 > 390, and 39 of the first 39 rows are cut. (idx.mjs, idx2.mjs, idx3.mjs)
+- **STILL-PRESENT** — 2. One very long flat list: 273 rows (was 270), 0 folder headings, 0 filter/search inputs. The #1592 table filter is not on docs-auto pages. docH is 22,784px at 1280 and 67,864px at 390. (idx.mjs, filt.mjs)
+- **STILL-PRESENT** — 3. Skills with no description: 48 of 273 rows read 'no description in the artefact' (was 49/270). latex-authoring is still the first such row. (idx.mjs, bt.mjs)
+- **STILL-PRESENT** — 4. Descriptions cut at 220 chars with no way to read the rest: 36 descriptions end in '…' (was 34). wireframe-design-review still ends '…mechanical checks at both vie…'. (idx.mjs)
+- **STILL-PRESENT** — 5. Markdown shows through (literal backticks): Narrowed since 2026-09-29: 1 of 273 descriptions shows a literal backtick (was 24), and 26 descriptions now render <code>. The one left is a 220-char cut that splits an inline-code span: 'Structural-QA integration watcher … edited uses[] / kind / label'. (idx.mjs, bt.mjs)
+- **STILL-PRESENT** — 6. Phone layout favours the path: On the main skills page at 390, the name+path cell is 89px and the description 255px, and the path breaks anywhere (overflow-wrap:anywhere; 3 lines). The small siblings are still path-heavy: who-iris-skills 180px vs 115px, large-datasets-skills 184px vs 112px. (idx.mjs, idx2.mjs)
+- **STILL-PRESENT** — 7. Small siblings get the same heavy page shell: who-iris-skills (1 row) and large-datasets-skills (3 rows) are still preceded by the lede, the note and the sibling list. At 390 the first row starts at y≈931 (was ≈811). (idx.mjs, idx2.mjs)
