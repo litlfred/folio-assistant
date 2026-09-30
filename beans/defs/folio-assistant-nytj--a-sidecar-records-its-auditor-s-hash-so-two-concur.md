@@ -124,3 +124,7 @@ cannot be asked to.
 - [ ] MEASURED AFTER the queue is on: bump an action pin by hand, with the seven
       sidecars left stale, and confirm the queue rejects it rather than `main`
       discovering it
+
+## Owner, 2026-09-30: "Turn on merge queue"
+
+Asked after roughly seven red-main incidents in one day, each a PR green against an older main. The owner chose the recommended option: turn on the merge queue for `main`. The switch is a repository setting, so the box above stays with the owner until the queue is actually on. Nothing in the workflows needs to change: both gating workflows already carry `merge_group:`. One caution was passed on: if `stage` (the preview deploy) is a *required* check, it must be unticked, because it does not run in the queue.
