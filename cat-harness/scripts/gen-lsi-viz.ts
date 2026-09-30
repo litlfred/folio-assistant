@@ -101,7 +101,7 @@ export function render(): string {
   L.push("");
   L.push("A graph needs one at 100 units and 20,000 words — a house threshold, with its");
   L.push("basis in " + code("scripts/lsi.ts") + ". Below it a graph is **not judged**, which is not");
-  L.push("the same as fine. The same verdict is " + code("kg:audit") + "'s " + code("lsi-index-fresh") + ".");
+  L.push("the same as fine. The same verdict is " + code("kg:audit") + "'s " + code("tool-downstream-fresh") + " for the " + code("lsi-index") + " Tool.");
   L.push("");
   L.push("| graph | verdict | detail |");
   L.push("|---|---|---|");

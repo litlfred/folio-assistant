@@ -161,7 +161,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### sampleimport--xlg2-wpro-trial
 
-12 step(s) checked, 12 `prov:Activity` emitted, 2 finding(s). Sources: `cat-harness/processes/sample-import.bpmn`, `cat-harness/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
+12 step(s) checked, 12 `prov:Activity` emitted, 2 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|
@@ -170,7 +170,7 @@ The after-check for the agentic engine (issue #1180, step 5). The deterministic 
 
 ### sampleimport--xlg2-wpro-trial-original
 
-17 step(s) checked, 17 `prov:Activity` emitted, 2 finding(s). Sources: `cat-harness/processes/sample-import.bpmn`, `cat-harness/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
+17 step(s) checked, 17 `prov:Activity` emitted, 2 finding(s). Sources: `large-datasets/processes/sample-import.bpmn`, `large-datasets/processes/materialize-remote.bpmn`. [PROV JSON-LD]({{ '/assets/prov/sampleimport--xlg2-wpro-trial-original.prov.jsonld' | relative_url }})
 
 | instance | entry | node | finding | detail |
 |---|---|---|---|---|

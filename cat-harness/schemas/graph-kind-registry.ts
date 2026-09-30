@@ -904,6 +904,9 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // The per-graph LSI index sidecar (bean `ansc`): fingerprint, pole terms,
       // neighbours and findings — never the vectors.
       "folio-lsi-index/v1": { shape: "scripts/lsi.ts#LsiSidecar" },
+      // A downstream tool's run record (bean `fq5u`): outcome and input
+      // fingerprint, read by kg:audit's `tool-downstream-fresh`.
+      "folio-tool-run/v1": { validator: "schemas/tool-run.ts#ToolRunRecordSchema" },
       // The viewer-navbar audit (bean `edx7`). A VERDICT PER PAGE rather than
       // a count, because the owner's rule has two clauses -- present unless
       // EXPLICITLY removed -- and a count cannot tell a deliberate removal

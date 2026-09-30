@@ -264,6 +264,54 @@ export const ToolMaintainsSchema = z.object({
 export type ToolMaintains = z.infer<typeof ToolMaintainsSchema>;
 
 /**
+ * A DOWNSTREAM output this Tool keeps current, the inputs it is derived from,
+ * and where its run outcome can be judged.
+ *
+ * ## Why this exists
+ *
+ * Bean `fq5u`, owner 2026-09-29: *"how do we know tools like LSI are run
+ * succesfully... not primary to pieple, but downstream. should be part of QA
+ * process (dependences = stall QA)"*. A downstream tool's failure was
+ * invisible: nothing recorded that it ran — for LSI, only whether its corpus
+ * had moved since. The declaration is what makes a Tool a member of the
+ * `tool-downstream-fresh` criterion family (`schemas/tool-run.ts`), which
+ * reads three states and never renders the absence of a run as green.
+ *
+ * ## Why this is not `maintains`
+ *
+ * `maintains` names a PUBLISHED artefact and `check:maintained-artefacts`
+ * looks for it in the assembled `_site/`. A downstream output is often not
+ * published at all — LSI's index is a committed sidecar under `test/results/`
+ * — so folding it into `maintains` would send that check looking for a file
+ * the site never carries. They answer different questions: "is the published
+ * artefact present" and "did the run that keeps this output current succeed
+ * against the current inputs".
+ *
+ * ## `judgedAt` — the third state, named
+ *
+ * `checkout`: the Tool writes a `folio-tool-run/v1` record and the audit
+ * compares its input fingerprint with the current one. `published`: the output
+ * exists only in an assembled site (the search index Jekyll writes), so from a
+ * checkout the verdict is `unknown` naming `verifier` — the entry in
+ * `publish-verify`'s set that answers it before deployment. Never `pass`.
+ */
+export const ToolDownstreamSchema = z
+  .object({
+    /** What the Tool keeps current — repo-relative for `checkout`, site-relative for `published`. */
+    output: z.string().min(1),
+    /** What it is derived from, so a reader can see what makes it stale. */
+    inputs: z.array(z.string().min(1)).min(1),
+    judgedAt: z.enum(["checkout", "published"]),
+    /** `published` only: the `publish-verify` verifier id that judges the output. */
+    verifier: z.string().min(1).optional(),
+  })
+  .refine((d) => d.judgedAt !== "published" || d.verifier !== undefined, {
+    message: "a downstream output judged only in the published tree must name the verifier that judges it",
+  });
+
+export type ToolDownstream = z.infer<typeof ToolDownstreamSchema>;
+
+/**
  * Why an agent would reach for THIS Tool rather than a substitutable sibling.
  *
  * ## Why this is not `description`
@@ -333,6 +381,13 @@ export const ToolDefinitionSchema = z
      * zod module whose job is to keep a public JSON Schema true.
      */
     maintains: z.array(ToolMaintainsSchema).optional(),
+    /**
+     * A downstream output this Tool keeps current, with its declared inputs.
+     * See {@link ToolDownstreamSchema}. Optional because most Tools keep no
+     * derived output; a run record or a publish verifier naming a Tool that
+     * does not declare one is a finding (`downstream-tool-declared`).
+     */
+    downstream: ToolDownstreamSchema.optional(),
     /**
      * The graph KINDS this Tool draws a viewer for — one page per declared
      * directory of the kind, placed by the Tool itself.

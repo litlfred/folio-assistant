@@ -70,6 +70,7 @@ classDiagram
       selection [0..1] object
       requires [0..1] object
       maintains [0..*] Maintain[]
+      downstream [0..1] object
       renders [0..*] string[]
     }
   }

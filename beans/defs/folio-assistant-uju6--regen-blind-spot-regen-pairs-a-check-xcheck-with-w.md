@@ -1,11 +1,11 @@
 ---
 # folio-assistant-uju6
 title: 'REGEN BLIND SPOT: regen pairs a check `X:check` with writer `X`, so a `check:X` gate whose writer is spelled differently is never repaired'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-30T08:57:47Z
-updated_at: 2026-09-30T11:21:27Z
+updated_at: 2026-09-30T21:25:36Z
 parent: folio-assistant-1xhc
 ---
 
@@ -32,3 +32,5 @@ Declare the pairing rather than inferring it from the script name. Either map ea
 
 ## Also blind: audit-coverage after a merge (2026-09-30, #1577)
 Taking main's audit-coverage.qa-results.json in a merge left it stale for the branch; three regen passes reported 0 regenerated while audit:coverage:require-all failed in CI. Fixed by hand with bun run audit:coverage.
+
+_2026-09-30T21:25:36Z_ — Claimed by claude/magical-archimedes-4qkfxp-regen — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

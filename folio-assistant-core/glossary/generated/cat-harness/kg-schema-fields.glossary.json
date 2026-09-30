@@ -8561,6 +8561,41 @@
       "status": "candidate"
     },
     {
+      "id": "tool-run.toolrunrecordschema.detail",
+      "prefLabel": "ToolRunRecordSchema.detail",
+      "definition": "For a failure: what went wrong, for a reader who has only the file.",
+      "source": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.detail",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-run.toolrunrecordschema.inputfingerprint",
+      "prefLabel": "ToolRunRecordSchema.inputFingerprint",
+      "definition": "The tool's own fingerprint of the inputs the run read, or `unknown` when the run failed before it could compute one. `unknown` matches nothing.",
+      "source": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.inputFingerprint",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-run.toolrunrecordschema.target",
+      "prefLabel": "ToolRunRecordSchema.target",
+      "definition": "Which of the tool's outputs — one tool may keep several (LSI: one per graph).",
+      "source": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.target",
+      "status": "candidate"
+    },
+    {
+      "id": "tool-run.toolrunrecordschema.tool",
+      "prefLabel": "ToolRunRecordSchema.tool",
+      "definition": "The Tool node id whose run this records. @ref ToolDefinitionSchema",
+      "source": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.tool",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooldefinitionschema.downstream",
+      "prefLabel": "ToolDefinitionSchema.downstream",
+      "definition": "A downstream output this Tool keeps current, with its declared inputs. See {@link ToolDownstreamSchema}. Optional because most Tools keep no derived output; a run record or a publish verifier naming a Tool that does not declare one is a finding (`downstream-tool-declared`).",
+      "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.downstream",
+      "status": "candidate"
+    },
+    {
       "id": "tool.tooldefinitionschema.maintains",
       "prefLabel": "ToolDefinitionSchema.maintains",
       "definition": "Published artefacts this Tool is authoritative for. See {@link ToolMaintainsSchema}.",
@@ -8586,6 +8621,27 @@
       "prefLabel": "ToolDefinitionSchema.selection",
       "definition": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set.",
       "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooldownstreamschema.inputs",
+      "prefLabel": "ToolDownstreamSchema.inputs",
+      "definition": "What it is derived from, so a reader can see what makes it stale.",
+      "source": "cat-harness/schemas/tool.ts#ToolDownstreamSchema.inputs",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooldownstreamschema.output",
+      "prefLabel": "ToolDownstreamSchema.output",
+      "definition": "What the Tool keeps current — repo-relative for `checkout`, site-relative for `published`.",
+      "source": "cat-harness/schemas/tool.ts#ToolDownstreamSchema.output",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooldownstreamschema.verifier",
+      "prefLabel": "ToolDownstreamSchema.verifier",
+      "definition": "`published` only: the `publish-verify` verifier id that judges the output.",
+      "source": "cat-harness/schemas/tool.ts#ToolDownstreamSchema.verifier",
       "status": "candidate"
     },
     {

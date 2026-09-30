@@ -142,6 +142,14 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     findings [1] : { nearDuplicates: Array<{ a: string; b: string; cosine: number }>; narrowDimensions: Array<{ dim: number; units: string[] }>; }
     neighbours [1] : Record<string, Array<[string, number]>>
   }
+  class "folio-tool-run/v1" as cat_harness_qa_folio_tool_run_v1_folio_tool_run_v1 <<json: ToolRunRecordSchema>> #f4e6e6 {
+    $schema [1] : 'folio-tool-run/v1'
+    tool [1] : string
+    target [1] : string
+    outcome [1] : succeeded | failed
+    inputFingerprint [1] : string
+    detail [0..1] : string
+  }
   class "Page" as cat_harness_qa_viewer_nav_qa_v1_Page <<json: ViewerNavQaSchema>> #f4e6e6 {
     path [1] : string
     source [1] : string
