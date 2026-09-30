@@ -6,8 +6,9 @@ summary: "placement is a SKILL — run it before the first file exists"
 createdAt: 2026-09-19
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 `skills/kg/kg-core/placement.md` is a four-step decision procedure with a
 stop — **instance → declared graph → kind of node → which of the two

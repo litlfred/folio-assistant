@@ -6,8 +6,9 @@ summary: "the document render path takes no TeX"
 createdAt: 2026-09-19
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 `content/pipeline/render-markdown.ts` assembles the folio to one Markdown
 file; `document_render_{md,html,pdf}` take it through pandoc, the PDF via

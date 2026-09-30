@@ -4,7 +4,7 @@ id: the-commands-that-do-exist-here
 label: stable
 summary: "the commands that do exist here"
 createdAt: 2026-09-19
-archived: "true"
+archived: true
 ---
 > **Archived 2026-09-19.** Its only reader, the `content-pipeline-navigator`
 > subagent, was retired. Kept rather than deleted: the record of what was

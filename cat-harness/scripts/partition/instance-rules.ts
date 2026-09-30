@@ -248,6 +248,9 @@ export const RULES: Rule[] = [
       // through `scripts/beans.ts` — the one reader of the store. No folio
       // content is opened.
       "scripts/check-bean-parent-prose.ts",
+      // HARNESS: it reads the NAMES of files in declared uploads/library
+      // graphs and never their contents, so no folio content is opened.
+      "scripts/check-upload-names.ts",
       // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
       // LEAF so `state-visualizer.ts` can be a call site without importing
       // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one
@@ -309,6 +312,12 @@ export const RULES: Rule[] = [
       // too. It renders a model and reads no content object -- the model's
       // regions are composed by the caller from declarations.
       "scripts/lib/navbar.ts",
+      // How a GRAPH-KIND row in that navbar is marked and named (bean `yag0`):
+      // the kind's avatar glyph and hue, and the head of its registered
+      // summary as the accessible name. HARNESS beside `navbar.ts` for the
+      // same reason — it is the platform's chrome, read from the platform's
+      // kind and avatar registries, and both navbar callers share it.
+      "scripts/lib/graph-kind-nav.ts",
       // The geometry that navbar became a reader of, and the generator that
       // renders it to CSS (bean `sjic`). HARNESS for the same reason as
       // `navbar.ts` and one step more plainly: the numbers are the width of
@@ -1202,6 +1211,9 @@ export const RULES: Rule[] = [
       // and the workflow engine, stop importing from a Tool. Harness beside
       // `known-skills.ts`, which it builds on.
       "scripts/skill-packages.ts",
+      // The user-invocable skill list, moved out of the `skill-prompts` Tool
+      // (bean `w2gr`) so `gen-skill-commands` stops importing from a Tool.
+      "scripts/invocable-skills.ts",
       // ...and the topic level it walks through (bean `9umr`): which
       // subdirectories of a skills directory are topics, from `skills.json`.
       "scripts/skill-topics.ts",
@@ -1692,7 +1704,11 @@ export const RULES: Rule[] = [
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
+    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
+    // `blueprint/` STOOD in the prefixes above until 2026-09-30 (bean `vov0`):
+    // it held a hand-written QOU blueprint, folio content in the platform, and
+    // is removed now that `blueprint-layout.ts` generates a paper's
+    // `blueprint/src` from its manifest (#1598).
     exact: [
       // `scripts/build-document-site.ts` STOOD HERE and is GONE as of bean
       // `yj6r`, 2026-09-30: it now lives in `folio-assistant-core/scripts/`

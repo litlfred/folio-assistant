@@ -28,13 +28,35 @@ import {
   whoThemeById,
 } from "./themes.js";
 import { ResolvedThemeSchema, themeKey } from "../../cat-harness/schemas/theme.js";
+import { DEFAULT_THEME_ID, themeById } from "../../cat-harness/schemas/themes.js";
 
 const INSTANCE = resolve(import.meta.dir, "..");
+/**
+ * The saved-page archive. Its CONTAINER name is normalised
+ * (`check:upload-names`, owner ruling 2026-09-30); the paths INSIDE it are
+ * not, and must not be — see {@link MEMBER}.
+ */
 const CAPTURE = join(
   INSTANCE,
   "uploads/wpr-rdo-2020-003-eng/iris-capture",
-  "Publication and information products style guide_files.zip",
+  "Publication-and-information-products-style-guide_files.zip",
 );
+
+/**
+ * A member path inside the zip, spaces and all.
+ *
+ * **This is not the same string as the zip's own name, and normalising it
+ * would break the capture.** The saved `.html` beside it references
+ * `./Publication and information products style guide_files/…` in its own
+ * markup, so the directory inside the archive has to keep that spelling for
+ * the capture to be reproducible — which is what
+ * `uploads/wpr-rdo-2020-003-eng/intake.json` is protecting.
+ *
+ * `check:upload-names` reads FILE names in a declared graph. It never opens an
+ * archive and never renames a directory, so the two do not collide; the zip's
+ * container name changed and its contents did not.
+ */
+const MEMBER = "Publication and information products style guide_files/client-theme.css";
 const SECTIONS = join(INSTANCE, "library/wpr-rdo-2020-003-eng/sections");
 
 /**
@@ -47,7 +69,7 @@ const SECTIONS = join(INSTANCE, "library/wpr-rdo-2020-003-eng/sections");
 function clientThemeCss(): string {
   return execFileSync(
     "unzip",
-    ["-p", CAPTURE, "Publication and information products style guide_files/client-theme.css"],
+    ["-p", CAPTURE, MEMBER],
     { encoding: "utf-8", maxBuffer: 8 * 1024 * 1024 },
   );
 }
@@ -65,12 +87,14 @@ function page(n: number): string {
 const CSS = clientThemeCss();
 const IRIS = whoThemeById("iris-web")!;
 const PUB = whoThemeById("who-wpro-publication")!;
+const STICKY = whoThemeById("iris-sticky")!;
 
 describe("both themes exist and resolve", () => {
-  it("resolves two themes, one of each screen/print kind", () => {
-    expect(WHO_THEMES.map((t) => t.id).sort()).toEqual(["iris-web", "who-wpro-publication"]);
+  it("resolves three themes: two measured (webpage, publication) and one derived sticky", () => {
+    expect(WHO_THEMES.map((t) => t.id).sort()).toEqual(["iris-sticky", "iris-web", "who-wpro-publication"]);
     expect(IRIS.kind).toBe("webpage");
     expect(PUB.kind).toBe("publication");
+    expect(STICKY.kind).toBe("sticky");
   });
 
   it("each passes the platform's RESOLVED schema, where requiredness lives", () => {
@@ -265,5 +289,51 @@ describe("j66n's fourth clause: a missing layout stays INVALID, never degraded",
   it("refuses print geometry on a webpage theme, and viewports on a publication theme", () => {
     expect(() => ResolvedThemeSchema.parse({ ...IRIS, layouts: PUB.layouts })).toThrow();
     expect(() => ResolvedThemeSchema.parse({ ...PUB, layouts: IRIS.layouts })).toThrow();
+  });
+});
+
+describe("iris-sticky is DERIVED from iris-web, not restated (bean v8n5)", () => {
+  // Read off the SAME capture as iris-web's own tests, so a re-skinned IRIS
+  // fails here too rather than leaving the board card on the old palette.
+  const body = CSS.match(/body\{margin:0;[^}]*\}/)?.[0] ?? "";
+  const hex = (v: string | undefined): string | undefined => {
+    if (v === undefined) return undefined;
+    const m = v.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+    if (!m) return v.toLowerCase();
+    const h = m[1]!.toLowerCase();
+    return h.length === 3 ? `#${h.split("").map((c) => c + c).join("")}` : `#${h}`;
+  };
+
+  it("its palette equals what the captured DSpace stylesheet says, role by role", () => {
+    expect(STICKY.palette.accent).toBe(hex(cssVar(CSS, "primary"))!);
+    expect(STICKY.palette.edge).toBe(hex(cssVar(CSS, "ds-header-navbar-border-bottom-color"))!);
+    expect(STICKY.palette.ink).toBe(hex(body.match(/;color:(#[0-9a-f]+)/i)?.[1])!);
+    expect(STICKY.palette.surface).toBe(hex(body.match(/background-color:(#[0-9a-f]+)/i)?.[1])!);
+  });
+
+  it("its palette IS iris-web's — every role, and no role of its own", () => {
+    expect(STICKY.palette).toEqual(IRIS.palette);
+  });
+
+  it("declares no colour literal of its own: the palette arrives by inheritance", () => {
+    const src = readFileSync(join(import.meta.dir, "themes.ts"), "utf-8");
+    const decl = src.slice(src.indexOf("const IRIS_STICKY"), src.indexOf("const RAW"));
+    expect(decl).toContain('inherits: { instance: THEME_INSTANCE, themeId: IRIS_WEB.id }');
+    expect(decl).not.toMatch(/#[0-9a-f]{3,6}\b/i);
+    expect(decl).not.toContain("palette:");
+  });
+
+  it("says in its description that it is derived from iris-web", () => {
+    expect(STICKY.description).toContain("derived from iris-web");
+  });
+
+  it("takes the note board's geometry, since IRIS has no sticky surface to measure", () => {
+    const board = themeById(DEFAULT_THEME_ID)!;
+    expect(board.kind).toBe("sticky");
+    expect(STICKY.layouts).toEqual(board.layouts);
+  });
+
+  it("carries no backdrop — IRIS imagery is somebody else's artefact", () => {
+    expect(STICKY.backdrop).toBeUndefined();
   });
 });

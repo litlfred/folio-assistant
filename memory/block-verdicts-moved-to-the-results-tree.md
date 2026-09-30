@@ -4,8 +4,9 @@ id: block-verdicts-moved-to-the-results-tree
 label: trap
 summary: "a block's QA verdict is no longer beside the block — scanning its directory finds nothing"
 createdAt: 2026-09-19
-agents:
-  - content-pipeline-navigator
+references:
+  - kind: agent
+    id: content-pipeline-navigator
 archived: true
 ---
 > **Archived 2026-09-19, on arrival.** Written for

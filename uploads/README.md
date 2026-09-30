@@ -50,29 +50,29 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | [`9789240120747-eng.pdf`](9789240120747-eng.pdf) | a file |  |
 | [`9789241509510_eng.pdf`](9789241509510_eng.pdf) | a file |  |
 | [`9789241511766-eng.pdf`](9789241511766-eng.pdf) | a file |  |
-| [`Agent Skill best practices - Gemini CLI.pdf`](Agent%20Skill%20best%20practices%20-%20Gemini%20CLI.pdf) | a file |  |
-| [`Agent Skill best practices - Gemini CLI.pdf.extraction.json`](Agent%20Skill%20best%20practices%20-%20Gemini%20CLI.pdf.extraction.json) | data |  |
-| [`Agent Skills - Google Antigravity Docs.pdf`](Agent%20Skills%20-%20Google%20Antigravity%20Docs.pdf) | a file |  |
-| [`Best Practices - Google Antigravity Docs.pdf`](Best%20Practices%20-%20Google%20Antigravity%20Docs.pdf) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 03_33_23 PM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2003_33_23%20PM.png) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 03_33_28 PM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2003_33_28%20PM.png) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 03_35_27 PM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2003_35_27%20PM.png) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 08_26_38 AM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2008_26_38%20AM.png) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 08_26_47 AM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2008_26_47%20AM.png) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 09_07_59 AM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2009_07_59%20AM.png) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 09_09_05 AM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2009_09_05%20AM.png) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 09_10_00 AM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2009_10_00%20AM.png) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 11_56_58 AM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2011_56_58%20AM.png) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 11_57_08 AM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2011_57_08%20AM.png) | a file |  |
-| [`ChatGPT Image Sep 20, 2026, 11_58_08 AM.png`](ChatGPT%20Image%20Sep%2020%2C%202026%2C%2011_58_08%20AM.png) | a file |  |
-| [`Equipping agents for the real world with Agent Skills _ Anthropic.pdf`](Equipping%20agents%20for%20the%20real%20world%20with%20Agent%20Skills%20_%20Anthropic.pdf) | a file |  |
-| [`Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json`](Equipping%20agents%20for%20the%20real%20world%20with%20Agent%20Skills%20_%20Anthropic.pdf.extraction.json) | data |  |
-| [`Home _ folio-assistant.pdf`](Home%20_%20folio-assistant.pdf) | a file |  |
-| [`PIIS2589750021000388 (2).pdf`](PIIS2589750021000388%20%282%29.pdf) | a file |  |
-| [`Skill authoring best practices - Claude Platform Docs.pdf`](Skill%20authoring%20best%20practices%20-%20Claude%20Platform%20Docs.pdf) | a file |  |
-| [`Skill authoring best practices - Claude Platform Docs.pdf.extraction.json`](Skill%20authoring%20best%20practices%20-%20Claude%20Platform%20Docs.pdf.extraction.json) | data |  |
-| [`Skills in OpenAI API.pdf`](Skills%20in%20OpenAI%20API.pdf) | a file |  |
-| [`Skills in OpenAI API.pdf.extraction.json`](Skills%20in%20OpenAI%20API.pdf.extraction.json) | data |  |
+| [`Agent-Skill-best-practices-Gemini-CLI.pdf`](Agent-Skill-best-practices-Gemini-CLI.pdf) | a file |  |
+| [`Agent-Skill-best-practices-Gemini-CLI.pdf.extraction.json`](Agent-Skill-best-practices-Gemini-CLI.pdf.extraction.json) | data |  |
+| [`Agent-Skills-Google-Antigravity-Docs.pdf`](Agent-Skills-Google-Antigravity-Docs.pdf) | a file |  |
+| [`Best-Practices-Google-Antigravity-Docs.pdf`](Best-Practices-Google-Antigravity-Docs.pdf) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-03_33_23-PM.png`](ChatGPT-Image-Sep-20-2026-03_33_23-PM.png) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-03_33_28-PM.png`](ChatGPT-Image-Sep-20-2026-03_33_28-PM.png) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-03_35_27-PM.png`](ChatGPT-Image-Sep-20-2026-03_35_27-PM.png) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-08_26_38-AM.png`](ChatGPT-Image-Sep-20-2026-08_26_38-AM.png) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-08_26_47-AM.png`](ChatGPT-Image-Sep-20-2026-08_26_47-AM.png) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-09_07_59-AM.png`](ChatGPT-Image-Sep-20-2026-09_07_59-AM.png) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-09_09_05-AM.png`](ChatGPT-Image-Sep-20-2026-09_09_05-AM.png) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-09_10_00-AM.png`](ChatGPT-Image-Sep-20-2026-09_10_00-AM.png) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-11_56_58-AM.png`](ChatGPT-Image-Sep-20-2026-11_56_58-AM.png) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-11_57_08-AM.png`](ChatGPT-Image-Sep-20-2026-11_57_08-AM.png) | a file |  |
+| [`ChatGPT-Image-Sep-20-2026-11_58_08-AM.png`](ChatGPT-Image-Sep-20-2026-11_58_08-AM.png) | a file |  |
+| [`Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf`](Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf) | a file |  |
+| [`Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.json`](Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.json) | data |  |
+| [`Home-_-folio-assistant.pdf`](Home-_-folio-assistant.pdf) | a file |  |
+| [`PIIS2589750021000388-2.pdf`](PIIS2589750021000388-2.pdf) | a file |  |
+| [`Skill-authoring-best-practices-Claude-Platform-Docs.pdf`](Skill-authoring-best-practices-Claude-Platform-Docs.pdf) | a file |  |
+| [`Skill-authoring-best-practices-Claude-Platform-Docs.pdf.extraction.json`](Skill-authoring-best-practices-Claude-Platform-Docs.pdf.extraction.json) | data |  |
+| [`Skills-in-OpenAI-API.pdf`](Skills-in-OpenAI-API.pdf) | a file |  |
+| [`Skills-in-OpenAI-API.pdf.extraction.json`](Skills-in-OpenAI-API.pdf.extraction.json) | data |  |
 | [`WHO-RHR-18.06-eng.pdf`](WHO-RHR-18.06-eng.pdf) | a file |  |
 | [`d1a26515-9bde-455d-84bc-2e5fc196b004.png`](d1a26515-9bde-455d-84bc-2e5fc196b004.png) | a file |  |
 | [`dong-2025-doc-researcher.pdf`](dong-2025-doc-researcher.pdf) | a file |  |

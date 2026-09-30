@@ -1,7 +1,7 @@
 ---
 name: one-voice-integration-watcher
 user_invocable: true
-inherits: local/integration-watcher
+inherits: folio-core/integration-watcher
 watch_arg: one-voice
 description: >
   One-voice integration watcher — watches origin/main + open active
