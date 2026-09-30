@@ -24,6 +24,11 @@ import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   assess,
+  BLAME_WALK_CAP,
+  blameFailingRun,
+  type BlameVerdict,
+  type ConclusionOnCommit,
+  type WorkflowHealth,
   describeWindow,
   pagesHealth,
   pushTriggerOf,
@@ -622,8 +627,172 @@ const health = runs
     })
   : [];
 
+/**
+ * First parent of a commit, from the LOCAL clone.
+ *
+ * Local git rather than the API for two reasons: it is free where the API is
+ * rate-limited on a trigger that fires per failure, and `ci-health.yml` already
+ * guarantees `fetch-depth: 0` for the `superseded` rule — so the history is
+ * present anyway. When it is NOT (a shallow clone elsewhere), `rev-parse` fails
+ * and this returns `undefined`, which the walk reports as `no-parent` rather
+ * than guessing. Bean `kgho`.
+ */
+function firstParentOf(sha: string): string | undefined {
+  try {
+    // `stdio` silences git's own complaint. Measured 2026-09-30: without it a
+    // commit absent from the local clone printed
+    // `fatal: ambiguous argument '<sha>^1'` ABOVE the report, where a reader
+    // takes it for the checker crashing rather than for one lookup falling
+    // back. `defaultBranch()` above silences git for the same reason.
+    const out = execFileSync("git", ["rev-parse", `${sha}^1`], {
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim();
+    return /^[0-9a-f]{40}$/.test(out) ? out : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * First parent from the API, for a commit the local clone does not have.
+ *
+ * The local lookup is not always enough, and this was measured rather than
+ * anticipated: run locally against a `main` whose failing commit had not been
+ * fetched, every walk ended `no-parent` at step 0 — a truthful answer, and a
+ * useless one. `ci-health.yml` checks out with `fetch-depth: 0`, but a
+ * `workflow_run` checkout is of the default branch's head, so a failing commit
+ * that is not its ancestor is absent there too.
+ *
+ * Still returns `undefined` on failure, so an unanswerable lookup stays
+ * `no-parent` rather than becoming a guess.
+ */
+async function firstParentFromApi(sha: string): Promise<string | undefined> {
+  if (!slug) return undefined;
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  try {
+    const res = await fetch(`https://api.github.com/repos/${slug}/commits/${sha}`, {
+      headers: {
+        accept: "application/vnd.github+json",
+        ...(token ? { authorization: `Bearer ${token}` } : {}),
+      },
+      signal: AbortSignal.timeout(20_000),
+    });
+    if (!res.ok) return undefined;
+    const body = (await res.json()) as { parents?: Array<{ sha?: string }> };
+    const first = body.parents?.[0]?.sha;
+    return first && /^[0-9a-f]{40}$/.test(first) ? first : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * One workflow's conclusion on one commit.
+ *
+ * Returns `"none"` when the workflow has no run on that commit and `"unknown"`
+ * when the request itself failed — and those are DIFFERENT answers, because
+ * `blameFailingRun` may name a suspect on neither but must report them
+ * distinctly. Collapsing them would make a rate-limited request look like a
+ * commit nothing ran on.
+ */
+async function conclusionOnCommit(file: string, sha: string): Promise<ConclusionOnCommit> {
+  if (!slug) return "unknown";
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${slug}/actions/workflows/${encodeURIComponent(file)}` +
+        `/runs?head_sha=${encodeURIComponent(sha)}&per_page=20`,
+      {
+        headers: {
+          accept: "application/vnd.github+json",
+          ...(token ? { authorization: `Bearer ${token}` } : {}),
+        },
+        signal: AbortSignal.timeout(20_000),
+      },
+    );
+    if (!res.ok) return "unknown";
+    const body = (await res.json()) as { workflow_runs?: Array<{ status?: string; conclusion?: string | null }> };
+    const settled = (body.workflow_runs ?? []).filter(
+      (r) => r.status === "completed" && r.conclusion && r.conclusion !== "cancelled" && r.conclusion !== "skipped",
+    );
+    if (settled.length === 0) return "none";
+    // ANY success on the commit counts as green — a re-run that passed is the
+    // commit passing. Only all-settled-runs-failed is a red.
+    return settled.some((r) => r.conclusion === "success") ? "success" : "failure";
+  } catch {
+    return "unknown";
+  }
+}
+
+/**
+ * Blame per red workflow — which merge, or explicitly that it cannot be told.
+ *
+ * Only for RED rows, and only when the row carries a `failingSha` and a `path`.
+ * A row missing either is simply absent from the map, which `render` prints as
+ * "no attribution was computed for this workflow" rather than as silence.
+ */
+async function computeBlame(rows: readonly WorkflowHealth[]): Promise<Map<string, BlameVerdict>> {
+  const out = new Map<string, BlameVerdict>();
+  for (const h of rows) {
+    if (h.health !== "red" || !h.failingSha || !h.path) continue;
+    const file = h.path.replace(/^\.github\/workflows\//, "");
+    // Memoised per workflow: a walk revisits no commit, but two workflows red on
+    // the same stretch would otherwise re-ask for the same shas.
+    const seen = new Map<string, ConclusionOnCommit>();
+    // Parents resolved so far. Local git first, API only for what it lacks, so
+    // the common case costs no request.
+    const parents = new Map<string, string | undefined>();
+    const parentOf = (sha: string): string | undefined => {
+      if (!parents.has(sha)) parents.set(sha, firstParentOf(sha));
+      return parents.get(sha);
+    };
+    // The walk is synchronous and the lookup is async, so the shas are
+    // collected first: walk with a lookup that records what it wants, then
+    // fetch, then walk again for real. Two passes over at most
+    // BLAME_WALK_CAP + 1 commits, and no async inside the pure function.
+    let pending: string | undefined;
+    for (let round = 0; round <= BLAME_WALK_CAP + 1; round++) {
+      pending = undefined;
+      let needParent: string | undefined;
+      const v = blameFailingRun({
+        failingSha: h.failingSha,
+        firstParent: (sha) => {
+          const local = parentOf(sha);
+          if (local === undefined) needParent ??= sha;
+          return local;
+        },
+        conclusionOn: (sha) => {
+          const known = seen.get(sha);
+          if (known !== undefined) return known;
+          pending ??= sha;
+          // Anything not yet fetched reads as a failed lookup, which ENDS the
+          // walk here rather than letting it invent a green.
+          return "unknown";
+        },
+      });
+      // A parent the clone lacks is asked for once, from the API, and the walk
+      // is retried. Only then is `no-parent` the real answer.
+      if (needParent !== undefined && v.kind === "cannot-determine" && v.why === "no-parent") {
+        parents.set(needParent, await firstParentFromApi(needParent));
+        if (parents.get(needParent) !== undefined) continue;
+      }
+      if (pending === undefined || v.kind === "suspect") {
+        out.set(h.workflow, v);
+        break;
+      }
+      const got = await conclusionOnCommit(file, pending);
+      seen.set(pending, got);
+      if (round === BLAME_WALK_CAP + 1) out.set(h.workflow, v);
+    }
+  }
+  return out;
+}
+
+const blame = health.some((h) => h.health === "red") ? await computeBlame(health) : new Map();
+
 const report = () =>
-  `${render(health, { unreachable, branch, window })}\n${renderPages(pages)}`;
+  `${render(health, { unreachable, branch, window, blame })}\n${renderPages(pages)}`;
 
 if (outFile) writeFileSync(outFile, report());
 
