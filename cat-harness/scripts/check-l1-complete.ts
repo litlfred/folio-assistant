@@ -54,7 +54,7 @@ import {
 } from "../schemas/archive-contents.ts";
 import { LIBRARY_BLOCK_ORIGIN, ProvenanceSchema, isIngested } from "../schemas/attribution.ts";
 import { NarrativeSchema } from "../schemas/narrative.ts";
-import { PdfStructureSchema } from "../schemas/pdf-structure.ts";
+import { structureOf } from "../schemas/document-structure.ts";
 import {
   TABULAR_RECORDS_SCHEMA_ID,
   TabularRecordsSchema,
@@ -503,20 +503,20 @@ function derivableRequirements(dir: string): Requirement[] {
     }
     if (s) {
       const secs = Array.isArray(s.sections) ? s.sections.length : 0;
-      // Conformance to pdf-structure/v1 (issue #1112). A file that parses but
-      // does not conform is not "met": every consumer of library/ reads this
-      // one shape, and a second spelling of a field is how gen-library-jsonld
-      // crashed on `section_id`.
-      const conform = PdfStructureSchema.safeParse(s);
-      const issues = conform.success
-        ? ""
-        : conform.error.issues.slice(0, 3).map((i) => `${i.path.join(".") || "(root)"}: ${i.message}`).join("; ");
+      // Conformance to ONE of the declared variants (issue #1112; bean rkqp
+      // made it a base with variants, `schemas/document-structure.ts`). A file
+      // that parses but conforms to none is not "met": a second spelling of a
+      // field is how gen-library-jsonld crashed on `section_id`. Read through
+      // `structureOf`, the accessor every reader shares, so this gate cannot
+      // accept a shape the readers do not.
+      const base = structureOf(s);
+      const ok = !("reason" in base);
       out.push({
         name: "structure",
-        state: secs > 0 && conform.success ? "met" : "unmet",
-        detail: conform.success
+        state: secs > 0 && ok ? "met" : "unmet",
+        detail: ok
           ? `${s._schema ?? "no $schema"}, toc_source=${s.toc_source}, ${secs} sections`
-          : `does not conform to pdf-structure/v1: ${issues}`,
+          : base.reason,
       });
       // `structure_note` is where a rung says what it did NOT claim -- notably
       // that no chapter tree was inferred (bean 6xaz). Its absence is not a
