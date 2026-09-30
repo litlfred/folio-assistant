@@ -184,6 +184,38 @@ export const BitstreamSchema = z
   });
 export type Bitstream = z.infer<typeof BitstreamSchema>;
 
+/**
+ * A Handle — `<prefix>/<suffix>`, e.g. `10665/332098` — the persistent
+ * identifier DSpace mints, resolvable through the global Handle System
+ * independently of the host that published it.
+ *
+ * Bean `08u4`, from the `v048` roast (objections 6 + 7) and `iris-dspace.md`
+ * R1: *"Resolve by Handle where one exists… only the Handle is guaranteed
+ * outside WHO"*. A host URL like `iris.who.int/handle/10665/332098` carries
+ * the Handle but resolves only while that host does; the owner's question was
+ * *"what happens if data source goes away"*.
+ */
+export const HandleSchema = z
+  .string()
+  .regex(/^\d+(\.\d+)*\/\S+$/, "a Handle is <prefix>/<suffix>, e.g. 10665/332098");
+
+/** The global Handle System resolver: the one address that outlives the publishing host. */
+export const HANDLE_RESOLVER = "https://hdl.handle.net/";
+
+/** The resolvable IRI for a Handle. */
+export function handleIri(handle: string): string {
+  return `${HANDLE_RESOLVER}${handle}`;
+}
+
+/**
+ * The Handle a host URL carries (`…/handle/<prefix>/<suffix>`), or undefined.
+ * Reading, not minting: a URL without `/handle/` yields nothing, never a guess.
+ */
+export function handleFromUrl(url: string | undefined): string | undefined {
+  const m = url?.match(/\/handle\/(\d+(?:\.\d+)*\/[^/?#\s]+)/);
+  return m?.[1];
+}
+
 export const CatalogueNodeSchema = z
   .object({
     $schema: z.literal(CATALOGUE_NODE_SCHEMA_TAG),
@@ -205,6 +237,14 @@ export const CatalogueNodeSchema = z
      * the model's size as the collection's.
      */
     childCountUpstream: z.number().int().nonnegative().optional(),
+    /**
+     * The node's Handle, where the source mints one — PREFERRED over any host
+     * URL for resolution ({@link resolvableIri}). Recorded only when read off
+     * the source; never derived for a node that shows none (a DSpace
+     * community or collection has a Handle upstream, but none is recorded
+     * here until one is read).
+     */
+    handle: HandleSchema.optional(),
     /** The local library slug, where this item has been ingested. Present iff something under `library/` corresponds. */
     libraryId: z.string().min(1).optional(),
     /** The item's metadata record, by reference to a `folio-dublin-core/v1` file. */
@@ -231,6 +271,20 @@ export const CatalogueNodeSchema = z
     }
   });
 export type CatalogueNode = z.infer<typeof CatalogueNodeSchema>;
+
+/**
+ * Where to resolve a node: its Handle IRI when it has one, else the host URL
+ * its materialization (or an ORIGINAL-bearing bitstream) names, else
+ * undefined — never a fallback to the host's front page.
+ */
+export function resolvableIri(n: Pick<CatalogueNode, "handle" | "materialization" | "bitstreams">): string | undefined {
+  if (n.handle) return handleIri(n.handle);
+  const b = n.bitstreams?.find((x) => (x.materialization?.provenance as { upstream?: string } | undefined)?.upstream);
+  return (
+    (b?.materialization?.provenance as { upstream?: string } | undefined)?.upstream ??
+    (n.materialization?.provenance as { upstream?: string } | undefined)?.upstream
+  );
+}
 
 /**
  * The catalogue itself.
@@ -271,6 +325,20 @@ export const CatalogueSchema = z
     /** How the numbers above were arrived at. A denominator with no provenance is a denominator nobody can check. */
     sizeBasis: z.string().min(1).optional(),
     nodesDir: z.string().min(1).default("nodes"),
+    /**
+     * What survives if the SOURCE goes away, stated per node kind — not only
+     * for bytes already copied (bean `08u4`). The `sourceLoss` GATE is asked
+     * only of a materialization; a referenced node never meets it, so without
+     * this the answer for 10 of 13 nodes was silence.
+     */
+    sourceLoss: z
+      .object({
+        container: z.string().min(1),
+        referencedItem: z.string().min(1),
+        materializedItem: z.string().min(1),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 export type Catalogue = z.infer<typeof CatalogueSchema>;
