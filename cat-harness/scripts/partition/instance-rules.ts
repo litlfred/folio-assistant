@@ -169,6 +169,7 @@ export const RULES: Rule[] = [
       "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
       "scripts/generate-registry.ts",        // scans skills/ → SkillRegistry
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
+      "scripts/gen-upload-step-docs.ts",     // a process step's Tools → docs; both graphs are harness concepts
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       // HARNESS: the review page is rendered surface, which the harness owns
@@ -513,6 +514,13 @@ export const RULES: Rule[] = [
       // `scripts/` directory read through `gitCorpus`, and it cannot express
       // an opinion about a folio because it never looks at one.
       "scripts/root-scan-census.ts",
+      // Does a generator's COMMITTED OUTPUT change when gitignored content is
+      // present (bean `qrlc`)? Harness by the same route as the census above:
+      // its subjects are derived from this repository's own `package.json`
+      // scripts, it compares them with `git status`, and it never opens a
+      // folio's content — it only asks whether running a writer produced
+      // different bytes.
+      "scripts/detect-live-corpus.ts",
       // Whether a translated page's links survived being one directory
       // deeper than the page they were translated from (bean `ahab`).
       // Harness for `check-subgraphs.ts`' reason and by the same route — it
@@ -762,10 +770,17 @@ export const RULES: Rule[] = [
       "scripts/gen-external-schemas-viz.ts",
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
-      "scripts/check-materialized-fixity.ts", // materialized bytes vs their recorded digest — the read-only rule, enforced
+      // The three materialisation modules that stood here — `check-materialized-fixity.ts`
+      // (materialized bytes vs their recorded digest, the read-only rule enforced),
+      // `backfill-materialized-fixity.ts` (records the baseline digest that check reads)
+      // and `cache-index.ts` (what is materialized, how big, how old, what could go —
+      // bean `54rk`) — are GONE FROM THIS LIST because they are gone from this
+      // instance. Bean `yj6r` moved them to `folio-assistant-core/scripts/`, where
+      // `schemas/materialization.ts` already lived. The classification did not change;
+      // the DIRECTORY caught up with it, so the fact is now carried by location rather
+      // than by a rule, and an `exact` entry naming a path this scan can no longer see
+      // would be a rule that fires on nothing while reading as an adjudication.
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
-      "scripts/backfill-materialized-fixity.ts", // records the baseline digest that check reads
-      "scripts/cache-index.ts",              // what is materialized, how big, how old, what could go — derived from the same walk (bean `54rk`)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
@@ -1573,7 +1588,9 @@ export const RULES: Rule[] = [
       // rule when it arrived.
       //
       // BASE rather than core, although its subject is content and
-      // `check-artifact-index.ts` below is core on exactly that reasoning. The
+      // `check-artifact-index.ts` was core on exactly that reasoning — it has since
+      // MOVED to `folio-assistant-core/scripts/` under bean `yj6r`, so no rule in
+      // this file adjudicates it any more; see the note where its entry stood. The
       // difference is the import: this one reads `content/pipeline/fsh-cone.ts`
       // to compare against what that tool extracts, and `fsh-cone` is base by
       // the keyword rule underneath. Calling this core would buy the one thing
@@ -1675,8 +1692,13 @@ export const RULES: Rule[] = [
       // it harness would buy a wrong-direction edge into `schemas/` for
       // nothing. Its sibling `scripts/ingest-ig-artifacts.ts` writes the same
       // graph from the same schema and is core on the same reasoning.
-      "scripts/check-artifact-index.ts",
-      "scripts/ingest-ig-artifacts.ts",
+      //
+      // Both are GONE FROM THIS LIST as of bean `yj6r`, for the reason given on the
+      // materialisation trio above: they now live in `folio-assistant-core/scripts/`
+      // beside the schema they read, so the classification is carried by location.
+      // The reasoning is kept here rather than only in the commit because the next
+      // reader of this rule set will ask why an IG tool is not adjudicated, and
+      // "it is, by where it sits" is the answer.
       // Reads `schemas/todo.ts` and `schemas/todo-graph.ts` and nothing else.
       // A script is not automatically tooling-side: this one operates
       // exclusively on core data, and calling it harness bought two
