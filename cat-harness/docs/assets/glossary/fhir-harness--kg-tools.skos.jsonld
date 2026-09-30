@@ -14,6 +14,26 @@
       "dcterms:source": "Tools of fhir-harness"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-site-data",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Populate site.data.fhir for a just-the-docs IG render"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the IG Publisher's Jekyll variables (`site.data.fhir.ig.*`, `packageId`, `canonical`) for ONE implementation guide, from `sushi-config.yaml` or a published IG's `fhir-artifact-index`, so pages written for the Publisher render on just-the-docs unchanged. fhir-harness declares `site.data` as a pass-through Liquid prefix; this is what Jekyll then reads (bean `bamf`)."
+        }
+      ],
+      "skos:notation": "ig-site-data",
+      "dcterms:source": "fhir-harness/tools/index.ts#ig-site-data",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/strip-library-binaries",
       "@type": "skos:Concept",
       "skos:inScheme": {

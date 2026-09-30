@@ -117,7 +117,7 @@ export function tools(baseUrl?: string): ToolDefinition[] {
         inputs: [
           { name: "ig", schema: t("RepoPath"), required: true, description: "The IG root: holds `sushi-config.yaml`, or `fhir-artifact-index/index.json` for a published IG." },
           { name: "out", schema: t("RepoPath"), required: true, description: "`<site>/_data/fhir.json` — Jekyll has one `_data/`, so one IG per site, as under the Publisher." },
-          { name: "check", schema: t("Flag"), description: "Write nothing; exit 1 when the file is stale." },
+          { name: "check", schema: t("Flag"), required: false, description: "Write nothing; exit 1 when the file is stale." },
         ],
         outputs: [
           { name: "written", schema: t("Count"), description: "Fields written, each from a named source." },
