@@ -187,7 +187,8 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
   /**
    * What is allowed, and why. Anything else that matches LEAKS fails.
    * - The publication address and the source repository: bootstrap's own
-   *   location, not a reference to another Harness.
+   *   location, not a reference to another Harness. `livesAt` states the same
+   *   location in owner/repo form (bean 6rmv).
    *
    * The `folio-*` schema identifiers are no longer allowed: bootstrap's own
    * files carry `model-registry/1.0.0`, resolving to a schema inside bootstrap
@@ -198,6 +199,9 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
   const ALLOW = [
     /https:\/\/litlfred\.github\.io\/folio-assistant\//g,
     /https:\/\/github\.com\/litlfred\/folio-assistant\//g,
+    // `livesAt`: where bootstrap sits TODAY, pre-split — its own location in
+    // owner/repo form, the same fact as the source-repository URL above (bean 6rmv).
+    /"livesAt": \{ "repository": "litlfred\/folio-assistant"/g,
   ];
   /** Structural, awaiting the owner's ruling (bean iwtn). Each entry is `file: the leaking text`. */
   const PENDING: string[] = [];

@@ -31,6 +31,10 @@ export const PROPERTY_SKILLS = {
   assets: { skills: ["directory-conventions"] },
   icon: { skills: ["theme-declaration", "harness-tiles"] },
   navbarIcons: { skills: ["harness-tiles"] },
+  // The planned owner/repo and, pre-split, the host + directory it sits in
+  // today (bean 6rmv); `instance-repositories.ts` derives the map from both.
+  repository: { skills: ["instance-kinds", "directory-conventions"] },
+  livesAt: { skills: ["instance-kinds", "directory-conventions"] },
   stub: { skills: ["directory-conventions"] },
   canonicalUrl: { skills: ["directory-conventions"] },
   previewUrl: { skills: ["directory-conventions"] },
