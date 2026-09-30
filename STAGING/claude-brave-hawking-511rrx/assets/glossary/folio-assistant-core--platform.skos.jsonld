@@ -1,8 +1,10 @@
 {
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
-    "dcterms": "http://purl.org/dc/terms/"
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform",
@@ -21,12 +23,54 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "glossary"
+          "@value": "glossary",
+          "@language": "en"
+        },
+        {
+          "@value": "مسرد",
+          "@language": "ar"
+        },
+        {
+          "@value": "glosario",
+          "@language": "es"
+        },
+        {
+          "@value": "glossaire",
+          "@language": "fr"
+        },
+        {
+          "@value": "глоссарий",
+          "@language": "ru"
+        },
+        {
+          "@value": "术语表",
+          "@language": "zh"
         }
       ],
       "skos:definition": [
         {
-          "@value": "An instance's terms and what they mean, as a SKOS concept scheme: local terms linked to external concepts, plus external concepts listed without being copied."
+          "@value": "An instance's terms and what they mean, as a SKOS concept scheme: local terms linked to external concepts, plus external concepts listed without being copied.",
+          "@language": "en"
+        },
+        {
+          "@value": "مصطلحات المثيل ومعانيها، في صورة مخطط مفاهيم SKOS: مصطلحات محلية مرتبطة بمفاهيم خارجية، إضافة إلى مفاهيم خارجية مُدرجة دون نسخها.",
+          "@language": "ar"
+        },
+        {
+          "@value": "Los términos de una instancia y lo que significan, como un esquema de conceptos SKOS: términos locales enlazados a conceptos externos, más conceptos externos listados sin copiarlos.",
+          "@language": "es"
+        },
+        {
+          "@value": "Les termes d'une instance et ce qu'ils signifient, sous forme de schéma de concepts SKOS : des termes locaux liés à des concepts externes, plus des concepts externes listés sans être copiés.",
+          "@language": "fr"
+        },
+        {
+          "@value": "Термины экземпляра и их значения в виде схемы понятий SKOS: локальные термины, связанные с внешними понятиями, а также внешние понятия, перечисленные без копирования.",
+          "@language": "ru"
+        },
+        {
+          "@value": "一个实例的术语及其含义，以 SKOS 概念体系表示：与外部概念相链接的本地术语，以及只列出而不复制的外部概念。",
+          "@language": "zh"
         }
       ],
       "skos:closeMatch": [

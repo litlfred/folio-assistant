@@ -32,12 +32,12 @@ gives its name and lists its
 it is divided into.
 
 A [Harness](schemas/README.md#harness) ([src](schemas/graph.schema.json#/$defs/Harness)) is what you use to work
-with a Knowledge Graph. A Harness is a Knowledge Graph too, declared the same
-way. This directory is the first Harness, `bootstrap`, declared by
+with a [Knowledge Graph](schemas/README.md#knowledge-graph). A [Harness](schemas/README.md#harness) is a [Knowledge Graph](schemas/README.md#knowledge-graph) too, declared the same
+way. This directory is the first [Harness](schemas/README.md#harness), `bootstrap`, declared by
 [`bootstrap.json`](bootstrap.json).
 
 **Setting up a repository means instantiating one or more different kinds of
-Knowledge Graph Harness on the data in the repository.** A person chooses which
+[Knowledge Graph](schemas/README.md#knowledge-graph) [Harness](schemas/README.md#harness) on the data in the repository.** A person chooses which
 ones, and the choice is hard to undo.
 
 ---
@@ -45,19 +45,19 @@ ones, and the choice is hard to undo.
 ## Who takes part
 
 An [Actor](schemas/README.md#actor) ([src](schemas/graph.schema.json#/$defs/Actor)) is a person, an agent or a
-program. Each Actor takes a [Role](schemas/README.md#role) ([src](schemas/graph.schema.json#/$defs/Role)), and
-the four Roles here are declared in [`scenarios/roles.json`](scenarios/roles.json):
+program. Each [Actor](schemas/README.md#actor) takes a [Role](schemas/README.md#role) ([src](schemas/graph.schema.json#/$defs/Role)), and
+the four [Roles](schemas/README.md#role) here are declared in [`scenarios/roles.json`](scenarios/roles.json):
 
 | Role | who plays it |
 |---|---|
 | **Bootstrapping Agent** | you: the agent setting the repository up |
-| **Requestor** | the person who asked for it. Only the Requestor chooses the Harness. |
-| **Knowledge Graph Data Store** | a repository: the one being set up, and any a Harness is read from |
+| **Requestor** | the person who asked for it. Only the Requestor chooses the [Harness](schemas/README.md#harness). |
+| **Knowledge Graph Data Store** | a repository: the one being set up, and any a [Harness](schemas/README.md#harness) is read from |
 | **Logger** | the record of what you did. Here, it is the conversation you are in. |
 
-As the Bootstrapping Agent you have no Harness yet, so you have no
-[Tools](schemas/README.md#tool) ([src](schemas/graph.schema.json#/$defs/Tool)) (programs to call). If a step
-seems to need one, it belongs to the Harness you are about to set up, not to
+As the Bootstrapping Agent you have no [Harness](schemas/README.md#harness) yet, so you have no
+tools (programs to call): a [Harness](schemas/README.md#harness) defines those, and bootstrap does not. If a step
+seems to need one, it belongs to the [Harness](schemas/README.md#harness) you are about to set up, not to
 this one.
 
 ---
@@ -65,10 +65,10 @@ this one.
 ## User story
 
 > **As** the Bootstrapping Agent, **I want** to set up the repository I was handed as
-> the Harness the Requestor chooses, **so that** everything added to it later
-> is built on the right Harness.
+> the [Harness](schemas/README.md#harness) the Requestor chooses, **so that** everything added to it later
+> is built on the right [Harness](schemas/README.md#harness).
 
-The story ends in one of two ways, and both are acceptable: the Harness is set
+The story ends in one of two ways, and both are acceptable: the [Harness](schemas/README.md#harness) is set
 up, or the reason it could not be is recorded.
 
 ---
@@ -78,7 +78,7 @@ up, or the reason it could not be is recorded.
 The steps are drawn as a
 [Process](schemas/README.md#process) ([src](schemas/graph.schema.json#/$defs/Process)),
 [`initialize-harness.bpmn`](processes/initialize-harness.bpmn). It is the only
-Process you start. Each step names the
+[Process](schemas/README.md#process) you start. Each step names the
 [Skill](schemas/README.md#skill) ([src](schemas/graph.schema.json#/$defs/Skill)) to read and the Functional
 Requirement it must meet (see the next section).
 
@@ -98,7 +98,7 @@ Requirement it must meet (see the next section).
     At any step: something cannot be found or read  --->  record it and stop
 ```
 
-The same steps, and the Processes they start, as the diagrams themselves:
+The same steps, and the [Processes](schemas/README.md#process) they start, as the diagrams themselves:
 
 <!-- kg:processes:begin -->
 
@@ -199,6 +199,7 @@ Process that reads a file, where a diagram says so.
 |---|---|---|
 | [`discussion.input.schema.json`](schemas/discussion.input.schema.json) | Discussion Input |  |
 | [`discussion.output.schema.json`](schemas/discussion.output.schema.json) | Discussion Output |  |
+| [`glossary-ledger.schema.json`](schemas/glossary-ledger.schema.json) | Glossary Ledger |  |
 | [`graph.schema.json`](schemas/graph.schema.json) | Knowledge Graph declaration |  |
 | [`model-registry.schema.json`](schemas/model-registry.schema.json) | Model Registry |  |
 | [`requirement.schema.json`](schemas/requirement.schema.json) | Requirement |  |
@@ -232,11 +233,5 @@ Process that reads a file, where a diagram says so.
 | file | what it is | used by |
 |---|---|---|
 | [`glossary-ledger.json`](glossary/glossary-ledger.json) | data |  |
-
-**[`test/results/`](test/results/README.md)**: What auditing THIS instance produced, committed so a consumer can tell "never audited" from "audited clean" — a printed verdict cannot, which is why every QA…
-
-| file | what it is | used by |
-|---|---|---|
-| [`test/results/`](test/results/) | 16 files, in subdirectories | |
 
 <!-- kg:files:end -->

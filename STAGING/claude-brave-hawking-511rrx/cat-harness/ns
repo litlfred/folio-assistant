@@ -5,7 +5,7 @@
     "owl": "http://www.w3.org/2002/07/owl#",
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
-    "bootstrap": "https://litlfred.github.io/folio-assistant/bootstrap/ns#",
+    "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
     "cat-harness": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
     "folio-assistant-core": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
     "label": "rdfs:label",
@@ -131,6 +131,21 @@
       "seeAlso": "https://litlfred.github.io/crdm-methodology.html"
     },
     {
+      "@id": "cat-harness:Lane",
+      "@type": [
+        "rdfs:Class",
+        "skos:Concept"
+      ],
+      "label": "Lane",
+      "comment": "A swimlane of one BPMN process: part of that process, binding the Role that acts in it (`bindsRole`). Not itself a role — a role is a registry node, and many lanes in many processes bind it (#1168, B9b).",
+      "prefLabel": "Lane",
+      "definition": "A swimlane of one BPMN process: part of that process, binding the Role that acts in it (`bindsRole`). Not itself a role — a role is a registry node, and many lanes in many processes bind it (#1168, B9b).",
+      "notation": "cat-harness:Lane",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:LaneUsage",
       "@type": [
         "rdfs:Class",
@@ -168,9 +183,9 @@
         "skos:Concept"
       ],
       "label": "Tool",
-      "comment": "The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
+      "comment": "A Node Instance describing a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
       "prefLabel": "Tool",
-      "definition": "The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
+      "definition": "A Node Instance describing a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
       "notation": "cat-harness:Tool",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
@@ -238,22 +253,6 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:Harness",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "Harness",
-      "comment": "A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph.",
-      "prefLabel": "Harness",
-      "definition": "A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph.",
-      "notation": "cat-harness:Harness",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/architecture.html"
     },
     {
       "@id": "cat-harness:RoleGraph",
@@ -511,21 +510,6 @@
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:ModelGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "ModelGraph",
-      "comment": "Which languages a model is good at, and whether a human checked. Read when a session opens, as ONE input to the communication-language determination and never as the answer. Declared in bootstrap because an agent reaching for it has not yet loaded the harness.",
-      "prefLabel": "ModelGraph",
-      "definition": "Which languages a model is good at, and whether a human checked. Read when a session opens, as ONE input to the communication-language determination and never as the answer. Declared in bootstrap because an agent reaching for it has not yet loaded the harness.",
-      "notation": "cat-harness:ModelGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness"
-    },
-    {
       "@id": "cat-harness:PolicyGraph",
       "@type": [
         "rdfs:Class",
@@ -536,21 +520,6 @@
       "prefLabel": "PolicyGraph",
       "definition": "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role constraints. Actions are the folio profile in skills/permissions/permissions.json.",
       "notation": "cat-harness:PolicyGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:ProcessGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "ProcessGraph",
-      "comment": "Executable BPMN processes and the DMN tables their gateways compute from.",
-      "prefLabel": "ProcessGraph",
-      "definition": "Executable BPMN processes and the DMN tables their gateways compute from.",
-      "notation": "cat-harness:ProcessGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
@@ -616,21 +585,6 @@
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:ScenarioGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "ScenarioGraph",
-      "comment": "Actors, the Roles they take on, and the User Stories those Roles serve.",
-      "prefLabel": "ScenarioGraph",
-      "definition": "Actors, the Roles they take on, and the User Stories those Roles serve.",
-      "notation": "cat-harness:ScenarioGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness"
-    },
-    {
       "@id": "cat-harness:SessionStateGraph",
       "@type": [
         "rdfs:Class",
@@ -656,36 +610,6 @@
       "prefLabel": "SessionSurveyGraph",
       "definition": "Published surveys of a commit window — one JSON file each, carrying `\"$schema\": \"folio-session-survey/v1\"` and the window's two edge commits, so a later session can compute what it is NOT covered for instead of re-deriving the whole range (bean `6ptx`).",
       "notation": "cat-harness:SessionSurveyGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:SkillGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "SkillGraph",
-      "comment": "Skill packages — the authored instruction bodies an Actor performs a Task from.",
-      "prefLabel": "SkillGraph",
-      "definition": "Skill packages — the authored instruction bodies an Actor performs a Task from.",
-      "notation": "cat-harness:SkillGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:SwimlaneGlossaryGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "SwimlaneGlossaryGraph",
-      "comment": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
-      "prefLabel": "SwimlaneGlossaryGraph",
-      "definition": "The swimlane glossary's retirement ledger — every concept this instance has ever minted, with the date it was first seen and the date it stopped being derivable. Written by scripts/glossary-export.ts; the glossary document itself is derived and not stored here.",
-      "notation": "cat-harness:SwimlaneGlossaryGraph",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
@@ -1381,6 +1305,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:mayTakeRole",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "mayTakeRole",
+      "comment": "A declared role this actor may take on: a link to the Role node from `scenarios/roles.json` (#1168 B8).",
+      "prefLabel": "mayTakeRole",
+      "definition": "A declared role this actor may take on: a link to the Role node from `scenarios/roles.json` (#1168 B8).",
+      "notation": "cat-harness:mayTakeRole",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:satisfiesStatement",
       "@type": [
         "rdf:Property",
@@ -1402,10 +1341,25 @@
         "skos:Concept"
       ],
       "label": "performedBy",
-      "comment": "The role that performs this activity.",
+      "comment": "The role that performs this activity: the registry Role its lane binds.",
       "prefLabel": "performedBy",
-      "definition": "The role that performs this activity.",
+      "definition": "The role that performs this activity: the registry Role its lane binds.",
       "notation": "cat-harness:performedBy",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:inLane",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "inLane",
+      "comment": "The BPMN lane this activity sits in, a Lane node of the same process.",
+      "prefLabel": "inLane",
+      "definition": "The BPMN lane this activity sits in, a Lane node of the same process.",
+      "notation": "cat-harness:inLane",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"

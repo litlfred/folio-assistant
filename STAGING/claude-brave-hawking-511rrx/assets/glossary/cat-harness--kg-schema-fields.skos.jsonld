@@ -1,8 +1,10 @@
 {
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
-    "dcterms": "http://purl.org/dc/terms/"
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields",
@@ -1399,25 +1401,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/assistant-types.skilldefinition.roles",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SkillDefinition.roles"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "by nothing. Kept optional so a downstream instance still validates."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/assistant-types.ts#SkillDefinition.roles",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/assistant-types.skilldefinition.routingpatterns",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2194,6 +2177,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/attribution.ts#Attribution.version",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/attribution.attributionschema.skill",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttributionSchema.skill"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The skill being exercised: `name` or `package/name` (#1168 B8)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/attribution.ts#AttributionSchema.skill",
       "skos:note": "candidate"
     },
     {
@@ -5427,6 +5429,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.liquid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.liquid"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The Liquid prefix this instance's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.liquid",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.name",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5693,6 +5714,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.iribase",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.iriBase"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The address this instance's IRIs are minted under, BEFORE the version — bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.liquid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.liquid"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "See {@link CatHarnessDeclaration.liquid}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.liquid",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.navbaricons",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5728,6 +5787,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.needs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.nodeschemas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.nodeSchemas"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance's Node Kinds, declared: each `$schema` tag its files may carry → the JSON Schema that defines it (an IRI, or a path relative to the declaration). Bootstrap's field (`graph.ts`, owner 2026-09-29: the schema-reference table \"should be in bootstrap\"), inherited here because this declaration is a Subkind of bootstrap's. The graph-kind registry's `nodeSchemas` keeps the harness's TypeScript-backed forms (`validator`, `shape`); this one names only published schemas, which is all a reader with nothing installed can follow."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.nodeSchemas",
       "skos:note": "candidate"
     },
     {
@@ -5845,6 +5923,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.summaries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectory.summaries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.summaries",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.theme",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5940,6 +6037,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.summaries",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.summaries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the agent summary drain may draft summaries for a `library` directory's prose blocks (bean `x80s`). Absent means `drain`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.summaries",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.theme",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5956,6 +6072,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.theme",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.tile",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.tile"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How this directory's tile looks. See {@link TileSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.tile",
       "skos:note": "candidate"
     },
     {
@@ -6108,6 +6243,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.liquidprefix.passthrough",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LiquidPrefix.passThrough"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#LiquidPrefix.passThrough",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.liquidprefix.prefix",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LiquidPrefix.prefix"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The first path segment(s); default the instance's `name`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#LiquidPrefix.prefix",
       "skos:note": "candidate"
     },
     {
@@ -6453,6 +6626,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.subgraphcoverageschema.process",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubgraphCoverageSchema.process"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The BPMN process that GOVERNS this directory — a diagram's basename, without `.bpmn`, as `document-ingestion`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.process",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.subgraphcoverageschema.serialisations",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6693,7 +6885,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The tile's theme. Absent means the directory's, then the instance's."
+          "@value": "The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.theme",
@@ -14471,6 +14663,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakeschema.licence",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IntakeSchema.licence"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The licence the uploader established, as the SAME record a library manifest carries in `meta.licence` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/intake.ts#IntakeSchema.licence",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/intake.intakeschema.record",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -15756,7 +15967,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The bean this work is claimed against, where there is one."
+          "@value": "The bean this work is claimed against, where there is one. A typed id (#1168 B8)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.bean",
@@ -16368,139 +16579,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/methodology.ts#MethodologyFrontMatterSchema.title",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/model-registry.modelentryschema.id",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ModelEntrySchema.id"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The model identifier, exactly as the runtime reports it."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.id",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/model-registry.modelentryschema.note",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ModelEntrySchema.note"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Anything a reader needs that the fields above cannot carry."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.note",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/model-registry.modelentryschema.preferredlanguages",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ModelEntrySchema.preferredLanguages"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "BCP 47 tags, best first."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.preferredLanguages",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/model-registry.modelentryschema.title",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ModelEntrySchema.title"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Human-readable name, for a report a person reads."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.title",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/model-registry.modelentryschema.validatedby",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ModelEntrySchema.validatedBy"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Who checked, when `validation` is `human-validated`."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.validatedBy",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/model-registry.modelentryschema.validatedon",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ModelEntrySchema.validatedOn"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "ISO date of that check. A validation with no date cannot go stale."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.validatedOn",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/model-registry.modelentryschema.validation",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ModelEntrySchema.validation"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "How the list above came to be believed. Required — see the header."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/model-registry.ts#ModelEntrySchema.validation",
       "skos:note": "candidate"
     },
     {
@@ -18150,7 +18228,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "BPMN process id — `staging-render-log` — when written inside one."
+          "@value": "BPMN process element id — `Process_RenderLog` — when written inside one."
         }
       ],
       "dcterms:source": "cat-harness/schemas/render-log.ts#RenderLogEntrySchema.process",
@@ -18382,253 +18460,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/render-targets.ts#RenderTargetDeclaration.validateExport",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementfields.derivedfrom",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementFields.derivedFrom"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Broader requirements this one specialises, by id."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.derivedFrom",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementfields.id",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementFields.id"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "`req:<slug>`."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.id",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementfields.proposedin",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementFields.proposedIn"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "WHERE IT CAME FROM — the proposal it was filed from, as a path, when it began as one. Kept after the proposal is moved, so the history can be followed back through `git log --follow`."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.proposedIn",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementfields.supersededby",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementFields.supersededBy"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "When `superseded`: what replaced it."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementFields.supersededBy",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.activity",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementStatementFields.activity"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "FUNCTIONAL — the activity the statement is part of."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.activity",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.actors",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementStatementFields.actors"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The roles it is about, by id in the harness's own role registry."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.actors",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.benefit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementStatementFields.benefit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "FUNCTIONAL — why (\"so that …\")."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.benefit",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.capability",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementStatementFields.capability"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "FUNCTIONAL — what the actor wants to be able to do (\"I want …\")."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.capability",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.category",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementStatementFields.category"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "NON-FUNCTIONAL — which quality it constrains."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.category",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.conformance",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementStatementFields.conformance"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "How strongly it binds. Named `conformance` — the word the harness's requirement files have used since they were first written — so that building them on this base moved no file."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.conformance",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.dependson",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementStatementFields.dependsOn"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Other statements this one presupposes, by {@link requirementRef}."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.dependsOn",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.key",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementStatementFields.key"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Unique within its requirement; with the requirement's id it is the statement's address."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.key",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/requirement.requirementstatementfields.requirement",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "RequirementStatementFields.requirement"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The statement itself, as one sentence a reviewer can say yes or no to."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/requirement.ts#RequirementStatementFields.requirement",
       "skos:note": "candidate"
     },
     {
@@ -19221,6 +19052,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/section-verdicts.sectionverdictfileschema.verdicts",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SectionVerdictFileSchema.verdicts"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "entry slug → section id (the `sections/<id>.md` stem) → verdict."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictFileSchema.verdicts",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/section-verdicts.sectionverdictschema.saw",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SectionVerdictSchema.saw"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the inspector SAW — the reason for the role, checkable against the page."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictSchema.saw",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/semantic-zoom.kindzoomschema.because",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -19765,7 +19634,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`\"\"` when the bean has no parent."
+          "@value": "`\"\"` when the bean has no parent; otherwise a typed bean id (#1168 B8)."
         }
       ],
       "dcterms:source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent",
@@ -20016,25 +19885,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema.sync",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/skill-package.skilldefinitionschema.roles",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "SkillDefinitionSchema.roles"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "RETIRED 2026-09-20 (bean `y1w9`) — optional, and read by nothing."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/skill-package.ts#SkillDefinitionSchema.roles",
       "skos:note": "candidate"
     },
     {
@@ -20639,7 +20489,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/harness.json`, `bootstrap/harness.json`, `harness.json`."
+          "@value": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/cat-harness.json`, `bootstrap/bootstrap.json`: each instance's own `<instance>/<instance>.json`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.declaredIn",
@@ -22603,25 +22453,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.alternativeto",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ToolDefinitionSchema.alternativeTo"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Other Tools that do the SAME job by a different mechanism."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.alternativeTo",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.maintains",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -22691,7 +22522,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Why to reach for this one. REQUIRED once `alternativeTo` is non-empty — see {@link ToolSelectionSchema}, and the refinement below."
+          "@value": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set."
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
@@ -26947,7 +26778,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "BPMN process ids, as `<bpmn:process id>` spells them — `Process_CrdmRequirements`, not a filename. Resolved against the diagrams the `cat-harness` graph carries, so a typo is a dangling reference rather than a voice that quietly never activates."
+          "@value": "BPMN process ids, as `<bpmn:process id>` spells them — `Process_CRDM_Requirements`, not a filename (#1168, B8: the element id, as `calledElement` uses it). Resolved against the loaded diagrams by `process-refs.test.ts`, so a typo is a dangling reference rather than a voice that quietly never activates."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema.processes",
@@ -27061,7 +26892,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Block kinds this voice audits. Absent means every kind the folio has."
+          "@value": "What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceProfileSchema.appliesTo",
