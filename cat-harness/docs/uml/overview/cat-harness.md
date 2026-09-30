@@ -1446,7 +1446,7 @@ classDiagram
       dir [1] string
       title [1] string
       provenance [1] string
-      rung [1] paged | tabular | none
+      rung [1] paged | tabular | referenced | none
       docId [1] string
       sourceFile [1] string
       sourceSha256 [1] string
@@ -1784,7 +1784,7 @@ classDiagram
       dir [1] string
       title [1] string
       provenance [1] string
-      rung [1] paged | tabular | none
+      rung [1] paged | tabular | referenced | none
       docId [1] string
       sourceFile [1] string
       sourceSha256 [1] string

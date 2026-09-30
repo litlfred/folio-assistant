@@ -1134,7 +1134,7 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     dir [1] : string
     title [1] : string
     provenance [1] : string
-    rung [1] : paged | tabular | none
+    rung [1] : paged | tabular | referenced | none
     docId [1] : string
     sourceFile [1] : string
     sourceSha256 [1] : string
@@ -1439,7 +1439,7 @@ package "cat-harness/root-docs" as pkg_cat_harness_root_docs <<docs>> {
     dir [1] : string
     title [1] : string
     provenance [1] : string
-    rung [1] : paged | tabular | none
+    rung [1] : paged | tabular | referenced | none
     docId [1] : string
     sourceFile [1] : string
     sourceSha256 [1] : string
