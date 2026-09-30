@@ -6916,6 +6916,13 @@
           "doc": "What produces this directory's SERIALISATIONS — `json`, `jsonld` and"
         },
         {
+          "name": "process",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The BPMN process that GOVERNS this directory — a diagram's basename,"
+        },
+        {
           "name": "exempt",
           "type": "z .object({ visualiser: z.string().min(1).optional(), docs: z.string().min(1).optional(), skill: z.string().min(1).opti…",
           "optional": true,

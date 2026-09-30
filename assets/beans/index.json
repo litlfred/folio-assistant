@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 450,
+      "count": 451,
       "unit": "beans"
     }
   },
@@ -4949,6 +4949,20 @@
       "updatedAt": "2026-09-30T00:35:22Z",
       "preview": "Found 2026-09-26 resolving #1290's conflicts in a worktree named `pr1290` (session_01ERf1yH3k69x37rXCrb6GYt). `bun run library:viz` wrote `\"uploadInstance\": \"pr1290\"` into 12 entries of `cat-harness/docs/assets/library/index.json` and emitted a page at `cat-harness/docs/cat-harness/library/pr1290/index.html`. Caught before push; regenerated from a directory named `folio-assistant`, after which all",
       "file": "beans/defs/folio-assistant-t5dm--instance-name-from-the-checkout-folder-library-gra.md"
+    },
+    {
+      "id": "folio-assistant-t7fl",
+      "title": "uploads/README shows the high-level document-ingestion BPMN, via a DECLARED coverage.process",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-slw1",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T23:47:39Z",
+      "updatedAt": "2026-09-30T00:25:28Z",
+      "preview": "Owner, 2026-09-29: *\"show highlevel (sub)process bpmn on the uploads page.\"*\n\nThe uploads page is `uploads/README.md`, the generated subgraph README written\nby `cat-harness/scripts/subgraph-readmes.ts` through the `subgraph` Liquid\ntemplate in the tools graph.\n\n## What is being added\n\nA new optional declared field on `SubgraphCoverageSchema` naming the BPMN\nprocess that GOVERNS a directory, declar",
+      "file": "beans/defs/folio-assistant-t7fl--uploadsreadme-shows-the-high-level-document-ingest.md"
     },
     {
       "id": "folio-assistant-t8g3",

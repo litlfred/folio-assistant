@@ -509,32 +509,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790757900">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790758486">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790757900">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790758486">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790757900">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790758486">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790757900">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790758486">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790757900">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790758486">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790757900">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790758486">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -551,7 +551,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790757900" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790758486" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -766,6 +766,7 @@
     </ol>
   </li>
   <li><a href="#harnessing-a-directory" id="markdown-toc-harnessing-a-directory">What harnessing a directory obliges</a>    <ol>
+      <li><a href="#coverageprocess-is-declared-and-is-not-an-obligation" id="markdown-toc-coverageprocess-is-declared-and-is-not-an-obligation"><code class="language-plaintext highlighter-rouge">coverage.process</code> is DECLARED and is not an obligation</a></li>
       <li><a href="#the-serialisation-is-the-one-obligation-a-harness-may-not-waive" id="markdown-toc-the-serialisation-is-the-one-obligation-a-harness-may-not-waive">The serialisation is the one obligation a Harness MAY NOT waive</a></li>
     </ol>
   </li>
@@ -1015,6 +1016,39 @@ why two of them are ranked differently.</p>
 <p>The first four are per declared directory. A fifth, a starting README, is per
 instance and is ranked harder still: an instance without one is not a gap
 somebody has not filled, it is an instance a reader cannot enter.</p>
+<h3 id="coverageprocess-is-declared-and-is-not-an-obligation">
+  
+  
+    <a href="#coverageprocess-is-declared-and-is-not-an-obligation" class="anchor-heading" aria-labelledby="coverageprocess-is-declared-and-is-not-an-obligation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">coverage.process</code> is DECLARED and is not an obligation
+  
+  
+</h3>
+    
+
+<p>A directory may also name the BPMN process that <strong>governs</strong> it —
+<code class="language-plaintext highlighter-rouge">coverage.process</code>, a diagram’s basename such as <code class="language-plaintext highlighter-rouge">document-ingestion</code>. The
+generated subgraph README then draws that diagram, links its <code class="language-plaintext highlighter-rouge">.bpmn</code> source and
+lists the subprocesses it calls, so the page a reader lands on says how the
+directory is worked rather than only what is in it.</p>
+
+<p>It sits apart from the four above in two ways.</p>
+
+<p><strong>It is not owed.</strong> Most directories are not the subject of a process, so an
+absent <code class="language-plaintext highlighter-rouge">coverage.process</code> means NOT DECLARED and never “no process” — the same
+third state <code class="language-plaintext highlighter-rouge">readOnly</code> keeps — and a directory declaring none gets no such
+section and is not a finding. What <em>is</em> a finding, ranked major, is a declared
+name that resolves to no diagram: somebody said, and what they said points at
+nothing. There is correspondingly no <code class="language-plaintext highlighter-rouge">exempt.process</code>; declaring nothing
+already is the silence, and a waiver would be a second spelling of it.</p>
+
+<p><strong>It is declared rather than inferred, and the temptation is the point.</strong>
+<code class="language-plaintext highlighter-rouge">document-ingestion.bpmn</code> starts on an event named <em>“A file lands in
+<code class="language-plaintext highlighter-rouge">uploads/</code>“</em>, so the directory could be matched out of that prose. An event’s
+name is editorial text: rewording it would silently unlink the page, and
+nothing could tell that from a directory that never had a process. A diagram
+also touches several directories while being <em>about</em> one — <code class="language-plaintext highlighter-rouge">document-ingestion</code>
+reads <code class="language-plaintext highlighter-rouge">uploads/</code> and writes <code class="language-plaintext highlighter-rouge">library/</code> — which is the direction name-matching
+cannot see at all.</p>
 <h3 id="the-serialisation-is-the-one-obligation-a-harness-may-not-waive">
   
   
@@ -1382,7 +1416,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36691533088"><code>8c9f12d</code></a> &middot; 2026-09-30T08:44:54Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36692557770"><code>d1b0be9</code></a> &middot; 2026-09-30T08:54:39Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
