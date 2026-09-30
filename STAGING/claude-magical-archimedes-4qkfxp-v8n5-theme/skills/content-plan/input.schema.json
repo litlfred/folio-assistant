@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5-theme/skills/content-plan/input.schema.json",
+  "title": "Content Plan Input",
+  "description": "Input schema for content planning — scope, team, timeline, governance.",
+  "type": "object",
+  "required": [
+    "projectName"
+  ],
+  "properties": {
+    "projectName": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Description of the content scope."
+    },
+    "targetDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "teamSize": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "sprintDuration": {
+      "type": "string",
+      "enum": [
+        "1w",
+        "2w",
+        "3w",
+        "4w"
+      ],
+      "default": "2w"
+    }
+  },
+  "staging": {
+    "branch": "claude/magical-archimedes-4qkfxp-v8n5-theme",
+    "sha": "333fae8d502f58c5aa0437efa200ddf25dbd1664",
+    "pr": "1611/merge",
+    "run": "36741436281"
+  }
+}
