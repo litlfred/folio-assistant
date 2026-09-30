@@ -66,6 +66,7 @@ import {
 } from "node:fs";
 import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
+import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
 
 import {
   KgAssetSchema,
@@ -542,6 +543,29 @@ export interface LiquidPrefix {
   passThrough?: boolean;
 }
 
+/**
+ * Where an instance sits today inside a HOST repository — the pre-split case,
+ * where `cat-harness` declares `litlfred/cat-harness` but is the
+ * `cat-harness/` directory of `litlfred/folio-assistant` (bean `6rmv`).
+ */
+export interface InstanceLocation {
+  /** The repository that holds the instance today, `owner/name`. */
+  repository: RepoFullName;
+  /** The instance's directory within it, repository-relative, no leading `./`. */
+  path: string;
+}
+
+export const InstanceLocationSchema = z
+  .object({
+    repository: RepoFullNameSchema,
+    path: z
+      .string()
+      .min(1)
+      .regex(/^[A-Za-z0-9._-]+(?:\/[A-Za-z0-9._-]+)*$/, "a repository-relative directory, no leading ./ or trailing /")
+      .refine((p) => !p.split("/").includes(".."), "a location may not climb with `..`"),
+  })
+  .strict();
+
 export interface CatHarnessDeclaration extends KgNodeLabels {
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
@@ -595,6 +619,24 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * consumer must be able to find the config without already knowing the
    * repository's name; the artefacts it *describes* are free to be named.
    */
+  /**
+   * The repository this instance IS — `owner/name`, its PLANNED home once the
+   * pre-split repository is broken apart (owner, 2026-09-30, bean `6rmv`).
+   *
+   * The identity every cross-instance reference resolves through: a bare
+   * `name` says nothing about which forge or owner, and two owners may both
+   * publish a `smart-base`. Planned rather than current so that an IRI keyed
+   * by it survives the split — where the instance sits TODAY is {@link livesAt}.
+   * `instanceRepositories` in `schemas/instance-repositories.ts` derives the
+   * `owner/repo ↔ name ↔ root` map from these; nothing keeps a list by hand.
+   */
+  repository?: RepoFullName;
+  /**
+   * Where the instance lives TODAY when that is not the root of
+   * {@link repository} — the host repository and the directory within it.
+   * Absent means it already lives at the root of its own repository.
+   */
+  livesAt?: InstanceLocation;
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
@@ -2382,6 +2424,8 @@ export const CatHarnessDeclarationSchema = z.object({
    * that deliberately wants a bare navbar.
    */
   navbarIcons: NavbarIconsSchema.optional(),
+  repository: RepoFullNameSchema.optional(),
+  livesAt: InstanceLocationSchema.optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   /**
