@@ -417,6 +417,15 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 292,
     reads: "a microphone — an editorial voice",
   },
+  "voice-vendors": {
+    // The `voices` microphone with a small tag hung on it: the same voice,
+    // specialised for one vendor. A sub-graph of `voices` (bean rkqp), so it
+    // keeps the parent's outline and a nearby tone, as `proposals` does
+    // under `docs`.
+    glyph: "M10 4a3 3 0 013 3v4a3 3 0 01-6 0V7a3 3 0 013-3zM5 11a5 5 0 0010 0M10 16v4M16 6h5v5h-5zM18.5 8.5h.01",
+    tone: 312,
+    reads: "a microphone with a tag — an editorial voice specialised for one vendor",
+  },
   themes: {
     // A paint swatch with a corner turned: a theme is a palette APPLIED to a
     // surface, not a palette on its own. Distinct from `voices`, which is also
