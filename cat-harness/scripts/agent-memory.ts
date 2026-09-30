@@ -56,10 +56,9 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 
-import { EMPTY_NOTE_TAGS, type KgRef, type NoteTags } from "../schemas/carried-note.js";
-import { parseFrontMatter } from "../schemas/front-matter.js";
+import { EMPTY_NOTE_TAGS, KgRefSchema, type KgRef, type NoteTags } from "../schemas/carried-note.js";
+import { mappingList, parseFrontMatter } from "../schemas/front-matter.js";
 import {
-  AGENT_REF_KIND,
   MEMORY_LABELS,
   MEMORY_SCHEMA_TAG,
   MemoryNodeSchema,
@@ -249,14 +248,19 @@ export function readMemoryNodes(dir: string = MEMORY_DIR()): MemoryNode[] {
   for (const f of readdirSync(dir).sort()) {
     if (!f.endsWith(".md")) continue;
     const path = join(dir, f);
-    const { fm, body } = parseFrontMatter(readFileSync(path, "utf8"));
+    const text = readFileSync(path, "utf8");
+    const { fm, body } = parseFrontMatter(text);
     // Declaration over location: a .md here without the tag is not a memory
     // node, and is left alone rather than guessed at.
     if (fm["$schema"] !== MEMORY_SCHEMA_TAG) continue;
 
-    const agents = (Array.isArray(fm["agents"]) ? (fm["agents"] as string[]) : []).map(
-      (id): KgRef => ({ kind: AGENT_REF_KIND, id }),
-    );
+    // `agents:` was memory's own shorthand until #1168 B10a (owner,
+    // 2026-09-30: "Rename, like todos"); it is refused rather than read, so an
+    // entry copied from an old one fails here instead of reaching everybody.
+    if (fm["agents"] !== undefined) {
+      throw new Error(`${path}: \`agents:\` is retired — write \`references:\` with \`- kind: agent\` and \`id:\`, as todos do`);
+    }
+    const agents = mappingList(text, "references").map((r): KgRef => KgRefSchema.parse(r));
     const tags: NoteTags = {
       ...EMPTY_NOTE_TAGS,
       roles: Array.isArray(fm["roles"]) ? (fm["roles"] as string[]) : [],

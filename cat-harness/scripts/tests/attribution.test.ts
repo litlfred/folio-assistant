@@ -251,3 +251,17 @@ describe("the real corpus", () => {
     }
   });
 });
+
+describe("MODEL_NOT_DISCLOSED — the declared non-identifier (owner, 2026-09-30)", () => {
+  test("an agent that may not name its model says so, and must give its session", async () => {
+    const { AttributionSchema, MODEL_NOT_DISCLOSED, modelDisclosed } = await import("../../schemas/attribution.ts");
+    const withSession = { kind: "agent", id: "claude-code", model: MODEL_NOT_DISCLOSED, session: "https://claude.ai/code/session_x" };
+    expect(AttributionSchema.safeParse(withSession).success).toBe(true);
+    expect(AttributionSchema.safeParse({ ...withSession, session: undefined }).success).toBe(false);
+    expect(modelDisclosed(withSession)).toBe(false);
+  });
+  test("model stays REQUIRED for an agent: not-disclosed is an answer, silence is not", async () => {
+    const { AttributionSchema } = await import("../../schemas/attribution.ts");
+    expect(AttributionSchema.safeParse({ kind: "agent", id: "a", session: "s" }).success).toBe(false);
+  });
+});

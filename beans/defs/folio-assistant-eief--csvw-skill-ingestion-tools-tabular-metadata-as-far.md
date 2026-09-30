@@ -74,7 +74,7 @@ model + skill + both stubs + QA axis · infer datatypes, mark `undetermined`
 when unsure.
 
 **Shipped:** `csvw:` in the published `@context` beside the other eight
-prefixes; `schemas/tabular-csvw.ts`; `skills/folio-core/tabular-metadata.md`;
+prefixes; `schemas/tabular-csvw.ts`; `skills/library/library-core/tabular-metadata.md`;
 `tabular-csv` and `tabular-xlsx` declared as stubs in `tools/index.ts`; and
 `bun run check:tabular-stubs`, wired into the gate set (52 fast / 55 all).
 

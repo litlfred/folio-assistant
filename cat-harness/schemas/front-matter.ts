@@ -119,3 +119,37 @@ export function list(fm: FrontMatter, key: string): string[] {
   if (Array.isArray(v)) return v;
   return typeof v === "string" && v !== "" ? [v] : [];
 }
+
+/**
+ * A front-matter list of MAPPINGS — `- kind: agent` with `  id: x` on the
+ * lines under it — which {@link parseFrontMatter} deliberately does not model
+ * (its items are scalars). Read by key, on demand, so the scalar parser's
+ * type stays what its eleven callers rely on.
+ *
+ * The shape todos already use for `references` and `artefacts` (#1168 B10a,
+ * owner 2026-09-30: memory's `agents:` became `references`, "like todos").
+ * A mapping needs colon-SPACE, YAML's own rule: `- github:litlfred` is a
+ * scalar, not `{github: "litlfred"}`.
+ */
+export function mappingList(text: string, key: string): Record<string, string>[] {
+  const m = /^---\n([\s\S]*?)\n---\n?/.exec(text);
+  if (!m) return [];
+  const out: Record<string, string>[] = [];
+  let inKey = false;
+  for (const line of m[1]!.split("\n")) {
+    const top = /^([A-Za-z$][\w$-]*):/.exec(line);
+    if (top) {
+      inKey = top[1] === key;
+      continue;
+    }
+    if (!inKey) continue;
+    const item = /^\s*-\s+([A-Za-z][\w-]*):[ \t]+(.*)$/.exec(line);
+    if (item) {
+      out.push({ [item[1]!]: stripQuotes(item[2]!.trim()) });
+      continue;
+    }
+    const cont = /^\s+([A-Za-z][\w-]*):[ \t]+(.*)$/.exec(line);
+    if (cont && out.length > 0) out[out.length - 1]![cont[1]!] = stripQuotes(cont[2]!.trim());
+  }
+  return out;
+}

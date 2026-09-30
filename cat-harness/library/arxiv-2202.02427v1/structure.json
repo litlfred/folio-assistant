@@ -1,0 +1,450 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2202.02427v1",
+ "source": {
+  "file": "arxiv-2202.02427v1.pdf",
+  "sha256": "f55daf70e8b4d5ac373c0c50751c4e2c9d3ce52714fc827962739195f607bb6a",
+  "bytes": 1099573,
+  "pages": 10,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-09-29T19:07:15Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2202.02427",
+   "version": "1",
+   "primary_class": "cs.LG",
+   "stamp_date": "4 Feb 2022"
+  },
+  "doi": null,
+  "title": "Lightweight Compositional Embeddings for Incremental Streaming Recommendation",
+  "authors_raw": "Mengyue Hang1, Tobias Schnabel2, Longqi Yang2, Jennifer Neville1,2",
+  "title_lines": [
+   "Lightweight Compositional Embeddings",
+   "for Incremental Streaming Recommendation"
+  ],
+  "abstract": "Most work in graph-based recommender systems considers a static setting where all information about test nodes (i.e., users and items) is available upfront at training time. However, this static setting makes little sense for many real world applications where data comes in continuously as a stream of new edges and nodes, and one has to update model predictions incrementally to reflect the latest state. To fully capitalize on the newly available data in the stream, recent graph-based recommendation models would need to be repeatedly retrained, which is infeasible in practice. In this pa- per, we study the graph-based streaming recommendation setting and propose a compositional recommendation model\u2014Lightweight Compositional Embedding (LCE)\u2014that supports incremental up- dates under low computational cost. Instead of learning explicit embeddings for the full set of nodes, LCE learns explicit embed- dings for only a subset of nodes and represents the other nodes implicitly, through a composition function based on their interac- tions in the graph. This provides an effective, yet efficient, means to leverage streaming graph data when one node type (e.g., items) is more amenable to static representation. We conduct an extensive empirical study to compare LCE to a set of competitive baselines on three large-scale user-item recommendation datasets with inter- actions under a streaming setting. The results demonstrate the su- perior performance of LCE, showing that it achieves nearly skyline performance with significantly fewer parameters than alternative graph-based models.",
+  "docinfo": {
+   "Title": "Lightweight Compositional Embeddings for Incremental Streaming Recommendation",
+   "Producer": "pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) kpathsea version 6.3.2",
+   "Creator": "LaTeX with acmart 2021/12/05 v1.81 Typesetting articles for the Association for Computing Machinery and hyperref 2020-05-15 v7.00e Hypertext links for LaTeX",
+   "CreationDate": "D:20220208022441Z"
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": "1"
+  },
+  {
+   "level": 1,
+   "title": "Problem Formulation and Notation",
+   "page": 2,
+   "source": "outline",
+   "number": "2"
+  },
+  {
+   "level": 1,
+   "title": "Lightweight Compositional Embeddings",
+   "page": 2,
+   "source": "outline",
+   "number": "3"
+  },
+  {
+   "level": 2,
+   "title": "LCE model",
+   "page": 2,
+   "source": "outline",
+   "number": "3.1"
+  },
+  {
+   "level": 2,
+   "title": "Offline batch training",
+   "page": 2,
+   "source": "outline",
+   "number": "3.2"
+  },
+  {
+   "level": 2,
+   "title": "Online incremental (streaming) updates",
+   "page": 3,
+   "source": "outline",
+   "number": "3.3"
+  },
+  {
+   "level": 1,
+   "title": "Empirical evaluation",
+   "page": 3,
+   "source": "outline",
+   "number": "4"
+  },
+  {
+   "level": 2,
+   "title": "Replay protocol",
+   "page": 3,
+   "source": "outline",
+   "number": "4.1"
+  },
+  {
+   "level": 2,
+   "title": "Data",
+   "page": 3,
+   "source": "outline",
+   "number": "4.2"
+  },
+  {
+   "level": 2,
+   "title": "Baselines",
+   "page": 4,
+   "source": "outline",
+   "number": "4.3"
+  },
+  {
+   "level": 2,
+   "title": "Comparison with baseline methods",
+   "page": 4,
+   "source": "outline",
+   "number": "4.4"
+  },
+  {
+   "level": 2,
+   "title": "Comparison with LCE variants",
+   "page": 5,
+   "source": "outline",
+   "number": "4.5"
+  },
+  {
+   "level": 2,
+   "title": "Explicit v.s. implicit embeddings",
+   "page": 6,
+   "source": "outline",
+   "number": "4.6"
+  },
+  {
+   "level": 2,
+   "title": "Evaluation on real-world production data",
+   "page": 7,
+   "source": "outline",
+   "number": "4.7"
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 7,
+   "source": "outline",
+   "number": "5"
+  },
+  {
+   "level": 2,
+   "title": "Sequential and streaming recommendation",
+   "page": 7,
+   "source": "outline",
+   "number": "5.1"
+  },
+  {
+   "level": 2,
+   "title": "Graph-based recommendation models",
+   "page": 7,
+   "source": "outline",
+   "number": "5.2"
+  },
+  {
+   "level": 2,
+   "title": "Cold-start recommendation",
+   "page": 7,
+   "source": "outline",
+   "number": "5.3"
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 7,
+   "source": "outline",
+   "number": "6"
+  },
+  {
+   "level": 1,
+   "title": "References",
+   "page": 8,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 1,
+   "title": "A Appendix",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "A.1 Comparison with related methods",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "A.2 Training procedure",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "A.3 Datasets",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "A.4 Baselines",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  },
+  {
+   "level": 2,
+   "title": "A.5 Model capacity v.s. performance",
+   "page": 9,
+   "source": "outline",
+   "number": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "sections": [
+  {
+   "id": "sec-000-3-lightweight-compositional-embeddings",
+   "number": "3",
+   "title": "Lightweight Compositional Embeddings",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 222,
+   "n_words": 16
+  },
+  {
+   "id": "sec-001-abstract",
+   "number": null,
+   "title": "Abstract",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1594,
+   "n_words": 235
+  },
+  {
+   "id": "sec-002-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 4493,
+   "n_words": 674
+  },
+  {
+   "id": "sec-003-2-problem-formulation-and-notation",
+   "number": "2",
+   "title": "Problem Formulation and Notation",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 1024,
+   "n_words": 193
+  },
+  {
+   "id": "sec-004-32-offline-batch-training",
+   "number": "3.2",
+   "title": "Offline batch training",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 1323,
+   "n_words": 207
+  },
+  {
+   "id": "sec-005-31-lce-model",
+   "number": "3.1",
+   "title": "LCE model",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 3172,
+   "n_words": 514
+  },
+  {
+   "id": "sec-006-42-data",
+   "number": "4.2",
+   "title": "Data",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 1774,
+   "n_words": 316
+  },
+  {
+   "id": "sec-007-33-online-incremental-streaming-updates",
+   "number": "3.3",
+   "title": "Online incremental (streaming) updates",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 398,
+   "n_words": 68
+  },
+  {
+   "id": "sec-008-4-empirical-evaluation",
+   "number": "4",
+   "title": "Empirical evaluation",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 138,
+   "n_words": 22
+  },
+  {
+   "id": "sec-009-43-baselines",
+   "number": "4.3",
+   "title": "Baselines",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 626,
+   "n_words": 100
+  },
+  {
+   "id": "sec-010-41-replay-protocol",
+   "number": "4.1",
+   "title": "Replay protocol",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 6582,
+   "n_words": 1050
+  },
+  {
+   "id": "sec-011-44-comparison-with-baseline-methods",
+   "number": "4.4",
+   "title": "Comparison with baseline methods",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 5310,
+   "n_words": 814
+  },
+  {
+   "id": "sec-012-45-comparison-with-lce-variants",
+   "number": "4.5",
+   "title": "Comparison with LCE variants",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 4554,
+   "n_words": 685
+  },
+  {
+   "id": "sec-013-46-explicit-vs-implicit-embeddings",
+   "number": "4.6",
+   "title": "Explicit v.s. implicit embeddings",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 2712,
+   "n_words": 429
+  },
+  {
+   "id": "sec-014-47-evaluation-on-real-world-production-data",
+   "number": "4.7",
+   "title": "Evaluation on real-world production data",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 1220,
+   "n_words": 193
+  },
+  {
+   "id": "sec-015-5-related-work",
+   "number": "5",
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 61,
+   "n_words": 11
+  },
+  {
+   "id": "sec-016-51-sequential-and-streaming-recommendation",
+   "number": "5.1",
+   "title": "Sequential and streaming recommendation",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 0,
+   "n_words": 0
+  },
+  {
+   "id": "sec-017-53-cold-start-recommendation",
+   "number": "5.3",
+   "title": "Cold-start recommendation",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 921,
+   "n_words": 132
+  },
+  {
+   "id": "sec-018-52-graph-based-recommendation-models",
+   "number": "5.2",
+   "title": "Graph-based recommendation models",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 1934,
+   "n_words": 300
+  },
+  {
+   "id": "sec-019-6-conclusion",
+   "number": "6",
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 1204,
+   "n_words": 183
+  },
+  {
+   "id": "sec-020-references",
+   "number": null,
+   "title": "References",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 10,
+   "n_chars": 15849,
+   "n_words": 2373
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 27,
+  "toc_inferred_entries": 0,
+  "sections": 21,
+  "chars_total": 55111
+ }
+}

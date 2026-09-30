@@ -16,7 +16,7 @@ allowed-tools: Read Write Edit Bash Grep Glob Agent WebFetch
 > link each upload to the `references.ts` entry it sources. An upload that
 > supplies a cited source moves that ref to `source-in-repo` (agent-identified
 > passage; no human photo) and then through the
-> [`bib-human-review`](../folio-core/bib-human-review.md) ladder to `validated`. Existing
+> [`bib-human-review`](../library/library-core/bib-human-review.md) ladder to `validated`. Existing
 > `uploads/` follow the same agent-sourced path.
 
 ## Overview
@@ -104,6 +104,28 @@ for a URL, absent for a direct upload) plus the capture moment.
 Place raw files in `uploads/<document-id>/`. Create `intake.json`
 with source metadata. Files are committed to git for reproducibility.
 
+**Record the licence in `intake.json` when you know it.** The ingestion
+pipeline's licence step runs EARLY — before any extraction, by the owner's
+ruling on bean `7bg9` — because `library/` is committed content and refusing a
+source after deriving from it is a deletion nobody may take unasked. That step
+sees only the upload: the `licence` record in `intake.json` (the same
+`stated` / `unknown` record a library manifest carries in `meta.licence`,
+`schemas/source-licence.ts`) and whether a `LICENSE` file sits beside it.
+`bun run ingest` prints its verdict before the first arm runs, and after the
+arms it writes a recorded licence into the staged entry's `licence.json` — the
+authored sidecar `gen-library-jsonld` carries into `meta.licence` (the manifest
+itself is generated, so a licence written there would not survive a
+regeneration). It never overwrites a `licence.json` already there; a mismatch
+is printed as a conflict.
+
+| verdict | when | what to do |
+|---|---|---|
+| `stated` | `licence: { status: "stated", id, basis }` | nothing — `basis` says where it is stated |
+| `unknown` | `licence: { status: "unknown", searched: [...] }` | nothing now; the places tried are the record |
+| `undetermined` | no licence recorded (a `LICENSE` sibling is named, not read) | ingestion proceeds, and says so — undetermined is never reported as cleared |
+
+It never reads a licence out of extracted text; that is a later check's job.
+
 Supported formats:
 - **PDF** — academic papers, scanned guidelines, reports
 - **LaTeX** — `.tex` source bundles
@@ -121,7 +143,7 @@ See [`paper-importer.md §Phase 1`](paper-importer.md#phase-1-acquisition)
 for the per-tool routing table. Sandboxed Claude-Code-on-the-web
 sessions (github-only allowlist) cannot reach those hosts; in
 those sessions, queue the fetch onto a normal-network machine
-per [`bib-qa.md §Batch intake pipeline`](../folio-core/bib-qa.md#batch-intake-pipeline).
+per [`bib-qa.md §Batch intake pipeline`](../library/library-core/bib-qa.md#batch-intake-pipeline).
 
 ### Stage 2: Extraction (→ `extracted`)
 

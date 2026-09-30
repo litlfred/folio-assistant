@@ -39,6 +39,9 @@ import { instanceDirectoriesForGraph, instanceRootsIn, readDeclaration } from ".
 import type { ResolvedTheme, ThemeRef } from "./theme.js";
 import { themeById } from "./themes.js";
 
+/** The instance whose themes are {@link THEMES} — the default `platform` below. */
+export const PLATFORM_THEME_OWNER = "cat-harness";
+
 /** The graph kind an instance's own themes are declared under. */
 export const THEMES_GRAPH_KIND = "themes";
 /** The module a `themes` directory holds, and the export it must carry. */
@@ -54,8 +57,19 @@ export type ThemeRefMiss =
 
 export type ThemeRefResult = { ok: true; theme: ResolvedTheme; owner: string | undefined } | { ok: false; miss: ThemeRefMiss };
 
-/** The themes an instance declares, or why it declares none that can be read. */
-function instanceThemes(repoRoot: string, instance: string): { ok: true; themes: readonly ResolvedTheme[] } | { ok: false; miss: ThemeRefMiss } {
+/**
+ * The themes an instance declares, or why it declares none that can be read.
+ *
+ * **Exported so a GATE can ask the same question the runtime asks.** Bean
+ * `z6xd`: three gates declared `@covers themes` while none of them resolved a
+ * `themes` directory — they audit the platform's `THEMES` constants and the
+ * declared theme ART, which the who-iris declaration is explicit are different
+ * things (*"These are NOT the platform's twelve themes"*). A gate that reached
+ * the graph by re-deriving this resolution would be a second answer to
+ * "which themes does this instance own", free to disagree with the one every
+ * generator actually renders from — so `check:instance-themes` calls this.
+ */
+export function instanceThemes(repoRoot: string, instance: string): { ok: true; themes: readonly ResolvedTheme[] } | { ok: false; miss: ThemeRefMiss } {
   const root = instanceRootsIn(repoRoot).find((r) => readDeclaration(r)?.name === instance);
   if (root === undefined) return { ok: false, miss: { kind: "no-such-instance", instance } };
   const dirs = instanceDirectoriesForGraph(root, THEMES_GRAPH_KIND);
@@ -91,7 +105,7 @@ function instanceThemes(repoRoot: string, instance: string): { ok: true; themes:
  *                       `ref.instance` is absent
  * @param platform       the platform instance's name; its themes are {@link THEMES}
  */
-export function themeByRef(ref: ThemeRef, repoRoot: string, citingInstance?: string, platform = "cat-harness"): ThemeRefResult {
+export function themeByRef(ref: ThemeRef, repoRoot: string, citingInstance?: string, platform = PLATFORM_THEME_OWNER): ThemeRefResult {
   const owner = ref.instance ?? citingInstance;
   if (owner === undefined || owner === platform) {
     const theme = themeById(ref.themeId);
@@ -114,6 +128,77 @@ export function themeByRef(ref: ThemeRef, repoRoot: string, citingInstance?: str
     if (theme) return { ok: true, theme, owner: platform };
   }
   return { ok: false, miss: { kind: "no-such-theme", instance: owner, themeId: ref.themeId } };
+}
+
+/** One instance-declared sticky theme, with the instance that owns it. */
+export interface OwnedStickyTheme {
+  instance: string;
+  theme: Extract<ResolvedTheme, { kind: "sticky" }>;
+}
+
+/** Why an instance's sticky theme was NOT emitted — each a finding, never a silent drop. */
+export type StickyThemeConflict =
+  | { kind: "shadows-platform"; instance: string; themeId: string }
+  | { kind: "duplicate-across-instances"; themeId: string; instances: string[] };
+
+/**
+ * Every STICKY-kind theme an instance in this repository declares, found the
+ * same way {@link themeByRef} finds one — by declaration, never by import.
+ *
+ * Bean `v8n5`. The note board's stylesheet (`gen-themes-css.ts`) selects on
+ * `[data-fa-sticky-theme="<themeId>"]` and a card writes the bare `themeId`
+ * there, so an id is ONE namespace on the page even though it is two in the
+ * graph. Two answers were possible — scope the selector by instance, or refuse
+ * a collision — and this refuses: scoping would change what every card writes
+ * and every e2e test asserts, for a collision no instance has. A colliding
+ * theme is REPORTED in `conflicts` and left out of `themes`, so the platform's
+ * own theme keeps its CSS and nothing is overwritten by declaration order.
+ *
+ * Instances that declare no themes, or whose module is unreadable, contribute
+ * nothing — that is `themeByRef`'s miss to report when something cites them.
+ */
+export function instanceStickyThemes(
+  repoRoot: string,
+  platform = PLATFORM_THEME_OWNER,
+  platformIds: ReadonlySet<string> = new Set(),
+): { themes: OwnedStickyTheme[]; conflicts: StickyThemeConflict[] } {
+  const byId = new Map<string, OwnedStickyTheme[]>();
+  const names = instanceRootsIn(repoRoot)
+    .map((r) => readDeclaration(r)?.name)
+    .filter((n): n is string => n !== undefined && n !== platform)
+    .sort();
+  for (const name of [...new Set(names)]) {
+    const found = instanceThemes(repoRoot, name);
+    if (!found.ok) continue;
+    for (const t of found.themes) {
+      if (t.kind !== "sticky") continue;
+      byId.set(t.id, [...(byId.get(t.id) ?? []), { instance: name, theme: t }]);
+    }
+  }
+  const themes: OwnedStickyTheme[] = [];
+  const conflicts: StickyThemeConflict[] = [];
+  for (const [id, owners] of [...byId].sort(([a], [b]) => a.localeCompare(b))) {
+    if (platformIds.has(id)) {
+      for (const o of owners) conflicts.push({ kind: "shadows-platform", instance: o.instance, themeId: id });
+      continue;
+    }
+    if (owners.length > 1) {
+      conflicts.push({ kind: "duplicate-across-instances", themeId: id, instances: owners.map((o) => o.instance) });
+      continue;
+    }
+    themes.push(owners[0]!);
+  }
+  return { themes, conflicts };
+}
+
+/** A sentence for a {@link StickyThemeConflict}. */
+export function explainStickyThemeConflict(c: StickyThemeConflict): string {
+  switch (c.kind) {
+    case "shadows-platform":
+      return `"${c.instance}" declares sticky theme "${c.themeId}", which is also a platform theme id — a card writes the bare id, so one selector cannot serve both. Rename the instance's theme.`;
+    case "duplicate-across-instances":
+      return `sticky theme "${c.themeId}" is declared by ${c.instances.join(" and ")} — a card writes the bare id, so one selector cannot serve both. Rename one.`;
+  }
 }
 
 /** A sentence for a finding. */

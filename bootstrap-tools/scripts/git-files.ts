@@ -20,7 +20,13 @@ import { join } from "node:path";
 
 export function gitFiles(dir: string): string[] | undefined {
   if (!existsSync(dir)) return undefined;
-  const r = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], { cwd: dir, encoding: "utf-8" });
+  const r = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], {
+    cwd: dir,
+    encoding: "utf-8",
+    // The 1 MiB default overflowed on this checkout (ENOBUFS, 2026-09-30),
+    // which read as "git could not answer" and failed iri:sync:check.
+    maxBuffer: 64 * 1024 * 1024,
+  });
   if (r.error !== undefined || r.status !== 0) return undefined;
   return r.stdout.split("\0").filter(Boolean).map((p) => join(dir, p));
 }

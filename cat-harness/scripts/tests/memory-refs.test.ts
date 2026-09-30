@@ -1,5 +1,6 @@
 /**
- * A memory entry's `roles:` and `agents:` name things that exist (#1168 B8).
+ * A memory entry's `roles:` and its `references` to agents name things that
+ * exist (#1168 B8; `agents:` became `references` with `kind: agent` in B10a).
  *
  * `memoryForRoles` hands an entry to every lane whose role it names, and
  * `memoryForAgent` to every agent it names. A typo in either does not fail:
@@ -11,7 +12,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { Glob } from "bun";
 
-import { list, parseFrontMatter } from "../../schemas/front-matter.ts";
+import { list, mappingList, parseFrontMatter } from "../../schemas/front-matter.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
@@ -27,7 +28,10 @@ describe("memory entries name roles and agents that exist", () => {
   const roles = roleIds();
   const entries = [...new Glob("**/*.md").scanSync({ cwd: join(REPO, "memory") })]
     .filter((rel) => rel !== "README.md")
-    .map((rel) => ({ rel, fm: parseFrontMatter(readFileSync(join(REPO, "memory", rel), "utf-8")).fm }))
+    .map((rel) => {
+      const text = readFileSync(join(REPO, "memory", rel), "utf-8");
+      return { rel, fm: parseFrontMatter(text).fm, refs: mappingList(text, "references") };
+    })
     .filter((e) => e.fm["$schema"] === "folio-memory/v1")
     // An ARCHIVED entry reaches nobody on purpose — the third state between
     // "reaches everybody" and "deleted" (agent-memory skill). Its names are
@@ -47,12 +51,16 @@ describe("memory entries name roles and agents that exist", () => {
     expect(dangling).toEqual([]);
   });
 
-  test("every `agents:` value is a declared subagent", () => {
-    const dangling = entries.flatMap((e) =>
-      list(e.fm, "agents")
-        .filter((a) => !existsSync(join(REPO, ".claude", "agents", `${a}.md`)))
-        .map((a) => `${e.rel} → ${a}`),
-    );
+  test("every agent reference is a declared subagent", () => {
+    const agents = entries.flatMap((e) => e.refs.filter((r) => r.kind === "agent").map((r) => ({ e, id: r.id! })));
+    expect(agents.length).toBeGreaterThan(0);
+    const dangling = agents
+      .filter(({ id }) => !existsSync(join(REPO, ".claude", "agents", `${id}.md`)))
+      .map(({ e, id }) => `${e.rel} → ${id}`);
     expect(dangling).toEqual([]);
+  });
+
+  test("no entry carries the retired `agents:` shorthand", () => {
+    expect(entries.filter((e) => e.fm["agents"] !== undefined).map((e) => e.rel)).toEqual([]);
   });
 });

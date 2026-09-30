@@ -121,7 +121,7 @@ Same rule as everywhere here, and it is easy to lose in a generator:
 - **Do not let the projection become the source of truth.** The generated
   server is a rendering, like the JSON Schema and the JSON-LD. A fix lands in
   `schemas/tool.ts` or the Tool node, never in the emitted server — see
-  [`directory-conventions`](directory-conventions.md) §"What lives in the
+  [`directory-conventions`](../kg/kg-core/directory-conventions.md) §"What lives in the
   `schemas` graph".
 
 ## Transport, and what the harness cares about

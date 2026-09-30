@@ -23,13 +23,10 @@ the individuals and/or populations (including subpopulations) that the
 recommendations are intended to affect; and
 ■■
 the important outcomes − both benefits and harms – that may result.
-The process of scoping a guideline will establish the focus for the rec­
-ommendations, as well as the key questions that will govern the search for 
+The process of scoping a guideline will establish the focus for the recommendations, as well as the key questions that will govern the search for 
 evidence to inform the recommendations. This process should ensure that 
 the guideline is of manageable size, adequately focused, and capable of being 
 executed within the allocated time frame and with the available resources.
 Scoping is one of the most difficult but important aspects of guideline 
-development. If the scope is right, the guideline process should be manage­
-able and the end product relevant to the end-user. If the scope is wrong, 
-resources are wasted and the end-user will remain uncertain about the opti­
-mal intervention or approach.
+development. If the scope is right, the guideline process should be manageable and the end product relevant to the end-user. If the scope is wrong, 
+resources are wasted and the end-user will remain uncertain about the optimal intervention or approach.

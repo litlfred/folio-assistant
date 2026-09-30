@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T13:44:11Z
+updated_at: 2026-09-30T16:12:47Z
 parent: folio-assistant-4ccr
 ---
 
@@ -135,3 +135,20 @@ duplicating a verdict the schema owns.
   icon-resolution one, and the repair (rename, or cross-link) is an editorial
   call rather than a check's.
 - The remaining ten findings on this bean.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 11 still present, 1 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — 1. At rest the strip is marks with no labels; harnesses not reachable from the strip: 1280×800 hit-test down x=12/28/44: the .fa-nav-icon links Todos/Beans/Processes/Knowledge graph, the 'More actions' button and the scheme button all have innerText '' (name only via aria-label). The harness dividers are still inside details '▦ Harnesses' (open=false). (nav8.mjs)
+- **STILL-PRESENT** — 2. Two dividers open the same page (Folio Assistant and C@T Harness both href '/'): 'Folio Assistant' → /folio-assistant/ and 'C@T Harness' → /folio-assistant/. Side note: the Bootstrap divider now goes to /folio-assistant/processes/ (it was /bootstrap/README.html, which 404s in this build). (nav10.mjs)
+- **STILL-PRESENT** — 3. Harness descriptions leak authoring notes and formatting into the landing page: p.fa-harness-section__description still carries both texts from findings 4 and 5. The same texts appear in 2 .fa-landing-sticky__body elements. (desc.mjs, nav10.mjs)
+- **STILL-PRESENT** — 4. Folio Assistant description is a naming rationale with literal backticks: Narrowed since 2026-09-29: the description now has 0 literal backticks (the spans render as code). It still reads 'The repository itself, acting as an initialized instance. NAMED folio-assistant-checkout rather than folio-assistant, which …', which is a naming rationale, over 3 lines. (desc.mjs)
+- **STILL-PRESENT** — 5. C@T Harness description is newline-separated alternative spellings that run together as one line: white-space:normal, 1 line: 'computable adjudication and agentic test harness caaat-harness ca&at-harness .c&at-harness  c@t-harness'. (desc.mjs)
+- **STILL-PRESENT** — 6. Each harness's navigation appears in four places, and the same destination has two names: The same set is still in 4 places: the sidebar divider kids, 'Folders' (.fa-nav-folders, 20 links), 6 'visualisations you can open' blocks on the landing, and the glass 'More' panel (27 .fa-tile). The names still differ, e.g. 'Skills — cat-harness' / 'Docs — cat-harness'. (nav6.mjs, nav4.mjs, nav10.mjs)
+- **STILL-PRESENT** — 7. The open sidebar is long even with its caps: 1280×800 with the sidebar opened (264px) and every details unfolded: 524 links in .side-bar (was 506). nav.site-nav is 2260px tall inside div.fa-nav-middle, which is 128px high with scrollHeight 3276. On arrival all 4 groups are folded. (nav8.mjs)
+- **STILL-PRESENT** — 8. Mobile: the sidebar's own ×/☰ labels are unstyled below 800px: 390×844: the .fa-nav-head copy inside the theme footer (div.d-md-none) is display:inline, 9.625px, transparent background, no border, at y≈6968. It renders as plain text under the build stamp. (nav6.mjs, nav7.mjs)
+- **STILL-PRESENT** — 9. '▾ Folio' handle fixed top centre over the top bar and the glass's own content; glyph stays ▾ when down: .fa-glass-handle is z-index 91, position fixed, 93×28 at 1280 and 82×25 at 390. At 390 its rect [154,0,82,25] is over a.site-title 'C@T Harness'. With the glass open the text is still '▾ Folio', and only the aria-label changes ('Put your folio away'). (nav2.mjs)
+- **FIXED** — 10. Bottom strip hides most of its tiles with no arrow, count or fade: Still fixed. With the glass open, .fa-glass-tiles holds 4 tiles, scrollWidth equals clientWidth (1280/1280 and 390/390), and none is off-screen. — dbbc2b6ef (nav4.mjs)
+- **STILL-PRESENT** — 11. Most declared tiles wear the same glyph: Glass → More: 25 of the 27 .fa-glass-more-item .fa-tile draw the identical outline SVG path ('M12 4.5 5 9.5…'). Only beans and uploads differ. The tile captions are clamped to 6 lines at 91–104px. (nav4.mjs)
+- **STILL-PRESENT** — 12. Two unrelated 'Settings': The glass ⚙ Settings panel ('Folio settings — theme, avatars, opacity') holds Theme/Avatars/Opacity/Blur/Harnesses/Tidy, and no text matches /discard|fish/ or points to the page settings. ▦ More actions → 'Settings' is still a separate panel. (nav9.mjs, nav8.mjs)

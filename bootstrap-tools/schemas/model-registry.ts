@@ -62,9 +62,29 @@ import { z } from "zod";
 export const VALIDATION_STATES = ["unverified", "self-reported", "human-validated"] as const;
 export type ValidationState = (typeof VALIDATION_STATES)[number];
 
+/**
+ * The value a record carries when the model that produced it was not
+ * disclosed. Declared, so it is a decision rather than a string that looks
+ * like one (#1168 B10c).
+ */
+export const NOT_DISCLOSED = "not-disclosed";
+
+/**
+ * A model identifier as a record carries it: exactly as the runtime reports
+ * it (`claude-opus-5`, `claude-haiku-4-5-20251001`, a vendor-prefixed id), or
+ * {@link NOT_DISCLOSED}. The SHAPE is checked here — no spaces, no empty, no
+ * display name. Whether the id is one the registry KNOWS is a separate,
+ * advisory question (`check-model-languages`), because the registry is
+ * deliberately populated only by people (owner, 2026-09-30, #1168 B10c).
+ */
+export const ModelIdSchema = z
+  .string()
+  .regex(/^[A-Za-z0-9][A-Za-z0-9._:/@-]*$/, "a model id is the runtime's identifier: no spaces, no display name");
+export type ModelId = z.infer<typeof ModelIdSchema>;
+
 export const ModelEntrySchema = z.object({
   /** The model identifier, exactly as the runtime reports it. */
-  id: z.string().min(1),
+  id: ModelIdSchema,
   /** Human-readable name, for a report a person reads. */
   title: z.string().min(1),
   /**
@@ -74,8 +94,15 @@ export const ModelEntrySchema = z.object({
    * absence: it says somebody looked and found no language this model is
    * notably strong in, which is different from nobody having looked. That
    * second state is `validation: "unverified"`.
+   *
+   * ABSENT only on an `unverified` entry, which then records the model's
+   * IDENTITY and claims nothing about its languages (#1168 B10c, owner
+   * 2026-09-30: "resolve properly"). That is what lets a record's model id
+   * resolve to a registry node without anybody asserting language evidence —
+   * the thing this registry forbids an agent to supply. A `self-reported` or
+   * `human-validated` entry IS a language claim, so it must carry the list.
    */
-  preferredLanguages: z.array(z.string().min(2)),
+  preferredLanguages: z.array(z.string().min(2)).optional(),
   /** How the list above came to be believed. Required — see the header. */
   validation: z.enum(VALIDATION_STATES),
   /** Who checked, when `validation` is `human-validated`. */
@@ -84,6 +111,9 @@ export const ModelEntrySchema = z.object({
   validatedOn: z.string().optional(),
   /** Anything a reader needs that the fields above cannot carry. */
   note: z.string().optional(),
+}).refine((m) => m.validation === "unverified" || m.preferredLanguages !== undefined, {
+  message: "a self-reported or human-validated entry is a language claim, and must state preferredLanguages",
+  path: ["preferredLanguages"],
 });
 
 export type ModelEntry = z.infer<typeof ModelEntrySchema>;
@@ -122,7 +152,7 @@ export const MODEL_REGISTRY_FILENAME = "models.json";
  * it was.
  */
 export function validatedLanguages(entry: ModelEntry): readonly string[] | undefined {
-  return entry.validation === "human-validated" ? entry.preferredLanguages : undefined;
+  return entry.validation === "human-validated" ? (entry.preferredLanguages ?? []) : undefined;
 }
 
 /**

@@ -253,7 +253,10 @@ describe("the provenance QA flag — a question for a person, not a gate", () =>
   });
 });
 
-describe("vendor overrides live in a reserved sub-sub-graph", () => {
+describe("vendor overrides live in DECLARED sub-graphs of voices", () => {
+  // Owner, 2026-09-30 (bean `rkqp`): "vendors/<id>/ should be declared
+  // subgraphs along with vendors/". Superseding the reserved name below: the
+  // loader descends only where `voices.json` / `vendors/vendors.json` say to.
   // Owner, 2026-09-22: "vendor overides go in sub-sub-grahiphs like
   // voice/vendors or voices-vendors". The nested spelling was taken, because
   // the flat one needs a SECOND declared graph for one concept.
@@ -294,6 +297,10 @@ describe("vendor overrides live in a reserved sub-sub-graph", () => {
       join(voices, "vendors", "base-voice-acme", "voice.json"),
       profile("base-voice-acme", "base-voice"),
     );
+    const decl = (ids: string[]) =>
+      JSON.stringify({ name: "t", directories: ids.map((id) => ({ id, path: id, graphKinds: ["voice-vendors"] })) });
+    writeFileSync(join(voices, "voices.json"), decl(["vendors"]));
+    writeFileSync(join(voices, "vendors", "vendors.json"), decl(["base-voice-acme"]));
     return root;
   }
 
@@ -336,16 +343,41 @@ describe("vendor overrides live in a reserved sub-sub-graph", () => {
     }
   });
 
-  test("recursion is ONE reserved name deep, not arbitrary", async () => {
-    // "Any directory, any depth" is a rule nobody can check, and it would make
-    // an unrelated nested directory a silent part of the graph.
+  test("an UNDECLARED directory holding voices is refused, loudly", async () => {
+    // Not a silent part of the graph, and not silently skipped either: the
+    // skip is `dh4f`, a clean read over real content. The error names the fix.
     const { loadVoices } = await import("../../schemas/voices.ts");
     const root = fixture();
     const stray = join(root, "skills", "voices", "notes", "draft");
     mkdirSync(stray, { recursive: true });
     writeFileSync(join(stray, "voice.json"), profile("draft"));
     try {
-      expect(loadVoices(root).map((v) => v.id)).not.toContain("draft");
+      expect(() => loadVoices(root)).toThrow(/not declared.*voices\.json/);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("a vendor missing from vendors.json is refused, not skipped", async () => {
+    const { loadVoices } = await import("../../schemas/voices.ts");
+    const root = fixture();
+    const extra = join(root, "skills", "voices", "vendors", "base-voice-other");
+    mkdirSync(extra, { recursive: true });
+    writeFileSync(join(extra, "voice.json"), profile("base-voice-other"));
+    try {
+      expect(() => loadVoices(root)).toThrow(/vendors\.json/);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  test("the declaration files are never loaded AS voices", async () => {
+    const { loadVoices } = await import("../../schemas/voices.ts");
+    const root = fixture();
+    try {
+      const ids = loadVoices(root).map((v) => v.id);
+      expect(ids).not.toContain("voices");
+      expect(ids).not.toContain("vendors");
     } finally {
       rmSync(root, { recursive: true, force: true });
     }

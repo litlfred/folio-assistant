@@ -38,4 +38,4 @@ typo.
 `content/` does not exist in this repository — the platform carries no folio — and
 the directory it lived in (`scripts/migrations/`) held only this file and is now
 gone. Moved rather than deleted, per
-[`fsh-guts`](../../cat-harness/skills/folio-core/fsh-guts.md).
+[`fsh-guts`](../../cat-harness/skills/kg/kg-core/fsh-guts.md).

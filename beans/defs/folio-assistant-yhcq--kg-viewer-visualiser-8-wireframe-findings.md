@@ -3,12 +3,13 @@
 title: 'kg-viewer visualiser: 8 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-kg-viewer
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-23T10:36:14Z
+updated_at: 2026-09-30T16:12:48Z
 parent: folio-assistant-4ccr
 ---
 
@@ -39,3 +40,16 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — Neighbourhood labels cut to 26 characters: Skill wireframe-design-review: #detail svg text max length 26: 'Produce >= 2 candidates, w', 'Mechanical checks, both vi'. Tool node: 'Review heat map — where to'.
 - **STILL-PRESENT** — Language switcher never appears (translation-boundary note never shown): #langs.hidden true and #boundary.hidden true at both widths; translated msgstr count in ar/es/fr/ru/zh kg-viewer.po @35402147f is 0/0/0/0/0.
 - **STILL-PRESENT** — No link back to the docs site: The page's only anchors outside the list are 'Skip to results' (#list), 'JSON-LD' (../cat-harness.jsonld) and 'source commit' (GitHub). There is no site or home link and no nav chrome.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 8 still present, 0 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code. The viewer was generated with `kg-viewer.ts --out <site>/cat-harness/index.html`, as `docs-site.yml` does, and served beside the build.
+
+- **STILL-PRESENT** — Page scrolls sideways at phone width on first load: At 390×844 before any facet: documentElement.scrollWidth 511, main grid-template-columns '510.516px', and 108 descendants of #facets/#subs extend past the right edge (was 102). (C_kg.mjs)
+- **STILL-PRESENT** — On mobile the detail is below the whole list; nothing scrolls to it: 390×844, Tool facet, first row ('Folio block QA summary') clicked: #detail top is at 1028px in the viewport, off-screen below 844. The page is 2288px tall, focus is not moved into #detail, and #list max-height is 607.68px. (C_kg.mjs)
+- **STILL-PRESENT** — 'No links to or from this node.' sits directly under a link: Tool 'discussion' (tool/discuss): #detail shows 'satisfies skill/discussion' as <a href='https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#skill/discussion'>, then the text 'No links to or from this node.' (C_kg2.mjs)
+- **STILL-PRESENT** — Two kinds of link look different and nothing says why (external vs in-graph): The external <a> (skill/discussion) has no icon, ::after content 'none', no title and no aria-label. Its colour is rgb(74,107,82). — ce6152624 (C_kg2.mjs)
+- **STILL-PRESENT** — Long list with no alphabetical order: With All selected, 2859 nodes match (was 2701). 401 li are rendered in document order (first: grade, fhir-validation, smart-base Toolchain, quality-control). There are 205 descending pairs among the 401 rows. (C_kg.mjs, C_kg2.mjs)
+- **STILL-PRESENT** — Neighbourhood labels cut to 26 characters: Skill wireframe-design-review: the #detail svg text max length is 26 ('Produce >= 2 candidates, w', 'Mechanical checks, both vi'). Tool node: 'Review heat map — where to'. (C_kg.mjs)
+- **STILL-PRESENT** — Language switcher never appears (translation-boundary note never shown): #langs.hidden and #boundary.hidden are true at both widths. (C_kg.mjs)
+- **STILL-PRESENT** — No link back to the docs site: The only anchors outside the list are 'Skip to results' (#list), 'JSON-LD' (../cat-harness.jsonld) and 'source commit' (GitHub, commit 3779d5d27). There is no site or home link. (C_kg.mjs)

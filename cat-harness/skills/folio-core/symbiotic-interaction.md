@@ -103,7 +103,7 @@ with a durable artefact attached.
 
 ### You do NOT ask permission to fix a rule the author just corrected
 
-[`kg-contribution-offer`](kg-contribution-offer.md) says the agent never picks a
+[`kg-contribution-offer`](../kg/kg-core/kg-contribution-offer.md) says the agent never picks a
 destination silently, and that is about **manufacturing a node** from agreed
 requirements — work whose shape nobody has ruled on. This is the opposite case:
 the node exists, it is wrong, and the author has just said so. Asking *"shall I
@@ -122,7 +122,7 @@ example below.
 |---|---|---|
 | *"THAT should be a skill, collision=coordinate, potentail colliosn by looking at beans = coordinate"* | [`coordinate`](coordinate.md), two new triggers | rule-level on all three questions, and the author named the destination outright — no offer to make |
 | *"voices should be associated to appropriate home semantically/by judgement"* | `schemas/voice-skill.ts`, replacing the ownership rule | question 3: it **contradicted** a standing mechanical rule (the instance that *derived* a voice owns it), which the corpus had already falsified twice. Additive filing would have left two answers |
-| *"harness handler wins."* | `gen-handler-index.ts`'s module doc and bean `8h42` — **and nowhere else, which was the defect** | question 2: it settles a collision between the TWO PATH RULES, so it belongs in [`schema-management`](schema-management.md) §"Where a viewer publishes" beside them. It was filed as a fact about one generator instead. Found by writing this section, and fixed in the same change |
+| *"harness handler wins."* | `gen-handler-index.ts`'s module doc and bean `8h42` — **and nowhere else, which was the defect** | question 2: it settles a collision between the TWO PATH RULES, so it belongs in [`schema-management`](../kg/kg-core/schema-management.md) §"Where a viewer publishes" beside them. It was filed as a fact about one generator instead. Found by writing this section, and fixed in the same change |
 
 A fourth, made **after** this section existed and the first to be governed by
 it rather than reconstructed: asked to settle a voice's `provenance`, the owner

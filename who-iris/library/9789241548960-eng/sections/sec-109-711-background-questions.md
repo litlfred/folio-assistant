@@ -41,11 +41,9 @@ from animal studies, to surveillance data on incident cases, to theoretical
 frameworks explaining behaviour change in connection with community 
 educational programmes. These questions help to establish the context for 
 the recommendations and a systematic review may be unnecessary or an 
-ineffective use of time and resources. Nevertheless, the answers to these ques­
-tions must be based on relevant and objective evidence in order to generate a 
+ineffective use of time and resources. Nevertheless, the answers to these questions must be based on relevant and objective evidence in order to generate a 
 high level of confidence in the results. For example, data on the incidence or 
 prevalence of a disease might be obtained from a single valid source, which 
 should be duly cited and justified. (Note that it is possible, in some situations, 
-for a question on prevalence to be central to prioritizing a set of interven­
-tions or establishing baseline risk. In such cases it is a foreground question 
+for a question on prevalence to be central to prioritizing a set of interventions or establishing baseline risk. In such cases it is a foreground question 
 requiring a systematic review.)

@@ -109,7 +109,7 @@ what would be wrong if you are wrong.
 
 **Establish which instance owns a node before you propose removing it.** In a
 multi-instance layout a file that looks orphaned here may be declared from
-somewhere else. [`placement`](placement.md) is the skill for that question;
+somewhere else. [`placement`](../kg/kg-core/placement.md) is the skill for that question;
 it is the same question in the other direction and does not need restating here.
 
 ## What to do instead

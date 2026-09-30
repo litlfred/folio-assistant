@@ -455,7 +455,7 @@ re-running on the clean base. Not this branch's, not fixed here. The third tranc
 in a row to measure this.
 
 Two files were added to the failing list and both were looked at rather than
-absorbed: `skills/folio-core/asset-extraction.md` (already named `who-iris`; the
+absorbed: `skills/library/library-core/asset-extraction.md` (already named `who-iris`; the
 path edit added `folio-assistant-core` — unavoidable, since the skill documents a
 command by path and the command moved), and the new note in `intake-records.ts`,
 whose FIRST DRAFT named two instances and was rewritten to name one. A note

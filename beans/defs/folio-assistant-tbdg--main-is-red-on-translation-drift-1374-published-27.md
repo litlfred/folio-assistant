@@ -5,8 +5,8 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T04:22:55Z
-updated_at: 2026-09-26T16:58:54Z
-parent: folio-assistant-1xhc
+updated_at: 2026-09-29T20:52:41Z
+parent: folio-assistant-bzyu
 ---
 
 
@@ -467,3 +467,6 @@ bean, `ngxj` and `f6r1` between them describe the red accurately and completely,
 and **not one of them asks for the thing that clears it** — a subject can be
 thoroughly documented and still have no owner, and the documentation is what
 makes that hard to see.
+
+
+_2026-09-29_ — **Re-parented `1xhc` → `bzyu`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). main is red BECAUSE translated pages shipped without catalogues; the fix is translation work.

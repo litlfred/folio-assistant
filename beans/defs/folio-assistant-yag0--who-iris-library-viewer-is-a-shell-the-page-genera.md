@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-23T05:46:53Z
-updated_at: 2026-09-30T13:39:14Z
+updated_at: 2026-09-30T13:39:18Z
 parent: folio-assistant-yj32
 ---
 
@@ -146,8 +146,8 @@ entry, which sits beside `library` as a one-letter glyph plus a bare kind word.
 - [x] the page is confirmed to list who-iris's entries — it always did
 - [x] a check fails when a declared subject's entries do not reach its viewer
 - [x] the deployment question settled: current, not stale
-- [ ] whether the rail's adjacent one-letter targets need distinguishing — the
-      owner's call, and not this bean's to decide
+- [x] whether the rail's adjacent one-letter targets need distinguishing — the
+      owner's call, and not this bean's to decide (owner, 2026-09-30: yes, folded into `v8n5`; done, see below)
 
 
 
@@ -156,3 +156,14 @@ entry, which sits beside `library` as a one-letter glyph plus a bare kind word.
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
 
 _2026-09-30T13:39:14Z_ — Claimed by claude/magical-archimedes-4qkfxp-v8n5-theme — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## 2026-09-30: the rail rows are distinguished — folded into `v8n5` by the owner
+
+Owner's ruling (b), "Fold into v8n5". Branch `claude/magical-archimedes-4qkfxp-v8n5-theme`.
+
+- **Generic, in platform code.** New `cat-harness/scripts/lib/graph-kind-nav.ts` gives every graph-kind navbar row (a) the kind's own SVG glyph and hue from `schemas/avatars.ts` — `library` is books on a shelf, `docs` a page under a magnifier — instead of its initial (which also made `catalogue` and `code` both `C`), and (b) a full accessible name `kind — <head of the kind's registered summary>, <instance>`, e.g. `library — L1 source content, who-iris`, rendered as visually-hidden text inside the link and as its `title`. The visible label stays the kind word and begins the name (SC 2.5.3); the words carry the meaning without the colour (SC 1.4.1).
+- Used by BOTH navbars: the rail (`mount-instance-docs.ts` `declaredGraphs`) and the Jekyll sidebar's harness rows (`gen-navbar-include.ts`, hue omitted there because the sidebar paints these marks on its own neutral chip in page ink).
+- **Found on the rendered build and fixed:** in the rail's resting 56px strip, LINKED sub-rows were indented past the strip (`.fa-nav-group .fa-nav-sub a` padding) while inert rows were not, so at rest the strip showed marks only for the rows that do NOT open. Kind rows now sit in the strip column (`a.fa-nav-kind`).
+- Tested in `navbar.test.ts` §"adjacent graph rows cannot be confused": every row's mark is unique, docs/library carry drawn glyphs with distinct hues, every accessible name is distinct and starts with the visible label.
+- Verified in Chromium on the `preview:site` + mount build: the rail's aria snapshot reads `link "docs — Documentation ABOUT the knowledge graph, who-iris"` and `link "library — L1 source content, who-iris"`.
+

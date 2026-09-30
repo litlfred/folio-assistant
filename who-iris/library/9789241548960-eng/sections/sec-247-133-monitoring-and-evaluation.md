@@ -27,10 +27,8 @@ changes in end-user knowledge and understanding;
 ■■
 changes in practice performance;
 ■■
-changes in health outcomes and inequities (both by level and distribu­
-tion); and
+changes in health outcomes and inequities (both by level and distribution); and
 ■■
 economic or other social consequences.
-Ideally, there should be baseline measures against which to assess per­
-formance in relation to the potential change induced by the guideline. 
-Operational and implementation research can be performed to assess ser­
+Ideally, there should be baseline measures against which to assess performance in relation to the potential change induced by the guideline. 
+Operational and implementation research can be performed to assess ser

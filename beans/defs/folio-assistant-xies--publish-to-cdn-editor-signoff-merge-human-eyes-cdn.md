@@ -47,7 +47,7 @@ measured numbers.
 
 ### The contract is the SKILL. This bean is the work-plan entry.
 
-> [`cat-harness/skills/folio-core/kg-to-portal.md`](../../cat-harness/skills/folio-core/kg-to-portal.md)
+> [`cat-harness/skills/kg/kg-core/kg-to-portal.md`](../../cat-harness/skills/kg/kg-core/kg-to-portal.md)
 
 It carries the owner's words verbatim, the one distinction the design turns on
 (**a CDN is not a publication host; it is a layer in front of one**, and why

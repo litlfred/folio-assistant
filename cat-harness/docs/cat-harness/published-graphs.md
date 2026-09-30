@@ -3,7 +3,7 @@ layout: default
 title: Published graphs
 lang: en
 description: "Every graph this handler renders, by kind and by the instance whose material it shows."
-nav_exclude: true
+nav_order: 2
 permalink: /cat-harness/
 ---
 
@@ -25,6 +25,13 @@ permalink: /cat-harness/
 Every graph this handler renders, by kind and by the instance whose material it
 shows. The handler segment of each route is this instance's declared name; the
 subject segment, where there is one, is the instance the material belongs to.
+
+**This is the one place every index is reached from** — the tables of contents
+(`docs`, `skills`), the glossaries, the methodologies, the tools, the
+libraries' catalogues and the latent semantic indexes (`qa`) are each a kind
+below. It is listed in the sidebar for that reason (bean `ansc`: it had been
+excluded from navigation, so the page that answers "where are all the indexes?"
+could only be found by knowing its address).
 
 A kind listed as **declared, not published** is one an instance declared and
 nothing renders yet. It is shown rather than omitted: "nothing renders this" and
@@ -55,13 +62,14 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 7 published.
+0 of 8 published.
 {: .fa-hx-dim }
 
 - Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 - Folio Assistant — *declared, not published*
 - folio-assistant-core — *declared, not published*
+- folio-assistant-sci — *declared, not published*
 - large-datasets — *declared, not published*
 - smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
@@ -80,7 +88,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }})
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
-- [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-docs/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-site/' | relative_url }})
 
 ### `external-schema`
 
@@ -115,10 +123,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `glossary`
 
-1 of 1 published.
+1 of 2 published.
 {: .fa-hx-dim }
 
 - [folio-assistant-core]({{ '/glossary/' | relative_url }})
+- who-style-guide — *declared, not published*
 
 ### `health`
 
@@ -262,10 +271,9 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `swimlane-glossary`
 
-1 of 2 published.
+1 of 1 published.
 {: .fa-hx-dim }
 
-- Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/swimlane-glossary/' | relative_url }})
 
 ### `themes`
@@ -315,6 +323,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [Folio Assistant]({{ '/cat-harness/uploads/folio-assistant/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/uploads/who-iris/' | relative_url }})
 
+### `voice-vendors`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- agent-skills — *declared, not published*
+
 ### `voices`
 
 5 of 5 published.
@@ -332,6 +347,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 {: .fa-hx-dim }
 
 - C@T Harness — *declared, not published*
+
+## Every declared viewer
+
+The same viewers the navbar and the board show, by title.
+
+- [fsh-guts]({{ '/fsh-guts/' | relative_url }}) — declared on `fsh-guts`
 
 ---
 

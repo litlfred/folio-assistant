@@ -25,7 +25,7 @@ at all** — no `substrate/`, no `*_probe.py`, and the proposal it cites
 (`docs/proposals/computations-subdirectory-refactor.md`) is gone. The phases it
 executes are numbered and complete. **A phase script is spent by construction.**
 
-Per [`fsh-guts`](../../cat-harness/skills/folio-core/fsh-guts.md): delete means
+Per [`fsh-guts`](../../cat-harness/skills/kg/kg-core/fsh-guts.md): delete means
 relocate. It is still addressable, greppable and citable.
 
 ## The lesson, extracted so it survives the script

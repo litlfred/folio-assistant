@@ -200,7 +200,7 @@
       ],
       "href": "/cat-harness/folio/",
       "hidden": false,
-      "count": 5,
+      "count": 6,
       "unit": "stickies"
     },
     {
@@ -284,7 +284,7 @@
       ],
       "href": "/cat-harness/library/folio-assistant-sci/",
       "hidden": false,
-      "count": 4,
+      "count": 5,
       "unit": "entries"
     },
     {
@@ -341,7 +341,7 @@
       ],
       "href": "/cat-harness/library/cat-harness/",
       "hidden": false,
-      "count": 11,
+      "count": 16,
       "unit": "entries"
     },
     {
@@ -372,6 +372,21 @@
       "hidden": false
     },
     {
+      "id": "qa",
+      "directory": "qa",
+      "title": "Latent semantic indexes",
+      "ref": "cat-harness/docs/lsi/index.md",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/lsi/",
+      "hidden": false,
+      "count": 973,
+      "unit": "documents"
+    },
+    {
       "id": "root-docs",
       "directory": "root-docs",
       "title": "root-docs",
@@ -396,7 +411,7 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 181,
+      "count": 191,
       "unit": "modules"
     },
     {
@@ -497,7 +512,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 22,
+      "count": 25,
       "unit": "waiting"
     },
     {
@@ -573,6 +588,7 @@
         }
       },
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": true,
@@ -639,6 +655,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -695,6 +712,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -745,6 +763,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -795,6 +814,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -845,6 +865,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -854,12 +875,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -868,6 +889,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "glossary",
+          "note": "no viewer yet"
+        },
         {
           "kind": "qa",
           "note": "no viewer yet"
@@ -878,7 +903,7 @@
         }
       ],
       "findings": [
-        "who-style-guide: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "who-style-guide: declares 2 graph(s) with no published viewer — glossary, qa. Declared and not rendered is a gap, not a dead link.",
         "who-style-guide: no avatar declared for this instance — showing the generic mark.",
         "who-style-guide: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/voices/who-style-guide/) rather than the instance's own themed root."
       ],
@@ -902,6 +927,7 @@
       ],
       "icon": null,
       "tone": 199,
+      "toneFrom": "avatar",
       "reads": "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
       "genericAvatar": false,
       "instantiated": true,
@@ -979,7 +1005,8 @@
         "folio-assistant-core"
       ],
       "icon": null,
-      "tone": 199,
+      "tone": 198,
+      "toneFrom": "theme",
       "reads": "an open book — a repository of published documents, in WHO blue",
       "genericAvatar": false,
       "instantiated": true,
@@ -989,7 +1016,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 8
+          "value": 9
         },
         {
           "id": "kinds",
@@ -1014,7 +1041,7 @@
         },
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/who-iris-docs/"
+          "path": "/cat-harness/docs-auto/index/docs/who-iris-site/"
         },
         {
           "kind": "library",
@@ -1062,6 +1089,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -1131,6 +1159,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -1140,12 +1169,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 5
         },
         {
           "id": "views",
@@ -1154,6 +1183,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
         {
           "kind": "library",
           "path": "/cat-harness/library/folio-assistant-sci/"
@@ -1172,7 +1205,7 @@
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -1228,6 +1261,7 @@
         }
       },
       "tone": 236,
+      "toneFrom": "avatar",
       "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it",
       "genericAvatar": false,
       "instantiated": true,
@@ -1284,6 +1318,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -1345,6 +1380,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -1354,12 +1390,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -1377,12 +1413,17 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "voice-vendors",
+          "within": "voices",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/agent-skills/"
         }
       ],
       "findings": [
-        "agent-skills: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "agent-skills: declares 2 graph(s) with no published viewer — qa, voice-vendors. Declared and not rendered is a gap, not a dead link.",
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root."
       ],
@@ -1438,6 +1479,7 @@
         }
       },
       "tone": 212,
+      "toneFrom": "avatar",
       "reads": "a leaf of paper with lines — the folio itself",
       "genericAvatar": false,
       "instantiated": false,
@@ -1570,6 +1612,7 @@
         }
       },
       "tone": 268,
+      "toneFrom": "avatar",
       "reads": "a framed face with ears — the harness the instance is held in",
       "genericAvatar": false,
       "instantiated": true,
@@ -1737,6 +1780,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -1825,6 +1869,7 @@
         }
       },
       "tone": 96,
+      "toneFrom": "avatar",
       "reads": "a seed germinating — the first thing, before anything else is known",
       "genericAvatar": false,
       "instantiated": true,
@@ -1834,12 +1879,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 5
         },
         {
           "id": "views",
@@ -1867,14 +1912,10 @@
         {
           "kind": "skills",
           "note": "no viewer by design"
-        },
-        {
-          "kind": "swimlane-glossary",
-          "note": "no viewer by design"
         }
       ],
       "findings": [
-        "bootstrap: 5 graph(s) render no viewer — models, scenarios, schemas, skills, swimlane-glossary — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+        "bootstrap: 4 graph(s) render no viewer — models, scenarios, schemas, skills — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
         "bootstrap: has no docs/ of its own, so the tile opens a kind handler's viewer (/processes/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -2579,7 +2620,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: voices, qa"
+            "summary": "3: voices, glossary, qa"
           },
           {
             "key": "needs",
@@ -2663,7 +2704,11 @@
           },
           {
             "key": "directories",
-            "summary": "8: library, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-themes, who-iris…"
+            "summary": "9: library, who-iris-site, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-t…"
+          },
+          {
+            "key": "stickies",
+            "summary": "1: who-iris"
           },
           {
             "key": "needs",
@@ -2731,7 +2776,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: library, voices, sci-methodologies, qa"
+            "summary": "5: library, voices, sci-methodologies, sci-adapters, qa"
           },
           {
             "key": "needs",
@@ -3033,7 +3078,7 @@
           },
           {
             "key": "assets",
-            "summary": "2: agent-instructions, readme"
+            "summary": "3: agent-instructions, readme, vocabulary"
           },
           {
             "key": "iriBase",
@@ -3041,11 +3086,11 @@
           },
           {
             "key": "nodeSchemas",
-            "summary": "{ model-registry/1.0.0, glossary-ledger/1.0.0, http://json-schema.org/draft-07/schema# }"
+            "summary": "{ model-registry/1.0.0, http://json-schema.org/draft-07/schema# }"
           },
           {
             "key": "directories",
-            "summary": "6: skills, schemas, scenarios, processes, models, swimlane-glossary"
+            "summary": "5: skills, schemas, scenarios, processes, models"
           },
           {
             "key": "stickies",

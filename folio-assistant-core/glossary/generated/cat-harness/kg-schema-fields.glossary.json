@@ -793,7 +793,7 @@
     {
       "id": "attribution.attribution.skill",
       "prefLabel": "Attribution.skill",
-      "definition": "The skill or tool that dispatched the authoring, e.g. `folio-core/library-ingestion`.",
+      "definition": "The skill or tool that dispatched the authoring, e.g. `library-core/library-ingestion`.",
       "source": "cat-harness/schemas/attribution.ts#Attribution.skill",
       "status": "candidate"
     },
@@ -1729,41 +1729,6 @@
       "status": "candidate"
     },
     {
-      "id": "bootstrap-graph.bootstrapgraphdocumentschema.at-id",
-      "prefLabel": "BootstrapGraphDocumentSchema.@id",
-      "definition": "Must equal the path the document is published at (bootstrap-graph-publication).",
-      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.@id",
-      "status": "candidate"
-    },
-    {
-      "id": "bootstrap-graph.bootstrapgraphdocumentschema.omitted",
-      "prefLabel": "BootstrapGraphDocumentSchema.omitted",
-      "definition": "The instance-bound collectors that were NOT run. \"Has no tools\" and \"tools were never looked for\" are different facts; this is how the document says which one it means.",
-      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.omitted",
-      "status": "candidate"
-    },
-    {
-      "id": "bootstrap-graph.bootstrapgraphdocumentschema.problems",
-      "prefLabel": "BootstrapGraphDocumentSchema.problems",
-      "definition": "Sources that could not be read, counted rather than silently dropped.",
-      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.problems",
-      "status": "candidate"
-    },
-    {
-      "id": "bootstrap-graph.bootstrapgraphdocumentschema.repository",
-      "prefLabel": "BootstrapGraphDocumentSchema.repository",
-      "definition": "The instance's declared name.",
-      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.repository",
-      "status": "candidate"
-    },
-    {
-      "id": "bootstrap-graph.bootstrapgraphdocumentschema.sourcecommitunavailable",
-      "prefLabel": "BootstrapGraphDocumentSchema.sourceCommitUnavailable",
-      "definition": "Said instead of `sourceCommit*` when the build could not read git.",
-      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.sourceCommitUnavailable",
-      "status": "candidate"
-    },
-    {
       "id": "carried-note.artefactrefschema.id",
       "prefLabel": "ArtefactRefSchema.id",
       "definition": "Its identifier within the provider: `203`, a SHA, a run id.",
@@ -2261,6 +2226,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.summaries",
+      "prefLabel": "ContentDirectory.summaries",
+      "definition": "Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.summaries",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.theme",
       "prefLabel": "ContentDirectory.theme",
       "definition": "Which theme this subgraph renders on — one answer for every surface that renders it (navbar section, board panel, sticky).",
@@ -2282,6 +2254,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectoryshape.kindrouteredirect",
+      "prefLabel": "ContentDirectoryShape.kindRouteRedirect",
+      "definition": "`/<kind>/<instance>/` for this directory is a ONE-FILE REDIRECT to the directory's declared viewer, because the directory itself is not mounted.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.kindRouteRedirect",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectoryshape.readonly",
       "prefLabel": "ContentDirectoryShape.readOnly",
       "definition": "This directory holds MATERIALIZED content: readable, and not editable here.",
@@ -2293,6 +2272,13 @@
       "prefLabel": "ContentDirectoryShape.readOnlyBasis",
       "definition": "WHY, and required whenever `readOnly` is declared — either value.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.summaries",
+      "prefLabel": "ContentDirectoryShape.summaries",
+      "definition": "Whether the agent summary drain may draft summaries for a `library` directory's prose blocks (bean `x80s`). Absent means `drain`.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.summaries",
       "status": "candidate"
     },
     {
@@ -5509,6 +5495,13 @@
       "status": "candidate"
     },
     {
+      "id": "intake.intakeschema.licence",
+      "prefLabel": "IntakeSchema.licence",
+      "definition": "The licence the uploader established, as the SAME record a library manifest carries in `meta.licence` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.licence",
+      "status": "candidate"
+    },
+    {
       "id": "intake.intakeschema.record",
       "prefLabel": "IntakeSchema.record",
       "definition": "The Dublin Core record describing it, relative to this file.",
@@ -6916,6 +6909,13 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.formername.retiredon",
+      "prefLabel": "FormerName.retiredOn",
+      "definition": "ISO date (YYYY-MM-DD) the name was retired.",
+      "source": "cat-harness/schemas/role-graph.ts#FormerName.retiredOn",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.loadedactor.capabilities",
       "prefLabel": "LoadedActor.capabilities",
       "definition": "Capability ids the actor claims — an environment probe it needs, not a skill. Carried here because nothing resolved them: `fhir-validator` was claimed by three actors and declared nowhere.",
@@ -6979,6 +6979,13 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.roledef.formernames",
+      "prefLabel": "RoleDef.formerNames",
+      "definition": "Names this role was known by and no longer is, each with the date it was retired — `Initiator` became `Bootstrapping Agent` on 2026-09-23. Published as `skos:hiddenLabel` on this role, and the old name's concept is `owl:deprecated` and `dcterms:isReplacedBy` this role, so a reader holding the old name is sent to the new one. Authored here, beside the definition, rather than only remembered by the harness's glossary ledger: a retired name is part of what the role IS to a reader of old text.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDef.formerNames",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.roledef.id",
       "prefLabel": "RoleDef.id",
       "definition": "Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`.",
@@ -6997,6 +7004,13 @@
       "prefLabel": "RoleDef.judgementOnly",
       "definition": "The role PERFORMS, but by judgement — no instruction body implements its steps, and naming one would be a lie about what the role does.",
       "source": "cat-harness/schemas/role-graph.ts#RoleDef.judgementOnly",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.roledef.othernames",
+      "prefLabel": "RoleDef.otherNames",
+      "definition": "Other names this role goes by today — synonyms, local titles, examples. The same field, and the same meaning, as `otherNames` on WHO SMART Base's Generic Persona (\"Other names or examples for the persona\"); published as `skos:altLabel`. Owner, 2026-09-30: *\"model both retired names and alternative names\"*.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDef.otherNames",
       "status": "candidate"
     },
     {
@@ -7021,10 +7035,24 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.roledefschema.formernames",
+      "prefLabel": "RoleDefSchema.formerNames",
+      "definition": "Names it no longer goes by, with the retirement date; `skos:hiddenLabel`.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.formerNames",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.roledefschema.inherits",
       "prefLabel": "RoleDefSchema.inherits",
       "definition": "Roles this one IS-A, outermost last. Static composition, not the scoped subprocess stack.",
       "source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.inherits",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.roledefschema.othernames",
+      "prefLabel": "RoleDefSchema.otherNames",
+      "definition": "Other names this role goes by today; `skos:altLabel`. As smart-base's `otherNames`.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.otherNames",
       "status": "candidate"
     },
     {
@@ -7116,6 +7144,20 @@
       "prefLabel": "ScriptQaReport.updated_at",
       "definition": "ISO-8601 UTC timestamp of last write.",
       "source": "cat-harness/schemas/script-qa.ts#ScriptQaReport.updated_at",
+      "status": "candidate"
+    },
+    {
+      "id": "section-verdicts.sectionverdictfileschema.verdicts",
+      "prefLabel": "SectionVerdictFileSchema.verdicts",
+      "definition": "entry slug → section id (the `sections/<id>.md` stem) → verdict.",
+      "source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictFileSchema.verdicts",
+      "status": "candidate"
+    },
+    {
+      "id": "section-verdicts.sectionverdictschema.saw",
+      "prefLabel": "SectionVerdictSchema.saw",
+      "definition": "What the inspector SAW — the reason for the role, checkable against the page.",
+      "source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictSchema.saw",
       "status": "candidate"
     },
     {
@@ -7410,6 +7452,13 @@
       "prefLabel": "RemotePackageRefSchema.sync",
       "definition": "OPTIONAL, because a wrapper whose only job is to supply Docker requirements should not have to claim a sync strategy to be valid. Required until 2026-09-19, which is why both wrappers carry one.",
       "source": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema.sync",
+      "status": "candidate"
+    },
+    {
+      "id": "skill-topics.skilltopicschema.path",
+      "prefLabel": "SkillTopicSchema.path",
+      "definition": "One plain segment: a topic is a direct subdirectory, never deeper.",
+      "source": "cat-harness/schemas/skill-topics.ts#SkillTopicSchema.path",
       "status": "candidate"
     },
     {
@@ -9860,6 +9909,13 @@
       "prefLabel": "TermGloss.layer",
       "definition": "Which layer owns it. Absent means `harness` — the middle, not a guess.",
       "source": "cat-harness/schemas/vocabulary.ts#TermGloss.layer",
+      "status": "candidate"
+    },
+    {
+      "id": "vocabulary.termgloss.replacedby",
+      "prefLabel": "TermGloss.replacedBy",
+      "definition": "The standard property that replaced this term, as a CURIE over {@link REPLACEMENT_PREFIXES} — a CURIE rather than an IRI because `namespaces.ts` imports this module, so the namespace constants cannot be imported back. Set when a term minted here turned out to restate a published one (owner, 2026-09-30, bean `xsqm`: \"emphasize preexisting standards … now align\"). The term stays in the vocabulary, `owl:deprecated` and `dcterms:isReplacedBy` this IRI, so data already carrying the old IRI still resolves to a definition that says where to go — a retired IRI that 404s is a broken link someone else owns.",
+      "source": "cat-harness/schemas/vocabulary.ts#TermGloss.replacedBy",
       "status": "candidate"
     },
     {

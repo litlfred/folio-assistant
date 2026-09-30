@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/glossary-terms.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/glossary-terms.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/library-core/glossary-terms.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/glossary-terms.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/glossary-terms.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/glossary-terms.md){: .fa-edit-source }
 
 {% raw %}
 # Glossary terms
@@ -203,7 +203,34 @@ templates with no change of its own. `bun run glossary:pot:check` is the gate.
   in every language; only labels and definitions are translated.
 - `translations/<locale>/glossary.po` is a different file (terminology hints
   for `translation-block-qa`). Do not confuse it with the `glossary/` directory.
-- Per-locale rendering of the glossary page is the next step, not built yet.
+
+### Translations and the per-locale pages (bean `c592`, owner 2026-09-30)
+
+A translation is a `.po` **beside its template**:
+`translations/<locale>/glossary/<instance>--<scheme>.po`. `bun run
+glossary:page` reads every such file (`readGlossaryTranslations`, through
+`glossary-pot.ts`'s own `potPath`, so the reader and the writer cannot
+disagree about where it is) and produces two things:
+
+- **a page per locale**, `docs/<locale>/glossary/index.md`, listing every
+  authored term with its translated label, alternative labels and
+  definition. An entry with no translation shows the **source text marked
+  _(untranslated)_** — never silently English, never dropped — and the page
+  states how many terms are fully translated;
+- **language-tagged SKOS**: the published `<instance>--<scheme>.skos.jsonld`
+  carries `skos:prefLabel` and `skos:definition` once per language
+  (`@language`), the source as `en`.
+
+`check:glossary` covers both, stale and orphan alike.
+
+**A translation is UNOFFICIAL until a person signs it off** (issue #206).
+Every glossary `.po` says so in its header and records
+`Last-Translator: folio-assistant agent (drafted, unofficial)` when an agent
+drafted it; every locale page carries `translation_status: unverified`.
+Keep code, identifiers and standard names (BPMN, SKOS, ODRL, PROV-O, JSON,
+IRI, `$schema`, `needs`) as written, and give each capitalised defined term
+ONE rendering per locale across every scheme — a term translated two ways
+reads as two concepts.
 
 ## A paper's glossary (bean `lqo9`, ruling 2: converge on SKOS)
 

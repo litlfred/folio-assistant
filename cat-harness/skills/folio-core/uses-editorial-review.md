@@ -21,7 +21,7 @@ humans, not generated.
 and a schema term's `uses` in bootstrap's `graph.schema.json`, say what a
 reader must know before the definition. Same discipline — AUTHORED, never
 inferred, with a text matcher kept only as a guard that list and prose agree
-([`glossary-terms`](glossary-terms.md) §"Ordered glossaries").
+([`glossary-terms`](../library/library-core/glossary-terms.md) §"Ordered glossaries").
 
 It is **not** the formal dependency graph. What a proof actually
 invokes is machine-derived from `lean.ref` (see

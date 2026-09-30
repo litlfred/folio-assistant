@@ -3,12 +3,13 @@
 title: 'glossary visualiser: 6 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-glossary
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-23T10:36:14Z
+updated_at: 2026-09-30T16:12:47Z
 parent: folio-assistant-4ccr
 ---
 
@@ -33,3 +34,14 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — Term column wide and dominated by the ledger path, breaks mid-token: Each first cell still carries span.p 'cat-harness/glossary/glossary-ledger.json#role/<id>' with line-break:anywhere. Column widths are 435/653 px at 1280 and 89/214 px at 390; at 390 the path span is 156 px tall (about 4 broken lines).
 - **STILL-PRESENT** — Heading repetitive: scope stated three times before first term: h1 'Glossary swimlane-glossary'; the lede ends 'Sub-graph cat-harness/glossary.'; ul.subs has 1 row 'swimlane-glossary cat-harness/glossary 48'. The scope still appears three times (renamed from glossary to swimlane-glossary).
 - **STILL-PRESENT** — Count differs from declaration (comment says 44, page shows 46): The page has 48 tbody rows and the subs row says 48. cat-harness.json@35402147f _visualiser_comment still says 'a real rendering: 44 terms'. The gap has widened (44 vs 48).
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 5 still present, 1 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — No way to find a term: no search, filter or A-Z jump: The page has 0 input/select/[role=search] and 0 A–Z anchor links over 48 rows. scrollHeight is 8909px at 1280 and 18908px at 390. The #1592 table filter does not reach this docs-auto page. (C_gl.mjs, lists.mjs, filt.mjs)
+- **STILL-PRESENT** — Order not alphabetical by displayed name (Activity log after Librarian; Human translator after Translation coordinator): The term order still runs … 'Librarian','Activity log','Narrative reviewer' … 'Translation coordinator','Human translator','User'. 45 of 48 names are out of alphabetical position. (C_gl.mjs)
+- **FIXED** — Markdown shows through: literal backticks in descriptions: Changed since 2026-09-29. 0 of 96 tbody cells contain a literal backtick (was 9). The 9 affected descriptions now render 30 <code> elements. 11 of those are links to in-page term anchors (e.g. 'reviewer' → #a-cat-harness-glossary-glossary-ledger-json-role-reviewer, across 6 rows), and all 11 anchors resolve. — #1594 (C_gl.mjs, gl2.mjs)
+- **STILL-PRESENT** — Term column wide and dominated by the ledger path, breaks mid-token: Each first cell still carries span.p 'cat-harness/glossary/glossary-ledger.json#role/<id>'. The column widths are 435/653px at 1280 and 89/214px at 390. At 390 the path span is 156px tall. (C_gl.mjs)
+- **STILL-PRESENT** — Heading repetitive: scope stated three times before first term: h1 'Glossary swimlane-glossary'. The lede still ends 'Sub-graph cat-harness/glossary.', and the subs row reads 'swimlane-glossary cat-harness/glossary 48'. (C_gl.mjs)
+- **STILL-PRESENT** — Count differs from declaration (comment says 44, page shows 46): The page has 48 rows. cat-harness.json@3779d5d27 _visualiser_comment still says 'a real rendering: 44 terms'. (C_gl.mjs; source read to compare the count only)
