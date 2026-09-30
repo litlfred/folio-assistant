@@ -10404,7 +10404,7 @@ ThemeOverrideNoteSchema.source <span class="fa-gloss-status">candidate, extracte
 ThemeRefSchema.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Declared instance name. Absent means the citing instance's own.</p>
+<p>The owning instance, as <code>owner/repo</code> (bean <code>6rmv</code>). Absent means the citing instance's own.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/theme.ts"><code>cat-harness/schemas/theme.ts#ThemeRefSchema.instance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--theme.themeschema.backdrop" data-fa-state="extracted" data-fa-gloss="">
@@ -11756,7 +11756,7 @@ VoiceProvenanceFlag.ruleIds <span class="fa-gloss-status">candidate, extracted</
 VoiceRefSchema.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The declared name of the instance holding it. Absent means this one.</p>
+<p>The instance holding it, as <code>owner/repo</code> (bean <code>6rmv</code>). Absent means this one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceRefSchema.instance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voiceruleschema.judgementonly" data-fa-state="extracted" data-fa-gloss="">
@@ -11777,7 +11777,7 @@ VoiceRuleSchema.title <span class="fa-gloss-status">candidate, extracted</span>
 VoiceRuleSourceSchema.instance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The DECLARED NAME of the instance holding the corpus, when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.</p>
+<p>The instance holding the corpus, as its planned <code>owner/repo</code> (bean <code>6rmv</code>; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.instance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voicerulesourceschema.libraryid" data-fa-state="extracted" data-fa-gloss="">

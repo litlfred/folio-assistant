@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { CatHarnessDeclarationSchema } from "./cat-harness";
@@ -31,6 +32,29 @@ describe("instance repositories — this checkout (bean 6rmv)", () => {
     expect(resolveInstance(map, e.repository)?.root).toBe(e.root);
     expect(resolveInstance(map, "cat-harness")?.repository).toBe(e.repository);
     expect(resolveInstance(map, "nobody/nothing")).toBeUndefined();
+  });
+});
+
+describe("instance references are owner/repo and resolve (bean 6rmv, phase 2)", () => {
+  const map = instanceRepositories(CHECKOUT);
+  // Every committed voice and instance declaration, as git lists them — the
+  // files whose `instance` fields name another instance.
+  const files = execFileSync("git", ["ls-files", "*voice.json", "*/*.json"], { cwd: CHECKOUT, encoding: "utf8" })
+    .split("\n")
+    .filter((f) => f.endsWith("voice.json") || /^([^/]+)\/\1\.json$/.test(f));
+  const refs: Array<{ file: string; ref: string }> = [];
+  for (const file of files) {
+    for (const m of readFileSync(join(CHECKOUT, file), "utf8").matchAll(/"instance":\s*"([^"]+)"/g)) {
+      refs.push({ file, ref: m[1]! });
+    }
+  }
+
+  test("there are references to check", () => {
+    expect(refs.length).toBeGreaterThan(100);
+  });
+
+  test("every one resolves through the derived map, by owner/repo", () => {
+    expect(refs.filter(({ ref }) => !map.byRepository.has(ref))).toEqual([]);
   });
 });
 

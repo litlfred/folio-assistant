@@ -318,7 +318,7 @@ describe("iris-sticky is DERIVED from iris-web, not restated (bean v8n5)", () =>
   it("declares no colour literal of its own: the palette arrives by inheritance", () => {
     const src = readFileSync(join(import.meta.dir, "themes.ts"), "utf-8");
     const decl = src.slice(src.indexOf("const IRIS_STICKY"), src.indexOf("const RAW"));
-    expect(decl).toContain('inherits: { instance: THEME_INSTANCE, themeId: IRIS_WEB.id }');
+    expect(decl).toContain('inherits: { instance: THEME_REPOSITORY, themeId: IRIS_WEB.id }');
     expect(decl).not.toMatch(/#[0-9a-f]{3,6}\b/i);
     expect(decl).not.toContain("palette:");
   });

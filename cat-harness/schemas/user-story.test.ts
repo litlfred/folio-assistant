@@ -36,7 +36,7 @@ describe("user stories point at their role (#1168)", () => {
       name: "t",
       stories: [
         { id: "ghost-1", role: { role: "ghost" }, want: "w" },
-        { id: "elsewhere-1", role: { instance: "other", role: "ghost" }, want: "w" },
+        { id: "elsewhere-1", role: { instance: "someone/other", role: "ghost" }, want: "w" },
       ],
     });
     expect(danglingStoryRoles(readUserStories(dir)!, GRAPH).map((s) => s.id)).toEqual(["ghost-1"]);
