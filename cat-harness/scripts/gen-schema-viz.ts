@@ -418,6 +418,14 @@ function esc(s) {
     return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
   });
 }
+/* A field's doc is prose that names things in markdown inline code; escaped
+   verbatim, "bean \x60abc\x60" showed its backticks. Escape first, then turn each
+   PAIRED span into <code>, the rule schemas/inline-code.ts applies server-side.
+   An unpaired backtick stays as written. \x60 is the backtick: the character
+   itself would end the template literal that carries this script. */
+function withCode(s) {
+  return esc(s).replace(/\x60([^\x60]+)\x60/g, "<code>$1</code>");
+}
 function byId(id) { return G.declIndex[id]; }
 
 /* A one-type UML neighbourhood: generalisations above, references below.
@@ -546,7 +554,7 @@ function detail(d) {
     h += "<table><caption class=\\"sub\\" style=\\"text-align:left;padding:0 0 4px\\">Fields</caption><thead><tr><th>name</th><th>type</th><th>notes</th></tr></thead><tbody>";
     d.fields.forEach(function (f) {
       h += "<tr><td><code>" + esc(f.name) + (f.optional ? '<span class="opt">?</span>' : "") +
-        "</code></td><td><code>" + esc(f.type) + "</code></td><td class=\\"sub\\">" + esc(f.doc || "") + "</td></tr>";
+        "</code></td><td><code>" + esc(f.type) + "</code></td><td class=\\"sub\\">" + withCode(f.doc || "") + "</td></tr>";
     });
     h += "</tbody></table>";
   }
