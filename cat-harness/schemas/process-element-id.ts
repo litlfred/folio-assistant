@@ -14,6 +14,7 @@
  * the loaded diagrams declare.
  *
  * @module schemas/process-element-id
+ * @graphNode schema
  */
 import { z } from "zod";
 
