@@ -399,7 +399,7 @@ export const RUNG_INPUT: ReadonlyArray<readonly [IngestRung, readonly string[]]>
   ["tabular", ["tabular.jsonld", TABULAR_CSVW_FILENAME]],
   // A source RECORDED and not held (bean `scfh`): `referenced-source.py`
   // writes the record, and this writes the manifest, as for every other rung.
-  ["referenced", ["referenced.jsonld"]],
+  ["referenced", ["referenced.json"]],
 ];
 
 /**
@@ -572,7 +572,7 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     const record = readJson<{
       identity?: { title?: string };
       source?: { file?: string; sha256?: string };
-    }>(join(dir, "referenced.jsonld"));
+    }>(join(dir, "referenced.json"));
     if (!record?.source?.sha256) return { state: "unreadable", rung };
     const manifest = {
       "@context": CONTENT_CONTEXT_URL,
@@ -582,7 +582,9 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
       // EMPTY on purpose: the entry holds no content nodes. The manifest says
       // the source exists and that none of it is held here.
       contains: [],
-      provenance: { kind: "script", id: "content/pipeline/gen-library-jsonld.ts" },
+      // The same value every manifest carries; `disposition` below says that
+      // none of the source's text is held.
+      provenance: "ingested",
       meta: {
         doc_id: docId,
         source_file: record.source.file,

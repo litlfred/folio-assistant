@@ -100,7 +100,7 @@ of declaring one: navigable without being held.
 | `pdf-ocr.py` | text extraction yields almost nothing | a text layer to then page-split |
 | `pdf-tables.py` | tables or figures matter | what `pdf-structure/v1`'s Section does not carry |
 | `slides-structure.py` | the package declares a **PPTX or ODP** deck | one section per **slide**, `images.json`, `accessibility.json` |
-| `referenced-source.py` | `--reference` given: the **licence forbids a copy** | `referenced.jsonld` only — identity, sha256, outline; no text |
+| `referenced-source.py` | `--reference` given: the **licence forbids a copy** | `referenced.json` only — identity, sha256, outline; no text |
 
 **The decision is mechanical, and the corpus shows all three paths.** Measured
 2026-09-19 over the four entries in `library/`:
@@ -168,7 +168,7 @@ bun run ingest FILE.pdf --reference IDENTITY.json --library <name>
 
 `IDENTITY.json` holds the title, version, document number, date, publisher,
 URL and the licence clause, **read off the document**. A missing field is
-refused, never guessed. The entry holds `referenced.jsonld` — the exact bytes'
+refused, never guessed. The entry holds `referenced.json` — the exact bytes'
 sha256, the embedded outline (clause titles and pages, so a citation can still
 name a clause), a `folio-materialization/v1` record in state `referenced`, and
 why the text is withheld — plus a manifest with an empty `contains`, and a

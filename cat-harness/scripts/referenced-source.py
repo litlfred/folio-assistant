@@ -7,7 +7,8 @@ media". Ingesting one the normal way commits every section's full text to a
 public repository, which is that condition broken. The owner chose (2026-09-30)
 to record rather than copy.
 
-This writes `referenced.jsonld` into `<out>/<slug>/`; `gen-library-jsonld.ts`
+This writes `referenced.json` — a plain JSON sidecar, like `images.json`, so
+its keys are not read as JSON-LD terms — into `<out>/<slug>/`; `gen-library-jsonld.ts`
 writes its manifest. It holds:
 
 - **what the document is** — title, version, document number and date, read
@@ -38,7 +39,6 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _pdf_doc_id import slugify as _slugify  # noqa: E402
-from _content_context import CONTENT_CONTEXT_URL  # noqa: E402
 
 
 def _load_tech_meta():
@@ -57,8 +57,10 @@ def outline(path: Path) -> list[dict]:
     """The PDF's EMBEDDED outline, or []. Never an inferred one (bean `6xaz`)."""
     try:
         import pymupdf
-    except ImportError:
-        import fitz as pymupdf  # type: ignore
+    except ImportError as e:
+        # Refused, not recorded as `none`: "this PDF has no outline" and "nothing
+        # could read it" are different facts, and only the first is a finding.
+        raise ValueError("pymupdf is not installed — cannot read the outline") from e
     with pymupdf.open(str(path)) as d:
         return [{"level": lvl, "title": t.strip(), "page": p if p > 0 else None} for lvl, t, p in d.get_toc()]
 
@@ -72,11 +74,8 @@ def record(path: Path, ident: dict) -> dict:
         raise ValueError(f"identity file lacks {', '.join(missing)} — read them off the document, never guess")
     meta = _tm.tech_meta(str(path))
     toc = outline(path)
-    slug = _slugify(path.stem)
     return {
-        "@context": CONTENT_CONTEXT_URL,
         "$schema": SCHEMA,
-        "@id": f"library/{slug}/referenced",
         "identity": {k: ident[k] for k in ("title", "version", "document_number", "date", "publisher")},
         "source": meta,
         "outline": toc,
@@ -105,7 +104,7 @@ def main() -> int:
         return 1
     out = a.outdir / _slugify(a.file.stem)
     out.mkdir(parents=True, exist_ok=True)
-    (out / "referenced.jsonld").write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    (out / "referenced.json").write_text(json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     # No manifest here: `gen-library-jsonld.ts --entry` writes it, as it does
     # for every rung, so there is one manifest writer (bean `scfh`).
     print(f"ok  {out.name}  referenced, {len(doc['outline'])} outline entries, no text held")

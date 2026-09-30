@@ -30,7 +30,7 @@ function staged(): string {
   // A two-page PDF with an embedded outline, written by PyMuPDF.
   const py = [
     "import sys",
-    "try:\n    import pymupdf\nexcept ImportError:\n    import fitz as pymupdf",
+    "import pymupdf",
     "doc = pymupdf.open()",
     "for t in ('Scope', 'Conformance'):\n    doc.new_page().insert_text((72, 72), t)",
     "doc.set_toc([[1, 'Scope', 1], [1, 'Conformance', 2]])",
@@ -57,13 +57,13 @@ function staged(): string {
 
 test("the record validates, carries the outline, and the entry passes with no text", () => {
   const e = staged();
-  const rec = ReferencedSourceSchema.parse(JSON.parse(readFileSync(join(e, "referenced.jsonld"), "utf-8")));
+  const rec = ReferencedSourceSchema.parse(JSON.parse(readFileSync(join(e, "referenced.json"), "utf-8")));
   expect(rec.outline.map((o) => o.title)).toEqual(["Scope", "Conformance"]);
   expect(rec.materialization.state).toBe("referenced");
   const manifest = JSON.parse(readFileSync(join(e, "manifest.jsonld"), "utf-8"));
   expect(manifest.contains).toEqual([]);
   const r = checkEntry(e);
-  expect(entryKind((f) => f === "referenced.jsonld")).toBe("referenced");
+  expect(entryKind((f) => f === "referenced.json")).toBe("referenced");
   expect(r.requirements.filter((q) => q.state === "unmet")).toEqual([]);
 });
 

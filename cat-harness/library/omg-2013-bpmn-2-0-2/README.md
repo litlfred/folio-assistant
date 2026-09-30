@@ -9,7 +9,7 @@ Held in the library [`cat-harness/library/`](../README.md) as `omg-2013-bpmn-2-0
 |---|---|
 | document id | `omg-2013-bpmn-2-0-2` |
 | source file | `omg-2013-bpmn-2-0-2.pdf` (sha256 `d3d9258a70bf…`) |
-| provenance | [object Object] |
+| provenance | ingested |
 
 | holds | count |
 |---|---|

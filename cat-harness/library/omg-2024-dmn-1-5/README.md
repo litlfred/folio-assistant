@@ -9,7 +9,7 @@ Held in the library [`cat-harness/library/`](../README.md) as `omg-2024-dmn-1-5`
 |---|---|
 | document id | `omg-2024-dmn-1-5` |
 | source file | `omg-2024-dmn-1-5.pdf` (sha256 `196c80d0f483…`) |
-| provenance | [object Object] |
+| provenance | ingested |
 
 | holds | count |
 |---|---|

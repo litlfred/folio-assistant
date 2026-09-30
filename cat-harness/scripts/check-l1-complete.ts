@@ -199,7 +199,7 @@ export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
   ["tabular", "tabular.jsonld"],
   ["archive", "contents.jsonld"],
   // Recorded, text withheld by licence — `referenced-source.py`, bean `scfh`.
-  ["referenced", "referenced.jsonld"],
+  ["referenced", "referenced.json"],
 ];
 
 /**
@@ -759,12 +759,12 @@ function derivableRequirements(dir: string): Requirement[] {
   // is a claim with no basis. And an entry of this kind that carries
   // `sections/` or `blocks/` is the copy this kind exists NOT to make, which is
   // worse than no entry, so it is refused rather than tolerated.
-  if (has("referenced.jsonld")) {
+  if (has("referenced.json")) {
     let r: unknown;
     try {
-      r = JSON.parse(readFileSync(join(dir, "referenced.jsonld"), "utf-8"));
+      r = JSON.parse(readFileSync(join(dir, "referenced.json"), "utf-8"));
     } catch (e) {
-      out.push({ name: "referenced-record", state: "unmet", detail: `referenced.jsonld unparseable: ${String(e)}` });
+      out.push({ name: "referenced-record", state: "unmet", detail: `referenced.json unparseable: ${String(e)}` });
     }
     if (r !== undefined) {
       const problems: string[] = [];

@@ -41,8 +41,7 @@ and then adapt the content in line with local policies,
 procedures, and digital tools. However, the process of 
 translating, operationalising, and incorporating health 
 and data recommendations into digital systems has 
-been unsystematic, slow, prone to error, and indif­
-ferent to technical standards (workflows, classifications, 
+been unsystematic, slow, prone to error, and indifferent to technical standards (workflows, classifications, 
 terminologies, identifiers, privacy), resulting in poor 
 transparency and traceability.3 Moreover, many digital 
 solutions are hard-coded, hindering ongoing alignment 
@@ -58,8 +57,7 @@ accountability.
 WHO envisions a future where everyone in the world 
 benefits fully and immediately from clinical, public health, 
 and data-use recommendations. SMART guidelines—
-standards-based, machine-readable, adaptive, require­
-ments-based, and testable—are an operationalisa­tion 
+standards-based, machine-readable, adaptive, requirements-based, and testable—are an operationalisation 
 of this vision for a new WHO-supported approach to 
 facilitate rapid, effective, global implementation of WHO 
 guideline recommendations in the digital age.
@@ -75,8 +73,7 @@ make
 interoperable, 
 institutionalise, 
 and update 
-digital systems consistent with evidence-based recom­
-mendations. SMART guidelines content is, by design, 
+digital systems consistent with evidence-based recommendations. SMART guidelines content is, by design, 
 software-neutral, formulated for adaptation into 
 whichever software platforms a country has elected 
 to use, within an exchanged digital health enterprise 
@@ -275,13 +272,11 @@ as a service to support updates to FHIR content and
 capabilities across subscribed digital systems.
 The final knowledge layer (L5: Dynamic—precision 
 health models) reflects the use of big data, advanced 
-analytics, and dynamic algorithms to facilitate preci­
-sion clinical and public health systems. Scaled-up 
+analytics, and dynamic algorithms to facilitate precision clinical and public health systems. Scaled-up 
 implementation of L4 digital systems will allow 
 for creation of country-specific, as well as globally 
 collated, anonymised, and normalised datasets.10 
-Advanced analytics and artificially intelligent tech­
-nology applied to these datasets facilitate context 
+Advanced analytics and artificially intelligent technology applied to these datasets facilitate context 
 specificity of globally curated recommendations in 
 countries, optimised for individual or population 
 outcomes. Evidence of improved health outcomes 

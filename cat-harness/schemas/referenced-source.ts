@@ -1,5 +1,5 @@
 /**
- * `referenced.jsonld`: a library entry that RECORDS a source and holds none of
+ * `referenced.json`: a library entry that RECORDS a source and holds none of
  * its text, written by `scripts/referenced-source.py`. Bean `scfh`, issue #1614.
  *
  * For a source whose licence forbids posting copies (the OMG BPMN and DMN
@@ -19,9 +19,7 @@ export const REFERENCED_SOURCE_SCHEMA_ID = "folio-referenced-source/v1" as const
 
 export const ReferencedSourceSchema = z
   .object({
-    "@context": z.string().min(1),
     $schema: z.literal(REFERENCED_SOURCE_SCHEMA_ID),
-    "@id": z.string().min(1),
     identity: z
       .object({
         title: z.string().min(1),
