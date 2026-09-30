@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-19T12:28:52Z
-updated_at: 2026-09-30T14:39:07Z
+updated_at: 2026-09-30T15:05:59Z
 parent: folio-assistant-zzmr
 ---
 
@@ -310,3 +310,8 @@ _2026-09-30T11:16:57Z_ — Claimed by claude/brave-hawking-511rrx — pushed to 
 
 ## 2026-09-30 14:36 — piece 1 verified LIVE
 PR #1483's staging deploy (commit `1e6511f`) wrote `STAGING/claude-brave-hawking-511rrx/staging-preview.json` on gh-pages, with `pr: 1483` and `issue: 1482`. `builtAt` was kept from the first deploy (13:50:49Z) while `commit` updated, which is the create-or-update rule working as designed. Pieces 2–4 run only on close, so this PR's merge is their first live run.
+
+
+
+## 2026-09-30 15:03 — pieces 2 and 4 verified LIVE
+PR #1483's merge ran `cleanup`. `STAGING/_retired/claude-brave-hawking-511rrx.json` exists on gh-pages with `retiredOn: 2026-09-30T14:59:02.797Z` and `retiredReason: "removed on PR #1483 close; confirmed by: merged"`, and it keeps the record's full history (builtAt 13:50:49Z, commit d2fb304). The branch was reused for PR #1628, whose deploy started a FRESH live record (pr 1628, issue 1626, a new builtAt) instead of reviving the retired one. Piece 3, the store surviving a full replace, is verified only by the next docs-site deploy.

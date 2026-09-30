@@ -1444,7 +1444,7 @@
     {
       "id": "block-qa.qareviewer.actor",
       "prefLabel": "QaReviewer.actor",
-      "definition": "The declared ACTOR this reviewer was acting as — an id in `.claude/skills/actors/`.",
+      "definition": "The declared ACTOR this reviewer was acting as — an id in `cat-harness/scenarios/actors/`.",
       "source": "cat-harness/schemas/block-qa.ts#QaReviewer.actor",
       "status": "candidate"
     },
@@ -3857,6 +3857,62 @@
       "status": "candidate"
     },
     {
+      "id": "document-structure.basestructure.raw",
+      "prefLabel": "BaseStructure.raw",
+      "definition": "The parsed variant, for the few readers that need its own fields.",
+      "source": "cat-harness/schemas/document-structure.ts#BaseStructure.raw",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksectionschema.cell_end",
+      "prefLabel": "NotebookSectionSchema.cell_end",
+      "definition": "Zero-based index of its last cell, inclusive.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.cell_end",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksectionschema.cell_start",
+      "prefLabel": "NotebookSectionSchema.cell_start",
+      "definition": "Zero-based index of the section's first cell, which is its heading cell.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.cell_start",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksectionschema.code_cells",
+      "prefLabel": "NotebookSectionSchema.code_cells",
+      "definition": "How many of those cells are code. Kept verbatim in the section text, never executed.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.code_cells",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksourceschema.language",
+      "prefLabel": "NotebookSourceSchema.language",
+      "definition": "The kernel language the notebook declares, or null when it declares none.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.language",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebooksourceschema.nbformat",
+      "prefLabel": "NotebookSourceSchema.nbformat",
+      "definition": "A notebook is JSON; this is what the file declared (`nbformat`), not sniffed bytes.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.nbformat",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebookstructureschema.structure_note",
+      "prefLabel": "NotebookStructureSchema.structure_note",
+      "definition": "What the rung did NOT claim. Required when `toc_source` is `none`.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema.structure_note",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.notebookstructureschema.toc_source",
+      "prefLabel": "NotebookStructureSchema.toc_source",
+      "definition": "`headings`: sections come from markdown headings. `none`: the notebook has no markdown heading, so it is one section, and `structure_note` says so.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema.toc_source",
+      "status": "candidate"
+    },
+    {
       "id": "external-schema.externalschemaschema.id",
       "prefLabel": "ExternalSchemaSchema.id",
       "definition": "Stable local id, e.g. `omg-bpmn-2.0`.",
@@ -5994,7 +6050,7 @@
     {
       "id": "log-entry.logentryschema.actor",
       "prefLabel": "LogEntrySchema.actor",
-      "definition": "The actor id from `.claude/skills/actors/`, where one is known.",
+      "definition": "The actor id from `cat-harness/scenarios/actors/`, where one is known.",
       "source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.actor",
       "status": "candidate"
     },

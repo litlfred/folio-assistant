@@ -498,7 +498,7 @@ The schema behind every declaration on this page is
 [`schemas/cat-harness.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts);
 the Role and Actor shapes are in
 [`scenarios/roles.json`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scenarios/roles.json)
-and `.claude/skills/actors/`; the Tool shape is
+and `cat-harness/scenarios/actors/`; the Tool shape is
 [`schemas/tool.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts).
 
 The audit that checks these joins actually resolve is `bun run kg:audit`, one
