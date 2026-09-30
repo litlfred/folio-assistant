@@ -8,9 +8,12 @@ import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { siteDirFor } from "../../../cat-harness/schemas/cat-harness.ts";
+
 const INSTANCE = resolve(import.meta.dir, "..", "..");
 const REPO = resolve(INSTANCE, "..");
-const PAGE = join(REPO, "cat-harness", "docs", "cat-harness", "catalogue", "who-iris", "index.html");
+const HARNESS = join(REPO, "cat-harness");
+const PAGE = join(HARNESS, siteDirFor(HARNESS), "cat-harness", "catalogue", "who-iris", "index.html");
 const html = existsSync(PAGE) ? readFileSync(PAGE, "utf-8") : "";
 const table = html.slice(html.indexOf("<h2>Every node</h2>"));
 const nodes = table.slice(0, table.indexOf("</table>"));
@@ -27,7 +30,7 @@ describe("the catalogue's rows lead somewhere (qgjh)", () => {
     const viewers = [...nodes.matchAll(/href="([^"#]*)#[^"]+"><code>/g)].map((m) => m[1]!);
     expect(viewers.length).toBeGreaterThan(0);
     for (const v of new Set(viewers)) {
-      expect(existsSync(join(REPO, "cat-harness", "docs", "cat-harness", "catalogue", "who-iris", v, "index.html")), v).toBe(true);
+      expect(existsSync(join(PAGE, "..", v, "index.html")), v).toBe(true);
     }
   });
 });

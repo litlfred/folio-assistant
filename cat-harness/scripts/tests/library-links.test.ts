@@ -6,6 +6,7 @@ import { describe, expect, it } from "bun:test";
 import { existsSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { libraryResolver } from "../lib/library-links.ts";
 import { itemFacts } from "../library-readmes.ts";
 
@@ -13,7 +14,7 @@ const INSTANCE = resolve(import.meta.dir, "..", "..");
 const REPO = resolve(INSTANCE, "..");
 const r = libraryResolver(REPO, INSTANCE);
 const entries = (
-  JSON.parse(readFileSync(join(INSTANCE, "docs", "assets", "library", "index.json"), "utf-8")) as {
+  JSON.parse(readFileSync(join(INSTANCE, siteDirFor(INSTANCE), "assets", "library", "index.json"), "utf-8")) as {
     entries: { id: string; instance: string; dir: string }[];
   }
 ).entries;
@@ -45,7 +46,7 @@ describe("a library reference resolves only where its target exists", () => {
 
 describe("the library projection carries what a reader opens (qgjh)", () => {
   const full = (
-    JSON.parse(readFileSync(join(INSTANCE, "docs", "assets", "library", "index.json"), "utf-8")) as {
+    JSON.parse(readFileSync(join(INSTANCE, siteDirFor(INSTANCE), "assets", "library", "index.json"), "utf-8")) as {
       entries: { id: string; dir: string; arxiv: string; readme?: string }[];
     }
   ).entries;
