@@ -234,12 +234,16 @@ export async function runSampleImport(opts: RunOptions): Promise<RunResult> {
             `summary: >-\n  One trial run of sample-import.bpmn over ${opts.item} in ${opts.instance}/catalogue, recorded as instance ${id}.` +
               ` A trial is kept and never published or refreshed. The bytes are NOT copied here: they are the held copy the` +
               ` catalogue already names, and duplicating them would add a second copy with no second source.`,
-            `instance: ${id}`,
-            `item: ${opts.item}`,
-            `store: ${opts.instance}/catalogue`,
             "---",
             "",
             `# Sample-import trial — ${node.title}`,
+            "",
+            // Kept in the body, not the front matter: the fsh-guts JSON-LD
+            // export maps only declared node fields, and an unmapped key is an
+            // "invalid property" warning on expansion.
+            `- **instance:** \`${id}\``,
+            `- **item:** \`${opts.item}\``,
+            `- **store:** \`${opts.instance}/catalogue\``,
             "",
             "The import test's result at landing, as `sample-import-check.ts` printed it:",
             "",
