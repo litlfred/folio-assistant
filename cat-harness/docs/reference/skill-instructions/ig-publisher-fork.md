@@ -78,6 +78,38 @@ Here, [`ig-ast-delta`](ig-ast-delta.md) lists, checks, diffs and renders what
 those produce. Owner: **no GitHub Actions for now**, and any CI added later
 **calls these same scripts**.
 
+## Without packages.fhir.org: seeding the cache from npm
+
+Some environments reach `registry.npmjs.org` but not `packages.fhir.org`
+(this one, 2026-09-30). The npm account **`grahamegrieve`** publishes FHIR
+packages there, and **the owner ruled it trusted**: Grahame Grieve founded HL7
+FHIR and maintains the IG Publisher. That account is the trust anchor, and no
+other account is.
+
+`ast-export/scripts/seed-fhir-cache-from-npm.py` (Tool
+`fhir-cache-seed-npm`) fills the FHIR package cache from it, with these rules:
+
+- **Exact versions only.** A pin to `hl7.fhir.uv.cql#1.0.0` is never satisfied
+  by 2.0.0. A build over substituted versions would measure a different IG
+  while looking like the real one, and the owner chose exact-only over an
+  "approximate" build.
+- **Trusted, then verified.** A tarball is accepted only when its npm
+  maintainers include `grahamegrieve`, and only after its published sha512
+  integrity checks. npm's `0.0.1-security` placeholder (a package taken down
+  as malicious; the unscoped `hl7.fhir.r4.core` is one) is refused. The real
+  core packages are under `@hl7/`.
+- **Nothing guessed.** Dependencies are followed through each package's own
+  `package.json`. `current`, `dev` and ranges are reported as missing.
+- **Provenance recorded** in `ast-export-npm-provenance.json` beside the cache.
+
+**What it cannot do, measured 2026-09-30.** The mirror mostly carries the
+latest version of each package. For smart-trust, 10 of the 30 exact versions
+in its transitive closure are there. smart-immunizations needs
+`who.template.root#current`, which is not on npm at all. So the seeder serves
+IGs whose pins are current releases. **It does not replace packages.fhir.org
+for the WHO IGs**, and a measurement taken over a partly seeded cache is not a
+measurement of them.
+
 ## The measurement that justifies the work
 
 From bean `nsbb`, using the Publisher's current metadata exports as an AST

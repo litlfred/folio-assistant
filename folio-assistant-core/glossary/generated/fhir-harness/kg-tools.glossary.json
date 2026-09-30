@@ -15,6 +15,14 @@
       "status": "candidate"
     },
     {
+      "id": "fhir-cache-seed-npm",
+      "prefLabel": "Seed the FHIR package cache from npm (exact versions, trusted publisher)",
+      "definition": "Fill `~/.fhir/packages` (or `--cache`) from registry.npmjs.org for an environment that cannot reach packages.fhir.org: exact version matches only, published by the owner-trusted account `grahamegrieve`, each tarball's sha512 integrity verified, npm's malicious-package placeholder refused, dependencies followed through each package's own `package.json`, provenance recorded. Missing versions are listed, never substituted.",
+      "notation": "fhir-cache-seed-npm",
+      "source": "fhir-harness/tools/index.ts#fhir-cache-seed-npm",
+      "status": "candidate"
+    },
+    {
       "id": "ig-ast-diff",
       "prefLabel": "List and view the delta between two IG ASTs",
       "definition": "Diff two ASTs by resource key: added, removed, changed (with a structural element-level differential) and version-changed resources, plus edges added and removed; optionally fold in the incremental plan, and render just-the-docs pages (an index that lists, a page per resource that shows) every one of which carries the provisional mark. `list <ast>` summarises one AST.",

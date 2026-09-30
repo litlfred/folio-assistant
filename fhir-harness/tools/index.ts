@@ -267,6 +267,34 @@ export function tools(baseUrl?: string): ToolDefinition[] {
     }),
 
     defineTool({
+      id: "fhir-cache-seed-npm",
+      title: "Seed the FHIR package cache from npm (exact versions, trusted publisher)",
+      description:
+        "Fill `~/.fhir/packages` (or `--cache`) from registry.npmjs.org for an environment that cannot reach packages.fhir.org: exact version matches only, published by the owner-trusted account `grahamegrieve`, each tarball's sha512 integrity verified, npm's malicious-package placeholder refused, dependencies followed through each package's own `package.json`, provenance recorded. Missing versions are listed, never substituted.",
+      install: { cli: "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher" },
+      invoke: { shell: "python3 fhir-ig-publisher/ast-export/scripts/seed-fhir-cache-from-npm.py [--cache <dir>] [--sushi-config <file>] [--dry-run] [name#version ...]" },
+      io: {
+        inputs: [
+          { name: "sushi-config", schema: t("FilesystemPath"), required: false, description: "Seed what this IG pins: its `dependencies:` and the core package for its `fhirVersion`." },
+          { name: "cache", schema: t("FilesystemPath"), required: false, description: "Default `~/.fhir/packages`, which SUSHI and the IG Publisher read." },
+          { name: "dry-run", schema: t("Flag"), required: false, description: "Resolve and report; download nothing." },
+        ],
+        outputs: [
+          { name: "installed", schema: t("Count") },
+          { name: "missing", schema: t("Count"), description: "Exit 1 when any is missing. Each is listed with why: not on npm, a different version only, an untrusted maintainer, or not an exact version." },
+        ],
+      },
+      satisfies: ["ig-publisher-fork"],
+      selection: {
+        when: "packages.fhir.org is unreachable and registry.npmjs.org is not.",
+        limits:
+          "The npm mirror mostly carries the latest version of each package: measured 2026-09-30 at 10 of smart-trust's 30 pinned versions, and without `who.template.root#current`. A partly seeded cache does not make a faithful build of an IG whose pins it misses.",
+        cost: "One download per package; the core packages are tens of megabytes.",
+      },
+      requires: { runtime: ["python3", "npm"], network: true },
+    }),
+
+    defineTool({
       id: "ig-ast-validity",
       title: "Is this IG AST still valid for the IG's current inputs?",
       description:

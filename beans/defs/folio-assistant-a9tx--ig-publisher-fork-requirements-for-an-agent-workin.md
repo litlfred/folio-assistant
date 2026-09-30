@@ -5,7 +5,7 @@ status: todo
 type: feature
 priority: normal
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-30T23:40:00Z
+updated_at: 2026-10-01T00:30:00Z
 parent: folio-assistant-uhkv
 ---
 
@@ -234,3 +234,20 @@ measurement only is the owner's call.
 4. `ast-export/scripts/w7-round.sh <work>`. Then
    `ig-ast.ts diff <base> <work>/w7/ast --plan <work>/w7/plan.json --site <dir>` and
    review it per `ig-ast-delta-review.bpmn`.
+
+
+## npm: the owner's ruling, and what it buys (2026-09-30)
+
+Owner: *"grahamegrieve is trusted. he is founder of hl7 fhir"*, and then
+**exact versions only**, over an approximate build with substituted
+versions. The earlier note above ("Not used") is superseded on trust. It still
+holds on coverage:
+
+- the seeder is built (fork `45af0f5`,
+  `ast-export/scripts/seed-fhir-cache-from-npm.py`, Tool `fhir-cache-seed-npm`,
+  documented in the `ig-publisher-fork` skill). It was verified by installing
+  8 packages into a scratch cache with integrity checked and provenance written,
+  and by refusing the `0.0.1-security` placeholder;
+- **coverage:** 10 of smart-trust's 30 pinned versions are on npm, and
+  `who.template.root#current` (smart-immunizations' template) is not. **W1/W2
+  still need packages.fhir.org.**

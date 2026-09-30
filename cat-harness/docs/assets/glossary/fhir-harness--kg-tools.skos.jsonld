@@ -34,6 +34,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/fhir-cache-seed-npm",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Seed the FHIR package cache from npm (exact versions, trusted publisher)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Fill `~/.fhir/packages` (or `--cache`) from registry.npmjs.org for an environment that cannot reach packages.fhir.org: exact version matches only, published by the owner-trusted account `grahamegrieve`, each tarball's sha512 integrity verified, npm's malicious-package placeholder refused, dependencies followed through each package's own `package.json`, provenance recorded. Missing versions are listed, never substituted."
+        }
+      ],
+      "skos:notation": "fhir-cache-seed-npm",
+      "dcterms:source": "fhir-harness/tools/index.ts#fhir-cache-seed-npm",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-ast-diff",
       "@type": "skos:Concept",
       "skos:inScheme": {
