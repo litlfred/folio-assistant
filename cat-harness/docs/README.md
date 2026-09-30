@@ -42,15 +42,15 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`translation-support.md`](translation-support.md) | Translation support |  |
 | [`_data/`](_data/) | 5 files | |
 | [`_includes/`](_includes/) | 9 files | |
-| [`ar/`](ar/) | 13 files | |
+| [`ar/`](ar/) | 14 files | |
 | [`architecture/`](architecture/) | 8 files | |
 | [`assets/`](assets/) | 472 files | |
 | [`beans/`](beans/) | 1 file | |
 | [`bootstrap/`](bootstrap/) | 1 file | |
 | [`cat-harness/`](cat-harness/) | 45 files | |
-| [`es/`](es/) | 13 files | |
+| [`es/`](es/) | 14 files | |
 | [`external-schemas/`](external-schemas/) | 1 file | |
-| [`fr/`](fr/) | 13 files | |
+| [`fr/`](fr/) | 14 files | |
 | [`fsh-guts/`](fsh-guts/) | 1 file | |
 | [`glossary/`](glossary/) | 6 files | |
 | [`guides/`](guides/) | 14 files | |
@@ -65,7 +65,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`reference/`](reference/) | 315 files | |
 | [`requirements/`](requirements/) | 1 file | |
 | [`research-and-analysis/`](research-and-analysis/) | 2 files | |
-| [`ru/`](ru/) | 13 files | |
+| [`ru/`](ru/) | 14 files | |
 | [`swimlane-glossary/`](swimlane-glossary/) | 1 file | |
 | [`themes/`](themes/) | 1 file | |
 | [`todos/`](todos/) | 1 file | |
@@ -74,5 +74,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`uml/`](uml/) | 130 files | |
 | [`uploads/`](uploads/) | 1 file | |
 | [`wireframes/`](wireframes/) | 146 files | |
-| [`zh/`](zh/) | 13 files | |
+| [`zh/`](zh/) | 14 files | |
 <!-- kg:subgraph:end -->
