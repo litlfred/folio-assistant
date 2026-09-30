@@ -1,7 +1,7 @@
 ---
 name: q-usage-watcher
 user_invocable: true
-inherits: local/integration-watcher
+inherits: folio-core/integration-watcher
 watch_arg: q-usage
 description: >
   q-usage integration watcher — detects how each content block treats

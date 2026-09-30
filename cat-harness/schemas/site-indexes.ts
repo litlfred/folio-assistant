@@ -28,6 +28,7 @@ import { z } from "zod";
 import { SUMMARY_STATUSES } from "./block-summary.js";
 import { TileCountsSchema } from "./tile-count.js";
 import { BeanIdSchema } from "./tool-types.js";
+import { ModelIdSchema } from "../../bootstrap-tools/schemas/model-registry.ts";
 
 /** A generated-index envelope: its `$schema` tag and the navbar count. */
 const envelope = <T extends string>(tag: T) => ({
@@ -266,7 +267,7 @@ export const BlockSummaryViewSchema = z
     status: z.enum(SUMMARY_STATUSES),
     text: z.string().optional(),
     state: z.string().optional(),
-    draftedBy: z.object({ kind: z.string(), id: z.string(), model: z.string().optional() }).strict().optional(),
+    draftedBy: z.object({ kind: z.string(), id: z.string(), model: ModelIdSchema.optional() }).strict().optional(),
     draftedAt: z.string().optional(),
     confirmedBy: z.string().optional(),
     rejectionReason: z.string().optional(),

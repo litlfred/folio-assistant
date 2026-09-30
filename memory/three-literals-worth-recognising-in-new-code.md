@@ -6,8 +6,9 @@ summary: "three literals worth recognising in new code"
 createdAt: 2026-09-19
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 Each shipped once:
 

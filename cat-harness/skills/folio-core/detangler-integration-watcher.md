@@ -1,7 +1,7 @@
 ---
 name: detangler-integration-watcher
 user_invocable: true
-inherits: local/integration-watcher
+inherits: folio-core/integration-watcher
 description: >
   Structural-QA integration watcher — watches the default branch + open
   active PRs + newly-opened PRs for organisational changes (paper /

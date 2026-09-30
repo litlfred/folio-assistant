@@ -6,8 +6,9 @@ summary: "there is no `recommendation` block kind"
 createdAt: 2026-09-19
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 A normative statement is a labelled, titled `prose` block; the convention and
 its limits are in `skills/folio-document-adapter/normative-statements.md`. A
