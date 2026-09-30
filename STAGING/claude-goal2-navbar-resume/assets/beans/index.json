@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 473,
+      "count": 478,
       "unit": "beans"
     }
   },
@@ -67,14 +67,14 @@
     {
       "id": "folio-assistant-0fua",
       "title": "Long flat lists with no search or filter",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:14Z",
-      "updatedAt": "2026-09-30T12:08:24Z",
+      "updatedAt": "2026-09-30T12:44:34Z",
       "preview": "Pages of 46 to 240+ rows are one flat list with no search, filter or grouping, so finding an entry means scrolling tens of thousands of pixels on a phone. Add a filter and grouping in the shared list component.\n\nObserved on: `glossary`, `processes`, `skills-index`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Re",
       "file": "beans/defs/folio-assistant-0fua--long-flat-lists-with-no-search-or-filter.md"
     },
@@ -133,6 +133,20 @@
       "updatedAt": "2026-09-22T21:02:55Z",
       "preview": "Owner: *\"review ... skills for document review for large things like a DAK or\nL1 digital transofrmation hadbook\"* and *\"put into folio-assistant-core\"*.\n\n**What.** A `review` skill package at `folio-assistant-core/skills/review/`,\ndeclared in folio-assistant-core.json:\n- `large-document-review`: the method. Slice the document by the folio/\n  graph, not by page. Assign slices to reviewer roles by s",
       "file": "beans/defs/folio-assistant-0jtl--skills-a-review-package-in-folio-assistant-core-la.md"
+    },
+    {
+      "id": "folio-assistant-0lj4",
+      "title": "UNDECLARED SIBLING: cat-harness imports 20x from bootstrap-tools, which it does not declare needing — and four checks all report clean",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T11:15:58Z",
+      "updatedAt": "2026-09-30T13:47:27Z",
+      "preview": "`cat-harness/` imports **20 times** from `bootstrap-tools/`, an instance it does\n**not declare needing** — and **four separate checks all report clean.**\n\nFound 2026-09-30 while a sibling agent was planning the `adapters/` closure. It\nflagged the relation as *undetermined* and said it could not find what treats\nthe two as one layer; this bean is that question answered.\n\n## The declarations\n\n```\nca",
+      "file": "beans/defs/folio-assistant-0lj4--undeclared-sibling-cat-harness-imports-20x-from-bo.md"
     },
     {
       "id": "folio-assistant-0lmb",
@@ -622,7 +636,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-24T06:06:37Z",
-      "updatedAt": "2026-09-24T18:27:03Z",
+      "updatedAt": "2026-09-30T10:58:02Z",
       "preview": "Measured 2026-09-24. Main went red on 10b48aed (the #1246 merge) in `TypeScript — tests, lint, types`: the test `prov-qaqc: the real repository > the committed page and logs are current (what check:prov-qaqc gates)` failed. #1245 had added the report; 172b558d (#1190) then committed a new workflow instance without regenerating it. It was fixed by a pure regeneration in #1249.\n\n**Why `bun run regen",
       "file": "beans/defs/folio-assistant-391j--regen-blind-spot-a-check-enforced-by-a-bun-test-no.md"
     },
@@ -1865,12 +1879,12 @@
       "title": "Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)",
       "status": "in-progress",
       "type": "epic",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:12:08Z",
-      "updatedAt": "2026-09-30T12:47:36Z",
+      "updatedAt": "2026-09-30T13:55:08Z",
       "preview": "Owner 2026-09-29: 'declared sub-graphs of cat-harness based on semantic concern (see sibling work on bootstrap definitions as named subset). dont need a separate facet. built into location.' Ruled 2026-09-30: **eight groups, KG + library move first**.\n\nA Subgraph is bootstrap's term (cat-harness/schemas/graph.ts): 'a named subset of Node Instances: a Declaration's directory entry, with its id, its",
       "file": "beans/defs/folio-assistant-9umr--concern-subgraphs-cat-harness-skills-live-in-one-d.md"
     },
@@ -2171,7 +2185,7 @@
     {
       "id": "folio-assistant-bamf",
       "title": "fhir-harness declares and populates FHIR IG Jekyll data (site.data.fhir.*) for the just-the-docs pipeline",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-zzmr",
@@ -2411,12 +2425,12 @@
       "title": "190 dangling refs in the KG: 137 ts-import, 28 md-link, 25 bpmn-skill",
       "status": "todo",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T06:33:48Z",
-      "updatedAt": "2026-09-26T06:33:48Z",
+      "updatedAt": "2026-09-30T11:10:02Z",
       "preview": "`bun run kg:detangle`, measured 2026-09-26 on `main`:\n\n```\nDetangle — 697 nodes, 2828 edges, 190 dangling\n```\n\nBreakdown, from the tool's own JSON rather than from prose:\n\n| via | count |\n|---|---|\n| `ts-import` | 137 |\n| `md-link` | 28 |\n| `bpmn-skill` | 25 |\n\nA dangling ref is a link-shaped value that does not dereference — bean `blv9`\n— at scale, in the graph the whole separation effort is comp",
       "file": "beans/defs/folio-assistant-cjvs--190-dangling-refs-in-the-kg-137-ts-import-28-md-li.md"
     },
@@ -2943,14 +2957,14 @@
     {
       "id": "folio-assistant-g9r2",
       "title": "who-iris replica: top-centre handle covers the INGESTED COPY banner and a link; 3 replica pages scroll sideways at 390",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T23:07:47Z",
-      "updatedAt": "2026-09-29T23:07:47Z",
+      "updatedAt": "2026-09-30T12:44:24Z",
       "preview": "Measured 2026-09-29 on a local build of main 35402147f.\n\n1. **The handle is back over the replica's own banner.** 2vne (owner 2026-09-27) moved the ▾ Folio handle back to top-centre as a short pill. On `who-iris/collection-collection-hq-publications.html` at 390×844 it covers the \"INGESTED COPY — not WHO\" text, which is 269z's original defect. At 1280×800 its box contains the centre of the \"folio-",
       "file": "beans/defs/folio-assistant-g9r2--who-iris-replica-top-centre-handle-covers-the-inge.md"
     },
@@ -3561,7 +3575,7 @@
     {
       "id": "folio-assistant-kott",
       "title": "Harness-namespaced values: one dotted key <harness>.<subgraph...>.<name> for :val AND site.data",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-zzmr",
@@ -3569,7 +3583,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-30T10:16:19Z",
       "updatedAt": "2026-09-30T10:16:19Z",
-      "preview": "Owner 2026-09-30: 'can we do something like bootstrap.blah, cat-harness.blah.blah, etc...?' Extends the 12s9 ruling (prefix = the DECLARING Subgraph's path joined with dots) from BPMN/schema prefixes to VALUES, and supersedes the prefix:name proposal on #1564.\n\n## The design\n- One key per value: <harness>.<subgraph...>.<name>, e.g. cat-harness.build.version, fhir-harness.<ig>.ig.version, qou.compu",
+      "preview": "Owner 2026-09-30: 'can we do something like bootstrap.blah, cat-harness.blah.blah, etc...?' Extends the 12s9 ruling (prefix = the DECLARING Subgraph's path joined with dots) from BPMN/schema prefixes to VALUES, and supersedes the prefix:name proposal on #1564.\n\n## The design — as confirmed by the owner, 2026-09-30\n\nOwner: *\"{{ site.data...}} is declared for fhir-harness only... it declares its sit",
       "file": "beans/defs/folio-assistant-kott--harness-namespaced-values-one-dotted-key-harnesssu.md"
     },
     {
@@ -3725,6 +3739,20 @@
       "updatedAt": "2026-09-27T05:08:36Z",
       "preview": "Found 2026-09-26 while diagnosing bean `7x8o` at the owner's instruction to find\nthe cause before touching any translation. **It is the third and largest member of\nthe `6b8u`/`ig4a` family, and it refutes most of `7x8o`.**\n\n`extractMarkdown` accumulates a PARAGRAPH until a blank line, so a hard-wrapped\nparagraph is correctly one entry. **List items and blockquotes are not\naccumulated** — each matc",
       "file": "beans/defs/folio-assistant-lvk9--extraction-list-items-and-blockquotes-are-extracte.md"
+    },
+    {
+      "id": "folio-assistant-lvoa",
+      "title": "TYPECHECK PROGRAM: folio-assistant-core/scripts is outside it — 33 files, and every instance-boundary move adds more while typecheck stays green",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T11:13:35Z",
+      "updatedAt": "2026-09-30T11:13:35Z",
+      "preview": "`bun run typecheck` is green over a program that does not contain\n`folio-assistant-core/scripts/` — **33 tracked `.ts` files, including nine this\nsession's own `yj6r` tranches moved there.** Every move up into that instance\nsilently removes its files from the typecheck program, and no gate reports a\nshrinking program.\n\nFound 2026-09-30 while planning the `adapters/` closure, which would have made\n",
+      "file": "beans/defs/folio-assistant-lvoa--typecheck-program-folio-assistant-corescripts-is-o.md"
     },
     {
       "id": "folio-assistant-lvw0",
@@ -4750,7 +4778,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-09-30T10:09:58Z",
+      "updatedAt": "2026-09-30T10:30:00Z",
       "preview": "Three things the pipeline already produces and this graph cannot hold. Proposal\nwith **options**, because at least two of the three have more than one\ndefensible shape and picking silently is how a kind gets registered wrong.\n\n## 1. Metadata indexes\n\nAlready partly solved: `fhir-artifact-index` exists, registered\n`renderable: false`, reconstructed from four partial views with `provenance`\nnaming t",
       "file": "beans/defs/folio-assistant-rjug--schema-proposal-metadata-indexes-binary-releases-a.md"
     },
@@ -5058,7 +5086,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:11:53Z",
-      "updatedAt": "2026-09-30T10:11:53Z",
+      "updatedAt": "2026-09-30T10:58:22Z",
       "preview": "Measured 2026-09-30, on a live subagent. A session delegating to agents that\neach work in their own `git worktree` — the pattern this repository's own\nguidance pushes, and the one used for every agent in that session — has its\nclaims land in the wrong tree.\n\n## The measurement\n\nAn agent was briefed to work in `/tmp/wtRJ/folio-assistant` and claim bean\n`rjug`. Immediately after it reported the clai",
       "file": "beans/defs/folio-assistant-ssfp--beansclaim-writes-to-processcwd-so-an-agent-workin.md"
     },
@@ -5263,6 +5291,20 @@
       "file": "beans/defs/folio-assistant-tjj6--goal-review-with-no-goals-given-ignores-the-goal-m.md"
     },
     {
+      "id": "folio-assistant-tqv4",
+      "title": "CENSUS SCOPE: root-scan-census is instance-scoped, so scripts moved up to core are counted nowhere — and its headline family reads 0 of 0 while the only instance of the shape sits outside it",
+      "status": "completed",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:28:50Z",
+      "updatedAt": "2026-09-30T13:51:27Z",
+      "preview": "`root-scan-census` is INSTANCE-scoped — `census(resolve(INSTANCE_ROOT, \"scripts\"))`\nat `cat-harness/scripts/root-scan-census.ts:231`, where `INSTANCE_ROOT` is\n`cat-harness/`. No other instance runs an equivalent census. So every script the\ninstance-boundary work moves **up** into `folio-assistant-core/` leaves this\nmeasurement and is counted **nowhere**.\n\n## The count falls, and falling reads as i",
+      "file": "beans/defs/folio-assistant-tqv4--census-scope-root-scan-census-is-instance-scoped-s.md"
+    },
+    {
       "id": "folio-assistant-tr05",
       "title": "KG MODELLING: dependents point at the general node; typed KG refs; skill I/O schemas (#1168)",
       "status": "in-progress",
@@ -5433,16 +5475,30 @@
     {
       "id": "folio-assistant-upgd",
       "title": "STREAM 1/3: GOAL 1 — the repo split and the KG's own declaration (vuip + zzmr, 47 open beans)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T18:08:55Z",
-      "updatedAt": "2026-09-23T09:18:18Z",
+      "updatedAt": "2026-09-30T13:47:14Z",
       "preview": "## What this is\n\nA **consolidation claim**, not new subject matter. The work plan stalled: between\n11:00Z and 15:19Z on 2026-09-22 seventeen PRs merged, and **nothing merged in the\n2h40m after**. CI is not the cause — `check:ci-health` reports all eight\nworkflows that ran in the window green, 48 Pages deploys succeeded and 0 failed.\nWhat stalled is that PRs went **conflicted** against a `main` mov",
       "file": "beans/defs/folio-assistant-upgd--stream-13-goal-1-the-repo-split-and-the-kgs-own-de.md"
+    },
+    {
+      "id": "folio-assistant-uyp8",
+      "title": "Ingest CODATA as a library dataset with provenance, and the skills/tools to ingest reference datasets",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:26:31Z",
+      "updatedAt": "2026-09-30T10:26:31Z",
+      "preview": "Owner 2026-09-30: *\"CODATA would need to be properly ingested as a dataset into library (bean up task to do, add skills tools) and variables be like {{ qou.library.codata-2022.mass-electron }} or so\"*.\n\n## Measured 2026-09-30\n- qou's CODATA values live in a hand-vendored Python snapshot: `computations/codata_2022_source.py` (CODATA_EDITION_YEAR=2022, CODATA_SOURCE_URL, ALLASCII_URL, VENDORED_SNAPS",
+      "file": "beans/defs/folio-assistant-uyp8--ingest-codata-as-a-library-dataset-with-provenance.md"
     },
     {
       "id": "folio-assistant-v048",
@@ -5657,6 +5713,20 @@
       "file": "beans/defs/folio-assistant-vm6m--test-data-fixed-and-generated-data-sets-as-a-skill.md"
     },
     {
+      "id": "folio-assistant-vpek",
+      "title": "LINT POISONED BY AGENT WORKTREES: eslint.config.mjs does not ignore .claude/worktrees/**, so one worktree-isolated agent reports 3158 errors on an unrelated branch",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T13:53:15Z",
+      "updatedAt": "2026-09-30T13:53:15Z",
+      "preview": "`eslint.config.mjs`'s `ignores` does not cover `.claude/worktrees/**`. A\nworktree-isolated agent puts a **complete second checkout of this repository**\nthere, so `bun run lint` walks into it and reports thousands of errors that\nbelong to nobody's diff.\n\nMeasured 2026-09-30, on `claude/declare-bootstrap-tools-need`, a branch whose\nwhole diff is three lines of JSON:\n\n```\n✖ 3163 problems (3158 errors",
+      "file": "beans/defs/folio-assistant-vpek--lint-poisoned-by-agent-worktrees-eslintconfigmjs-d.md"
+    },
+    {
       "id": "folio-assistant-vq8o",
       "title": "Prior-art page: open-source projects taking a similar approach",
       "status": "completed",
@@ -5773,12 +5843,12 @@
       "title": "cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:12:08Z",
-      "updatedAt": "2026-09-30T08:12:08Z",
+      "updatedAt": "2026-09-30T13:55:08Z",
       "preview": "Owner 2026-09-29/30: 'i want to split out cat-harness-tools too https://github.com/litlfred/cat-harness-tools' — 'see sibling work' (#1514, bootstrap-tools, bean 81tw). Direction ruled 2026-09-30: **tools depend on the harness** — cat-harness never imports the new instance.\n\nMeasured 2026-09-30: litlfred/cat-harness-tools is EMPTY (no commits). In scope: cat-harness/tools/ (8 files: discover, inde",
       "file": "beans/defs/folio-assistant-w2gr--cat-harness-tools-split-the-mcp-server-and-tool-im.md"
     },
@@ -6359,14 +6429,14 @@
     {
       "id": "folio-assistant-yag0",
       "title": "WHO-IRIS LIBRARY VIEWER IS A SHELL: the page generates, the link is right, and neither the corpus entry nor the 3 materialized assets appear",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T05:46:53Z",
-      "updatedAt": "2026-09-29T18:14:47Z",
+      "updatedAt": "2026-09-30T13:39:14Z",
       "preview": "Reported by the owner, 2026-09-23, from the deployed site:\n\n> library for who-iris does not work,\n> https://litlfred.github.io/folio-assistant/cat-harness/docs-auto/index/docs/who-iris-docs/\n>\n> i got to there by clickinv library under\n> https://litlfred.github.io/folio-assistant/who-iris/ whcih should toak me to\n> who-iris library w/ 3 thigns … (at least, all materialized assets)\n\n## What is NOT ",
       "file": "beans/defs/folio-assistant-yag0--who-iris-library-viewer-is-a-shell-the-page-genera.md"
     },
@@ -6436,7 +6506,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-27T07:47:30Z",
-      "updatedAt": "2026-09-30T08:57:59Z",
+      "updatedAt": "2026-09-30T10:28:59Z",
       "preview": "Found 2026-09-27 while answering the owner's question *\"how resolve/gate/qa escape\nimports?\"* — sibling to `zlmp` under the same SPLIT epic, and **not** a reopening\nof it.\n\n## Two axes, and only one of them has ever been driven to zero\n\n`zlmp` drove the MODULE axis to zero: `check:partition` reports **0**\nwrong-direction edges today, and that is correct on its own terms — it measures\nedges between",
       "file": "beans/defs/folio-assistant-yj6r--escapes-15-instance-boundary-imports-checkpartitio.md"
     },
@@ -6450,7 +6520,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:38:34Z",
-      "updatedAt": "2026-09-27T05:55:41Z",
+      "updatedAt": "2026-09-30T10:57:00Z",
       "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
       "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
     },
@@ -6499,14 +6569,14 @@
     {
       "id": "folio-assistant-yx9p",
       "title": "SEPARATION: the 5 partition package names and the 5 instance directory names do not agree — 1 of 5 does",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T06:33:48Z",
-      "updatedAt": "2026-09-26T06:33:48Z",
+      "updatedAt": "2026-09-30T13:47:14Z",
       "preview": "Measured 2026-09-26. `repo-partition.ts` partitions 1143 modules into five\ntarget packages. The repository holds sixteen declared instances as sibling\ndirectories. **The two naming schemes agree on one of five.**\n\n| partition package | directory | the directory's declared `name` |\n|---|---|---|\n| `agentic-harness` | `cat-harness/` | `cat-harness` |\n| `folio-assist-core` | `folio-assistant-core/` |",
       "file": "beans/defs/folio-assistant-yx9p--separation-the-5-partition-package-names-and-the-5.md"
     },
