@@ -10,4 +10,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `scenarios`, holding `sce
 | [`roles.json`](roles.json) | data |  |
 | [`stories.json`](stories.json) | data |  |
 | [`actors/`](actors/) | 36 files | |
+| [`capabilities/`](capabilities/) | 28 files | |
 <!-- kg:subgraph:end -->

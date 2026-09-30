@@ -7504,6 +7504,13 @@
       "status": "candidate"
     },
     {
+      "id": "skill-package.capabilitydefinitionschema.setupskill",
+      "prefLabel": "CapabilityDefinitionSchema.setupSkill",
+      "definition": "The skill that explains how to SET UP this capability — install it, configure it, verify it. Optional.",
+      "source": "cat-harness/schemas/skill-package.ts#CapabilityDefinitionSchema.setupSkill",
+      "status": "candidate"
+    },
+    {
       "id": "skill-package.remotepackagerefschema.sync",
       "prefLabel": "RemotePackageRefSchema.sync",
       "definition": "OPTIONAL, because a wrapper whose only job is to supply Docker requirements should not have to claim a sync strategy to be valid. Required until 2026-09-19, which is why both wrappers carry one.",
