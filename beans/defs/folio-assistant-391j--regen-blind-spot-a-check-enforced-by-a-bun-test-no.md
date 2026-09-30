@@ -38,3 +38,43 @@ The mitigation in use today is fixing forward fast: #1249 and #1257 each fixed a
 
 ## Summary of Changes
 The first diagnosis ("regen misses test-enforced checks") was wrong: `check:prov-qaqc` is a workflow step. The measured cause was merge skew. #1245's branch lacked #1190's workflow instance, so main was red at #1245's own merge (`08fe2c68`), one merge before the one that got blamed. The owner chose **fix forward** over a merge queue or an up-to-date requirement. `continual-progress` gains a section on it: watch main after every merge you make, fix a red main you find in a small PR of its own, and check the parent before blaming the last merge.
+
+## Five more witnesses in one session, 2026-09-30 — the rate, not just the shape
+
+2026-09-24 measured this once. A session that merged **seventeen** PRs on
+2026-09-30 turned `main` red **five** times, and four are this bean's shape:
+a corpus-walking artefact staled by the merge sequence rather than by any
+diff in it.
+
+| # | what went red | cause |
+|---|---|---|
+| 1 | `readme:subgraphs:check` | a GitHub **web-UI** upload added 3 PDFs to `uploads/` and ran no generator |
+| 2 | `check-bean-parents` | bean `14ve` landed with no `parent` |
+| 3 | `readme:subgraphs:check` | `beans/README.md`, `scripts/README.md` — merges, shifting bases |
+| 4 | `voices:viz` `folio:viz` `docs:auto` `kg:detangle` | four projections — same |
+| 5 | `audit:coverage:strict` + `:require-all` | sidecar recorded 177 gates; a gate had been added, making 178 |
+
+**Incident 2 is the one that costs the most to diagnose**, and it is why the
+shape matters more than the count: the failing job was `TypeScript — tests,
+lint, types (hard)`, on two pull requests whose diffs were **bean markdown and
+nothing else**. The check walks the real corpus, so the failure belonged to no
+diff. A reader who trusts the job name looks for a TypeScript regression that
+is not there.
+
+**Incident 1 adds a route this bean did not have.** A web-UI commit runs no
+generator AND, committed straight to `main`, skips the pull request where CI
+would have caught it. Neither remedy this bean names — merge queue, or
+require-up-to-date — touches that route, because there is no branch to be out
+of date.
+
+### What this does NOT change
+
+The diagnosis stands and the remedy is still a repository setting the owner
+picks. Nothing here argues for one over the other; it measures the rate at
+which the gap bites when several sessions merge in one window, which is the
+number the choice actually turns on.
+
+`bun run regen` remains the manual remedy and it works — incidents 3, 4 and 5
+were each fixed by running it and committing. **Nothing automates it after a
+merge**: `grep -rn regen .github/workflows/` finds no invocation. Whether that
+should change is part of the same open decision.
