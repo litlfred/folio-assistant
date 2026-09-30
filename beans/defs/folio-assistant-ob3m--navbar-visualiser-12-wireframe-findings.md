@@ -1,14 +1,15 @@
 ---
 # folio-assistant-ob3m
 title: 'navbar visualiser: 12 wireframe findings'
-status: todo
+status: in-progress
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-23T10:36:15Z
+updated_at: 2026-09-30T13:44:11Z
 parent: folio-assistant-4ccr
 ---
 
@@ -47,3 +48,90 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **FIXED** — 10. Bottom strip hides most of its tiles with no arrow, count or fade: With the glass open, .fa-glass-tiles holds 4 tiles (Todos, Filter, Settings, ⋯More). scrollWidth equals clientWidth (1280/1280 and 390/390) and none is off-screen at either width. The 20 declared tiles moved behind a labelled 'More — every visualisation this folio declares' tile. Caveat: at 1280 the More panel is 95… — dbbc2b6ef
 - **STILL-PRESENT** — 11. Most declared tiles wear the same glyph: Glass → More: 18 of the 20 .fa-glass-more-item .fa-tile draw the identical outline SVG path ('M12 4.5 5 9.5…'). Only beans and uploads differ. The tiles are now in the More panel rather than the strip.
 - **STILL-PRESENT** — 12. Two unrelated 'Settings': The glass ⚙ Settings panel (aria 'Folio settings — theme, avatars, opacity') holds Theme/Avatars/Opacity/Blur/Harnesses/Tidy and no text matches /discard|fish/ or points to the page settings. ▦ More actions → 'Settings' holds scheme, Larger text, Higher contrast, Underline links, Reduce motion and the Discarded item…
+
+
+---
+
+## 2026-09-30 — findings 11 and 12 root-caused; 11's declaration half now gated
+
+Worked from `claude/cool-fermi-htir5p`, on the owner's request for a QA check
+that *"each harness LHS navbar header and menus are themed appropriately and has
+consitent layout/icon/navgation"*.
+
+### Finding 11 has TWO causes, and only one was where the finding looked
+
+The render says *18 of 20 tiles draw the identical outline path*. Reading the
+client, `docs/assets/js/docs-ui.js`:
+
+- **`ROW_GLYPHS`** (the navbar row, 5 slots) already carries **five distinct
+  drawings**, and its own comment insists on it: *"a row where four slots are
+  indistinguishable is a row that says nothing."* The row is not the defect.
+- **`TILE_GLYPHS`** (the glass tile panel) carries **two** entries, `beans` and
+  `uploads` — which is exactly the finding's *"Only beans and uploads differ."*
+
+But the registry is not short of drawings. The declaration side is:
+**2 of 11 declared tiles name a glyph at all**; the other 9 call
+`glyphFor(undefined)` and take the fallback. Per instance: `cat-harness` 7 of 9,
+`smart-trust` 1 of 1, `who-iris` 1 of 1.
+
+**The two denominators are not the same number and must not be quoted as one.**
+The render's 20 includes tiles derived from pages rather than from
+`directories[].tile`; this 11 is the declaration-side half. A static check
+cannot see the rendered panel, so the rendered count still needs an e2e
+assertion — NOT done here, and named as outstanding below.
+
+### What is gated now — `bun run check:navbar-consistency`
+
+New: `cat-harness/scripts/check-navbar-consistency.ts`, wired into
+`code-quality-gates.yml` as `check:navbar-consistency:check` (`:check` and not
+`:strict`, deliberately — see below). 13 unit tests in
+`cat-harness/scripts/tests/navbar-consistency.test.ts`.
+
+| family | blocking | today |
+|---|---|---|
+| `unregistered-tile-icon` — a declared name absent from `TILE_GLYPHS` | yes | 0 |
+| `registry-disagreement` — one id, two registries, two glyphs | yes | 0 (overlap 1) |
+| `tile-without-icon` — declared tiles sharing the fallback | no | 9 of 11 |
+| `art-declared-no-icon` — images shipped, none named as `icon` | no | 1 (`who-iris`) |
+
+Every family was falsified before it shipped: plant the defect, watch it fire,
+restore, watch it pass. Renaming either registry literal exits **2**, not 0 —
+could-not-determine is never green (`dh4f`), and a registry read as empty would
+satisfy every family above.
+
+**Advisory rather than blocking for the two coverage families**, on the line
+`check:theme-art` already drew: whether an artefact deserves its own drawing is
+editorial, and `glyphFor`'s fallback is deliberately defended in its docblock.
+What was missing was never the fallback — it was the COUNT. This finding had to
+be taken by hand off a render.
+
+### One correction to the record
+
+A first draft of the check treated the instance-level `icon` as a glyph-registry
+name and would have reported `cat-harness`'s navbar mark as falling back to the
+net. **It does not.** `sync-docs-harness.ts` resolves it with
+`decl.images?.find((i) => i.id === decl.icon)`, so `icon: "mark"` ends at
+`/assets/img/icons/cat-mark.svg` and works. Two unrelated namespaces:
+
+- instance `icon` -> an id in that instance's `images` -> an SVG file
+- `directories[].tile.icon` -> a name in `TILE_GLYPHS` -> an inline glyph
+
+The script now carries a test per namespace so a later change cannot re-collapse
+them.
+
+A second draft had a `dangling-instance-icon` family. It was **dead code**:
+`readDeclaration` already throws on an `icon` naming no declared image, and
+names every valid id while doing it. The planted-defect test found it by getting
+the schema's error instead of the finding — reading the code did not show it.
+The script now refuses (exit 2) on an unloadable declaration rather than
+duplicating a verdict the schema owns.
+
+### Still open on this bean
+
+- **Finding 11, rendered half** — an e2e assertion counting distinct
+  `.fa-tile svg` in the rendered panel. The static check cannot reach it.
+- **Finding 12** — two unrelated "Settings", both wearing a gear, neither
+  pointing at the other. Untouched: it is a navigation-structure defect, not an
+  icon-resolution one, and the repair (rename, or cross-link) is an editorial
+  call rather than a check's.
+- The remaining ten findings on this bean.
