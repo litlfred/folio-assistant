@@ -186,10 +186,25 @@ put in `methodologyId`. And an implementation that emits one anyway is
 inventing an id, which is how a consumer ends up resolving a methodology that
 does not exist.
 
-So the selector's honest output today is a FAMILY plus a within-family
-suggestion in prose, and the tables above are material for that prose rather
-than a menu of returnable answers. Whether individual methods should get nodes
-— 23 of them, most unsourced — is a decision for the owner, on `7e59`.
+**Owner ruled 2026-09-30: FAMILY plus prose.** The selector returns a
+methodology node that exists — `mcdm-aggregation`,
+`probabilistic-decision-analysis`, `kepner-tregoe`, `dmn` and the rest — and
+names the within-family method in `rationale`, as prose. The 23 rows above are
+material for that prose. They are not a menu of returnable answers, and no
+individual method gets a node.
+
+Three things follow, and the third is the one to keep in view:
+
+1. **`methodologyId` is always resolvable.** Every value the selector can emit
+   is a node in the graph, so a consumer that follows the id finds a document.
+2. **An unsourced row may still be named in prose**, and must be named as what
+   it is. "Of the distance-based family, TOPSIS is the usual first reach —
+   note that nothing in this repository's library covers it" is honest; "use
+   TOPSIS" as a returned recommendation is not.
+3. **A request that lands wholly outside the sourced families gets a refusal,
+   not the nearest fit.** `SelectionResultSchema` already carries the field
+   for it — the explanation for when no methodology fits. An agent asking for
+   an outranking method is told none is adopted here.
 
 **And these families are entirely absent, even as recall**: ambiguity and
 robust decision-making (maximin under unknown distributions), real options,

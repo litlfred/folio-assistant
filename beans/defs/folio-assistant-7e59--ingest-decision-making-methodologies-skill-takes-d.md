@@ -67,9 +67,12 @@ cover**, which is the same rule its own output already follows for `not-for`.
 - [ ] the author replaces this body with the real scope
 - [x] the skill's ranking output has a schema — `MethodologyRecommendationSchema`,
       and reading it turned up the granularity mismatch below
-- [ ] **owner:** do individual methods get methodology nodes, or does the
-      selector return a FAMILY plus prose? 23 methods are tabulated, 15 of
-      them unsourced, and `methodologyId` requires a node that none of them has
+- [x] **owner ruled 2026-09-30: FAMILY plus prose.** No individual method
+      gets a node; the selector returns an existing node and names the
+      within-family method in `rationale`. An unsourced method may be named in
+      prose as unsourced, never returned as a recommendation, and a request
+      landing wholly outside the sourced families gets the "no methodology
+      fits" explanation rather than the nearest fit. Recorded in the skill.
 - [x] the selector declares the families it does NOT cover (2026-09-30)
 - [ ] owner's call on the `250906388v1` slug
 
