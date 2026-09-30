@@ -203,6 +203,31 @@
             ]
           }
         },
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "description": "A forge repository's full name, owner/name"
+        },
+        "livesAt": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "description": "A forge repository's full name, owner/name"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9._-]+(?:\\/[A-Za-z0-9._-]+)*$"
+            }
+          },
+          "required": [
+            "repository",
+            "path"
+          ],
+          "additionalProperties": false
+        },
         "stub": {
           "type": "string",
           "minLength": 1
@@ -845,8 +870,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-52cz/cat-harness.jsonld",
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-52cz",
-    "sha": "59bce69223dd53f0f191dcebbbb63257f401673b",
+    "sha": "79eaa32209eb36eae5d08e715c94a2fa9a991bc0",
     "pr": "1659/merge",
-    "run": "36759574997"
+    "run": "36764851084"
   }
 }
