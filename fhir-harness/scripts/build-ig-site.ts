@@ -16,7 +16,7 @@
  * |---|---|---|
  * | `input/pagecontent/*.md` | `<page>.md` with front matter | the pages; title, parent and order from `sushi-config.yaml` `pages:` |
  * | `input/includes/*`, `input/pagecontent/*`, `input/images/*.svg` | `_includes/` | the Publisher resolves `{% include %}` against all three, so pages include each other and inline SVGs |
- * | `input/images/*` | the site root | the Publisher publishes them there, so pages say `<img src="x.png">` |
+ * | `input/images/*` | the site root | the Publisher publishes them there, so pages say `<img src="x.png">` — except a `.json`/`.jsonld` that does not parse, which is left out and reported: publishing a broken data file under our site blocks the deploy, and whose file it is cannot be told from a file no parser can read |
  * | `input/images-source/*.plantuml` | `_includes/<name>.svg` | the Publisher RENDERS these; rendered here with `--plantuml-jar`, otherwise a visible "not rendered" marker, reported |
  * | `ig-site-data` over the source | `_data/fhir.json` | `site.data.fhir.*`, only what is sourced |
  * | — | `_config.yml` | just-the-docs, one site |
@@ -133,6 +133,8 @@ export interface StageResult {
   rendered: string[];
   /** Included files the source does not hold and nothing rendered: a marker stands in. */
   notRendered: string[];
+  /** `input/images` data files (`.json`, `.jsonld`) that do not parse: not published, with the parser's reason. */
+  unparseable: string[];
   siteData: IgSiteDataResult;
 }
 
@@ -207,7 +209,16 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   }
   const imagesDir = join(src, "input", "images");
   let images = 0;
+  const unparseable: string[] = [];
   for (const f of files(imagesDir)) {
+    if (/\.(json|jsonld)$/.test(f)) {
+      try {
+        JSON.parse(readFileSync(join(imagesDir, f), "utf-8"));
+      } catch (e) {
+        unparseable.push(`${f} (${(e as Error).message})`);
+        continue;
+      }
+    }
     copyFileSync(join(imagesDir, f), join(out, f));
     if (f.endsWith(".svg")) {
       copyFileSync(join(imagesDir, f), join(out, "_includes", f));
@@ -252,7 +263,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
       "",
     ].join("\n"),
   );
-  return { pages: pages.sort(), unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, siteData };
+  return { pages: pages.sort(), unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, siteData };
 }
 
 /**
@@ -301,6 +312,7 @@ export function describeStage(r: StageResult): string {
   return [
     `pages: ${r.pages.length}; includes: ${r.includes}; images: ${r.images}; diagrams rendered: ${r.rendered.length}`,
     ...(r.notRendered.length ? [`NOT RENDERED (a visible marker stands in): ${r.notRendered.join(", ")}`] : []),
+    ...(r.unparseable.length ? [`NOT PUBLISHED (not valid JSON in the IG source): ${r.unparseable.join("; ")}`] : []),
     ...(r.unlisted.length ? [`not in the navigation source (titled by file name): ${r.unlisted.join(", ")}`] : []),
     ...(r.menuMissing.length ? [`menu items with no page in this source (Publisher-generated): ${r.menuMissing.join(", ")}`] : []),
     describeSiteData(r.siteData),

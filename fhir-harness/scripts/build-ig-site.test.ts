@@ -4,7 +4,7 @@
  */
 
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { dedupeIds, includeTargets, pageNav, stageIgSite, type StageResult } from "./build-ig-site";
@@ -46,6 +46,8 @@ beforeAll(() => {
   writeFileSync(join(pc, "orphan.md"), "Not in sushi-config.\n");
   writeFileSync(join(src, "input", "includes", "notes.md"), "a note\n");
   writeFileSync(join(src, "input", "images", "logo.png"), "png");
+  writeFileSync(join(src, "input", "images", "good.jsonld"), '{"@id": "x"}');
+  writeFileSync(join(src, "input", "images", "broken.jsonld"), '{"a: 1}');
   writeFileSync(join(src, "input", "images-source", "flow.plantuml"), "@startuml\nA -> B\n@enduml\n");
   out = join(dir, "site");
   r = stageIgSite(src, out, { baseurl: "/site/example" });
@@ -78,6 +80,13 @@ describe("staging one IG as one just-the-docs site", () => {
     expect(r.pages).toEqual(["changes.md", "index.md", "orphan.md", "overview.md"]);
     for (const f of ["notes.md", "overview.md", "index.md"]) expect(readFileSync(join(out, "_includes", f), "utf-8").length).toBeGreaterThan(0);
     expect(readFileSync(join(out, "logo.png"), "utf-8")).toBe("png");
+  });
+
+  test("a data file that does not parse is not published, and is reported", () => {
+    expect(existsSync(join(out, "good.jsonld"))).toBe(true);
+    expect(existsSync(join(out, "broken.jsonld"))).toBe(false);
+    expect(r.unparseable).toHaveLength(1);
+    expect(r.unparseable[0]).toStartWith("broken.jsonld (");
   });
 
   test("a diagram the Publisher renders, with no renderer given, is a VISIBLE marker and reported", () => {
