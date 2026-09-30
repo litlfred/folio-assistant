@@ -3921,7 +3921,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declared ACTOR this reviewer was acting as — an id in `.claude/skills/actors/`."
+          "@value": "The declared ACTOR this reviewer was acting as — an id in `cat-harness/scenarios/actors/`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/block-qa.ts#QaReviewer.actor",
@@ -10464,6 +10464,158 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-structure.basestructure.raw",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BaseStructure.raw"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The parsed variant, for the few readers that need its own fields."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#BaseStructure.raw",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-structure.notebooksectionschema.cell_end",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSectionSchema.cell_end"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Zero-based index of its last cell, inclusive."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.cell_end",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-structure.notebooksectionschema.cell_start",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSectionSchema.cell_start"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Zero-based index of the section's first cell, which is its heading cell."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.cell_start",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-structure.notebooksectionschema.code_cells",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSectionSchema.code_cells"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How many of those cells are code. Kept verbatim in the section text, never executed."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema.code_cells",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-structure.notebooksourceschema.language",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSourceSchema.language"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kernel language the notebook declares, or null when it declares none."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.language",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-structure.notebooksourceschema.nbformat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSourceSchema.nbformat"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A notebook is JSON; this is what the file declared (`nbformat`), not sniffed bytes."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.nbformat",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-structure.notebookstructureschema.structure_note",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookStructureSchema.structure_note"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the rung did NOT claim. Required when `toc_source` is `none`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema.structure_note",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-structure.notebookstructureschema.toc_source",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookStructureSchema.toc_source"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`headings`: sections come from markdown headings. `none`: the notebook has no markdown heading, so it is one section, and `structure_note` says so."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema.toc_source",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/external-schema.externalschemaschema.id",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -16271,7 +16423,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The actor id from `.claude/skills/actors/`, where one is known."
+          "@value": "The actor id from `cat-harness/scenarios/actors/`, where one is known."
         }
       ],
       "dcterms:source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.actor",
