@@ -10,7 +10,7 @@ import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { census } from "../root-scan-census.ts";
+import { build, census, censusRepository } from "../root-scan-census.ts";
 
 function repo(files: Record<string, string>): { dir: string; cleanup: () => void } {
   const dir = mkdtempSync(join(tmpdir(), "census-"));
@@ -21,6 +21,48 @@ function repo(files: Record<string, string>): { dir: string; cleanup: () => void
   }
   return { dir, cleanup: () => rmSync(dir, { recursive: true, force: true }) };
 }
+
+describe("the census covers the repository, and says which instances it scanned (tqv4)", () => {
+  const decl = (name: string) => JSON.stringify({ name, version: "0.1.0", directories: [] });
+
+  test("a script in a SECOND instance is counted — moving a script up never drops it from the census", () => {
+    // The defect: the census scanned only its own instance, so every script
+    // moved into another read as one fewer scanner, and the headline family
+    // read 0 of 0 while its only member sat one directory over.
+    const { dir, cleanup } = repo({
+      "alpha/alpha.json": decl("alpha"),
+      "alpha/scripts/a.ts": 'const ROOT = "x";\nreaddirSync(ROOT);\n',
+      "beta/beta.json": decl("beta"),
+      "beta/scripts/b.ts": 'const REPO_ROOT = "x";\nreaddirSync(REPO_ROOT);\n',
+      "gamma/gamma.json": decl("gamma"),
+    });
+    const { rows, scope } = censusRepository(dir);
+    expect(rows.map((r) => r.file).sort()).toEqual(["alpha/scripts/a.ts", "beta/scripts/b.ts"]);
+    expect(scope.map((s) => [s.instance, s.state, s.enumerating])).toEqual([
+      ["alpha", "scanned", 1],
+      ["beta", "scanned", 1],
+      ["gamma", "no-scripts-dir", 0],
+    ]);
+    cleanup();
+  });
+
+  test("the sidecar carries the scope, so a drop in scope cannot read as a drop in scanners", () => {
+    const { dir, cleanup } = repo({
+      "alpha/alpha.json": decl("alpha"),
+      "alpha/scripts/a.ts": 'const ROOT = "x";\nreaddirSync(ROOT);\n',
+    });
+    const { rows, scope } = censusRepository(dir);
+    const fam = build(rows, scope).families.scope;
+    expect(fam.entries).toEqual([{ instance: "alpha", path: "alpha/scripts", state: "scanned", enumerating: 1 }]);
+    cleanup();
+  });
+
+  test("over this repository, folio-assistant-core's scripts are in scope", () => {
+    const { rows, scope } = censusRepository(resolve(import.meta.dir, "..", "..", ".."));
+    expect(scope.find((s) => s.path === "folio-assistant-core/scripts")?.state).toBe("scanned");
+    expect(rows.some((r) => r.file.startsWith("folio-assistant-core/scripts/"))).toBe(true);
+  });
+});
 
 describe("root-scan census", () => {
   test("A CONVERTED SCANNER STAYS IN THE DENOMINATOR", () => {
