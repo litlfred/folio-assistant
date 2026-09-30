@@ -24,7 +24,7 @@ There is no Task, no skill and no Tool for the act of *putting a file into
 | fact | how measured |
 |---|---|
 | `document-ingestion.bpmn` starts at `StartEvent_Dropped`, *"A file lands in uploads/"* — an EVENT; its first activity is `Task_Detect` | read the file |
-| `document-intake` triggers on *"User drops a file into `uploads/`"* | `skills/folio-paper-adapter/document-intake.md` |
+| `document-intake` triggers on *"User drops a file into `uploads/`"* | `skills/authoring/folio-paper-adapter/document-intake.md` |
 | the ingest Tools take a file already present — *"The upload to ingest, under the declared `uploads` graph"* | `cat-harness/tools/index.ts`, `ingest-stdlib` / `ingest-extended` |
 | three commits in the whole history added files to `uploads/` through the GitHub web UI: `c8349950fa5`, `f4ddfc65c8d`, `b8549160bb1` — each author `Carl Leitner`, committer `GitHub`, subject `Add files via upload` | `git log -- cat-harness/uploads uploads`, then `git log -1 --format` per commit |
 | `c8349950fa5` has ONE parent, `9698eff0f87`, itself a merge of PR #1493 — so it was committed straight onto `main`, skipping the PR where CI runs | `git log -1 --format='%P'`, `git log --oneline -3` |

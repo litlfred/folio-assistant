@@ -70,8 +70,8 @@ bun run src/index.ts --check-deps      # what this environment can do
 | Где | Что это дает |
 |---|---|
 | `skills/folio-core/` | не зависит от контента: координация, наблюдатели, QA, рендеринг, библиография |
-| `skills/folio-paper-adapter/` | статьи: Lean, LaTeX, доказательства, симуляторы |
-| `skills/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
+| `skills/authoring/folio-paper-adapter/` | статьи: Lean, LaTeX, доказательства, симуляторы |
+| `skills/authoring/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
 | [Справочник по схемам навыков](../../reference/skills/) | сгенерированный контракт ввода/вывода для каждого навыка |
 | [Инструкции по навыкам](../../reference/skill-instructions/) | сгенерированные полные тексты инструкций |
 | [Навыки и роли](../../skills.html) | композиция навыков, ролей и возможностей |

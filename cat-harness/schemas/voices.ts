@@ -4,7 +4,7 @@
  * A **voice** is a named set of editorial rules an agent applies when authoring
  * or reviewing prose. Voices are OVERLAID, not chosen: a folio may activate
  * several, and the union of their rules applies on top of the base house voice
- * in `skills/folio-core/one-voice-style-guide.md`.
+ * in `skills/authoring/authoring-core/one-voice-style-guide.md`.
  *
  * ## A voice is a third axis, and conflating it with the other two is costly
  *
@@ -144,7 +144,7 @@ export const VoiceRuleSourceSchema = z
      * The voice keeps `provenance: "house"` regardless, because the citations
      * are evidence FOR this project's standard rather than its source; see
      * {@link VOICE_PROVENANCE}. `technical-writer` is the live `path` case,
-     * citing `skills/folio-core/technical-documentation.md`.
+     * citing `skills/authoring/authoring-core/technical-documentation.md`.
      */
     // Named `kgRef` until #1168 B9d (owner, 2026-09-30): it holds a PATH, not
     // a `{kind, id}` KG reference, and the old name said the other thing.
@@ -317,7 +317,7 @@ export type VoiceProvenance = (typeof VOICE_PROVENANCE)[number];
  *
  * Measured over the five voices this repository ships, 2026-09-21: **one
  * fires.** `technical-writer` declares `assertion` with 3 of 9 rules citing
- * `skills/folio-core/technical-documentation.md`; `milnor` does not fire, by
+ * `skills/authoring/authoring-core/technical-documentation.md`; `milnor` does not fire, by
  * the ruling; the three WHO voices cite only ingested documents. A flag on
  * `technical-writer` is the right outcome rather than a false positive — it is
  * a genuinely mixed voice, and asking whether that makes it `house` is a
