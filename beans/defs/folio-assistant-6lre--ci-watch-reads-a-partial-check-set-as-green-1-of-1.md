@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6lre
 title: 'CI WATCH READS A PARTIAL CHECK SET AS GREEN: 1 of 13 registered, verdict PASS — ask the check SUITES, not only the runs'
-status: todo
+status: in-progress
 type: bug
 priority: high
 created_at: 2026-09-30T16:15:00Z
-updated_at: 2026-09-30T17:29:28Z
+updated_at: 2026-09-30T18:43:34Z
 parent: folio-assistant-1xhc
 ---
 
@@ -159,3 +159,5 @@ them.
 
 The fourth item above ("the base-branch alternative is written down as
 considered and rejected") is wrong as written and is superseded by this.
+
+_2026-09-30T18:43:34Z_ — Claimed by claude/cool-fermi-htir5p — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
