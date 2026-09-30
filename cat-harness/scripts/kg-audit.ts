@@ -117,7 +117,8 @@ import {
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "./skill-packages.js";
 import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
-import { graphVerdict, proseGraphs } from "./lsi.ts";
+import { toolDownstreamEntry, undeclaredDownstream } from "./downstream-runs.ts";
+import { VERIFIERS } from "./publish-verify.ts";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
@@ -1260,6 +1261,8 @@ function auditSkills(): KgQaReport[] {
  * mistake avoided in `readSatisfiers`, and the reason both fixes are in the
  * DATA rather than in the classification.
  */
+const VERIFIER_IDS = VERIFIERS.map((v) => v.id);
+
 function auditTools(instance?: string): KgQaReport[] {
   const check = checkTools(instance);
   const unresolved = unresolvedPaths(instance);
@@ -1332,6 +1335,9 @@ function auditTools(instance?: string): KgQaReport[] {
             // `n/a` rather than a pass when the Tool has no derived alternative.
             alternatives.has(t.id),
           ),
+          // The downstream-tool family (bean `fq5u`): three states, and no
+          // run record is never a pass. See `scripts/downstream-runs.ts`.
+          "tool-downstream-fresh": toolDownstreamEntry(t, VERIFIER_IDS),
           "tool-maintains-in-tree":
             (t.maintains ?? []).length === 0
               ? { result: "n/a", findings: [] }
@@ -2200,19 +2206,12 @@ function auditGraph(
       // it. "Declared by a remote package nothing syncs" and "named nowhere at
       // all" have different remedies, and a finding that does not say which is one
       // somebody has to measure again.
-      // The prose graphs THIS instance owns (the owner attribution is
-      // `proseGraphs`'s: the instance whose root contains the directory). The
-      // finding text carries no counts, so the committed sidecar moves only
-      // when a verdict does — see `GraphVerdict.stableDetail`.
-      "lsi-index-fresh": (() => {
-        const name = readDeclaration(root)?.name;
-        const mine = proseGraphs().filter((g) => g.instance === name);
-        const verdicts = mine.map((g) => ({ g, v: graphVerdict(g) }));
-        return entry(
-          verdicts.filter(({ v }) => v.result === "fail").map(({ g, v }) => ({ where: `${g.instance}/${g.id}`, detail: v.stableDetail })),
-          verdicts.some(({ v }) => v.result !== "n/a"),
-        );
-      })(),
+      // A downstream tool with no declaration (bean `fq5u`). The family's
+      // per-Tool verdict is `tool-downstream-fresh`, which generalises what
+      // `lsi-index-fresh` judged here for LSI alone.
+      "downstream-tool-declared": entry(
+        undeclaredDownstream(tools(), AUDITOR_ROOT, VERIFIERS.map((v) => ({ id: v.id, tool: v.tool }))),
+      ),
       "manifest-skill-exists": (() => {
         const remote = remotePackageSkills(root);
         return entry(
