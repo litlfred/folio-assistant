@@ -356,9 +356,9 @@ Every one of the **75** diagrams has a rendered SVG.
 
 ### Activities carrying no `<bootstrap.processes:skill ref>` — a census, not a gap list
 
-**43** across **25** diagram(s). This section reported them as defects in its first version, and that was wrong: beans `luke` and `uuhu` worked this corpus from 90 down to this remainder and settled what is left. `luke`: *"coverage is deliberately NOT gated — a human sign-off step has no skill"*. `uuhu` added the call-activity exemption and recorded that its own remainder *"are not gaps"*.
+**42** across **24** diagram(s). This section reported them as defects in its first version, and that was wrong: beans `luke` and `uuhu` worked this corpus from 90 down to this remainder and settled what is left. `luke`: *"coverage is deliberately NOT gated — a human sign-off step has no skill"*. `uuhu` added the call-activity exemption and recorded that its own remainder *"are not gaps"*.
 
-**16** are call activities, which delegate to a subprocess — the skill is named there, and naming it twice would be one fact in two places. The other **27** are listed by lane, because the lane is what says whether a person, a pipeline or an agent performs the step, and only the last of those has a skill to run.
+**15** are call activities, which delegate to a subprocess — the skill is named there, and naming it twice would be one fact in two places. The other **27** are listed by lane, because the lane is what says whether a person, a pipeline or an agent performs the step, and only the last of those has a skill to run.
 
 | lane | steps |
 |---|---|

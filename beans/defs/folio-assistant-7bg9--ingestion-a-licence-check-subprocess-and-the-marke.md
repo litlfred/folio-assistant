@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7bg9
 title: 'INGESTION: a licence check subprocess, and the marker coverage the ingest family is missing'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-20T15:25:27Z
-updated_at: 2026-09-30T09:25:37Z
+updated_at: 2026-09-30T10:02:17Z
 parent: folio-assistant-zzmr
 ---
 
@@ -148,3 +148,8 @@ holds here as everywhere else in this repository.
 Found in passing: bean eowd (regen cannot repair translate-bpmn:check).
 
 _2026-09-30T09:25:32Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## Closed 2026-09-30 — both open items done
+- [x] **Carried into the manifest.** ingest-document.ts carryIntakeLicence(): after the arms run in stage mode, the intake.json licence becomes the staged manifest's meta.licence, which --promote takes into library/ and check:source-licence reads. NEVER overwrites: a manifest already carrying a different licence is reported as 'licence CONFLICT' and left as it is (a person decides); the same licence is 'kept'; nothing recorded writes nothing. l1-blocks already carries an existing meta.licence across rebuilds, so the carried record survives a re-run. Tests: early-licence.test.ts (+3: carried, conflict left alone, absence writes nothing).
+- [x] **Marker sweep.** Measured, not assumed: across document-ingestion.bpmn and the five ingest-*.bpmn subprocesses (37 activities), exactly ONE named no skill — CallActivity_Gate, documented 'NOT YET SKILL-BACKED … left uncovered until the skill is written'. That skill exists now: library-ingestion §'What a complete L1 entry holds' names check:l1-complete as the gate. Bound, with the documentation saying why. No activity in the family touches the work plan except Task_OpenBean, which already carries its bean op. check:workflow-refs, check:lane-documentation, render:bpmn:check, translate-bpmn:check, kg:audit:check pass.

@@ -3,10 +3,10 @@
  * outcomes, and undetermined is never reported as cleared.
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { earlyLicence } from "../ingest-document.ts";
+import { carryIntakeLicence, earlyLicence } from "../ingest-document.ts";
 
 const made: string[] = [];
 afterEach(() => {
@@ -52,5 +52,33 @@ describe("earlyLicence (bean 7bg9)", () => {
     const v = earlyLicence(upload({ "intake.json": intake({ status: "stated", id: "CC-BY-4.0" }) }));
     expect(v.verdict).toBe("undetermined");
     expect(v.detail).toContain("does not validate");
+  });
+});
+
+describe("carryIntakeLicence (bean 7bg9)", () => {
+  function staged(manifestMeta: Record<string, unknown> = {}): string {
+    const d = mkdtempSync(join(tmpdir(), "7bg9-entry-"));
+    made.push(d);
+    writeFileSync(join(d, "manifest.jsonld"), JSON.stringify({ "@id": "x/manifest", meta: { doc_id: "doc", ...manifestMeta } }));
+    return d;
+  }
+  const readLicence = (d: string) => JSON.parse(readFileSync(join(d, "manifest.jsonld"), "utf-8")).meta.licence;
+  const stated = { status: "stated", id: "CC-BY-4.0", basis: "the PDF's copyright page" };
+
+  test("a licence recorded at intake becomes the entry's meta.licence", () => {
+    const entry = staged();
+    expect(carryIntakeLicence(upload({ "intake.json": intake(stated) }), entry).outcome).toBe("carried");
+    expect(readLicence(entry)).toEqual(stated);
+  });
+  test("never overwrites: a different licence already on the manifest is a CONFLICT, and left alone", () => {
+    const mine = { status: "unknown", searched: [{ where: "publisher", result: "silent" }] };
+    const entry = staged({ licence: mine });
+    expect(carryIntakeLicence(upload({ "intake.json": intake(stated) }), entry).outcome).toBe("conflict");
+    expect(readLicence(entry)).toEqual(mine);
+  });
+  test("nothing recorded at intake writes nothing — absence is not a licence", () => {
+    const entry = staged();
+    expect(carryIntakeLicence(upload({ "intake.json": intake() }), entry).outcome).toBe("nothing");
+    expect(readLicence(entry)).toBeUndefined();
   });
 });

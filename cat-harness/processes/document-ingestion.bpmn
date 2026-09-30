@@ -183,12 +183,14 @@ knowledge graph
     <bpmn:callActivity id="CallActivity_Gate" name="L1 completeness gate" calledElement="Process_L1Gate">
       <bpmn:documentation>See ingest-l1-completeness-gate.bpmn.
 
-NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has
-never existed, and is not `proof-triage` (that one triages proofs). Left
-uncovered until the skill is written.
+Skill-backed by `library-ingestion` (2026-09-30, bean 7bg9): its section
+"What a complete L1 entry holds" names `check:l1-complete` as the gate and
+states its three results. Until then this step named `paper-relevance-triage`,
+which never existed, and was left uncovered rather than bound to a guess.
 
 The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.</bpmn:documentation>
       <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="library-ingestion" />
         <cat-harness.processes:adjudication accepts="real spurious source-wrong"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_i5</bpmn:incoming>

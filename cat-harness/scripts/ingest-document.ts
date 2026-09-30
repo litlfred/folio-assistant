@@ -50,7 +50,7 @@
  *
  * @module scripts/ingest-document
  */
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -240,6 +240,45 @@ export function earlyLicence(upload: string): EarlyLicence {
   const sibling = ["LICENSE", "LICENCE", "LICENSE.md", "LICENCE.md", "LICENSE.txt", "LICENCE.txt"].find((f) => existsSync(join(dir, f)));
   if (sibling) return { verdict: "undetermined", detail: `a ${sibling} sits beside the upload — a person reads it and records the licence in intake.json` };
   return { verdict: "undetermined", detail: "nothing recorded: no intake.json licence and no LICENSE beside the upload" };
+}
+
+/**
+ * Carry the upload's licence into the staged manifest (bean `7bg9`, the step
+ * after the early verdict). The early step READ the licence from the upload;
+ * this is where it becomes the entry's own `meta.licence`, which is what
+ * `check:source-licence` reads — so a licence recorded at intake is not lost
+ * at the library boundary.
+ *
+ * Never overwrites. A manifest that already carries a licence holds a finding
+ * somebody made (issue #1023); if it disagrees with the intake the two are
+ * REPORTED as a conflict and the manifest is left as it is — which one is
+ * right is a person's call, not this step's.
+ */
+export type LicenceCarry =
+  | { outcome: "carried"; status: string }
+  | { outcome: "kept"; detail: string }
+  | { outcome: "conflict"; detail: string }
+  | { outcome: "nothing"; detail: string };
+export function carryIntakeLicence(upload: string, stagedEntry: string): LicenceCarry {
+  const intakePath = join(dirname(resolve(upload)), "intake.json");
+  if (!existsSync(intakePath)) return { outcome: "nothing", detail: "no intake.json beside the upload" };
+  const parsed = IntakeSchema.safeParse(JSON.parse(readFileSync(intakePath, "utf-8")));
+  if (!parsed.success || parsed.data.licence === undefined)
+    return { outcome: "nothing", detail: parsed.success ? "intake.json records no licence" : "intake.json does not validate" };
+  const from = parsed.data.licence;
+  const manifestPath = join(stagedEntry, "manifest.jsonld");
+  if (!existsSync(manifestPath)) return { outcome: "nothing", detail: "no staged manifest to carry it into" };
+  const manifest = JSON.parse(readFileSync(manifestPath, "utf-8")) as { meta?: Record<string, unknown> };
+  const existing = manifest.meta?.licence;
+  if (existing !== undefined) {
+    const same = JSON.stringify(existing) === JSON.stringify(from);
+    return same
+      ? { outcome: "kept", detail: "the manifest already carries the same licence" }
+      : { outcome: "conflict", detail: `manifest says ${JSON.stringify(existing)}, intake says ${JSON.stringify(from)} — left as the manifest has it` };
+  }
+  manifest.meta = { ...(manifest.meta ?? {}), licence: from };
+  writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+  return { outcome: "carried", status: from.status };
 }
 
 /**
@@ -861,6 +900,11 @@ if (import.meta.main) {
   // is what "refuse to promote" has to mean when ingestion is a pipeline
   // rather than a single command.
   if (ingestMode(argv) === "stage") {
+    // The licence the upload recorded becomes the entry's own meta.licence —
+    // never overwriting one already there (bean 7bg9).
+    const carried = carryIntakeLicence(pdf, staging);
+    if (carried.outcome === "carried") console.log(`  licence: carried into the staged manifest (${carried.status})`);
+    else if (carried.outcome === "conflict") console.log(`  licence CONFLICT: ${carried.detail}`);
     const staged = checkEntry(staging);
     const pending = staged.requirements.filter((r) => r.state === "unmet");
     console.log(`\n✓ staged at ${relative(resolve(INSTANCE_ROOT), staging)}/`);
