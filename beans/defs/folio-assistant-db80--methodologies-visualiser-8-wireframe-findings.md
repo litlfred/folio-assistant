@@ -3,12 +3,13 @@
 title: 'methodologies visualiser: 8 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-methodologies
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-23T10:36:15Z
+updated_at: 2026-09-30T16:12:46Z
 parent: folio-assistant-4ccr
 ---
 
@@ -37,3 +38,16 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — Badges fail contrast on the default dark scheme: Dark (default): .mv-ingested rgb(13,110,94) is 2.44:1 on #27262b and 2.19:1 on row bg rgb(48,45,54); .mv-cited rgb(138,97,0) is 2.71:1 and 2.44:1; font 11.52 px (10.08 px at 390). Light: 6.16 and 5.54 (pass). .mv-dangling does not occur on the page now.
 - **STILL-PRESENT** — Mobile: 'Choosing one' table four columns in 358 px; later columns off-screen, no scroll cue: 390x844: .table-wrapper 362 px (14..376), overflow-x auto, mask none; table scrollWidth 499. 'origin held?' at 261-404 is cut; 'declared by' at 406-511 is fully off-screen. There is no scroll hint element.
 - **STILL-PRESENT** — WireGen origin ('Section numbers below are the paper's') points at nothing: The text '... Section numbers below are the paper’s.' is followed directly by 'Ingested sources: library/arxiv-2312.07755v1' and the next section.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 5 still present, 3 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — DIIG contradicts itself (Origin says ingested; badge cited, not ingested): The DIIG section still reads 'diig — declared by smart-base — cited, not ingested', then 'Origin. … Ingested at smart-base/library/9789240010567-eng/; every citation below resolves to a section there.', then 'No ingested source. The origin above names one; nothing in this checkout holds it.' (C_meth2.mjs)
+- **STILL-PRESENT** — 'applies when' column cut at 150 characters on every row: The table now has 16 rows. The applies-when lengths are 146,146,146,150,149,146,145,150,131,117,146,144,1,146,146,150, and all 16 end in '…'. One row is still just '…'. (C_meth.mjs)
+- **FIXED** — MADR cell renders a stray backtick: Still fixed: 0 of 16 applies-when cells contain a backtick. — c50675273 (C_meth.mjs)
+- **FIXED** — Ingested sources are code text, not links: Changed since 2026-09-29. 15 of the 17 <code>library/…</code> mentions are now inside an <a>: the viewer deep link (e.g. ../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2602.16554v1), plus 'item page' and 'source' links (30 library links in main). All local targets return 200. The 2 unlinked mentions are inside Origin prose (Doc-Researcher, RASCI), not the 'Ingested sources' lists. — #1592 (C_meth.mjs, m6.mjs, linkcheck.mjs)
+- **STILL-PRESENT** — Section anchors sit below their headings; jump hides heading: <p><a id='diig'></a></p> still follows h3#diig--…. After clicking the table link on a fresh page, the heading rect is top −27/bottom −5 at 1280 for diig, madr and raci (wiregen visible at 130), and −21/−3 at 390 for diig, madr, wiregen and raci. (C_meth4.mjs)
+- **FIXED** — Badges fail contrast on the default dark scheme: Changed since 2026-09-29. Dark: .mv-ingested rgb(92,211,189) is 7.40:1 on the row bg rgb(48,45,54) and 8.23:1 on the page bg. .mv-cited rgb(230,189,82) is 7.57:1 and 8.41:1. That is at 11.52px (10.08px at 390). Light is unchanged and passes: 6.16 and 5.54. — #1592 / rtuo (C_meth.mjs, contrast.mjs)
+- **STILL-PRESENT** — Mobile: 'Choosing one' table four columns in 358 px; later columns off-screen, no scroll cue: 390×844: .table-wrapper is 362px (14–376), overflow-x auto, mask none, with only a box-shadow. Table scrollWidth is 499. 'origin held?' at 261–404 is cut, and 'declared by' at 406–511 is off-screen. There is no scroll hint element. (C_meth5.mjs)
+- **STILL-PRESENT** — WireGen origin ('Section numbers below are the paper's') points at nothing: '… Section numbers below are the paper’s.' is followed directly by 'Ingested sources: library/arxiv-2312.07755v1 · item page · source' and the next section. No section numbers follow. (C_meth.mjs)

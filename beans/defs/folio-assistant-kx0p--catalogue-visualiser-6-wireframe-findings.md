@@ -3,12 +3,13 @@
 title: 'catalogue visualiser: 6 wireframe findings'
 status: todo
 type: task
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - visualiser-catalogue
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-23T10:36:14Z
+updated_at: 2026-09-30T16:12:47Z
 parent: folio-assistant-4ccr
 ---
 
@@ -33,3 +34,14 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — The node list is not filterable or sortable, and puts referenced ahead of materialized: No input/select/button in tables (only visible input is the nav checkbox); no th[aria-sort]. Row order: 10 REFERENCED then 3 MATERIALIZED; first materialized row at y=1866 at 1280 (~2.3 screens), y=4217 at 390.
 - **STILL-PRESENT** — About the first 280 px is replica chrome before the h1: h1 'The catalogue, as a graph' top at y=319 at 1280 and y=615 at 390.
 - **STILL-PRESENT** — The gate verdict counts have no label: Gates row markup: <span class='state materialized'>permitted</span> 2 <span class='state referenced'>refused</span> 4 — bare numbers, row text 'copyright PERMITTED 2 REFUSED 4'.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 4 still present, 2 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **FIXED** — Horizontal scroll at phone width: Still fixed. At 390 documentElement.scrollWidth is 390, and table.kg is display:block; overflow-x:auto (238px box, scrollWidth 518). 'held as' (x 393), 'record' and 'bitstreams' still start off-screen inside the table scroller. — 76b34f8ec (rv-cat.mjs, rv-cat2.mjs)
+- **STILL-PRESENT** — The menu and breadcrumb look like links and are not: 'Communities & Collections' and the 'who-iris' crumb are still leaf <span>s with no <a> ancestor. (rv-cat.mjs)
+- **FIXED** — No row leads anywhere: Changed since 2026-09-29. The every-node table now has 11 links. 5 of 13 node titles (both collections and all 3 items) link to their replica page under /library/who-iris/, and all return 200. The 3 'held as' cells link to the library viewer and the item page. The 8 community rows are still plain text, and the state and gate tables have 0 links. — #1592 (rv-cat.mjs, cat3.mjs, linkcheck.mjs)
+- **STILL-PRESENT** — The node list is not filterable or sortable, and puts referenced ahead of materialized: There is no input/select/button in the tables and no th[aria-sort]. The #1592 filter is not on this page. The rows are still 10 REFERENCED then 3 MATERIALIZED. The first materialized row is at y=1889 at 1280 and y=4217 at 390. (rv-cat.mjs, filt.mjs)
+- **STILL-PRESENT** — About the first 280 px is replica chrome before the h1: The h1 'The catalogue, as a graph' still starts at y=319 at 1280 and y=615 at 390. (rv-cat.mjs)
+- **STILL-PRESENT** — The gate verdict counts have no label: The gates rows still read 'copyright PERMITTED 2 REFUSED 4', 'restrictions PERMITTED 2 REFUSED 4', 'retention PERMITTED 6', as bare numbers after state spans. (rv-cat.mjs)
