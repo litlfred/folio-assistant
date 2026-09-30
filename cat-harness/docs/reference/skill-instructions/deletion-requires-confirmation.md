@@ -298,5 +298,6 @@ nothing.
 | [Board: relocate content to the trashcan](../../processes/board-relocate.html) | Name what will move, and where it lands; Say what moved and where it went |
 | [Staging a feature branch preview, and taking it down](../../processes/feature-staging.html) | Remove the preview AND append `removed` — one commit; Check the slug's SHAPE and that the confirmation repeats it; Re-evaluate liveness AT REMOVAL TIME; Remove it AND append `removed` — one commit; Repeat the slug, exactly, to confirm |
 | [A sub-graph wants to leave](../../processes/graph-detanglement.html) | Report what would move — sizes, and what breaks; Authorise the extraction |
+| [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | Report what moves — sizes, what breaks; 9 · Authorise the extraction; 13 · Cutover: delete the parent's copy |
 | [Is the repository itself healthy?](../../processes/repository-health-watch.html) | Run the health checks, keeping the report either way |
 

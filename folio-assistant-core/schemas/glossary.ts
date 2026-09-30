@@ -69,6 +69,14 @@ export const TermSchema = z
     closeMatch: z.array(Iri).optional(),
     broadMatch: z.array(Iri).optional(),
     narrowMatch: z.array(Iri).optional(),
+    /**
+     * Local ids of the terms this definition USES — what a reader must know
+     * first (dcterms:requires). In an `ordered` glossary each must come
+     * earlier; the scheme refuses one that does not.
+     */
+    requires: z.array(z.string().min(1)).optional(),
+    /** The schema or standard that defines the term (rdfs:isDefinedBy). */
+    isDefinedBy: Iri.optional(),
     /** Where the term came from: a repository path (with #anchor) or an IRI. */
     source: z.string().min(1).optional(),
     status: z.enum(TERM_STATUSES),
@@ -102,6 +110,13 @@ export const GlossarySchema = z
     /** The licence the terms are published under: an SPDX id or a URL. */
     license: z.string().min(1).optional(),
     terms: z.array(TermSchema).default([]),
+    /**
+     * The terms are in a LOGICAL order, each defined only by terms above it,
+     * and a reader should meet them in that order — not alphabetically. The
+     * owner, 2026-09-29, of bootstrap's terms: keep "logical rather than
+     * alphabetical order". Published as a skos:OrderedCollection.
+     */
+    ordered: z.boolean().optional(),
     /** External concept IRIs this glossary lists without copying: a `skos:Collection`. */
     members: z.array(Iri).optional(),
   })
@@ -111,6 +126,19 @@ export const GlossarySchema = z
     g.terms.forEach((t, i) => {
       if (ids.has(t.id)) ctx.addIssue({ code: "custom", path: ["terms", i, "id"], message: `term id "${t.id}" appears twice` });
       ids.add(t.id);
+    });
+    // `requires` names terms of THIS glossary; in an ordered one, earlier ones.
+    const at = new Map(g.terms.map((t, i) => [t.id, i]));
+    g.terms.forEach((t, i) => {
+      (t.requires ?? []).forEach((ref, j) => {
+        const k = at.get(ref);
+        const why =
+          k === undefined ? `"${ref}" is not a term in this glossary`
+          : k === i ? `a term does not require itself`
+          : g.ordered && k > i ? `"${ref}" comes after "${t.id}", and this glossary is ordered`
+          : undefined;
+        if (why) ctx.addIssue({ code: "custom", path: ["terms", i, "requires", j], message: why });
+      });
     });
     // A local reference must name a term here; anything else must be an IRI.
     g.terms.forEach((t, i) => {
@@ -185,9 +213,22 @@ export function toSkos(g: Glossary, ns: string): Record<string, unknown> {
       const v = iris(t[m]);
       if (v) node[`skos:${m}`] = v.value;
     }
+    if (t.requires?.length) node["dcterms:requires"] = t.requires.map(ref);
+    if (t.isDefinedBy) node["rdfs:isDefinedBy"] = { "@id": t.isDefinedBy };
     if (t.source) node["dcterms:source"] = t.source;
     if (t.status !== "authored") node["skos:note"] = t.reason ? `${t.status}: ${t.reason}` : t.status;
     graph.push(node);
+  }
+  if (g.ordered && g.terms.length) {
+    // The order is part of what was said: a reader meets each term after the
+    // terms its definition uses. SKOS states it with an OrderedCollection,
+    // whose memberList is an RDF list — `@list` in JSON-LD.
+    graph.push({
+      "@id": `${scheme}#order`,
+      "@type": "skos:OrderedCollection",
+      "skos:prefLabel": `${g.title}, in order`,
+      "skos:memberList": { "@list": g.terms.map((t) => ({ "@id": termIri(ns, g, t.id) })) },
+    });
   }
   if (g.members?.length) {
     graph.push({
@@ -197,5 +238,8 @@ export function toSkos(g: Glossary, ns: string): Record<string, unknown> {
       "skos:member": g.members.map((m) => ({ "@id": m })),
     });
   }
-  return { "@context": { skos: SKOS_NS, dcterms: DCTERMS_NS }, "@graph": graph };
+  return {
+    "@context": { skos: SKOS_NS, dcterms: DCTERMS_NS, rdfs: "http://www.w3.org/2000/01/rdf-schema#" },
+    "@graph": graph,
+  };
 }

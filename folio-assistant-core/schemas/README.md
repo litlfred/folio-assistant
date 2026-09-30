@@ -1,7 +1,7 @@
 <!-- kg:subgraph:begin -->
 # folio-assist-core-schemas
 
-The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.
+The schemas of the content layer's [Node Kinds](../../bootstrap/schemas/README.md#node-kind), kept as their own [Subgraph](../../bootstrap/schemas/README.md#subgraph) until this repository is split.
 
 Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-assist-core-schemas`, holding `schemas`, `cat-harness`.
 

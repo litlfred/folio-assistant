@@ -1,11 +1,11 @@
 ---
 # folio-assistant-w91p
 title: 'B7a (#1168): the 10 gen-*-viz scripts become Tools (renders:, maintains:); coverage.visualiser removed'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-24T19:50:21Z
-updated_at: 2026-09-29T21:43:12Z
+updated_at: 2026-09-29T23:45:29Z
 parent: folio-assistant-tr05
 ---
 

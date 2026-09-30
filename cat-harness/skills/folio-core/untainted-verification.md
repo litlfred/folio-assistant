@@ -6,7 +6,6 @@ description: >-
   rules that make it a measurement rather than a ritual, and the third state
   that lets it gate at all.
 capability: quality-assurance
-package: folio-core
 ---
 
 # Untainted verification — the producer never writes the verdict

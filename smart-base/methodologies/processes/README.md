@@ -7,5 +7,5 @@ Part of [C@T Harness](../../../cat-harness/README.md) 0.1.0, declared as `smart-
 
 | file | what it is | used by |
 |---|---|---|
-| [`diig-investment-path.bpmn`](diig-investment-path.bpmn) | a Process: DIIG — from a health system bottleneck to a costed implementation plan |  |
+| [`diig-investment-path.bpmn`](diig-investment-path.bpmn) | a [Process](../../../bootstrap/schemas/README.md#process): DIIG — from a health system bottleneck to a costed implementation plan |  |
 <!-- kg:subgraph:end -->
