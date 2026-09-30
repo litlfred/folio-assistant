@@ -12,13 +12,13 @@ permalink: /glossary/tools/
 
 Candidate terms extracted from every Tool node: `title` as the label, `description` as the definition, the Tool id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: cat-harness 111 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 4 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
+From: cat-harness 111 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 10 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 128 terms and is 84 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 134 terms and is 89 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">128</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">134</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -76,6 +76,13 @@ BPMN diagram rendering <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Render each process diagram to SVG for the documentation site. The .bpmn file is the source of truth; the picture is generated from it, so a diagram and its image cannot disagree.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#bpmn-render</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-tools--ig-ast-export" data-fa-state="extracted" data-fa-gloss="">
+Build an IG and write its AST <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Run one ordinary IG Publisher build through <code>AstPublisher</code> (a subclass that overrides nothing) and write the AST beside <code>output/</code>: one JSON file per resource keyed <code>canonical|version</code>, <code>dependencies.json</code> (upstream's DependencyAnalyser plus the Library/PlanDefinition/ActivityDefinition/Measure edges it leaves empty), SUSHI's <code>fsh-index.json</code>, and a manifest that declares itself a cache and records the inputs it is valid for.</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-ast-export</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--lsi-index" data-fa-state="extracted" data-fa-gloss="">
 Build the Latent Semantic Indexing index of a prose graph <span class="fa-gloss-status">candidate, extracted</span>
@@ -364,6 +371,13 @@ Is CI passing on the default branch? <span class="fa-gloss-status">candidate, ex
 <p>Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#ci-health</code></a></p>
 </dd>
+<dt id="fhir-harness--kg-tools--ig-ast-validity" data-fa-state="extracted" data-fa-gloss="">
+Is this IG AST still valid for the IG's current inputs? <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Run folio-assistant-core's <code>compiledValidity</code> on an AST manifest's <code>inputs</code>: recompute the input digest (the same algorithm as the Java writer, pinned by a shared golden vector) and the source revision, and answer valid, stale-inputs (naming which input), or cannot-tell.</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-ast-validity</code></a></p>
+</dd>
 </dl>
 
 <h2 id="letter-J">J</h2>
@@ -474,6 +488,13 @@ Library viewer <span class="fa-gloss-status">candidate, extracted</span>
 <p>Render each declared library directory — its entries, intakes and avatars — as a page per subject instance.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/viewers.ts"><code>cat-harness/tools/viewers.ts#library-viewer</code></a></p>
 </dd>
+<dt id="fhir-harness--kg-tools--ig-ast-diff" data-fa-state="extracted" data-fa-gloss="">
+List and view the delta between two IG ASTs <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Diff two ASTs by resource key: added, removed, changed (with a structural element-level differential) and version-changed resources, plus edges added and removed; optionally fold in the incremental plan, and render just-the-docs pages (an index that lists, a page per resource that shows) every one of which carries the provisional mark. <code>list &lt;ast&gt;</code> summarises one AST.</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-ast-diff</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--workflow-list" data-fa-state="extracted" data-fa-gloss="">
 List processes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -519,6 +540,13 @@ May this step be performed? <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>Ask before doing work a strict process governs. The content-agnostic processes refuse a step that is not enabled; the per-content-type ones advise.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/mcp.ts"><code>cat-harness/tools/mcp.ts#workflow-gate</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-tools--ig-ast-measure-real-igs" data-fa-state="extracted" data-fa-gloss="">
+Measure the AST export on real IGs <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Build smart-trust and smart-immunizations through <a href="#fhir-harness--kg-tools--ig-ast-export"><code>ig-ast-export</code></a> and print the W1/W2 measurements: counts, whether FSH sources sit where the plan expects, and logic-layer edge coverage per resource type against 458 of 458. <code>--byte-identical</code> adds a stock build and an <code>output/</code> diff.</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-ast-measure-real-igs</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--methodologies-viewer" data-fa-state="extracted" data-fa-gloss="">
 Methodologies viewer <span class="fa-gloss-status">candidate, extracted</span>
@@ -580,6 +608,13 @@ PDF page raster <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pdf-cover</code></a></p>
+</dd>
+<dt id="fhir-harness--kg-tools--ig-ast-plan" data-fa-state="extracted" data-fa-gloss="">
+Plan an incremental IG build from a delta of changed files <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Map a delta (a commit range, a PR's diff, or the staged index) onto a base AST: which resources to rebuild (the forward cone), which to load from cache, which to remove, or a full build and why. Builds nothing.</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-ast-plan</code></a></p>
 </dd>
 <dt id="fhir-harness--kg-tools--ig-site-data" data-fa-state="extracted" data-fa-gloss="">
 Populate site.data.fhir for a just-the-docs IG render <span class="fa-gloss-status">candidate, extracted</span>
@@ -645,6 +680,13 @@ QA sweep <span class="fa-gloss-status">candidate, extracted</span>
 
 <h2 id="letter-R">R</h2>
 <dl class="fa-gloss">
+<dt id="fhir-harness--kg-tools--ig-ast-incremental-build" data-fa-state="extracted" data-fa-gloss="">
+Rebuild only the cone of a change and merge it into the AST <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Write the unchanged part of a base AST as a FHIR package into the package cache, build a temporary IG of only the rebuild set with the stock Publisher, merge the result into a mixed-provenance AST (<code>builtAt</code> per resource), and repeat while the merged graph's cone reaches resources that were not rebuilt.</p>
+<p class="fa-gloss-meta">Tools of fhir-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/tools/index.ts"><code>fhir-harness/tools/index.ts#ig-ast-incremental-build</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--translation-roundtrip-record" data-fa-state="extracted" data-fa-gloss="">
 Record a round-trip translation verdict <span class="fa-gloss-status">candidate, extracted</span>
 </dt>

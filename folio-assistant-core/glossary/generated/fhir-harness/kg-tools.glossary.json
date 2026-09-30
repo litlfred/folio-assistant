@@ -15,6 +15,54 @@
       "status": "candidate"
     },
     {
+      "id": "ig-ast-diff",
+      "prefLabel": "List and view the delta between two IG ASTs",
+      "definition": "Diff two ASTs by resource key: added, removed, changed (with a structural element-level differential) and version-changed resources, plus edges added and removed; optionally fold in the incremental plan, and render just-the-docs pages (an index that lists, a page per resource that shows) every one of which carries the provisional mark. `list <ast>` summarises one AST.",
+      "notation": "ig-ast-diff",
+      "source": "fhir-harness/tools/index.ts#ig-ast-diff",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast-export",
+      "prefLabel": "Build an IG and write its AST",
+      "definition": "Run one ordinary IG Publisher build through `AstPublisher` (a subclass that overrides nothing) and write the AST beside `output/`: one JSON file per resource keyed `canonical|version`, `dependencies.json` (upstream's DependencyAnalyser plus the Library/PlanDefinition/ActivityDefinition/Measure edges it leaves empty), SUSHI's `fsh-index.json`, and a manifest that declares itself a cache and records the inputs it is valid for.",
+      "notation": "ig-ast-export",
+      "source": "fhir-harness/tools/index.ts#ig-ast-export",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast-incremental-build",
+      "prefLabel": "Rebuild only the cone of a change and merge it into the AST",
+      "definition": "Write the unchanged part of a base AST as a FHIR package into the package cache, build a temporary IG of only the rebuild set with the stock Publisher, merge the result into a mixed-provenance AST (`builtAt` per resource), and repeat while the merged graph's cone reaches resources that were not rebuilt.",
+      "notation": "ig-ast-incremental-build",
+      "source": "fhir-harness/tools/index.ts#ig-ast-incremental-build",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast-measure-real-igs",
+      "prefLabel": "Measure the AST export on real IGs",
+      "definition": "Build smart-trust and smart-immunizations through `ig-ast-export` and print the W1/W2 measurements: counts, whether FSH sources sit where the plan expects, and logic-layer edge coverage per resource type against 458 of 458. `--byte-identical` adds a stock build and an `output/` diff.",
+      "notation": "ig-ast-measure-real-igs",
+      "source": "fhir-harness/tools/index.ts#ig-ast-measure-real-igs",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast-plan",
+      "prefLabel": "Plan an incremental IG build from a delta of changed files",
+      "definition": "Map a delta (a commit range, a PR's diff, or the staged index) onto a base AST: which resources to rebuild (the forward cone), which to load from cache, which to remove, or a full build and why. Builds nothing.",
+      "notation": "ig-ast-plan",
+      "source": "fhir-harness/tools/index.ts#ig-ast-plan",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast-validity",
+      "prefLabel": "Is this IG AST still valid for the IG's current inputs?",
+      "definition": "Run folio-assistant-core's `compiledValidity` on an AST manifest's `inputs`: recompute the input digest (the same algorithm as the Java writer, pinned by a shared golden vector) and the source revision, and answer valid, stale-inputs (naming which input), or cannot-tell.",
+      "notation": "ig-ast-validity",
+      "source": "fhir-harness/tools/index.ts#ig-ast-validity",
+      "status": "candidate"
+    },
+    {
       "id": "ig-site-data",
       "prefLabel": "Populate site.data.fhir for a just-the-docs IG render",
       "definition": "Write the IG Publisher's Jekyll variables (`site.data.fhir.ig.*`, `packageId`, `canonical`) for ONE implementation guide, from `sushi-config.yaml` or a published IG's `fhir-artifact-index`, so pages written for the Publisher render on just-the-docs unchanged. fhir-harness declares `site.data` as a pass-through Liquid prefix; this is what Jekyll then reads (bean `bamf`).",
