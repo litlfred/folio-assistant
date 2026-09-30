@@ -13,7 +13,7 @@ are told apart by shape — which is the failure
 names when it says **the files declare what they are**.
 
 *Used for*: validation at read time, the generated schema reference, and the
-`@context` a published KGraph is parsed against.
+`@context` a published Knowledge Graph is parsed against.
 
 ### Content
 

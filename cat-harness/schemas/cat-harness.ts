@@ -1648,7 +1648,7 @@ export const DEFAULT_DIRECTORIES: readonly ContentDirectory[] = [
   { id: "tools", path: "tools/", dependents: "skip", graphKinds: ["tools"] },
   { id: "schemas", path: "schemas/", dependents: "skip", graphKinds: ["schemas", "cat-harness"] },
   { id: "skills", path: "skills/", dependents: "skip", graphKinds: ["skills"] },
-  // THE CONVENTION, as of 2026-09-21: an instance's KGraph is five sibling
+  // THE CONVENTION, as of 2026-09-21: an instance's Knowledge Graph is five sibling
   // directories rather than one with subdirectories. `scenarios/` and
   // `processes/` were `skills/roles/` and `skills/workflows/`, found by
   // walking down from the skills root.
@@ -4246,7 +4246,7 @@ export const SKILL_BEARING_GRAPH_KINDS: readonly string[] = ["skills", KG_GRAPH_
  * three kinds split out of it.
  *
  * Distinct from {@link SKILL_BEARING_GRAPH_KINDS}, and the difference is the
- * whole point of the split: a consumer asking "is this the KGraph?" wants all
+ * whole point of the split: a consumer asking "is this the Knowledge Graph?" wants all
  * four, while one asking "may I scan this for skill bodies?" wants two. One
  * list serving both questions is what made `cat-harness` ambiguous.
  */
@@ -4281,7 +4281,7 @@ export function isKgOnlyDirectory(d: ContentDirectory): boolean {
  * kinds?
  *
  * **Wider than {@link isKgOnlyDirectory}, and the two must not be merged.**
- * This one answers "is there a KGraph node in here at all" — which is what a
+ * This one answers "is there a Knowledge Graph node in here at all" — which is what a
  * consumer looking for roles, BPMN or requirements needs. The narrow one
  * answers "may I read every `.md` in here as a Skill body", which is false for
  * `workflows/` (51 `.bpmn`) and `scenarios/` (one `roles.json`).
