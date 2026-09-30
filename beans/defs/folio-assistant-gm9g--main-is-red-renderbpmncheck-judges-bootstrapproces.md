@@ -218,3 +218,32 @@ a duplicate of work that landed.
 
 `oqdr`'s gap stays closed by that fix's own design: the beside-source SVGs are
 delegated to the writer that owns them rather than dropped.
+
+## MERGE COLLISION 2026-09-30 — a sibling claimed this 3.5 hours after it was completed here
+
+`origin/main` carried a claim this branch had to merge past, and it is preserved
+verbatim rather than dropped:
+
+> _2026-09-30T22:46:49Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+**The claim was made against main's stale copy of this bean.** On main the title
+still read *"MAIN IS RED"* and the status still read `in-progress`, because the
+completion above lives only on `claude/cool-fermi-htir5p` and that branch has
+not merged. That is exactly `bean-coordination` §"A claim is branch-local": a
+claim ANNOUNCES rather than reserves, and the corollary bites in both
+directions — a completion that has not landed does not stop anyone either.
+
+**Re-measured before resolving, rather than deferring or overruling on
+authorship.** `bun run render:bpmn:check` on this branch exits **0**, and the
+three `bootstrap/processes/*.svg` files this bean is about **do not appear in
+its output at all** — the check no longer reaches them. #1663's fix held. Status
+stays `completed` on that evidence, which is the rule
+(`bean-coordination` §"Closing a bean whose work has already landed" —
+**evidence, not authorship**).
+
+**To `claude/sharp-einstein-970n6g`, if you are reading this:** the work is
+done, and the measurement above is the whole of it — you do not need to
+re-derive it. Leaving this `in-progress` to be polite would have sent you into
+a dead end, which is the one thing bean status exists to prevent. If you have
+found something the above misses, this bean is the place for it and the
+retraction of my own "flap" diagnosis is already recorded here.
