@@ -12,13 +12,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1483 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 154 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1491 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 154 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1683 terms and is 924 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1691 terms and is 928 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1683</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1691</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -10425,6 +10425,13 @@ ToolContribution.name <span class="fa-gloss-status">candidate, extracted</span>
 <p>Stable identifier, e.g. <code>&quot;lean&quot;</code>. Unique across contributors.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/contributions.ts"><code>cat-harness/schemas/contributions.ts#ToolContribution.name</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--tool.tooldefinitionschema.downstream" data-fa-state="extracted" data-fa-gloss="">
+ToolDefinitionSchema.downstream <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A downstream output this Tool keeps current, with its declared inputs. See &#123;@link ToolDownstreamSchema}. Optional because most Tools keep no derived output; a run record or a publish verifier naming a Tool that does not declare one is a finding (<code>downstream-tool-declared</code>).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolDefinitionSchema.downstream</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--tool.tooldefinitionschema.maintains" data-fa-state="extracted" data-fa-gloss="">
 ToolDefinitionSchema.maintains <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -10452,6 +10459,27 @@ ToolDefinitionSchema.selection <span class="fa-gloss-status">candidate, extracte
 <dd>
 <p>Why to reach for this one. REQUIRED when the Tool has a derived alternative (&#123;@link deriveAlternatives}); <code>check-tools</code> enforces it, since whether a Tool has one is a fact about the whole set.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool.tooldownstreamschema.inputs" data-fa-state="extracted" data-fa-gloss="">
+ToolDownstreamSchema.inputs <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What it is derived from, so a reader can see what makes it stale.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolDownstreamSchema.inputs</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool.tooldownstreamschema.output" data-fa-state="extracted" data-fa-gloss="">
+ToolDownstreamSchema.output <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What the Tool keeps current — repo-relative for <code>checkout</code>, site-relative for <code>published</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolDownstreamSchema.output</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool.tooldownstreamschema.verifier" data-fa-state="extracted" data-fa-gloss="">
+ToolDownstreamSchema.verifier <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>published</code> only: the <code>publish-verify</code> verifier id that judges the output.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolDownstreamSchema.verifier</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tool.toolinputschema.arg" data-fa-state="extracted" data-fa-gloss="">
 ToolInputSchema.arg <span class="fa-gloss-status">candidate, extracted</span>
@@ -10550,6 +10578,34 @@ ToolMaintainsSchema.source <span class="fa-gloss-status">candidate, extracted</s
 <dd>
 <p>Repo-relative module that defines it, e.g. <code>schemas/tool.ts</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool.ts"><code>cat-harness/schemas/tool.ts#ToolMaintainsSchema.source</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool-run.toolrunrecordschema.detail" data-fa-state="extracted" data-fa-gloss="">
+ToolRunRecordSchema.detail <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>For a failure: what went wrong, for a reader who has only the file.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool-run.ts"><code>cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.detail</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool-run.toolrunrecordschema.inputfingerprint" data-fa-state="extracted" data-fa-gloss="">
+ToolRunRecordSchema.inputFingerprint <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The tool's own fingerprint of the inputs the run read, or <code>unknown</code> when the run failed before it could compute one. <code>unknown</code> matches nothing.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool-run.ts"><code>cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.inputFingerprint</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool-run.toolrunrecordschema.target" data-fa-state="extracted" data-fa-gloss="">
+ToolRunRecordSchema.target <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Which of the tool's outputs — one tool may keep several (LSI: one per graph).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool-run.ts"><code>cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.target</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--tool-run.toolrunrecordschema.tool" data-fa-state="extracted" data-fa-gloss="">
+ToolRunRecordSchema.tool <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The Tool node id whose run this records. @ref ToolDefinitionSchema</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/tool-run.ts"><code>cat-harness/schemas/tool-run.ts#ToolRunRecordSchema.tool</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tool.toolselectionschema.cost" data-fa-state="extracted" data-fa-gloss="">
 ToolSelectionSchema.cost <span class="fa-gloss-status">candidate, extracted</span>

@@ -24,12 +24,12 @@
         }
       ]
     },
-    "lsi-index-fresh": {
-      "result": "fail",
+    "downstream-tool-declared": {
+      "result": "n/a",
       "findings": [
         {
-          "where": "smart-trust/smart-trust-docs",
-          "detail": "needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs`"
+          "where": "—",
+          "detail": "not evaluated: `downstream-tool-declared` is `repo`-scoped and this run is scoped to smart-trust. Its three sources are platform-level: the member readers are code in `scripts/downstream-runs.ts`, the publish verifiers are `publish-verify`'s set, and run records live under the auditor's own `qa` directory. Asked per instance it would judge the platform's members against an instance's Tools and report every one as undeclared."
         }
       ]
     },
@@ -139,8 +139,8 @@
   },
   "totals": {
     "pass": 7,
-    "fail": 1,
-    "n/a": 10,
+    "fail": 0,
+    "n/a": 11,
     "unknown": 3
   }
 }

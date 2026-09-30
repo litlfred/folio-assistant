@@ -33,7 +33,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 A graph needs one at 100 units and 20,000 words — a house threshold, with its
 basis in `scripts/lsi.ts`. Below it a graph is **not judged**, which is not
-the same as fine. The same verdict is `kg:audit`'s `lsi-index-fresh`.
+the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for the `lsi-index` Tool.
 
 | graph | verdict | detail |
 |---|---|---|
@@ -114,9 +114,9 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 3 | 22.30 | proof, watcher, lean, slot, blocks, witness, project, chapter | harness, node, instance, bean, page, directory, actor, process |
 | 4 | 19.52 | dpi, color, grayscale, lean, pdf, matplotlib, images, raster | session, queue, branch, prs, commits, coordination, beans, sibling |
 | 5 | 18.59 | dpi, color, grayscale, contrast, matplotlib, raster, eps, fonts | lean, proof, glossary, declaration, term, theorem, mathlib, sorry |
-| 6 | 16.77 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
+| 6 | 16.76 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
 | 7 | 16.20 | lean, mathlib, mcp, sorry, proof, search, bean, theorem | watcher, slot, backlog, voice, ledger, objection, nesting, queue |
-| 8 | 15.32 | mathlib, lean, sorry, lake, subdirectory, mcp, oleans, sessions | slot, forward, criterion, watcher, major, band, reader, prose |
+| 8 | 15.31 | mathlib, lean, sorry, lake, subdirectory, mcp, oleans, sessions | slot, forward, criterion, watcher, major, band, reader, prose |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
