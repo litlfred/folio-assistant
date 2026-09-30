@@ -49,8 +49,13 @@ import { join, resolve } from "node:path";
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 const WORKFLOW_DIR = join(REPO_ROOT, ".github", "workflows");
 
-/** A `bun run cat-harness/scripts/<name>.ts` call and the rest of its line. */
-const INVOCATION = /cat-harness\/scripts\/([a-z0-9-]+)\.ts([^\n]*)/g;
+/** A `bun run cat-harness/scripts/<name>.ts` (or `bootstrap-tools/scripts/…`) call and the rest of its line. */
+// bootstrap-tools' scripts count too, under their repository's name: since
+// 2026-09-30 (bean `xsqm`) bootstrap's own graph is written by
+// `bootstrap-tools/scripts/export-graph.ts --root ./bootstrap`, and a matcher
+// that saw only cat-harness would be blind to the one foreign-instance export
+// `3jhq` exists to protect.
+const INVOCATION = /(?:cat-harness\/|(bootstrap-tools\/))scripts\/([a-z0-9-]+)\.ts([^\n]*)/g;
 
 /**
  * Generators the deploy runs that a preview is not expected to.
@@ -113,9 +118,10 @@ export function invocations(workflowText: string): Invocation[] {
   const code = withoutComments(workflowText);
   INVOCATION.lastIndex = 0;
   for (const m of code.matchAll(INVOCATION)) {
-    const script = m[1]!;
-    const rest = m[2] ?? "";
-    const inst = /--instance\s+(?:"([^"]+)"|'([^']+)'|(\S+))/.exec(rest);
+    const script = `${m[1] ?? ""}${m[2]!}`;
+    const rest = m[3] ?? "";
+    // `--root` is bootstrap-tools' spelling of the same argument.
+    const inst = /--(?:instance|root)\s+(?:"([^"]+)"|'([^']+)'|(\S+))/.exec(rest);
     const instance = inst ? (inst[1] ?? inst[2] ?? inst[3]) : undefined;
     // Keyed on the PAIR: `kg-export` and `kg-export --instance ./bootstrap`
     // are different obligations, and collapsing them is exactly how `3jhq`

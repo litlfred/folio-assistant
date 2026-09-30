@@ -70,6 +70,21 @@ export interface NavItem {
   /** A single character or short glyph, shown while the navbar rests. */
   icon?: string;
   /**
+   * SVG path data in a 24×24 box, drawn as the mark instead of {@link icon}
+   * — a graph kind's own avatar glyph (bean `yag0`). One letter per row made
+   * `docs` and `library` two adjacent single letters, and `catalogue` and
+   * `code` the SAME letter; a shape the avatar registry already draws cannot
+   * collide that way.
+   */
+  glyphPath?: string;
+  /**
+   * The rest of the row's ACCESSIBLE NAME, after {@link label} — rendered as
+   * visually-hidden text inside the link and as its `title`. The visible
+   * label stays short; the name a screen reader or a hover gives is full, and
+   * always begins with the visible label (WCAG SC 2.5.3).
+   */
+  description?: string;
+  /**
    * An image to use instead of `icon` — the harness's avatar, when it has one.
    *
    * `region` is the image's declared `avatarRegion` (`603s`), as fractions of
@@ -347,6 +362,8 @@ export function navbarCss(): string {
     `border-bottom:1px solid #30363d;cursor:pointer;user-select:none}`,
     `.fa-nav-glyph{flex:0 0 ${NAV_GLYPH_PX}px;text-align:center;font-size:16px}`,
     `.fa-nav-glyph img{width:${NAV_GLYPH_PX}px;height:${NAV_GLYPH_PX}px;display:block}`,
+    // A kind's SVG glyph (bean `yag0`): drawn in the ink colour on its tone.
+    `.fa-nav-glyph svg{width:${NAV_GLYPH_PX}px;height:${NAV_GLYPH_PX}px;display:block;padding:4px;box-sizing:border-box}`,
     // A CROPPED mark: the frame clips and the image is positioned inside it.
     // The `img` rule above sizes an UNCROPPED avatar; a cropped one carries
     // its own width/height inline, so this resets the two that would fight it.
@@ -405,6 +422,12 @@ export function navbarCss(): string {
     `.fa-nav-group>summary:hover{background:#30363d}`,
     `.fa-nav-group[open]>summary{font-weight:600}`,
     `.fa-nav-group .fa-nav-sub a{padding-left:${NAV_PAD_PX + NAV_GLYPH_PX + 8}px}`,
+    // A graph-kind row carries its OWN mark (bean `yag0`), so it sits in the
+    // strip's column like the inert rows beside it. Indented as above, a
+    // LINKED row's mark was pushed past the 56px strip at rest while an inert
+    // row's was not — measured on a built /who-iris/ page — so the strip showed
+    // marks only for the rows that do not open.
+    `.fa-nav-group .fa-nav-sub a.fa-nav-kind{padding-left:${NAV_PAD_PX}px}`,
     `.fa-nav-tone{border-radius:3px}`,
     // THE CLOSE CONTROL, only while pinned open. Alone in a strip this narrow
     // it would be the only thing in it, and would read as a close button for
@@ -459,12 +482,23 @@ function mark(i: NavItem, c: Ctx): string {
   }
   // An initial, not a question mark. `603s` reports "no avatar declared" as a
   // FINDING elsewhere; a navbar is not the place to render a gap as a glyph.
+  if (i.glyphPath && !i.icon) {
+    return (
+      `<span class="fa-nav-glyph fa-nav-tone"${tone} aria-hidden="true">` +
+      `<svg viewBox="0 0 24 24" focusable="false"><path d="${esc(i.glyphPath)}" fill="none" ` +
+      `stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`
+    );
+  }
   const glyph = i.icon ?? i.label.slice(0, 1).toUpperCase();
   return `<span class="fa-nav-glyph fa-nav-tone"${tone} aria-hidden="true">${esc(glyph)}</span>`;
 }
 
 function itemHtml(i: NavItem, c: Ctx): string {
-  const body = `${mark(i, c)}<span class="fa-nav-label">${esc(i.label)}</span>`;
+  // The description is INSIDE the label span's row but hidden visually, so it
+  // joins the accessible name without widening the strip.
+  const sr = i.description ? `<span class="fa-nav-sr"> — ${esc(i.description)}</span>` : "";
+  const body = `${mark(i, c)}<span class="fa-nav-label">${esc(i.label)}${sr}</span>`;
+  const title = i.description ? ` title="${esc(`${i.label} — ${i.description}`)}"` : "";
   // Indent by PADDING rather than by a nested list: a nested `<ul>` would make
   // the document index a different shape from every other group here, and the
   // rows are links either way.
@@ -475,9 +509,10 @@ function itemHtml(i: NavItem, c: Ctx): string {
     // assistive technology reads "catalogue, no viewer yet" as one thing
     // rather than as a label and a detached aside.
     const note = i.note ? `<span class="fa-nav-note">${esc(i.note)}</span>` : "";
-    row = `<span class="fa-nav-dead"${d}>${body}${note}</span>`;
+    row = `<span class="fa-nav-dead"${d}${title}>${body}${note}</span>`;
   } else {
-    row = `<a href="${href(i.href, c)}"${d}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
+    const kind = i.glyphPath && !i.icon ? ' class="fa-nav-kind"' : "";
+    row = `<a href="${href(i.href, c)}"${kind}${d}${title}${i.current ? ' aria-current="page"' : ""}>${body}</a>`;
   }
   if (!i.action && !i.children) return row;
   // The action is a SIBLING of the row, never inside it — a control nested in

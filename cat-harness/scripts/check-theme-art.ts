@@ -3,7 +3,12 @@
  * Report on this instance's theme art — the intake check, run over what shipped.
  *
  * @module scripts/check-theme-art
- * @covers themes
+ * @covers none — its subject is an instance's declared theme ART, read from
+ * the declaration's `images` via `readDeclaration` and grouped by
+ * `THEME_LAYOUTS`. It resolves NO `themes` directory, and it declared
+ * `@covers themes` until 2026-09-30 (bean `z6xd`), which reported the graph
+ * audited over ground this script never reaches. `check:instance-themes`
+ * covers the graph.
  *
  * The owner, 2026-09-20: *"make skills for avatar theme ingestion (need 3
  * meeting certain formatting constraints), return sucches or explnation of

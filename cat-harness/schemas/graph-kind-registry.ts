@@ -105,7 +105,7 @@ import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph";
  * entry, which no step may touch. A consumer told only "this is state" cannot
  * tell whether writing to it is normal or a bug.
  *
- * See `skills/folio-core/content-context-and-state-graphs.md`.
+ * See `skills/kg/kg-core/content-context-and-state-graphs.md`.
  */
 export type GraphLayer = "content" | "context" | "state" | "derived";
 
@@ -236,7 +236,7 @@ export interface GraphKindDef {
    * not say" indistinguishable from "content".
    *
    * **The discipline is in the skill, not here** —
-   * `skills/folio-core/content-context-and-state-graphs.md` carries the definition,
+   * `skills/kg/kg-core/content-context-and-state-graphs.md` carries the definition,
    * the classification of every kind with its reason, the two questions that
    * settle a hard case, and what a consumer may assume about each side. The
    * classification of `fsh-guts`, `qa`, `health` and `uploads` is the part
@@ -553,6 +553,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-voice-skill/v1": { validator: "schemas/voice-skill.ts#VoiceSkillSchema" },
       // A synced remote skill's pinned, per-file fixity record (issue #556).
       "folio-remote-skill/v1": { validator: "schemas/skill-package.ts#RemoteSkillRecordSchema" },
+      // `skills.json`, the node that names a skills directory's TOPICS (bean `9umr`).
+      "skill-topics/v1": { validator: "schemas/skill-topics.ts#SkillTopicsSchema" },
     },
     // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
     summary: BOOTSTRAP_GRAPH_KINDS["skills"],
@@ -1062,7 +1064,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "state",
     // declared-path-literal: this table IS the declaration, as on `health`.
     nodeSchemas: {
-      "glossary-ledger/1.0.0": { validator: "bootstrap-tools:schemas/glossary-ledger.ts#LedgerSchema" },
+      "glossary-ledger/1.0.0": { validator: "schemas/glossary-ledger.ts#LedgerSchema" },
     },
     // NOT work. A bean is something somebody is partway through; this is a
     // record that a term exists, true whether or not anybody is doing
@@ -1070,11 +1072,13 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // decided, and it was right to: "state" alone does not say whether a
     // reader is looking at a queue or at a fact.
     recordsWork: false,
-    // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
-    // The harness's detail, formerly in the summary: written by
+    // cat-harness's own kind since 2026-09-30 (owner, bean `xsqm`): the
+    // ledger is harness state, hosted here for every instance it exports,
+    // so the kind moved up from bootstrap with it. Written by
     // scripts/glossary-export.ts; the glossary document itself is derived and
     // not stored here — only the ledger, the one fact that cannot be re-derived.
-    summary: BOOTSTRAP_GRAPH_KINDS["swimlane-glossary"],
+    summary:
+      "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused.",
   },
   models: {
     type: termIri("ModelGraph"),

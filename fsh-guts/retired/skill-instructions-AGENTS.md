@@ -15,7 +15,7 @@ summary: >-
 ---
 
 > **Retired 2026-09-23.** Moved here rather than deleted, per
-> `skills/folio-core/fsh-guts.md`. The original page follows verbatim,
+> `skills/kg/kg-core/fsh-guts.md`. The original page follows verbatim,
 > including its own front matter, fenced so it is not read as this node's.
 
 ````markdown
@@ -26,9 +26,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`skills/kg-navigation/AGENTS.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/kg-navigation/AGENTS.md) — do not edit here.
+> Generated from [`skills/kg/kg-navigation/AGENTS.md`](https://github.com/litlfred/folio-assistant/blob/main/skills/kg/kg-navigation/AGENTS.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/kg-navigation/AGENTS.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/skills/kg/kg-navigation/AGENTS.md){: .fa-edit-source }
 
 {% raw %}
 # AGENTS.md — kg-navigation

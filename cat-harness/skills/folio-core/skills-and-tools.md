@@ -22,7 +22,7 @@ makes a layer un-portable.
 Decided 2026-09-18 by the repository owner. Schema for the Tool node:
 `docs/architecture/cat-harness-minimum.md` §"Strawperson"; carrier
 convention (Zod authoritative, JSON-LD and JSON Schema generated) in
-[`directory-conventions`](directory-conventions.md) §"What lives in the
+[`directory-conventions`](../kg/kg-core/directory-conventions.md) §"What lives in the
 `schemas` graph".
 
 ## The test, in one line
@@ -67,7 +67,7 @@ equal standing, and the skill must present it that way.
 somebody asks whether another project could do a skill's job — Beads for the
 work plan, say — that survey is research, not a proposal and not a skill edit:
 it files under `<instance>/docs/research-and-analysis/` per
-[`placement`](placement.md), dated, with each project's health measured rather
+[`placement`](../kg/kg-core/placement.md), dated, with each project's health measured rather
 than recalled. The first one is `research-and-analysis/prior-art.md`
 (2026-09-23), and the choice it raised is a bean (`b91x`), not a paragraph
 here. Only if a candidate is adopted does it become a Tool node, with the

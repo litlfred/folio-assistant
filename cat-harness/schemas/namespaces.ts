@@ -47,7 +47,7 @@
  * it would churn every consumer to no effect: the IRI is what is published,
  * and that does not change.
  */
-import { type TermLayer, termLayer } from "./vocabulary";
+import { PROPERTY_GLOSSES, REPLACEMENT_PREFIXES, type TermLayer, termLayer } from "./vocabulary";
 // The VALUES live in a code list, not here (owner, 2026-09-23: "list of codes
 // and corresponding narrative desc and source should be part of a
 // node/asset"). Each code there carries what the namespace names and where
@@ -319,10 +319,35 @@ export function prefixForLayer(layer: TermLayer): NsPrefix {
  * This replaced 93 hand-written per-term template literals
  * across four modules. Each of those was a place to pick the wrong namespace
  * once the namespaces stopped being one, and `cat-harness.ts` alone mints
- * terms in all three layers — `KGraph` and `SchemaGraph` are
+ * terms in all three layers — `Subgraph` and `GraphKind` are
  * bootstrap's, `BeanGraph` is the harness's, `VoiceGraph` is core's — so
  * "which namespace does this file use" has no file-level answer.
  */
 export function termIri(name: string): string {
   return `${namespaceForLayer(termLayer(name))}${name}`;
+}
+
+/**
+ * The standard property a retired term was replaced by, as an IRI — or
+ * `undefined` for a term that was never replaced. Resolved here, not in the
+ * vocabulary, because `processes:` is bootstrap's own namespace and moves with
+ * its release.
+ */
+export function replacementIri(name: string): string | undefined {
+  const curie = PROPERTY_GLOSSES[name]?.replacedBy;
+  if (curie === undefined) return undefined;
+  const [prefix, local] = curie.split(":") as [keyof typeof REPLACEMENT_PREFIXES, string];
+  const base = prefix === "processes" ? BOOTSTRAP_PROCESSES_NS : REPLACEMENT_PREFIXES[prefix];
+  if (base === undefined) throw new Error(`${name}: replacedBy ${curie} names an unknown prefix`);
+  return `${base}${local}`;
+}
+
+/**
+ * The property a graph writes for `name`: the standard one when the term was
+ * replaced, otherwise the term minted here. What kg-export's `@context` uses,
+ * so the exporter and the published vocabulary cannot disagree about where a
+ * term went.
+ */
+export function propertyIri(name: string): string {
+  return replacementIri(name) ?? termIri(name);
 }

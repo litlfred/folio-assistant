@@ -429,7 +429,7 @@ in the corpus in three places, none of which had been read as answering it:
 |---|---|
 | `folio-assistant-core/schemas/materialization.ts` | **three states** — `referenced` (we know where, we hold no bytes), `materialized` (the bytes are here), `unknown` (we have not established which) — with **no default**, plus five gates, and `localPath` present **iff** `materialized` |
 | `skills/workflows/materialize-remote.bpmn` | the act itself, as an executable **STRICT** process running five gates in a fixed order; `unknown` on any one keeps the node `referenced` |
-| `skills/folio-core/directory-conventions.md` | the `catalogue` graph kind — *"a remote catalogue modelled BY REFERENCE … Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is"* |
+| `skills/kg/kg-core/directory-conventions.md` | the `catalogue` graph kind — *"a remote catalogue modelled BY REFERENCE … Distinct from `library`: that is content which IS here, this is the shape of a collection of which almost none is"* |
 
 **So: yes.** The knowledge graph is static and modelled by reference;
 materialisation is a separate, gated, checked act that produces bytes.

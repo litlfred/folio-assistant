@@ -112,6 +112,6 @@ the ruling. Four are `docs/architecture/*`, whose subject IS the layering —
 the same shape as `schemas/dak-content-type.ts`, where a file below the
 boundary describes the boundary, and both *move* and *reword* are wrong.
 
-One of the 17 is `skills/folio-core/instance-publication.md`, written in this
+One of the 17 is `skills/kg/kg-core/instance-publication.md`, written in this
 same arc four days ago. The check had no way to say so at the time, because
 nothing ran it.

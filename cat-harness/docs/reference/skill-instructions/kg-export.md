@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/kg-export.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/kg-export.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/kg-core/kg-export.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/kg-export.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/kg-export.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/kg-core/kg-export.md){: .fa-edit-source }
 
 {% raw %}
 # KG export — publishing the graph as linked data, not as a page
@@ -72,7 +72,7 @@ as long as the document had no consumer.
 
 ## Declaring a term is a decision, not a line of context
 
-Four questions, in this order. The worked call for each term is in
+Five questions, in this order. The worked call for each term is in
 `buildContext()`, beside the term it justifies.
 
 1. **Does the fact belong in the graph at all?** Five of the thirty-four were
@@ -102,6 +102,32 @@ Four questions, in this order. The worked call for each term is in
    dispatch object from a Tool, and stays one term typed `@json`, because
    declaring a container term alone keeps the outer key and drops every inner
    one.
+5. **Does a published standard already say it?** Then the term IS the
+   standard's property, and nothing is minted. Owner, 2026-09-30 (bean
+   `xsqm`): *"emphasize preexisting standards … now align"*. `title` and
+   `description` are Dublin Core's; `partOf`/`inSubgraph` are
+   `dcterms:isPartOf`, `holdsGraph` is `dcterms:type`, `conformsTo` is
+   `dcterms:conformsTo`; a sequence flow's `from`/`to` are BPMN's own
+   `sourceRef`/`targetRef` and a node's `incoming`/`outgoing` BPMN's
+   attributes of those names; `implementedBy` and `bindsRole` are bootstrap's
+   `processes:skill` and `processes:role`, the extension attributes the
+   diagram itself carries. bootstrap's own graph (bootstrap-tools'
+   `export-graph.ts`) uses the same IRIs, so the two graphs agree.
+
+   **How, so it cannot drift:** a term that restated a standard keeps its
+   gloss in `schemas/vocabulary.ts` and gains `replacedBy`, a CURIE.
+   `buildContext()` maps each such key through `propertyIri()`
+   (`schemas/namespaces.ts`), which reads that field, so the exporter cannot
+   name one IRI while the vocabulary names another. The published vocabulary
+   keeps the old term, `owl:deprecated` and `dcterms:isReplacedBy` the
+   standard property: data already holding the old IRI still dereferences to
+   a definition that says where to go. The JSON keys are unchanged, so a
+   reader of plain JSON sees no difference.
+
+   What stays minted is what no standard says: `performedBy`, `inLane`,
+   `hasSkill`, `startNode`, and the rest. BPMN spells a lane's members as
+   `flowNodeRef` on the LANE; `inLane` is the inverse, on the node, and no
+   standard names that direction.
 
 **No `canonicalUrl` and no `--base-url` → no absolute IRIs**, reported in
 `problems[]` rather than papered over. A fabricated absolute base is the same
@@ -141,12 +167,59 @@ Owner, 2026-09-23: *"prefix -> match stub"*. Each of our namespaces is
 
 | namespace | prefix |
 |---|---|
-| `…/bootstrap/ns#` | `bootstrap` |
-| `…/cat-harness/ns#` | `cat-harness` |
-| `…/folio-assistant-core/ns#` | `folio-assistant-core` |
+| `https://litlfred.github.io/bootstrap/0.1.0/ns#` | `bootstrap` |
+| `…/folio-assistant/cat-harness/ns#` | `cat-harness` |
+| `…/folio-assistant/folio-assistant-core/ns#` | `folio-assistant-core` |
+
+bootstrap's row is the exception to the `<canonical>/<stub>/` shape, and says
+so: its namespace sits under bootstrap's own `iriBase` and carries the
+release version (bean `r3gy` E), because bootstrap is published from its own
+repository and an agent reading it pins a release. The prefix is still the
+stub. The address is written once, in `cat-harness/code-lists/own-namespaces.json` (read as
+`CAT_BOOTSTRAP_NS`), and `iri:sync` keeps every literal copy — this table's
+included — at bootstrap's declared version.
 
 One word in three places — path segment, stub, prefix — instead of three
-words that must agree. `NS_PREFIXES` in `schemas/namespaces.ts` is the one
+words that must agree.
+
+### Naming a namespace document — `ns`, and why (owner, 2026-09-30)
+
+**A namespace document is published where its identifiers point**, so its file
+name IS its address: `bootstrap/ns.jsonld` is what makes
+`…/bootstrap/0.1.0/ns#Node` resolve, and `check:node-iris` fails the day they
+differ. Renaming the file renames every term.
+
+The owner asked whether `ns` should be a friendlier name (`vocabulary.jsonld`,
+`schemas/terms.jsonld`) and chose to keep it, on this analysis:
+
+- **It is the house rule and the common practice.** Six of this project's own
+  namespaces end in `/ns#` — each layer's, core's DSpace fields, and both
+  process-extension namespaces — and `<canonical>/<stub>/ns#` is what "the
+  prefix is the stub" rests on. W3C publishes PROV, DCAT, ORG and SHACL under
+  `w3.org/ns/`.
+- **Renaming is not local.** Changing the pattern means renaming cat-harness's
+  and core's namespaces, already published (a MAJOR version each under
+  `instance-versioning`), and 91 BPMN files binding the process namespaces.
+- **`schemas/` would misclassify it.** Here a schema is what a Node is
+  *checked against*; a vocabulary *defines words*.
+- **Findability is solved without renaming**: the file's own `label` ("bootstrap
+  vocabulary") is what the generated README file table shows beside it.
+
+### One source per layer — and no all-layers union (owner, 2026-09-30)
+
+Each layer's vocabulary is ONE document, and every term's `rdfs:isDefinedBy`
+names that document. bootstrap's is `bootstrap/ns.jsonld`, written by
+bootstrap-tools from bootstrap's own terms and committed; the site copies it,
+and the harness's full build reads it rather than rebuilding it, so nothing
+can say a thing about a bootstrap term that bootstrap's file does not
+(`ns-export-skos.test.ts` holds them equal, node for node).
+
+The all-layers union at `<site>/ns/vocabulary.jsonld` is **retired**. Asked
+where it should live for findability, the answer came from who reads it: a
+program follows a term's IRI to its layer document; a person looking for terms
+goes to the Glossary, which lists every term and publishes SKOS for every
+scheme. The union served neither, linked from no page, and was a third copy of
+the same terms — so it is gone, rather than moved. `NS_PREFIXES` in `schemas/namespaces.ts` is the one
 list; `stubOfNamespace()` reads the stub back off an IRI. The abbreviations
 `bs`, `cat` and `fac` were retired the same day, for a measured reason
 rather than taste.

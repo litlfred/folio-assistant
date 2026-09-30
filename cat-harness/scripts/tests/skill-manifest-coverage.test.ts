@@ -184,7 +184,7 @@ describe("skill package manifests cover the package", () => {
     //
     // The convention is already INSTRUCTED, in two places — `skill-register.ts`
     // prints "Add the slug to its `package-manifest.json` `skills` list, sorted"
-    // and `skills/folio-core/skill-registration.md` says "you add the slug,
+    // and `skills/kg/kg-core/skill-registration.md` says "you add the slug,
     // sorted". Measured 2026-09-27: 6 of the 22 manifests carrying a `skills`
     // array did not obey it. An instruction nothing checks is an instruction
     // that drifts, and `kfkh` asked for it to be enforced or dropped; dropping

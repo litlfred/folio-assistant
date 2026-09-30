@@ -980,3 +980,44 @@ describe("a harness row carries its own graphs and its own control", () => {
     expect(navbarRegionsHtml(plain)).not.toContain("fa-nav-row");
   });
 });
+
+describe("adjacent graph rows cannot be confused (bean yag0)", () => {
+  // The owner clicked who-iris's `docs` row meaning `library` on 2026-09-23:
+  // adjacent rows, each a one-letter initial beside a bare kind word, and at
+  // rest the strip shows only the marks. `catalogue` and `code` shared `C`.
+  const rows = declaredGraphs("who-iris", new Map([["docs", "../docs/who-iris/"], ["library", "../cat-harness/library/who-iris/"]]));
+
+  it("every row has a mark no other row has", () => {
+    const marks = rows.map((r) => r.glyphPath ?? r.icon);
+    expect(marks.every((m) => m !== undefined)).toBe(true);
+    expect(new Set(marks).size).toBe(rows.length);
+  });
+
+  it("docs and library carry a drawn glyph and distinct hues, not initials", () => {
+    const docs = rows.find((r) => r.label === "docs")!;
+    const library = rows.find((r) => r.label === "library")!;
+    expect(docs.glyphPath).toBeDefined();
+    expect(library.glyphPath).toBeDefined();
+    expect(docs.icon).toBeUndefined();
+    expect(docs.tone).not.toBe(library.tone);
+  });
+
+  it("every row's accessible name is full and distinct, and begins with its visible label", () => {
+    const html = navbarRegionsHtml(railModel({ instance: "who-iris", toRoot: "..", links: rows }));
+    const names = rows.map((r) => `${r.label} — ${r.description}`);
+    expect(new Set(names).size).toBe(rows.length);
+    for (const r of rows) {
+      expect(r.description).toContain("who-iris");
+      // The visible label then the hidden rest, inside the same row, and the
+      // same text as its tooltip.
+      expect(html).toContain(`${r.label}<span class="fa-nav-sr"> — ${r.description!.replace(/&/g, "&amp;")}`);
+    }
+    expect(rows.find((r) => r.label === "library")!.description).toBe("L1 source content, who-iris");
+    expect(html).toContain('title="library — L1 source content, who-iris"');
+  });
+
+  it("the glyph is an SVG hidden from assistive technology — the words are the name", () => {
+    const html = navbarRegionsHtml(railModel({ instance: "who-iris", toRoot: "..", links: rows }));
+    expect(html).toMatch(/<span class="fa-nav-glyph fa-nav-tone" style="[^"]*" aria-hidden="true"><svg viewBox="0 0 24 24"/);
+  });
+});

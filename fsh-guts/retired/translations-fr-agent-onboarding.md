@@ -20,7 +20,7 @@ summary: >-
 ---
 
 > **Retired 2026-09-20.** Moved here rather than deleted, per the standing
-> rule in `skills/folio-core/fsh-guts.md`: work that is not wanted moves to
+> rule in `skills/kg/kg-core/fsh-guts.md`: work that is not wanted moves to
 > `fsh-guts/` with a note saying what superseded it, and actual deletion
 > happens **only on explicit confirmation from the owner**. The links below
 > are preserved as they were and are not expected to resolve from here.

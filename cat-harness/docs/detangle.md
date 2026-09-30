@@ -11,8 +11,8 @@ lang: en
 > a top-level `detangle/` instance that declared no `needs`, so its own edges
 > could not be placed by the direction classifier it hosts. The owner's ruling:
 > fold it into the harness. The script is
-> `skills/graph-management/kg-detangle.ts`, beside the
-> [`graph-detanglement`](../skills/graph-management/graph-detanglement.md) skill
+> `skills/kg/graph-management/kg-detangle.ts`, beside the
+> [`graph-detanglement`](../skills/kg/graph-management/graph-detanglement.md) skill
 > it implements (owner, 2026-09-24); the criterion `schemas/detangle.ts`; the
 > pinned measurements `test/results/detangle/`, under the declared `qa`
 > directory. Run it with `bun run kg:detangle`.

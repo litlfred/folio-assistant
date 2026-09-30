@@ -98,11 +98,10 @@ document is the contract, so it is what gets graded.
 
 ## What this does not cover
 
-- **The graph document.** `BootstrapGraphDocumentSchema` describes it, but
-  that Zod is still in cat-harness, which bootstrap-tools may not import
-  (`check:tools-closure`), and the graph is built at deploy time with no
-  committed base to diff against. `bootstrap:validate` does not parse it and
-  `bootstrap:semver` does not grade it; its bump is `could not determine` by
-  construction. Do not report it as unchanged in the meantime.
+- **The graph document's bump.** Since 2026-09-30 its schema is here
+  (`GraphExportSchema`, beside `export-graph.ts`), and `bootstrap:validate`
+  builds and parses it. But it is built at deploy time with no committed base
+  to diff against, so `bootstrap:semver` does not grade it; its bump is
+  `could not determine` by construction. Do not report it as unchanged.
 - **Which version number gets written.** This computes the minimum bump; it
   does not write a version, and an author may always bump further.

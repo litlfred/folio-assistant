@@ -229,8 +229,8 @@ rather than an error* — is the failure `findDeclarationFile()` is built to
 avoid: it never computes the name from the directory, but scans for a `*.json`
 whose stem equals the `name` **inside** it, and throws when a directory holds
 two rather than picking one.
-See [`directory-conventions`](../../skills/folio-core/directory-conventions.md)
-§Naming and [`kg-export`](../../skills/folio-core/kg-export.md).
+See [`directory-conventions`](../../skills/kg/kg-core/directory-conventions.md)
+§Naming and [`kg-export`](../../skills/kg/kg-core/kg-export.md).
 
 **I.3 is the one to stage carefully.** 2,408 occurrences is a scale at which a
 single sweep is unreviewable. Split it by consumer — pipeline, scripts, docs,
