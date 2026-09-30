@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-30T13:43:41Z
+updated_at: 2026-09-30T16:02:22Z
 parent: folio-assistant-slw1
 ---
 
@@ -186,3 +186,8 @@ Plan:
 
 
 _2026-09-30 15:40_ — vendors declared from within (`voices.json` names `vendors/`, `vendors/vendors.json` names each vendor; kind `voice-vendors`) landed in PR #1483. The loader refuses an undeclared vendor. Three vendor voices now: Gemini CLI, Claude, OpenAI.
+
+
+
+## Owner, 2026-09-30 (round 4): the accessor gate is a literal allowlist
+Refuse the literal `structure.json` in TypeScript outside a short allowlist, each entry with its reason. The existence-only readers (library-ref, check-materialized-fixity, check-catalogue) are listed as such. The orphan `scenarios.detangle.json` was deleted with the owner's approval (commit 3095e92).
