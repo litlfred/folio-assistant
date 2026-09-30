@@ -5,6 +5,17 @@ a top-level directory ahead of becoming its own repository — the same
 arrangement as [`who-iris/`](../who-iris/) and
 [`folio-assistant-core/`](../folio-assistant-core/).
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [What is here](#what-is-here)
+- [Why it is not in who-iris/](#why-it-is-not-in-who-iris)
+- [Why it is not in cat-harness/](#why-it-is-not-in-cat-harness)
+- [How it is reached](#how-it-is-reached)
+
+<!-- readme:toc:end -->
+
 ## What is here
 
 Four documents and the methods adopted from three of them.
