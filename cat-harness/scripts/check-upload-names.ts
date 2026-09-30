@@ -97,6 +97,8 @@ const SIDECAR_SUFFIXES = [".extraction.json"] as const;
  * and gains nothing.
  */
 const UNSAFE = /[ ,()[\]{}#?&%'"`<>|]+/g;
+/** The same class, non-global: `.test` on a `/g` regex is STATEFUL and skips. */
+const UNSAFE_ONCE = /[ ,()[\]{}#?&%'"`<>|]/;
 
 /** `"PIIS… (2).pdf"` → `"PIIS…-2.pdf"` — case and extension untouched. */
 export function normaliseName(name: string): string {
@@ -107,7 +109,19 @@ export function normaliseName(name: string): string {
   // A dotfile or a name with no extension has no stem to split off.
   const stem = dot > 0 ? name.slice(0, dot) : name;
   const ext = dot > 0 ? name.slice(dot) : "";
-  const safe = stem.replace(UNSAFE, "-").replace(/-+/g, "-").replace(/^-+|-+$/g, "");
+  // A name with NO unsafe character is returned untouched. Without this guard
+  // the collapse below rewrites names that were never a problem: it renamed
+  // `sec-119-74-broadly--versus-…md` to `…broadly-versus-…md` purely for its
+  // double dash, and that file is a library SECTION — the rename dropped
+  // `prose-sec-119` out of the generated JSON-LD's `contains`, losing a block
+  // from the published graph. Same class as wanting `README.md` lowercased:
+  // a rule that edits correct names to satisfy itself.
+  if (!UNSAFE_ONCE.test(stem)) return name;
+  const safe = stem
+    .replace(UNSAFE, "-")
+    // Collapse and trim ONLY around what was just replaced — never a dash the
+    // uploader wrote. `--` is not unsafe and is not this check's business.
+    .replace(/^-+|-+$/g, "");
   return `${safe || stem}${ext}`;
 }
 

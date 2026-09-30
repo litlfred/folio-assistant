@@ -56,6 +56,22 @@ describe("case is not the defect", () => {
     expect(normaliseName("README.md")).toBe("README.md");
   });
 
+  test("a name with no unsafe character is returned UNTOUCHED", () => {
+    // The bug this pins cost a block out of the published graph. The rule
+    // replaced unsafe runs and then collapsed `-+` globally, which rewrote
+    // `sec-119-74-broadly--versus-narrowly-focused-key-question.md` — a library
+    // SECTION file with no unsafe character in it — to a single dash. The
+    // generator then could not find `prose-sec-119`, and `sections/sec-119.jsonld`
+    // regenerated WITHOUT it: `gen-library-jsonld --check` went red and the
+    // `contains` array silently lost an entry.
+    //
+    // A double dash is not unsafe and is not this check's business.
+    expect(normaliseName("sec-119-74-broadly--versus-narrowly-focused.md"))
+      .toBe("sec-119-74-broadly--versus-narrowly-focused.md");
+    expect(isNormalised("a--b.pdf")).toBe(true);
+    expect(isNormalised("-leading-and-trailing-.pdf")).toBe(true);
+  });
+
   test("mixed case and underscores survive", () => {
     for (const n of ["AGENTS.md", "My_File.PDF", "arxiv-2607.25032v1", "WHO-handbook.pdf"]) {
       expect(normaliseName(n)).toBe(n);

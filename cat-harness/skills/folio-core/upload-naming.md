@@ -99,3 +99,30 @@ a rename — a `git mv` that overwrites is a deletion with a friendlier name.
   harness-layer rather than folio-layer in the repo partition.
 - **Whether a file should be there at all.** That is ingestion's question, not
   naming's.
+
+## It does not touch a name that has no unsafe character — measured the hard way
+
+The rule replaced unsafe runs **and then collapsed `-+` globally**. That rewrote
+
+```
+sec-119-74-broadly--versus-narrowly-focused-key-question.md
+```
+
+— a library **section** file containing no unsafe character at all — purely for
+its double dash. `gen-library-jsonld` then could not find `prose-sec-119`, and
+`sections/sec-119.jsonld` regenerated **without it**: `contains` silently lost
+an entry, which is a block missing from the published graph rather than the
+reference churn the owner accepted.
+
+Caught by refusing to commit the regeneration: the block file was still on disk
+and `main`'s committed copy still listed it, so the generator's new output was
+wrong and the committed one right. `gen-library-jsonld --check` on a pristine
+`origin/main` worktree exited **0**, which is what established the drift as
+mine.
+
+So: **a name with no unsafe character is returned untouched.** Collapsing and
+trimming happen only to names that were going to change anyway. A double dash,
+a leading dash, a trailing dash — none is this check's business.
+
+That is the same failure as wanting `README.md` lowercased, one step subtler,
+and it is why both are pinned by tests rather than by intent.
