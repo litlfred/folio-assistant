@@ -19,6 +19,9 @@ Provide before/after URL pairs whenever rendered content has changed in a
 feature branch. This is part of every review or feedback session involving
 visual content.
 
+URLs tell the reviewer where to look. The captured, measured pair that goes
+with them is [`before-after-preview`](before-after-preview.md).
+
 ## Signature — one optional string in, a reviewable list out
 
 Stated formally because this skill is invoked by other processes and by a

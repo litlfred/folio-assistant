@@ -5,7 +5,7 @@
     "id": "Process_Editing",
     "path": "processes/editing-hci-validation.bpmn"
   },
-  "source_hash": "sha256:93bf9b0f6a4e7b858f49630cf67eb616b213ed360ff9406ccc3db83a3484e7d2",
+  "source_hash": "sha256:273db41bfa9bd60516d433ef50c6e9d2d4db6c92bdf4c207c5bd5017f989e715",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -47,6 +47,10 @@
           "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
+          "where": "Task_SmeReview",
+          "detail": "names skill \"before-after-preview\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
           "where": "Task_ReviseEdit",
           "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         }
@@ -73,8 +77,13 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_SmeReview",
+          "detail": "needs skill \"before-after-preview\", but its lane's role \"reviewer\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -126,8 +135,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 1,
+    "pass": 15,
+    "fail": 2,
     "n/a": 8,
     "unknown": 0
   }

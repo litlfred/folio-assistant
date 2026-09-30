@@ -5,7 +5,7 @@
     "id": "Process_CodeChangeReview",
     "path": "processes/code-change-review.bpmn"
   },
-  "source_hash": "sha256:1f922df85351c0f9ddc173107587a4b8686da1615d4e0e6717e5a358d0863028",
+  "source_hash": "sha256:a48b799f0335696f6bfb6f8d19250d3e4d6b5deb7296cf9120919d0d63bc1339",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -37,6 +37,14 @@
         {
           "where": "Task_BranchAndAnnounce",
           "detail": "names skill \"issue-working\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_CommitAndOpenPR",
+          "detail": "names skill \"before-after-preview\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Review",
+          "detail": "names skill \"before-after-preview\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         }
       ]
     },
@@ -61,8 +69,17 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_CommitAndOpenPR",
+          "detail": "needs skill \"before-after-preview\", but its lane's role \"authoring-agent\" does not carry it."
+        },
+        {
+          "where": "Task_Review",
+          "detail": "needs skill \"before-after-preview\", but its lane's role \"code-reviewer\" does not carry it."
+        }
+      ]
     },
     "activity-names-skill": {
       "result": "pass",
@@ -114,8 +131,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 1,
+    "pass": 14,
+    "fail": 2,
     "n/a": 9,
     "unknown": 0
   }

@@ -20,6 +20,11 @@ reviewer must judge is how the block LOOKS. The Markdown or SVG diff of a
 recoloured bar chart is noise. So the staging job pictures each such block on
 both sides, and the review page shows the pictures.
 
+For a before/after of anything the staging job does not picture (page
+chrome, scroll behaviour, a PDF page, an IG page, a slide), and for the rules
+every reviewer-facing pair follows, see
+[`before-after-preview`](before-after-preview.md).
+
 ## The owner's rulings this follows
 
 - **A Skill and a Tool, built into the processes** (2026-09-23). The steps

@@ -441,7 +441,7 @@
     {
       "id": "process_codechangereview.task_commitandopenpr",
       "prefLabel": "Commit, push, open the PR",
-      "definition": "The PR opens at the FIRST commit, even on a stub, and permission is never asked for it. Holding a green PR back for someone to look at is not caution — it is a blocked reviewer.",
+      "definition": "The PR opens at the FIRST commit, even on a stub, and permission is never asked for it. Holding a green PR back for someone to look at is not caution — it is a blocked reviewer. A change to a rendered surface carries a before/after preview in the PR body (skill before-after-preview).",
       "notation": "Task_CommitAndOpenPR",
       "source": "cat-harness/processes/code-change-review.bpmn#Task_CommitAndOpenPR",
       "status": "candidate"
@@ -473,7 +473,7 @@
     {
       "id": "process_codechangereview.task_review",
       "prefLabel": "Review the change",
-      "definition": "A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane.",
+      "definition": "A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane. For a rendered change the reviewer reads the agent's before/after preview rather than building one.",
       "notation": "Task_Review",
       "source": "cat-harness/processes/code-change-review.bpmn#Task_Review",
       "status": "candidate"
@@ -705,7 +705,7 @@
     {
       "id": "process_contentchangereview.task_commitpush",
       "prefLabel": "Commit, push, update PR",
-      "definition": "Agent commits all changes to the feature branch and pushes. The feature-staging.yml workflow automatically deploys to STAGING/<branch-slug>/ and comments the URL on the PR.",
+      "definition": "Agent commits all changes to the feature branch and pushes. The feature-staging.yml workflow automatically deploys to STAGING/<branch-slug>/ and comments the URL on the PR. For a rendered change the agent also produces the before/after preview (skill before-after-preview) and links it in the PR body.",
       "notation": "Task_CommitPush",
       "source": "cat-harness/processes/content-change-review.bpmn#Task_CommitPush",
       "status": "candidate"
@@ -713,7 +713,7 @@
     {
       "id": "process_contentchangereview.task_comparebeforeafter",
       "prefLabel": "Compare main vs staging",
-      "definition": "Review committee opens both URLs side by side: - Main site: <pages-url>/ (current published state) - Staging: <pages-url>/STAGING/<branch-slug>/ The staging banner shows the commit SHA so they can verify what they are reviewing matches the PR. A changed figure, diagram or table is also pictured before and after on the review page, with the share of changed pixels in words (skill visual-diff, Tool folio-block-screenshots).",
+      "definition": "Review committee opens both URLs side by side: - Main site: <pages-url>/ (current published state) - Staging: <pages-url>/STAGING/<branch-slug>/ The staging banner shows the commit SHA so they can verify what they are reviewing matches the PR. A changed figure, diagram or table is also pictured before and after on the review page, with the share of changed pixels in words (skill visual-diff, Tool folio-block-screenshots). Anything the staging job cannot picture (page chrome, scroll behaviour, a PDF page, an IG page) is in the agent's before/after preview (skill before-after-preview).",
       "notation": "Task_CompareBeforeAfter",
       "source": "cat-harness/processes/content-change-review.bpmn#Task_CompareBeforeAfter",
       "status": "candidate"
@@ -825,7 +825,7 @@
     {
       "id": "process_contentchangereview.task_reviewstaging",
       "prefLabel": "Review staged rendering",
-      "definition": "Author reviews the rendered feature branch at <pages-url>/STAGING/<branch-slug>/ and compares against the main site. The staging banner shows the commit SHA.",
+      "definition": "Author reviews the rendered feature branch at <pages-url>/STAGING/<branch-slug>/ and compares against the main site. The staging banner shows the commit SHA. The agent's before/after preview (skill before-after-preview) sits beside the URLs, with its counts and status line.",
       "notation": "Task_ReviewStaging",
       "source": "cat-harness/processes/content-change-review.bpmn#Task_ReviewStaging",
       "status": "candidate"
@@ -1569,7 +1569,7 @@
     {
       "id": "process_editing.task_smereview",
       "prefLabel": "Human / SME review [content-review]",
-      "definition": "Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement.",
+      "definition": "Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement. A rendered change reaches the reviewer with its before/after preview (skill before-after-preview).",
       "notation": "Task_SmeReview",
       "source": "cat-harness/processes/editing-hci-validation.bpmn#Task_SmeReview",
       "status": "candidate"
