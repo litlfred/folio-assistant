@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T21:04:56.479Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a5e2a5b6012ce5364a4e0e8a6f3edab76f6a886b",
-  "sourceCommitSha": "a5e2a5b6012ce5364a4e0e8a6f3edab76f6a886b",
-  "sourceCommitAt": "2026-09-30T20:59:33Z",
+  "generatedAt": "2026-09-30T21:11:19.015Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5498fdb5b57ef942253657edca5a3bf291d2e905",
+  "sourceCommitSha": "5498fdb5b57ef942253657edca5a3bf291d2e905",
+  "sourceCommitAt": "2026-09-30T21:08:11Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -318,8 +318,8 @@
     "SequenceFlow": 941,
     "Lane": 192,
     "ProcessNode": 889,
-    "Tool": 109,
-    "Schema": 132,
+    "Tool": 111,
+    "Schema": 133,
     "ExternalSchema": 17,
     "GraphKind": 35,
     "Role": 48,
@@ -3485,7 +3485,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
-      "instructionLines": 203,
+      "instructionLines": 216,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -41512,6 +41512,92 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/tool-types-schema"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#tool/lsi-index",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "lsi-index",
+      "title": "Build the Latent Semantic Indexing index of a prose graph",
+      "description": "Build the per-graph LSI index sidecar for every declared prose graph (or the one named): input fingerprint, parameters, dimension summaries, nearest neighbours and near-duplicate findings, never the vectors. Records each run's outcome and input fingerprint, success or failure, as a `folio-tool-run/v1` record.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run lsi index"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "instance",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/tool-types.schema.json#/$defs/Slug",
+            "description": "Instance declaring the graph, e.g. `cat-harness`.",
+            "required": false,
+            "arg": {
+              "flag": "--instance"
+            }
+          },
+          {
+            "name": "graph",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/tool-types.schema.json#/$defs/Slug",
+            "description": "Graph id within the instance, e.g. `skills`.",
+            "required": false,
+            "arg": {
+              "flag": "--graph"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "index",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`test/results/lsi/<instance>/<graph>.lsi.json`, and the run record under `test/results/tool-runs/lsi-index/`."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#skill/lsi-indexing"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/lsi-index"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#tool/site-search-index",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "site-search-index",
+      "title": "Site search index",
+      "description": "The just-the-docs search index, `assets/js/search-data.json`, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run preview:site"
+      },
+      "io": {
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "index",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`_site/assets/js/search-data.json` in the assembled site."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "ruby"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#skill/docs-generation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/site-search-index"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#tool/log-message",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "log-message",
@@ -45565,6 +45651,15 @@
       "module": "schemas/tool-invocation.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tool-invocation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#schema/tool-run",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "tool-run",
+      "title": "A TOOL RUN RECORD — did the downstream tool run, did it succeed, and over",
+      "module": "schemas/tool-run.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/tool-run"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld#schema/tool-types",
