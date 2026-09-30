@@ -153,8 +153,15 @@ left alone.
 ## How big the rename actually was — findings are not paths
 
 **33 paths**, measured from `git diff --name-status -M` rather than re-derived:
-26 primaries and 7 `.extraction.json` sidecars; 23 in the root `uploads` graph
-and 10 across four who-iris captures.
+26 primaries and 7 `.extraction.json` sidecars; 23 under the root `uploads/`
+directory and 10 across four who-iris captures.
+
+(That sentence says *directory* rather than *graph* on purpose.
+`check:declaration-claims` pairs the phrase `` `<graph>` graph `` with any
+`` `*.json` `` filename near it and asks whether that file declares the graph.
+This skill is ABOUT filenames, so `.json` names are dense here and none of them
+is a declaration claim — the pairing was a false positive, and the honest repair
+is to stop making a claim-shaped sentence rather than to add an exception.)
 
 A run's finding count is **not** this number and must not be quoted as it. The
 check reports only what is *still* unnormalised, so once part of the corpus has
