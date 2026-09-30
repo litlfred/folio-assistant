@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T17:53:09Z
-updated_at: 2026-09-30T17:53:34Z
+updated_at: 2026-09-30T18:13:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -117,3 +117,42 @@ Whether any test **other** than these two reads the checkout path. The
 measurement above is a whole-suite run, so the count 2 is the suite's answer
 under one wrong name — it is **not** a proof that no third test would fail
 under a different one.
+
+
+## This is the first FILING, not the first sighting — and that is the point
+
+Recorded 2026-09-30, after #1616 merged.
+
+**#1616's own PR body already diagnosed mechanism 1, correctly and in full**,
+three hours before this bean existed:
+
+> The one `bun test` failure present in both runs is `instanceRootsIn includes
+> the repository root`, which asserts the checkout directory is named
+> `folio-assistant`. This worktree is named `agent-a8366c7084ef9fa2b`, and the
+> assertion's own received list contains that string. A checkout-name artefact,
+> not this change; CI checks out into a correctly named directory.
+
+Every element is there: the test, the mechanism, the worktree name, the
+received list as evidence, and the reason CI cannot see it. The agent that
+wrote `ymsu`'s fix found `ymsu`'s sibling while measuring it, wrote it down
+accurately — **and it went nowhere**, because the place it was written down
+was a PR body.
+
+Then a second session (this one) hit the identical failure on the identical
+branch, spent a 25-minute gate run and four controlled re-runs re-deriving it
+from scratch, and filed it. **The finding was not lost because it was
+unclear. It was lost because a PR body is a record of a change, not a record
+of a corpus fact** — nothing scans it, no epic holds it, and the next agent to
+run gates in a worktree does not read it.
+
+That is `1xhc` about the corpus rather than about CI: a finding that does not
+fire where the next agent will look is indistinguishable from one nobody made.
+It is also exactly what `surprise-to-corpus` is for, pointed at a surprise
+that HAD already been noticed.
+
+**No blame attaches to #1616 for it.** Its brief was `ymsu`'s fix, it correctly
+ruled the failure out of its own scope, and saying so in the PR body is what
+a careful agent does. The gap is that ruling something out of scope has no
+destination — "not this change" names where it does not belong and nowhere
+that it does. Whether that warrants a convention is a question for the owner,
+recorded here unanswered rather than decided.
