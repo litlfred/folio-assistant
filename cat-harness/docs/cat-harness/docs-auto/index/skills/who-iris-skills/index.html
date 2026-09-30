@@ -31,6 +31,12 @@
   .f .k { display: inline-block; min-width: 5.2rem; font-weight: 600; }
   ul.subs { list-style: none; padding: 0; margin: 0 0 1.6rem; }
   ul.subs li { padding: .3rem 0; border-bottom: 1px solid var(--edge); }
+  .fa-table-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; margin: .75rem 0 .5rem; }
+  .fa-table-filter label { font-weight: 600; }
+  .fa-table-filter input { flex: 1 1 14rem; min-width: 0; max-width: 28rem; min-height: 44px; padding: 0 .75rem;
+    font: inherit; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: 4px; }
+  .fa-table-filter-count { font-size: .875em; opacity: .85; }
+  table[data-fa-filtered] tr[hidden] { display: none !important; }
   .n { float: right; color: var(--muted); font-variant-numeric: tabular-nums; }
 </style>
 <style data-folio-narrow-viewport>
@@ -134,6 +140,7 @@
 <li><strong>who-iris-skills</strong> <span class="p">who-iris/skills</span> <span class="n">1</span></li>
 </ul>
 
+
 <table>
 <thead><tr><th>Artefact</th><th>What it declares about itself</th></tr></thead>
 <tbody>
@@ -149,5 +156,6 @@
    ownership before pruning — the same line the viewer generators emit. */
 var SCOPE = "who-iris-skills";
 </script>
+
 </body>
 </html>
