@@ -16,7 +16,7 @@ skill of hosting content (using mime time data whch github tool cant)" and
 
 ## This hole is already documented, deliberately
 
-`skills/folio-core/serving-renderings.md` settles the durable half — the four
+`skills/ui/ui-core/serving-renderings.md` settles the durable half — the four
 endpoints under an instance's stub, the media type each declares, and the three
 enforcement states per host. Its closing section reads, verbatim:
 

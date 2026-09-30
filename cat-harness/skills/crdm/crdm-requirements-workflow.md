@@ -442,7 +442,7 @@ For each bean:
 
 ### Theme and UI review is NOT a Phase 6 step — it happens at ingestion
 
-This section used to put [`theme-ui-review`](../../skills/folio-core/theme-ui-review.md)
+This section used to put [`theme-ui-review`](../../skills/ui/ui-core/theme-ui-review.md)
 on the single edge out of MVP acceptance in `crdm-deliver.bpmn`. **That call was
 removed on 2026-09-24.** The owner ruled that theme review happens *"at
 ingestion of graphical assets in context of website or app design"*, and, asked

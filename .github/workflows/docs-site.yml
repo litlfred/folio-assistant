@@ -353,7 +353,7 @@ jobs:
       # type for `.jsonld` and serves it as octet-stream; `.json` is the only
       # way to get a correct `Content-Type` out of this host at all. The
       # `.jsonld` stays canonical — it is what every `@id` names — so this is
-      # an alias, not a rename. See `skills/folio-core/serving-renderings.md`.
+      # an alias, not a rename. See `skills/ui/ui-core/serving-renderings.md`.
       #
       # No --base-url: the declaration's canonicalUrl is correct for main,
       # and a foreign instance declaring none falls back to it — see
@@ -447,7 +447,10 @@ jobs:
           # the navbar tab links to `<base>/bootstrap/README.html`. LAST, and
           # it never overwrites: the graph's `.json` copy above has the same
           # name as bootstrap's declaration, and the graph keeps that address.
-          bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}"
+          # `--allow-collision bootstrap.json`: the graph's `.json` copy and bootstrap's
+          # declaration share that address, and the graph keeps it (bootstrap-graph-publication).
+          # Any OTHER different file at a taken address fails this step.
+          bun run cat-harness/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_STUB}" --allow-collision bootstrap.json
           # bootstrap's diagram vocabulary at its extensionless address, which is
           # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
           # `.json` copy every rendering here carries for Pages.

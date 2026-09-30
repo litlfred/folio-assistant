@@ -101,7 +101,16 @@ if (import.meta.main) {
     console.error(`--from moves ONE instance's base, and ${rels.length} declare one. Name it by editing only that declaration first.`);
     process.exit(2);
   }
-  const files = gitFiles(repo);
+  // The whole checkout when it is one repository (the monorepo, where
+  // cat-harness's literal citations of bootstrap's IRIs are kept in step too);
+  // otherwise each declaring instance's own repository — the standalone case,
+  // where bootstrap and bootstrap-tools are sibling clones in a directory that
+  // is not itself a repository (found by `rehearse-standalone`).
+  const perRoot = () => {
+    const each = rels.map(({ root }) => gitFiles(root));
+    return each.every((f) => f !== undefined) ? [...new Set(each.flat() as string[])] : undefined;
+  };
+  const files = gitFiles(repo) ?? perRoot();
   if (!files) {
     console.error("git could not list the corpus, so nothing was checked — that is not a pass.");
     process.exit(2);

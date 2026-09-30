@@ -53,11 +53,11 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`external-schemas/`](external-schemas/) | 1 file | |
 | [`fr/`](fr/) | 14 files | |
 | [`fsh-guts/`](fsh-guts/) | 1 file | |
-| [`glossary/`](glossary/) | 6 files | |
+| [`glossary/`](glossary/) | 10 files | |
 | [`guides/`](guides/) | 14 files | |
 | [`health/`](health/) | 1 file | |
 | [`issue-marks/`](issue-marks/) | 1 file | |
-| [`lsi/`](lsi/) | 1 file | |
+| [`lsi/`](lsi/) | 3 files | |
 | [`methodologies/`](methodologies/) | 1 file | |
 | [`processes/`](processes/) | 76 files | |
 | [`proposals/`](proposals/) | 19 files | |
@@ -72,7 +72,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `docs`, holding `docs`.
 | [`todos/`](todos/) | 1 file | |
 | [`tools/`](tools/) | 1 file | |
 | [`translation-status/`](translation-status/) | 1 file | |
-| [`uml/`](uml/) | 133 files | |
+| [`uml/`](uml/) | 137 files | |
 | [`uploads/`](uploads/) | 1 file | |
 | [`wireframes/`](wireframes/) | 146 files | |
 | [`zh/`](zh/) | 14 files | |

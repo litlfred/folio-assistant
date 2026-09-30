@@ -119,7 +119,7 @@ export const RETIRED_DIR = "_retired";
  * "what happened to `STAGING/x`" needs most.
  *
  * A list rather than one constant because this is the second tenant of the
- * same rule — `skills/folio-core/render-logging.md` for the first, and bean
+ * same rule — `skills/ui/ui-core/render-logging.md` for the first, and bean
  * `6pfo`'s retired-record store for the next. Adding one should be a row here,
  * not a third code path that can disagree with the other two.
  */

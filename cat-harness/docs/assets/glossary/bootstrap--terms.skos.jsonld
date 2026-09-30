@@ -15,7 +15,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Node",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -78,7 +78,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Node"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/reference",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Reference",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -137,7 +137,7 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Node"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -146,7 +146,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Reference"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-schema",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeSchema",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -205,7 +205,7 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Node"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -214,7 +214,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/NodeSchema"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-kind",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeKind",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -273,7 +273,7 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-schema"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeSchema"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -282,7 +282,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/NodeKind"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/subkind",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subkind",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -341,13 +341,13 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-kind"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeKind"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-schema"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeSchema"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Node"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -356,7 +356,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Subkind"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -415,13 +415,13 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Node"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-kind"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeKind"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-schema"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeSchema"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -430,7 +430,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/NodeInstance"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/graph-kind",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -489,7 +489,7 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-kind"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeKind"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -498,7 +498,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/GraphKind"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Declaration",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -561,7 +561,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Declaration"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/extension",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Extension",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -620,7 +620,7 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Declaration"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -629,7 +629,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Extension"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/subgraph",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -688,13 +688,13 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Declaration"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/graph-kind"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -703,7 +703,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Subgraph"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/asset",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -762,7 +762,7 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Declaration"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -771,7 +771,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Asset"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/knowledge-graph",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#KnowledgeGraph",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -830,19 +830,19 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-schema"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeSchema"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/asset"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Declaration"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/subgraph"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -851,7 +851,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/KnowledgeGraph"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/dependency",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Dependency",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -910,16 +910,16 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Declaration"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/knowledge-graph"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#KnowledgeGraph"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/reference"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Reference"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -928,7 +928,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Dependency"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/content",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Content",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -987,10 +987,10 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/knowledge-graph"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#KnowledgeGraph"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -999,7 +999,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Content"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/task",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Task",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -1062,7 +1062,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Task"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/actor",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Actor",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -1121,7 +1121,7 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/task"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Task"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -1130,7 +1130,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Actor"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/skill",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -1189,13 +1189,13 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/actor"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Actor"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/task"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Task"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -1204,7 +1204,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Skill"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/role",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -1263,16 +1263,16 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/actor"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Actor"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/task"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Task"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/skill"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -1281,7 +1281,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Role"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process-node",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -1344,7 +1344,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/ProcessNode"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/sequence-flow",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -1403,7 +1403,7 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process-node"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -1412,7 +1412,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -1471,19 +1471,19 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/task"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Task"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process-node"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/sequence-flow"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/role"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -1492,7 +1492,7 @@
       "dcterms:source": "bootstrap/schemas/graph.schema.json#/$defs/Process"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/harness",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms"
@@ -1551,22 +1551,22 @@
       ],
       "dcterms:requires": [
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/knowledge-graph"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#KnowledgeGraph"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/subgraph"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/skill"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/role"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process"
         },
         {
-          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/actor"
+          "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Actor"
         }
       ],
       "rdfs:isDefinedBy": {
@@ -1581,70 +1581,70 @@
       "skos:memberList": {
         "@list": [
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Node"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/reference"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Reference"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-schema"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeSchema"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-kind"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeKind"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/subkind"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subkind"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/node-instance"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#NodeInstance"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/graph-kind"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/declaration"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Declaration"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/extension"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Extension"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/subgraph"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/asset"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Asset"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/knowledge-graph"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#KnowledgeGraph"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/dependency"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Dependency"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/content"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Content"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/task"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Task"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/actor"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Actor"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/skill"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/role"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process-node"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/sequence-flow"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/process"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process"
           },
           {
-            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#glossary/terms/harness"
+            "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#Harness"
           }
         ]
       }

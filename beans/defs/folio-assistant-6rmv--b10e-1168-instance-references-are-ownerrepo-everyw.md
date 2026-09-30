@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T14:59:54Z
-updated_at: 2026-09-30T17:45:49Z
+updated_at: 2026-09-30T17:48:29Z
 parent: folio-assistant-tr05
 ---
 
@@ -23,3 +23,7 @@ So: an owner/repo → IRI-base map DERIVED from each instance's declaration and 
 Pre-split, cat-harness, smart-base, bootstrap, folio-assistant-core… are directories of ONE repo (litlfred/folio-assistant); owner/repo alone cannot tell them apart. Their planned own repos (AssetSource's doc says litlfred/cat-harness), or owner/repo + path?
 
 _2026-09-30T17:45:49Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Owner decision 2026-09-30
+
+Planned own repo (Rec.): each instance declares its PLANNED repo (e.g. cat-harness → litlfred/cat-harness), plus a separate 'lives today at' field (litlfred/folio-assistant, path cat-harness/) so links resolve pre-split. IRIs keyed by the planned repo, so they survive the split.

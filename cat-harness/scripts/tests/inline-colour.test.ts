@@ -24,7 +24,7 @@
  *
  * ## `opacity` is called out by name, and it is not a style preference
  *
- * `skills/folio-core/ui-accessibility.md` names it, and this bean paid for it
+ * `skills/ui/ui-core/ui-accessibility.md` names it, and this bean paid for it
  * twice. `opacity` on text composites the glyph toward whatever is behind it,
  * so the colour that reaches the reader is not the colour in the source —
  * `#475569` at `0.5` is `#323f52` on one panel and `#373e4a` on another. A

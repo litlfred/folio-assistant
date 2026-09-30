@@ -102,7 +102,7 @@ export function potEntries(s: GlossarySource, repo: string = REPO): PotEntry[] {
   const out: PotEntry[] = [];
   for (const t of s.glossary.terms) {
     if (t.status !== "authored") continue;
-    const iri = termIri(s.ns, s.glossary, t.id);
+    const iri = t.iri ?? termIri(s.ns, s.glossary, t.id);
     const line = lineOf(t.id);
     out.push({ source: s.file, line, kind: "glossary-term", msgid: sourceText(t.prefLabel), comment: `Glossary term label: ${iri}` });
     for (const alt of t.altLabel ?? []) {

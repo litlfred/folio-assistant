@@ -1,6 +1,8 @@
 {
   "_comment": "The WHO IRIS catalogue instance, staged as a top-level directory ahead of becoming its own repository. Owner, 2026-09-20: 'there needs to be a new repo (staged here as a new top-level dir -> repo later) which is an instance of fa-core, and is for the who-iris cataloge and this is an example artefact (the style guide is part of the library itself)', and later 'in future who-iris iwll be own repo. will have specialized tools/themes.' The `library` entry landed with the git mv (bean frs5), in the same change, exactly as the previous version of this comment said it would: until then its ABSENCE was load-bearing, because `resolveLibraryRef` reported `no-library-graph` for a citation naming this instance -- a different and more useful answer than 'that section is missing'. Both of those are now real answers rather than one standing in for the other.",
   "name": "who-iris",
+  "repository": "litlfred/who-iris",
+  "livesAt": { "repository": "litlfred/folio-assistant", "path": "who-iris" },
   "version": "0.1.0",
   "needs": [
     "folio-assistant-core"

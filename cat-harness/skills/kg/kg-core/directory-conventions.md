@@ -700,14 +700,14 @@ one is argued.
    column reads exactly that, so a file that says nothing shows as a gap.
 7. **Generated or authored — say which, in the file.** A generated file
    carries the markers of the region it owns
-   ([`readme-sections`](../../folio-core/readme-sections.md)) or a header naming the command
+   ([`readme-sections`](../../ui/ui-core/readme-sections.md)) or a header naming the command
    that wrote it, is never hand-edited, and has a `--check` twin in CI.
 8. **A missing fact is a QA finding, never a blank or a guess** — the three
    states of §"Three states, as everywhere else here". Record it in a
    committed sidecar under `test/results/`; do not fill it with a plausible
    default.
 9. **Then regenerate**: `bun run readme:subgraphs` renders the directory's
-   README from this entry ([`liquid-templates`](../../folio-core/liquid-templates.md)), and
+   README from this entry ([`liquid-templates`](../../ui/ui-core/liquid-templates.md)), and
    `bun run kg:export` publishes the entry as a Directory node
    ([`kg-export`](kg-export.md)).
 
@@ -745,6 +745,33 @@ word.
   `<name>.json`, and composing either from the other resolves to nothing.
 - **The renderable site lives at `docs/<stub>/`.** Compute it with
   `siteDir(d)` or `siteDirFor(root)`, never by writing the path out.
+
+### Identity: `repository` and `livesAt` (owner, 2026-09-30, bean `6rmv`)
+
+`name` is what `needs` edges and filenames resolve against, but it is not an
+identity outside the instance: it names no forge or owner, and two owners may
+each publish a `smart-base`. So the declaration also says which repository the
+instance **is**:
+
+| field | meaning |
+|---|---|
+| `repository` | `owner/name`: the **planned** home, e.g. `litlfred/cat-harness` |
+| `livesAt` | `{ repository, path }`: where it sits **today**, when not at the root of `repository` |
+
+It is **planned** rather than current because IRIs are keyed by it and must
+survive the split. The pre-split fact lives in `livesAt`: `cat-harness` is
+the `cat-harness/` directory of `litlfred/folio-assistant`. Leaving `livesAt`
+out asserts that the instance already sits at its own repository's root.
+
+**Never keep an `owner/repo` table by hand.**
+`instanceRepositories(checkoutRoot, folioRoot?)` in
+`schemas/instance-repositories.ts` derives the `owner/repo ↔ name ↔ root`
+map. It reads the declarations in the checkout and in the folio's dependency
+overlay, and it throws when two instances claim one repository.
+`instance-repositories.test.ts` is the gate. It checks three things:
+- every instance declares `repository`;
+- every `livesAt.path` is where the instance actually sits;
+- every `livesAt` names one host.
 
 ### Every other marker: THE TYPE DECLARES ITS OWN FILENAME (STRICT)
 
