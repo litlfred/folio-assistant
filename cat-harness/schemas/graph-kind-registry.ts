@@ -553,6 +553,8 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "folio-voice-skill/v1": { validator: "schemas/voice-skill.ts#VoiceSkillSchema" },
       // A synced remote skill's pinned, per-file fixity record (issue #556).
       "folio-remote-skill/v1": { validator: "schemas/skill-package.ts#RemoteSkillRecordSchema" },
+      // `skills.json`, the node that names a skills directory's TOPICS (bean `9umr`).
+      "skill-topics/v1": { validator: "schemas/skill-topics.ts#SkillTopicsSchema" },
     },
     // bootstrap's own sentence, read rather than restated (bean r3gy, D1).
     summary: BOOTSTRAP_GRAPH_KINDS["skills"],

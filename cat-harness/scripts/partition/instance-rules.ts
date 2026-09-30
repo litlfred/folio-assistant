@@ -447,6 +447,8 @@ export const RULES: Rule[] = [
       // core `schemas/` prefix and made four harness modules read as depending
       // on the content layer. None of it describes a folio's content.
       "schemas/skill-package.ts",
+      // `skills.json`'s shape (bean `9umr`); read by `scripts/skill-topics.ts`.
+      "schemas/skill-topics.ts",
       // What happened when a Tool ran, and under whose authority. Tools are
       // the HARNESS's vocabulary — the `tools` graph is declared by
       // `agentic-harness`, not by any folio — and this file imports only
