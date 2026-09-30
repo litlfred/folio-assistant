@@ -49,6 +49,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`ingest-l1-completeness-gate.bpmn`](ingest-l1-completeness-gate.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Ingestion subprocess — the L1 completeness gate | "Document ingestion — uploads/ to the L1 source knowledge graph" |
 | [`ingest-theme.bpmn`](ingest-theme.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Ingestion subprocess — ingest a theme | "Document ingestion — uploads/ to the L1 source knowledge graph" |
 | [`jsonld-drift-check.bpmn`](jsonld-drift-check.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Are the .jsonld siblings still in sync with their .ts manifests? |  |
+| [`kg-separation.bpmn`](kg-separation.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): A knowledge graph leaves for its own repositories |  |
 | [`kg-to-portal.bpmn`](kg-to-portal.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): KG to public portal |  |
 | [`l2-dak-authoring.bpmn`](l2-dak-authoring.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): L2 DAK authoring |  |
 | [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): L3 FHIR IG pipeline |  |
@@ -59,7 +60,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`options-analysis.bpmn`](options-analysis.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Options analysis | "Content Change and Review", "CRDM Phase 6 — implement, MVP, acceptance", "Editing and HCI validation", "Adopting an upstream version bump", "Wireframe design review" |
 | [`pr-checks-present.bpmn`](pr-checks-present.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Which open pull requests have no CI run on their head? |  |
 | [`publish-alert.bpmn`](publish-alert.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Alert the publication manager | "Publishing the docs site, and keeping the previews alive" |
-| [`publish-verification.bpmn`](publish-verification.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Verify the export before it is deployed | "Publishing the docs site, and keeping the previews alive" |
+| [`publish-verification.bpmn`](publish-verification.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Verify the export before it is deployed | "Publishing the docs site, and keeping the previews alive", "A knowledge graph leaves for its own repositories" |
 | [`qa-report-signing.bpmn`](qa-report-signing.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): QA report signing |  |
 | [`refresh-materialized.bpmn`](refresh-materialized.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Refresh materialized remote content | "Sample import into a structured data store" |
 | [`related-work.bpmn`](related-work.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Related work: find, sort, summarize, ask to coordinate | "CRDM — link the work to an issue", "Adopt a methodology from a source document" |
@@ -74,7 +75,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`theme-ui-review.bpmn`](theme-ui-review.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Theme and UI review — at ingestion | "Ingestion subprocess — ingest a theme" |
 | [`translation-workflow.bpmn`](translation-workflow.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): translation-workflow.bpmn |  |
 | [`upstream-pin-watch.bpmn`](upstream-pin-watch.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Watching a pinned upstream dependency |  |
-| [`upstream-version-adoption.bpmn`](upstream-version-adoption.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Adopting an upstream version bump | "Watching a pinned upstream dependency" |
+| [`upstream-version-adoption.bpmn`](upstream-version-adoption.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Adopting an upstream version bump | "A knowledge graph leaves for its own repositories", "Watching a pinned upstream dependency" |
 | [`voice-review.bpmn`](voice-review.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Voice overlay review | "Narrative review" |
 | [`wireframe-design-review.bpmn`](wireframe-design-review.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Wireframe design review |  |
 | [`decisions/`](decisions/) | 9 files | |

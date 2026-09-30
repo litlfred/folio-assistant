@@ -119,6 +119,10 @@ graph document.
 Only once edges are zero and the declaration stands alone. A directory move
 rather than a file-by-file sift. The five-point gate is in
 `docs/architecture/migration-plan.md` Phase II and is not restated here.
+For a Knowledge Graph leaving as its own repositories — a content repository
+and a tools repository — the rest of the method, from splitting the tools out
+to the cutover, is [`kg-separation`](kg-separation.md) and its process
+`kg-separation.bpmn`.
 
 ## The seventeen moves
 
@@ -324,4 +328,5 @@ This skill has its own process: **[A sub-graph wants to leave](../../processes/g
 | process | step(s) that name it |
 |---|---|
 | [A sub-graph wants to leave](../../processes/graph-detanglement.html) | 1 · Declare in place (nothing moves); 2a · Measure — unassigned column FIRST; 2b · Prune, merge, factor — or the classification is wrong; 3 · Isolate — own declaration, namespace, artefact; 4 · Extract — a directory move, not a file-by-file sift |
+| [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | 1–3 · Declare, detangle, isolate |
 

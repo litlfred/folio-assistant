@@ -118,6 +118,10 @@ graph document.
 Only once edges are zero and the declaration stands alone. A directory move
 rather than a file-by-file sift. The five-point gate is in
 `docs/architecture/migration-plan.md` Phase II and is not restated here.
+For a Knowledge Graph leaving as its own repositories — a content repository
+and a tools repository — the rest of the method, from splitting the tools out
+to the cutover, is [`kg-separation`](kg-separation.md) and its process
+`kg-separation.bpmn`.
 
 ## The seventeen moves
 

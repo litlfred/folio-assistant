@@ -77,3 +77,16 @@ export function knowledgeGraphsIn(repoRoot: string): { root: string; decl: Knowl
   }
   return out;
 }
+
+/**
+ * Does this toolset support `content` at `version`? It declares the content
+ * MAJOR versions it handles under `supports` (owner, 2026-09-29: tools may
+ * manage several versions of the content). Semver: within one major a newer
+ * minor or patch only adds, so a major is the unit of support — and no range
+ * syntax, per instance-versioning rule 2.
+ */
+export function supportsContent(tools: Record<string, unknown>, content: string, version: string | undefined): boolean {
+  const majors = (tools["supports"] as Record<string, unknown> | undefined)?.[content];
+  const m = /^(\d+)\.\d+\.\d+$/.exec(version ?? "");
+  return Array.isArray(majors) && m !== null && majors.includes(Number(m[1]));
+}

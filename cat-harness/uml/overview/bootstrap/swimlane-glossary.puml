@@ -9,11 +9,7 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "bootstrap/swimlane-glossary" as pkg_bootstrap_swimlane_glossary <<swimlane-glossary>> {
-  class "glossary-ledger/1.0.0" as bootstrap_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0 <<json: LedgerSchema>> #f4f4f1 {
-    $schema [1] : 'glossary-ledger/1.0.0'
-    instance [1] : string
-    concepts [1] : map<object>
-  }
+  note "swimlane-glossary glossary-ledger/1.0.0: no node schema declared\n(schemas/glossary-ledger.ts does not exist under the instance root /home/user/wt/bt/folio-assistant/cat-harness: could not determine)" as n_bootstrap_swimlane_glossary_swimlane_glossary_glossary_ledger_1_0_0
 }
 
 @enduml

@@ -65,3 +65,15 @@ describe("iri-sync rewrite", () => {
     expect(rewrite(text, R)).toEqual({ text, changes: 0 });
   });
 });
+
+describe("a toolset supports content by major version", () => {
+  test("listed majors are supported, others refused; no range syntax", async () => {
+    const { supportsContent } = await import("./declaration.ts");
+    const tools = { supports: { bootstrap: [0, 2] } };
+    expect(supportsContent(tools, "bootstrap", "0.9.1")).toBe(true);
+    expect(supportsContent(tools, "bootstrap", "2.0.0")).toBe(true);
+    expect(supportsContent(tools, "bootstrap", "1.0.0")).toBe(false);
+    expect(supportsContent(tools, "other", "0.1.0")).toBe(false);
+    expect(supportsContent({}, "bootstrap", "0.1.0")).toBe(false);
+  });
+});

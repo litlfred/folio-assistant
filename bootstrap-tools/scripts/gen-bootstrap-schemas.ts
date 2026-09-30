@@ -53,7 +53,7 @@ import { join, relative } from "node:path";
 
 import { z } from "zod";
 
-import { readKnowledgeGraphDeclaration } from "../schemas/declaration.ts";
+import { readKnowledgeGraphDeclaration, supportsContent } from "../schemas/declaration.ts";
 
 
 import {
@@ -104,7 +104,18 @@ function bootstrapRoot(): string {
   // the pair. No sibling scan: the tool is handed the checkout it works on.
   const at = process.argv.indexOf("--root");
   const dir = at >= 0 && process.argv[at + 1] ? process.argv[at + 1]! : join(ROOT, "bootstrap");
-  if (readKnowledgeGraphDeclaration(dir)?.name === "bootstrap") return dir;
+  const decl = readKnowledgeGraphDeclaration(dir);
+  if (decl?.name === "bootstrap") {
+    // A toolset handles the content majors it lists, and refuses others.
+    const tools = readKnowledgeGraphDeclaration(join(import.meta.dir, ".."));
+    if (!tools || !supportsContent(tools, "bootstrap", decl.version)) {
+      throw new Error(
+        `bootstrap ${decl.version ?? "(no version)"} is not a major these tools support ` +
+          `(bootstrap-tools.json \`supports.bootstrap\`). Use a bootstrap-tools release that lists it.`,
+      );
+    }
+    return dir;
+  }
   throw new Error(
     `${dir} holds no declaration naming itself \`bootstrap\` — cannot place the generated schemas. ` +
       "Pass the bootstrap checkout as --root <dir>.",

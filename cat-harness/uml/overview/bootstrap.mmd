@@ -174,28 +174,13 @@ classDiagram
     }
   }
   namespace bootstrap__models {
-    class bootstrap_models_Model["Model"] {
-      <<json: ModelRegistrySchema>>
-      id [1] string
-      title [1] string
-      preferredLanguages [0..*] string[]
-      validation [1] unverified | self-reported | human-validated
-      validatedBy [0..1] string
-      validatedOn [0..1] string
-      note [0..1] string
-    }
-    class bootstrap_models_ModelRegistry["ModelRegistry"] {
-      <<json: ModelRegistrySchema>>
-      $schema [1] 'model-registry/1.0.0'
-      models [0..*] Model[]
+    class n_bootstrap_models_models["models: no node schema"] {
+      <<could not determine>>
     }
   }
   namespace bootstrap__swimlane_glossary {
-    class bootstrap_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0["glossary-ledger/1.0.0"] {
-      <<json: LedgerSchema>>
-      $schema [1] 'glossary-ledger/1.0.0'
-      instance [1] string
-      concepts [1] map~object~
+    class n_bootstrap_swimlane_glossary_swimlane_glossary_glossary_ledger_1_0_0["swimlane-glossary glossary-ledger/1.0.0: no node schema"] {
+      <<could not determine>>
     }
   }
   cssClass "n_bootstrap_skills_skills" fa_uml_kind_skills
@@ -226,7 +211,7 @@ classDiagram
   cssClass "bootstrap_scenarios_Actor" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_RoleGraph" fa_uml_kind_scenarios
   cssClass "bootstrap_processes_omg_bpmn_2_0" fa_uml_kind_processes
-  bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
-  cssClass "bootstrap_models_Model" fa_uml_kind_models
-  cssClass "bootstrap_models_ModelRegistry" fa_uml_kind_models
-  cssClass "bootstrap_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0" fa_uml_kind_swimlane_glossary
+  cssClass "n_bootstrap_models_models" fa_uml_kind_models
+  cssClass "n_bootstrap_models_models" fa_uml_undetermined
+  cssClass "n_bootstrap_swimlane_glossary_swimlane_glossary_glossary_ledger_1_0_0" fa_uml_kind_swimlane_glossary_glossary_ledger_1_0_0
+  cssClass "n_bootstrap_swimlane_glossary_swimlane_glossary_glossary_ledger_1_0_0" fa_uml_undetermined

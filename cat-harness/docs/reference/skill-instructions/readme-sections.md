@@ -221,7 +221,7 @@ s"*. A capitalized term bootstrap defines links to its row in
 use — so a reader who lands mid-page is one click from the definition.
 
 - **Generated READMEs** link them as they are written: `subgraph-readmes` runs
-  `linkTerms` (`content/pipeline/term-links.ts`) over each declared
+  `linkTerms` (`bootstrap-tools/scripts/term-links.ts`) over each declared
   description and each file's description, with links made relative to the
   README by `bootstrapTermTargets`.
 - **Hand-written READMEs** are not rewritten by a generator — the folio owns

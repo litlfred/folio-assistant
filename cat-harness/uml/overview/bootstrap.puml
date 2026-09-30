@@ -163,26 +163,10 @@ package "bootstrap/processes" as pkg_bootstrap_processes <<processes>> {
   }
 }
 package "bootstrap/models" as pkg_bootstrap_models <<models>> {
-  class "Model" as bootstrap_models_Model <<json: ModelRegistrySchema>> #e8f0ee {
-    id [1] : string
-    title [1] : string
-    preferredLanguages [0..*] : string[]
-    validation [1] : unverified | self-reported | human-validated
-    validatedBy [0..1] : string
-    validatedOn [0..1] : string
-    note [0..1] : string
-  }
-  class "ModelRegistry" as bootstrap_models_ModelRegistry <<json: ModelRegistrySchema>> #e8f0ee {
-    $schema [1] : 'model-registry/1.0.0'
-    models [0..*] : Model[]
-  }
+  note "models: no node schema declared\n(schemas/model-registry.ts does not exist under the instance root /home/user/wt/bt/folio-assistant/cat-harness: could not determine)" as n_bootstrap_models_models
 }
 package "bootstrap/swimlane-glossary" as pkg_bootstrap_swimlane_glossary <<swimlane-glossary>> {
-  class "glossary-ledger/1.0.0" as bootstrap_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0 <<json: LedgerSchema>> #f4f4f1 {
-    $schema [1] : 'glossary-ledger/1.0.0'
-    instance [1] : string
-    concepts [1] : map<object>
-  }
+  note "swimlane-glossary glossary-ledger/1.0.0: no node schema declared\n(schemas/glossary-ledger.ts does not exist under the instance root /home/user/wt/bt/folio-assistant/cat-harness: could not determine)" as n_bootstrap_swimlane_glossary_swimlane_glossary_glossary_ledger_1_0_0
 }
 
 bootstrap_schemas_discussion_input_schema_json_Discussion_Input *-- "0..*" bootstrap_schemas_discussion_input_schema_json_KnownRepository : knownRepositories
@@ -194,7 +178,6 @@ bootstrap_schemas_model_registry_schema_json_Model_Registry *-- "0..*" bootstrap
 bootstrap_schemas_requirement_schema_json_Requirement *-- "1..*" bootstrap_schemas_requirement_schema_json_Statement : statements
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
 bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
-bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models
 ' grid: portrait, 2 column(s) — pkg_bootstrap_skills pkg_bootstrap_schemas pkg_bootstrap_scenarios pkg_bootstrap_processes pkg_bootstrap_models pkg_bootstrap_swimlane_glossary
 pkg_bootstrap_skills -[hidden]down- pkg_bootstrap_scenarios
 pkg_bootstrap_schemas -[hidden]down- pkg_bootstrap_processes

@@ -196,6 +196,39 @@ served, and today that is this site; pointing it at a base that serves nothing
 is the failure `40fl` / #718 recorded. It moves when the bootstrap repository
 publishes.
 
+## The release site — what is served where
+
+The IRI rule above says what an identifier IS; this says what the instance's
+own site must serve so that every identifier dereferences. Written 2026-09-29
+for the bootstrap split, after the separation analysis found every bootstrap
+identifier pointing at an address nothing yet served.
+
+| path | holds | changes |
+|---|---|---|
+| `<iriBase><version>/` | every file of that release exactly where it sits in the repository — schemas, JSON-LD, BPMN, the declaration — plus an extension-less alias for a vocabulary document (`processes/ns` beside `processes/ns.jsonld`) | **never**, once published: an agent pinned to `0.1.0` must keep getting `0.1.0`, so every released version stays |
+| `<iriBase>v<major>/` | the person-facing pages — READMEs rendered as HTML, the drawn schema page, the diagrams | moves forward with each minor or patch release of that major |
+| `<iriBase>` | an index naming the current release of each major, and the versions available | with every release |
+
+Three rules follow from the table:
+
+- **Publish files where they sit.** A published node's own identifier must be
+  its file's path under the release address, so copying the release's tree is
+  enough to serve every identifier. `check:node-iris` enforces it; the two
+  discussion schemas failed it until 2026-09-29.
+- **No two artefacts may publish to one path.** A generated alias that lands on
+  an authored file's path hides the authored file — the exported graph's
+  `.json` copy at `bootstrap/bootstrap.json` did exactly that to bootstrap's
+  own declaration.
+- **Output about the instance is published by whoever produces it.** Harness
+  output about bootstrap — its exported graph, glossary, QA verdicts — is the
+  harness's to publish, at the harness's address, naming bootstrap as its
+  subject ([`kg-separation`](../graph-management/kg-separation.md) §"The pair").
+
+`publish-instance-files.ts` is the step that copies an instance's files into a
+site today — each file as it sits, `.md` also as `.html`, `README.md` as
+`index.html`. It serves bootstrap under this site until bootstrap's own
+repository publishes itself.
+
 ## What a consumer may assume of a draft
 
 - **That the id is stable.** It is the one thing that does not move.
