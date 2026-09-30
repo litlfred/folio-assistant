@@ -211,6 +211,10 @@
           "type": "string",
           "format": "uri"
         },
+        "iriBase": {
+          "type": "string",
+          "format": "uri"
+        },
         "previewUrl": {
           "type": "string",
           "format": "uri"
@@ -401,6 +405,44 @@
                         "minLength": 1
                       }
                     }
+                  }
+                }
+              },
+              "tile": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "surfaces": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "navbar",
+                        "board",
+                        "glass"
+                      ]
+                    }
+                  },
+                  "hidden": {
+                    "type": "boolean"
+                  },
+                  "theme": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "icon": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "publish": {
+                    "type": "string",
+                    "enum": [
+                      "staging-only"
+                    ]
                   }
                 }
               },
@@ -713,8 +755,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-xlg2/cat-harness.jsonld",
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-xlg2",
-    "sha": "82f35a6dcf024eae656d3ffc79bc92ecce451633",
+    "sha": "577e03372444579913cd656680feba132a07bcc2",
     "pr": "1510/merge",
-    "run": "36644940399"
+    "run": "36648517149"
   }
 }
