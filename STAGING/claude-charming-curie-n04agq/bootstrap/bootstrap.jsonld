@@ -89,6 +89,10 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bindsRole",
       "@type": "@id"
     },
+    "inLane": {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#inLane",
+      "@type": "@id"
+    },
     "maintains": {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#maintains",
       "@type": "@id"
@@ -307,19 +311,20 @@
     "schemas",
     "tools"
   ],
-  "generatedAt": "2026-09-30T13:28:37.561Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7b9f024a4d85fb3abc5979a38d5c0c8d7a8a18ae",
-  "sourceCommitSha": "7b9f024a4d85fb3abc5979a38d5c0c8d7a8a18ae",
-  "sourceCommitAt": "2026-09-30T13:14:44Z",
+  "generatedAt": "2026-09-30T13:49:59.697Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/380f06f565141daabc6cb856feaa98c28408eeee",
+  "sourceCommitSha": "380f06f565141daabc6cb856feaa98c28408eeee",
+  "sourceCommitAt": "2026-09-30T13:45:46Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 7,
     "Process": 3,
     "SequenceFlow": 30,
-    "Role": 9,
+    "Lane": 7,
     "ProcessNode": 30,
     "GraphKind": 6,
+    "Role": 4,
     "Directory": 6,
     "Asset": 2
   },
@@ -520,20 +525,22 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/flow/Flow_Unsettled_End"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_BootstrappingAgent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Lane",
       "name": "Bootstrapping Agent",
-      "sourceKind": "bpmn-lane",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_BootstrappingAgent"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Requestor",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_Requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Lane",
       "name": "Requestor",
-      "sourceKind": "bpmn-lane",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/requestor",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Requestor"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_Requestor"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/node/Start_Discussion",
@@ -542,7 +549,8 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_BootstrappingAgent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -560,7 +568,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_BootstrappingAgent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
@@ -582,7 +591,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_BootstrappingAgent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
@@ -605,7 +615,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Requestor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/requestor",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_Requestor",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -625,7 +636,8 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_BootstrappingAgent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -647,7 +659,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_BootstrappingAgent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
@@ -669,7 +682,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_BootstrappingAgent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/discussion"
       ],
@@ -691,7 +705,8 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_BootstrappingAgent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -709,7 +724,8 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_Discussion/lane/Lane_BootstrappingAgent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -885,12 +901,31 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/flow/SF_IH_12"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Lane",
+      "name": "Bootstrapping Agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_Requestor",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Lane",
+      "name": "Requestor",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/requestor",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_Requestor"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_DataStore",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Lane",
       "name": "Knowledge Graph Data Store",
-      "sourceKind": "bpmn-lane",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_DataStore"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/node/Start_InitializeHarness",
@@ -899,7 +934,8 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -917,7 +953,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/confirm-harness"
       ],
@@ -939,7 +976,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/confirm-harness"
       ],
@@ -961,7 +999,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:UserTask",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Requestor",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/requestor",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_Requestor",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/confirm-harness"
       ],
@@ -983,7 +1022,8 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1004,7 +1044,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_DataStore",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
       ],
@@ -1026,7 +1067,8 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1047,7 +1089,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Knowledge%20Graph%20Data%20Store",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_DataStore",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
       ],
@@ -1069,7 +1112,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
@@ -1091,7 +1135,8 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1112,7 +1157,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/bootstrap-kg-navigation"
       ],
@@ -1134,7 +1180,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/root-readme"
       ],
@@ -1156,7 +1203,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
@@ -1180,7 +1228,8 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1198,7 +1247,8 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Bootstrapping%20Agent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness/lane/Lane_BootstrappingAgent",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1271,19 +1321,21 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/flow/SF_LM_5"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Actor",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Lane",
       "name": "Actor",
-      "sourceKind": "bpmn-lane",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Actor"
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Logger",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Role",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Logger",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Lane",
       "name": "Logger",
-      "sourceKind": "bpmn-lane",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
       "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/logger",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#role/Logger"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Logger"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/node/Start_LogMessage",
@@ -1292,7 +1344,7 @@
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Actor",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1310,7 +1362,7 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Actor",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
@@ -1332,7 +1384,7 @@
       "nodeKind": "exclusive",
       "bpmnType": "bpmn:ExclusiveGateway",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Actor",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1353,7 +1405,8 @@
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Logger",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/logger",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Logger",
       "implementedBy": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#skill/log-message"
       ],
@@ -1375,7 +1428,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Actor",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1393,7 +1446,7 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage",
-      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#role/Actor",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor",
       "implementedBy": [],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -1613,8 +1666,8 @@
   ],
   "staging": {
     "branch": "claude/charming-curie-n04agq",
-    "sha": "632ffdc79c6c694c0d62182208590c7360f7ff82",
+    "sha": "89d152996a32eb550cb6899e6d7ff17928a2460a",
     "pr": "1594/merge",
-    "run": "36721525770"
+    "run": "36724077935"
   }
 }
