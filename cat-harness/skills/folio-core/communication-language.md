@@ -7,7 +7,6 @@ description: >-
   to the person and writing durable artefacts, where the determination is
   recorded so a sibling session does not re-ask, and when to re-ask.
 capability: interaction
-package: folio-core
 ---
 
 # The language you communicate in
