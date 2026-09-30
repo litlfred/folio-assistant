@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 487,
+      "count": 488,
       "unit": "beans"
     }
   },
@@ -67,14 +67,14 @@
     {
       "id": "folio-assistant-0fua",
       "title": "Long flat lists with no search or filter",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:14Z",
-      "updatedAt": "2026-09-30T12:08:24Z",
+      "updatedAt": "2026-09-30T12:44:34Z",
       "preview": "Pages of 46 to 240+ rows are one flat list with no search, filter or grouping, so finding an entry means scrolling tens of thousands of pixels on a phone. Add a filter and grouping in the shared list component.\n\nObserved on: `glossary`, `processes`, `skills-index`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Re",
       "file": "beans/defs/folio-assistant-0fua--long-flat-lists-with-no-search-or-filter.md"
     },
@@ -144,7 +144,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T11:15:58Z",
-      "updatedAt": "2026-09-30T11:15:58Z",
+      "updatedAt": "2026-09-30T13:47:27Z",
       "preview": "`cat-harness/` imports **20 times** from `bootstrap-tools/`, an instance it does\n**not declare needing** — and **four separate checks all report clean.**\n\nFound 2026-09-30 while a sibling agent was planning the `adapters/` closure. It\nflagged the relation as *undetermined* and said it could not find what treats\nthe two as one layer; this bean is that question answered.\n\n## The declarations\n\n```\nca",
       "file": "beans/defs/folio-assistant-0lj4--undeclared-sibling-cat-harness-imports-20x-from-bo.md"
     },
@@ -1907,12 +1907,12 @@
       "title": "Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)",
       "status": "in-progress",
       "type": "epic",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:12:08Z",
-      "updatedAt": "2026-09-30T12:47:36Z",
+      "updatedAt": "2026-09-30T13:55:08Z",
       "preview": "Owner 2026-09-29: 'declared sub-graphs of cat-harness based on semantic concern (see sibling work on bootstrap definitions as named subset). dont need a separate facet. built into location.' Ruled 2026-09-30: **eight groups, KG + library move first**.\n\nA Subgraph is bootstrap's term (cat-harness/schemas/graph.ts): 'a named subset of Node Instances: a Declaration's directory entry, with its id, its",
       "file": "beans/defs/folio-assistant-9umr--concern-subgraphs-cat-harness-skills-live-in-one-d.md"
     },
@@ -2514,7 +2514,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T19:18:36Z",
-      "updatedAt": "2026-09-30T13:38:24Z",
+      "updatedAt": "2026-09-30T13:54:32Z",
       "preview": "Owner asked 2026-09-21: *\"we need to dediplicate. options? auto stub prefix?\"*\nBoth options were put to them, both were chosen, and **both turned out to be\nmeasurably wrong**. Recorded here so the next agent does not re-derive it.\n\n## The measurement\n\n**63 declared entries across 52 distinct directories; 11 declared twice.**\nEvery duplicate has one shape: `cat-harness` declares another instance's\n",
       "file": "beans/defs/folio-assistant-cmsl--dedupe-11-directories-declared-twice-and-both-obvi.md"
     },
@@ -3069,14 +3069,14 @@
     {
       "id": "folio-assistant-g9r2",
       "title": "who-iris replica: top-centre handle covers the INGESTED COPY banner and a link; 3 replica pages scroll sideways at 390",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-29T23:07:47Z",
-      "updatedAt": "2026-09-29T23:07:47Z",
+      "updatedAt": "2026-09-30T12:44:24Z",
       "preview": "Measured 2026-09-29 on a local build of main 35402147f.\n\n1. **The handle is back over the replica's own banner.** 2vne (owner 2026-09-27) moved the ▾ Folio handle back to top-centre as a short pill. On `who-iris/collection-collection-hq-publications.html` at 390×844 it covers the \"INGESTED COPY — not WHO\" text, which is 269z's original defect. At 1280×800 its box contains the centre of the \"folio-",
       "file": "beans/defs/folio-assistant-g9r2--who-iris-replica-top-centre-handle-covers-the-inge.md"
     },
@@ -4890,7 +4890,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-09-30T10:09:58Z",
+      "updatedAt": "2026-09-30T10:30:00Z",
       "preview": "Three things the pipeline already produces and this graph cannot hold. Proposal\nwith **options**, because at least two of the three have more than one\ndefensible shape and picking silently is how a kind gets registered wrong.\n\n## 1. Metadata indexes\n\nAlready partly solved: `fhir-artifact-index` exists, registered\n`renderable: false`, reconstructed from four partial views with `provenance`\nnaming t",
       "file": "beans/defs/folio-assistant-rjug--schema-proposal-metadata-indexes-binary-releases-a.md"
     },
@@ -5405,14 +5405,14 @@
     {
       "id": "folio-assistant-tqv4",
       "title": "CENSUS SCOPE: root-scan-census is instance-scoped, so scripts moved up to core are counted nowhere — and its headline family reads 0 of 0 while the only instance of the shape sits outside it",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:28:50Z",
-      "updatedAt": "2026-09-30T10:28:50Z",
+      "updatedAt": "2026-09-30T13:51:27Z",
       "preview": "`root-scan-census` is INSTANCE-scoped — `census(resolve(INSTANCE_ROOT, \"scripts\"))`\nat `cat-harness/scripts/root-scan-census.ts:231`, where `INSTANCE_ROOT` is\n`cat-harness/`. No other instance runs an equivalent census. So every script the\ninstance-boundary work moves **up** into `folio-assistant-core/` leaves this\nmeasurement and is counted **nowhere**.\n\n## The count falls, and falling reads as i",
       "file": "beans/defs/folio-assistant-tqv4--census-scope-root-scan-census-is-instance-scoped-s.md"
     },
@@ -5587,14 +5587,14 @@
     {
       "id": "folio-assistant-upgd",
       "title": "STREAM 1/3: GOAL 1 — the repo split and the KG's own declaration (vuip + zzmr, 47 open beans)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T18:08:55Z",
-      "updatedAt": "2026-09-23T09:18:18Z",
+      "updatedAt": "2026-09-30T13:47:14Z",
       "preview": "## What this is\n\nA **consolidation claim**, not new subject matter. The work plan stalled: between\n11:00Z and 15:19Z on 2026-09-22 seventeen PRs merged, and **nothing merged in the\n2h40m after**. CI is not the cause — `check:ci-health` reports all eight\nworkflows that ran in the window green, 48 Pages deploys succeeded and 0 failed.\nWhat stalled is that PRs went **conflicted** against a `main` mov",
       "file": "beans/defs/folio-assistant-upgd--stream-13-goal-1-the-repo-split-and-the-kgs-own-de.md"
     },
@@ -5825,6 +5825,20 @@
       "file": "beans/defs/folio-assistant-vm6m--test-data-fixed-and-generated-data-sets-as-a-skill.md"
     },
     {
+      "id": "folio-assistant-vpek",
+      "title": "LINT POISONED BY AGENT WORKTREES: eslint.config.mjs does not ignore .claude/worktrees/**, so one worktree-isolated agent reports 3158 errors on an unrelated branch",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T13:53:15Z",
+      "updatedAt": "2026-09-30T13:53:15Z",
+      "preview": "`eslint.config.mjs`'s `ignores` does not cover `.claude/worktrees/**`. A\nworktree-isolated agent puts a **complete second checkout of this repository**\nthere, so `bun run lint` walks into it and reports thousands of errors that\nbelong to nobody's diff.\n\nMeasured 2026-09-30, on `claude/declare-bootstrap-tools-need`, a branch whose\nwhole diff is three lines of JSON:\n\n```\n✖ 3163 problems (3158 errors",
+      "file": "beans/defs/folio-assistant-vpek--lint-poisoned-by-agent-worktrees-eslintconfigmjs-d.md"
+    },
+    {
       "id": "folio-assistant-vq8o",
       "title": "Prior-art page: open-source projects taking a similar approach",
       "status": "completed",
@@ -5941,12 +5955,12 @@
       "title": "cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:12:08Z",
-      "updatedAt": "2026-09-30T08:12:08Z",
+      "updatedAt": "2026-09-30T13:55:08Z",
       "preview": "Owner 2026-09-29/30: 'i want to split out cat-harness-tools too https://github.com/litlfred/cat-harness-tools' — 'see sibling work' (#1514, bootstrap-tools, bean 81tw). Direction ruled 2026-09-30: **tools depend on the harness** — cat-harness never imports the new instance.\n\nMeasured 2026-09-30: litlfred/cat-harness-tools is EMPTY (no commits). In scope: cat-harness/tools/ (8 files: discover, inde",
       "file": "beans/defs/folio-assistant-w2gr--cat-harness-tools-split-the-mcp-server-and-tool-im.md"
     },
@@ -6695,14 +6709,14 @@
     {
       "id": "folio-assistant-yx9p",
       "title": "SEPARATION: the 5 partition package names and the 5 instance directory names do not agree — 1 of 5 does",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
-      "parent": "folio-assistant-vke6",
+      "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T06:33:48Z",
-      "updatedAt": "2026-09-29T20:52:40Z",
+      "updatedAt": "2026-09-30T13:47:14Z",
       "preview": "Measured 2026-09-26. `repo-partition.ts` partitions 1143 modules into five\ntarget packages. The repository holds sixteen declared instances as sibling\ndirectories. **The two naming schemes agree on one of five.**\n\n| partition package | directory | the directory's declared `name` |\n|---|---|---|\n| `agentic-harness` | `cat-harness/` | `cat-harness` |\n| `folio-assist-core` | `folio-assistant-core/` |",
       "file": "beans/defs/folio-assistant-yx9p--separation-the-5-partition-package-names-and-the-5.md"
     },
@@ -6809,13 +6823,13 @@
       "title": "B9d (#1168): rename voice source kgRef → path, skill front matter capability: → requiresCapability",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:54:25Z",
-      "updatedAt": "2026-09-30T12:51:45Z",
-      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected\n\n_2026-09-30T12:51:45Z_ — Claimed by claude/sharp-einstein-970n",
+      "updatedAt": "2026-09-30T12:53:05Z",
+      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected\n\n\n\n## 2026-09-30 progress\n- [x] voice source kgRef → path (37 v",
       "file": "beans/defs/folio-assistant-zmm2--b9d-1168-rename-voice-source-kgref-path-skill-fron.md"
     },
     {

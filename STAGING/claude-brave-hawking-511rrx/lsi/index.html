@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/docs-ui.css?v=1790776183">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/docs-ui.css?v=1790778903">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/narrow-viewport.css?v=1790776183">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/narrow-viewport.css?v=1790778903">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/work-plan.css?v=1790776183">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/work-plan.css?v=1790778903">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/themes.css?v=1790776183">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/themes.css?v=1790778903">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/uml.css?v=1790776183">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/uml.css?v=1790778903">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/avatars.css?v=1790776183">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/css/avatars.css?v=1790778903">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/docs-ui.js?v=1790776183" defer></script>
+<script src="/folio-assistant/STAGING/claude-brave-hawking-511rrx/assets/js/docs-ui.js?v=1790778903" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -833,6 +833,11 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
       <td>needs an LSI index and has none — run <code class="language-plaintext highlighter-rouge">bun run lsi index --instance agent-skills --graph library</code></td>
     </tr>
     <tr>
+      <td><code class="language-plaintext highlighter-rouge">bootstrap-tools/bootstrap-tools-skills</code></td>
+      <td><span class="lv-na">n/a</span></td>
+      <td>below the need-an-index threshold — not judged</td>
+    </tr>
+    <tr>
       <td><code class="language-plaintext highlighter-rouge">bootstrap/skills</code></td>
       <td><span class="lv-na">n/a</span></td>
       <td>below the need-an-index threshold — not judged</td>
@@ -849,6 +854,11 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">cat-harness/folio</code></td>
+      <td><span class="lv-na">n/a</span></td>
+      <td>below the need-an-index threshold — not judged</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/folio-assistant-sci-data-skills</code></td>
       <td><span class="lv-na">n/a</span></td>
       <td>below the need-an-index threshold — not judged</td>
     </tr>
@@ -1068,7 +1078,7 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
 </h2>
     
 
-<p><strong>306</strong> units · <strong>7570</strong> terms · k = <strong>100</strong> · retains <strong>68.8 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/cat-harness/skills.lsi.json</code></p>
+<p><strong>306</strong> units · <strong>7573</strong> terms · k = <strong>100</strong> · retains <strong>68.8 %</strong> of the weighted matrix · weighting <code class="language-plaintext highlighter-rouge">log-entropy</code> · sidecar <code class="language-plaintext highlighter-rouge">cat-harness/test/results/lsi/cat-harness/skills.lsi.json</code></p>
 
 <blockquote>
   <p>Dimension 1 has <strong>no negative pole</strong>: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.</p>
@@ -1088,32 +1098,32 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
   <tbody>
     <tr>
       <td>1</td>
-      <td>46.41</td>
-      <td>bean, session, graph, instance, branch, kind, page, agent</td>
+      <td>46.44</td>
+      <td>bean, session, graph, kind, instance, branch, page, agent</td>
       <td><em>(none)</em></td>
     </tr>
     <tr>
       <td>2</td>
-      <td>27.71</td>
+      <td>27.70</td>
       <td>bias, studies, study, effect, statistical, causation, validity, causal</td>
-      <td>bean, instance, harness, directory, node, graph, kind, session</td>
+      <td>bean, harness, instance, directory, node, graph, kind, session</td>
     </tr>
     <tr>
       <td>3</td>
-      <td>22.21</td>
-      <td>proof, lean, watcher, slot, blocks, project, witness, chapter</td>
+      <td>22.20</td>
+      <td>proof, watcher, lean, slot, blocks, project, witness, chapter</td>
       <td>harness, node, instance, bean, page, directory, actor, process</td>
     </tr>
     <tr>
       <td>4</td>
       <td>19.49</td>
-      <td>dpi, color, grayscale, matplotlib, images, raster, pdf, lean</td>
+      <td>dpi, color, grayscale, matplotlib, pdf, images, raster, lean</td>
       <td>session, queue, branch, prs, commits, coordination, sibling, beans</td>
     </tr>
     <tr>
       <td>5</td>
       <td>18.55</td>
-      <td>dpi, color, grayscale, matplotlib, contrast, raster, eps, session</td>
+      <td>dpi, color, grayscale, matplotlib, contrast, raster, eps, fonts</td>
       <td>lean, proof, glossary, declaration, mathlib, theorem, term, sorry</td>
     </tr>
     <tr>
@@ -1124,15 +1134,15 @@ the same as fine. The same verdict is <code class="language-plaintext highlighte
     </tr>
     <tr>
       <td>7</td>
-      <td>16.13</td>
-      <td>lean, mathlib, mcp, sorry, proof, search, bean, theorem</td>
+      <td>16.14</td>
+      <td>lean, mathlib, mcp, sorry, proof, search, theorem, bean</td>
       <td>watcher, slot, backlog, voice, ledger, nesting, queue, idle</td>
     </tr>
     <tr>
       <td>8</td>
       <td>15.28</td>
       <td>mathlib, lean, sorry, subdirectory, lake, mcp, nesting, sessions</td>
-      <td>slot, forward, major, edges, criterion, reader, prose, band</td>
+      <td>slot, forward, major, edges, criterion, reader, watcher, prose</td>
     </tr>
   </tbody>
 </table></div>
