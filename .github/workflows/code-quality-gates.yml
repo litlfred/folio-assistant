@@ -62,9 +62,25 @@ on:
   # measurement (`kg:detangle`, `kg:audit`) was green on the branch and green
   # on main and stale on the two merged — "the state that breaks is the one
   # neither party evaluates". A merge_group run tests EXACTLY the commit that
-  # will land. Inert until the owner turns the merge queue on for `main`;
-  # harmless before. No job here reads event_name or head_ref, which a
-  # merge_group run leaves empty — checked, and kept that way.
+  # will land. No job here reads event_name or head_ref, which a merge_group
+  # run leaves empty — checked, and kept that way.
+  #
+  # THIS TRIGGER HAS NEVER FIRED AND CANNOT — bean `1hjm`, measured 2026-09-30.
+  # It read "inert until the owner turns the merge queue on for `main`" until
+  # then, which promised a pending state that cannot arrive: the repository's
+  # ruleset form offers thirteen rules and `Require merge queue` is not among
+  # them. GitHub renders only the rules a repository is ELIGIBLE for, so the
+  # absence is the measurement. `folio-assistant` is owned by a personal
+  # account rather than an organization, which is the likely cause but is
+  # INFERENCE — docs.github.com is egress-blocked from the agent container, so
+  # the eligibility rule could not be quoted.
+  #
+  # The trigger is KEPT anyway, deliberately: it becomes correct with no work
+  # if the repository ever moves under an organization, and removing it would
+  # only have to be undone. What was wrong was the claim about WHY it is inert
+  # — an agent reading the old sentence concludes the queue is one owner click
+  # away, which is what happened repeatedly across one session before anybody
+  # looked at the form.
   merge_group:
   push:
     branches: [main]
