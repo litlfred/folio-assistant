@@ -427,7 +427,7 @@ else
   if [ "$wf_n" = "0" ]; then
     echo "**No instance recorded.** If this turn runs a process, start it"
     echo "(\`workflow_start\`) so the state is committed and a sibling session reads the"
-    echo "same position — \`skills/workflow/process-state.md\` §\"Naming it is not the same"
+    echo "same position — \`skills/process/workflow/process-state.md\` §\"Naming it is not the same"
     echo "as recording it\". If it does not, say so in the turn report."
   else
     echo "$wf_n instance(s) recorded:"

@@ -18,7 +18,7 @@ process state, continual progress, context-before-the-question.
    instance declares is what resolves, and a hardcoded path is how a skill
    goes missing the moment the layout moves.
 4. **Say which process you are in**, every turn — the process, the lane, the
-   task, and when you switch. `skills/workflow/process-state.md`.
+   task, and when you switch. `skills/process/workflow/process-state.md`.
 
 ## What is specific to THIS layer
 

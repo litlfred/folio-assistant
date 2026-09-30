@@ -19,6 +19,8 @@
 import { relative, resolve } from "node:path";
 import { instanceRootsIn, readDeclaration, type InstanceLocation } from "./cat-harness.js";
 import { declarationChain } from "./harness-config.js";
+import { LEGACY_FOLIO_NS } from "./namespaces.js";
+import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.js";
 import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
 
 export interface InstanceRepository {
@@ -30,6 +32,8 @@ export interface InstanceRepository {
   livesAt?: InstanceLocation;
   /** Absolute path of the instance root in this checkout or overlay. */
   root: string;
+  /** The vocabulary namespace its terms are minted under — {@link instanceNamespace}. */
+  namespace: string;
 }
 
 export interface InstanceRepositoryMap {
@@ -67,6 +71,7 @@ export function instanceRepositories(checkoutRoot: string, folioRoot?: string): 
       repository: decl.repository,
       ...(decl.livesAt !== undefined ? { livesAt: decl.livesAt } : {}),
       root,
+      namespace: instanceNamespace(decl),
     };
     const clash = byRepository.get(entry.repository);
     if (clash !== undefined) {
@@ -83,6 +88,32 @@ export function instanceRepositories(checkoutRoot: string, folioRoot?: string): 
     entries.push(entry);
   }
   return { entries, byRepository, byName, undeclared };
+}
+
+/** The platform's publication root: the stem every non-releasing namespace sits under. */
+const NS_STEM = LEGACY_FOLIO_NS.replace(/ns#$/, "");
+
+/**
+ * The namespace an instance's terms are minted under — ONE rule, so the
+ * glossary, the vocabulary and the `owner/repo → IRI` map cannot disagree.
+ *
+ * An instance that declares an `iriBase` mints under its own release,
+ * `<iriBase><version>/ns#` (`release-iri.ts`). One that declares none mints
+ * under the platform's site, `<stem><stub>/ns#`. Owner, 2026-09-30: the map
+ * is "dynamic generated based on overlays", which is why it is read from each
+ * declaration here rather than listed.
+ */
+export function instanceNamespace(decl: { name: string; stub?: string; iriBase?: string; version?: string }): string {
+  const release = releaseIris(decl);
+  return release ? `${release.agent}ns#` : `${NS_STEM}${decl.stub ?? decl.name}/ns#`;
+}
+
+/**
+ * The `owner/repo → namespace` map over a checkout and, when given, the
+ * folio's dependency overlay.
+ */
+export function repositoryNamespaces(checkoutRoot: string, folioRoot?: string): Map<RepoFullName, string> {
+  return new Map(instanceRepositories(checkoutRoot, folioRoot).entries.map((e) => [e.repository, e.namespace]));
 }
 
 /**

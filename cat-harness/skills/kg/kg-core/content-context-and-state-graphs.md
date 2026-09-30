@@ -248,7 +248,7 @@ the copy that drifted — it says so itself.
   and how a path resolves. This page is the axis; that one is the mechanism.
 - [`agent-memory`](../../conduct/conduct-core/agent-memory.md) — what a memory entry promises, and the
   injection budget. This page says what layer it is on.
-- [`process-state`](../../workflow/process-state.md), [`bpmn-processes`](../../workflow/bpmn-processes.md) —
+- [`process-state`](../../process/workflow/process-state.md), [`bpmn-processes`](../../process/workflow/bpmn-processes.md) —
   the largest writer of a live-state graph: a workflow instance is a token's
   position in a diagram that lives in a content graph.
 - [`todo-manager`](../../folio-core/todo-manager.md), [`bean-coordination`](../../folio-core/bean-coordination.md)

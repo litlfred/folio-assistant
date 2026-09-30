@@ -146,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 496,
+      "count": 512,
       "unit": "beans"
     },
     {
@@ -383,7 +383,7 @@
       ],
       "href": "/lsi/",
       "hidden": false,
-      "count": 995,
+      "count": 996,
       "unit": "documents"
     },
     {
@@ -1169,12 +1169,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 5
         },
         {
           "id": "views",
@@ -1200,16 +1200,12 @@
           "note": "no viewer yet"
         },
         {
-          "kind": "skills",
-          "note": "no viewer yet"
-        },
-        {
           "kind": "voices",
           "path": "/cat-harness/voices/folio-assistant-sci/"
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 3 graph(s) with no published viewer — code, qa, skills. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -1394,12 +1390,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -1417,12 +1413,17 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "voice-vendors",
+          "within": "voices",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/agent-skills/"
         }
       ],
       "findings": [
-        "agent-skills: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "agent-skills: declares 2 graph(s) with no published viewer — qa, voice-vendors. Declared and not rendered is a gap, not a dead link.",
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root."
       ],
@@ -2086,9 +2087,9 @@
     },
     "cat-harness": {
       "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
+      "major": 0,
+      "agent": "https://litlfred.github.io/cat-harness/0.1.0/",
+      "human": "https://litlfred.github.io/cat-harness/v0/"
     },
     "fhir-harness": {
       "version": "0.1.0",
@@ -2104,9 +2105,9 @@
     },
     "folio-assistant-core": {
       "version": "0.1.0",
-      "major": null,
-      "agent": "",
-      "human": ""
+      "major": 0,
+      "agent": "https://litlfred.github.io/folio-assistant-core/0.1.0/",
+      "human": "https://litlfred.github.io/folio-assistant-core/v0/"
     },
     "folio-assistant-sci": {
       "version": "0.1.0",
@@ -2693,7 +2694,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: glossary, qa"
+            "summary": "3: voices, glossary, qa"
           },
           {
             "key": "needs",
@@ -2743,7 +2744,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: library, methodologies, processes, smart-base-artifact-index, tools, qa"
+            "summary": "7: library, methodologies, voices, processes, smart-base-artifact-index, tools, qa"
           },
           {
             "key": "needs",
@@ -2881,7 +2882,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: library, sci-methodologies, sci-adapters, qa"
+            "summary": "5: library, voices, sci-methodologies, sci-adapters, qa"
           },
           {
             "key": "needs",
@@ -3023,7 +3024,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: library, qa"
+            "summary": "3: library, voices, qa"
           },
           {
             "key": "needs",
@@ -3064,8 +3065,12 @@
             "summary": "{ repository, path }"
           },
           {
+            "key": "iriBase",
+            "summary": "https://litlfred.github.io/folio-assistant-core/"
+          },
+          {
             "key": "directories",
-            "summary": "10: core-schemas, folios, glossary, core-tools, core-scripts, core-library, core-methodologie…"
+            "summary": "11: core-schemas, folios, glossary, voices, core-tools, core-scripts, core-library, core-meth…"
           },
           {
             "key": "stickies",
@@ -3132,6 +3137,10 @@
           {
             "key": "canonicalUrl",
             "summary": "https://litlfred.github.io/folio-assistant"
+          },
+          {
+            "key": "iriBase",
+            "summary": "https://litlfred.github.io/cat-harness/"
           },
           {
             "key": "publication",

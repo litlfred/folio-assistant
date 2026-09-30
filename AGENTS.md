@@ -407,7 +407,7 @@ the duration of a lane, and the same actor is a different role in another
 diagram.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/role-model.md`](cat-harness/skills/folio-core/role-model.md) carries the
+[`skills/process/process-core/role-model.md`](cat-harness/skills/process/process-core/role-model.md) carries the
 three actor kinds and why the line between agentic and mechanical is judgement;
 the actor's three lists (`roles`, `permissions`, `capabilities`) and why moving
 permissions onto Role produced 36 conflicts; the two compositions (`inherits` is
@@ -534,7 +534,7 @@ instance under the declared `workflow-state` graph, and the session-start sweep
 reports "no instance recorded" as a **finding** rather than as silence.
 
 **The discipline is in the skill, not here** —
-[`skills/workflow/process-state.md`](cat-harness/skills/workflow/process-state.md)
+[`skills/process/workflow/process-state.md`](cat-harness/skills/process/workflow/process-state.md)
 §"Say which process you are in" carries the format and §"Naming it is not the
 same as recording it" carries that rule, and the rest of that skill carries the
 five detectors for being out of process and the recovery that confirms with the
@@ -661,9 +661,9 @@ to spend the words: **do not start the topic.**
   same position. **Which store answers which question**, what
   `<cat-harness.processes:bean op>` actually performs, and why an instance and a bean must be
   one answer rather than two, are in
-  [`workflow-state`](cat-harness/skills/workflow/workflow-state.md).
+  [`workflow-state`](cat-harness/skills/process/workflow/workflow-state.md).
   **The discipline is in the skill, not here** —
-  [`bpmn-processes`](cat-harness/skills/workflow/bpmn-processes.md) carries how to author
+  [`bpmn-processes`](cat-harness/skills/process/workflow/bpmn-processes.md) carries how to author
   an activity (`<bootstrap.processes:skill ref>` and `<cat-harness.processes:bean>`, both required), strict
   vs advisory and the four steps no package may relax, the commit-boundary
   corpus gate and why it refuses when it cannot tell, DMN-backed gateways and
@@ -673,7 +673,7 @@ to spend the words: **do not start the topic.**
   holds nested state — a task, inside a process instance, under a role that owns
   a swimlane — and the five detectors for "you are out of process", plus the
   recovery that **confirms with the user before re-entering**, are in
-  [`skills/workflow/process-state.md`](cat-harness/skills/workflow/process-state.md).
+  [`skills/process/workflow/process-state.md`](cat-harness/skills/process/workflow/process-state.md).
   Bean status defaults to **non-blocking**; a real block carries what it waits
   on, since, an **expiry** and a handoff, because a block with no expiry cannot
   be told from abandoned work —

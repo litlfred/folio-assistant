@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T08:19:40Z
-updated_at: 2026-09-30T16:02:22Z
+updated_at: 2026-09-30T19:55:31Z
 parent: folio-assistant-tr05
 ---
 
@@ -36,3 +36,6 @@ Actors move beside `roles.json`, inside the already-declared `scenarios` graph. 
 
 ## Owner, 2026-09-30 (round 4): capabilities → `cat-harness/scenarios/capabilities/`, kept as their own kind, with an optional link to a setup skill
 They are not recast as skills: the role model keeps an actor's capabilities (environment) separate from its role's skills (knowledge). Each capability may gain an optional pointer to the skill that explains how to set it up, like `satisfiedBy` on requirements. `requirements/` no longer exists under .claude/skills.
+
+## Owner decision 2026-09-30
+Actors move BESIDE roles.json: cat-harness/scenarios/ (the declared kg directory holding roles.json and stories.json). Capabilities/requirements each decided separately.

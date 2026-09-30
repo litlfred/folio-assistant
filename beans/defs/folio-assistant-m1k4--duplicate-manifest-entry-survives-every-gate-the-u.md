@@ -11,7 +11,7 @@ parent: folio-assistant-1xhc
 
 Measured on `origin/main` at `0c5086db6c1`, 2026-09-26.
 
-`cat-harness/skills/workflow/package-manifest.json` lists **14** skills of which
+`cat-harness/skills/process/workflow/package-manifest.json` lists **14** skills of which
 **13 are distinct**. `release-epic-planning` appears **twice**.
 
     skills entries: 14 | distinct: 13
@@ -46,7 +46,7 @@ wrong in a way the test suite is blind to.
 
 ## Done when
 
-- [x] The duplicate is removed from `skills/workflow/package-manifest.json`.
+- [x] The duplicate is removed from `skills/process/workflow/package-manifest.json`.
 - [x] A gate asserts each manifest lists every skill **exactly once** — the
       complement of the coverage question, not a widening of it. It must fail
       on today's `main` before the removal and pass after, or it is not testing

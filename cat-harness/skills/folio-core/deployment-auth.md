@@ -55,7 +55,7 @@ reproduces what the ladder allowed. An explicit `X-User-Actor` header, once the
 gateway sends one, takes precedence over the tier. What is still to build is
 steps 1 and 4 below: the gateway mapping a login to a finer-grained actor, and
 a relationship engine. The same policies govern BPMN task execution
-([`task-authorization`](task-authorization.md)).
+([`task-authorization`](../process/process-core/task-authorization.md)).
 
 The target, per the owner's 2026-09-23 decisions:
 
@@ -80,7 +80,7 @@ GitHub for the caller's login and repository role, and maps the role onto the
 same three gateway actors: `admin` → `owner`; `maintain` and `write` →
 `collaborator`; `triage` and `read` → `viewer`. A GitHub role covers the whole
 repository, never a sub-graph, node or query path. The trade-off is argued in
-[`task-authorization`](task-authorization.md) §"GitHub as the auth layer".
+[`task-authorization`](../process/process-core/task-authorization.md) §"GitHub as the auth layer".
 
 ## CRITICAL: Whitelist Protection
 

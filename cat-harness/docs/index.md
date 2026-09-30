@@ -135,7 +135,7 @@ swimlanes, with the roles, the HCI validation gate, and the shared work plan.
 - **[Skill schema reference](reference/skills/)** — generated input/output contracts for every skill.
 - **[TypeScript API reference](api/)** — the content-object model (`Block`, `Chapter`, `Paper`, builders, Zod constraints).
 - **[Architecture](architecture.html)** — adapters, MCP server, RBAC, the block model.
-- **[The KGraph](kgraph.html)** — the subgraph taxonomy, which way the references run, and how repositories divide the work.
+- **[The Knowledge Graph](knowledge-graph.html)** — the subgraph taxonomy, which way the references run, and how repositories divide the work.
 - **[The Harness](harness.html)** — instantiation, the dependency walk, and what harnessing a directory obliges.
 
 Two Skills are worth reading before the pages above, because everything else
