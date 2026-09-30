@@ -41,7 +41,7 @@
 import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
-import { EMPTY_NOTE_TAGS, type ArtefactRef, type KgRef, type NoteTags } from "../schemas/carried-note.js";
+import { EMPTY_NOTE_TAGS, KgRefSchema, type ArtefactRef, type KgRef, type NoteTags } from "../schemas/carried-note.js";
 import { TODO_SCHEMA_TAG, TodoNodeSchema, type TodoNode } from "../schemas/todo.js";
 import { TODO_GRAPH_FILE, parseTodoGraph } from "../schemas/todo-graph.js";
 import { deferResolution, directoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
@@ -130,7 +130,9 @@ function tagsFrom(fm: Record<string, unknown>): NoteTags {
       .filter((x): x is { provider: string; id: string } => x !== undefined),
     references: asObjects(fm["references"])
       .filter((r) => r.kind && r.id)
-      .map((r): KgRef => ({ kind: r.kind!, id: r.id!, ...(r.note ? { note: r.note } : {}) })),
+      // Parsed, not cast: `kind` is a closed list (#1168 B9c), and an unknown
+      // one must fail loudly here rather than travel on as a typed lie.
+      .map((r): KgRef => KgRefSchema.parse({ kind: r.kind, id: r.id, ...(r.note ? { note: r.note } : {}) })),
     artefacts: asObjects(fm["artefacts"])
       .filter((a) => a.kind && a.id)
       .map((a): ArtefactRef => ({
