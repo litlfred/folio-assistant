@@ -52,6 +52,10 @@ The owner earlier called theme mapping *"authoring (human/agentic) decision/judg
 - **Seen on the build, not fixed here:** the board uses `--fa-sticky-accent` only for the medium-priority stripe, and a landing card has no priority, so the IRIS card renders as white / `#ced4da` edge / `#212529` ink — faithful to IRIS, but the blue does not show on the card itself. Making it show needs a board CSS change or a backdrop: the owner's call.
 
 
+## OWNER RULING, 2026-09-30: a thin accent band on themed cards with no priority
+
+Asked in session https://claude.ai/code/session_01SiFEMuTciyB681XP5WfcbB. The problem: the board paints a theme's accent colour only as a priority stripe, so the who-iris landing card, which has no priority, showed white with grey edges and no IRIS blue. **The owner chose the generic fix:** a thin accent band on ANY themed card without a priority, so every instance theme benefits. Not a who-iris special case. Implementation follows in its own PR.
+
 ## The band is built — 2026-09-30, branch `claude/magical-archimedes-4qkfxp-v8n5-band`
 
 One rule in `docs-ui.css`: `.fa-sticky[data-fa-sticky-theme]:not([class*="fa-sticky-p-"])` gets a 3px `border-top` in `--fa-sticky-accent`, falling back to the edge colour. It keys on the theme ATTRIBUTE, so every instance theme gets it and no theme is named.
