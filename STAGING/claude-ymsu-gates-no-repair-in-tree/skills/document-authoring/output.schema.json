@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-no-repair-in-tree/skills/document-authoring/output.schema.json",
+  "title": "Document Authoring Output",
+  "type": "object",
+  "required": [
+    "label",
+    "filesWritten",
+    "listedInSection"
+  ],
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "filesWritten": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Repo-relative paths written (.ts and .md)."
+    },
+    "listedInSection": {
+      "type": "boolean",
+      "description": "Whether the block root was added to a section's blocks[]. False means the block renders nowhere — the most common way authored work disappears."
+    },
+    "validation": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "integer"
+        },
+        "warnings": {
+          "type": "integer"
+        },
+        "profileViolations": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/ymsu-gates-no-repair-in-tree",
+    "sha": "fbee2696b3c67146353f9874c0cd1db3a1f068bf",
+    "pr": "1616/merge",
+    "run": "36730067376"
+  }
+}

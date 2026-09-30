@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-no-repair-in-tree/skills/latex-authoring/input.schema.json",
+  "title": "LaTeX Authoring Input",
+  "description": "Input schema for the latex-authoring skill.",
+  "type": "object",
+  "required": [
+    "documentClass",
+    "mainFile"
+  ],
+  "properties": {
+    "documentClass": {
+      "type": "string",
+      "enum": [
+        "article",
+        "book",
+        "report",
+        "beamer"
+      ],
+      "description": "LaTeX document class."
+    },
+    "mainFile": {
+      "type": "string",
+      "description": "Path to the main .tex file."
+    },
+    "bibliographyFile": {
+      "type": "string",
+      "description": "Path to the .bib bibliography file."
+    },
+    "outputFormat": {
+      "type": "string",
+      "enum": [
+        "pdf",
+        "dvi",
+        "ps"
+      ],
+      "default": "pdf"
+    }
+  },
+  "staging": {
+    "branch": "claude/ymsu-gates-no-repair-in-tree",
+    "sha": "fbee2696b3c67146353f9874c0cd1db3a1f068bf",
+    "pr": "1616/merge",
+    "run": "36730067376"
+  }
+}

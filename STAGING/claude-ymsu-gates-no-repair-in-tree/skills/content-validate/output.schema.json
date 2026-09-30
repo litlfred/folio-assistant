@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ymsu-gates-no-repair-in-tree/skills/content-validate/output.schema.json",
+  "title": "Content Validate Output",
+  "description": "Output schema for content validation results.",
+  "type": "object",
+  "required": [
+    "overallStatus",
+    "results"
+  ],
+  "properties": {
+    "overallStatus": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "warnings",
+        "errors"
+      ]
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "rule",
+          "status"
+        ],
+        "properties": {
+          "rule": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "warning",
+              "skipped"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/ymsu-gates-no-repair-in-tree",
+    "sha": "fbee2696b3c67146353f9874c0cd1db3a1f068bf",
+    "pr": "1616/merge",
+    "run": "36730067376"
+  }
+}
