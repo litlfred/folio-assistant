@@ -53,7 +53,7 @@ Instances 4–7 (a writer and a reader disagreeing on a key) are not concurrency
 - [x] `cat-harness/scripts/check-merged.ts` + `check:merged`; Tool node `gates-merged`; `/prepare-merge` skill and command
 - [x] falsified both ways: replaying the real pair (d0c91582 against main at 10:52, cc6548ef) fails EXACTLY 1 of 135 gates — `kg:detangle:check`, the real defect — exit 1; a clean control (current main against itself) passes 135/135, exit 0. The first replay also showed two false failures from path-sensitive tests (`folio-root.test.ts` requires the checkout directory be named `folio-assistant`); fixed by naming the worktree after the checkout, and re-proved.
 - [x] registered: partition rule; `covered-by` exemption (the merge queue is its CI counterpart). bun run gates 135/135; PR
-- [ ] owner switches on the merge queue for `main` (Settings → Rules/Branch protection → Require merge queue) — the owner's action, not an agent's
+- [x] owner switches on the merge queue for `main` — **CLOSED NOT DONE, 2026-09-30: impossible on this repository.** `Require merge queue` is absent from the ruleset form's thirteen rules; bean `1hjm` has the measurement and the owner's "leave settings alone" ruling on the two features that ARE available. The parenthetical above named a settings path that does not exist here.
 
 _2026-09-26_ — **FIVE more instances in ~30 hours, and one of them makes a NEW
 argument for the single open box.** Appended by another session; not claimed, and

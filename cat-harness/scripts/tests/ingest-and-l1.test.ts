@@ -352,7 +352,7 @@ describe("L1 completeness", () => {
 });
 
 describe("the verdict as a committed sidecar", () => {
-  const doc = (d: string) => sidecarDocument(checkEntry(d), new Date("2026-01-01T00:00:00Z"));
+  const doc = (d: string) => sidecarDocument(checkEntry(d));
 
   test("the ASSET is the subject and the TOOL is the producer", () => {
     // The owner's question was which of the two a sidecar hangs off. It is not
@@ -382,17 +382,13 @@ describe("the verdict as a committed sidecar", () => {
     expect(clean.total).toBeGreaterThan(0);
   });
 
-  test("rerunning produces the same bytes apart from the timestamp", () => {
+  test("rerunning produces the same bytes, and carries no timestamp", () => {
+    // Byte stability keeps a committed verdict out of every diff; no
+    // `updated_at` keeps two concurrent changes from colliding on one line
+    // (bean y7b3, #1707).
     const d = entry();
-    // Round-tripped through JSON so the timestamp can be dropped without
-    // fighting the typed shape -- the property under test is byte stability,
-    // which is what keeps a committed verdict out of every diff.
-    const strip = (r: unknown) => {
-      const o = JSON.parse(JSON.stringify(r)) as Record<string, unknown>;
-      delete o.updated_at;
-      return JSON.stringify(o);
-    };
-    expect(strip(doc(d))).toBe(strip(sidecarDocument(checkEntry(d), new Date("2026-06-06T00:00:00Z"))));
+    expect(JSON.stringify(doc(d))).toBe(JSON.stringify(sidecarDocument(checkEntry(d))));
+    expect(doc(d)).not.toHaveProperty("updated_at");
   });
 
   test("a missing sidecar is stale, not absent-and-fine", () => {

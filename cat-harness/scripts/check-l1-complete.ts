@@ -1199,7 +1199,7 @@ export function checkAll(root: string): EntryReport[] | undefined {
  * `kg-qa` tree learned that the hard way, where four basenames already
  * collided across packages.
  */
-export function sidecarDocument(report: EntryReport, now?: Date) {
+export function sidecarDocument(report: EntryReport) {
   const unmet = report.requirements.filter((q) => q.state === "unmet");
   const nd = report.requirements.filter((q) => q.state === "not-derivable");
   const result = buildQaResult({
@@ -1222,14 +1222,13 @@ export function sidecarDocument(report: EntryReport, now?: Date) {
         entries: nd.map((q) => ({ requirement: q.name, detail: q.detail })),
       },
     },
-    now,
   });
   return result;
 }
 
 /** {@link sidecarDocument}, written under the declared `qa` tree. */
-export function sidecarFor(root: string, report: EntryReport, now?: Date): string {
-  return writeQaResult(root, join("library-qa", report.slug), sidecarDocument(report, now));
+export function sidecarFor(root: string, report: EntryReport): string {
+  return writeQaResult(root, join("library-qa", report.slug), sidecarDocument(report));
 }
 
 /**
@@ -1260,8 +1259,8 @@ export function staleSidecars(root: string, reports: EntryReport[]): string[] {
       out.push(`${r.slug}: sidecar will not parse`);
       continue;
     }
-    delete (fresh as Record<string, unknown>).updated_at;
-    delete committed.updated_at;
+    // Compared whole: the document carries no `updated_at` (`y7b3`), so an
+    // old sidecar that still has one reads stale and is regenerated away.
     if (JSON.stringify(fresh) !== JSON.stringify(committed)) out.push(`${r.slug}: stale`);
   }
   return out;

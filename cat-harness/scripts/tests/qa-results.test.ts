@@ -12,7 +12,7 @@ import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { buildQaResult, sourceHashOf, writeQaResult, QA_RESULTS_DIR } from "../qa-results.js";
+import { buildQaResult, qaResultState, sourceHashOf, writeQaResult, QA_RESULTS_DIR } from "../qa-results.js";
 import { readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { exitCodeFor, verifySiteLinks, type CheckableLink } from "../site-links.js";
@@ -383,49 +383,45 @@ describe("the badge URLs resolve against a tree built the way the site is", () =
  * always appears changed has given up the property it was created to have.
  */
 describe("writeQaResult does not churn", () => {
-  function result(entries: unknown[], when: string) {
+  function result(entries: unknown[]) {
     return buildQaResult({
       script: "scripts/x.ts",
       scriptAbsPath: join(import.meta.dir, "../../package.json"),
       subject: { kind: "t", id: "t" },
       families: { f: { summary: "s", entries } },
-      now: new Date(when),
     });
   }
 
-  test("identical findings leave the file untouched, timestamp and all", () => {
+  test("identical findings leave the file untouched", () => {
     const root = mkdtempSync(join(tmpdir(), "qa-churn-"));
-    const p = writeQaResult(root, "x", result([], "2026-01-01T00:00:00.000Z"));
+    const p = writeQaResult(root, "x", result([]));
     const first = readFileSync(p, "utf-8");
-
-    // A LATER timestamp, same findings. The whole point: a re-run must not
-    // rewrite, and must not quietly rewrite with the old timestamp either —
-    // that would be equally clean and would misreport the bytes as
-    // reconsidered.
-    writeQaResult(root, "x", result([], "2026-06-01T00:00:00.000Z"));
+    writeQaResult(root, "x", result([]));
     expect(readFileSync(p, "utf-8")).toBe(first);
-    expect(first).toContain("2026-01-01");
   });
 
-  test("CHANGED findings do rewrite, and the timestamp moves with them", () => {
-    // The guard must not be a freeze. The timestamp answers "when were these
-    // findings established", so it moves when they do.
+  test("CHANGED findings do rewrite", () => {
+    // The guard must not be a freeze.
     const root = mkdtempSync(join(tmpdir(), "qa-churn-"));
-    const p = writeQaResult(root, "x", result([], "2026-01-01T00:00:00.000Z"));
-    writeQaResult(root, "x", result([{ finding: "new" }], "2026-06-01T00:00:00.000Z"));
-    const after = readFileSync(p, "utf-8");
-    expect(after).toContain("2026-06-01");
-    expect(after).toContain("new");
+    const p = writeQaResult(root, "x", result([]));
+    writeQaResult(root, "x", result([{ finding: "new" }]));
+    expect(readFileSync(p, "utf-8")).toContain("new");
   });
 
-  test("an unreadable previous result is replaced, not skipped", () => {
-    // "Could not tell" resolves to WRITE here, which is the opposite of the
-    // log sweep's rule and right for the same reason: the risk is a stale
-    // verdict surviving, not a good one being lost.
+  test("the document carries no timestamp, so two branches cannot collide on one (y7b3)", () => {
+    // Measured over 300 merges: 80 of the 86 conflicting lines in
+    // skill-register.qa-results.json were `updated_at`, and no reader used it.
+    expect(result([])).not.toHaveProperty("updated_at");
+  });
+
+  test("an old file that still carries a timestamp reads STALE, so it is regenerated away", () => {
     const root = mkdtempSync(join(tmpdir(), "qa-churn-"));
-    const p = writeQaResult(root, "x", result([], "2026-01-01T00:00:00.000Z"));
-    writeFileSync(p, "{ not json");
-    writeQaResult(root, "x", result([], "2026-06-01T00:00:00.000Z"));
-    expect(readFileSync(p, "utf-8")).toContain("2026-06-01");
+    const p = writeQaResult(root, "x", result([]));
+    const legacy = { ...JSON.parse(readFileSync(p, "utf-8")), updated_at: "2026-01-01T00:00:00.000Z" };
+    writeFileSync(p, JSON.stringify(legacy, null, 2) + "\n");
+    expect(qaResultState(p, result([]))).toBe("stale");
+    writeQaResult(root, "x", result([]));
+    expect(readFileSync(p, "utf-8")).not.toContain("updated_at");
   });
 });
+

@@ -153,6 +153,49 @@ Two further traps:
   PR's current head before concluding anything.
 - **`mergeable_state: "unknown"`** means GitHub has not finished computing it,
   not that the PR is fine. `"dirty"` is a real merge conflict and is work now.
+- **"No suite failed" over ZERO suites is not a pass**, and neither is a clean
+  run list that is only PART of the check set. See below.
+
+### A clean check set and a COMPLETE check set are different questions
+
+A `check_suite.completed` event says no third-party suite is still running or
+failed. Its own harness note admits the gap: *suites with no runs, cancelled
+suites and legacy statuses are not covered; verify the PR's overall state
+before acting.* So the event is evidence about the suites that EXIST, and
+silence about the ones that do not yet.
+
+The same hole one layer down cost real pushes. Measured twice on 2026-09-30:
+
+    16:13:58  29b10a68923  PASS — 1 check(s) completed clean
+    17:25:41  0d714756f3d  PASS — 1 check(s) completed clean
+
+exit **0** both times, against `total_count: 1`, while thirteen checks ran on
+neighbouring commits of the same branch. The second was authorised for merge on
+that verdict. The classifier guarded the EMPTY run list; with one clean run a
+PARTIAL list reached the pass branch carrying a plausible number, which is what
+made it convincing.
+
+**So before reading a clean check set as green, ask whether it is the whole
+set.** `check:head-has-run` (bean `3pqn`) already answers it — `coverageFor`
+reconciles the runs against the workflows the tree itself declares, and
+`mergeStateForHead` returns `conflicted` for the case below. `bun run ci:watch`
+composes both since #1664. **Do not build a second reconciliation**; two
+answers to one question are free to disagree.
+
+Three causes of an absent run, which must not collapse into one silence:
+
+| cause | how it reads | what to do |
+|---|---|---|
+| **a conflicted head** | no `pull_request` run is published AT ALL — the forge mints no `refs/pull/N/merge`, and a `pull_request` run checks that ref out (bean `52cz`) | merge the base in. The checks are not slow; they are never coming |
+| **a filtered trigger that owed no run** | genuinely nothing was due | stay silent — `g62s` measured that loosening this produces false fires |
+| **a run never created, unexplained** | a workflow the tree declares `on: pull_request` has no run and the head is mergeable | a **finding** (bean `3pqn`), not a wait |
+
+**Ask whether the BASE moved before calling any verdict non-deterministic.** A
+`pull_request` run tests the head merged with `main` as it was at push time, so
+main moving flips verdicts in both directions with no change to your branch. On
+2026-09-30 it turned a green branch head into a red merge commit, and six
+minutes later turned a red check green when a sibling's fix landed mid-cycle.
+The second was diagnosed as a flapping gate; it was not. One command settles it.
 
 ## Order of resort
 
