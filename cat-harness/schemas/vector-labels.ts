@@ -53,6 +53,17 @@
  * architectures, 130 pt apart. A consumer reading those blocks' bounding boxes
  * would place both titles in one rectangle spanning half the figure.
  *
+ * **Demonstrated, not only asserted — 2026-09-30.** Figure 2 of
+ * `arxiv-2504.19675v2` was described from this sidecar alone and then
+ * rendered. Every proper name, heading and run number came out right; the
+ * relation did not. Its 13 in-drawing labels line up as three rows, which
+ * reads as "one ensemble per base project", and the dashed arrows in fact
+ * CROSS — the paper's own text says the two BM ensembles each combine Bonsai
+ * and MLLM while BMX combines all three. A whole column (`trained on`) is
+ * cylinder glyphs with no text, so it is invisible here beyond its heading.
+ * A description written from labels alone is safe as an INVENTORY and unsafe
+ * as an ACCOUNT; bean `a8wy` carries the worked case.
+ *
  * **It does not claim reading order.** {@link VectorFigurePageSchema.labels} is
  * ordered by top edge then left edge: a deterministic, stated convention so a
  * re-run diffs cleanly, and not a claim about how a reader's eye moves through
