@@ -78,6 +78,7 @@ It is a high-level process: 5 of its steps are **call activities**, each handing
 | [`ihris_admin_handbook_sep_17_2010.pdf`](ihris_admin_handbook_sep_17_2010.pdf) | a file |  |
 | [`rfc2119-key-words-requirement-levels.pdf`](rfc2119-key-words-requirement-levels.pdf) | a file |  |
 | [`rfc8174-uppercase-vs-lowercase-2119-key-words.pdf`](rfc8174-uppercase-vs-lowercase-2119-key-words.pdf) | a file |  |
+| [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/) | 2 files | |
 <!-- kg:subgraph:end -->
 
 ## What the process does not cover — how a file gets here

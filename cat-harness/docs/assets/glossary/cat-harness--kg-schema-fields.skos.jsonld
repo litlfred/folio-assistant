@@ -10559,6 +10559,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-structure.notebooksourceschema.mimetype_sniffed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NotebookSourceSchema.mimetype_sniffed"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The same two fields every rung writes (bean `nso8`), so the L1 gate's `technical-metadata` requirement reads them as it does for a PDF. A notebook has no magic bytes, so its type is decided by CONTENT, and `mimetype_source` says exactly that rather than claiming a sniff."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.mimetype_sniffed",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-structure.notebooksourceschema.nbformat",
       "@type": "skos:Concept",
       "skos:inScheme": {

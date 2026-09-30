@@ -3892,6 +3892,13 @@
       "status": "candidate"
     },
     {
+      "id": "document-structure.notebooksourceschema.mimetype_sniffed",
+      "prefLabel": "NotebookSourceSchema.mimetype_sniffed",
+      "definition": "The same two fields every rung writes (bean `nso8`), so the L1 gate's `technical-metadata` requirement reads them as it does for a PDF. A notebook has no magic bytes, so its type is decided by CONTENT, and `mimetype_source` says exactly that rather than claiming a sniff.",
+      "source": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema.mimetype_sniffed",
+      "status": "candidate"
+    },
+    {
       "id": "document-structure.notebooksourceschema.nbformat",
       "prefLabel": "NotebookSourceSchema.nbformat",
       "definition": "A notebook is JSON; this is what the file declared (`nbformat`), not sniffed bytes.",

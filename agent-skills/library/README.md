@@ -19,4 +19,5 @@ Part of [agent-skills](../README.md) 0.1.0, declared as `library`, holding `libr
 | [`rfc8174-uppercase-vs-lowercase-2119-key-words/`](rfc8174-uppercase-vs-lowercase-2119-key-words/README.md) | 28 files | |
 | [`skill-authoring-best-practices---claude-platform-docs/`](skill-authoring-best-practices---claude-platform-docs/README.md) | 106 files | |
 | [`skills-in-openai-api/`](skills-in-openai-api/README.md) | 7 files | |
+| [`skills-in-openai-api-notebook/`](skills-in-openai-api-notebook/README.md) | 41 files | |
 <!-- kg:subgraph:end -->
