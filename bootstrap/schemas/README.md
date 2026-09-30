@@ -206,7 +206,7 @@ Which languages a model is good at, and whether a person checked. Only `human-va
                              +----------------------------------------------------------------------------------+
                              | * id                  [1]     string                                             |
                              | * title               [1]     string                                             |
-                             | * preferredLanguages  [0..*]  list of string                                     |
+                             |   preferredLanguages  [0..*]  list of string                                     |
                              | * validation          [1]     "unverified" | "self-reported" | "human-validated" |
                              |   validatedBy         [0..1]  string                                             |
                              |   validatedOn         [0..1]  string                                             |
