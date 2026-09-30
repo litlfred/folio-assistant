@@ -87,19 +87,59 @@ export function scriptOf(command: string): string | undefined {
 }
 
 /**
- * The writer for a `:check` script, when the pair exists.
+ * The writer for a verifying script, when the pair exists.
  *
- * The convention this repository already follows everywhere: `X` writes and
- * `X:check` verifies. Read from `package.json` rather than assumed, because a
- * check whose writer was renamed must come back as `no-writer` — a reported
- * gap — and not as a command that silently runs nothing.
+ * TWO conventions, because this repository uses two and only one was read
+ * until 2026-09-30:
+ *
+ *   - **suffix** — `X` writes, `X:check` verifies. The common one.
+ *   - **prefix** — `X` writes, `check:X` verifies. Measured: three gates
+ *     name themselves this way and every one has a real writer running the
+ *     same script:
+ *
+ *     ```
+ *     check:raci        → raci          (raci-chart.ts, --check vs not)
+ *     check:subgraphs   → subgraphs     (check-subgraphs.ts, --check vs not)
+ *     check:term-mapping → term:mapping (check-term-mapping.ts)
+ *     ```
+ *
+ * **The prefix half was a false clean, not a missing feature.** `regen`
+ * reported *"73 current, 0 regenerated"* — a fixed point — on a tree where
+ * `check:term-mapping` was stale, because a gate it never offered cannot be
+ * reported as `no-writer` either. So the one line this command exists to be
+ * trusted on was wrong, in the direction that reads as success. Found when CI
+ * failed on a gate `regen` had just declared current.
+ *
+ * `term:mapping` also shows why the base cannot be derived by swapping
+ * separators: the writer is `term:mapping` where the check is
+ * `check:term-mapping`, so the lookup tries the hyphenated and the
+ * colon-separated spelling and takes whichever `package.json` actually has.
+ *
+ * Still read from `package.json` rather than assumed: a check whose writer
+ * was renamed must come back as `no-writer` — a reported gap — and not as a
+ * command that silently runs nothing.
  */
 export function writerFor(scripts: Record<string, string>, check: string): string | undefined {
   const override = WRITER_OVERRIDES[check];
   if (override !== undefined) return scripts[override] === undefined ? undefined : override;
-  if (!check.endsWith(":check")) return undefined;
-  const base = check.slice(0, -":check".length);
-  return scripts[base] === undefined ? undefined : base;
+
+  if (check.endsWith(":check")) {
+    const base = check.slice(0, -":check".length);
+    return scripts[base] === undefined ? undefined : base;
+  }
+
+  if (check.startsWith("check:")) {
+    const rest = check.slice("check:".length);
+    // `check:term-mapping`'s writer is `term:mapping`, so the hyphen may be
+    // the separator the writer spells with a colon. Both are tried and
+    // neither is invented — whichever package.json declares is the answer.
+    for (const base of [rest, rest.replace(/-/g, ":")]) {
+      if (scripts[base] !== undefined) return base;
+    }
+    return undefined;
+  }
+
+  return undefined;
 }
 
 /**
@@ -140,7 +180,18 @@ export function repairableGates(gates: readonly Gate[], scripts: Record<string, 
   const out: { check: string; writer: string | undefined }[] = [];
   for (const g of gates) {
     const script = scriptOf(g.command);
-    if (script === undefined || (!script.endsWith(":check") && WRITER_OVERRIDES[script] === undefined)) continue;
+    // Eligibility has to admit BOTH naming conventions, not just the one
+    // `writerFor` resolves. Teaching `writerFor` the `check:X` prefix alone
+    // changed nothing — measured: still "73 pair(s)" — because a gate filtered
+    // out here is never asked. Two halves of one rule, and fixing the half
+    // that reads better is how the false clean survived a first attempt.
+    if (script === undefined) continue;
+    const named = script.endsWith(":check") || script.startsWith("check:");
+    if (!named && WRITER_OVERRIDES[script] === undefined) continue;
+    // A `check:X` with no writer is still not a pair — most of the `check:*`
+    // family are pure verifiers with nothing to regenerate, and listing them
+    // as `no-writer` would drown the one line this command exists for.
+    if (!script.endsWith(":check") && WRITER_OVERRIDES[script] === undefined && writerFor(scripts, script) === undefined) continue;
     if (seen.has(script)) continue;
     seen.add(script);
     out.push({ check: script, writer: writerFor(scripts, script) });
