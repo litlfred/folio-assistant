@@ -146,7 +146,8 @@
                 "properties": {
                   "instance": {
                     "type": "string",
-                    "minLength": 1
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                    "description": "A forge repository's full name, owner/name"
                   },
                   "path": {
                     "type": "string",
@@ -404,7 +405,8 @@
                               "properties": {
                                 "instance": {
                                   "type": "string",
-                                  "minLength": 1
+                                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                                  "description": "A forge repository's full name, owner/name"
                                 },
                                 "themeId": {
                                   "type": "string",
@@ -488,7 +490,8 @@
                     "properties": {
                       "instance": {
                         "type": "string",
-                        "minLength": 1
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                        "description": "A forge repository's full name, owner/name"
                       },
                       "themeId": {
                         "type": "string",
@@ -546,7 +549,8 @@
                 "properties": {
                   "instance": {
                     "type": "string",
-                    "minLength": 1
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                    "description": "A forge repository's full name, owner/name"
                   },
                   "themeId": {
                     "type": "string",
@@ -666,7 +670,8 @@
                 "properties": {
                   "instance": {
                     "type": "string",
-                    "minLength": 1
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                    "description": "A forge repository's full name, owner/name"
                   },
                   "themeId": {
                     "type": "string",
@@ -870,8 +875,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "618100027582244fa3d1832ae130dcde81107ab3",
+    "sha": "36564b3ab2e181f2516bcb12de909a8450d1cbdb",
     "pr": "main",
-    "run": "36764627145"
+    "run": "36767907989"
   }
 }

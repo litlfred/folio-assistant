@@ -10,7 +10,7 @@ graph-kinds:
 
 # /interaction-modality — ask in a form the person can answer
 
-Process: [`processes/getting-started.bpmn`](../../processes/getting-started.bpmn),
+Process: [`processes/getting-started.bpmn`](../../../processes/getting-started.bpmn),
 `Task_DetectModality` and `Task_AskIntent`.
 Preferences: `interaction/interaction.json` (committed, read at session start).
 
@@ -126,7 +126,7 @@ about one page on it: *"next time give appropraite link
 …/STAGING/<branch>/who-iris/"*. Linking the root hands the reader a route the
 agent already knew, and hands it to somebody who types with difficulty. Full
 rule, with the failure it also hides:
-[`continual-progress`](continual-progress.md) §"Link the PAGE, never the site
+[`continual-progress`](../../folio-core/continual-progress.md) §"Link the PAGE, never the site
 root".
 
 Six parts, in order:

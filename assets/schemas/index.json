@@ -15524,11 +15524,11 @@
       "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
         {
-          "name": "type",
-          "type": "string",
-          "optional": false,
+          "name": "layer",
+          "type": "\"core\"",
+          "optional": true,
           "array": false,
-          "doc": "The `@type` IRI this kind projects to."
+          "doc": "Whose namespace the kind is named in, when it is not the harness's:"
         },
         {
           "name": "renderable",
@@ -18037,7 +18037,7 @@
       "fields": [
         {
           "name": "instance",
-          "type": "z.string().min(1)",
+          "type": "RepoFullNameSchema",
           "optional": false,
           "array": false,
           "doc": "The instance it came from, as a reference — `litlfred/cat-harness`."
@@ -18059,7 +18059,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -24297,7 +24299,7 @@
       "fields": [
         {
           "name": "instance",
-          "type": "z.string().min(1).optional()",
+          "type": "RepoFullNameSchema.optional()",
           "optional": true,
           "array": false
         },
@@ -24310,7 +24312,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -30132,10 +30136,10 @@
       "fields": [
         {
           "name": "instance",
-          "type": "z.string().min(1).optional()",
+          "type": "RepoFullNameSchema.optional()",
           "optional": true,
           "array": false,
-          "doc": "Declared instance name. Absent means the citing instance's own."
+          "doc": "The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own."
         },
         {
           "name": "themeId",
@@ -30146,7 +30150,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -35864,7 +35870,7 @@
         },
         {
           "name": "sources",
-          "type": "z .array( z.object({ title: z.string().min(1), instance: z.string().min(1).optional(), libraryId: z.string().min(1).opt…",
+          "type": "z .array( z.object({ title: z.string().min(1), instance: RepoFullNameSchema.optional(), libraryId: z.string().min(1).op…",
           "optional": true,
           "array": true,
           "doc": "The ingested documents this voice is derived from."
@@ -35916,6 +35922,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
         "cat-harness/schemas/voice-skill.ts#VoiceInstructionsSchema",
         "cat-harness/schemas/voice-skill.ts#VoiceSkillRuleSchema",
         "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
@@ -36258,6 +36265,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
         "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
         "cat-harness/schemas/voices.ts#VoiceRefSchema",
         "cat-harness/schemas/voices.ts#VoiceRuleSchema",
@@ -36340,10 +36348,10 @@
       "fields": [
         {
           "name": "instance",
-          "type": "z.string().min(1).optional()",
+          "type": "RepoFullNameSchema.optional()",
           "optional": true,
           "array": false,
-          "doc": "The declared name of the instance holding it. Absent means this one."
+          "doc": "The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one."
         },
         {
           "name": "voiceId",
@@ -36354,7 +36362,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -36501,10 +36511,10 @@
       "fields": [
         {
           "name": "instance",
-          "type": "z.string().min(1).optional()",
+          "type": "RepoFullNameSchema.optional()",
           "optional": true,
           "array": false,
-          "doc": "The DECLARED NAME of the instance holding the corpus, when it is not this"
+          "doc": "The instance holding the corpus, as its planned `owner/repo` (bean"
         },
         {
           "name": "libraryId",
@@ -36543,7 +36553,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -44077,6 +44089,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/kg-node.ts#AssetSourceSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "instance",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/kg-node.ts#KgAssetSchema",
       "to": "cat-harness/schemas/kg-node.ts#AssetSourceSchema",
       "via": "source",
@@ -44939,6 +44959,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/role-graph.ts#RoleRefSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "instance",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/role-graph.ts#RoleStack",
@@ -45869,6 +45897,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/theme.ts#ThemeRefSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "instance",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/theme.ts#ThemeSchema",
       "to": "cat-harness/schemas/theme.ts#PrintGeometrySchema",
       "via": "layouts",
@@ -46702,6 +46738,14 @@
     },
     {
       "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
       "to": "cat-harness/schemas/voice-skill.ts#VoiceInstructionsSchema",
       "via": "instructions",
       "kind": "field",
@@ -46806,6 +46850,14 @@
     },
     {
       "from": "cat-harness/schemas/voices.ts#VoiceProfileSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/voices.ts#VoiceProfileSchema",
       "to": "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
       "via": "activeIn",
       "kind": "field",
@@ -46845,6 +46897,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/voices.ts#VoiceRefSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "instance",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/voices.ts#VoiceRuleSchema",
       "to": "cat-harness/schemas/voices.ts#VoicePatternSchema",
       "via": "patterns",
@@ -46867,6 +46927,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/voices.ts#VoiceRuleSourceSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "instance",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/voices.ts#VoiceScope",
