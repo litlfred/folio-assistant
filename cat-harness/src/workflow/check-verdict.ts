@@ -156,7 +156,9 @@ export function explainSuperseded(newerCommits: readonly string[]): string {
  *
  * Bean `52cz`, measured on #1589: GitHub creates no `pull_request` run for a
  * PR whose `mergeable_state` is `dirty`, because there is no merge commit to
- * test. Pushes to such a PR produce no run at all, and whatever check results
+ * test. The field can be served STALE (bean `fx5r`), so it only ever
+ * DOWNGRADES here: a stale `dirty` costs an undetermined, and a stale `clean`
+ * falls through to the head's own runs, which a new head does not yet have. Pushes to such a PR produce no run at all, and whatever check results
  * are on display describe an earlier commit nobody is testing — while a
  * `check_suite.completed` notice truthfully says no suite failed, which reads
  * like green. So `dirty` decides the verdict on its own: CI is not running,

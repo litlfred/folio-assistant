@@ -87,6 +87,8 @@ async function fetchRuns(slug: string, sha: string): Promise<readonly CheckRun[]
 /**
  * A pull request's head sha and `mergeable_state`, or `undefined` when the PR
  * could not be read. Re-read on every poll: a merge of the base changes both.
+ * The state can be served STALE (bean `fx5r`: a pre-merge value 45 minutes
+ * after the merge), which is why `prVerdict` only lets it DOWNGRADE a verdict.
  */
 async function fetchPr(slug: string, n: string): Promise<{ sha: string; state: string | undefined } | undefined> {
   // GitHub computes mergeability LAZILY: the first read of a PR starts the
@@ -112,6 +114,8 @@ async function readPr(slug: string, n: string): Promise<{ sha: string; state: st
       },
     });
     if (!r.ok) return undefined;
+    // `mergeable_state` may be stale (bean `fx5r`); it is trusted only to downgrade,
+    // never to confirm a pass — see `prVerdict`.
     const body = (await r.json()) as { head?: { sha?: string }; mergeable_state?: string };
     return typeof body.head?.sha === "string" ? { sha: body.head.sha, state: body.mergeable_state } : undefined;
   } catch {
