@@ -35,11 +35,10 @@
 import { defaultGraphKinds, type GraphKindDef, type GraphKindRegistry } from "./graph-kind-registry.js";
 // Straight from the namespace leaf, not via the harness: the IRI is the
 // platform's, not the harness's to re-export.
-import { termIri } from "./namespaces";
 
 /** The one renderable graph kind. */
 export const FOLIO_GRAPH_KIND: GraphKindDef = {
-  type: termIri("FolioGraph"),
+  layer: "core",
   renderable: true,
   // The subject matter itself — a folio IS the thing a reader came for, which
   // is also why it is the only renderable kind. The two axes are independent

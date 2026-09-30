@@ -151,7 +151,7 @@
  * **It does not repair anything.** Same rule as `check:bean-bodies` and
  * `bun run health`: the finding names something a *person* does, and the
  * person is the bean's owner. See
- * [`deletion-requires-confirmation.md`](../skills/folio-core/deletion-requires-confirmation.md).
+ * [`deletion-requires-confirmation.md`](../skills/conduct/conduct-core/deletion-requires-confirmation.md).
  *
  * **It ignores closed beans**, like `check:bean-parents` and
  * `check:bean-bodies` and for their reason: a finished bean is history, and

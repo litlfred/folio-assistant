@@ -396,6 +396,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "kg-core": "Knowledge graph — declaration, placement, export, audit (kg-core)",
   "library-core": "Library and information management (library-core)",
   "ui-core": "Rendering, UI and publication surfaces (ui-core)",
+  "conduct-core": "Agent conduct (conduct-core)",
   theming: "Theming (theming)",
   // Keyed by basename: a package subdirectory of the declared `skills/`,
   // like `theming` above. Bean `6bhf`, owner 2026-09-25 — "bean as

@@ -44,7 +44,7 @@
  * @module schemas/graph-kind-registry
  * @graphNode schema
  */
-import { termIri } from "./namespaces";
+import { namespaceForLayer } from "./namespaces";
 import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph";
 
 
@@ -157,8 +157,16 @@ export type NodeSchemaRef = (
  * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
  */
 export interface GraphKindDef {
-  /** The `@type` IRI this kind projects to. */
-  type: string;
+  /**
+   * Whose namespace the kind is named in, when it is not the harness's:
+   * `core` for the folio's own furniture (`voices`, `library`, `todos`, …).
+   * A kind bootstrap defines is bootstrap's whatever this says
+   * (`BOOTSTRAP_GRAPH_KINDS`). The kind IS its individual,
+   * `<ns>graphKind/<name>` ({@link graphKindIri}); there is no class per kind.
+   * Owner, 2026-09-30 (bean `3r47`): "Drop per-kind classes" — bootstrap names
+   * a kind as one `GraphKind` individual, and the harness now does the same.
+   */
+  layer?: "core";
   /**
    * Is a graph of this kind expected to render as a website?
    *
@@ -476,7 +484,6 @@ export interface GraphKindDef {
  */
 export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   tools: {
-    type: termIri("ToolGraph"),
     renderable: false,
     // A Tool node is an authored definition of a mechanism. It says what this
     // instance CAN DO, not what anybody did.
@@ -503,7 +510,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // `cat-harness` are two spellings of this one term, and the IRI is what
     // tells them apart from a third. The namespace is unchanged
     // (`…/cat-harness/ns#`); only the local name moves.
-    type: termIri("KGraph"),
     renderable: false,
     // Skills, workflows, roles, requirements — the authored instruction bodies
     // and the diagrams they are named from. See the note on `holds`:
@@ -542,7 +548,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // A downstream declaration still saying `["cat-harness"]` therefore keeps
   // parsing. What it loses is the finer query, which is the thing it never had.
   skills: {
-    type: termIri("SkillGraph"),
     renderable: false,
     // A Skill is a Capability with defined inputs and outputs — an authored
     // instruction body. It states what can be done, never what was done.
@@ -560,7 +565,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["skills"],
   },
   processes: {
-    type: termIri("ProcessGraph"),
     renderable: false,
     // The BPMN and DMN are the source of truth and are READ to run a process;
     // where a running instance GOT TO is `workflow-state`, which is `state`.
@@ -578,7 +582,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["processes"],
   },
   scenarios: {
-    type: termIri("ScenarioGraph"),
     renderable: false,
     // Actors, the Roles they take, and the User Stories those Roles serve.
     //
@@ -599,7 +602,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // authored, and is true whether or not anything reads it, so it `holds`
   // content like the role graph beside it: it owes no viewer.
   policies: {
-    type: termIri("PolicyGraph"),
     renderable: false,
     holds: "content",
     schema: "schemas/odrl.ts",
@@ -638,7 +640,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // Doc-Researcher. GRADE is not a methodology node: since 2026-09-24 (bean
   // `wg7r`) it is the `grade` skill with its vocabularies as code lists.
   methodology: {
-    type: termIri("MethodologyGraph"),
     renderable: false,
     // `context`, by the axis's own criterion and not by resemblance: read
     // during a process, never written by one. A methodology here is somebody
@@ -690,7 +691,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // moment a `docs` page needs a block viewer, a LaTeX pass, a QA badge or a
   // translation overlay, it is describing authored CONTENT and is a `folio`.
   docs: {
-    type: termIri("DocsGraph"),
     renderable: true,
     // THE FROM-WITHIN NODE (issue #1164; the owner's #980 ruling: nesting is
     // allowed when "a (Sub?)KGraph node within the first subdir labels all the
@@ -743,7 +743,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // handed arguments that were never agreed — the same reason `beans` does
   // not mix the work plan with instance state.
   proposals: {
-    type: termIri("ProposalsGraph"),
     // NOT a site of its own: its pages are built by `docs`, which it is
     // `within`. The harness still owns exactly one renderable kind.
     renderable: false,
@@ -761,7 +760,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "against the `Requirement` schema.",
   },
   requirements: {
-    type: termIri("RequirementsGraph"),
     // NOT a site of its own: its pages are built by `docs`, which it is
     // `within`. The harness still owns exactly one renderable kind.
     renderable: false,
@@ -778,7 +776,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "at these statements by `req:<slug>#<key>`.",
   },
   "external-schema": {
-    type: termIri("ExternalSchemaGraph"),
     renderable: false,
     // `content`, and the call is against the obvious reading. A process DOES
     // write these files — `external-schemas.ts --write` refreshes each
@@ -828,7 +825,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // an adjudication may give, which namespaces are ours — and a person makes
   // it. Diagrams and `schemas/namespaces.ts` READ these; nothing writes them.
   "code-list": {
-    type: termIri("CodeListGraph"),
     renderable: false,
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
@@ -838,7 +834,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "per list, every code carrying its definition and source, published as SKOS.",
   },
   schemas: {
-    type: termIri("SchemaGraph"),
     renderable: false,
     // A shape is the subject matter of the schema graph. It is true before
     // anything is validated against it.
@@ -857,7 +852,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `scripts/gen-uml-overview.ts`. `derived`: regenerated, never authored, so
   // a finding against one is a finding against the generator or its inputs.
   uml: {
-    type: termIri("UmlGraph"),
     renderable: false,
     holds: "derived",
     // declared-path-literal: this table IS the declaration, as on `health`.
@@ -883,7 +877,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // declaration mentioned, so a consumer scanning the declared directories saw
   // none of them and reported a clean run over the lot.
   qa: {
-    type: termIri("QaGraph"),
     renderable: false,
     // A verdict is where a REVIEW got to on a subject that lives elsewhere.
     // Detached from the artefact it judges it says nothing — which is the
@@ -954,7 +947,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // fake-reference failure `activity-names-skill` is written to prevent. The
   // field is optional and absent means absent.
   health: {
-    type: termIri("HealthGraph"),
     renderable: false,
     // The same shape one level out: where the REPOSITORY got to, measured
     // against thresholds. A report is evidence about an instance, never part
@@ -1010,7 +1002,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `ce65` own it. Reporting the two as one number is how the cheap one never
   // gets done.
   code: {
-    type: termIri("CodeGraph"),
     renderable: false,
     holds: "content",
     validatorNotApplicable:
@@ -1049,7 +1040,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // through. A half-written report is not work in progress; it is a run that
   // died, which `qaReportVerdict` reports as `unknown` rather than as clean.
   "qa-report": {
-    type: termIri("QaReportGraph"),
     renderable: false,
     holds: "state",
     recordsWork: false,
@@ -1072,7 +1062,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // instance's glossary/ page. This is the harness's swimlane-role ledger, one
   // source that page reads.
   "swimlane-glossary": {
-    type: termIri("SwimlaneGlossaryGraph"),
     renderable: false,
     // `state`, and NOT `derived` — the interesting call now that `derived`
     // exists. The glossary DOCUMENT is derived and lives in `_kg/`; what is
@@ -1101,7 +1090,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused.",
   },
   models: {
-    type: termIri("ModelGraph"),
     renderable: false,
     // `context`: READ when a session opens, never written by a process. That
     // is the whole point of the kind — a person grants a validation, an agent
@@ -1120,7 +1108,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: BOOTSTRAP_GRAPH_KINDS["models"],
   },
   beans: {
-    type: termIri("BeanGraph"),
     renderable: false,
     // The work plan. Its own declaration already splits WHAT IS BEING WORKED
     // ON from WHERE IT GOT TO — both are records about content, neither is
@@ -1157,7 +1144,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // had grown a parallel closed vocabulary (`BEAN_NODE_KINDS`) saying the same
   // thing in different words.
   "bean-defs": {
-    type: termIri("BeanDefsGraph"),
     renderable: false,
     // What is being worked on. A bean names a change to something; it is not
     // the something.
@@ -1171,7 +1157,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "Authored and edited by people and agents.",
   },
   "session-survey": {
-    type: termIri("SessionSurveyGraph"),
     renderable: false,
     // Written BY a running session, for other sessions to read. That makes it
     // state rather than context: `interaction/` is context because no process
@@ -1198,7 +1183,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "the whole range (bean `6ptx`).",
   },
   "workflow-state": {
-    type: termIri("WorkflowStateGraph"),
     renderable: false,
     // The clearest case in the table: a token's position in a process drawn in
     // the `cat-harness` graph. It cannot be read at all without the diagram it
@@ -1228,7 +1212,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // the four coordinates of the role model: who, as which role, in which
   // process, on which task.
   todos: {
-    type: termIri("TodoGraph"),
+    layer: "core",
     renderable: false,
     // A person's outstanding items. Outstanding is the word that settles it —
     // an item records a position, not a fact.
@@ -1264,7 +1248,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // hold `x` and `y`, which `schemas/board-positions.ts` asserts against the
   // source of four schemas.
   boards: {
-    type: termIri("BoardGraph"),
     renderable: false,
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
@@ -1282,7 +1265,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "no board is complete. Schema: `schemas/board.ts`.",
   },
   "board-positions": {
-    type: termIri("BoardPositionsGraph"),
     renderable: false,
     // Written by a running process every time somebody moves a note. It is
     // Diagram Interchange: where things were drawn, not what is true.
@@ -1302,7 +1284,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "is never pointed back at. Schema: `schemas/board-positions.ts`.",
   },
   "todo-items": {
-    type: termIri("TodoItemsGraph"),
+    layer: "core",
     renderable: false,
     // As `todos`.
     holds: "state",
@@ -1323,7 +1305,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // `content/docs/document-ingestion/uploads-and-library-are-two-stages-of-one-pipeline.md`
   // exists to state.
   uploads: {
-    type: termIri("UploadsGraph"),
+    layer: "core",
     renderable: false,
     // A QUEUE, and a queue is a position in a pipeline. The declaration
     // already says these files are NOT L1 and read as absent to every corpus
@@ -1343,7 +1325,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "greppable as corpus: a document here reads as absent to every consumer.",
   },
   library: {
-    type: termIri("LibraryGraph"),
+    layer: "core",
     renderable: false,
     // DERIVED, not content — bean `hqku`, and the owner's ruling of
     // 2026-09-20: *"library is static (only if we materialize assets or
@@ -1409,7 +1391,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // Every node declares a materialization state and there is no default — see
   // folio-assistant-core/schemas/materialization.ts.
   catalogue: {
-    type: termIri("CatalogueGraph"),
     renderable: false,
     // `content`, on the same reasoning that makes `library` content: it is
     // DERIVED from an external source by an import process, and being derived
@@ -1463,7 +1444,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // shape exactly — including its mixed case, where a handful of nodes are
   // materialised and the rest are not — so it takes `catalogue`'s answer.
   "fhir-artifact-index": {
-    type: termIri("FhirArtifactIndexGraph"),
     renderable: false,
     // `content`, on `catalogue`'s reasoning: detach an artefact node and it
     // still says something standing on its own — this ValueSet exists, at this
@@ -1563,7 +1543,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // list over the decision-logic core reads as uninformative rather than
   // clean).
   "ig-metadata-index": {
-    type: termIri("IgMetadataIndexGraph"),
     renderable: false,
     holds: "derived",
     // declared-path-literal: this table IS the declaration, as on `health`.
@@ -1640,7 +1619,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // from an accident, which is `deletion-requires-confirmation` written into a
   // shape.
   "binary-release": {
-    type: termIri("BinaryReleaseGraph"),
     renderable: false,
     holds: "state",
     recordsWork: false,
@@ -1660,7 +1638,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // a voice apply, and a graph kind that conflated the two would have no place
   // to record that this instance ships four voices and activates none.
   voices: {
-    type: termIri("VoiceGraph"),
+    layer: "core",
     renderable: false,
     // THE FROM-WITHIN NODE, as on `docs` (owner 2026-09-30, bean `rkqp`:
     // "vendors/<id>/ should be declared subgraphs along with vendors/").
@@ -1685,7 +1663,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // says what is held rather than how deep. `vendors/vendors.json` declares
   // each `<id>/`; the chain stops where a directory carries no declaration.
   "voice-vendors": {
-    type: termIri("VoiceVendorsGraph"),
+    layer: "core",
     renderable: false,
     within: "voices",
     declarationFile: "vendors.json",
@@ -1710,7 +1688,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // subject matter does not live in the platform. This kind is what gives it
   // somewhere else to live that a declaration-driven consumer can still find.
   themes: {
-    type: termIri("ThemeGraph"),
     renderable: false,
     // Authored-from-a-source, like `voices` and for the same reason: a theme is
     // true whether or not anything has been rendered with it. The DERIVATION
@@ -1725,7 +1702,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "every kind and only the geometry varies; every value cites where it was measured.",
   },
   "todo-feedback": {
-    type: termIri("TodoFeedbackGraph"),
+    layer: "core",
     renderable: false,
     // As `todos`, plus a submitter's identity — which makes it more obviously
     // a record OF something rather than the something.
@@ -1738,7 +1715,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       "identity. Read by the `todo-review` skill.",
   },
   "review-verdicts": {
-    type: termIri("ReviewVerdictsGraph"),
+    layer: "core",
     renderable: false,
     // Written by a running review: the coordinator's step commits each
     // verdict as it is ingested. A record OF a review, like `todo-feedback`,
@@ -1816,7 +1793,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // and declaring a directory before it exists is the `dh4f` defect, where a
   // consumer scans nothing and reports a clean run. Nothing scans a kind.
   "session-state": {
-    type: termIri("SessionStateGraph"),
     renderable: false,
     holds: "state",
     recordsWork: false, // live state, but nothing anybody is partway through
@@ -1840,7 +1816,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // REJECTS a dot-prefixed segment, so the file was in the one place the
   // conventions forbid while being read at the start of every session.
   interaction: {
-    type: termIri("InteractionGraph"),
     renderable: false,
     holds: "context",
     // `schema` pointed at `harness-config.ts` until 2026-09-24, and that was
@@ -1868,7 +1843,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // keeps its id: the id alone would call it seen, and an edited requirement
   // is a changed requirement (`issue-working`).
   "issue-marks": {
-    type: termIri("IssueMarkGraph"),
     renderable: false,
     holds: "state",
     recordsWork: false, // live state, but nothing anybody is partway through
@@ -1886,7 +1860,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   },
 
   memory: {
-    type: termIri("MemoryGraph"),
     renderable: false,
     holds: "context",
     // declared-path-literal: this table IS the declaration, as on `health` — a validator is a
@@ -1895,7 +1868,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     summary: "Durable facts an agent carries between sessions. Read during a process, never written by one.",
   },
 
-  // A confirmation the owner gave IN ADVANCE — `skills/folio-core/confirmation-waiver.md`.
+  // A confirmation the owner gave IN ADVANCE — `skills/conduct/conduct-core/confirmation-waiver.md`.
   //
   // Owner, 2026-09-20: "human can waive confirmation rights (e.g. for session,
   // for process run)", and "context dependent, should be in memories".
@@ -1914,7 +1887,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // has stopped being possible". A waiver's whole content is that it EXPIRES.
   // Labelling one `stable` would assert the opposite of what the node says.
   waiver: {
-    type: termIri("WaiverGraph"),
     renderable: false,
     holds: "context",
     schema: "schemas/waiver.ts",
@@ -1927,7 +1899,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   },
 
   "fsh-guts": {
-    type: termIri("FshGutsGraph"),
     renderable: false,
     // The one that reads like content, and the one `context` moved. What is
     // in here is deprecated or superseded, so the fact it carries is WHERE
@@ -1975,7 +1946,6 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // defect in reverse, five committed directories that no declaration
   // mentioned. That is what this kind is for.
   "translation-sources": {
-    type: termIri("TranslationSourceGraph"),
     renderable: false,
     // A `.po` catalogue and its manifest are authored content in another
     // language, not a record of a translation having happened.
@@ -2124,7 +2094,18 @@ export function resolveGraphKind(name: string): { kind: string; deprecated?: str
  * the next field added to `GraphKindDef` has one place to be considered.
  */
 function sameKind(a: GraphKindDef, b: GraphKindDef): boolean {
-  return a.type === b.type && a.renderable === b.renderable && a.holds === b.holds;
+  return a.layer === b.layer && a.renderable === b.renderable && a.holds === b.holds;
+}
+
+/** The layer whose namespace names a kind: bootstrap's for a kind bootstrap defines. */
+export function graphKindLayer(name: string, def?: Pick<GraphKindDef, "layer">): "bootstrap" | "core" | "harness" {
+  if (Object.hasOwn(BOOTSTRAP_GRAPH_KINDS, name)) return "bootstrap";
+  return def?.layer ?? "harness";
+}
+
+/** A kind's identity: its `GraphKind` individual, `<layer ns>graphKind/<name>`. */
+export function graphKindIri(name: string, def?: Pick<GraphKindDef, "layer">): string {
+  return `${namespaceForLayer(graphKindLayer(name, def))}graphKind/${name}`;
 }
 
 export class GraphKindRegistry {
@@ -2159,9 +2140,9 @@ export class GraphKindRegistry {
     return [...this.kinds.keys()];
   }
 
-  /** The kind behind a projected `@type`, or `undefined`. */
-  forType(type: string): string | undefined {
-    for (const [k, v] of this.kinds) if (v.type === type) return k;
+  /** The kind a `GraphKind` individual names, or `undefined`. */
+  forIri(iri: string): string | undefined {
+    for (const [k, v] of this.kinds) if (graphKindIri(k, v) === iri) return k;
     return undefined;
   }
 }

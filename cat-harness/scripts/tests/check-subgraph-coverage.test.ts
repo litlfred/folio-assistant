@@ -362,7 +362,6 @@ describe("an unmet OBLIGATION outranks an unanswered question", () => {
     // line as untested intent.
     const registry = new GraphKindRegistry({
       "live-board": {
-        type: "https://example.invalid/ns#LiveBoardGraph",
         renderable: true,
         holds: "state",
         summary: "A state graph that renders itself. Hypothetical, and the point.",

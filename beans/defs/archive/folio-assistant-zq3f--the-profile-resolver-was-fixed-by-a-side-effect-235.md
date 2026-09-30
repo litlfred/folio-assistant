@@ -52,7 +52,7 @@ current finding.
       business carrying. The registry probe answered it directly.
 - [x] If it does not: the 235 sidecars are stale output, and refreshing them
       is the fix — **not** deleting them
-      ([`deletion-requires-confirmation`](../../../cat-harness/skills/folio-core/deletion-requires-confirmation.md)).
+      ([`deletion-requires-confirmation`](../../../cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md)).
       **They are not stale output in the sense meant**: every verdict is
       `n/a`, so there is nothing false recorded, and they refresh in a folio
       repo rather than here.
@@ -122,7 +122,7 @@ preflights on `content/package.json`, which this platform repo does not have
 dispatch workflow.
 
 No deletion, and none was ever warranted
-([`deletion-requires-confirmation`](../../../cat-harness/skills/folio-core/deletion-requires-confirmation.md)).
+([`deletion-requires-confirmation`](../../../cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md)).
 
 ### Done when
 

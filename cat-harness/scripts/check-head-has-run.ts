@@ -347,7 +347,22 @@ export function mergeStateForHead(
   if (n === undefined) return "not-a-pr-head";
   try {
     const out = git(["ls-remote", "origin", `refs/pull/${n}/merge`]);
-    return out.trim() === "" ? "conflicted" : "mergeable";
+    const merge = out.trim().split(/\s+/)[0];
+    if (merge === undefined || merge === "") return "conflicted";
+    // PRESENT IS NOT CURRENT. The forge does not delete a merge ref when a new
+    // head conflicts — it leaves the one it built for an EARLIER head. Measured
+    // 2026-09-30 on #1665: `refs/pull/1665/merge` was 8cdfbc1, built for head
+    // 1b7b537, while the head was ec1d829 and REST said `dirty`. Reading
+    // existence alone called that head `mergeable`, and `noRunAdvice` then
+    // offered dispatch on a tree that will never exist (bean `52cz`).
+    //
+    // So the merge commit's second parent must BE this head. When it is not,
+    // the answer is `unknown`, not `conflicted`: in the seconds after a push the
+    // ref is stale for a mergeable head too (PR #813: rebuilt within 15 s), and
+    // one read cannot tell the two apart.
+    git(["fetch", "--quiet", "--no-tags", "--no-write-fetch-head", "origin", merge]);
+    const builtFor = git(["rev-parse", `${merge}^2`]).trim();
+    return builtFor === sha ? "mergeable" : "unknown";
   } catch {
     // The head lookup succeeded and this one did not, so the difference is the
     // probe rather than the PR. Never `conflicted` on a failed read — that is

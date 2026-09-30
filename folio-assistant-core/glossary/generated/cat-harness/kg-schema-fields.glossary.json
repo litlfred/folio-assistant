@@ -4977,6 +4977,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.layer",
+      "prefLabel": "GraphKindDef.layer",
+      "definition": "Whose namespace the kind is named in, when it is not the harness's: `core` for the folio's own furniture (`voices`, `library`, `todos`, …). A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_KINDS`). The kind IS its individual, `<ns>graphKind/<name>` ({@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphKind` individual, and the harness now does the same.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.layer",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.nodeschemas",
       "prefLabel": "GraphKindDef.nodeSchemas",
       "definition": "One entry per `$schema` family a node of this kind may carry, keyed by the tag. Bean `rdkm`.",
@@ -5002,13 +5009,6 @@
       "prefLabel": "GraphKindDef.schema",
       "definition": "Where the shape of a node in this graph is defined — a repo-relative module path, or a `$schema` tag the files themselves carry.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema",
-      "status": "candidate"
-    },
-    {
-      "id": "graph-kind-registry.graphkinddef.type",
-      "prefLabel": "GraphKindDef.type",
-      "definition": "The `@type` IRI this kind projects to.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.type",
       "status": "candidate"
     },
     {

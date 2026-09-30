@@ -502,10 +502,10 @@ from the tool it documents on the next `beans` release.
 
 `bun run check:ready-to-close` lists every tagged bean with its evidence, so the
 confirmation is one read rather than four. **It reports and never acts** —
-[`deletion-requires-confirmation.md`](deletion-requires-confirmation.md) — unless
+[`deletion-requires-confirmation.md`](../conduct/conduct-core/deletion-requires-confirmation.md) — unless
 the owner has waived the `bean-close` gate for this session or process run, in
 which case the batch closes under that waiver and the turn report names it:
-[`confirmation-waiver.md`](confirmation-waiver.md).
+[`confirmation-waiver.md`](../conduct/conduct-core/confirmation-waiver.md).
 
 **It is not a parking space.** `ready-to-close` says *re-derivation is beyond
 this session*; it never says *I would rather not*. Where you can run the check,

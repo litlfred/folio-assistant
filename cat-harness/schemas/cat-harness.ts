@@ -78,7 +78,7 @@ import {
   type KgImage,
   type KgNodeLabels,
 } from "./kg-node";
-import { NS_PREFIXES, termIri } from "./namespaces";
+import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
 
 /**
@@ -309,7 +309,9 @@ export * from "./graph-kind-registry.js";
 // forwards a name; it does not bring it into local scope.
 import {
   defaultGraphKinds,
+  graphKindIri,
   REGISTRATION_MODULE,
+  resolveGraphKind,
   type GraphKind,
   type GraphKindRegistry,
   type GraphLayer,
@@ -3582,19 +3584,20 @@ function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
     o.directories = o.directories.map((d) => {
       if (typeof d !== "object" || d === null) return d;
       const e = { ...(d as Record<string, unknown>) };
-      // `@type` recovers `graphs`, and handles both projected forms: a single
-      // type stays a string, several become a list. A type the registry does
-      // not know is DROPPED rather than guessed — recovering the wrong kind is
+      // `holdsGraph` recovers `graphKinds`, in both projected forms: one stays
+      // a string, several become a list. An individual the registry does not
+      // know is DROPPED rather than guessed — recovering the wrong kind is
       // worse than recovering none, because the reader has no way to tell.
-      if (e.graphKinds === undefined && e["@type"] !== undefined) {
-        const types = Array.isArray(e["@type"]) ? e["@type"] : [e["@type"]];
-        const kinds = types
+      if (e.graphKinds === undefined && e.holdsGraph !== undefined) {
+        const iris = Array.isArray(e.holdsGraph) ? e.holdsGraph : [e.holdsGraph];
+        const kinds = iris
           .filter((t): t is string => typeof t === "string")
-          .map((t) => registry.forType(t))
+          .map((t) => registry.forIri(t))
           .filter((k): k is string => k !== undefined);
         if (kinds.length > 0) e.graphKinds = kinds;
       }
       delete e["@type"];
+      delete e.holdsGraph;
       if (typeof e["@id"] === "string" && e.id === undefined) e.id = (e["@id"] as string).replace(/^#/, "");
       delete e["@id"];
       return e;
@@ -5289,6 +5292,9 @@ export function toJsonLd(
       directories: termIri("scans"),
       scope: termIri("scope"),
       dependents: termIri("dependents"),
+      // What a directory holds, as the kinds' own individuals — the same
+      // property kg-export writes (`dcterms:type`, via `propertyIri`).
+      holdsGraph: { "@id": propertyIri("holdsGraph"), "@type": "@id" },
     },
     "@type": termIri("Harness"),
     name: decl.name,
@@ -5308,13 +5314,16 @@ export function toJsonLd(
         }
       : {}),
     directories: decl.directories.map((d) => {
-      const types = d.graphKinds.map((g) => registry.get(g)?.type ?? termIri("UnknownGraph"));
+      // A directory is a Subgraph, and says what it holds only through
+      // `holdsGraph` → each kind's individual (owner, 2026-09-30, bean `3r47`:
+      // "Drop per-kind classes"). A kind the registry does not know still
+      // gets an individual in the harness's namespace rather than vanishing.
+      const kinds = d.graphKinds.map((g) => graphKindIri(resolveGraphKind(g).kind, registry.get(g)));
       return {
         "@id": `#${d.id}`,
-        // One type stays a string, several become a list — JSON-LD permits
-        // both, and emitting a one-element array for the common case would
-        // make every existing published form look changed.
-        "@type": types.length === 1 ? types[0] : types,
+        "@type": termIri("Subgraph"),
+        // One stays a string, several become a list — JSON-LD permits both.
+        holdsGraph: kinds.length === 1 ? kinds[0] : kinds,
         path: d.path,
         // `dependents` is REQUIRED, so a projection that dropped it produced a
         // document that no longer parses as a declaration — caught by the
