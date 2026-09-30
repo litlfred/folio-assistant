@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 452,
+      "count": 455,
       "unit": "beans"
     }
   },
@@ -1373,14 +1373,14 @@
     {
       "id": "folio-assistant-7bg9",
       "title": "INGESTION: a licence check subprocess, and the marker coverage the ingest family is missing",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-zzmr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T15:25:27Z",
-      "updatedAt": "2026-09-20T15:25:27Z",
+      "updatedAt": "2026-09-30T09:25:32Z",
       "preview": "Owner, 2026-09-20: *\"liscence check task (subprocess) is part of document/asset\ningestion pipeline\"*.\n\nQueued rather than started, per the standing instruction to queue new topics in\nparallel and not pivot.\n\n## The gap is real, and the shape already fits\n\nMeasured 2026-09-20 against `origin/main` at `dc78e7ccf`:\n\n    cat-harness/processes/document-ingestion.bpmn\n      \"Document ingestion — uploads",
       "file": "beans/defs/folio-assistant-7bg9--ingestion-a-licence-check-subprocess-and-the-marke.md"
     },
@@ -3083,15 +3083,15 @@
     {
       "id": "folio-assistant-i4i1",
       "title": "C: UML — Task implements Skill, Voice->Role, skill I/O schema edges, test->schemas, glossary links (+ Task, UserStory, Test glosses)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:53:34Z",
-      "updatedAt": "2026-09-23T19:53:34Z",
-      "preview": "See #1168 plan C. After B lands.",
+      "updatedAt": "2026-09-30T09:58:14Z",
+      "preview": "See #1168 plan C. After B lands.\n\n_2026-09-30T09:58:14Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).",
       "file": "beans/defs/folio-assistant-i4i1--c-uml-task-implements-skill-voice-role-skill-io-sc.md"
     },
     {
@@ -4249,6 +4249,20 @@
       "file": "beans/defs/folio-assistant-p67i--ingest-csv-and-spreadsheet-sheet-names-headers-sha.md"
     },
     {
+      "id": "folio-assistant-pb3e",
+      "title": "QA gate: instances declare needs and have a harness IRI (#1548)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-zzmr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:48:21Z",
+      "updatedAt": "2026-09-30T08:51:34Z",
+      "preview": "Owner 2026-09-30: 'QA gates on harness declaration of dependences. harness instancess need IRI for harness.' Issue #1548; done on PR #1530, which it unblocks.\n\n## Done when\n- [x] check:instance-graph fails on an instance with no needs ([] stays legal)\n- [x] check:instance-graph fails on an instance with no absolute harness IRI, or two sharing one — via kg-export's exportIdentity\n- [x] exportIdenti",
+      "file": "beans/defs/folio-assistant-pb3e--qa-gate-instances-declare-needs-and-have-a-harness.md"
+    },
+    {
       "id": "folio-assistant-pesg",
       "title": "A review re-derived a finding the instrument had already computed, and got it wrong",
       "status": "in-progress",
@@ -4589,14 +4603,14 @@
     {
       "id": "folio-assistant-rjug",
       "title": "SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-09-29T20:03:11Z",
+      "updatedAt": "2026-09-30T10:09:58Z",
       "preview": "Three things the pipeline already produces and this graph cannot hold. Proposal\nwith **options**, because at least two of the three have more than one\ndefensible shape and picking silently is how a kind gets registered wrong.\n\n## 1. Metadata indexes\n\nAlready partly solved: `fhir-artifact-index` exists, registered\n`renderable: false`, reconstructed from four partial views with `provenance`\nnaming t",
       "file": "beans/defs/folio-assistant-rjug--schema-proposal-metadata-indexes-binary-releases-a.md"
     },
@@ -4879,6 +4893,20 @@
       "updatedAt": "2026-08-26T19:15:00Z",
       "preview": "Split out of `p2en`, whose original question — what schema consolidates math and\nhealth-policy ingestion — is answered. This is the follow-on it uncovered.\n\n## Why\n\n`p2en` landed DAK block kinds, adapter-scoped QA axes, and five DAK checkers,\nbut those criteria were written from what the corpus happens to contain. WHO\npublishes its own authoring standards, and they are the better source: a\ncriteri",
       "file": "beans/defs/folio-assistant-sopq--mine-the-who-ig-starter-kit-sops-for-dak-qa-criter.md"
+    },
+    {
+      "id": "folio-assistant-ssfp",
+      "title": "beans:claim writes to process.cwd(), so an agent working in a git worktree claims in the WRONG checkout",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:11:53Z",
+      "updatedAt": "2026-09-30T10:11:53Z",
+      "preview": "Measured 2026-09-30, on a live subagent. A session delegating to agents that\neach work in their own `git worktree` — the pattern this repository's own\nguidance pushes, and the one used for every agent in that session — has its\nclaims land in the wrong tree.\n\n## The measurement\n\nAn agent was briefed to work in `/tmp/wtRJ/folio-assistant` and claim bean\n`rjug`. Immediately after it reported the clai",
+      "file": "beans/defs/folio-assistant-ssfp--beansclaim-writes-to-processcwd-so-an-agent-workin.md"
     },
     {
       "id": "folio-assistant-supn",
@@ -5345,6 +5373,20 @@
       "updatedAt": "2026-09-29T20:50:32Z",
       "preview": "`bean-store`'s `bean-self-declared-done` finding names a claimed bean whose every\n`## Done when` box is ticked, and its implied action is that somebody closes it.\n`0pes` settled who may: **a bean closes on EVIDENCE, not on authorship** — with\nthree obligations, the third of which is that **mid-flight is off limits**, where\nmid-flight means a claim naming a branch, an open PR, *or a recent note*.\n\n",
       "file": "beans/defs/folio-assistant-v9ah--self-declared-done-names-only-mid-flight-beans-eve.md"
+    },
+    {
+      "id": "folio-assistant-vbxp",
+      "title": "DIRECTION SIDECAR: check:reference-direction printed a verdict and committed nothing, so 'never audited' and 'audited clean' were indistinguishable",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1swy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T09:23:19Z",
+      "updatedAt": "2026-09-30T09:43:22Z",
+      "preview": "## State — delivered, green, PR open. Not merged.\n\nParent: `zhg2` (the axis) — this is the third of the three gaps `yj6r` records\nagainst it, and the only one of the three in scope here. The other two\n(instance-boundary imports, the 76-file question) are untouched.\n\n## The gap\n\n`check:reference-direction` **printed and committed nothing**. Verified on\n`origin/main` 2026-09-30: no `writeFileSync`, ",
+      "file": "beans/defs/folio-assistant-vbxp--direction-sidecar-checkreference-direction-printed.md"
     },
     {
       "id": "folio-assistant-vigi",
