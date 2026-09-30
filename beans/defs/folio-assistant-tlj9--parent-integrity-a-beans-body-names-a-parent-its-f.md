@@ -62,3 +62,23 @@ over-generalisation `generalise-the-fix` warns about.
    corpus clean is the `vq8g` defect.
 3. The check is falsified before it ships: plant the defect on a scratch bean,
    watch it fire, restore, watch it pass.
+
+
+---
+
+## 2026-09-30 — Done-when #1 done, by the owner's ruling
+
+The owner chose, from four options: *"Reparent 4ccr, then gate ob3m + generalise
+v8n5"*. So `4ccr` now carries `parent: folio-assistant-10uc`.
+
+**Measured before and after, not asserted.** GOAL 2 (`p5wm`) went from
+**38 descendants / 28 open** to **68 / 52** — the +24 predicted from `4ccr`'s
+own subtree (29 descendants, 23 open, plus `4ccr` itself). The prediction and
+the result agree, which is the only reason to trust either.
+
+`10uc`'s title still reads *"39 open beans"*, matching neither figure. That is a
+count in prose, which is a claim rather than evidence — left for whoever owns
+`10uc` rather than edited here.
+
+Done-when #2 (a check for a bean whose body names a parent its front matter does
+not carry) and #3 (its falsification) remain open.

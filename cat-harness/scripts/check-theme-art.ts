@@ -13,19 +13,27 @@
  * face: it reads the instance's declaration, groups the declared images by role,
  * and runs intake over each group.
  *
- * ## Why this REPORTS and does not yet gate
+ * ## Why this reported before it gated
  *
- * Running it today refuses `landing-architecture`, which is declared with
- * laptop and card and **no mobile**. That is a real finding, and it is exactly
- * the failure intake exists to catch — but turning it into a gate in the same
- * change would make CI red over art that is missing rather than over a
- * regression somebody just introduced.
+ * It used to refuse `landing-architecture`, which was declared with laptop and
+ * card and **no mobile**. That was a real finding, and exactly the failure
+ * intake exists to catch — but turning it into a gate in the same change would
+ * have made CI red over art that was missing rather than over a regression
+ * somebody had just introduced. All three layouts are accepted as of
+ * 2026-09-30 (`bun run check:theme-art:check`, exit 0, 3 layouts each), so the
+ * reason to hold the gate is gone and the gate is in.
  *
- * So: `--check` exits non-zero on a refusal, and nothing runs `--check` in CI
- * yet. The gate goes in when the art is complete, which is a question for the
- * owner (two of the three files that commit `1b62b57` delivered were
- * byte-identical, so whether the third crop is missing or the duplicate was an
- * upload slip is not something to guess).
+ * So: `--check` exits non-zero on a refusal. **It has been gated in CI since
+ * 2026-09-24** — `code-quality-gates.yml` runs `check:theme-art:check`, and
+ * that step's own comment records why: `landing-architecture` had no mobile
+ * crop, the owner supplied it, so a refusal here is now a regression rather
+ * than a backlog item.
+ *
+ * This paragraph said the opposite until 2026-09-30 (bean `q885`), and a stale
+ * gap notice is worse than none: an agent reading "nothing runs `--check` in
+ * CI" concludes the guard is advisory and either weakens it or stops trusting
+ * it, where the same agent reading the true state would have left it alone.
+ * `check:navbar-consistency` is the check for this class of claim.
  *
  * The same discipline the repository already applies elsewhere: **a report is
  * not an action**, and an agent does not repair somebody's art on its own

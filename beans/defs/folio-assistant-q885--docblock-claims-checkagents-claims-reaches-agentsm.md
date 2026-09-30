@@ -51,3 +51,37 @@ one form and reported the corpus clean is the `vq8g` defect, already paid for.
    denominator**, not as prose.
 3. The check is falsified before it ships: plant the claim, watch it fire,
    restore, watch it pass.
+
+
+---
+
+## 2026-09-30 — the docblock corrected; the sweep found ONE, not more
+
+Done-when #1 and #2 are done; #3 (a check for the claim class) is not.
+
+**The claim, and both sides of it.** `check-theme-art.ts` said *"nothing runs
+`--check` in CI yet"*. `code-quality-gates.yml:1384` runs
+`check:theme-art:check`, and that step's own comment dates the change:
+*"Reported but ungated until 2026-09-24 because `landing-architecture` had no
+mobile crop; the owner supplied it, so a refusal here is now a regression."*
+
+**A SECOND stale claim in the same docblock.** It also said *"Running it today
+refuses `landing-architecture`, which is declared with laptop and card and no
+mobile."* `bun run check:theme-art:check` now exits 0 with *"landing-architecture:
+3 layouts accepted"* — laptop, mobile and card all present. Both sentences are
+corrected, and the section heading with them (*"Why this REPORTS and does not yet
+gate"* -> *"Why this reported before it gated"*).
+
+**The denominator: 1 of 1.** Sweeping every `.ts` docblock for the same claim
+family — `nothing runs \`--check\` in CI`, `not run in CI`, `ungated in CI`,
+`no CI step runs` — returns **zero other instances**. So this was one file, not
+a pattern, and the bean's Done-when #2 asked for the count rather than an
+impression: here it is with its denominator.
+
+**Done-when #3 is still open** and is deliberately not attempted yet. The
+checkable form of this claim family is narrow — a docblock asserting that some
+named script *is* or *is not* run by CI, cross-read against
+`code-quality-gates.yml` — and with a corpus of one there is nothing to
+validate a detector against. Writing one now would be a detector whose only
+test case is the defect it was written from, which is the `vq8g` failure: it
+recognises one phrasing and reports the corpus clean.
