@@ -211,6 +211,21 @@
           "type": "string",
           "format": "uri"
         },
+        "iriBase": {
+          "type": "string",
+          "format": "uri"
+        },
+        "nodeSchemas": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "minLength": 1
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "previewUrl": {
           "type": "string",
           "format": "uri"
@@ -401,6 +416,44 @@
                         "minLength": 1
                       }
                     }
+                  }
+                }
+              },
+              "tile": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "surfaces": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "navbar",
+                        "board",
+                        "glass"
+                      ]
+                    }
+                  },
+                  "hidden": {
+                    "type": "boolean"
+                  },
+                  "theme": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "icon": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "publish": {
+                    "type": "string",
+                    "enum": [
+                      "staging-only"
+                    ]
                   }
                 }
               },
@@ -713,8 +766,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld",
   "staging": {
     "branch": "claude/charming-curie-n04agq",
-    "sha": "63e0b9d1beb080887784c43300cfaa3e6a03bcd6",
+    "sha": "1ca6890f78bdd2adb19735e3609340414879a96c",
     "pr": "1512/merge",
-    "run": "36645107569"
+    "run": "36690151854"
   }
 }

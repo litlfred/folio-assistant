@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "df1842707af2"
+    "script_hash": "6944d52b6a12"
   },
   "subject": {
     "kind": "graph",
     "id": "subgraph-readmes"
   },
-  "updated_at": "2026-09-29T21:17:03.054Z",
+  "updated_at": "2026-09-30T01:10:26.063Z",
   "families": {
     "absent-directory": {
       "summary": "Declared directories not on disk and not declared `absent`: a consumer scanning them finds nothing and may report a clean run.",
@@ -53,11 +53,6 @@
           "instance": "bootstrap",
           "directory": "swimlane-glossary",
           "path": "bootstrap/glossary"
-        },
-        {
-          "instance": "bootstrap",
-          "directory": "qa",
-          "path": "bootstrap/test/results"
         },
         {
           "instance": "cat-harness",
@@ -173,6 +168,11 @@
           "instance": "cat-harness",
           "directory": "folio-assistant-core-methodologies",
           "path": "folio-assistant-core/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-sci-methodologies",
+          "path": "folio-assistant-sci/methodologies"
         },
         {
           "instance": "cat-harness",
@@ -457,11 +457,6 @@
           "path": "bootstrap/glossary"
         },
         {
-          "instance": "bootstrap",
-          "directory": "qa",
-          "path": "bootstrap/test/results"
-        },
-        {
           "instance": "cat-harness",
           "directory": "tools",
           "path": "cat-harness/tools"
@@ -600,6 +595,11 @@
           "instance": "cat-harness",
           "directory": "folio-assistant-core-methodologies",
           "path": "folio-assistant-core/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-sci-methodologies",
+          "path": "folio-assistant-sci/methodologies"
         },
         {
           "instance": "cat-harness",

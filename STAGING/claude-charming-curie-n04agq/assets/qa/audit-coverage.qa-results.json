@@ -8,10 +8,10 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-29T20:59:45.659Z",
+  "updated_at": "2026-09-30T00:43:43.882Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 45 of 45 declared kind(s), 174 gate(s), 69 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 45 of 45 declared kind(s), 177 gate(s), 69 criteria.",
       "count": 45,
       "entries": [
         {
@@ -84,6 +84,7 @@
           "kind": "cat-harness",
           "state": "covered",
           "directories": [
+            "bootstrap-tools/schemas",
             "cat-harness/schemas",
             "folio-assistant-core/schemas",
             "large-datasets/schemas"
@@ -140,6 +141,7 @@
             "bun run check:version-bump",
             "bun run check:wireframes",
             "bun run harness:dirs:check",
+            "bun run iri:sync:check",
             "bun run kg:audit:all:check",
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
@@ -176,6 +178,7 @@
           "kind": "code",
           "state": "covered",
           "directories": [
+            "bootstrap-tools/scripts",
             "cat-harness/adapters",
             "cat-harness/deploy",
             "cat-harness/scripts",
@@ -201,6 +204,7 @@
             "bun run check:portable-paths",
             "bun run check:python-deps",
             "bun run check:secret-leaks",
+            "bun run check:tools-closure",
             "bun run deps:python:check"
           ],
           "typed": false,
@@ -432,6 +436,7 @@
           "directories": [
             "cat-harness/methodologies",
             "folio-assistant-core/methodologies",
+            "folio-assistant-sci/methodologies",
             "smart-base/methodologies"
           ],
           "criteria": [],
@@ -549,7 +554,6 @@
           "state": "covered",
           "directories": [
             "agent-skills/test/results",
-            "bootstrap/test/results",
             "cat-harness/test/results",
             "fhir-harness/test/results",
             "folio-assistant-core/test/results",
@@ -645,6 +649,7 @@
           "kind": "schemas",
           "state": "covered",
           "directories": [
+            "bootstrap-tools/schemas",
             "bootstrap/schemas",
             "cat-harness/schemas",
             "folio-assistant-core/schemas",
@@ -658,6 +663,7 @@
             "bun run cat-harness/scripts/gen-schema-docs.ts --check",
             "bun run check:bootstrap-concepts",
             "bun run check:context-emission",
+            "bun run check:node-iris",
             "bun run check:schema-nodes",
             "bun run gen:jsonld:check",
             "bun run kg:schema:check"
@@ -1038,7 +1044,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 174 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 177 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }
