@@ -14,7 +14,7 @@ Candidate terms extracted from every skill's front matter: `name` as the label, 
 
 From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 1 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 272 (<a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 6 (<a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 1 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-sci 1 (<a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 3 (<a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>) · who-iris 1 (<a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 292 terms and is 210 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 292 terms and is 211 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -288,7 +288,7 @@ compute-audit <span class="fa-gloss-status">candidate, extracted</span>
 compute-author <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Pre-work briefing + durable patterns for anyone writing or modifying compute scripts (or the native crates they call). Read this BEFORE you write or change compute code — it covers precision discipline, the native↔script boundary cost, exact-arithmetic choices (big-integer vs big-rational vs arbitrary-precision float), algebraic-preflight requirements before optimization shortcuts, and witness-emission discipline. Sibling to <code>compute-audit</code> (post-hoc); this skill is pre-work.</p>
+<p>Pre-work briefing + durable patterns for anyone writing or modifying compute scripts (or the native crates they call). Read this BEFORE you write or change compute code — it covers precision discipline, the native↔script boundary cost, exact-arithmetic choices (big-integer vs big-rational vs arbitrary-precision float), algebraic-preflight requirements before optimization shortcuts, and witness-emission discipline. Sibling to <a href="#cat-harness--kg-skills--compute-audit"><code>compute-audit</code></a> (post-hoc); this skill is pre-work.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-paper-adapter/compute-author.md"><code>cat-harness/skills/folio-paper-adapter/compute-author.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--compute-integration-watcher" data-fa-state="extracted" data-fa-gloss="">
@@ -449,7 +449,7 @@ covered-is-not-reachable <span class="fa-gloss-status">candidate, extracted</spa
 crdm-data-model <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The CRDM data-modelling phase — when in the requirements process a model is built, what it is built from, who confirms it, and what it hands to the phases either side. The technique it invokes is <code>data-modelling</code>; this skill carries only the sequencing and the sign-off.</p>
+<p>The CRDM data-modelling phase — when in the requirements process a model is built, what it is built from, who confirms it, and what it hands to the phases either side. The technique it invokes is <a href="#cat-harness--kg-skills--data-modelling"><code>data-modelling</code></a>; this skill carries only the sequencing and the sign-off.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-data-model.md"><code>cat-harness/skills/crdm/crdm-data-model.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--crdm-detect" data-fa-state="extracted" data-fa-gloss="">
@@ -523,7 +523,7 @@ dak-preprocessing <span class="fa-gloss-status">candidate, extracted</span>
 data-modelling <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Build a data model: identify the entities a body of work is actually about, the relations between them, and the cardinalities — then declare it where the tools can read it. Process-agnostic technique; the CRDM phase that invokes it is <code>crdm-data-model</code>.</p>
+<p>Build a data model: identify the entities a body of work is actually about, the relations between them, and the cardinalities — then declare it where the tools can read it. Process-agnostic technique; the CRDM phase that invokes it is <a href="#cat-harness--kg-skills--crdm-data-model"><code>crdm-data-model</code></a>.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/data-modelling.md"><code>cat-harness/skills/folio-core/data-modelling.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--decision-audit" data-fa-state="extracted" data-fa-gloss="">
@@ -586,7 +586,7 @@ deployment-auth <span class="fa-gloss-status">candidate, extracted</span>
 detangler-integration-watcher <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Structural-QA integration watcher — watches the default branch + open active PRs + newly-opened PRs for organisational changes (paper / chapter manifest edits, new blocks, edited <code>uses[]</code> / <code>kind</code> / <code>label</code> / <code>interprets</code> / <code>defines</code> / <code>tags</code>, block renames) and runs the editor's detanglement skill suite (<code>content-graph</code>, <code>chapter-complexity-review</code>, <code>block-density</code>, <code>critical-path-analysis</code>) on every detected change. Queues findings, auto-discharges mechanical fixes (table extraction), routes block reorderings through narrative review before applying them, and escalates section splits / merges / cross-chapter moves / new sections to the author. Inherits shared mechanics from <code>local/integration-watcher</code>.</p>
+<p>Structural-QA integration watcher — watches the default branch + open active PRs + newly-opened PRs for organisational changes (paper / chapter manifest edits, new blocks, edited <code>uses[]</code> / <code>kind</code> / <code>label</code> / <code>interprets</code> / <code>defines</code> / <code>tags</code>, block renames) and runs the editor's detanglement skill suite (<a href="#cat-harness--kg-skills--content-graph"><code>content-graph</code></a>, <a href="#cat-harness--kg-skills--chapter-complexity-review"><code>chapter-complexity-review</code></a>, <a href="#cat-harness--kg-skills--block-density"><code>block-density</code></a>, <a href="#cat-harness--kg-skills--critical-path-analysis"><code>critical-path-analysis</code></a>) on every detected change. Queues findings, auto-discharges mechanical fixes (table extraction), routes block reorderings through narrative review before applying them, and escalates section splits / merges / cross-chapter moves / new sections to the author. Inherits shared mechanics from <code>local/integration-watcher</code>.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/detangler-integration-watcher.md"><code>cat-harness/skills/folio-core/detangler-integration-watcher.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--deterministic-and-agentic" data-fa-state="extracted" data-fa-gloss="">
@@ -600,7 +600,7 @@ deterministic-and-agentic <span class="fa-gloss-status">candidate, extracted</sp
 devils-advocate-watcher <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Logical devil's-advocate integration watcher — for every content block (.ts/.md) and formal sibling, constructs the strongest adversarial case that it is WRONG: the objection a hostile-but- competent referee would raise (false claim, vacuity, circularity, overclaim, hidden degree-of-freedom, logical non-sequitur, formal↔narrative divergence, citation misuse, definitional ambiguity, empirical fragility, domain implausibility, irreproducible compute). Fans out multiple adversarial-lens agents per block, then an adjudicator scores whether each objection survives rebuttal. Persists per-block &lt;block&gt;.qa.json entries under the <code>da-*</code> criteria family (reviewer.kind = &quot;agent&quot;). Operationalizes the standing Critical-distance red-team license (AGENTS.md). Inherits all shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from <code>integration-watcher</code>.</p>
+<p>Logical devil's-advocate integration watcher — for every content block (.ts/.md) and formal sibling, constructs the strongest adversarial case that it is WRONG: the objection a hostile-but- competent referee would raise (false claim, vacuity, circularity, overclaim, hidden degree-of-freedom, logical non-sequitur, formal↔narrative divergence, citation misuse, definitional ambiguity, empirical fragility, domain implausibility, irreproducible compute). Fans out multiple adversarial-lens agents per block, then an adjudicator scores whether each objection survives rebuttal. Persists per-block &lt;block&gt;.qa.json entries under the <code>da-*</code> criteria family (reviewer.kind = &quot;agent&quot;). Operationalizes the standing Critical-distance red-team license (AGENTS.md). Inherits all shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from <a href="#cat-harness--kg-skills--integration-watcher"><code>integration-watcher</code></a>.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/devils-advocate-watcher.md"><code>cat-harness/skills/folio-core/devils-advocate-watcher.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--diff" data-fa-state="extracted" data-fa-gloss="">
@@ -1333,7 +1333,7 @@ one-voice-integration-watcher <span class="fa-gloss-status">candidate, extracted
 one-voice-style-guide <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Author voice profile and narrative style guide. Reference when authoring or editing prose. Pairs with <code>one-voice-audit</code> (mechanical sweep for status leaks, emoji, and Unicode crashes).</p>
+<p>Author voice profile and narrative style guide. Reference when authoring or editing prose. Pairs with <a href="#cat-harness--kg-skills--one-voice-audit"><code>one-voice-audit</code></a> (mechanical sweep for status leaks, emoji, and Unicode crashes).</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/one-voice-style-guide.md"><code>cat-harness/skills/folio-core/one-voice-style-guide.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--ontologist" data-fa-state="extracted" data-fa-gloss="">
@@ -1692,7 +1692,7 @@ sample-import <span class="fa-gloss-status">candidate, extracted</span>
 schema-management <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Manage a schema over its life — add one, change one, read the schema graph and its viewer, and act on what the reader could not determine. The layout rule lives in <code>directory-conventions</code>; the entity question lives in <code>data-modelling</code>; this is the work in between.</p>
+<p>Manage a schema over its life — add one, change one, read the schema graph and its viewer, and act on what the reader could not determine. The layout rule lives in <a href="#cat-harness--kg-skills--directory-conventions"><code>directory-conventions</code></a>; the entity question lives in <a href="#cat-harness--kg-skills--data-modelling"><code>data-modelling</code></a>; this is the work in between.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/schema-management.md"><code>cat-harness/skills/folio-core/schema-management.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--scientific-accuracy" data-fa-state="extracted" data-fa-gloss="">
@@ -2089,7 +2089,7 @@ vocabulary-authority <span class="fa-gloss-status">candidate, extracted</span>
 voice-authoring-guidance <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Load the active voices' rules BEFORE writing, so a block is drafted in the register it will be reviewed against. The authoring half of the voice overlay; <code>voice-overlay-review</code> is the half that runs after.</p>
+<p>Load the active voices' rules BEFORE writing, so a block is drafted in the register it will be reviewed against. The authoring half of the voice overlay; <a href="#cat-harness--kg-skills--voice-overlay-review"><code>voice-overlay-review</code></a> is the half that runs after.</p>
 <p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/voice-authoring-guidance.md"><code>cat-harness/skills/folio-core/voice-authoring-guidance.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--voice-editorial-review" data-fa-state="extracted" data-fa-gloss="">

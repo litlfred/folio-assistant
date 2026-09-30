@@ -762,7 +762,7 @@ Sync generated README sections <span class="fa-gloss-status">candidate, extracte
 TeX snippet validation (AST) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Parse every <code>tex</code> snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to <code>latex-preflight</code>, which gates a main.tex before a compile, and to <code>latex-overfull</code>, which reads a log after one.</p>
+<p>Parse every <code>tex</code> snippet in a folio's blocks and report what will not compile — structural, not textual: it reads an AST rather than matching patterns. Complementary to <a href="#cat-harness--kg-tools--latex-preflight"><code>latex-preflight</code></a>, which gates a main.tex before a compile, and to <a href="#cat-harness--kg-tools--latex-overfull"><code>latex-overfull</code></a>, which reads a log after one.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#tex-snippet-validate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--tex-source-audit" data-fa-state="extracted" data-fa-gloss="">
