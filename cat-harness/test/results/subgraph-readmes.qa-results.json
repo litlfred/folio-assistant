@@ -8,7 +8,7 @@
     "kind": "graph",
     "id": "subgraph-readmes"
   },
-  "updated_at": "2026-09-30T15:38:31.966Z",
+  "updated_at": "2026-09-30T20:12:48.419Z",
   "families": {
     "absent-directory": {
       "summary": "Declared directories not on disk and not declared `absent`: a consumer scanning them finds nothing and may report a clean run.",
@@ -17,7 +17,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 76,
+      "count": 77,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -251,6 +251,11 @@
         },
         {
           "instance": "folio-assistant-core",
+          "directory": "core-adapters",
+          "path": "folio-assistant-core/adapters"
+        },
+        {
+          "instance": "folio-assistant-core",
           "directory": "core-scripts",
           "path": "folio-assistant-core/scripts"
         },
@@ -419,7 +424,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 96,
+      "count": 97,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -743,6 +748,11 @@
         },
         {
           "instance": "folio-assistant-core",
+          "directory": "core-adapters",
+          "path": "folio-assistant-core/adapters"
+        },
+        {
+          "instance": "folio-assistant-core",
           "directory": "core-scripts",
           "path": "folio-assistant-core/scripts"
         },
@@ -925,5 +935,5 @@
       "entries": []
     }
   },
-  "total": 176
+  "total": 178
 }

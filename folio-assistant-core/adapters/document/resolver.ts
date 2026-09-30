@@ -8,9 +8,9 @@
 
 import { existsSync, readFileSync } from "fs";
 import { join } from "path";
-import type { GitHelper } from "../../src/core/git.js";
-import type { FeedbackStore } from "../../src/core/feedback.js";
-import { TtlCache } from "../../src/core/cache.js";
+import type { GitHelper } from "../../../cat-harness/src/core/git.js";
+import type { FeedbackStore } from "../../../cat-harness/src/core/feedback.js";
+import { TtlCache } from "../../../cat-harness/src/core/cache.js";
 import type {
   FolioItem,
   ContentOutline,
@@ -21,14 +21,14 @@ import type {
   ResolvedDocument,
   ChapterDetail,
   SectionStub,
-} from "../../src/types.js";
-import { resolveFormalRef } from "../../schemas/formal-ref.js";
-import type { Block, Chapter, Folio, Paper, Section } from "../../schemas/types.js";
-import { leanStatusBucket } from "../../schemas/types.js";
+} from "../../../cat-harness/src/types.js";
+import { resolveFormalRef } from "../../../cat-harness/schemas/formal-ref.js";
+import type { Block, Chapter, Folio, Paper, Section } from "../../../cat-harness/schemas/types.js";
+import { leanStatusBucket } from "../../../cat-harness/schemas/types.js";
 import {
   blockCaption, blockExamples, blockLean, blockProofs, blockTex,
   isSectionRef, sectionBlockNames,
-} from "../manifest-entries.js";
+} from "../../../cat-harness/adapters/manifest-entries.js";
 
 
 export class PaperResolver {
