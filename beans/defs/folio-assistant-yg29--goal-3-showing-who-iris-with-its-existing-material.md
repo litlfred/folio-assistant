@@ -221,3 +221,9 @@ The live published site could **not** be fetched from the measuring container (g
 
 Closing a GOAL milestone is left to the owner. The goal review of 2026-09-30 put that question to them, along with the one reading of the goal's words the boxes do not test: whether *"themed harness"* means the harness's own surfaces (board tile, navbar) or only the who-iris pages.
 
+### The owner's answer, 2026-09-30: keep it OPEN and theme the harness
+
+Answering the goal review, the owner chose to keep GOAL 3 open with a harness-theming bean over closing it. So *"themed harness"* covers the harness's own surfaces, not only the pages. That work is **`v8n5`**: the who-iris board tile, navbar and stickies render on the IRIS theme, resolved from `who-iris/themes/` and never copied into the platform.
+
+- [ ] `v8n5` — the harness surfaces render on the IRIS theme
+
