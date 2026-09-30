@@ -636,6 +636,10 @@ jobs:
           while read -r INSTANCE SRC; do
             BUNDLE_GEMFILE="$PWD/cat-harness/docs/Gemfile" bundle exec jekyll build \
               --source "$SRC" --destination "./_site/${INSTANCE}/ig"
+            # An IG's source can repeat an anchor, and the Publisher's output
+            # repeats it too. Keep the first copy (where every link already
+            # lands), rename the rest, and report each one.
+            bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids "./_site/${INSTANCE}/ig"
             echo "built ${INSTANCE}'s IG site -> ${BASE}/${INSTANCE}/ig/"
           done < ./_ig-list.txt
 

@@ -28,6 +28,7 @@
  * Usage:
  *   bun run fhir-harness/scripts/build-ig-site.ts --ig-src <IG repo> --out <jekyll source> \
  *     [--baseurl /<site>/<ig>] [--plantuml-jar <plantuml.jar>] [--menu <menu.json>] [--remote-theme <owner/repo@ref>]
+ *   bun run fhir-harness/scripts/build-ig-site.ts --dedupe-ids <built site>   # after jekyll build
  *
  * @module fhir-harness/scripts/build-ig-site
  */
@@ -254,6 +255,48 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   return { pages: pages.sort(), unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, siteData };
 }
 
+/**
+ * Rename the second and later copies of each `id` on one built page to
+ * `<id>--2`, `--3`, … and say which. An IG's source can repeat an anchor
+ * (two headings `{#x}`, or a page included into another that already holds
+ * it); the Publisher's output then repeats it too, and a duplicate id is an
+ * accessibility defect (bean `gjli`). A link to `#x` already lands on the
+ * FIRST copy in every browser, so keeping the first and renaming the rest
+ * changes where no link goes.
+ */
+export function dedupeIds(html: string): { html: string; renamed: string[] } {
+  const seen = new Map<string, number>();
+  const renamed: string[] = [];
+  const out = html.replace(/(\sid=)(["'])([^"']+)\2/g, (whole, pre: string, q: string, id: string) => {
+    const n = (seen.get(id) ?? 0) + 1;
+    seen.set(id, n);
+    if (n === 1) return whole;
+    renamed.push(`${id} -> ${id}--${n}`);
+    return `${pre}${q}${id}--${n}${q}`;
+  });
+  return { html: out, renamed };
+}
+
+/** Every `.html` under a built site, deduplicated in place; returns page → renames. */
+export function dedupeSiteIds(site: string): Map<string, string[]> {
+  const report = new Map<string, string[]>();
+  const walk = (dir: string) => {
+    for (const f of readdirSync(dir)) {
+      const p = join(dir, f);
+      if (statSync(p).isDirectory()) walk(p);
+      else if (f.endsWith(".html")) {
+        const r = dedupeIds(readFileSync(p, "utf-8"));
+        if (r.renamed.length) {
+          writeFileSync(p, r.html);
+          report.set(p.slice(site.length + 1), r.renamed);
+        }
+      }
+    }
+  };
+  walk(site);
+  return report;
+}
+
 export function describeStage(r: StageResult): string {
   return [
     `pages: ${r.pages.length}; includes: ${r.includes}; images: ${r.images}; diagrams rendered: ${r.rendered.length}`,
@@ -267,6 +310,14 @@ export function describeStage(r: StageResult): string {
 if (import.meta.main) {
   const args = process.argv.slice(2);
   const opt = (k: string) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : undefined; };
+  // Post-build: `--dedupe-ids <built site>` repairs repeated ids and reports each.
+  const dedupe = opt("--dedupe-ids");
+  if (dedupe) {
+    const report = dedupeSiteIds(resolve(dedupe));
+    for (const [page, renames] of report) console.log(`${page}: repeated id(s) in the IG source renamed: ${renames.join(", ")}`);
+    console.log(`${report.size} page(s) carried a repeated id`);
+    process.exit(0);
+  }
   const igSrc = opt("--ig-src");
   const out = opt("--out");
   if (!igSrc || !out) {

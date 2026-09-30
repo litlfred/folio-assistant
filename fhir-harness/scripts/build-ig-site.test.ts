@@ -7,7 +7,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { includeTargets, pageNav, stageIgSite, type StageResult } from "./build-ig-site";
+import { dedupeIds, includeTargets, pageNav, stageIgSite, type StageResult } from "./build-ig-site";
 
 let dir: string;
 let out: string;
@@ -95,5 +95,11 @@ describe("staging one IG as one just-the-docs site", () => {
 
   test("include targets are read from the page", () => {
     expect(includeTargets("{% include a.svg %} x {%- include b.md -%}")).toEqual(["a.svg", "b.md"]);
+  });
+
+  test("a repeated id keeps its first copy and the rest are renamed, each reported", () => {
+    const r = dedupeIds(`<h3 id="x">a</h3><h3 id="x">b</h3><a id='x'></a><p id="y"></p>`);
+    expect(r.html).toBe(`<h3 id="x">a</h3><h3 id="x--2">b</h3><a id='x--3'></a><p id="y"></p>`);
+    expect(r.renamed).toEqual(["x -> x--2", "x -> x--3"]);
   });
 });

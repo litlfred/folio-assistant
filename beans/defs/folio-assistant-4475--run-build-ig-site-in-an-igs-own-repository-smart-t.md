@@ -17,7 +17,11 @@ fhir-harness's build-ig-site stages an IG source repository as one just-the-docs
 - 2 PlantUML diagrams render.
 
 ## Blocked on
-The split (vke6). Do not instantiate a harness on an existing IG repository before it lands.
+
+- **waits on:** folio-assistant being split completely (epic vke6); the owner will not instantiate a harness on an existing IG repository before then
+- **since:** 2026-09-30T19:00Z
+- **expires:** 2026-12-31T00:00Z
+- **handoff:** if the split has landed, instantiate the smart-guideline harness on smart-trust's repository and wire build-ig-site into its CI. If it has not, ask the owner whether the block still holds, rather than proceeding.
 
 ## Done when
 - [ ] smart-trust's repository instantiates the smart-guideline harness and its CI runs build-ig-site

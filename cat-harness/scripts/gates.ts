@@ -161,6 +161,29 @@ export interface StepExemption {
 
 export const STEP_EXEMPTIONS: StepExemption[] = [
   {
+    // Bean `bamf`: each IG's own just-the-docs site, staged from the source
+    // repository its menu.json records. A BUILD step: it clones and copies,
+    // and has no verdict a contributor could run without the network and a
+    // built `_site/`. The staging logic is asserted by
+    // stage-ig-sites.test.ts and build-ig-site.test.ts in `bun test`.
+    match: "fhir-harness/scripts/stage-ig-sites.ts",
+    kind: "ci-only",
+    reason:
+      "a BUILD step, not a check: it clones each IG's recorded source and stages a Jekyll source; " +
+      "its logic is covered by stage-ig-sites.test.ts and build-ig-site.test.ts in `bun test`",
+  },
+  {
+    // Its post-build sibling: repairs repeated ids in a BUILT IG site and
+    // reports each. Writes into `./_site`, which only the staging job has;
+    // `dedupeIds` is covered by build-ig-site.test.ts, and the result is
+    // judged by `check:duplicate-ids` in the same job.
+    match: "fhir-harness/scripts/build-ig-site.ts --dedupe-ids",
+    kind: "ci-only",
+    reason:
+      "a DEPLOY step: it rewrites ids in ./_site, which only the staging job produces; dedupeIds is " +
+      "covered by build-ig-site.test.ts, and check:duplicate-ids judges the result",
+  },
+  {
     // Bean `oi1y`. Rails the pages Jekyll copies through verbatim — wireframe
     // `as-is.html` and bootstrap's `.md`-rendered siblings — which inherit no
     // layout and so no sidebar.

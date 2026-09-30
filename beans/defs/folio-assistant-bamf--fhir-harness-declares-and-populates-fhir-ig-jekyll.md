@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T10:16:18Z
-updated_at: 2026-09-30T19:07:16Z
+updated_at: 2026-09-30T20:09:40Z
 parent: folio-assistant-zzmr
 ---
 
@@ -47,3 +47,7 @@ Owner 2026-09-30: IG pages use Liquid site.data.fhir.* (IG Publisher convention,
 - #1591: ig-site-data writes site.data.fhir from sushi-config or fhir-artifact-index; fhir-harness declares site.data as a pass-through prefix.
 - #1670: build-ig-site stages one IG as one just-the-docs site (owner's choice).
 - Running it inside an IG's own repository waits on the split (vke6), and is tracked in its own bean.
+
+
+## 2026-09-30, later: a staging TEST of smart-trust's own site, on this repository
+The owner asked to see smart-trust's landing page here, on staging, with its existing nav menu. stage-ig-sites.ts builds every IG whose menu.json records its source (of + ref) into /<instance>/ig/ on the feature-staging preview. The long-term home is still the IG's own repository (bean 4475).
