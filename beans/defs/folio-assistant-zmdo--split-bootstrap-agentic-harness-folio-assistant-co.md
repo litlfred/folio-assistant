@@ -5,8 +5,10 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-18T17:24:16Z
-updated_at: 2026-09-30T19:49:54Z
+updated_at: 2026-09-30T21:47:18Z
 parent: folio-assistant-vke6
+blocked_by:
+    - folio-assistant-mer2
 ---
 
 ## The ask
@@ -105,3 +107,88 @@ defect against `folio_init` — not a reason to weaken the definition.
 
 Full comparison of the four candidate definitions, and why the other three were
 rejected, is on `tndo`.
+
+## MEASURED 2026-09-30 — the first thing this bean said to measure. It is a FINDING.
+
+The section above named it: *"whether `folio_init` can target a single layer at
+all today. If it cannot, that is a defect against `folio_init` — not a reason
+to weaken the definition."* Measured, and it cannot.
+
+### `folio_init` has no layer argument
+
+From `cat-harness/scripts/init-folio.ts` — `InitFolioOptions` and `parseArgs`,
+read on `claude/cool-fermi-htir5p`:
+
+| | |
+|---|---|
+| CLI flags accepted | **11** |
+| of those naming a layer | **0** |
+
+`--dir --type --slug --title --author --link --assistant --force --dry-run
+--skip-vcs --help`. `--assistant` is the near miss and is not one: its own
+docblock reads *"Path to the folio-assistant checkout"* — the **whole stack**.
+`instanceRoot` is `resolve(import.meta.dir, "..")`, hardcoded to the platform
+checkout the script lives in.
+
+So **none of the four checkboxes above can be run today**, for either layer.
+Not "fails" — *not expressible*. The first box says "against that layer alone",
+and there is no way to say that.
+
+### For `agentic-harness` the condition is currently UNSATISFIABLE, not just unimplemented
+
+`BUILTIN_ADAPTERS` (`cat-harness/src/builtin-adapters.ts`) already carries a
+`layer` per adapter — so a layer notion exists, as a **label describing where a
+module lives**, never as an input. Both rows sit *above* `cat-harness`:
+
+| contentType | module | layer |
+|---|---|---|
+| `paper` | `../folio-assistant-sci/adapters/paper/index.ts` | `sci` |
+| `document` | `../folio-assistant-core/adapters/document/index.ts` | `core` |
+
+**Zero adapters at the `agentic-harness` layer.** A folio needs a content type
+and every content type's adapter lives higher, so "a working folio against
+agentic-harness ALONE" has nothing to scaffold. For `folio-assist-core` the
+`document` adapter is in the right place, so that half becomes reachable the
+moment the flag exists — which is the useful half of this finding: the two
+layers are **not** symmetrically blocked, and the core fork can go first.
+
+### The probe must assert the content type, or it scores a pass on the wrong folio
+
+When the asked adapter is unavailable the resolver does not fail — it falls back
+to another content type with a warning: *"contentType X declares the Y adapter,
+which is unavailable … using Z instead — tools specific to Y are NOT
+registered"*. A probe reading only "did `init-folio` exit 0 and write files"
+would therefore report the first checkbox **met** while holding a folio of a
+content type nobody asked for.
+
+That is bean `1xhc` — a gate that does not fire looks like one that passed —
+reached through a fallback rather than a skipped step. Checkbox 1 is amended
+below to assert what it got.
+
+### `x3bd` already carries the same test, one layer down
+
+`x3bd` records: *"THE TEST OF BOOTSTRAP IS FALSIFIABLE: a checkout with ONLY
+`bootstrap/` and `cat-harness.json` must let an agent claim a bean, read the
+conventions and run `folio_init`. If it cannot, the list is wrong. Worth a CI
+job."* That is the owner's MVP definition applied to `bootstrap/` — same shape,
+same tool, written down eleven days earlier and independently. Whatever
+single-layer switch `folio_init` grows should serve both, and neither should
+grow its own.
+
+### Condition, restated on the measurement
+
+- [ ] **`folio_init` accepts a layer** and scaffolds against it alone — the
+      prerequisite none of the boxes below can be evaluated without. Blocked on
+      nothing; it is ordinary work.
+- [ ] `bun run init-folio` against that layer alone, no sibling instance on
+      disk, exits 0 in an empty repo **and the folio it wrote carries the
+      content type that was asked for** — asserted, not inferred from exit 0
+- [ ] the scaffolded folio's declared graphs all resolve — no
+      declared-but-absent directory (`dh4f`)
+- [ ] that folio's gate set passes in the fresh repository
+- [ ] the layer's `needs:` closure is satisfied by what is present
+
+**`core` before `agentic-harness`**, on the adapter measurement above: core's
+content type is already in core, and the harness layer has no content type at
+all until something is decided about that. Recorded, not decided — which
+content type a bare harness should scaffold, if any, is a scope call.

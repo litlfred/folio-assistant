@@ -109,3 +109,94 @@ alone, without checking the two channels the bean itself went on to list. The
 measurement was right and the conclusion overreached — the same shape as
 declaring a gate flappy without checking whether the base had moved
 (bean `gm9g`, same session, same day).
+
+## MEASURED 2026-09-30 — done-when 2 cannot be built before done-when 3, and here is the number that says so
+
+Done-when 1 is closed (the question reached the owner twice). Attempting 2
+first produced a finding about 2 itself.
+
+### The check as specified would be vacuous by construction
+
+Done-when 2 keys on `status: draft`. Measured over all **518** beans in
+`beans/defs/` on this branch:
+
+| status | beans |
+|---|---|
+| `completed` | 834 lines / — |
+| `todo` | 189 |
+| `in-progress` | 97 |
+| `scrapped` | 29 |
+| **`draft`** | **0** |
+
+`draft` **is** a legal status — `cat-harness/schemas/tool-types.ts:36` has
+`.enum(["draft", "todo", "in-progress", "completed", "scrapped"])` — and **not
+one bean in the store has ever used it.** `r0tm` itself, the bean this one was
+created about and whose own title calls it *"a draft decision"*, is
+`status: todo`.
+
+So a check keyed on `status: draft` reports `0 of 0` today and every day until
+the convention changes, and reads **green** the whole time. That is bean `1xhc`
+exactly — a gate that does not fire is indistinguishable from one that passed —
+and it is worse here than usual, because the bean asking for the check is the
+bean warning that a decision can go unseen.
+
+(The status counts above are line counts from `grep -h '^status:'`, which
+overcounts: beans quote each other's front matter in their bodies, so 1149
+lines fall out of 518 files. The `draft: 0` figure is from a per-file front
+matter parse, which is the only form that can be trusted here. Stating the
+weaker measurement's shape rather than laundering it into a clean table.)
+
+### Keying on prose instead swings the population by two orders of magnitude
+
+If the check cannot read a status, the alternative is to recognise a ruling
+request by its shape. Six recognisers over the **286** open beans, each also
+filtered to "not present in `origin/main`'s tree":
+
+| recogniser | open matches | not on main |
+|---|---|---|
+| heading `Recommendation` | 1 | 0 |
+| heading `Options` | 20 | 0 |
+| phrase `safe default` | 1 | 0 |
+| phrase `ruling` | 63 | **1** |
+| phrase `owner's call` / `owner's decision` | 48 | 0 |
+| an unticked `- [ ]` box | 190 | **1** |
+
+**1 to 190** depending on which form you recognise. That is bean `vq8g` — a
+detector that recognises one form — stated as a number rather than a worry.
+
+### And the single finding it does produce is a false positive
+
+Both recognisers that fire on anything unreachable fire on the **same** bean:
+`ybp4`, `in-progress`, *"ADAPTERS CLOSURE step 2/2"*. It matches `ruling`
+because it **records** a ruling the owner already gave. It is not a ruling
+request at all.
+
+So the grep-based check would today report exactly one finding, and be wrong
+about it. A report that is 0-for-1 precise on its only output is `oqdr` — a
+report nobody reads — and it earns that reputation on its first run.
+
+### Therefore: 3 before 2, and 2 reads the declaration
+
+The ordering in this bean's own done-when list is backwards, and the measurement
+is what shows it. **A decision bean must declare itself**, and then the check
+reads the declaration instead of sniffing prose:
+
+1. `bean-coordination` records the convention `r0tm` demonstrated — post the
+   question to the issue, and say on the bean where it was posted (done-when 3).
+   That convention is what mints the declared marker.
+2. The check then reports beans carrying that marker, unreachable from the
+   default branch, with a denominator — and `could not determine` stays a
+   finding, never green (`dh4f`).
+
+Written down rather than acted on, because renaming what a decision bean looks
+like is a convention change and conventions here are the owner's. What is
+asserted is only that building 2 first buys a green light over an empty set.
+
+### Done when — restated a second time
+
+1. [x] The `r0tm` ruling request reaches the owner.
+2. [ ] The check — **blocked on 3**, and now for a measured reason rather than
+       a preference: keyed on `status: draft` it is vacuous over 518 beans;
+       keyed on prose it is 1-to-190 arbitrary and 0-for-1 precise.
+3. [ ] `bean-coordination` records the convention, INCLUDING the declared
+       marker 2 will read.

@@ -108,3 +108,124 @@ the owner's other three options all required somebody to judge readiness.
 2. [ ] `zmdo` carries the condition, so `bean-blocking`'s rule is satisfiable.
 3. [ ] GOAL 1's queue states, with a denominator, how many open items are
        blocked on this term.
+
+## MEASURED 2026-09-30 — done-when 2 and 3, and a finding against `folio_init`
+
+The owner's ruling settled done-when 1: **MVP = `folio_init` creates a working
+folio against that layer ALONE, in an empty repository.** Done-when 2 and 3 are
+answered below, and answering 2 turned up a defect in the thing the definition
+measures against.
+
+### The definition is not evaluable today, and that is `folio_init`'s problem
+
+**`folio_init` takes no layer argument.** Measured from
+`cat-harness/scripts/init-folio.ts` — `InitFolioOptions` and `parseArgs` — on
+this branch:
+
+| | |
+|---|---|
+| CLI flags accepted | **11** |
+| of those naming a layer | **0** |
+
+The eleven are `--dir --type --slug --title --author --link --assistant --force
+--dry-run --skip-vcs --help`. The nearest candidate is `--assistant`, and it is
+not one: its own docblock says *"Path to the folio-assistant checkout"* — the
+**whole stack**, not one layer of it. `instanceRoot` is
+`resolve(import.meta.dir, "..")`, hardcoded to the platform checkout the script
+lives in.
+
+So the MVP condition cannot be run for either layer. **That is a finding against
+`folio_init`, not grounds to weaken the definition** — the owner chose
+bootstrap-provability over *self-contained gates pass* precisely because passing
+gates in-tree is not evidence of a separable layer, and softening the term to
+fit the current CLI would hand back the property the ruling bought.
+
+### A sharper problem: for `agentic-harness` the condition is currently unsatisfiable
+
+`BUILTIN_ADAPTERS` in `cat-harness/src/builtin-adapters.ts` already carries a
+`layer` per adapter, so the layer notion exists — as a **label on the adapter**,
+describing where its module lives, never as an input. Both rows sit **above**
+`cat-harness`:
+
+| contentType | module | layer |
+|---|---|---|
+| `paper` | `../folio-assistant-sci/adapters/paper/index.ts` | `sci` |
+| `document` | `../folio-assistant-core/adapters/document/index.ts` | `core` |
+
+**Zero adapters at the `agentic-harness` layer.** `folio_init` against that layer
+alone therefore has no content type to scaffold at all: "a working folio against
+agentic-harness ALONE" is not merely unimplemented, it is unsatisfiable as the
+code stands. For `folio-assist-core` the `document` adapter is in the right
+place, so that half of the MVP is reachable once the flag exists.
+
+**And the failure would be quiet.** When the asked adapter is unavailable the
+resolver falls back to another content type with a warning — *"contentType X
+declares the Y adapter, which is unavailable … using Z instead"*. An MVP probe
+reading only "did a folio get created" would score a **pass** on a folio of the
+wrong content type. Any check written for this definition must assert the
+content type it got, not merely that files appeared. This is bean `1xhc`'s shape
+— a gate that does not fire looks like one that passed — one layer along.
+
+### Done-when 2 — `zmdo` records its block in PROSE, in a field nothing reads
+
+`zmdo`'s body says *"**Blocked on MVP** of both layers. Do not start the forks
+**before** then"*. Its front matter carries **no `blocked_by`**.
+
+The field is real and it is used: `blocked_by:` appears in the front matter of
+**11** beans in `beans/defs/`. `zmdo` is not one of them. So the strongest
+statement of the block in the whole store is unreadable by any check, which is
+why `bean-blocking`'s rule — a block carries what it waits on, since, an expiry
+and a handoff — reads as unsatisfied here no matter what the prose says.
+
+Done-when 2 is therefore **not yet met**, and the remedy is now concrete rather
+than a judgement.
+
+**DONE, 2026-09-30, and not as first written.** The first attempt pointed
+`zmdo`'s `blocked_by` at *this* bean, which is wrong: the term `tndo` exists
+about is now **ruled**, so `zmdo` is not waiting on it. What `zmdo` waits on is
+`folio_init` growing a layer argument, which nothing owned — checked before
+creating, and the three other beans matching `--layer` use it in unrelated
+senses (IG chrome layers, a glossary example, a `check:tools` example). Created
+as `mer2` and wired both ways: `mer2` carries `blocking: [zmdo]`, `zmdo` carries
+`blocked_by: [mer2]`.
+
+**The hazard that cost, worth the two lines:** `blocked_by` is a YAML **list**.
+Writing it by hand as a scalar — `blocked_by: folio-assistant-tndo` — made
+*every* `beans` command fail, store-wide, with `cannot unmarshal !!str into
+[]string`. Not the edited bean: the whole store, because the CLI loads all 518
+before doing anything. And the failure surfaced as a **usage dump** from
+`beans create`, so the first reading was "my title is malformed". One
+hand-edited scalar in one file is a total outage of the work-plan tool,
+diagnosable only by running an unrelated command. `beans update <id>
+--blocked-by <id>` writes the list form correctly; the correction above was made
+that way.
+
+### Done-when 3 — the denominator
+
+Computed over all 517 beans in `beans/defs/`, walking `parent` transitively to
+GOAL 1 (`vuip`):
+
+| | count |
+|---|---|
+| beans under GOAL 1, transitively | 57 |
+| of those **open** (`todo`/`in-progress`/`blocked`/`draft`) | **46** |
+| open GOAL 1 items whose body names `MVP` or `zmdo` | 7 |
+| open GOAL 1 items **blocked on this term** | **1** — `zmdo` |
+| of those carrying a machine-readable `blocked_by` | **0** |
+
+**1 of 46, not 7 of 46.** The seven-way match is what a grep gives, and four of
+the seven matched on a `zmdo` *mention* rather than a dependency; `jut3`'s `MVP`
+line is a quoted owner ask about the IG publisher — a different MVP entirely.
+Reporting 7 would have overstated the blast radius by sevenfold, and the whole
+point of a denominator is that it be honest in both directions.
+
+So the term blocks **one** item — but that item is GOAL 1's own falsifier, which
+is why it was worth defining rather than deferring. The rest of GOAL 1's 46 open
+items are not waiting on it.
+
+### What this bean now waits on
+
+Nothing from the owner. Done-when 1 is ruled; 2 and 3 are measured. What remains
+is work, and it is `folio_init`'s: a layer argument, and a probe that asserts the
+content type it received. Recorded as its own item rather than done here, because
+the ruling asked for a definition and this bean's scope was the definition.
