@@ -5818,7 +5818,7 @@
     {
       "id": "log-entry.logentryschema.bean",
       "prefLabel": "LogEntrySchema.bean",
-      "definition": "The bean this work is claimed against, where there is one.",
+      "definition": "The bean this work is claimed against, where there is one. A typed id (#1168 B8).",
       "source": "cat-harness/schemas/log-entry.ts#LogEntrySchema.bean",
       "status": "candidate"
     },
@@ -7330,7 +7330,7 @@
     {
       "id": "site-indexes.beanindexitemschema.parent",
       "prefLabel": "BeanIndexItemSchema.parent",
-      "definition": "`\"\"` when the bean has no parent.",
+      "definition": "`\"\"` when the bean has no parent; otherwise a typed bean id (#1168 B8).",
       "source": "cat-harness/schemas/site-indexes.ts#BeanIndexItemSchema.parent",
       "status": "candidate"
     },
