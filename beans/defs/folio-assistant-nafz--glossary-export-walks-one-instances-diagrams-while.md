@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nafz
 title: glossary-export walks ONE instance's diagrams while translate-bpmn walks the dependents' too
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-23T21:14:17Z
-updated_at: 2026-09-23T21:15:20Z
+updated_at: 2026-09-30T00:33:58Z
 parent: folio-assistant-slw1
 ---
 
@@ -87,3 +87,11 @@ longer exists. A comment is not a fix either way.
 - [ ] the DANGLING wording says which corpus it walked
 - [ ] `translate-bpmn` and `glossary-export` agree, or the reason they differ is
       written on both
+
+
+## Summary of changes (2026-09-30)
+Option 1 (phrase the finding by scope) — the only option that decides nothing, and the scope question turned out ALREADY decided: skill swimlane-glossary §'Run it once per instance — never widen the scan' (widening re-opens 7u3g, enforced by instance-graph-isolation.test.ts). So option 2 is refused by the skill, not open.
+- [x] scope stated where a generator is checked against it — the skill section above + the isolation test.
+- [x] wording says which corpus was walked — glossary-export now prints 'N declared role(s) no swimlane in <instance>/ draws:' and splits: 'deep-researcher — drawn in another instance: folio-assistant-core/processes/deep-document-research.bpmn' vs 'drawn by no diagram in the repository: librarian, …'. New report field drawnElsewhere (explicit <folio:role ref> only; a lane NAME match is not a binding). Nothing outside the instance is bound or emitted.
+- [x] the reason translate-bpmn and glossary-export differ is written on both walks.
+Test: glossary-export.test.ts 'an undrawn role another instance draws is told apart from one drawn nowhere'.

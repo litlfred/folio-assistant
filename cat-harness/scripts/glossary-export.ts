@@ -293,6 +293,15 @@ export interface GlossaryReport {
   readonly usages: number;
   /** Declared roles no task-containing lane in this instance draws. */
   readonly undrawn: string[];
+  /**
+   * ...of those, the ones a lane OUTSIDE this instance binds by
+   * `<folio:role ref>`, with the diagrams that draw them. Bean `nafz`: the
+   * walk is scoped to one instance (a glossary is published per instance), so
+   * "no swimlane draws" is a fact about the WALK, and a role drawn in a
+   * dependent's diagram must not read like one drawn nowhere. Informational —
+   * it does not change the glossary, only what the report claims.
+   */
+  readonly drawnElsewhere: ReadonlyArray<{ role: string; files: string[] }>;
   /** Lanes whose binding is dangling or contradictory — reported, not gated. */
   readonly problems: string[];
   /** True when the ledger on disk differs from the one this run computed. */
@@ -357,6 +366,12 @@ export function buildGlossary(opts: {
   }
   const merged: RoleGraph | undefined = graphs.length > 0 ? { name: id.stub, roles } : undefined;
 
+  // THIS instance's diagrams only — not the dependency overlay
+  // `translate-bpmn` walks (bean `nafz`). A glossary is published per
+  // instance and each dependent builds its own, so a role drawn only in a
+  // dependent's diagram is reported in `drawnElsewhere`, not bound here.
+  // Never widen this walk: skill `swimlane-glossary` §"Run it once per
+  // instance", and `instance-graph-isolation.test.ts` (`7u3g`).
   const lanes = readLanes(instanceRoot, repoRoot);
   const swimlanes = lanes.filter((l) => l.activities > 0);
 
@@ -545,6 +560,20 @@ export function buildGlossary(opts: {
   for (const r of roles) {
     if (!occurrences.has(r.id)) undrawn.push(r.id);
   }
+  // Which of those another instance draws (bean `nafz`). Read the whole
+  // repository's diagrams, drop this instance's own, and match only an
+  // explicit `<folio:role ref>` — a lane NAME that happens to equal a role's
+  // is not a binding, and claiming one would be the report inventing a fact.
+  const drawnElsewhere: Array<{ role: string; files: string[] }> = [];
+  if (undrawn.length > 0) {
+    const own = relative(repoRoot, instanceRoot);
+    const inOwn = (f: string) => own === "" || f === own || f.startsWith(own + "/");
+    const outside = readLanes(repoRoot, repoRoot).filter((l) => l.activities > 0 && !inOwn(l.file));
+    for (const role of undrawn) {
+      const files = [...new Set(outside.filter((l) => l.roleRef === role).map((l) => l.file))].sort();
+      if (files.length > 0) drawnElsewhere.push({ role, files });
+    }
+  }
 
   const schemeLabel = `${id.stub} swimlane glossary`;
   const doc = {
@@ -603,6 +632,7 @@ export function buildGlossary(opts: {
       restored,
       usages,
       undrawn,
+      drawnElsewhere,
       problems,
       ledgerStale,
     },
@@ -629,7 +659,15 @@ if (import.meta.main) {
   if (report.retired.length > 0) console.log(`  ${report.retired.length} retired (kept, never deleted)`);
   for (const k of report.newlyRetired) console.log(`    NEWLY RETIRED: ${k}`);
   if (report.undrawn.length > 0) {
-    console.log(`  ${report.undrawn.length} declared role(s) no swimlane draws: ${report.undrawn.join(", ")}`);
+    // Scoped wording (bean `nafz`): the walk covers THIS instance's diagrams
+    // only, so say so, and separate a role drawn in another instance from one
+    // no diagram in the repository draws.
+    const where = relative(repoRootFor(ROOT), instanceDir) || ".";
+    const elsewhere = new Map(report.drawnElsewhere.map((d) => [d.role, d.files]));
+    const nowhere = report.undrawn.filter((r) => !elsewhere.has(r));
+    console.log(`  ${report.undrawn.length} declared role(s) no swimlane in ${where}/ draws:`);
+    for (const [role, files] of elsewhere) console.log(`    ${role} — drawn in another instance: ${files.join(", ")}`);
+    if (nowhere.length > 0) console.log(`    drawn by no diagram in the repository: ${nowhere.join(", ")}`);
   }
   for (const p of report.problems) console.log(`  PROBLEM: ${p}`);
 

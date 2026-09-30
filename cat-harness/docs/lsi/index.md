@@ -3,7 +3,7 @@ title: "Latent semantic indexes"
 description: "Every committed LSI index over a declared prose graph — its latent dimensions, its findings, and which graphs still need one."
 renders:
   - cat-harness/test/results
-rendered-by: undefined
+rendered-by: lsi-viewer
 ---
 <style>
 .lv-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
