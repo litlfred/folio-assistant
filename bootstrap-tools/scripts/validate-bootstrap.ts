@@ -37,12 +37,12 @@
  *
  * ## What it does NOT validate, and why
  *
- * The built bootstrap GRAPH document. Its Zod, `BootstrapGraphDocumentSchema`,
- * is still in `cat-harness/schemas/bootstrap-graph.ts`, and bootstrap-tools
- * imports nothing above bootstrap (`check:tools-closure`, bean `xsqm`). The
- * first version of this validator (PR #1514) read it from a bootstrap-tools
- * that depended on cat-harness; on main that dependency is gone, so the graph
- * target waits for its schema to move down rather than reaching up for it.
+ * Nothing it can reach, since 2026-09-30. The GRAPH document,
+ * `bootstrap.jsonld`, was the gap: its Zod lived in cat-harness, which these
+ * tools may not import. It is now written here (`export-graph.ts`, shape
+ * `GraphExportSchema`, bean `xsqm`), so it is BUILT in memory and parsed like
+ * the rest. It is built rather than read because it is never committed; the
+ * site build writes it.
  *
  * A document that cannot be read or parsed as JSON is a FAILURE, not a skip,
  * and a run that found no document at all exits non-zero — a validator over
@@ -63,7 +63,9 @@ import type { z } from "zod";
 import { readKnowledgeGraphDeclaration, supportsContent } from "../schemas/declaration.ts";
 import { DiscussionInputSchema, DiscussionOutputSchema } from "../schemas/discussion.ts";
 import { KnowledgeGraphDeclarationSchema } from "../schemas/graph.ts";
+import { GraphExportSchema } from "../schemas/graph-export.ts";
 import { MODEL_REGISTRY_DIR, MODEL_REGISTRY_FILENAME, ModelRegistrySchema } from "../schemas/model-registry.ts";
+import { exportGraph } from "./export-graph.ts";
 
 const REPO = join(import.meta.dir, "..", "..");
 
@@ -106,6 +108,8 @@ export interface Target {
   stripSelfDeclaration?: boolean;
   /** Absolute path. */
   path: string;
+  /** A document that is built rather than committed: its content, instead of reading `path`. */
+  build?: () => unknown;
   schema: z.ZodType;
   /** An absent required document is a failure; an absent optional one is not looked at. */
   required: boolean;
@@ -119,6 +123,18 @@ export interface Result {
 
 /** Parse one document. Never throws: an unreadable file is a verdict, not a crash. */
 export function validateFile(target: Target): Result {
+  if (target.build) {
+    let built: unknown;
+    try {
+      built = target.build();
+    } catch (err) {
+      return { target, verdict: "unreadable", issues: [err instanceof Error ? err.message : String(err)] };
+    }
+    const parsed = target.schema.safeParse(built);
+    return parsed.success
+      ? { target, verdict: "valid", issues: [] }
+      : { target, verdict: "invalid", issues: parsed.error.issues.map((i) => `${i.path.length ? i.path.join(".") : "(root)"}: ${i.message}`) };
+  }
   if (!existsSync(target.path)) {
     return {
       target,
@@ -203,6 +219,15 @@ export function planTargets(root: string): Target[] {
       path: join(root, MODEL_REGISTRY_DIR, MODEL_REGISTRY_FILENAME),
       schema: ModelRegistrySchema,
       required: true,
+    },
+    {
+      // Built, not read: the site build writes it and nothing commits it. The
+      // `@id` is a stand-in; the shape does not depend on the address.
+      label: "Knowledge Graph (built)",
+      path: join(root, `${name}.jsonld`),
+      schema: GraphExportSchema,
+      required: true,
+      build: () => exportGraph(root, { docIri: `https://example.invalid/${name}/${name}.jsonld` }),
     },
     ...discussionDocuments(root),
   ];
