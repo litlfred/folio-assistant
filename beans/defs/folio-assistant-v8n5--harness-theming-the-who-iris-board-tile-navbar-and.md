@@ -24,6 +24,8 @@ An instance-declared theme has to be resolvable wherever a surface names a theme
 - [ ] `check:voices`, `iris:pages:check` and the SC 1.4.1 rule from `j66n` (state carried by word as well as colour) still hold
 - [ ] Checked on a rendered build, `preview:site` **plus** the `mount-instance-docs.ts` step (see `yg29` §"A correction worth keeping"), not inferred from generator output
 
+_2026-09-30T11:02:54Z_ — Claimed by claude/magical-archimedes-4qkfxp-v8n5 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## 2026-09-30: the platform half is built; the who-iris half waits on one question
 
 **Built** (`cat-harness/schemas/theme-by-ref.ts`, with 9 tests). A theme reference now resolves against its **owner**. `{instance: "who-iris", themeId: "iris-web"}` finds who-iris's declared `themes` directory and reads its `themes.ts` export, `INSTANCE_THEMES`, by declaration, not by import, so the platform holds no WHO value. A reference with no `instance` means the citing instance's own, then the platform's, so every reference written before #1168 B8 resolves exactly as it did.
