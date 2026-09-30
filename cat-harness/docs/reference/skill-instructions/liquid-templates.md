@@ -18,22 +18,26 @@ which one you are writing for before you write a line:
 
 | | README templates | site templates |
 |---|---|---|
-| engine | liquidjs, run by `subgraph-readmes` (`jekyllInclude: true`, `strictFilters: true`) | Jekyll, run by `docs-site.yml` with the pinned just-the-docs `remote_theme` |
-| lives in | `templates/readme/` inside the declared `tools` directory (`cat-harness/tools/templates/readme/`) | `cat-harness/docs/_includes/` — just-the-docs' extension points (`head_custom.html`, `footer_custom.html`, `nav_footer_custom.html`) plus our own |
+| engine | liquidjs, run by bootstrap-tools' `subgraph-readmes` (`jekyllInclude: true`, `strictFilters: true`) | Jekyll, run by `docs-site.yml` with the pinned just-the-docs `remote_theme` |
+| lives in | `templates/readme/` beside the writer, in the tools repository (`bootstrap-tools/scripts/templates/readme/`) | `cat-harness/docs/_includes/` — just-the-docs' extension points (`head_custom.html`, `footer_custom.html`, `nav_footer_custom.html`) plus our own |
 | output | `<directory>/README.md`, **committed**, read on GitHub where no Liquid runs | `_site/`, **never committed**, published to Pages |
 | data | only what the generator passes: `subgraph`, `instance`, `kg`, `files`, `subdirs`, `summary` | `site`, `page`, `include`, and `_data/*.json` written by the pipeline |
 | verified by | `bun run readme:subgraphs:check` — the diff is the output | building the site: [`rendered-verification`](rendered-verification.md), `bun run preview:site` |
 
 ## Where a template lives
 
-**Inside a declared directory, and found through that directory's `id`.**
-`templatesDir()` in `scripts/subgraph-readmes.ts` resolves the `tools` entry
-of the declaration and joins `templates/readme/` to it, rather than spelling
-the whole path, so the tools directory can move without the generator
-changing ([`directory-conventions`](directory-conventions.md) — ids are
-stable, paths are not). The templates are files OF the tools graph, not a
-directory of their own: a declared directory nested inside another is refused
-by `check:layout-norms`. Never an inline template string in a `.ts` file and
+**Beside the writer that renders it, in the tools repository.** The README
+templates are part of bootstrap-tools' `scripts/` subgraph, at
+`bootstrap-tools/scripts/templates/readme/`, and the writer finds them with
+`TEMPLATES`, a path relative to its own file. They moved there with the
+writer (bean `xsqm`, owner 2026-09-29: one copy of the README writers, in the
+tools repository): a template is part of the toolset, and somebody who wants
+different READMEs uses a different toolset over the same content. Until then
+they sat in cat-harness's `tools/` directory, found through its `id`, and a
+harness that wants its own layout still passes its own templates directory to
+`plan()`. They are files OF the `scripts/` subgraph, not a directory of their
+own: a declared directory nested inside another is refused by
+`check:layout-norms`. Never an inline template string in a `.ts` file and
 never a `.liquid` file outside a declared directory: a template nobody
 declared is one no checker looks at, and its README row cannot say what it is.
 

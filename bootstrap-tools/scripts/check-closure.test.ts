@@ -33,14 +33,14 @@ describe("check-closure", () => {
     expect(checkClosure(root).map((f) => f.why)).toEqual(["leaves bootstrap-tools (../cat-harness/x.ts)"]);
   });
 
-  test("any other package fails, and a test may add only bun:test and ajv", () => {
+  test("liquidjs is allowed, any other package fails, and a test may add only bun:test and ajv", () => {
     const root = pkg({
-      "schemas/a.ts": 'import { Liquid } from "liquidjs";\n',
+      "schemas/a.ts": 'import { Liquid } from "liquidjs";\nimport _ from "lodash";\n',
       "schemas/a.test.ts": 'import { test } from "bun:test";\nimport Ajv from "ajv";\nimport x from "playwright";\n',
     });
     expect(checkClosure(root).map((f) => `${f.file} ${f.specifier}`).sort()).toEqual([
       "schemas/a.test.ts playwright",
-      "schemas/a.ts liquidjs",
+      "schemas/a.ts lodash",
     ]);
   });
 

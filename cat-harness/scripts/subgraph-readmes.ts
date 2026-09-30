@@ -1,253 +1,85 @@
 #!/usr/bin/env bun
 /**
- * A README for every declared directory, generated from the Knowledge Graph.
+ * A README for every declared directory — cat-harness's call into the
+ * writer in bootstrap-tools.
  *
  * @module scripts/subgraph-readmes
  * @covers cat-harness
  *
- * Owner, 2026-09-29: a large instance *"can't have all their files listed
- * directly, however they have declared subgraphs/dirs in which to naturally
- * link to sub-README generated documentation for that directory. make sure
- * sub-dir READMEs part of the KG itself"*; *"you should be able to extract
- * needed metadata info (e.g. titles, desc) from the KG itself. QA check when
- * not there"*; committed READMEs, *"check in process should gate regen.
- * source templates should be accessible in tools KG"*, with Liquid
- * `{% include %}` allowed.
+ * The writer, its Liquid templates and its findings are
+ * `bootstrap-tools/scripts/subgraph-readmes.ts` — one copy, in the tools
+ * repository (owner, 2026-09-29, bean `xsqm`). What stays here is what only
+ * a harness knows:
  *
- * ## What it writes, and where it will not
- *
- * For each directory an instance declares, `<directory>/README.md`, and only
- * between `<!-- kg:subgraph:begin -->` and `<!-- kg:subgraph:end -->`:
- *
- * - no README → one is created holding just that region;
- * - a README carrying the markers → the region is replaced;
- * - a README without them → **left alone**, and reported. Somebody wrote it,
- *   and the platform owns markers, never the file (`readme-sections`).
- *
- * ## Where the words come from
- *
- * The heading is the directory's declared `title`, the paragraph its declared
- * `description`, the kinds its `graphKinds`; each file row is described from
- * the file itself and "used by" only where a diagram records it (the same
- * helpers as the `kg:files` README section). Nothing is composed here.
- *
- * The layout is a Liquid template in `tools/templates/readme/`, part of the
- * tools graph. Templates may `{% include %}` each other, Jekyll style,
- * and read any declared field through `kg`.
- *
- * ## QA: a missing fact is a finding, never a blank
- *
- * `test/results/subgraph-readmes.qa-results.json` records every directory
- * with no `title` or no `description`, every declared directory absent from
- * disk (unless it declares `absent`), and every README left untouched for
- * lack of markers. Reported, not failed: a gap in the declaration is the
- * declaration owner's to fill, and failing on it would block every commit on
- * a backlog. What `--check` FAILS on is a stale README or a stale sidecar.
+ * - **resolving its Extensions** before the writer sees a directory: a
+ *   directory entry `scope: "repository"` is relative to the repository
+ *   rather than the instance, one declaring `absent` may be missing, and an
+ *   asset's README is found through {@link declaredAssetPath}, which honours
+ *   the asset's scope too;
+ * - **recording the findings** as the committed QA sidecar
+ *   `test/results/subgraph-readmes.qa-results.json`. Reported, not failed: a
+ *   gap in a declaration is its owner's to fill, and failing on it would block
+ *   every commit on a backlog. What `--check` FAILS on is a stale README or a
+ *   stale sidecar.
  *
  * Usage: `bun run readme:subgraphs` · `bun run readme:subgraphs:check`
  */
-import { bootstrapTermTargets, linkTerms } from "../../bootstrap-tools/scripts/term-links.ts";
-import { BOOTSTRAP_TERMS } from "../../bootstrap-tools/schemas/graph.ts";
-import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
-import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
-import { basename, join, relative, resolve } from "node:path";
-import { Liquid } from "liquidjs";
+import { existsSync, readFileSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
 
 import {
-  declaredAssetPath,
-  findDeclarationFile,
-  INSTANCE_README_ROLE,
-  instanceRootsIn,
-  readDeclaration,
-  repoRootFor,
-} from "../schemas/cat-harness.ts";
-import { describe as describeFile, usedByIndex } from "../../bootstrap-tools/scripts/readme-graph-sections.ts";
+  apply,
+  DESCRIPTION_WORDS,
+  type InstanceInput,
+  type Plan,
+  plan,
+} from "../../bootstrap-tools/scripts/subgraph-readmes.ts";
+import { declaredAssetPath, INSTANCE_README_ROLE, instanceRootsIn, readDeclaration, repoRootFor } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
-import { gitCorpus } from "../schemas/git-corpus.ts";
-
-/**
- * Every file under `dir` that git would commit, relative to `dir`: tracked or
- * untracked, never ignored. A bare walk listed `__pycache__/` after a Python
- * test ran, so the README depended on what happened to be on disk. Outside a
- * git work tree (a test's temporary directory) it falls back to the walk.
- */
-function filesIn(dir: string): string[] {
-  const corpus = gitCorpus(dir);
-  if (corpus !== undefined) return corpus.filter((p) => existsSync(p)).map((p) => relative(dir, p)).sort();
-  const out: string[] = [];
-  const walk = (d: string): void => {
-    for (const e of readdirSync(d, { withFileTypes: true })) {
-      if (e.name.startsWith(".")) continue;
-      if (e.isDirectory()) walk(join(d, e.name));
-      else out.push(relative(dir, join(d, e.name)));
-    }
-  };
-  walk(dir);
-  return out.sort();
-}
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(ROOT);
 
 /**
- * The templates, in the tools graph: `templates/readme/` inside the directory
- * this instance declares as `tools`. Not a declared directory of their own —
- * a declared directory nested in another is refused by `check:layout-norms`,
- * so they are files OF the tools graph, found through its declaration.
+ * Every instance under `repo`, with this harness's Extensions resolved: the
+ * declared README (scope-aware), each directory's real location, and whether
+ * it may be absent. An unreadable declaration is skipped — it is
+ * `readDeclaration`'s own finding, reported by its checkers.
  */
-export function templatesDir(instanceRoot: string = ROOT): string {
-  const decl = readDeclaration(instanceRoot);
-  const tools = decl?.directories?.find((x) => x.id === "tools");
-  if (!tools) throw new Error(`subgraph-readmes: ${instanceRoot} declares no \`tools\` directory`);
-  // declared-path-literal: the templates' place WITHIN the declared tools
-  // directory; the directory itself is read from the declaration above.
-  return join(instanceRoot, tools.path, "templates", "readme");
-}
-
-export const BEGIN = "<!-- kg:subgraph:begin -->";
-export const END = "<!-- kg:subgraph:end -->";
-
-/**
- * A declared description longer than this reads as an essay under a README
- * heading. Many carry history and argument meant for maintainers; they are
- * reported so the declaration's owner can move that to a comment.
- */
-export const DESCRIPTION_WORDS = 60;
-
-/** More direct files than this and the table becomes a count by extension. */
-export const LIST_LIMIT = 150;
-
-const cell = (t: string) => t.replace(/\|/g, "\\|").replace(/\s*\n\s*/g, " ");
-
-export interface Finding {
-  instance: string;
-  directory: string;
-  path: string;
-}
-
-export interface Plan {
-  /** README path → the full text it should hold. */
-  writes: Map<string, string>;
-  findings: Record<
-    "no-title" | "no-description" | "long-description" | "absent-directory" | "unmarked-readme",
-    Finding[]
-  >;
-}
-
-/** Replace the marked region, or create a file holding only it. `undefined`: no markers, leave it. */
-export function splice(existing: string | undefined, region: string): string | undefined {
-  const block = `${BEGIN}\n${region.trimEnd()}\n${END}`;
-  if (existing === undefined) return `${block}\n`;
-  const i = existing.indexOf(BEGIN);
-  const j = existing.indexOf(END);
-  if (i === -1 || j === -1 || j < i) return undefined;
-  return existing.slice(0, i) + block + existing.slice(j + END.length);
-}
-
-/** Every declared directory of every instance under `repo`, planned. */
-export async function plan(repo: string, templates: string): Promise<Plan> {
-  const liquid = new Liquid({ root: [templates], extname: ".liquid", jekyllInclude: true, strictFilters: true });
-  const out: Plan = {
-    writes: new Map(),
-    findings: { "no-title": [], "no-description": [], "long-description": [], "absent-directory": [], "unmarked-readme": [] },
-  };
-  const seen = new Set<string>();
-
+export function harnessInstances(repo: string): InstanceInput[] {
+  const out: InstanceInput[] = [];
   for (const inst of instanceRootsIn(repo)) {
     let decl;
     try {
       decl = readDeclaration(inst);
     } catch {
-      continue; // an unreadable declaration is readDeclaration's own finding, reported by its checkers
+      continue;
     }
     if (!decl) continue;
-    // The version, and — for an instance declaring an iriBase — both release
-    // addresses, so a template writes `{{ release.version }}` rather than a
-    // number that goes stale on the next bump (owner, 2026-09-29).
-    const iris = releaseIris(decl);
-    const release = {
-      version: decl.version ?? "",
-      major: iris?.major ?? "",
-      agent: iris?.agent ?? "",
-      human: iris?.human ?? "",
-    };
-    const name = decl.name;
-    const declFile = findDeclarationFile(inst);
-    const instReadme = declaredAssetPath(inst, INSTANCE_README_ROLE) ?? join(inst, "README.md");
-    const instLink = existsSync(instReadme) ? instReadme : declFile ? join(inst, basename(declFile)) : inst;
-    const dirs = decl.directories ?? [];
-    const used = usedByIndex(inst, dirs.map((d) => d.path));
-    const assets = new Map<string, string>();
-
-    for (const d of dirs) {
-      const base = (d as { scope?: string }).scope === "repository" ? repo : inst;
-      const abs = resolve(base, d.path);
-      const at = { instance: name, directory: d.id, path: relative(repo, abs) || "." };
-      // The instance's own root, or the repository's, is the instance README's
-      // job, not a directory README's.
-      if (abs === resolve(inst) || abs === resolve(repo)) continue;
-      if (!existsSync(abs) || !statSync(abs).isDirectory()) {
-        if (!(d as { absent?: unknown }).absent) out.findings["absent-directory"].push(at);
-        continue;
-      }
-      if (seen.has(abs)) continue; // two entries for one directory: the first one writes it
-      seen.add(abs);
-      const title = (d as { title?: string }).title;
-      const description = (d as { description?: string }).description;
-      if (!title) out.findings["no-title"].push(at);
-      if (!description) out.findings["no-description"].push(at);
-      else if (description.split(/\s+/).length > DESCRIPTION_WORDS) out.findings["long-description"].push(at);
-
-      // Every defined term in the prose this README shows links to its
-      // definition (owner, 2026-09-29: terms "should be links in README.md s").
-      const terms = bootstrapTermTargets(repo, abs, Object.keys(BOOTSTRAP_TERMS));
-      const linked = (text: string) => linkTerms(text, terms).text;
-
-      const all = filesIn(abs).filter((f) => !f.split("/").some((seg) => seg.startsWith(".")));
-      const direct = all.filter((f) => !f.includes("/") && f !== "README.md");
-      const counts = new Map<string, number>();
-      for (const f of all) if (f.includes("/")) counts.set(f.split("/")[0]!, (counts.get(f.split("/")[0]!) ?? 0) + 1);
-      const subdirs = [...counts]
-        .sort((a, b) => a[0].localeCompare(b[0]))
-        .map(([n, count]) => ({ name: n, count, readme: existsSync(join(abs, n, "README.md")) ? `${n}/README.md` : "" }));
-      const listed = direct.length <= LIST_LIMIT;
-      const files = listed
-        ? direct.map((f) => {
-            const relToInst = relative(inst, join(abs, f));
-            return {
-              path: f,
-              what: linked(cell(describeFile(inst, relToInst, assets))),
-              usedBy: used(relToInst),
-            };
-          })
-        : [];
-      const byExt = new Map<string, number>();
-      for (const f of direct) byExt.set(f.includes(".") ? f.slice(f.lastIndexOf(".")) : "(none)", (byExt.get(f.includes(".") ? f.slice(f.lastIndexOf(".")) : "(none)") ?? 0) + 1);
-      const summary = listed
-        ? ""
-        : `${direct.length} files directly here, too many to list: ` +
-          [...byExt].sort((a, b) => b[1] - a[1]).map(([e, n]) => `${n} ${e}`).join(", ") + ".";
-
-      const region = await liquid.renderFile("subgraph", {
-        subgraph: { id: d.id, path: d.path, title, description: description ? linked(description) : description, kinds: d.graphKinds },
-        instance: { name, title: decl.title, readme: relative(abs, instLink) },
-        release,
-        kg: decl,
-        files,
-        subdirs,
-        summary,
-      });
-      const readme = join(abs, "README.md");
-      const existing = existsSync(readme) ? readFileSync(readme, "utf-8") : undefined;
-      const next = splice(existing, region.replace(/\n{3,}/g, "\n\n"));
-      if (next === undefined) {
-        out.findings["unmarked-readme"].push({ ...at, path: relative(repo, readme) });
-        continue;
-      }
-      out.writes.set(readme, next);
-    }
+    out.push({
+      root: inst,
+      decl: decl as unknown as InstanceInput["decl"],
+      readme: declaredAssetPath(inst, INSTANCE_README_ROLE),
+      dirs: (decl.directories ?? []).map((d) => {
+        const base = (d as { scope?: string }).scope === "repository" ? repo : inst;
+        return {
+          id: d.id,
+          path: d.path,
+          abs: resolve(base, d.path),
+          title: (d as { title?: string }).title,
+          description: (d as { description?: string }).description,
+          graphKinds: d.graphKinds as string[],
+          mayBeAbsent: Boolean((d as { absent?: unknown }).absent),
+        };
+      }),
+    });
   }
   return out;
+}
+
+/** The writer's plan over every instance in this checkout. */
+export function harnessPlan(repo: string = REPO): Promise<Plan> {
+  return plan(repo, harnessInstances(repo));
 }
 
 /** The committed QA record of what the declarations do not say. */
@@ -284,20 +116,10 @@ export function qaResult(p: Plan) {
 
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const p = await plan(REPO, templatesDir());
-  let stale = 0;
-  let wrote = 0;
-  for (const [file, text] of p.writes) {
-    const prev = existsSync(file) ? readFileSync(file, "utf-8") : undefined;
-    if (prev === text) continue;
-    if (check) {
-      console.error(`  ✗ ${relative(REPO, file)} is stale`);
-      stale++;
-      continue;
-    }
-    writeFileSync(file, text);
-    wrote++;
-  }
+  const p = await harnessPlan(REPO);
+  const { stale: staleFiles, wrote } = apply(p, check, REPO);
+  for (const f of staleFiles) console.error(`  ✗ ${f} is stale`);
+  let stale = staleFiles.length;
   const result = qaResult(p);
   const sidecar = join(ROOT, "test/results/subgraph-readmes.qa-results.json");
   if (check) {
@@ -322,4 +144,3 @@ if (import.meta.main) {
     process.exit(1);
   }
 }
-

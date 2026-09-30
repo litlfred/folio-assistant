@@ -2,11 +2,13 @@
   "name": "@litlfred/bootstrap-tools",
   "version": "0.1.0",
   "private": true,
-  "description": "The Zod source of bootstrap's schemas, their generators, and the checks bootstrap's content must pass. Depends on zod alone.",
+  "description": "The Zod source of bootstrap's schemas, their generators, and the checks bootstrap's content must pass. Depends on zod, and liquidjs for the README templates.",
   "license": "Apache-2.0",
   "type": "module",
   "repository": "https://github.com/litlfred/bootstrap-tools",
   "scripts": {
+    "readmes": "bun run scripts/subgraph-readmes.ts",
+    "readmes:check": "bun run scripts/subgraph-readmes.ts --check",
     "schemas": "bun run scripts/gen-bootstrap-schemas.ts",
     "schemas:check": "bun run scripts/gen-bootstrap-schemas.ts --check",
     "iri:sync": "bun run scripts/iri-sync.ts",
@@ -17,6 +19,7 @@
     "test": "bun test ."
   },
   "dependencies": {
+    "liquidjs": "^10.29.0",
     "zod": "^4.6.5"
   },
   "devDependencies": {

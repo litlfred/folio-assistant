@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 /**
- * check-closure.ts — bootstrap-tools imports nothing but itself, `zod` and
- * the runtime.
+ * check-closure.ts — bootstrap-tools imports nothing but itself, `zod`,
+ * `liquidjs` and the runtime.
  *
  * ## Why this is a gate, not a convention
  *
@@ -18,8 +18,10 @@
  *
  * For every `.ts` file under `bootstrap-tools/`:
  * - a RELATIVE import must resolve to a file inside `bootstrap-tools/`;
- * - a BARE import must be `zod`, a `node:` builtin, or — in a test file only —
- *   `bun:test` or `ajv`.
+ * - a BARE import must be `zod`, `liquidjs`, a `node:` builtin, or — in a
+ *   test file only — `bun:test` or `ajv`. `liquidjs` is the README writers'
+ *   template engine (Phase 2 of bean `xsqm`: the owner ruled one copy of the
+ *   writers, here, and allowed it and Playwright as dependencies).
  *
  * Imports are read with comments and string literals of other statements
  * stripped, so a docblock that quotes an import is not one.
@@ -35,7 +37,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 /** Bare specifiers any file may import. */
-export const ALLOWED = [/^zod$/, /^node:/];
+export const ALLOWED = [/^zod$/, /^liquidjs$/, /^node:/];
 /** …and a test file may also import. */
 export const ALLOWED_IN_TESTS = [/^bun:test$/, /^ajv$/];
 
@@ -150,7 +152,7 @@ if (import.meta.main) {
     process.exit(2);
   }
   if (findings.length === 0) {
-    console.log(`✓ bootstrap-tools imports only itself, zod and the runtime (${files} files).`);
+    console.log(`✓ bootstrap-tools imports only itself, zod, liquidjs and the runtime (${files} files).`);
     process.exit(0);
   }
   console.error(`✗ ${findings.length} import(s) leave bootstrap-tools' closure:`);
