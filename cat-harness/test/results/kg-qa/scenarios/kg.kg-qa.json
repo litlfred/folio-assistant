@@ -239,6 +239,10 @@
         {
           "where": "cat-harness/docs",
           "detail": "needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs`"
+        },
+        {
+          "where": "cat-harness/library",
+          "detail": "stale — re-run `bun run lsi index --instance cat-harness --graph library`"
         }
       ]
     },

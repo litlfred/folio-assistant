@@ -984,6 +984,21 @@ function inLocale(src: string, t: SchemeTranslations | undefined): { text: strin
  * chrome and all, or it marks what is not.
  */
 export const LOCALE_PAGE_STRINGS = {
+  // Bean `7wou`. The source page gained this section on 2026-09-30 and the
+  // five locale pages did not, which `translation:drift:check` caught as
+  // 9 headings against 8 — correctly, and it is reader-visible: a section
+  // a reader in that language could not reach. Added as msgids rather than
+  // recorded in KNOWN_DRIFT, because these pages are GENERATED from this
+  // file and a generated page's missing section is a generator gap, not a
+  // translator's backlog.
+  mapping: "Already somebody else's concept?",
+  mappingIntro:
+    "Extracted candidates are minted from this repository's own assets and are not, by themselves, checked against any vocabulary. `check:term-mapping` asks whether each already exists as a concept somebody is authoritative for — SKOS for what a term MEANS, FHIR for a clinical code's operational semantics — and the two are separate questions with separate answers.",
+  // The same shape as `pagesNote`: the table below is counts, scheme ids and
+  // column labels the generator writes in the source language. Saying so is
+  // the policy this page already follows for the extracted pages — never
+  // silently English, never omitted.
+  mappingTableNote: "The table's labels are in the source language: it reports counts per scheme, computed by the gate rather than authored here.",
   pages: "Pages",
   pagesNote: "Extracted candidates are not translated: they are lifted verbatim from knowledge-graph assets and uncurated. Their pages are in the source language.",
   authored: "Authored terms",
@@ -1063,6 +1078,18 @@ export function renderLocalePage(
     `# ${esc(titleTerm)}`,
     "",
     `**${translated} / ${terms}** ${mark(u("fullyTranslated"))}. ${mark(u("status"))}`,
+    "",
+    // Before `## Pages`, because `translation-drift` compares the ORDER of
+    // headings and not merely their number: re-levelling or re-ordering one
+    // keeps the count identical and is still drift (measured on this gate,
+    // twice, which is why it records the full shape).
+    `## ${mark(u("mapping"))}`,
+    "",
+    `${mark(u("mappingIntro"))}`,
+    "",
+    `${mark(u("mappingTableNote"))}`,
+    "",
+    mappingBlock(mappingStates(), [...new Set(c.glossaries.map((g) => g.glossary.id))]),
     "",
     `## ${mark(u("pages"))}`,
     "",
