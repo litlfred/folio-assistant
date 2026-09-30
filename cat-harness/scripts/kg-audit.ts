@@ -124,6 +124,7 @@ import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
 import { actorsDir, capabilitiesDir } from "../schemas/role-graph.ts";
+import { conventionsDir, skillDefinitionDirs } from "../schemas/skill-definitions-dir.ts";
 
 const ENGINE_VERSION = "1";
 
@@ -853,8 +854,8 @@ async function auditProcess(
 
   // CONVENTION REFS. The dangling direction only — see the criterion's note
   // in `kg-qa.ts` for why absence is deliberately not a finding.
-  const conventionDir = join(repoRootFor(root), ".claude", "skills", CONVENTION_GROUP);
-  const knownConventions = existsSync(conventionDir)
+  const conventionDir = conventionsDir(repoRootFor(root));
+  const knownConventions = conventionDir !== undefined && existsSync(conventionDir)
     ? new Set(readdirSync(conventionDir).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5)))
     : undefined;
   const danglingConvention: KgFinding[] = [];
@@ -1902,11 +1903,13 @@ function servableSkills(): Set<string> {
  */
 function localHarnessSkills(): Set<string> {
   const out = new Set<string>();
+  // The `.md` bodies stay in the agent harness's `.claude/skills/local/`; the
+  // JSON definitions moved by theme into each owner's `skill-definitions/`
+  // (bean `rqao`).
   const dir = join(repoRootFor(root), ".claude", "skills", "local");
-  if (!existsSync(dir)) return out;
-  for (const f of readdirSync(dir)) {
-    if (f.endsWith(".md")) out.add(f.slice(0, -3));
-    else if (f.endsWith(".json")) out.add(f.slice(0, -5));
+  if (existsSync(dir)) for (const f of readdirSync(dir)) if (f.endsWith(".md")) out.add(f.slice(0, -3));
+  for (const d of skillDefinitionDirs(repoRootFor(root))) {
+    for (const f of readdirSync(d)) if (f.endsWith(".json")) out.add(f.slice(0, -5));
   }
   return out;
 }

@@ -9,4 +9,5 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `fhir-ig-s
 |---|---|---|
 | [`fhir-client/`](fhir-client/) | 3 files | |
 | [`fhir-ig-base/`](fhir-ig-base/) | 5 files | |
+| [`skill-definitions/`](skill-definitions/) | 4 files | |
 <!-- kg:subgraph:end -->
