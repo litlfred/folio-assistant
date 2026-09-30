@@ -728,7 +728,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * Minting ids before then would bake the wrong scheme into artefacts the
    * schema itself calls *stable forever, never reused*.
    *
-   * `skills/folio-core/instance-publication.md` carries the namespace rule and
+   * `skills/kg/kg-core/instance-publication.md` carries the namespace rule and
    * why a mirror never takes its subject's identity.
    */
   id?: string;
@@ -763,7 +763,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * that a version reads as a publication claim. It does not — a version
    * distinguishes snapshots; whether anyone outside may depend on them is
    * {@link publication}, a separate question.
-   * `skills/folio-core/instance-publication.md`.
+   * `skills/kg/kg-core/instance-publication.md`.
    */
   version?: string;
 }
@@ -1638,7 +1638,7 @@ export interface Publication {
    * WHAT STATE this instance's publication is in. `draft`, always, today.
    *
    * **The discipline is in the skill, not here** —
-   * `skills/folio-core/instance-publication.md`. Owner's ruling, 2026-09-23:
+   * `skills/kg/kg-core/instance-publication.md`. Owner's ruling, 2026-09-23:
    * *"all assets get a version and are in 'draft' publication. formal
    * publication process needs to be deinfed/neeeds tools/depends on
    * instance."*
@@ -2488,7 +2488,7 @@ export const CatHarnessDeclarationSchema = z.object({
     // conditional left to check about them. What replaced the old branches:
     // §3.1 refused both unless `publishable: true`, and the owner's ruling of
     // 2026-09-23 makes them universal. See
-    // `skills/folio-core/instance-publication.md`.
+    // `skills/kg/kg-core/instance-publication.md`.
     //
     // `publication` is a literal union of one value, so `"published"` is
     // refused by the type rather than here — deliberately, because a refusal

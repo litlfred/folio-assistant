@@ -54,7 +54,7 @@ practice' drift, not formal"*. So:
 ## Done when
 
 - [ ] The PDF is ingested with **extraction provenance** (`capturedAt`,
-      `producer`, `readAt`) per `skills/folio-core/asset-extraction.md` —
+      `producer`, `readAt`) per `skills/library/library-core/asset-extraction.md` —
       metadata by default, contents only on explicit ask, which this is.
 - [ ] Commit `4677175` is ingested as a source with its sha pinned.
 - [ ] The `.ts` skill data model carries both, with the model-specific ones

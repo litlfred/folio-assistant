@@ -18,7 +18,7 @@ repository. Retired at the owner's word, 2026-09-20, after the audit in
 the only code referencing three declared fields.
 
 Moved here rather than deleted, per
-[`fsh-guts`](../../cat-harness/skills/folio-core/fsh-guts.md) — delete means
+[`fsh-guts`](../../cat-harness/skills/kg/kg-core/fsh-guts.md) — delete means
 relocate, and actual deletion needs the owner's explicit word. The body is
 beside this record, not only in history, because it is the one thing that says
 what the ACTORS and CAPABILITIES references would have contained.

@@ -56,7 +56,7 @@ export const HEALTH_REPORT_SCHEMA = "health-report/v1";
  * tests/health with results tests/health/results"), and this repository then
  * had BOTH `test/` (the declared `qa` graph) and `tests/` (Playwright e2e
  * specs). The owner settled that on `test/` the same day — bean `auap`, see
- * `skills/folio-core/directory-conventions.md` §"`test/` is the one test
+ * `skills/kg/kg-core/directory-conventions.md` §"`test/` is the one test
  * tree".
  *
  * **This constant is the reason the move is safe, and it was nearly the

@@ -31,7 +31,7 @@
  * ## Why it lives in `schemas/` and not beside the scripts that use it
  *
  * It sat in `scripts/` until 2026-09-26. Then a **thirteenth** ignore-blind scan
- * turned up in `skills/graph-management/kg-detangle.ts`, outside the directory
+ * turned up in `skills/kg/graph-management/kg-detangle.ts`, outside the directory
  * `xd1g`'s survey searched — and the one whose output is COMMITTED, so its wrong
  * answer was pinned and then republished: `cat-harness/schemas`'s `size` read
  * **1441** where git accounts for **227**, the difference being

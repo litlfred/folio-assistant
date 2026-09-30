@@ -712,8 +712,14 @@ describe("every self-URL the export publishes resolves to something published", 
   test("nothing published still names the retired `kg/` directory", async () => {
     // Pinned as a literal, not derived: the point is that this exact string
     // stopped being a path, and a derived check would move with the mistake.
+    //
+    // The retired thing is the PUBLISHED `<base>/kg/` — the old viewer URL the
+    // `udx8` tile pointed at — so the literal is that URL's form. It was the
+    // bare substring "/kg/" until bean `9umr` gave the skills directory a `kg`
+    // TOPIC (`skills/kg/kg-core/`), a real path the bare substring would forbid.
     const doc = EXPORT_CANONICAL;
-    expect(JSON.stringify(doc)).not.toContain("/kg/");
+    expect(JSON.stringify(doc)).not.toContain("github.io/folio-assistant/kg/");
+    expect(JSON.stringify(doc)).not.toContain('"/kg/');
   });
 });
 
@@ -856,7 +862,7 @@ describe("a package's id is declared, not derived from its path", () => {
   //
   // It is now `large-datasets`: directory `large-datasets/skills/`, basename
   // `skills`, manifest `large-datasets`. (It was `kg-navigation` until bean
-  // `byql` folded that one into `cat-harness/skills/kg-navigation/`, where the
+  // `byql` folded that one into `cat-harness/skills/kg/kg-navigation/`, where the
   // basename IS the name and the test would no longer discriminate.) Same shape, and a witness the root
   // graph carries for its own reasons rather than by a declaration made for
   // one package. The members are READ from its manifest rather than listed,

@@ -36,7 +36,7 @@ four pieces are genuinely new; one already exists and is aimed somewhere else.**
 | `content/pipeline/glossary-candidates.ts` (298 ln) | proposes an owner block per unowned slug, ranked by mention count |
 | `content/pipeline/apply-glossary-curation.ts` | applies the human's choices |
 | `ui/glossary-curator.html`, `src/routes/glossary.ts` | the human-in-the-loop half |
-| `skills/folio-core/glossary-build.md` | the governing skill |
+| `skills/library/library-core/glossary-build.md` | the governing skill |
 
 Its input is `BlockBase.defines[]`, which **is** schema-backed
 (`schemas/constraints.ts:261`, `schemas/types.ts:612`). Its output is a LaTeX

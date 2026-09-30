@@ -3,7 +3,7 @@ $schema: folio-fsh-guts/v1
 title: "The `package:` field in SKILL front matter — 18 annotations, each restating its own directory"
 kind: retired-field
 movedOn: 2026-09-29
-movedFrom: "front matter of 18 `*.md` files under `cat-harness/skills/folio-core/` and `cat-harness/skills/graph-management/`"
+movedFrom: "front matter of 18 `*.md` files under `cat-harness/skills/folio-core/` and `cat-harness/skills/kg/graph-management/`"
 bean: folio-assistant-a0s3
 issue: 1168
 summary: >-
@@ -39,7 +39,7 @@ membership is stated three times: `manifest.skills`, skill front matter
 | file | `package:` | directory |
 |---|---|---|
 | `cat-harness/skills/folio-core/adjudication.md` | `folio-core` | `folio-core` |
-| `cat-harness/skills/folio-core/code-lists.md` | `folio-core` | `folio-core` |
+| `cat-harness/skills/library/library-core/code-lists.md` | `folio-core` | `folio-core` |
 | `cat-harness/skills/folio-core/communication-language.md` | `folio-core` | `folio-core` |
 | `cat-harness/skills/folio-core/evidence-review.md` | `folio-core` | `folio-core` |
 | `cat-harness/skills/folio-core/github-state-inspection.md` | `folio-core` | `folio-core` |
@@ -48,11 +48,11 @@ membership is stated three times: `manifest.skills`, skill front matter
 | `cat-harness/skills/folio-core/review-comments.md` | `folio-core` | `folio-core` |
 | `cat-harness/skills/folio-core/review-heatmap.md` | `folio-core` | `folio-core` |
 | `cat-harness/skills/folio-core/staging-review.md` | `folio-core` | `folio-core` |
-| `cat-harness/skills/folio-core/translation-manager.md` | `folio-core` | `folio-core` |
+| `cat-harness/skills/library/library-core/translation-manager.md` | `folio-core` | `folio-core` |
 | `cat-harness/skills/folio-core/untainted-verification.md` | `folio-core` | `folio-core` |
 | `cat-harness/skills/folio-core/visual-diff.md` | `folio-core` | `folio-core` |
-| `cat-harness/skills/folio-core/vocabulary-authority.md` | `folio-core` | `folio-core` |
-| `cat-harness/skills/graph-management/domain-fencing.md` | `graph-management` | `graph-management` |
-| `cat-harness/skills/graph-management/edge-kinds-and-blast-radius.md` | `graph-management` | `graph-management` |
-| `cat-harness/skills/graph-management/graph-detanglement.md` | `graph-management` | `graph-management` |
-| `cat-harness/skills/graph-management/graph-rendering.md` | `graph-management` | `graph-management` |
+| `cat-harness/skills/kg/kg-core/vocabulary-authority.md` | `folio-core` | `folio-core` |
+| `cat-harness/skills/kg/graph-management/domain-fencing.md` | `graph-management` | `graph-management` |
+| `cat-harness/skills/kg/graph-management/edge-kinds-and-blast-radius.md` | `graph-management` | `graph-management` |
+| `cat-harness/skills/kg/graph-management/graph-detanglement.md` | `graph-management` | `graph-management` |
+| `cat-harness/skills/kg/graph-management/graph-rendering.md` | `graph-management` | `graph-management` |

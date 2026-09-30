@@ -66,7 +66,7 @@ block: a verdict with no expiry cannot be told from an abandoned one.
 
 ## The fencing analysis — which rules are the platform's, and which are not
 
-Run through [`domain-fencing`](../graph-management/domain-fencing.md)'s three
+Run through [`domain-fencing`](../kg/graph-management/domain-fencing.md)'s three
 questions, in order, first-to-answer wins:
 
 | candidate rule | Q1 rationale survives translation? | Q2 domain in mechanism or vocabulary? | Q3 needs the domain installed? | verdict |
@@ -103,11 +103,11 @@ This is the same line `content-profiles` draws for block kinds and
 
 - [`untainted-verification`](untainted-verification.md) — the discipline. Read
   it first; this skill adds only what evidence review instantiates.
-- [`translation-manager`](translation-manager.md) §"The agentic round trip" —
+- [`translation-manager`](../library/library-core/translation-manager.md) §"The agentic round trip" —
   the other instance, deliberately unrelated to this one.
 - `voice-who-guideline-development` in `who-style-guide` — how a recommendation
   is **worded**. It states its own boundary: it governs the language of
   normative statements, *not the process that produces them*. This skill is on
   the other side of that line, and the two do not overlap.
-- [`domain-fencing`](../graph-management/domain-fencing.md) — the three
+- [`domain-fencing`](../kg/graph-management/domain-fencing.md) — the three
   questions, and why a fenced rule is correctly located rather than missing.

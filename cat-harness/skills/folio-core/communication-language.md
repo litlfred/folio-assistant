@@ -17,7 +17,7 @@ The owner, 2026-09-21: *"part of agent first task is to determine appropriate
 language when speaking/communicating regardless of context"*.
 
 Searched before this skill was written: this repository had a great deal about
-the language its **content** is in — [`translation-manager`](translation-manager.md),
+the language its **content** is in — [`translation-manager`](../library/library-core/translation-manager.md),
 `defaultLocale`, per-locale `.po` resolution, coverage badges — and **nothing
 at all** about the language an agent SPEAKS IN.
 
@@ -78,7 +78,7 @@ what you write into the repository.
 | chat replies, questions, status reports | **the determination** |
 | commit messages, PR bodies, issue comments | the instance's source language |
 | code comments, skills, beans, schemas | the instance's source language |
-| folio CONTENT | [`translation-manager`](translation-manager.md), not this skill |
+| folio CONTENT | [`translation-manager`](../library/library-core/translation-manager.md), not this skill |
 
 The reason is the reader, not the author. A commit message has reviewers, a
 future bisector and an agent six months from now; an issue comment has
@@ -132,7 +132,7 @@ indistinguishable from a real one.
 
 - [`interaction-modality`](interaction-modality.md) — the FORM a question
   takes; this is the LANGUAGE it takes. Both are read from the same file.
-- [`translation-manager`](translation-manager.md) — the language of content,
+- [`translation-manager`](../library/library-core/translation-manager.md) — the language of content,
   which this skill does not govern.
 - `bootstrap-tools/schemas/model-registry.ts` — why a model's own word is not
   evidence.

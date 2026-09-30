@@ -133,7 +133,7 @@ was a count of absences.
 **A measurement whose author has to explain it away is about the instrument,
 not the subject.** All of it was removed — the numbers, the field, the badge
 and both scripts. The incident in full, with its numbers, is in
-[`translation-manager`](translation-manager.md) §"The instrument, not the
+[`translation-manager`](../library/library-core/translation-manager.md) §"The instrument, not the
 translation", where it happened.
 
 ## This is one rule with two homes
@@ -142,7 +142,7 @@ It is not a platform invention. Guideline methodology separates the systematic
 review team from the guideline development group for the same reason, and
 `8rwa` carries the identical rule into evidence-based literature review for
 living guidelines. When adding a domain's rules here, run them through
-[`domain-fencing`](../graph-management/domain-fencing.md)'s three questions
+[`domain-fencing`](../kg/graph-management/domain-fencing.md)'s three questions
 first: a rule that fails all three is a folio's rule, correctly located, and
 fencing it and saying so is the honest move.
 

@@ -105,7 +105,7 @@ import { BOOTSTRAP_GRAPH_KINDS } from "../../bootstrap-tools/schemas/graph";
  * entry, which no step may touch. A consumer told only "this is state" cannot
  * tell whether writing to it is normal or a bug.
  *
- * See `skills/folio-core/content-context-and-state-graphs.md`.
+ * See `skills/kg/kg-core/content-context-and-state-graphs.md`.
  */
 export type GraphLayer = "content" | "context" | "state" | "derived";
 
@@ -236,7 +236,7 @@ export interface GraphKindDef {
    * not say" indistinguishable from "content".
    *
    * **The discipline is in the skill, not here** —
-   * `skills/folio-core/content-context-and-state-graphs.md` carries the definition,
+   * `skills/kg/kg-core/content-context-and-state-graphs.md` carries the definition,
    * the classification of every kind with its reason, the two questions that
    * settle a hard case, and what a consumer may assume about each side. The
    * classification of `fsh-guts`, `qa`, `health` and `uploads` is the part

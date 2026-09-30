@@ -546,7 +546,7 @@ Attribution.session <span class="fa-gloss-status">candidate, extracted</span>
 Attribution.skill <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The skill or tool that dispatched the authoring, e.g. <code>folio-core/library-ingestion</code>.</p>
+<p>The skill or tool that dispatched the authoring, e.g. <code>library-core/library-ingestion</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/attribution.ts"><code>cat-harness/schemas/attribution.ts#Attribution.skill</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--attribution.attribution.version" data-fa-state="extracted" data-fa-gloss="">

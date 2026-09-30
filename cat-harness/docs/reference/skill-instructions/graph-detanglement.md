@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/graph-management/graph-detanglement.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/graph-detanglement.md) — do not edit here.
+> Generated from [`cat-harness/skills/kg/graph-management/graph-detanglement.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/graph-detanglement.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/graph-management/graph-detanglement.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/kg/graph-management/graph-detanglement.md){: .fa-edit-source }
 
 {% raw %}
 # Graph detanglement — the practice, not the migration
@@ -45,7 +45,7 @@ message:
 > wrong — **check the target's layer before the importer's** — or the import
 > is."
 
-**At knowledge-graph scale** — [`kg-detangle.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/graph-management/kg-detangle.ts), beside this skill (`bun run kg:detangle`), over the
+**At knowledge-graph scale** — [`kg-detangle.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/graph-management/kg-detangle.ts), beside this skill (`bun run kg:detangle`), over the
 instance stack each `<instance>.json` declares in `needs`.
 
 The repository and knowledge-graph scales share ONE verdict function,

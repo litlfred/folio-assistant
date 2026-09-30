@@ -73,7 +73,7 @@ element shape when the LM lands; do not invent it early.
    declares an IG **instance**.
 4. **Migrate the real repos** — `smart-base` and the `smart-*` DAKs — and
    update the skills that still describe `dak.json` as somebody else's file:
-   `skills/folio-core/directory-conventions.md` §Naming cites it as an external
+   `skills/kg/kg-core/directory-conventions.md` §Naming cites it as an external
    model rather than as ours.
 
 ## Done when
