@@ -100,7 +100,31 @@ export interface TermGloss {
   readonly gloss: string;
   /** Site-relative page carrying the full treatment, when one exists. */
   readonly seeAlso?: string;
+  /**
+   * The standard property that replaced this term, as a CURIE over
+   * {@link REPLACEMENT_PREFIXES} — a CURIE rather than an IRI because
+   * `namespaces.ts` imports this module, so the namespace constants cannot be
+   * imported back. Set when a term minted
+   * here turned out to restate a published one (owner, 2026-09-30, bean
+   * `xsqm`: "emphasize preexisting standards … now align"). The term stays in
+   * the vocabulary, `owl:deprecated` and `dcterms:isReplacedBy` this IRI, so
+   * data already carrying the old IRI still resolves to a definition that
+   * says where to go — a retired IRI that 404s is a broken link someone else
+   * owns.
+   */
+  readonly replacedBy?: `${keyof typeof REPLACEMENT_PREFIXES}:${string}`;
 }
+
+/**
+ * The prefixes a `replacedBy` may use, and what each names. `processes` is
+ * bootstrap's BPMN extension namespace, resolved by the reader
+ * (`BOOTSTRAP_PROCESSES_NS`), since it moves with bootstrap's release.
+ */
+export const REPLACEMENT_PREFIXES = {
+  dcterms: "http://purl.org/dc/terms/",
+  bpmn: "http://www.omg.org/spec/BPMN/20100524/MODEL#",
+  processes: undefined,
+} as const;
 
 /**
  * The node classes — the things the graph has instances OF.
@@ -259,7 +283,7 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
  */
 export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // ── Structure ────────────────────────────────────────────────────────
-  partOf: { gloss: "The node this one belongs to." },
+  partOf: { gloss: "The node this one belongs to.", replacedBy: "dcterms:isPartOf" },
   inPackage: { gloss: "The skill package a skill ships in." },
   inSubgraph: {
     gloss:
@@ -270,6 +294,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
       "value belongs to no declared directory — vocabulary nodes are minted from the namespace " +
       "rather than from any file — and that absence is reported as its own state rather than " +
       "folded into a default.",
+    replacedBy: "dcterms:isPartOf",
   },
   localId: { gloss: "The node's own identifier within its file, before any IRI is minted." },
   module: { gloss: "The source module a node was projected from." },
@@ -306,7 +331,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   nodeKind: { gloss: "Which kind of node this is, where the type alone is not specific enough." },
   graphKind: { gloss: "The kind of graph a directory declares it holds." },
-  holdsGraph: { gloss: "A graph kind found in this directory." },
+  holdsGraph: { gloss: "A graph kind found in this directory.", replacedBy: "dcterms:type" },
   renderable: { gloss: "Whether a directory's contents are published as a website." },
   scans: { gloss: "A directory an instance will look in." },
   scope: { gloss: "Which root a declared path resolves against — the instance's or the repository's." },
@@ -358,7 +383,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   judgementOnly: { gloss: "Whether this role acts by judgement, so no skill can be named for its tasks." },
   declaresSkill: { gloss: "A skill this package declares." },
   declaresRole: { gloss: "A role this registry declares." },
-  bindsRole: { gloss: "The role a BPMN lane binds: the lane's own <bootstrap.processes:role ref>. On the lane, never on the role (#1168)." },
+  bindsRole: { gloss: "The role a BPMN lane binds: the lane's own <bootstrap.processes:role ref>. On the lane, never on the role (#1168).", replacedBy: "processes:role" },
   hasLaneUsage: {
     gloss:
       "One appearance of this glossary concept as a swimlane in one process. " +
@@ -384,7 +409,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   satisfiesStatement: { gloss: "A requirement statement this node discharges, as `req:<requirement>#<statement key>`." },
   performedBy: { gloss: "The role that performs this activity: the registry Role its lane binds." },
   inLane: { gloss: "The BPMN lane this activity sits in, a Lane node of the same process." },
-  implementedBy: { gloss: "The skill that implements this activity." },
+  implementedBy: { gloss: "The skill that implements this activity.", replacedBy: "processes:skill" },
   assignments: { gloss: "The role-to-lane bindings a diagram carries." },
   permissionName: { gloss: "A permission's name, as an actor holds it." },
   hasCapability: { gloss: "A capability this actor's environment provides." },
@@ -419,7 +444,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   maintainedBy: { gloss: "The tool that generates and keeps this artefact current." },
 
   // ── Schemas and the standards a graph conforms to ────────────────────
-  conformsTo: { gloss: "A published specification this node's files are written in, e.g. BPMN 2.0 for a process." },
+  conformsTo: { gloss: "A published specification this node's files are written in, e.g. BPMN 2.0 for a process.", replacedBy: "dcterms:conformsTo" },
   validator: { gloss: "The schema node that runtime-validates a node of this kind." },
   validatorRef: { gloss: "The `module#Export` a kind names as its validator, where no schema node for it is in this graph." },
   validatorNotApplicable: { gloss: "Why no runtime validator applies to this kind, and what grades it instead." },
@@ -433,10 +458,10 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // ── Process ──────────────────────────────────────────────────────────
   bpmnType: { gloss: "The BPMN element type a process node was read from." },
   startNode: { gloss: "The node a process begins at." },
-  incoming: { gloss: "A sequence flow arriving at this node." },
-  outgoing: { gloss: "A sequence flow leaving this node." },
-  from: { gloss: "The node a sequence flow leaves." },
-  to: { gloss: "The node a sequence flow arrives at." },
+  incoming: { gloss: "A sequence flow arriving at this node.", replacedBy: "bpmn:incoming" },
+  outgoing: { gloss: "A sequence flow leaving this node.", replacedBy: "bpmn:outgoing" },
+  from: { gloss: "The node a sequence flow leaves.", replacedBy: "bpmn:sourceRef" },
+  to: { gloss: "The node a sequence flow arrives at.", replacedBy: "bpmn:targetRef" },
   decisionRef: { gloss: "The DMN table that computes this gateway's branch." },
   decidedBy: { gloss: "The Decision node whose table computes this gateway's branch." },
   hitPolicy: { gloss: "How a DMN decision table picks among matching rules, e.g. FIRST or UNIQUE." },

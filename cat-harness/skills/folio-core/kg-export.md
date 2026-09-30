@@ -67,7 +67,7 @@ as long as the document had no consumer.
 
 ## Declaring a term is a decision, not a line of context
 
-Four questions, in this order. The worked call for each term is in
+Five questions, in this order. The worked call for each term is in
 `buildContext()`, beside the term it justifies.
 
 1. **Does the fact belong in the graph at all?** Five of the thirty-four were
@@ -97,6 +97,32 @@ Four questions, in this order. The worked call for each term is in
    dispatch object from a Tool, and stays one term typed `@json`, because
    declaring a container term alone keeps the outer key and drops every inner
    one.
+5. **Does a published standard already say it?** Then the term IS the
+   standard's property, and nothing is minted. Owner, 2026-09-30 (bean
+   `xsqm`): *"emphasize preexisting standards … now align"*. `title` and
+   `description` are Dublin Core's; `partOf`/`inSubgraph` are
+   `dcterms:isPartOf`, `holdsGraph` is `dcterms:type`, `conformsTo` is
+   `dcterms:conformsTo`; a sequence flow's `from`/`to` are BPMN's own
+   `sourceRef`/`targetRef` and a node's `incoming`/`outgoing` BPMN's
+   attributes of those names; `implementedBy` and `bindsRole` are bootstrap's
+   `processes:skill` and `processes:role`, the extension attributes the
+   diagram itself carries. bootstrap's own graph (bootstrap-tools'
+   `export-graph.ts`) uses the same IRIs, so the two graphs agree.
+
+   **How, so it cannot drift:** a term that restated a standard keeps its
+   gloss in `schemas/vocabulary.ts` and gains `replacedBy`, a CURIE.
+   `buildContext()` maps each such key through `propertyIri()`
+   (`schemas/namespaces.ts`), which reads that field, so the exporter cannot
+   name one IRI while the vocabulary names another. The published vocabulary
+   keeps the old term, `owl:deprecated` and `dcterms:isReplacedBy` the
+   standard property: data already holding the old IRI still dereferences to
+   a definition that says where to go. The JSON keys are unchanged, so a
+   reader of plain JSON sees no difference.
+
+   What stays minted is what no standard says: `performedBy`, `inLane`,
+   `hasSkill`, `startNode`, and the rest. BPMN spells a lane's members as
+   `flowNodeRef` on the LANE; `inLane` is the inverse, on the node, and no
+   standard names that direction.
 
 **No `canonicalUrl` and no `--base-url` → no absolute IRIs**, reported in
 `problems[]` rather than papered over. A fabricated absolute base is the same

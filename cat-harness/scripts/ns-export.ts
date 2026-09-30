@@ -38,6 +38,7 @@
  * @module scripts/ns-export
  * @covers cat-harness
  *
+ * @conformsTo dcmi-terms
  * @conformsTo w3c-owl2
  * @conformsTo w3c-rdf
  * @conformsTo w3c-rdfs
@@ -47,7 +48,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
 import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
-import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer, termIri } from "../schemas/namespaces.js";
+import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer, replacementIri, termIri } from "../schemas/namespaces.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
 import {
@@ -277,6 +278,12 @@ export function buildVocabulary(
       isDefinedBy: conceptSchemeIri(l),
       layer: l,
       ...(g.seeAlso ? { seeAlso: new URL(g.seeAlso, `${vocabularyIri().replace(/\/ns$/, "/")}`).href } : {}),
+      // A term that restated a published standard: still defined, so data
+      // carrying its IRI resolves, and saying which property replaced it
+      // (owner, 2026-09-30, bean `xsqm`).
+      ...(kind === "property" && replacementIri(name) !== undefined
+        ? { deprecated: true, isReplacedBy: replacementIri(name) }
+        : {}),
     });
   };
 
@@ -371,6 +378,8 @@ export function buildVocabulary(
       inScheme: { "@id": "skos:inScheme", "@type": "@id" },
       // bootstrap's nodes carry what each term uses, as in bootstrap's file.
       requires: { "@id": "dcterms:requires", "@type": "@id" },
+      deprecated: { "@id": "owl:deprecated", "@type": "http://www.w3.org/2001/XMLSchema#boolean" },
+      isReplacedBy: { "@id": "dcterms:isReplacedBy", "@type": "@id" },
       // Declared, not left bare: a JSON-LD processor DROPS an undeclared key,
       // and this one was on all 159 terms (bean vigi, found by expanding).
       layer: termIri("layer"),

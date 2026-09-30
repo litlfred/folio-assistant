@@ -9751,6 +9751,13 @@
       "status": "candidate"
     },
     {
+      "id": "vocabulary.termgloss.replacedby",
+      "prefLabel": "TermGloss.replacedBy",
+      "definition": "The standard property that replaced this term, as a CURIE over {@link REPLACEMENT_PREFIXES} — a CURIE rather than an IRI because `namespaces.ts` imports this module, so the namespace constants cannot be imported back. Set when a term minted here turned out to restate a published one (owner, 2026-09-30, bean `xsqm`: \"emphasize preexisting standards … now align\"). The term stays in the vocabulary, `owl:deprecated` and `dcterms:isReplacedBy` this IRI, so data already carrying the old IRI still resolves to a definition that says where to go — a retired IRI that 404s is a broken link someone else owns.",
+      "source": "cat-harness/schemas/vocabulary.ts#TermGloss.replacedBy",
+      "status": "candidate"
+    },
+    {
       "id": "vocabulary.termgloss.seealso",
       "prefLabel": "TermGloss.seeAlso",
       "definition": "Site-relative page carrying the full treatment, when one exists.",

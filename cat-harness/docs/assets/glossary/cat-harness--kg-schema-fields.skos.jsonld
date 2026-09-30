@@ -26462,6 +26462,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vocabulary.termgloss.replacedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermGloss.replacedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The standard property that replaced this term, as a CURIE over {@link REPLACEMENT_PREFIXES} — a CURIE rather than an IRI because `namespaces.ts` imports this module, so the namespace constants cannot be imported back. Set when a term minted here turned out to restate a published one (owner, 2026-09-30, bean `xsqm`: \"emphasize preexisting standards … now align\"). The term stays in the vocabulary, `owl:deprecated` and `dcterms:isReplacedBy` this IRI, so data already carrying the old IRI still resolves to a definition that says where to go — a retired IRI that 404s is a broken link someone else owns."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/vocabulary.ts#TermGloss.replacedBy",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/vocabulary.termgloss.seealso",
       "@type": "skos:Concept",
       "skos:inScheme": {
