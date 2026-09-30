@@ -243,7 +243,7 @@ more skills to execute a task.
 The harness's own schemas, drawn from the JSON Schemas they are generated from,
 in four packages. **test** holds the KG QA report and the test run. **process**
 holds the task and the OMG BPMN 2.0 process. **scenario** holds actor, role,
-user story and skill. **schema** holds JSON Schema and external schema. An actor
+user story, voice and skill. **schema** holds JSON Schema and external schema. An actor
 takes on roles, a role carries skills, a task sits in a lane of a role and uses
 a skill, a test run tests a skill, and a QA report audits any kind of subject.
 
@@ -253,6 +253,8 @@ a skill, a test run tests a skill, and a QA report audits any kind of subject.
 
 > **Misaligned — the snapshot is older:** today's diagram has a **Voice
 > Profile** class that slide 8 does not. The picture above is the current one.
+> The owner's copy now shows it too: slide 8 carries a fresh render, cropped
+> to the same four packages.
 
 ## 9 — Knowledge graphs in git, and the questions each repository kind answers
 {: #slide-09 data-fa-label="sec:living-deck-slide-09" }
@@ -339,7 +341,7 @@ repository: <https://github.com/litlfred/folio-assistant>
 
 > **Misaligned — broken link:** the slide spells the repository
 > `github.com/litlfred/folio-assitant` (missing an *s*). That link resolves to
-> nothing.
+> nothing. It is corrected in the owner's copy.
 
 ## 13 — Operating model: how the layers meet
 {: #slide-13 data-fa-label="sec:living-deck-slide-13" }
@@ -375,9 +377,9 @@ repository: <https://github.com/litlfred/folio-assistant>
 | 1 | docs said SMART has three layers | five (Mehl et al. 2021, the primary source) | fixed on this branch |
 | 2 | Cloudflare named as *the* CDN; 10 TB, Data Hub, "Swiss Observatory" appear nowhere else | undecided — the repo keeps the CDN swappable | recorded as proposed: bean `l9v6` |
 | 3 | notes 8; figure 9; logical model 9, scheduling not its own field | 10: the original 8 + scheduling logic + test scenarios (owner) | code lists 10, scheduling marked unformalized; WHO model lags |
-| 8 | UML lacks Voice Profile | the generated diagram | page shows current |
+| 8 | UML lacks Voice Profile | the generated diagram | page shows current; owner's copy re-rendered |
 | 9 | target repository names | the monorepo today | target vs current |
 | 11 | "not yet live" links | published under folio-assistant | snapshot only |
-| 12 | `folio-assitant` link | `folio-assistant` | snapshot only |
+| 12 | `folio-assitant` link | `folio-assistant` | corrected in the owner's copy |
 
 Aligned: slides 4 (count), 5, 6 (same lanes and tasks), 7 (partly built), 10 (`smart-kg` is its own repository) and 13 (three taskable actor kinds, plus `external`).

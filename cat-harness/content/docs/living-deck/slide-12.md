@@ -5,4 +5,4 @@ repository: <https://github.com/litlfred/folio-assistant>
 
 > **Misaligned — broken link:** the slide spells the repository
 > `github.com/litlfred/folio-assitant` (missing an *s*). That link resolves to
-> nothing.
+> nothing. It is corrected in the owner's copy.
