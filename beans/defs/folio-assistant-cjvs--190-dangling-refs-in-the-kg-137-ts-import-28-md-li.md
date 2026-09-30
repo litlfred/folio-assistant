@@ -49,7 +49,7 @@ reading: a real broken import would not typecheck.
 Sample, `md-link`:
 
 ```
-from: cat-harness/skills/authoring-who-smart-guidelines/grade.md
+from: cat-harness/skills/authoring/authoring-who-smart-guidelines/grade.md
 ref:  ../../methodologies/dmn.md
 ```
 

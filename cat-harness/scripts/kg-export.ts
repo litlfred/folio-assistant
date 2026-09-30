@@ -102,7 +102,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
  * Three times now a hardcoded list has been the bug. First this module listed
  * six directories and missed `schemas/skills/`, reporting 11 BPMN refs as
  * dangling. Then, with that fixed, the same list still omitted
- * `skills/authoring-who-smart-guidelines/` and its siblings, so
+ * `skills/authoring/authoring-who-smart-guidelines/` and its siblings, so
  * `smart-base-tools` — a file that plainly exists — came out as a dangling
  * `declaresSkill` link. `knownSkills()` in `scripts/check-workflow-refs.ts`
  * carries a fourth, differently-wrong copy of the same list.

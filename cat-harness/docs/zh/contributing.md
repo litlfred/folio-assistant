@@ -53,7 +53,7 @@ beans <id> --status in-progress   # 开始工作前先认领
   bun run scripts/gen-schema-docs.ts
   ```
 
-- **技能指令**（`docs/reference/skill-instructions/*.md`）也是自动生成的——切勿手动编辑。请编辑 `skills/content-lifecycle/*.md` 或 `src/skills/*.md` 下的技能正文并重新生成：
+- **技能指令**（`docs/reference/skill-instructions/*.md`）也是自动生成的——切勿手动编辑。请编辑 `skills/authoring/content-lifecycle/*.md` 或 `src/skills/*.md` 下的技能正文并重新生成：
 
   ```sh
   bun run scripts/gen-skill-docs.ts

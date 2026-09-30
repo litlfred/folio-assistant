@@ -63,7 +63,7 @@ de la mise à jour des directives pour les agents.
 
 - Les **instructions de compétences** (`docs/reference/skill-instructions/*.md`) sont également
   générées — ne les modifiez jamais manuellement. Modifiez le corps des compétences sous
-  `skills/content-lifecycle/*.md` ou `src/skills/*.md` et régénérez :
+  `skills/authoring/content-lifecycle/*.md` ou `src/skills/*.md` et régénérez :
 
   ```sh
   bun run scripts/gen-skill-docs.ts

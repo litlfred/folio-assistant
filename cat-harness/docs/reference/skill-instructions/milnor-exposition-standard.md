@@ -6,15 +6,15 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/milnor-exposition-standard.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/milnor-exposition-standard.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/milnor-exposition-standard.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md){: .fa-edit-source }
 
 {% raw %}
 # The Milnor exposition standard
 
 **Three files sent readers here for this section and it did not exist.**
-`skills/folio-core/exposition-swarm-drain.md` cited "one-voice style guide →
+`skills/authoring/authoring-core/exposition-swarm-drain.md` cited "one-voice style guide →
 'The Milnor exposition standard'" three times, one of them naming a
 `.claude/skills/local/one-voice-style-guide.md` that is not on disk. The eight
 hallmarks lived only inside the `expo-milnor-clarity` criterion's description —

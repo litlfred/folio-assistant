@@ -94,7 +94,7 @@ and typeset through LaTeX. `PaperContentAdapter` extends
 a kind added to `BLOCK_KINDS` cannot go unclassified.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/content-profiles.md`](cat-harness/skills/folio-core/content-profiles.md)
+[`skills/authoring/authoring-core/content-profiles.md`](cat-harness/skills/authoring/authoring-core/content-profiles.md)
 carries why adapters and profiles are different axes (adapters partition
 disjointly and `adapterForKind` must stay total; profiles *nest*), the question
 to ask when adding a content type — different **code**, or only different
@@ -644,7 +644,7 @@ to spend the words: **do not start the topic.**
   `RemarkBlock.interprets` in `schemas/types.ts`; union accessors in
   `content/pipeline/content-graph.ts`. The discipline, the two caveats that
   change what a count means, and why a count in prose is a claim rather than
-  evidence: [`uses-editorial-review`](cat-harness/skills/folio-core/uses-editorial-review.md)
+  evidence: [`uses-editorial-review`](cat-harness/skills/authoring/authoring-core/uses-editorial-review.md)
   (agent/human) plus the mechanical `uses` QA axis.
 - Lean tooling roadmap (Lean Atlas / Compass, Nazrin, refactor cluster,
   LeanDojo) — where each earns a place and how it wires into existing skills:

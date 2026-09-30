@@ -22,17 +22,17 @@ Measured 2026-09-26 in a clean worktree of pristine `origin/main` at
 
 A `scripts/` → `cat-harness/scripts/` rewrite, left over from the pre-split
 move, was applied to each link's **text** *and* to its **href**. From
-`cat-harness/skills/folio-paper-adapter/`, `../../` already **is**
+`cat-harness/skills/authoring/folio-paper-adapter/`, `../../` already **is**
 `cat-harness/`, so every rewritten href resolves to
 `cat-harness/cat-harness/scripts/…`:
 
 ```
-skills/folio-paper-adapter/document-intake.md    -> ../../cat-harness/scripts/pdf-extract.py
-skills/folio-paper-adapter/document-intake.md    -> ../../cat-harness/scripts/pdf-structure.py
-skills/folio-paper-adapter/document-intake.md    -> ../../cat-harness/scripts/pdf-ocr.py
-skills/folio-paper-adapter/document-intake.md    -> ../../cat-harness/scripts/extract-candidates.py
-skills/folio-paper-adapter/latex-build-cache.md  -> ../../cat-harness/scripts/install-tex.sh
-skills/folio-paper-adapter/latex-build-cache.md  -> ../../cat-harness/scripts/feature-build.sh
+skills/authoring/folio-paper-adapter/document-intake.md    -> ../../cat-harness/scripts/pdf-extract.py
+skills/authoring/folio-paper-adapter/document-intake.md    -> ../../cat-harness/scripts/pdf-structure.py
+skills/authoring/folio-paper-adapter/document-intake.md    -> ../../cat-harness/scripts/pdf-ocr.py
+skills/authoring/folio-paper-adapter/document-intake.md    -> ../../cat-harness/scripts/extract-candidates.py
+skills/authoring/folio-paper-adapter/latex-build-cache.md  -> ../../cat-harness/scripts/install-tex.sh
+skills/authoring/folio-paper-adapter/latex-build-cache.md  -> ../../cat-harness/scripts/feature-build.sh
 ```
 
 All six targets exist at `cat-harness/scripts/…`, verified individually — so

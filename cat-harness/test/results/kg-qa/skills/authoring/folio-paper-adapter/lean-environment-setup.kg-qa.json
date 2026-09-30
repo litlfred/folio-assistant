@@ -1,0 +1,56 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "lean-environment-setup",
+    "path": "skills/authoring/folio-paper-adapter/lean-environment-setup.md"
+  },
+  "source_hash": "29cd615632b0",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup.ts",
+          "detail": "cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup.ts changed since cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 1,
+    "n/a": 1,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup.md",
+      "code": "cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup.ts",
+      "prose_hash": "29cd615632b0",
+      "code_hash": "761d84645e8f",
+      "by": "baseline"
+    }
+  ]
+}
