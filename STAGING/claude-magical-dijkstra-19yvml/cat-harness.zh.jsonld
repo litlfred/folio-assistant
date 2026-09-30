@@ -305,14 +305,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T17:49:21.599Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/5eb8717c37c3fd62a330459c55aab450b5abddcd",
-  "sourceCommitSha": "5eb8717c37c3fd62a330459c55aab450b5abddcd",
-  "sourceCommitAt": "2026-09-30T17:42:32Z",
+  "generatedAt": "2026-09-30T18:11:40.841Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/70c8a5caa3c73541fe170f27b0b6b878ba8c233b",
+  "sourceCommitSha": "70c8a5caa3c73541fe170f27b0b6b878ba8c233b",
+  "sourceCommitAt": "2026-09-30T18:08:53Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 286,
+    "Skill": 287,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -4357,6 +4357,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/bib-human-review"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/upload-naming",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "upload-naming",
+      "title": "Upload naming — the name is normalised, not the link escaped",
+      "description": "What an ingested file may be CALLED. Read before adding anything to an `uploads` or `library` graph, before writing a generator that links to one, and before \"fixing\" a broken link in a generated README. Covers which characters break what, why the name is normalised rather than the link escaped, how a sidecar stays paired with its source, and the one case the fixer refuses.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/upload-naming.md",
+      "instructionLines": 218,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-naming"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/literature-search",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "literature-search",
@@ -6860,6 +6877,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/ontologist",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/tabular-metadata",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/upload-naming",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#skill/uploads-watch"
       ],
       "providesCapability": [],

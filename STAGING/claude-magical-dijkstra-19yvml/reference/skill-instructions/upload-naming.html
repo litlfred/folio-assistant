@@ -14,9 +14,10 @@
   <style id="jtd-nav-activation">
   
 
+    .site-nav > ul.nav-list:first-child > li > a,
     
-    .site-nav > ul.nav-list:first-child > li:not(:nth-child(8)) > a,
-    .site-nav > ul.nav-list:first-child > li > ul > li a {
+    .site-nav > ul.nav-list:first-child > li > ul > li:not(:nth-child(237)) > a,
+    .site-nav > ul.nav-list:first-child > li > ul > li > ul > li a {
       background-image: none;
     }
 
@@ -25,12 +26,14 @@
       background-image: none;
     }
 
-    .site-nav > ul.nav-list:first-child > li:nth-child(8) > a {
+    .site-nav > ul.nav-list:first-child > li:nth-child(10) > ul > li:nth-child(237) > a {
       font-weight: 600;
       text-decoration: none;
-    }.site-nav > ul.nav-list:first-child > li:nth-child(8) > button svg {
+    }.site-nav > ul.nav-list:first-child > li:nth-child(10) > button svg,
+    .site-nav > ul.nav-list:first-child > li:nth-child(10) > ul > li:nth-child(237) > button svg {
       transform: rotate(-90deg);
-    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(8) > ul.nav-list {
+    }.site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(10) > ul.nav-list,
+    .site-nav > ul.nav-list:first-child > li.nav-list-item:nth-child(10) > ul.nav-list > li.nav-list-item:nth-child(237) > ul.nav-list {
       display: block;
     }
   </style>
@@ -50,16 +53,16 @@
 
 
   <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Skills &amp; roles | folio-assistant</title>
+<title>Upload naming | folio-assistant</title>
 <meta name="generator" content="Jekyll v3.10.0" />
-<meta property="og:title" content="Skills &amp; roles" />
-<meta property="og:locale" content="en" />
+<meta property="og:title" content="Upload naming" />
+<meta property="og:locale" content="en_US" />
 <meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." />
 <meta property="og:site_name" content="folio-assistant" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="Skills &amp; roles" />
+<meta property="twitter:title" content="Upload naming" />
 <!-- End Jekyll SEO tag -->
 
 
@@ -268,12 +271,8 @@
   "translationStatus": "",
   "translationSource": "",
   "supportedLocales": ["ar","zh","en","fr","ru","es"],
-  "availableLocales": ["ar","zh","en","fr","ru","es"],
-  "translationQa":{
-    "key": "page.translation",
-    "src": "/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/qa/skills/page.translation.json",
-    "index": "/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/assets/qa/skills/qa-index.json"
-  },
+  "availableLocales": null,
+  "translationQa":null,
   "sweep": {
     "run": true,
     "sweptAt": "2026-09-21T11:25:19.602Z",
@@ -786,676 +785,376 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </div>
 
     <div class="main-content-wrap">
-      
+      <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+  <ol class="breadcrumb-nav-list">
+    <li class="breadcrumb-nav-list-item"><a href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/reference/skill-instructions/">Skill instructions</a></li>
+    <li class="breadcrumb-nav-list-item"><span>Upload naming</span></li>
+  </ol>
+</nav>
+
+
       <div id="main-content" class="main-content">
         <main>
           
-            <h1 class="no_toc" id="skills--roles">
+            <blockquote class="note">
+  <p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/upload-naming.md"><code class="language-plaintext highlighter-rouge">cat-harness/skills/library/library-core/upload-naming.md</code></a> — do not edit here.</p>
+
+  <p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/upload-naming.md" class="fa-edit-source">✎ Edit this page’s source</a></p>
+</blockquote>
+<h1 id="upload-naming--the-name-is-normalised-not-the-link-escaped">
   
   
-    <a href="#skills--roles" class="anchor-heading" aria-labelledby="skills--roles"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Skills &amp; roles
+    <a href="#upload-naming--the-name-is-normalised-not-the-link-escaped" class="anchor-heading" aria-labelledby="upload-naming--the-name-is-normalised-not-the-link-escaped"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Upload naming — the name is normalised, not the link escaped
   
   
 </h1>
     
 
-<p>This page is the master list of every <strong>skill</strong> and <strong>role</strong> in folio-assistant,
-and explains how they fit together with the LLM. For the typed input/output
-contract of each skill, see the <a href="reference/skills/">Skill schema reference</a>.</p>
-
-<ol id="markdown-toc">
-  <li><a href="#how-it-works-together-with-the-llm" id="markdown-toc-how-it-works-together-with-the-llm">How it works together with the LLM</a></li>
-  <li><a href="#skills" id="markdown-toc-skills">Skills</a>    <ol>
-      <li><a href="#where-skills-live-and-their-status" id="markdown-toc-where-skills-live-and-their-status">Where skills live (and their status)</a></li>
-      <li><a href="#cross-cutting-content-lifecycle" id="markdown-toc-cross-cutting-content-lifecycle">Cross-cutting: <code class="language-plaintext highlighter-rouge">content-lifecycle</code></a></li>
-      <li><a href="#documents--policy-guidance-folio-document-adapter" id="markdown-toc-documents--policy-guidance-folio-document-adapter">Documents &amp; policy guidance: <code class="language-plaintext highlighter-rouge">folio-document-adapter</code></a></li>
-      <li><a href="#papers--books-authoring-math" id="markdown-toc-papers--books-authoring-math">Papers &amp; books: <code class="language-plaintext highlighter-rouge">authoring-math</code></a></li>
-      <li><a href="#who-smart-guidelines-authoring-who-smart-guidelines" id="markdown-toc-who-smart-guidelines-authoring-who-smart-guidelines">WHO SMART Guidelines: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code></a></li>
-      <li><a href="#agentplatform-skills-srcskills" id="markdown-toc-agentplatform-skills-srcskills">Agent/platform skills (<code class="language-plaintext highlighter-rouge">src/skills</code>)</a></li>
-      <li><a href="#local-coordination-skills-claudeskillslocal" id="markdown-toc-local-coordination-skills-claudeskillslocal">Local coordination skills (<code class="language-plaintext highlighter-rouge">.claude/skills/local</code>)</a></li>
-      <li><a href="#platform-skill-bundles-skillsfolio-core-skillsfolio-document-adapter-skillsfolio-paper-adapter" id="markdown-toc-platform-skill-bundles-skillsfolio-core-skillsfolio-document-adapter-skillsfolio-paper-adapter">Platform skill bundles (<code class="language-plaintext highlighter-rouge">skills/folio-core</code>, <code class="language-plaintext highlighter-rouge">skills/folio-document-adapter</code>, <code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter</code>)</a></li>
-    </ol>
-  </li>
-  <li><a href="#roles-actors" id="markdown-toc-roles-actors">Roles (actors)</a>    <ol>
-      <li><a href="#people" id="markdown-toc-people">People</a></li>
-      <li><a href="#system-actors" id="markdown-toc-system-actors">System actors</a></li>
-      <li><a href="#role-assignment" id="markdown-toc-role-assignment">Role assignment</a></li>
-    </ol>
-  </li>
-  <li><a href="#capabilities--requirements" id="markdown-toc-capabilities--requirements">Capabilities &amp; requirements</a></li>
-  <li><a href="#see-also" id="markdown-toc-see-also">See also</a></li>
-</ol><hr />
-<h2 id="how-it-works-together-with-the-llm">
-  
-  
-    <a href="#how-it-works-together-with-the-llm" class="anchor-heading" aria-labelledby="how-it-works-together-with-the-llm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it works together with the LLM
-  
-  
-</h2>
-    
-
-<p>folio-assistant gives an LLM agent a structured way to do real authoring work.
-Five concepts compose:</p>
-
-<pre><code class="language-mermaid">flowchart TD
-    LLM[LLM agent] --&gt;|skill_list / skill_fetch| Skill[Skill&lt;br/&gt;schema-bounded unit of work]
-    Skill --&gt; Pkg[Skill package&lt;br/&gt;groups skills + Docker deps]
-    Skill --&gt; Schema[JSON Schema&lt;br/&gt;typed input/output]
-    LLM --&gt; Role[Role / actor&lt;br/&gt;who the agent acts as]
-    Role --&gt;|RBAC| Cap[Capabilities&lt;br/&gt;what the environment can do]
-    Role --&gt; Stage[Lifecycle stage&lt;br/&gt;plan→author→…→retire]
-    Cap --&gt; Req[Requirements&lt;br/&gt;gates that must hold]
-</code></pre>
-
-<ol>
-  <li><strong>Skill</strong> — a documented, schema-bounded unit of work (e.g.
-<code class="language-plaintext highlighter-rouge">lean-formalization</code>). The agent discovers skills with the <code class="language-plaintext highlighter-rouge">skill_list</code> MCP
-tool and loads a skill’s instructions with <code class="language-plaintext highlighter-rouge">skill_fetch</code>. Each skill has a
-typed <a href="reference/skills/">input/output contract</a>.</li>
-  <li><strong>Skill package</strong> — a group of related skills that also declares its
-Docker/runtime dependencies (<code class="language-plaintext highlighter-rouge">package-manifest.json</code>).</li>
-  <li><strong>Role (actor)</strong> — <em>who</em> the agent is acting as. An <strong>actor</strong> takes on a
-<strong>role</strong> because of the BPMN lane it acts in. What the actor may <strong>do</strong> is a
-W3C ODRL policy in <code class="language-plaintext highlighter-rouge">policies/</code>, not a property of the role. Before every task
-the executor checks authentication, role assignment, policy and content
-access (<a href="reference/skill-instructions/task-authorization.html"><code class="language-plaintext highlighter-rouge">task-authorization</code></a>);
-the HTTP routes ask the same policies through <code class="language-plaintext highlighter-rouge">src/core/rbac.ts</code>.</li>
-  <li><strong>Capability</strong> — a concrete environment ability (e.g. <code class="language-plaintext highlighter-rouge">latex-compiler</code>,
-<code class="language-plaintext highlighter-rouge">lean-toolchain</code>). Skills require capabilities; <code class="language-plaintext highlighter-rouge">check_dependencies</code> probes
-them.</li>
-  <li><strong>Requirement</strong> — a gate that must hold (e.g. <code class="language-plaintext highlighter-rouge">commit-hygiene</code>,
-<code class="language-plaintext highlighter-rouge">lean-verification</code>) before/while a stage proceeds.</li>
-</ol>
-
-<p>The loop, in practice: the agent primes the work-plan (<code class="language-plaintext highlighter-rouge">work_plan_prime</code>),
-checks it has the capabilities it needs (<code class="language-plaintext highlighter-rouge">check_dependencies</code>), lists and loads
-the right skill (<code class="language-plaintext highlighter-rouge">skill_list</code> → <code class="language-plaintext highlighter-rouge">skill_fetch</code>), does the work as the user’s role
-(subject to RBAC), and validates/builds/publishes through the content adapter’s
-tools.</p><hr />
-<h2 id="skills">
-  
-  
-    <a href="#skills" class="anchor-heading" aria-labelledby="skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Skills
-  
-  
-</h2>
-    
-<h3 id="where-skills-live-and-their-status">
-  
-  
-    <a href="#where-skills-live-and-their-status" class="anchor-heading" aria-labelledby="where-skills-live-and-their-status"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where skills live (and their status)
-  
-  
-</h3>
-    
-
-<p>A skill is defined across a few layers — not a single file. For any skill:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Layer</th>
-      <th>Location</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong>Definition</strong> (roles, required capabilities, requirements, routing patterns, lifecycle stages, schema ref)</td>
-      <td><code class="language-plaintext highlighter-rouge">.claude/skills/local/&lt;skill&gt;.json</code></td>
-      <td>✅ all 22 authoring skills — validated in CI by <code class="language-plaintext highlighter-rouge">scripts/validate-skills.ts</code></td>
-    </tr>
-    <tr>
-      <td><strong>Typed contract</strong> (input/output JSON Schema)</td>
-      <td><code class="language-plaintext highlighter-rouge">schemas/skills/&lt;skill&gt;/</code></td>
-      <td>✅ all 22 — see <a href="reference/skills/">reference</a></td>
-    </tr>
-    <tr>
-      <td><strong>Instruction body</strong> (prose how-to the LLM loads) — browse them in the <a href="reference/skill-instructions/">Skill instructions</a> reference</td>
-      <td><code class="language-plaintext highlighter-rouge">skills/content-lifecycle/*.md</code>, <code class="language-plaintext highlighter-rouge">skills/folio-*-adapter/*.md</code>, <code class="language-plaintext highlighter-rouge">src/skills/*.md</code></td>
-      <td>✅ lifecycle, agent, platform-bundle and <strong>folio-document-adapter</strong> skills; ⏳ <strong>authoring-math / authoring-who-smart-guidelines bodies are TBD</strong> (those packages ship the manifest + JSON definitions)</td>
-    </tr>
-    <tr>
-      <td><strong>Package</strong> (Docker/runtime deps)</td>
-      <td><code class="language-plaintext highlighter-rouge">skills/&lt;package&gt;/package-manifest.json</code></td>
-      <td>✅ all four packages</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>So <em>yes, the skills exist</em> — as structured definitions + typed schemas, with prose
-bodies shipped for the lifecycle and agent skills. The <code class="language-plaintext highlighter-rouge">skill_fetch</code> MCP tool
-currently serves the <code class="language-plaintext highlighter-rouge">src/skills/*.md</code> bodies; the authoring-skill prose bodies
-are the next thing to fill in (the definitions and contracts they’d attach to
-are already in place).</p>
-<h3 id="cross-cutting-content-lifecycle">
-  
-  
-    <a href="#cross-cutting-content-lifecycle" class="anchor-heading" aria-labelledby="cross-cutting-content-lifecycle"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Cross-cutting: <code class="language-plaintext highlighter-rouge">content-lifecycle</code>
-  
-  
-</h3>
-    
-
-<p>The lifecycle stages that apply to <strong>every</strong> content type:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Stage</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="reference/skills/content-plan.html"><code class="language-plaintext highlighter-rouge">content-plan</code></a></td>
-      <td>plan</td>
-      <td>Scope, team, timeline, governance</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-author.html"><code class="language-plaintext highlighter-rouge">content-author</code></a></td>
-      <td>author</td>
-      <td>Create structured artifacts</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-validate.html"><code class="language-plaintext highlighter-rouge">content-validate</code></a></td>
-      <td>validate</td>
-      <td>Check schema + constraints</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-review.html"><code class="language-plaintext highlighter-rouge">content-review</code></a></td>
-      <td>review</td>
-      <td>Formal review &amp; approval</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-test.html"><code class="language-plaintext highlighter-rouge">content-test</code></a></td>
-      <td>test</td>
-      <td>End-to-end QA / build green</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-publish.html"><code class="language-plaintext highlighter-rouge">content-publish</code></a></td>
-      <td>publish</td>
-      <td>Render &amp; deploy</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/content-feedback.html"><code class="language-plaintext highlighter-rouge">content-feedback</code></a></td>
-      <td>feedback</td>
-      <td>Collect &amp; triage feedback</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-retire</code></td>
-      <td>retire</td>
-      <td>Deprecate / archive</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="documents--policy-guidance-folio-document-adapter">
-  
-  
-    <a href="#documents--policy-guidance-folio-document-adapter" class="anchor-heading" aria-labelledby="documents--policy-guidance-folio-document-adapter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Documents &amp; policy guidance: <code class="language-plaintext highlighter-rouge">folio-document-adapter</code>
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="reference/skills/document-authoring.html"><code class="language-plaintext highlighter-rouge">document-authoring</code></a></td>
-      <td>Create and revise blocks in a prose folio</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/document-structure.html"><code class="language-plaintext highlighter-rouge">document-structure</code></a></td>
-      <td>Chapters and sections — add, remove, reorder</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a></td>
-      <td>Carry a recommendation, requirement or rule</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/document-publishing.html"><code class="language-plaintext highlighter-rouge">document-publishing</code></a></td>
-      <td>Markdown → HTML / PDF, no TeX</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="papers--books-authoring-math">
-  
-  
-    <a href="#papers--books-authoring-math" class="anchor-heading" aria-labelledby="papers--books-authoring-math"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Papers &amp; books: <code class="language-plaintext highlighter-rouge">authoring-math</code>
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="reference/skills/lean-formalization.html"><code class="language-plaintext highlighter-rouge">lean-formalization</code></a></td>
-      <td>Formalize statements/proofs in Lean 4</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/latex-authoring.html"><code class="language-plaintext highlighter-rouge">latex-authoring</code></a></td>
-      <td>Author LaTeX documents</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/proof-verification.html"><code class="language-plaintext highlighter-rouge">proof-verification</code></a></td>
-      <td>Verify proofs, audit <code class="language-plaintext highlighter-rouge">sorry</code>/axioms</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">scientific-visualization</code></td>
-      <td>Figures &amp; diagrams</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">hypothesis-generation</code></td>
-      <td>Propose conjectures / directions</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">scientific-critical-thinking</code></td>
-      <td>Adversarial review of arguments</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="who-smart-guidelines-authoring-who-smart-guidelines">
-  
-  
-    <a href="#who-smart-guidelines-authoring-who-smart-guidelines" class="anchor-heading" aria-labelledby="who-smart-guidelines-authoring-who-smart-guidelines"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> WHO SMART Guidelines: <code class="language-plaintext highlighter-rouge">authoring-who-smart-guidelines</code>
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><a href="reference/skills/l2-dak-authoring.html"><code class="language-plaintext highlighter-rouge">l2-dak-authoring</code></a></td>
-      <td>L2 DAK artifacts (data dictionary, etc.)</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/l3-fhir-authoring.html"><code class="language-plaintext highlighter-rouge">l3-fhir-authoring</code></a></td>
-      <td>L3 FHIR resources via FSH</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/bpmn-authoring.html"><code class="language-plaintext highlighter-rouge">bpmn-authoring</code></a></td>
-      <td>BPMN 2.0 business processes</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/dmn-authoring.html"><code class="language-plaintext highlighter-rouge">dmn-authoring</code></a></td>
-      <td>DMN decision tables</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/terminology-management.html"><code class="language-plaintext highlighter-rouge">terminology-management</code></a></td>
-      <td>Code systems / value sets</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/fhir-validation.html"><code class="language-plaintext highlighter-rouge">fhir-validation</code></a></td>
-      <td>Validate against FHIR profiles</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/ig-publication.html"><code class="language-plaintext highlighter-rouge">ig-publication</code></a></td>
-      <td>Build &amp; publish the IG</td>
-    </tr>
-    <tr>
-      <td><a href="reference/skills/quality-control.html"><code class="language-plaintext highlighter-rouge">quality-control</code></a></td>
-      <td>QA gates</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="agentplatform-skills-srcskills">
-  
-  
-    <a href="#agentplatform-skills-srcskills" class="anchor-heading" aria-labelledby="agentplatform-skills-srcskills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Agent/platform skills (<code class="language-plaintext highlighter-rouge">src/skills</code>)
-  
-  
-</h3>
-    
-
-<p>Skills the LLM uses to work effectively in the repo (loaded via <code class="language-plaintext highlighter-rouge">skill_fetch</code>,
-package <code class="language-plaintext highlighter-rouge">folio-assistant</code>):</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">corpus-grep</code></td>
-      <td>Search across the content corpus</td>
-    </tr>
-  </tbody>
-</table></div>
-
 <blockquote>
-  <p><code class="language-plaintext highlighter-rouge">editor</code>, <code class="language-plaintext highlighter-rouge">readability-editing</code>, <code class="language-plaintext highlighter-rouge">todo-review</code>, <code class="language-plaintext highlighter-rouge">symbiotic-interaction</code>, and
-<code class="language-plaintext highlighter-rouge">deployment-auth</code> now live (generalized) in the <strong><code class="language-plaintext highlighter-rouge">folio-core</code></strong> bundle below —
-fetch them with <code class="language-plaintext highlighter-rouge">package_name="folio-core"</code>.</p>
+  <p><strong>Lives in <code class="language-plaintext highlighter-rouge">library-core</code>, not <code class="language-plaintext highlighter-rouge">folio-core</code>.</strong> It was written into
+<code class="language-plaintext highlighter-rouge">folio-core</code> on 2026-09-30 and moved the same day, when bean <code class="language-plaintext highlighter-rouge">9umr</code> carved
+the library topic out: <code class="language-plaintext highlighter-rouge">library-core</code> is <em>“acquisition, ingestion and
+archiving of sources (arXiv, web pages, photos, uploads)”</em>, and what an
+ingested file may be CALLED is that topic’s question. It sits beside
+<code class="language-plaintext highlighter-rouge">uploads-watch</code> and <code class="language-plaintext highlighter-rouge">library-ingestion</code>, which is where somebody looking for
+it will look.</p>
 </blockquote>
 
-<p>A paper folio wants the <code class="language-plaintext highlighter-rouge">folio-document-adapter</code> skills too: a paper <em>is</em> a
-document plus Lean-bearing blocks, so <code class="language-plaintext highlighter-rouge">document-structure</code> and
-<code class="language-plaintext highlighter-rouge">document-publishing</code> apply to both. The two bundles are halves of one content
-model, not alternatives to choose between.</p>
-<h3 id="local-coordination-skills-claudeskillslocal">
-  
-  
-    <a href="#local-coordination-skills-claudeskillslocal" class="anchor-heading" aria-labelledby="local-coordination-skills-claudeskillslocal"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Local coordination skills (<code class="language-plaintext highlighter-rouge">.claude/skills/local</code>)
-  
-  
-</h3>
-    
+<p><strong>A file in an <code class="language-plaintext highlighter-rouge">uploads</code> or <code class="language-plaintext highlighter-rouge">library</code> graph is named by whoever uploaded it, and
+that name reaches a generated Markdown link.</strong> So the name is an interface, not
+a label.</p>
 
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Skill</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">prepare-merge</code></td>
-      <td>Take a branch to clean/green/mergeable (see also <code class="language-plaintext highlighter-rouge">/watch</code>)</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">bean-coordination</code></td>
-      <td>Multi-agent claim/coordination discipline</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">todo-manager</code></td>
-      <td>beans-as-todos discipline</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="platform-skill-bundles-skillsfolio-core-skillsfolio-document-adapter-skillsfolio-paper-adapter">
+<p><code class="language-plaintext highlighter-rouge">bun run check:upload-names</code> reports; <code class="language-plaintext highlighter-rouge">check:upload-names:check</code> gates;
+<code class="language-plaintext highlighter-rouge">check:upload-names:fix</code> renames with <code class="language-plaintext highlighter-rouge">git mv</code>.</p>
+<h2 id="the-rule">
   
   
-    <a href="#platform-skill-bundles-skillsfolio-core-skillsfolio-document-adapter-skillsfolio-paper-adapter" class="anchor-heading" aria-labelledby="platform-skill-bundles-skillsfolio-core-skillsfolio-document-adapter-skillsfolio-paper-adapter"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Platform skill bundles (<code class="language-plaintext highlighter-rouge">skills/folio-core</code>, <code class="language-plaintext highlighter-rouge">skills/folio-document-adapter</code>, <code class="language-plaintext highlighter-rouge">skills/folio-paper-adapter</code>)
-  
-  
-</h3>
-    
-
-<p>Larger <strong>platform bundles</strong>, two of them migrated from the qou content repo (see
-<a href="migrations/2026-06-29-platform-skills-migration.html">migration record</a> and
-issue <a href="https://github.com/litlfred/folio-assistant/issues/27">#27</a>). These are
-content-agnostic and meant to be synced into any folio:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Bundle</th>
-      <th style="text-align: right">Skills</th>
-      <th>Scope</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">folio-core</code></strong></td>
-      <td style="text-align: right">43</td>
-      <td>Agent coordination, the watcher framework, QA / render / bibliography / glossary pipeline, docs, deployment — applies to <em>any</em> content type.</td>
-    </tr>
-    <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">folio-document-adapter</code></strong></td>
-      <td style="text-align: right">4</td>
-      <td>Prose folios: block authoring, chapter/section structure, normative statements, and the TeX-free publication path. Applies to papers too.</td>
-    </tr>
-    <tr>
-      <td><strong><code class="language-plaintext highlighter-rouge">folio-paper-adapter</code></strong></td>
-      <td style="text-align: right">40</td>
-      <td>Formal-math paper-adapter (any Lean 4 + LaTeX paper): Lean workflow, proof tooling, content-object validation, LaTeX, paper structure, import, simulators.</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>Irreducible QOU physics skills were skipped; QOU-specific examples in the rest
-were generalized. Each bundle ships a <code class="language-plaintext highlighter-rouge">package-manifest.json</code>.</p>
-
-<blockquote>
-  <p>Skill <strong>schemas</strong> (typed input/output for the authoring skills) are generated
-into the <a href="reference/skills/">Skill schema reference</a> — never drift from what
-the framework validates.</p>
-</blockquote><hr />
-<h2 id="roles-actors">
-  
-  
-    <a href="#roles-actors" class="anchor-heading" aria-labelledby="roles-actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Roles (actors)
+    <a href="#the-rule" class="anchor-heading" aria-labelledby="the-rule"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rule
   
   
 </h2>
     
 
-<p>Roles answer <em>who the agent is acting as</em>. The current user is mapped to a role
-by <code class="language-plaintext highlighter-rouge">role-assignments.json</code>, and the role’s capabilities bound what the agent may
-do (RBAC). Roles <strong>inherit</strong> (e.g. <code class="language-plaintext highlighter-rouge">author</code> inherits <code class="language-plaintext highlighter-rouge">reviewer</code>).</p>
+<p>A name may not contain any of</p>
 
-<blockquote>
-  <p>To see these roles <em>as lanes</em> — who edits, who reviews, who signs off, and
-which steps an agent may take on its own — read
-<a href="publication-workflow.html#who-is-who">Publication workflow → Who is who</a>.</p>
-</blockquote>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>space , ( ) [ ] { } # ? &amp; % ' " ` &lt; &gt; |
+</code></pre></div></div>
 
-<pre><code class="language-mermaid">flowchart LR
-    viewer --&gt; reviewer --&gt; author --&gt; admin
-</code></pre>
-<h3 id="people">
+<p>Everything else is left <strong>exactly</strong> as uploaded. The fixer replaces a run of
+those with a single <code class="language-plaintext highlighter-rouge">-</code>, trims, and preserves the extension and any sidecar
+suffix.</p>
+<h2 id="why-those-characters-and-not-everything-a-slug-would-change">
   
   
-    <a href="#people" class="anchor-heading" aria-labelledby="people"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> People
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Role</th>
-      <th>What they can do</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">viewer</code></td>
-      <td>Base read-only. View content, no changes.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">reviewer</code></td>
-      <td>View + review comments; no direct changes.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">author</code></td>
-      <td>Create/modify content (inherits reviewer).</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">admin</code></td>
-      <td>Full administrative access — roles, settings, all content.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">programme-manager</code></td>
-      <td>Scope, team formation, timeline, stakeholder governance.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">technical-officer</code></td>
-      <td>Programme-area coordinator + first-pass reviewer.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">business-analyst</code></td>
-      <td>L2 DAK author (BPMN, data dictionaries, decision logic, indicators).</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">clinical-sme</code></td>
-      <td>Clinical validator / ground-truth provider.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">terminologist</code></td>
-      <td>Terminology governance (ICD-11, SNOMED CT, LOINC).</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">fhir-modeller</code></td>
-      <td>L3 FHIR artifacts (FSH, SUSHI, CQL, IG Publisher).</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">content-reviewer</code></td>
-      <td>Formal approval / phase-transition sign-off.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">qc-reviewer</code></td>
-      <td>Publication-readiness QA across layers.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">publication-manager</code></td>
-      <td>Releases, IG config, builds, versioning, publication.</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">translator</code></td>
-      <td>Localization for UN-supported languages.</td>
-    </tr>
-  </tbody>
-</table></div>
-<h3 id="system-actors">
-  
-  
-    <a href="#system-actors" class="anchor-heading" aria-labelledby="system-actors"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> System actors
-  
-  
-</h3>
-    
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Actor</th>
-      <th>Provides</th>
-      <th>Cannot</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">authoring-agent</code></td>
-      <td>Drafts and revises a <strong>proposed</strong> change to a content block</td>
-      <td>Commit — its output goes to the editor through the validation gate</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">review-agent</code></td>
-      <td>Non-mechanical validation: accuracy, voice, exposition</td>
-      <td>Approve — it reports findings only</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">lean-mcp</code></td>
-      <td>Lean 4 proof checking &amp; diagnostics via MCP</td>
-      <td>—</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">ig-publisher-service</code></td>
-      <td>FHIR IG Publisher build &amp; QA reporting</td>
-      <td>—</td>
-    </tr>
-  </tbody>
-</table></div>
-
-<p>Where each of these sits in the process — and what an agent may and may not
-decide — is modelled in the
-<a href="publication-workflow.html">publication workflow</a> BPMN diagrams.</p>
-<h3 id="role-assignment">
-  
-  
-    <a href="#role-assignment" class="anchor-heading" aria-labelledby="role-assignment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Role assignment
-  
-  
-</h3>
-    
-
-<p><code class="language-plaintext highlighter-rouge">role-assignments.json</code> maps a user identity (from git config / auth) to a role
-by priority. The shipped defaults:</p>
-
-<div class="table-wrapper"><table>
-  <thead>
-    <tr>
-      <th>Pattern</th>
-      <th>Source</th>
-      <th>Role</th>
-      <th>Priority</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">litlfred@gmail.com</code></td>
-      <td>git-config</td>
-      <td><code class="language-plaintext highlighter-rouge">admin</code></td>
-      <td>100</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">*@who.int</code></td>
-      <td>git-config</td>
-      <td><code class="language-plaintext highlighter-rouge">author</code></td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <td><code class="language-plaintext highlighter-rouge">*</code></td>
-      <td>default</td>
-      <td><code class="language-plaintext highlighter-rouge">viewer</code></td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table></div><hr />
-<h2 id="capabilities--requirements">
-  
-  
-    <a href="#capabilities--requirements" class="anchor-heading" aria-labelledby="capabilities--requirements"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Capabilities &amp; requirements
+    <a href="#why-those-characters-and-not-everything-a-slug-would-change" class="anchor-heading" aria-labelledby="why-those-characters-and-not-everything-a-slug-would-change"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why those characters and not “everything a slug would change”
   
   
 </h2>
     
 
-<p><strong>Capabilities</strong> are concrete environment abilities a skill may require; the
-<code class="language-plaintext highlighter-rouge">check_dependencies</code> MCP tool probes them:</p>
+<p><strong>Case is not the defect.</strong> A first draft normalised with <code class="language-plaintext highlighter-rouge">slugify</code> — lowercase,
+non-alphanumeric to <code class="language-plaintext highlighter-rouge">-</code> — and reported <strong>110</strong> findings over
+<code class="language-plaintext highlighter-rouge">uploads/</code>/<code class="language-plaintext highlighter-rouge">library/</code>, of which <strong>77</strong> were <code class="language-plaintext highlighter-rouge">README.md</code> → <code class="language-plaintext highlighter-rouge">readme.md</code>. Renaming
+<code class="language-plaintext highlighter-rouge">README.md</code> breaks every link to it and every generator that writes one: a
+check damaging correct names to enforce a convention nobody asked for. Narrowed
+to the characters that actually break something, the same corpus reports <strong>34</strong>.</p>
 
-<p><code class="language-plaintext highlighter-rouge">bun-runtime</code> · <code class="language-plaintext highlighter-rouge">node-runtime</code> · <code class="language-plaintext highlighter-rouge">python3</code> · <code class="language-plaintext highlighter-rouge">git-push</code> · <code class="language-plaintext highlighter-rouge">docker</code> ·
-<code class="language-plaintext highlighter-rouge">latex-compiler</code> · <code class="language-plaintext highlighter-rouge">lean-toolchain</code> · <code class="language-plaintext highlighter-rouge">lean-mcp</code> · <code class="language-plaintext highlighter-rouge">ig-publisher</code> ·
-<code class="language-plaintext highlighter-rouge">sushi-compiler</code> · <code class="language-plaintext highlighter-rouge">java-runtime</code> · <code class="language-plaintext highlighter-rouge">jekyll</code> · <code class="language-plaintext highlighter-rouge">plantuml</code> · <code class="language-plaintext highlighter-rouge">graphviz</code></p>
+<p>What each one breaks:</p>
 
-<p><strong>Requirements</strong> are gates that must hold during work:</p>
-
-<p><code class="language-plaintext highlighter-rouge">commit-hygiene</code> · <code class="language-plaintext highlighter-rouge">lean-verification</code> · <code class="language-plaintext highlighter-rouge">fhir-validation</code> ·
-<code class="language-plaintext highlighter-rouge">content-lifecycle</code> · <code class="language-plaintext highlighter-rouge">session-start</code></p><hr />
-<h2 id="see-also">
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>character</th>
+      <th>what it breaks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>space, <code class="language-plaintext highlighter-rouge">(</code>, <code class="language-plaintext highlighter-rouge">)</code></td>
+      <td>a Markdown link target <strong>ends at the first <code class="language-plaintext highlighter-rouge">)</code></strong></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">[</code> <code class="language-plaintext highlighter-rouge">]</code></td>
+      <td>the label half of the link</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;</code> <code class="language-plaintext highlighter-rouge">&gt;</code> <code class="language-plaintext highlighter-rouge">\|</code></td>
+      <td>the angle-bracket link form, and tables</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">#</code> <code class="language-plaintext highlighter-rouge">?</code></td>
+      <td>a fragment and a query to every URL parser</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&amp;</code> <code class="language-plaintext highlighter-rouge">%</code> quotes backtick</td>
+      <td>escaping in a shell, an href, or both</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">,</code></td>
+      <td>nothing — included for the stub convention, on the owner’s ruling</td>
+    </tr>
+  </tbody>
+</table></div>
+<h2 id="why-the-name-rather-than-the-link">
   
   
-    <a href="#see-also" class="anchor-heading" aria-labelledby="see-also"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> See also
+    <a href="#why-the-name-rather-than-the-link" class="anchor-heading" aria-labelledby="why-the-name-rather-than-the-link"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Why the NAME rather than the link
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">uploads/PIIS2589750021000388 (2).pdf</code> — a browser’s duplicate-download suffix,
+ingested verbatim — produced</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| [`PIIS2589750021000388 (2).pdf`](PIIS2589750021000388 (2).pdf) | a file | |
+</code></pre></div></div>
+
+<p>whose target resolves to <code class="language-plaintext highlighter-rouge">PIIS2589750021000388 (2</code>. That reddened <code class="language-plaintext highlighter-rouge">main</code> through
+<em>“over the real tree, every link in every generated README resolves”</em>.</p>
+<h3 id="both-layers-now-exist-and-that-is-the-right-answer">
+  
+  
+    <a href="#both-layers-now-exist-and-that-is-the-right-answer" class="anchor-heading" aria-labelledby="both-layers-now-exist-and-that-is-the-right-answer"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Both layers now exist, and that is the right answer
+  
+  
+</h3>
+    
+
+<p><strong>The escaping half landed on <code class="language-plaintext highlighter-rouge">main</code> the same day, from a sibling session</strong>
+(<a href="https://github.com/litlfred/folio-assistant/pull/1639">#1639</a>): <code class="language-plaintext highlighter-rouge">linkTarget</code>
+in <code class="language-plaintext highlighter-rouge">bootstrap-tools/scripts/subgraph-readmes.ts</code> percent-encodes every segment
+of a destination — parentheses included, because an unbalanced one ends a
+CommonMark destination just as surely as a space — and <code class="language-plaintext highlighter-rouge">decodeLinkTarget</code> in
+<code class="language-plaintext highlighter-rouge">cat-harness/scripts/check-subgraphs.ts</code> decodes before asking the filesystem.</p>
+
+<p>This section argued against that route while it was hypothetical. It is not a
+reason to undo it. <strong>The two layers answer different questions</strong>, and neither
+subsumes the other:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>layer</th>
+      <th>reaches</th>
+      <th>fails when</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">linkTarget</code> / <code class="language-plaintext highlighter-rouge">decodeLinkTarget</code></td>
+      <td><strong>every</strong> generated README link, in every graph kind, including directory names</td>
+      <td>never — it is total over what the generator writes</td>
+    </tr>
+    <tr>
+      <td>this check</td>
+      <td><code class="language-plaintext highlighter-rouge">uploads</code> and <code class="language-plaintext highlighter-rouge">library</code> <strong>names</strong>, before anything links them</td>
+      <td>a name reaches something that is not that generator</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>The encoder is the one that keeps <code class="language-plaintext highlighter-rouge">main</code> green. This check is the one that keeps
+a filename usable in a shell, an <code class="language-plaintext highlighter-rouge">href</code>, a CI log line, a <code class="language-plaintext highlighter-rouge">curl</code>, and the next
+generator nobody has written yet — the places the encoder does not reach
+because it is not there.</p>
+
+<p><strong>Measured after both landed: <code class="language-plaintext highlighter-rouge">uploads/README.md</code> contains zero percent-escapes.</strong>
+The encoder is a no-op over that graph precisely because the names are now safe,
+which is what belt-and-braces looks like when the braces are doing their job.</p>
+
+<p>What is still true is the cost argument, now as a statement about <em>reach</em> rather
+than about <em>effort</em>: escaping is per-generator, and a name is per-file. A name
+that is safe everywhere is safe once.</p>
+
+<p>Owner ruling, 2026-09-30: <em>“rename files to normalize to stubs and downstream us
+is OK.”</em> Downstream references are expected to churn; that is accepted, not
+worked around. The ruling is why this check exists — not main being red, which
+the encoder had already fixed by the time it merged.</p>
+
+<p><strong>“OK” means repaired, not abandoned.</strong> The 33 renames left dangling
+references in <strong>30 hand-maintained files</strong> — 26 carrying structured-data path
+fields and 4 carrying a path in code or prose — plus everything generated. The
+counts below are from <code class="language-plaintext highlighter-rouge">git status</code> over the repair, not from recall:</p>
+
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>kind</th>
+      <th>where</th>
+      <th>how it was repaired</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">files[].path</code></td>
+      <td>3 × <code class="language-plaintext highlighter-rouge">who-iris/uploads/*/intake.json</code></td>
+      <td>repointed from the git map</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">container</code>, <code class="language-plaintext highlighter-rouge">assets[].path</code></td>
+      <td>7 × <code class="language-plaintext highlighter-rouge">*.extraction.json</code></td>
+      <td>repointed; an asset path equal to the container’s own basename moves with it</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">provenance.source</code></td>
+      <td>3 × <code class="language-plaintext highlighter-rouge">who-iris/catalogue/records/*.dc.json</code></td>
+      <td>repointed</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">file</code>, <code class="language-plaintext highlighter-rouge">source_file</code></td>
+      <td>6 × <code class="language-plaintext highlighter-rouge">structure.json</code>, 6 × <code class="language-plaintext highlighter-rouge">manifest.jsonld</code></td>
+      <td>repointed</td>
+    </tr>
+    <tr>
+      <td>a hardcoded path</td>
+      <td><code class="language-plaintext highlighter-rouge">who-iris/themes/themes.test.ts</code></td>
+      <td><strong>threw at module load</strong>, which is why bun reported <code class="language-plaintext highlighter-rouge">1 error</code> with an empty failure list</td>
+    </tr>
+    <tr>
+      <td>two test fixtures</td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness/scripts/tests/pdf-images.test.py</code></td>
+      <td>the arm <strong>skipped silently</strong> — <code class="language-plaintext highlighter-rouge">1xhc</code> — so the skip now announces itself</td>
+    </tr>
+    <tr>
+      <td>prose paths</td>
+      <td><code class="language-plaintext highlighter-rouge">gen-iris-pages.ts</code>, <code class="language-plaintext highlighter-rouge">pdf-pages.py</code>, two <code class="language-plaintext highlighter-rouge">_comment</code> fields</td>
+      <td>repointed</td>
+    </tr>
+  </tbody>
+</table></div>
+
+<p>Everything else regenerates, and <strong>in dependency order</strong>: <code class="language-plaintext highlighter-rouge">library:graph</code> →
+<code class="language-plaintext highlighter-rouge">library:viz</code> → <code class="language-plaintext highlighter-rouge">library:readmes</code> → <code class="language-plaintext highlighter-rouge">readme:subgraphs</code>, then <code class="language-plaintext highlighter-rouge">skill:register</code>.
+Run out of order and a later writer stales an earlier one’s output, which reads
+exactly like a real failure.</p>
+
+<p><strong>One thing deliberately NOT changed:</strong> <code class="language-plaintext highlighter-rouge">cat-harness/docs/wireframes/uploads/as-is.html</code>
+still shows the old names in its table. It is a hand-authored wireframe, so
+what it depicts is a design decision rather than a rename consequence.</p>
+<h2 id="a-sidecar-suffix-is-not-an-extension">
+  
+  
+    <a href="#a-sidecar-suffix-is-not-an-extension" class="anchor-heading" aria-labelledby="a-sidecar-suffix-is-not-an-extension"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A sidecar suffix is not an extension
+  
+  
+</h2>
+    
+
+<p><code class="language-plaintext highlighter-rouge">X.pdf</code> pairs with <code class="language-plaintext highlighter-rouge">X.pdf.extraction.json</code>. Two ways to break that:</p>
+
+<ul>
+  <li>rename the source and not the sidecar → the extraction is orphaned</li>
+  <li>normalise the sidecar by a different rule than its source → same</li>
+</ul>
+
+<p>So the fixer <strong>strips the sidecar suffix first, normalises the remaining name by
+the one rule, and restores the suffix.</strong> The pair moves together by
+construction rather than by care. Measured before it shipped: 10 pairs, 0
+orphans; after the renames, 10 pairs, 0 orphans.</p>
+
+<p><code class="language-plaintext highlighter-rouge">slugify</code> applied to a whole filename destroys the extension —
+<code class="language-plaintext highlighter-rouge">…(2).pdf</code> → <code class="language-plaintext highlighter-rouge">…-2-pdf</code> — which is why the stem is slugged and the extension
+left alone.</p>
+<h2 id="how-big-the-rename-actually-was--findings-are-not-paths">
+  
+  
+    <a href="#how-big-the-rename-actually-was--findings-are-not-paths" class="anchor-heading" aria-labelledby="how-big-the-rename-actually-was--findings-are-not-paths"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How big the rename actually was — findings are not paths
+  
+  
+</h2>
+    
+
+<p><strong>33 paths</strong>, measured from <code class="language-plaintext highlighter-rouge">git diff --name-status -M</code> rather than re-derived:
+26 primaries and 7 <code class="language-plaintext highlighter-rouge">.extraction.json</code> sidecars; 23 under the root <code class="language-plaintext highlighter-rouge">uploads/</code>
+directory and 10 across four who-iris captures.</p>
+
+<p>(That sentence says <em>directory</em> rather than <em>graph</em> on purpose.
+<code class="language-plaintext highlighter-rouge">check:declaration-claims</code> pairs the phrase <code class="language-plaintext highlighter-rouge">`&lt;graph&gt;` graph</code> with any
+<code class="language-plaintext highlighter-rouge">`*.json`</code> filename near it and asks whether that file declares the graph.
+This skill is ABOUT filenames, so <code class="language-plaintext highlighter-rouge">.json</code> names are dense here and none of them
+is a declaration claim — the pairing was a false positive, and the honest repair
+is to stop making a claim-shaped sentence rather than to add an exception.)</p>
+
+<p>A run’s finding count is <strong>not</strong> this number and must not be quoted as it. The
+check reports only what is <em>still</em> unnormalised, so once part of the corpus has
+been renamed the count is the tail of the work rather than its size. Both <code class="language-plaintext highlighter-rouge">34</code>
+and <code class="language-plaintext highlighter-rouge">10</code> were written down as “the renames” during this work, from two
+different runs of a rule that was narrowed in between, and both were wrong
+about the corpus.</p>
+
+<p><strong>And the reference sweep must read the same map.</strong> A first attempt piped
+<code class="language-plaintext highlighter-rouge">git diff --name-status -M</code> through <code class="language-plaintext highlighter-rouge">awk '{print $2}'</code>, whose default field
+splitting breaks on the spaces <em>inside the very filenames being renamed</em> — so
+the old-name list came out empty, the sweep matched nothing, and it reported no
+dangling references. That is <code class="language-plaintext highlighter-rouge">dh4f</code> committed by the instrument built to refuse
+it. <code class="language-plaintext highlighter-rouge">awk -F'\t'</code> is the fix; the lesson is that a sweep which finds nothing
+must be shown to have had something to look for.</p>
+<h2 id="the-one-case-it-refuses">
+  
+  
+    <a href="#the-one-case-it-refuses" class="anchor-heading" aria-labelledby="the-one-case-it-refuses"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The one case it refuses
+  
+  
+</h2>
+    
+
+<p><strong>Two files that normalise to one name.</strong> The fixer reports the collision and
+renames neither: picking a winner silently destroys an upload, and an upload is
+somebody’s source material. Rename one by hand.</p>
+
+<p>That is
+<a href="/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation</code></a> applied to
+a rename — a <code class="language-plaintext highlighter-rouge">git mv</code> that overwrites is a deletion with a friendlier name.</p>
+<h2 id="what-this-does-not-cover">
+  
+  
+    <a href="#what-this-does-not-cover" class="anchor-heading" aria-labelledby="what-this-does-not-cover"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What this does NOT cover
   
   
 </h2>
     
 
 <ul>
-  <li><a href="publication-workflow.html">Publication workflow</a> — BPMN swimlanes: which skill runs at which step, and who decides</li>
-  <li><a href="reference/skill-instructions/">Skill instructions</a> — the prose how-to bodies the LLM loads</li>
-  <li><a href="reference/skills/">Skill schema reference</a> — typed input/output for each skill</li>
-  <li><a href="content-types.html">Content types</a> — which skills each content type uses</li>
-  <li><a href="architecture.html">Architecture</a> — RBAC, adapters, and the MCP server</li>
-  <li><a href="getting-started.html">Getting started</a> — running your first skill</li>
+  <li><strong>Directory names.</strong> The check reads files. A directory with a space in it is
+not yet graded, and nothing in the corpus has one.</li>
+  <li><strong>Content.</strong> It reads names and never opens a file, which is why it is
+harness-layer rather than folio-layer in the repo partition.</li>
+  <li><strong>Whether a file should be there at all.</strong> That is ingestion’s question, not
+naming’s.</li>
 </ul>
+<h2 id="it-does-not-touch-a-name-that-has-no-unsafe-character--measured-the-hard-way">
+  
+  
+    <a href="#it-does-not-touch-a-name-that-has-no-unsafe-character--measured-the-hard-way" class="anchor-heading" aria-labelledby="it-does-not-touch-a-name-that-has-no-unsafe-character--measured-the-hard-way"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> It does not touch a name that has no unsafe character — measured the hard way
+  
+  
+</h2>
+    
+
+<p>The rule replaced unsafe runs <strong>and then collapsed <code class="language-plaintext highlighter-rouge">-+</code> globally</strong>. That rewrote</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sec-119-74-broadly--versus-narrowly-focused-key-question.md
+</code></pre></div></div>
+
+<p>— a library <strong>section</strong> file containing no unsafe character at all — purely for
+its double dash. <code class="language-plaintext highlighter-rouge">gen-library-jsonld</code> then could not find <code class="language-plaintext highlighter-rouge">prose-sec-119</code>, and
+<code class="language-plaintext highlighter-rouge">sections/sec-119.jsonld</code> regenerated <strong>without it</strong>: <code class="language-plaintext highlighter-rouge">contains</code> silently lost
+an entry, which is a block missing from the published graph rather than the
+reference churn the owner accepted.</p>
+
+<p>Caught by refusing to commit the regeneration: the block file was still on disk
+and <code class="language-plaintext highlighter-rouge">main</code>’s committed copy still listed it, so the generator’s new output was
+wrong and the committed one right. <code class="language-plaintext highlighter-rouge">gen-library-jsonld --check</code> on a pristine
+<code class="language-plaintext highlighter-rouge">origin/main</code> worktree exited <strong>0</strong>, which is what established the drift as
+mine.</p>
+
+<p>So: <strong>a name with no unsafe character is returned untouched.</strong> Collapsing and
+trimming happen only to names that were going to change anyway. A double dash,
+a leading dash, a trailing dash — none is this check’s business.</p>
+
+<p>That is the same failure as wanting <code class="language-plaintext highlighter-rouge">README.md</code> lowercased, one step subtler,
+and it is why both are pinned by tests rather than by intent.</p>
 
           
 
