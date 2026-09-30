@@ -26,6 +26,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - name: Install MPFR/GMP system libs
         run: sudo apt-get update && sudo apt-get install -y libmpfr-dev libgmp-dev

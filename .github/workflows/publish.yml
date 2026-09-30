@@ -139,6 +139,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          submodules: true
           fetch-depth: 0  # need branches for diff PDF in Job 3a
           # For same-repo PRs, check out the PR HEAD branch (not the
           # detached merge ref) so the witness commit-back below can push
@@ -413,6 +414,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          submodules: true
           fetch-depth: 0
 
       - uses: actions/download-artifact@v8
@@ -530,6 +532,8 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: actions/download-artifact@v8
         with:
@@ -561,6 +565,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: oven-sh/setup-bun@v2
         with:
@@ -597,6 +603,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          submodules: true
           fetch-depth: 0
 
       - uses: actions/download-artifact@v8
@@ -645,6 +652,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          submodules: true
           fetch-depth: 0
 
       - uses: actions/download-artifact@v8
@@ -686,6 +694,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: actions/download-artifact@v8
         with:
@@ -722,6 +732,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: actions/download-artifact@v8
         with:
