@@ -15,11 +15,14 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
+import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { ActorDefSchema } from "../../schemas/role-graph.ts";
 
 const H = resolve(import.meta.dir, "../..");
 const REPO = resolve(H, "..");
 const DECK = join(H, "content/docs/living-deck");
+/** The published site root, from the declaration — never a literal. */
+const SITE = join(H, siteDirFor(H));
 const read = (p: string) => readFileSync(p, "utf-8");
 
 describe("living deck: every claim about the KG still holds", () => {
@@ -38,7 +41,7 @@ describe("living deck: every claim about the KG still holds", () => {
   });
 
   test("slide 8 — the generated UML has the Voice Profile class the snapshot lacks", () => {
-    expect(read(join(H, "docs/assets/img/uml/harness-schemas.svg"))).toContain("VoiceProfileSchema");
+    expect(read(join(SITE, "assets/img/uml/harness-schemas.svg"))).toContain("VoiceProfileSchema");
   });
 
   test("slide 4 — the ingested SMART Base index still holds 25 StructureDefinition pages", () => {
@@ -55,7 +58,7 @@ describe("living deck: every claim about the KG still holds", () => {
   });
 
   test("slide 10 — the taxonomy still uses smart-kg as its example, and says it is its own repository", () => {
-    const t = read(join(H, "docs/architecture/repo-taxonomy.md"));
+    const t = read(join(SITE, "architecture/repo-taxonomy.md"));
     expect(t).toContain("`smart-kg` and `smart-kg-tools` is the worked example");
     expect(t).toContain("`smart-kg` is already its own repository");
     // Its stub left this checkout for that reason (bean `wg7r`).
@@ -74,6 +77,6 @@ describe("living deck: every claim about the KG still holds", () => {
     const md = readdirSync(DECK).filter((f) => f.endsWith(".md")).map((f) => read(join(DECK, f))).join("\n");
     const assets = [...md.matchAll(/\]\((assets\/[^)\s]+)\)/g)].map((m) => m[1]!);
     expect(assets.length).toBeGreaterThan(0);
-    for (const a of assets) expect(existsSync(join(H, "docs", a)), a).toBe(true);
+    for (const a of assets) expect(existsSync(join(SITE, a)), a).toBe(true);
   });
 });
