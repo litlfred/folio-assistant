@@ -186,14 +186,14 @@ export interface Mountable {
  * very ruling it implemented. `instanceRoot: true` on the directory decides it.
  *
  * **A declared root YIELDS ITS KIND ROUTE to a same-kind sibling** (bean
- * `2b5s`). Two directories of one instance may share a kind — who-iris's
- * replica in `site/` and its documentation in `docs/` are both `docs` — and
+ * `2b5s`). Two directories of one instance may share a kind — a themed
+ * replica in `site/` and plain documentation in `docs/`, both `docs` — and
  * both would claim `/<kind>/<instance>/`, which the walk refuses as a
  * collision. The owner's table already says which is which: the kind route
  * is the kind handler's default rendering and the root is the instance
  * presenting itself. So the root directory answers at `/<instance>/` only,
  * and the sibling keeps the kind route. With no same-kind sibling nothing
- * changes — the root still publishes at both, as smart-trust's does.
+ * changes — a lone root still publishes at both routes.
  *
  * With several renderable kinds and none marked, the root is returned as
  * UNDETERMINED. The deterministic order still picks one, because a site has to
@@ -956,9 +956,8 @@ function mountable(): Mountable[] {
 // ── Embedded assets from outside the mounted directory — bean `2b5s` ──────
 //
 // A mount copies ONE directory. A page in it may embed a file that lives
-// elsewhere in the same instance — who-iris's replica shows each item's cover,
-// and the covers stay in `library/` where the catalogue's `localPath` names
-// them. Copying `library/` to make the `<img>` resolve is exactly the wholesale
+// elsewhere in the same instance — a catalogue replica shows each item's
+// cover, and the covers stay in `library/` where the catalogue names them. Copying `library/` to make the `<img>` resolve is exactly the wholesale
 // copy this rule replaces: 1,367 corpus files published to serve one image.
 //
 // So the unit of publication is the REFERENCE, not the directory: every file a
@@ -1085,8 +1084,8 @@ function withheldAncestor(instanceDir: string, abs: string): string | undefined 
  * Where an embedded asset is published, and what the page must now call it.
  *
  * Beneath the route, at the asset's path RELATIVE TO THE INSTANCE — so
- * who-iris's `library/<slug>-cover.png` lands at
- * `/who-iris/library/<slug>-cover.png`. The published tree then mirrors the
+ * an instance's `library/<slug>-cover.png` lands at
+ * `/<instance>/library/<slug>-cover.png`. The published tree then mirrors the
  * repository's, restricted to what a page embeds, which is the one layout a
  * reader can check against the checkout without being told a mapping.
  *

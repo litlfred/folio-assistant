@@ -184,26 +184,26 @@ describe("which kind answers at the instance's own route", () => {
   });
 
   it("a declared root YIELDS its kind route to a same-kind sibling — bean 2b5s", () => {
-    // who-iris's replica (`site/`) and its documentation (`docs/`) are both
-    // `docs`. Without the rule both claim `docs/who-iris` and the walk refuses
-    // one; with it the replica answers at `/who-iris/` only and the kind
-    // route stays with the sibling that is not the root.
-    const site = { ...m("who-iris", "docs", true), dir: "/repo/who-iris/site" };
-    const docs = { ...m("who-iris", "docs"), dir: "/repo/who-iris/docs" };
+    // A replica (`site/`) and documentation (`docs/`) both declared `docs`.
+    // Without the rule both claim `docs/inst` and the walk refuses one; with
+    // it the replica answers at `/inst/` only and the kind route stays with
+    // the sibling that is not the root.
+    const site = { ...m("inst", "docs", true), dir: "/repo/inst/site" };
+    const docs = { ...m("inst", "docs"), dir: "/repo/inst/docs" };
     const { candidates, undetermined } = withRoutes([docs, site]);
     expect(candidates.map((c) => [c.route, c.dir]).sort()).toEqual([
-      ["docs/who-iris", "/repo/who-iris/docs"],
-      ["who-iris", "/repo/who-iris/site"],
+      ["docs/inst", "/repo/inst/docs"],
+      ["inst", "/repo/inst/site"],
     ]);
     expect(resolve_(candidates).refused).toEqual([]);
     expect(undetermined).toEqual([]);
   });
 
   it("with NO same-kind sibling the root still publishes at both routes", () => {
-    // smart-trust's shape: one docs directory, marked root. The yield rule
-    // must not take a URL away from an instance it does not concern.
-    const { candidates } = withRoutes([m("smart-trust", "docs", true)]);
-    expect(candidates.map((c) => c.route).sort()).toEqual(["docs/smart-trust", "smart-trust"]);
+    // One docs directory, marked root. The yield rule must not take a URL
+    // away from an instance it does not concern.
+    const { candidates } = withRoutes([m("lone", "docs", true)]);
+    expect(candidates.map((c) => c.route).sort()).toEqual(["docs/lone", "lone"]);
   });
 
   it("one instance being undetermined does not implicate another", () => {
@@ -296,8 +296,8 @@ describe("a page's embedded assets are published, and nothing else from their di
     writeFileSync(join(d, "site", "index.html"), '<img src="../library/a-cover.png">');
     writeFileSync(join(d, "site", "sub", "p.html"), '<img src="../../library/a-cover.png">');
     const [top, deep] = referencedAssets(join(d, "site"), d).assets;
-    expect(publishedAsset("who-iris", top!)).toEqual({ dest: "who-iris/library/a-cover.png", ref: "library/a-cover.png" });
-    expect(publishedAsset("who-iris", deep!)).toEqual({ dest: "who-iris/library/a-cover.png", ref: "../library/a-cover.png" });
+    expect(publishedAsset("inst", top!)).toEqual({ dest: "inst/library/a-cover.png", ref: "library/a-cover.png" });
+    expect(publishedAsset("inst", deep!)).toEqual({ dest: "inst/library/a-cover.png", ref: "../library/a-cover.png" });
   });
 
   it("refuses, naming it, a ref that leaves the instance, resolves to nothing, or is withheld", () => {
@@ -319,8 +319,8 @@ describe("a page's embedded assets are published, and nothing else from their di
 
 describe("a kind route whose directory is not mounted is a one-file redirect — bean 2b5s", () => {
   it("refreshes, declares canonical, and links visibly, all to the viewer re-based from the route", () => {
-    const html = redirectHtml("library/who-iris", "cat-harness/library/who-iris/");
-    const target = "../../cat-harness/library/who-iris/";
+    const html = redirectHtml("library/inst", "handler/library/inst/");
+    const target = "../../handler/library/inst/";
     expect(html).toContain(`<meta http-equiv="refresh" content="0; url=${target}">`);
     expect(html).toContain(`<link rel="canonical" href="${target}">`);
     expect(html).toContain(`<a href="${target}">`);
