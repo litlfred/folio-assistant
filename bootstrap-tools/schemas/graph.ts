@@ -171,8 +171,6 @@ export const BOOTSTRAP_GRAPH_KINDS = {
     "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from.",
   models:
     "A Subgraph describing the language models an Actor may be: which languages each is good at, and whether a person checked.",
-  "swimlane-glossary":
-    "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused.",
 } as const;
 
 export type BootstrapGraphKind = keyof typeof BOOTSTRAP_GRAPH_KINDS;

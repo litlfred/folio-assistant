@@ -280,6 +280,24 @@ export interface RoleDef {
    * that contradicts its lane is worse than none — it looks authoritative.
    */
   persona?: string;
+  /**
+   * Other names this role goes by today — synonyms, local titles, examples.
+   * The same field, and the same meaning, as `otherNames` on WHO SMART Base's
+   * Generic Persona ("Other names or examples for the persona"); published as
+   * `skos:altLabel`. Owner, 2026-09-30: *"model both retired names and
+   * alternative names"*.
+   */
+  otherNames?: string[];
+  /**
+   * Names this role was known by and no longer is, each with the date it was
+   * retired — `Initiator` became `Bootstrapping Agent` on 2026-09-23.
+   * Published as `skos:hiddenLabel` on this role, and the old name's concept
+   * is `owl:deprecated` and `dcterms:isReplacedBy` this role, so a reader
+   * holding the old name is sent to the new one. Authored here, beside the
+   * definition, rather than only remembered by the harness's glossary ledger:
+   * a retired name is part of what the role IS to a reader of old text.
+   */
+  formerNames?: FormerName[];
   // No `voice` and no `useCases` (#1168, B2). Both are DEPENDENTS of the
   // role: a voice is addressed TO a reader, and a story is told AS one. Each
   // now points here — a voice profile by `activeIn.roles`, a user story by
@@ -352,6 +370,20 @@ export const ActorDefSchema = z.object({
  * @general — a node others depend on: it points only at other general nodes,
  * never at its dependents (data-modelling step 8; checked by `arrow-direction`).
  */
+/** A name a role no longer goes by, and when it stopped. */
+export interface FormerName {
+  name: string;
+  /** ISO date (YYYY-MM-DD) the name was retired. */
+  retiredOn: string;
+}
+
+export const FormerNameSchema = z
+  .object({
+    name: z.string().min(1),
+    retiredOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "an ISO date, YYYY-MM-DD"),
+  })
+  .strict();
+
 export const RoleDefSchema = z.object({
   // Declared in the Zod shape as well as the interface: a field TypeScript
   // accepts and Zod strips is written by an author, type-checks, and vanishes
@@ -365,6 +397,10 @@ export const RoleDefSchema = z.object({
   title: z.string().min(1),
   description: z.string().min(1),
   actorKinds: z.array(z.enum(ACTOR_KINDS)).min(1),
+  /** Other names this role goes by today; `skos:altLabel`. As smart-base's `otherNames`. */
+  otherNames: z.array(z.string().min(1)).optional(),
+  /** Names it no longer goes by, with the retirement date; `skos:hiddenLabel`. */
+  formerNames: z.array(FormerNameSchema).optional(),
   /**
    * Skills available to an actor in this role, before inheritance.
    *
@@ -499,6 +535,21 @@ export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
   for (const r of graph.roles) {
     if (ids.has(r.id)) throw new Error(`${p}: role id "${r.id}" is declared twice.`);
     ids.add(r.id);
+  }
+  // One name, one role — current, alternative or retired alike. A retired
+  // name given to a new role would make every old text that used it mean
+  // something it never meant; that is the job the glossary ledger did from
+  // the outside, and here it is held by the authored names themselves.
+  const owner = new Map<string, string>();
+  for (const r of graph.roles) {
+    const names = [r.title, ...(r.otherNames ?? []), ...(r.formerNames ?? []).map((f) => f.name)];
+    for (const n of new Set(names.map((x) => x.trim().toLowerCase()))) {
+      const prev = owner.get(n);
+      if (prev !== undefined && prev !== r.id) {
+        throw new Error(`${p}: the name "${n}" belongs to both role "${prev}" and role "${r.id}" — a title, other name or former name names one role.`);
+      }
+      owner.set(n, r.id);
+    }
   }
   for (const r of graph.roles) {
     for (const parent of r.inherits ?? []) {

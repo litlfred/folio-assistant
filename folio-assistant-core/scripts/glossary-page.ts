@@ -336,10 +336,19 @@ export function collect(repo: string = REPO): {
         }
       }
       if (kinds.includes("swimlane-glossary")) {
-        const ledger = join(d.absPath, "glossary-ledger.json");
-        if (existsSync(ledger)) {
-          const l = JSON.parse(readFileSync(ledger, "utf-8")) as { concepts?: Record<string, unknown> };
-          ledgers.push({ instance: decl.name, path: relative(repo, ledger), terms: Object.keys(l.concepts ?? {}).length });
+        // The directory's own ledger, and any it HOSTS one level down under a
+        // guest's stub (`cat-harness/glossary/bootstrap/` since 2026-09-30,
+        // bean `xsqm`). Each file names its `instance`, so a hosted ledger is
+        // credited to its subject, not to the directory's declarer.
+        const found = [join(d.absPath, "glossary-ledger.json")];
+        if (existsSync(d.absPath)) {
+          for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
+            if (e.isDirectory()) found.push(join(d.absPath, e.name, "glossary-ledger.json"));
+          }
+        }
+        for (const ledger of found.filter((f) => existsSync(f))) {
+          const l = JSON.parse(readFileSync(ledger, "utf-8")) as { instance?: string; concepts?: Record<string, unknown> };
+          ledgers.push({ instance: l.instance ?? decl.name, path: relative(repo, ledger), terms: Object.keys(l.concepts ?? {}).length });
         }
       }
     }

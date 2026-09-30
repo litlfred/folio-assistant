@@ -12,7 +12,7 @@
  *
  * The narrowing that created this split was right — *"a check that answers a
  * question it cannot see is worse than one that declines to"* — and
- * `artefact-declaration-drift.test.ts` pins the decline: `ns/vocabulary.jsonld`
+ * `artefact-declaration-drift.test.ts` pins the decline: `cat-harness/ns.jsonld`
  * and `ns/content/v1.jsonld` must NOT be reported as drift.
  *
  * ## The hole those two suites leave, which is why this third one exists
@@ -104,13 +104,14 @@ describe("the scopes TILE — nothing falls between them", () => {
 });
 
 describe("the artefacts that caused the narrowing are the ones to name", () => {
-  it("`ns/vocabulary.jsonld` and `ns/content/v1.jsonld` are covered by the site check", () => {
+  it("a layer's `ns.jsonld` and `ns/content/v1.jsonld` are covered by the site check", () => {
     // Named explicitly, because they are why the gap existed: both declarations
     // true, both published by `docs-site.yml`, both reported as drift until the
     // narrowing, and then covered by nothing until the site check landed. A
     // regression here is the exact state bean `6f1x` was opened to close.
     const { site, driftJudges } = scopes();
-    for (const a of ["ns/vocabulary.jsonld", "ns/content/v1.jsonld"]) {
+    // `cat-harness/ns.jsonld` since the all-layers union was retired (2026-09-30).
+    for (const a of ["cat-harness/ns.jsonld", "ns/content/v1.jsonld"]) {
       expect(site.has(a), `${a} is not a subject of the site check`).toBe(true);
       // And still correctly declined by the drift check — the other suite asserts
       // this too, and it is repeated here because the pairing is the invariant.
