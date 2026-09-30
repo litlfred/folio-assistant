@@ -1134,6 +1134,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/pin-smart-base-terminology",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Snapshot a published IG's terminology at its pinned version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read every CodeSystem concept out of a smart-base clone and write `external-schemas/who-smart-base.terminology.json`, the offline snapshot `check:term-mapping` resolves its `fhir` target against. 585 concepts across 12 code systems at v1.0.0."
+        }
+      ],
+      "skos:notation": "pin-smart-base-terminology",
+      "dcterms:source": "cat-harness/tools/index.ts#pin-smart-base-terminology",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-tools/processes-viewer",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -102,6 +102,13 @@ const ROOT = resolve(import.meta.dir, "..", "..");
  */
 export const DEFAULT_ROOTS: readonly string[] = [ROOT, resolve(import.meta.dir, "..")];
 
+// declared-path-literal: `fsh-guts/uploads` is a SUB-directory of the declared
+// `fsh-guts` graph rather than a declared directory of its own, so no
+// declaration resolves it and there is nothing to ask. It is named in one
+// place, here, and the remedy lines this script prints are composed from it.
+// It is the owner's ruling of 2026-09-29 — *"archival … should be moved to
+// fsh-guts"* — with the sub-directory chosen on 2026-09-30 and recorded in
+// `library-ingestion` §"What happens to the upload after it is ingested".
 /** Where an archived upload lives. One place, named by the owner's ruling. */
 const ARCHIVE = "fsh-guts/uploads";
 

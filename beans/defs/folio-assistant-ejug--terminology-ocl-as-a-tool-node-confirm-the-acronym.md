@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ejug
 title: TERMINOLOGY / OCL as a Tool node — confirm the acronym first
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-25T04:51:48Z
-updated_at: 2026-09-29T22:01:31Z
+updated_at: 2026-09-30T16:09:45Z
 parent: folio-assistant-5yhm
 ---
 
@@ -106,3 +106,53 @@ disagree, and which one the check asserts is the owner's call.
       environment), or both with the source recorded per row?
 - [ ] a Tool node for whichever lands, passing `check:tools`
 - [ ] unreachable-service behaviour stays the third state, with a test
+
+
+## Done 2026-09-30 — the Tool is the PIN REFRESHER, not OCL
+
+Owner chose "The pin refresher" from four options. That is the second ruling
+applied rather than the first one softened: on 2026-09-29 OCL was named as the
+Tool, and on 2026-09-30, asked what the `fhir` half of `check:term-mapping`
+should assert, the owner answered **"published IG at a version"**. Those are
+different claims that can disagree, so the node has to say which it produces.
+
+`pin-smart-base-terminology` in `cat-harness/tools/index.ts`:
+
+| | |
+|---|---|
+| `satisfies` | `vocabulary-authority` — which had **no Tool at all**, the `skills-and-tools` debt: a skill whose mechanism is inlined in its prose |
+| `invoke` | `bun run cat-harness/scripts/pin-smart-base-terminology.ts --from <clone>` |
+| `requires` | `bun`, `git`; **`network: false`**, exactly true — it reads a clone from disk and never fetches |
+| input | the clone, at the pinned tag |
+| output | `external-schemas/who-smart-base.terminology.json`, 585 concepts / 12 code systems at v1.0.0 |
+
+### Two things `check:tools` decided, not me
+
+**The `from` input carries NO `arg` binding.** `FilesystemPath` is the type for
+a path that may point outside the repository, and its own docblock says it is
+"refused as a command-line word" — `..` is what `RepoPath` exists to forbid,
+and weakening `RepoPath` to admit this would strip traversal protection from
+every port using it. `check:tools` refused the pairing on the first run:
+
+```
+✗ 1 command-line input(s) of a type that can express a shell payload:
+    pin-smart-base-terminology.from : FilesystemPath — put free text on stdin
+```
+
+So the flag lives in `invoke.shell`, where it is a person's command line, and
+not in the contract a caller may fill from untrusted input. Declaring it would
+have asserted a safety property the type withholds.
+
+**`selection.limits` carries the fact that decides whether to use it**: the
+version comes from `external-schemas/who-smart-base.json` and never from the
+script, so refreshing means moving the pin FIRST. Re-running against a newer
+clone is refused rather than silently accepted.
+
+### OCL is not this node, and not deferral for its own sake
+
+`api.openconceptlab.org:443` is refused by this environment's network policy
+(403 on CONNECT, logged by the proxy), as is `smart.who.int:443`. A node
+wrapping the live API would be a declared mechanism no run here could reach.
+When OCL becomes reachable it earns its OWN node beside this one, sharing
+`check:term-mapping`'s contract — two answers to "what is this term" are
+honest when each says which it is.
