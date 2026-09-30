@@ -805,6 +805,13 @@
       "status": "candidate"
     },
     {
+      "id": "attribution.attributionschema.skill",
+      "prefLabel": "AttributionSchema.skill",
+      "definition": "The skill being exercised: `name` or `package/name` (#1168 B8).",
+      "source": "cat-harness/schemas/attribution.ts#AttributionSchema.skill",
+      "status": "candidate"
+    },
+    {
       "id": "avatars.avatar.glyph",
       "prefLabel": "Avatar.glyph",
       "definition": "SVG path data, drawn in a 24×24 box.",
@@ -6652,7 +6659,7 @@
     {
       "id": "render-log.renderlogentryschema.process",
       "prefLabel": "RenderLogEntrySchema.process",
-      "definition": "BPMN process id — `staging-render-log` — when written inside one.",
+      "definition": "BPMN process element id — `Process_RenderLog` — when written inside one.",
       "source": "cat-harness/schemas/render-log.ts#RenderLogEntrySchema.process",
       "status": "candidate"
     },

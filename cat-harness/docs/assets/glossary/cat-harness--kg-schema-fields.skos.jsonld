@@ -2180,6 +2180,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/attribution.attributionschema.skill",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttributionSchema.skill"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The skill being exercised: `name` or `package/name` (#1168 B8)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/attribution.ts#AttributionSchema.skill",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/avatars.avatar.glyph",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -18057,7 +18076,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "BPMN process id — `staging-render-log` — when written inside one."
+          "@value": "BPMN process element id — `Process_RenderLog` — when written inside one."
         }
       ],
       "dcterms:source": "cat-harness/schemas/render-log.ts#RenderLogEntrySchema.process",
