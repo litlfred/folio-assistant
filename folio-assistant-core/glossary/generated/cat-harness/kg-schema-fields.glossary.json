@@ -7485,7 +7485,7 @@
     {
       "id": "sticky-contribution.declaredcontribution.declaredin",
       "prefLabel": "DeclaredContribution.declaredIn",
-      "definition": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/harness.json`, `bootstrap/harness.json`, `harness.json`.",
+      "definition": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/cat-harness.json`, `bootstrap/bootstrap.json`: each instance's own `<instance>/<instance>.json`.",
       "source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.declaredIn",
       "status": "candidate"
     },
@@ -8211,13 +8211,6 @@
       "status": "candidate"
     },
     {
-      "id": "tool.tooldefinitionschema.alternativeto",
-      "prefLabel": "ToolDefinitionSchema.alternativeTo",
-      "definition": "Other Tools that do the SAME job by a different mechanism.",
-      "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.alternativeTo",
-      "status": "candidate"
-    },
-    {
       "id": "tool.tooldefinitionschema.maintains",
       "prefLabel": "ToolDefinitionSchema.maintains",
       "definition": "Published artefacts this Tool is authoritative for. See {@link ToolMaintainsSchema}.",
@@ -8241,7 +8234,7 @@
     {
       "id": "tool.tooldefinitionschema.selection",
       "prefLabel": "ToolDefinitionSchema.selection",
-      "definition": "Why to reach for this one. REQUIRED once `alternativeTo` is non-empty — see {@link ToolSelectionSchema}, and the refinement below.",
+      "definition": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set.",
       "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
       "status": "candidate"
     },
