@@ -1,0 +1,79 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-declare-bootstrap-tools-need/skills/content-feedback/output.schema.json",
+  "title": "Content Feedback Output",
+  "description": "Output schema for triaged feedback.",
+  "type": "object",
+  "required": [
+    "triagedItems"
+  ],
+  "properties": {
+    "triagedItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "priority",
+          "disposition"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "P0",
+              "P1",
+              "P2",
+              "P3"
+            ]
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "backlog",
+              "next-sprint",
+              "wont-fix",
+              "duplicate",
+              "needs-info"
+            ]
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "linkedIssue": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "integer"
+        },
+        "critical": {
+          "type": "integer"
+        },
+        "major": {
+          "type": "integer"
+        },
+        "minor": {
+          "type": "integer"
+        },
+        "enhancement": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/declare-bootstrap-tools-need",
+    "sha": "9dd7b2c9eea4e7f33e5be0963b9af8ed5dd4c069",
+    "pr": "1595/merge",
+    "run": "36724754302"
+  }
+}
