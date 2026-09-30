@@ -50,7 +50,7 @@
  *
  * @module scripts/ingest-document
  */
-import { cpSync, existsSync, mkdirSync, rmSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -59,6 +59,7 @@ import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { refreshLibraryIndex } from "./lsi.ts";
+import { IntakeSchema } from "../schemas/intake.ts";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -204,6 +205,41 @@ export interface Plan {
   why: string;
   /** Commands to run, in order, each as argv. */
   steps: string[][];
+}
+
+/**
+ * The EARLY licence verdict — bean `7bg9`, owner's ruling 2026-09-20: before
+ * any derivation, because `library/` is `holds: content` and anything derived
+ * first is committed, so refusing it afterwards is a deletion nobody may take
+ * unasked.
+ *
+ * It sees only the upload itself, as the ruling requires: the `licence`
+ * record in the `intake.json` beside it (`schemas/source-licence.ts`, the same
+ * record a library manifest carries) and whether a LICENSE file sits beside
+ * it. It never reads a licence out of extracted text — that is a later check's
+ * to find — so with nothing recorded the verdict is `undetermined`, and
+ * undetermined is REPORTED, never rendered as cleared. It does not stop the
+ * pipeline: the ruling lets undetermined proceed, and a refusal needs a
+ * compatibility rule this step does not have.
+ */
+export interface EarlyLicence {
+  verdict: "stated" | "unknown" | "undetermined";
+  detail: string;
+}
+export function earlyLicence(upload: string): EarlyLicence {
+  const dir = dirname(resolve(upload));
+  const intakePath = join(dir, "intake.json");
+  if (existsSync(intakePath)) {
+    const parsed = IntakeSchema.safeParse(JSON.parse(readFileSync(intakePath, "utf-8")));
+    // A malformed intake is not "no licence": say it could not be read.
+    if (!parsed.success) return { verdict: "undetermined", detail: `intake.json does not validate — ${parsed.error.issues[0]?.message ?? "invalid"}` };
+    const l = parsed.data.licence;
+    if (l?.status === "stated") return { verdict: "stated", detail: `${l.id} (${l.basis})` };
+    if (l?.status === "unknown") return { verdict: "unknown", detail: `searched ${l.searched!.length} place(s), none stated one` };
+  }
+  const sibling = ["LICENSE", "LICENCE", "LICENSE.md", "LICENCE.md", "LICENSE.txt", "LICENCE.txt"].find((f) => existsSync(join(dir, f)));
+  if (sibling) return { verdict: "undetermined", detail: `a ${sibling} sits beside the upload — a person reads it and records the licence in intake.json` };
+  return { verdict: "undetermined", detail: "nothing recorded: no intake.json licence and no LICENSE beside the upload" };
 }
 
 /**
@@ -791,6 +827,9 @@ if (import.meta.main) {
   console.log(`${basename(pdf)} -> ${destination}/${slug}/`);
   console.log(`  rung: ${plan.rung}`);
   console.log(`  why:  ${plan.why}`);
+  // Before any arm runs — the licence step is EARLY by ruling (bean 7bg9).
+  const lic = earlyLicence(pdf);
+  console.log(`  licence: ${lic.verdict} — ${lic.detail}`);
   if (plan.rung === "undetermined") {
     console.error("\nNOT ingested. This is not a pass — a document filed under");
     console.error("the wrong rung reads as ingested while its structure is wrong.");

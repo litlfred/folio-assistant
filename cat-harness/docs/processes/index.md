@@ -58,7 +58,7 @@ Each page shows the diagram, what it is for, who acts in it, every step with the
 | [CRDM Phase 5 — beans and sign-off](crdm-signoff.html) | 6 | — |
 | [Criterion adjudication](criterion-adjudication.html) | 4 | — |
 | [Publishing the docs site, and keeping the previews alive](docs-site-publish.html) | 8 | — |
-| [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 11 | — |
+| [Document ingestion — uploads/ to the L1 source knowledge graph](document-ingestion.html) | 12 | — |
 | [Draft, review and publish](draft-to-publication.html) | 11 | — |
 | [Editing and HCI validation](editing-hci-validation.html) | 17 | — |
 | [Evidence for a recommendation](evidence-retrieval.html) | 10 | — |

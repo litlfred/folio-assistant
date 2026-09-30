@@ -206,6 +206,7 @@ classDiagram
       _comment [0..1] string
       source [1] object
       files [0..*] File[]
+      licence [0..1] object
     }
   }
   namespace who_iris__who_iris_skills {

@@ -2335,6 +2335,14 @@
       "status": "candidate"
     },
     {
+      "id": "process_ingestion.task_licence",
+      "prefLabel": "Establish the licence from the upload alone [document-intake]",
+      "definition": "EARLY, by the owner's ruling on bean 7bg9 (2026-09-20): before any derivation, because library/ is holds: content and anything derived first is committed, so refusing it later is a deletion nobody may take unasked. This step sees only the upload itself — the licence recorded in its intake.json (the same stated / unknown record a library manifest carries) and whether a LICENSE file sits beside it. It never infers a licence from extracted text. The verdict is stated, unknown, or UNDETERMINED, and undetermined is never reported as cleared: the pipeline proceeds and says so, because a licence that only extraction can reveal is a later check's to find.",
+      "notation": "Task_Licence",
+      "source": "cat-harness/processes/document-ingestion.bpmn#Task_Licence",
+      "status": "candidate"
+    },
+    {
       "id": "process_ingestion.task_openbean",
       "prefLabel": "Record the gap as a bean",
       "definition": "A missing derived artefact is a tracked gap, not a silent omission. The document stays in uploads/ until the gap closes.",

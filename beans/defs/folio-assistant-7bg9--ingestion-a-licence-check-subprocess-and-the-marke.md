@@ -1,10 +1,11 @@
 ---
 # folio-assistant-7bg9
 title: 'INGESTION: a licence check subprocess, and the marker coverage the ingest family is missing'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-20T15:25:27Z
-updated_at: 2026-09-20T15:25:27Z
+updated_at: 2026-09-30T09:25:37Z
 parent: folio-assistant-zzmr
 ---
 
@@ -135,3 +136,13 @@ If a licence can only be determined from extracted structure, the early gate
 must report **undetermined** and let the pipeline proceed to a second check,
 rather than passing it. Undetermined is never rendered as cleared; that rule
 holds here as everywhere else in this repository.
+
+
+## 2026-09-30 — the early step, built to the ruling
+- [x] existing vocabulary read first, and REUSED: the stated / unknown / absent record check:source-licence reads from a manifest's meta.licence moved to cat-harness/schemas/source-licence.ts (SourceLicenceSchema + licenceProblem, one rule set; check-source-licence re-exports it). intake.json (folio-intake/v1) gains an optional `licence` of that same record — no second licence vocabulary.
+- [x] EARLY, per the ruling: document-ingestion.bpmn gains Task_Licence 'Establish the licence from the upload alone' between Task_Detect and CallActivity_Extract (Lane_1, skill document-intake; DI shifted right one slot; render:bpmn, check:workflow-refs, check:lane-documentation pass; .pot re-extracted for 5 locales).
+- [x] undetermined ≠ cleared: ingest-document.ts earlyLicence() reads only the upload — intake.json licence, or a LICENSE sibling (named, never read) — and prints 'licence: stated|unknown|undetermined — …' before the first arm runs. Undetermined proceeds, as ruled; a malformed intake reports 'does not validate', never 'no licence'. Test: scripts/tests/early-licence.test.ts (5 cases).
+- [x] document-intake skill: 'Record the licence in intake.json when you know it', with the three verdicts.
+- [ ] STILL OPEN — carry the intake licence into the promoted manifest's meta.licence, so check:source-licence sees it (today no manifest records one: every current document is 'undetermined').
+- [ ] STILL OPEN — the marker sweep over the seven existing activities; same rule as b5f0.
+Found in passing: bean eowd (regen cannot repair translate-bpmn:check).
