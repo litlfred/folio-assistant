@@ -14,7 +14,7 @@
  * termonology/coding."*
  *
  * The MODEL for a mapping already existed —
- * [`vocabulary-authority`](../skills/folio-core/vocabulary-authority.md) names
+ * [`vocabulary-authority`](../skills/kg/kg-core/vocabulary-authority.md) names
  * SKOS the hub and `exactMatch` / `closeMatch` / `broadMatch` / `relatedMatch`
  * the predicates, and authored terms already carry `exactMatch` to ODRL URIs.
  * What did not exist is anything that performs the comparison.

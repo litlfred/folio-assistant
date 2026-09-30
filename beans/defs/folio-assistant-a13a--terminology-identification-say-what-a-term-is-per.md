@@ -16,7 +16,7 @@ checked.
 
 Written 2026-09-25 to ask "what IS a term, per asset kind, and what is not",
 on the reading that `glossary-page.ts`'s rule was implicit. It is not implicit
-any more. [`glossary-terms`](../../cat-harness/skills/folio-core/glossary-terms.md)
+any more. [`glossary-terms`](../../cat-harness/skills/library/library-core/glossary-terms.md)
 §"Extracted terms" now states it:
 
 - `folio-assistant-core/scripts/glossary-extract.ts` extracts a `candidate`

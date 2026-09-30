@@ -115,7 +115,7 @@ somewhere else to live — which is what the second half of the ruling settles.
 
 ### `fsh-guts/` is that somewhere, and it already has the contract
 
-[`fsh-guts`](fsh-guts.md) is *"the trashcan that is kept"*: addressable,
+[`fsh-guts`](../../kg/kg-core/fsh-guts.md) is *"the trashcan that is kept"*: addressable,
 exported, greppable, and deliberately absent from the canonical render.
 **Delete means relocate**, and this is that rule applied to a source whose
 derivation has landed.
