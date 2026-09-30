@@ -22282,25 +22282,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.alternativeto",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ToolDefinitionSchema.alternativeTo"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Other Tools that do the SAME job by a different mechanism."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.alternativeTo",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.maintains",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -22370,7 +22351,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Why to reach for this one. REQUIRED once `alternativeTo` is non-empty — see {@link ToolSelectionSchema}, and the refinement below."
+          "@value": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set."
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
