@@ -168,9 +168,9 @@
         "skos:Concept"
       ],
       "label": "Tool",
-      "comment": "The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
+      "comment": "A Node Instance describing a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
       "prefLabel": "Tool",
-      "definition": "The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
+      "definition": "A Node Instance describing a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
       "notation": "cat-harness:Tool",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
@@ -238,22 +238,6 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
       "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
       "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:Harness",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "Harness",
-      "comment": "A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph.",
-      "prefLabel": "Harness",
-      "definition": "A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph.",
-      "notation": "cat-harness:Harness",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/ns/vocabulary.jsonld",
-      "layer": "harness",
-      "seeAlso": "https://litlfred.github.io/architecture.html"
     },
     {
       "@id": "cat-harness:RoleGraph",

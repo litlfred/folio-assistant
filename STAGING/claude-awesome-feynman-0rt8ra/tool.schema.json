@@ -186,7 +186,9 @@
           "type": "array",
           "items": {
             "type": "string",
-            "minLength": 1
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "A skill name, e.g. todo-manager"
           }
         },
         "alternativeTo": {
@@ -287,8 +289,8 @@
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "claude/awesome-feynman-0rt8ra",
-    "sha": "b15d712571ebb270f3c358ca215a93cf3753cd3c",
+    "sha": "0bcc9a225fc9a6a5f3cbfdc407ef75a0140264b9",
     "pr": "1530/merge",
-    "run": "36650263353"
+    "run": "36690712369"
   }
 }
