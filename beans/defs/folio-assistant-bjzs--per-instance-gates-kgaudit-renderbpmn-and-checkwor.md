@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-26T04:14:07Z
-updated_at: 2026-09-27T10:36:45Z
+updated_at: 2026-09-27T11:27:47Z
 parent: folio-assistant-d308
 ---
 
@@ -750,3 +750,80 @@ bootstrap unchanged. `instance-graph-isolation.test.ts` green.
       a gate that keeps them current, or 13 sets of artefacts start going stale
       the moment they land
 - [ ] the `dh4f` zero-diagram question
+
+
+## 2026-09-27, box 9: the loop — every declared instance is audited, and its verdict is committed
+
+`kg:audit:all` / `kg:audit:all:check` (`scripts/kg-audit-all.ts`), wired into
+`code-quality-gates.yml` beside the single-instance step it generalises.
+
+**Spawned per instance, not looped in-process.** `kg-audit.ts` resolves `root`
+once at module scope and derives nine `*_DIR` constants, subject discovery and
+its output path from it — its own docblock says why that is right. So a `--all`
+flag would have to unpick the design. Spawning also makes a crash in one
+instance a REPORTED failure rather than an exception that ends the sweep;
+`crashed` is a third outcome, not a kind of failure, because nothing was judged.
+
+**Result: 15 instances audited, 15 clean, 0 produced no report.** 13 of them had
+no `test/results` at all before this.
+
+### Three coupled changes the loop forced, each measured rather than predicted
+
+1. **The 13 instances DECLARE their `qa` directory**, with the sidecars in the
+   same commit — box 6's precedent, and `dh4f`'s rule. `audit:coverage` now
+   reports the `qa` kind as **15 declared directories, state `covered`** (was 2).
+
+2. **The auditor manifest moved out of `skills/`.** `KG_QA_MANIFEST_PATH` was
+   `skills/kg-qa.manifest.json`, harmless while ONE instance was audited.
+   `kg-audit.ts` writes it unconditionally, so the first full sweep CREATED a
+   `skills/` directory holding nothing but a manifest in every instance that has
+   none — and the generated UML and the navbar both moved to report a skills
+   graph with no skills. It is now `test/results/kg-qa.manifest.json`, which is
+   where it belongs on its own terms: it describes the SIDECARS.
+   `kg-qa-manifest/v1`'s registration moved from the `skills` kind to `qa` with
+   it — a kind claiming a `$schema` whose files live in another kind's directory
+   is a validator aimed at nothing.
+
+3. **Two prose counts were falsified by that move and corrected**: cat-harness's
+   `qa` description said "Three kinds live here" (now four, manifest enumerated),
+   and the 13 generated descriptions said "ONE kind lives here" (now two). A
+   count in prose is a claim, and this is the second time in two days it was the
+   thing that went stale first.
+
+### What the loop found on its FIRST run
+
+bootstrap's `kg-qa.manifest.json` was **stale** — it records the auditor's hash,
+so every instance's manifest goes stale the moment `kg-audit.ts` changes, and
+nothing said so because no gate ran bootstrap's audit. That is this bean's
+subject demonstrating itself.
+
+### Still not audited: the ROOT instance
+
+`kg:audit --instance .` exits 1 before auditing anything (bean `pgzn`). The
+sweep prints that gap on EVERY run, clean or not — a gap mentioned only when
+something else fails is a gap nobody reads on the day it matters. So coverage is
+**15 of 16**, stated rather than rounded up.
+
+The obvious repair is wrong, and the corpus says so: the value feeds
+`rootScripts`, which reads `package.json`, and `siblingScopeFor`'s own docblock
+warns that substituting it for `repoRootFor` *"would make the repository-furniture
+question wrong for that same instance, in the other direction."*
+
+### The `dh4f` zero-diagram question, measured
+
+**No instance in this corpus declares `processes/` and holds no diagram.** The
+two that declare it (`folio-assistant-core`, `smart-base`) hold one each; the
+eleven with no diagrams declare no `processes` directory. So the question is
+hypothetical here, every instance yields at least one subject, and no sidecar
+set is empty. It is a case to guard by construction, not a live finding — which
+is worth saying plainly, because the box was written as though a corpus case
+existed.
+
+## Done when
+
+- [x] every earlier box (see above)
+- [x] resolution follows `needs` downward — skills and roles
+- [x] the loop: every declared instance audited, its sidecars committed, and a
+      CI gate that keeps them current
+- [ ] the ROOT instance is audited too — blocked on `pgzn`
+- [ ] the `dh4f` zero-diagram question — no corpus case; guard by construction

@@ -36,6 +36,7 @@ import { readdirSync, readFileSync, statSync, existsSync, mkdirSync, writeFileSy
 import { join, relative, resolve, dirname } from "path";
 import { detangleResultsDir, sidecarFor, sidecarPathFor, staleFields } from "../../schemas/detangle-sidecar.ts";
 import { gitCorpus } from "../../schemas/git-corpus.ts";
+import { groupDepthFor } from "./group-depth.ts";
 import {
   DEFAULT_THRESHOLDS,
   measure,
@@ -49,28 +50,45 @@ import {
 import { allowedFromNeeds, directionOf, type LayerRule } from "../../schemas/layer-direction.js";
 import { ancestorsOf, flattenDependencies } from "../../schemas/dependency-order.js";
 import { ownElementPattern } from "../../schemas/namespaces.js";
+import { isDirectoryReadme } from "../../schemas/kg-node.ts";
 
 const ROOT = resolve(import.meta.dir, "../../..");
 
-/** Directories scanned, each mapped to the depth at which a candidate group is named. */
-const SCAN: Array<{ path: string; groupDepth: number }> = [
-  { path: "cat-harness/skills", groupDepth: 3 },
-  // `processes/` and `scenarios/` are SIBLINGS of `skills/` since 2026-09-21,
-  // not subdirectories of it. At depth 3 the old layout named them
-  // `cat-harness/skills/workflows` and `.../roles`; once they moved out, the
-  // `cat-harness/skills` entry above stopped reaching them and they were
-  // measured nowhere — the detangle report is only as wide as this list, so a
-  // directory missing from it reads as "nothing to report" rather than as a
-  // gap. Depth 2 names them for the same reason `bootstrap/processes` does.
-  { path: "cat-harness/processes", groupDepth: 2 },
-  { path: "cat-harness/scenarios", groupDepth: 2 },
-  { path: "cat-harness/schemas", groupDepth: 2 },
-  { path: "cat-harness/tools", groupDepth: 2 },
-  { path: "cat-harness/src/skills", groupDepth: 3 },
-  // declared-path-literal: the scan list is REPO-relative and pairs each path with a grouping depth no declaration carries; deriving it is its own change, not part of the byql fold.
-  { path: "folio-assistant-core/schemas", groupDepth: 2 },
-  { path: "bootstrap/skills", groupDepth: 2 },
-  { path: "bootstrap/processes", groupDepth: 2 },
+/**
+ * Directories scanned. The depth at which each names its groups is DERIVED —
+ * see {@link groupDepthFor}.
+ *
+ * Each entry used to carry a hardcoded `groupDepth`, and the reasoning those
+ * numbers encoded is kept here because it is still true about the LAYOUT even
+ * though it no longer has to be written down as a number:
+ *
+ * - `processes/` and `scenarios/` are SIBLINGS of `skills/` since 2026-09-21,
+ *   not subdirectories of it. Under the old table they were listed at depth 3
+ *   as `cat-harness/skills/workflows` and `.../roles`; once they moved out, the
+ *   `cat-harness/skills` entry stopped reaching them and they were measured
+ *   NOWHERE — this report is only as wide as this list, so a directory missing
+ *   from it reads as "nothing to report" rather than as a gap.
+ * - `cat-harness/skills` names its groups one level down and `bootstrap/skills`
+ *   does not, despite being the same graph kind. That is a fact about where each
+ *   instance keeps its nodes, which is why the depth is measured rather than
+ *   inferred from the kind.
+ *
+ * An entry naming a directory that does not exist is REPORTED as a determined
+ * empty and left alone — removing it is a person's edit, not this script's.
+ */
+const SCAN: Array<{ path: string }> = [
+  { path: "cat-harness/skills" },
+  { path: "cat-harness/processes" },
+  { path: "cat-harness/scenarios" },
+  { path: "cat-harness/schemas" },
+  { path: "cat-harness/tools" },
+  { path: "cat-harness/src/skills" },
+  // declared-path-literal: the scan list is REPO-relative. The grouping depth it
+  // used to pair with each path is now derived (`groupDepthFor`); the PATHS
+  // remain literals, which is a separate and still-open concern.
+  { path: "folio-assistant-core/schemas" },
+  { path: "bootstrap/skills" },
+  { path: "bootstrap/processes" },
 ];
 
 const EXT = /\.(md|bpmn|dmn|json|ts)$/;
@@ -179,8 +197,15 @@ const byId = new Map<string, string>(); // id -> absolute path
 /** Skill name (front-matter `name:` or basename) -> node id. A name may be carried by two bodies; both are kept. */
 const byName = new Map<string, string[]>();
 
-for (const { path, groupDepth } of SCAN) {
-  for (const abs of corpusOf(join(ROOT, path))) {
+for (const { path } of SCAN) {
+  // A README is documentation ABOUT a directory, never a node IN it — the
+  // rule `isSkillMd` states for the skill scan. It mattered little while
+  // READMEs were rare; `subgraph-readmes` writes one into every declared
+  // directory, and counting them would add a node to every group and tilt
+  // `groupDepthFor`'s here-vs-nested count at every root.
+  const scanned = corpusOf(join(ROOT, path)).filter((p) => !isDirectoryReadme(p));
+  const groupDepth = groupDepthFor(path, scanned);
+  for (const abs of scanned) {
     const id = relative(ROOT, abs);
     const group = id.split("/").slice(0, groupDepth).join("/");
     nodes.push({ id, group });

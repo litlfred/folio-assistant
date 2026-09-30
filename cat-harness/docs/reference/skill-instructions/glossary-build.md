@@ -30,6 +30,11 @@ namespace, beside every other scheme. The rules (status by provenance,
 verbatim definitions, the slug as `notation`) are in
 [`glossary-terms`](glossary-terms.md).
 
+The paper's scheme is **unordered**: its terms are shown A–Z. A glossary whose
+terms must be read in a logical order declares `ordered: true` and gives each
+term `requires`; see [`glossary-terms`](glossary-terms.md) §"Ordered
+glossaries" — do not sort one of those.
+
 `--check` also fails when the scheme is stale, when two slugs would mint
 one term IRI, or when another document in the directory holds the scheme id.
 A scheme not written yet is reported and does not fail, so a paper that has

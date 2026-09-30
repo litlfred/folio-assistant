@@ -96,3 +96,10 @@ them with `tool_list` rather than relying on this list.
   start of your adoption.
 - It does not push to a registry on its own (step 4, above).
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | 12 · First release |
+

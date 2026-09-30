@@ -51,9 +51,13 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { basename, join, relative, resolve } from "node:path";
 
-import { readDeclaration, siteDirFor } from "../schemas/cat-harness.js";
+import { readDeclaration, repoRootFor, siteDirFor } from "../schemas/cat-harness.js";
 import { tileCounts } from "../schemas/tile-count.js";
 import { withViewerNav, type ViewerNav } from "./viewer-page.ts";
+import { renderedPath, withRenders } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "translation-status-viewer";
 
 const ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = resolve(ROOT, "..");
@@ -424,7 +428,8 @@ function main(): void {
   // green over a page that gains its rail only when somebody re-runs this.
   const nav: ViewerNav = { built: basename(ROOT), docsRoot: site };
   const page = (changedAt: string) => {
-    const html = statusPage({ locales, changedAt, scope: doc.scope });
+    // The page says which directory it draws (#1168 B7a-2).
+    const html = withRenders(statusPage({ locales, changedAt, scope: doc.scope }), [renderedPath(repoRootFor(ROOT), translationsDir)], VIEWER_TOOL);
     return withViewerNav(html, pagePath, nav) ?? html;
   };
   const json = (changedAt: string) => `${JSON.stringify({ ...doc, changedAt }, null, 2)}\n`;

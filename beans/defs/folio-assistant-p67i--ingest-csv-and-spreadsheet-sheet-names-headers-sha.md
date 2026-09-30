@@ -1,11 +1,11 @@
 ---
 # folio-assistant-p67i
 title: 'INGEST: CSV and spreadsheet — sheet names, headers, shape, narrative'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-16T06:43:50Z
-updated_at: 2026-09-20T14:08:26Z
+updated_at: 2026-09-29T20:03:12Z
 parent: folio-assistant-slw1
 ---
 
@@ -222,3 +222,9 @@ caught by a named test.
 **Remaining:** the narrative, still blocked on there being a dataset. The
 manifest does not surface it yet — adding that path with nothing in the corpus
 to exercise it would be a second unreached branch, which is the defect above.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

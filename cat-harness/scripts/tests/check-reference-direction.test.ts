@@ -21,6 +21,7 @@ import { allowedFromNeeds, type LayerRule } from "../../schemas/layer-direction.
 import {
   classifyReference,
   occurrencesOf,
+  type NameCollision,
   type Occurrence,
   type ReferenceExemption,
 } from "../../schemas/reference-direction.ts";
@@ -52,7 +53,8 @@ const occ = (from: string, to: string, text = "some prose", file = "a.md"): Occu
   from,
   to,
 });
-const never = () => false;
+/** No collision at all: the target's name is not the repository's, so the arrow decides. */
+const never = (): NameCollision | undefined => undefined;
 
 describe("occurrencesOf is bounded, because one instance name may prefix another", () => {
   test("a name inside a longer name is NOT an occurrence of it", () => {
@@ -101,22 +103,60 @@ describe("classifyReference follows the dependency arrow", () => {
   });
 });
 
-describe("a target whose name is the repository's is undetermined, not a guess", () => {
-  const sharesName = (n: string) => n === "high";
+describe("a name colliding with the repository's is decided per OCCURRENCE, not per name", () => {
+  // Until 2026-09-29 this was one blanket `undetermined` for the whole name,
+  // which was 78 % of every occurrence in the real corpus. The resolver now
+  // says which of three things THIS occurrence is, and each answer has a
+  // different consequence — which is the whole point of having three.
+  const collides = (answer: NameCollision) => (o: Occurrence) =>
+    o.to === "high" ? answer : undefined;
 
-  test("undecidable by name — so it is declined, not called a violation", () => {
-    const v = classifyReference(occ("low", "high"), RULE, sharesName);
+  test('"unknown" is still `undetermined` — the honest residue survives', () => {
+    // A bare prose mention: no path, no URL, nothing to tell the repository
+    // from the instance. This test exists so the third state cannot be
+    // optimised away as unreachable.
+    const v = classifyReference(occ("low", "high"), RULE, collides("unknown"));
     expect(v.verdict).toBe("undetermined");
     expect(v.basis).toContain("repository's name");
   });
 
-  test("and not called clean either: it does NOT become `allowed`", () => {
-    expect(classifyReference(occ("low", "high"), RULE, sharesName).verdict).not.toBe("allowed");
+  test('"unknown" is not called clean either: it does NOT become `allowed`', () => {
+    expect(classifyReference(occ("low", "high"), RULE, collides("unknown")).verdict).not.toBe("allowed");
   });
 
-  test("it outranks every exemption, so no exemption can silently claim the credit", () => {
+  test('"unknown" outranks every exemption, so no exemption can silently claim the credit', () => {
     const always: ReferenceExemption[] = [{ pattern: /.*/, reason: "would swallow everything" }];
-    expect(classifyReference(occ("low", "high"), RULE, sharesName, always).verdict).toBe("undetermined");
+    expect(classifyReference(occ("low", "high"), RULE, collides("unknown"), always).verdict).toBe("undetermined");
+  });
+
+  test('"repository" is `names-repository` — judged, and owing no direction', () => {
+    const v = classifyReference(occ("low", "high"), RULE, collides("repository"));
+    expect(v.verdict).toBe("names-repository");
+    expect(v.basis).toContain("not a layer");
+  });
+
+  test('"repository" is NOT `allowed`, `exempt` or `undetermined` — it is its own statement', () => {
+    const always: ReferenceExemption[] = [{ pattern: /.*/, reason: "would swallow everything" }];
+    const v = classifyReference(occ("low", "high"), RULE, collides("repository"), always);
+    expect(v.verdict).toBe("names-repository");
+  });
+
+  test('"instance" falls THROUGH to the arrow, so it can be wrong-direction', () => {
+    // The case the blanket could not reach: a real reference to the instance
+    // whose name happens to be the repository's.
+    const v = classifyReference(occ("low", "high"), RULE, collides("instance"));
+    expect(v.verdict).toBe("wrong-direction");
+  });
+
+  test('"instance" pointing DOWN the arrow is allowed, like any other reference', () => {
+    const down = (o: Occurrence) => (o.to === "low" ? "instance" as const : undefined);
+    expect(classifyReference(occ("high", "low"), RULE, down).verdict).toBe("allowed");
+  });
+
+  test('"instance" can be exempted, which the blanket verdict made impossible', () => {
+    const url: ReferenceExemption[] = [{ pattern: /https?:\/\//, reason: "an address, not a reference" }];
+    const v = classifyReference(occ("low", "high", "see https://x/high"), RULE, collides("instance"), url);
+    expect(v.verdict).toBe("exempt");
   });
 });
 
@@ -304,6 +344,104 @@ describe("a file that DECLARES itself generated is not read", () => {
 // second full walk of the corpus for no extra coverage. Measured when it was
 // briefly written that way: 5.89s for this file, against 198ms without it,
 // and a sibling test's budget is 5s.
+
+describe("the repository-name collision, resolved from the occurrence and the declaration", () => {
+  // The root instance's name IS the repository's name, so a name match alone
+  // cannot tell the two apart. What the occurrence CARRIES can: a URL around
+  // it, an owner in front of it, a declared directory after it. On main
+  // 2026-09-29 the blanket version of this test returned `undetermined` for
+  // 11,090 of 14,299 occurrences — 78 % — of which 14 pointed into a directory
+  // the root instance actually declares.
+  //
+  // `repo` here is declared AT the temp root, which is what makes it collide:
+  // an instance rooted at the repository root shares the repository's name.
+
+  /** `low` <- `repo` (rooted at the repo root, declaring `uploads/` and `tools/`) and `low` <- `high`. */
+  function collidingTree(files: Record<string, string>): string {
+    const root = mkdtempSync(join(tmpdir(), "refdir-"));
+    made.push(root);
+    writeFileSync(
+      join(root, "repo.json"),
+      JSON.stringify({
+        name: "repo",
+        needs: ["low"],
+        directories: [
+          { id: "uploads", path: "uploads/", graphKinds: ["docs"] },
+          { id: "root-tools", path: "tools/", graphKinds: ["code"] },
+        ],
+      }),
+    );
+    for (const [name, needs] of [["low", []], ["high", ["low"]]] as const) {
+      mkdirSync(join(root, name), { recursive: true });
+      writeFileSync(join(root, name, `${name}.json`), JSON.stringify({ name, needs, directories: [] }));
+    }
+    for (const [rel, body] of Object.entries(files)) {
+      const abs = join(root, rel);
+      mkdirSync(join(abs, ".."), { recursive: true });
+      writeFileSync(abs, body);
+    }
+    return root;
+  }
+  const only = (root: string) => analyse(root).classified.map((c) => c.verdict.verdict);
+
+  test("a URL naming the repository is `names-repository` — an address, not a layer", () => {
+    expect(only(collidingTree({ "low/a.md": "see <https://litlfred.github.io/repo/guides/x.html>\n" }))).toEqual([
+      "names-repository",
+    ]);
+  });
+
+  test("`<owner>/<name>` is `names-repository` — a repository slug", () => {
+    expect(only(collidingTree({ "low/a.md": "cloned from litlfred/repo last week\n" }))).toEqual(["names-repository"]);
+  });
+
+  test("`<name>/` before any OTHER path segment is `names-repository` — a path in the repository", () => {
+    expect(only(collidingTree({ "low/a.md": "it lives at repo/docs/guides/x.md\n" }))).toEqual(["names-repository"]);
+  });
+
+  test("a path into a DECLARED directory is judged by the arrow, NOT `names-repository`", () => {
+    // `uploads/` is one of the two directories `repo.json` declares, so this
+    // names the INSTANCE. `low` is depended on by `repo`, so it may not.
+    expect(only(collidingTree({ "low/a.md": "dropped in repo/uploads/x.pdf\n" }))).toEqual(["wrong-direction"]);
+  });
+
+  test("the OTHER declared directory too — it is read from the declaration, not from a literal", () => {
+    expect(only(collidingTree({ "low/a.md": "the barrel is repo/tools/index.ts\n" }))).toEqual(["wrong-direction"]);
+  });
+
+  test("a URL that points INTO a declared directory is still the instance — order matters", () => {
+    // Documented ordering: `instance` is tested before `repository`, so a URL
+    // cannot decide this occurrence. Reversing the two would return
+    // `names-repository`; instead it goes to the arrow, is refused, and is then
+    // excused by the URL EXEMPTION — which carries a stated reason and is
+    // counted in the summary, where the blanket verdict was neither.
+    expect(only(collidingTree({ "low/a.md": "see https://x.test/repo/uploads/x.pdf\n" }))).toEqual(["exempt"]);
+  });
+
+  test("a bare prose mention is `undetermined` — the third state is still reachable", () => {
+    // No path and no URL: genuinely undecidable, and this is the residue the
+    // narrowing was NOT allowed to eliminate.
+    const r = collidingTree({ "low/a.md": "this whole thing is about repo, in the end\n" });
+    expect(only(r)).toEqual(["undetermined"]);
+    expect(analyse(r).classified[0]!.verdict.basis).toContain("repository's name");
+  });
+
+  test("a NON-colliding target behaves exactly as before — the collision rule reaches nothing else", () => {
+    // `high` is not rooted at the repository root, so none of the three
+    // answers applies to it and every shape is judged by the arrow alone.
+    for (const text of [
+      "this is about high\n",
+      "see https://litlfred.github.io/high/guides/x.html\n",
+      "cloned from litlfred/high\n",
+      "it lives at high/docs/guides/x.md\n",
+    ]) {
+      // The URL lines are `exempt` rather than `wrong-direction` by the URL
+      // exemption, which is the pre-existing behaviour and not part of this
+      // rule; what matters is that `names-repository` never appears.
+      expect(only(collidingTree({ "low/a.md": text }))).not.toContain("names-repository");
+    }
+    expect(only(collidingTree({ "low/a.md": "this is about high\n" }))).toEqual(["wrong-direction"]);
+  });
+});
 
 describe("a declared path resolves against the scope it declares, not against the declarer", () => {
   // `scope: "repository"` resolves against the REPO ROOT, via `rootForScope`.

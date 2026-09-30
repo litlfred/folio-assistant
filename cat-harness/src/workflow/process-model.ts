@@ -33,7 +33,7 @@
 
 import { BpmnModdle } from "bpmn-moddle";
 import { existsSync, readFileSync, readdirSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { basename, dirname, isAbsolute, join } from "node:path";
 import { loadDecisionTable, possibleOutcomes, type DecisionTable } from "./decision-table.js";
 import { ACTOR_KINDS, type ActorKind } from "../../schemas/role-graph.js";
 import { CONVENTION_EXT, conventionsInForce, type ConventionScope } from "../../schemas/convention.js";
@@ -443,7 +443,12 @@ export type PreconditionKind =
 
 /** The checks the engine implements. Adding one is adding a case below. */
 export type PreconditionCheck =
-  /** `ref` names a path, relative to the repository root, that must exist. */
+  /**
+   * `ref` names a path, relative to the INSTANCE that owns the diagram, that
+   * must exist. Not the repository root: an instance can be a subdirectory
+   * today and a repository of its own tomorrow, and a ref written against the
+   * repository root means a different file in each (bean `r3gy`, group C).
+   */
   | "file-exists";
 
 /** One `<bootstrap.processes:precondition>` on a process. */
@@ -453,8 +458,14 @@ export interface Precondition {
   /** The statement, in the author's words. */
   text: string;
   kind: PreconditionKind;
-  /** Present exactly when `kind` is `checkable` — the parser enforces both ways. */
-  check?: { kind: PreconditionCheck; ref: string };
+  /**
+   * Present exactly when `kind` is `checkable` — the parser enforces both ways.
+   *
+   * `base` is the absolute root of the instance that owns the diagram, found
+   * when it is parsed. It is carried on the check rather than passed to the
+   * evaluator, so no caller can resolve `ref` against a different directory.
+   */
+  check?: { kind: PreconditionCheck; ref: string; base: string };
 }
 
 /**
@@ -1137,9 +1148,10 @@ function processIndex(dir: string): Map<string, string> {
  * `satisfied`, so the guarantee is structural rather than a rule somebody has
  * to keep remembering.
  *
- * @param root Repository root that a `file-exists` ref resolves against.
+ * A `file-exists` ref resolves against `check.base`, the owning instance's
+ * root, and nothing else — which is why this takes no root argument.
  */
-export function evaluatePrecondition(p: Precondition, root: string): PreconditionVerdict {
+export function evaluatePrecondition(p: Precondition): PreconditionVerdict {
   if (p.kind === "stated") return "could-not-determine";
   // `check` is present exactly when kind is `checkable` — the parser refuses
   // both halves of the other case — but a model built by hand in a test could
@@ -1147,7 +1159,7 @@ export function evaluatePrecondition(p: Precondition, root: string): Preconditio
   if (!p.check) return "could-not-determine";
   switch (p.check.kind) {
     case "file-exists":
-      return existsSync(join(root, p.check.ref)) ? "satisfied" : "unsatisfied";
+      return existsSync(join(p.check.base, p.check.ref)) ? "satisfied" : "unsatisfied";
   }
 }
 
@@ -1161,11 +1173,10 @@ export function evaluatePrecondition(p: Precondition, root: string): Preconditio
  */
 export function evaluatePreconditions(
   model: Pick<ProcessModel, "preconditions">,
-  root: string,
 ): Array<{ precondition: Precondition; verdict: PreconditionVerdict }> {
   return model.preconditions.map((precondition) => ({
     precondition,
-    verdict: evaluatePrecondition(precondition, root),
+    verdict: evaluatePrecondition(precondition),
   }));
 }
 
@@ -1466,12 +1477,30 @@ export async function loadProcessModel(
             `ref. The check needs to know WHAT must exist.`,
         );
       }
+      // Relative to the instance, and INSIDE it. An absolute path or a `..`
+      // segment would name a file the instance does not own, which is the
+      // repository-root dependence this resolution exists to remove.
+      if (isAbsolute(ref) || ref.split(/[\\/]/).includes("..")) {
+        throw new UnsupportedBpmn(
+          `${basename(bpmnPath)}: bootstrap.processes:precondition ${id} has ref="${ref}", which ` +
+            `leaves the instance. A file-exists ref is relative to the instance that owns the ` +
+            `diagram and must stay inside it.`,
+        );
+      }
+    }
+    const base = kind === "checkable" ? findInstanceRoot(dirname(bpmnPath)) : undefined;
+    if (kind === "checkable" && base === undefined) {
+      throw new UnsupportedBpmn(
+        `${basename(bpmnPath)}: bootstrap.processes:precondition ${id} checks a file, but no ` +
+          `instance declaration owns this diagram, so there is no root to resolve "${ref}" ` +
+          `against. Guessing the repository root is the dependence this refuses.`,
+      );
     }
     preconditions.push({
       id,
       text,
       kind,
-      ...(kind === "checkable" ? { check: { kind: "file-exists" as const, ref: ref! } } : {}),
+      ...(kind === "checkable" ? { check: { kind: "file-exists" as const, ref: ref!, base: base! } } : {}),
     });
   }
   const seenIds = new Set<string>();

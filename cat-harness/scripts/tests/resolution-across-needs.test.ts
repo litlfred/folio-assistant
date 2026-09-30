@@ -346,7 +346,7 @@ describe("skill refs resolve across the `needs` chain", () => {
         join(inst, "processes", "p.bpmn"),
         `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
                   id="Defs_1" targetNamespace="http://example.com/synth">
   <bpmn:process id="Process_Synth" isExecutable="true">
     <bpmn:startEvent id="S_1" name="Start"><bpmn:outgoing>F_1</bpmn:outgoing></bpmn:startEvent>

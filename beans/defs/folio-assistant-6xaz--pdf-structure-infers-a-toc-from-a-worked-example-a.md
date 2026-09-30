@@ -1,11 +1,11 @@
 ---
 # folio-assistant-6xaz
 title: pdf-structure infers a TOC from a worked EXAMPLE and ships it as the document's own structure
-status: in-progress
+status: todo
 type: bug
 priority: normal
 created_at: 2026-09-19T00:12:09Z
-updated_at: 2026-09-20T14:53:07Z
+updated_at: 2026-09-29T20:03:11Z
 parent: folio-assistant-0lmb
 ---
 
@@ -114,3 +114,9 @@ was built to pin the property rather than the document.
 - Re-ingesting the two documents with `pdf-structure.py` (they carry
   interim page-granularity trees from `pdf-pages.py`). The bean says to do that
   once this is fixed; shape two is not, so they stay as they are.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

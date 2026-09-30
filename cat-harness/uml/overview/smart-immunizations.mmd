@@ -1,5 +1,5 @@
 classDiagram
-  direction TB
+  direction LR
   namespace smart_immunizations__smart_immunizations_artifact_index {
     class smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Context["Context"] {
       <<json: FhirArtifactIndexSchema>>
@@ -1164,6 +1164,32 @@ classDiagram
       dak/ValueSet-IMMZD5DTYellowFeverContraindicationsVS [1] enum(704) of string
     }
   }
+  namespace smart_immunizations__qa {
+    class smart_immunizations_qa_kg_qa_v1_Pair_attestation["Pair_attestation"] {
+      <<json: KgQaReportSchema>>
+      kind [1] implements | co-located
+      prose [1] string
+      code [1] string
+      prose_hash [1] string
+      code_hash [1] string
+      by [1] baseline | agent | human
+      reason [0..1] string
+    }
+    class smart_immunizations_qa_kg_qa_v1_kg_qa_v1["kg-qa/v1"] {
+      <<json: KgQaReportSchema>>
+      $schema [1] 'kg-qa/v1'
+      subject [1] object
+      source_hash [1] string | null
+      criteria [1] map~object~
+      totals [1] map~number~
+      pair_attestations [0..*] Pair_attestation[]
+    }
+    class smart_immunizations_qa_kg_qa_manifest_v1_kg_qa_manifest_v1["kg-qa-manifest/v1"] {
+      <<json: KgQaManifestSchema>>
+      $schema [1] 'kg-qa-manifest/v1'
+      auditor [1] object
+    }
+  }
   smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Context : contexts
   smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_DakUnbound : dakUnbound
   smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_folio_fhir_artifact_index_v1 *-- "0..*" smart_immunizations_smart_immunizations_artifact_index_folio_fhir_artifact_index_v1_Artifact : artifacts
@@ -1370,3 +1396,7 @@ classDiagram
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_ValueSet_IMMZD5DTVaricellaContraindicationsVS_displays_json_IMMZD5DTVaricellaContraindications_ValueSet_for_Decision_Table_Display_Values" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_dak_ValueSet_IMMZD5DTYellowFeverContraindicationsVS_displays_json_IMMZD5DTYellowFeverContraindications_ValueSet_for_Decision_Table_Display_Values" fa_uml_kind_fhir_artifact_index
   cssClass "smart_immunizations_smart_immunizations_artifact_index_https___json_schema_org_draft_2020_12_schema_listed" fa_uml_kind_fhir_artifact_index
+  smart_immunizations_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" smart_immunizations_qa_kg_qa_v1_Pair_attestation : pair_attestations
+  cssClass "smart_immunizations_qa_kg_qa_v1_Pair_attestation" fa_uml_kind_qa
+  cssClass "smart_immunizations_qa_kg_qa_v1_kg_qa_v1" fa_uml_kind_qa
+  cssClass "smart_immunizations_qa_kg_qa_manifest_v1_kg_qa_manifest_v1" fa_uml_kind_qa

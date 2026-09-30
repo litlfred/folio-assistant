@@ -1047,6 +1047,10 @@ describe("instanceRootsIn — discovered, never listed", () => {
       ".",
       "agent-skills",
       "bootstrap",
+      // Added 2026-09-30 when it fired as designed: bootstrap's tools were
+      // re-created as the sibling instance `bootstrap-tools/` (bean `xsqm`),
+      // which declares `bootstrap-tools.json` and is therefore an instance.
+      "bootstrap-tools",
       "cat-harness",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
@@ -1199,8 +1203,12 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     // METHOD, and the theme describes methods rather than the layer that holds
     // them. A second theme for core's copy would say the two graphs render
     // differently, which nobody decided and which the pages do not do.
+    // THREE since 2026-09-29 (bean `h3rw`): `folio-assistant-sci-methodologies`
+    // holds the science layer's Lean-formalization methods, and takes
+    // `analyst` for the same reason.
     expect(themed.map((d) => d.id).sort()).toEqual([
       "folio-assistant-core-methodologies",
+      "folio-assistant-sci-methodologies",
       "methodologies",
     ]);
     for (const d of themed) expect(d.theme).toBe("analyst");

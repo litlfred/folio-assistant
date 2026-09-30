@@ -1,11 +1,11 @@
 ---
 # folio-assistant-4kq7
 title: 'Adopt github/spec-kit: spec-before-code gate, one spec template, specs as issue comments, change-size splitting'
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-21T14:46:51Z
-updated_at: 2026-09-21T17:15:47Z
+updated_at: 2026-09-29T20:50:32Z
 parent: folio-assistant-ahvw
 ---
 
@@ -48,3 +48,9 @@ agree, and spec-kit's own `specs/NNN-feature/spec.md` layout does NOT survive
 contact with this repository. A `specs/` directory was drafted in this session
 and withdrawn before anything was committed, which is the first concrete
 instance of "adopt it whole" colliding with a rule already paid for here.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

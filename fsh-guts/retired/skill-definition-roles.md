@@ -123,3 +123,13 @@ before writing a line — RBAC tier or BPMN role. It cannot be both, and the
 Whichever you choose, the values must be checked against that registry, or
 this recurs: `reader` survived 8 declarations precisely because nothing ever
 resolved it.
+
+## 2026-09-29: deleted from the schema
+
+#1168 B8 (bean `folio-assistant-a0s3`) removed the optional `roles` from
+`SkillDefinitionSchema` and the `SkillDefinition` interface. The owner's
+string-to-reference plan: a skill naming the roles that use it is the inverse
+of `RoleDef.skills`, which already records the relation. The schema is not
+strict, so a downstream definition still carrying the key still validates.
+`retired-skill-fields.test.ts` still refuses a definition in this instance that
+declares it.

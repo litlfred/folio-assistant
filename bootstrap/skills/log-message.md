@@ -16,7 +16,7 @@ about what did.
 
 It is carried out as a **sub-process**: nobody starts there. A task in another
 process calls it, and the calling task's diagram says so; this skill does not
-list its callers or the process that implements it (data-modelling, step 8).
+list its callers or the process that implements it.
 
 ## The message
 
@@ -80,9 +80,9 @@ Tool beside it; this one keeps working, because the skill says what a message
 
 ## What this skill is NOT
 
-It is **not** the work plan. A bean says what is being worked on and survives
+It is **not** the work plan. A work-plan item says what is being worked on and survives
 the session; a log line says what an actor did at a moment and does not claim
-to. A Bootstrapping Agent has no beans at all, which is the clearest case: it can log
+to. A Bootstrapping Agent has no work plan at all, which is the clearest case: it can log
 every step of an install and still have nowhere to record that the install is
 outstanding.
 

@@ -1,10 +1,10 @@
 ---
 # folio-assistant-a0s3
 title: 'B8 (#1168): string-to-reference sweep — typed refs on ~25 bare-string fields; delete SkillDefinition.roles and front-matter package:'
-status: todo
+status: in-progress
 type: task
 created_at: 2026-09-23T21:12:05Z
-updated_at: 2026-09-23T21:12:05Z
+updated_at: 2026-09-29T23:45:53Z
 parent: folio-assistant-tr05
 ---
 

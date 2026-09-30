@@ -106,6 +106,7 @@ import { join, resolve } from "path";
 import { WITHHELD_FILE, withheldFilter, withheldPaths } from "./lib/withheld.js";
 import { declarationPathIn, visualisationsOf } from "../schemas/cat-harness.js";
 import { injectRail, type NavItem } from "./lib/harness-rail.js";
+import { viewersOf } from "./viewer-declarations.js";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 
@@ -849,6 +850,7 @@ function mountable(): Mountable[] {
         graphKinds?: string[];
         instanceRoot?: boolean;
         composed?: boolean;
+        scope?: string;
         coverage?: Parameters<typeof visualisationsOf>[0];
       }[];
     };
@@ -880,7 +882,8 @@ function mountable(): Mountable[] {
       // The directory's own declared visualiser, if it has one. Read here
       // rather than re-derived later: the declaration is the only place that
       // knows, and a second answer is free to disagree with it.
-      const visualiser = visualisationsOf(entry.coverage, entry.id ?? entry.path)[0]?.ref;
+      // Resolved from the pages (#1168 B7a-2b).
+      const visualiser = viewersOf({ ...entry, id: entry.id ?? entry.path, path: entry.path }, join(REPO, e.name), REPO)[0]?.ref;
       for (const kind of entry.graphKinds ?? []) {
         out.push({
           name: d.name ?? e.name,

@@ -38,6 +38,7 @@
  * @graphNode schema
  */
 import { z } from "zod";
+import { SkillNameSchema } from "./tool-types.js";
 
 /** Whether the run was allowed, and if not, why not. */
 export const InvocationOutcomeSchema = z.enum([
@@ -91,7 +92,7 @@ export const ToolInvocationSchema = z.object({
    * because a Tool may satisfy several skills and WHICH ONE was being exercised
    * is the thing an audit cannot reconstruct afterwards.
    */
-  skill: z.string().min(1),
+  skill: SkillNameSchema,
   by: InvocationAuthoritySchema,
   context: InvocationContextSchema.optional(),
   /** Parsed, type-checked input values — never the raw request. */

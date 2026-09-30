@@ -6,7 +6,6 @@ description: >-
   checkable and readable. Ten rules learned on the UML overview, which engine
   to lay a graph out with and why, and how each graph kind here applies them.
 capability: architecture
-package: graph-management
 ---
 
 # Graph rendering: one set of rules for every drawn graph

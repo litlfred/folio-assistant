@@ -639,8 +639,10 @@ function intakeTitle(intake: { title?: string; item?: string; record?: string },
   return "";
 }
 
-export function readLibraryGraph(roots: string[]): LibraryGraph | null {
-  const repoRoot = repoRootFor(roots[0] ?? ".");
+export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor(roots[0] ?? ".")): LibraryGraph | null {
+  // `repoRoot` is passed by a caller whose first root IS the repository root:
+  // `repoRootFor` of that is its parent, which put every upload queue under
+  // one wrong instance with a path one level too long (#1168 B7a-2).
   const libDirs = new Set<string>();
   const upDirs = new Set<string>();
   for (const r of roots) {

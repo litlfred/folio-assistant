@@ -137,7 +137,7 @@ package "who-iris/who-iris-uploads" as pkg_who_iris_who_iris_uploads <<uploads>>
   }
 }
 package "who-iris/who-iris-skills" as pkg_who_iris_who_iris_skills <<skills>> {
-  note "skills: no node schema declared\n(no node here carries a $schema family skills names (4 named): could not determine)" as n_who_iris_who_iris_skills_skills
+  note "skills: no node schema declared\n(no node here carries a $schema family skills names (3 named): could not determine)" as n_who_iris_who_iris_skills_skills
 }
 package "who-iris/who-iris-themes" as pkg_who_iris_who_iris_themes <<themes>> {
   class "Override" as who_iris_who_iris_themes_Override <<json: ThemeSchema>> #f4f4f1 {
@@ -164,6 +164,29 @@ package "who-iris/who-iris-docs" as pkg_who_iris_who_iris_docs <<docs>> {
 package "who-iris/who-iris-scripts" as pkg_who_iris_who_iris_scripts <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_who_iris_who_iris_scripts_code
 }
+package "who-iris/qa" as pkg_who_iris_qa <<qa>> {
+  class "Pair_attestation" as who_iris_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
+    kind [1] : implements | co-located
+    prose [1] : string
+    code [1] : string
+    prose_hash [1] : string
+    code_hash [1] : string
+    by [1] : baseline | agent | human
+    reason [0..1] : string
+  }
+  class "kg-qa/v1" as who_iris_qa_kg_qa_v1_kg_qa_v1 <<json: KgQaReportSchema>> #f4e6e6 {
+    $schema [1] : 'kg-qa/v1'
+    subject [1] : object
+    source_hash [1] : string | null
+    criteria [1] : map<object>
+    totals [1] : map<number>
+    pair_attestations [0..*] : Pair_attestation[]
+  }
+  class "kg-qa-manifest/v1" as who_iris_qa_kg_qa_manifest_v1_kg_qa_manifest_v1 <<json: KgQaManifestSchema>> #f4e6e6 {
+    $schema [1] : 'kg-qa-manifest/v1'
+    auditor [1] : object
+  }
+}
 
 who_iris_library_folio_withheld_v1_folio_withheld_v1 *-- "0..*" who_iris_library_folio_withheld_v1_Path : paths
 who_iris_who_iris_catalogue_folio_dublin_core_v1_Field *-- "1..*" who_iris_who_iris_catalogue_folio_dublin_core_v1_Value : values
@@ -174,10 +197,12 @@ who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who
 who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Omitted : omitted
 who_iris_who_iris_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" who_iris_who_iris_uploads_folio_intake_v1_File : files
 who_iris_who_iris_themes_Theme *-- "0..*" who_iris_who_iris_themes_Override : overrides
-' grid: portrait, 2 column(s) — pkg_who_iris_library pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs pkg_who_iris_who_iris_scripts
+who_iris_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" who_iris_qa_kg_qa_v1_Pair_attestation : pair_attestations
+' grid: portrait, 2 column(s) — pkg_who_iris_library pkg_who_iris_who_iris_catalogue pkg_who_iris_who_iris_uploads pkg_who_iris_who_iris_skills pkg_who_iris_who_iris_themes pkg_who_iris_who_iris_docs pkg_who_iris_who_iris_scripts pkg_who_iris_qa
 pkg_who_iris_library -[hidden]down- pkg_who_iris_who_iris_uploads
 pkg_who_iris_who_iris_catalogue -[hidden]down- pkg_who_iris_who_iris_skills
 pkg_who_iris_who_iris_uploads -[hidden]down- pkg_who_iris_who_iris_themes
 pkg_who_iris_who_iris_skills -[hidden]down- pkg_who_iris_who_iris_docs
 pkg_who_iris_who_iris_themes -[hidden]down- pkg_who_iris_who_iris_scripts
+pkg_who_iris_who_iris_docs -[hidden]down- pkg_who_iris_qa
 @enduml

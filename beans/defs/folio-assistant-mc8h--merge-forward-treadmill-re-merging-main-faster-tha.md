@@ -1,11 +1,12 @@
 ---
 # folio-assistant-mc8h
 title: 'MERGE-FORWARD TREADMILL: re-merging main faster than CI can answer means never getting a verdict — #1064 took four base merges and observed zero gates runs'
-status: in-progress
+status: todo
 type: bug
-parent: folio-assistant-1swy
+priority: normal
 created_at: 2026-09-23T13:25:16Z
-updated_at: 2026-09-23T13:25:16Z
+updated_at: 2026-09-29T20:50:32Z
+parent: folio-assistant-1swy
 ---
 
 
@@ -137,3 +138,9 @@ it is simply no longer propped up by a claim about what CI did not do.
 - [x] the surviving lesson restated at the size the evidence supports
 - [ ] a check that no tool reads `get_status` for a verdict — **not built**;
       whether that is worth a gate is the owner's call, not this bean's
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

@@ -68,6 +68,24 @@ an example it never cites.
 metric in the corpus is computed from. `lean-formal-graph` is how you look at
 the formal side; `content-graph` is how you ask impact questions across both.
 
+## Adopted methods for formalising, and where they live
+
+Three external methods for Lean formalization are adopted as methodology
+nodes in the science layer, `folio-assistant-sci/methodologies/`, each citing a
+paper held in `folio-assistant-sci/library/`. They are the *method*; the skills
+above are how this platform performs it. Read the node when the question is
+the one it names:
+
+| node | read it when |
+|---|---|
+| `blueprint-driven-formalization` | deciding who writes dependency and completion status, and splitting a target into nodes a prover can attempt one at a time |
+| `process-driven-autoformalization` | testing a candidate Lean statement (compile it WITH a proof — a one-sided filter, never evidence of faithfulness), or generating prose from Lean |
+| `bidirectional-agentic-autoformalization` | organising an agent run over a whole paper, and reviewing the output by informalizing it back without the source |
+
+Each node states what its paper measured and did not, and what this platform
+refuses from it. The refusal most likely to be breached: **running out of
+attempts is never a reason to write an `axiom`** (see `sorry` below).
+
 ## `sorry`
 
 `skills/requirements/lean-verification.json` states it as a SHALL: every

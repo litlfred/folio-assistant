@@ -5,7 +5,7 @@
     "id": "Process_CiHealth",
     "path": "processes/ci-health-watch.bpmn"
   },
-  "source_hash": "sha256:bb01c29bef5e6fa50078c178457774e6c66f8fef27962fc3315dd2ae99ed5a96",
+  "source_hash": "sha256:8974af1fc2d8b445ae981db438ec9be4fd8a81231e40de72c0313bb66dc7a664",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -136,7 +136,7 @@
       "kind": "implements",
       "prose": "cat-harness/processes/ci-health-watch.bpmn",
       "code": ".github/workflows/ci-health.yml",
-      "prose_hash": "bb01c29bef5e",
+      "prose_hash": "8974af1fc2d8",
       "code_hash": "c18d71af09a7",
       "by": "agent",
       "reason": "This branch changed 12 workflow files in ONE way: an `oven-sh/setup-bun@v2` step's `bun-version` literal went from `latest` (or from absent) to `1.3.14`. Re-read all six paired documentations: none mentions the runtime, `setup-bun\\', `bun-version` or `latest` — grepped, not assumed — so none of them describes the thing that changed. `upstream-pin-watch` was read most closely because this branch also adds Bun to `upstream-pins.json`, and its prose is tenant-agnostic by design: it names no pin, gives no count, and says a new tenant is 'a registry row and a call — never a second diagram'. Adding a row is what it prescribes, so the prose holds a fortiori. Bean `3ozg`."

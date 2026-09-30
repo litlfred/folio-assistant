@@ -1,11 +1,11 @@
 ---
 # folio-assistant-08u4
 title: 'SURVIVAL PATH: every referenced IRIS node resolves by Handle, with a liveness check and a snapshot pointer'
-status: todo
+status: in-progress
 type: task
 priority: high
 created_at: 2026-09-24T18:01:44Z
-updated_at: 2026-09-24T18:01:44Z
+updated_at: 2026-09-30T00:13:50Z
 parent: folio-assistant-kupb
 ---
 
@@ -17,3 +17,5 @@ From the `v048` roast, objections 6 + 7. Placed under `kupb` by the owner, 2026-
 - [ ] every node with a Handle records it as a resolvable `https://hdl.handle.net/…` IRI, preferred over the host URL
 - [ ] a liveness check exists (it may report *could not determine* where egress is blocked, never "live") and is wired into the process
 - [ ] what happens on source loss is stated per node kind (a snapshot pointer, or an explicit "lost with the source"), not only for bytes already copied
+
+_2026-09-30T00:13:50Z_ — Claimed by claude/magical-archimedes-4qkfxp-08u4 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

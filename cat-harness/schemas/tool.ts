@@ -42,6 +42,8 @@
  */
 import { z } from "zod";
 
+import { SkillNameSchema } from "./tool-types.js";
+
 /** A lowercase, hyphenated id. It is also the MCP tool name stem. */
 const ToolId = z
   .string()
@@ -310,7 +312,7 @@ export const ToolDefinitionSchema = z
       outputs: z.array(ToolPortSchema),
     }),
     /** Skills this Tool can satisfy. One skill may have several Tools. */
-    satisfies: z.array(z.string().min(1)).min(1, "a Tool must satisfy at least one skill"),
+    satisfies: z.array(SkillNameSchema).min(1, "a Tool must satisfy at least one skill"),
     /**
      * Other Tools that do the SAME job by a different mechanism.
      *

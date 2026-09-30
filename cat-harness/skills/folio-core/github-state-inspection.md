@@ -8,7 +8,6 @@ description: >-
 adapters: [document, paper, dak]
 profiles: [document, paper]
 capability: review
-package: folio-core
 ---
 
 # Reading GitHub state — resolve the ref, do not compose the URL

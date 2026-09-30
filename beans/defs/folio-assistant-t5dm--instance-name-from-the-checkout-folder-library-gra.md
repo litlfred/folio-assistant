@@ -1,10 +1,10 @@
 ---
 # folio-assistant-t5dm
 title: 'INSTANCE NAME FROM THE CHECKOUT FOLDER: library-graph attributes root uploads to basename(repoRoot), so a clone''s directory name is published'
-status: todo
+status: in-progress
 type: bug
 created_at: 2026-09-26T10:38:48Z
-updated_at: 2026-09-26T10:38:48Z
+updated_at: 2026-09-30T00:35:22Z
 parent: folio-assistant-zzmr
 ---
 
@@ -30,3 +30,5 @@ Two tests fail in any worktree whose folder is not named `folio-assistant` and p
 - [ ] Falsified: `library:viz` run from a checkout directory with a different name produces byte-identical `index.json` to one run from `folio-assistant/`
 - [ ] Every other `basename(repoRoot|ROOT)` used as an INSTANCE NAME is found and either fixed or recorded (a grep, then a reading — not a count)
 - [ ] The two worktree-failing tests are confirmed or ruled out as the same class
+
+_2026-09-30T00:35:22Z_ — Claimed by claude/brave-hawking-511rrx — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

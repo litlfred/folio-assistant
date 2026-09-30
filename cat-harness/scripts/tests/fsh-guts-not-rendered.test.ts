@@ -22,6 +22,7 @@ import { join, resolve } from "node:path";
 import { siteDirFor, repoRootFor } from "../../schemas/cat-harness.ts";
 import { isWithheld, withheldFromCanonical } from "../compose-docs.ts";
 import { pageRelPath } from "../gen-fsh-guts-viz.ts";
+import { isDirectoryReadme } from "../../schemas/kg-node.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
 // THE REPOSITORY root. `fsh-guts/` is declared `scope: "repository"` — it sits
@@ -61,7 +62,9 @@ function fshGutsNodes(repoRoot: string): string[] {
     for (const e of readdirSync(dir, { withFileTypes: true })) {
       const abs = join(dir, e.name);
       if (e.isDirectory()) walk(abs);
-      else if (e.name.endsWith(".md")) out.push(abs);
+      // A directory README is documentation about the directory, written by
+      // `subgraph-readmes`, never one of the retired nodes this test audits.
+      else if (e.name.endsWith(".md") && !isDirectoryReadme(abs)) out.push(abs);
     }
   };
   walk(join(repoRoot, GUTS));

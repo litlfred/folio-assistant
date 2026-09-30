@@ -37,7 +37,7 @@
  * @conformsTo w3c-skos
  */
 
-import { BOOTSTRAP_TERMS } from "./graph.ts";
+import { BOOTSTRAP_TERMS } from "../../bootstrap-tools/schemas/graph.ts";
 
 /**
  * Which layer owns a term — and therefore which instances must carry it.
@@ -205,9 +205,11 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
     gloss: BOOTSTRAP_TERMS.SequenceFlow,
   },
   Tool: {
-    // Harness layer, so its IRI does not move; its DEFINITION is bootstrap's,
-    // because bootstrap/README.md uses the word before anything else loads.
-    gloss: BOOTSTRAP_TERMS.Tool,
+    // The harness's own term. Bootstrap defined it until v3 of its terms; the
+    // owner, 2026-09-29: "no tools in bootstrap". Bootstrap names no program an
+    // Actor runs, so the word belongs to the layer that has Tools.
+    gloss:
+      "A Node Instance describing a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
     seeAlso: "/architecture.html",
   },
   Schema: {
@@ -252,11 +254,12 @@ export const CLASS_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // the declaration is the harness's own object, and `cat:CatHarness`
   // stuttered the layer into the term.
   Harness: {
-    layer: "harness",
-    // Definition from bootstrap, which the owner stated: "a harness is used to
-    // interact with a knowledge graph". Layer and IRI unchanged.
+    // Bootstrap defines it, so bootstrap owns it, IRI included (terms v3,
+    // 2026-09-29). It was harness-layer with bootstrap's definition — a term
+    // published by one layer and minted by another, which the layering rule
+    // forbids. No `seeAlso`: a bootstrap term links to nothing above it.
+    layer: "bootstrap",
     gloss: BOOTSTRAP_TERMS.Harness,
-    seeAlso: "/architecture.html",
   },
   Image: {
     layer: "core",
@@ -439,6 +442,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   // ── Instructions and contracts ───────────────────────────────────────
   hasInstructions: { gloss: "Whether a skill has an instruction body at all." },
   instructionsPath: { gloss: "Where a skill's instruction body lives, relative to the instance root." },
+  readmePath: { gloss: "Where a declared directory's README lives, relative to the instance root: the page a person reads about that directory." },
   instructionLines: { gloss: "How long a skill's instruction body is." },
   hasIOContract: { gloss: "Whether a skill declares input and output schemas." },
   inputSchema: { gloss: "The published schema a skill's input must satisfy." },
@@ -561,5 +565,38 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
  * the base depend on something above it.
  */
 export function termLayer(name: string): TermLayer {
-  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? "harness";
+  return CLASS_GLOSSES[name]?.layer ?? PROPERTY_GLOSSES[name]?.layer ?? GRAPH_KIND_TYPE_LAYERS[name] ?? "harness";
 }
+
+/**
+ * Which layer owns each graph kind's TYPE, keyed by the type's local name.
+ *
+ * The ONE table. It was two, and they disagreed (bean `r3gy`, D1): this file
+ * gave every graph kind `harness`, so `termIri("SchemaGraph")` minted a
+ * cat-harness IRI, while `ns-export.ts` kept its own map publishing `schemas`
+ * as bootstrap's. A term published by one layer and minted by another is the
+ * leak the layering rule forbids. `ns-export` now asks {@link termLayer}.
+ *
+ * Bootstrap's rows are the kinds in `BOOTSTRAP_GRAPH_KINDS` (`graph.ts`), plus
+ * `KGraph`, the kind of a Knowledge Graph itself; `graph.test.ts` holds the two
+ * lists together. The `core` rows are the folio's own furniture, which the
+ * owner named as NOT bootstrap: "we shouldnt need voicegraph or librarygrph or
+ * previewgrapjh in bootstrap!!". An absent kind is `harness`, the safe
+ * direction, for the reason given on `termLayer`.
+ */
+export const GRAPH_KIND_TYPE_LAYERS: Readonly<Record<string, TermLayer>> = {
+  KGraph: "bootstrap",
+  SkillGraph: "bootstrap",
+  SchemaGraph: "bootstrap",
+  ScenarioGraph: "bootstrap",
+  ProcessGraph: "bootstrap",
+  ModelGraph: "bootstrap",
+  SwimlaneGlossaryGraph: "bootstrap",
+  VoiceGraph: "core",
+  LibraryGraph: "core",
+  UploadsGraph: "core",
+  TodoGraph: "core",
+  TodoItemsGraph: "core",
+  TodoFeedbackGraph: "core",
+  ReviewVerdictsGraph: "core",
+};

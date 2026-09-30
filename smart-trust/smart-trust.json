@@ -24,16 +24,11 @@
       "graphKinds": [
         "docs"
       ],
-      "coverage": {
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/smart-trust-docs/index.html",
-            "title": "Docs — smart-trust"
-          }
-        ]
-      },
       "composed": true,
-      "_comment_composed": "Rendered THROUGH just-the-docs, not mounted after it. Owner, 2026-09-21: \"i want the input/page(s)/ content to be rendered viajustthedocs pipeline\". These pages are markdown with front matter, generated from fhir-artifact-index by smart-trust:pages, so they compose into the Jekyll source at _docs/smart-trust/ and come out as ordinary folio pages -- sidebar, search, language bar. They were finished HTML copied into _site AFTER Jekyll, which is why they inherited none of it and why hw9g had to inject a nav rail. who-iris does NOT set this and must not: it is a replica of IRIS, and just-the-docs' layout would replace IRIS's chrome with folio-assistant's."
+      "_comment_composed": "Rendered THROUGH just-the-docs, not mounted after it. Owner, 2026-09-21: \"i want the input/page(s)/ content to be rendered viajustthedocs pipeline\". These pages are markdown with front matter, generated from fhir-artifact-index by smart-trust:pages, so they compose into the Jekyll source at _docs/smart-trust/ and come out as ordinary folio pages -- sidebar, search, language bar. They were finished HTML copied into _site AFTER Jekyll, which is why they inherited none of it and why hw9g had to inject a nav rail. who-iris does NOT set this and must not: it is a replica of IRIS, and just-the-docs' layout would replace IRIS's chrome with folio-assistant's.",
+      "tile": {
+        "title": "Docs — smart-trust"
+      }
     },
     {
       "id": "smart-trust-scripts",
@@ -42,6 +37,15 @@
       "description": "`gen-smart-trust-pages.ts` and its tests -- the generator that turns the artefact index into this instance's 681 pages, and as of bean `0818` renders the IG's own menu into the left-hand nav. Undeclared until now while BOTH the index it reads and the docs it writes were declared, so the only undeclared thing in this instance was the transformation between two declared graphs.",
       "graphKinds": [
         "code"
+      ]
+    },
+    {
+      "id": "qa",
+      "path": "test/results/",
+      "dependents": "reproduce",
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 1 file across scenarios (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "graphKinds": [
+        "qa"
       ]
     }
   ],

@@ -28,7 +28,7 @@ import {
   undeclaredNamespaces,
   unusedNamespaces,
   type ExternalSchema,
-} from "../../folio-assistant-core/schemas/external-schema.js";
+} from "../schemas/external-schema.js";
 
 import { isOwnExtensionNamespace, OWN_BPMN_EXTENSION_NAMESPACES, OWN_NAMESPACE_VALUES, OWN_XML_NAMESPACES, WORKFLOWS_NS } from "../schemas/namespaces.js";
 import { portableSegment } from "../schemas/portable-path";

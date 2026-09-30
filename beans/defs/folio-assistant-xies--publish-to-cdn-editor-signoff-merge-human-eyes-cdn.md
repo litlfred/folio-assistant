@@ -1,11 +1,11 @@
 ---
 # folio-assistant-xies
 title: 'PUBLISH TO CDN: editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE not the design'
-status: in-progress
+status: todo
 type: task
 priority: high
 created_at: 2026-09-20T09:01:32Z
-updated_at: 2026-09-23T02:45:00Z
+updated_at: 2026-09-29T18:14:47Z
 parent: folio-assistant-5a3l
 ---
 
@@ -107,3 +107,9 @@ about the IRIS catalogue holds GOAL 3 open for a reason unrelated to GOAL 3.
 **Nothing about this bean's own work changed** — not its status, not its
 Done-when, not a line of its body above this note. Only the question *"whose
 goal does finishing this serve?"* is answered differently.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

@@ -17,6 +17,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
+import { localeDirIn, translationsHomeFor } from "../../schemas/cat-harness.ts";
 import { undeclaredRootTerms } from "../kg-export.ts";
 import {
   buildLocaleExports,
@@ -334,5 +335,71 @@ describe("the real corpus — what it can still answer with zero translations", 
 describe("localeDocPath", () => {
   test("it sits beside the core document, suffixed by locale", () => {
     expect(localeDocPath("cat-harness", "fr")).toBe("cat-harness.fr.jsonld");
+  });
+});
+
+describe("hosted translations — an instance's templates may live in its HOST's corpus", () => {
+  /**
+   * `bootstrap` declares no `translation-sources`. Its 15 `.pot` templates sit
+   * in cat-harness's corpus under `<locale>/bootstrap/processes/`, because a
+   * `.pot` is tooling output and bootstrap is a floor an agent reads.
+   *
+   * Three things are asserted separately because they fail separately, and the
+   * middle one is the whole point: a hosted instance's locale set is its HOST's,
+   * not an empty set and not the host's set unfiltered.
+   */
+  test("cat-harness owns its corpus — scope is empty", () => {
+    const home = translationsHomeFor(HARNESS, HARNESS);
+    expect(home.by).toBe("own");
+    expect(home.scope).toEqual([]);
+  });
+
+  test("bootstrap is HOSTED by cat-harness, scoped by its stub", () => {
+    const home = translationsHomeFor(join(REPO, "bootstrap"), HARNESS);
+    expect(home.by).toBe("hosted");
+    expect(home.scope).toEqual(["bootstrap"]);
+    expect(home.root).toBe(join(HARNESS, "translations"));
+  });
+
+  test("with no host offered, bootstrap falls back to the convention and SAYS so", () => {
+    const home = translationsHomeFor(join(REPO, "bootstrap"));
+    expect(home.by).toBe("convention");
+    expect(home.scope).toEqual([]);
+  });
+
+  test("a hosted instance's locales are its host's, and it finds them", () => {
+    // The regression this whole change exists to stop: after the templates
+    // moved, this returned [] and `6tkl`'s refusal took three CI jobs red.
+    expect(knownLocales(join(REPO, "bootstrap")).length).toBeGreaterThan(0);
+  });
+
+  test("localeDirIn inserts the scope for a hosted instance and not for an owner", () => {
+    const hosted = translationsHomeFor(join(REPO, "bootstrap"), HARNESS);
+    const own = translationsHomeFor(HARNESS, HARNESS);
+    expect(localeDirIn(hosted, "fr")).toBe(join(HARNESS, "translations", "fr", "bootstrap"));
+    expect(localeDirIn(own, "fr")).toBe(join(HARNESS, "translations", "fr"));
+  });
+
+  /**
+   * The anti-vacuity pair. Each test above passes for a resolver that answered
+   * one constant shape; this asserts the two real instances DISAGREE on both
+   * fields, which no constant satisfies.
+   */
+  test("the two real instances disagree on `by` AND on `scope`", () => {
+    const hosted = translationsHomeFor(join(REPO, "bootstrap"), HARNESS);
+    const own = translationsHomeFor(HARNESS, HARNESS);
+    expect(hosted.by).not.toBe(own.by);
+    expect(hosted.scope).not.toEqual(own.scope);
+  });
+
+  test("a directory that declares nothing and is hosted by nobody is the convention", () => {
+    const dir = mkdtempSync(join(tmpdir(), "no-decl-"));
+    try {
+      const home = translationsHomeFor(dir, HARNESS);
+      expect(home.by).toBe("convention");
+      expect(home.root).toBe(join(dir, "translations"));
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });

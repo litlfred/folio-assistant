@@ -147,6 +147,10 @@ import { QA_GRAPH_INDEX_SCHEMA } from "../content/pipeline/qa-graph-index.ts";
 import { unportableSegment } from "../schemas/portable-path";
 import { carriesMarker, orphanSubjectPages } from "./orphan-pages.ts";
 import { withViewerNav } from "./viewer-page.ts";
+import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "state-viewer";
 
 const ROOT = instanceRootFor(import.meta.dir);
 const SITE = join(ROOT, siteDirFor(ROOT));
@@ -846,7 +850,9 @@ if (import.meta.main) main();
  * this writing into the real site directory as a side effect of the import.
  */
 function main(): void {
-const decl = readDeclaration(ROOT);
+// Viewers RESOLVED from the pages (#1168 B7a-2b).
+const declRead = readDeclaration(ROOT);
+const decl = declRead && { ...declRead, directories: withViewers(declRead.directories ?? [], ROOT) };
 if (!decl) {
   // "Could not determine", and this generator does not get to decide it means
   // "no state". Exit 2 is never rendered as a pass, the same rule
@@ -884,8 +890,15 @@ for (const g of unportable) {
 }
 const graphs = all.filter((g) => !taken.includes(g) && !unportable.includes(g));
 
+// Each dashboard says which directory it draws (#1168 B7a-2), resolved the
+// way the declaration resolves it: a `repository`-scoped path from the
+// repository root, any other from this instance's.
+const drawnDir = (g: StateGraph): string => {
+  const entry = decl.directories?.find((d) => d.id === g.id);
+  return renderedPath(REPO_ROOT, join(entry?.scope === "repository" ? REPO_ROOT : ROOT, g.path));
+};
 for (const g of graphs) {
-  emit(join(SITE, g.id, "index.html"), dashboardPage(g, graphs));
+  emit(join(SITE, g.id, "index.html"), withRenders(dashboardPage(g, graphs), [drawnDir(g)], VIEWER_TOOL));
 }
 
 // Orphans, AFTER the writes so the keep-set is what this run actually wanted.

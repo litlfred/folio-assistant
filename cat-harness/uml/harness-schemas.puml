@@ -38,7 +38,6 @@ package scenario {
     id [1] : string
     name [1] : string
     description [1] : string
-    roles [0..*] : string[]
     requiredCapabilities [0..*] : {capabilityId, degradation}[]
     dependsOn [0..*] : {ref, kind, conformance}[]
     allowedTools [0..*] : string[]

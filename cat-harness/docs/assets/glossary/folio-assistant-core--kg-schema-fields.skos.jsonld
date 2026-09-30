@@ -1,8 +1,10 @@
 {
   "@context": {
     "skos": "http://www.w3.org/2004/02/skos/core#",
-    "dcterms": "http://purl.org/dc/terms/"
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields",
@@ -924,139 +926,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/external-schema.externalschemaschema.id",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExternalSchemaSchema.id"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Stable local id, e.g. `omg-bpmn-2.0`."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.id",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/external-schema.externalschemaschema.namespaces",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExternalSchemaSchema.namespaces"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The XML namespaces or URI stems this edition defines, as WE consume them."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.namespaces",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/external-schema.externalschemaschema.note",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExternalSchemaSchema.note"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Why this edition, where the choice was not forced."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.note",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/external-schema.externalschemaschema.specurl",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExternalSchemaSchema.specUrl"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Where the specification is published."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.specUrl",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/external-schema.externalschemaschema.terms",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExternalSchemaSchema.terms"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The OPERATIVE vocabulary — the terms this repository actually acts on."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.terms",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/external-schema.externalschemaschema.title",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExternalSchemaSchema.title"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The specification's own title, as the authority writes it."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.title",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/external-schema.externalschemaschema.version",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ExternalSchemaSchema.version"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The edition being conformed to."
-        }
-      ],
-      "dcterms:source": "folio-assistant-core/schemas/external-schema.ts#ExternalSchemaSchema.version",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/extraction.extractedassetschema.bytes",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1931,6 +1800,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.glossaryschema.ordered",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySchema.ordered"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The terms are in a LOGICAL order, each defined only by terms above it, and a reader should meet them in that order — not alphabetically. The owner, 2026-09-29, of bootstrap's terms: keep \"logical rather than alphabetical order\". Published as a skos:OrderedCollection."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.ordered",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.glossaryschema.source",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1969,6 +1857,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.termschema.isdefinedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermSchema.isDefinedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The schema or standard that defines the term (rdfs:isDefinedBy)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.isDefinedBy",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.termschema.notation",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2004,6 +1911,25 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields/glossary.termschema.requires",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermSchema.requires"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Local ids of the terms this definition USES — what a reader must know first (dcterms:requires). In an `ordered` glossary each must come earlier; the scheme refuses one that does not."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.requires",
       "skos:note": "candidate"
     },
     {

@@ -263,7 +263,7 @@ describe("readWitnessDoc — kg family keeps one auditor, and says what it does 
     // a relaxed assertion.
     mkdirSync(join(dir, "skills"), { recursive: true });
     writeFileSync(
-      join(dir, "skills", "kg-qa.manifest.json"),
+      join(dir, "test", "results", "kg-qa.manifest.json"),
       JSON.stringify({
         $schema: "kg-qa-manifest/v1",
         auditor: { script: "scripts/kg-audit.ts", script_hash: "sha256:abc", engine_version: "1" },
@@ -291,7 +291,7 @@ describe("readWitnessDoc — kg family keeps one auditor, and says what it does 
     // does not keep.
     inTmp((dir) => {
       kg(dir, "sha256:whatever");
-      rmSync(join(dir, "skills", "kg-qa.manifest.json"));
+      rmSync(join(dir, "test", "results", "kg-qa.manifest.json"));
       const w = readWitnessDoc("kg", join(dir, "p.bpmn"), dir)!.criteria[0]!.witnesses[0]!;
       expect(w.id).toBe("unrecorded");
       expect(w.scriptHash).toBeUndefined();

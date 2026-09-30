@@ -51,11 +51,15 @@ const ROOT = mkdtempSync(join(tmpdir(), "preflight-"));
  */
 function writeProcess(dir: string, requiredFile: string): void {
   mkdirSync(dir, { recursive: true });
+  // The instance that owns the diagram. A `file-exists` ref resolves against
+  // it, so without one the diagram is refused at parse — and a refusal test
+  // would then pass on the parse error rather than on the gate.
+  writeFileSync(join(dir, "..", "fixture.json"), JSON.stringify({ name: "fixture" }));
   writeFileSync(
     join(dir, "gated.bpmn"),
     `<?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:bootstrap.processes="https://litlfred.github.io/folio-assistant/bootstrap/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#" xmlns:cat-harness.processes="https://litlfred.github.io/folio-assistant/cat-harness/processes/ns#"
                   id="Defs_Gated" targetNamespace="urn:test">
   <bpmn:process id="Process_Gated" name="Gated">
     <bpmn:extensionElements>
@@ -158,7 +162,7 @@ describe("the gate's own three states", () => {
 
   test("only `unsatisfied` produces a refusal", () => {
     const stated = { id: "a", text: "unobservable", kind: "stated" as const };
-    const report = preflight(model([stated]), ROOT);
+    const report = preflight(model([stated]));
 
     expect(report.undetermined).toHaveLength(1);
     expect(report.unsatisfied).toHaveLength(0);
@@ -168,7 +172,7 @@ describe("the gate's own three states", () => {
   });
 
   test("a process declaring none says so rather than saying nothing", () => {
-    const report = preflight(model([]), ROOT);
+    const report = preflight(model([]));
     expect(describePreflight(report)).toBe("Preconditions: none declared by this process.");
     expect(preflightRefusal(report)).toBeUndefined();
   });
@@ -176,7 +180,6 @@ describe("the gate's own three states", () => {
   test("the description never renders an undetermined claim as clean", () => {
     const report = preflight(
       model([{ id: "unobservable-one", text: "cannot tell", kind: "stated" as const }]),
-      ROOT,
     );
     const d = describePreflight(report);
     expect(d).toContain("1 could not be determined");

@@ -177,7 +177,8 @@
         "role-model",
         "task-authorization",
         "deletion-requires-confirmation",
-        "confirmation-waiver"
+        "confirmation-waiver",
+        "kg-separation"
       ],
       "persona": "Accountable for who can do what. Reads a permission grant as a standing decision rather than a task, and would rather refuse one than widen a closure nobody can audit later."
     },
@@ -210,7 +211,9 @@
         "ig-publication",
         "decision-audit",
         "qa-report-signing",
-        "publish-verification"
+        "publish-verification",
+        "instance-publication",
+        "package-release"
       ],
       "persona": "Owns the release. Cares about what is authorised, what is built and what is public — and about the gap between them."
     },
@@ -389,7 +392,8 @@
         "voice-authoring-guidance",
         "watch",
         "wireframe-design-review",
-        "workflow-state"
+        "workflow-state",
+        "kg-separation"
       ],
       "persona": "Has the whole corpus available and no memory of the last session. Will follow the most specific instruction it can find and improvise when it finds none. Reads a skill before it reads the code."
     },
@@ -510,7 +514,8 @@
         "build-pdf",
         "latex-build-cache",
         "latex-validation",
-        "smart-base-tools"
+        "smart-base-tools",
+        "kg-separation"
       ]
     },
     {
@@ -710,7 +715,9 @@
         "serving-renderings",
         "kg-export",
         "kg-viewer",
-        "domain-fencing"
+        "domain-fencing",
+        "kg-separation",
+        "upstream-version-adoption"
       ],
       "persona": "Thinks in contracts between this instance and a consumer it cannot see. Knows that a partial graph must never pass for a whole one, and that three states at a boundary are not degrees of two."
     },

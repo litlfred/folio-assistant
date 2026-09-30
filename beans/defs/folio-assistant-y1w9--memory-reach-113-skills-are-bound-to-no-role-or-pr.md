@@ -1,11 +1,11 @@
 ---
 # folio-assistant-y1w9
 title: 'MEMORY REACH: 113 skills are bound to no role or process, so nothing hands them to an agent'
-status: in-progress
+status: todo
 type: task
 priority: normal
 created_at: 2026-09-19T18:34:19Z
-updated_at: 2026-09-20T16:15:40Z
+updated_at: 2026-09-29T21:43:12Z
 parent: folio-assistant-8jt6
 ---
 
@@ -647,3 +647,9 @@ bootstrap skills and the five `remote-stubs`, both deliberate.
 
 Verification: export still contains **zero** occurrences of `fsh-guts`;
 `bun run gates` **58/58**; `bun test` **4051 pass, 0 fail**.
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

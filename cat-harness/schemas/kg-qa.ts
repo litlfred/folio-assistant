@@ -82,8 +82,34 @@ export const KG_QA_SCHEMA = "kg-qa/v1";
  */
 export const KG_QA_MANIFEST_SCHEMA = "kg-qa-manifest/v1";
 
-/** Repo-relative location of that manifest, so every reader agrees on it. */
-export const KG_QA_MANIFEST_PATH = "skills/kg-qa.manifest.json";
+/**
+ * Instance-relative location of that manifest, so every reader agrees on it.
+ *
+ * ## Why it moved out of `skills/` (2026-09-27)
+ *
+ * It was `skills/kg-qa.manifest.json`, which was harmless while ONE instance
+ * was audited — cat-harness, which has a `skills/` directory. Auditing every
+ * declared instance made it a defect: `kg-audit.ts` writes this file
+ * unconditionally, so running the audit against an instance with no skills
+ * CREATED a `skills/` directory holding nothing but this manifest. Measured on
+ * the first full sweep: six instances (`smart-dak`, `smart-ig`,
+ * `smart-immunizations`, `smart-l1`, `smart-trust`, `agent-skills`) gained one,
+ * and the generated UML and navbar both moved to report a skills graph that
+ * holds no skills.
+ *
+ * `test/results/` is where it belongs on its own terms, not merely where it is
+ * harmless: this file describes the SIDECARS, and a fact about a set of
+ * artefacts belongs with them. Its old home was an accident of the period when
+ * the role graph and the skill packages shared one directory.
+ *
+ * It is the CONVENTION rather than a declaration read at run time, and that is
+ * deliberate for one consumer's sake: `qa-witness.ts` reads it as
+ * `join(repoRoot, KG_QA_MANIFEST_PATH)` and has no instance in hand. All 15
+ * declared instances declare `qa` → `test/results/`, so the constant and every
+ * declaration agree today; if one ever moves its `qa` directory, this is the
+ * line that has to learn to ask.
+ */
+export const KG_QA_MANIFEST_PATH = "test/results/kg-qa.manifest.json";
 
 /**
  * The directory name sidecars used to sit in, beside their subject.
@@ -159,7 +185,13 @@ export const KG_QA_RESULTS_DIR = join("test", "results", "kg-qa");
  * @param subjectDir absolute directory the subject itself lives in
  * @param stem       the subject's filename without extension, or its id
  */
-export function kgQaSidecarPath(repoRoot: string, subjectDir: string, stem: string): string {
+export function kgQaSidecarPath(
+  repoRoot: string,
+  subjectDir: string,
+  stem: string,
+  /** The `kg-qa/` tree to write under; the instance's own by default. See `kgQaHomeFor`. */
+  tree: string = join(repoRoot, KG_QA_RESULTS_DIR),
+): string {
   // `relative` rather than string surgery: a subject reached by a different
   // spelling of the same directory must land on the same results path, or the
   // writer and the reader disagree again by another route.
@@ -176,8 +208,7 @@ export function kgQaSidecarPath(repoRoot: string, subjectDir: string, stem: stri
   // from an id that never had to be a legal filename. `req:agent-workflow` is
   // what made this repository unclonable on Windows — see `portable-path.ts`.
   return join(
-    repoRoot,
-    KG_QA_RESULTS_DIR,
+    tree,
     ...(escaped ? ["_external", ...inside] : inside),
     `${portableSegment(stem)}.kg-qa.json`,
   );
@@ -238,7 +269,12 @@ export interface OrphanSidecar {
  * reason; a person decides. Splitting the report makes that decision possible
  * rather than making it automatic.
  */
-export function sweepOrphans(root: string, written: ReadonlySet<string>): OrphanSidecar[] {
+export function sweepOrphans(
+  root: string,
+  written: ReadonlySet<string>,
+  /** The `kg-qa/` tree to sweep; the instance's own by default. */
+  tree: string = join(root, KG_QA_RESULTS_DIR),
+): OrphanSidecar[] {
   const found: OrphanSidecar[] = [];
   const walk = (dir: string): void => {
     let entries: Dirent[];
@@ -281,7 +317,7 @@ export function sweepOrphans(root: string, written: ReadonlySet<string>): Orphan
   // clean sweep over nothing on every run. It was caught only because the
   // orphan it was written for was put back and the guard stayed silent.
   // A guard that cannot fire is the defect it was written to prevent.
-  walk(join(root, KG_QA_RESULTS_DIR));
+  walk(tree);
   return found;
 }
 

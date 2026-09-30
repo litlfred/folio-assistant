@@ -76,14 +76,12 @@
       "id": "core-schemas",
       "path": "schemas/",
       "dependents": "skip",
-      "description": "The content layer's own schema nodes. Three today, and they are one chain: `dublin-core` is what a source system SAYS about an item, `catalogue` is the shape of the collection that item sits in, and `materialization` is whether any of its bytes are actually here. The third is the load-bearing one — see its module doc for why bootstrap fetching a harness and who-iris fetching three items out of 361.55 GB are the same process with two names.",
+      "description": "The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.",
+      "_description_comment": "The content layer's own schema nodes. Three today, and they are one chain: `dublin-core` is what a source system SAYS about an item, `catalogue` is the shape of the collection that item sits in, and `materialization` is whether any of its bytes are actually here. The third is the load-bearing one — see its module doc for why bootstrap fetching a harness and who-iris fetching three items out of 361.55 GB are the same process with two names.",
       "graphKinds": [
         "schemas",
         "cat-harness"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html"
-      }
+      ]
     },
     {
       "id": "folios",
@@ -113,10 +111,7 @@
       "description": "Voice skills this layer owns. `technical-writer` is the whole of it: an SDO register (W3C, IHE) with RFC 2119 requirement levels, read from the two ingested RFCs and constrained by RFC 8174. PLACED HERE BY JUDGEMENT, on the owner's ruling of 2026-09-21: *\"voices should be associated to appropriate home semantically/by judgement\"*. It arrived on `main` in `cat-harness/voices/` while the migration to `<instance>/skills/voices/` was in flight (bean `btuv`), and the two obvious mechanical homes are both wrong — the PLATFORM holds no voice content, and `agent-skills` merely holds the RFCs it cites, which has never decided ownership (`who-editorial` cites who-iris's library and lives in who-style-guide). What settles it is what the voice is ABOUT: how to write technical documentation of a standard, software or a knowledge asset — which is what this layer is for.",
       "graphKinds": [
         "voices"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/voices/folio-assistant-core/index.html"
-      }
+      ]
     },
     {
       "id": "core-tools",
@@ -131,7 +126,7 @@
       "id": "core-scripts",
       "path": "scripts/",
       "dependents": "skip",
-      "description": "The review-comment Tool and its move helper, with their tests beside them. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.",
+      "description": "Core's own executable surface, with every test beside its subject: the review-comment Tool and its move helper, the glossary extractors, the sample-import pair, and — since bean `yj6r` — the materialisation trio (`check-materialized-fixity`, `backfill-materialized-fixity`, `cache-index`) and the FHIR IG artefact-index pair (`ingest-ig-artifacts`, `check-artifact-index`), which moved up out of `cat-harness/scripts/` to sit beside the `schemas/materialization.ts` and `schemas/fhir-artifact-index.ts` they read. This sentence listed only the first pair until then, by which point four other tools were already here — a directory description that names its founding file rather than its contents goes stale the first time anything lands. Core declared its `schemas/`, its `folios/`, its `voices/` and its `tools/` and left `scripts/` undeclared, which is the `ylj7` shape: the directories that hold what is DESCRIBED were declared and the one holding what RUNS was not. Declared where it is: `review-comments.ts` is invoked by path from `folio-staging.yml`, so relocating it is an invocation surface `check:workflow-paths` would have to re-guard for nothing the declaration does not already buy.",
       "graphKinds": [
         "code"
       ]
@@ -171,6 +166,15 @@
       "description": "The BPMN core owns -- `deep-document-research`, Doc-Researcher's iterative loop as an executable process. A TOP-LEVEL directory rather than `methodologies/processes/`, which is where it was first put: `check:layout-norms` refused that as a package subdirectory of an already-declared graph, declaring the same directory twice. `smart-base` carries the nested shape and is baselined, but the harness's own diagrams live in a top-level `processes/` and so do these. That satisfies bean `g43o` -- `workflowDirs` resolves from a DECLARED directory -- without the double declaration, which is strictly better than baselining a third instance of a tolerated exception.",
       "graphKinds": [
         "processes"
+      ]
+    },
+    {
+      "id": "qa",
+      "path": "test/results/",
+      "dependents": "reproduce",
+      "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 7 files across processes (1), scenarios (1), skills (1), tools (4). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
+      "graphKinds": [
+        "qa"
       ]
     }
   ],

@@ -59,7 +59,6 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
 import {
   checkMethodologyEvidence,
@@ -67,6 +66,10 @@ import {
   type EvidenceReport,
   type MethodologyNode,
 } from "./check-methodology-evidence.js";
+import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "methodologies-viewer";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO = resolve(INSTANCE_ROOT, "..");
@@ -159,25 +162,12 @@ export function methodologyRows(
     .sort((a, b) => a.name.localeCompare(b.name, "en"));
 }
 
-/** Where the page goes, read from the declaration that renders it. */
+/**
+ * Where the page goes: the declared directory's own name (#1168 B7a-2b,
+ * `conventionalPage`). Never a literal — `site-dir-single-answer` refuses one.
+ */
 export function pageRelPath(repo = REPO): string | undefined {
-  const declPath = declarationPathIn(join(repo, "cat-harness"));
-  if (!declPath || !existsSync(declPath)) return undefined;
-  const d = JSON.parse(readFileSync(declPath, "utf-8")) as {
-    directories?: { graphKinds?: string[]; coverage?: { visualiser?: unknown } }[];
-  };
-  for (const e of d.directories ?? []) {
-    if (!(e.graphKinds ?? []).includes(KIND)) continue;
-    const v = e.coverage?.visualiser;
-    for (const one of Array.isArray(v) ? v : [v]) {
-      const ref = typeof one === "string" ? one : (one as { ref?: string } | undefined)?.ref;
-      if (!ref) continue;
-      const rel = relative(baseDocs(repo), resolve(repo, ref));
-      if (rel.startsWith("..") || rel === "") return undefined;
-      return rel;
-    }
-  }
-  return undefined;
+  return conventionalPage(join(repo, "cat-harness"), KIND);
 }
 
 /** The base docs layer — the same answer `compose-docs.ts` uses. */
@@ -393,7 +383,8 @@ if (import.meta.main) {
     process.exit(1);
   }
 
-  const rendered = page(rows, report);
+  // The page says which directories it draws (#1168 B7a-2).
+  const rendered = withRendersFrontMatter(page(rows, report), handledDirectories(REPO, INSTANCE_ROOT, KIND), VIEWER_TOOL);
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {

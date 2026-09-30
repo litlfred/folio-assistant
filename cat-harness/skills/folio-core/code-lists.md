@@ -6,7 +6,6 @@ description: >-
   Use when a diagram, a schema or a script needs a fixed set of values
   (adjudication answers, namespace IRIs) instead of strings in code.
 capability: authoring
-package: folio-core
 graph-kinds:
   - code-list
 ---

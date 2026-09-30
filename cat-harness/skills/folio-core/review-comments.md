@@ -10,7 +10,6 @@ description: >-
   how to comment on a block, when the review page shows no comments or a wrong
   one, when editing the ingestion, or when a folio's staging workflow is set up.
 capability: review
-package: folio-core
 user_invocable: true
 allowed-tools: Bash(bun run folio-assistant-core/scripts/review-comments.ts*) Read Grep Glob mcp__github__pull_request_read
 ---

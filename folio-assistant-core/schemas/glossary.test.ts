@@ -319,7 +319,7 @@ describe("extracted KG terms", () => {
       const decl = instanceRootsIn(REPO)
         .map((r) => ({ r, d: readDeclaration(r) }))
         .find(({ d }) => d?.name === s.instance)!;
-      expect(s.ns).toBe(instanceNs(decl.d!.name, decl.d!.stub));
+      expect(s.ns).toBe(instanceNs(decl.d!.name, decl.d!.stub, decl.d!));
       const rel = relative(REPO, decl.r).split("\\").join("/");
       for (const t of s.glossary.terms) expect(t.source!.startsWith(`${rel}/`)).toBe(true);
     }
@@ -409,7 +409,7 @@ describe("every term in the namespace of the instance that owns its source", () 
     .map((r) => ({ root: resolve(r), decl: readDeclaration(r)! }))
     .filter((r) => r.decl)
     .sort((a, b) => b.root.length - a.root.length);
-  const nsOfName = new Map(roots.map((r) => [r.decl.name, instanceNs(r.decl.name, r.decl.stub)] as const));
+  const nsOfName = new Map(roots.map((r) => [r.decl.name, instanceNs(r.decl.name, r.decl.stub, r.decl)] as const));
   const holder = (path: string) => {
     const p = resolve(REPO, path);
     return roots.find((r) => p === r.root || p.startsWith(`${r.root}/`))?.decl.name;
@@ -480,3 +480,52 @@ describe("every term in the namespace of the instance that owns its source", () 
   });
 });
 
+
+describe("an ordered glossary (owner, 2026-09-29: logical, not alphabetical)", () => {
+  const term = (id: string, requires?: string[]) => ({
+    id,
+    prefLabel: id,
+    definition: `about ${id}`,
+    status: "authored" as const,
+    ...(requires ? { requires } : {}),
+  });
+  const g = (terms: unknown[], ordered = true) =>
+    GlossarySchema.safeParse({ $schema: "folio-glossary/v1", id: "t", title: "T", ordered, terms });
+
+  test("a term may require only earlier terms of its own glossary, never itself", () => {
+    expect(g([term("a"), term("b", ["a"])]).success).toBe(true);
+    expect(g([term("a", ["b"]), term("b")]).success).toBe(false); // forward
+    expect(g([term("a", ["a"])]).success).toBe(false); // self
+    expect(g([term("a", ["zz"])]).success).toBe(false); // missing
+    expect(g([term("a", ["b"]), term("b")], false).success).toBe(true); // unordered: forward allowed
+  });
+
+  test("the SKOS carries the order as an OrderedCollection, and each requires as dcterms:requires", () => {
+    const parsed = GlossarySchema.parse({
+      $schema: "folio-glossary/v1",
+      id: "t",
+      title: "T",
+      ordered: true,
+      terms: [term("a"), term("b", ["a"])],
+    });
+    const graph = toSkos(parsed, "https://example.org/ns#")["@graph"] as Record<string, unknown>[];
+    const order = graph.find((n) => n["@type"] === "skos:OrderedCollection")!;
+    expect((order["skos:memberList"] as { "@list": { "@id": string }[] })["@list"].map((m) => m["@id"])).toEqual([
+      "https://example.org/ns#glossary/t/a",
+      "https://example.org/ns#glossary/t/b",
+    ]);
+    const b = graph.find((n) => n["@id"] === "https://example.org/ns#glossary/t/b")!;
+    expect(b["dcterms:requires"]).toEqual([{ "@id": "https://example.org/ns#glossary/t/a" }]);
+  });
+
+  test("bootstrap's terms are one ordered, authored scheme, read from its schema in the schema's order", () => {
+    const c = collect();
+    const boot = c.glossaries.find((s) => s.instance === "bootstrap" && s.glossary.ordered)!;
+    expect(boot.file).toBe("bootstrap/schemas/graph.schema.json");
+    expect(boot.glossary.terms.every((t) => t.status === "authored")).toBe(true);
+    const schema = JSON.parse(readFileSync(join(import.meta.dir, "..", "..", boot.file), "utf-8")) as { $defs: Record<string, unknown> };
+    expect(boot.glossary.terms.map((t) => t.prefLabel)).toEqual(
+      Object.keys(schema.$defs).map((k) => k.replace(/([a-z])([A-Z])/g, "$1 $2")),
+    );
+  });
+});

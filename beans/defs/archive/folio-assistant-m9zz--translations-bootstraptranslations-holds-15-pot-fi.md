@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-21T23:25:32Z
-updated_at: 2026-09-22T07:24:28Z
+updated_at: 2026-09-27T06:21:12Z
 parent: folio-assistant-bzyu
 ---
 
@@ -73,3 +73,32 @@ says whose 298 templates those are.
 Third done-when is therefore met by the SECOND branch of its own wording —
 "or states in one line that it measures one instance and which" — which the
 page already did before this bean was picked up.
+
+## SUPERSEDED 2026-09-27 — the declaration this bean added has been removed, and that is not a regression
+
+This bean's fix declared `bootstrap-translations` at `bootstrap/translations/`
+with graph kind `translation-sources`, and argued three decisions inside it
+(a separate id, because overrides match on id; `dependents: "reproduce"`).
+Every one of those arguments was right for the question asked.
+
+PR #1448 removes that node. The reason is that the question changed: the 15
+`.pot` files are no longer in bootstrap at all. They are at
+`cat-harness/translations/<locale>/bootstrap/processes/`, covered by
+cat-harness's existing `translations/` declaration, because a declared
+directory covers its subtree.
+
+The owner's instruction was ".pot shouldnt be in bootrtrap/ translations but
+cat-harness/transslations/bootstrap or so", and the reason it is the better
+answer is the one this bean could not see from where it stood: a `.pot` is an
+extraction TEMPLATE, written by `translate-bpmn --extract` and consumed by
+`msgmerge`. Nobody reads one. bootstrap's promise is that it is a floor an
+agent READS, and 20 of its 38 files were tooling output (53%). It is now 5 of
+23 (22%).
+
+So this bean declared a directory correctly and the right fix was for the
+directory not to exist. Recorded here rather than left for the next agent to
+find a removed node and read it as a regression — the three arguments above
+still hold for any instance that genuinely owns its own templates.
+
+Follow-on: `qmqg`, for the convention fallback that would have let #1448's
+declaration edit pass silently if the files had stayed.

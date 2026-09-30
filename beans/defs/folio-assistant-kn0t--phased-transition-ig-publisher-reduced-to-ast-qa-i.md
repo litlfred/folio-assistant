@@ -1,11 +1,11 @@
 ---
 # folio-assistant-kn0t
 title: 'PHASED TRANSITION: IG Publisher reduced to AST + QA, in five phases with a stated exit criterion each'
-status: in-progress
+status: todo
 type: feature
 priority: high
 created_at: 2026-09-22T19:07:23Z
-updated_at: 2026-09-22T19:54:07Z
+updated_at: 2026-09-29T20:03:11Z
 parent: folio-assistant-uhkv
 ---
 
@@ -81,3 +81,9 @@ on an AST dump existing.
 - [ ] each phase has an exit criterion that is measured, not asserted
 - [ ] P3 and P4 are not approved while the logic-layer edges do not exist, or
       are approved with a criterion that can be satisfied
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

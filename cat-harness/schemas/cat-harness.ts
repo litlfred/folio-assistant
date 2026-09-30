@@ -1206,9 +1206,24 @@ export type SubgraphCoverage = z.infer<typeof SubgraphCoverageSchema>;
 export const VISUALISER_KINDS = ["folio"] as const;
 export type VisualiserKind = (typeof VISUALISER_KINDS)[number];
 
+/**
+ * How a directory's tile looks — everything a {@link Visualisation} carries
+ * except the page it opens.
+ *
+ * #1168 B7a-2b, owner 2026-09-24 (*"split: page derived"*): the PAGE is read
+ * from the viewer pages, each of which names the directories it draws
+ * (`scripts/viewer-declarations.ts`); a directory no longer points at its
+ * viewer. What stays with the directory is presentation, which is the
+ * directory's own business.
+ */
+export const TileSchema = VisualisationSchema.omit({ ref: true });
+export type Tile = z.infer<typeof TileSchema>;
+
 const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
   dependents: DependentMaterialisationSchema,
   coverage: SubgraphCoverageSchema.optional(),
+  /** How this directory's tile looks. See {@link TileSchema}. */
+  tile: TileSchema.optional(),
   /**
    * HOW this graph is shown, and what can be done to it.
    *
@@ -2255,6 +2270,30 @@ export const CatHarnessDeclarationSchema = z.object({
   navbarIcons: NavbarIconsSchema.optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
+  /**
+   * The address this instance's IRIs are minted under, BEFORE the version —
+   * bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits.
+   *
+   * Not `canonicalUrl`, and the difference is the version. `canonicalUrl`
+   * says where documents are PUBLISHED, and `kg-export` mints a document's
+   * `@id` from it; `iriBase` says what the vocabulary's identifiers ARE, and
+   * those carry the release: `<iriBase><version>/…` for anything an agent
+   * reads (namespaces, schema `$id`s), `<iriBase>v<major>/…` for pages a
+   * person reads (owner, 2026-09-29). `releaseIris` in `bootstrap-tools/schemas/release-iri.ts`
+   * composes both; `iri:sync` keeps every literal copy at the declared version.
+   */
+  iriBase: z.string().url().optional(),
+  /**
+   * The instance's Node Kinds, declared: each `$schema` tag its files may
+   * carry → the JSON Schema that defines it (an IRI, or a path relative to
+   * the declaration). Bootstrap's field (`graph.ts`, owner 2026-09-29: the
+   * schema-reference table "should be in bootstrap"), inherited here because
+   * this declaration is a Subkind of bootstrap's. The graph-kind registry's
+   * `nodeSchemas` keeps the harness's TypeScript-backed forms (`validator`,
+   * `shape`); this one names only published schemas, which is all a reader
+   * with nothing installed can follow.
+   */
+  nodeSchemas: z.record(z.string().min(1), z.string().min(1)).optional(),
   previewUrl: z.string().url().optional(),
   publication: PublicationSchema.optional(),
   topology: TopologySchema.optional(),
@@ -4483,7 +4522,149 @@ export function directoryForGraph(
   return all[0]?.absPath;
 }
 
+/**
+ * Where an instance's `.pot` / `.po` sources actually live — its own declared
+ * directory, or a HOST's, namespaced by the instance's stub.
+ *
+ * ## The third case, and why it had to exist
+ *
+ * Two answers were assumed for years and both are about the instance itself:
+ * it declares `translation-sources`, or it does not and the convention
+ * `<root>/translations` applies. Ten readers spell the second as
+ * `directoryForGraph(root, "translation-sources") ?? join(root, "translations")`.
+ *
+ * A third case is real and neither covers it. `bootstrap` is a floor an agent
+ * READS — no TypeScript, `needs: []` — and a `.pot` is tooling OUTPUT that
+ * nobody reads. So on the owner's instruction its 15 templates moved to
+ * `cat-harness/translations/<locale>/bootstrap/processes/`: the files that
+ * describe one instance's diagrams, kept in the translation corpus of the
+ * instance that PUBLISHES them.
+ *
+ * Both assumed answers then compose a path that does not exist, and this is
+ * not hypothetical — it took three CI jobs red on 2026-09-27, twice, in two
+ * different readers.
+ *
+ * ## The host is a DEPENDENT, not a dependency
+ *
+ * Worth stating because the natural guess is wrong and costs an afternoon.
+ * `bootstrap` declares `needs: []`; it depends on nothing, so no dependency of
+ * bootstrap's could be hosting anything. `cat-harness` is what declares
+ * `needs: ['bootstrap']`. The host is the instance that DEPENDS on this one,
+ * which is also the one whose build publishes it — so the host cannot be found
+ * by walking this instance's own dependencies, and `hostRoot` is supplied by
+ * the caller rather than derived. A tool shipping inside cat-harness passes
+ * its own instance root, which is the only host it could sensibly mean.
+ *
+ * ## Three states, reported rather than collapsed
+ *
+ * `by` says WHICH question answered, because the three are not equally good
+ * news and a caller that cannot tell them apart makes the mistake this
+ * function exists to stop. `own` is a declaration. `hosted` is a declaration
+ * one level out plus a directory that exists. `convention` is a guess, and a
+ * reader deciding whether an empty result is a determined empty or a defect
+ * needs to know it was a guess.
+ *
+ * @param instanceRoot the instance whose translations are wanted
+ * @param hostRoot an instance that may host them; omit when there is none
+ */
+export function translationsHomeFor(
+  instanceRoot: string,
+  hostRoot?: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): { root: string; scope: readonly string[]; by: "own" | "hosted" | "convention" } {
+  const own = matchingDirectories(instanceRoot, "translation-sources", registry);
+  if (own.length > 0 && own[0] !== undefined) {
+    return { root: own[0].absPath, scope: [], by: "own" };
+  }
+
+  if (hostRoot !== undefined && resolve(hostRoot) !== resolve(instanceRoot)) {
+    const hosts = matchingDirectories(hostRoot, "translation-sources", registry);
+    const host = hosts[0];
+    // `readDeclaration`, NOT `artefactStubFor`. The latter throws EISDIR on a
+    // directory with no declaration file: `findDeclarationFile` returns
+    // undefined, so it reads the DIRECTORY and node refuses. Found by this
+    // function's own tests, which pass exactly such a directory — and by two
+    // OLDER tests in the same file that had been passing temp dirs to
+    // `catalogueFor` for months. An instance with no declaration has no stub,
+    // so it cannot be hosted under one; that is the convention case below.
+    const decl = readDeclaration(instanceRoot);
+    if (host !== undefined && decl !== undefined && decl !== null) {
+      const stub = artefactStub(decl);
+      // Existence is REQUIRED, not assumed. Composing `<host>/<locale>/<stub>`
+      // and reporting `hosted` without looking would hand every caller a path
+      // that may be nothing, and the whole point of this function is that a
+      // caller can tell an empty answer apart from a wrong one.
+      const hosted = existsSync(host.absPath)
+        ? readdirSync(host.absPath, { withFileTypes: true }).some(
+            (e) => e.isDirectory() && existsSync(join(host.absPath, e.name, stub)),
+          )
+        : false;
+      if (hosted) return { root: host.absPath, scope: [stub], by: "hosted" };
+    }
+  }
+
+  // declared-path-literal: the base case for an instance that declares nothing
+  // and is hosted by nobody. Reading a declaration to learn the fallback for
+  // having no declaration cannot be done; `DEFAULT_DIRECTORIES` supplies this
+  // same convention, and `by: "convention"` tells the caller it was a guess.
+  return { root: join(instanceRoot, "translations"), scope: [], by: "convention" };
+}
+
+/**
+ * The directory holding one locale's files for an instance, hosted or not:
+ * `<root>/<locale>` when it owns its corpus, `<root>/<locale>/<stub>` when a
+ * host carries it.
+ *
+ * One function rather than a join at each site, for the reason `potPathFor`
+ * gives about its own sibling: two copies of a path is how a check passes over
+ * a file the extractor never wrote.
+ */
+export function localeDirIn(
+  home: { root: string; scope: readonly string[] },
+  locale: string,
+): string {
+  return join(home.root, locale, ...home.scope);
+}
+
 /** Every directory this instance declares as holding `graph`, in declaration order. */
+/**
+ * Where an instance's `kg-audit` results live: the directory holding its
+ * `kg-qa/` tree and its `kg-qa.manifest.json`.
+ *
+ * Three answers, and the caller is told which, as {@link translationsHomeFor}
+ * does for translations:
+ *
+ * - **own** — the instance declares a `qa` directory; its results live there.
+ * - **hosted** — it declares none, and `hostRoot` (the auditor's instance)
+ *   does; the results live in the host's `qa` directory under the instance's
+ *   stub, e.g. `cat-harness/test/results/bootstrap/`. This is how bootstrap
+ *   keeps its QA sidecars out of its own tree (owner, 2026-09-29, decision 2 of
+ *   bean `r3gy`): a verdict ABOUT bootstrap is harness output, and bootstrap is
+ *   the layer that must read cleanly with no harness present.
+ * - **convention** — neither declares one; `<instance>/test/results/`.
+ *
+ * A hosted home sits BESIDE the host's own `kg-qa/` tree, never inside it, so
+ * the host's orphan sweep cannot claim another instance's sidecars as its own.
+ */
+export function kgQaHomeFor(
+  instanceRoot: string,
+  hostRoot?: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): { root: string; by: "own" | "hosted" | "convention" } {
+  const own = matchingDirectories(instanceRoot, "qa", registry)[0];
+  if (own !== undefined) return { root: own.absPath, by: "own" };
+  if (hostRoot !== undefined && resolve(hostRoot) !== resolve(instanceRoot)) {
+    const host = matchingDirectories(hostRoot, "qa", registry)[0];
+    const decl = readDeclaration(instanceRoot);
+    if (host !== undefined && decl !== undefined && decl !== null) {
+      return { root: join(host.absPath, artefactStub(decl)), by: "hosted" };
+    }
+  }
+  // declared-path-literal: the base case for an instance that declares no `qa`
+  // directory and is hosted by nobody — the same convention KG_QA_RESULTS_DIR names.
+  return { root: join(instanceRoot, "test", "results"), by: "convention" };
+}
+
 function matchingDirectories(
   root: string,
   graph: string,

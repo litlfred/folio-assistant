@@ -43,13 +43,25 @@ this skill sits before both and feeds them.
 | input | what it is | default if the owner gives none |
 |---|---|---|
 | **window** | the time period to sweep, as a duration or two instants | the last 4 hours |
-| **goals** | the outcomes to prioritise against, **in the owner's words** | none — ask, or review without a queue and say so |
+| **goals** | the outcomes to prioritise against, **in the owner's words** | the store's goal **milestones**, offered in the closing question (§"No goals given"); only if there are none, ask, or review without a queue and say so |
 | **scope** | which repositories and stores are in the sweep | the checkout you are in and its forge repository |
 | **axes** | which kinds of activity to read | all six below |
 
 Keep the owner's wording for a goal verbatim through the whole report. A goal
 paraphrased by the agent is a different goal, and the reader cannot tell
 which one the queue was built for.
+
+**No goals given — but the store may already hold them.** Bean `tjj6`,
+measured 2026-09-24: the owner ran `/goal-review 1d` with no goals while the
+store carried three goal milestones (`vuip`, `p5wm`, `yg29`) — exactly the
+objects §"Goals that are not in the store are a gap" exists to create — and the
+review built no queue, dropping the one input the store could supply. So with
+no goals given, list the open milestones (`beans list -t milestone`), each
+title **verbatim**, and offer them as the queue basis in the closing question.
+Say which milestones **quote the owner** (their body carries the owner's own
+words) and which are a milestone's wording only — a title is the owner's words
+only where it says so, and presenting one as such is the paraphrase this
+section forbids, one level up.
 
 ## Cold start — before any durable read
 
@@ -74,6 +86,19 @@ it answers, it gives what no inference can — each session's `session_status`,
 and a `task_summary` that carries a held question in plain text. **Fall back to
 commit trailers when it does not answer, and report "could not determine" when
 neither does.** Never present the fallback as the method.
+
+**Reading the listing — measured, bean `4dxv` (2026-09-24).** It is ordered by
+**creation, not activity**: a 40-row page held 22 sessions updated in a 1-day
+window interleaved with ones last active weeks earlier, and page 2 held none.
+**Page until a whole page was created before the window opened, then stop** —
+a session cannot be updated before it exists, so no later page can hold an
+in-window row. Stopping at the first page with no *in-window* row is right for
+that reason and no other; a reader who does not know the order either stops at
+page 1 or pages forever. The listing is large (~75 KB per 40 sessions): parse
+it, do not read it, and note the JSON sits inside an untrusted wrapper line.
+Read `status_bucket` / `session_status` and `task_summary`; a summary on a
+session that requires action is a **held question — quote it**, it is the
+sweep's most valuable line.
 
 *Dated observation, 2026-09-20, kept as provenance and NOT as a capability
 claim:* eight lookups by id returned *not found* and the listing showed only
@@ -154,6 +179,25 @@ measurements the store's own status field cannot give you:
   rather than scanning nothing and reporting clean, it scans the wrong
   baseline and reports a catastrophe.
 
+  **Then compare by bean ID, never by file diff against a merge base.** Bean
+  `x6lu`, measured 2026-09-24, and NOT the same trap as `065p` above: with a
+  fresh `origin/main`, `git diff --diff-filter=A origin/main...origin/<branch>
+  -- beans/defs` listed **131** added beans for a branch 822 commits behind;
+  by id, **1** was absent from main. `A...B` diffs against the **merge
+  base**, which predates everything main gained since — so the count
+  inflates with how far behind the branch is, the same symptom as a stale
+  ref from a different cause. Across that day's 19 unmerged branches: 152 by
+  file diff, 20 unique by id. The check, ids on the branch minus ids
+  anywhere on main (archive included):
+
+  ```sh
+  ids() { git ls-tree -r --name-only "$1" beans/defs | sed -n 's#.*/folio-assistant-\([a-z0-9]\{4\}\)--.*#\1#p' | sort -u; }
+  comm -23 <(ids origin/<branch>) <(ids origin/main)   # beans on the branch and nowhere on main
+  ```
+
+  **A large file-diff count from a far-behind branch is the stale-base
+  signature, not a hidden epic** — measure by id before reporting either.
+
 **5. Issues.** Updated in the window, and the full open set for
 classification. **Measure it; do not expect a size.** *Dated observation,
 2026-09-20:* 54 proposals merged and 2 issues changed — which this file
@@ -166,6 +210,16 @@ subject changed underneath the number. Bean `8nzu`.
 **6. CI on the default branch.** Runs in the window by workflow and outcome.
 A red default branch reclassifies every "stalled" proposal, so read this
 before judging any of them.
+
+**Compare the tool's span with the window.** Bean `52rd`, measured
+2026-09-24: `check:ci-health` reads the last 100 runs and says so — "100
+recent run(s) spanning 13.4h" — against a 24h window, leaving the first ~10.6h
+with no CI verdict at all. The tool is honest; the easy reading, "main is
+green", is not. The uncovered part is **could not determine** (rule 1),
+reported as such with its extent. To cover it, page the forge's workflow-run
+listing for the default branch by `created` back to the window's start (the
+`actions_list` tool, or `GET /repos/{owner}/{repo}/actions/runs?branch=<default>&created=>=<start>`);
+`check:ci-health` takes no `--since`.
 
 **Where a check fails, sidecars and generated files are the first suspect**:
 one proposal that day was red only because a QA sidecar had not been

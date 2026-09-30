@@ -84,6 +84,7 @@ import { loadContributions } from "../../schemas/harness-config";
 import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions";
 import { usesGraphHash } from "./uses-graph-hash";
 import { blockQaPath, existingBlockQaPath, findContentRepoRoot } from "./qa-paths";
+import { contributionsRoot } from "./repo-root";
 
 
 import type { BlockQaReport, CheckerResult, CompanionRole, QaCriterionEntry, QaScriptSidecar} from "../../schemas/block-qa";
@@ -196,8 +197,14 @@ async function run(): Promise<void> {
   // edge for it because a string is not an import — but after the repository
   // split that file lives in another package and still has to be there. Bean
   // `zlmp` measured five such runtime edges; this drains one of them.
+  //
+  // Loaded from `contributionsRoot()`, NOT `INSTANCE_ROOT`. INSTANCE_ROOT is
+  // `cat-harness/`, which declares no dependencies, so loading from it
+  // registered 0 contributed checkers and the two contributed cost criteria
+  // never ran (folio-assistant#1492). INSTANCE_ROOT stays the anchor for
+  // path normalisation, which is what it is for.
   const contributions = await loadContributions<FolioContribution, ContributionRegistry>(
-    INSTANCE_ROOT,
+    contributionsRoot(),
     new ContributionRegistry(),
   );
   const discovery = await discoverBlockCheckers(contributions);

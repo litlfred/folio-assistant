@@ -42,6 +42,7 @@ import { fileURLToPath } from "node:url";
 
 import { instanceRootsIn, readDeclaration, repoRootFor, siteDirFor, visualisationsOf } from "../schemas/cat-harness.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
+import { withViewers } from "./viewer-declarations.js";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
@@ -69,7 +70,8 @@ export function declaredVisualisers(repoRoot: string = REPO_ROOT): string[] {
   const refs = new Set<string>();
   for (const root of instanceRootsIn(repoRoot)) {
     const decl = readDeclaration(root);
-    for (const d of decl?.directories ?? []) {
+    // Viewers RESOLVED from the pages (#1168 B7a-2b).
+    for (const d of withViewers(decl?.directories ?? [], root, repoRoot)) {
       for (const v of visualisationsOf(d.coverage, d.id)) refs.add(v.ref);
     }
   }

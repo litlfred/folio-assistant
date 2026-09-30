@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ga3q
 title: 'WAIVER: a human can waive a confirmation right, scoped to a session or a process run'
-status: in-progress
+status: todo
 type: feature
 priority: normal
 created_at: 2026-09-20T18:51:21Z
-updated_at: 2026-09-20T18:51:53Z
+updated_at: 2026-09-29T20:50:33Z
 parent: folio-assistant-ahvw
 ---
 
@@ -70,3 +70,9 @@ available.
       separate file and a separate change)
 - [ ] A first real waiver is granted, so the read path is exercised rather than
       only the empty case
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

@@ -76,6 +76,7 @@ semantic cone propagates over type edges only.
 | Is the narrative leaving a gap? | `uses-formal-coverage` (advisory; most formal-only edges are correct) |
 | Who owns this declaration? | `g.declOwners` / `lean-ref-owns-decl` |
 | What should I review first? | `semantic-review-scoping` |
+| Does a proof use the lemmas it was planned to use? | compare the block's planned predecessors with its **value** edges. A proof that uses none of them is a reason to re-read the *statement* — a proof easier than the intended mathematics is evidence about the statement. Advisory; see `blueprint-driven-formalization` §4 |
 
 ## Declaration ownership
 

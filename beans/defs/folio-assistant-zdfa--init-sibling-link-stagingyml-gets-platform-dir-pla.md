@@ -1,11 +1,11 @@
 ---
 # folio-assistant-zdfa
 title: 'INIT SIBLING LINK: staging.yml gets platform_dir ../platform, outside the Actions checkout; a subfolder folio''s workflow lands where GitHub never reads it'
-status: in-progress
+status: todo
 type: bug
 priority: normal
 created_at: 2026-09-23T18:06:56Z
-updated_at: 2026-09-24T19:19:05Z
+updated_at: 2026-09-29T18:14:48Z
 parent: folio-assistant-q4jm
 ---
 
@@ -24,3 +24,9 @@ A related problem: a folio scaffolded into a SUBFOLDER gets its workflow at `<su
 - Sibling link: `folio-staging.yml` (stage and publish-main) now resolves `platform_dir`. A path outside the workspace is checked out at `.folio-platform` inside it, then symlinked to the named path, so the shim and build command resolve the same in CI as locally. The written caller is unchanged. Tested by running the workflow's own step scripts (`folio-staging-platform.test.ts`).
 - Subfolder: `init-folio` detects an enclosing repository. It writes no staging workflow there and says why in its notes (the reusable workflow builds from the repository root). It also no longer runs a nested `git init`.
 - Not done, possible follow-up: supporting a folio BELOW the repository root would need a `folio_root` input threaded through every step (paths, the ChangeSet's `git archive`, and the pages checkout).
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, and no holder recorded; the sessions that held theme C (rendered site) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

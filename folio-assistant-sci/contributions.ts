@@ -36,6 +36,7 @@ import type {
   CheckerResult,
 } from "../cat-harness/schemas/block-qa.js";
 import { COST_AUTOMATED_CHECKERS } from "./content/pipeline/qa-checkers-cost.js";
+import { FORMAL_EDGES_TOOL, registerFormalEdgesTools } from "./content/pipeline/formal-edges-mcp.js";
 
 /** Where each contributed checker is defined, relative to this instance. */
 const COST_CHECKERS = "content/pipeline/qa-checkers-cost.ts";
@@ -47,6 +48,7 @@ export default function contribute(): {
     check: (paths: CheckerPaths) => CheckerResult;
     sourceFile: string;
   }>;
+  tools: Array<{ name: string; register: (server: unknown) => void }>;
 } {
   return {
     // Overwritten by `loadContributions` from the dependency entry — the root
@@ -62,5 +64,9 @@ export default function contribute(): {
       check,
       sourceFile: COST_CHECKERS,
     })),
+    // The formal-edge extractor (folio-assistant#1492). Lean tooling, so it
+    // lives here and reaches the server as a contribution: the server walks
+    // declared dependencies and never names this instance.
+    tools: [{ name: FORMAL_EDGES_TOOL, register: registerFormalEdgesTools }],
   };
 }

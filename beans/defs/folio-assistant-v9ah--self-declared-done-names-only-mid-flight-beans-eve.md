@@ -1,10 +1,11 @@
 ---
 # folio-assistant-v9ah
 title: 'SELF-DECLARED-DONE NAMES ONLY MID-FLIGHT BEANS: every finding the check produces is one no session may act on, which is thux''s o5qj shape unfixed on the second axis'
-status: in-progress
+status: todo
 type: bug
+priority: normal
 created_at: 2026-09-25T17:34:43Z
-updated_at: 2026-09-25T17:34:43Z
+updated_at: 2026-09-29T20:50:32Z
 parent: folio-assistant-1xhc
 ---
 
@@ -96,3 +97,9 @@ nothing here re-statuses a bean.
 - [ ] The finding's action text says what a reader may actually do
 - [ ] The epic-with-open-children case is ruled on, either in the check or in the
       threshold's `basis`
+
+
+
+## Claim released 2026-09-29
+
+Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open working branch touches it; the sessions that held theme B (CI reliability, QA instruments, process) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.

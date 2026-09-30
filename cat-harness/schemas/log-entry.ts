@@ -39,6 +39,7 @@ import { join } from "node:path";
 import { z } from "zod";
 
 import { resolveDirectories } from "./cat-harness.ts";
+import { BeanIdSchema } from "./tool-types.ts";
 
 /** The `$schema` tag every log entry carries, per the declare-yourself rule. */
 export const LOG_ENTRY_SCHEMA_ID = "folio-log/v1";
@@ -226,8 +227,8 @@ export const LogEntrySchema = z.object({
   process: z.string().min(1).optional(),
   /** The activity/step id within that process. */
   task: z.string().min(1).optional(),
-  /** The bean this work is claimed against, where there is one. */
-  bean: z.string().min(1).optional(),
+  /** The bean this work is claimed against, where there is one. A typed id (#1168 B8). */
+  bean: BeanIdSchema.optional(),
 
   // ── Provenance ─────────────────────────────────────────────────
   /** Session identifier, so one run's entries can be emptied together. */

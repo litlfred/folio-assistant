@@ -68,6 +68,9 @@ import {
 } from "./git.js";
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
 import { join, relative, resolve, extname, basename } from "path";
+import { loadContributions } from "../../schemas/harness-config";
+import { ContributionRegistry, type FolioContribution } from "../../schemas/contributions";
+import { contributionsRoot } from "../../content/pipeline/repo-root";
 import Anthropic from "@anthropic-ai/sdk";
 
 // ── Access control ───────────────────────────────────────────
@@ -3558,6 +3561,30 @@ server.tool = function (...args: Parameters<typeof origTool>) {
 for (const o of await registerMcpToolGroups(server)) {
   if (o.state === "absent") log("mcp", `− ${o.id}`, `${o.layer} layer: ${o.detail}`);
   else if (o.state === "failed") log("mcp", `✗ ${o.id}`, o.detail);
+}
+
+// Tools CONTRIBUTED by the folio's declared dependencies — the direction that
+// needs no name: the server walks what the instance declares and registers
+// what each dependency's `contributes` module supplies, as qa-sweep already
+// does for contributed QA checkers. `ContributionRegistry.registerTools` had
+// no production caller until this block, so a contributed tool never reached
+// any server (folio-assistant#1492, which contributes `lean_formal_edges` from
+// folio-assistant-sci). A contribution that cannot load is REPORTED and the
+// server still starts, the same stance as a failed tool group above.
+try {
+  // `contributionsRoot()` (#1523): the FOLIO's root, which is what declares
+  // the dependencies that contribute. It falls back to the repository root
+  // where a lookup would land on the platform's own `cat-harness/`, which
+  // declares none, so loading from there would register nothing and look
+  // exactly like "nothing to add". qa-sweep uses the same helper.
+  const contributions = await loadContributions<FolioContribution, ContributionRegistry>(
+    contributionsRoot(),
+    new ContributionRegistry(),
+  );
+  contributions.registerTools(server);
+  for (const name of contributions.contributedTools()) log("mcp", `+ ${name}`, "contributed tool");
+} catch (e) {
+  log("mcp", "✗ contributed tools", e instanceof Error ? e.message : String(e));
 }
 
 // ── Transport selection ──────────────────────────────────────────

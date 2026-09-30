@@ -109,7 +109,7 @@ import { basename, join, relative, resolve } from "node:path";
 
 import { parsePo } from "../content/pipeline/po-inject.js";
 import { readHarnessConfig } from "../schemas/harness-config.js";
-import { repoRootFor, resolveDirectories } from "../schemas/cat-harness.js";
+import { localeDirIn, repoRootFor, translationsHomeFor } from "../schemas/cat-harness.js";
 import { buildExport, exportIdentity, publishedDocument, undeclaredRootTerms } from "./kg-export.js";
 
 const ROOT = resolve(import.meta.dir, "..");
@@ -161,23 +161,33 @@ export function isIri(s: string): boolean {
  * Resolved from the declaration rather than spelled, because two copies of
  * this join is how a check passes over a directory the writer never used.
  */
+export function translationsHome(instanceRoot: string): ReturnType<typeof translationsHomeFor> {
+  // `ROOT` is this script's own instance and therefore the HOST when
+  // `--instance` names another: bootstrap's templates live in cat-harness's
+  // corpus under `<locale>/bootstrap/`. The host is a DEPENDENT, not a
+  // dependency — bootstrap declares `needs: []` — so it cannot be derived from
+  // `--instance` and is supplied here instead.
+  return translationsHomeFor(instanceRoot, ROOT);
+}
+
+/** The directory whose children are locales. Reporting still names one path. */
 export function translationsRootFor(instanceRoot: string): string {
-  const d = resolveDirectories([{ name: "(local)", root: instanceRoot, own: true }]).find((x) =>
-    x.graphKinds.includes("translation-sources"),
-  );
-  // declared-path-literal: the base case for an instance that declares
-  // nothing. Reading a declaration to learn the fallback for having no
-  // declaration cannot be done; `DEFAULT_DIRECTORIES` supplies this same
-  // convention, and `translate-bpmn.ts` falls back identically.
-  return d?.absPath ?? join(instanceRoot, "translations");
+  return translationsHome(instanceRoot).root;
 }
 
 /** Every locale directory under the instance's translations root. */
 export function knownLocales(instanceRoot: string): string[] {
-  const dir = translationsRootFor(instanceRoot);
-  if (!existsSync(dir)) return [];
-  return readdirSync(dir, { withFileTypes: true })
+  const home = translationsHome(instanceRoot);
+  if (!existsSync(home.root)) return [];
+  return readdirSync(home.root, { withFileTypes: true })
     .filter((e) => e.isDirectory())
+    // A hosted instance's locale set is a SUBSET of its host's: a locale the
+    // host translates but which carries nothing for this instance is not this
+    // instance's locale. Filtering on the scope directory rather than on the
+    // host's locale list is what keeps the two apart — otherwise bootstrap
+    // would claim every locale cat-harness has, and a per-locale document would
+    // be emitted for each over an empty catalogue.
+    .filter((e) => home.scope.length === 0 || existsSync(localeDirIn(home, e.name)))
     .map((e) => e.name)
     .sort();
 }
@@ -227,7 +237,7 @@ export function projectedStems(instanceRoot: string): Set<string> {
  * exact distinction the report below exists to make.
  */
 export function catalogueFor(instanceRoot: string, locale: string): Map<string, string> {
-  const dir = join(translationsRootFor(instanceRoot), locale);
+  const dir = localeDirIn(translationsHome(instanceRoot), locale);
   const stems = projectedStems(instanceRoot);
   const out = new Map<string, string>();
   const walk = (d: string): void => {
@@ -490,6 +500,18 @@ if (import.meta.main) {
   if (build.locales.length === 0) {
     // `6tkl`: a per-locale build over no locales asserts nothing, and
     // reporting it clean would be a pass over an empty set.
+    //
+    // This briefly granted a DETERMINED EMPTY to an instance that declares no
+    // `translation-sources`, and that was the wrong fix — reverted the same
+    // day. The premise was that such an instance has nothing to export; the
+    // actual state was that its templates had MOVED and this script was
+    // looking in the wrong place. `translationsHomeFor` resolves the hosted
+    // case now, so the empty this guards is once again the only empty there is.
+    //
+    // `code-quality-gates.yml` states the policy for the sibling generator and
+    // it reads the same way: "a folio with no translations is a real state, and
+    // this generator is not the thing that gets to decide the absence means
+    // 'nothing to report'."
     console.error(
       `\nNo locale directories under ${relative(repoRootFor(ROOT), translationsRootFor(resolve(instanceRoot ?? ROOT)))} — refusing to call that clean.`,
     );
