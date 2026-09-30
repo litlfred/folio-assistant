@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-vibrant-franklin-d0ulgh/skills/content-author/input.schema.json",
+  "title": "Content Author Input",
+  "description": "Input schema for general content authoring.",
+  "type": "object",
+  "required": [
+    "contentType"
+  ],
+  "properties": {
+    "contentType": {
+      "type": "string",
+      "enum": [
+        "document",
+        "fhir-ig",
+        "lean-proof",
+        "bpmn",
+        "data-dictionary"
+      ],
+      "description": "Type of content to author."
+    },
+    "sourceRef": {
+      "type": "string",
+      "description": "Reference to source material."
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "Output directory for authored content."
+    }
+  },
+  "staging": {
+    "branch": "claude/vibrant-franklin-d0ulgh",
+    "sha": "29cf79513f8ee62c32b152a44bec7f66d7183a6c",
+    "pr": "1708/merge",
+    "run": "36785840210"
+  }
+}
