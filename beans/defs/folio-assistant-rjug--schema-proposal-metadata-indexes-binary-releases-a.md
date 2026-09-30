@@ -123,6 +123,8 @@ registered for them. Their options stand as written above.
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and no open branch touches it; the sessions that held theme D (content folios, SMART/FHIR stack, ingest) work stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
 
+_2026-09-30T10:09:58Z_ — Claimed by claude/zhg2-direction-sidecar — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## Claimed 2026-09-30 — by `claude/rjug-two-kinds`, and the holder note on `main` names the wrong branch
 
 `bun run beans:claim folio-assistant-rjug` was run once from the WRONG

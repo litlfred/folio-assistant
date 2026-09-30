@@ -54,6 +54,7 @@
 import { z } from "zod";
 
 import { LOG_CAPTURE, LogReferenceSchema } from "./log-entry.ts";
+import { ProcessElementIdSchema } from "./process-element-id.ts";
 
 /** The `$schema` every render-log entry carries. */
 export const RENDER_LOG_SCHEMA_ID = "folio-render-log/v1";
@@ -209,8 +210,8 @@ export const RenderLogEntrySchema = z.object({
   commit: z.string().min(1).optional(),
   /** The workflow run that wrote this, so a reader can open the log. */
   run: z.string().min(1).optional(),
-  /** BPMN process id — `staging-render-log` — when written inside one. */
-  process: z.string().min(1).optional(),
+  /** BPMN process element id — `Process_RenderLog` — when written inside one. */
+  process: ProcessElementIdSchema.optional(),
   /** The activity within that process. */
   task: z.string().min(1).optional(),
 

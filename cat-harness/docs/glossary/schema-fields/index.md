@@ -12,13 +12,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 25 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1472 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 152 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 25 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1456 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 152 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1667 terms and is 905 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1651 terms and is 897 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1667</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1651</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -555,6 +555,13 @@ Attribution.version <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Version pin: a script revision, or a human's role at the time.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/attribution.ts"><code>cat-harness/schemas/attribution.ts#Attribution.version</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--attribution.attributionschema.skill" data-fa-state="extracted" data-fa-gloss="">
+AttributionSchema.skill <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The skill being exercised: `name` or `package/name` (#1168 B8).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/attribution.ts"><code>cat-harness/schemas/attribution.ts#AttributionSchema.skill</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--qa-review.auditnote.author" data-fa-state="extracted" data-fa-gloss="">
 AuditNote.author <span class="fa-gloss-status">candidate, extracted</span>
@@ -4284,27 +4291,6 @@ IgChromeTokenSchema.value <span class="fa-gloss-status">candidate, extracted</sp
 <p>The winning value, verbatim.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ig-chrome.ts"><code>cat-harness/schemas/ig-chrome.ts#IgChromeTokenSchema.value</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--ig-metadata-index.igidentityschema.canonical" data-fa-state="extracted" data-fa-gloss="">
-IgIdentitySchema.canonical <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The IG's canonical URL, where it declares one.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ig-metadata-index.ts"><code>cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.canonical</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--ig-metadata-index.igidentityschema.packageid" data-fa-state="extracted" data-fa-gloss="">
-IgIdentitySchema.packageId <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The NPM-style package id, e.g. `who.smart.trust`.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ig-metadata-index.ts"><code>cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.packageId</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--ig-metadata-index.igidentityschema.version" data-fa-state="extracted" data-fa-gloss="">
-IgIdentitySchema.version <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The IG version this harvest was taken at. An id alone collides across versions.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ig-metadata-index.ts"><code>cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.version</code></a></p>
-</dd>
 <dt id="cat-harness--kg-schema-fields--ig-menu.igmenugroupschema.href" data-fa-state="extracted" data-fa-gloss="">
 IgMenuGroupSchema.href <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -4346,27 +4332,6 @@ IgMenuSourceSchema.ref <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>The commit it was read at. Provenance.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ig-menu.ts"><code>cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--ig-metadata-index.igmetadatasourceschema.harvestedat" data-fa-state="extracted" data-fa-gloss="">
-IgMetadataSourceSchema.harvestedAt <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>When the harvest ran.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ig-metadata-index.ts"><code>cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedAt</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--ig-metadata-index.igmetadatasourceschema.harvestedfrom" data-fa-state="extracted" data-fa-gloss="">
-IgMetadataSourceSchema.harvestedFrom <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The published site or package the exports were read out of.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ig-metadata-index.ts"><code>cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedFrom</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--ig-metadata-index.igmetadatasourceschema.runurl" data-fa-state="extracted" data-fa-gloss="">
-IgMetadataSourceSchema.runUrl <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>A URL for the harvest run, if one exists.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/ig-metadata-index.ts"><code>cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--fhir-artifact-index.igsourceschema.of" data-fa-state="extracted" data-fa-gloss="">
 IgSourceSchema.of <span class="fa-gloss-status">candidate, extracted</span>
@@ -7414,76 +7379,6 @@ RefSchema.ref <span class="fa-gloss-status">candidate, extracted</span>
 <p>What was asked for — `origin/main`, a branch, or `worktree`.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/changeset.ts"><code>folio-assistant-core/schemas/changeset.ts#RefSchema.ref</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseassetschema.bytes" data-fa-state="extracted" data-fa-gloss="">
-ReleaseAssetSchema.bytes <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Size in bytes. Required — this is half of what the node is for.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.bytes</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseassetschema.contenttype" data-fa-state="extracted" data-fa-gloss="">
-ReleaseAssetSchema.contentType <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Media type, where the publisher declares one.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.contentType</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseassetschema.dispositionreason" data-fa-state="extracted" data-fa-gloss="">
-ReleaseAssetSchema.dispositionReason <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Why, for a disposition somebody DECIDED. Required for those; refused for the rest.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.dispositionReason</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseassetschema.fetchedfrom" data-fa-state="extracted" data-fa-gloss="">
-ReleaseAssetSchema.fetchedFrom <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Where the bytes are fetched from. **Required, even for a purged asset** — a record of a file it cannot get back is a size and a hash with no referent.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.fetchedFrom</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseassetschema.name" data-fa-state="extracted" data-fa-gloss="">
-ReleaseAssetSchema.name <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The file's published name, e.g. `package.tgz`.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.name</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseidentityschema.id" data-fa-state="extracted" data-fa-gloss="">
-ReleaseIdentitySchema.id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The release's own id in its origin — a GitHub release id, a registry key.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.id</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseidentityschema.publishedat" data-fa-state="extracted" data-fa-gloss="">
-ReleaseIdentitySchema.publishedAt <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>When it was published.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.publishedAt</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseidentityschema.tag" data-fa-state="extracted" data-fa-gloss="">
-ReleaseIdentitySchema.tag <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The git tag, where the origin uses one.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.tag</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseidentityschema.url" data-fa-state="extracted" data-fa-gloss="">
-ReleaseIdentitySchema.url <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The human-facing page for the release, if there is one.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.url</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseidentityschema.version" data-fa-state="extracted" data-fa-gloss="">
-ReleaseIdentitySchema.version <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The version released. Required: an id alone collides across re-publications.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.version</code></a></p>
-</dd>
 <dt id="bootstrap-tools--kg-schema-fields--release-iri.releaseiris.agent" data-fa-state="extracted" data-fa-gloss="">
 ReleaseIris.agent <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -7518,13 +7413,6 @@ ReleaseIris.version <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>The declared version, `MAJOR.MINOR.PATCH`.</p>
 <p class="fa-gloss-meta">Schema fields of bootstrap-tools · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/schemas/release-iri.ts"><code>bootstrap-tools/schemas/release-iri.ts#ReleaseIris.version</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--binary-release.releaseoriginrefschema.repository" data-fa-state="extracted" data-fa-gloss="">
-ReleaseOriginRefSchema.repository <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The repository or registry, e.g. `WorldHealthOrganization/smart-trust`.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/binary-release.ts"><code>cat-harness/schemas/binary-release.ts#ReleaseOriginRefSchema.repository</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--bib-verification.relevanceassessment.assessed_at" data-fa-state="extracted" data-fa-gloss="">
 RelevanceAssessment.assessed_at <span class="fa-gloss-status">candidate, extracted</span>
@@ -7754,7 +7642,7 @@ RenderLogEntrySchema.id <span class="fa-gloss-status">candidate, extracted</span
 RenderLogEntrySchema.process <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>BPMN process id — `staging-render-log` — when written inside one.</p>
+<p>BPMN process element id — `Process_RenderLog` — when written inside one.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/render-log.ts"><code>cat-harness/schemas/render-log.ts#RenderLogEntrySchema.process</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--render-log.renderlogentryschema.reason" data-fa-state="extracted" data-fa-gloss="">
@@ -11144,7 +11032,7 @@ VisualisationSchema.surfaces <span class="fa-gloss-status">candidate, extracted<
 VisualisationSchema.theme <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The tile's theme. Absent means the directory's, then the instance's.</p>
+<p>The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#VisualisationSchema.theme</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.visualisationschema.title" data-fa-state="extracted" data-fa-gloss="">
@@ -11361,7 +11249,7 @@ VoiceProfileSchema.activeIn <span class="fa-gloss-status">candidate, extracted</
 VoiceProfileSchema.appliesTo <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Block kinds this voice audits. Absent means every kind the folio has.</p>
+<p>What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts#VoiceProfileSchema.appliesTo</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--voices.voiceprofileschema.extends" data-fa-state="extracted" data-fa-gloss="">
