@@ -305,10 +305,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T19:03:42.457Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e49c7f3b9635459ba327510eab317f475bef8e0c",
-  "sourceCommitSha": "e49c7f3b9635459ba327510eab317f475bef8e0c",
-  "sourceCommitAt": "2026-09-30T19:00:57Z",
+  "generatedAt": "2026-09-30T19:23:06.321Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a052f33f6d6a72ba73814490f433066c8387ce3b",
+  "sourceCommitSha": "a052f33f6d6a72ba73814490f433066c8387ce3b",
+  "sourceCommitAt": "2026-09-30T19:20:13Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -323,7 +323,7 @@
     "Lane": 192,
     "ProcessNode": 889,
     "Tool": 110,
-    "Schema": 133,
+    "Schema": 135,
     "ExternalSchema": 17,
     "GraphKind": 35,
     "Role": 48,
@@ -3844,7 +3844,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1125,
+      "instructionLines": 1152,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -45081,6 +45081,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/inline-code"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#schema/instance-repositories",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "instance-repositories",
+      "title": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
+      "module": "schemas/instance-repositories.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/instance-repositories"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#schema/intake",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "intake",
@@ -45334,6 +45343,15 @@
       "module": "schemas/render-targets.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/render-targets"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#schema/repo-full-name",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "repo-full-name",
+      "title": "`owner/name` — a forge repository's full name, in its own module so a",
+      "module": "schemas/repo-full-name.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/repo-full-name"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld#schema/role-graph",

@@ -203,6 +203,31 @@
             ]
           }
         },
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "description": "A forge repository's full name, owner/name"
+        },
+        "livesAt": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "description": "A forge repository's full name, owner/name"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9._-]+(?:\\/[A-Za-z0-9._-]+)*$"
+            }
+          },
+          "required": [
+            "repository",
+            "path"
+          ],
+          "additionalProperties": false
+        },
         "stub": {
           "type": "string",
           "minLength": 1
@@ -845,8 +870,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-magical-dijkstra-19yvml/cat-harness.jsonld",
   "staging": {
     "branch": "claude/magical-dijkstra-19yvml",
-    "sha": "0014a607de330d045f6643a894a4f79383c572b2",
+    "sha": "a705591e175a6e11cff7aa9546dbf50ff30d6f63",
     "pr": "1633/merge",
-    "run": "36762703996"
+    "run": "36764974263"
   }
 }
