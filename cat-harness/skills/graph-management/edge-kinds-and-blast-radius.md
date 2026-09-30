@@ -5,14 +5,13 @@ description: >-
   ordering and the impact answer. Interface edges versus implementation edges,
   the union rule for blast radius, and the split/merge signals — generalized
   out of the formal-math skills that first stated them.
-capability: architecture
 # consulted: reference material nobody performs — a PRINCIPLE about graph semantics. Zero imperative markers and every heading is a claim — "Not every edge is a dependency", "Provenance is three-valued", "Taint propagates down the dependency graph". It is read before deciding how to traverse a graph; nobody performs it as a task.
 consulted: true
 ---
 
 # Edge kinds and blast radius
 
-> Skill id: `edge-kinds-and-blast-radius` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `edge-kinds-and-blast-radius` · Package: `graph-management`
 
 These rules were first written for a formal-mathematics corpus — Lean
 declarations, propositions, proof terms. Each one below is the domain-free form,

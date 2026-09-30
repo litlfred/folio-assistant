@@ -6,12 +6,11 @@ description: >-
   staged practice — declare in place, detangle, isolate, extract — with the
   seventeen moves that were measured rather than argued, and the failures each
   one cost.
-capability: architecture
 ---
 
 # Graph detanglement — the practice, not the migration
 
-> Skill id: `graph-detanglement` · Capability: `architecture` · Package: `graph-management`
+> Skill id: `graph-detanglement` · Package: `graph-management`
 
 A repository grows until part of it wants to leave. Sometimes the reason is
 size, sometimes it is semantic — *"split only where consumers or cadences

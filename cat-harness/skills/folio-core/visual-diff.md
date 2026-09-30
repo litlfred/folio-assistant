@@ -7,14 +7,13 @@ description: >-
   the review process call it. Use when a reviewer asks "what does this
   figure look like now", when a table's markup diff is unreadable, or when a
   staging preview's pictures are missing.
-capability: review
 user_invocable: true
 allowed-tools: Read Grep Glob Bash
 ---
 
 # Visual diff — see a figure change
 
-> Skill id: `visual-diff` · Capability: `review` · Package: `folio-core` · Bean: `0rxe` · Epic: `q4jm`
+> Skill id: `visual-diff` · Package: `folio-core` · Bean: `0rxe` · Epic: `q4jm`
 
 For a figure, a diagram, a table, an equation or a simulator, the change a
 reviewer must judge is how the block LOOKS. The Markdown or SVG diff of a

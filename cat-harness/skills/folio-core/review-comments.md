@@ -9,14 +9,13 @@ description: >-
   comment's status, and how to change this process. Use when a reviewer asks
   how to comment on a block, when the review page shows no comments or a wrong
   one, when editing the ingestion, or when a folio's staging workflow is set up.
-capability: review
 user_invocable: true
 allowed-tools: Bash(bun run folio-assistant-core/scripts/review-comments.ts*) Read Grep Glob mcp__github__pull_request_read
 ---
 
 # Review comments — from a PR comment to a structured todo
 
-> Skill id: `review-comments` · Capability: `review` · Package: `folio-core`
+> Skill id: `review-comments` · Package: `folio-core`
 > Tools: `folio-review-comments` (ingest), `folio-review-comment-move` (record a decision) · Bean: `423d` · Epic: `q4jm`
 
 A reviewer comments on **one block** of a folio by writing an ordinary comment
