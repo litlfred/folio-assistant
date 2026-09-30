@@ -20,7 +20,7 @@ const notebook = (over: Record<string, unknown> = {}) => ({
   ...over,
 });
 
-describe("structureOf reads every committed PDF structure unchanged", () => {
+describe("structureOf reads every committed structure, each as its own variant", () => {
   // The whole premise of A+B: pdf-structure/v1 stays as it is. If any
   // committed file stops reading through the accessor, the premise is false.
   const files = spawnSync("git", ["ls-files", "*structure.json"], { cwd: REPO, encoding: "utf-8" })
@@ -31,14 +31,29 @@ describe("structureOf reads every committed PDF structure unchanged", () => {
     expect(files.length).toBeGreaterThan(10);
   });
 
-  test("each reads as the pdf variant, with page locators", () => {
+  test("each reads as a declared variant, with that variant's locator", () => {
+    // The whole premise of A+B: pdf-structure/v1 files read UNCHANGED as the
+    // pdf variant (pages), and a notebook reads as the notebook variant
+    // (cells). A file that reads as neither, or with the other's locator, is
+    // the misreading this base exists to prevent.
     const bad: string[] = [];
+    const want = { pdf: "pages", notebook: "cells" } as const;
     for (const f of files) {
       const s = structureOf(JSON.parse(readFileSync(join(REPO, f), "utf-8")));
       if ("reason" in s) bad.push(`${f}: ${s.reason}`);
-      else if (s.variant !== "pdf" || s.sections.some((x) => x.locator.kind !== "pages")) bad.push(`${f}: not read as pdf`);
+      else if (s.sections.some((x) => x.locator.kind !== want[s.variant])) bad.push(`${f}: ${s.variant} with a foreign locator`);
     }
     expect(bad).toEqual([]);
+  });
+
+  test("both variants are present in the corpus, so neither half is vacuous", () => {
+    const variants = new Set(
+      files.map((f) => {
+        const s = structureOf(JSON.parse(readFileSync(join(REPO, f), "utf-8")));
+        return "reason" in s ? "unreadable" : s.variant;
+      }),
+    );
+    expect([...variants].sort()).toEqual(["notebook", "pdf"]);
   });
 });
 
