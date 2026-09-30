@@ -11,7 +11,6 @@ description: >-
   Bootstrap + bootstrap-tools is the worked example; cat-harness +
   cat-harness-tools is next.
 capability: architecture
-package: graph-management
 ---
 
 # Knowledge Graph separation — the method

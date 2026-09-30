@@ -30,7 +30,7 @@ Analysis: session scratchpad `separation-process-analysis.md` (94 beans, cone me
 - [x] tests move (split graph.test.ts per the analysis §3.6)
 
 ## Phase 2 — README + SVG writers
-- [ ] subgraph-readmes, readme-sections (kg:processes/kg:files), render-bpmn into bootstrap-tools with cones cut
+- [x] subgraph-readmes, readme-sections (kg:processes/kg:files), render-bpmn into bootstrap-tools with cones cut — output byte-identical (78 SVGs, every README but the two template rows); standalone writes only `supports` graphs
 
 ## Phase 3 — publication + docs gaps
 - [ ] publish-instance-files documented; `/0.1.0/` and `/v0/` layout described; bootstrap.json name collision fixed; bs: vocabulary producer; hosted outputs in skills; stale kg-export/bootstrap-graph-publication text; release/tag mechanics; migration-plan Phase II
