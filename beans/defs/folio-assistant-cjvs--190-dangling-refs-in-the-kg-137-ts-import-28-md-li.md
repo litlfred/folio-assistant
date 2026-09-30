@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-09-30T15:16:39Z
+updated_at: 2026-09-30T20:23:23Z
 parent: folio-assistant-vke6
 ---
 
@@ -355,3 +355,74 @@ extractor.
 ## OWNER RULING, 2026-09-30: MOVE the four large-datasets processes out of cat-harness
 
 Asked in session https://claude.ai/code/session_01SiFEMuTciyB681XP5WfcbB. The four processes are `copy-out-materialized`, `materialize-remote`, `refresh-materialized` and `sample-import`. Every step of each names a skill that exists only in `large-datasets`, while cat-harness depends only on `bootstrap`, so their 25 references run the wrong way. **The owner chose: move them into `large-datasets`**, which declares its own `processes` directory. The alternative, leaving them and recording the edges, was declined. Implementation follows in its own PR.
+
+## The 25 `bpmn-skill` refs fixed: the four processes moved to large-datasets, 2026-09-30
+
+Owner ruling today (issue #1605): move rather than record. Branch
+`claude/magical-archimedes-4qkfxp-cjvs-move`.
+
+**What moved** (`git mv`, history kept), `cat-harness/processes/` →
+`large-datasets/processes/`:
+`copy-out-materialized.bpmn`, `materialize-remote.bpmn`,
+`refresh-materialized.bpmn`, `sample-import.bpmn`. None had a beside-source
+file; their SVGs are generated into the site's `assets/img/workflows/` and
+kept the same site path. Their `.pot` templates stay in `cat-harness/translations/`,
+the translations home, as `deep-document-research`'s and smart-base's do.
+
+**Declared:** `large-datasets.json` gains `large-datasets-processes`
+(`processes/`, kind `processes`). `cat-harness.json` also declares it
+repository-scoped, the same way it declares `folio-assistant-core-processes`,
+so the workflow tools, `kg:audit` and the site generators, which all scan from
+the root, still find the diagrams (bean `g43o`).
+
+**One engine change was needed, and it is not cosmetic.** Subprocess descent
+(`loadProcessModel`) looked up a `calledElement` only among SIBLING files.
+`refresh-materialized` calls `Process_Adjudication`, which stays in
+cat-harness. After the move that call would have gone silently opaque: no
+descent, and `checkAcceptedCodes` would never have run. The fix is in
+`process-model.ts` (`dependencyProcessHome`). When no sibling file defines the
+callee, the lookup searches the calling instance's DEPENDENCIES' declared
+`processes` directories, nearest dependency first, and never its dependents.
+`adjudication-marker.test.ts` covers this: it asserts that
+`refresh-materialized`'s adjudication child resolves and carries its codes.
+
+### Before / after
+
+`bun run kg:detangle --json` (dangling, by extractor):
+
+| | before (main @ `d1474207ea7`) | after |
+|---|---:|---:|
+| dangling total | 210 | **185** |
+| `ts-import` | 154 | 154 |
+| `md-link` | 31 | 31 |
+| `bpmn-skill` | **25** | **0** |
+| `kg:detangle:direction` wrong-direction | 0 | 0 |
+
+**The zero has two causes, so it cannot stand as proof on its own.**
+`kg:detangle`'s `SCAN` does not list `large-datasets/`. So the 25 disappear
+partly because their source files left the graph, not only because the
+edges now point the right way. An independent probe settles the direction.
+It ignores SCAN and takes each skill ref and call in the four diagrams. For
+each one it finds the instance that holds the target, and checks whether that
+instance is the diagram's own instance or one of its declared transitive
+`needs`:
+
+| | skill refs + calls | wrong-direction | unresolved |
+|---|---:|---:|---:|
+| in `cat-harness/processes/` (may reach bootstrap, bootstrap-tools) | 33 skill refs + 3 calls | **25 skill refs** (materialize-remote 20, copy-out-materialized 5) | 0 |
+| in `large-datasets/processes/` (may also reach cat-harness, folio-assistant-core) | 33 + 3 | **0** | 0 |
+
+The remaining refs are `sample-import` ×7, `adjudication` ×1 and the call to
+`Process_Adjudication`. All of them point DOWN into cat-harness, which
+large-datasets reaches through folio-assistant-core.
+
+### Still open: the 2 cross-instance `md-link`s, left alone on purpose
+
+- `cat-harness/skills/content-lifecycle/sample-import.md` → `large-datasets/skills/materialize-remote.md`
+- `cat-harness/skills/folio-core/todo-review.md` → `large-datasets/skills/copy-out-materialized.md`
+  (and, since the move, to `large-datasets/processes/copy-out-materialized.bpmn`)
+
+These links still run from cat-harness up to a dependent. So does the
+`sample-import` SKILL itself: it stays in cat-harness while its process now
+lives in large-datasets. Moving the skill would be a second ruling, and this
+change does not presume it. The two fhir-harness md-links are untouched.

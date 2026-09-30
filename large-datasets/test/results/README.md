@@ -8,5 +8,5 @@ Part of [large-datasets](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | file | what it is | used by |
 |---|---|---|
 | [`kg-qa.manifest.json`](kg-qa.manifest.json) | data |  |
-| [`kg-qa/`](kg-qa/) | 4 files | |
+| [`kg-qa/`](kg-qa/) | 8 files | |
 <!-- kg:subgraph:end -->
