@@ -23,7 +23,7 @@ Part of [folio-assistant-core](../README.md) 0.1.0, declared as `core-scripts`, 
 | [`codemod-refterm.ts`](codemod-refterm.ts) | a file |  |
 | [`extract-assets.ts`](extract-assets.ts) | a file |  |
 | [`glossary-extract.ts`](glossary-extract.ts) | a file |  |
-| [`glossary-mapping-block.test.ts`](glossary-mapping-block.test.ts) | a file |  |
+| [`glossary-one-concept.test.ts`](glossary-one-concept.test.ts) | a file |  |
 | [`glossary-page.ts`](glossary-page.ts) | a file |  |
 | [`glossary-pot.test.ts`](glossary-pot.test.ts) | a file |  |
 | [`glossary-pot.ts`](glossary-pot.ts) | a file |  |
