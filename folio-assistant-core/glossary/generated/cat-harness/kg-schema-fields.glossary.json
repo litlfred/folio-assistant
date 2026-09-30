@@ -805,6 +805,13 @@
       "status": "candidate"
     },
     {
+      "id": "attribution.attributionschema.skill",
+      "prefLabel": "AttributionSchema.skill",
+      "definition": "The skill being exercised: `name` or `package/name` (#1168 B8).",
+      "source": "cat-harness/schemas/attribution.ts#AttributionSchema.skill",
+      "status": "candidate"
+    },
+    {
       "id": "avatars.avatar.glyph",
       "prefLabel": "Avatar.glyph",
       "definition": "SVG path data, drawn in a 24×24 box.",
@@ -2487,7 +2494,7 @@
     {
       "id": "cat-harness.visualisationschema.theme",
       "prefLabel": "VisualisationSchema.theme",
-      "definition": "The tile's theme. Absent means the directory's, then the instance's.",
+      "definition": "The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's.",
       "source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.theme",
       "status": "candidate"
     },
@@ -6659,7 +6666,7 @@
     {
       "id": "render-log.renderlogentryschema.process",
       "prefLabel": "RenderLogEntrySchema.process",
-      "definition": "BPMN process id — `staging-render-log` — when written inside one.",
+      "definition": "BPMN process element id — `Process_RenderLog` — when written inside one.",
       "source": "cat-harness/schemas/render-log.ts#RenderLogEntrySchema.process",
       "status": "candidate"
     },
@@ -9844,7 +9851,7 @@
     {
       "id": "voices.voiceprofileschema.appliesto",
       "prefLabel": "VoiceProfileSchema.appliesTo",
-      "definition": "Block kinds this voice audits. Absent means every kind the folio has.",
+      "definition": "What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has.",
       "source": "cat-harness/schemas/voices.ts#VoiceProfileSchema.appliesTo",
       "status": "candidate"
     },

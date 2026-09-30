@@ -1245,6 +1245,9 @@ export const RULES: Rule[] = [
       //    survives the "describes a process" test.
       "schemas/memory.ts",
       "schemas/carried-note.ts",
+      // The BPMN process element id (#1168 B8): a leaf `carried-note`'s
+      // TaskRef and the log / invocation records all reference.
+      "schemas/process-element-id.ts",
       // Same argument as `memory.ts`, one step along: a waiver is a permission
       // a PERSON gives an AGENT about a gate in this repository's process. It
       // is declared over the same directory as agent memory and it fails the
