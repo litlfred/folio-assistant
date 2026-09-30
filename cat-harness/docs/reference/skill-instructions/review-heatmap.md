@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Review heat map — where to look first
 
-> Skill id: `review-heatmap` · Capability: `review` · Package: `folio-core` · Bean: `qbfi` · Epic: `q4jm`
+> Skill id: `review-heatmap` · Package: `folio-core` · Bean: `qbfi` · Epic: `q4jm`
 
 The review page (`review/` in a folio's staging preview) opens with a table.
 It has **one row per section**, in reading order, and **one column per
