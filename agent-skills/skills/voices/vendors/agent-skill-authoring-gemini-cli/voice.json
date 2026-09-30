@@ -2,6 +2,7 @@
   "$schema": "folio-voice/v1",
   "id": "agent-skill-authoring-gemini-cli",
   "title": "Agent skill authoring — Gemini CLI override",
+  "appliesTo": ["skill"],
   "description": "What Gemini CLI's own documentation adds to the shared base voice (agent-skill-authoring): its loading budget in words, its degrees-of-freedom rule, its folder names, script ergonomics and security. MODEL-SPECIFIC by the owner's ruling (bean rkqp, 2026-09-20): a vendor's advice is evidence about that vendor's platform, so it is a separate voice extending the base rather than caveats folded into it — a rule that turns out to be Gemini-only can then be dropped without touching the rest. Provenance is ASSERTION: a publisher describing its own product, revisable without notice. Rules the base already states (description carries function and trigger; read third-party skills before installing) are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate — the owner's instruction, because 'best practice' drifts.",
   "provenance": "assertion",
   "extends": {

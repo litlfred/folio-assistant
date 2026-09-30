@@ -193,6 +193,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Serving a rendering](serving-renderings.html) | `serving-renderings` | — | A **rendering** is what an instance publishes about itself. Running it produces |
 | [/session-intent](session-intent.html) | `session-intent` | — | A coordination failure mode recurs whenever agents have no durable |
 | [Adding a](skill-registration.html) | `skill-registration` | — | One command, before you commit: |
+| [Skill voice review](skill-voice-review.html) | `skill-voice-review` | — |  |
 | [Skills and Tools](skills-and-tools.html) | `skills-and-tools` | — | **A skill is a capability stated generically. A Tool content node is one |
 | [Staging review](staging-review.html) | `staging-review` | — | > Skill id: `staging-review` · Package: `folio-core` |
 | [Surprise to corpus](surprise-to-corpus.html) | `surprise-to-corpus` | — | > Skill id: `surprise-to-corpus` · Package: `folio-core` |

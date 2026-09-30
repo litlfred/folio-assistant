@@ -15974,6 +15974,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgqareport.voice_reviews",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KgQaReport.voice_reviews"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "An agent's or a person's rule-by-rule review of a skill against a voice that judges skills — carried across runs like `pair_attestations`, and written by `voice:review`; see `scripts/skill-voice-review.ts`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/kg-qa.ts#KgQaReport.voice_reviews",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/kg-qa.kgsubject.id",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -61,6 +61,7 @@ import { tools, toolsOf } from "../tools/discover.js";
 import { kgDirectories, ownKgRoots, workflowDirs, workflowFiles } from "./known-skills.js";
 import { docsLayers } from "./compose-docs.js";
 import { PAIR_CRITERION, discoverPairs, evaluatePairs, readAttestations } from "./prose-code-pairs.js";
+import { VOICE_REVIEW_CRITERION, evaluateVoiceReviews, readVoiceReviews, skillVoices } from "./skill-voice-review.js";
 import { claimsEntry, judgePair, rootScripts } from "./pair-claims.js";
 // `Dirent` for the orphan-sidecar sweep (bean `3jj9`), which walks the
 // results tree with `withFileTypes` to tell a directory from a file.
@@ -2698,6 +2699,21 @@ if (!check) {
     r.criteria["prose-claims-resolve"] = claimsEntry(pairs.flatMap((p) => judgePair(repoRoot, p, scripts)));
     r.totals = tally(r.criteria);
     if (attestations.length) r.pair_attestations = attestations;
+  }
+}
+
+// ── Skills reviewed against the voices that judge skills (bean `rkqp`).
+//
+// The same shape as the pairs above: it READS the previous sidecar, because a
+// review is carried across runs, so it runs before the write loop too.
+{
+  const voices = skillVoices(resolve(root, ".."));
+  for (const r of reports) {
+    if (r.subject.kind !== "skill" || !r.subject.path) continue;
+    const { entry: e, reviews } = evaluateVoiceReviews(join(root, r.subject.path), readVoiceReviews(sidecarPath(r)), voices);
+    r.criteria[VOICE_REVIEW_CRITERION] = e;
+    r.totals = tally(r.criteria);
+    if (reviews.length) r.voice_reviews = reviews;
   }
 }
 

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-30T16:02:22Z
+updated_at: 2026-09-30T19:17:49Z
 parent: folio-assistant-slw1
 ---
 
@@ -191,3 +191,13 @@ _2026-09-30 15:40_ — vendors declared from within (`voices.json` names `vendor
 
 ## Owner, 2026-09-30 (round 4): the accessor gate is a literal allowlist
 Refuse the literal `structure.json` in TypeScript outside a short allowlist, each entry with its reason. The existence-only readers (library-ref, check-materialized-fixity, check-catalogue) are listed as such. The orphan `scenarios.detangle.json` was deleted with the owner's approval (commit 3095e92).
+
+
+## 2026-09-30 — the agentic review axis for skills (the last open item)
+- [x] `skill-voice-review-current` (kg-qa, `minor`, gated by nothing): does a CURRENT review exist of this skill against each ACTIVE voice whose rules are scoped `appliesTo: ["skill"]`. Rule-content verdicts are recorded in the sidecar's `voice_reviews` and are never a finding — the owner's "no formal gate on rule content".
+- [x] Reviews carried across `kg:audit` runs exactly like `pair_attestations`; each pins the skill's content hash and the hash of the voice's skill-scoped rules, so either moving makes it stale (the old review kept as evidence).
+- [x] `bun run voice:review` writes one (refuses a set missing a rule, judging one twice, or an unexplained fail/n/a); `--rules <voice>` prints what to judge, resolved through `extends`.
+- [x] Agent half: `skill-voice-review` skill (folio-core), bound to the `code-reviewer` lane beside `skills-and-tools`.
+- [x] The four skill-authoring voices now declare `appliesTo: ["skill"]` — until now they claimed every block kind.
+- Measured: 323 skill sidecars each gain only `n/a` (no voice is active in `folio-assistant.config.json`); nothing else moved.
+- OPEN, the owner's: which voices to ACTIVATE (`voice.active`). Nothing is reviewed until then.

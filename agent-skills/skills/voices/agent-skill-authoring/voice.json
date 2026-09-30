@@ -2,6 +2,7 @@
   "$schema": "folio-voice/v1",
   "id": "agent-skill-authoring",
   "title": "Agent skill authoring \u2014 the base voice, read from two ingested papers",
+  "appliesTo": ["skill"],
   "description": "The voice for writing and reviewing agent skills: what a SKILL.md's description must carry to be routed to at all, how much may sit in the body, where references and examples go, and what to do before trusting somebody else's skill. Twelve rules, every one cited to a page of an ingested paper. This is the SHARED BASE \u2014 the part the vendors agree on. Anything specific to one vendor's platform belongs in an override under `vendors/`, declaring this voice in its `extends` field.",
   "provenance": "evidence",
   "sources": [

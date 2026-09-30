@@ -4284,6 +4284,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/skill-voice-review",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "skill-voice-review"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Reviews a skill against a voice that judges skills — the base `agent-skill-authoring` voice or a vendor override such as Claude's, Gemini CLI's or OpenAI's — rule by rule, with each rule's citation open, and records the verdicts with `voice:review`. Use when `skill-voice-review-current` reports a skill never reviewed or reviewed before the skill or the voice changed, or when asked whether a skill follows a vendor's authoring guidance. The agent half of that axis; the mechanical half, in `scripts/skill-voice-review.ts`, only says whether a current review exists."
+        }
+      ],
+      "skos:notation": "skill-voice-review",
+      "dcterms:source": "cat-harness/skills/folio-core/skill-voice-review.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/skills-and-tools",
       "@type": "skos:Concept",
       "skos:inScheme": {

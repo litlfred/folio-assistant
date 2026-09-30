@@ -2,6 +2,7 @@
   "$schema": "folio-voice/v1",
   "id": "agent-skill-authoring-openai",
   "title": "Agent skill authoring — OpenAI override",
+  "appliesTo": ["skill"],
   "description": "What OpenAI's 'Skills in OpenAI API' cookbook notebook adds to the shared base voice agent-skill-authoring: front matter as the router, explicit use/don't-use routing with negative examples, scripts that behave like tiny CLIs, verification in SKILL.md, what may leave over the network, version pinning, and the platform's upload limits. MODEL-SPECIFIC by the owner's ruling (bean rkqp): a vendor's advice is evidence about that vendor's platform. Provenance ASSERTION: a publisher describing its own product. Read from the full notebook (ingested through the notebook rung, MIT-licensed), not the one-page PDF capture skills-in-openai-api, which is almost all code. Rules the base already carries — description states function and trigger, one default, state dependencies — are inherited through extends, not repeated. Conformance is an agentic review, never a schema gate.",
   "provenance": "assertion",
   "extends": {
