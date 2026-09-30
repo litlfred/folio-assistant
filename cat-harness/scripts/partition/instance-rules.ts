@@ -1331,6 +1331,13 @@ export const RULES: Rule[] = [
       "scripts/check-fallback-roles.ts",    // reads role-graph
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
+      // HARNESS, although what it reads is core's glossary — the test is the
+      // module's imports, not the data's home. It reaches only
+      // `schemas/term-mapping.ts` and `scripts/qa-results.ts`, both harness,
+      // so classifying it core would buy two wrong-direction edges for the
+      // tidiness of filing it beside the glossary it inspects. Same reasoning
+      // the content-side block below states in the other direction.
+      "scripts/check-term-mapping.ts",      // is a minted candidate already somebody's concept (bean `7wou`)
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-quiet-claim-liveness.ts", // the work plan's own state against the remote (bean `omki`)
       "scripts/skill-governance.ts",        // which skill governs a directory, read from the skills (#1168 B7b)
