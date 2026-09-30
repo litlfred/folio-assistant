@@ -19,7 +19,7 @@ one a graph node cannot answer: nothing resolves a node across instances,
 so &quot;does a dependent get its own?&quot; has no meaning there.</p>
 </div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">ContentDirectory</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#coverage">coverage</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span><br/>        <span class="tsd-kind-property">exempt</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">docs</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">skill</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">visualiser</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">process</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">serialisations</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>        <span class="tsd-kind-property">visualiser</span><span class="tsd-signature-symbol">?:</span><br/>            <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">string</span><br/>            <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-symbol">{</span><br/>                <span class="tsd-kind-property">hidden</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">icon</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">publish</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;staging-only&quot;</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">ref</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">surfaces</span><span class="tsd-signature-symbol">?:</span> (<span class="tsd-signature-type">&quot;navbar&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;board&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;glass&quot;</span>)<span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">theme</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">instance</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">themeId</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>                <span class="tsd-kind-property">title</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>            <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#dependents">dependents</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;skip&quot;</span><br/>    <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;reproduce&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#description">description</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#graphkinds">graphKinds</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#id">id</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#path">path</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#readonly">readOnly</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#readonlybasis">readOnlyBasis</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#scope">scope</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;instance&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;repository&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#summaries">summaries</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;drain&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;held&quot;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#theme">theme</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">instance</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">themeId</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#title">title</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div>
-<section class="tsd-panel tsd-hierarchy" data-refl="2927">
+<section class="tsd-panel tsd-hierarchy" data-refl="2952">
 <h4>Hierarchy (<a href="../hierarchy.html#schemas/cat-harness.ContentDirectory">View Summary</a>)</h4>
 <ul class="tsd-hierarchy">
 <li class="tsd-hierarchy-item"><a href="schemas_cat-harness.GraphNodeDirectory.html" class="tsd-signature-type tsd-kind-interface">GraphNodeDirectory</a>
@@ -28,7 +28,7 @@ so &quot;does a dependent get its own?&quot; has no meaning there.</p>
 <ul class="tsd-hierarchy">
 <li class="tsd-hierarchy-item"><a href="schemas_cat-harness.ResolvedDirectory.html" class="tsd-signature-type tsd-kind-interface">ResolvedDirectory</a></li></ul></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L490">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:490</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L490">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:490</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -158,7 +158,7 @@ and it was caught only because the corpus was measured first.</p>
 behaviour rather than changing it.</p>
 </div></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L511">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:511</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L511">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:511</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="dependents"><span>dependents</span><a href="#dependents" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">dependents</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;skip&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;reproduce&quot;</span></div>
@@ -169,7 +169,7 @@ of its own. Required, because neither default is safe — see
 <a href="../variables/schemas_cat-harness.DependentMaterialisationSchema.html" class="tsd-kind-variable">DependentMaterialisationSchema</a> for the measurement.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L499">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:499</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L499">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:499</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="description"><code class="tsd-tag">Optional</code><span>description</span><a href="#description" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -177,7 +177,7 @@ of its own. Required, because neither default is safe — see
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_cat-harness.GraphNodeDirectory.html">GraphNodeDirectory</a>.<a href="schemas_cat-harness.GraphNodeDirectory.html#description">description</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/kg-node.ts#L62">work/folio-assistant/folio-assistant/cat-harness/schemas/kg-node.ts:62</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/kg-node.ts#L62">work/folio-assistant/folio-assistant/cat-harness/schemas/kg-node.ts:62</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="graphkinds"><span>graph<wbr/>Kinds</span><a href="#graphkinds" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">graphKinds</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -196,7 +196,7 @@ concept.</p>
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_cat-harness.GraphNodeDirectory.html">GraphNodeDirectory</a>.<a href="schemas_cat-harness.GraphNodeDirectory.html#graphkinds">graphKinds</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L479">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:479</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L479">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:479</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="id"><span>id</span><a href="#id" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -205,7 +205,7 @@ on THIS, never on <code>path</code> — see the module note on relocation.</p>
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_cat-harness.GraphNodeDirectory.html">GraphNodeDirectory</a>.<a href="schemas_cat-harness.GraphNodeDirectory.html#id">id</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L449">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:449</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L449">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:449</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="path"><span>path</span><a href="#path" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">path</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
@@ -214,7 +214,7 @@ trailing slash.</p>
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_cat-harness.GraphNodeDirectory.html">GraphNodeDirectory</a>.<a href="schemas_cat-harness.GraphNodeDirectory.html#path">path</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L454">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:454</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L454">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:454</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="readonly"><code class="tsd-tag">Optional</code><span>read<wbr/>Only</span><a href="#readonly" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">readOnly</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div>
@@ -224,14 +224,14 @@ owner's ruling, why it is declared rather than derived, and the two greys
 a listing must keep apart.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L520">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:520</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L520">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:520</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="readonlybasis"><code class="tsd-tag">Optional</code><span>read<wbr/>Only<wbr/>Basis</span><a href="#readonlybasis" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">readOnlyBasis</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
 <div class="tsd-comment tsd-typography"><p>Why — required whenever <a href="#readonly" class="tsd-kind-property">readOnly</a> is declared, either value. See the schema field.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L523">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:523</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L523">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:523</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="scope"><code class="tsd-tag">Optional</code><span>scope</span><a href="#scope" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">scope</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;instance&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;repository&quot;</span></div>
@@ -241,14 +241,14 @@ and why it is a field rather than a <code>../</code> in the path.</p>
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_cat-harness.GraphNodeDirectory.html">GraphNodeDirectory</a>.<a href="schemas_cat-harness.GraphNodeDirectory.html#scope">scope</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L461">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:461</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L461">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:461</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="summaries"><code class="tsd-tag">Optional</code><span>summaries</span><a href="#summaries" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">summaries</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">&quot;drain&quot;</span> <span class="tsd-signature-symbol">|</span> <span class="tsd-signature-type">&quot;held&quot;</span></div>
 <div class="tsd-comment tsd-typography"><p>Whether the agent summary drain may offer a <code>library</code>'s blocks; absent means <code>drain</code>. See the schema field (bean <code>x80s</code>).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L526">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:526</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L526">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:526</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="theme"><code class="tsd-tag">Optional</code><span>theme</span><a href="#theme" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">theme</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">instance</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">themeId</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span> <span class="tsd-signature-symbol">}</span></div>
@@ -268,7 +268,7 @@ for why it lives on the directory and why the methodologies take
 <li class="tsd-parameter">
 <h5><span class="tsd-kind-property">themeId</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li></ul></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/cat-harness.ts#L536">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:536</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/cat-harness.ts#L536">work/folio-assistant/folio-assistant/cat-harness/schemas/cat-harness.ts:536</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-is-inherited">
 <h3 class="tsd-anchor-link" id="title"><code class="tsd-tag">Optional</code><span>title</span><a href="#title" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">title</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div>
@@ -276,7 +276,7 @@ for why it lives on the directory and why the methodologies take
 </div><aside class="tsd-sources">
 <p>Inherited from <a href="schemas_cat-harness.GraphNodeDirectory.html">GraphNodeDirectory</a>.<a href="schemas_cat-harness.GraphNodeDirectory.html#title">title</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/cat-harness/schemas/kg-node.ts#L60">work/folio-assistant/folio-assistant/cat-harness/schemas/kg-node.ts:60</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/31245d1e9e474a6e7ab0cb207247233b2887ac83/cat-harness/schemas/kg-node.ts#L60">work/folio-assistant/folio-assistant/cat-harness/schemas/kg-node.ts:60</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

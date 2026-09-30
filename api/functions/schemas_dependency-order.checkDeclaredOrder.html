@@ -23,11 +23,11 @@ here so a harness caller asks one module about order either way.</p>
 <div class="tsd-signature tsd-anchor-link" id="checkdeclaredorder"><span class="tsd-kind-call-signature">checkDeclaredOrder</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">steps</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">needs</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="../interfaces/schemas_dependency-order.OrderViolation.html" class="tsd-signature-type tsd-kind-interface">OrderViolation</a><span class="tsd-signature-symbol">[]</span><a href="#checkdeclaredorder" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
 <div class="tsd-comment tsd-typography"><p>Does a list already in its intended order keep it? — the question a
-glossary asks, where cat-harness's <code>flattenDependencies</code> asks the question a
+glossary asks, where a harness's <code>flattenDependencies</code> asks the question a
 pipeline asks (&quot;give me AN order&quot;).</p>
 <p>A glossary's order is authored: the owner, 2026-09-29, wanted definitions
 that are <em>&quot;logically tight, non self-referential&quot;</em>, so each term is defined
-only by terms above it. That is rule 1 of cat-harness's <code>dependency-order.ts</code> (a node runs after
+only by terms above it. That is rule 1 of a harness's <code>dependency-order.ts</code> (a node runs after
 everything it needs) read the other way round: <code>steps</code> here is the order as written, and every <code>needs</code> must point
 UP. Nothing is reordered — a violation names the edge, because moving a
 term silently would publish an order nobody chose.</p>
@@ -38,7 +38,7 @@ term silently would publish an order nobody chose.</p>
 <li><span><span class="tsd-kind-parameter">steps</span>: <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span> <span class="tsd-kind-property">needs</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">[]</span></span></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="../interfaces/schemas_dependency-order.OrderViolation.html" class="tsd-signature-type tsd-kind-interface">OrderViolation</a><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4f02c670bc9442ca27e501fb5c0abd400cf04966/bootstrap-tools/schemas/declared-order.ts#L29">work/folio-assistant/folio-assistant/bootstrap-tools/schemas/declared-order.ts:29</a></li></ul></aside></div></li></ul></section></div>
+<li>Defined in work/folio-assistant/folio-assistant/bootstrap-tools/schemas/declared-order.ts:29</li></ul></aside></div></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

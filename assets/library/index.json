@@ -6,7 +6,7 @@
       "unit": "waiting"
     },
     "agent-skills-library": {
-      "count": 11,
+      "count": 12,
       "unit": "entries"
     },
     "library": {
@@ -60,14 +60,7 @@
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/agent-skill-best-practices---gemini-cli/README.md",
-      "referencedBy": [
-        {
-          "kind": "voices",
-          "instance": "agent-skills",
-          "from": "agent-skills/skills/voices/vendors/agent-skill-authoring-gemini-cli/voice.json",
-          "count": 11
-        }
-      ],
+      "referencedBy": [],
       "summaries": {
         "prose": 3,
         "summarised": 0,
@@ -201,14 +194,7 @@
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2607.25032v1/README.md",
-      "referencedBy": [
-        {
-          "kind": "voices",
-          "instance": "agent-skills",
-          "from": "agent-skills/skills/voices/agent-skill-authoring/voice.json",
-          "count": 11
-        }
-      ],
+      "referencedBy": [],
       "summaries": {
         "prose": 13,
         "summarised": 0,
@@ -251,14 +237,7 @@
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/arxiv-2608.08453v1/README.md",
-      "referencedBy": [
-        {
-          "kind": "voices",
-          "instance": "agent-skills",
-          "from": "agent-skills/skills/voices/agent-skill-authoring/voice.json",
-          "count": 3
-        }
-      ],
+      "referencedBy": [],
       "summaries": {
         "prose": 20,
         "summarised": 0,
@@ -389,7 +368,7 @@
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/rfc2119-key-words-requirement-levels/README.md",
       "referencedBy": [
         {
-          "kind": "voices",
+          "kind": "skills",
           "instance": "folio-assistant-core",
           "from": "folio-assistant-core/skills/voices/technical-writer/voice.json",
           "count": 6
@@ -439,7 +418,7 @@
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words/README.md",
       "referencedBy": [
         {
-          "kind": "voices",
+          "kind": "skills",
           "instance": "folio-assistant-core",
           "from": "folio-assistant-core/skills/voices/technical-writer/voice.json",
           "count": 2
@@ -487,14 +466,7 @@
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skill-authoring-best-practices---claude-platform-docs/README.md",
-      "referencedBy": [
-        {
-          "kind": "voices",
-          "instance": "agent-skills",
-          "from": "agent-skills/skills/voices/vendors/agent-skill-authoring-claude/voice.json",
-          "count": 9
-        }
-      ],
+      "referencedBy": [],
       "summaries": {
         "prose": 32,
         "summarised": 0,
@@ -547,6 +519,49 @@
         "stale": 0,
         "rejected": 0,
         "notSummarised": 1,
+        "unreadable": 0,
+        "empty": 0
+      }
+    },
+    {
+      "id": "skills-in-openai-api-notebook",
+      "instance": "agent-skills",
+      "dir": "agent-skills/library/skills-in-openai-api-notebook",
+      "title": "Skills in OpenAI API",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "skills-in-openai-api-notebook",
+      "sourceFile": "skills-in-openai-api-notebook.ipynb",
+      "sourceSha256": "b5162ce54fe14d576f4d6a55f5fcd3b7cb6d2337a160f7b91dcdd0e6284113d5",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 12,
+      "blocks": 12,
+      "images": 0,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": null,
+      "pageEnd": null,
+      "words": 2520,
+      "chars": 20021,
+      "bytes": 42795,
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
+      "readme": "https://github.com/litlfred/folio-assistant/blob/main/agent-skills/library/skills-in-openai-api-notebook/README.md",
+      "referencedBy": [],
+      "summaries": {
+        "prose": 12,
+        "summarised": 0,
+        "backlog": 12,
+        "draft": 0,
+        "confirmed": 0,
+        "stale": 0,
+        "rejected": 0,
+        "notSummarised": 12,
         "unreadable": 0,
         "empty": 0
       }
@@ -1508,14 +1523,7 @@
       "upload": "match",
       "uploadInstance": "cat-harness",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/milnorlink/README.md",
-      "referencedBy": [
-        {
-          "kind": "voices",
-          "instance": "folio-assistant-sci",
-          "from": "folio-assistant-sci/skills/voices/milnor/voice.json",
-          "count": 13
-        }
-      ],
+      "referencedBy": [],
       "summaries": {
         "prose": 20,
         "summarised": 0,
@@ -1558,14 +1566,7 @@
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/library/9789240010567-eng/README.md",
-      "referencedBy": [
-        {
-          "kind": "voices",
-          "instance": "smart-base",
-          "from": "smart-base/skills/voices/who-digital-health/voice.json",
-          "count": 5
-        }
-      ],
+      "referencedBy": [],
       "summaries": {
         "prose": 182,
         "summarised": 0,
@@ -1613,14 +1614,7 @@
         "src": "smart-base/library/9789240081949-eng/images/img-p001-1.png",
         "source": "figure"
       },
-      "referencedBy": [
-        {
-          "kind": "voices",
-          "instance": "smart-base",
-          "from": "smart-base/skills/voices/who-digital-health/voice.json",
-          "count": 5
-        }
-      ],
+      "referencedBy": [],
       "summaries": {
         "prose": 66,
         "summarised": 0,
@@ -1845,14 +1839,7 @@
       "upload": "match",
       "uploadInstance": "folio-assistant",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/library/who-rhr-1806-eng/README.md",
-      "referencedBy": [
-        {
-          "kind": "voices",
-          "instance": "smart-base",
-          "from": "smart-base/skills/voices/who-digital-health/voice.json",
-          "count": 1
-        }
-      ],
+      "referencedBy": [],
       "summaries": {
         "prose": 20,
         "summarised": 0,
@@ -1902,12 +1889,6 @@
           "instance": "who-iris",
           "from": "who-iris/catalogue/nodes/item-9789241548960-eng.json",
           "count": 1
-        },
-        {
-          "kind": "voices",
-          "instance": "who-style-guide",
-          "from": "who-style-guide/skills/voices/who-guideline-development/voice.json",
-          "count": 9
         }
       ],
       "summaries": {
@@ -1959,12 +1940,6 @@
           "instance": "who-iris",
           "from": "who-iris/catalogue/nodes/item-who-pub-tps-931.json",
           "count": 1
-        },
-        {
-          "kind": "voices",
-          "instance": "who-style-guide",
-          "from": "who-style-guide/skills/voices/who-editorial/voice.json",
-          "count": 26
         }
       ],
       "summaries": {
@@ -2020,12 +1995,6 @@
           "instance": "who-iris",
           "from": "who-iris/catalogue/nodes/item-wpr-rdo-2020-003-eng.json",
           "count": 1
-        },
-        {
-          "kind": "voices",
-          "instance": "who-style-guide",
-          "from": "who-style-guide/skills/voices/who-publication-design/voice.json",
-          "count": 9
         }
       ],
       "summaries": {
@@ -2684,7 +2653,7 @@
       "kind": "file",
       "instance": "folio-assistant",
       "path": "uploads/README.md",
-      "bytes": 7921,
+      "bytes": 8004,
       "ext": "md",
       "ingestedBy": "",
       "docId": "",
@@ -2726,6 +2695,18 @@
       "docId": "",
       "title": "",
       "declaredFiles": 0
+    },
+    {
+      "file": "skills-in-openai-api-notebook",
+      "kind": "intake",
+      "instance": "folio-assistant",
+      "path": "uploads/skills-in-openai-api-notebook",
+      "bytes": 30855,
+      "ext": "",
+      "ingestedBy": "skills-in-openai-api-notebook",
+      "docId": "skills-in-openai-api-notebook",
+      "title": "Skills in OpenAI API (cookbook notebook)",
+      "declaredFiles": 1
     },
     {
       "file": "Skills-in-OpenAI-API.pdf",
@@ -2823,8 +2804,8 @@
     {
       "instance": "folio-assistant",
       "dir": "uploads",
-      "total": 46,
-      "ingested": 25,
+      "total": 47,
+      "ingested": 26,
       "uningested": 21
     },
     {
@@ -2836,7 +2817,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 2223,
+    "filesRead": 2288,
     "unreadable": []
   }
 }

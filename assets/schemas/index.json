@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 195,
+      "count": 197,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -413,6 +413,21 @@
       "name": "document-image",
       "graphNode": "schema",
       "summary": "An image placed on a page of an ingested document — bean `d5f1`.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/document-structure.test.ts",
+      "instance": "cat-harness",
+      "name": "document-structure.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/document-structure.ts",
+      "instance": "cat-harness",
+      "name": "document-structure",
+      "graphNode": "schema",
+      "summary": "`structure.json` as a BASE with VARIANTS — bean `rkqp`, owner 2026-09-30",
       "isTest": false
     },
     {
@@ -7374,6 +7389,13 @@
           "optional": false,
           "array": false,
           "doc": "True when the declaring instance is the root rather than a dependency."
+        },
+        {
+          "name": "within",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The id of the directory that declared this one FROM WITHIN (bean `cmsl`,"
         }
       ],
       "extendsNames": [
@@ -12906,6 +12928,394 @@
         "z"
       ],
       "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#BaseSection",
+      "name": "BaseSection",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "interface",
+      "doc": "The fields every variant's sections share, plus where the section is.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "number",
+          "type": "string | null",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "level",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "n_chars",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "n_words",
+          "type": "number",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "locator",
+          "type": "SectionLocator",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-structure.ts#SectionLocator"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#BaseStructure",
+      "name": "BaseStructure",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "interface",
+      "doc": "A `structure.json` of any variant, read as the base.",
+      "fields": [
+        {
+          "name": "variant",
+          "type": "\"pdf\" | \"notebook\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doc_id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "string | null",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sections",
+          "type": "BaseSection[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "raw",
+          "type": "DocumentStructure",
+          "optional": false,
+          "array": false,
+          "doc": "The parsed variant, for the few readers that need its own fields."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-structure.ts#BaseSection",
+        "cat-harness/schemas/document-structure.ts#DocumentStructure"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#DocumentStructure",
+      "name": "DocumentStructure",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#DocumentStructureSchema",
+      "name": "DocumentStructureSchema",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "zod-union",
+      "doc": "Every variant `structure.json` may be. Discriminated by its `_schema` tag.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema",
+      "name": "NotebookSectionSchema",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "zod-object",
+      "doc": "One section of a notebook: a heading and the cells under it, up to the next heading of its level or above.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "number",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "level",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "cell_start",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false,
+          "doc": "Zero-based index of the section's first cell, which is its heading cell."
+        },
+        {
+          "name": "cell_end",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false,
+          "doc": "Zero-based index of its last cell, inclusive."
+        },
+        {
+          "name": "code_cells",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false,
+          "doc": "How many of those cells are code. Kept verbatim in the section text, never executed."
+        },
+        {
+          "name": "n_chars",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "n_words",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema",
+      "name": "NotebookSourceSchema",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sha256",
+          "type": "Sha256",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mtime",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mimetype_sniffed",
+          "type": "z.literal(\"application/x-ipynb+json\")",
+          "optional": false,
+          "array": false,
+          "doc": "The same two fields every rung writes (bean `nso8`), so the L1 gate's"
+        },
+        {
+          "name": "mimetype_source",
+          "type": "z.literal(\"content\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "nbformat",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "A notebook is JSON; this is what the file declared (`nbformat`), not sniffed bytes."
+        },
+        {
+          "name": "language",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The kernel language the notebook declares, or null when it declares none."
+        },
+        {
+          "name": "cells",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-structure.ts#Sha256"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#NotebookStructure",
+      "name": "NotebookStructure",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema",
+      "name": "NotebookStructureSchema",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "_schema",
+          "type": "z.literal(NOTEBOOK_STRUCTURE_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doc_id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "NotebookSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "metadata",
+          "type": "z.object({ title: z.string().nullable() }).passthrough()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "toc_source",
+          "type": "z.enum([\"headings\", \"none\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`headings`: sections come from markdown headings. `none`: the notebook"
+        },
+        {
+          "name": "sections",
+          "type": "z.array(NotebookSectionSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "structure_note",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What the rung did NOT claim. Required when `toc_source` is `none`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-structure.ts#NotebookSectionSchema",
+        "cat-harness/schemas/document-structure.ts#NotebookSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "NOTEBOOK_STRUCTURE_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#SectionLocator",
+      "name": "SectionLocator",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "type-alias",
+      "doc": "Where a section is, in the unit its format has.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#Sha256",
+      "name": "Sha256",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness/schemas/external-schema.ts#ExternalSchema",
@@ -18867,6 +19277,13 @@
           "optional": true,
           "array": true,
           "doc": "Declared prose ↔ code pairs and the state each was last accepted in —"
+        },
+        {
+          "name": "voice_reviews",
+          "type": "KgVoiceReview[]",
+          "optional": true,
+          "array": true,
+          "doc": "An agent's or a person's rule-by-rule review of a skill against a voice"
         }
       ],
       "extendsNames": [],
@@ -18875,7 +19292,8 @@
         "cat-harness/schemas/kg-qa.ts#KgCriterionEntry",
         "cat-harness/schemas/kg-qa.ts#KgPairAttestation",
         "cat-harness/schemas/kg-qa.ts#KgResult",
-        "cat-harness/schemas/kg-qa.ts#KgSubject"
+        "cat-harness/schemas/kg-qa.ts#KgSubject",
+        "cat-harness/schemas/kg-qa.ts#KgVoiceReview"
       ],
       "unresolved": [],
       "external": [
@@ -18922,6 +19340,12 @@
         {
           "name": "pair_attestations",
           "type": "z .array( z.object({ kind: z.enum([\"implements\", \"co-located\"]), prose: z.string().min(1), code: z.string().min(1), pro…",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "voice_reviews",
+          "type": "z .array( z.object({ voice: z.string().min(1), instance: z.string().min(1), skill_hash: z.string().min(1), voice_hash: …",
           "optional": true,
           "array": true
         }
@@ -19009,6 +19433,63 @@
       "module": "cat-harness/schemas/kg-qa.ts",
       "kind": "type-alias",
       "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/kg-qa.ts#KgVoiceReview",
+      "name": "KgVoiceReview",
+      "module": "cat-harness/schemas/kg-qa.ts",
+      "kind": "interface",
+      "doc": "One review of a skill against one voice. Hashes pin what was reviewed.",
+      "fields": [
+        {
+          "name": "voice",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "instance",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "skill_hash",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "voice_hash",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "by",
+          "type": "\"agent\" | \"human\"",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "at",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdicts",
+          "type": "Array<{ rule: string; result: \"pass\" | \"fail\" | \"n/a\"; note?: string }>",
+          "optional": false,
+          "array": false
+        }
+      ],
       "extendsNames": [],
       "values": [],
       "refs": [],
@@ -19546,7 +20027,7 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false,
-          "doc": "The actor id from `.claude/skills/actors/`, where one is known."
+          "doc": "The actor id from `cat-harness/scenarios/actors/`, where one is known."
         },
         {
           "name": "role",
@@ -26038,13 +26519,21 @@
           "optional": true,
           "array": true,
           "doc": "The requirement statements this capability discharges. See"
+        },
+        {
+          "name": "setupSkill",
+          "type": "SkillNameSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The skill that explains how to SET UP this capability — install it,"
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
         "cat-harness/schemas/skill-package.ts#CapabilityDetectionSchema",
-        "cat-harness/schemas/skill-package.ts#RequirementStatementRefSchema"
+        "cat-harness/schemas/skill-package.ts#RequirementStatementRefSchema",
+        "cat-harness/schemas/tool-types.ts#SkillNameSchema"
       ],
       "unresolved": [],
       "external": [
@@ -27314,6 +27803,47 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/skill-topics.ts#SkillsDirectoryEntrySchema",
+      "name": "SkillsDirectoryEntrySchema",
+      "module": "cat-harness/schemas/skill-topics.ts",
+      "kind": "zod-object",
+      "doc": "An INSTANCE directory declared from inside `skills/` (bean `cmsl`, owner",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "dependents",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "graphKinds",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/skill-topics.ts#SkillTopic",
       "name": "SkillTopic",
       "module": "cat-harness/schemas/skill-topics.ts",
@@ -27390,12 +27920,20 @@
           "type": "z.array(SkillTopicSchema)",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "directories",
+          "type": "z.array(SkillsDirectoryEntrySchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "One node, two lists: the instance directories declared from within."
         }
       ],
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/skill-topics.ts#SkillTopicSchema"
+        "cat-harness/schemas/skill-topics.ts#SkillTopicSchema",
+        "cat-harness/schemas/skill-topics.ts#SkillsDirectoryEntrySchema"
       ],
       "unresolved": [],
       "external": [
@@ -43457,6 +43995,54 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/document-structure.ts#BaseSection",
+      "to": "cat-harness/schemas/document-structure.ts#SectionLocator",
+      "via": "locator",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#BaseStructure",
+      "to": "cat-harness/schemas/document-structure.ts#BaseSection",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#BaseStructure",
+      "to": "cat-harness/schemas/document-structure.ts#DocumentStructure",
+      "via": "raw",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema",
+      "to": "cat-harness/schemas/document-structure.ts#Sha256",
+      "via": "sha256",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema",
+      "to": "cat-harness/schemas/document-structure.ts#NotebookSectionSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema",
+      "to": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/formalization-types.ts#CategoryGlossaryEntry",
       "to": "cat-harness/schemas/formalization-types.ts#CategoryLevel",
       "via": "category_level",
@@ -44407,6 +44993,14 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/kg-qa.ts#KgQaReport",
+      "to": "cat-harness/schemas/kg-qa.ts#KgVoiceReview",
+      "via": "voice_reviews",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/kg-qa.ts#KgQaReportSchema",
@@ -45545,6 +46139,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/skill-package.ts#CapabilityDefinitionSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+      "via": "setupSkill",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema",
       "to": "cat-harness/schemas/skill-package.ts#DockerRequirementsSchema",
       "via": "wrapper",
@@ -45758,6 +46360,14 @@
       "via": "packages",
       "kind": "field",
       "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/skill-topics.ts#SkillTopicsSchema",
+      "to": "cat-harness/schemas/skill-topics.ts#SkillsDirectoryEntrySchema",
+      "via": "directories",
+      "kind": "field",
+      "optional": true,
       "array": true
     },
     {

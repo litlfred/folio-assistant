@@ -26,8 +26,20 @@
   "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsGraph",
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 23,
+  "nodeCount": 24,
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "bootstrap and bootstrap-tools as staged here — superseded by their own repositories",
+      "nodeKind": "staged-copies",
+      "sourcePath": "fsh-guts/retired/bootstrap-split.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "bootstrap/ and bootstrap-tools/",
+      "bean": "folio-assistant-xsqm",
+      "description": "The two directories as they stood in folio-assistant at commit 3aa7917, before each became its own repository, packed as one archive beside this file (`bootstrap-split.tar.gz`, made by `git archive` from that commit). Owner, 2026-09-30: \"seed the repos ... then mv this repo's copies to fsh-guts\". They now live at litlfred/bootstrap (seeded at f70a56c) and litlfred/bootstrap-tools (ff39c76), and folio-assistant carries them as submodules at the same paths. Kept, not deleted, so the staged state stays reachable; packed rather than loose, so the copies are not mistaken for live files by the scanners that read every file in the checkout.",
+      "body": "# bootstrap and bootstrap-tools, as staged\n\n`bootstrap-split.tar.gz` beside this file holds `bootstrap/` and\n`bootstrap-tools/` as they were developed inside folio-assistant until\n2026-09-30 — list it with `tar -tzf bootstrap-split.tar.gz`, or read the same\nfiles at commit `3aa7917`. The live versions are the\nrepositories [litlfred/bootstrap](https://github.com/litlfred/bootstrap) and\n[litlfred/bootstrap-tools](https://github.com/litlfred/bootstrap-tools), seeded\nfrom these files with one commit each and no history (owner: \"I dont want all\nthe clutter in git history on bootstrap (still retained in folio-assistant)\").\nTheir history is this repository's history up to that commit.\n\nWhat changed on the way out — licence files, `livesAt` removed, links and prose\nmade self-contained, a README-sections command — is in each repository's own\nlog and QA report. Do not unpack it back into place: change the repositories."
+    },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/detangle-schema-viewer.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
@@ -309,6 +321,10 @@
   "skipped": [
     {
       "path": "fsh-guts/README.md",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/retired/bootstrap-split.tar.gz",
       "reason": "declares no $schema, so it is not a node of this graph"
     },
     {
