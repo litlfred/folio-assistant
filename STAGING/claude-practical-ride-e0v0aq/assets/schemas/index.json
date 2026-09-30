@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 191,
+      "count": 195,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -616,6 +616,21 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/instance-repositories.test.ts",
+      "instance": "cat-harness",
+      "name": "instance-repositories.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/instance-repositories.ts",
+      "instance": "cat-harness",
+      "name": "instance-repositories",
+      "graphNode": "schema",
+      "summary": "The `owner/repo ↔ instance` map — DERIVED, never kept by hand (bean `6rmv`).",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/instance-versioning.test.ts",
       "instance": "cat-harness",
       "name": "instance-versioning.test",
@@ -1055,6 +1070,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/repo-full-name.ts",
+      "instance": "cat-harness",
+      "name": "repo-full-name",
+      "graphNode": "schema",
+      "summary": "`owner/name` — a forge repository's full name, in its own module so a",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/role-graph.test.ts",
       "instance": "cat-harness",
       "name": "role-graph.test",
@@ -1398,6 +1421,14 @@
       "name": "tool-invocation",
       "graphNode": "schema",
       "summary": "What happened when a Tool ran, and under whose authority.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/tool-run.ts",
+      "instance": "cat-harness",
+      "name": "tool-run",
+      "graphNode": "schema",
+      "summary": "A TOOL RUN RECORD — did the downstream tool run, did it succeed, and over",
       "isTest": false
     },
     {
@@ -3292,7 +3323,7 @@
         },
         {
           "name": "model",
-          "type": "z.string().optional()",
+          "type": "ModelIdSchema.optional()",
           "optional": true,
           "array": false
         },
@@ -3324,6 +3355,7 @@
       "unresolved": [],
       "external": [
         "ATTRIBUTION_KINDS",
+        "ModelIdSchema",
         "z"
       ],
       "exported": true
@@ -6156,11 +6188,24 @@
           "doc": "The instance's name, e.g. `\"agentic-harness\"`."
         },
         {
+          "name": "repository",
+          "type": "RepoFullName",
+          "optional": true,
+          "array": false,
+          "doc": "The repository this instance IS — `owner/name`, its PLANNED home once the"
+        },
+        {
+          "name": "livesAt",
+          "type": "InstanceLocation",
+          "optional": true,
+          "array": false,
+          "doc": "Where the instance lives TODAY when that is not the root of"
+        },
+        {
           "name": "stub",
           "type": "string",
           "optional": true,
-          "array": false,
-          "doc": "The repository's short name, used as the **filename stem of every artefact"
+          "array": false
         },
         {
           "name": "canonicalUrl",
@@ -6261,6 +6306,7 @@
       "refs": [
         "cat-harness/schemas/cat-harness.ts#AssociatedHarness",
         "cat-harness/schemas/cat-harness.ts#ContentDirectory",
+        "cat-harness/schemas/cat-harness.ts#InstanceLocation",
         "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
         "cat-harness/schemas/cat-harness.ts#NavbarIcon",
         "cat-harness/schemas/cat-harness.ts#Publication",
@@ -6270,6 +6316,7 @@
         "cat-harness/schemas/kg-node.ts#KgAsset",
         "cat-harness/schemas/kg-node.ts#KgImage",
         "cat-harness/schemas/kg-node.ts#KgNodeLabels",
+        "cat-harness/schemas/repo-full-name.ts#RepoFullName",
         "cat-harness/schemas/sticky-contribution.ts#StickyContribution"
       ],
       "unresolved": [],
@@ -6313,6 +6360,18 @@
           "optional": true,
           "array": false,
           "doc": "Which icons this instance's navbar row shows."
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullNameSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "livesAt",
+          "type": "InstanceLocationSchema.optional()",
+          "optional": true,
+          "array": false
         },
         {
           "name": "stub",
@@ -6425,6 +6484,7 @@
         "cat-harness/schemas/cat-harness.ts#AssociatedHarnessSchema",
         "cat-harness/schemas/cat-harness.ts#ContentDirectorySchema",
         "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
+        "cat-harness/schemas/cat-harness.ts#InstanceLocationSchema",
         "cat-harness/schemas/cat-harness.ts#NavbarIconsSchema",
         "cat-harness/schemas/cat-harness.ts#PublicationSchema",
         "cat-harness/schemas/cat-harness.ts#RemoteGraphSchema",
@@ -6432,6 +6492,7 @@
         "cat-harness/schemas/cat-harness.ts#TopologySchema",
         "cat-harness/schemas/kg-node.ts#KgAssetSchema",
         "cat-harness/schemas/kg-node.ts#KgImageSchema",
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
         "cat-harness/schemas/sticky-contribution.ts#StickyContributionSchema"
       ],
       "unresolved": [],
@@ -6578,6 +6639,13 @@
           "optional": true,
           "array": false,
           "doc": "This directory is what answers at the instance's own route, `/<instance>/`."
+        },
+        {
+          "name": "kindRouteRedirect",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`/<kind>/<instance>/` for this directory is a ONE-FILE REDIRECT to the"
         },
         {
           "name": "composed",
@@ -6825,6 +6893,67 @@
         "z"
       ],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#InstanceLocation",
+      "name": "InstanceLocation",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "interface",
+      "doc": "Where an instance sits today inside a HOST repository — the pre-split case,",
+      "fields": [
+        {
+          "name": "repository",
+          "type": "RepoFullName",
+          "optional": false,
+          "array": false,
+          "doc": "The repository that holds the instance today, `owner/name`."
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The instance's directory within it, repository-relative, no leading `./`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullName"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/cat-harness.ts#InstanceLocationSchema",
+      "name": "InstanceLocationSchema",
+      "module": "cat-harness/schemas/cat-harness.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "repository",
+          "type": "RepoFullNameSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "path",
+          "type": "z .string() .min(1) .regex(/^[A-Za-z0-9._-]+(?:\\/[A-Za-z0-9._-]+)*$/, \"a repository-relative directory, no leading ./ o…",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
@@ -15311,9 +15440,15 @@
       "fields": [
         {
           "name": "prefLabel",
-          "type": "z.string().describe(\"The label at the time of minting — what a retired term is shown as.\")",
+          "type": "z.string().describe(\"The current label — what the term is shown as, and what a retired term keeps.\")",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "formerLabels",
+          "type": "z .array(z.string()) .optional() .describe(\"Labels this key carried before, oldest first — published as skos:hiddenLabe…",
+          "optional": true,
+          "array": true
         },
         {
           "name": "firstSeen",
@@ -15357,7 +15492,7 @@
         },
         {
           "name": "concepts",
-          "type": "z .record(z.string(), LedgerEntrySchema) .describe(\"Keyed by the term IRI's local part, never the absolute IRI, so the …",
+          "type": "z .record(z.string().regex(LEDGER_KEY, \"a ledger key is role/<id> or process/<process id>/lane/<lane id>\"), LedgerEntry…",
           "optional": false,
           "array": false
         }
@@ -15369,6 +15504,7 @@
       ],
       "unresolved": [],
       "external": [
+        "LEDGER_KEY",
         "LEDGER_SCHEMA",
         "z"
       ],
@@ -15396,11 +15532,11 @@
       "doc": "never at its dependents (data-modelling step 8; checked by `arrow-direction`).",
       "fields": [
         {
-          "name": "type",
-          "type": "string",
-          "optional": false,
+          "name": "layer",
+          "type": "\"core\"",
+          "optional": true,
           "array": false,
-          "doc": "The `@type` IRI this kind projects to."
+          "doc": "Whose namespace the kind is named in, when it is not the harness's:"
         },
         {
           "name": "renderable",
@@ -17478,6 +17614,100 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/instance-repositories.ts#InstanceRepository",
+      "name": "InstanceRepository",
+      "module": "cat-harness/schemas/instance-repositories.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The declaration's machine name — what `needs` resolves against."
+        },
+        {
+          "name": "repository",
+          "type": "RepoFullName",
+          "optional": false,
+          "array": false,
+          "doc": "The planned repository, `owner/name` — the identity references use."
+        },
+        {
+          "name": "livesAt",
+          "type": "InstanceLocation",
+          "optional": true,
+          "array": false,
+          "doc": "Where it sits today, when not at the root of `repository`."
+        },
+        {
+          "name": "root",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "Absolute path of the instance root in this checkout or overlay."
+        },
+        {
+          "name": "namespace",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The vocabulary namespace its terms are minted under — {@link instanceNamespace}."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/cat-harness.ts#InstanceLocation",
+        "cat-harness/schemas/repo-full-name.ts#RepoFullName"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/instance-repositories.ts#InstanceRepositoryMap",
+      "name": "InstanceRepositoryMap",
+      "module": "cat-harness/schemas/instance-repositories.ts",
+      "kind": "interface",
+      "fields": [
+        {
+          "name": "entries",
+          "type": "InstanceRepository[]",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "byRepository",
+          "type": "ReadonlyMap<RepoFullName, InstanceRepository>",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "byName",
+          "type": "ReadonlyMap<string, InstanceRepository>",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "undeclared",
+          "type": "Array<{ name: string; root: string }>",
+          "optional": false,
+          "array": false,
+          "doc": "Roots whose declaration names no `repository` — reported, never guessed."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/instance-repositories.ts#InstanceRepository",
+        "cat-harness/schemas/repo-full-name.ts#RepoFullName"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/intake.ts#DateTime",
       "name": "DateTime",
       "module": "cat-harness/schemas/intake.ts",
@@ -17822,7 +18052,7 @@
       "fields": [
         {
           "name": "instance",
-          "type": "z.string().min(1)",
+          "type": "RepoFullNameSchema",
           "optional": false,
           "array": false,
           "doc": "The instance it came from, as a reference — `litlfred/cat-harness`."
@@ -17844,7 +18074,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -23413,6 +23645,33 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/repo-full-name.ts#RepoFullName",
+      "name": "RepoFullName",
+      "module": "cat-harness/schemas/repo-full-name.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "name": "RepoFullNameSchema",
+      "module": "cat-harness/schemas/repo-full-name.ts",
+      "kind": "zod-scalar",
+      "doc": "A forge repository's full name, `owner/name`.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/role-graph.ts#ActorDef",
       "name": "ActorDef",
       "module": "cat-harness/schemas/role-graph.ts",
@@ -24055,7 +24314,7 @@
       "fields": [
         {
           "name": "instance",
-          "type": "z.string().min(1).optional()",
+          "type": "RepoFullNameSchema.optional()",
           "optional": true,
           "array": false
         },
@@ -24068,7 +24327,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -24986,7 +25247,7 @@
         },
         {
           "name": "draftedBy",
-          "type": "z.object({ kind: z.string(), id: z.string(), model: z.string().optional() }).strict().optional()",
+          "type": "z.object({ kind: z.string(), id: z.string(), model: ModelIdSchema.optional() }).strict().optional()",
           "optional": true,
           "array": false
         },
@@ -25016,6 +25277,7 @@
         "SUMMARY_STATUSES"
       ],
       "external": [
+        "ModelIdSchema",
         "z"
       ],
       "exported": true
@@ -29889,10 +30151,10 @@
       "fields": [
         {
           "name": "instance",
-          "type": "z.string().min(1).optional()",
+          "type": "RepoFullNameSchema.optional()",
           "optional": true,
           "array": false,
-          "doc": "Declared instance name. Absent means the citing instance's own."
+          "doc": "The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own."
         },
         {
           "name": "themeId",
@@ -29903,7 +30165,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -30856,6 +31120,94 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-run.ts#DownstreamState",
+      "name": "DownstreamState",
+      "module": "cat-harness/schemas/tool-run.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "fresh",
+        "stale",
+        "not-run",
+        "failed"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-run.ts#ToolRunRecord",
+      "name": "ToolRunRecord",
+      "module": "cat-harness/schemas/tool-run.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema",
+      "name": "ToolRunRecordSchema",
+      "module": "cat-harness/schemas/tool-run.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(TOOL_RUN_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tool",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The Tool node id whose run this records. @ref ToolDefinitionSchema"
+        },
+        {
+          "name": "target",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Which of the tool's outputs — one tool may keep several (LSI: one per graph)."
+        },
+        {
+          "name": "outcome",
+          "type": "z.enum([\"succeeded\", \"failed\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "inputFingerprint",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The tool's own fingerprint of the inputs the run read, or `unknown` when"
+        },
+        {
+          "name": "detail",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "For a failure: what went wrong, for a reader who has only the file."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "TOOL_RUN_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-types.ts#BeanIdSchema",
       "name": "BeanIdSchema",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -31397,20 +31749,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/tool-types.ts#RepoFullNameSchema",
-      "name": "RepoFullNameSchema",
-      "module": "cat-harness/schemas/tool-types.ts",
-      "kind": "zod-scalar",
-      "doc": "A forge repository's full name, `owner/name`.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/tool-types.ts#RepoPathSchema",
       "name": "RepoPathSchema",
       "module": "cat-harness/schemas/tool-types.ts",
@@ -31686,6 +32024,13 @@
           "doc": "Published artefacts this Tool is authoritative for. See"
         },
         {
+          "name": "downstream",
+          "type": "ToolDownstreamSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A downstream output this Tool keeps current, with its declared inputs."
+        },
+        {
           "name": "renders",
           "type": "z.array(z.string().min(1)).optional()",
           "optional": true,
@@ -31697,6 +32042,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/tool-types.ts#SkillNameSchema",
+        "cat-harness/schemas/tool.ts#ToolDownstreamSchema",
         "cat-harness/schemas/tool.ts#ToolId",
         "cat-harness/schemas/tool.ts#ToolInputSchema",
         "cat-harness/schemas/tool.ts#ToolInstallSchema",
@@ -31706,6 +32052,63 @@
         "cat-harness/schemas/tool.ts#ToolRequiresSchema",
         "cat-harness/schemas/tool.ts#ToolSelectionSchema"
       ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolDownstream",
+      "name": "ToolDownstream",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool.ts#ToolDownstreamSchema",
+      "name": "ToolDownstreamSchema",
+      "module": "cat-harness/schemas/tool.ts",
+      "kind": "zod-object",
+      "doc": "A DOWNSTREAM output this Tool keeps current, the inputs it is derived from,",
+      "fields": [
+        {
+          "name": "output",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the Tool keeps current — repo-relative for `checkout`, site-relative for `published`."
+        },
+        {
+          "name": "inputs",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "What it is derived from, so a reader can see what makes it stale."
+        },
+        {
+          "name": "judgedAt",
+          "type": "z.enum([\"checkout\", \"published\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verifier",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`published` only: the `publish-verify` verifier id that judges the output."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -35635,7 +36038,7 @@
         },
         {
           "name": "sources",
-          "type": "z .array( z.object({ title: z.string().min(1), instance: z.string().min(1).optional(), libraryId: z.string().min(1).opt…",
+          "type": "z .array( z.object({ title: z.string().min(1), instance: RepoFullNameSchema.optional(), libraryId: z.string().min(1).op…",
           "optional": true,
           "array": true,
           "doc": "The ingested documents this voice is derived from."
@@ -35687,6 +36090,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
         "cat-harness/schemas/voice-skill.ts#VoiceInstructionsSchema",
         "cat-harness/schemas/voice-skill.ts#VoiceSkillRuleSchema",
         "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
@@ -36029,6 +36433,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
         "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
         "cat-harness/schemas/voices.ts#VoiceRefSchema",
         "cat-harness/schemas/voices.ts#VoiceRuleSchema",
@@ -36111,10 +36516,10 @@
       "fields": [
         {
           "name": "instance",
-          "type": "z.string().min(1).optional()",
+          "type": "RepoFullNameSchema.optional()",
           "optional": true,
           "array": false,
-          "doc": "The declared name of the instance holding it. Absent means this one."
+          "doc": "The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one."
         },
         {
           "name": "voiceId",
@@ -36125,7 +36530,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -36272,10 +36679,10 @@
       "fields": [
         {
           "name": "instance",
-          "type": "z.string().min(1).optional()",
+          "type": "RepoFullNameSchema.optional()",
           "optional": true,
           "array": false,
-          "doc": "The DECLARED NAME of the instance holding the corpus, when it is not this"
+          "doc": "The instance holding the corpus, as its planned `owner/repo` (bean"
         },
         {
           "name": "libraryId",
@@ -36314,7 +36721,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -37019,6 +37428,7 @@
       "external": [
         "ADJUDICATION_SCHEMA_TAG",
         "ADJUDICATOR_KINDS",
+        "ModelIdSchema",
         "z"
       ],
       "exported": true
@@ -39239,6 +39649,13 @@
           "optional": true,
           "array": false,
           "doc": "The schema or standard that defines the term (rdfs:isDefinedBy)."
+        },
+        {
+          "name": "iri",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The concept's IRI when its defining vocabulary already mints one. The"
         },
         {
           "name": "source",
@@ -41729,6 +42146,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/cat-harness.ts#InstanceLocation",
+      "via": "livesAt",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/cat-harness.ts#LiquidPrefix",
       "via": "liquid",
       "kind": "field",
@@ -41801,6 +42226,14 @@
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullName",
+      "via": "repository",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration",
       "to": "cat-harness/schemas/sticky-contribution.ts#StickyContribution",
       "via": "stickies",
       "kind": "field",
@@ -41827,6 +42260,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
       "to": "cat-harness/schemas/cat-harness.ts#ExactVersionSchema",
       "via": "version",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/cat-harness.ts#InstanceLocationSchema",
+      "via": "livesAt",
       "kind": "field",
       "optional": true,
       "array": false
@@ -41886,6 +42327,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "repository",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema",
@@ -42004,6 +42453,22 @@
       "to": "cat-harness/schemas/kg-node.ts#KgNodeLabels",
       "via": "",
       "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#InstanceLocation",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullName",
+      "via": "repository",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#InstanceLocationSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "repository",
+      "kind": "field",
       "optional": false,
       "array": false
     },
@@ -43680,6 +44145,54 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/instance-repositories.ts#InstanceRepository",
+      "to": "cat-harness/schemas/cat-harness.ts#InstanceLocation",
+      "via": "livesAt",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/instance-repositories.ts#InstanceRepository",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullName",
+      "via": "repository",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/instance-repositories.ts#InstanceRepositoryMap",
+      "to": "cat-harness/schemas/instance-repositories.ts#InstanceRepository",
+      "via": "byName",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/instance-repositories.ts#InstanceRepositoryMap",
+      "to": "cat-harness/schemas/instance-repositories.ts#InstanceRepository",
+      "via": "byRepository",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/instance-repositories.ts#InstanceRepositoryMap",
+      "to": "cat-harness/schemas/instance-repositories.ts#InstanceRepository",
+      "via": "entries",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/instance-repositories.ts#InstanceRepositoryMap",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullName",
+      "via": "byRepository",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/intake.ts#IntakeFileSchema",
       "to": "cat-harness/schemas/archive-contents.ts#ArchiveEntrySchema",
       "via": "",
@@ -43739,6 +44252,14 @@
       "from": "cat-harness/schemas/interaction.ts#InteractionNodeSchema",
       "to": "cat-harness/schemas/interaction.ts#InteractionProfileSchema",
       "via": "users",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/kg-node.ts#AssetSourceSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "instance",
       "kind": "field",
       "optional": false,
       "array": false
@@ -44606,6 +45127,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/role-graph.ts#RoleRefSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "instance",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/role-graph.ts#RoleStack",
@@ -45536,6 +46065,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/theme.ts#ThemeRefSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "instance",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/theme.ts#ThemeSchema",
       "to": "cat-harness/schemas/theme.ts#PrintGeometrySchema",
       "via": "layouts",
@@ -45704,6 +46241,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/tool-run.ts#ToolRunRecordSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
+      "via": "tool",
+      "kind": "id-ref",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/tool-types.ts#DelimitedTextPathSchema",
       "to": "cat-harness/schemas/tool-types.ts#RepoPathSchema",
       "via": "",
@@ -45726,6 +46271,14 @@
       "kind": "field",
       "optional": false,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
+      "to": "cat-harness/schemas/tool.ts#ToolDownstreamSchema",
+      "via": "downstream",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/tool.ts#ToolDefinitionSchema",
@@ -46369,6 +46922,14 @@
     },
     {
       "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
       "to": "cat-harness/schemas/voice-skill.ts#VoiceInstructionsSchema",
       "via": "instructions",
       "kind": "field",
@@ -46473,6 +47034,14 @@
     },
     {
       "from": "cat-harness/schemas/voices.ts#VoiceProfileSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/voices.ts#VoiceProfileSchema",
       "to": "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
       "via": "activeIn",
       "kind": "field",
@@ -46512,6 +47081,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/voices.ts#VoiceRefSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "instance",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/voices.ts#VoiceRuleSchema",
       "to": "cat-harness/schemas/voices.ts#VoicePatternSchema",
       "via": "patterns",
@@ -46534,6 +47111,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/voices.ts#VoiceRuleSourceSchema",
+      "to": "cat-harness/schemas/repo-full-name.ts#RepoFullNameSchema",
+      "via": "instance",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/voices.ts#VoiceScope",
@@ -46886,6 +47471,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "iri",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",

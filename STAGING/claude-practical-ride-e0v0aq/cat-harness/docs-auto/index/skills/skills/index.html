@@ -185,7 +185,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <li><a href="../folio-assistant-sci-data-skills/">folio-assistant-sci-data-skills</a> <span class="p">folio-assistant-sci/skills/data</span> <span class="n">1</span></li>
 <li><a href="../folio-assistant-sci-lean-skills/">folio-assistant-sci-lean-skills</a> <span class="p">folio-assistant-sci/skills/lean</span> <span class="n">1</span></li>
 <li><a href="../large-datasets-skills/">large-datasets-skills</a> <span class="p">large-datasets/skills</span> <span class="n">3</span></li>
-<li><strong>skills</strong> <span class="p">cat-harness/skills</span> <span class="n">274</span></li>
+<li><strong>skills</strong> <span class="p">cat-harness/skills</span> <span class="n">276</span></li>
 <li><a href="../who-iris-skills/">who-iris-skills</a> <span class="p">who-iris/skills</span> <span class="n">1</span></li>
 </ul>
 
@@ -262,6 +262,70 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/agent-memory.md"><code>agent-memory</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/agent-memory.md</span></td>
+  <td>Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as th…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/communication-language.md"><code>communication-language</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/communication-language.md</span></td>
+  <td>Determine the language an agent SPEAKS IN — the language of a turn, as against the language of content.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/confirmation-waiver.md"><code>confirmation-waiver</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/confirmation-waiver.md</span></td>
+  <td>A human may waive a confirmation they are owed — for a session, for a process run, or until a stated time.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/decision-comparison.md"><code>decision-comparison</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/decision-comparison.md</span></td>
+  <td>Lay a decision out as a comparison before you ask it — what each option does, its pro, its con, what it changes downstream, and how reversible it is — in the prose that precedes the question, never inside the option lab…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md"><code>deletion-requires-confirmation</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md</span></td>
+  <td>An agent never removes a durable artefact on its own initiative.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/getting-started.md"><code>getting-started</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/getting-started.md</span></td>
+  <td>Triage what a person means when they ask to create a folio, and route them.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/interaction-modality.md"><code>interaction-modality</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/interaction-modality.md</span></td>
+  <td>Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice dura…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/repo-conversion.md"><code>repo-conversion</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/repo-conversion.md</span></td>
+  <td>Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/retry-backoff.md"><code>retry-backoff</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/retry-backoff.md</span></td>
+  <td>Every error gets a falling-off retry rate — each wait doubles, with jitter.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/symbiotic-interaction.md"><code>symbiotic-interaction</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/symbiotic-interaction.md</span></td>
+  <td>Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coacti…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/untrusted-input.md"><code>untrusted-input</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/untrusted-input.md</span></td>
+  <td>Keep attacker-controlled values out of program text — in GitHub Actions, in command lines, in anything that is parsed before it runs.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/unverified-constraints.md"><code>unverified-constraints</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/unverified-constraints.md</span></td>
+  <td>Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/conduct-core/where-does-this-go.md"><code>where-does-this-go</code></a><br><span class="p">cat-harness/skills/conduct/conduct-core/where-does-this-go.md</span></td>
+  <td>The router for filing decisions.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/security/injection-boundaries.md"><code>injection-boundaries</code></a><br><span class="p">cat-harness/skills/conduct/security/injection-boundaries.md</span></td>
+  <td>Where a value becomes program rather than data — workflow expressions, shell strings, and archive members.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/security/path-containment.md"><code>path-containment</code></a><br><span class="p">cat-harness/skills/conduct/security/path-containment.md</span></td>
+  <td>Turning a value from outside into a path.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/conduct/security/security.md"><code>security</code></a><br><span class="p">cat-harness/skills/conduct/security/security.md</span></td>
+  <td>The security sub-KG's entry point.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/content-author.md"><code>content-author</code></a><br><span class="p">cat-harness/skills/content-lifecycle/content-author.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
 </tr>
@@ -334,10 +398,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Settle a review that reached no mechanical or consensus agreement.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/agent-memory.md"><code>agent-memory</code></a><br><span class="p">cat-harness/skills/folio-core/agent-memory.md</span></td>
-  <td>Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as th…</td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/bean-blocking.md"><code>bean-blocking</code></a><br><span class="p">cat-harness/skills/folio-core/bean-blocking.md</span></td>
   <td>Default to non-blocking when updating a bean's status.</td>
 </tr>
@@ -348,14 +408,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/block-density.md"><code>block-density</code></a><br><span class="p">cat-harness/skills/folio-core/block-density.md</span></td>
   <td>Audits individual content blocks for single-topic coherence, length, and embedded tables.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/board-diagram-interchange.md"><code>board-diagram-interchange</code></a><br><span class="p">cat-harness/skills/folio-core/board-diagram-interchange.md</span></td>
-  <td>A board is a DIAGRAM OF a folio, not a container of one.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/board-windows.md"><code>board-windows</code></a><br><span class="p">cat-harness/skills/folio-core/board-windows.md</span></td>
-  <td>Everything starts as its avatar; opening projects a window onto the board.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/canonical-watcher.md"><code>canonical-watcher</code></a><br><span class="p">cat-harness/skills/folio-core/canonical-watcher.md</span></td>
@@ -370,16 +422,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>A red workflow looks exactly like a green one from inside a checkout.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/communication-language.md"><code>communication-language</code></a><br><span class="p">cat-harness/skills/folio-core/communication-language.md</span></td>
-  <td>Determine the language an agent SPEAKS IN — the language of a turn, as against the language of content.</td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/compute-integration-watcher.md"><code>compute-integration-watcher</code></a><br><span class="p">cat-harness/skills/folio-core/compute-integration-watcher.md</span></td>
   <td>Cross-layer wiring auditor — watches for newly-landed formal/analytic improvements (proofs, propositions, lemmas, axiom→theorem upgrades, witness data) on the default branch AND on open PRs, and checks whether each one…</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/confirmation-waiver.md"><code>confirmation-waiver</code></a><br><span class="p">cat-harness/skills/folio-core/confirmation-waiver.md</span></td>
-  <td>A human may waive a confirmation they are owed — for a session, for a process run, or until a stated time.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/content-graph.md"><code>content-graph</code></a><br><span class="p">cat-harness/skills/folio-core/content-graph.md</span></td>
@@ -406,18 +450,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Record why a decision was made, or why a finding in it was left.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-comparison.md"><code>decision-comparison</code></a><br><span class="p">cat-harness/skills/folio-core/decision-comparison.md</span></td>
-  <td>Lay a decision out as a comparison before you ask it — what each option does, its pro, its con, what it changes downstream, and how reversible it is — in the prose that precedes the question, never inside the option lab…</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-methodology-selector.md"><code>decision-methodology-selector</code></a><br><span class="p">cat-harness/skills/folio-core/decision-methodology-selector.md</span></td>
-  <td>Given a decision context, select the applicable methodology from the methodology graph.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/deletion-requires-confirmation.md"><code>deletion-requires-confirmation</code></a><br><span class="p">cat-harness/skills/folio-core/deletion-requires-confirmation.md</span></td>
-  <td>An agent never removes a durable artefact on its own initiative.</td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/delivery-summary.md"><code>delivery-summary</code></a><br><span class="p">cat-harness/skills/folio-core/delivery-summary.md</span></td>
   <td>Post-delivery summary with server restart command and viewer links</td>
 </tr>
@@ -440,14 +472,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/dispatch-agent.md"><code>dispatch-agent</code></a><br><span class="p">cat-harness/skills/folio-core/dispatch-agent.md</span></td>
   <td>Dispatch one or more background sub-agents against parallel research/build fronts with a STANDARDIZED live progress contract, and monitor them on a 2-minute heartbeat.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/docs-auto.md"><code>docs-auto</code></a><br><span class="p">cat-harness/skills/folio-core/docs-auto.md</span></td>
-  <td>Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating…</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/docs-generation.md"><code>docs-generation</code></a><br><span class="p">cat-harness/skills/folio-core/docs-generation.md</span></td>
-  <td>Generate and deploy documentation artifacts: schema docs (TypeDoc), formal-layer API docs, dependency graphs, schema manifests, and per-paper HTML/PDF/Markdown outputs.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/editor.md"><code>editor</code></a><br><span class="p">cat-harness/skills/folio-core/editor.md</span></td>
@@ -474,10 +498,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>You have a fix.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/getting-started.md"><code>getting-started</code></a><br><span class="p">cat-harness/skills/folio-core/getting-started.md</span></td>
-  <td>Triage what a person means when they ask to create a folio, and route them.</td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/github-state-inspection.md"><code>github-state-inspection</code></a><br><span class="p">cat-harness/skills/folio-core/github-state-inspection.md</span></td>
   <td>Answer questions about GitHub-hosted state — is a page published, where does it live, did CI pass, does a branch exist — by reading the ref or the API, never by composing a URL or fetching one.</td>
 </tr>
@@ -486,20 +506,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Cold start, then review a time window of activity — sibling sessions, the work plan, issues, change proposals, branches, CI — and prioritise what it finds against goals stated in the owner's words.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/harness-tiles.md"><code>harness-tiles</code></a><br><span class="p">cat-harness/skills/folio-core/harness-tiles.md</span></td>
-  <td>A tile is a function of the harness watching a directory, not of nodes.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/html-rendering-qc.md"><code>html-rendering-qc</code></a><br><span class="p">cat-harness/skills/folio-core/html-rendering-qc.md</span></td>
-  <td><span class="none">no description in the artefact</span></td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/idle-backlog.md"><code>idle-backlog</code></a><br><span class="p">cat-harness/skills/folio-core/idle-backlog.md</span></td>
   <td>While idle or waiting on a long-running async task (a build, a long compute script, a CI run, a background agent), pull the applicable backlog in priority order and work non-conflicting items instead of stalling.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/incremental-render.md"><code>incremental-render</code></a><br><span class="p">cat-harness/skills/folio-core/incremental-render.md</span></td>
-  <td>Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-render…</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/integration-audit.md"><code>integration-audit</code></a><br><span class="p">cat-harness/skills/folio-core/integration-audit.md</span></td>
@@ -518,24 +526,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Abstract parent skill for domain-specific **integration watchers**.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/interaction-modality.md"><code>interaction-modality</code></a><br><span class="p">cat-harness/skills/folio-core/interaction-modality.md</span></td>
-  <td>Establish how to talk to the person in front of you before deciding what to say — audio, ordinary chat, selectable options for limited hand function, large-type for low vision, plain language — and hold that choice dura…</td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/issue-working.md"><code>issue-working</code></a><br><span class="p">cat-harness/skills/folio-core/issue-working.md</span></td>
   <td>Working a tracked issue — announce the branch when you create it rather than when you finish, and re-check the issue for new AND edited comments while you work.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/kg-viewer.md"><code>kg-viewer</code></a><br><span class="p">cat-harness/skills/folio-core/kg-viewer.md</span></td>
-  <td>Render a published knowledge-graph document so a person can read it — faceted index, node detail, followable edges, and an honest account of what the document is missing.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/liquid-templates.md"><code>liquid-templates</code></a><br><span class="p">cat-harness/skills/folio-core/liquid-templates.md</span></td>
-  <td>Authoring a Liquid template in this repository — a README template the <code>subgraph-readmes</code> Tool renders with liquidjs, or a Jekyll include on the just-the-docs site.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/markdown-render-check.md"><code>markdown-render-check</code></a><br><span class="p">cat-harness/skills/folio-core/markdown-render-check.md</span></td>
-  <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/mcp-assembly.md"><code>mcp-assembly</code></a><br><span class="p">cat-harness/skills/folio-core/mcp-assembly.md</span></td>
@@ -552,10 +544,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/md-authoring.md"><code>md-authoring</code></a><br><span class="p">cat-harness/skills/folio-core/md-authoring.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/methodology-adoption.md"><code>methodology-adoption</code></a><br><span class="p">cat-harness/skills/folio-core/methodology-adoption.md</span></td>
-  <td>How a named external methodology enters the knowledge graph, and how an agent picks which one applies.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/milnor-exposition-standard.md"><code>milnor-exposition-standard</code></a><br><span class="p">cat-harness/skills/folio-core/milnor-exposition-standard.md</span></td>
@@ -626,32 +614,12 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/readme-sections.md"><code>readme-sections</code></a><br><span class="p">cat-harness/skills/folio-core/readme-sections.md</span></td>
-  <td>A folio's README is the author's file; the platform owns only the marked regions it generates.</td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/related-work-coordination.md"><code>related-work-coordination</code></a><br><span class="p">cat-harness/skills/folio-core/related-work-coordination.md</span></td>
   <td>Before new work takes shape, find the work it touches.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/render-logging.md"><code>render-logging</code></a><br><span class="p">cat-harness/skills/folio-core/render-logging.md</span></td>
-  <td>Log every render to the publish branch — what was published, removed, restored or deliberately retained — to an append-only log that lives beside what it describes.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/render-order.md"><code>render-order</code></a><br><span class="p">cat-harness/skills/folio-core/render-order.md</span></td>
-  <td><span class="none">no description in the artefact</span></td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/rendered-verification.md"><code>rendered-verification</code></a><br><span class="p">cat-harness/skills/folio-core/rendered-verification.md</span></td>
   <td>Confirm a UI change by LOOKING at it in a browser and sending the screenshots to the author, rather than describing it.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/repo-conversion.md"><code>repo-conversion</code></a><br><span class="p">cat-harness/skills/folio-core/repo-conversion.md</span></td>
-  <td>Lay folio-assistant over a repository that already exists, without losing or silently moving what is in it.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/retry-backoff.md"><code>retry-backoff</code></a><br><span class="p">cat-harness/skills/folio-core/retry-backoff.md</span></td>
-  <td>Every error gets a falling-off retry rate — each wait doubles, with jitter.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/review-comments.md"><code>review-comments</code></a><br><span class="p">cat-harness/skills/folio-core/review-comments.md</span></td>
@@ -662,15 +630,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>The review page's heat map: a section-by-metric table that tells a reviewer of a large document where to look first.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/role-model.md"><code>role-model</code></a><br><span class="p">cat-harness/skills/folio-core/role-model.md</span></td>
-  <td>Actors, roles and skills — who performs a BPMN task, under which swimlane, with which skills.</td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/scientific-accuracy.md"><code>scientific-accuracy</code></a><br><span class="p">cat-harness/skills/folio-core/scientific-accuracy.md</span></td>
-  <td><span class="none">no description in the artefact</span></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/serving-renderings.md"><code>serving-renderings</code></a><br><span class="p">cat-harness/skills/folio-core/serving-renderings.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
@@ -690,32 +650,12 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Decide whether to run parallel agents at all, and if so how many, at which model level, against which decomposition.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/swimlane-glossary.md"><code>swimlane-glossary</code></a><br><span class="p">cat-harness/skills/folio-core/swimlane-glossary.md</span></td>
-  <td><span class="none">no description in the artefact</span></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/swot-analysis.md"><code>swot-analysis</code></a><br><span class="p">cat-harness/skills/folio-core/swot-analysis.md</span></td>
-  <td>Running a SWOT situation analysis — the four activities of <code>swot-analysis.bpmn</code>, what each step must produce, and the one thing the technique must never be used for.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/symbiotic-interaction.md"><code>symbiotic-interaction</code></a><br><span class="p">cat-harness/skills/folio-core/symbiotic-interaction.md</span></td>
-  <td>Recognize and respond to the three epistemic registers of author input — Socratic steer (known-answer correction), honest gap (flagged unknown), and intuition seed (tenuous cross-domain identification) — with the coacti…</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/task-authorization.md"><code>task-authorization</code></a><br><span class="p">cat-harness/skills/folio-core/task-authorization.md</span></td>
-  <td>The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content…</td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/technical-documentation.md"><code>technical-documentation</code></a><br><span class="p">cat-harness/skills/folio-core/technical-documentation.md</span></td>
   <td>Write and review technical documentation of standards, software and knowledge assets as an SDO writes.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/test-engineer.md"><code>test-engineer</code></a><br><span class="p">cat-harness/skills/folio-core/test-engineer.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/theme-ui-review.md"><code>theme-ui-review</code></a><br><span class="p">cat-harness/skills/folio-core/theme-ui-review.md</span></td>
-  <td>Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/todo-manager.md"><code>todo-manager</code></a><br><span class="p">cat-harness/skills/folio-core/todo-manager.md</span></td>
@@ -730,20 +670,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Say which bean you are on, every turn — the opening and closing report formats, the rules that make a report worth reading (two sentences and a link per bean, every mention), and the STRICT rule that the &quot;next&quot; line is…</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/ui-accessibility.md"><code>ui-accessibility</code></a><br><span class="p">cat-harness/skills/folio-core/ui-accessibility.md</span></td>
-  <td>Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit.</td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/untainted-verification.md"><code>untainted-verification</code></a><br><span class="p">cat-harness/skills/folio-core/untainted-verification.md</span></td>
   <td>The party that produced an artefact does not write the verdict on it.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/untrusted-input.md"><code>untrusted-input</code></a><br><span class="p">cat-harness/skills/folio-core/untrusted-input.md</span></td>
-  <td>Keep attacker-controlled values out of program text — in GitHub Actions, in command lines, in anything that is parsed before it runs.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/unverified-constraints.md"><code>unverified-constraints</code></a><br><span class="p">cat-harness/skills/folio-core/unverified-constraints.md</span></td>
-  <td>Never encode a constraint you have not verified — a rule that refuses a working setup is worse than no rule.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/upload-routes.md"><code>upload-routes</code></a><br><span class="p">cat-harness/skills/folio-core/upload-routes.md</span></td>
@@ -780,14 +708,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/where-a-proposal-goes.md"><code>where-a-proposal-goes</code></a><br><span class="p">cat-harness/skills/folio-core/where-a-proposal-goes.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/where-does-this-go.md"><code>where-does-this-go</code></a><br><span class="p">cat-harness/skills/folio-core/where-does-this-go.md</span></td>
-  <td>The router for filing decisions.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/wireframe-design-review.md"><code>wireframe-design-review</code></a><br><span class="p">cat-harness/skills/folio-core/wireframe-design-review.md</span></td>
-  <td>Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both vie…</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-document-adapter/document-authoring.md"><code>document-authoring</code></a><br><span class="p">cat-harness/skills/folio-document-adapter/document-authoring.md</span></td>
@@ -1094,6 +1014,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Adding a skill is never a one-file change.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/skill-voice-review.md"><code>skill-voice-review</code></a><br><span class="p">cat-harness/skills/kg/kg-core/skill-voice-review.md</span></td>
+  <td>Reviews a skill against a voice that judges skills — the base <code>agent-skill-authoring</code> voice or a vendor override such as Claude's, Gemini CLI's or OpenAI's — rule by rule, with each rule's citation open, and records the…</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/kg/kg-core/surprise-to-corpus.md"><code>surprise-to-corpus</code></a><br><span class="p">cat-harness/skills/kg/kg-core/surprise-to-corpus.md</span></td>
   <td>What was unexpected in that task, and does it belong in the corpus? Logical surprise is the detectable kind, recurrence is the filter that stops this generating noise every turn, and the agent PROMPTS — it never writes…</td>
 </tr>
@@ -1178,12 +1102,92 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Translation lifecycle management for folio content.</td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/upload-naming.md"><code>upload-naming</code></a><br><span class="p">cat-harness/skills/library/library-core/upload-naming.md</span></td>
+  <td>What an ingested file may be CALLED.</td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/uploads-watch.md"><code>uploads-watch</code></a><br><span class="p">cat-harness/skills/library/library-core/uploads-watch.md</span></td>
   <td>Notice what has landed in the acquisition queue, and tell an arrival from a backlog.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/raci/raci.md"><code>raci</code></a><br><span class="p">cat-harness/skills/raci/raci.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/decision-methodology-selector.md"><code>decision-methodology-selector</code></a><br><span class="p">cat-harness/skills/process/process-core/decision-methodology-selector.md</span></td>
+  <td>Given a decision context, select the applicable methodology from the methodology graph.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/methodology-adoption.md"><code>methodology-adoption</code></a><br><span class="p">cat-harness/skills/process/process-core/methodology-adoption.md</span></td>
+  <td>How a named external methodology enters the knowledge graph, and how an agent picks which one applies.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/role-model.md"><code>role-model</code></a><br><span class="p">cat-harness/skills/process/process-core/role-model.md</span></td>
+  <td>Actors, roles and skills — who performs a BPMN task, under which swimlane, with which skills.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/swimlane-glossary.md"><code>swimlane-glossary</code></a><br><span class="p">cat-harness/skills/process/process-core/swimlane-glossary.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/swot-analysis.md"><code>swot-analysis</code></a><br><span class="p">cat-harness/skills/process/process-core/swot-analysis.md</span></td>
+  <td>Running a SWOT situation analysis — the four activities of <code>swot-analysis.bpmn</code>, what each step must produce, and the one thing the technique must never be used for.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/task-authorization.md"><code>task-authorization</code></a><br><span class="p">cat-harness/skills/process/process-core/task-authorization.md</span></td>
+  <td>The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/raci/raci.md"><code>raci</code></a><br><span class="p">cat-harness/skills/process/raci/raci.md</span></td>
   <td>RACI over this repository's processes — who is Responsible, Accountable, Consulted and Informed for each activity.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/bpmn-authoring.md"><code>bpmn-authoring</code></a><br><span class="p">cat-harness/skills/process/workflow/bpmn-authoring.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/bpmn-processes.md"><code>bpmn-processes</code></a><br><span class="p">cat-harness/skills/process/workflow/bpmn-processes.md</span></td>
+  <td>Every process here is BPMN, the diagrams are executable, and the base processes are strict.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/branch-freshness.md"><code>branch-freshness</code></a><br><span class="p">cat-harness/skills/process/workflow/branch-freshness.md</span></td>
+  <td>Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/code-review-process.md"><code>code-review-process</code></a><br><span class="p">cat-harness/skills/process/workflow/code-review-process.md</span></td>
+  <td>Where code review sits in the release lifecycle.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/deterministic-and-agentic.md"><code>deterministic-and-agentic</code></a><br><span class="p">cat-harness/skills/process/workflow/deterministic-and-agentic.md</span></td>
+  <td>Workflow processing is a SPECTRUM, not a switch.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/dmn-authoring.md"><code>dmn-authoring</code></a><br><span class="p">cat-harness/skills/process/workflow/dmn-authoring.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/process-state.md"><code>process-state</code></a><br><span class="p">cat-harness/skills/process/workflow/process-state.md</span></td>
+  <td>Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/release-epic-planning.md"><code>release-epic-planning</code></a><br><span class="p">cat-harness/skills/process/workflow/release-epic-planning.md</span></td>
+  <td>Plan and track releases using bean epics.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/release-lifecycle.md"><code>release-lifecycle</code></a><br><span class="p">cat-harness/skills/process/workflow/release-lifecycle.md</span></td>
+  <td>Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/session-context.md"><code>session-context</code></a><br><span class="p">cat-harness/skills/process/workflow/session-context.md</span></td>
+  <td>What a state machine tracks across a session, as against one process instance.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/session-state-machine.md"><code>session-state-machine</code></a><br><span class="p">cat-harness/skills/process/workflow/session-state-machine.md</span></td>
+  <td>An agent PLAYING a state machine rather than an engine executing one.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/specification-compiled-agents.md"><code>specification-compiled-agents</code></a><br><span class="p">cat-harness/skills/process/workflow/specification-compiled-agents.md</span></td>
+  <td>When a diagram already says what the process is, the model should not be planning it.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/workflow-state.md"><code>workflow-state</code></a><br><span class="p">cat-harness/skills/process/workflow/workflow-state.md</span></td>
+  <td>Where a running process keeps what it knows, and which store answers which question.</td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md"><code>scientific-critical-thinking</code></a><br><span class="p">cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md</span></td>
@@ -1194,104 +1198,108 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <td>Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/security/injection-boundaries.md"><code>injection-boundaries</code></a><br><span class="p">cat-harness/skills/security/injection-boundaries.md</span></td>
-  <td>Where a value becomes program rather than data — workflow expressions, shell strings, and archive members.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/security/path-containment.md"><code>path-containment</code></a><br><span class="p">cat-harness/skills/security/path-containment.md</span></td>
-  <td>Turning a value from outside into a path.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/security/security.md"><code>security</code></a><br><span class="p">cat-harness/skills/security/security.md</span></td>
-  <td>The security sub-KG's entry point.</td>
-</tr>
-<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/spec-kit/spec-kit.md"><code>spec-kit</code></a><br><span class="p">cat-harness/skills/spec-kit/spec-kit.md</span></td>
   <td>Spec-driven development, adopted whole: define what and why before deciding how, and do not develop before a spec exists.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/create-sticky-note.md"><code>create-sticky-note</code></a><br><span class="p">cat-harness/skills/theming/create-sticky-note.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/create-sticky-note.md"><code>create-sticky-note</code></a><br><span class="p">cat-harness/skills/ui/theming/create-sticky-note.md</span></td>
   <td>Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/site-presentation-assets.md"><code>site-presentation-assets</code></a><br><span class="p">cat-harness/skills/theming/site-presentation-assets.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/site-presentation-assets.md"><code>site-presentation-assets</code></a><br><span class="p">cat-harness/skills/ui/theming/site-presentation-assets.md</span></td>
   <td>A visual fact — a colour, a glyph, a theme — lives in a graph node, and the stylesheet the site serves is a rendering of it.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-art-intake.md"><code>theme-art-intake</code></a><br><span class="p">cat-harness/skills/theming/theme-art-intake.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-art-intake.md"><code>theme-art-intake</code></a><br><span class="p">cat-harness/skills/ui/theming/theme-art-intake.md</span></td>
   <td>Accept or refuse a set of three theme/avatar layouts arriving through document ingestion, with a named reason for every refusal.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-artefacts.md"><code>theme-artefacts</code></a><br><span class="p">cat-harness/skills/theming/theme-artefacts.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-artefacts.md"><code>theme-artefacts</code></a><br><span class="p">cat-harness/skills/ui/theming/theme-artefacts.md</span></td>
   <td>The per-surface SPECIALISATION layer — sticky, landing board, docs background, navbar avatar.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-contrast.md"><code>theme-contrast</code></a><br><span class="p">cat-harness/skills/theming/theme-contrast.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-contrast.md"><code>theme-contrast</code></a><br><span class="p">cat-harness/skills/ui/theming/theme-contrast.md</span></td>
   <td>Why every scrim is measured over PURE BLACK rather than over the art actually in use, what the AAA floor is, and why the high-contrast pair declares no backdrop at all.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-declaration.md"><code>theme-declaration</code></a><br><span class="p">cat-harness/skills/theming/theme-declaration.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-declaration.md"><code>theme-declaration</code></a><br><span class="p">cat-harness/skills/ui/theming/theme-declaration.md</span></td>
   <td>What a theme IS as data — the palette, the three required layouts, and the per-image regions (<code>textRegion</code>, <code>avatarRegion</code>).</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theme-generation.md"><code>theme-generation</code></a><br><span class="p">cat-harness/skills/theming/theme-generation.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theme-generation.md"><code>theme-generation</code></a><br><span class="p">cat-harness/skills/ui/theming/theme-generation.md</span></td>
   <td>Turning a declared theme into CSS — <code>bun run themes:css</code> — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/theming.md"><code>theming</code></a><br><span class="p">cat-harness/skills/theming/theming.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/theming.md"><code>theming</code></a><br><span class="p">cat-harness/skills/ui/theming/theming.md</span></td>
   <td>The map of this subgraph: theming is split on PIPELINE STAGE first — intake, declaration, generation, contrast — with producer/consumer as the direction each stage faces, and per-artefact specialisation last.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/bpmn-authoring.md"><code>bpmn-authoring</code></a><br><span class="p">cat-harness/skills/workflow/bpmn-authoring.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/board-diagram-interchange.md"><code>board-diagram-interchange</code></a><br><span class="p">cat-harness/skills/ui/ui-core/board-diagram-interchange.md</span></td>
+  <td>A board is a DIAGRAM OF a folio, not a container of one.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/board-windows.md"><code>board-windows</code></a><br><span class="p">cat-harness/skills/ui/ui-core/board-windows.md</span></td>
+  <td>Everything starts as its avatar; opening projects a window onto the board.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/docs-auto.md"><code>docs-auto</code></a><br><span class="p">cat-harness/skills/ui/ui-core/docs-auto.md</span></td>
+  <td>Derived documentation for a sub-graph — what the handler emits, what it deliberately does not, and the obligation on whoever authors a harness's docs: summarise what the index lists, by reusing it rather than restating…</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/docs-generation.md"><code>docs-generation</code></a><br><span class="p">cat-harness/skills/ui/ui-core/docs-generation.md</span></td>
+  <td>Generate and deploy documentation artifacts: schema docs (TypeDoc), formal-layer API docs, dependency graphs, schema manifests, and per-paper HTML/PDF/Markdown outputs.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/harness-tiles.md"><code>harness-tiles</code></a><br><span class="p">cat-harness/skills/ui/ui-core/harness-tiles.md</span></td>
+  <td>A tile is a function of the harness watching a directory, not of nodes.</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/html-rendering-qc.md"><code>html-rendering-qc</code></a><br><span class="p">cat-harness/skills/ui/ui-core/html-rendering-qc.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/bpmn-processes.md"><code>bpmn-processes</code></a><br><span class="p">cat-harness/skills/workflow/bpmn-processes.md</span></td>
-  <td>Every process here is BPMN, the diagrams are executable, and the base processes are strict.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/incremental-render.md"><code>incremental-render</code></a><br><span class="p">cat-harness/skills/ui/ui-core/incremental-render.md</span></td>
+  <td>Rendering only what changed — seeding a build from a previous render, the two edges that decide what must re-run, why a step declares GRAPH KINDS rather than paths, and the rule that could-not-determine always re-render…</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/branch-freshness.md"><code>branch-freshness</code></a><br><span class="p">cat-harness/skills/workflow/branch-freshness.md</span></td>
-  <td>Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/kg-viewer.md"><code>kg-viewer</code></a><br><span class="p">cat-harness/skills/ui/ui-core/kg-viewer.md</span></td>
+  <td>Render a published knowledge-graph document so a person can read it — faceted index, node detail, followable edges, and an honest account of what the document is missing.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/code-review-process.md"><code>code-review-process</code></a><br><span class="p">cat-harness/skills/workflow/code-review-process.md</span></td>
-  <td>Where code review sits in the release lifecycle.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/liquid-templates.md"><code>liquid-templates</code></a><br><span class="p">cat-harness/skills/ui/ui-core/liquid-templates.md</span></td>
+  <td>Authoring a Liquid template in this repository — a README template the <code>subgraph-readmes</code> Tool renders with liquidjs, or a Jekyll include on the just-the-docs site.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/deterministic-and-agentic.md"><code>deterministic-and-agentic</code></a><br><span class="p">cat-harness/skills/workflow/deterministic-and-agentic.md</span></td>
-  <td>Workflow processing is a SPECTRUM, not a switch.</td>
-</tr>
-<tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/dmn-authoring.md"><code>dmn-authoring</code></a><br><span class="p">cat-harness/skills/workflow/dmn-authoring.md</span></td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/markdown-render-check.md"><code>markdown-render-check</code></a><br><span class="p">cat-harness/skills/ui/ui-core/markdown-render-check.md</span></td>
   <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/process-state.md"><code>process-state</code></a><br><span class="p">cat-harness/skills/workflow/process-state.md</span></td>
-  <td>Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/readme-sections.md"><code>readme-sections</code></a><br><span class="p">cat-harness/skills/ui/ui-core/readme-sections.md</span></td>
+  <td>A folio's README is the author's file; the platform owns only the marked regions it generates.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/release-epic-planning.md"><code>release-epic-planning</code></a><br><span class="p">cat-harness/skills/workflow/release-epic-planning.md</span></td>
-  <td>Plan and track releases using bean epics.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/render-logging.md"><code>render-logging</code></a><br><span class="p">cat-harness/skills/ui/ui-core/render-logging.md</span></td>
+  <td>Log every render to the publish branch — what was published, removed, restored or deliberately retained — to an append-only log that lives beside what it describes.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/release-lifecycle.md"><code>release-lifecycle</code></a><br><span class="p">cat-harness/skills/workflow/release-lifecycle.md</span></td>
-  <td>Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/render-order.md"><code>render-order</code></a><br><span class="p">cat-harness/skills/ui/ui-core/render-order.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-context.md"><code>session-context</code></a><br><span class="p">cat-harness/skills/workflow/session-context.md</span></td>
-  <td>What a state machine tracks across a session, as against one process instance.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/serving-renderings.md"><code>serving-renderings</code></a><br><span class="p">cat-harness/skills/ui/ui-core/serving-renderings.md</span></td>
+  <td><span class="none">no description in the artefact</span></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-state-machine.md"><code>session-state-machine</code></a><br><span class="p">cat-harness/skills/workflow/session-state-machine.md</span></td>
-  <td>An agent PLAYING a state machine rather than an engine executing one.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/theme-ui-review.md"><code>theme-ui-review</code></a><br><span class="p">cat-harness/skills/ui/ui-core/theme-ui-review.md</span></td>
+  <td>Review graphical assets AS THEY ARE INGESTED, in the context of the website or app design they are for — accessibility, branding, languages — to determine what the assets and the UI will be.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/specification-compiled-agents.md"><code>specification-compiled-agents</code></a><br><span class="p">cat-harness/skills/workflow/specification-compiled-agents.md</span></td>
-  <td>When a diagram already says what the process is, the model should not be planning it.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/ui-accessibility.md"><code>ui-accessibility</code></a><br><span class="p">cat-harness/skills/ui/ui-core/ui-accessibility.md</span></td>
+  <td>Every user interface this project produces must be operable by keyboard, legible at measured contrast, and comfortable to hit.</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/workflow-state.md"><code>workflow-state</code></a><br><span class="p">cat-harness/skills/workflow/workflow-state.md</span></td>
-  <td>Where a running process keeps what it knows, and which store answers which question.</td>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/wireframe-design-review.md"><code>wireframe-design-review</code></a><br><span class="p">cat-harness/skills/ui/ui-core/wireframe-design-review.md</span></td>
+  <td>Design a user interface (a page, a visualiser, a navbar) by the WireGen methodology: a written design intent, at least two mid-fidelity HTML candidates, each with a web AND a mobile layout, mechanical checks at both vie…</td>
 </tr>
 </tbody>
 </table>

@@ -146,7 +146,8 @@
                 "properties": {
                   "instance": {
                     "type": "string",
-                    "minLength": 1
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                    "description": "A forge repository's full name, owner/name"
                   },
                   "path": {
                     "type": "string",
@@ -202,6 +203,31 @@
               "launcher"
             ]
           }
+        },
+        "repository": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+          "description": "A forge repository's full name, owner/name"
+        },
+        "livesAt": {
+          "type": "object",
+          "properties": {
+            "repository": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+              "description": "A forge repository's full name, owner/name"
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "^[A-Za-z0-9._-]+(?:\\/[A-Za-z0-9._-]+)*$"
+            }
+          },
+          "required": [
+            "repository",
+            "path"
+          ],
+          "additionalProperties": false
         },
         "stub": {
           "type": "string",
@@ -379,7 +405,8 @@
                               "properties": {
                                 "instance": {
                                   "type": "string",
-                                  "minLength": 1
+                                  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                                  "description": "A forge repository's full name, owner/name"
                                 },
                                 "themeId": {
                                   "type": "string",
@@ -463,7 +490,8 @@
                     "properties": {
                       "instance": {
                         "type": "string",
-                        "minLength": 1
+                        "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                        "description": "A forge repository's full name, owner/name"
                       },
                       "themeId": {
                         "type": "string",
@@ -510,6 +538,9 @@
               "instanceRoot": {
                 "type": "boolean"
               },
+              "kindRouteRedirect": {
+                "type": "boolean"
+              },
               "composed": {
                 "type": "boolean"
               },
@@ -518,7 +549,8 @@
                 "properties": {
                   "instance": {
                     "type": "string",
-                    "minLength": 1
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                    "description": "A forge repository's full name, owner/name"
                   },
                   "themeId": {
                     "type": "string",
@@ -638,7 +670,8 @@
                 "properties": {
                   "instance": {
                     "type": "string",
-                    "minLength": 1
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                    "description": "A forge repository's full name, owner/name"
                   },
                   "themeId": {
                     "type": "string",
@@ -842,8 +875,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-practical-ride-e0v0aq/cat-harness.jsonld",
   "staging": {
     "branch": "claude/practical-ride-e0v0aq",
-    "sha": "39aaf886e2facd84bf18096744eefd884158ea3d",
+    "sha": "8d8d80d1e16d10a6147786c2e673e2c6d0a6c839",
     "pr": "1615/merge",
-    "run": "36750168277"
+    "run": "36788419007"
   }
 }

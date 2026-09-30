@@ -1829,7 +1829,7 @@ a.fa-lang-tab:hover:not(.is-current) {
  *
  * `#cbd1d9` is not a literal in the source: the tab was `color:#94a3b8` with
  * `opacity:0.4`, and 0.4 of #94a3b8 over the bar's background is #cbd1d9. That
- * is the trap `skills/folio-core/ui-accessibility.md` names by name — opacity
+ * is the trap `skills/ui/ui-core/ui-accessibility.md` names by name — opacity
  * blends text toward its background and quietly drops the ratio — and it is
  * why the bean's own note misattributed the failure to the available-locale
  * colour. There is no `opacity` on text here any more; a dimmer tab is its own
@@ -3315,6 +3315,20 @@ a.fa-tile[data-fa-readonly]:focus-visible {
  * reads as a rendering fault rather than as "medium". */
 .fa-sticky-p-medium   { border-left-color: var(--fa-sticky-accent, rgba(128, 128, 128, 0.7)); }
 .fa-sticky-p-low      { border-left-color: var(--fa-sticky-edge, rgba(128, 128, 128, 0.35)); }
+
+/* A THEMED CARD WITH NO PRIORITY carries its accent as a thin TOP band.
+ * Owner ruling 2026-09-30 (bean `v8n5`): the accent reached a card only
+ * through `.fa-sticky-p-medium`, so a landing card, which has no priority,
+ * showed its theme as white with grey edges, and the IRIS blue appeared
+ * nowhere on the who-iris card. Generic by construction: it keys on the
+ * theme ATTRIBUTE, not on any theme's name.
+ *
+ * The TOP edge, not the left. The left edge is the priority channel, and
+ * medium already paints the accent there, so an accent left edge on a card
+ * with no priority would read as "medium". Two signals, two edges. */
+.fa-sticky[data-fa-sticky-theme]:not([class*="fa-sticky-p-"]) {
+  border-top: 3px solid var(--fa-sticky-accent, var(--fa-sticky-edge, rgba(128, 128, 128, 0.45)));
+}
 
 .fa-sticky-head {
   display: flex;

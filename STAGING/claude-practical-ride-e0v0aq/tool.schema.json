@@ -257,6 +257,39 @@
             ]
           }
         },
+        "downstream": {
+          "type": "object",
+          "properties": {
+            "output": {
+              "type": "string",
+              "minLength": 1
+            },
+            "inputs": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "judgedAt": {
+              "type": "string",
+              "enum": [
+                "checkout",
+                "published"
+              ]
+            },
+            "verifier": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "output",
+            "inputs",
+            "judgedAt"
+          ]
+        },
         "renders": {
           "type": "array",
           "items": {
@@ -281,8 +314,8 @@
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "claude/practical-ride-e0v0aq",
-    "sha": "39aaf886e2facd84bf18096744eefd884158ea3d",
+    "sha": "8d8d80d1e16d10a6147786c2e673e2c6d0a6c839",
     "pr": "1615/merge",
-    "run": "36750168277"
+    "run": "36788419007"
   }
 }

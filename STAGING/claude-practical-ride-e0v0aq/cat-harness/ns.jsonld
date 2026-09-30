@@ -6,8 +6,8 @@
     "skos": "http://www.w3.org/2004/02/skos/core#",
     "dcterms": "http://purl.org/dc/terms/",
     "bootstrap": "https://litlfred.github.io/bootstrap/0.1.0/ns#",
-    "cat-harness": "https://litlfred.github.io/folio-assistant/cat-harness/ns#",
-    "folio-assistant-core": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#",
+    "cat-harness": "https://litlfred.github.io/cat-harness/0.1.0/ns#",
+    "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#",
     "label": "rdfs:label",
     "comment": "rdfs:comment",
     "isDefinedBy": {
@@ -38,9 +38,9 @@
       "@id": "dcterms:isReplacedBy",
       "@type": "@id"
     },
-    "layer": "https://litlfred.github.io/folio-assistant/cat-harness/ns#layer"
+    "layer": "https://litlfred.github.io/cat-harness/0.1.0/ns#layer"
   },
-  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+  "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns",
   "@type": [
     "owl:Ontology",
     "skos:ConceptScheme"
@@ -59,8 +59,8 @@
       "prefLabel": "FshGutsNode",
       "definition": "One item in the trashcan: something deprecated or thrown away, kept and addressable rather than deleted, and deliberately absent from the rendered site. Carries where it used to live, so it is not an orphan.",
       "notation": "cat-harness:FshGutsNode",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -74,8 +74,8 @@
       "prefLabel": "Instance",
       "definition": "A repository carrying a harness declaration — it names itself, its published stub, and the directories it holds.",
       "notation": "cat-harness:Instance",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "seeAlso": "https://litlfred.github.io/agentic-harness.html"
     },
@@ -90,8 +90,8 @@
       "prefLabel": "Folio",
       "definition": "A repository that authors folio content — it declares a content type, and `folio_init` wrote its config. Distinct from an Instance: this repository's `cat-harness/` is an Instance and is not a Folio.",
       "notation": "cat-harness:Folio",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "seeAlso": "https://litlfred.github.io/getting-started.html"
     },
@@ -106,8 +106,8 @@
       "prefLabel": "SushiProject",
       "definition": "A repository SUSHI will build — FSH compiled to a FHIR implementation guide. Minted here because SUSHI publishes no logical model for its own config; this is our name for the membership, not a claim to define SUSHI.",
       "notation": "cat-harness:SushiProject",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -121,8 +121,8 @@
       "prefLabel": "Convention",
       "definition": "A standing rule an actor must hold while performing a task, bound to a process, a lane or an activity rather than loaded unconditionally. Resolution is first-binding-wins along that order, not a merge, so a reader asking why a rule applies here gets one answer.",
       "notation": "cat-harness:Convention",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "seeAlso": "https://litlfred.github.io/agentic-harness.html"
     },
@@ -137,8 +137,8 @@
       "prefLabel": "Requirement",
       "definition": "A stated need a change must satisfy, elicited and signed off in the CRDM process before implementation begins. Distinct from the issue that tracks it and the bean that plans the work.",
       "notation": "cat-harness:Requirement",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "seeAlso": "https://litlfred.github.io/crdm-methodology.html"
     },
@@ -153,8 +153,8 @@
       "prefLabel": "Lane",
       "definition": "A swimlane of one BPMN process: part of that process, binding the Role that acts in it (`bindsRole`). Not itself a role — a role is a registry node, and many lanes in many processes bind it (#1168, B9b).",
       "notation": "cat-harness:Lane",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -168,8 +168,8 @@
       "prefLabel": "LaneUsage",
       "definition": "One appearance of a glossary concept as a swimlane in one BPMN process — the process it is in, the label that process gave the lane, and that lane's own documentation. A usage is an occurrence, not a term: it is regenerated wholesale and never retired, while a concept is a term somebody may have cited.",
       "notation": "cat-harness:LaneUsage",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -183,8 +183,8 @@
       "prefLabel": "SkillPackage",
       "definition": "A directory of skills shipped and versioned together.",
       "notation": "cat-harness:SkillPackage",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "seeAlso": "https://litlfred.github.io/skills.html"
     },
@@ -199,8 +199,8 @@
       "prefLabel": "Tool",
       "definition": "A Node Instance describing a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it.",
       "notation": "cat-harness:Tool",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "seeAlso": "https://litlfred.github.io/architecture.html"
     },
@@ -215,8 +215,8 @@
       "prefLabel": "Schema",
       "definition": "A schema definition, itself a node in the knowledge graph rather than an island beside one.",
       "notation": "cat-harness:Schema",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -230,8 +230,8 @@
       "prefLabel": "ExternalSchema",
       "definition": "A published specification this corpus conforms to or reads — BPMN, DMN, ODRL, PROV-O — recorded by name and edition rather than copied in.",
       "notation": "cat-harness:ExternalSchema",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "seeAlso": "https://litlfred.github.io/external-schemas/"
     },
@@ -246,8 +246,8 @@
       "prefLabel": "Decision",
       "definition": "A DMN decision — a table that computes a gateway's branch from supplied facts, rather than a judgement somebody makes.",
       "notation": "cat-harness:Decision",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "seeAlso": "https://litlfred.github.io/external-schemas/"
     },
@@ -262,8 +262,8 @@
       "prefLabel": "Capability",
       "definition": "Something an actor's environment provides — a binary, a service, a credential — probed rather than assumed.",
       "notation": "cat-harness:Capability",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -277,173 +277,8 @@
       "prefLabel": "RoleGraph",
       "definition": "The role registry as a graph — every role, what it inherits, and the lanes it binds.",
       "notation": "cat-harness:RoleGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:BeanDefsGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "BeanDefsGraph",
-      "comment": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents.",
-      "prefLabel": "BeanDefsGraph",
-      "definition": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents.",
-      "notation": "cat-harness:BeanDefsGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:BeanGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "BeanGraph",
-      "comment": "The work plan — what is being worked on, and where each running BPMN instance got to. Its inner directories are declared by `beans/beans.json`.",
-      "prefLabel": "BeanGraph",
-      "definition": "The work plan — what is being worked on, and where each running BPMN instance got to. Its inner directories are declared by `beans/beans.json`.",
-      "notation": "cat-harness:BeanGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:BinaryReleaseGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "BinaryReleaseGraph",
-      "comment": "Published binary releases -- one `folio-binary-release/v1` document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. Never the bytes: the schema is strict throughout, and a file a deploy phase deleted must still say where to get it back and why it went.",
-      "prefLabel": "BinaryReleaseGraph",
-      "definition": "Published binary releases -- one `folio-binary-release/v1` document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. Never the bytes: the schema is strict throughout, and a file a deploy phase deleted must still say where to get it back and why it went.",
-      "notation": "cat-harness:BinaryReleaseGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:BoardGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "BoardGraph",
-      "comment": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/board.ts`.",
-      "prefLabel": "BoardGraph",
-      "definition": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/board.ts`.",
-      "notation": "cat-harness:BoardGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:BoardPositionsGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "BoardPositionsGraph",
-      "comment": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/board-positions.ts`.",
-      "prefLabel": "BoardPositionsGraph",
-      "definition": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/board-positions.ts`.",
-      "notation": "cat-harness:BoardPositionsGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:CatalogueGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "CatalogueGraph",
-      "comment": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
-      "prefLabel": "CatalogueGraph",
-      "definition": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
-      "notation": "cat-harness:CatalogueGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:CodeGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "CodeGraph",
-      "comment": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis.",
-      "prefLabel": "CodeGraph",
-      "definition": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis.",
-      "notation": "cat-harness:CodeGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:CodeListGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "CodeListGraph",
-      "comment": "Closed sets of codes — adjudication answers, the namespaces this project mints — one file per list, every code carrying its definition and source, published as SKOS.",
-      "prefLabel": "CodeListGraph",
-      "definition": "Closed sets of codes — adjudication answers, the namespaces this project mints — one file per list, every code carrying its definition and source, published as SKOS.",
-      "notation": "cat-harness:CodeListGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:DocsGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "DocsGraph",
-      "comment": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`.",
-      "prefLabel": "DocsGraph",
-      "definition": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`.",
-      "notation": "cat-harness:DocsGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:ExternalSchemaGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "ExternalSchemaGraph",
-      "comment": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
-      "prefLabel": "ExternalSchemaGraph",
-      "definition": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
-      "notation": "cat-harness:ExternalSchemaGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:FhirArtifactIndexGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "FhirArtifactIndexGraph",
-      "comment": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of.",
-      "prefLabel": "FhirArtifactIndexGraph",
-      "definition": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of.",
-      "notation": "cat-harness:FhirArtifactIndexGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -453,402 +288,492 @@
         "skos:Concept"
       ],
       "label": "FshGutsGraph",
-      "comment": "Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the rendered site. The destination for anything that would otherwise be deleted, and for SDLC churn that must not reach the folio's readers.",
+      "comment": "The published export of an instance's fsh-guts tree: deprecated and throwaway structured content, reachable by name only.",
       "prefLabel": "FshGutsGraph",
-      "definition": "Deprecated and throwaway structured content — kept, addressable and exported, and deliberately absent from the rendered site. The destination for anything that would otherwise be deleted, and for SDLC churn that must not reach the folio's readers.",
+      "definition": "The published export of an instance's fsh-guts tree: deprecated and throwaway structured content, reachable by name only.",
       "notation": "cat-harness:FshGutsGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:HealthGraph",
+      "@id": "cat-harness:graphKind/bean-defs",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "HealthGraph",
-      "comment": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited.",
-      "prefLabel": "HealthGraph",
-      "definition": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited.",
-      "notation": "cat-harness:HealthGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "label": "bean-defs",
+      "comment": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents.",
+      "prefLabel": "bean-defs",
+      "definition": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents.",
+      "notation": "cat-harness:graphKind/bean-defs",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:IgMetadataIndexGraph",
+      "@id": "cat-harness:graphKind/beans",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "IgMetadataIndexGraph",
-      "comment": "The IG Publisher's own metadata exports for one published IG, harvested verbatim — ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. Each export declares whether it was present, absent or never looked for, and a `uses` field that upstream declared and left empty is recorded as exactly that.",
-      "prefLabel": "IgMetadataIndexGraph",
-      "definition": "The IG Publisher's own metadata exports for one published IG, harvested verbatim — ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. Each export declares whether it was present, absent or never looked for, and a `uses` field that upstream declared and left empty is recorded as exactly that.",
-      "notation": "cat-harness:IgMetadataIndexGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "label": "beans",
+      "comment": "The work plan — what is being worked on, and where each running BPMN instance got to. Its inner directories are declared by `beans/beans.json`.",
+      "prefLabel": "beans",
+      "definition": "The work plan — what is being worked on, and where each running BPMN instance got to. Its inner directories are declared by `beans/beans.json`.",
+      "notation": "cat-harness:graphKind/beans",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:InteractionGraph",
+      "@id": "cat-harness:graphKind/binary-release",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "InteractionGraph",
-      "comment": "How a person wants to be asked — read at session start, never written by a process.",
-      "prefLabel": "InteractionGraph",
-      "definition": "How a person wants to be asked — read at session start, never written by a process.",
-      "notation": "cat-harness:InteractionGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "label": "binary-release",
+      "comment": "Published binary releases -- one `folio-binary-release/v1` document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. Never the bytes: the schema is strict throughout, and a file a deploy phase deleted must still say where to get it back and why it went.",
+      "prefLabel": "binary-release",
+      "definition": "Published binary releases -- one `folio-binary-release/v1` document per release, carrying its id, version and origin, and for each asset the size, the sha256 where one is known, where it is fetched from, and what became of it. Never the bytes: the schema is strict throughout, and a file a deploy phase deleted must still say where to get it back and why it went.",
+      "notation": "cat-harness:graphKind/binary-release",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:IssueMarkGraph",
+      "@id": "cat-harness:graphKind/board-positions",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "IssueMarkGraph",
-      "comment": "How far an agent has read an issue — the comment id and the edit time it accounted for.",
-      "prefLabel": "IssueMarkGraph",
-      "definition": "How far an agent has read an issue — the comment id and the edit time it accounted for.",
-      "notation": "cat-harness:IssueMarkGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "label": "board-positions",
+      "comment": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/board-positions.ts`.",
+      "prefLabel": "board-positions",
+      "definition": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/board-positions.ts`.",
+      "notation": "cat-harness:graphKind/board-positions",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:KGraph",
+      "@id": "cat-harness:graphKind/boards",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "KGraph",
+      "label": "boards",
+      "comment": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/board.ts`.",
+      "prefLabel": "boards",
+      "definition": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/board.ts`.",
+      "notation": "cat-harness:graphKind/boards",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/cat-harness",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "cat-harness",
       "comment": "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them.",
-      "prefLabel": "KGraph",
+      "prefLabel": "cat-harness",
       "definition": "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them.",
-      "notation": "cat-harness:KGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/cat-harness",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:MemoryGraph",
+      "@id": "cat-harness:graphKind/catalogue",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "MemoryGraph",
+      "label": "catalogue",
+      "comment": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
+      "prefLabel": "catalogue",
+      "definition": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here.",
+      "notation": "cat-harness:graphKind/catalogue",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/code",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "code",
+      "comment": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis.",
+      "prefLabel": "code",
+      "definition": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis.",
+      "notation": "cat-harness:graphKind/code",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/code-list",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "code-list",
+      "comment": "Closed sets of codes — adjudication answers, the namespaces this project mints — one file per list, every code carrying its definition and source, published as SKOS.",
+      "prefLabel": "code-list",
+      "definition": "Closed sets of codes — adjudication answers, the namespaces this project mints — one file per list, every code carrying its definition and source, published as SKOS.",
+      "notation": "cat-harness:graphKind/code-list",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/docs",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "docs",
+      "comment": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`.",
+      "prefLabel": "docs",
+      "definition": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. The who-iris catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`.",
+      "notation": "cat-harness:graphKind/docs",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/external-schema",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "external-schema",
+      "comment": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+      "prefLabel": "external-schema",
+      "definition": "The specifications this instance depends on — one record per specification, pinning the EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+      "notation": "cat-harness:graphKind/external-schema",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/fhir-artifact-index",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "fhir-artifact-index",
+      "comment": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of.",
+      "prefLabel": "fhir-artifact-index",
+      "definition": "The artefact index of a published FHIR Implementation Guide, reconstructed from its published output — every artefact by canonical URL and published representation, with the DAK API's JSON Schema / JSON-LD sidecars as an overlay where the IG publishes one. No IG publishes such an index itself, so every field records which file it came out of.",
+      "notation": "cat-harness:graphKind/fhir-artifact-index",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/health",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "health",
+      "comment": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited.",
+      "prefLabel": "health",
+      "definition": "Repository health reports — one `health-report/v1` document per sweep, carrying every check's three-state verdict, the thresholds it applied and the basis each threshold was chosen on. Generated by `test/health/run.ts`; never hand-edited.",
+      "notation": "cat-harness:graphKind/health",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/ig-metadata-index",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "ig-metadata-index",
+      "comment": "The IG Publisher's own metadata exports for one published IG, harvested verbatim — ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. Each export declares whether it was present, absent or never looked for, and a `uses` field that upstream declared and left empty is recorded as exactly that.",
+      "prefLabel": "ig-metadata-index",
+      "definition": "The IG Publisher's own metadata exports for one published IG, harvested verbatim — ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. Each export declares whether it was present, absent or never looked for, and a `uses` field that upstream declared and left empty is recorded as exactly that.",
+      "notation": "cat-harness:graphKind/ig-metadata-index",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/interaction",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "interaction",
+      "comment": "How a person wants to be asked — read at session start, never written by a process.",
+      "prefLabel": "interaction",
+      "definition": "How a person wants to be asked — read at session start, never written by a process.",
+      "notation": "cat-harness:graphKind/interaction",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/issue-marks",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "issue-marks",
+      "comment": "How far an agent has read an issue — the comment id and the edit time it accounted for.",
+      "prefLabel": "issue-marks",
+      "definition": "How far an agent has read an issue — the comment id and the edit time it accounted for.",
+      "notation": "cat-harness:graphKind/issue-marks",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphKind/memory",
+      "@type": [
+        "bootstrap:GraphKind",
+        "skos:Concept"
+      ],
+      "label": "memory",
       "comment": "Durable facts an agent carries between sessions. Read during a process, never written by one.",
-      "prefLabel": "MemoryGraph",
+      "prefLabel": "memory",
       "definition": "Durable facts an agent carries between sessions. Read during a process, never written by one.",
-      "notation": "cat-harness:MemoryGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/memory",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:MethodologyGraph",
+      "@id": "cat-harness:graphKind/methodology",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "MethodologyGraph",
+      "label": "methodology",
       "comment": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
-      "prefLabel": "MethodologyGraph",
+      "prefLabel": "methodology",
       "definition": "Judgement methodologies, adopted whole and kept independent — parallel ways to reach a decision, selected by context.",
-      "notation": "cat-harness:MethodologyGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/methodology",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:ModelGraph",
+      "@id": "cat-harness:graphKind/policies",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "ModelGraph",
-      "comment": "A Subgraph describing the language models an Actor may be: which languages each is good at, and whether a person checked.",
-      "prefLabel": "ModelGraph",
-      "definition": "A Subgraph describing the language models an Actor may be: which languages each is good at, and whether a person checked.",
-      "notation": "cat-harness:ModelGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:PolicyGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "PolicyGraph",
+      "label": "policies",
       "comment": "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role constraints. Actions are the folio profile in skills/permissions/permissions.json.",
-      "prefLabel": "PolicyGraph",
+      "prefLabel": "policies",
       "definition": "W3C ODRL 2.2 policies: which Actor may do which action, scoped by Process, Task and Role constraints. Actions are the folio profile in skills/permissions/permissions.json.",
-      "notation": "cat-harness:PolicyGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/policies",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:ProcessGraph",
+      "@id": "cat-harness:graphKind/proposals",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "ProcessGraph",
-      "comment": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from.",
-      "prefLabel": "ProcessGraph",
-      "definition": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from.",
-      "notation": "cat-harness:ProcessGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:ProposalsGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "ProposalsGraph",
+      "label": "proposals",
       "comment": "Proposals for the harness's own features — initial analysis, MVP, options — argued before anything is agreed. A sub-graph of `docs`. When the feature ships, its proposal is MOVED to `requirements` and filed against the `Requirement` schema.",
-      "prefLabel": "ProposalsGraph",
+      "prefLabel": "proposals",
       "definition": "Proposals for the harness's own features — initial analysis, MVP, options — argued before anything is agreed. A sub-graph of `docs`. When the feature ships, its proposal is MOVED to `requirements` and filed against the `Requirement` schema.",
-      "notation": "cat-harness:ProposalsGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/proposals",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:QaGraph",
+      "@id": "cat-harness:graphKind/qa",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "QaGraph",
+      "label": "qa",
       "comment": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited.",
-      "prefLabel": "QaGraph",
+      "prefLabel": "qa",
       "definition": "QA verdicts and their projections — kg-qa audits, block and translation QA, qa-witness documents for the docs site, the viewer-navbar audit, result roll-ups and test runs; every `$schema` family is named in `nodeSchemas`, which is the list — a count here would be a second one, and it was already wrong by one before `viewer-nav-qa/v1` was added. Generated; never hand-edited.",
-      "notation": "cat-harness:QaGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/qa",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:QaReportGraph",
+      "@id": "cat-harness:graphKind/qa-report",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "QaReportGraph",
+      "label": "qa-report",
       "comment": "QA reports -- one `qa-report/v1` document per tool run, carrying the tool's own successes, warnings and errors, the files it processed, the files it EXPECTED and the ones that were missing, plus the provenance and toolchain versions upstream records nowhere. Generated by the run; never hand-edited.",
-      "prefLabel": "QaReportGraph",
+      "prefLabel": "qa-report",
       "definition": "QA reports -- one `qa-report/v1` document per tool run, carrying the tool's own successes, warnings and errors, the files it processed, the files it EXPECTED and the ones that were missing, plus the provenance and toolchain versions upstream records nowhere. Generated by the run; never hand-edited.",
-      "notation": "cat-harness:QaReportGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/qa-report",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:RequirementsGraph",
+      "@id": "cat-harness:graphKind/requirements",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "RequirementsGraph",
+      "label": "requirements",
       "comment": "What the harness promises, one document per shipped feature, each carrying a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point at these statements by `req:<slug>#<key>`.",
-      "prefLabel": "RequirementsGraph",
+      "prefLabel": "requirements",
       "definition": "What the harness promises, one document per shipped feature, each carrying a `Requirement` in its front matter. A sub-graph of `docs`. Test runs point at these statements by `req:<slug>#<key>`.",
-      "notation": "cat-harness:RequirementsGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/requirements",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:ScenarioGraph",
+      "@id": "cat-harness:graphKind/session-state",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "ScenarioGraph",
-      "comment": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on.",
-      "prefLabel": "ScenarioGraph",
-      "definition": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on.",
-      "notation": "cat-harness:ScenarioGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:SchemaGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "SchemaGraph",
-      "comment": "A Subgraph of Node Schemas: files that state the shape other files must have.",
-      "prefLabel": "SchemaGraph",
-      "definition": "A Subgraph of Node Schemas: files that state the shape other files must have.",
-      "notation": "cat-harness:SchemaGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:SessionStateGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "SessionStateGraph",
+      "label": "session-state",
       "comment": "A session's context — the acting actor, the instances it has open, and what it waits on.",
-      "prefLabel": "SessionStateGraph",
+      "prefLabel": "session-state",
       "definition": "A session's context — the acting actor, the instances it has open, and what it waits on.",
-      "notation": "cat-harness:SessionStateGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/session-state",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:SessionSurveyGraph",
+      "@id": "cat-harness:graphKind/session-survey",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "SessionSurveyGraph",
+      "label": "session-survey",
       "comment": "Published surveys of a commit window — one JSON file each, carrying `\"$schema\": \"folio-session-survey/v1\"` and the window's two edge commits, so a later session can compute what it is NOT covered for instead of re-deriving the whole range (bean `6ptx`).",
-      "prefLabel": "SessionSurveyGraph",
+      "prefLabel": "session-survey",
       "definition": "Published surveys of a commit window — one JSON file each, carrying `\"$schema\": \"folio-session-survey/v1\"` and the window's two edge commits, so a later session can compute what it is NOT covered for instead of re-deriving the whole range (bean `6ptx`).",
-      "notation": "cat-harness:SessionSurveyGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/session-survey",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:SkillGraph",
+      "@id": "cat-harness:graphKind/swimlane-glossary",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "SkillGraph",
-      "comment": "A Subgraph of Skills: the instructions an Actor follows to carry out a Task.",
-      "prefLabel": "SkillGraph",
-      "definition": "A Subgraph of Skills: the instructions an Actor follows to carry out a Task.",
-      "notation": "cat-harness:SkillGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "layer": "harness"
-    },
-    {
-      "@id": "cat-harness:SwimlaneGlossaryGraph",
-      "@type": [
-        "rdfs:Class",
-        "skos:Concept"
-      ],
-      "label": "SwimlaneGlossaryGraph",
+      "label": "swimlane-glossary",
       "comment": "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused.",
-      "prefLabel": "SwimlaneGlossaryGraph",
+      "prefLabel": "swimlane-glossary",
       "definition": "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused.",
-      "notation": "cat-harness:SwimlaneGlossaryGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/swimlane-glossary",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:ThemeGraph",
+      "@id": "cat-harness:graphKind/themes",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "ThemeGraph",
+      "label": "themes",
       "comment": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured.",
-      "prefLabel": "ThemeGraph",
+      "prefLabel": "themes",
       "definition": "Themes derived from an instance's own sources — one Theme node each, carrying `kind: sticky | webpage | publication`. The palette vocabulary is shared across every kind and only the geometry varies; every value cites where it was measured.",
-      "notation": "cat-harness:ThemeGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/themes",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:ToolGraph",
+      "@id": "cat-harness:graphKind/tools",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "ToolGraph",
+      "label": "tools",
       "comment": "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
-      "prefLabel": "ToolGraph",
+      "prefLabel": "tools",
       "definition": "Tool definitions — themselves nodes in the KG, per the repo taxonomy.",
-      "notation": "cat-harness:ToolGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/tools",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:TranslationSourceGraph",
+      "@id": "cat-harness:graphKind/translation-sources",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "TranslationSourceGraph",
+      "label": "translation-sources",
       "comment": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`.",
-      "prefLabel": "TranslationSourceGraph",
+      "prefLabel": "translation-sources",
       "definition": "POT templates, PO catalogues and their `TranslationNode` manifests, one directory per target locale. The INPUT to injection; the rendered output is ordinary content that declares its own `lang`.",
-      "notation": "cat-harness:TranslationSourceGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/translation-sources",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:UmlGraph",
+      "@id": "cat-harness:graphKind/uml",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "UmlGraph",
+      "label": "uml",
       "comment": "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas its graph kinds register — PlantUML and Mermaid from one model.",
-      "prefLabel": "UmlGraph",
+      "prefLabel": "uml",
       "definition": "UML class diagrams of each named sub-graph a harness declares, derived from the node schemas its graph kinds register — PlantUML and Mermaid from one model.",
-      "notation": "cat-harness:UmlGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/uml",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:WaiverGraph",
+      "@id": "cat-harness:graphKind/waiver",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "WaiverGraph",
+      "label": "waiver",
       "comment": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
-      "prefLabel": "WaiverGraph",
+      "prefLabel": "waiver",
       "definition": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
-      "notation": "cat-harness:WaiverGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/waiver",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
-      "@id": "cat-harness:WorkflowStateGraph",
+      "@id": "cat-harness:graphKind/workflow-state",
       "@type": [
-        "rdfs:Class",
+        "bootstrap:GraphKind",
         "skos:Concept"
       ],
-      "label": "WorkflowStateGraph",
+      "label": "workflow-state",
       "comment": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
-      "prefLabel": "WorkflowStateGraph",
+      "prefLabel": "workflow-state",
       "definition": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
-      "notation": "cat-harness:WorkflowStateGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "notation": "cat-harness:graphKind/workflow-state",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -862,8 +787,8 @@
       "prefLabel": "partOf",
       "definition": "The node this one belongs to.",
       "notation": "cat-harness:partOf",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "http://purl.org/dc/terms/isPartOf"
@@ -879,8 +804,8 @@
       "prefLabel": "inPackage",
       "definition": "The skill package a skill ships in.",
       "notation": "cat-harness:inPackage",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -894,8 +819,8 @@
       "prefLabel": "inSubgraph",
       "definition": "The DECLARED DIRECTORY a node was projected from — the named subgraph it belongs to, as a link to that directory's own node rather than a bare id. Derived from the instance's declaration, longest path prefix winning, and INHERITED through `partOf` for nodes that have no path of their own (a ProcessNode is part of a diagram, not a file). A node with no value belongs to no declared directory — vocabulary nodes are minted from the namespace rather than from any file — and that absence is reported as its own state rather than folded into a default.",
       "notation": "cat-harness:inSubgraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "http://purl.org/dc/terms/isPartOf"
@@ -911,8 +836,8 @@
       "prefLabel": "localId",
       "definition": "The node's own identifier within its file, before any IRI is minted.",
       "notation": "cat-harness:localId",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -926,8 +851,8 @@
       "prefLabel": "module",
       "definition": "The source module a node was projected from.",
       "notation": "cat-harness:module",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -941,8 +866,8 @@
       "prefLabel": "path",
       "definition": "A declared directory's path, relative to the instance root.",
       "notation": "cat-harness:path",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -956,8 +881,8 @@
       "prefLabel": "assetRole",
       "definition": "What a declared asset is FOR, as the instance names it — `instance-readme`, `agent-instructions`. A literal, and not the swimlane Role, which is a node with skills.",
       "notation": "cat-harness:assetRole",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -971,8 +896,8 @@
       "prefLabel": "typeIri",
       "definition": "The IRI of a node's type, so a consumer need not parse the `@type` string.",
       "notation": "cat-harness:typeIri",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -986,8 +911,8 @@
       "prefLabel": "statement",
       "definition": "What a convention REQUIRES, in one line. Distinct from rdfs:comment, which is prose about the node: this is the rule itself, and a consumer filtering for enforceable text needs the two apart.",
       "notation": "cat-harness:statement",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1001,8 +926,8 @@
       "prefLabel": "rationale",
       "definition": "Why a convention holds, so a reader can tell whether it still does. Kept separate from the statement deliberately — a rule and its justification collapsed into one field is a rule nobody can retire, because nothing is left that says what would falsify it.",
       "notation": "cat-harness:rationale",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1016,8 +941,8 @@
       "prefLabel": "applies",
       "definition": "The surfaces a convention governs — `typescript`, `bpmn`, `commit-message`. A filter, not prose, and open rather than enumerated: a closed set would have to be edited before a convention about a new surface could exist.",
       "notation": "cat-harness:applies",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1031,8 +956,8 @@
       "prefLabel": "nodeKind",
       "definition": "Which kind of node this is, where the type alone is not specific enough.",
       "notation": "cat-harness:nodeKind",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1046,8 +971,8 @@
       "prefLabel": "graphKind",
       "definition": "The kind of graph a directory declares it holds.",
       "notation": "cat-harness:graphKind",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1061,8 +986,8 @@
       "prefLabel": "holdsGraph",
       "definition": "A graph kind found in this directory.",
       "notation": "cat-harness:holdsGraph",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "http://purl.org/dc/terms/type"
@@ -1078,8 +1003,8 @@
       "prefLabel": "renderable",
       "definition": "Whether a directory's contents are published as a website.",
       "notation": "cat-harness:renderable",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1093,8 +1018,8 @@
       "prefLabel": "scans",
       "definition": "A directory an instance will look in.",
       "notation": "cat-harness:scans",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1108,8 +1033,8 @@
       "prefLabel": "scope",
       "definition": "Which root a declared path resolves against — the instance's or the repository's.",
       "notation": "cat-harness:scope",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1123,8 +1048,8 @@
       "prefLabel": "dependents",
       "definition": "Whether an instance depending on this one materialises its own copy of a declared directory. Orthogonal to `scope`, which says where a path resolves rather than who gets one.",
       "notation": "cat-harness:dependents",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1138,8 +1063,8 @@
       "prefLabel": "movedOn",
       "definition": "When a node was moved into the trashcan.",
       "notation": "cat-harness:movedOn",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1153,8 +1078,8 @@
       "prefLabel": "movedFrom",
       "definition": "Where a node in the trashcan used to live.",
       "notation": "cat-harness:movedFrom",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1168,8 +1093,8 @@
       "prefLabel": "issue",
       "definition": "The issue that superseded this node, or that it was written for.",
       "notation": "cat-harness:issue",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1183,8 +1108,8 @@
       "prefLabel": "bean",
       "definition": "The work-plan item a node was written under, where there is one.",
       "notation": "cat-harness:bean",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1198,8 +1123,8 @@
       "prefLabel": "nodeCount",
       "definition": "How many nodes a graph or directory yielded.",
       "notation": "cat-harness:nodeCount",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1213,8 +1138,8 @@
       "prefLabel": "layer",
       "definition": "Which layer of the platform mints a term — bootstrap, harness or core. Declared so a JSON-LD processor keeps it: undeclared, it was silently dropped from all 159 vocabulary terms (bean vigi).",
       "notation": "cat-harness:layer",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1228,8 +1153,8 @@
       "prefLabel": "skipped",
       "definition": "A file an exporter looked at and left out, with the reason — so a short output is never mistaken for a small input.",
       "notation": "cat-harness:skipped",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1243,8 +1168,8 @@
       "prefLabel": "flowCount",
       "definition": "How many sequence flows a process carries.",
       "notation": "cat-harness:flowCount",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1258,8 +1183,8 @@
       "prefLabel": "actorKind",
       "definition": "Whether an actor is human, agentic or mechanical.",
       "notation": "cat-harness:actorKind",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1273,8 +1198,8 @@
       "prefLabel": "actorKinds",
       "definition": "Which kinds of actor a role admits.",
       "notation": "cat-harness:actorKinds",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1288,8 +1213,8 @@
       "prefLabel": "reach",
       "definition": "What this actor can reach off its own machine — internet, egress-restricted or air-gapped. The same vocabulary the deployment declares, at the level of one participant; absent means undeclared, which is not `internet`.",
       "notation": "cat-harness:reach",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1303,8 +1228,8 @@
       "prefLabel": "hasSkill",
       "definition": "A skill this role carries.",
       "notation": "cat-harness:hasSkill",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1318,8 +1243,8 @@
       "prefLabel": "actedUpon",
       "definition": "Whether this role is written to rather than performed, so no actor takes it on.",
       "notation": "cat-harness:actedUpon",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1333,8 +1258,8 @@
       "prefLabel": "judgementOnly",
       "definition": "Whether this role acts by judgement, so no skill can be named for its tasks.",
       "notation": "cat-harness:judgementOnly",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1348,8 +1273,8 @@
       "prefLabel": "declaresSkill",
       "definition": "A skill this package declares.",
       "notation": "cat-harness:declaresSkill",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1363,8 +1288,8 @@
       "prefLabel": "declaresRole",
       "definition": "A role this registry declares.",
       "notation": "cat-harness:declaresRole",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1378,8 +1303,8 @@
       "prefLabel": "bindsRole",
       "definition": "The role a BPMN lane binds: the lane's own <bootstrap.processes:role ref>. On the lane, never on the role (#1168).",
       "notation": "cat-harness:bindsRole",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role"
@@ -1395,8 +1320,8 @@
       "prefLabel": "hasLaneUsage",
       "definition": "One appearance of this glossary concept as a swimlane in one process. The scope note lives on the usage rather than on the concept because a note answers what the lane is accountable for IN THIS PROCESS: measured 2026-09-21, all 26 lane names appearing in more than one diagram carry different documentation in each.",
       "notation": "cat-harness:hasLaneUsage",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1410,8 +1335,8 @@
       "prefLabel": "ofConcept",
       "definition": "The glossary concept this lane usage is an appearance of.",
       "notation": "cat-harness:ofConcept",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1425,8 +1350,8 @@
       "prefLabel": "inProcess",
       "definition": "The BPMN process this lane usage appears in.",
       "notation": "cat-harness:inProcess",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1440,8 +1365,8 @@
       "prefLabel": "performerVaries",
       "definition": "Whether this lane declines to name a persona because its performer is whoever invoked the process. A term so marked has no definition, and that absence is an assertion rather than a gap.",
       "notation": "cat-harness:performerVaries",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1455,8 +1380,8 @@
       "prefLabel": "isA",
       "definition": "A role this one inherits from, statically and everywhere.",
       "notation": "cat-harness:isA",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1470,8 +1395,8 @@
       "prefLabel": "roleName",
       "definition": "The role's own name, as a lane binds it.",
       "notation": "cat-harness:roleName",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1485,8 +1410,8 @@
       "prefLabel": "mayTakeRole",
       "definition": "A declared role this actor may take on: a link to the Role node from `scenarios/roles.json` (#1168 B8).",
       "notation": "cat-harness:mayTakeRole",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1500,8 +1425,8 @@
       "prefLabel": "satisfiesStatement",
       "definition": "A requirement statement this node discharges, as `req:<requirement>#<statement key>`.",
       "notation": "cat-harness:satisfiesStatement",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1515,8 +1440,8 @@
       "prefLabel": "performedBy",
       "definition": "The role that performs this activity: the registry Role its lane binds.",
       "notation": "cat-harness:performedBy",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1530,8 +1455,8 @@
       "prefLabel": "inLane",
       "definition": "The BPMN lane this activity sits in, a Lane node of the same process.",
       "notation": "cat-harness:inLane",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1545,8 +1470,8 @@
       "prefLabel": "implementedBy",
       "definition": "The skill that implements this activity.",
       "notation": "cat-harness:implementedBy",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill"
@@ -1562,8 +1487,8 @@
       "prefLabel": "assignments",
       "definition": "The role-to-lane bindings a diagram carries.",
       "notation": "cat-harness:assignments",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1577,8 +1502,8 @@
       "prefLabel": "permissionName",
       "definition": "A permission's name, as an actor holds it.",
       "notation": "cat-harness:permissionName",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1592,8 +1517,8 @@
       "prefLabel": "hasCapability",
       "definition": "A capability this actor's environment provides.",
       "notation": "cat-harness:hasCapability",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1607,8 +1532,8 @@
       "prefLabel": "providesCapability",
       "definition": "A capability this node makes available.",
       "notation": "cat-harness:providesCapability",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1622,8 +1547,23 @@
       "prefLabel": "requiresCapability",
       "definition": "A capability this node needs before it can run.",
       "notation": "cat-harness:requiresCapability",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:setupBySkill",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "setupBySkill",
+      "comment": "The skill that explains how to set up this capability — install, configure, verify. A pointer from an environment probe to a procedure, not a merge of the two kinds.",
+      "prefLabel": "setupBySkill",
+      "definition": "The skill that explains how to set up this capability — install, configure, verify. A pointer from an environment probe to a procedure, not a merge of the two kinds.",
+      "notation": "cat-harness:setupBySkill",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1637,8 +1577,8 @@
       "prefLabel": "fallbackToCapability",
       "definition": "The capability that stands in for this one when it is absent. It must not transitively require the capability it replaces — such a substitute is unavailable in exactly the case it exists for.",
       "notation": "cat-harness:fallbackToCapability",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1652,8 +1592,8 @@
       "prefLabel": "hasInstructions",
       "definition": "Whether a skill has an instruction body at all.",
       "notation": "cat-harness:hasInstructions",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1667,8 +1607,8 @@
       "prefLabel": "instructionsPath",
       "definition": "Where a skill's instruction body lives, relative to the instance root.",
       "notation": "cat-harness:instructionsPath",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1682,8 +1622,8 @@
       "prefLabel": "readmePath",
       "definition": "Where a declared directory's README lives, relative to the instance root: the page a person reads about that directory.",
       "notation": "cat-harness:readmePath",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1697,8 +1637,8 @@
       "prefLabel": "instructionLines",
       "definition": "How long a skill's instruction body is.",
       "notation": "cat-harness:instructionLines",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1712,8 +1652,8 @@
       "prefLabel": "hasIOContract",
       "definition": "Whether a skill declares input and output schemas.",
       "notation": "cat-harness:hasIOContract",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1727,8 +1667,8 @@
       "prefLabel": "inputSchema",
       "definition": "The published schema a skill's input must satisfy.",
       "notation": "cat-harness:inputSchema",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1742,8 +1682,8 @@
       "prefLabel": "outputSchema",
       "definition": "The published schema a skill's output satisfies.",
       "notation": "cat-harness:outputSchema",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1757,8 +1697,8 @@
       "prefLabel": "io",
       "definition": "A skill's input/output contract, taken together.",
       "notation": "cat-harness:io",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1772,8 +1712,8 @@
       "prefLabel": "hasManifest",
       "definition": "Whether a package carries a manifest listing its skills.",
       "notation": "cat-harness:hasManifest",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1787,8 +1727,8 @@
       "prefLabel": "requirements",
       "definition": "The conformance statements this node is held to.",
       "notation": "cat-harness:requirements",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1802,8 +1742,8 @@
       "prefLabel": "satisfies",
       "definition": "A requirement this node satisfies.",
       "notation": "cat-harness:satisfies",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1817,8 +1757,8 @@
       "prefLabel": "invoke",
       "definition": "How a tool is called.",
       "notation": "cat-harness:invoke",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1832,8 +1772,8 @@
       "prefLabel": "install",
       "definition": "How a tool is obtained, where it is not already present.",
       "notation": "cat-harness:install",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1847,8 +1787,8 @@
       "prefLabel": "meta",
       "definition": "A tool's own descriptive metadata.",
       "notation": "cat-harness:meta",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1862,8 +1802,8 @@
       "prefLabel": "maintains",
       "definition": "An artefact this tool generates and keeps current.",
       "notation": "cat-harness:maintains",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1877,8 +1817,8 @@
       "prefLabel": "maintainsFrom",
       "definition": "The source a maintained artefact is generated from.",
       "notation": "cat-harness:maintainsFrom",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1892,8 +1832,8 @@
       "prefLabel": "maintainedBy",
       "definition": "The tool that generates and keeps this artefact current.",
       "notation": "cat-harness:maintainedBy",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1907,8 +1847,8 @@
       "prefLabel": "conformsTo",
       "definition": "A published specification this node's files are written in, e.g. BPMN 2.0 for a process.",
       "notation": "cat-harness:conformsTo",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "http://purl.org/dc/terms/conformsTo"
@@ -1924,8 +1864,8 @@
       "prefLabel": "validator",
       "definition": "The schema node that runtime-validates a node of this kind.",
       "notation": "cat-harness:validator",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1939,8 +1879,8 @@
       "prefLabel": "validatorRef",
       "definition": "The `module#Export` a kind names as its validator, where no schema node for it is in this graph.",
       "notation": "cat-harness:validatorRef",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1954,8 +1894,8 @@
       "prefLabel": "validatorNotApplicable",
       "definition": "Why no runtime validator applies to this kind, and what grades it instead.",
       "notation": "cat-harness:validatorNotApplicable",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1969,8 +1909,8 @@
       "prefLabel": "authority",
       "definition": "The body that publishes a specification, e.g. OMG or W3C.",
       "notation": "cat-harness:authority",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1984,8 +1924,8 @@
       "prefLabel": "specVersion",
       "definition": "The edition of a specification this corpus is pinned to.",
       "notation": "cat-harness:specVersion",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -1999,8 +1939,8 @@
       "prefLabel": "specUse",
       "definition": "How the corpus uses a specification: conforms to it, or only reads it.",
       "notation": "cat-harness:specUse",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2014,8 +1954,8 @@
       "prefLabel": "specUrl",
       "definition": "Where a specification is published.",
       "notation": "cat-harness:specUrl",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2029,8 +1969,8 @@
       "prefLabel": "namespace",
       "definition": "An XML or RDF namespace a specification defines.",
       "notation": "cat-harness:namespace",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2044,8 +1984,8 @@
       "prefLabel": "canonicalDocument",
       "definition": "The document a node's canonical IRI resolves to.",
       "notation": "cat-harness:canonicalDocument",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2059,8 +1999,8 @@
       "prefLabel": "bpmnType",
       "definition": "The BPMN element type a process node was read from.",
       "notation": "cat-harness:bpmnType",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2074,8 +2014,8 @@
       "prefLabel": "startNode",
       "definition": "The node a process begins at.",
       "notation": "cat-harness:startNode",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2089,8 +2029,8 @@
       "prefLabel": "incoming",
       "definition": "A sequence flow arriving at this node.",
       "notation": "cat-harness:incoming",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "http://www.omg.org/spec/BPMN/20100524/MODEL#incoming"
@@ -2106,8 +2046,8 @@
       "prefLabel": "outgoing",
       "definition": "A sequence flow leaving this node.",
       "notation": "cat-harness:outgoing",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "http://www.omg.org/spec/BPMN/20100524/MODEL#outgoing"
@@ -2123,8 +2063,8 @@
       "prefLabel": "from",
       "definition": "The node a sequence flow leaves.",
       "notation": "cat-harness:from",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "http://www.omg.org/spec/BPMN/20100524/MODEL#sourceRef"
@@ -2140,8 +2080,8 @@
       "prefLabel": "to",
       "definition": "The node a sequence flow arrives at.",
       "notation": "cat-harness:to",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness",
       "deprecated": true,
       "isReplacedBy": "http://www.omg.org/spec/BPMN/20100524/MODEL#targetRef"
@@ -2157,8 +2097,8 @@
       "prefLabel": "decisionRef",
       "definition": "The DMN table that computes this gateway's branch.",
       "notation": "cat-harness:decisionRef",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2172,8 +2112,8 @@
       "prefLabel": "decidedBy",
       "definition": "The Decision node whose table computes this gateway's branch.",
       "notation": "cat-harness:decidedBy",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2187,8 +2127,8 @@
       "prefLabel": "hitPolicy",
       "definition": "How a DMN decision table picks among matching rules, e.g. FIRST or UNIQUE.",
       "notation": "cat-harness:hitPolicy",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2202,8 +2142,8 @@
       "prefLabel": "enforcement",
       "definition": "Whether a process's steps are strict or advisory.",
       "notation": "cat-harness:enforcement",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2217,8 +2157,8 @@
       "prefLabel": "relaxable",
       "definition": "Whether a step may be relaxed by a downstream package.",
       "notation": "cat-harness:relaxable",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2232,8 +2172,8 @@
       "prefLabel": "touchesWorkPlan",
       "definition": "Whether completing this step performs a work-plan operation.",
       "notation": "cat-harness:touchesWorkPlan",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2247,8 +2187,8 @@
       "prefLabel": "workPlanOp",
       "definition": "The work-plan operation a step performs — claim, note or resolve.",
       "notation": "cat-harness:workPlanOp",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2262,8 +2202,8 @@
       "prefLabel": "sourceKind",
       "definition": "What kind of source a node was read from.",
       "notation": "cat-harness:sourceKind",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2277,8 +2217,8 @@
       "prefLabel": "sourcePath",
       "definition": "The file a node was read from.",
       "notation": "cat-harness:sourcePath",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2292,8 +2232,8 @@
       "prefLabel": "sourceCommitSha",
       "definition": "The commit the export was taken at.",
       "notation": "cat-harness:sourceCommitSha",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2307,8 +2247,8 @@
       "prefLabel": "sourceCommitAt",
       "definition": "When that commit was made.",
       "notation": "cat-harness:sourceCommitAt",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2322,8 +2262,8 @@
       "prefLabel": "sourceTreeDirty",
       "definition": "Whether the working tree had uncommitted changes when the export ran.",
       "notation": "cat-harness:sourceTreeDirty",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2337,8 +2277,8 @@
       "prefLabel": "sourceCommitUnavailable",
       "definition": "That the commit could not be determined — never rendered as clean.",
       "notation": "cat-harness:sourceCommitUnavailable",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2352,8 +2292,8 @@
       "prefLabel": "sourceLanguage",
       "definition": "The language a locale document's untagged strings are in — its SOURCE language, not the language it was translated into.",
       "notation": "cat-harness:sourceLanguage",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2367,8 +2307,8 @@
       "prefLabel": "staging",
       "definition": "Which build produced this document, when it is a staging preview rather than a release.",
       "notation": "cat-harness:staging",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2382,8 +2322,8 @@
       "prefLabel": "stagingBranch",
       "definition": "The branch a staging preview was built from.",
       "notation": "cat-harness:stagingBranch",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2397,8 +2337,8 @@
       "prefLabel": "stagingSha",
       "definition": "The commit a staging preview was built from.",
       "notation": "cat-harness:stagingSha",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2412,8 +2352,8 @@
       "prefLabel": "stagingRef",
       "definition": "The pull request a staging preview belongs to.",
       "notation": "cat-harness:stagingRef",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2427,8 +2367,8 @@
       "prefLabel": "stagingRun",
       "definition": "The CI run that produced a staging preview.",
       "notation": "cat-harness:stagingRun",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2442,8 +2382,8 @@
       "prefLabel": "counts",
       "definition": "How many nodes of each type the export produced.",
       "notation": "cat-harness:counts",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2457,8 +2397,8 @@
       "prefLabel": "omitted",
       "definition": "Instance-bound collectors that were NOT run, on a foreign instance's document — so a reader can tell 'this instance has no tools' from 'tools were never looked for'.",
       "notation": "cat-harness:omitted",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2472,8 +2412,8 @@
       "prefLabel": "dependsOn",
       "definition": "The instances this publishable instance depends on, as FHIR-shaped {packageId, version, uri} records.",
       "notation": "cat-harness:dependsOn",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2487,8 +2427,8 @@
       "prefLabel": "packageId",
       "definition": "A dependency's reverse-DNS id — the identity a consumer resolves.",
       "notation": "cat-harness:packageId",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2502,8 +2442,8 @@
       "prefLabel": "uri",
       "definition": "A dependency's canonical URL, stable across its versions.",
       "notation": "cat-harness:uri",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2517,8 +2457,8 @@
       "prefLabel": "dependsOnGaps",
       "definition": "Dependency edges that could NOT become a record, each with which of the four reasons applies — so a reader can tell 'depends on nothing' from 'depends on things none of which is publishable'.",
       "notation": "cat-harness:dependsOnGaps",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2532,8 +2472,8 @@
       "prefLabel": "dependsOnUnavailable",
       "definition": "Why there is no dependsOn block, when the reason is not an empty dependency set — never rendered as 'depends on nothing'.",
       "notation": "cat-harness:dependsOnUnavailable",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2547,8 +2487,8 @@
       "prefLabel": "detection",
       "definition": "How a value was arrived at, where it was inferred rather than declared.",
       "notation": "cat-harness:detection",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     },
     {
@@ -2562,8 +2502,8 @@
       "prefLabel": "ambiguous",
       "definition": "That more than one answer matched, and none was chosen.",
       "notation": "cat-harness:ambiguous",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
-      "isDefinedBy": "https://litlfred.github.io/folio-assistant/cat-harness/ns",
+      "inScheme": "https://litlfred.github.io/cat-harness/0.1.0/ns",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/0.1.0/ns",
       "layer": "harness"
     }
   ]
