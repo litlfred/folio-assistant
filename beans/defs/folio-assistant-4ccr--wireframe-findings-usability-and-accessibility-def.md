@@ -7,7 +7,6 @@ tags:
     - wireframe-findings
     - ui
 created_at: 2026-09-23T10:36:13Z
-parent: folio-assistant-10uc
 updated_at: 2026-09-23T10:36:13Z
 ---
 

@@ -82,3 +82,54 @@ count in prose, which is a claim rather than evidence — left for whoever owns
 
 Done-when #2 (a check for a bean whose body names a parent its front matter does
 not carry) and #3 (its falsification) remain open.
+
+
+---
+
+## 2026-09-30, later — the reparent is BLOCKED, and the blocker is a second instance of this bean's own defect
+
+The owner ruled "reparent 4ccr". I did, CI went red, and the reason is
+`check:bean-parents`:
+
+    ✗ folio-assistant-4ccr: `parent: folio-assistant-10uc` is a task,
+      not a milestone, epic or feature
+
+Reverted, and `check:bean-parents` is back to exit 0. **The ruling is not
+carried out** and must not be recorded as done.
+
+### Why no target works, measured
+
+`check-bean-parents.ts` permits a parent of type `milestone`, `epic` or
+`feature`, and adds one rule for epics: *"AN EPIC HANGS FROM A GOAL, and from
+nothing else"* — `b.type === "epic"` requires `p.type === "milestone"`.
+
+| bean | type | usable as `4ccr`'s parent? |
+|---|---|---|
+| `4ccr` | **epic** | — its parent must be a `milestone` |
+| `10uc` | **task** | no: `task` is not a permitted parent type at all |
+| `p5wm` (GOAL 2) | **bug** | no |
+| `yg29` (GOAL 3) | **bug** | no |
+| `vuip` (GOAL 1) | `milestone` | yes by type, wrong goal |
+
+So GOAL 2 has **no milestone anywhere in its line**, and an epic cannot hang
+from anything else.
+
+### The finding, and it is this bean's own class again
+
+`todo-manager` §"A GOAL is a `milestone` bean" is quoted by the check's own
+error message. `p5wm` is titled *"GOAL 2: ..."* and typed **`bug`**; `yg29` is
+titled *"GOAL 3: ..."* and typed **`bug`**. Only `vuip` is a `milestone`.
+
+That is exactly this bean's subject — **a declaration and its subject drift, and
+nothing compares them** — one level up: the title says GOAL, the type says bug,
+and `check:bean-parents` only notices when something tries to hang off it. Two
+of the three goals this session's review was organised around are not, to the
+store, goals at all.
+
+### Not fixed here, deliberately
+
+Every route requires retyping a bean that is not mine and reshapes the roadmap:
+retype `p5wm` to `milestone` (then `4ccr` hangs off it directly), or retype
+`4ccr` to `feature` **and** `10uc` to `epic`. The owner's ruling authorised a
+reparent, not a retype, and `bean-coordination` does not let an agent decide
+another bean's type on its own initiative. Put to the owner instead.
