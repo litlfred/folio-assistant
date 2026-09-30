@@ -56,10 +56,10 @@ import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import remarkHtml from "remark-html";
 
-import { folioDir } from "../schemas/cat-harness.js";
-import type { Chapter, Paper, Section, SectionRef } from "../schemas/types.js";
-import { buildDocumentMarkdown } from "../content/pipeline/render-markdown.js";
-import { reviewPageHtml } from "./gen-review-page.js";
+import { folioDir } from "../../cat-harness/schemas/cat-harness.js";
+import type { Chapter, Paper, Section, SectionRef } from "../../cat-harness/schemas/types.js";
+import { buildDocumentMarkdown } from "../../cat-harness/content/pipeline/render-markdown.js";
+import { reviewPageHtml } from "../../cat-harness/scripts/gen-review-page.js";
 
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
@@ -202,7 +202,7 @@ if (import.meta.main) {
     return i >= 0 ? args[i + 1] : undefined;
   };
   if (args.includes("--help")) {
-    console.log("usage: bun run cat-harness/scripts/build-document-site.ts [--repo <folio repo root>] [--out _site]");
+    console.log("usage: bun run folio-assistant-core/scripts/build-document-site.ts [--repo <folio repo root>] [--out _site]");
     process.exit(0);
   }
   const repo = resolve(opt("repo") ?? process.cwd());

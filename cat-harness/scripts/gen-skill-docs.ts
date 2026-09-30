@@ -501,6 +501,9 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // core, so naming its package does not invert the layer order that
   // `folio-assistant-core.json`’s `needs: ["cat-harness"]` fixes.
   "folio-assistant-core-skills": "Content layer (folio-assistant-core)",
+  // The science layer's Lean tooling (folio-assistant#1492): tooling lives in
+  // folio-assistant-sci, never in core.
+  "folio-assistant-sci-lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
   // The `fhir-harness` instance's two packages, keyed by BASENAME because they
