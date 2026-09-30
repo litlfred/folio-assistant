@@ -13,7 +13,7 @@ package "who-style-guide/voices" as pkg_who_style_guide_voices <<voices>> {
     title [1] : string
     instance [0..1] : string
     libraryId [0..1] : string
-    kgRef [0..1] : string
+    path [0..1] : string
     url [0..1] : string<uri>
     year [0..1] : integer
   }

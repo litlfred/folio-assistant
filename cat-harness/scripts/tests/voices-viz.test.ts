@@ -282,7 +282,7 @@ describe("vendor overrides live in DECLARED sub-graphs of voices", () => {
           description: "A voice with no rules does not parse, so the fixture carries one.",
           category: "structure",
           severity: "minor",
-          source: { kgRef: "skills/folio-core/technical-documentation.md", quote: "a fixture quote" },
+          source: { path: "skills/folio-core/technical-documentation.md", quote: "a fixture quote" },
         },
       ],
     });

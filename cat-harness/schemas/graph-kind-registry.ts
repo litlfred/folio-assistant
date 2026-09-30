@@ -1479,6 +1479,147 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // and saying so here is the point: an undeclared validator that nobody
     // wrote down reads exactly like a graph with nothing to check.
   },
+  // The IG Publisher's OWN metadata exports — `valueset-ref-list.json`,
+  // `codesystem-ref-list.json` and `usage-stats.json`, the three files an IG
+  // publishes ABOUT what it built.
+  //
+  // Registered on the owner's ruling, 2026-09-30 — OPTION B of bean `rjug`:
+  // *"a sibling kind `ig-metadata-index`, `holds: "derived"`. Keeps 'what
+  // artefacts exist' apart from 'what the toolchain reported'."* Option A
+  // would have hung a `metadataExports` block off `fhir-artifact-index` one
+  // entry up, and the bean's own objection to it is why it lost: *"Risks
+  // making the index a bag."*
+  //
+  // A SIBLING of `fhir-artifact-index`, and the line between them is the line
+  // between a reconstruction and a transcription. That index answers *what
+  // artefacts does this IG contain*, assembled from four partial published
+  // views because NO IG PUBLISHES SUCH AN INDEX — which is why every field
+  // there records the file it came out of. This kind answers *what did the
+  // toolchain say about them*, read verbatim from three files the IG does
+  // publish. One document holding both would leave a consumer unable to tell
+  // a fact this repository assembled from a fact the Publisher asserted.
+  //
+  // `derived` by the axis's own two questions, and they agree here. It does
+  // NOT stand on its own — every record is an edge or a count about artefacts
+  // named elsewhere, so detached it asserts nothing. And you would REGENERATE
+  // it: re-harvest an unchanged published IG and the same file comes back.
+  // That last clause is exactly what separates it from `binary-release`
+  // below, where re-running produces a different release, which is why one is
+  // `derived` and the other `state` although both are downstream of a build.
+  //
+  // What `derived` buys, concretely, is what it bought `library/`: a QA
+  // finding against one of these documents is a finding against the HARVEST
+  // that made it, never against an author, so the content sweep is right to
+  // skip it and `walkBlocks` does.
+  //
+  // NOT renderable, on `fhir-artifact-index`'s reasoning one entry up. These
+  // are machine-readable edge lists and usage counts harvested from somebody
+  // else's published site; nothing in the docs build makes pages from them,
+  // and `renderable` asks whether the graph is wired to the SITE BUILD, not
+  // whether a human could be shown it. Saying `true` would promise a page per
+  // export for every IG ever harvested. The IG's own rendering is the IG's,
+  // and it is already published — at the URL `source.harvestedFrom` names.
+  //
+  // The schema carries bean `nsbb`'s two measured findings as SHAPE rather
+  // than prose, because both are absences that must not read as zeros: `uses`
+  // is declared-and-never-populated in both IGs measured (hence a three-state
+  // `usesState`, where a bare array would erase the finding), and nothing
+  // exports Library / PlanDefinition / Measure edges at all (hence
+  // `IG_METADATA_UNREACHED_TYPES` and `dependencyReach`, so an empty edge
+  // list over the decision-logic core reads as uninformative rather than
+  // clean).
+  "ig-metadata-index": {
+    type: termIri("IgMetadataIndexGraph"),
+    renderable: false,
+    holds: "derived",
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    // Unlike `fhir-artifact-index`, whose schema lives in core and which
+    // therefore declares none, this kind's schema is in `cat-harness/` — the
+    // same place `ig-menu.ts` and `ig-chrome.ts` sit — so the pointer
+    // resolves under the declaring instance's root and `check:kind-validators`
+    // can run it.
+    schema: "schemas/ig-metadata-index.ts",
+    validator: "schemas/ig-metadata-index.ts#IgMetadataIndexSchema",
+    summary:
+      "The IG Publisher's own metadata exports for one published IG, harvested verbatim — " +
+      "ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. " +
+      "Each export declares whether it was present, absent or never looked for, and a " +
+      "`uses` field that upstream declared and left empty is recorded as exactly that.",
+  },
+  // Binary releases — WHAT WAS PUBLISHED, under what version, with what
+  // digest. Never the bytes.
+  //
+  // Registered on the owner's ruling, 2026-09-30 — OPTION A of bean `rjug`:
+  // *"a `binary-release` kind, `holds: "state"`, one node per release,
+  // recording id, version, digest, size and where it is fetched from, never
+  // the bytes."*
+  //
+  // OPTION B WAS REUSING `materialization`, and the bean asked for the
+  // reservation to be decided rather than assumed: *"a release is an EVENT
+  // with a version and a digest, not a materialisation state."* Bean `gpdo`
+  // has since landed (owner's pick 2026-09-23, "Third purpose"; issue #1194,
+  // still open) and it SHARPENS that mismatch rather than softening it.
+  // `MATERIALIZATION_PURPOSES` is now `working | archival | both | compiled`,
+  // and every one of the four is a purpose of A COPY THIS INSTANCE HOLDS —
+  // may I re-fetch it, are these the stored bytes, both, or was it built from
+  // the inputs we have now. A release's subject is a publication UPSTREAM: it
+  // happened whether or not a byte was ever fetched here, and it stays true
+  // after every local copy is gone. `gpdo` added a third question to
+  // materialization and a release answers that one no better than the other
+  // two — it has no inputs, it has a version.
+  //
+  // So the two COMPOSE rather than substitute. A release node says "v1.8.0
+  // published package.tgz, this many bytes, this sha256, at this URL"; a
+  // materialization record says "and a copy is here, taken for this purpose".
+  // Asking a materialization node what was released returns an answer about
+  // what was FETCHED — the `catalogue`-vs-`library` confusion one corpus
+  // over.
+  //
+  // `state` by the one question: the release pipeline WRITES it as it runs,
+  // and it fails the stand-alone test the way `qa` and `health` do — detached
+  // from the thing released, a digest asserts nothing. NOT `derived`, which is
+  // the call worth stating now that `derived` exists and the entry above takes
+  // it: a derived graph is regenerated from a source that still exists, while
+  // re-running a release pipeline produces a DIFFERENT release with a new
+  // version and a new digest. Same distinction `qa-report` draws.
+  //
+  // `recordsWork: false` -- live state, but nothing anybody is partway
+  // through. A published release is a completed fact; an arriving agent
+  // cannot pick one up.
+  //
+  // NOT renderable. A release ledger is a provenance record consulted when
+  // somebody asks where a file went, not a page anybody reads: it is the same
+  // answer `health` and `qa-report` give, and for the same reason — the site
+  // build does not read it, and `renderable` asks about the site build rather
+  // than about legibility. Note what saying `true` would actually promise: a
+  // published page per release, listing every asset's fetch URL, including
+  // the ones a deploy phase deleted on purpose. The kind exists to make that
+  // history ASKABLE, not to republish it.
+  //
+  // The case it exists for is the deploy purge. `rjug` names the >100 MB files
+  // the WHO deploy phase DELETES before deployment; after the purge nothing
+  // anywhere records that they existed -- not the deployed site, not the
+  // repository, and not a materialization record, because no copy was kept.
+  // Hence `deleted-before-deploy` as a disposition, hence `fetchedFrom`
+  // required even on a purged asset, and hence the rule that a DECIDED
+  // disposition must say why: a removal with no recorded reason cannot be told
+  // from an accident, which is `deletion-requires-confirmation` written into a
+  // shape.
+  "binary-release": {
+    type: termIri("BinaryReleaseGraph"),
+    renderable: false,
+    holds: "state",
+    recordsWork: false,
+    // declared-path-literal: this table IS the declaration, as on `health`.
+    schema: "schemas/binary-release.ts",
+    validator: "schemas/binary-release.ts#BinaryReleaseSchema",
+    summary:
+      "Published binary releases -- one `folio-binary-release/v1` document per release, " +
+      "carrying its id, version and origin, and for each asset the size, the sha256 where " +
+      "one is known, where it is fetched from, and what became of it. Never the bytes: the " +
+      "schema is strict throughout, and a file a deploy phase deleted must still say where " +
+      "to get it back and why it went.",
+  },
   // Named editorial voice profiles, overlaid on the base house voice. A
   // separate kind from `kg` because a voice is OPT-IN per folio while a skill is
   // simply available: the activation list in `harness.config.json` is what makes

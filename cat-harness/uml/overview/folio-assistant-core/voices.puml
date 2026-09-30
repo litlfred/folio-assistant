@@ -13,7 +13,7 @@ package "folio-assistant-core/voices" as pkg_folio_assistant_core_voices <<voice
     title [1] : string
     instance [0..1] : string
     libraryId [0..1] : string
-    kgRef [0..1] : string
+    path [0..1] : string
     url [0..1] : string<uri>
     year [0..1] : integer
   }

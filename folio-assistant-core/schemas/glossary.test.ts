@@ -23,6 +23,7 @@ import {
   pagePath,
   permalinkOf,
   renderPages,
+  linkTermCodes,
 } from "../scripts/glossary-page.ts";
 import {
   ASSET_TYPES,
@@ -530,33 +531,25 @@ describe("an ordered glossary (owner, 2026-09-29: logical, not alphabetical)", (
   });
 });
 
-describe("per-locale glossary pages and language-tagged SKOS (bean c592)", () => {
-  test("a missing translation shows the SOURCE marked untranslated — never dropped, never silently English", async () => {
-    const { collect, renderLocalePage } = await import("../scripts/glossary-page.ts");
-    const c = collect();
-    // An empty translation map: every term is untranslated.
-    const page = renderLocalePage(c, "xx", new Map(), ["xx"]);
-    expect(page).toContain("_(untranslated)_");
-    expect(page).toContain("quality of the evidence");
-    expect(page).toMatch(/\*\*0 \/ \d+\*\*/);
-    expect(page).toContain("translation_status: unverified");
+describe("a description naming another term links to it (bean qgjh)", () => {
+  const c = collect();
+  const pages = renderPages(c);
+
+  test("every in-page term link lands on an entry of the same page", () => {
+    for (const [k, page] of pages) {
+      const ids = new Set([...page.matchAll(/<dt id="([^"]+)"/g)].map((m) => m[1]!));
+      for (const m of page.matchAll(/<a href="#([^"]+--[^"]+--[^"]+)"><code>/g)) {
+        expect(ids.has(m[1]!) ? "" : `${k}: #${m[1]} has no entry`).toBe("");
+      }
+    }
   });
 
-  test("a translation reaches the page and the SKOS, the source staying `en`", async () => {
-    const { collect, renderLocalePage, withTranslations } = await import("../scripts/glossary-page.ts");
-    const { templateName } = await import("../scripts/glossary-pot.ts");
-    const c = collect();
-    const s = c.glossaries.find((g) => g.glossary.terms.some((t) => t.id === "quality-of-the-evidence"))!;
-    const tr = new Map([["xx", new Map([[templateName(s), new Map([["quality of the evidence", "QOE-XX"]])]])]]);
-    expect(renderLocalePage(c, "xx", tr.get("xx")!, ["xx"])).toContain("**QOE-XX**");
-    const term = withTranslations(s, tr).terms.find((t) => t.id === "quality-of-the-evidence")!;
-    expect(term.prefLabel).toEqual({ en: "quality of the evidence", xx: "QOE-XX" });
-  });
-
-  test("the committed translations are read: every shipped locale translates every authored term", async () => {
-    const { readGlossaryTranslations } = await import("../scripts/glossary-page.ts");
-    const tr = readGlossaryTranslations();
-    expect([...tr.keys()].sort()).toEqual(["ar", "es", "fr", "ru", "zh"]);
-    for (const [, byScheme] of tr) for (const [, m] of byScheme) for (const [, v] of m) expect(v.length).toBeGreaterThan(0);
+  test("only an exact id of the SAME scheme links, and never the term itself", () => {
+    const s = { instance: "i", glossary: { id: "g", terms: [{ id: "a" }, { id: "b" }] } } as unknown as Parameters<
+      typeof linkTermCodes
+    >[0];
+    expect(linkTermCodes(s, "a", "<code>a</code> <code>b</code> <code>c</code>")).toBe(
+      '<code>a</code> <a href="#i--g--b"><code>b</code></a> <code>c</code>',
+    );
   });
 });

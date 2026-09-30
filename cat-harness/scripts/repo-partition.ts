@@ -12,6 +12,21 @@
  * entry is a module that must move, a dependency that must invert, or a
  * documented exception.
  *
+ * ## BOTH QUESTIONS ARE ASKED WITHIN ONE INSTANCE
+ *
+ * `ROOT` is this instance, and `SCAN_ROOTS` are relative to it, so question 2
+ * is "which edges cross a proposed boundary **among this instance's own
+ * modules**". It is silent about imports between instances that already exist
+ * side by side in the checkout. Bean `p11x`; the report says so in its own
+ * output, because a bare "0 wrong-direction edges" was cited as the wide claim
+ * on #1465 and had to be corrected by comment.
+ *
+ * The cross-instance axis belongs to `kg:detangle:direction`, where a node's
+ * layer is the instance it lives in — the owner's Option 2 ruling of
+ * 2026-09-30. It is blocking in CI. The two are not each other's second
+ * opinion: this one partitions a future layout by path rule, that one checks
+ * a present layout against declared `needs`, and Phase I.1 needs both.
+ *
  * ## Three states, not two
  *
  * A module this tool cannot classify is reported as `unassigned`, never
@@ -44,7 +59,8 @@
  *   `unassigned` and a finding
  */
 
-import { SPEC, REPOS } from "./partition/instance-rules.js";
+import { basename } from "path";
+import { SPEC, REPOS, ROOT, SCAN_ROOTS } from "./partition/instance-rules.js";
 import {
   analyse as analyseWith,
   classify as classifyWith,
@@ -126,7 +142,43 @@ function main(): void {
     else console.log(`  ${repoName(id).padEnd(20)} ${String(total).padStart(4)}  (rule ${c.rule}, triage ${c.triage}, keyword ${c.keyword}, unclaimed ${c.default})`);
   }
 
-  console.log(`\n${H}Wrong-direction edges: ${crossEdges.length}\n`);
+  // ── SCOPE, printed WITH the number rather than assumed by the reader.
+  //
+  // Bean `p11x`. This tool's ROOT is ONE instance, so every wrong-direction
+  // count it has ever printed is scoped to that instance's own modules and is
+  // silent about edges between already-extracted siblings. A PR citing the
+  // bare number therefore made an over-broad claim, which had to be corrected
+  // by comment on #1465 — and the bean's own line is that the fix belongs
+  // here rather than in per-PR prose.
+  //
+  // The owner ruled Option 2 (2026-09-30): this tool STAYS instance-scoped
+  // and `kg:detangle` owns the cross-instance axis. Option 3 — print the
+  // scope — was NOT the option chosen, and its substance comes along anyway
+  // because the two are not alternatives any more. Option 3 was rejected as
+  // a fix-substitute: it "stops the over-broad read without making anything
+  // visible". Under Option 2 something IS visible, so the same print line
+  // stops standing in for a fix and becomes the pointer TO one.
+  //
+  // It goes further than Option 3 asked, deliberately. A bare
+  // `(scope: cat-harness/)` tells a reader the number is narrower than it
+  // looks and leaves them to find the wide one; naming the check that owns
+  // the other question ROUTES them instead. A reader who knows a number is
+  // incomplete and cannot find its complement is not much better off than
+  // one who never doubted it.
+  //
+  // DERIVED from `ROOT` and `SCAN_ROOTS`, never spelled out: this instance's
+  // name is exactly the thing the bean recorded as wrong to assume, and a
+  // literal here would go stale on the next relocation while still reading
+  // as authoritative.
+  const scopeLabel = `${basename(ROOT)}/{${SCAN_ROOTS.join(",")}}`;
+  console.log(`\n${H}Wrong-direction edges within ${scopeLabel}: ${crossEdges.length}\n`);
+  console.log(
+    `${markdown ? "> " : "  "}SCOPE: one instance. This count is over modules under \`${basename(ROOT)}/\` only,\n` +
+      `${markdown ? "> " : "  "}bucketed into the five PROPOSED repos by path rule. It says nothing about imports\n` +
+      `${markdown ? "> " : "  "}between instances that already exist side by side in this checkout.\n` +
+      `${markdown ? "> " : "  "}The CROSS-INSTANCE axis is \`bun run kg:detangle:direction\`, which is blocking in CI.\n` +
+      `${markdown ? "> " : "  "}Do not cite this number as "0 wrong-direction edges" without the scope (bean p11x).\n`,
+  );
   if (crossEdges.length > 0) {
     const byPair = new Map<string, CrossEdge[]>();
     for (const e of crossEdges) {
@@ -178,6 +230,28 @@ function main(): void {
   //
   // `--strict` is kept as an accepted no-op so existing invocations do not
   // break; there is no longer a laxer mode for it to select.
+  //
+  // ── BOTH AXES ARE ZERO AND ENFORCED WITHIN ONE INSTANCE, and that is not
+  // the same sentence as "the layering holds". Bean `p11x`, corrected
+  // 2026-09-30 on the owner's Option 2 ruling.
+  //
+  // The paragraph above was read — here, in the migration plan, and on at
+  // least one PR — as discharging Phase I.1, whose gate is "the cross-edge
+  // list is empty or every survivor has a written reason". It does not,
+  // because `ROOT` is this instance and the scan never leaves it. `bf5l`
+  // measured the gap rather than arguing it: with a real wrong-direction
+  // import in place (`cat-harness/schemas/intake.ts` importing
+  // `folio-assistant-core`), `check:instance-graph` said no cycle, THIS TOOL
+  // said 0, and `kg:detangle` said 1. Three green checks did not mean the
+  // layering held.
+  //
+  // So I.1's gate is now BOTH this tool and `kg:detangle:direction`, which is
+  // blocking in CI and whose node layer IS the instance. Neither discharges
+  // I.1 alone; they answer different questions and are not each other's
+  // second opinion. Option 1 — widening `ROOT`/`SCAN_ROOTS` to the checkout —
+  // was considered and NOT taken: the path rules here are written against
+  // instance-relative paths, so it would have meant a large reclassification
+  // across ~17 instances to reach a fact another tool already reports.
   const unassigned = [...modules].filter(([, a]) => a.repo === "unassigned").map(([m]) => m);
   let failed = false;
   if (unassigned.length > 0) {
@@ -194,7 +268,9 @@ function main(): void {
     }
     console.error(
       "    A repo may not import one that depends on it. Either the CLASSIFICATION is wrong —" +
-        "\n    check the target's layer before the importer's — or the import is.",
+        "\n    check the target's layer before the importer's — or the import is." +
+        `\n    Scope: modules under \`${basename(ROOT)}/\` bucketed into the five PROPOSED repos. The` +
+        "\n    CROSS-INSTANCE axis is a different question — `bun run kg:detangle:direction`.",
     );
   }
   if (failed) process.exit(1);

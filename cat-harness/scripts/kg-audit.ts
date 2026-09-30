@@ -115,7 +115,7 @@ import {
   remotePackageDeclarations,
   remotePackageSkills,
 } from "./known-skills.js";
-import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
+import { LOCAL_PACKAGES } from "./skill-packages.js";
 import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
 import { graphVerdict, proseGraphs } from "./lsi.ts";
 import { orderedDependencies } from "../schemas/harness-config.js";

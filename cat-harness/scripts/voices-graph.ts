@@ -74,7 +74,7 @@ export interface VoiceRuleView {
    * Which KIND of thing the rule cites.
    *
    * `none` is unreachable through the schema — `VoiceRuleSourceSchema`
-   * requires exactly one of (`libraryId` + `sectionId`) or `kgRef` — and is
+   * requires exactly one of (`libraryId` + `sectionId`) or `path` — and is
    * carried anyway, because a reader that cannot represent the state it is
    * checking for cannot report it. If `none` ever appears on this page, the
    * schema stopped being enforced somewhere and the page says so instead of
@@ -164,7 +164,7 @@ export interface VoicesGraph {
 /** How a rule's citation resolves. */
 function citationKindOf(src: VoiceRule["source"]): CitationKind {
   if (src.libraryId !== undefined && src.sectionId !== undefined) return "library";
-  if (src.kgRef !== undefined) return "kg-node";
+  if (src.path !== undefined) return "kg-node";
   return "none";
 }
 
@@ -185,7 +185,7 @@ function ruleView(r: VoiceRule): VoiceRuleView {
       kind === "library"
         ? `${r.source.libraryId}#${r.source.sectionId}`
         : kind === "kg-node"
-          ? r.source.kgRef
+          ? r.source.path
           : undefined,
     citesInstance: r.source.instance,
     pages: r.source.pages,

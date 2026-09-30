@@ -407,6 +407,27 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 168,
     reads: "a card index with a schema brace — an IG's artefacts, known by canonical URL",
   },
+  "ig-metadata-index": {
+    // The `fhir-artifact-index` drawer with an arrow LEAVING it. It quotes
+    // that glyph on purpose, as that one quotes `catalogue`'s: the three are
+    // a family, and an unrelated mark would hide the relation the kind was
+    // registered to keep. What the arrow adds is the distinction itself —
+    // the index says what an IG HOLDS, this says what its toolchain REPORTED
+    // about what it holds.
+    glyph: "M4 6h12v12H4zM4 10h12M10 6v12M18 13h4m-2-2l2 2-2 2",
+    tone: 190,
+    reads: "a card index with an arrow leaving it — not what the IG holds, but what its toolchain reported about it",
+  },
+  "binary-release": {
+    // A sealed carton with its strap. Deliberately NOT the `uploads` arrow —
+    // that is something arriving, and a release is something that WENT, under
+    // a version, whether or not a byte of it was ever fetched here. The mark
+    // stands for the record of the carton rather than the carton: the kind
+    // holds a digest and a size and never the bytes.
+    glyph: "M4 9l8-4 8 4v7l-8 4-8-4zM4 9l8 4m8-4l-8 4m0 0v7M8 7l8 4",
+    tone: 24,
+    reads: "a sealed carton with its strap — what shipped under a version, recorded by digest and size, never by its bytes",
+  },
   library: {
     glyph: "M5 4h4v16H5zM11 4h3v16h-3zM16 5l3 15-2 .4L14 5.4z",
     tone: 36,

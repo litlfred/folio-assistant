@@ -1178,6 +1178,14 @@ export const RULES: Rule[] = [
       // ...and stage A, what that prose SAYS about the code (bean `ca4a`).
       "scripts/pair-claims.ts",
       "scripts/known-skills.ts",
+      // Which skill packages this checkout serves — moved here from the
+      // `skill_fetch` Tool (bean `9umr`) so the harness callers, `kg-audit`
+      // and the workflow engine, stop importing from a Tool. Harness beside
+      // `known-skills.ts`, which it builds on.
+      "scripts/skill-packages.ts",
+      // ...and the topic level it walks through (bean `9umr`): which
+      // subdirectories of a skills directory are topics, from `skills.json`.
+      "scripts/skill-topics.ts",
       // The checkout-portability gate, beside the module it runs. Harness by
       // subject: it reads `git ls-files` over THIS repository and grades the
       // tree's own filenames, which is a fact about the checkout and not about

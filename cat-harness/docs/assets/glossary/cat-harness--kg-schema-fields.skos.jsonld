@@ -2883,6 +2883,215 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseassetschema.bytes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseAssetSchema.bytes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Size in bytes. Required — this is half of what the node is for."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.bytes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseassetschema.contenttype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseAssetSchema.contentType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Media type, where the publisher declares one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.contentType",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseassetschema.dispositionreason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseAssetSchema.dispositionReason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Why, for a disposition somebody DECIDED. Required for those; refused for the rest."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.dispositionReason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseassetschema.fetchedfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseAssetSchema.fetchedFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where the bytes are fetched from. **Required, even for a purged asset** — a record of a file it cannot get back is a size and a hash with no referent."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.fetchedFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseassetschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseAssetSchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The file's published name, e.g. `package.tgz`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseAssetSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseidentityschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseIdentitySchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The release's own id in its origin — a GitHub release id, a registry key."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseidentityschema.publishedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseIdentitySchema.publishedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When it was published."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.publishedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseidentityschema.tag",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseIdentitySchema.tag"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The git tag, where the origin uses one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.tag",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseidentityschema.url",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseIdentitySchema.url"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The human-facing page for the release, if there is one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.url",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseidentityschema.version",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseIdentitySchema.version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The version released. Required: an id alone collides across re-publications."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseIdentitySchema.version",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/binary-release.releaseoriginrefschema.repository",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseOriginRefSchema.repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The repository or registry, e.g. `WorldHealthOrganization/smart-trust`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/binary-release.ts#ReleaseOriginRefSchema.repository",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/block-qa.blockqareport.criteria",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -14565,6 +14774,120 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/ig-menu.ts#IgMenuSourceSchema.ref",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/ig-metadata-index.igidentityschema.canonical",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgIdentitySchema.canonical"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG's canonical URL, where it declares one."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.canonical",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/ig-metadata-index.igidentityschema.packageid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgIdentitySchema.packageId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The NPM-style package id, e.g. `who.smart.trust`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.packageId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/ig-metadata-index.igidentityschema.version",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgIdentitySchema.version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG version this harvest was taken at. An id alone collides across versions."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ig-metadata-index.ts#IgIdentitySchema.version",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/ig-metadata-index.igmetadatasourceschema.harvestedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgMetadataSourceSchema.harvestedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When the harvest ran."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/ig-metadata-index.igmetadatasourceschema.harvestedfrom",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgMetadataSourceSchema.harvestedFrom"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The published site or package the exports were read out of."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.harvestedFrom",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/ig-metadata-index.igmetadatasourceschema.runurl",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IgMetadataSourceSchema.runUrl"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A URL for the harvest run, if one exists."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
       "skos:note": "candidate"
     },
     {
@@ -27105,25 +27428,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.instance",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/voices.voicerulesourceschema.kgref",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "VoiceRuleSourceSchema.kgRef"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "A node of THIS instance's knowledge graph, as a repo-relative path, for a voice that is a house standard rather than a reading of an outside document."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.kgRef",
       "skos:note": "candidate"
     },
     {
