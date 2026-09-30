@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-30T11:28:43Z
-updated_at: 2026-09-30T14:41:56Z
+updated_at: 2026-09-30T19:49:54Z
 parent: folio-assistant-1swy
 ---
 
@@ -161,3 +161,49 @@ told not to.
       hits the same wall from the other side — a gate reaching a kind through a
       helper or a runtime-composed path would false-fire. Raised for the owner
       rather than decided.
+
+
+## RULED 2026-09-30 — the general `@covers` checker is NOT built; the narrowing stands
+
+Done-when item 3 raised this for the owner rather than deciding it. The owner
+chose, from four options compared in full:
+
+> **Keep it narrow, as shipped** — a pinning test per kind as each gains a
+> covering gate.
+
+Rejected: a *general checker with an allowlist* (catches the class, but an
+allowlist is where false fires go to be silenced — the `1xhc` shape); *advisory
+only* (an ungated report is one nobody reads, which is `oqdr`'s exact shape,
+where three files went unrendered for days); *nothing further* (the next false
+`@covers` then gets found the way this one was, by accident).
+
+### The ruling rests on a measurement, not a preference
+
+`audit-coverage.md` records why the gate half is **declared** rather than
+inferred: a grep fails in BOTH directions. A checker of declarations hits the
+same wall from the other side — a gate reaching a kind through a helper or a
+runtime-composed path would false-fire.
+
+And that is not hypothetical here. **A lookalike parser written during this very
+bean misfired**: my test reimplemented the `@covers` parser and reported
+`gen-themes-css` as still claiming `themes`, because its new REASON contains the
+word. `coversIn` stops the kind list at the em-dash; the lookalike split the
+whole line. The `vq8g` defect inside the test written to catch `vq8g`. The test
+now imports `coversIn`.
+
+So the general form is not merely hard to write — it was written, in miniature,
+and it was wrong.
+
+### What the narrowing costs, stated rather than hidden
+
+A new graph kind that gains a covering gate and **no pinning test is unguarded**,
+and nothing reports that. That is the accepted cost of refusing a checker that
+false-fires. The obligation is manual: whoever wires a gate to a kind adds the
+test that says so.
+
+## Done when — item 3 closed
+
+- [x] Raised for the owner rather than decided — **ruled 2026-09-30: keep it
+      narrow.** The general checker is not to be built, and the reason is
+      recorded here and in `audit-coverage.md` so it is not rediscovered as an
+      improvement.
