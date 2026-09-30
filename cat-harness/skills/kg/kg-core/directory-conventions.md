@@ -782,6 +782,18 @@ reference through `declaresInstance`, which accepts either form, because
 `instance-repositories.test.ts` checks that every committed reference
 resolves.
 
+**The `owner/repo → IRI` map is derived too.** `repositoryNamespaces()` gives
+each repository's vocabulary namespace. One rule, `instanceNamespace`,
+produces it, and the glossary uses the same rule:
+- an instance that declares `iriBase` mints under its own release,
+  `<iriBase><version>/ns#`;
+- one that declares none mints under the platform site, `<stem><stub>/ns#`.
+
+`code-lists/own-namespaces.json` still lists these namespaces, because code
+reads them by code. The gate fails when the list spells one differently from
+what the declaration derives. So moving an instance's IRIs is one edit, to
+its declaration's `iriBase`, and the list follows.
+
 ### Every other marker: THE TYPE DECLARES ITS OWN FILENAME (STRICT)
 
 Settled by the owner 2026-09-20, bean `79t3` question 1. The rule above covers
