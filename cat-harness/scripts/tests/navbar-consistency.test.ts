@@ -204,8 +204,12 @@ describe("the themes set is iterated, not hardcoded", () => {
 
 describe("the denominator comes from the declared enumerator", () => {
   test("`instanceRootsIn` includes the repository root and excludes graph declarations", () => {
-    const names = instanceRootsIn(REPO).map((p) => p.split("/").pop());
-    expect(names).toContain("folio-assistant"); // the root declares
+    const roots = instanceRootsIn(REPO).map((p) => resolve(p));
+    // The root declares. Compared as a PATH: its basename is whatever the
+    // operator named the checkout, and an agent worktree is never called
+    // `folio-assistant` (bean `8zsb`).
+    expect(roots).toContain(REPO);
+    const names = roots.filter((p) => p !== REPO).map((p) => p.split("/").pop());
     for (const notAnInstance of ["beans", "interaction", "todos"]) {
       expect(names).not.toContain(notAnInstance);
     }

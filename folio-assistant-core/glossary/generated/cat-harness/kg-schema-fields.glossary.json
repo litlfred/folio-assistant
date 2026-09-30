@@ -8227,7 +8227,7 @@
     {
       "id": "theme.themerefschema.instance",
       "prefLabel": "ThemeRefSchema.instance",
-      "definition": "Declared instance name. Absent means the citing instance's own.",
+      "definition": "The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own.",
       "source": "cat-harness/schemas/theme.ts#ThemeRefSchema.instance",
       "status": "candidate"
     },
@@ -10159,7 +10159,7 @@
     {
       "id": "voices.voicerefschema.instance",
       "prefLabel": "VoiceRefSchema.instance",
-      "definition": "The declared name of the instance holding it. Absent means this one.",
+      "definition": "The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one.",
       "source": "cat-harness/schemas/voices.ts#VoiceRefSchema.instance",
       "status": "candidate"
     },
@@ -10180,7 +10180,7 @@
     {
       "id": "voices.voicerulesourceschema.instance",
       "prefLabel": "VoiceRuleSourceSchema.instance",
-      "definition": "The DECLARED NAME of the instance holding the corpus, when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.",
+      "definition": "The instance holding the corpus, as its planned `owner/repo` (bean `6rmv`; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.",
       "source": "cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.instance",
       "status": "candidate"
     },

@@ -7,14 +7,14 @@
   "sources": [
     {
       "title": "Role `translation-coordinator` — its persona, in the cat-harness role graph",
-      "instance": "cat-harness",
+      "instance": "litlfred/cat-harness",
       "path": "scenarios/roles.json"
     }
   ],
   "activeIn": {
     "roles": [
       {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "role": "translation-coordinator"
       }
     ]
@@ -28,7 +28,7 @@
       "severity": "minor",
       "judgementOnly": true,
       "source": {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "path": "scenarios/roles.json",
         "quote": "Runs the translation cycle without necessarily speaking the target languages. Tracks what is extracted, sent, returned and signed off — and what has gone stale since."
       }

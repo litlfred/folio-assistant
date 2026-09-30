@@ -30,6 +30,8 @@ Asked *"KGraph needs better name? CatHarness? … what is bootstrap's? consisten
 
 Owner: keep the primary focus on the bootstrap / bootstrap-tools separation. Needed for that only: bootstrap's `bs:` vocabulary is its own terms, and the harness's classes are minted in the harness's namespace (done in #1538); the classes themselves go here.
 
+_2026-09-30T19:12:25Z_ — Claimed by next/3r47 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## Progress, 2026-09-30
 
 - `GraphKindDef.type` (the class IRI) is gone; a kind states `layer?: "core"`
@@ -48,9 +50,11 @@ Owner: keep the primary focus on the bootstrap / bootstrap-tools separation. Nee
   class). `GlossaryGraph` and `UnknownGraph` keep their published definitions
   but are no longer minted.
 
-## Open — needs the owner
+## Owner ruling, 2026-09-30 — the KGraph chapter
 
 The `KGraph` docs chapter (`content/docs/kgraph/`, published at `/kgraph.html`,
 linked from 5 translated index pages) defines KGraph as "everything this
 harness knows about itself is one graph" — bootstrap's term Knowledge Graph
-under a coined name. Renaming it moves a public URL and translations.
+under a coined name. Owner chose **rename, keep a redirect**: the chapter
+becomes "Knowledge Graph" at `/knowledge-graph.html`, `/kgraph.html` redirects,
+and the translated link texts are flagged for re-translation. Next change.
