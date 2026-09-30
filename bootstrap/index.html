@@ -83,6 +83,47 @@ the four <a href="schemas/README.html#role">Roles</a> here are declared in <a hr
 </tr>
 </tbody>
 </table>
+<p>The same four, as <a href="scenarios/roles.json"><code>scenarios/roles.json</code></a> defines them, with every
+name each goes by: other names in use today, and former names with the day each
+was retired, so a name met in older text still leads to the right one.</p>
+<!-- kg:roles:begin -->
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>what it is</th>
+<th>also called</th>
+<th>formerly</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bootstrapping Agent</strong></td>
+<td>An agent asked to set up a <a href="schemas/README.html#harness">Harness</a> with ONLY the knowledge bootstrap's README.md hands it.</td>
+<td></td>
+<td>Initiator (until 2026-09-23)</td>
+</tr>
+<tr>
+<td><strong>Knowledge Graph Data Store</strong></td>
+<td>A git repository, reached either through the git CLI or through a forge's API.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Requestor</strong></td>
+<td>Wants to initialize — or bootstrap, or install, or load, or harness — a harness: bootstrap itself, or any <a href="schemas/README.html#harness">Harness</a> built on it.</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Logger</strong></td>
+<td>A machine that accepts log messages and puts them somewhere a person can read.</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<!-- kg:roles:end -->
 <p>As the Bootstrapping Agent you have no <a href="schemas/README.html#harness">Harness</a> yet, so you have no
 tools (programs to call): a <a href="schemas/README.html#harness">Harness</a> defines those, and bootstrap does not. If a step
 seems to need one, it belongs to the <a href="schemas/README.html#harness">Harness</a> you are about to set up, not to
@@ -237,6 +278,11 @@ Process that reads a file, where a diagram says so.</p>
 <td></td>
 </tr>
 <tr>
+<td><a href="ns.jsonld"><code>ns.jsonld</code></a></td>
+<td>Every term bootstrap defines, in order, and every Graph Kind it defines, as RDF and SKOS — the document bootstrap's namespace resolves to.</td>
+<td></td>
+</tr>
+<tr>
 <td><a href="bootstrap.json"><code>bootstrap.json</code></a></td>
 <td>Bootstrap</td>
 <td></td>
@@ -316,11 +362,6 @@ Process that reads a file, where a diagram says so.</p>
 <td></td>
 </tr>
 <tr>
-<td><a href="schemas/glossary-ledger.schema.json"><code>glossary-ledger.schema.json</code></a></td>
-<td>Glossary Ledger</td>
-<td></td>
-</tr>
-<tr>
 <td><a href="schemas/graph.schema.json"><code>graph.schema.json</code></a></td>
 <td>Knowledge Graph declaration</td>
 <td></td>
@@ -396,7 +437,7 @@ Process that reads a file, where a diagram says so.</p>
 </tr>
 <tr>
 <td><a href="processes/ns.jsonld"><code>ns.jsonld</code></a></td>
-<td>data</td>
+<td>bootstrap's diagram elements</td>
 <td></td>
 </tr>
 </tbody>
@@ -414,23 +455,6 @@ Process that reads a file, where a diagram says so.</p>
 <tr>
 <td><a href="models/models.json"><code>models.json</code></a></td>
 <td>Which languages a model is good at, and whether anybody checked.</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p><strong><a href="glossary/README.html"><code>glossary/</code></a></strong>: The swimlane glossary's retirement ledger.</p>
-<table>
-<thead>
-<tr>
-<th>file</th>
-<th>what it is</th>
-<th>used by</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="glossary/glossary-ledger.json"><code>glossary-ledger.json</code></a></td>
-<td>data</td>
 <td></td>
 </tr>
 </tbody>

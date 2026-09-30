@@ -26,14 +26,14 @@ property stated in prose and read through a cast is not checked anywhere.</p>
 tool that lives in cat-harness (owner, 2026-09-24). It was in
 <code>bootstrap-tools</code> until then.</p>
 <h2 id="which-document-this-describes" class="tsd-anchor-link">Which document this describes<a href="#which-document-this-describes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<p>The one that is PUBLISHED, which is <code>kg-export --instance ./bootstrap</code> (the
-sole publisher since bean <code>dyd3</code>), not <code>gen-bootstrap-graph.ts</code>, which still
-runs as a test subject but publishes nothing. The two differ in one way:
-the published document carries PROV provenance (<code>generatedAt</code>,
-<code>sourceCommit*</code>, or <code>sourceCommitUnavailable</code>), and the generator's does not.
-Owner, 2026-09-23 (bean <code>hwzu</code>): every published graph carries it, and the
-emission skill's &quot;no timestamp, no commit SHA&quot; is narrowed to the <code>@graph</code>
-itself. So the fields are optional here, and both documents parse.</p>
+<p><code>gen-bootstrap-graph.ts</code>'s, which runs as a test subject and publishes
+nothing. Since 2026-09-30 (owner, bean <code>xsqm</code>: &quot;bootstrap.jsonld, should be
+in bootstrap-tools&quot;) the PUBLISHED <code>bootstrap.jsonld</code> is written by
+bootstrap-tools' <code>scripts/export-graph.ts</code> in bootstrap's classes and
+standard properties, and its shape is <code>GraphExportSchema</code> in
+<code>bootstrap-tools/schemas/graph-export.ts</code>, not this one. Before then it was
+<code>kg-export --instance ./bootstrap</code> (bean <code>dyd3</code>), whose PROV fields are why
+<code>generatedAt</code> and <code>sourceCommit*</code> are optional below.</p>
 </div></div></section>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Type Aliases"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="type-aliases">Type Aliases<a href="#type-aliases" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary><dl class="tsd-member-summaries"><dt class="tsd-member-summary" id="bootstrapgraphdocument"><span class="tsd-member-summary-name"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Type Alias"><use href="../assets/icons.svg#icon-2097152"></use></svg><a href="../types/schemas_bootstrap-graph.BootstrapGraphDocument.html">BootstrapGraphDocument</a><a href="#bootstrapgraphdocument" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></span></dt><dd class="tsd-member-summary"></dd></dl></details>

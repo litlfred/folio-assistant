@@ -12,26 +12,14 @@
 <li><a href="" aria-current="page">VOICE_VENDORS_DIR</a></li></ul>
 <h1>Variable VOICE_VENDORS_DIR<code class="tsd-tag">Const</code></h1></div>
 <div class="tsd-signature"><span class="tsd-kind-variable">VOICE_VENDORS_DIR</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;vendors&quot;</span></div>
-<div class="tsd-comment tsd-typography"><p>The reserved sub-sub-graph holding VENDOR OVERRIDES of a base voice.</p>
-<p>Owner, 2026-09-22: <em>&quot;vendor overides go in sub-sub-grahiphs like
-voice/vendors or voices-vendors&quot;</em>.</p>
-<p>Of the two spellings offered, the NESTED one is the shape this declaration
-model already has. <code>voices-vendors/</code> would need a SECOND declared graph for
-one concept, and a declaration inside a declaration is the defect #263's own
-comment names — so the vendors live inside the <code>voices</code> graph as a
-subdirectory, one declaration, and every consumer that already asks for
-<code>voices</code> gets them with no change.</p>
-<p><strong>The directory is where a person looks; the FILE is still the contract.</strong> A
-vendor voice declares what it overrides through its own <a href="schemas_voices.VoiceProfileSchema.html" class="tsd-kind-variable">VoiceProfileSchema</a> <code>extends</code> field — the field is <code>extends</code>, not
-<code>overrides</code>, and writing the latter is how this comment was wrong for one
-draft — exactly as one sitting flat would, so nothing downstream infers a
-relation from a path. That is this repository's standing rule — extension and
-location are coincidences, a declaration inside the file is the contract —
-and it is why this name is a convention for humans rather than a second
-source of truth.</p>
+<div class="tsd-comment tsd-typography"><p><strong>Superseded 2026-09-30 (bean <code>rkqp</code>)</strong>: the loader no longer descends by
+this name. The owner asked for <code>vendors/</code> and each <code>vendors/&lt;id&gt;/</code> to be
+DECLARED sub-graphs, so <code>voiceFilesIn</code> follows <code>voices.json</code> and
+<code>vendors/vendors.json</code>. The name stays as the conventional spelling a person
+uses when creating the directory.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5b8db8da691ba8524ec86e7fbf7756a3d1a4b77f/cat-harness/schemas/voices.ts#L661">work/folio-assistant/folio-assistant/cat-harness/schemas/voices.ts:661</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4408776fddc656e28a8a1f0724fd4438319b1dfc/cat-harness/schemas/voices.ts#L668">work/folio-assistant/folio-assistant/cat-harness/schemas/voices.ts:668</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

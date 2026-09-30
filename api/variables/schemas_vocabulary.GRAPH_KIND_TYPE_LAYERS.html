@@ -18,15 +18,17 @@ gave every graph kind <code>harness</code>, so <code>termIri(&quot;SchemaGraph&q
 cat-harness IRI, while <code>ns-export.ts</code> kept its own map publishing <code>schemas</code>
 as bootstrap's. A term published by one layer and minted by another is the
 leak the layering rule forbids. <code>ns-export</code> now asks <a href="../functions/schemas_vocabulary.termLayer.html" class="tsd-kind-function">termLayer</a>.</p>
-<p>Bootstrap's rows are the kinds in <code>BOOTSTRAP_GRAPH_KINDS</code> (<code>graph.ts</code>), plus
-<code>KGraph</code>, the kind of a Knowledge Graph itself; <code>graph.test.ts</code> holds the two
-lists together. The <code>core</code> rows are the folio's own furniture, which the
+<p>bootstrap has NO rows, since 2026-09-30 (owner, bean <code>xsqm</code>): bootstrap's
+vocabulary is exactly its defined terms, and <code>SkillGraph</code>, <code>ProcessGraph</code>
+and the rest are the harness's classes for a directory holding a kind — not
+terms bootstrap defines. The kinds themselves are bootstrap's, and are
+named in its vocabulary as <code>bootstrap:graphKind/&lt;kind&gt;</code> (<code>graphKindNamespace</code>). The <code>core</code> rows are the folio's own furniture, which the
 owner named as NOT bootstrap: &quot;we shouldnt need voicegraph or librarygrph or
 previewgrapjh in bootstrap!!&quot;. An absent kind is <code>harness</code>, the safe
 direction, for the reason given on <code>termLayer</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/5b8db8da691ba8524ec86e7fbf7756a3d1a4b77f/cat-harness/schemas/vocabulary.ts#L595">work/folio-assistant/folio-assistant/cat-harness/schemas/vocabulary.ts:595</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/4408776fddc656e28a8a1f0724fd4438319b1dfc/cat-harness/schemas/vocabulary.ts#L572">work/folio-assistant/folio-assistant/cat-harness/schemas/vocabulary.ts:572</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
