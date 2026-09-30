@@ -39,7 +39,7 @@
  *   bun run cat-harness/scripts/gen-external-schemas-viz.ts
  *   bun run cat-harness/scripts/gen-external-schemas-viz.ts --check
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -53,6 +53,8 @@ import {
   type ExternalSchema,
 } from "../schemas/external-schema.js";
 import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
+import { sourceLinks } from "../schemas/cat-harness.ts";
+import { detectRepoUrl } from "../src/core/git-refs.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "external-schemas-viewer";
@@ -137,11 +139,21 @@ function cell(v: string): string {
   return v.replace(/\|/g, "\\|").replace(/\r?\n/g, " ").replace(/\s+/g, " ").trim();
 }
 
+/**
+ * `fileHref`, when given, turns a dependent's repository path into a link to
+ * that file (bean `qgjh`: references are links wherever the target resolves).
+ * It returns `undefined` for a path that is not a file here, which stays code.
+ */
 export function page(
   specs: readonly ExternalSchema[],
   users: SpecUsers,
   inUse: readonly string[],
+  fileHref: (repoPath: string) => string | undefined = () => undefined,
 ): string {
+  const userCell = (u: string): string => {
+    const h = fileHref(u);
+    return h === undefined ? `\`${cell(u)}\`` : `[\`${cell(u)}\`](${h})`;
+  };
   // One row per user and spec; a `.bpmn` per diagram would bury the rest, so
   // `xmlns` users are counted per directory.
   const bySpec = new Map<string, SpecUse[]>();
@@ -277,7 +289,7 @@ export function page(
       b.push("**What depends on it.** Nothing here declares it.", "");
     } else {
       b.push("**What depends on it.**", "", "| user | declared by |", "|---|---|");
-      for (const r of rows) b.push(`| \`${cell(r.user)}\` | ${FORM[r.form]}${r.via ? ` (\`${cell(r.via)}\`)` : ""} |`);
+      for (const r of rows) b.push(`| ${userCell(r.user)} | ${FORM[r.form]}${r.via ? ` (${userCell(r.via)})` : ""} |`);
       b.push("");
     }
 
@@ -329,7 +341,18 @@ if (import.meta.main) {
 
   const users = declaredUsers(specs);
   // The page says which directories it draws (#1168 B7a-2).
-  const rendered = withRendersFrontMatter(page(specs, users, namespacesInUse()), handledDirectories(REPO, INSTANCE_ROOT, KIND), VIEWER_TOOL);
+  // A dependent links to its file on the repository host, and only when that
+  // file exists here: a directory or a path gone since stays code.
+  const repoUrl = detectRepoUrl(REPO);
+  const fileHref = (repoPath: string): string | undefined => {
+    const abs = join(REPO, repoPath);
+    return existsSync(abs) && statSync(abs).isFile() ? sourceLinks(repoUrl, repoPath, "main")?.viewHref : undefined;
+  };
+  const rendered = withRendersFrontMatter(
+    page(specs, users, namespacesInUse(), fileHref),
+    handledDirectories(REPO, INSTANCE_ROOT, KIND),
+    VIEWER_TOOL,
+  );
   const out = join(baseDocs(REPO), PAGE);
 
   if (check) {

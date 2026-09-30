@@ -199,6 +199,8 @@ export const LibraryIndexEntrySchema = z
     hasManifest: z.boolean(),
     hasStructure: z.boolean(),
     hasImagesJson: z.boolean(),
+    // The item's generated README on the repository host (bean `qgjh`).
+    readme: z.string().url().optional(),
     pageStart: PageNumber,
     pageEnd: PageNumber,
     words: Count,
@@ -340,6 +342,17 @@ export const VoicesIndexSchema = z
                 quote: z.string(),
                 counterintuitive: z.boolean().optional(),
                 commonError: z.string().optional(),
+                // Where a LIBRARY citation links (bean `qgjh`,
+                // `scripts/lib/library-links.ts`): each present only where it
+                // resolves. `viewer` is site-relative; the others absolute.
+                links: z
+                  .object({
+                    viewer: z.string().optional(),
+                    readme: z.string().url().optional(),
+                    source: z.string().url().optional(),
+                  })
+                  .strict()
+                  .optional(),
               })
               .strict(),
           ),
