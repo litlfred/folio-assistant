@@ -447,7 +447,19 @@ function derivableRequirements(dir: string): Requirement[] {
       children = [];
       out.push({ name: "contents", state: "unmet", detail: `could not list ${dir}` });
     }
-    const stray = children.filter((c) => !allowed.has(c) && !c.startsWith("."));
+    // The entry's GENERATED README (bean `qgjh`, owner 2026-09-30: a page per
+    // library item "like bootstrap readmes", written by `library-readmes.ts`).
+    // Allowed only when it carries that generator's marker region: a README
+    // an arm or a person dropped here without it is still a stray.
+    const generatedReadme = (c: string): boolean => {
+      if (c !== "README.md") return false;
+      try {
+        return readFileSync(join(dir, c), "utf-8").includes("<!-- kg:subgraph:begin -->");
+      } catch {
+        return false;
+      }
+    };
+    const stray = children.filter((c) => !allowed.has(c) && !c.startsWith(".") && !generatedReadme(c));
     if (stray.length > 0) {
       out.push({
         name: "contents",

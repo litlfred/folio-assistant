@@ -263,6 +263,7 @@ package "cat-harness/root-docs" as pkg_cat_harness_root_docs <<docs>> {
     quote [1] : string
     counterintuitive [0..1] : boolean
     commonError [0..1] : string
+    links [0..1] : object
   }
   class "Voice" as cat_harness_root_docs_folio_voices_index_v1_Voice <<json: VoicesIndexSchema>> #f4f4f1 {
     id [1] : string

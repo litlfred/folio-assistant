@@ -1452,6 +1452,7 @@ classDiagram
       quote [1] string
       counterintuitive [0..1] boolean
       commonError [0..1] string
+      links [0..1] object
     }
     class cat_harness_docs_folio_voices_index_v1_Voice["Voice"] {
       <<json: VoicesIndexSchema>>
@@ -1788,6 +1789,7 @@ classDiagram
       quote [1] string
       counterintuitive [0..1] boolean
       commonError [0..1] string
+      links [0..1] object
     }
     class cat_harness_root_docs_folio_voices_index_v1_Voice["Voice"] {
       <<json: VoicesIndexSchema>>
