@@ -20,7 +20,17 @@ import { join } from "node:path";
 
 export function gitFiles(dir: string): string[] | undefined {
   if (!existsSync(dir)) return undefined;
-  const r = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], { cwd: dir, encoding: "utf-8" });
+  const r = spawnSync(
+    "git",
+    ["ls-files", "-z", "--cached", "--others", "--exclude-standard"],
+    // 64 MiB, not node's 1 MiB default: on ENOBUFS `spawnSync` sets `error`,
+    // so a corpus whose path names outgrow the buffer reads as "git could not
+    // answer" and every caller refuses or falls back. Measured 2026-09-30 —
+    // 1,058,420 bytes here, and `iri:sync:check` exited 2 with "git could not
+    // list the corpus". Restated rather than imported for the same reason the
+    // rest of this module is (bean `xsqm`).
+    { cwd: dir, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 },
+  );
   if (r.error !== undefined || r.status !== 0) return undefined;
   return r.stdout.split("\0").filter(Boolean).map((p) => join(dir, p));
 }

@@ -78,6 +78,18 @@ import { existsSync, readdirSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 
 /**
+ * How much `git ls-files` output a corpus listing may produce.
+ *
+ * Node's default is 1 MiB, and on ENOBUFS `spawnSync` sets `error` rather
+ * than writing a truncated list — so the symptom is total, not partial. That
+ * is the one mercy here: a caller sees "git could not answer" instead of a
+ * quietly short corpus. It is still wrong, because several callers FALL BACK
+ * to a filesystem walk, and a walk is a different corpus with different
+ * exclusions.
+ */
+const MAX_CORPUS_BYTES = 64 * 1024 * 1024;
+
+/**
  * The files git accounts for under {@link dir}, as absolute paths — or
  * `undefined` when git cannot answer.
  *
@@ -89,7 +101,14 @@ export function gitCorpus(dir: string, pathspec: readonly string[] = []): string
   const r = spawnSync(
     "git",
     ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...pathspec],
-    { cwd: dir, encoding: "utf-8" },
+    // `maxBuffer` is not defensive padding — without it this returns `undefined`
+    // on a corpus whose PATH NAMES exceed node's 1 MiB default, and the size of
+    // a repository's file list is not something a caller can reason about.
+    // Measured 2026-09-30: this repository listed 1,058,420 bytes and every
+    // caller lost git, 43 KB after `main` was still under. `trackedPaths` in
+    // `scripts/check-portable-paths.ts` had already been given the same 64 MiB
+    // in isolation, which is the evidence this is a class rather than a one-off.
+    { cwd: dir, encoding: "utf-8", maxBuffer: MAX_CORPUS_BYTES },
   );
   if (r.error !== undefined || r.status !== 0) return undefined;
   return r.stdout

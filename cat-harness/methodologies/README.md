@@ -7,11 +7,14 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `methodologies`, holding 
 
 | file | what it is | used by |
 |---|---|---|
+| [`adequacy-for-purpose-modelling.md`](adequacy-for-purpose-modelling.md) | Adequacy-for-purpose modelling |  |
 | [`consensus-grounded-subject-evaluation.md`](consensus-grounded-subject-evaluation.md) | Consensus-grounded subject evaluation: score against where experts agree, and read the panel |  |
 | [`dmn.md`](dmn.md) | DMN — the computable case |  |
 | [`hybrid-llm-deterministic.md`](hybrid-llm-deterministic.md) | Hybrid LLM/deterministic — generate the rule, then execute it |  |
 | [`kepner-tregoe.md`](kepner-tregoe.md) | Kepner-Tregoe Decision Analysis |  |
 | [`madr.md`](madr.md) | MADR — the record, not the method |  |
+| [`mcdm-aggregation.md`](mcdm-aggregation.md) | Aggregation-type MCDM |  |
+| [`probabilistic-decision-analysis.md`](probabilistic-decision-analysis.md) | Probabilistic decision-making algorithms |  |
 | [`raci.md`](raci.md) | RACI — involvement, in four kinds |  |
 | [`rasci.md`](rasci.md) | RASCI — the fifth letter, and when it earns its place |  |
 | [`skill-pipeline-subject-indexing.md`](skill-pipeline-subject-indexing.md) | [Skill](../../bootstrap/schemas/README.md#skill)-pipeline subject indexing: decompose the cataloguer's stages and validate each |  |

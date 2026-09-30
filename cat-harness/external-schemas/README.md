@@ -24,4 +24,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `external-schemas`, holdi
 | [`w3c-web-annotation.json`](w3c-web-annotation.json) | Web Annotation Vocabulary |  |
 | [`w3c-xsd11-datatypes.json`](w3c-xsd11-datatypes.json) | XML Schema Definition Language (XSD) 1.1 Part 2: Datatypes |  |
 | [`who-smart-base.json`](who-smart-base.json) | WHO SMART Guidelines base IG |  |
+| [`who-smart-base.terminology.json`](who-smart-base.terminology.json) | data |  |
 <!-- kg:subgraph:end -->

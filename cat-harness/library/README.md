@@ -7,16 +7,20 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 
 | file | what it is | used by |
 |---|---|---|
+| [`figure-descriptions.json`](figure-descriptions.json) | data |  |
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
 | [`arxiv-2312.07755v1/`](arxiv-2312.07755v1/README.md) | 186 files | |
 | [`arxiv-2504.07199v3/`](arxiv-2504.07199v3/README.md) | 77 files | |
 | [`arxiv-2504.19675v2/`](arxiv-2504.19675v2/README.md) | 83 files | |
 | [`arxiv-2504.21474v1/`](arxiv-2504.21474v1/README.md) | 32 files | |
 | [`arxiv-2508.05192v2/`](arxiv-2508.05192v2/README.md) | 44 files | |
+| [`arxiv-2508.21620v2/`](arxiv-2508.21620v2/README.md) | 65 files | |
 | [`arxiv-2605.03537v1/`](arxiv-2605.03537v1/README.md) | 62 files | |
 | [`arxiv-2606.04382v1/`](arxiv-2606.04382v1/README.md) | 77 files | |
 | [`arxiv-2607.14456v1/`](arxiv-2607.14456v1/README.md) | 104 files | |
+| [`arxiv-2607.20636v1/`](arxiv-2607.20636v1/README.md) | 462 files | |
 | [`dusengumuremyi-2026-ai-mediated-raci/`](dusengumuremyi-2026-ai-mediated-raci/README.md) | 29 files | |
 | [`gurel-tat-2017-swot-analysis/`](gurel-tat-2017-swot-analysis/README.md) | 61 files | |
 | [`sammut-bonnici-galea-2015-swot-analysis/`](sammut-bonnici-galea-2015-swot-analysis/README.md) | 34 files | |
+| [`wang-rangaiah-2026-mcdm-aggregation/`](wang-rangaiah-2026-mcdm-aggregation/README.md) | 138 files | |
 <!-- kg:subgraph:end -->

@@ -90,7 +90,14 @@ export interface PublishablePackage {
 
 /** The manifests git accounts for, for one filename. */
 function manifests(root: string, glob: string): string[] {
-  const r = spawnSync("git", ["ls-files", "-z", "--", glob], { cwd: root, encoding: "utf-8" });
+  // 64 MiB for the same reason `gitCorpus` carries it: node caps a child's
+  // stdout at 1 MiB and sets ENOBUFS rather than truncating. This call is
+  // pathspec-scoped so it is far from the limit, but the consequence here is
+  // worse than elsewhere — `[]` is returned, so an unanswerable git reads as
+  // "no publishable packages" and the gate passes over nothing. That vacuity
+  // is bean `folio-assistant-bnuy`; raising the buffer removes the only
+  // realistic way to reach it, and does not fix it.
+  const r = spawnSync("git", ["ls-files", "-z", "--", glob], { cwd: root, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
   if (r.error !== undefined || r.status !== 0) return [];
   return r.stdout.split("\0").filter((p) => p.length > 0);
 }
