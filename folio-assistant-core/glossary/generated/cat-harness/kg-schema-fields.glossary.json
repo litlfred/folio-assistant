@@ -2121,6 +2121,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.subscriptions",
+      "prefLabel": "CatHarnessDeclaration.subscriptions",
+      "definition": "External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — {@link Subscription}. Issue #1719.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.subscriptions",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.topology",
       "prefLabel": "CatHarnessDeclaration.topology",
       "definition": "The topology axes this deployment declares about itself. See {@link Topology} — every field optional, absent meaning \"has not said\".",
@@ -2195,6 +2202,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.remoteGraphs",
       "definition": "Graphs this instance knows about and does not hold — see {@link RemoteGraph}. A SEPARATE array from `directories`, not a variant of one, because a remote graph has no directory.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.subscriptions",
+      "prefLabel": "CatHarnessDeclarationSchema.subscriptions",
+      "definition": "External Knowledge Graphs this one subscribes to — see {@link Subscription}. `.optional()` for the reason `associatedHarnesses` is. Ids are unique, and never also in `needs` or `associatedHarnesses` — refined below.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.subscriptions",
       "status": "candidate"
     },
     {
@@ -2552,6 +2566,55 @@
       "prefLabel": "SubgraphRelation.parent",
       "definition": "The containing directory's `id`.",
       "source": "cat-harness/schemas/cat-harness.ts#SubgraphRelation.parent",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.assets",
+      "prefLabel": "Subscription.assets",
+      "definition": "How referenced binary assets are materialised. Each copy still passes `Process_MaterializeRemote`'s gates.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.assets",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.harnesses",
+      "prefLabel": "Subscription.harnesses",
+      "definition": "Harness names from the substrate CHOSEN for instantiation. Instantiating writes `<name>.config.json`, which is what puts it in the navbar.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.harnesses",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.id",
+      "prefLabel": "Subscription.id",
+      "definition": "Local name for the subscription; unique within this list. The substrate's own name, unless two pins of one substrate are ever needed.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.id",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.note",
+      "prefLabel": "Subscription.note",
+      "definition": "One sentence a reader of the visualizer sees.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.note",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.ref",
+      "prefLabel": "Subscription.ref",
+      "definition": "The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.repository",
+      "prefLabel": "Subscription.repository",
+      "definition": "Where the substrate lives, `owner/repo` (#1652).",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.subscription.subgraphs",
+      "prefLabel": "Subscription.subgraphs",
+      "definition": "Subgraph ids (the substrate's `directories[].id`) CHOSEN for materialisation. Everything else stays referenced.",
+      "source": "cat-harness/schemas/cat-harness.ts#Subscription.subgraphs",
       "status": "candidate"
     },
     {
