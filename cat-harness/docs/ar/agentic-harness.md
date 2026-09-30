@@ -403,7 +403,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 | تأليف المحتوى (paper) | مهارات authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
 | تأليف المحتوى (document) | مهارات folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
 | دورة حياة المحتوى | مهارات content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
-| استيعاب المستندات | `docs-generation.md` | [`skills/folio-core/docs-generation.md`](../../skills/folio-core/docs-generation.md) |
+| استيعاب المستندات | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | الإرسال والتنسيق | `dispatch-agent.md`، و`coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | أنواع المحتوى والمحولات | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
 | تأليف مخططات BPMN | مهارة `bpmn-authoring` | [`skills/folio-core/`](../../skills/folio-core/) |

@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/theming/site-presentation-assets.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/theming/site-presentation-assets.md) — do not edit here.
+> Generated from [`cat-harness/skills/ui/theming/site-presentation-assets.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/theming/site-presentation-assets.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/theming/site-presentation-assets.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/theming/site-presentation-assets.md){: .fa-edit-source }
 
 {% raw %}
 # Site presentation assets — the node is the source, the stylesheet is a rendering

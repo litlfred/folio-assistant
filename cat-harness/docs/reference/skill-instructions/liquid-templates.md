@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/liquid-templates.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/liquid-templates.md) — do not edit here.
+> Generated from [`cat-harness/skills/ui/ui-core/liquid-templates.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/liquid-templates.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/liquid-templates.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/liquid-templates.md){: .fa-edit-source }
 
 {% raw %}
 # Liquid templates — layout only, every fact from the graph

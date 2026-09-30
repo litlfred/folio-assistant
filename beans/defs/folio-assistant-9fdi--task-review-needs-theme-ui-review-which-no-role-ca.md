@@ -124,7 +124,7 @@ activity failing `role-carries-activity-skill`. The note now carries both halves
   and `document-ingestion.kg-qa.json` both report **pass**.
 - `Task_Review`'s `<folio:documentation>` and `<folio:no-call reason>` carry the
   ruling and the two-moment distinction, in the diagram rather than only here.
-- `skills/folio-core/theme-ui-review.md` opens with the two moments. Its old
+- `skills/ui/ui-core/theme-ui-review.md` opens with the two moments. Its old
   first heading — *"Post-MVP, because there is nothing to check before there is a
   render"* — now reads as the second row of that table rather than as the whole
   skill, and the file says so, because a heading that contradicts the ruling is
