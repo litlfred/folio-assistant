@@ -2,7 +2,7 @@ import { describe, test, expect } from "bun:test";
 import { isAbsolute } from "path";
 import { INSTANCE_ROOT, FOLIO_ROOT, hasFolio, LEAN_DIR, QOU_LEAN_DIR } from "./helpers";
 import { findContentRepoRoot, findPapers } from "../../content/pipeline/repo-root";
-import { repoRootFor } from "../../schemas/cat-harness.js";
+import { readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
 
 /**
  * folio-assistant is the PLATFORM; papers, the Lake workspace,
@@ -26,7 +26,9 @@ describe("FOLIO_ROOT detection", () => {
     // published artefacts, so the two now differ and a test that conflated
     // them would pass for the wrong reason.
     expect(INSTANCE_ROOT.endsWith("cat-harness")).toBe(true);
-    expect(repoRootFor(INSTANCE_ROOT).endsWith("folio-assistant")).toBe(true);
+    // The repository by its DECLARED name, not its folder (bean `t5dm`): a
+    // worktree or a clone under another name is the same repository.
+    expect(readDeclaration(repoRootFor(INSTANCE_ROOT))?.name).toBe("folio-assistant");
   });
 
   test("agrees with hasFolio()", () => {

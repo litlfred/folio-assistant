@@ -9,8 +9,7 @@ source_pdf: 9789241548960_eng.pdf
 source_sha256: bfcd856e3ad7ab20
 ---
 Peer review of the draft of the final guideline document by key individuals, 
-both internal and external to WHO, is important for all guidelines pro­
-duced by WHO, including those produced rapidly. In the context of a rapid 
+both internal and external to WHO, is important for all guidelines produced by WHO, including those produced rapidly. In the context of a rapid 
 Chapter 11 
 Rapid advice guidelines in the setting of a public health emergency
 153
@@ -18,8 +17,7 @@ Rapid advice guidelines in the setting of a public health emergency
 advice guideline, peer review will be accelerated and abbreviated. Early in 
 the guideline development process, the steering group should identify three 
 to six key individuals and solicit their interest, availability and commitment 
-to a very short turn-around time for their reviews. Leading external organi­
-zations that are involved in the public health emergency should also be asked 
+to a very short turn-around time for their reviews. Leading external organizations that are involved in the public health emergency should also be asked 
 to review the draft document. Doing so promotes engagement and buy-in 
 during dissemination and implementation and provides the opportunity to 
 raise and address issues before publication. Obviously the peer review period 

@@ -9,6 +9,7 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `who-iris-
 |---|---|---|
 | [`9789241548960-eng-cover.png`](9789241548960-eng-cover.png) | a file |  |
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
+| [`section-verdicts.json`](section-verdicts.json) | data |  |
 | [`who-pub-tps-931-cover.png`](who-pub-tps-931-cover.png) | a file |  |
 | [`withheld.json`](withheld.json) | data |  |
 | [`wpr-rdo-2020-003-eng-cover.png`](wpr-rdo-2020-003-eng-cover.png) | a file |  |

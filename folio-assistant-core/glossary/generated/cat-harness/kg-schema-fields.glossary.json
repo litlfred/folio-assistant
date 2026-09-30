@@ -2261,6 +2261,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectory.summaries",
+      "prefLabel": "ContentDirectory.summaries",
+      "definition": "Whether the agent summary drain may offer a `library`'s blocks; absent means `drain`. See the schema field (bean `x80s`).",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.summaries",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectory.theme",
       "prefLabel": "ContentDirectory.theme",
       "definition": "Which theme this subgraph renders on — one answer for every surface that renders it (navbar section, board panel, sticky).",
@@ -2300,6 +2307,13 @@
       "prefLabel": "ContentDirectoryShape.readOnlyBasis",
       "definition": "WHY, and required whenever `readOnly` is declared — either value.",
       "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.readOnlyBasis",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentdirectoryshape.summaries",
+      "prefLabel": "ContentDirectoryShape.summaries",
+      "definition": "Whether the agent summary drain may draft summaries for a `library` directory's prose blocks (bean `x80s`). Absent means `drain`.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.summaries",
       "status": "candidate"
     },
     {
@@ -5516,6 +5530,13 @@
       "status": "candidate"
     },
     {
+      "id": "intake.intakeschema.licence",
+      "prefLabel": "IntakeSchema.licence",
+      "definition": "The licence the uploader established, as the SAME record a library manifest carries in `meta.licence` (`schemas/source-licence.ts`, bean `7bg9`). Read by the EARLY licence step of document ingestion, before any derivation. Absent means nobody recorded one — reported as undetermined, never as cleared.",
+      "source": "cat-harness/schemas/intake.ts#IntakeSchema.licence",
+      "status": "candidate"
+    },
+    {
       "id": "intake.intakeschema.record",
       "prefLabel": "IntakeSchema.record",
       "definition": "The Dublin Core record describing it, relative to this file.",
@@ -7123,6 +7144,20 @@
       "prefLabel": "ScriptQaReport.updated_at",
       "definition": "ISO-8601 UTC timestamp of last write.",
       "source": "cat-harness/schemas/script-qa.ts#ScriptQaReport.updated_at",
+      "status": "candidate"
+    },
+    {
+      "id": "section-verdicts.sectionverdictfileschema.verdicts",
+      "prefLabel": "SectionVerdictFileSchema.verdicts",
+      "definition": "entry slug → section id (the `sections/<id>.md` stem) → verdict.",
+      "source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictFileSchema.verdicts",
+      "status": "candidate"
+    },
+    {
+      "id": "section-verdicts.sectionverdictschema.saw",
+      "prefLabel": "SectionVerdictSchema.saw",
+      "definition": "What the inspector SAW — the reason for the role, checkable against the page.",
+      "source": "cat-harness/schemas/section-verdicts.ts#SectionVerdictSchema.saw",
       "status": "candidate"
     },
     {

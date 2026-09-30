@@ -24,6 +24,7 @@
  * @module schemas/intake
  */
 import { z } from "zod";
+import { SourceLicenceSchema } from "./source-licence.ts";
 
 import { SourceProvenanceSchema } from "./source-provenance.ts";
 import { ArchiveEntrySchema } from "./archive-contents.js";
@@ -77,6 +78,14 @@ export const IntakeSchema = z
     _comment: z.string().min(1).optional(),
     source: IntakeSourceSchema,
     files: z.array(IntakeFileSchema),
+    /**
+     * The licence the uploader established, as the SAME record a library
+     * manifest carries in `meta.licence` (`schemas/source-licence.ts`, bean
+     * `7bg9`). Read by the EARLY licence step of document ingestion, before
+     * any derivation. Absent means nobody recorded one — reported as
+     * undetermined, never as cleared.
+     */
+    licence: SourceLicenceSchema.optional(),
   })
   .strict()
   .refine((i) => i.item !== undefined || i.record !== undefined || i.title !== undefined, {

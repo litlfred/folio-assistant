@@ -13,7 +13,7 @@ parent: Skill instructions
 {% raw %}
 # Translation manager
 
-> Skill id: `translation-manager` · Capability: `translation` · Package:
+> Skill id: `translation-manager` · Package:
 > `folio-core`
 
 Manage the translation lifecycle for folio content. This skill covers the full

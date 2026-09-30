@@ -106,6 +106,28 @@ for a URL, absent for a direct upload) plus the capture moment.
 Place raw files in `uploads/<document-id>/`. Create `intake.json`
 with source metadata. Files are committed to git for reproducibility.
 
+**Record the licence in `intake.json` when you know it.** The ingestion
+pipeline's licence step runs EARLY — before any extraction, by the owner's
+ruling on bean `7bg9` — because `library/` is committed content and refusing a
+source after deriving from it is a deletion nobody may take unasked. That step
+sees only the upload: the `licence` record in `intake.json` (the same
+`stated` / `unknown` record a library manifest carries in `meta.licence`,
+`schemas/source-licence.ts`) and whether a `LICENSE` file sits beside it.
+`bun run ingest` prints its verdict before the first arm runs, and after the
+arms it writes a recorded licence into the staged entry's `licence.json` — the
+authored sidecar `gen-library-jsonld` carries into `meta.licence` (the manifest
+itself is generated, so a licence written there would not survive a
+regeneration). It never overwrites a `licence.json` already there; a mismatch
+is printed as a conflict.
+
+| verdict | when | what to do |
+|---|---|---|
+| `stated` | `licence: { status: "stated", id, basis }` | nothing — `basis` says where it is stated |
+| `unknown` | `licence: { status: "unknown", searched: [...] }` | nothing now; the places tried are the record |
+| `undetermined` | no licence recorded (a `LICENSE` sibling is named, not read) | ingestion proceeds, and says so — undetermined is never reported as cleared |
+
+It never reads a licence out of extracted text; that is a later check's job.
+
 Supported formats:
 - **PDF** — academic papers, scanned guidelines, reports
 - **LaTeX** — `.tex` source bundles
@@ -443,7 +465,7 @@ Before marking intake complete:
 
 | process | step(s) that name it |
 |---|---|
-| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Detect media type and mint a doc id; Extract structure (calls a sub-process); Derive content from the assets (calls a sub-process); Build the L1 knowledge graph (calls a sub-process); Move into library/<bib-slug>/; Available to cite as an L1 source |
+| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | Detect media type and mint a doc id; Establish the licence from the upload alone; Extract structure (calls a sub-process); Derive content from the assets (calls a sub-process); Build the L1 knowledge graph (calls a sub-process); Move into library/<bib-slug>/; Available to cite as an L1 source |
 | [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Search trusted SOURCES — L1; Search trusted CONTENT — L2 DAKs, L3 IGs; Query data repositories and statistical datasets |
 | [Getting started](../../processes/getting-started.html) | Scan the repo for content worth importing |
 | [Ingestion subprocess — build the L1 knowledge graph](../../processes/ingest-build-l1-kg.html) | Write dublin-core.jsonld (the record of truth); Write manifest.jsonld referencing it; Record assets[] — local path or remote URL; Bind the folder name to the bibliography slug; Link L1 nodes into the corpus graph |

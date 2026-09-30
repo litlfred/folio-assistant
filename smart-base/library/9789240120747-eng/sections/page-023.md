@@ -14,8 +14,7 @@ granularity: page
 1. Assess the current state and enabling environment
 Table 3. Assessing the technology infrastructure
 Assessing network 
-coverage, connec­
-tivity and electricity
+coverage, connectivity and electricity
 Obtain or calculate the World Economic Forum Network Readiness Score.
 Obtain the availability of electricity at the facility level, including the 
 availability for 8 hours a day.

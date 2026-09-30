@@ -8,6 +8,8 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | file | what it is | used by |
 |---|---|---|
 | [`image-verdicts.json`](image-verdicts.json) | data |  |
+| [`arxiv-0909.4061v2/`](arxiv-0909.4061v2/README.md) | 227 files | |
+| [`arxiv-2202.02427v1/`](arxiv-2202.02427v1/README.md) | 73 files | |
 | [`arxiv-2312.07755v1/`](arxiv-2312.07755v1/README.md) | 186 files | |
 | [`arxiv-2504.07199v3/`](arxiv-2504.07199v3/README.md) | 77 files | |
 | [`arxiv-2504.19675v2/`](arxiv-2504.19675v2/README.md) | 83 files | |
@@ -16,7 +18,10 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `library`, holding `libra
 | [`arxiv-2605.03537v1/`](arxiv-2605.03537v1/README.md) | 62 files | |
 | [`arxiv-2606.04382v1/`](arxiv-2606.04382v1/README.md) | 77 files | |
 | [`arxiv-2607.14456v1/`](arxiv-2607.14456v1/README.md) | 104 files | |
+| [`deerwester-1990-indexing-by-lsa/`](deerwester-1990-indexing-by-lsa/README.md) | 107 files | |
 | [`dusengumuremyi-2026-ai-mediated-raci/`](dusengumuremyi-2026-ai-mediated-raci/README.md) | 29 files | |
 | [`gurel-tat-2017-swot-analysis/`](gurel-tat-2017-swot-analysis/README.md) | 61 files | |
+| [`landauer-foltz-laham-1998-intro-lsa/`](landauer-foltz-laham-1998-intro-lsa/README.md) | 128 files | |
+| [`qi-hessen-vanderheijden-2023-ca-vs-lsa/`](qi-hessen-vanderheijden-2023-ca-vs-lsa/README.md) | 78 files | |
 | [`sammut-bonnici-galea-2015-swot-analysis/`](sammut-bonnici-galea-2015-swot-analysis/README.md) | 34 files | |
 <!-- kg:subgraph:end -->

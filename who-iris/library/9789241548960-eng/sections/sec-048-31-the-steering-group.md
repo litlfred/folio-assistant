@@ -14,6 +14,5 @@ reminded that WHO is producing a guideline, not a textbook, as the
 reviewers will almost invariably suggest expanding the planned scope.
 ■■
 Reconsider ‒ Once you have incorporated the external feedback as 
-appropriate, review the scope and key questions again. Is the scope fea­
-sible? Is the time frame reasonable? Are sufficient financial and human 
+appropriate, review the scope and key questions again. Is the scope feasible? Is the time frame reasonable? Are sufficient financial and human 
 resources available?

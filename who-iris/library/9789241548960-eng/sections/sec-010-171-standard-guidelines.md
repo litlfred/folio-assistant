@@ -20,8 +20,7 @@ guideline are either developed de novo or by updating previous WHO
 guidelines.
 Standard guidelines generally focus on one or more of the following:
 ■■
-clinical interventions (e.g. the management of severe acute malnutri­
-tion in infants and children);
+clinical interventions (e.g. the management of severe acute malnutrition in infants and children);
 ■■
 health-care system or policy approaches (e.g. country pharmaceutical 
 pricing policies);
@@ -29,8 +28,7 @@ pricing policies);
 public health interventions or exposures (e.g. optimal intake of dietary 
 folate in pregnant women);
 ■■
-diagnostic tests (e.g. fluorescent light-emitting diode [LED] micros­
-copy for the diagnosis of tuberculosis), or
+diagnostic tests (e.g. fluorescent light-emitting diode [LED] microscopy for the diagnosis of tuberculosis), or
 ■■
 surveillance and monitoring (e.g. surveillance guidelines for measles, 
 rubella and congenital rubella syndrome in the WHO European Region).

@@ -97,6 +97,15 @@ import { RENDER_LOG_DIR } from "../schemas/render-log.ts";
 export const STAGING_PREFIX = "STAGING";
 
 /**
+ * The retired-record store under {@link STAGING_PREFIX} — bean `6pfo`. A
+ * directory beside the previews, never one of them: it belongs to no pull
+ * request, so a liveness-gated carry would drop exactly the records of closed
+ * ones it exists to keep. Every slug guard in `feature-staging.yml` refuses
+ * this name, so no preview can be staged over it.
+ */
+export const RETIRED_DIR = "_retired";
+
+/**
  * What else on the publish branch must survive a full replace.
  *
  * The previews above are carried because a reviewer's link would otherwise
@@ -114,7 +123,7 @@ export const STAGING_PREFIX = "STAGING";
  * `6pfo`'s retired-record store for the next. Adding one should be a row here,
  * not a third code path that can disagree with the other two.
  */
-export const CARRIED_PREFIXES: readonly string[] = [RENDER_LOG_DIR];
+export const CARRIED_PREFIXES: readonly string[] = [RENDER_LOG_DIR, `${STAGING_PREFIX}/${RETIRED_DIR}`];
 
 export interface RestoreOptions {
   /** Git working directory the commands run in. */
@@ -190,7 +199,11 @@ function previewsAt(repo: string, rev: string, prefix: string): string[] | { rea
   if (!has) return [];
   const kids = git(repo, ["ls-tree", "-d", "--name-only", `${rev}:${prefix}`]);
   if (kids.code !== 0) return { reason: `git ls-tree ${rev}:${prefix} exited ${kids.code}: ${kids.err.trim()}` };
-  return kids.out.split("\n").map((s) => s.trim()).filter((s) => s !== "").sort();
+  return kids.out
+    .split("\n")
+    .map((s) => s.trim())
+    .filter((s) => s !== "" && !(prefix === STAGING_PREFIX && s === RETIRED_DIR))
+    .sort();
 }
 
 /** Does `rev` carry anything at `prefix`? A reason rather than a bare false. */
