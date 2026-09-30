@@ -31,3 +31,13 @@ Each finding re-measured on a local build of that commit, at 1280×800 and 390×
 - **STILL-PRESENT** — References shown as plain text, not links — processes: The 'skill|run by' table has 99 rows and 0 links, with .bpmn names as <code>. The 'lane|in' table (105 rows) also has 0 links. Only the process table links (74/74). (links.mjs)
 - **STILL-PRESENT** — References shown as plain text, not links — tools: The main table 'tool|what it does|invoked|satisfies|i/o' has 104 rows and 0 <a>. satisfies/skill ids are <code> (296 unlinked codes on the page). (links.mjs)
 - **STILL-PRESENT** — References shown as plain text, not links — voices: 0 content links on /cat-harness/voices/ (102 span.cite) and on /cat-harness/voices/who-style-guide/ (25 span.cite, e.g. 'who-pub-tps-931#page-014, p14'). (links.mjs)
+## Slice 1 — processes and tools (2026-09-30)
+
+One shared answer for "does this skill have a page": `cat-harness/scripts/lib/skill-pages.ts` (`skillPagesOf`, `skillPageHref`). It reads the directory `gen-skill-docs.ts` writes and never composes a page from an id, so a skill without a page stays code instead of becoming a 404.
+
+| page | before | after | unresolved |
+|---|---|---|---|
+| processes: skill → run by | 0 links in 99 rows | **322** links (94 of 99 skills plus every diagram) | 0 |
+| tools: satisfies | 0 links in 105 rows | **131** of 135 skill references | 0 |
+
+The skills left as code are bootstrap's own (`bootstrap-kg-navigation`, `confirm-harness`, `discussion`, `log-message`, `root-readme`, `bootstrap-graph-emission`, `bootstrap-graph-publication`), which publish no instruction page. Remaining pages: catalogue, external-schemas, folio, glossary, library, methodologies, voices.

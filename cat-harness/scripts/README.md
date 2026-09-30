@@ -14,7 +14,7 @@ _400 files directly here, too many to list: 280 .ts, 44 .sh, 33 .bat, 26 .py, 14
 | [`eval/`](eval/) | 2 files | |
 | [`git-hooks/`](git-hooks/) | 5 files | |
 | [`knot-plots/`](knot-plots/) | 10 files | |
-| [`lib/`](lib/) | 8 files | |
+| [`lib/`](lib/) | 9 files | |
 | [`partition/`](partition/) | 2 files | |
 | [`render-tex/`](render-tex/) | 2 files | |
 | [`tests/`](tests/) | 477 files | |

@@ -50,6 +50,7 @@ import { join, resolve } from "node:path";
 
 import { declarationPathIn } from "../schemas/cat-harness.js";
 import { docsLayers } from "./compose-docs.js";
+import { skillPageHref, skillPagesOf } from "./lib/skill-pages.ts";
 import { conventionalPage, handledDirectories, withRendersFrontMatter } from "./viewer-declarations.js";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -209,7 +210,18 @@ function cell(v: string): string {
   return v.replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
 }
 
-export function page(rows: readonly ToolRow[], known: ReadonlySet<string>): string {
+/**
+ * `skillPages` is the set of skills with a published instruction page
+ * (`lib/skill-pages.ts`): a `satisfies` naming one is a link, anything else
+ * stays code — bean `qgjh`. `fromPage` is where this page is published, so
+ * the link is relative to it rather than assumed.
+ */
+export function page(
+  rows: readonly ToolRow[],
+  known: ReadonlySet<string>,
+  skillPages: ReadonlySet<string> = new Set(),
+  fromPage = "tools/index.md",
+): string {
   const invoke = new Map<string, number>();
   const install = new Map<string, number>();
   for (const r of rows) {
@@ -302,7 +314,12 @@ export function page(rows: readonly ToolRow[], known: ReadonlySet<string>): stri
   b.push("## Every tool", "", "| tool | what it does | invoked | satisfies | i/o |", "|---|---|---|---|---|");
   for (const r of rows) {
     const sat = r.satisfies.length
-      ? r.satisfies.map((s) => `\`${cell(s)}\``).join("<br>")
+      ? r.satisfies
+          .map((s) => {
+            const href = skillPageHref(s, fromPage, skillPages);
+            return href === undefined ? `\`${cell(s)}\`` : `[\`${cell(s)}\`](${href})`;
+          })
+          .join("<br>")
       : "**—**";
     b.push(
       `| \`${cell(r.id)}\`<br>${cell(r.title)} | ${cell(r.description)} | ` +
@@ -315,7 +332,11 @@ export function page(rows: readonly ToolRow[], known: ReadonlySet<string>): stri
 
 /** The page as committed: {@link page} plus the directories it draws (#1168 B7a-2). */
 export function publishedPage(rows: Parameters<typeof page>[0], known: Parameters<typeof page>[1], repo = REPO): string {
-  return withRendersFrontMatter(page(rows, known), handledDirectories(repo, join(repo, "cat-harness"), KIND), VIEWER_TOOL);
+  return withRendersFrontMatter(
+    page(rows, known, skillPagesOf(repo), pageRelPath(repo) ?? "tools/index.md"),
+    handledDirectories(repo, join(repo, "cat-harness"), KIND),
+    VIEWER_TOOL,
+  );
 }
 
 if (import.meta.main) {

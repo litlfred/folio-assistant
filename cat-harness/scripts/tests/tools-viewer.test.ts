@@ -230,3 +230,25 @@ describe("the generator writes where the declaration says", () => {
     expect(readFileSync(join(DOCS, rel), "utf-8")).toBe(publishedPage(rows, skillIds(REPO)));
   });
 });
+
+/**
+ * Bean `qgjh`: a `satisfies` that names a skill with a published instruction
+ * page is a link; one without a page stays code rather than a link that 404s.
+ */
+describe("satisfies links what resolves (qgjh)", () => {
+  const withSkill = rows.find((r) => r.satisfies.length > 0)!;
+  const s = withSkill.satisfies[0]!;
+  const line = (md: string): string => md.split("\n").find((l) => l.startsWith(`| \`${withSkill.id}\``))!;
+
+  it("links a skill whose page exists, relative to the page it sits on", () => {
+    expect(line(page(rows, new Set([s]), new Set([s]), "tools/index.md"))).toContain(
+      `[\`${s}\`](../reference/skill-instructions/${s}.html)`,
+    );
+  });
+
+  it("leaves a skill with no page as code", () => {
+    const l = line(page(rows, new Set([s]), new Set(), "tools/index.md"));
+    expect(l).toContain(`\`${s}\``);
+    expect(l).not.toContain(`[\`${s}\`]`);
+  });
+});

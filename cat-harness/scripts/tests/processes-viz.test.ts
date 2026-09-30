@@ -239,3 +239,27 @@ describe("the committed page is current", () => {
     expect(readFileSync(join(DOCS, pageRelPath(REPO)!), "utf-8")).toBe(publishedIndex(rows));
   });
 });
+
+/**
+ * Bean `qgjh`: "emit links wherever the target resolves". The skill → run-by
+ * table printed every skill and every diagram as code — 0 links in 99 rows.
+ * A skill links to its instruction page only when that page exists, and a
+ * diagram links to its own process page; neither becomes a link that 404s.
+ */
+describe("the skill → run-by table links what resolves (qgjh)", () => {
+  const ok = rows.filter((r) => r.loadError === undefined);
+  const [skill, files] = [...skillToProcesses(ok)][0]!;
+  const tableRow = (html: string): string => html.split("\n").find((l) => l.includes(`\`${skill}\``) && l.includes(basename(files[0]!)))!;
+
+  it("links a skill that has a page, and each diagram to its process page", () => {
+    const line = tableRow(page(rows, new Set([skill])));
+    expect(line).toContain(`[\`${skill}\`](../reference/skill-instructions/${skill}.html)`);
+    const stem = ok.find((r) => r.file === files[0])!.stem;
+    expect(line).toContain(`](${stem}.html)`);
+  });
+
+  it("leaves a skill with no page as code, never a link that 404s", () => {
+    const line = tableRow(page(rows, new Set()));
+    expect(line.startsWith(`| \`${skill}\` |`)).toBe(true);
+  });
+});
