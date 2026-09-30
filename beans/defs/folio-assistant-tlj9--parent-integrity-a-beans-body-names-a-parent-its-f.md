@@ -133,3 +133,57 @@ retype `p5wm` to `milestone` (then `4ccr` hangs off it directly), or retype
 `4ccr` to `feature` **and** `10uc` to `epic`. The owner's ruling authorised a
 reparent, not a retype, and `bean-coordination` does not let an agent decide
 another bean's type on its own initiative. Put to the owner instead.
+
+---
+
+## 2026-09-30, third pass — CORRECTION: the table above is wrong, and the reparent is done
+
+**Done-when #1 is done.** `4ccr` carries `parent: folio-assistant-p5wm` and
+`check:bean-parents` exits 0.
+
+### The table in the section above is wrong, and so was the reason I reverted
+
+It said `p5wm` (GOAL 2) is `type: bug` with `parent: folio-assistant-ahvw`, and
+concluded GOAL 2 had no milestone in its line. Read by exact path, every goal is
+a milestone with no parent:
+
+| bean | type | parent |
+|---|---|---|
+| `p5wm` (GOAL 2) | **milestone** | — |
+| `yg29` (GOAL 3) | **milestone** | — |
+| `vuip` (GOAL 1) | **milestone** | — |
+| `10uc` | `task` | `p5wm` |
+
+So an epic could hang from `p5wm` all along. **No retype of anything was
+needed**, and the owner's ruling was never blocked by the store's shape.
+
+### How the wrong table was produced
+
+`glob("beans/defs/*p5wm*.md")[0]` matched
+`folio-assistant-k59d--milestone-critical-paths-go-stale-p5wm-and-yg29-bo.md`
+— a bean whose TITLE mentions `p5wm` and `yg29`, sorted before the real file.
+Every "p5wm" fact in that table is `k59d`'s front matter: `type: bug`,
+`parent: ahvw`. The same glob then RETYPED `k59d` to `milestone`, which
+`check:bean-parents` caught immediately (*"a `milestone` hangs below a `epic`"*)
+— the check found my edit before I did. `k59d` is restored to `bug`.
+
+**Fifth wrong-instrument error in this session, and the same shape every time:**
+a plausible-looking accessor substituted for the exact one — `get_status` for
+CI (returns `total_count: 0` here), a `<dir>/<dir>.json` glob for instances,
+`graphs` for `graphKinds`, the `images` namespace for the glyph registry, and
+now a substring glob for a bean id. Four of the five produced a *confident
+wrong number* rather than an error, which is what makes the class dangerous.
+
+The one true part of the earlier diagnosis survives: **`10uc` is a `task`**, and
+a task is not a permitted parent type. That is why `parent: 10uc` failed. The
+remedy was simply the goal itself.
+
+### Measured now
+
+GOAL 2: **69 descendants, 49 open.** Not the 52 quoted earlier — that was
+computed before merging main, which has since landed more beans and completed
+others. The figure moves with main; 49 is what it is on this head.
+
+`check:bean-parents`, `check:bean-bodies`, `check:bean-front-matter`,
+`readme:subgraphs:check`, `check:navbar-consistency:check` and
+`audit:coverage:require-all` all pass.
