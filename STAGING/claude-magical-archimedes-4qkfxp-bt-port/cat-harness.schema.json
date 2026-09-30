@@ -375,8 +375,21 @@
                               "type": "boolean"
                             },
                             "theme": {
-                              "type": "string",
-                              "minLength": 1
+                              "type": "object",
+                              "properties": {
+                                "instance": {
+                                  "type": "string",
+                                  "minLength": 1
+                                },
+                                "themeId": {
+                                  "type": "string",
+                                  "pattern": "^[a-z][a-z0-9-]*$"
+                                }
+                              },
+                              "required": [
+                                "themeId"
+                              ],
+                              "additionalProperties": false
                             },
                             "icon": {
                               "type": "string",
@@ -446,8 +459,21 @@
                     "type": "boolean"
                   },
                   "theme": {
-                    "type": "string",
-                    "minLength": 1
+                    "type": "object",
+                    "properties": {
+                      "instance": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "themeId": {
+                        "type": "string",
+                        "pattern": "^[a-z][a-z0-9-]*$"
+                      }
+                    },
+                    "required": [
+                      "themeId"
+                    ],
+                    "additionalProperties": false
                   },
                   "icon": {
                     "type": "string",
@@ -481,8 +507,21 @@
                 "type": "boolean"
               },
               "theme": {
-                "type": "string",
-                "minLength": 1
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "themeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9-]*$"
+                  }
+                },
+                "required": [
+                  "themeId"
+                ],
+                "additionalProperties": false
               }
             },
             "required": [
@@ -588,8 +627,21 @@
                 "maximum": 9007199254740991
               },
               "theme": {
-                "type": "string",
-                "pattern": "^[a-z][a-z0-9-]*$"
+                "type": "object",
+                "properties": {
+                  "instance": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "themeId": {
+                    "type": "string",
+                    "pattern": "^[a-z][a-z0-9-]*$"
+                  }
+                },
+                "required": [
+                  "themeId"
+                ],
+                "additionalProperties": false
               },
               "summary": {
                 "type": "string",
@@ -770,8 +822,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-bt-port/cat-harness.jsonld",
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-bt-port",
-    "sha": "66abc0370631963fc614b7fdb738eb636f6f7fec",
+    "sha": "cd73d01d34c8722ac5cb1679febe1f13112ad3e2",
     "pr": "1553/merge",
-    "run": "36701933897"
+    "run": "36704577016"
   }
 }
