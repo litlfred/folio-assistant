@@ -146,6 +146,56 @@ export interface OwnedStickyTheme {
   theme: Extract<ResolvedTheme, { kind: "sticky" }>;
 }
 
+/** One instance-declared WEBPAGE theme, with the instance that owns it. */
+export interface OwnedWebpageTheme {
+  instance: string;
+  theme: Extract<ResolvedTheme, { kind: "webpage" }>;
+}
+
+/**
+ * Every WEBPAGE-kind theme an instance declares — one per instance, at most.
+ *
+ * Bean `7h3u`. The sibling of {@link instanceStickyThemes}, and the difference
+ * between them is the whole reason this is a second function rather than a
+ * `kind` parameter:
+ *
+ * **A sticky theme id is ONE namespace on the page.** The board selects on
+ * `[data-fa-sticky-theme="<themeId>"]` and a card writes the bare id, so two
+ * instances declaring the same id collide and `instanceStickyThemes` refuses
+ * one of them.
+ *
+ * **A webpage theme is scoped by the INSTANCE whose pages it dresses**, so two
+ * instances may both declare `id: "web"` and never meet — their rules apply on
+ * different URLs. Refusing that collision would be inventing a constraint the
+ * surface does not have, so there are no `conflicts` here and none is reported.
+ *
+ * What IS refused is a second webpage theme inside ONE instance, because
+ * nothing would say which of them dresses that instance's pages. That is
+ * ambiguity in the declaration rather than a clash between declarations, so it
+ * throws rather than being filtered: a silently-picked theme is the failure
+ * mode, and `themes.test.ts` in the declaring instance is where it surfaces.
+ */
+export function instanceWebpageThemes(repoRoot: string, platform = PLATFORM_THEME_OWNER): OwnedWebpageTheme[] {
+  const out: OwnedWebpageTheme[] = [];
+  const names = instanceRootsIn(repoRoot)
+    .map((r) => readDeclaration(r)?.name)
+    .filter((n): n is string => n !== undefined && n !== platform)
+    .sort();
+  for (const name of [...new Set(names)]) {
+    const found = instanceThemes(repoRoot, name);
+    if (!found.ok) continue;
+    const webpage = found.themes.filter((t): t is Extract<ResolvedTheme, { kind: "webpage" }> => t.kind === "webpage");
+    if (webpage.length > 1) {
+      throw new Error(
+        `instance ${name} declares ${webpage.length} webpage themes (${webpage.map((t) => t.id).join(", ")}) — ` +
+          `nothing says which dresses its pages. Declare one, or scope them yourself.`,
+      );
+    }
+    if (webpage[0]) out.push({ instance: name, theme: webpage[0] });
+  }
+  return out;
+}
+
 /** Why an instance's sticky theme was NOT emitted — each a finding, never a silent drop. */
 export type StickyThemeConflict =
   | { kind: "shadows-platform"; instance: string; themeId: string }
