@@ -95,7 +95,8 @@ Four questions, in this order. The worked call for each term is in
    nothing. Each becomes a link the day its referent becomes a node — residue
    worth recording, not a reason to assert the edge early.
 4. **Is one name carrying two relations?** Then it is two terms: `source` was a
-   `.bpmn` path on a Process and `bpmn-lane` on a lane-derived Role, so it is
+   `.bpmn` path on a Process and `bpmn-lane` on a lane-derived Role (a node
+   kind retired in #1168 B9b: a lane is now a `Lane`), so it is
    `sourcePath` and `sourceKind`. Heterogeneous SHAPE under one relation is a
    different case — `install` is a command string from a Capability and a
    dispatch object from a Tool, and stays one term typed `@json`, because

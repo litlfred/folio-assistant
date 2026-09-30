@@ -16,7 +16,6 @@ classDiagram
       invoke [1] object
       io [1] object
       satisfies [1..*] string[]
-      alternativeTo [0..*] string[]
       selection [0..1] object
       requires [0..1] object
       maintains [0..*] Maintain[]
@@ -1003,6 +1002,11 @@ classDiagram
       <<could not determine>>
     }
   }
+  namespace cat_harness__folio_assistant_sci_data_skills {
+    class n_cat_harness_folio_assistant_sci_data_skills_skills["skills: no node schema"] {
+      <<could not determine>>
+    }
+  }
   namespace cat_harness__folio_assistant_core_skills {
     class n_cat_harness_folio_assistant_core_skills_skills["skills: no node schema"] {
       <<could not determine>>
@@ -1219,6 +1223,7 @@ classDiagram
       hasManifest [1] boolean
       hasStructure [1] boolean
       hasImagesJson [1] boolean
+      readme [0..1] string~uri~
       pageStart [1] integer | null
       pageEnd [1] integer | null
       words [1] integer
@@ -1317,6 +1322,7 @@ classDiagram
       quote [1] string
       counterintuitive [0..1] boolean
       commonError [0..1] string
+      links [0..1] object
     }
     class cat_harness_docs_folio_voices_index_v1_Voice["Voice"] {
       <<json: VoicesIndexSchema>>
@@ -1555,6 +1561,7 @@ classDiagram
       hasManifest [1] boolean
       hasStructure [1] boolean
       hasImagesJson [1] boolean
+      readme [0..1] string~uri~
       pageStart [1] integer | null
       pageEnd [1] integer | null
       words [1] integer
@@ -1653,6 +1660,7 @@ classDiagram
       quote [1] string
       counterintuitive [0..1] boolean
       commonError [0..1] string
+      links [0..1] object
     }
     class cat_harness_root_docs_folio_voices_index_v1_Voice["Voice"] {
       <<json: VoicesIndexSchema>>
@@ -1983,6 +1991,8 @@ classDiagram
   cssClass "n_cat_harness_folio_assistant_sci_methodologies_methodology" fa_uml_undetermined
   cssClass "n_cat_harness_folio_assistant_sci_lean_skills_skills" fa_uml_kind_skills
   cssClass "n_cat_harness_folio_assistant_sci_lean_skills_skills" fa_uml_undetermined
+  cssClass "n_cat_harness_folio_assistant_sci_data_skills_skills" fa_uml_kind_skills
+  cssClass "n_cat_harness_folio_assistant_sci_data_skills_skills" fa_uml_undetermined
   cssClass "n_cat_harness_folio_assistant_core_skills_skills" fa_uml_kind_skills
   cssClass "n_cat_harness_folio_assistant_core_skills_skills" fa_uml_undetermined
   cssClass "cat_harness_smart_base_processes_omg_bpmn_2_0" fa_uml_kind_processes

@@ -112,3 +112,23 @@ describe("the page a reader gets — over the REAL registry", () => {
     expect(at!.startsWith("..")).toBe(false);
   });
 });
+
+/**
+ * Bean `qgjh`: a dependent that is a file here links to it; the resolver is
+ * asked, never assumed, so one it cannot place stays code.
+ */
+describe("dependents link to their files (qgjh)", () => {
+  const specs = loadSpecs();
+  const used = declaredUsers(specs, REPO);
+  it("links every dependent the resolver places, and no other", () => {
+    const placed = new Set<string>();
+    const html = page(specs, used, namespacesInUse(), (p) => {
+      if (!p.endsWith(".ts")) return undefined;
+      placed.add(p);
+      return `https://host/${p}`;
+    });
+    expect(placed.size).toBeGreaterThan(0);
+    for (const p of placed) expect(html).toContain(`[\`${p}\`](https://host/${p})`);
+    expect(page(specs, used, namespacesInUse())).not.toContain("](https://host/");
+  });
+});

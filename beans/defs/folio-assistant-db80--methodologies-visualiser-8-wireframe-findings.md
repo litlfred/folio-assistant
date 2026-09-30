@@ -24,3 +24,16 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/methodologies/` (
 8. **WireGen's origin points at nothing on this page.** It ends "Section numbers below are the paper's", written for the methodology file's own body; on this page nothing follows it but the sources list.
 
 When fixed, re-draw `cat-harness/docs/wireframes/methodologies/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 7 still present, 1 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — DIIG contradicts itself (Origin says ingested; badge cited, not ingested): The DIIG section reads 'diig — declared by smart-base — cited, not ingested' / Origin '... Ingested at smart-base/library/9789240010567-eng/; every citation below resolves to a section there.' / 'No ingested source. The origin above names one; nothing in this checkout holds it.' The table badge is .mv-cited.
+- **STILL-PRESENT** — 'applies when' column cut at 150 characters on every row: table:first td[applies when] lengths 146,150,149,146,145,150,131,146,144,1,146,146,150; each ends in '…' (e.g. '...the budget and the moni…', '...Contextu…', '...who answers for this, wh…'). Now 13 rows, and one row is just '…'.
+- **FIXED** — MADR cell renders a stray backtick: The MADR applies-when cell now reads '... Not for the decision METHOD (see…'. Backticks in the applies-when cells: 0 of 13. — c50675273
+- **STILL-PRESENT** — Ingested sources are code text, not links: There are 14 <code>library/...</code> mentions (incl. library/arxiv-2508.05192v2, dusengumuremyi-2026-ai-mediated-raci, both SWOT slugs, arxiv-2312.07755v1). All 14 have inLink false, and no <a> href contains 'library'.
+- **STILL-PRESENT** — Section anchors sit below their headings; jump hides heading: <p><a id='diig'></a></p> comes after h3#diig--digital-implementation-investment-guide. After clicking the table link on a fresh page, the h3 rect is top -27/bottom -5 at 1280 (diig, madr, raci) and -21/-3 at 390 (diig, madr, wiregen). The heading is just above the viewport. Only wiregen at 1280 is visible, because i…
+- **STILL-PRESENT** — Badges fail contrast on the default dark scheme: Dark (default): .mv-ingested rgb(13,110,94) is 2.44:1 on #27262b and 2.19:1 on row bg rgb(48,45,54); .mv-cited rgb(138,97,0) is 2.71:1 and 2.44:1; font 11.52 px (10.08 px at 390). Light: 6.16 and 5.54 (pass). .mv-dangling does not occur on the page now.
+- **STILL-PRESENT** — Mobile: 'Choosing one' table four columns in 358 px; later columns off-screen, no scroll cue: 390x844: .table-wrapper 362 px (14..376), overflow-x auto, mask none; table scrollWidth 499. 'origin held?' at 261-404 is cut; 'declared by' at 406-511 is fully off-screen. There is no scroll hint element.
+- **STILL-PRESENT** — WireGen origin ('Section numbers below are the paper's') points at nothing: The text '... Section numbers below are the paper’s.' is followed directly by 'Ingested sources: library/arxiv-2312.07755v1' and the next section.
