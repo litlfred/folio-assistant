@@ -1159,17 +1159,17 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 4
         },
         {
           "id": "views",
           "label": "visualisations you can open",
-          "value": 4
+          "value": 3
         }
       ],
       "visualisations": [
@@ -1184,10 +1184,6 @@
         {
           "kind": "qa",
           "note": "no viewer yet"
-        },
-        {
-          "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/folio-assistant-sci-lean-skills/"
         },
         {
           "kind": "voices",
@@ -1377,12 +1373,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -1400,12 +1396,17 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "voice-vendors",
+          "within": "voices",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/agent-skills/"
         }
       ],
       "findings": [
-        "agent-skills: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "agent-skills: declares 2 graph(s) with no published viewer — qa, voice-vendors. Declared and not rendered is a gap, not a dead link.",
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root."
       ],
@@ -2753,7 +2754,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: library, voices, lean-skills, sci-methodologies, qa"
+            "summary": "4: library, voices, sci-methodologies, qa"
           },
           {
             "key": "needs",

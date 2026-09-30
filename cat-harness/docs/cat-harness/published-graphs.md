@@ -257,7 +257,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `skills`
 
-6 of 8 published.
+5 of 7 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
@@ -265,7 +265,6 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/skills/' | relative_url }})
 - [FHIR IG Harness]({{ '/cat-harness/docs-auto/index/skills/fhir-ig-skills/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/' | relative_url }})
-- [folio-assistant-sci]({{ '/cat-harness/docs-auto/index/skills/folio-assistant-sci-lean-skills/' | relative_url }})
 - [large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }})
 

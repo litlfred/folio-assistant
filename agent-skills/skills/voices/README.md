@@ -7,6 +7,7 @@ Part of [agent-skills](../../README.md) 0.1.0, declared as `voices`, holding `vo
 
 | file | what it is | used by |
 |---|---|---|
+| [`voices.json`](voices.json) | data |  |
 | [`agent-skill-authoring/`](agent-skill-authoring/) | 1 file | |
-| [`vendors/`](vendors/) | 2 files | |
+| [`vendors/`](vendors/) | 3 files | |
 <!-- kg:subgraph:end -->

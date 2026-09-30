@@ -8,11 +8,11 @@
     "kind": "audit-coverage",
     "id": "graph-kinds"
   },
-  "updated_at": "2026-09-30T13:49:52.574Z",
+  "updated_at": "2026-09-30T13:57:43.406Z",
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 45 of 45 declared kind(s), 184 gate(s), 70 criteria.",
-      "count": 45,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 46 of 46 declared kind(s), 184 gate(s), 70 criteria.",
+      "count": 46,
       "entries": [
         {
           "kind": "bean-defs",
@@ -918,6 +918,16 @@
           "hasFiles": true
         },
         {
+          "kind": "voice-vendors",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "hasFiles": false
+        },
+        {
           "kind": "voices",
           "state": "covered",
           "directories": [
@@ -977,7 +987,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 12,
+      "count": 13,
       "entries": [
         {
           "kind": "bean-defs",
@@ -1052,6 +1062,11 @@
           "gates": []
         },
         {
+          "kind": "voice-vendors",
+          "criteria": 0,
+          "gates": []
+        },
+        {
           "kind": "workflow-state",
           "criteria": 0,
           "gates": [
@@ -1071,5 +1086,5 @@
       "entries": []
     }
   },
-  "total": 57
+  "total": 59
 }

@@ -44,6 +44,7 @@ the same as fine. The same verdict is `kg:audit`'s `lsi-index-fresh`.
 | `cat-harness/docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs` |
 | `cat-harness/folio` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/folio-assistant-sci-data-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
+| `cat-harness/folio-assistant-sci-lean-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/library` | <span class="lv-pass">pass</span> | fresh |
 | `cat-harness/memory` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
@@ -56,7 +57,6 @@ the same as fine. The same verdict is `kg:audit`'s `lsi-index-fresh`.
 | `folio-assistant-core/core-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-core/folios` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-core/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `folio-assistant-sci/lean-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-sci/library` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-sci/sci-methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `large-datasets/large-datasets-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
@@ -100,7 +100,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**306** units · **7572** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**306** units · **7573** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -108,14 +108,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.42 | bean, session, graph, kind, instance, branch, page, agent | *(none)* |
+| 1 | 46.44 | bean, session, graph, kind, instance, branch, page, agent | *(none)* |
 | 2 | 27.70 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
 | 3 | 22.20 | proof, watcher, lean, slot, blocks, project, witness, chapter | harness, node, instance, bean, page, directory, actor, process |
 | 4 | 19.49 | dpi, color, grayscale, matplotlib, pdf, images, raster, lean | session, queue, branch, prs, commits, coordination, sibling, beans |
 | 5 | 18.55 | dpi, color, grayscale, matplotlib, contrast, raster, eps, fonts | lean, proof, glossary, declaration, mathlib, theorem, term, sorry |
 | 6 | 16.76 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, consider, solutions, description, correlation |
-| 7 | 16.12 | lean, mathlib, mcp, sorry, proof, search, bean, theorem | watcher, slot, backlog, voice, ledger, nesting, queue, idle |
-| 8 | 15.27 | mathlib, lean, sorry, subdirectory, lake, nesting, mcp, sessions | slot, forward, major, edges, criterion, reader, prose, section |
+| 7 | 16.14 | lean, mathlib, mcp, sorry, proof, search, theorem, bean | watcher, slot, backlog, voice, ledger, nesting, queue, idle |
+| 8 | 15.28 | mathlib, lean, sorry, subdirectory, lake, mcp, nesting, sessions | slot, forward, major, edges, criterion, reader, watcher, prose |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
