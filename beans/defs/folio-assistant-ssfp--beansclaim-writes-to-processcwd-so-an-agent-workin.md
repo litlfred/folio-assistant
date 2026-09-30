@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ssfp
 title: beans:claim writes to process.cwd(), so an agent working in a git worktree claims in the WRONG checkout
-status: todo
+status: completed
 type: bug
 priority: high
 created_at: 2026-09-30T10:11:53Z
-updated_at: 2026-09-30T10:58:22Z
+updated_at: 2026-09-30T17:48:33Z
 parent: folio-assistant-ahvw
 ---
 
@@ -63,12 +63,12 @@ mechanisms.
 
 ## Done when
 
-- [ ] a claim made from a worktree lands in THAT worktree, or the command
+- [x] a claim made from a worktree lands in THAT worktree, or the command
       refuses and says which tree it was about to write to
-- [ ] the mismatch is detectable rather than silent — comparing the resolved
+- [x] the mismatch is detectable rather than silent — comparing the resolved
       store against `git rev-parse --show-toplevel` is one way, and is
       worktree-aware where `process.cwd()` is merely literal
-- [ ] a test covers a claim invoked from a worktree, since no existing test
+- [x] a test covers a claim invoked from a worktree, since no existing test
       exercises a second checkout
 
 Not proposed here: whether `--repo` should become required. That is a
@@ -120,3 +120,19 @@ all, so the existing population is large and (1) does nothing for it.
 `main`'s mislabelled note on `rjug` was left in place through the merge. Erasing
 it would erase the evidence, and `deletion-requires-confirmation` applies to a
 record of a mistake as much as to anything else.
+
+_2026-09-30T17:47:07Z_ — Claimed by claude/magical-archimedes-4qkfxp-ssfp — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Summary of Changes
+
+Built 2026-09-30, branch `claude/magical-archimedes-4qkfxp-ssfp`, and claimed from its own worktree.
+
+- **The claim resolves the checkout's top level.** It uses `git rev-parse --show-toplevel` rather than the literal `process.cwd()`, so running from a subdirectory of a worktree claims in that worktree.
+- **The command says which tree it claims from.** Every run prints `claiming from <tree> (branch <b>)`.
+- **A claim from the wrong checkout is refused, not misattributed.** New `wrongCheckout()`: if the checkout is on the default branch or detached, the command exits 5 and names the tree it was about to write to. That is the signature of the measured failure, where the main checkout sat on `main` while a worktree held the work. `--repo <worktree>` and `--any-branch` are the ways out.
+- **Tests.** Three new cases in `claim-bean.test.ts` against a real bare remote and a real `git worktree`:
+  - a claim from the main checkout on `main` is refused, and its bean is untouched;
+  - a claim from a subdirectory of the worktree lands in the worktree, and the main checkout's copy is untouched;
+  - `wrongCheckout` names the tree.
+  18 pass, and the four other claim test files pass too (60 tests).
+- **Documented.** `bean-coordination` explains the refusal and its exit code.

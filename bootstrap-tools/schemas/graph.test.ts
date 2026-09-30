@@ -187,16 +187,25 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
   /**
    * What is allowed, and why. Anything else that matches LEAKS fails.
    * - The publication address and the source repository: bootstrap's own
-   *   location, not a reference to another Harness.
+   *   location, not a reference to another Harness. `livesAt` states the same
+   *   location in owner/repo form (bean 6rmv).
+   * - `bootstrap-tools`, which LEAKS does not list: the one name outside
+   *   itself bootstrap may carry, as the answer to "what wrote this file?"
+   *   (owner, 2026-09-30, bean `xsqm`). Every generated file carries it —
+   *   `scripts/generated-by.test.ts`.
    *
    * The `folio-*` schema identifiers are no longer allowed: bootstrap's own
-   * files carry `model-registry/1.0.0` and `glossary-ledger/1.0.0`, each resolving
-   * to a schema inside bootstrap (bean r3gy, D2). The `folio:` diagram prefix
+   * files carry `model-registry/1.0.0`, resolving to a schema inside bootstrap
+   * (bean r3gy, D2); `glossary-ledger/1.0.0` moved up to cat-harness with the
+   * hosted ledger (bean xsqm). The `folio:` diagram prefix
    * went earlier (bean 12s9, stage 2).
    */
   const ALLOW = [
     /https:\/\/litlfred\.github\.io\/folio-assistant\//g,
     /https:\/\/github\.com\/litlfred\/folio-assistant\//g,
+    // `livesAt`: where bootstrap sits TODAY, pre-split — its own location in
+    // owner/repo form, the same fact as the source-repository URL above (bean 6rmv).
+    /"livesAt": \{ "repository": "litlfred\/folio-assistant"/g,
   ];
   /** Structural, awaiting the owner's ruling (bean iwtn). Each entry is `file: the leaking text`. */
   const PENDING: string[] = [];
@@ -204,7 +213,7 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
   const walk = (d: string) => {
     for (const f of readdirSync(d)) {
       const p = join(d, f);
-      // No skip. `translations/` used to be excepted here because bootstrap held
+      // One skip, `.git` (below). `translations/` used to be excepted here because bootstrap held
       // 15 `.pot` extraction templates, which are tooling OUTPUT — nobody reads
       // a `.pot`, so they contradicted bootstrap's own promise of "a file you
       // read, not something you run" and have moved to
@@ -213,6 +222,9 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
       // The exception is gone rather than kept-and-unused, because while it
       // stood this test scanned 23 of 38 files under a name claiming all of
       // them. It now scans every file in `bootstrap/`, which is what it says.
+      // `.git` is version-control metadata, not bootstrap's content — and a
+      // standalone clone has one (found by `rehearse-standalone`, bean xsqm).
+      if (f === ".git") continue;
       if (statSync(p).isDirectory()) walk(p);
       else files.push(p);
     }
@@ -287,9 +299,9 @@ describe("every $schema a bootstrap file carries is a Node Kind its declaration 
     expect(bad).toEqual([]);
   });
 
-  test("the two tags that used to name the platform are bootstrap's own", () => {
+  test("the tag that used to name the platform is bootstrap's own; the ledger's left with the ledger", () => {
     expect(kinds["model-registry/1.0.0"]).toBe("schemas/model-registry.schema.json");
-    expect(kinds["glossary-ledger/1.0.0"]).toBe("schemas/glossary-ledger.schema.json");
+    expect(kinds["glossary-ledger/1.0.0"]).toBeUndefined();
   });
 
   test("the declaration shape knows the field", () => {

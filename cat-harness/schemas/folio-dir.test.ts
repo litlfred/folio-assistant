@@ -8,16 +8,34 @@
  * @module schemas/folio-dir.test
  */
 import { folioDir } from "./cat-harness.js";
-import { describe, expect, test } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
+import { afterEach, describe, expect, test } from "bun:test";
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
 import { writeDeclaration } from "../test/support/instance-fixture.js";
 
+/**
+ * Every root a test makes, removed after it. These sit directly in
+ * `tmpdir()`, and one of them is malformed ON PURPOSE — left behind, it is
+ * found by any checkout whose parent is `tmpdir()`, because the resolver
+ * walks a checkout's parent to find sibling instances (bean `8zsb`: 163 of
+ * them had accumulated, and two unrelated tests failed on them).
+ */
+const made: string[] = [];
+afterEach(() => {
+  for (const dir of made.splice(0)) rmSync(dir, { recursive: true, force: true });
+});
+
+function tempRoot(prefix: string): string {
+  const root = mkdtempSync(join(tmpdir(), prefix));
+  made.push(root);
+  return root;
+}
+
 /** A repository root with an optional declaration. */
 function repo(declaration?: Record<string, unknown>): string {
-  const root = mkdtempSync(join(tmpdir(), "folio-dir-"));
+  const root = tempRoot("folio-dir-");
   if (declaration) {
     writeDeclaration(root, JSON.stringify(declaration, null, 2));
   }
@@ -69,7 +87,7 @@ describe("folioDir", () => {
   });
 
   test("a MALFORMED declaration throws rather than guessing", () => {
-    const root = mkdtempSync(join(tmpdir(), "folio-dir-bad-"));
+    const root = tempRoot("folio-dir-bad-");
     // Named after the DIRECTORY, not "broken". An unparseable file has no
     // `name` to agree with, so since 2026-09-21 it counts as this instance's
     // broken declaration only when its stem matches the directory or a paired

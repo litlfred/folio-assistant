@@ -7,9 +7,11 @@ createdAt: 2026-09-19
 roles:
   - code-reviewer
   - validation-pipeline
-agents:
-  - ci-health-watcher
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: ci-health-watcher
+  - kind: agent
+    id: platform-boundary-guard
 ---
 Owner, 2026-09-19: **"dont encode rules against a working setup."**
 
@@ -22,4 +24,4 @@ Encode an entailment of the mechanism, or something measured here with the
 command shown. Never "someone said so".
 
 Full rule, the worked case and both lanes:
-[`folio-core/unverified-constraints.md`](../cat-harness/skills/folio-core/unverified-constraints.md).
+[`conduct-core/unverified-constraints.md`](../cat-harness/skills/conduct/conduct-core/unverified-constraints.md).

@@ -7,7 +7,7 @@
  *
  * ## This is the ONE exception to the never-delete rule, and it is narrow
  *
- * [`fsh-guts`](../../skills/folio-core/fsh-guts.md) exists so that nothing is
+ * [`fsh-guts`](../../skills/kg/kg-core/fsh-guts.md) exists so that nothing is
  * removed with `rm`: a deleted artefact cannot be told from one that never
  * existed, and a scrapped thing records a dead end so the next agent does not
  * re-enter it. A log entry records **no decision**. It is a trace, it is

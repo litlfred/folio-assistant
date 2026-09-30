@@ -48,6 +48,7 @@
  *   bun run bootstrap:schemas          # write
  *   bun run bootstrap:schemas:check    # fail if stale
  */
+import { generatedNote } from "./generated-by.ts";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
@@ -70,7 +71,6 @@ import {
 } from "../schemas/graph.ts";
 import { renderSchemaPage, type PageDocument } from "./bootstrap-schema-page.ts";
 import { ModelRegistrySchema } from "../schemas/model-registry.ts";
-import { LedgerSchema } from "../schemas/glossary-ledger.ts";
 import { bootstrapRelease, releaseIri } from "../schemas/release-iri.ts";
 
 /** Every `$id` below is minted from bootstrap's declared iriBase and version, never typed. */
@@ -183,19 +183,6 @@ const TARGETS = [
     terms: {} as Readonly<Record<string, string>>,
   },
   {
-    // The shape of `glossary/glossary-ledger.json`. Its tag was
-    // `folio-glossary-ledger/v1` and resolved to no schema inside bootstrap;
-    // now every `$schema` a bootstrap file carries does (bean r3gy, D2).
-    file: "schemas/glossary-ledger.schema.json",
-    id: releaseIri(RELEASE, "schemas/glossary-ledger.schema.json", "agent"),
-    title: "Glossary Ledger",
-    description:
-      "Every term a Knowledge Graph's Processes have ever named, with the date each was first seen and the date it stopped being used. The glossary itself is regenerated each time; this is the one fact that cannot be, so a retired term is never silently reused.",
-    schema: LedgerSchema,
-    conditionals: [] as readonly unknown[],
-    terms: {} as Readonly<Record<string, string>>,
-  },
-  {
     // What a harness, or something built with one, must do (issue #1164).
     // Bootstrap publishes it because a harness states its requirements before
     // anything above bootstrap has loaded; the Zod is in cat-harness (FR-7, 319n).
@@ -275,6 +262,7 @@ export function render(t: (typeof TARGETS)[number]): string {
   const doc: Record<string, unknown> = {
     $schema: "http://json-schema.org/draft-07/schema#",
     $id: t.id,
+    $comment: generatedNote("scripts/gen-bootstrap-schemas.ts", "its Zod source", "change the Zod"),
     title: t.title,
     description: t.description,
     ...body,

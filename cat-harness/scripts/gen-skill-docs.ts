@@ -390,6 +390,13 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "folio-core": "Platform core (folio-core)",
   workflow: "Workflow & process (workflow)",
   "graph-management": "Graph management (graph-management)",
+  // The `kg` and `library` topics' packages (bean `9umr`): keyed by the
+  // package's own basename, like every entry here — the topic is a level of
+  // the directory, not part of the name.
+  "kg-core": "Knowledge graph — declaration, placement, export, audit (kg-core)",
+  "library-core": "Library and information management (library-core)",
+  "ui-core": "Rendering, UI and publication surfaces (ui-core)",
+  "conduct-core": "Agent conduct (conduct-core)",
   theming: "Theming (theming)",
   // Keyed by basename: a package subdirectory of the declared `skills/`,
   // like `theming` above. Bean `6bhf`, owner 2026-09-25 — "bean as
@@ -419,7 +426,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // below. Keyed on `crdm` it threw, naming the id it actually wanted.
   // `theming` is above, keyed by its package-subdirectory name. Two sessions
   // built that package independently on 2026-09-20 and this entry was the
-  // duplicate: one put it at `skills/theming/` (a subdirectory, keyed by
+  // duplicate: one put it at `skills/ui/theming/` (a subdirectory, keyed by
   // basename) and the other at a top-level `cat-harness/theming/` (a declared
   // directory, keyed by id). Same key either way, so the object literal had
   // it twice. The subdirectory won on evidence — bean `lps0` measured that

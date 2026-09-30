@@ -1,14 +1,15 @@
 ---
 # folio-assistant-qgjh
 title: References are shown as plain text, not links
-status: in-progress
+status: completed
 type: bug
+priority: normal
 tags:
     - wireframe-findings
     - ui
     - cross-cutting
 created_at: 2026-09-23T10:36:13Z
-updated_at: 2026-09-30T00:40:20Z
+updated_at: 2026-09-30T17:43:41Z
 parent: folio-assistant-4ccr
 ---
 
@@ -70,3 +71,23 @@ Shared answers: `scripts/lib/skill-pages.ts`, `scripts/lib/library-links.ts`, an
 - processes' lane → in table: a lane has no page to link to (no role pages, and the swimlane glossary carries no term anchors).
 - glossary: 9 descriptions name roles or permissions in backticks. The terms carry anchors, so these can link within the page. Not done yet.
 - Skills that publish no instruction page (bootstrap's own) stay code on purpose.
+
+## Re-verified 2026-09-30 on `main` 3779d5d27
+
+Each finding re-measured on a local build of that commit (`preview-site.sh`, served at `/folio-assistant/`), at 1280×800 and 390×844, both colour schemes where contrast is involved. 2 still present, 7 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **FIXED** — References shown as plain text, not links — catalogue: Changed since 2026-09-29. The every-node table has 11 links. 5 of 13 node titles (both collections and all 3 items) link to replica pages under /library/who-iris/, and the 3 'held as' ids link to the library viewer and the item page. All 6 local targets return 200. What is left: the 8 community rows are text, and the state and gate tables (states and verdicts, not references) have 0 links. — #1592 (qgjh.mjs, cat3.mjs, linkcheck.mjs)
+- **FIXED** — References shown as plain text, not links — external-schemas: Changed since 2026-09-29. The 17 dependents tables ('user | declared by', 41 rows) link 29 of 41 user cells to the file on GitHub (46 links in tables). The 12 unlinked cells are globs or node sets with no single target, e.g. 'cat-harness/processes/*.bpmn (70)'. The term tables (112 rows) still have 0 links. — #1592 (qgjh.mjs, xs5.mjs)
+- **FIXED** — References shown as plain text, not links — folio: Changed since 2026-09-29. The node table's 'links' column has 14 <a> in 3 of 5 rows (the other two read 'none'), and all 9 local targets return 200. The 'declared in' values and the directory table are still code. — #1592 (qgjh.mjs, rv-folio.mjs, linkcheck.mjs)
+- **STILL-PRESENT** — References shown as plain text, not links — glossary: Narrowed since 2026-09-29. The literal backticks are gone. The 9 affected descriptions render 30 <code>, and 11 of those link to in-page term anchors across 6 rows, all resolving. 19 code references are still plain: permissions (adjudication, claim, note, resolve), skills (todo-manager, content-change-review, doc-researcher) and paths (role-model.md, folio-assistant-core/processes/deep-document-research.bpmn). The term names still link to GitHub (48/48). — #1594 (gl2.mjs, qgjh.mjs)
+- **FIXED** — References shown as plain text, not links — library: Changed since 2026-09-29. /cat-harness/library/who-iris/: 3 of 3 titles link to the item README on GitHub. /cat-harness/library/cat-harness/: 11 of 11 titles, plus 7 'source' links (arxiv.org). The slug and cover cells and the uploads table still have 0 links. — #1592 (qgjh.mjs, C_lib.mjs)
+- **FIXED** — References shown as plain text, not links — methodologies: Changed since 2026-09-29. 15 of 17 <code>library/…</code> references are inside an <a> (library-viewer deep link, plus 'item page' and 'source'). All 31 local hrefs resolve. The 2 unlinked ones are inside Origin prose. — #1592 (qgjh.mjs, m6.mjs, linkcheck.mjs)
+- **STILL-PRESENT** — References shown as plain text, not links — processes: Narrowed since 2026-09-29. 'skill | run by' (103 rows) now has 335 links: 98 of 103 skill cells and 103 of 103 run-by cells, and all 173 local targets return 200. The 'lane | in' table (106 rows) still has 0 links. The bean records that as deliberate (a lane has no page). — #1592 (qgjh.mjs, D/p_idx.js, linkcheck.mjs)
+- **FIXED** — References shown as plain text, not links — tools: Changed since 2026-09-29. In the main table (107 rows), 'satisfies' links in 105 of 107 rows (136 links, all 61 targets return 200). The 2 unlinked are bootstrap skills with no page. The tool-id column is still code (0 of 107); that part is tracked under qbfm. — #1592 (qgjh.mjs, D/p_tools.js, linkcheck.mjs)
+- **FIXED** — References shown as plain text, not links — voices: Changed since 2026-09-29. /cat-harness/voices/: 102 of 102 span.cite contain an <a> (library viewer / item page / source, or the KG node's file). /cat-harness/voices/who-style-guide/: 25 of 25. The local targets resolve. — #1592 (qgjh.mjs, D/p_vo3.js, linkcheck.mjs)
+
+## Landed
+- #1592: catalogue, external-schemas, folio, library, methodologies, processes (run by), tools, voices link their references.
+- #1594: glossary role names link to their rows.
+- #1651 (merged bbba1ea6): glossary skills link to instruction pages and repository paths to their source.
+Left as code on purpose: permissions with no page (claim, note, resolve), and the processes 'lane | in' table (a lane has no page), both recorded above.

@@ -130,7 +130,7 @@
       ],
       "href": "/cat-harness/library/agent-skills/",
       "hidden": false,
-      "count": 12,
+      "count": 11,
       "unit": "entries"
     },
     {
@@ -146,7 +146,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 496,
+      "count": 441,
       "unit": "beans"
     },
     {
@@ -200,7 +200,7 @@
       ],
       "href": "/cat-harness/folio/",
       "hidden": false,
-      "count": 5,
+      "count": 6,
       "unit": "stickies"
     },
     {
@@ -383,7 +383,7 @@
       ],
       "href": "/lsi/",
       "hidden": false,
-      "count": 995,
+      "count": 973,
       "unit": "documents"
     },
     {
@@ -411,7 +411,7 @@
       ],
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
-      "count": 181,
+      "count": 194,
       "unit": "modules"
     },
     {
@@ -512,7 +512,7 @@
       "href": "/cat-harness/uploads/cat-harness/",
       "hidden": false,
       "icon": "uploads",
-      "count": 22,
+      "count": 25,
       "unit": "waiting"
     },
     {
@@ -588,6 +588,7 @@
         }
       },
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": true,
@@ -654,6 +655,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -710,6 +712,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -760,6 +763,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -810,6 +814,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -860,6 +865,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -921,6 +927,7 @@
       ],
       "icon": null,
       "tone": 199,
+      "toneFrom": "avatar",
       "reads": "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
       "genericAvatar": false,
       "instantiated": true,
@@ -998,7 +1005,8 @@
         "folio-assistant-core"
       ],
       "icon": null,
-      "tone": 199,
+      "tone": 198,
+      "toneFrom": "theme",
       "reads": "an open book — a repository of published documents, in WHO blue",
       "genericAvatar": false,
       "instantiated": true,
@@ -1008,7 +1016,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 8
+          "value": 9
         },
         {
           "id": "kinds",
@@ -1033,7 +1041,7 @@
         },
         {
           "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/who-iris-docs/"
+          "path": "/cat-harness/docs-auto/index/docs/who-iris-site/"
         },
         {
           "kind": "library",
@@ -1081,6 +1089,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -1150,6 +1159,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -1174,6 +1184,10 @@
       ],
       "visualisations": [
         {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "library",
           "path": "/cat-harness/library/folio-assistant-sci/"
         },
@@ -1186,16 +1200,12 @@
           "note": "no viewer yet"
         },
         {
-          "kind": "skills",
-          "note": "no viewer yet"
-        },
-        {
           "kind": "voices",
           "path": "/cat-harness/voices/folio-assistant-sci/"
         }
       ],
       "findings": [
-        "folio-assistant-sci: declares 2 graph(s) with no published viewer — qa, skills. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant-sci: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
         "folio-assistant-sci: no avatar declared for this instance — showing the generic mark.",
         "folio-assistant-sci: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/folio-assistant-sci/) rather than the instance's own themed root."
       ],
@@ -1251,6 +1261,7 @@
         }
       },
       "tone": 236,
+      "toneFrom": "avatar",
       "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it",
       "genericAvatar": false,
       "instantiated": true,
@@ -1307,6 +1318,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -1368,6 +1380,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -1377,12 +1390,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 3
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 3
+          "value": 4
         },
         {
           "id": "views",
@@ -1400,12 +1413,17 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "voice-vendors",
+          "within": "voices",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "voices",
           "path": "/cat-harness/voices/agent-skills/"
         }
       ],
       "findings": [
-        "agent-skills: declares 1 graph(s) with no published viewer — qa. Declared and not rendered is a gap, not a dead link.",
+        "agent-skills: declares 2 graph(s) with no published viewer — qa, voice-vendors. Declared and not rendered is a gap, not a dead link.",
         "agent-skills: no avatar declared for this instance — showing the generic mark.",
         "agent-skills: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/agent-skills/) rather than the instance's own themed root."
       ],
@@ -1461,6 +1479,7 @@
         }
       },
       "tone": 212,
+      "toneFrom": "avatar",
       "reads": "a leaf of paper with lines — the folio itself",
       "genericAvatar": false,
       "instantiated": false,
@@ -1593,6 +1612,7 @@
         }
       },
       "tone": 268,
+      "toneFrom": "avatar",
       "reads": "a framed face with ears — the harness the instance is held in",
       "genericAvatar": false,
       "instantiated": true,
@@ -1760,6 +1780,7 @@
       ],
       "icon": null,
       "tone": 0,
+      "toneFrom": "avatar",
       "reads": "a question mark — no avatar is declared for this kind",
       "genericAvatar": true,
       "instantiated": false,
@@ -1848,6 +1869,7 @@
         }
       },
       "tone": 96,
+      "toneFrom": "avatar",
       "reads": "a seed germinating — the first thing, before anything else is known",
       "genericAvatar": false,
       "instantiated": true,
@@ -1857,12 +1879,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 6
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 6
+          "value": 5
         },
         {
           "id": "views",
@@ -1890,14 +1912,10 @@
         {
           "kind": "skills",
           "note": "no viewer by design"
-        },
-        {
-          "kind": "swimlane-glossary",
-          "note": "no viewer by design"
         }
       ],
       "findings": [
-        "bootstrap: 5 graph(s) render no viewer — models, scenarios, schemas, skills, swimlane-glossary — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
+        "bootstrap: 4 graph(s) render no viewer — models, scenarios, schemas, skills — under a declared `renderExemption`. Not a gap: it owes Its own Knowledge Graph, written out as `.jsonld` with a `.json` copy and published at `<base>/bootstrap/bootstrap.jsonld`, the exact address its `@id` names. Governed by `skills/bootstrap-graph-emission.md` and `skills/bootstrap-graph-publication.md`.",
         "bootstrap: has no docs/ of its own, so the tile opens a kind handler's viewer (/processes/) rather than the instance's own themed root."
       ],
       "navbarIcons": [
@@ -2230,6 +2248,32 @@
         ]
       },
       {
+        "key": "repository",
+        "skills": [
+          {
+            "name": "instance-kinds",
+            "path": "/reference/skill-instructions/instance-kinds.html"
+          },
+          {
+            "name": "directory-conventions",
+            "path": "/reference/skill-instructions/directory-conventions.html"
+          }
+        ]
+      },
+      {
+        "key": "livesAt",
+        "skills": [
+          {
+            "name": "instance-kinds",
+            "path": "/reference/skill-instructions/instance-kinds.html"
+          },
+          {
+            "name": "directory-conventions",
+            "path": "/reference/skill-instructions/directory-conventions.html"
+          }
+        ]
+      },
+      {
         "key": "stub",
         "skills": [
           {
@@ -2415,6 +2459,14 @@
             "summary": "2: agent-instructions, instance-readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/smart-trust"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "directories",
             "summary": "4: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa"
           },
@@ -2451,6 +2503,14 @@
           {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/smart-immunizations"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
           },
           {
             "key": "directories",
@@ -2491,6 +2551,14 @@
             "summary": "2: agent-instructions, instance-readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/smart-l1"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "directories",
             "summary": "1: qa"
           },
@@ -2527,6 +2595,14 @@
           {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/smart-ig"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
           },
           {
             "key": "directories",
@@ -2567,6 +2643,14 @@
             "summary": "2: agent-instructions, instance-readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/smart-dak"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "directories",
             "summary": "1: qa"
           },
@@ -2601,8 +2685,16 @@
             "summary": "2: agent-instructions, readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/who-style-guide"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "directories",
-            "summary": "2: glossary, qa"
+            "summary": "3: voices, glossary, qa"
           },
           {
             "key": "needs",
@@ -2639,12 +2731,20 @@
             "summary": "2: agent-instructions, instance-readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/smart-base"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "canonicalUrl",
             "summary": "http://smart.who.int/base"
           },
           {
             "key": "directories",
-            "summary": "6: library, methodologies, processes, smart-base-artifact-index, tools, qa"
+            "summary": "7: library, methodologies, voices, processes, smart-base-artifact-index, tools, qa"
           },
           {
             "key": "needs",
@@ -2685,8 +2785,20 @@
             "summary": "2: agent-instructions, readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/who-iris"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "directories",
-            "summary": "8: library, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-themes, who-iris…"
+            "summary": "9: library, who-iris-site, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-t…"
+          },
+          {
+            "key": "stickies",
+            "summary": "1: who-iris"
           },
           {
             "key": "needs",
@@ -2717,6 +2829,14 @@
           {
             "key": "assets",
             "summary": "2: agent-instructions, readme"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/large-datasets"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
           },
           {
             "key": "directories",
@@ -2753,8 +2873,16 @@
             "summary": "2: agent-instructions, readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/folio-assistant-sci"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "directories",
-            "summary": "3: library, sci-methodologies, qa"
+            "summary": "5: library, voices, sci-methodologies, sci-adapters, qa"
           },
           {
             "key": "needs",
@@ -2789,6 +2917,10 @@
           {
             "key": "assets",
             "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/folio-assistant"
           },
           {
             "key": "directories",
@@ -2833,6 +2965,14 @@
             "summary": "2: agent-instructions, instance-readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/fhir-harness"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "canonicalUrl",
             "summary": "https://litlfred.github.io/folio-assistant/fhir-harness"
           },
@@ -2875,8 +3015,16 @@
             "summary": "2: agent-instructions, readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/agent-skills"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "directories",
-            "summary": "2: library, qa"
+            "summary": "3: library, voices, qa"
           },
           {
             "key": "needs",
@@ -2909,8 +3057,16 @@
             "summary": "2: agent-instructions, readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/folio-assistant-core"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "directories",
-            "summary": "10: core-schemas, folios, glossary, core-tools, core-scripts, core-library, core-methodologie…"
+            "summary": "11: core-schemas, folios, glossary, voices, core-tools, core-scripts, core-library, core-meth…"
           },
           {
             "key": "stickies",
@@ -2961,6 +3117,14 @@
           {
             "key": "navbarIcons",
             "summary": "close, todos, beans, processes, kg, launcher"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/cat-harness"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
           },
           {
             "key": "stub",
@@ -3021,6 +3185,14 @@
             "summary": "2: agent-instructions, readme"
           },
           {
+            "key": "repository",
+            "summary": "litlfred/bootstrap-tools"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
+          },
+          {
             "key": "directories",
             "summary": "3: bootstrap-tools-schemas, bootstrap-tools-scripts, bootstrap-tools-skills"
           },
@@ -3056,7 +3228,15 @@
           },
           {
             "key": "assets",
-            "summary": "2: agent-instructions, readme"
+            "summary": "3: agent-instructions, readme, vocabulary"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/bootstrap"
+          },
+          {
+            "key": "livesAt",
+            "summary": "{ repository, path }"
           },
           {
             "key": "iriBase",
@@ -3064,11 +3244,11 @@
           },
           {
             "key": "nodeSchemas",
-            "summary": "{ model-registry/1.0.0, glossary-ledger/1.0.0, http://json-schema.org/draft-07/schema# }"
+            "summary": "{ model-registry/1.0.0, http://json-schema.org/draft-07/schema# }"
           },
           {
             "key": "directories",
-            "summary": "6: skills, schemas, scenarios, processes, models, swimlane-glossary"
+            "summary": "5: skills, schemas, scenarios, processes, models"
           },
           {
             "key": "stickies",

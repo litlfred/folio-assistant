@@ -7,25 +7,26 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 
 | file | what it is | used by |
 |---|---|---|
+| [`skills.json`](skills.json) | data |  |
 | [`authoring-math/`](authoring-math/) | 5 files | |
 | [`authoring-who-smart-guidelines/`](authoring-who-smart-guidelines/) | 15 files | |
+| [`conduct/`](conduct/) | 18 files | |
 | [`content-lifecycle/`](content-lifecycle/) | 11 files | |
 | [`crdm/`](crdm/) | 7 files | |
-| [`folio-core/`](folio-core/) | 170 files | |
+| [`folio-core/`](folio-core/) | 96 files | |
 | [`folio-document-adapter/`](folio-document-adapter/) | 6 files | |
 | [`folio-paper-adapter/`](folio-paper-adapter/) | 66 files | |
 | [`framework/`](framework/) | 1 file | |
-| [`graph-management/`](graph-management/) | 9 files | |
 | [`hypothesis-generation/`](hypothesis-generation/) | 30 files | |
-| [`kg-navigation/`](kg-navigation/) | 2 files | |
+| [`kg/`](kg/) | 34 files | |
+| [`library/`](library/) | 22 files | |
 | [`permissions/`](permissions/) | 1 file | |
 | [`raci/`](raci/) | 2 files | |
 | [`remote-packages/`](remote-packages/) | 2 files | |
 | [`requirements/`](requirements/) | 7 files | |
 | [`scientific-critical-thinking/`](scientific-critical-thinking/) | 11 files | |
 | [`scientific-visualization/`](scientific-visualization/) | 21 files | |
-| [`security/`](security/) | 4 files | |
 | [`spec-kit/`](spec-kit/) | 2 files | |
-| [`theming/`](theming/) | 9 files | |
+| [`ui/`](ui/) | 28 files | |
 | [`workflow/`](workflow/) | 14 files | |
 <!-- kg:subgraph:end -->

@@ -32,6 +32,7 @@ import {
   resolvePath,
   type ValOccurrence,
 } from "./render-value";
+import { LIQUID_VALUE, applyFilters, resolveKey, valueScope, type ValueScope } from "./liquid-values";
 import type { Block, ValidationIssue } from "../../schemas/types";
 // Content repo root (the downstream repo embedding folio-assistant); witness
 // files are resolved relative to this.  See ./repo-root for why import-relative
@@ -93,6 +94,54 @@ function loadWitnessOnce(file: string): unknown | null {
 export interface ValValidationOpts {
   /** When true, treat needsReview entries as errors instead of warnings. */
   strict?: boolean;
+  /** The Liquid value scope; defaults to the process-wide one. */
+  scope?: ValueScope;
+}
+
+/** One `{{ key | filters }}` reference in a block's markdown. */
+export interface LiquidOccurrence {
+  key: string;
+  filters: string;
+}
+
+export function extractLiquidOccurrences(md: string): LiquidOccurrence[] {
+  return [...md.matchAll(LIQUID_VALUE)].map((m) => ({ key: m[1]!, filters: m[2] ?? "" }));
+}
+
+/**
+ * The same rules as a `:val` reference, for a Liquid one (bean `kott`):
+ * without this, migrating a folio from `:val` to Liquid silently REMOVED its
+ * validation — a broken reference showed only as `⟦unresolved⟧` in the
+ * rendered output. Returns the witness file the reference reads, when it
+ * reads one, for the computation auto-link.
+ */
+function checkLiquidOccurrence(
+  blockName: string,
+  occ: LiquidOccurrence,
+  scope: ValueScope,
+  issues: ValidationIssue[],
+): string | undefined {
+  const r = resolveKey(occ.key, scope);
+  // `site.*`, `page.*` and pass-through prefixes are Jekyll's to resolve.
+  if (r.state === "not-ours" || r.state === "pass-through") return undefined;
+  const at = (rule: string, msg: string, level: "error" | "warning" = "error") =>
+    issues.push({ level, block: blockName, message: `[${rule}] {{ ${occ.key} }} — ${msg}`, file: `${blockName}.md` });
+  if (r.state === "unresolved") {
+    at("val-resolves", r.reason);
+    return undefined;
+  }
+  try {
+    applyFilters(r.raw, r.text, occ.filters);
+  } catch (e) {
+    at("val-filter", (e as Error).message);
+  }
+  const requested = occ.filters.match(/precision\s*:\s*(\d+)/);
+  const source = sourcePrecision(r.raw);
+  if (requested && source !== undefined && Number(requested[1]) > source) {
+    at("val-precision-bounded", `requested precision ${requested[1]} > source precision ${source}`);
+  }
+  // A witness is a computation's output; a dataset's values.json is not.
+  return r.provenance.file.endsWith(".witness.json") ? r.provenance.file : undefined;
 }
 
 /**
@@ -109,15 +158,23 @@ export function validateValueDirectives(
   for (const [name, { block, md }] of blocks) {
     if (!md) continue;
     const occs = extractValOccurrences(md);
-    if (occs.length === 0) continue;
+    const liquid = md.includes("{{") ? extractLiquidOccurrences(md) : [];
+    if (occs.length === 0 && liquid.length === 0) continue;
 
     // ── Per-occurrence rules ────────────────────────────────────
     for (const occ of occs) {
       checkOccurrence(name, occ, issues, opts);
     }
+    const referenced = new Set<string>();
+    if (liquid.length) {
+      const scope = opts.scope ?? valueScope();
+      for (const occ of liquid) {
+        const witness = checkLiquidOccurrence(name, occ, scope, issues);
+        if (witness) referenced.add(witness);
+      }
+    }
 
     // ── Auto-link advisory: block computation field ─────────────
-    const referenced = new Set<string>();
     for (const occ of occs) {
       const entry = lookupValue(occ.name);
       if (entry && !entry.needsReview) referenced.add(entry.witnessFile);
@@ -145,7 +202,7 @@ export function validateValueDirectives(
       issues.push({
         level: "warning",
         block: name,
-        message: `[val-block-computation] block cites :val[…] but has no \`computation:\` field; implicit witness dep on ${list}`,
+        message: `[val-block-computation] block cites a witnessed value but has no \`computation:\` field; implicit witness dep on ${list}`,
         file: `${name}.md`,
       });
     } else {
@@ -161,7 +218,7 @@ export function validateValueDirectives(
         issues.push({
           level: "warning",
           block: name,
-          message: `[val-block-computation] block computation.witness is ${declaredList} but :val[…] also references ${missingList}`,
+          message: `[val-block-computation] block computation.witness is ${declaredList} but its witnessed values also reference ${missingList}`,
           file: `${name}.md`,
         });
       }

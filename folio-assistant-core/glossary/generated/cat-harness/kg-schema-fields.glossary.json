@@ -793,7 +793,7 @@
     {
       "id": "attribution.attribution.skill",
       "prefLabel": "Attribution.skill",
-      "definition": "The skill or tool that dispatched the authoring, e.g. `folio-core/library-ingestion`.",
+      "definition": "The skill or tool that dispatched the authoring, e.g. `library-core/library-ingestion`.",
       "source": "cat-harness/schemas/attribution.ts#Attribution.skill",
       "status": "candidate"
     },
@@ -1729,41 +1729,6 @@
       "status": "candidate"
     },
     {
-      "id": "bootstrap-graph.bootstrapgraphdocumentschema.at-id",
-      "prefLabel": "BootstrapGraphDocumentSchema.@id",
-      "definition": "Must equal the path the document is published at (bootstrap-graph-publication).",
-      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.@id",
-      "status": "candidate"
-    },
-    {
-      "id": "bootstrap-graph.bootstrapgraphdocumentschema.omitted",
-      "prefLabel": "BootstrapGraphDocumentSchema.omitted",
-      "definition": "The instance-bound collectors that were NOT run. \"Has no tools\" and \"tools were never looked for\" are different facts; this is how the document says which one it means.",
-      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.omitted",
-      "status": "candidate"
-    },
-    {
-      "id": "bootstrap-graph.bootstrapgraphdocumentschema.problems",
-      "prefLabel": "BootstrapGraphDocumentSchema.problems",
-      "definition": "Sources that could not be read, counted rather than silently dropped.",
-      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.problems",
-      "status": "candidate"
-    },
-    {
-      "id": "bootstrap-graph.bootstrapgraphdocumentschema.repository",
-      "prefLabel": "BootstrapGraphDocumentSchema.repository",
-      "definition": "The instance's declared name.",
-      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.repository",
-      "status": "candidate"
-    },
-    {
-      "id": "bootstrap-graph.bootstrapgraphdocumentschema.sourcecommitunavailable",
-      "prefLabel": "BootstrapGraphDocumentSchema.sourceCommitUnavailable",
-      "definition": "Said instead of `sourceCommit*` when the build could not read git.",
-      "source": "cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.sourceCommitUnavailable",
-      "status": "candidate"
-    },
-    {
       "id": "carried-note.artefactrefschema.id",
       "prefLabel": "ArtefactRefSchema.id",
       "definition": "Its identifier within the provider: `203`, a SHA, a run id.",
@@ -2086,6 +2051,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.livesat",
+      "prefLabel": "CatHarnessDeclaration.livesAt",
+      "definition": "Where the instance lives TODAY when that is not the root of {@link repository} — the host repository and the directory within it. Absent means it already lives at the root of its own repository.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.livesAt",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.name",
       "prefLabel": "CatHarnessDeclaration.name",
       "definition": "The instance's name, e.g. `\"agentic-harness\"`.",
@@ -2135,17 +2107,17 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.repository",
+      "prefLabel": "CatHarnessDeclaration.repository",
+      "definition": "The repository this instance IS — `owner/name`, its PLANNED home once the pre-split repository is broken apart (owner, 2026-09-30, bean `6rmv`).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.repository",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.stickies",
       "prefLabel": "CatHarnessDeclaration.stickies",
       "definition": "Sticky notes this layer contributes to the landing board.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stickies",
-      "status": "candidate"
-    },
-    {
-      "id": "cat-harness.catharnessdeclaration.stub",
-      "prefLabel": "CatHarnessDeclaration.stub",
-      "definition": "The repository's short name, used as the **filename stem of every artefact this instance publishes** — `<stub>.jsonld` for the knowledge graph, `<stub>.schema.json` for its schema. Defaults to `name`.",
-      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stub",
       "status": "candidate"
     },
     {
@@ -2289,6 +2261,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.contentdirectoryshape.kindrouteredirect",
+      "prefLabel": "ContentDirectoryShape.kindRouteRedirect",
+      "definition": "`/<kind>/<instance>/` for this directory is a ONE-FILE REDIRECT to the directory's declared viewer, because the directory itself is not mounted.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.kindRouteRedirect",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.contentdirectoryshape.readonly",
       "prefLabel": "ContentDirectoryShape.readOnly",
       "definition": "This directory holds MATERIALIZED content: readable, and not editable here.",
@@ -2377,6 +2356,20 @@
       "prefLabel": "GraphNodeDirectoryShape.absent",
       "definition": "This directory is DECLARED and deliberately not on disk, with the reason.",
       "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.instancelocation.path",
+      "prefLabel": "InstanceLocation.path",
+      "definition": "The instance's directory within it, repository-relative, no leading `./`.",
+      "source": "cat-harness/schemas/cat-harness.ts#InstanceLocation.path",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.instancelocation.repository",
+      "prefLabel": "InstanceLocation.repository",
+      "definition": "The repository that holds the instance today, `owner/name`.",
+      "source": "cat-harness/schemas/cat-harness.ts#InstanceLocation.repository",
       "status": "candidate"
     },
     {
@@ -5005,6 +4998,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.layer",
+      "prefLabel": "GraphKindDef.layer",
+      "definition": "Whose namespace the kind is named in, when it is not the harness's: `core` for the folio's own furniture (`voices`, `library`, `todos`, …). A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_KINDS`). The kind IS its individual, `<ns>graphKind/<name>` ({@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphKind` individual, and the harness now does the same.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.layer",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.nodeschemas",
       "prefLabel": "GraphKindDef.nodeSchemas",
       "definition": "One entry per `$schema` family a node of this kind may carry, keyed by the tag. Bean `rdkm`.",
@@ -5030,13 +5030,6 @@
       "prefLabel": "GraphKindDef.schema",
       "definition": "Where the shape of a node in this graph is defined — a repo-relative module path, or a `$schema` tag the files themselves carry.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema",
-      "status": "candidate"
-    },
-    {
-      "id": "graph-kind-registry.graphkinddef.type",
-      "prefLabel": "GraphKindDef.type",
-      "definition": "The `@type` IRI this kind projects to.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.type",
       "status": "candidate"
     },
     {
@@ -5555,6 +5548,41 @@
       "prefLabel": "IgMetadataSourceSchema.runUrl",
       "definition": "A URL for the harvest run, if one exists.",
       "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-repositories.instancerepository.livesat",
+      "prefLabel": "InstanceRepository.livesAt",
+      "definition": "Where it sits today, when not at the root of `repository`.",
+      "source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.livesAt",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-repositories.instancerepository.name",
+      "prefLabel": "InstanceRepository.name",
+      "definition": "The declaration's machine name — what `needs` resolves against.",
+      "source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.name",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-repositories.instancerepository.repository",
+      "prefLabel": "InstanceRepository.repository",
+      "definition": "The planned repository, `owner/name` — the identity references use.",
+      "source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-repositories.instancerepository.root",
+      "prefLabel": "InstanceRepository.root",
+      "definition": "Absolute path of the instance root in this checkout or overlay.",
+      "source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.root",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-repositories.instancerepositorymap.undeclared",
+      "prefLabel": "InstanceRepositoryMap.undeclared",
+      "definition": "Roots whose declaration names no `repository` — reported, never guessed.",
+      "source": "cat-harness/schemas/instance-repositories.ts#InstanceRepositoryMap.undeclared",
       "status": "candidate"
     },
     {
@@ -7014,6 +7042,13 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.formername.retiredon",
+      "prefLabel": "FormerName.retiredOn",
+      "definition": "ISO date (YYYY-MM-DD) the name was retired.",
+      "source": "cat-harness/schemas/role-graph.ts#FormerName.retiredOn",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.loadedactor.capabilities",
       "prefLabel": "LoadedActor.capabilities",
       "definition": "Capability ids the actor claims — an environment probe it needs, not a skill. Carried here because nothing resolved them: `fhir-validator` was claimed by three actors and declared nowhere.",
@@ -7077,6 +7112,13 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.roledef.formernames",
+      "prefLabel": "RoleDef.formerNames",
+      "definition": "Names this role was known by and no longer is, each with the date it was retired — `Initiator` became `Bootstrapping Agent` on 2026-09-23. Published as `skos:hiddenLabel` on this role, and the old name's concept is `owl:deprecated` and `dcterms:isReplacedBy` this role, so a reader holding the old name is sent to the new one. Authored here, beside the definition, rather than only remembered by the harness's glossary ledger: a retired name is part of what the role IS to a reader of old text.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDef.formerNames",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.roledef.id",
       "prefLabel": "RoleDef.id",
       "definition": "Stable id. Referenced by `<bootstrap.processes:role ref>` and by `inherits`.",
@@ -7095,6 +7137,13 @@
       "prefLabel": "RoleDef.judgementOnly",
       "definition": "The role PERFORMS, but by judgement — no instruction body implements its steps, and naming one would be a lie about what the role does.",
       "source": "cat-harness/schemas/role-graph.ts#RoleDef.judgementOnly",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.roledef.othernames",
+      "prefLabel": "RoleDef.otherNames",
+      "definition": "Other names this role goes by today — synonyms, local titles, examples. The same field, and the same meaning, as `otherNames` on WHO SMART Base's Generic Persona (\"Other names or examples for the persona\"); published as `skos:altLabel`. Owner, 2026-09-30: *\"model both retired names and alternative names\"*.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDef.otherNames",
       "status": "candidate"
     },
     {
@@ -7119,10 +7168,24 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.roledefschema.formernames",
+      "prefLabel": "RoleDefSchema.formerNames",
+      "definition": "Names it no longer goes by, with the retirement date; `skos:hiddenLabel`.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.formerNames",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.roledefschema.inherits",
       "prefLabel": "RoleDefSchema.inherits",
       "definition": "Roles this one IS-A, outermost last. Static composition, not the scoped subprocess stack.",
       "source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.inherits",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.roledefschema.othernames",
+      "prefLabel": "RoleDefSchema.otherNames",
+      "definition": "Other names this role goes by today; `skos:altLabel`. As smart-base's `otherNames`.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleDefSchema.otherNames",
       "status": "candidate"
     },
     {
@@ -7529,6 +7592,13 @@
       "prefLabel": "RemotePackageRefSchema.sync",
       "definition": "OPTIONAL, because a wrapper whose only job is to supply Docker requirements should not have to claim a sync strategy to be valid. Required until 2026-09-19, which is why both wrappers carry one.",
       "source": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema.sync",
+      "status": "candidate"
+    },
+    {
+      "id": "skill-topics.skilltopicschema.path",
+      "prefLabel": "SkillTopicSchema.path",
+      "definition": "One plain segment: a topic is a direct subdirectory, never deeper.",
+      "source": "cat-harness/schemas/skill-topics.ts#SkillTopicSchema.path",
       "status": "candidate"
     },
     {
@@ -8241,7 +8311,7 @@
     {
       "id": "theme.themerefschema.instance",
       "prefLabel": "ThemeRefSchema.instance",
-      "definition": "Declared instance name. Absent means the citing instance's own.",
+      "definition": "The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own.",
       "source": "cat-harness/schemas/theme.ts#ThemeRefSchema.instance",
       "status": "candidate"
     },
@@ -9982,6 +10052,13 @@
       "status": "candidate"
     },
     {
+      "id": "vocabulary.termgloss.replacedby",
+      "prefLabel": "TermGloss.replacedBy",
+      "definition": "The standard property that replaced this term, as a CURIE over {@link REPLACEMENT_PREFIXES} — a CURIE rather than an IRI because `namespaces.ts` imports this module, so the namespace constants cannot be imported back. Set when a term minted here turned out to restate a published one (owner, 2026-09-30, bean `xsqm`: \"emphasize preexisting standards … now align\"). The term stays in the vocabulary, `owl:deprecated` and `dcterms:isReplacedBy` this IRI, so data already carrying the old IRI still resolves to a definition that says where to go — a retired IRI that 404s is a broken link someone else owns.",
+      "source": "cat-harness/schemas/vocabulary.ts#TermGloss.replacedBy",
+      "status": "candidate"
+    },
+    {
       "id": "vocabulary.termgloss.seealso",
       "prefLabel": "TermGloss.seeAlso",
       "definition": "Site-relative page carrying the full treatment, when one exists.",
@@ -10166,7 +10243,7 @@
     {
       "id": "voices.voicerefschema.instance",
       "prefLabel": "VoiceRefSchema.instance",
-      "definition": "The declared name of the instance holding it. Absent means this one.",
+      "definition": "The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one.",
       "source": "cat-harness/schemas/voices.ts#VoiceRefSchema.instance",
       "status": "candidate"
     },
@@ -10187,7 +10264,7 @@
     {
       "id": "voices.voicerulesourceschema.instance",
       "prefLabel": "VoiceRuleSourceSchema.instance",
-      "definition": "The DECLARED NAME of the instance holding the corpus, when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.",
+      "definition": "The instance holding the corpus, as its planned `owner/repo` (bean `6rmv`; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.",
       "source": "cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.instance",
       "status": "candidate"
     },

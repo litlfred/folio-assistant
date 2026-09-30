@@ -7,6 +7,10 @@
   "type": "module",
   "repository": "https://github.com/litlfred/bootstrap-tools",
   "scripts": {
+    "vocabulary": "bun run scripts/gen-vocabulary.ts",
+    "vocabulary:check": "bun run scripts/gen-vocabulary.ts --check",
+    "graph": "bun run scripts/export-graph.ts",
+    "publish": "bun run scripts/publish-files.ts",
     "render": "bun run scripts/render-bpmn.ts",
     "render:check": "bun run scripts/render-bpmn.ts --check",
     "readmes": "bun run scripts/subgraph-readmes.ts",
@@ -20,6 +24,7 @@
     "check:closure": "bun run scripts/check-closure.ts",
     "check:node-iris": "bun run scripts/check-node-iris.ts",
     "check:concepts": "bun run scripts/check-bootstrap-concepts.ts",
+    "check:standalone": "bun run scripts/rehearse-standalone.ts",
     "test": "bun test ."
   },
   "dependencies": {

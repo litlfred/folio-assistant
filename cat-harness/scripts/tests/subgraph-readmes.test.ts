@@ -43,7 +43,9 @@ test("over the real tree, every link in every generated README resolves", async 
     for (const m of region.matchAll(/\]\(([^)]+)\)/g)) {
       const l = m[1]!;
       if (/^[a-z]+:/.test(l) || l.startsWith("#")) continue;
-      if (!existsSync(join(dirname(file), l.split("#")[0]!))) broken.push(`${file}: ${l}`);
+      // A destination is a URL-encoded path (`linkTarget`), so decode it
+      // before asking the filesystem — a name with a space is a real file.
+      if (!existsSync(join(dirname(file), decodeURIComponent(l.split("#")[0]!)))) broken.push(`${file}: ${l}`);
     }
   }
   expect(broken).toEqual([]);
@@ -200,4 +202,12 @@ describe("coverage.process — declared, absent, and could-not-determine", async
     expect(at("quiet")).not.toContain("## Files");
     rmSync(r, { recursive: true, force: true });
   });
+});
+
+test("a link destination is percent-encoded per segment, parentheses included", async () => {
+  const { linkTarget } = await import("../../../bootstrap-tools/scripts/subgraph-readmes.ts");
+  expect(linkTarget("PIIS2589750021000388 (2).pdf")).toBe("PIIS2589750021000388%20%282%29.pdf");
+  expect(linkTarget("a b/c(d.md")).toBe("a%20b/c%28d.md");
+  expect(linkTarget("plain.md")).toBe("plain.md");
+  expect(decodeURIComponent(linkTarget("x (1) y.pdf"))).toBe("x (1) y.pdf");
 });

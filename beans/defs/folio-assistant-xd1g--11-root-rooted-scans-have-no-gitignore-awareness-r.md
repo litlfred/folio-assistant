@@ -114,7 +114,7 @@ Found the way this bean predicts: not by sweeping the list, but by a gate writin
 to the tree while `bun run gates` judged it, caught by the new between-gates tree
 guard (bean `ymsu`).
 
-**`cat-harness/skills/graph-management/kg-detangle.ts` walks from `ROOT` and skips
+**`cat-harness/skills/kg/graph-management/kg-detangle.ts` walks from `ROOT` and skips
 only dot-prefixed entries.** No `ls-files`, no `exclude-standard`, no gitignore.
 
 ### Measured, four ways, on one tree
@@ -161,7 +161,7 @@ same day, same mechanism as `check-subgraphs`, `check-kind-validators` and
 
 The method is *"every `scripts/*.ts` carrying a `new Glob` or a hand-written
 `walk(…)`"*. **This file is not under `scripts/`** — it is a skill node under
-`skills/graph-management/`. The caveat said the list is a floor; this is the first
+`skills/kg/graph-management/`. The caveat said the list is a floor; this is the first
 miss that is outside the searched directory rather than spelled differently inside
 it. Worth widening the filter past `scripts/` before the count is quoted again.
 
@@ -269,7 +269,7 @@ five `--check` commands without `bun test` masking them, went red on
 `kg:detangle:check` on its first run. That session numbered it the **twelfth**.
 
 **Twelfth vs thirteenth is not a disagreement about the defect** — both name
-`cat-harness/skills/graph-management/kg-detangle.ts`, both measured
+`cat-harness/skills/kg/graph-management/kg-detangle.ts`, both measured
 `cat-harness/schemas` at 1441 against a clean checkout's 227, and both traced it
 to `block-qa-schema/node_modules`. The counts differ because this bean's
 enumeration was a syntactic filter over `scripts/*.ts` and neither count is

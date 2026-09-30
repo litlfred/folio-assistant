@@ -136,7 +136,7 @@ For each authorized batch:
 
 1. **Create branch** under the structured-name convention (the folio's own
    `AGENTS.md` sets it; the accessibility half is
-   [`interaction-modality`](interaction-modality.md)):
+   [`interaction-modality`](../conduct/conduct-core/interaction-modality.md)):
    `claude/integration-backlog-<axis>-<theme>-<YYYY-MM-DD>`
    - `axis` ∈ the enabled axes
    - `theme` ≤ 40 chars, lowercase, hyphenated

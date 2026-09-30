@@ -17,7 +17,18 @@ This epic turns those findings into work (owner, 2026-09-23: *"make the findings
 - one **cross-cutting** bug per defect that recurs across pages, so it is fixed once, in the shared template or CSS;
 - one task per **visualiser**, holding that page's findings verbatim, each tagged with the cross-cutting bug that covers it.
 
-It belongs to the rendered-surface stream, `folio-assistant-10uc` (navbar, visualisers, stickies).
+It belongs to the rendered-surface work under GOAL 2, and carries
+`parent: folio-assistant-p5wm` — the GOAL 2 milestone — as of 2026-09-30.
+
+This sentence named `folio-assistant-10uc` (the rendered-surface STREAM) while
+the front matter carried no parent at all, which is bean `tlj9`: every consumer
+that walks `parent` omitted this epic and its 23 open descendants from GOAL 2.
+The owner ruled the reparent on 2026-09-30. It hangs from `p5wm` rather than
+from `10uc` because `check:bean-parents` requires an EPIC to hang from a
+`milestone`, and `10uc` is a `task` — so the stream this belongs to by subject
+is not a placement the store can express. `check:bean-parent-prose` exists so
+the next sentence that disagrees with its own front matter is found
+mechanically rather than by somebody reading the body.
 
 Fixing a finding means changing the generator or the shared chrome, then re-drawing that visualiser's wireframe, so that `check:wireframes` and the wireframe stay the record of the page as it is.
 

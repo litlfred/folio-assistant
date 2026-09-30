@@ -31,7 +31,7 @@
  * That is why this is a registry rather than an enum, and why each entry
  * carries its own `filename`: the owner's rule, 2026-09-20 —
  * **each type declares its own filename** — recorded in
- * `skills/folio-core/directory-conventions.md`.
+ * `skills/kg/kg-core/directory-conventions.md`.
  *
  * ## Deliberately the same shape as `GraphKindRegistry`
  *

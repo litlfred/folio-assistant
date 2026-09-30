@@ -40,22 +40,31 @@
  * linked. That is `pb04`'s lesson as a rule: a dead link is worse than no
  * link, because it invites a click and then reads as "this site is broken".
  *
- * ## The theme comes from the AVATAR's tone
+ * ## The tone comes from the instance's OWN THEME, else the AVATAR's
  *
- * No instance declares a theme today, and inventing a palette per instance
- * would put a second colour vocabulary beside `schemas/theme.ts` — the exact
- * drift that file exists to have ended. `schemas/avatars.ts` already gives
- * every kind a **hue angle**, from which the stylesheet builds both schemes,
- * so a tile themed by its avatar's tone is themed by the mechanism this
- * repository already has. An instance with no avatar of its own takes
- * `GENERIC`, which is reported as a finding rather than rendered as a blank.
+ * Bean `v8n5`: when the sticky an instance contributes about itself resolves
+ * to a theme THE INSTANCE DECLARES ITSELF (by reference, owner first —
+ * `themeByRef`; not one of the platform's shared themes), the tile's `tone` is
+ * the HUE of that theme's `accent` (`hexHue`), so the tile and navbar entry
+ * sit on the palette the instance declared rather than on a second hue written
+ * down in the avatar registry. `toneFrom` says which answer was used.
+ *
+ * Otherwise the avatar's tone, as before: inventing a palette per instance
+ * would put a second colour vocabulary beside `schemas/theme.ts`, and
+ * `schemas/avatars.ts` already gives every kind a **hue angle**. An instance
+ * with no avatar of its own takes `GENERIC`, which is reported as a finding
+ * rather than rendered as a blank.
+ *
+ * A tone is a HUE and nothing more: the tile's words (title, counts, viewer
+ * names) carry its state, so no theme can remove the second channel (WCAG
+ * SC 1.4.1, the `j66n` rule).
  */
 import { existsSync, readdirSync } from "node:fs";
 import { isAbsolute, join, relative, resolve } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
-import { resolveThemeBackdrop } from "../schemas/theme.js";
-import { themeByRef } from "../schemas/theme-by-ref.js";
+import { hexHue, resolveThemeBackdrop } from "../schemas/theme.js";
+import { PLATFORM_THEME_OWNER, themeByRef } from "../schemas/theme-by-ref.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { flattenDependencies } from "../schemas/dependency-order.js";
 import {
@@ -217,8 +226,13 @@ export type HarnessTile = {
    * broken image and from a placeholder glyph.
    */
   mark?: { src: string; title: string; crop?: { width: number; height: number; left: number; top: number } };
-  /** Hue angle from the avatar registry — the tile's theme. */
+  /**
+   * Hue angle — the tile's theme. From the instance's own theme accent when it
+   * resolves one, else from the avatar registry; {@link toneFrom} says which.
+   */
   tone: number;
+  /** Where {@link tone} came from: the instance's own theme accent, or the avatar registry. */
+  toneFrom: "theme" | "avatar";
   /** What the avatar reads as, for the accessible name. */
   reads: string;
   /** Whether the avatar is the instance's own or the generic fallback. */
@@ -948,6 +962,13 @@ function tileFor(
         `showing no theme avatar rather than a broken image.`,
     );
   }
+  // THE TONE, from the accent of a theme the instance DECLARED ITSELF (bean
+  // `v8n5`). Scoped to an instance's own theme on purpose: a card citing one
+  // of the platform's shared sticky themes chose a note style, not an
+  // identity colour, and re-hueing every such tile is a change nobody asked
+  // for. A grey accent has no hue, and then the avatar's tone stands.
+  const ownTheme = found?.ok === true && found.owner !== undefined && found.owner !== PLATFORM_THEME_OWNER;
+  const themeTone = theme && ownTheme ? hexHue(theme.palette.accent) : undefined;
   // OWN IMAGES FIRST, THE SITE OWNER'S SECOND — the overlay order this
   // repository uses everywhere else, and the one the theme docs describe: *"an
   // instance declaring its own `landing` images gets its own backdrop"*, with
@@ -1087,7 +1108,8 @@ function tileFor(
      * nothing.
      */
     ...(navMark ? { mark: navMark } : {}),
-    tone: avatar.tone,
+    tone: themeTone ?? avatar.tone,
+    toneFrom: themeTone !== undefined ? ("theme" as const) : ("avatar" as const),
     reads: avatar.reads,
     genericAvatar: !own,
     instantiated: existsSync(join(repoRoot, instanceConfigFilename(decl.name))),

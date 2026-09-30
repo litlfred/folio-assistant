@@ -24,9 +24,9 @@ The method is [Latent Semantic Indexing](../methodologies/) (node `lsi`), with
 how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
-<div class="lv-stat"><b>4</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>1167</b><span>units indexed</span></div>
-<div class="lv-stat"><b>3</b><span>graphs that need an index and lack a fresh one</span></div>
+<div class="lv-stat"><b>3</b><span>committed indexes</span></div>
+<div class="lv-stat"><b>993</b><span>units indexed</span></div>
+<div class="lv-stat"><b>4</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
 ## Which graphs need an index
@@ -37,7 +37,7 @@ the same as fine. The same verdict is `kg:audit`'s `lsi-index-fresh`.
 
 | graph | verdict | detail |
 |---|---|---|
-| `agent-skills/library` | <span class="lv-pass">pass</span> | fresh |
+| `agent-skills/library` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance agent-skills --graph library` |
 | `bootstrap-tools/bootstrap-tools-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `bootstrap/skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/beans` | <span class="lv-na">n/a</span> | state graph — indexed on demand, never committed |
@@ -65,29 +65,9 @@ the same as fine. The same verdict is `kg:audit`'s `lsi-index-fresh`.
 | `smart-trust/smart-trust-docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance smart-trust --graph smart-trust-docs` |
 | `who-iris/library` | <span class="lv-pass">pass</span> | fresh |
 | `who-iris/who-iris-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
+| `who-iris/who-iris-site` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-iris/who-iris-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `who-style-guide/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-
-## agent-skills / library
-
-**174** units · **2605** terms · k = **100** · retains **88.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/agent-skills/library.lsi.json`
-
-> Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
-
-Each dimension is a **contrast** between two poles, shown by their highest-loading terms. It is not named here: naming it is a reader's act.
-
-| dim | σ | one pole | the other pole |
-|---|---|---|---|
-| 1 | 18.54 | gemini, task, office, science, model, industrial, agent, openhands | *(none)* |
-| 2 | 15.41 | office, industrial, science, finance, media, gpt, opus, deepseek | defects, defect, safety, routing, body, detected, checks, description |
-| 3 | 13.21 | arxiv, wang, zhou, language, yang, yao, jiang, liu | defects, defect, routing, office, industrial, safety, detected, body |
-| 4 | 12.16 | openhands, gemini, gpt, configurations, opus, flash, condition, pro | defects, defect, arxiv, safety, liu, routing, coding, zhang |
-| 5 | 11.34 | openhands, defects, gemini, gpt, flash, pro, opus, defect | reasoning, tool, reference, docs, cookie, file, multimodal, coding |
-| 6 | 10.31 | oracle, human, fraction, verifier, augmentation, pytest, passed, submissions | claude, openhands, opus, gpt, flash, pro, deepseek, gemini |
-| 7 | 9.45 | behaviour, hook, mechanisms, interface, call, external, advisory, ordinary | cookie, claude, services, docs, platform, analyze, usage, policy |
-| 8 | 8.90 | wang, xiangyi, tier, university, spec, retrieved, well, checks | reasoning, yao, generated, spec-aware, providing, framework, chat, hook |
-
-**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
 ## cat-harness / library
 
@@ -121,7 +101,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**307** units · **7579** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**307** units · **7598** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -129,14 +109,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.70 | bean, session, instance, graph, kind, branch, page, directory | *(none)* |
-| 2 | 27.74 | bias, studies, study, effect, statistical, causation, validity, causal | bean, instance, harness, directory, node, graph, kind, session |
-| 3 | 22.26 | proof, watcher, lean, slot, blocks, project, witness, chapter | harness, node, instance, bean, page, directory, actor, process |
-| 4 | 19.51 | dpi, color, grayscale, matplotlib, pdf, lean, images, raster | session, queue, branch, prs, commits, coordination, sibling, beans |
-| 5 | 18.57 | dpi, color, grayscale, contrast, matplotlib, raster, eps, fonts | lean, proof, glossary, declaration, mathlib, theorem, sorry, term |
+| 1 | 46.92 | bean, instance, session, graph, kind, branch, page, directory | *(none)* |
+| 2 | 27.75 | bias, studies, study, effect, statistical, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
+| 3 | 22.32 | proof, watcher, lean, slot, blocks, witness, project, chapter | harness, node, instance, bean, page, directory, actor, bias |
+| 4 | 19.53 | dpi, color, grayscale, lean, pdf, matplotlib, images, raster | session, branch, queue, prs, commits, coordination, beans, sibling |
+| 5 | 18.61 | dpi, color, grayscale, contrast, matplotlib, raster, eps, fonts | lean, proof, glossary, declaration, term, theorem, mathlib, sorry |
 | 6 | 16.77 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, consider, description, ignoring |
-| 7 | 16.22 | lean, mathlib, mcp, sorry, proof, search, bean, theorem | watcher, slot, backlog, voice, ledger, nesting, objection, queue |
-| 8 | 15.33 | mathlib, lean, sorry, lake, mcp, subdirectory, oleans, sessions | slot, forward, watcher, criterion, major, band, reader, prose |
+| 7 | 16.23 | lean, mathlib, mcp, sorry, search, proof, theorem, bean | watcher, slot, voice, backlog, ledger, objection, queue, nesting |
+| 8 | 15.34 | mathlib, lean, sorry, lake, subdirectory, mcp, oleans, sessions | slot, watcher, forward, criterion, major, band, avatar, reader |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

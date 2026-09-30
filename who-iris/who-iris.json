@@ -1,6 +1,8 @@
 {
   "_comment": "The WHO IRIS catalogue instance, staged as a top-level directory ahead of becoming its own repository. Owner, 2026-09-20: 'there needs to be a new repo (staged here as a new top-level dir -> repo later) which is an instance of fa-core, and is for the who-iris cataloge and this is an example artefact (the style guide is part of the library itself)', and later 'in future who-iris iwll be own repo. will have specialized tools/themes.' The `library` entry landed with the git mv (bean frs5), in the same change, exactly as the previous version of this comment said it would: until then its ABSENCE was load-bearing, because `resolveLibraryRef` reported `no-library-graph` for a citation naming this instance -- a different and more useful answer than 'that section is missing'. Both of those are now real answers rather than one standing in for the other.",
   "name": "who-iris",
+  "repository": "litlfred/who-iris",
+  "livesAt": { "repository": "litlfred/folio-assistant", "path": "who-iris" },
   "version": "0.1.0",
   "needs": [
     "folio-assistant-core"
@@ -27,7 +29,7 @@
   "_folioMount_comment": "F8/F9, bean jpjt. The reader's folio comes from cat-harness and must be the same folio in every library they browse — board-windows: \"the test is not 'is this folio good' but 'is this the same folio'\". These are the roots whose pages carry it; `check:folio-mount` fails the build for one that does not. uploads/ is EXEMPT with its reason, because it holds the captured IRIS source the replica is generated FROM, and rewriting a capture destroys the artefact ingestion exists to preserve.",
   "folioMount": {
     "roots": [
-      "library/",
+      "site/",
       "docs/"
     ],
     "exempt": [
@@ -46,8 +48,21 @@
       "graphKinds": [
         "library"
       ],
+      "_comment_corpusOnly": "CORPUS ONLY since 2026-09-30 (bean 2b5s, the owner's 'site/ + publish covers'). This entry carried `instanceRoot: true` while the replica pages lived here, and a mount copies the whole directory whose index.html it finds -- so the 1,367 ingestion sidecars were published at /who-iris/ AND /library/who-iris/ as if they were pages. The replica moved to `site/`, which is now the instance root; this directory has no index.html and is mounted nowhere. The covers the replica shows stay here, where the catalogue's localPath names them (bean yl5w), and the mount publishes exactly the ones a page embeds.",
+      "kindRouteRedirect": true,
+      "_comment_kindRouteRedirect": "/library/who-iris/ stayed a live URL while it was a verbatim mount, so it keeps answering: `mount-instance-docs.ts` writes it as a one-file redirect to this directory's library viewer, /cat-harness/library/who-iris/, rather than letting an old link 404."
+    },
+    {
+      "id": "who-iris-site",
+      "path": "site/",
+      "dependents": "skip",
+      "description": "The IRIS REPLICA: the home page, the community list, and one page per collection and per item, themed as IRIS and generated from `catalogue/` by `scripts/gen-iris-pages.ts` (gated by `bun run iris:pages:check`). It is what `/who-iris/` serves. Moved out of `library/` on 2026-09-30 (bean 2b5s) so that the corpus and its rendering are separate directories: before, the mount copied the corpus along with the pages. A page shows an item's cover by referencing `../library/<slug>-cover.png`; the build publishes exactly the files a page embeds, beside the replica, and not the directory they sit in.",
+      "graphKinds": [
+        "docs"
+      ],
+      "_graphKinds_comment": "`docs`, the one renderable kind the harness owns, because the mount publishes only renderable directories' pages and the replica is a finished HTML rendering of this instance's catalogue -- `folio` is authored block content with viewers, LaTeX and QA badges, which this is not. It shares the kind with `docs/`, and `withRoutes` settles which answers where: this directory is the instance root and serves /who-iris/, and the kind route /docs/who-iris/ stays with the sibling that is not the root, so the replica is published once rather than twice.",
       "instanceRoot": true,
-      "_comment_instanceRoot": "The themed replica is what /who-iris/ serves — the owner's ruling, 'who-iris themed at /who-iris/'. Without this the route goes to whichever kind sorts first, which is `docs`."
+      "_comment_instanceRoot": "The themed replica is what /who-iris/ serves — the owner's ruling, 'who-iris themed at /who-iris/'. Moved here from the `library` entry with the pages (bean 2b5s)."
     },
     {
       "id": "who-iris-catalogue",
@@ -132,6 +147,26 @@
       "description": "What auditing THIS instance produced, committed so a consumer can tell \"never audited\" from \"audited clean\" — a printed verdict cannot, which is why every QA verdict here is a sidecar. TWO kinds live here and the files declare which they are via $schema: kg-qa/v1, one per audited subject, in a tree mirroring the subject’s own path, and ONE kg-qa-manifest/v1 recording the auditor’s identity for all of them. The manifest moved here from skills/ on 2026-09-27: kg-audit.ts writes it unconditionally, so its old home created a skills/ directory holding no skills in every instance that has none. At declaration time that is 2 files across scenarios (1), skills (1). No qa-results/v1 and no witnesses: this instance runs no document build and no witness-producing computation, and declaring kinds it does not hold would be an over-claim. dependents: reproduce, because a dependent audits its OWN graph — these verdicts are about this instance’s nodes, and inheriting them would attribute one instance’s findings to another. Declared WITH its files in one commit, per bean dh4f: a declared-but-absent directory makes a consumer scan nothing and report a clean run over it.",
       "graphKinds": [
         "qa"
+      ]
+    }
+  ],
+  "stickies": [
+    {
+      "_comment": "WHO-IRIS'S OWN CARD, bean v8n5. The owner ruled that each initiated harness contributes its own initialization card, and a theme is reached THROUGH a sticky -- so this card is also what gives the who-iris board tile and navbar entry their theme. It cites `iris-sticky` BY REFERENCE, owner first (`themeByRef`): a sticky-kind theme declared in this instance's own `themes/`, DERIVED from `iris-web` (inherits its palette), which was measured from the captured DSpace stylesheet. The platform holds no WHO colour; `gen-themes-css.ts` finds the theme by this instance's declaration and emits its CSS at build time. `bodyFrom: description` so the words are read from this declaration's own `description` and cannot drift from it.",
+      "id": "who-iris",
+      "order": 40,
+      "theme": {
+        "instance": "litlfred/who-iris",
+        "themeId": "iris-sticky"
+      },
+      "summary": "A catalogue by reference",
+      "bodyFrom": "description",
+      "links": [
+        {
+          "label": "The IRIS replica",
+          "href": "/who-iris/",
+          "note": "The three materialized items, on IRIS's own theme."
+        }
       ]
     }
   ],

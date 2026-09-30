@@ -123,14 +123,14 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-skos
  */
-import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../../bootstrap-tools/schemas/glossary-ledger.ts";
+import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
 import { tagCompatible } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 import { NS_PREFIXES, ownElementPattern, termIri } from "../schemas/namespaces.js";
 import { laneBinding, readRoleGraph, type LaneBinding, type RoleDef, type RoleGraph } from "../schemas/role-graph.js";
-import { repoRootFor } from "../schemas/cat-harness.js";
+import { glossaryHomeFor, repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 import { exportIdentity, makeIri } from "./kg-export.js";
 import { codeListDirs, loadCodeLists } from "../schemas/code-list.js";
@@ -148,7 +148,7 @@ export const GLOSSARY_DIR = "glossary";
 /** The ledger's filename — the one non-derivable fact this module stores. */
 export const LEDGER_FILENAME = "glossary-ledger.json";
 /** Tagged so the file declares what it is, per the directory conventions. */
-export { LEDGER_SCHEMA } from "../../bootstrap-tools/schemas/glossary-ledger.ts";
+export { LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
 
 // ── The corpus ──────────────────────────────────────────────────
 
@@ -245,8 +245,10 @@ export function readLanes(instanceRoot: string, repoRoot: string): LaneOccurrenc
 // ── The ledger ──────────────────────────────────────────────────
 
 export interface LedgerEntry {
-  /** The label at the time of minting — what a retired concept is shown as. */
+  /** The current label — what a retired concept keeps being shown as. */
   readonly prefLabel: string;
+  /** Labels this key carried before, oldest first (#1168 B10b) — published as skos:hiddenLabel. */
+  readonly formerLabels?: readonly string[];
   /** ISO date this key was first written. */
   readonly firstSeen: string;
   /** ISO date it stopped being derivable, or `null` while it still is. */
@@ -261,8 +263,34 @@ export interface Ledger {
   readonly concepts: Record<string, LedgerEntry>;
 }
 
+/**
+ * The ledger's file: in the instance's own `swimlane-glossary` directory, or —
+ * for an instance that declares none, as bootstrap does not since 2026-09-30 —
+ * hosted in this harness's under the instance's stub ({@link glossaryHomeFor}).
+ */
+/**
+ * A live key's next ledger entry. New: minted today. Known: keeps its
+ * `firstSeen`, is un-retired, and — when its label changed — keeps the old
+ * label in `formerLabels` rather than minting a new term (#1168 B10b, owner
+ * 2026-09-30: "use SKOS for rename/alternate name"; published as
+ * skos:hiddenLabel, so the old name still finds it).
+ */
+export function liveLedgerEntry(was: LedgerEntry | undefined, label: string, now: string): LedgerEntry {
+  if (was === undefined) return { prefLabel: label, firstSeen: now, retiredOn: null };
+  const former = [...(was.formerLabels ?? [])];
+  if (was.prefLabel !== label && !former.includes(was.prefLabel)) former.push(was.prefLabel);
+  // The current label is never also a former one (a lane renamed back).
+  const kept = former.filter((f) => f !== label);
+  return {
+    prefLabel: label,
+    ...(kept.length > 0 ? { formerLabels: kept } : {}),
+    firstSeen: was.firstSeen,
+    retiredOn: null,
+  };
+}
+
 export function ledgerPath(instanceRoot: string): string {
-  return join(instanceRoot, GLOSSARY_DIR, LEDGER_FILENAME);
+  return join(glossaryHomeFor(instanceRoot, ROOT).root, LEDGER_FILENAME);
 }
 
 export function readLedger(instanceRoot: string, stub: string): Ledger {
@@ -464,7 +492,18 @@ export function buildGlossary(opts: {
     // A declared role with no lane in THIS instance is still a declared term
     // — omitting it would be `dh4f`, a glossary silently short of the
     // vocabulary it claims to index. It is reported in `undrawn` instead.
-    const altLabels = [...new Set(ls.map((l) => l.laneName).filter((n): n is string => typeof n === "string" && n !== r.title))].sort();
+    // Alternative labels from two sources, merged: the names the role's lanes
+    // are drawn with, and the role's own authored `otherNames` (smart-base's
+    // Generic Persona field, owner 2026-09-30). Retired names are NOT here —
+    // `formerNames` become `hiddenLabel`: findable, never offered as current.
+    const altLabels = [
+      ...new Set(
+        [...ls.map((l) => l.laneName), ...(r.otherNames ?? [])].filter(
+          (n): n is string => typeof n === "string" && n !== r.title,
+        ),
+      ),
+    ].sort();
+    const hiddenLabels = [...new Set((r.formerNames ?? []).map((f) => f.name))].sort();
     live.set(localPart, r.title);
     nodes.push({
       "@id": iri,
@@ -472,6 +511,7 @@ export function buildGlossary(opts: {
       prefLabel: r.title,
       ...(r.description ? { definition: r.description } : {}),
       ...(altLabels.length > 0 ? { altLabel: altLabels } : {}),
+      ...(hiddenLabels.length > 0 ? { hiddenLabel: hiddenLabels } : {}),
       notation: r.id,
       inScheme: schemeIri,
       // `actedUpon` is not decoration: `Work plan — beans`, `Corpus` and
@@ -485,16 +525,20 @@ export function buildGlossary(opts: {
   }
 
   // The lanes whose performer VARIES: a concept with a scope note and no
-  // definition, which is TRUE. Keyed by lane name because there is no role to
-  // key by — that is the whole content of the `variable` answer.
-  const varyingByName = new Map<string, LaneOccurrence[]>();
+  // definition, which is TRUE. There is no role to key by — that is the whole
+  // content of the `variable` answer — so the key is the LANE's own identity,
+  // `process/<process id>/lane/<lane id>`, the same local part kg-export mints
+  // for the Lane node (#1168 B10b). It was the display name until then, so
+  // renaming a lane minted a new term; now the old name is a former label.
+  const varyingByLane = new Map<string, LaneOccurrence[]>();
   for (const l of varying) {
-    const k = l.laneName ?? l.laneId;
-    varyingByName.set(k, [...(varyingByName.get(k) ?? []), l]);
+    const k = `${l.processId}/lane/${l.laneId}`;
+    varyingByLane.set(k, [...(varyingByLane.get(k) ?? []), l]);
   }
-  for (const [name, ls] of [...varyingByName].sort(([a], [b]) => a.localeCompare(b))) {
-    const localPart = `lane/${name}`;
-    const iri = makeIri(id.docIri, "lane", name);
+  for (const [laneKey, ls] of [...varyingByLane].sort(([a], [b]) => a.localeCompare(b))) {
+    const name = ls[0]!.laneName ?? ls[0]!.laneId;
+    const localPart = `process/${laneKey}`;
+    const iri = makeIri(id.docIri, "process", laneKey);
     live.set(localPart, name);
     nodes.push({
       "@id": iri,
@@ -512,6 +556,15 @@ export function buildGlossary(opts: {
   }
 
   // ── Retirement ────────────────────────────────────────────────
+  // A retired name a role now lists among its `formerNames` was RENAMED, not
+  // dropped: its deprecated concept says which role replaced it, so a reader
+  // holding the old name from old text is sent to the current one.
+  const renamedTo = new Map<string, { iri: string; title: string }>();
+  for (const r of roles) {
+    for (const f of r.formerNames ?? []) {
+      renamedTo.set(f.name.trim().toLowerCase(), { iri: makeIri(id.docIri, "role", r.id), title: r.title });
+    }
+  }
   const prior = readLedger(instanceRoot, id.stub);
   const concepts: Record<string, LedgerEntry> = {};
   const retired: string[] = [];
@@ -519,15 +572,11 @@ export function buildGlossary(opts: {
   const restored: string[] = [];
   for (const [key, label] of [...live].sort(([a], [b]) => a.localeCompare(b))) {
     const was = prior.concepts[key];
-    if (was === undefined) {
-      concepts[key] = { prefLabel: label, firstSeen: now, retiredOn: null };
-    } else {
-      // A term that comes BACK is un-retired and said so. Leaving the flag on
-      // would report a live term as gone for ever, which is the mirror of the
-      // defect this ledger exists to prevent.
-      if (was.retiredOn !== null) restored.push(key);
-      concepts[key] = { prefLabel: label, firstSeen: was.firstSeen, retiredOn: null };
-    }
+    // A term that comes BACK is un-retired and said so. Leaving the flag on
+    // would report a live term as gone for ever, which is the mirror of the
+    // defect this ledger exists to prevent.
+    if (was !== undefined && was.retiredOn !== null) restored.push(key);
+    concepts[key] = liveLedgerEntry(was, label, now);
   }
   for (const [key, was] of Object.entries(prior.concepts).sort(([a], [b]) => a.localeCompare(b))) {
     if (live.has(key)) continue;
@@ -545,8 +594,25 @@ export function buildGlossary(opts: {
       // REPORTED, NEVER DELETED. `owl:deprecated` is the machine-readable
       // half; the change note is the half a person reads.
       deprecated: true,
-      changeNote: `Retired ${retiredOn}: no swimlane in this instance derives this term.`,
+      ...(() => {
+        const to = renamedTo.get(was.prefLabel.trim().toLowerCase());
+        return to === undefined
+          ? { changeNote: `Retired ${retiredOn}: no swimlane in this instance derives this term.` }
+          : { changeNote: `Retired ${retiredOn}: renamed ${to.title}.`, isReplacedBy: to.iri };
+      })(),
     });
+  }
+
+  // A renamed live term carries its former labels as skos:hiddenLabel —
+  // findable under the old name, never offered as current — beside any the
+  // role declared itself (`formerNames`).
+  for (const [key, entry] of Object.entries(concepts)) {
+    if (entry.retiredOn !== null || !entry.formerLabels?.length) continue;
+    const [kind, ...rest] = key.split("/");
+    const node = nodes.find((n) => n["@id"] === makeIri(id.docIri, kind!, rest.join("/")));
+    if (node === undefined) continue;
+    const hidden = new Set([...((node["hiddenLabel"] as string[] | undefined) ?? []), ...entry.formerLabels]);
+    node["hiddenLabel"] = [...hidden].sort();
   }
 
   const ledger: Ledger = { $schema: LEDGER_SCHEMA, instance: id.stub, concepts };
@@ -586,6 +652,8 @@ export function buildGlossary(opts: {
       label: "rdfs:label",
       prefLabel: "skos:prefLabel",
       altLabel: "skos:altLabel",
+      hiddenLabel: "skos:hiddenLabel",
+      isReplacedBy: { "@id": "dcterms:isReplacedBy", "@type": "@id" },
       definition: "skos:definition",
       scopeNote: "skos:scopeNote",
       changeNote: "skos:changeNote",

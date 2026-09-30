@@ -4,11 +4,12 @@ id: adapter-vs-profile
 label: stable
 summary: "adapter vs profile: a different axis, and conflating them is costly"
 createdAt: 2026-09-19
-archived: "true"
+archived: true
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 - **Adapters** (`paper`, `dak`) partition block kinds into **disjoint**
   namespaces. `adapterForKind` is what QA-criterion scoping reads, and it
@@ -22,7 +23,7 @@ needs different **code** (adapter) or only different **rules** (profile plus
 a subclass).
 
 **Archived 2026-09-19** (bean `folio-assistant-4kiw`). Superseded by
-`skills/folio-core/placement.md` Step 3, which carries every operative
+`skills/kg/kg-core/placement.md` Step 3, which carries every operative
 claim here — disjoint vs nesting, `adapterForKind` staying *total and
 unambiguous*, the **eight** shared kinds, and the separating question
 (different **code** -> adapter; only different **rules** -> profile plus a

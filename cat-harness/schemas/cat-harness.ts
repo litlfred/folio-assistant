@@ -66,6 +66,7 @@ import {
 } from "node:fs";
 import { isAbsolute, join, relative, resolve, basename } from "node:path";
 import { z } from "zod";
+import { RepoFullNameSchema, type RepoFullName } from "./repo-full-name.js";
 
 import {
   KgAssetSchema,
@@ -77,7 +78,7 @@ import {
   type KgImage,
   type KgNodeLabels,
 } from "./kg-node";
-import { NS_PREFIXES, termIri } from "./namespaces";
+import { NS_PREFIXES, propertyIri, termIri } from "./namespaces";
 import { StickyContributionSchema, type StickyContribution } from "./sticky-contribution";
 
 /**
@@ -308,7 +309,9 @@ export * from "./graph-kind-registry.js";
 // forwards a name; it does not bring it into local scope.
 import {
   defaultGraphKinds,
+  graphKindIri,
   REGISTRATION_MODULE,
+  resolveGraphKind,
   type GraphKind,
   type GraphKindRegistry,
   type GraphLayer,
@@ -542,6 +545,29 @@ export interface LiquidPrefix {
   passThrough?: boolean;
 }
 
+/**
+ * Where an instance sits today inside a HOST repository — the pre-split case,
+ * where `cat-harness` declares `litlfred/cat-harness` but is the
+ * `cat-harness/` directory of `litlfred/folio-assistant` (bean `6rmv`).
+ */
+export interface InstanceLocation {
+  /** The repository that holds the instance today, `owner/name`. */
+  repository: RepoFullName;
+  /** The instance's directory within it, repository-relative, no leading `./`. */
+  path: string;
+}
+
+export const InstanceLocationSchema = z
+  .object({
+    repository: RepoFullNameSchema,
+    path: z
+      .string()
+      .min(1)
+      .regex(/^[A-Za-z0-9._-]+(?:\/[A-Za-z0-9._-]+)*$/, "a repository-relative directory, no leading ./ or trailing /")
+      .refine((p) => !p.split("/").includes(".."), "a location may not climb with `..`"),
+  })
+  .strict();
+
 export interface CatHarnessDeclaration extends KgNodeLabels {
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
@@ -595,6 +621,24 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * consumer must be able to find the config without already knowing the
    * repository's name; the artefacts it *describes* are free to be named.
    */
+  /**
+   * The repository this instance IS — `owner/name`, its PLANNED home once the
+   * pre-split repository is broken apart (owner, 2026-09-30, bean `6rmv`).
+   *
+   * The identity every cross-instance reference resolves through: a bare
+   * `name` says nothing about which forge or owner, and two owners may both
+   * publish a `smart-base`. Planned rather than current so that an IRI keyed
+   * by it survives the split — where the instance sits TODAY is {@link livesAt}.
+   * `instanceRepositories` in `schemas/instance-repositories.ts` derives the
+   * `owner/repo ↔ name ↔ root` map from these; nothing keeps a list by hand.
+   */
+  repository?: RepoFullName;
+  /**
+   * Where the instance lives TODAY when that is not the root of
+   * {@link repository} — the host repository and the directory within it.
+   * Absent means it already lives at the root of its own repository.
+   */
+  livesAt?: InstanceLocation;
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
@@ -731,7 +775,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * Minting ids before then would bake the wrong scheme into artefacts the
    * schema itself calls *stable forever, never reused*.
    *
-   * `skills/folio-core/instance-publication.md` carries the namespace rule and
+   * `skills/kg/kg-core/instance-publication.md` carries the namespace rule and
    * why a mirror never takes its subject's identity.
    */
   id?: string;
@@ -766,7 +810,7 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * that a version reads as a publication claim. It does not — a version
    * distinguishes snapshots; whether anyone outside may depend on them is
    * {@link publication}, a separate question.
-   * `skills/folio-core/instance-publication.md`.
+   * `skills/kg/kg-core/instance-publication.md`.
    */
   version?: string;
 }
@@ -1430,6 +1474,27 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   instanceRoot: z.boolean().optional(),
   /**
+   * `/<kind>/<instance>/` for this directory is a ONE-FILE REDIRECT to the
+   * directory's declared viewer, because the directory itself is not mounted.
+   *
+   * The case it exists for is a directory that WAS mounted and stopped being:
+   * its kind route was a live URL, somebody may have linked it, and a route
+   * that simply vanishes turns every such link into a 404. Bean `2b5s`: an
+   * instance's `library/` held both its rendered pages and its corpus, the
+   * mount copied the corpus to two routes, and moving the pages out left
+   * `/library/<instance>/` with nothing to serve.
+   *
+   * **Declared, not inferred.** "Was this route ever published" is a fact
+   * about history, which a checkout does not hold; deriving the redirect from
+   * "has a published viewer and no index" instead would emit one stub per
+   * such directory in every instance — 38 declared entries on 2026-09-30, several at routes
+   * Jekyll already serves. `mount-instance-docs.ts` refuses the redirect,
+   * naming it, when the directory IS mountable (a route cannot be both a
+   * mount and a redirect) or declares no published viewer (a redirect to
+   * nowhere).
+   */
+  kindRouteRedirect: z.boolean().optional(),
+  /**
    * This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the
    * Jekyll source instead of mounting its built output.
    *
@@ -1653,7 +1718,7 @@ export interface Publication {
    * WHAT STATE this instance's publication is in. `draft`, always, today.
    *
    * **The discipline is in the skill, not here** —
-   * `skills/folio-core/instance-publication.md`. Owner's ruling, 2026-09-23:
+   * `skills/kg/kg-core/instance-publication.md`. Owner's ruling, 2026-09-23:
    * *"all assets get a version and are in 'draft' publication. formal
    * publication process needs to be deinfed/neeeds tools/depends on
    * instance."*
@@ -2361,6 +2426,8 @@ export const CatHarnessDeclarationSchema = z.object({
    * that deliberately wants a bare navbar.
    */
   navbarIcons: NavbarIconsSchema.optional(),
+  repository: RepoFullNameSchema.optional(),
+  livesAt: InstanceLocationSchema.optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   /**
@@ -2503,7 +2570,7 @@ export const CatHarnessDeclarationSchema = z.object({
     // conditional left to check about them. What replaced the old branches:
     // §3.1 refused both unless `publishable: true`, and the owner's ruling of
     // 2026-09-23 makes them universal. See
-    // `skills/folio-core/instance-publication.md`.
+    // `skills/kg/kg-core/instance-publication.md`.
     //
     // `publication` is a literal union of one value, so `"published"` is
     // refused by the type rather than here — deliberately, because a refusal
@@ -2783,6 +2850,19 @@ export function findInstanceRoot(start: string): string | undefined {
     if (up === dir) return undefined;
     dir = up;
   }
+}
+
+/**
+ * Whether a declaration is the instance a reference names — by its planned
+ * repository (`owner/name`, the form references take since bean `6rmv`) or
+ * by its machine `name`, which internal callers and `needs` edges still use.
+ * One predicate so every resolver answers "which instance is this" alike.
+ */
+export function declaresInstance(
+  decl: { name?: string; repository?: string } | undefined,
+  ref: string,
+): boolean {
+  return decl !== undefined && (decl.name === ref || (decl.repository !== undefined && decl.repository === ref));
 }
 
 /**
@@ -3334,7 +3414,7 @@ export function publicationLinkStyleConflict(
  * The media type each rendering extension declares, longest extension first.
  *
  * The companion to `renderingPath`: that says WHERE an artefact is, this says
- * WHAT it is. Both were prose in `skills/folio-core/serving-renderings.md` and
+ * WHAT it is. Both were prose in `skills/ui/ui-core/serving-renderings.md` and
  * only one of them was code, so every consumer that served a rendering had to
  * re-derive the type — and `grep` for `ld+json` across this repository's
  * TypeScript returned **nothing** before this existed (measured 2026-09-19).
@@ -3504,19 +3584,20 @@ function stripJsonLd(raw: unknown, registry: GraphKindRegistry): unknown {
     o.directories = o.directories.map((d) => {
       if (typeof d !== "object" || d === null) return d;
       const e = { ...(d as Record<string, unknown>) };
-      // `@type` recovers `graphs`, and handles both projected forms: a single
-      // type stays a string, several become a list. A type the registry does
-      // not know is DROPPED rather than guessed — recovering the wrong kind is
+      // `holdsGraph` recovers `graphKinds`, in both projected forms: one stays
+      // a string, several become a list. An individual the registry does not
+      // know is DROPPED rather than guessed — recovering the wrong kind is
       // worse than recovering none, because the reader has no way to tell.
-      if (e.graphKinds === undefined && e["@type"] !== undefined) {
-        const types = Array.isArray(e["@type"]) ? e["@type"] : [e["@type"]];
-        const kinds = types
+      if (e.graphKinds === undefined && e.holdsGraph !== undefined) {
+        const iris = Array.isArray(e.holdsGraph) ? e.holdsGraph : [e.holdsGraph];
+        const kinds = iris
           .filter((t): t is string => typeof t === "string")
-          .map((t) => registry.forType(t))
+          .map((t) => registry.forIri(t))
           .filter((k): k is string => k !== undefined);
         if (kinds.length > 0) e.graphKinds = kinds;
       }
       delete e["@type"];
+      delete e.holdsGraph;
       if (typeof e["@id"] === "string" && e.id === undefined) e.id = (e["@id"] as string).replace(/^#/, "");
       delete e["@id"];
       return e;
@@ -4902,6 +4983,42 @@ export function kgQaHomeFor(
   return { root: join(instanceRoot, "test", "results"), by: "convention" };
 }
 
+/**
+ * Where an instance's swimlane-glossary retirement LEDGER lives — the same
+ * three answers as {@link kgQaHomeFor}, for the same reason.
+ *
+ * - **own** — the instance declares a `swimlane-glossary` directory.
+ * - **hosted** — it declares none, and `hostRoot` (the instance running the
+ *   export) does; the ledger lives in the host's directory under the
+ *   instance's stub, e.g. `cat-harness/glossary/bootstrap/`. The ledger is
+ *   harness state ABOUT bootstrap — `glossary-export` writes it, nothing in
+ *   bootstrap reads it — so it is hosted like the QA verdicts (owner,
+ *   2026-09-30, Q2 of bean `xsqm`).
+ * - **convention** — neither declares one; `<instance>/glossary/`.
+ *
+ * A hosted ledger sits in a stub-named subdirectory, so the host's own
+ * `glossary-ledger.json` and a guest's never share a path, and each file
+ * carries its `instance`, so a walker over the host's directory attributes it.
+ */
+export function glossaryHomeFor(
+  instanceRoot: string,
+  hostRoot?: string,
+  registry: GraphKindRegistry = defaultGraphKinds,
+): { root: string; by: "own" | "hosted" | "convention" } {
+  const own = matchingDirectories(instanceRoot, "swimlane-glossary", registry)[0];
+  if (own !== undefined) return { root: own.absPath, by: "own" };
+  if (hostRoot !== undefined && resolve(hostRoot) !== resolve(instanceRoot)) {
+    const host = matchingDirectories(hostRoot, "swimlane-glossary", registry)[0];
+    const decl = readDeclaration(instanceRoot);
+    if (host !== undefined && decl !== undefined && decl !== null) {
+      return { root: join(host.absPath, artefactStub(decl)), by: "hosted" };
+    }
+  }
+  // declared-path-literal: the base case for an instance that declares no
+  // `swimlane-glossary` directory and is hosted by nobody — `GLOSSARY_DIR`'s convention.
+  return { root: join(instanceRoot, "glossary"), by: "convention" };
+}
+
 function matchingDirectories(
   root: string,
   graph: string,
@@ -5281,6 +5398,9 @@ export function toJsonLd(
       directories: termIri("scans"),
       scope: termIri("scope"),
       dependents: termIri("dependents"),
+      // What a directory holds, as the kinds' own individuals — the same
+      // property kg-export writes (`dcterms:type`, via `propertyIri`).
+      holdsGraph: { "@id": propertyIri("holdsGraph"), "@type": "@id" },
     },
     "@type": termIri("Harness"),
     name: decl.name,
@@ -5300,13 +5420,16 @@ export function toJsonLd(
         }
       : {}),
     directories: decl.directories.map((d) => {
-      const types = d.graphKinds.map((g) => registry.get(g)?.type ?? termIri("UnknownGraph"));
+      // A directory is a Subgraph, and says what it holds only through
+      // `holdsGraph` → each kind's individual (owner, 2026-09-30, bean `3r47`:
+      // "Drop per-kind classes"). A kind the registry does not know still
+      // gets an individual in the harness's namespace rather than vanishing.
+      const kinds = d.graphKinds.map((g) => graphKindIri(resolveGraphKind(g).kind, registry.get(g)));
       return {
         "@id": `#${d.id}`,
-        // One type stays a string, several become a list — JSON-LD permits
-        // both, and emitting a one-element array for the common case would
-        // make every existing published form look changed.
-        "@type": types.length === 1 ? types[0] : types,
+        "@type": termIri("Subgraph"),
+        // One stays a string, several become a list — JSON-LD permits both.
+        holdsGraph: kinds.length === 1 ? kinds[0] : kinds,
         path: d.path,
         // `dependents` is REQUIRED, so a projection that dropped it produced a
         // document that no longer parses as a declaration — caught by the

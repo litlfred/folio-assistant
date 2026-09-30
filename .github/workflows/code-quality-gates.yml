@@ -441,7 +441,9 @@ jobs:
       # that publishes nothing. `kg-export.test.ts` is where the published
       # document's are, and the two guards in `bootstrap-graph.test.ts` that
       # DO reach the site are the ones about publication: the path the `@id`
-      # names, and exactly one publisher per workflow.
+      # names, and exactly one publisher per workflow. Since 2026-09-30 that
+      # publisher is bootstrap-tools' `export-graph.ts` (bean `xsqm`), whose
+      # own properties are asserted in `bootstrap-tools/scripts/export-graph.test.ts`.
 
       # Every `<folio:skill ref>` in a diagram names a skill that exists.
       # `corpus-search` and `paper-relevance-triage` were referenced by two
@@ -949,6 +951,20 @@ jobs:
       - name: bootstrap documents parse against their Zod
         run: bun run bootstrap:validate
 
+      # bootstrap's vocabulary, `bootstrap/ns.jsonld`: exactly its defined
+      # terms and graph kinds, written by bootstrap-tools and committed, and
+      # copied to the site as-is (owner, 2026-09-30, bean `xsqm`).
+      - name: bootstrap vocabulary is current
+        run: bun run bootstrap:vocabulary:check
+
+      # The split, rehearsed (Phase 4, bean `xsqm`): bootstrap and
+      # bootstrap-tools copied alone into an empty directory as sibling clones,
+      # and bootstrap-tools' checks and tests run there. The closure gate
+      # proves no IMPORT reaches up; this proves no script or test READS
+      # anything only the monorepo has. Its first run found two such reads.
+      - name: bootstrap-tools passes standing alone beside bootstrap
+        run: bun run check:bootstrap-standalone
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and
@@ -1351,6 +1367,20 @@ jobs:
           # `imagesForRole` is layout-keyed and a mark declares no layout.
           bun run check:image-roles
           bun run check:bean-parents
+          # Does a bean's BODY name a parent its front matter does not carry?
+          # `check:bean-parents` validates the declared graph; this asks whether
+          # the declaration agrees with the bean's own prose. 4ccr's body named
+          # a parent while its front matter carried none, and GOAL 2's queue
+          # omitted 24 open items including ob3m (bean tlj9). The phrase set is
+          # narrow by measurement: 338 bean-id mentions in bodies, 1 in a
+          # placement phrase.
+          bun run check:bean-parent-prose:check
+          # Every file in an `uploads` or `library` graph carries a name that is
+          # safe to link to. `uploads/PIIS2589750021000388 (2).pdf` broke the
+          # generated README's Markdown link — a target ends at the first `)` —
+          # which reddened main through `every link in every generated README
+          # resolves`. Owner ruling 2026-09-30: normalise the NAME, not the link.
+          bun run check:upload-names:check
           # Bean `e8m3`, on the owner's VIEW ruling. `beans/defs/archive/` held 631
           # bean-defs while `beans/beans.json` declared it nowhere — the `dh4f`
           # family INVERTED, and invisible to check:declared-dirs and
@@ -1473,6 +1503,13 @@ jobs:
           # about whether an instance wants a mark at all, not a regression.
           # Same line `check:theme-art` drew above, for the same reason.
           bun run check:navbar-consistency:check
+          # Every instance declaring a `themes` graph: does it load, and does
+          # each theme validate? The gate that TRULY covers the `themes` kind —
+          # three others declared `@covers themes` while resolving no themes
+          # directory (bean `z6xd`), so the kind read audited over ground
+          # nothing reached. Theme KINDS are reported and never graded: which
+          # theme may style who-iris's card is the owner's call (#1584).
+          bun run check:instance-themes:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.

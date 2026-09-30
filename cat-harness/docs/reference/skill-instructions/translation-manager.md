@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/translation-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/translation-manager.md) — do not edit here.
+> Generated from [`cat-harness/skills/library/library-core/translation-manager.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/library/library-core/translation-manager.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/translation-manager.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/library/library-core/translation-manager.md){: .fa-edit-source }
 
 {% raw %}
 # Translation manager
@@ -607,6 +607,16 @@ The `translations/` directory contains **only** three file types:
 **Do not** put `.md`, `.qa.json`, or `status.json` files in `translations/`.
 Rendered output lives in `docs/<locale>/`; QA and status are properties of
 the TranslationNode manifest.
+
+**An instance with no `translations` directory of its own is hosted.**
+`translationsHomeFor` (`schemas/cat-harness.ts`) puts its templates in the
+extracting harness's `translations/<locale>/<stub>/` —
+`cat-harness/translations/<locale>/bootstrap/processes/*.pot` for bootstrap's
+three diagrams — rather than inside the instance, which holds no translation
+machinery. The templates are extracted from the bootstrap the harness has
+pinned; when bootstrap is its own repository they stay here, since a
+template is the harness's work over bootstrap's text, not part of it
+([`kg-separation`](kg-separation.md) §"The pair").
 
 ## WHO smart-base integration
 

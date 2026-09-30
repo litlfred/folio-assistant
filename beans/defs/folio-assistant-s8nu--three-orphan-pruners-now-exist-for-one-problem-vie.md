@@ -1,11 +1,11 @@
 ---
 # folio-assistant-s8nu
 title: Four orphan-selectors now exist for one question — orphanSubjectPages should be the only one
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T05:33:00Z
-updated_at: 2026-09-29T21:43:13Z
+updated_at: 2026-09-30T19:48:18Z
 parent: folio-assistant-vke6
 ---
 
@@ -223,3 +223,17 @@ both carried rules.
 ## Claim released 2026-09-29
 
 Released `in-progress` → `todo` on the owner's instruction (review session https://claude.ai/code/session_014Qj8wncQhqV52QGN1yZDnj). No git change to this bean since before 2026-09-26, no holder recorded, and the owner judged it NOT part of the live bootstrap-separation (repo split) work. The session that held it stopped on the 2026-09-25 weekly usage limit. Nothing in the body was changed: re-claim with `bun run beans:claim <id>`.
+
+## Where this stands, 2026-09-30 — both open boxes are ONE owner ruling
+
+Re-measured on main @ 5b8db8da691:
+
+- `orphan-pages.ts` exists, and `orphanSubjectPages(dir, wanted, test?)` takes the ownership test as a parameter (box 1, ticked).
+- `prunableDashboards` (state-visualizer.ts:438) **is already a call site**, as `orphanSubjectPages(site, wantedIds, carriesMarker(GENERATED_BY))`. That is half of box 2.
+- `prunableStickies` (ensure-landing-sticky.ts:289) is **not**, and it cannot become one without a design step. It walks flat `.json` FILES, while the selector's unit is a *directory holding an index.html*. `orphan-pages.ts`'s docblock already says so (§"What is parameterised, and what deliberately is not").
+
+So the rest of box 2 (stickies) and box 3 (who-iris `OWNED`) are **the same question**: should the selector's unit be generalised from *directory holding an index.html* to *artefact this generator emits*, so flat files qualify? Nothing more is buildable here until that is ruled on. Put to the owner 2026-09-30.
+
+Note for whoever takes it: #1612 (bean 2b5s) renames who-iris's `OWNED` side to `OWNED_SITE` and adds a sweep of its own pages left in `library/`. Read that before touching the who-iris selectors.
+
+_2026-09-30T19:48:18Z_ — Claimed by claude/magical-archimedes-4qkfxp-rulings — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

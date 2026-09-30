@@ -35,6 +35,7 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
+import { SkillTopicsSchema, type SkillTopic } from "../schemas/skill-topics.ts";
 import { defaultGraphKinds } from "../schemas/graph-kind-registry.ts";
 
 /**
@@ -48,15 +49,7 @@ import { defaultGraphKinds } from "../schemas/graph-kind-registry.ts";
  */
 export const TOPICS_FILE = defaultGraphKinds.get("skills")?.declarationFile ?? "skills.json";
 
-/** One topic: a subdirectory of the skills directory that holds packages. */
-export interface SkillTopic {
-  /** Stable id. By convention the same as `path`. */
-  id: string;
-  /** The subdirectory, relative to the skills directory, one segment. */
-  path: string;
-  title: string;
-  description: string;
-}
+export type { SkillTopic };
 
 /** A candidate package directory, and where it sits. */
 export interface PackageDir {
@@ -85,23 +78,17 @@ export function topicsOf(skillsDir: string): SkillTopic[] {
   } catch (e) {
     throw new Error(`${file} is not valid JSON: ${String(e)}`);
   }
-  const topics = (parsed as { topics?: unknown }).topics;
-  if (!Array.isArray(topics)) throw new Error(`${file} declares no "topics" array`);
-  return topics.map((raw, i) => {
-    const t = raw as Partial<SkillTopic>;
-    for (const field of ["id", "path", "title", "description"] as const) {
-      if (typeof t[field] !== "string" || t[field] === "") {
-        throw new Error(`${file}: topic ${i + 1} has no "${field}"`);
-      }
-    }
-    if (!/^[a-z0-9][a-z0-9-]*$/.test(t.path!)) {
-      throw new Error(`${file}: topic "${t.id}" path "${t.path}" is not one plain segment`);
-    }
-    const dir = join(skillsDir, t.path!);
+  const result = SkillTopicsSchema.safeParse(parsed);
+  if (!result.success) {
+    const issue = result.error.issues[0]!;
+    throw new Error(`${file}: ${issue.path.join(".") || "(root)"}: ${issue.message}`);
+  }
+  return result.data.topics.map((t) => {
+    const dir = join(skillsDir, t.path);
     if (!existsSync(dir) || !statSync(dir).isDirectory()) {
       throw new Error(`${file}: topic "${t.id}" names ${t.path}/, which does not exist`);
     }
-    return t as SkillTopic;
+    return t;
   });
 }
 

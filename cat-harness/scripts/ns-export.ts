@@ -38,6 +38,7 @@
  * @module scripts/ns-export
  * @covers cat-harness
  *
+ * @conformsTo dcmi-terms
  * @conformsTo w3c-owl2
  * @conformsTo w3c-rdf
  * @conformsTo w3c-rdfs
@@ -46,15 +47,16 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
-import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer, termIri } from "../schemas/namespaces.js";
+import { defaultGraphKinds, graphKindLayer, isPublishedGraphKind, repoRootFor } from "../schemas/cat-harness.js";
+import "../schemas/folio-graph-kind.js";
+import "../schemas/glossary-graph-kind.js";
+import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer, replacementIri, termIri } from "../schemas/namespaces.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
 import {
   CLASS_GLOSSES,
   PROPERTY_GLOSSES,
   TERM_LAYERS,
-  termLayer,
   type TermGloss,
   type TermLayer,
 } from "../schemas/vocabulary.js";
@@ -78,7 +80,15 @@ const OWL = "http://www.w3.org/2002/07/owl#";
 const SKOS = "http://www.w3.org/2004/02/skos/core#";
 const DCTERMS = "http://purl.org/dc/terms/";
 
-/** The namespace with its trailing `#` removed — the DOCUMENT, not the stem. */
+/**
+ * The `@id` of the all-layers build — which is no longer PUBLISHED (owner,
+ * 2026-09-30, bean `xsqm`: *"Retire it"*). Every term is defined by its layer's
+ * own namespace document, and a person looking for terms reads the Glossary,
+ * which publishes SKOS for every scheme; a third copy of the same terms was
+ * one more thing free to drift. The full build still runs — it is what
+ * `ns:check` uses to prove every minted term is defined — it just is not
+ * written to the site.
+ */
 export function vocabularyIri(): string {
   // `<base>/ns/vocabulary.jsonld`, NOT `<base>/ns`.
   //
@@ -154,17 +164,24 @@ export function mintedTermsFromSource(root = ROOT): Set<string> {
   return out;
 }
 
-// The layer table lives in `vocabulary.ts` (`GRAPH_KIND_TYPE_LAYERS`), read
-// through `termLayer` — the same answer `termIri` mints the type's IRI from.
-
-/** The graph kinds' own summaries — read, never restated. */
-export function graphKindTerms(): Map<string, TermGloss> {
-  const out = new Map<string, TermGloss>();
-  for (const def of Object.values(BASE_GRAPH_KINDS)) {
-    const local = def.type.includes("#") ? def.type.split("#")[1] : undefined;
-    if (local && def.summary) out.set(local, { gloss: def.summary, layer: termLayer(local) });
-  }
-  return out;
+/**
+ * The graph kinds the harness and core define, as the `GraphKind` individuals
+ * kg-export names them by — `<prefix>:graphKind/<name>` — each glossed with
+ * its own summary, read, never restated. bootstrap's kinds are not here: they
+ * come verbatim from bootstrap's file, like its terms.
+ *
+ * Until 2026-09-30 each kind was ALSO a class (`SkillGraph`, `KGraph`, …),
+ * stamped on a directory as its `@type` beside the individual it `holdsGraph`
+ * — two ways to say one fact. Owner (bean `3r47`): "Drop per-kind classes".
+ */
+export function graphKindIndividuals(): Array<{ name: string; layer: TermLayer; gloss: string }> {
+  return defaultGraphKinds
+    .names()
+    .filter(isPublishedGraphKind)
+    .map((name) => ({ name, def: defaultGraphKinds.get(name)! }))
+    .filter(({ name, def }) => graphKindLayer(name, def) !== "bootstrap" && def.summary)
+    .map(({ name, def }) => ({ name, layer: graphKindLayer(name, def) as TermLayer, gloss: def.summary! }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export interface VocabularyReport {
@@ -177,6 +194,20 @@ export interface VocabularyReport {
 }
 
 /** Assemble the vocabulary, and report what is missing rather than guessing. */
+/** Where bootstrap's own vocabulary is, relative to the cat-harness instance root. */
+export function bootstrapVocabularyPath(root = ROOT): string {
+  return join(root, "..", "bootstrap", "ns.jsonld");
+}
+
+/** bootstrap's vocabulary as bootstrap-tools wrote it. Throws when it is not there. */
+export function bootstrapVocabulary(root = ROOT): { "@graph": Record<string, unknown>[] } {
+  const p = bootstrapVocabularyPath(root);
+  if (!existsSync(p)) {
+    throw new Error(`${p} is missing — bootstrap's vocabulary is written by bootstrap-tools (bun run bootstrap:vocabulary); it is not rebuilt here.`);
+  }
+  return JSON.parse(readFileSync(p, "utf-8")) as { "@graph": Record<string, unknown>[] };
+}
+
 export function buildVocabulary(
   root = ROOT,
   /**
@@ -200,8 +231,10 @@ export function buildVocabulary(
    */
   exact = false,
 ): { doc: unknown; report: VocabularyReport } {
-  const kinds = graphKindTerms();
-  const doublyDefined = [...kinds.keys()].filter((t) => t in CLASS_GLOSSES || t in PROPERTY_GLOSSES).sort();
+  const kinds = graphKindIndividuals();
+  // A kind is an individual under `graphKind/`, so it cannot share a name
+  // with a class or a property; kept in the report so its shape is stable.
+  const doublyDefined: string[] = [];
 
   // The declared order, not a local one. `TERM_LAYERS` states that its order
   // IS the direction rule, which is exactly what these index comparisons read.
@@ -216,6 +249,10 @@ export function buildVocabulary(
   const defined = new Set<string>();
   const emit = (name: string, kind: "class" | "property", g: TermGloss): void => {
     if (!inSlice(g)) return;
+    // bootstrap's terms are NOT built here: they are read, verbatim, from the
+    // vocabulary bootstrap-tools writes (below), so the union can never say
+    // something about a bootstrap term that bootstrap's own file does not.
+    if ((g.layer ?? "harness") === "bootstrap") return;
     defined.add(name);
     const l = g.layer ?? "harness";
     nodes.push({
@@ -244,15 +281,54 @@ export function buildVocabulary(
       // type is a `notation` that goes missing; this one cannot.
       notation: `${prefixForLayer(l)}:${name}`,
       inScheme: conceptSchemeIri(l),
-      isDefinedBy: vocabularyIri(),
+      // The term's OWN layer document — the one its IRI dereferences to. It
+      // pointed at the all-layers union until 2026-09-30, a convenience copy
+      // claiming to define terms that live elsewhere; the union is retired
+      // (owner, bean `xsqm`), and a definition has one home per layer.
+      isDefinedBy: conceptSchemeIri(l),
       layer: l,
       ...(g.seeAlso ? { seeAlso: new URL(g.seeAlso, `${vocabularyIri().replace(/\/ns$/, "/")}`).href } : {}),
+      // A term that restated a published standard: still defined, so data
+      // carrying its IRI resolves, and saying which property replaced it
+      // (owner, 2026-09-30, bean `xsqm`).
+      ...(kind === "property" && replacementIri(name) !== undefined
+        ? { deprecated: true, isReplacedBy: replacementIri(name) }
+        : {}),
     });
   };
 
   for (const [name, g] of Object.entries(CLASS_GLOSSES)) emit(name, "class", g);
-  for (const [name, g] of [...kinds].sort(([a], [b]) => a.localeCompare(b))) emit(name, "class", g);
+  for (const k of kinds) {
+    if (!inSlice({ gloss: k.gloss, layer: k.layer })) continue;
+    const id = `${prefixForLayer(k.layer)}:graphKind/${k.name}`;
+    nodes.push({
+      "@id": id,
+      "@type": ["bootstrap:GraphKind", "skos:Concept"],
+      label: k.name,
+      comment: k.gloss,
+      prefLabel: k.name,
+      definition: k.gloss,
+      notation: id,
+      inScheme: conceptSchemeIri(k.layer),
+      isDefinedBy: conceptSchemeIri(k.layer),
+      layer: k.layer,
+    });
+  }
   for (const [name, g] of Object.entries(PROPERTY_GLOSSES)) emit(name, "property", g);
+
+  // bootstrap's layer: ONE source. Its vocabulary is `bootstrap/ns.jsonld`,
+  // written by bootstrap-tools from bootstrap's own terms (owner, 2026-09-30,
+  // bean `xsqm`), and every bootstrap node here is that file's node, copied —
+  // the owner's question was how `<site>/ns/vocabulary.jsonld` cannot drift,
+  // and a copy of the one file cannot say anything the file does not. An
+  // absent file is refused rather than rebuilt from glosses: rebuilding is
+  // the second source this replaces.
+  if (ORDER.indexOf("bootstrap") <= cutoff && (!exact || layer === "bootstrap")) {
+    for (const n of bootstrapVocabulary(root)["@graph"]) {
+      nodes.push({ ...n, layer: "bootstrap" });
+      defined.add(String(n["@id"]).replace(/^bootstrap:/, ""));
+    }
+  }
 
   // The schemes, derived from what was ACTUALLY emitted rather than from the
   // three layers that exist. A scheme with no concepts is `dh4f` in miniature:
@@ -266,6 +342,9 @@ export function buildVocabulary(
     // In `--exact` mode the DOCUMENT is the scheme, so it gains the type below
     // instead of appearing a second time inside its own `@graph`.
     .filter((l) => conceptSchemeIri(l) !== docIri)
+    // bootstrap's scheme is described by bootstrap's own file, just below —
+    // a title written here would be a second description of it.
+    .filter((l) => l !== "bootstrap")
     .map((l) => ({
       "@id": conceptSchemeIri(l),
       "@type": "skos:ConceptScheme",
@@ -274,6 +353,10 @@ export function buildVocabulary(
       definition: `Every class and property the ${l} layer mints, one concept each.`,
     }));
   nodes.push(...schemeNodes);
+  if (schemeLayers.includes("bootstrap") && conceptSchemeIri("bootstrap") !== docIri) {
+    const b = bootstrapVocabulary(root) as Record<string, unknown>;
+    nodes.push({ "@id": b["@id"], "@type": b["@type"], label: b["label"], prefLabel: b["label"], definition: b["definition"] });
+  }
 
   // Only a FULL build can say a term is undefined. A bootstrap slice omits
   // core terms ON PURPOSE, and reporting those as missing would turn the
@@ -281,7 +364,6 @@ export function buildVocabulary(
   // this repository switches off.
   const everything = new Set<string>([
     ...Object.keys(CLASS_GLOSSES),
-    ...kinds.keys(),
     ...Object.keys(PROPERTY_GLOSSES),
   ]);
   // THE UNION THIS FILE HAS DOCUMENTED SINCE IT WAS WRITTEN, now performed.
@@ -318,6 +400,10 @@ export function buildVocabulary(
       notation: "skos:notation",
       title: "dcterms:title",
       inScheme: { "@id": "skos:inScheme", "@type": "@id" },
+      // bootstrap's nodes carry what each term uses, as in bootstrap's file.
+      requires: { "@id": "dcterms:requires", "@type": "@id" },
+      deprecated: { "@id": "owl:deprecated", "@type": "http://www.w3.org/2001/XMLSchema#boolean" },
+      isReplacedBy: { "@id": "dcterms:isReplacedBy", "@type": "@id" },
       // Declared, not left bare: a JSON-LD processor DROPS an undeclared key,
       // and this one was on all 159 terms (bean vigi, found by expanding).
       layer: termIri("layer"),

@@ -276,7 +276,7 @@ pins that.
    `roles` to get past it; that is `actor-role-administration.bpmn`, and it
    belongs to the administrator lane.
 3. **`deny`:** a prohibition was written on purpose. Ask the user; never
-   remove it yourself ([`deletion-requires-confirmation`](deletion-requires-confirmation.md)).
+   remove it yourself ([`deletion-requires-confirmation`](../conduct/conduct-core/deletion-requires-confirmation.md)).
 
 ## The engine writes its own PROV-O record
 

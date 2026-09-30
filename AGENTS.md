@@ -45,7 +45,7 @@ are thin stubs pointing here.
 >   (`schemas/cat-harness.ts`) and read from the directory it names.
 >
 > Conventions for the declaration and its graph kinds:
-> [`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md).
+> [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).
 >
 > **A dependency's skills ARE reachable** — `resolveSkillDirs` in
 > `schemas/harness-config.ts` computes the cross-instance overlay and
@@ -183,7 +183,7 @@ tag, instance state was identifiable only by SHAPE. **Extension is a
 coincidence; a declaration inside the file is the contract.**
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md)
+[`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md)
 carries the declaration schema and every graph kind, path resolution and the
 dot-prefix guard that tests **every** segment, and the rule that an unavoidable
 duplicate is fine while an unchecked one is not. In this instance
@@ -252,7 +252,7 @@ deleted one leaves a sibling unable to tell abandonment from accident.
 
 **That is one instance of a general rule, and the general rule is the source of
 truth** —
-[`deletion-requires-confirmation.md`](cat-harness/skills/folio-core/deletion-requires-confirmation.md):
+[`deletion-requires-confirmation.md`](cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md):
 an agent never removes a durable artefact on its own initiative; it reports what
 would go, with sizes and ages, and waits to be told. The bean case is the
 strictest because a bean id is referenced from commits, issues and other beans.
@@ -273,7 +273,7 @@ them, `readme:audit` for the authored half — or the `readme_sync` / `readme_au
 MCP tools, registered among the **generic** tools.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/readme-sections.md`](cat-harness/skills/folio-core/readme-sections.md)
+[`skills/ui/ui-core/readme-sections.md`](cat-harness/skills/ui/ui-core/readme-sections.md)
 carries the opt-in contract, the third state ("could not determine" leaves the
 region untouched, and an empty directory is still a determined empty), why every
 link is resolved rather than composed, why `raw` is not the private-repo answer,
@@ -287,14 +287,14 @@ carries where it was drawn, and the arrow runs `folio → board → position →
 note` and never back. A folio is complete with no board.
 
 **The discipline is in the skills, not here** —
-[`board-diagram-interchange`](cat-harness/skills/folio-core/board-diagram-interchange.md)
+[`board-diagram-interchange`](cat-harness/skills/ui/ui-core/board-diagram-interchange.md)
 carries that split, why a note holds no coordinate, and how an orphan is swept
 from the LAYER;
-[`board-windows`](cat-harness/skills/folio-core/board-windows.md) carries the
+[`board-windows`](cat-harness/skills/ui/ui-core/board-windows.md) carries the
 two mechanisms that must not be conflated — semantic zoom is automatic and
 driven by size, open and close are a person's — and the `l4zi` rule that an
 action whose inverse is not reachable is not a toggle;
-[`harness-tiles`](cat-harness/skills/folio-core/harness-tiles.md) carries why a
+[`harness-tiles`](cat-harness/skills/ui/ui-core/harness-tiles.md) carries why a
 tile belongs to the **harness** rather than to a node, why `instantiated` is a
 different question from `declared`, and the two gaps it reports rather than
 hides.
@@ -350,7 +350,7 @@ fails. `bun run health:list` says what the checks are.
 
 **It reports and never acts.** Four of the five checks are about artefacts
 accumulating, and every finding's action names something a *person* does. That
-is [`deletion-requires-confirmation`](cat-harness/skills/folio-core/deletion-requires-confirmation.md)
+is [`deletion-requires-confirmation`](cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md)
 applied to the tool that most wants to break it — the skill's own worked
 example is `plj1`, a workflow whose shape deleted every open PR's preview
 without anybody deciding it.
@@ -374,7 +374,7 @@ be *typed*. This asks who *judges* it, and the two come apart: a kind can be
 perfectly typed and audited by nothing.
 
 **The discipline is in the skill, not here** —
-[`audit-coverage`](cat-harness/skills/folio-core/audit-coverage.md)
+[`audit-coverage`](cat-harness/skills/kg/kg-core/audit-coverage.md)
 carries why the gate half is **declared** rather than inferred
 (a grep fails in both directions), the four per-kind states that must not
 collapse into one zero — including why `typed-only` is still a **finding**,
@@ -432,7 +432,7 @@ Subagents declared under [`.claude/agents/`](.claude/agents/) carry
 lines only**, with the overflow dropped silently.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/agent-memory.md`](cat-harness/skills/folio-core/agent-memory.md) carries
+[`skills/conduct/conduct-core/agent-memory.md`](cat-harness/skills/conduct/conduct-core/agent-memory.md) carries
 the three entry labels and what each promises, why entries are authored as nodes
 under `memory/` rather than in the generated file, the two ways the
 injection budget has to be checked, archiving as the third state between
@@ -539,7 +539,7 @@ reports "no instance recorded" as a **finding** rather than as silence.
 same as recording it" carries that rule, and the rest of that skill carries the
 five detectors for being out of process and the recovery that confirms with the
 user before re-entering — a confirmation the owner may waive for a session or a
-process run ([`confirmation-waiver`](cat-harness/skills/folio-core/confirmation-waiver.md)).
+process run ([`confirmation-waiver`](cat-harness/skills/conduct/conduct-core/confirmation-waiver.md)).
 
 ## Working an issue — announce, then re-check
 
@@ -589,7 +589,7 @@ question is not ready. A link is where somebody goes for *more*; it is never
 where the terms are defined.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/interaction-modality.md`](cat-harness/skills/folio-core/interaction-modality.md)
+[`skills/conduct/conduct-core/interaction-modality.md`](cat-harness/skills/conduct/conduct-core/interaction-modality.md)
 §4.1 carries the six parts, the surfaces this binds that do not feel like asking
 (the end-of-turn "next" line, a bean's `## Done when`, a PR body, an issue
 comment), why feature work breaks it more than content work, and a worked
@@ -621,7 +621,7 @@ to spend the words: **do not start the topic.**
 ## More
 
 - **Not sure where a thing goes? There is a router now** —
-  [`where-does-this-go`](cat-harness/skills/folio-core/where-does-this-go.md).
+  [`where-does-this-go`](cat-harness/skills/conduct/conduct-core/where-does-this-go.md).
   This repository answers "where does this file?" nine separate times, each
   well and each in its own skill, and until 2026-09-22 nothing said WHICH
   question you were asking. The router answers none of them: every row is a
@@ -629,7 +629,7 @@ to spend the words: **do not start the topic.**
   nine answers would be nine summaries free to drift from nine skills. It is
   for the moment you notice yourself about to guess, not for every turn. Its
   companion is
-  [`surprise-to-corpus`](cat-harness/skills/folio-core/surprise-to-corpus.md)
+  [`surprise-to-corpus`](cat-harness/skills/kg/kg-core/surprise-to-corpus.md)
   — notice what was logically unexpected, filter it by whether the next agent
   in that process would hit it too, and then **prompt**: the agent never
   writes corpus guidance unasked, which is
@@ -693,7 +693,7 @@ to spend the words: **do not start the topic.**
   Both are required, so a kind that has not decided does not compile, and a
   step writing to a `context` graph is a defect rather than an update.
   **The discipline is in the skill, not here** —
-  [`skills/folio-core/content-context-and-state-graphs.md`](cat-harness/skills/folio-core/content-context-and-state-graphs.md)
+  [`skills/kg/kg-core/content-context-and-state-graphs.md`](cat-harness/skills/kg/kg-core/content-context-and-state-graphs.md)
   carries the one question that settles a kind, the two that settle a hard
   case, the kinds whose layer is not obvious from their name, what a consumer
   may assume of each, and why agent memory is `context` while its mirror
@@ -723,7 +723,7 @@ to spend the words: **do not start the topic.**
   argument for its first clause, and the reason no count is given here on
   purpose: a count in prose is the same failure one turn later. Schema:
   `schemas/cat-harness.ts`; conventions:
-  [`skills/folio-core/directory-conventions.md`](cat-harness/skills/folio-core/directory-conventions.md).
+  [`skills/kg/kg-core/directory-conventions.md`](cat-harness/skills/kg/kg-core/directory-conventions.md).
 - Migration plan + cross-repo coordination: `folio-assistant/docs/folio-assistant-migration.md`.
 - Skills live under `skills/` (packages) and `.claude/skills/` (local + capabilities).
 - **Adding one is never a one-file change** — `bun run skill:register` performs
@@ -733,7 +733,7 @@ to spend the words: **do not start the topic.**
   your skill, so the cause is invisible from the symptom** — which is why the
   remedy is a command rather than a list. **The discipline is in the skill, not
   here** —
-  [`skill-registration`](cat-harness/skills/folio-core/skill-registration.md)
+  [`skill-registration`](cat-harness/skills/kg/kg-core/skill-registration.md)
   carries what a skill owes and why the feedback arrives on somebody else's PR,
   the ONE declaration the command deliberately leaves to you (which package a
   file belongs to is your assertion, not a derivable fact), why the chain cannot

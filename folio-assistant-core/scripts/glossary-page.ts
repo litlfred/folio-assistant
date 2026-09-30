@@ -223,10 +223,39 @@ export function schemeOwner(
  * the owner asked for logical rather than alphabetical order — each term is
  * defined only by terms above it.
  */
+/**
+ * The concepts an instance's declared VOCABULARY already mints, by local name:
+ * `Node` → `<ns>Node`. Read from the asset whose `role` is `vocabulary`
+ * (bootstrap's `ns.jsonld`), each `@id` expanded through that file's own
+ * `@context`. Empty when the instance declares none, or it cannot be read —
+ * the glossary then mints its own IRIs, as before.
+ */
+export function vocabularyConcepts(root: string, decl: { assets?: unknown }): Map<string, string> {
+  const out = new Map<string, string>();
+  const assets = Array.isArray(decl.assets) ? (decl.assets as Array<{ role?: unknown; src?: unknown }>) : [];
+  const vocab = assets.find((a) => a.role === "vocabulary" && typeof a.src === "string");
+  if (!vocab) return out;
+  let doc: { "@context"?: Record<string, unknown>; "@graph"?: Array<{ "@id"?: unknown }> };
+  try {
+    doc = JSON.parse(readFileSync(join(root, vocab.src as string), "utf-8"));
+  } catch {
+    return out;
+  }
+  const ctx = doc["@context"] ?? {};
+  for (const n of doc["@graph"] ?? []) {
+    const id = typeof n["@id"] === "string" ? n["@id"] : undefined;
+    const m = id ? /^([A-Za-z][\w.-]*):([A-Za-z][\w]*)$/.exec(id) : null;
+    const base = m ? ctx[m[1]!] : undefined;
+    if (m && typeof base === "string") out.set(m[2]!, `${base}${m[2]}`);
+  }
+  return out;
+}
+
 export function termsOfSchema(
   abs: string,
   rel: string,
   decl: { name: string; title?: string; version?: string },
+  concepts: ReadonlyMap<string, string> = new Map(),
 ): Glossary | undefined {
   let doc: { $id?: string; $defs?: Record<string, { description?: string; uses?: unknown; isDefinedBy?: unknown }> };
   try {
@@ -259,6 +288,9 @@ export function termsOfSchema(
       ...(v.description ? { definition: v.description } : {}),
       ...(Array.isArray(v.uses) && v.uses.length ? { requires: (v.uses as string[]).map(id) } : {}),
       ...(absolute(v.isDefinedBy) ? { isDefinedBy: absolute(v.isDefinedBy)! } : {}),
+      // The vocabulary's own IRI when it defines this term, so there is one
+      // concept per term (owner, 2026-09-30, "one SKOS", option A).
+      ...(concepts.has(key.replace(/\s+/g, "")) ? { iri: concepts.get(key.replace(/\s+/g, ""))! } : {}),
       source: `${rel}#/$defs/${key}`,
       status: "authored" as const,
     })),
@@ -324,7 +356,7 @@ export function collect(repo: string = REPO): {
         for (const f of readdirSync(d.absPath).filter((f) => f.endsWith(".schema.json")).sort()) {
           const p = join(d.absPath, f);
           const rel = relative(repo, p).split("\\").join("/");
-          const g = termsOfSchema(p, rel, decl);
+          const g = termsOfSchema(p, rel, decl, vocabularyConcepts(root, decl));
           if (!g) continue;
           const r = GlossarySchema.safeParse(g);
           if (!r.success) {
@@ -336,10 +368,19 @@ export function collect(repo: string = REPO): {
         }
       }
       if (kinds.includes("swimlane-glossary")) {
-        const ledger = join(d.absPath, "glossary-ledger.json");
-        if (existsSync(ledger)) {
-          const l = JSON.parse(readFileSync(ledger, "utf-8")) as { concepts?: Record<string, unknown> };
-          ledgers.push({ instance: decl.name, path: relative(repo, ledger), terms: Object.keys(l.concepts ?? {}).length });
+        // The directory's own ledger, and any it HOSTS one level down under a
+        // guest's stub (`cat-harness/glossary/bootstrap/` since 2026-09-30,
+        // bean `xsqm`). Each file names its `instance`, so a hosted ledger is
+        // credited to its subject, not to the directory's declarer.
+        const found = [join(d.absPath, "glossary-ledger.json")];
+        if (existsSync(d.absPath)) {
+          for (const e of readdirSync(d.absPath, { withFileTypes: true })) {
+            if (e.isDirectory()) found.push(join(d.absPath, e.name, "glossary-ledger.json"));
+          }
+        }
+        for (const ledger of found.filter((f) => existsSync(f))) {
+          const l = JSON.parse(readFileSync(ledger, "utf-8")) as { instance?: string; concepts?: Record<string, unknown> };
+          ledgers.push({ instance: l.instance ?? decl.name, path: relative(repo, ledger), terms: Object.keys(l.concepts ?? {}).length });
         }
       }
     }
@@ -473,7 +514,7 @@ const pageLink = (k: PageKey, text: string) => `<a href="{{ '${permalinkOf(k)}' 
 const skosLink = (s: GlossarySource) => `<a href="{{ '/${skosAsset(s)}' | relative_url }}">SKOS</a>`;
 
 function termEntry({ s, t, label }: Row): string {
-  const iri = termIri(s.ns, s.glossary, t.id);
+  const iri = t.iri ?? termIri(s.ns, s.glossary, t.id);
   const matches = (["exactMatch", "closeMatch", "broadMatch", "narrowMatch"] as const).flatMap((m) =>
     (t[m] ?? []).map((u) => `<li>${m}: ${link(u)}</li>`),
   );
@@ -691,7 +732,7 @@ export function renderIndex(c: ReturnType<typeof collect>, typePages: ReadonlyMa
       .filter(({ t }) => t.status === "authored")
       .map(({ s, t, label }) => ({
         "@type": "DefinedTerm",
-        "@id": termIri(s.ns, s.glossary, t.id),
+        "@id": t.iri ?? termIri(s.ns, s.glossary, t.id),
         name: label,
         ...(t.definition ? { description: first(t.definition) } : {}),
         ...(t.notation ? { termCode: t.notation } : {}),

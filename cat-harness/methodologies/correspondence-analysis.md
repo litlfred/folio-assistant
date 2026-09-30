@@ -130,4 +130,4 @@ it against the paper's Table 1: the first two principal inertias (0.475,
 terms, every dimension centred on the masses, and the transition formula
 returning each document to its own coordinates. `bun run lsi:epics --method ca`
 runs it on the bean store; the skill is
-[`lsi-indexing`](../skills/graph-management/lsi-indexing.md).
+[`lsi-indexing`](../skills/kg/graph-management/lsi-indexing.md).

@@ -58,13 +58,14 @@
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 
 // `declarationPathIn` only, deliberately: it answers "is there a declaration
 // here" from the FILENAME convention and parses nothing, so this gate needs
 // no graph-kind registered to ask. `readDeclaration` would, and a gate that
 // throws on an unregistered kind reports a break it did not find.
 import { declarationPathIn } from "../schemas/cat-harness.js";
+import { qaResultPath, qaResultState, readQaResult, type QaResultState } from "./qa-results.js";
 
 const REPO_ROOT = resolve(import.meta.dir, "..", "..");
 const WORKFLOW_DIR = join(REPO_ROOT, ".github", "workflows");
@@ -91,6 +92,15 @@ const PLACEHOLDER_BASE = "https://example.invalid/gate-stand-in";
  */
 const INVOCATION = /kg-export\.ts\s+--instance\s+(\S+)([^\n]*)/g;
 
+/**
+ * A content repository's OWN tools exporting its graph — bootstrap-tools'
+ * `export-graph.ts --root <path>`, which writes `bootstrap.jsonld` since
+ * 2026-09-30 (owner, bean `xsqm`). The same question as above — does the
+ * command the deploy runs succeed, and emit something — for a publisher that
+ * is not cat-harness's.
+ */
+const TOOLS_INVOCATION = /bootstrap-tools\/scripts\/export-graph\.ts\s+--root\s+(\S+)([^\n]*)/g;
+
 export interface Invocation {
   /** The workflow file that runs it, basename only. */
   workflow: string;
@@ -98,6 +108,8 @@ export interface Invocation {
   instance: string;
   /** True when the workflow passes a `--base-url` this gate had to stand in for. */
   standInBase: boolean;
+  /** Which exporter: cat-harness's, or the content's own tools'. */
+  tool?: "kg-export" | "export-graph";
 }
 
 export interface ExportResult {
@@ -113,6 +125,18 @@ export interface ExportResult {
   ok: boolean;
   /** Why it failed — the export's own stderr, trimmed to what it reported. */
   detail?: string;
+  /**
+   * The COMMITTED QA sidecar for this export, against the one this run computed.
+   *
+   * Bean `ymsu`. This gate used to publish that sidecar as a side effect of
+   * verifying the export, which made it the only producer AND the only reader —
+   * so it could not fail on a stale one. The export now writes to a temp root
+   * and the committed copy is COMPARED instead.
+   *
+   * `undefined` is could-not-determine: the export did not run, or wrote no
+   * sidecar to compare against. Never rendered as agreement.
+   */
+  qaSidecar?: QaResultState;
 }
 
 export interface PublishedExportReport {
@@ -133,11 +157,20 @@ export interface PublishedExportReport {
  * that does not, and the report must not present them as the same evidence.
  */
 export function publishedInstances(workflowText: string, workflow = ""): Invocation[] {
-  return [...workflowText.matchAll(INVOCATION)].map((m) => ({
-    workflow,
-    instance: m[1]!,
-    standInBase: /--base-url/.test(m[2] ?? ""),
-  }));
+  return [
+    ...[...workflowText.matchAll(INVOCATION)].map((m) => ({
+      workflow,
+      instance: m[1]!,
+      standInBase: /--base-url/.test(m[2] ?? ""),
+      tool: "kg-export" as const,
+    })),
+    ...[...workflowText.matchAll(TOOLS_INVOCATION)].map((m) => ({
+      workflow,
+      instance: m[1]!,
+      standInBase: true,
+      tool: "export-graph" as const,
+    })),
+  ];
 }
 
 /**
@@ -154,7 +187,8 @@ export function publishedInstances(workflowText: string, workflow = ""): Invocat
  * question is what the command a workflow runs actually produced.
  */
 function nodesEmitted(stdout: string): number | undefined {
-  const m = /^\s*(\d+)\s+total\s*$/m.exec(stdout);
+  // kg-export's summary ends `<n> total`; export-graph's says `: <n> nodes`.
+  const m = /^\s*(\d+)\s+total\s*$/m.exec(stdout) ?? /: (\d+) nodes\b/.exec(stdout);
   return m ? Number(m[1]) : undefined;
 }
 
@@ -188,23 +222,78 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
     };
   }
   const stub = `${inv.workflow}-${inv.instance}`.replace(/[^a-zA-Z0-9]+/g, "-");
-  const args = ["run", join("cat-harness", "scripts", "kg-export.ts"), "--instance", inv.instance];
+  const args =
+    inv.tool === "export-graph"
+      ? ["run", join("bootstrap-tools", "scripts", "export-graph.ts"), "--root", inv.instance, "--base-url", `${PLACEHOLDER_BASE}/instance/`]
+      : ["run", join("cat-harness", "scripts", "kg-export.ts"), "--instance", inv.instance];
   // Only when the workflow passes one. Supplying a base where the workflow
   // does not would skip the declaration fallback entirely — the exact path
-  // that broke the deploy — and report a pass over it.
-  if (inv.standInBase) args.push("--base-url", PLACEHOLDER_BASE);
+  // that broke the deploy — and report a pass over it. (export-graph always
+  // takes one: it has no fallback to skip.)
+  if (inv.tool !== "export-graph" && inv.standInBase) args.push("--base-url", PLACEHOLDER_BASE);
   args.push("--out", join(outDir, `${stub}.jsonld`));
+  // ── AND the sidecar, which `--out` never governed (bean `ymsu`) ──────────
+  //
+  // `kg-export.ts` writes two artefacts: the document, sent to `outDir` above,
+  // and a COMMITTED QA sidecar under `<instance>/test/results/`. This gate runs
+  // it with `cwd: REPO_ROOT`, so that second write landed in the tree being
+  // judged — and because this gate is the only thing that ever exports
+  // `--instance ./bootstrap`, it was the sole producer of
+  // `test/results/kg-export.bootstrap.qa-results.json` and therefore the only
+  // thing that could repair it.
+  //
+  // Measured on `origin/main` `e718627f198`, this gate alone on an otherwise
+  // CLEAN tree: exit **0**, and `kg-export.bootstrap.qa-results.json` comes
+  // back ` M` with `script_hash` corrected from the committed `b539167517cb` to
+  // the true `0456470f68c8`. So `main` was carrying a stale recorded hash, the
+  // gate that reads it passed, and the only thing that noticed was the runner's
+  // mutation guard — this bean's third symptom: every verdict green, exit 1.
+  //
+  // Verifying an export must not be how the export gets published.
+  args.push("--qa-root", outDir);
 
   const r = spawnSync("bun", args, { cwd: REPO_ROOT, encoding: "utf-8" });
   const nodes = nodesEmitted(r.stdout ?? "");
+  // The sidecar the export just computed, read back out of the temp root and
+  // compared with the committed one. `qaStem` mirrors `kg-export.ts`'s own
+  // rule: the HOST keeps the bare stem, a foreign instance is qualified by its
+  // stub. Composed here rather than parsed out of the export's output, because
+  // a gate that reads a path off stdout breaks when a log line is reworded.
+  const qaStem = `kg-export.${basename(resolve(REPO_ROOT, inv.instance))}`;
+  const fresh = readQaResult(qaResultPath(outDir, qaStem));
+  const qaSidecar =
+    fresh === undefined
+      ? undefined
+      : qaResultState(qaResultPath(join(REPO_ROOT, "cat-harness"), qaStem), fresh);
   if (r.status === 0) {
     // A published graph with no nodes is not a graph. Reported as a failure
     // rather than a note: the deploy would write it, and a consumer cannot
     // tell an empty document from one whose subjects were never collected.
     if (nodes === 0) {
-      return { ...inv, nodes, ok: false, detail: "exported 0 nodes — an empty graph published under a name a consumer trusts" };
+      return { ...inv, nodes, ok: false, qaSidecar, detail: "exported 0 nodes — an empty graph published under a name a consumer trusts" };
     }
-    return { ...inv, nodes, ok: true };
+    // A STALE committed sidecar is a failure of this gate, and that placement
+    // is deliberate rather than convenient: nothing else in the gate set
+    // produces or reads `kg-export.<stub>.qa-results.json`, so if this gate
+    // waves it through, no gate ever looks at it. Measured on `origin/main`
+    // `e718627f198` — the committed hash was `b539167517cb` against a true
+    // `0456470f68c8`, and every verdict in the run was green.
+    //
+    // `absent` and `unreadable` are findings too, for the third-state reason:
+    // "there is no sidecar" and "the sidecar agrees" must not share an exit.
+    if (qaSidecar !== undefined && qaSidecar !== "current") {
+      return {
+        ...inv,
+        nodes,
+        qaSidecar,
+        ok: false,
+        detail:
+          `the committed \`${qaStem}.qa-results.json\` is ${qaSidecar.toUpperCase()} against this export — ` +
+          "this gate no longer rewrites it on its way past (bean `ymsu`). Run " +
+          `\`bun run cat-harness/scripts/kg-export.ts --instance ${inv.instance}\` and commit the result`,
+      };
+    }
+    return { ...inv, nodes, ok: true, qaSidecar };
   }
   // The export prints its problems to stdout and exits non-zero; stderr
   // carries a crash. Both are reported, because "it failed and said nothing"
@@ -216,7 +305,7 @@ function runExport(inv: Invocation, outDir: string): ExportResult {
     .filter((l) => l.includes("\u2717") || l.includes("error"))
     .join("\n")
     .trim();
-  return { ...inv, nodes, ok: false, detail: said || `exited ${String(r.status)} with no diagnosis` };
+  return { ...inv, nodes, ok: false, qaSidecar, detail: said || `exited ${String(r.status)} with no diagnosis` };
 }
 
 export function checkPublishedInstanceExports(): PublishedExportReport {

@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-09-30T13:58:20Z
+updated_at: 2026-09-30T15:16:39Z
 parent: folio-assistant-vke6
 ---
 
@@ -73,7 +73,7 @@ deliberately did not pivot.
 ## Box 1 answered, 2026-09-30 — and the answer OVERTURNS this bean's headline
 
 Triaged read-only by replicating `kg-detangle`'s own extractor and node set
-(`cat-harness/skills/graph-management/kg-detangle.ts`, `SCAN` at :79, `link()`
+(`cat-harness/skills/kg/graph-management/kg-detangle.ts`, `SCAN` at :79, `link()`
 at :284, the `ts-import` site at :367) against git's file list. Nothing was run
 that writes — deliberately, because `kg:detangle` is an `ymsu` witness and the
 gate set was in flight in the same tree.
@@ -258,3 +258,96 @@ The cross-instance entries all run from **cat-harness**, which declares only `bo
 **Not fixed here**, because the obvious fix is a split decision: move the four processes into `large-datasets`, which then needs a declared `processes` directory that the workflow engine and `kg:audit` load. Put to the owner 2026-09-30.
 
 **Box 3:** every md-link and bpmn-skill entry is recorded with a reason. The wrong-direction 29 wait on the owner's ruling.
+
+
+## Boxes 2 and 3, measured 2026-09-30 — and NOT ticked
+
+Same method as box 1: kg-detangle's `SCAN` and extractors replicated read-only
+against git's file list. Nothing that writes was run — `kg:detangle` is an
+`ymsu` witness and that file is under active change by another agent.
+
+### `md-link` — 31 now, and **NOT ONE is rot**
+
+| destination | count |
+|---|---|
+| `cat-harness/methodologies` | 12 |
+| `cat-harness/docs` | 6 |
+| `AGENTS.md` | 3 |
+| `fhir-harness/skills` | 2 |
+| `large-datasets/skills` | 2 |
+| `cat-harness/content` | 2 |
+| `bootstrap/README.md` | 2 |
+| `bootstrap/AGENTS.md`, `memory/…` | 1 each |
+| **not on disk** | **0** |
+
+**Zero.** The bean's premise — *"190 edges that go nowhere"* — is now wrong for
+the second of three buckets. Every one of the 31 points at a file that exists
+and is simply outside `SCAN`.
+
+**Six of the 31 are correct by design and are not defects at all.**
+`AGENTS.md` (3), `bootstrap/README.md` (2) and `bootstrap/AGENTS.md` (1) are
+what `kg-detangle` calls CONVENTIONAL — its own comment: *"A README is
+documentation ABOUT a directory, never a node IN it."* Those links resolve
+for a human and will never resolve in the graph, and that is the intended
+behaviour rather than rot.
+
+**Two destinations are a real scope gap, and it is a known one.**
+`fhir-harness/skills` and `large-datasets/skills` are **skill directories that
+`SCAN` does not list**. That is the same class as `bootstrap-tools` missing
+from `SCAN` (`0lj4`): the graph cannot see a whole instance's skills, so a
+link into them is filed as dangling rather than as a cross-instance edge.
+
+### `bpmn-skill` — the count is DISPUTED and I have not reconciled it
+
+Two probes of mine disagree, so **no number is published here.**
+
+- Probe A, over `.bpmn` files inside `SCAN`, counting occurrences: **25**.
+- Probe B, over every `.bpmn` in the checkout, counting distinct ref NAMES not
+  matched under `cat-harness/skills`: **8** — of which **5 resolve under
+  `bootstrap/skills/`, which IS in `SCAN`** and should therefore not be
+  dangling at all.
+
+The two are measuring different things (occurrences vs distinct names, and
+different file sets), which may explain it entirely — **or may not.** Until
+that is reconciled, quoting either as "the `bpmn-skill` count" would be the
+failure this bean exists to record.
+
+### Three names with a generated page and NO source skill
+
+The one thing Probe B establishes independently of the count:
+
+```
+copy-out-materialized     only cat-harness/docs/processes/… + docs/reference/skill-instructions/…
+deep-document-research    only cat-harness/docs/…
+materialize-remote        only cat-harness/docs/…
+```
+
+A BPMN activity names a skill whose **only** files are generated pages. Either
+the source skill was removed and its generated mirror outlived it, or it lives
+somewhere neither probe looked. **Not established**, and worth its own look
+rather than a guess.
+
+## Done when — updated
+
+- [x] `ts-import` split. 107 dropped real edges, 34 out of scope, 4 not
+      imports, **0 broken**.
+- [x] `kg:detangle` states whether its wrong-direction count is over all edges
+      or only the resolving ones. (#1580)
+- [ ] The `md-link` and `bpmn-skill` entries each fixed or recorded with a
+      reason. **Half done and deliberately not ticked**: `md-link` is measured
+      and characterised (31, zero rot, 6 correct by design, 4 in two unscanned
+      skill directories); `bpmn-skill` has two disagreeing probes and three
+      source-less skill names, none of it reconciled.
+
+## What all three buckets now say together
+
+Across `ts-import`, `md-link` and the part of `bpmn-skill` that is settled,
+**not one dangling ref has been shown to be broken.** Every one measured so
+far is a **scope artefact of the `SCAN` list** — an edge the graph declines to
+see, not an edge that goes nowhere.
+
+That inverts the bean's title. The remedy for a broken link is to fix the
+link; the remedy for this is to decide what the graph is supposed to cover —
+which is `p11x`'s question (#1580 now prints 3 of 19 instances reached and
+names the 16 it misses) and `0lj4`'s, arriving for a third time from a third
+extractor.

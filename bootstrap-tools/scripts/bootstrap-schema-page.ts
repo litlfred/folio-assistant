@@ -37,6 +37,7 @@
  * object with no properties — throws rather than being left out. A page that
  * silently omits a rule reads as a complete description of a schema it is not.
  */
+import { generatedNote } from "./generated-by.ts";
 
 /** A JSON Schema node, as the generator emits it. Only what is drawn is typed. */
 interface SchemaNode {
@@ -279,7 +280,7 @@ export function renderSchemaPage(docs: readonly PageDocument[], termsFrom: strin
   const out = [
     "## Schemas, drawn",
     "",
-    "<!-- Generated from the schemas in this directory. Change a schema, not this page. -->",
+    `<!-- ${generatedNote("scripts/gen-bootstrap-schemas.ts", "the schemas in this directory", "change a schema")} -->`,
     "",
     "Every JSON file bootstrap defines has a schema in this directory. This page",
     "draws each one, so you can read it without reading JSON Schema.",

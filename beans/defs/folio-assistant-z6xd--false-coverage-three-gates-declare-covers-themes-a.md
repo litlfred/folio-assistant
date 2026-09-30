@@ -1,10 +1,11 @@
 ---
 # folio-assistant-z6xd
 title: 'FALSE COVERAGE: three gates declare @covers themes and none reads the themes graph — the kind reads covered over ground nothing reaches'
-status: todo
+status: in-progress
 type: bug
+priority: normal
 created_at: 2026-09-30T11:28:43Z
-updated_at: 2026-09-30T11:28:43Z
+updated_at: 2026-09-30T14:41:56Z
 parent: folio-assistant-1swy
 ---
 
@@ -69,3 +70,94 @@ for GOAL 3's themed harness is the one reading falsely covered.
   never resolves a directory of that kind.** Without that, the next wrong
   declaration is found by a person again. This is the part that stops the class
   rather than the instance.
+
+---
+
+## 2026-09-30 — resolved: the three declarations corrected, and a gate that truly covers the kind
+
+### What the three gates actually read
+
+Measured on merged main, with the right key (`graphKinds`, not `graphs`):
+
+| script | reads | the `themes` graph? |
+|---|---|---|
+| `check-theme-art.ts` | `readDeclaration` + `THEME_LAYOUTS` | no — declared theme **art** |
+| `gen-themes-css.ts` | `THEMES` | no — the **platform's** themes, in code |
+| `render-theme-sheet.ts` | `THEMES` + `readDeclaration` | no — both of the above |
+
+The who-iris declaration is explicit that these are different objects:
+*"These are NOT the platform's twelve themes: those are cat-harness's own
+furniture, and a palette read off a WHO style guide is subject matter."*
+
+All three now declare `@covers none` with their real subject. Exactly one script
+in the corpus declares `@covers themes`, and a test asserts that.
+
+### The honest state, measured before building anything
+
+Removing the three false declarations turns `themes` into **`typed-only`** — 3
+files, 0 criteria, 0 gates — and `audit:coverage:strict` exits 1. So the truthful
+state was a finding, exactly as this bean predicted, and a data-only fix would
+have reddened CI. `typed-only` is still a finding: typing a node is not judging
+it.
+
+### The gate — `bun run check:instance-themes`
+
+`cat-harness/scripts/check-instance-themes.ts`, wired as
+`check:instance-themes:check`. For every instance declaring a `themes` graph:
+does it load, and does each theme satisfy `ResolvedThemeSchema`?
+
+**It calls `instanceThemes` from `schemas/theme-by-ref.ts`** — the same
+resolution every generator renders a theme reference through, exported for this
+purpose. A gate that re-derived "which themes does this instance own" would be a
+second answer free to disagree with the pages, which is this bean's own defect
+one layer along. A test asserts the import.
+
+Today: 1 of 17 instances declares the graph; 2 themes load and validate.
+
+### Falsified three ways before it shipped
+
+| planted | verdict |
+|---|---|
+| a theme bypassing the module's self-validation | exit **1**, naming the field |
+| `INSTANCE_THEMES` renamed away | exit **1**, naming the path |
+| the module throws | exit **2** — a refusal, never a pass |
+
+The third matters: *a module that throws is not a module with no themes*. And
+the `safeParse` branch was checked for reachability rather than assumed —
+`instanceThemes` does only `Array.isArray` and casts, so an instance that does
+not self-validate reaches it. who-iris happens to; another need not.
+
+### Two defects found inside my own work on this bean
+
+1. My first falsification used the module's own validation path and never
+   reached `safeParse`, so I checked whether that branch was dead — the same
+   question that removed a `dangling-instance-icon` family from
+   `check-navbar-consistency`. It is not dead, and there is now a test that
+   reaches it.
+2. My test reimplemented the `@covers` parser and reported `gen-themes-css` as
+   still claiming the kind — because its new REASON contains the word "themes".
+   `coversIn` stops the kind list at the em-dash; the lookalike split the whole
+   line. **That is the `vq8g` defect inside the test written to catch `vq8g`.**
+   The test now imports `coversIn`.
+
+### Kinds are reported and never graded
+
+who-iris owns `webpage 1, publication 1` and **no `sticky`**, and the board
+styles a card only from `sticky` themes. PR #1584 reserved that authoring call
+for the owner, so the kinds print with their denominator and no verdict
+attaches. A test pins the green so nobody later grades a decision its author was
+told not to.
+
+## Done when
+- [x] the three `@covers themes` declarations corrected to their real subjects
+- [x] a gate declaring `@covers themes` that actually resolves a themes directory
+- [x] a check that catches a gate declaring `@covers <kind>` while resolving no
+      directory of that kind — **narrowed and delivered as a test** rather than a
+      corpus-wide checker: exactly one script may claim `themes`, it must be
+      this one, and it must resolve the directory. A general checker still
+      cannot be written honestly, and the reason is recorded in
+      `audit-coverage.md`: the gate half is *declared* rather than inferred
+      because a grep fails in BOTH directions, and a checker of declarations
+      hits the same wall from the other side — a gate reaching a kind through a
+      helper or a runtime-composed path would false-fire. Raised for the owner
+      rather than decided.

@@ -16,6 +16,10 @@ It is **one** toolset over swappable content. Someone who wants a different gene
 | `schemas/release-iri.ts` | an instance's release addresses: `<iriBase><version>/` for programs, `<iriBase>v<major>/` for people |
 | `schemas/declared-order.ts` | checks that an authored order keeps its promise: each item uses only items above it |
 | `scripts/gen-bootstrap-schemas.ts` | writes `bootstrap/schemas/*.schema.json` and the drawn page `bootstrap/schemas/README.md` |
+| `scripts/gen-vocabulary.ts` | writes `bootstrap/ns.jsonld`, bootstrap's vocabulary: every defined term and graph kind, as RDF and SKOS, at the address its IRIs name |
+| `scripts/export-graph.ts`, `schemas/graph-export.ts` | writes `bootstrap.jsonld`, bootstrap's own graph, in bootstrap's classes and standard properties (Dublin Core, BPMN, PROV); the site publishes it, nothing commits it |
+| `scripts/publish-files.ts` | publishes bootstrap's files as they sit at its site address, never overwriting; GitHub Pages renders the `.md` |
+| `scripts/rehearse-standalone.ts` | runs these tools' checks and tests with bootstrap and bootstrap-tools copied alone as sibling clones — the split, rehearsed |
 | `scripts/iri-sync.ts` | keeps every literal release IRI at the declared version |
 | `scripts/term-links.ts` | links each defined term in README prose to its definition |
 | `scripts/subgraph-readmes.ts`, `scripts/templates/readme/` | writes each declared directory's README from its declaration, through Liquid templates; standalone it writes only the graphs these tools `support` |
@@ -34,6 +38,8 @@ Every tool is a script an agent runs, as the actor in a process step, or a perso
 bun run --cwd bootstrap-tools schemas          # regenerate bootstrap's schemas and schema page
 bun run --cwd bootstrap-tools readmes          # regenerate bootstrap's directory READMEs
 bun run --cwd bootstrap-tools render           # redraw each Process beside its .bpmn
+bun run --cwd bootstrap-tools vocabulary       # regenerate bootstrap/ns.jsonld
+bun run --cwd bootstrap-tools graph -- --root ../bootstrap --base-url <site>/bootstrap/ --out bootstrap.jsonld
 bun run --cwd bootstrap-tools schemas:check    # fail if they are stale
 bun run --cwd bootstrap-tools check:closure    # nothing here imports above bootstrap
 bun run --cwd bootstrap-tools check:node-iris  # every published identifier is its file's path

@@ -165,7 +165,7 @@ Three operations: **one entry**, **all of them**, and a **periodic sweep**.
 An entry carries a stable `id` so the first is possible at all, and
 `session` so a whole run can go at once.
 
-**This is the one exception to [`fsh-guts`](fsh-guts.md)'s rule that nothing
+**This is the one exception to [`fsh-guts`](../kg/kg-core/fsh-guts.md)'s rule that nothing
 is deleted.** That rule exists because a removed artefact cannot be told
 from one that never existed, and a scrapped thing records a dead end so the
 next agent does not re-enter it. **A log entry records no decision.** It is
@@ -210,7 +210,7 @@ Three consequences worth knowing before you call it:
 `fsh-guts/logs/` is inside `fsh-guts/`, which `UNPUBLISHED_GRAPH_KINDS`
 strips from every published graph — the kind, the directory, the skill and
 every edge naming them (bean `folio-assistant-uv09`,
-[`kg-export`](kg-export.md)).
+[`kg-export`](../kg/kg-core/kg-export.md)).
 
 That is placement doing the work rather than a second rule, which is why
 logs can be as detailed as they need to be. **There is a test asserting it

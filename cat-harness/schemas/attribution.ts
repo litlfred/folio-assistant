@@ -40,6 +40,7 @@
  */
 import { z } from "zod";
 import { SkillRefSchema } from "./tool-types.js";
+import { ModelIdSchema } from "../../bootstrap-tools/schemas/model-registry.ts";
 
 /**
  * The three sorts of participant that can author content.
@@ -72,7 +73,7 @@ export interface Attribution {
   session?: string;
   /** ISO-8601 date the content was authored. */
   date?: string;
-  /** The skill or tool that dispatched the authoring, e.g. `folio-core/library-ingestion`. */
+  /** The skill or tool that dispatched the authoring, e.g. `library-core/library-ingestion`. */
   skill?: string;
 }
 
@@ -103,7 +104,7 @@ export const AttributionSchema = z
     kind: z.enum(ATTRIBUTION_KINDS),
     id: z.string().min(1),
     version: z.string().optional(),
-    model: z.string().optional(),
+    model: ModelIdSchema.optional(),
     session: z.string().optional(),
     date: z.string().optional(),
     /** The skill being exercised: `name` or `package/name` (#1168 B8). */

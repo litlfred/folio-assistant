@@ -1,11 +1,11 @@
 ---
 # folio-assistant-fq5u
 title: 'DOWNSTREAM TOOLS IN QA: a run record per downstream tool, and QA goes stale when its inputs change — LSI first'
-status: todo
+status: in-progress
 type: feature
 priority: high
 created_at: 2026-09-29T23:46:01Z
-updated_at: 2026-09-29T23:46:01Z
+updated_at: 2026-09-30T17:25:23Z
 parent: folio-assistant-1swy
 ---
 
@@ -28,3 +28,5 @@ One QA criterion family generalizing `lsi-index-fresh`: every downstream tool is
 - [ ] the site search index is the second member, with a pre-publish verifier (present, parses, non-empty, entries ≈ page count)
 - [ ] a downstream tool with no declaration is itself a finding
 - [ ] stale / not-run surface where people already look (`bun run health` or the kg:audit report)
+
+_2026-09-30T17:25:23Z_ — Claimed by claude/magical-archimedes-4qkfxp-fq5u — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

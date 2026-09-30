@@ -8,4 +8,5 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `swimlane-glossary`, hold
 | file | what it is | used by |
 |---|---|---|
 | [`glossary-ledger.json`](glossary-ledger.json) | data |  |
+| [`bootstrap/`](bootstrap/) | 1 file | |
 <!-- kg:subgraph:end -->

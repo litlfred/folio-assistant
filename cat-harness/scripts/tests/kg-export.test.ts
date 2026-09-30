@@ -311,7 +311,11 @@ describe("kg export", () => {
     // `holdsGraph` is a LIST: `graph` became `graphs[]` upstream because a
     // directory may hold more than one graph — `schemas/` holds both its own
     // and `kg`. Every entry must still land on a GraphKind node.
-    for (const dir of typed("Directory")) {
+    // `Subgraph` — bootstrap's word — since 2026-09-30; it was `Directory`,
+    // and a loop over a type nothing carries any more passes over nothing.
+    const dirs = typed("Subgraph");
+    expect(dirs.length).toBeGreaterThan(0);
+    for (const dir of dirs) {
       const held = dir.holdsGraph as string[];
       expect(Array.isArray(held)).toBe(true);
       expect(held.length).toBeGreaterThan(0);
@@ -646,11 +650,9 @@ describe("every self-URL the export publishes resolves to something published", 
       // lives in the document `<base>/ns`. The `.jsonld` and `.json` are the
       // canonical-extension and correct-Content-Type aliases, exactly as for
       // the graph itself.
-      // `ns/` is a directory: the union vocabulary and the content context
-      // live inside it. There is deliberately no file at `ns` — see
-      // `vocabularyIri()`.
-      "ns/vocabulary.jsonld",
-      "ns/vocabulary.json",
+      // `ns/` is a directory holding the content context. There is
+      // deliberately no file at `ns`, and no all-layers union inside it any
+      // more (retired 2026-09-30) — each layer's vocabulary is `<stub>/ns`.
       "ns/content/v1.jsonld",
       // The generated stylesheets, reached because `themes-css` and
       // `avatars-css` DECLARE them through `maintains` and the export publishes
@@ -712,8 +714,14 @@ describe("every self-URL the export publishes resolves to something published", 
   test("nothing published still names the retired `kg/` directory", async () => {
     // Pinned as a literal, not derived: the point is that this exact string
     // stopped being a path, and a derived check would move with the mistake.
+    //
+    // The retired thing is the PUBLISHED `<base>/kg/` — the old viewer URL the
+    // `udx8` tile pointed at — so the literal is that URL's form. It was the
+    // bare substring "/kg/" until bean `9umr` gave the skills directory a `kg`
+    // TOPIC (`skills/kg/kg-core/`), a real path the bare substring would forbid.
     const doc = EXPORT_CANONICAL;
-    expect(JSON.stringify(doc)).not.toContain("/kg/");
+    expect(JSON.stringify(doc)).not.toContain("github.io/folio-assistant/kg/");
+    expect(JSON.stringify(doc)).not.toContain('"/kg/');
   });
 });
 
@@ -856,7 +864,7 @@ describe("a package's id is declared, not derived from its path", () => {
   //
   // It is now `large-datasets`: directory `large-datasets/skills/`, basename
   // `skills`, manifest `large-datasets`. (It was `kg-navigation` until bean
-  // `byql` folded that one into `cat-harness/skills/kg-navigation/`, where the
+  // `byql` folded that one into `cat-harness/skills/kg/kg-navigation/`, where the
   // basename IS the name and the test would no longer discriminate.) Same shape, and a witness the root
   // graph carries for its own reasons rather than by a declaration made for
   // one package. The members are READ from its manifest rather than listed,

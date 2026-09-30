@@ -46,7 +46,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
-import { userInvocableSkills, type InvocableSkill } from "../src/tools/skill-prompts.ts";
+import { userInvocableSkills, type InvocableSkill } from "./invocable-skills.ts";
 
 export const GENERATED_BY = "cat-harness/scripts/gen-skill-commands.ts";
 export const COMMANDS_DIR = join(".claude", "commands");

@@ -8,7 +8,7 @@ Held in the library [`agent-skills/library/`](../README.md) as `agent-skill-best
 | | |
 |---|---|
 | document id | `agent-skill-best-practices---gemini-cli` |
-| source file | `Agent Skill best practices - Gemini CLI.pdf` (sha256 `5e69cc80f81e…`) |
+| source file | `Agent-Skill-best-practices-Gemini-CLI.pdf` (sha256 `5e69cc80f81e…`) |
 | provenance | ingested |
 
 | holds | count |

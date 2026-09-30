@@ -164,6 +164,7 @@ export const RULES: Rule[] = [
     triaged: true,
     exact: [
       "scripts/check-ci-health.ts",          // workflow state on the default branch
+      "scripts/watch-ci.ts",                 // one commit's check runs → a three-state verdict
       "scripts/check-workflow-policy.ts",    // BPMN relaxation legality
       "scripts/bpmn-render.ts",              // BPMN → SVG
       "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
@@ -237,6 +238,19 @@ export const RULES: Rule[] = [
       // content — the declarations it reads are the harness's, and the glyph
       // registries it compares are the harness's own furniture.
       "scripts/check-navbar-consistency.ts",
+      // HARNESS for the same reason: it asks the runtime's own question
+      // through `schemas/theme-by-ref.ts` over this repository's declared
+      // instances. The THEMES it loads are an instance's subject matter,
+      // but this script reads no folio content — it validates a graph
+      // against a schema the harness owns.
+      "scripts/check-instance-themes.ts",
+      // HARNESS: its subject is this repository's own work plan, read
+      // through `scripts/beans.ts` — the one reader of the store. No folio
+      // content is opened.
+      "scripts/check-bean-parent-prose.ts",
+      // HARNESS: it reads the NAMES of files in declared uploads/library
+      // graphs and never their contents, so no folio content is opened.
+      "scripts/check-upload-names.ts",
       // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
       // LEAF so `state-visualizer.ts` can be a call site without importing
       // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one
@@ -298,6 +312,12 @@ export const RULES: Rule[] = [
       // too. It renders a model and reads no content object -- the model's
       // regions are composed by the caller from declarations.
       "scripts/lib/navbar.ts",
+      // How a GRAPH-KIND row in that navbar is marked and named (bean `yag0`):
+      // the kind's avatar glyph and hue, and the head of its registered
+      // summary as the accessible name. HARNESS beside `navbar.ts` for the
+      // same reason — it is the platform's chrome, read from the platform's
+      // kind and avatar registries, and both navbar callers share it.
+      "scripts/lib/graph-kind-nav.ts",
       // The geometry that navbar became a reader of, and the generator that
       // renders it to CSS (bean `sjic`). HARNESS for the same reason as
       // `navbar.ts` and one step more plainly: the numbers are the width of
@@ -418,6 +438,8 @@ export const RULES: Rule[] = [
       "schemas/tool.ts",                     // what a Tool IS — `tools` is a harness graph kind
       "schemas/withheld.ts",                 // what an instance must not publish — read by the harness mount (bean `mkao`)
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
+      "schemas/repo-full-name.ts",           // `owner/name` — a Tool type AND the declaration's repository (bean `6rmv`)
+      "schemas/instance-repositories.ts",    // the derived owner/repo ↔ instance map (bean `6rmv`)
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
@@ -453,6 +475,8 @@ export const RULES: Rule[] = [
       // core `schemas/` prefix and made four harness modules read as depending
       // on the content layer. None of it describes a folio's content.
       "schemas/skill-package.ts",
+      // `skills.json`'s shape (bean `9umr`); read by `scripts/skill-topics.ts`.
+      "schemas/skill-topics.ts",
       // What happened when a Tool ran, and under whose authority. Tools are
       // the HARNESS's vocabulary — the `tools` graph is declared by
       // `agentic-harness`, not by any folio — and this file imports only
@@ -1190,6 +1214,9 @@ export const RULES: Rule[] = [
       // and the workflow engine, stop importing from a Tool. Harness beside
       // `known-skills.ts`, which it builds on.
       "scripts/skill-packages.ts",
+      // The user-invocable skill list, moved out of the `skill-prompts` Tool
+      // (bean `w2gr`) so `gen-skill-commands` stops importing from a Tool.
+      "scripts/invocable-skills.ts",
       // ...and the topic level it walks through (bean `9umr`): which
       // subdirectories of a skills directory are topics, from `skills.json`.
       "scripts/skill-topics.ts",
@@ -1247,10 +1274,9 @@ export const RULES: Rule[] = [
       // edge `namespaces.ts` was extracted to remove. Measured on first run:
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
-      // bootstrap's own Zod (graph, discussion, requirement) moved down to
-      // `bootstrap-tools/` (owner, 2026-09-29, bean `xsqm`), outside this
-      // partition. What stays is the harness's reading of it.
-      "schemas/bootstrap-graph.ts",
+      // bootstrap's own Zod (graph, discussion, requirement, and since
+      // 2026-09-30 the graph document's) lives in `bootstrap-tools/` (bean
+      // `xsqm`), outside this partition.
       // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
       // adjudication's codes against, and the loader `namespaces.ts` sits
       // beside. Needed to RUN a process, so harness — the same test as the
@@ -1407,7 +1433,6 @@ export const RULES: Rule[] = [
       "scripts/skill-register.ts",          // runs the generators a NEW SKILL stales AND gates the declarations (beans `v625`, `nfv3` — two commands one letter apart, consolidated here at the owner's decision 2026-09-26). Beside `gates.ts` for the same reason: it invokes the repo's own tooling and knows nothing about any content type. `ymsu`'s guard above is why it verifies with ISOLATED check runs: inside `gates`, `bun test` repairs two of the six artefacts before their checks read them
       "scripts/check-merged.ts",            // the gate runner, on the merged tree (bean `nytj`)
       "scripts/gen-avatars-css.ts",         // generated from the avatar nodes
-      "scripts/gen-bootstrap-graph.ts", // writes bootstrap/bootstrap.jsonld
       "scripts/gen-python-deps.ts",         // writes requirements.txt
       "scripts/kg-validate.ts",             // one Tool, parameterised by graph kind
       "scripts/repo-files.ts",              // enumerates files the way a GATE needs
@@ -1598,7 +1623,17 @@ export const RULES: Rule[] = [
     // declaration in THIS repo describes — that is the whole point of the plan.
     // `simulators/` was here until they moved to the folio that owns them: a
     // simulator is subject matter, so no platform package is its target.
-    prefixes: ["adapters/paper/", "skills/authoring-math/", "skills/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
+    //
+    // `adapters/paper/` was here until 2026-09-30, and its removal is the rule
+    // SUCCEEDING rather than being withdrawn. It named `PaperContentAdapter`
+    // as sci-layer code, and bean `y5si` moved the directory to
+    // `folio-assistant-sci/` on that adjudication plus the matching
+    // `layer: "sci"` in `src/builtin-adapters.ts`. This scan is rooted at
+    // `cat-harness/`, so the prefix now matches nothing — and a rule that
+    // fires on nothing while reading as a live adjudication is worse than no
+    // rule, because the next reader takes it as evidence the file is still
+    // here. The reasoning is kept; the dead prefix is not.
+    prefixes: ["skills/authoring-math/", "skills/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
     exact: ["schemas/formalization-types.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
   },
   {
@@ -1672,7 +1707,11 @@ export const RULES: Rule[] = [
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
+    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
+    // `blueprint/` STOOD in the prefixes above until 2026-09-30 (bean `vov0`):
+    // it held a hand-written QOU blueprint, folio content in the platform, and
+    // is removed now that `blueprint-layout.ts` generates a paper's
+    // `blueprint/src` from its manifest (#1598).
     exact: [
       // `scripts/build-document-site.ts` STOOD HERE and is GONE as of bean
       // `yj6r`, 2026-09-30: it now lives in `folio-assistant-core/scripts/`

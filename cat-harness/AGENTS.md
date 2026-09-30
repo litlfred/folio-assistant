@@ -37,7 +37,7 @@ text:
 - **A directory is declared or it does not exist.** Add one to
   [`cat-harness.json`](cat-harness.json) with its graph kinds in the same change;
   a declared-but-absent directory makes a consumer scan nothing and report a
-  clean run. `folio-core/directory-conventions`.
+  clean run. `kg-core/directory-conventions`.
 - **The discipline lives in the skill.** Changing how agents behave means
   editing the skill, not a Markdown file at a root. Where a skill and any
   `AGENTS.md` disagree, **the skill wins and the file is wrong** — fix it.
@@ -56,7 +56,7 @@ That last row is the one distinction worth holding on to: **this file is read,
 memory is injected.** Nothing truncates a file, so it carries what an agent
 must be able to look up; memory carries what must arrive without being asked
 for, and pays a budget for it. Maintaining both is one job —
-`folio-core/agent-memory`.
+`conduct-core/agent-memory`.
 
 ---
 

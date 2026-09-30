@@ -1829,7 +1829,7 @@ a.fa-lang-tab:hover:not(.is-current) {
  *
  * `#cbd1d9` is not a literal in the source: the tab was `color:#94a3b8` with
  * `opacity:0.4`, and 0.4 of #94a3b8 over the bar's background is #cbd1d9. That
- * is the trap `skills/folio-core/ui-accessibility.md` names by name — opacity
+ * is the trap `skills/ui/ui-core/ui-accessibility.md` names by name — opacity
  * blends text toward its background and quietly drops the ratio — and it is
  * why the bean's own note misattributed the failure to the available-locale
  * colour. There is no `opacity` on text here any more; a dimmer tab is its own
@@ -6333,6 +6333,17 @@ a.fa-harness-tab__body:focus-visible {
 }
 
 .side-bar .fa-nav-kids .fa-nav-label { flex: 0 1 auto; min-width: 0; }
+
+/* A graph kind's SVG glyph (bean `yag0`) — distinct per kind, so `docs` and
+ * `library` are no longer two adjacent initials. Fills the chip above and
+ * strokes in the inherited ink. */
+.side-bar .fa-nav-glyph svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0.125rem;
+  box-sizing: border-box;
+}
 
 /* The note is the same meaning as `.fa-harness-graph__note`, so the same
  * look — pushed to the row's end so it can never run into the label, and

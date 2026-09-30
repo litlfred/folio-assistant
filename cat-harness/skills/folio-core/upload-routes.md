@@ -9,14 +9,14 @@ description: >
 
 # Two mechanisms and a persona
 
-[`content-acquisition`](content-acquisition.md) decides *what channel* a
+[`content-acquisition`](../library/library-core/content-acquisition.md) decides *what channel* a
 resource comes in on — a file, a link, or a description somebody gives in
 their own words. This skill starts one step later, where the answer was **a
 file**, and asks the question nothing here answered until 2026-09-30: **what
 writes the bytes into the declared queue, and what does the writer owe?**
 
-It ends the moment the file is in the queue. [`uploads-watch`](uploads-watch.md)
-notices it arrived; [`library-ingestion`](library-ingestion.md) and
+It ends the moment the file is in the queue. [`uploads-watch`](../library/library-core/uploads-watch.md)
+notices it arrived; [`library-ingestion`](../library/library-core/library-ingestion.md) and
 `document-intake` take it from there.
 
 ## The answer is two, not three, and the third is a persona
@@ -144,8 +144,8 @@ have, and it is the reason to keep the persona named even though it is not a
 mechanism.
 
 **Do not ingest on your own say-so, and do not delete.** Both are other
-skills' decisions — [`library-ingestion`](library-ingestion.md) and
-[`deletion-requires-confirmation`](deletion-requires-confirmation.md). A
+skills' decisions — [`library-ingestion`](../library/library-core/library-ingestion.md) and
+[`deletion-requires-confirmation`](../conduct/conduct-core/deletion-requires-confirmation.md). A
 processed upload still looks spent and still is not.
 
 ## What the routes are NOT responsible for
@@ -185,7 +185,7 @@ or follow whatever the surrounding work already uses.
 
 **Whether an arrival should be refused when it carries no intake record.** 0 of
 56 files carry one. A gate would redden `main` on arrival, which is the
-opposite of accepting what somebody offers ([`content-acquisition`](content-acquisition.md):
+opposite of accepting what somebody offers ([`content-acquisition`](../library/library-core/content-acquisition.md):
 *"do not make them follow a process to hand you something they already
 have"*). Whether the record is owed by the placer or minted by intake is
 undecided here, deliberately — it is a rule with a cost and the owner has not

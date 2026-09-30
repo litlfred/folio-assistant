@@ -51,10 +51,10 @@ const CSS = readFileSync(join(ROOT, SITE, "assets/css/docs-ui.css"), "utf8");
 const JS = readFileSync(join(ROOT, SITE, "assets/js/docs-ui.js"), "utf8");
 
 /**
- * A page the generator wrote. `community-list.html` is the library landing —
+ * A page the generator wrote. `community-list.html` is the replica's landing —
  * the page a reader arrives on, so the one whose folio matters most.
  */
-const PAGE_FILE = join(REPO, "who-iris", "library", "community-list.html");
+const PAGE_FILE = join(REPO, "who-iris", "site", "community-list.html");
 const PAGE = existsSync(PAGE_FILE) ? readFileSync(PAGE_FILE, "utf8") : "";
 
 /**
@@ -134,7 +134,7 @@ test.describe("the glass comes down on a library page", () => {
   });
 
   test("and on the OTHER mount route, where a relative href would 404", async ({ page }) => {
-    // `who-iris/library/` is served at `/who-iris/` and `who-iris/docs/` at
+    // `who-iris/site/` is served at `/who-iris/` and `who-iris/docs/` at
     // `/docs/who-iris/`. One generated file, two depths below the site root —
     // which is the whole reason the root is derived in the browser.
     await serve(page, "/docs/who-iris/index.html");
@@ -275,3 +275,25 @@ test.describe("the replica at phone width", () => {
     expect(scroll, "the page scrolls sideways at 390 px").toBeLessThanOrEqual(client);
   });
 });
+
+/**
+ * ...AND ON A DESKTOP. The phone case above let the desktop one through: the
+ * 2026-09-30 QA re-run measured community-list.html 1475 px wide at 1280 and
+ * 1405 px at 1024, because the "Metadata record" column kept `nowrap` on its
+ * longest file name at every width but a phone's. Same page, same assertion,
+ * the two widths that overflowed.
+ */
+for (const width of [1024, 1280]) {
+  test.describe("the replica at " + width + " px", () => {
+    test.use({ viewport: { width, height: 800 } });
+
+    test("the page is no wider than the screen", async ({ page }) => {
+      await serve(page, "/who-iris/community-list.html");
+      const [scroll, client] = await page.evaluate(() => [
+        document.documentElement.scrollWidth,
+        document.documentElement.clientWidth,
+      ]);
+      expect(scroll, "the page scrolls sideways at " + width + " px").toBeLessThanOrEqual(client);
+    });
+  });
+}

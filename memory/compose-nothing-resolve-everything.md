@@ -4,11 +4,12 @@ id: compose-nothing-resolve-everything
 label: trap
 summary: "compose nothing; resolve everything"
 createdAt: 2026-09-19
-archived: "true"
+archived: true
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 The old contents table built every PDF cell as
 `${PAGES}/papers/<paper>/chapters/<dir>.pdf` — by convention, checked against
@@ -25,7 +26,7 @@ directory, title, badges and a `PAGES` constant as literals) in a repo whose
 so it could only run from a platform checkout, which has no papers.
 
 **Archived 2026-09-19** (bean `folio-assistant-4kiw`). Superseded by
-`skills/folio-core/placement.md` Step 4, which states the rule under this
+`skills/kg/kg-core/placement.md` Step 4, which states the rule under this
 entry's own name — *"Compose nothing; resolve everything"* — with this
 entry's evidence intact (all twenty-three chapter links 404 and always had
 been; three of six appendix links happened to resolve) plus a second case
