@@ -16,7 +16,7 @@
  * reported `skill-ref-resolves` **fail (9)** on nine activities of
  * `methodologies/processes/diig-investment-path.bpmn`. All nine named the one
  * skill `methodology-adoption`, which lives at
- * `cat-harness/skills/folio-core/methodology-adoption.md` — four layers down
+ * `cat-harness/skills/process/process-core/methodology-adoption.md` — four layers down
  * smart-base's own declared `needs` chain (`smart-base → fhir-harness →
  * folio-assistant-core → cat-harness → bootstrap`). Nine criticals against a
  * diagram that is correct.

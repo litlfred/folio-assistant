@@ -498,7 +498,7 @@ export const STEPS: readonly Step[] = [
   {
     write: ["lsi:skills"],
     verify: ["lsi:skills:check"],
-    because: "the skills graph's LSI index — a new or edited skill changes its fingerprint, and kg:audit's `lsi-index-fresh` reads it next",
+    because: "the skills graph's LSI index — a new or edited skill changes its fingerprint, and the run record it writes is what kg:audit's `tool-downstream-fresh` reads next",
   },
   {
     write: ["lsi:viz"],

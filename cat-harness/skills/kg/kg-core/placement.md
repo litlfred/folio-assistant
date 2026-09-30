@@ -198,7 +198,7 @@ sentence carries the model — *an actor performs a task in a process as a role,
 using that role's skills* — and moving permissions onto Role, which looks right,
 produced **36 conflicts** where a permission was held by some but not all actors
 sharing a role. Resolution rules, how to bind a lane, and how to add a role:
-[`role-model.md`](../../folio-core/role-model.md). Do not re-derive them here.
+[`role-model.md`](../../process/process-core/role-model.md). Do not re-derive them here.
 
 **A `.md` under the `cat-harness` path that declares its own `$schema` is not a
 skill.** The audit walks that directory recursively; declaration beats location,

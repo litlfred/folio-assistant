@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>109</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>111</b><span>Tool nodes</span></div>
 <div class="tg-stat"><b>66</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>89</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>91</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 89 |
+| <span class="tg-tag tg-shell">shell</span> | 91 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 24 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 6 |
 
 | installation | tools |
 |---|---|
-| `none` | 100 |
+| `none` | 102 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **66** skills named across **109** tools resolve to a
+Yes — all **66** skills named across **111** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -111,6 +111,7 @@ tool advertising a capability the graph cannot locate.
 | `lean-toolchain-setup`<br>Lean toolchain install | Install the toolchain pinned in `lean-toolchain`, fetching it from the GitHub release rather than through elan's downloader. Idempotent, and it detects partial state rather than re-downloading. | <span class="tg-tag tg-shell">shell</span> | [`lean-environment-setup`](../reference/skill-instructions/lean-environment-setup.html) | 0 in / 1 out |
 | `library-viewer`<br>Library viewer | Render each declared library directory — its entries, intakes and avatars — as a page per subject instance. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `log-message`<br>Log a message to the discussion | Write a log line where the human actor will read it: the discussion you are already in. Takes the five required fields and the optional body, and renders them as one entry. | <span class="tg-tag tg-manual">manual</span> | `log-message` | 6 in / 1 out |
+| `lsi-index`<br>Build the Latent Semantic Indexing index of a prose graph | Build the per-graph LSI index sidecar for every declared prose graph (or the one named): input fingerprint, parameters, dimension summaries, nearest neighbours and near-duplicate findings, never the vectors. Records each run's outcome and input fingerprint, success or failure, as a `folio-tool-run/v1` record. | <span class="tg-tag tg-shell">shell</span> | [`lsi-indexing`](../reference/skill-instructions/lsi-indexing.html) | 2 in / 1 out |
 | `lsi-query`<br>Latent Semantic Indexing over a prose graph | Find units of a declared prose graph (a library, the skills, the beans, docs) that discuss a query in OTHER words — the vocabulary gap lexical search cannot reach. Each hit is labelled lexical+latent or latent only, and the score is a cosine in the latent space, never merged with a lexical result. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`lsi-indexing`](../reference/skill-instructions/lsi-indexing.html) | 3 in / 1 out |
 | `lsi-viewer`<br>Latent semantic index viewer | Render every committed LSI index — dimensions as two poles, narrow-dimension and near-duplicate findings — and which declared prose graphs still need one. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `mcp-capture`<br>What this instance's MCP server serves | Read the real tool surface from the registrars by mounting each against a capture object — the same objects the server asks, so the Zod shapes and their optionality are the served ones rather than a reading of the source. | <span class="tg-tag tg-shell">shell</span> | [`mcp-contract`](../reference/skill-instructions/mcp-contract.html) | 1 in / 1 out |
@@ -138,6 +139,7 @@ tool advertising a capability the graph cannot locate.
 | `schemas-viewer`<br>Schemas viewer | Render each declared schema directory as a page per subject instance, over one shared data index. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `serve-rendering`<br>Local rendering server | Serve an instance's renderings over local HTTP with their declared media types. The publication host wherever GitHub Pages is absent, and the only host that can enforce `application/ld+json` at all. | <span class="tg-tag tg-shell">shell</span> | [`serving-renderings`](../reference/skill-instructions/serving-renderings.html) | 2 in / 1 out |
 | `sibling-sessions`<br>Sibling sessions in a window | List the Claude Code sessions that have committed to this repository in a time window, from the `Claude-Session:` trailer on commits across ALL branches — with each one's commit count, first and last commit, latest subject, and the branches containing its tip. The session API cannot see a sibling session, so the trailer is the only durable session identity here and a session's state is INFERRED from its branch; whether a session is still running is not knowable from a checkout and is deliberately not reported. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-shell">shell</span> | [`bean-coordination`](../reference/skill-instructions/bean-coordination.html) | 2 in / 1 out |
+| `site-search-index`<br>Site search index | The just-the-docs search index, `assets/js/search-data.json`, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 0 in / 1 out |
 | `skill-docs`<br>Skill instruction reference | Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html) | 1 in / 1 out |
 | `skill-fetch`<br>Fetch a skill | Load one skill's instruction body for the agent to follow, from the local packages or an external bundle. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html) | 2 in / 1 out |
 | `skill-list`<br>List skills | Every skill this instance can resolve, with its one-line summary. The entry point AGENTS.md sends an agent to first. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html) | 0 in / 1 out |

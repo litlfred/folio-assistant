@@ -62,7 +62,7 @@ namespace is `<publication root><instance stub>/ns#` (`instanceNs` in
 
 | instance | namespace |
 |---|---|
-| `folio-assistant-core` | `https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#` |
+| `folio-assistant-core` | `https://litlfred.github.io/folio-assistant-core/0.1.0/ns#` |
 | `ihris` (its own site) | `https://litlfred.github.io/ihris/ihris/ns#` |
 
 The namespace is never the asset's path: moving the asset must not move the
@@ -138,7 +138,7 @@ owner chose *"Split per asset type"* (2026-09-24) when extraction took the
 single page to 1.4 MB; the budgets are what keeps that choice true.
 
 The harness's swimlane-role terms (`swimlane-glossary`, the
-[`swimlane-glossary`](../../folio-core/swimlane-glossary.md) skill) are one more source the page
+[`swimlane-glossary`](../../process/process-core/swimlane-glossary.md) skill) are one more source the page
 links to, not copies of.
 
 ## Extracted terms (bean `lqo9`, piece 1)

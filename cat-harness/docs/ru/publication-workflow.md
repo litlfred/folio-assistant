@@ -611,7 +611,7 @@ bun run <platform>/scripts/check-corpus-gate.ts --staged --warn   # adopt gradua
 **делать**, не является свойством его роли: это правило ODRL в `policies/`, и
 перед выполнением каждой задачи исполнитель BPMN проверяет, что актор аутентифицирован,
 соответствует роли дорожки, имеет права согласно политике и допущен к работе с данным
-контентом ([`task-authorization`](../../skills/folio-core/task-authorization.md),
+контентом ([`task-authorization`](../../skills/process/process-core/task-authorization.md),
 issue #1207).
 
 ### Люди
