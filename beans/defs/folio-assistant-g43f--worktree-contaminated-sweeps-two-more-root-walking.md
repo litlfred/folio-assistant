@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-30T14:13:37Z
-updated_at: 2026-09-30T14:20:53Z
+updated_at: 2026-09-30T14:35:43Z
 parent: folio-assistant-1xhc
 ---
 
@@ -152,3 +152,66 @@ scope widening rather than four new scanners.
 **The census is now the right instrument for the sweep**, which it was not when
 this bean was opened: an instance-scoped census could not have answered a
 question about the whole checkout.
+
+
+## The class sweep — done, and the result is NEGATIVE
+
+`generalise-the-fix` Move 1.2: three instances is a class, so sweep for
+siblings rather than stop at the third. Done 2026-09-30, read-only.
+
+**No fourth instance found.** A negative result is a real result, and this
+records the method so the next reader can judge it rather than trust it.
+
+### Two filters, and the gap between them is the point
+
+Over the 205 enumerating scripts under `*/scripts/` and
+`cat-harness/content/pipeline/`:
+
+| filter | count | what it is worth |
+|---|---|---|
+| **loose** — does not ask git, and either has no `startsWith(".")` guard or names `.claude` explicitly | **142** | **useless as an upper bound.** Most walk a NAMED SUBDIRECTORY (`content/`, `translations/`, `folio/<paper>`) and never approach `.claude/` |
+| **tight** — additionally SEEDED at a root constant (`REPO_ROOT` / `INSTANCE_ROOT` / `ROOT`) | **2** | both **false positives on inspection** — see below |
+| **known actual** | **3** | eslint (`vpek`), and the two fixed in this bean |
+
+142 is not "142 bugs", and reporting it as one would be the same over-claim
+this bean's own `SKIP_DIRS` trap was about. The census documents exactly this
+shape about its own two filters: *"the loose one over-counts … the tight one
+under-counts … the gap between them is the finding, not either number."*
+
+### The two candidates, and why both fell
+
+```
+cat-harness/content/pipeline/audit-status-sections.ts:130    const root = join("folio", paper);
+cat-harness/content/pipeline/extract-status-sections.ts:98   let root = join("folio", paper);
+```
+
+Both walk `folio/<paper>` — a folio's content directory. Neither can reach
+`.claude/`. They matched only because the regex saw `walkMd(root)` and read the
+PARAMETER NAME `root` as a root constant.
+
+### The blind spot, stated rather than implied
+
+The tight filter is defeated by **a walk whose root arrives as a parameter from
+a caller that passes the repository root**. That is not hypothetical — it is
+the limitation `root-scan-census` already documents about its own
+`seededAtRoot` filter, measured there as catching 4 of 62 and missing one of
+`xd1g`'s twelve.
+
+So this sweep establishes **no fourth instance among scripts whose walk root is
+syntactically visible**, and says nothing about one whose root is passed in.
+That residue is why the box below stays open rather than being ticked.
+
+## Done when — updated
+
+- [x] `check-stale-field-advice` asks git, non-silent fallback, source reportable.
+- [x] `check-declaration-filename`'s markdown sweep asks git, same shape.
+- [x] Neither rescopes — before/after counts recorded.
+- [x] **The class is swept.** 205 enumerating scripts examined; loose filter 142,
+      tight filter 2, both tight candidates false positives on inspection; **no
+      fourth instance found.** Method and its blind spot above.
+- [ ] Whether `root-scan-census` should FAIL on a root-walking sweep that is
+      not git-aware, rather than only report. It reports and never fails by the
+      owner's ruling of 2026-09-27. This bean is evidence for revisiting that —
+      **55 of 69 enumerating scripts do not ask git** — and deliberately does
+      not presume the answer, because most of those 55 are walking a directory
+      they own, where a walk is fine.
