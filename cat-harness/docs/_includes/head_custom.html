@@ -616,3 +616,43 @@
   }
   .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
 </style>
+
+<!--
+  AN INSTANCE'S OWN WEBPAGE THEME, scoped to its pages.
+
+  Bean `7h3u`, on the owner's 2026-09-30 ruling to wire this at the PLATFORM
+  layer so every ingested IG gets it, rather than in one instance's page
+  generator.
+
+  WHY LIQUID AND NOT CSS. A webpage theme dresses one instance's pages, so it
+  has to be scoped by URL — and CSS cannot select on a URL. Jekyll is what
+  knows which page is rendering, so the scope is applied here and the VALUES
+  come from `_data/instance-themes.json`, written by `gen-themes-css.ts` from
+  each instance's declared `themes/`. That is the `site.data` pass-through bean
+  `kott` settled, and the owner's own instruction for this work: "reuse all
+  existing justthedocs infra".
+
+  WHY INLINE AND NOT A LINKED STYLESHEET. The same first-paint reasoning this
+  file already carries for the colour scheme: a sheet arriving after first
+  paint flashes the unthemed colours, which is the defect this file was
+  rewritten to remove.
+
+  WHAT IT RETHEMES, AND WHAT IT CANNOT. These three names are read by
+  `docs-ui.css` at 29 of its 33 `var(--x, #literal)` sites and DEFINED by
+  nothing — just-the-docs is Sass, so its own chrome compiles to literals and
+  no custom property can reach it. So this dresses the surfaces the site owns,
+  the left-hand nav among them, and leaves just-the-docs' compiled chrome
+  alone. Stated here because the alternative is a reader concluding the theme
+  is broken when it is doing exactly what it can.
+-->
+{%- assign fa_page_url = page.url | default: '' -%}
+{%- for fa_inst in site.data.instance-themes.instances -%}
+  {%- if fa_page_url contains fa_inst.prefix -%}
+<style id="fa-instance-theme" data-instance="{{ fa_inst.instance }}">
+  /* {{ fa_inst.name }} — declared by instance {{ fa_inst.instance }}, theme {{ fa_inst.themeId }}. */
+  :root {
+  {{ fa_inst.declarations }}
+  }
+</style>
+  {%- endif -%}
+{%- endfor -%}

@@ -25,7 +25,7 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { SMART_TRUST_THEMES, UPSTREAM, smartTrustThemeById } from "./themes.js";
+import { SMART_TRUST_THEMES, THEME_INSTANCE, UPSTREAM, smartTrustThemeById } from "./themes.js";
 
 /** The vendored stylesheet, read as bytes — the artefact, not a summary of it. */
 const WHO_CSS = readFileSync(join(import.meta.dir, UPSTREAM.template.vendored), "utf-8");
@@ -168,3 +168,30 @@ function expandHex(hex: string): string {
   const body = hex.slice(1).toLowerCase();
   return body.length === 3 ? `#${[...body].map((c) => c + c).join("")}` : `#${body}`;
 }
+
+describe("the platform can FIND this theme, not just resolve it", () => {
+  // The test that was missing. Every test above imports `./themes.js`
+  // directly, so they exercised the theme and never the DISCOVERY — and the
+  // first version of this module exported `THEMES` where the platform reads
+  // `INSTANCE_THEMES`. `instanceThemes()` returned `no-themes-module` for a
+  // module that was present, resolved and fully tested, and nothing said so.
+  //
+  // A theme nothing can find is the `1xhc` shape: a declaration that looks
+  // done and is reached by nobody.
+
+  test("`instanceThemes` resolves it through the declaration, by name", async () => {
+    const { instanceThemes } = await import("../../cat-harness/schemas/theme-by-ref.js");
+    const found = instanceThemes(join(import.meta.dir, "..", ".."), THEME_INSTANCE);
+    // The whole result on a miss, not a boolean: `no-themes-directory` and
+    // `no-themes-module` are different faults with different fixes, and a bare
+    // `expect(found.ok).toBe(true)` would print neither.
+    expect(found.ok ? { ok: true } : found).toEqual({ ok: true });
+    expect(found.ok && found.themes.map((t) => t.id)).toContain("who-smart-ig");
+  });
+
+  test("it is the instance's ONE webpage theme, so the generator has no choice to make", async () => {
+    const { instanceWebpageThemes } = await import("../../cat-harness/schemas/theme-by-ref.js");
+    const owned = instanceWebpageThemes(join(import.meta.dir, "..", ".."));
+    expect(owned.filter((o) => o.instance === THEME_INSTANCE).map((o) => o.theme.id)).toEqual(["who-smart-ig"]);
+  });
+});

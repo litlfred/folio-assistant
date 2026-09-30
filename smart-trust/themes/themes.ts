@@ -238,5 +238,18 @@ export function smartTrustThemeById(id: string): ResolvedTheme | undefined {
   return SMART_TRUST_THEMES.find((t) => t.id === id);
 }
 
-/** The conventional export a harness reads to resolve `{instance: "smart-trust", themeId}`. */
-export const THEMES = SMART_TRUST_THEMES;
+/**
+ * The conventional export the platform reads — the name, not a synonym.
+ *
+ * `theme-by-ref.ts` looks up `INSTANCE_THEMES_EXPORT`, which is the literal
+ * string `"INSTANCE_THEMES"`. This file first exported `THEMES`, which reads
+ * fine and is invisible to every consumer: `instanceThemes()` returned
+ * `no-themes-module` for a module that was present, resolved and tested.
+ *
+ * The tests did not catch it because they import this file DIRECTLY, so they
+ * exercised the theme and never the discovery. `themes.test.ts` now asserts
+ * resolution through the platform's own path as well, which is the test that
+ * would have caught it — a theme nothing can find is the `1xhc` shape: a
+ * declaration that looks done and is reached by nobody.
+ */
+export const INSTANCE_THEMES: readonly ResolvedTheme[] = SMART_TRUST_THEMES;
