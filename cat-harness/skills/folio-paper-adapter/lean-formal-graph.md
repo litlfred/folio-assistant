@@ -21,6 +21,15 @@ have read) is owned by `uses-editorial-review`.
 **Never write formal dependencies into `uses[]`.** They answer different
 questions and diverge legitimately in both directions.
 
+**Where the formal edges come from.** The graph reads
+`docs/audits/lean-atlas-deps.json`, and each entry records its source. A
+`scan` entry is a lexical guess (measured recall 0.63, folio-assistant#1492);
+`atlas` and `elaborated` are elaborated and their type/value split can be
+trusted. To produce elaborated edges, run the science layer's extractor:
+skill `lean-formal-edges` (`folio-assistant-sci/skills/lean/`), CLI
+`folio-assistant-sci/content/pipeline/formal-edges.ts`, MCP tool
+`lean_formal_edges`. It is tooling, so it lives there, not here.
+
 ## Get a graph
 
 ```sh

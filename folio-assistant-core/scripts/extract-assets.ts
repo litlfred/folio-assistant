@@ -7,8 +7,8 @@
  * KG. don't extract contents unless explict ask by user."*
  *
  * Usage:
- *   bun run cat-harness/scripts/extract-assets.ts <container> [--out <file>]
- *   bun run cat-harness/scripts/extract-assets.ts <container> --extract <path> --because "<why>"
+ *   bun run folio-assistant-core/scripts/extract-assets.ts <container> [--out <file>]
+ *   bun run folio-assistant-core/scripts/extract-assets.ts <container> --extract <path> --because "<why>"
  *
  * @module scripts/extract-assets
  */
@@ -21,7 +21,7 @@ import {
   totalBytes,
   type ExtractedAsset,
   type Extraction,
-} from "../../folio-assistant-core/schemas/extraction.js";
+} from "../schemas/extraction.js";
 
 const REPO = resolve(import.meta.dir, "../..");
 

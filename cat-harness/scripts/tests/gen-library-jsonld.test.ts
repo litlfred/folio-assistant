@@ -26,6 +26,8 @@ import {
   ingestRungOf,
   RUNG_INPUT,
   buildEntryNodes,
+  readLicence,
+  LICENCE_FILENAME,
 } from "../../content/pipeline/gen-library-jsonld";
 
 const DIR = mkdtempSync(join(tmpdir(), "gen-library-"));
@@ -406,5 +408,44 @@ describe("a figure on a section boundary — bean `imen`", () => {
     expect(contains("sec-000-1-introduction")).toContain("library/0110001v3/blocks/figure-img-p003-1");
     expect(contains("sec-001-2-the-formula")).not.toContain("library/0110001v3/blocks/figure-img-p003-1");
     expect(contains("sec-001-2-the-formula")).toContain("library/0110001v3/blocks/figure-img-p005-1");
+  });
+});
+
+describe("the licence record survives regeneration (folio-assistant#1492)", () => {
+  const meta = (fs: Array<{ path: string; content: string }>) =>
+    (JSON.parse(fs.find((f) => f.path === "manifest.jsonld")!.content) as { meta: Record<string, unknown> }).meta;
+  const record = { status: "unknown", searched: [{ where: "the PDF", result: "no statement" }] };
+
+  test("an authored licence is carried verbatim into meta.licence", () => {
+    expect(meta(buildDocumentNodes("d", structure, candidates, () => true, undefined, record)).licence).toEqual(record);
+  });
+
+  test("no sidecar: no meta.licence at all, so the checker reports 'not recorded'", () => {
+    expect("licence" in meta(buildDocumentNodes("d", structure, candidates, () => true))).toBe(false);
+  });
+
+  test("the whole entry path reads licence.json", () => {
+    const dir = mkdtempSync(join(tmpdir(), "lic-entry-"));
+    try {
+      mkdirSync(join(dir, "sections"), { recursive: true });
+      writeFileSync(join(dir, "structure.json"), JSON.stringify(structure));
+      writeFileSync(join(dir, LICENCE_FILENAME), JSON.stringify(record));
+      const out = buildEntryNodes("d", dir);
+      expect(out.state).toBe("built");
+      expect(meta((out as { files: Array<{ path: string; content: string }> }).files).licence).toEqual(record);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  test("an unparseable sidecar is carried as malformed, never as absent", () => {
+    const dir = mkdtempSync(join(tmpdir(), "lic-bad-"));
+    try {
+      writeFileSync(join(dir, LICENCE_FILENAME), "{ not json");
+      expect((readLicence(dir) as { status: string }).status).toBe("unparseable");
+      expect(readLicence(join(dir, "nowhere"))).toBeUndefined();
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 });
