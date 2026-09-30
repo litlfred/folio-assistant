@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 197,
+      "count": 198,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -1194,6 +1194,14 @@
       "name": "site-indexes",
       "graphNode": "schema",
       "summary": "The published index files the site's viewers read — each `$schema` family",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/skill-definitions-dir.ts",
+      "instance": "cat-harness",
+      "name": "skill-definitions-dir",
+      "graphNode": "schema",
+      "summary": "Where the JSON workflow-skill definitions and the conventions live.",
       "isTest": false
     },
     {
