@@ -99,6 +99,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { kgNodeLabelShape } from "./kg-node";
 import { join } from "node:path";
 import { z } from "zod";
+import { RepoFullNameSchema } from "./repo-full-name.js";
 import { ODRL_ACTIONS } from "./odrl";
 
 import { NS_PREFIXES, termIri } from "./namespaces";
@@ -444,15 +445,15 @@ export const RoleDefSchema = z.object({
  * that reader, a user story told as them.
  *
  * The dependent holds this; the role holds nothing back (data-modelling step
- * 8). `instance` is the declared NAME of the instance whose role graph
- * declares the role, absent for the pointer's own instance — a name, never a
- * path, as `VoiceRuleSourceSchema.instance` spells it.
+ * 8). `instance` is the `owner/repo` of the instance whose role graph
+ * declares the role (bean `6rmv`), absent for the pointer's own instance —
+ * never a path, as `VoiceRuleSourceSchema.instance` spells it.
  *
  * @ref RoleDefSchema
  */
 export const RoleRefSchema = z
   .object({
-    instance: z.string().min(1).optional(),
+    instance: RepoFullNameSchema.optional(),
     role: z.string().min(1),
   })
   .strict();
