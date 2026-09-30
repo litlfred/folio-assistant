@@ -214,7 +214,6 @@ Process that reads a file, where a diagram says so.
 |---|---|---|
 | [`discussion.input.schema.json`](schemas/discussion.input.schema.json) | Discussion Input |  |
 | [`discussion.output.schema.json`](schemas/discussion.output.schema.json) | Discussion Output |  |
-| [`glossary-ledger.schema.json`](schemas/glossary-ledger.schema.json) | Glossary Ledger |  |
 | [`graph.schema.json`](schemas/graph.schema.json) | Knowledge Graph declaration |  |
 | [`model-registry.schema.json`](schemas/model-registry.schema.json) | Model Registry |  |
 | [`requirement.schema.json`](schemas/requirement.schema.json) | Requirement |  |
@@ -242,11 +241,5 @@ Process that reads a file, where a diagram says so.
 | file | what it is | used by |
 |---|---|---|
 | [`models.json`](models/models.json) | Which languages a model is good at, and whether anybody checked. |  |
-
-**[`glossary/`](glossary/README.md)**: The swimlane glossary's retirement ledger.
-
-| file | what it is | used by |
-|---|---|---|
-| [`glossary-ledger.json`](glossary/glossary-ledger.json) | data |  |
 
 <!-- kg:files:end -->

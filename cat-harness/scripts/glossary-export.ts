@@ -123,14 +123,14 @@
  * @conformsTo w3c-rdfs
  * @conformsTo w3c-skos
  */
-import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../../bootstrap-tools/schemas/glossary-ledger.ts";
+import { LEDGER_SCHEMA, LEDGER_SCHEMA_NAME, LEGACY_LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
 import { tagCompatible } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
 import { NS_PREFIXES, ownElementPattern, termIri } from "../schemas/namespaces.js";
 import { laneBinding, readRoleGraph, type LaneBinding, type RoleDef, type RoleGraph } from "../schemas/role-graph.js";
-import { repoRootFor } from "../schemas/cat-harness.js";
+import { glossaryHomeFor, repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
 import { exportIdentity, makeIri } from "./kg-export.js";
 import { codeListDirs, loadCodeLists } from "../schemas/code-list.js";
@@ -148,7 +148,7 @@ export const GLOSSARY_DIR = "glossary";
 /** The ledger's filename — the one non-derivable fact this module stores. */
 export const LEDGER_FILENAME = "glossary-ledger.json";
 /** Tagged so the file declares what it is, per the directory conventions. */
-export { LEDGER_SCHEMA } from "../../bootstrap-tools/schemas/glossary-ledger.ts";
+export { LEDGER_SCHEMA } from "../schemas/glossary-ledger.ts";
 
 // ── The corpus ──────────────────────────────────────────────────
 
@@ -261,8 +261,13 @@ export interface Ledger {
   readonly concepts: Record<string, LedgerEntry>;
 }
 
+/**
+ * The ledger's file: in the instance's own `swimlane-glossary` directory, or —
+ * for an instance that declares none, as bootstrap does not since 2026-09-30 —
+ * hosted in this harness's under the instance's stub ({@link glossaryHomeFor}).
+ */
 export function ledgerPath(instanceRoot: string): string {
-  return join(instanceRoot, GLOSSARY_DIR, LEDGER_FILENAME);
+  return join(glossaryHomeFor(instanceRoot, ROOT).root, LEDGER_FILENAME);
 }
 
 export function readLedger(instanceRoot: string, stub: string): Ledger {

@@ -70,7 +70,6 @@ import {
 } from "../schemas/graph.ts";
 import { renderSchemaPage, type PageDocument } from "./bootstrap-schema-page.ts";
 import { ModelRegistrySchema } from "../schemas/model-registry.ts";
-import { LedgerSchema } from "../schemas/glossary-ledger.ts";
 import { bootstrapRelease, releaseIri } from "../schemas/release-iri.ts";
 
 /** Every `$id` below is minted from bootstrap's declared iriBase and version, never typed. */
@@ -179,19 +178,6 @@ const TARGETS = [
     description:
       "Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.",
     schema: ModelRegistrySchema,
-    conditionals: [] as readonly unknown[],
-    terms: {} as Readonly<Record<string, string>>,
-  },
-  {
-    // The shape of `glossary/glossary-ledger.json`. Its tag was
-    // `folio-glossary-ledger/v1` and resolved to no schema inside bootstrap;
-    // now every `$schema` a bootstrap file carries does (bean r3gy, D2).
-    file: "schemas/glossary-ledger.schema.json",
-    id: releaseIri(RELEASE, "schemas/glossary-ledger.schema.json", "agent"),
-    title: "Glossary Ledger",
-    description:
-      "Every term a Knowledge Graph's Processes have ever named, with the date each was first seen and the date it stopped being used. The glossary itself is regenerated each time; this is the one fact that cannot be, so a retired term is never silently reused.",
-    schema: LedgerSchema,
     conditionals: [] as readonly unknown[],
     terms: {} as Readonly<Record<string, string>>,
   },
