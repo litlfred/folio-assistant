@@ -1428,7 +1428,7 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * **Declared, not inferred.** "Was this route ever published" is a fact
    * about history, which a checkout does not hold; deriving the redirect from
    * "has a published viewer and no index" instead would emit one stub per
-   * such directory in every instance — 39 on 2026-09-30, several at routes
+   * such directory in every instance — 38 declared entries on 2026-09-30, several at routes
    * Jekyll already serves. `mount-instance-docs.ts` refuses the redirect,
    * naming it, when the directory IS mountable (a route cannot be both a
    * mount and a redirect) or declares no published viewer (a redirect to
