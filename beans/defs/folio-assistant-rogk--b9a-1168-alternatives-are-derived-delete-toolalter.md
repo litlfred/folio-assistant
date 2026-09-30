@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T10:54:25Z
-updated_at: 2026-09-30T11:21:27Z
+updated_at: 2026-09-30T14:29:18Z
 parent: folio-assistant-tr05
 ---
 
@@ -23,3 +23,8 @@ Rule: two Tools are alternatives iff they share a satisfied skill AND have the s
 
 ## Done — #1577 (merged 2026-09-30)
 deriveAlternatives + alternativesWithoutSelection in schemas/tool.ts; alternativeTo removed from schema and 9 declarations; criterion tool-alternative-selectable. Derived set = beans, ingest, 3 transcriber pairs. Not derived: release-please / package-release-manual (I/O differs) — put to the owner.
+
+
+
+## Follow-up — release pair (owner 2026-09-30: Align I/O, pair)
+release-please and package-release-manual now share package→tag I/O and derive as alternatives.
