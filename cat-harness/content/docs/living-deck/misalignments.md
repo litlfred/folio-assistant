@@ -8,6 +8,5 @@
 | 10 | `smart-kg` as the worked example | `smart-kg/` has left the repo | repo taxonomy to refresh |
 | 11 | "not yet live" links | published under folio-assistant | snapshot only |
 | 12 | `folio-assitant` link | `folio-assistant` | snapshot only |
-| 13 | three actor kinds vs a four-value schema enum | unresolved **inside** the KG | schema/skill to reconcile |
 
-Aligned: slides 4 (count), 5, 6 (same lanes and tasks) and 7 (partly built).
+Aligned: slides 4 (count), 5, 6 (same lanes and tasks), 7 (partly built) and 13 (three taskable actor kinds, plus `external`).

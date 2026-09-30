@@ -58,9 +58,12 @@ describe("living deck: every claim about the KG still holds", () => {
     expect(existsSync(join(REPO, "smart-kg"))).toBe(false);
   });
 
-  test("slide 13 — the Actor schema still has four kinds against the prose's three", () => {
+  test("slide 13 — three taskable actor kinds, plus `external`, and the skill says so", () => {
     const kinds = (ActorDefSchema.shape.kind as unknown as { options: string[] }).options;
     expect([...kinds].sort()).toEqual(["agent", "external", "person", "system"]);
+    const skill = read(join(H, "skills/folio-core/role-model.md"));
+    expect(skill).toContain("An actor is one of three kinds — human, agentic, mechanical");
+    expect(skill).toMatch(/`external` is the fourth/);
   });
 
   test("every generated asset the deck shows exists", () => {

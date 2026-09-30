@@ -344,11 +344,12 @@ repository: <https://github.com/litlfred/folio-assistant>
 
 **Sources:** [platform](platform.html); the `role-model` skill.
 
-> **Misaligned — inside the KG:** the slide and the `role-model` skill give
-> three actor kinds (human, agentic, mechanical). The Actor schema's `kind` has
-> four values (`person | agent | system | external`), and `external` has no
-> counterpart in the prose. The slide is not what is wrong here: the schema and
-> the skill disagree with each other.
+> **Aligned:** the Actor schema spells the three kinds `person`, `agent` and
+> `system` (human, agentic and mechanical), and adds a fourth, `external`: a
+> participant outside this instance, which is never given a task. The
+> `role-model` skill and the schema's own documentation state the same
+> mapping. An earlier version of this note called the four values a
+> contradiction. That read the enum without its documentation.
 
 ## Misalignments at a glance
 {: #misalignments data-fa-label="sec:living-deck-misalignments" }
@@ -365,6 +366,5 @@ repository: <https://github.com/litlfred/folio-assistant>
 | 10 | `smart-kg` as the worked example | `smart-kg/` has left the repo | repo taxonomy to refresh |
 | 11 | "not yet live" links | published under folio-assistant | snapshot only |
 | 12 | `folio-assitant` link | `folio-assistant` | snapshot only |
-| 13 | three actor kinds vs a four-value schema enum | unresolved **inside** the KG | schema/skill to reconcile |
 
-Aligned: slides 4 (count), 5, 6 (same lanes and tasks) and 7 (partly built).
+Aligned: slides 4 (count), 5, 6 (same lanes and tasks), 7 (partly built) and 13 (three taskable actor kinds, plus `external`).
