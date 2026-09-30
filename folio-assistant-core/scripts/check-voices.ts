@@ -19,12 +19,12 @@
  */
 
 import { existsSync, readdirSync } from "node:fs";
-import { explainFailure, resolveLibraryRef } from "../../folio-assistant-core/schemas/library-ref.js";
+import { explainFailure, resolveLibraryRef } from "../schemas/library-ref.js";
 import { join, relative, resolve } from "node:path";
 
-import { loadVoices, unionRules, voicesPresent } from "../schemas/voices";
-import { instanceRootsIn, readDeclaration, repoRootFor, resolveDirectories } from "../schemas/cat-harness.ts";
-import { readRoleGraph, type RoleGraph } from "../schemas/role-graph";
+import { loadVoices, unionRules, voicesPresent } from "../../cat-harness/schemas/voices";
+import { instanceRootsIn, readDeclaration, repoRootFor, resolveDirectories } from "../../cat-harness/schemas/cat-harness.ts";
+import { readRoleGraph, type RoleGraph } from "../../cat-harness/schemas/role-graph";
 
 const ROOT = resolve(import.meta.dir, "..");
 /** The checkout, one level out: a cross-instance citation is resolved against sibling instances. */
