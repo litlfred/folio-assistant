@@ -110,3 +110,32 @@ Not the landing-race fix for #1633 either. A conflicted PR creates no
 but does not by itself win the race against a base moving 10-25 commits per
 cycle. The owner chose to keep cycling rather than enable a merge queue; this
 reduces the cost of each cycle, not their number.
+
+## A churn amplifier the table does not show
+
+The L1 verdict sidecars under `test/results/library-qa/` do not appear in the
+200-commit table above, and they went stale **three times in one evening**
+(2026-09-30, PR #1633 cycles 21-23). Each sidecar records a `script_hash` of
+its producer, so **every edit to `check-l1-complete.ts` invalidates every
+sidecar it has ever written**, corpus-wide, whatever the corpus did:
+
+    30689f8902dd  ->  9129552c7b5d  ->  70c41a3630ab
+
+That is the field working as designed — a verdict produced by a different
+script version genuinely is a different verdict — but it means producer churn
+multiplies into artefact churn by the size of the library, not by the size of
+the change.
+
+**And `regen` cannot repair it, by construction rather than by omission.**
+The repair is `check:l1-complete -- --write`: the writer is the SAME script
+under a flag, while `WRITER_OVERRIDES` maps a gate name to a writer's *script
+name*. There is no spelling of `-- --write` in that map. So `regen` reports a
+clean fixed point over a stale gate — the exact failure `uju6` was opened for,
+reached by a different route. `check:l1-complete -- --check` IS in the gate
+set (observed in a 194-gate local run), so this reddens CI.
+
+Two candidate directions, neither chosen here: teach `regen` flag-bearing
+writers, or drop `script_hash` in favour of what `y7b3` did for `updated_at`
+(#1714 removed the timestamp from qa-results for precisely this
+collision reason). The second is not obviously right — the hash carries
+information the timestamp did not.
