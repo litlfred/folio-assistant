@@ -7,7 +7,7 @@ import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { dedupeIds, includeTargets, pageNav, stageIgSite, type StageResult } from "./build-ig-site";
+import { colourScheme, contrast, dedupeIds, includeTargets, pageNav, stageIgSite, type StageResult } from "./build-ig-site";
 
 let dir: string;
 let out: string;
@@ -110,5 +110,56 @@ describe("staging one IG as one just-the-docs site", () => {
     const r = dedupeIds(`<h3 id="x">a</h3><h3 id="x">b</h3><a id='x'></a><p id="y"></p>`);
     expect(r.html).toBe(`<h3 id="x">a</h3><h3 id="x--2">b</h3><a id='x--3'></a><p id="y"></p>`);
     expect(r.renamed).toEqual(["x -> x--2", "x -> x--3"]);
+  });
+
+  test("with no palette there is no scheme, and the report says so", () => {
+    expect(r.scheme).toBeUndefined();
+    expect(readFileSync(join(out, "_config.yml"), "utf-8")).not.toContain("color_scheme");
+  });
+});
+
+// A synthetic palette: a dark accent, so the sidebar must take the light role.
+const PALETTE = { surface: "#f7f7f7", ink: "#111111", edge: "#dddddd", accent: "#123456" };
+
+describe("the instance's palette as a just-the-docs colour scheme", () => {
+  test("WCAG contrast is computed as the spec defines it", () => {
+    expect(contrast("#000000", "#ffffff")).toBeCloseTo(21, 5);
+    expect(contrast("#fff", "#ffffff")).toBeCloseTo(1, 5);
+    expect(contrast("navy", "#ffffff")).toBeUndefined();
+  });
+
+  test("each role lands on the scheme variable just-the-docs reads", () => {
+    const s = colourScheme(PALETTE).scss;
+    expect(s).toContain("$feedback-color: darken($sidebar-color, 3%);");
+    expect(s).toContain("$body-background-color: #f7f7f7;");
+    expect(s).toContain("$body-text-color: #111111;");
+    expect(s).toContain("$link-color: #123456;");
+    expect(s).toContain("$border-color: #dddddd;");
+    expect(s).toContain("$sidebar-color: #123456;");
+  });
+
+  test("sidebar text is the palette role with more contrast on accent, never a literal", () => {
+    const dark = colourScheme(PALETTE);
+    expect(dark.sidebarText).toBe("surface");
+    expect(dark.scss).toContain("$nav-child-link-color: #f7f7f7;");
+    const light = colourScheme({ ...PALETTE, accent: "#eeeeaa" });
+    expect(light.sidebarText).toBe("ink");
+  });
+
+  test("a pairing below AA, or one that cannot be computed, is a finding", () => {
+    expect(colourScheme(PALETTE).findings).toEqual([]);
+    const low = colourScheme({ ...PALETTE, accent: "#999999" }).findings;
+    expect(low.some((f) => f.startsWith("accent on surface (links)"))).toBe(true);
+    const named = colourScheme({ ...PALETTE, accent: "navy" }).findings;
+    expect(named.some((f) => f.includes("not computable"))).toBe(true);
+  });
+
+  test("a staged site with a palette selects the scheme and ships its files", () => {
+    const o = join(dir, "themed");
+    const t = stageIgSite(join(dir, "src"), o, { palette: PALETTE });
+    expect(t.scheme?.sidebarText).toBe("surface");
+    expect(readFileSync(join(o, "_config.yml"), "utf-8")).toContain("color_scheme: ig");
+    expect(readFileSync(join(o, "_sass", "color_schemes", "ig.scss"), "utf-8")).toContain("$sidebar-color: #123456;");
+    expect(readFileSync(join(o, "_sass", "custom", "custom.scss"), "utf-8")).toContain("$nav-child-link-color");
   });
 });
