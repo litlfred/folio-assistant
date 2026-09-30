@@ -39,7 +39,8 @@ import { ACTOR_KINDS, type ActorKind } from "../../schemas/role-graph.js";
 import { CONVENTION_EXT, conventionsInForce, type ConventionScope } from "../../schemas/convention.js";
 import { WORK_PLAN_OPS, type WorkPlanOp } from "./bean-link.js";
 import { activeCodes, codeListDirs, loadCodeLists, type CodeList } from "../../schemas/code-list.js";
-import { findInstanceRoot } from "../../schemas/cat-harness.js";
+import { directoriesForGraph, findInstanceRoot } from "../../schemas/cat-harness.js";
+import { orderedDependencies } from "../../schemas/harness-config.js";
 import { CANONICAL_EXTENSION_PREFIX, isOwnExtensionNamespace } from "../../schemas/namespaces.js";
 
 /** Element types the interpreter can walk faithfully. */
@@ -1140,6 +1141,50 @@ function processIndex(dir: string): Map<string, string> {
 }
 
 /**
+ * Where a called process lives when no SIBLING file defines it: the declared
+ * `processes` directories of the calling diagram's instance's DEPENDENCIES,
+ * nearest dependency first, first definition wins.
+ *
+ * Bean `cjvs` (2026-09-30). The sibling index was the whole lookup while
+ * every calling diagram and its callee shared one directory. Moving
+ * `refresh-materialized.bpmn` into `large-datasets/processes/` made it the
+ * first diagram whose callee (`Process_Adjudication`) is in ANOTHER
+ * instance — one it is allowed to reach, since large-datasets needs
+ * folio-assistant-core, which needs cat-harness. Without this the call went
+ * silently opaque: no descent, and `checkAcceptedCodes` never ran.
+ *
+ * Only DEPENDENCIES are searched, never dependents, so a lower layer's
+ * diagram cannot descend into a process defined above it — the same arrow
+ * `kg:detangle:direction` grades. Any failure to resolve the instance or its
+ * dependencies returns `undefined`, which keeps the pre-existing behaviour
+ * (the call stays an opaque single step) rather than inventing an answer.
+ */
+function dependencyProcessHome(dir: string, processId: string): string | undefined {
+  let roots: string[];
+  try {
+    const own = findInstanceRoot(dir);
+    if (own === undefined || own === null) return undefined;
+    roots = orderedDependencies(own).map((d) => d.rootPath).reverse();
+  } catch {
+    return undefined;
+  }
+  for (const root of roots) {
+    let dirs: string[];
+    try {
+      dirs = directoriesForGraph(root, "processes");
+    } catch {
+      continue;
+    }
+    for (const d of dirs) {
+      if (!existsSync(d)) continue;
+      const home = processIndex(d).get(processId);
+      if (home !== undefined) return home;
+    }
+  }
+  return undefined;
+}
+
+/**
  * Answer one precondition, or say that it cannot be answered.
  *
  * A `stated` precondition returns `could-not-determine` on the FIRST line,
@@ -1593,7 +1638,7 @@ export async function loadProcessModel(
           `on the call path (${path.join(" → ")}). A process cannot contain itself.`,
       );
     }
-    const home = index.get(node.calledElement);
+    const home = index.get(node.calledElement) ?? dependencyProcessHome(dirname(bpmnPath), node.calledElement);
     if (!home) continue;
     const child = await loadProcessModel(home, path);
     children.set(node.id, child);
