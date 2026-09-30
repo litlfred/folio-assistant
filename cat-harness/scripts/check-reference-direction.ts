@@ -851,7 +851,6 @@ export function buildDirectionResult(args: {
     script,
     scriptAbsPath: args.scriptAbsPath ?? join(import.meta.dir, "check-reference-direction.ts"),
     subject: { kind: "reference-direction", id: "instances" },
-    now: args.now,
     families: {
       "multi-destination-unlisted": {
         summary:
@@ -914,7 +913,7 @@ export function buildDirectionResult(args: {
  * for `health`, and the reason it is a hash rather than an age.
  */
 export function comparableDirection(r: QaResult): string {
-  const { updated_at: _when, total: _total, families, ...rest } = r;
+  const { total: _total, families, ...rest } = r;
   const graded = Object.fromEntries(Object.entries(families).filter(([k]) => k !== CENSUS_FAMILY));
   return JSON.stringify({ ...rest, families: graded });
 }

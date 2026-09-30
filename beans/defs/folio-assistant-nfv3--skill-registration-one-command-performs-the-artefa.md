@@ -5,7 +5,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-09-26T07:38:20Z
-updated_at: 2026-09-26T14:17:46Z
+updated_at: 2026-09-30T22:33:45Z
 parent: folio-assistant-1xhc
 ---
 
@@ -379,3 +379,19 @@ run after every merge could not restore it. Regenerated in a clean worktree;
 Worth keeping as a rule: taking `--theirs` on a generated file is correct for a
 parseable base, but it needs a regeneration to follow, and the registration chain
 does not cover every generated artefact.
+
+
+## CORRECTION, 2026-09-30 — "the moment the merge queue is on" never arrives
+
+This bean says *"the moment the merge queue is on, an unregistered skill cannot
+reach `main` — automatically, with no further change here"*, and treats `nytj`'s
+last box as an owner's pending flip. Bean `1hjm`: the flip does not exist on
+this repository — `Require merge queue` is absent from the ruleset form, and
+`nytj`'s box is now closed not-done for that reason.
+
+**The reading of `check-merged.ts` was right and is unaffected.** `bun run gates`
+does derive its list from `code-quality-gates.yml`, and `skills:register:check`
+is in it. What is wrong is only the trigger: that protection arrives via the
+queue, so on this repository `skill:register:check` is enforced on `pull_request`
+and `push` alone, and an unregistered skill reaching `main` is still possible
+through merge skew.

@@ -926,7 +926,6 @@ classDiagram
       $schema [1] 'qa-results/v1'
       producer [1]  /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; 
       subject [1]  kind: string; id: string 
-      updated_at [1] string
       families [1] Record~string, QaResultFamily~
       total [1] number
     }
