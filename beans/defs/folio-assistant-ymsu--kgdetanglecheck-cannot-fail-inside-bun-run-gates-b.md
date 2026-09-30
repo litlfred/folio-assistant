@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-25T18:38:34Z
-updated_at: 2026-09-30T10:57:00Z
+updated_at: 2026-09-30T15:14:04Z
 parent: folio-assistant-1xhc
 ---
 
@@ -75,21 +75,46 @@ asked.
 
 ## Done when
 
-- [ ] the writer does not run during `bun test` — a test needing detangle output
+- [x] the writer does not run during `bun test` — a test needing detangle output
       computes it in a temp dir, as the profile-conformance tests already do
       (`/tmp/profile-axis-*`), rather than writing into
-      `cat-harness/test/results/`
-- [ ] `gates` fails when the tree is entered with a staled pinned measurement.
+      `cat-harness/test/results/`.
+      **PR #1616, 2026-09-30.** The writer was reached by
+      `src/tools/degradation.ts#loadSkillNeeds` importing every `.ts` under the
+      declared kg roots; `kg-detangle.ts` now guards its write on
+      `import.meta.main` and that loader imports only a file naming the field it
+      collects. `wrote 28 pinned measurement(s)` appears 0 times in the fixed
+      run's `bun test` and once in the baseline's
+- [x] `gates` fails when the tree is entered with a staled pinned measurement.
       MEASURED AFTER: stale one `internal` by hand, `bun run gates` exits
-      non-zero
-- [ ] `gates` refuses, or at minimum reports loudly, when a gate has MODIFIED
+      non-zero.
+      **Both runs done, same tree, `internal: 999`.** `origin/main`
+      `e718627f198`: the check PASSED inside `gates`, 1 of 182 failed and none
+      of it the staleness. This branch: `kg:detangle:check` FAILED inside
+      `gates` naming `STALE … — internal`, 4 of 186 failed, three of them the
+      planted staleness. Earned by the gate itself, not by the mutation guard
+- [x] `gates` refuses, or at minimum reports loudly, when a gate has MODIFIED
       tracked files — a gate run that changes the tree it is judging is the
       general form of this defect and would have caught it without knowing
-      about detangle
-- [ ] the other 27 sidecars are confirmed covered by the same fix, rather than
-      assumed to be
-- [ ] swept for siblings: which other `:check` gates have their subject written
-      by an earlier gate in the same run
+      about detangle.
+      **Shipped in #1363 (clause 3).** Ticked on evidence rather than on
+      memory: `scripts/gate-tree-guard.ts` read, and watched fire in both runs
+      above — naming `bun test` and `check:published-instance-exports` in the
+      baseline, and only `skill:register:check` after the fix
+- [x] the other 27 sidecars are confirmed covered by the same fix, rather than
+      assumed to be.
+      **Structural, not sampled:** all 28 are written by one `writeFileSync`
+      call in one writer, and the guard is on that call, so no sidecar can be
+      outside it
+- [x] swept for siblings: which other `:check` gates have their subject written
+      by an earlier gate in the same run.
+      **SWEPT 26 of 26 `.ts` under 11 declared kg roots: 0 import-time writers,
+      0 unimportable**, with the control that the same sweep reports 1 and names
+      `kg-detangle.ts` when the guard is removed. The gate-level half is the
+      `gates` mutation report: `check:published-instance-exports` and
+      `check:version-bump` fixed, and a FIFTH site found and left open —
+      `skill:register:check` writing `skill-register.qa-results.json`, which
+      fires only when a verdict moves
 
 ## Second instance, found by the same measurement — a `--check` that omits a field
 
@@ -996,3 +1021,185 @@ mechanism is why none of them could have been caught before merge by running
 first. Of the nine red-`main` incidents on 2026-09-30, five were corpus-walking
 artefacts staled by the merge *sequence* (bean `391j`) and this mechanism is
 what made them invisible on each branch in isolation.
+
+
+## 2026-09-30 — clause 1 FIXED and falsified end to end, and the writer was never a test file
+
+PR #1616, issue #1610, branch `claude/ymsu-gates-no-repair-in-tree`. Owner asked
+for this directly. Coordination note: `bun run beans:claim ymsu` still refuses
+with *ALREADY CLAIMED by claude/ymsu-gates-tree-guard*, the clause-3 holder from
+#1363 — whose own PR scopes clause 1 OUT in as many words. Proceeded on that
+basis plus the owner's ask, as the 2026-09-27 entry above did.
+
+### The writer, identified — and the bean's own warning was right
+
+This bean says *"the writer is NOT yet identified … do not assume it is one of
+the three above — each was measured to write nothing"*, and then narrows to
+`content/pipeline/`. **It is not in `content/pipeline/` and it is not a test
+file.**
+
+`src/tools/degradation.ts#loadSkillNeeds` walks every declared knowledge-graph
+root and `await import()`s each `.ts` to read the skills declaring the
+capabilities they require. A knowledge-graph root holds **scripts** as well as
+declarations, and `skills/graph-management/kg-detangle.ts` does its work at
+module top level. So *capability detection executed the detangler*, and
+`src/tools/degradation.test.ts` does it three times over the real corpus.
+
+That is why the earlier narrowing could not find it. `bun test
+cat-harness/content/pipeline/` was clean and `qa-witness.test.ts` was clean
+because the writer sits in `src/tools/`, reached through a loader that has no
+idea it is running a script.
+
+**The general defect is one line: importing a module executes it, and a
+knowledge-graph directory is not a directory of inert data.**
+
+### Fixed at two layers, each independently justified
+
+| layer | change |
+|---|---|
+| the script | `kg-detangle.ts` guards its sidecar write on `import.meta.main` — a module in a kg directory is importable by anything that scans the graph, so its side effects must be conditional on being the entry point |
+| the consumer | `loadSkillNeeds` reads source first and imports only a file naming the field it collects — the predicate its own `catch` already used, asked before the side effect instead of after it |
+
+Fixing only the consumer would leave the next scanner to rediscover this.
+
+### THE measurement this bean has been waiting for
+
+Same tree, `folio-core.detangle.json` `internal` hand-staled to `999`, whole
+gate set both times:
+
+| | `kg:detangle:check` ALONE | the same check INSIDE `bun run gates` | run verdict |
+|---|---|---|---|
+| `origin/main` `e718627f198` | exit 1, `STALE … — internal` | **PASSED** | 1 of 182 failed — a pre-existing `bun test`, nothing about the staleness |
+| this branch | exit 1, `STALE … — internal` | **FAILED**, `STALE … — internal` | 4 of 186 failed: three name the planted staleness, one is that same pre-existing `bun test` |
+
+The bean's central claim — *same tree, same stale value, opposite verdicts* — is
+now false in the direction it should be. `skill:register:check` reports it red
+too, in both of the jobs that run it.
+
+Corroborating: the string `wrote 28 pinned measurement(s)` appears **0** times in
+the fixed run's `bun test` output and once in the baseline's.
+
+### The other three call sites, each falsified alone
+
+| call site | staled | `origin/main` | with the fix |
+|---|---|---|---|
+| `bun test` → capability detection → detangle writer | `internal` = 999 | **repaired to 157** (2.83 s) | **999, untouched** (0.50 s) |
+| `check:version-bump` | `kg-export.qa-results.json` `script_hash` | exit 0, **repaired** | exit 0, untouched, and the gate now PRINTS `STALE` |
+| `check:published-instance-exports` | `kg-export.bootstrap.qa-results.json` same | exit 0, **repaired** | **exit 1**, names it STALE, file untouched |
+| `bun test` → `init-folio-qa.test.ts` → `qa-sweep` | `assertions_are_falsifiable.script.json` | **repaired** | **untouched** |
+
+### Removing the write alone would have been a WEAKENING, and that is the part to read
+
+Before this, a stale `kg-export` sidecar did surface — accidentally, as the
+runner's mutation guard reporting that a gate had changed the tree. Take the
+write away and nothing sees it: a worse gate wearing a cleaner run. So the
+repair is **replaced by a comparison** (`qaResultState` in `scripts/qa-results.ts`,
+holding out `updated_at` for the same reason the churn guard does, and keeping
+`absent` and `unreadable` distinct from `current`).
+
+Where each reports differs on purpose:
+
+- `check:published-instance-exports` **fails**. Nothing else in the gate set
+  produces or reads `kg-export.<stub>.qa-results.json`, so if this gate waves it
+  through, no gate ever looks at it.
+- `check:version-bump` **notes** it. A QA sidecar's currency is not that gate's
+  subject, and a gate that reddens for something a reader did not ask it about
+  teaches them to stop reading it.
+
+**That leaves the host sidecar with no owning gate, and that is a finding rather
+than a tidy ending**: `kg:export` is a writer with no `:check` anywhere in the
+set. Recorded here; inventing a gate for it would have been a second subject
+smuggled into that change.
+
+### `main` was carrying the defect, and the value is diagnostic
+
+`origin/main` @ `7b685b667b3`:
+
+| | |
+|---|---|
+| `cat-harness/scripts/kg-export.ts` true hash | `0456470f68c8` |
+| `kg-export.qa-results.json` records | `0456470f68c8` — current |
+| `kg-export.bootstrap.qa-results.json` records | **`7a7d02611be6` — stale** |
+
+`7a7d02611be6` matches **no version of `kg-export.ts` on `main`** — not its tip,
+and not `e718627f198`, where the same file recorded `b539167517cb`. It is a hash
+some branch's container computed while `check:published-instance-exports`
+repaired the sidecar mid-run, committed by whoever ran the gates. The only
+producer of that file was also its only reader. With the branch the gate goes
+red on that state instead.
+
+### Sweep — the bean's last Done-when box, with its denominator
+
+Every `.ts` under every declared knowledge-graph root, imported in its own
+subprocess, git asked what moved:
+
+```
+SWEPT 26 of 26 .ts file(s) under 11 declared kg root(s)
+IMPORT-TIME WRITERS: 0
+DID NOT IMPORT (not a clearance - not measured): 0
+```
+
+**Control, because a sweep that cannot find the known instance measures
+nothing:** with the `import.meta.main` guard removed, the same sweep reports
+**1** and names `kg-detangle.ts`.
+
+Separately, the only other walk-and-import-everything consumer: there is none.
+`generate-index.ts`, `find-dangling-remarks.ts` and `capture-mcp-tools.ts` all
+import NAMED files; `degradation.ts` was the only site that walked a directory
+and imported whatever it found.
+
+### A FIFTH call site, and it was invisible until the other four were fixed
+
+The fixed run's mutation report:
+
+```
+✗ 1 gate(s) CHANGED THE REPOSITORY while the gates were running:
+  · bun run skill:register:check   (1 path(s))
+      wrote     (" M")  cat-harness/test/results/skill-register.qa-results.json
+```
+
+`check:published-instance-exports` is gone from that list and `skill:register:check`
+has taken its place. It is the same shape — a `:check` gate writing a committed
+artefact into the tree under test — with one mitigating property measured here:
+on a tree whose verdicts have not moved it writes **identical bytes** and does
+not appear at all (it is absent from the baseline run's report over the same
+staled tree, because there the detangle check still passed). It fires only when
+a verdict CHANGES, which is to say only when the run is already red.
+
+**Left open rather than fixed**, because it is a different subject: that sidecar
+is `skill:register`'s own QA record and the gate is its only producer, so the
+remedy is the `check:published-instance-exports` one — compare rather than
+write — and it belongs with whoever owns `skill-registration`. Recorded so the
+next reader does not read the fixed run's single remaining mutation as a
+regression from this work.
+
+### Two traps hit while doing this, both now recorded in the code
+
+1. The first `kg-detangle.ts` docblock **spelled the field name** the loader now
+   selects on, which put the script straight back into its candidate set. *A
+   docblock that documents a tag necessarily contains the tag* — `audit-coverage`
+   already records this and it still caught me.
+2. The first falsification of the new loader tests **passed against what I
+   thought was `origin/main`**: I had already committed the fix, so
+   `git checkout --` restored the fixed version. Against
+   `git show origin/main:…` it is **1 fail** vs **17 pass**. A guard nobody has
+   watched fail is not a guard, and "I reverted it" is not the same as "I
+   reverted it to the baseline".
+
+### What this earns, and what it does not
+
+**All five of the original `## Done when` boxes are ticked, up in that section
+and only there** — each with the measurement that earns it. This paragraph
+deliberately does not restate them: `check:bean-bodies` caught a restated,
+separately-ticked copy here while the canonical list was still open, which is
+exactly the drift it exists to stop, and it was right.
+
+NOT earned, and untouched by this: the CI skip-cascade clauses (103 checks below
+the accepted drift red in one `run: |` block, `if: always()`, "report which gates
+returned NO VERDICT"), and `gen-docs-pages --check` comparing `tile.*.count`.
+Those restructure gates that are not this change's subject and the bean records
+the first as an owner decision.
+
+_2026-09-30_ — measured on `origin/main` `e718627f198` and, after merge,
+`7b685b667b3`. Every number above is from a run in this container, reported as
+measured.

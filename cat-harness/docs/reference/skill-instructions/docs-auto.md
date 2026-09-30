@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/docs-auto.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/docs-auto.md) — do not edit here.
+> Generated from [`cat-harness/skills/ui/ui-core/docs-auto.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/ui/ui-core/docs-auto.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/docs-auto.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/ui/ui-core/docs-auto.md){: .fa-edit-source }
 
 {% raw %}
 # docs-auto — the index is generated, the meaning is authored
