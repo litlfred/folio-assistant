@@ -8,5 +8,5 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `fhir-ig-s
 | file | what it is | used by |
 |---|---|---|
 | [`fhir-client/`](fhir-client/) | 3 files | |
-| [`fhir-ig-base/`](fhir-ig-base/) | 5 files | |
+| [`fhir-ig-base/`](fhir-ig-base/) | 6 files | |
 <!-- kg:subgraph:end -->

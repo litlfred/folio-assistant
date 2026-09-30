@@ -150,3 +150,10 @@ Until it is, this section is where they are written down.
   CI is ever added, it **calls these same scripts and tools**, so a CI result
   and a local result are the same measurement.
 {% endraw %}
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [Is the incremental IG AST what a full build would have produced?](../../processes/ig-ast-delta-review.html) | Check the base AST against the IG's inputs; Diff base → head and render the delta pages; Read the rendered delta |
+
