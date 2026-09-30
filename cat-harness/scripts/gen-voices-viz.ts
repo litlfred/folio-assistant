@@ -58,6 +58,7 @@ import {
 import { tileCounts } from "../schemas/tile-count.js";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
 import { withRenders } from "./viewer-declarations.js";
+import { libraryResolver, type LibraryResolver } from "./lib/library-refs.ts";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
 const VIEWER_TOOL = "voices-viewer";
@@ -65,8 +66,30 @@ const VIEWER_TOOL = "voices-viewer";
 const ROOT = join(import.meta.dir, "..");
 const check = process.argv.includes("--check");
 
-/** The projection. Everything the reader found; it is already small. */
-export function projection(g: VoicesGraph): unknown {
+/**
+ * The projection. Everything the reader found; it is already small.
+ *
+ * `links`, when given, resolves a LIBRARY citation to the three places the
+ * owner asked a library reference to go (bean `qgjh`, `lib/library-refs.ts`):
+ * the viewer opened on the item, the item's README, and its upstream record.
+ * Each rule gets `links` only where its citation resolves, so an unresolved one
+ * stays text on the page rather than becoming a 404.
+ */
+export function projection(g: VoicesGraph, links?: LibraryResolver): unknown {
+  const linked =
+    links === undefined
+      ? g
+      : {
+          ...g,
+          voices: g.voices.map((v) => ({
+            ...v,
+            rules: v.rules.map((r) => {
+              if (r.citation !== "library" || r.cites === undefined) return r;
+              const l = links.links(r.cites.split("#")[0]!, r.citesInstance);
+              return l === undefined ? r : { ...r, links: l };
+            }),
+          })),
+        };
   return {
     $schema: "folio-voices-index/v1",
     // `totals.voices`, which the graph already computes for the badge row, so
@@ -74,7 +97,7 @@ export function projection(g: VoicesGraph): unknown {
     // which would be the same number arrived at twice. `directories` is the
     // container the voices were found in, not a count of voices.
     ...tileCounts({ voices: [g.totals.voices, "voices"] }),
-    ...g,
+    ...linked,
   };
 }
 
@@ -199,6 +222,10 @@ footer { padding:14px 16px; border-top:1px solid var(--line); color:var(--muted)
 <footer id="foot"></footer>
 <script>
 var SCOPE = "${scope}";
+// The site root, from where this page reads its data (\`assets/voices/\`),
+// so a site-relative library link works under any base — the bare site, the
+// project baseurl, or a staging preview.
+var SITE_ROOT = (function (h) { var i = h.lastIndexOf("assets/"); return i < 0 ? "" : h.slice(0, i); })("${dataHref}");
 var DATA = null;
 var esc = function (s) {
   return String(s === undefined || s === null ? "" : s)
@@ -344,9 +371,14 @@ function renderRule(r) {
     ? '<p class="nocite">This rule cites nothing. The schema requires a source, ' +
       "so something is loading voices without validating them.</p>"
     : "<blockquote>" + esc(r.quote) + '<span class="cite">' +
-      (r.citation === "library" ? "" : "KG node ") + esc(r.cites) +
+      (r.citation === "library" ? "" : "KG node ") +
+      (r.links && r.links.viewer
+        ? '<a href="' + esc(SITE_ROOT + r.links.viewer) + '">' + esc(r.cites) + "</a>"
+        : esc(r.cites)) +
       (r.pages ? ", p" + esc(r.pages) : "") +
       (r.citesInstance ? " \\u2014 in " + esc(r.citesInstance) : "") +
+      (r.links && r.links.readme ? ' \\u00b7 <a href="' + esc(r.links.readme) + '">item page</a>' : "") +
+      (r.links && r.links.source ? ' \\u00b7 <a href="' + esc(r.links.source) + '">source</a>' : "") +
       "</span></blockquote>";
 
   return '<div class="rule"><span class="rtitle">' + esc(r.title) +
@@ -421,7 +453,7 @@ if (import.meta.main) {
     process.exit(0);
   }
   const { pageDir, dataDir, dataHref } = viewerPlacement(site, `${handler}/${seg}`, seg);
-  emit(join(dataDir, "index.json"), JSON.stringify(projection(g), null, 2) + "\n");
+  emit(join(dataDir, "index.json"), JSON.stringify(projection(g, libraryResolver(repoRoot, ROOT)), null, 2) + "\n");
   const nav = { built: basename(ROOT), docsRoot: site };
   // Each page says which directories it draws (#1168 B7a-2): the voices
   // directories present — every one here, the subject's own on a subject page.

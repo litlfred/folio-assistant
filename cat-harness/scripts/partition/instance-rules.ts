@@ -777,6 +777,9 @@ export const RULES: Rule[] = [
       // tools and processes visualisers link a skill only where one is, so the
       // module sits beside the two viewers that read it.
       "scripts/lib/skill-pages.ts",
+      // Its library twin (bean `qgjh`): where a library reference links — the
+      // viewer, the item README, the upstream record — read, never composed.
+      "scripts/lib/library-refs.ts",
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       // The three materialisation modules that stood here — `check-materialized-fixity.ts`
       // (materialized bytes vs their recorded digest, the read-only rule enforced),
