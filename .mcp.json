@@ -11,6 +11,16 @@
       "command": "cat-harness/scripts/google-drive-mcp.sh",
       "args": [],
       "env": {}
+    },
+    "folio-assistant": {
+      "command": "bun",
+      "args": [
+        "run",
+        "cat-harness/src/index.ts",
+        "--stdio",
+        "--repo",
+        "."
+      ]
     }
   }
 }

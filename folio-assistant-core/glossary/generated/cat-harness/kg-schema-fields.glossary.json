@@ -2079,6 +2079,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.liquid",
+      "prefLabel": "CatHarnessDeclaration.liquid",
+      "definition": "The Liquid prefix this instance's VALUES are addressed by in authored text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the platform resolves it or passes it through.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.liquid",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.name",
       "prefLabel": "CatHarnessDeclaration.name",
       "definition": "The instance's name, e.g. `\"agentic-harness\"`.",
@@ -2181,6 +2188,13 @@
       "prefLabel": "CatHarnessDeclarationSchema.iriBase",
       "definition": "The address this instance's IRIs are minted under, BEFORE the version — bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.catharnessdeclarationschema.liquid",
+      "prefLabel": "CatHarnessDeclarationSchema.liquid",
+      "definition": "See {@link CatHarnessDeclaration.liquid}.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.liquid",
       "status": "candidate"
     },
     {
@@ -2349,6 +2363,20 @@
       "prefLabel": "GraphNodeDirectoryShape.absent",
       "definition": "This directory is DECLARED and deliberately not on disk, with the reason.",
       "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.liquidprefix.passthrough",
+      "prefLabel": "LiquidPrefix.passThrough",
+      "definition": "Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher).",
+      "source": "cat-harness/schemas/cat-harness.ts#LiquidPrefix.passThrough",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.liquidprefix.prefix",
+      "prefLabel": "LiquidPrefix.prefix",
+      "definition": "The first path segment(s); default the instance's `name`.",
+      "source": "cat-harness/schemas/cat-harness.ts#LiquidPrefix.prefix",
       "status": "candidate"
     },
     {
@@ -7604,7 +7632,7 @@
     {
       "id": "sticky-contribution.declaredcontribution.declaredin",
       "prefLabel": "DeclaredContribution.declaredIn",
-      "definition": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/harness.json`, `bootstrap/harness.json`, `harness.json`.",
+      "definition": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/cat-harness.json`, `bootstrap/bootstrap.json`: each instance's own `<instance>/<instance>.json`.",
       "source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.declaredIn",
       "status": "candidate"
     },
@@ -8330,13 +8358,6 @@
       "status": "candidate"
     },
     {
-      "id": "tool.tooldefinitionschema.alternativeto",
-      "prefLabel": "ToolDefinitionSchema.alternativeTo",
-      "definition": "Other Tools that do the SAME job by a different mechanism.",
-      "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.alternativeTo",
-      "status": "candidate"
-    },
-    {
       "id": "tool.tooldefinitionschema.maintains",
       "prefLabel": "ToolDefinitionSchema.maintains",
       "definition": "Published artefacts this Tool is authoritative for. See {@link ToolMaintainsSchema}.",
@@ -8360,7 +8381,7 @@
     {
       "id": "tool.tooldefinitionschema.selection",
       "prefLabel": "ToolDefinitionSchema.selection",
-      "definition": "Why to reach for this one. REQUIRED once `alternativeTo` is non-empty — see {@link ToolSelectionSchema}, and the refinement below.",
+      "definition": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set.",
       "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
       "status": "candidate"
     },
