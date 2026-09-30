@@ -12,8 +12,8 @@
     "type": "@type",
     "graph": "@graph",
     "name": "rdfs:label",
-    "title": "rdfs:label",
-    "description": "rdfs:comment",
+    "title": "http://purl.org/dc/terms/title",
+    "description": "http://purl.org/dc/terms/description",
     "summary": "rdfs:comment",
     "generatedAt": {
       "@id": "http://www.w3.org/ns/prov#generatedAtTime",
@@ -42,15 +42,15 @@
     "dependsOnGaps": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnGaps",
     "dependsOnUnavailable": "https://litlfred.github.io/folio-assistant/cat-harness/ns#dependsOnUnavailable",
     "partOf": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#partOf",
+      "@id": "http://purl.org/dc/terms/isPartOf",
       "@type": "@id"
     },
     "inSubgraph": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#inSubgraph",
+      "@id": "http://purl.org/dc/terms/isPartOf",
       "@type": "@id"
     },
     "implementedBy": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#implementedBy",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#skill",
       "@type": "@id"
     },
     "performedBy": {
@@ -86,7 +86,7 @@
       "@type": "@id"
     },
     "bindsRole": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#bindsRole",
+      "@id": "https://litlfred.github.io/bootstrap/0.1.0/processes/ns#role",
       "@type": "@id"
     },
     "inLane": {
@@ -104,7 +104,7 @@
     },
     "module": "https://litlfred.github.io/folio-assistant/cat-harness/ns#module",
     "holdsGraph": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#holdsGraph",
+      "@id": "http://purl.org/dc/terms/type",
       "@type": "@id"
     },
     "startNode": {
@@ -112,19 +112,19 @@
       "@type": "@id"
     },
     "incoming": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#incoming",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#incoming",
       "@type": "@id"
     },
     "outgoing": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#outgoing",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#outgoing",
       "@type": "@id"
     },
     "from": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#from",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#sourceRef",
       "@type": "@id"
     },
     "to": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#to",
+      "@id": "http://www.omg.org/spec/BPMN/20100524/MODEL#targetRef",
       "@type": "@id"
     },
     "alternateOf": {
@@ -140,7 +140,7 @@
       "@type": "@id"
     },
     "conformsTo": {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#conformsTo",
+      "@id": "http://purl.org/dc/terms/conformsTo",
       "@type": "@id"
     },
     "validator": {
@@ -305,10 +305,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T15:20:22.889Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b884d83aa768bc088cd3ab71c70d27320c021a4a",
-  "sourceCommitSha": "b884d83aa768bc088cd3ab71c70d27320c021a4a",
-  "sourceCommitAt": "2026-09-30T15:16:11Z",
+  "generatedAt": "2026-09-30T16:09:35.164Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4f4664e5e5a2b89e56e15401c517f629c1086e9d",
+  "sourceCommitSha": "4f4664e5e5a2b89e56e15401c517f629c1086e9d",
+  "sourceCommitAt": "2026-09-30T15:55:43Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -323,11 +323,11 @@
     "Lane": 192,
     "ProcessNode": 889,
     "Tool": 109,
-    "Schema": 129,
+    "Schema": 130,
     "ExternalSchema": 17,
     "GraphKind": 35,
     "Role": 48,
-    "Directory": 48,
+    "Subgraph": 48,
     "Asset": 3
   },
   "@graph": [
@@ -997,7 +997,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/translation-manager.md",
-      "instructionLines": 703,
+      "instructionLines": 713,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1048,7 +1048,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/covered-is-not-reachable.md",
-      "instructionLines": 272,
+      "instructionLines": 274,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2010,7 +2010,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/kg-export.md",
-      "instructionLines": 445,
+      "instructionLines": 518,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2925,7 +2925,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/instance-publication.md",
-      "instructionLines": 257,
+      "instructionLines": 275,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3059,7 +3059,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/role-model.md",
-      "instructionLines": 636,
+      "instructionLines": 669,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4298,7 +4298,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/witnessed-values.md",
-      "instructionLines": 252,
+      "instructionLines": 266,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4434,7 +4434,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/graph-management/kg-separation.md",
-      "instructionLines": 194,
+      "instructionLines": 199,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -5133,7 +5133,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#package/fhir-ig-base"
       ],
       "instructionsPath": "../fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md",
-      "instructionLines": 251,
+      "instructionLines": 271,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -41070,9 +41070,11 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#skill/kg-export"
       ],
       "maintains": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/ns/vocabulary.jsonld"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness/ns.jsonld",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/folio-assistant-core/ns.jsonld"
       ],
       "maintainsFrom": [
+        "schemas/vocabulary.ts",
         "schemas/vocabulary.ts"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/ns-vocabulary"
@@ -45248,6 +45250,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary-graph-kind"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#schema/glossary-ledger",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "glossary-ledger",
+      "title": "The swimlane glossary's retirement ledger: its tag and its shape.",
+      "module": "schemas/glossary-ledger.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/glossary-ledger"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#schema/graph-kind-registry",
       "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
       "name": "graph-kind-registry",
@@ -45887,6 +45898,7 @@
       "title": "What each term in the folio namespace MEANS — one brief gloss apiece.",
       "module": "schemas/vocabulary.ts",
       "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#tool/ns-vocabulary",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#tool/ns-vocabulary"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/schemas",
@@ -46112,6 +46124,7 @@
       "specUrl": "https://www.omg.org/spec/BPMN/2.0/",
       "namespace": [
         "http://www.omg.org/spec/BPMN/20100524/MODEL",
+        "http://www.omg.org/spec/BPMN/20100524/MODEL#",
         "http://www.omg.org/spec/BPMN/20100524/DI"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#externalSchema/omg-bpmn-2.0"
@@ -46326,10 +46339,10 @@
       "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#schema/tool"
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/cat-harness",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "cat-harness",
-      "typeIri": "https://litlfred.github.io/bootstrap/0.1.0/ns#KGraph",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#KGraph",
       "renderable": false,
       "summary": "A Subgraph holding a Harness's own parts, such as Skills, Processes and Roles, where one directory holds more than one of them.",
       "validatorNotApplicable": "it holds several node kinds typed in different places — skills, workflows, roles, actors. `schema` above already says why one pointer here would be a lie of precision, and that applies to a validator with more force: a runnable one would silently grade 51 JSON files against whichever single shape it named. Each family is validated where it is declared."
@@ -46338,7 +46351,7 @@
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/skills",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "skills",
-      "typeIri": "https://litlfred.github.io/bootstrap/0.1.0/ns#SkillGraph",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillGraph",
       "renderable": false,
       "summary": "A Subgraph of Skills: the instructions an Actor follows to carry out a Task."
     },
@@ -46346,7 +46359,7 @@
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/processes",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "processes",
-      "typeIri": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessGraph",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ProcessGraph",
       "renderable": false,
       "summary": "A Subgraph of Processes: BPMN diagrams that coordinate Tasks, and the decision tables their gateways compute from.",
       "conformsTo": [
@@ -46360,7 +46373,7 @@
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/scenarios",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "scenarios",
-      "typeIri": "https://litlfred.github.io/bootstrap/0.1.0/ns#ScenarioGraph",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#ScenarioGraph",
       "renderable": false,
       "summary": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on.",
       "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#schema/role-graph"
@@ -46435,7 +46448,7 @@
       "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/schemas",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "schemas",
-      "typeIri": "https://litlfred.github.io/bootstrap/0.1.0/ns#SchemaGraph",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SchemaGraph",
       "renderable": false,
       "summary": "A Subgraph of Node Schemas: files that state the shape other files must have."
     },
@@ -46475,10 +46488,10 @@
       "validatorNotApplicable": "its nodes are TypeScript — 1793 files, counted 2026-09-24. `tsc` is the validator for code, and `check:partition` plus `check-code-accounting` grade the graph over it."
     },
     {
-      "@id": "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/swimlane-glossary",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "swimlane-glossary",
-      "typeIri": "https://litlfred.github.io/bootstrap/0.1.0/ns#SwimlaneGlossaryGraph",
+      "typeIri": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SwimlaneGlossaryGraph",
       "renderable": false,
       "summary": "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused."
     },
@@ -47590,7 +47603,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/tools",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "tools",
       "path": "tools/",
       "holdsGraph": [
@@ -47603,7 +47616,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/external-schemas",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "external-schemas",
       "path": "external-schemas/",
       "holdsGraph": [
@@ -47616,7 +47629,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/code-lists",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "code-lists",
       "path": "code-lists/",
       "holdsGraph": [
@@ -47629,12 +47642,12 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/schemas",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "schemas",
       "path": "schemas/",
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/schemas",
-        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/cat-harness"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
       ],
       "description": "The content-object model and the per-skill JSON Schemas. Declares BOTH graphs: the schema definitions themselves, and `kg` because a schema IS a knowledge-graph node — the .ts files are part of the KG, not a separate island beside it.",
       "readmePath": "schemas/README.md",
@@ -47643,7 +47656,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/uml",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "uml",
       "path": "uml/",
       "holdsGraph": [
@@ -47656,7 +47669,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/skills",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "skills",
       "path": "skills/",
       "holdsGraph": [
@@ -47669,7 +47682,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/scenarios",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "scenarios",
       "path": "scenarios/",
       "holdsGraph": [
@@ -47682,7 +47695,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/policies",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "policies",
       "path": "policies/",
       "holdsGraph": [
@@ -47695,7 +47708,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/processes",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "processes",
       "path": "processes/",
       "holdsGraph": [
@@ -47708,7 +47721,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/methodologies",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "methodologies",
       "path": "methodologies/",
       "holdsGraph": [
@@ -47721,7 +47734,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/qa",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "qa",
       "path": "test/results/",
       "holdsGraph": [
@@ -47734,7 +47747,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/health",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "health",
       "path": "test/health/results/",
       "holdsGraph": [
@@ -47747,7 +47760,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/beans",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "beans",
       "path": "beans/",
       "holdsGraph": [
@@ -47758,7 +47771,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/todos",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "todos",
       "path": "todos/",
       "holdsGraph": [
@@ -47769,7 +47782,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/memory",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "memory",
       "path": "memory/",
       "holdsGraph": [
@@ -47781,7 +47794,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/interaction",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "interaction",
       "path": "interaction/",
       "holdsGraph": [
@@ -47792,7 +47805,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/issue-marks",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "issue-marks",
       "path": "issue-marks/",
       "holdsGraph": [
@@ -47803,7 +47816,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/uploads",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "uploads",
       "path": "uploads/",
       "holdsGraph": [
@@ -47816,7 +47829,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/library",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "library",
       "path": "library/",
       "holdsGraph": [
@@ -47829,7 +47842,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/who-iris-library",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "who-iris-library",
       "path": "who-iris/library/",
       "holdsGraph": [
@@ -47840,7 +47853,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/agent-skills-library",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "agent-skills-library",
       "path": "agent-skills/library/",
       "holdsGraph": [
@@ -47851,7 +47864,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio-assistant-sci-library",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-assistant-sci-library",
       "path": "folio-assistant-sci/library/",
       "holdsGraph": [
@@ -47862,7 +47875,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio-assistant-core-library",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-assistant-core-library",
       "path": "folio-assistant-core/library/",
       "holdsGraph": [
@@ -47873,7 +47886,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/smart-base-library",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "smart-base-library",
       "path": "smart-base/library/",
       "holdsGraph": [
@@ -47884,7 +47897,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/translation-sources",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "translation-sources",
       "path": "translations/",
       "holdsGraph": [
@@ -47897,7 +47910,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio",
       "path": "folio/",
       "holdsGraph": [
@@ -47910,7 +47923,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/smart-base-methodologies",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "smart-base-methodologies",
       "path": "smart-base/methodologies/",
       "holdsGraph": [
@@ -47921,7 +47934,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio-assistant-core-methodologies",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-assistant-core-methodologies",
       "path": "folio-assistant-core/methodologies/",
       "holdsGraph": [
@@ -47932,7 +47945,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio-assistant-sci-methodologies",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-assistant-sci-methodologies",
       "path": "folio-assistant-sci/methodologies/",
       "holdsGraph": [
@@ -47943,7 +47956,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio-assistant-sci-lean-skills",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-assistant-sci-lean-skills",
       "path": "folio-assistant-sci/skills/lean/",
       "holdsGraph": [
@@ -47954,7 +47967,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio-assistant-sci-data-skills",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-assistant-sci-data-skills",
       "path": "folio-assistant-sci/skills/data/",
       "holdsGraph": [
@@ -47965,7 +47978,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio-assistant-core-skills",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-assistant-core-skills",
       "path": "folio-assistant-core/skills/",
       "holdsGraph": [
@@ -47976,7 +47989,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/smart-base-processes",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "smart-base-processes",
       "path": "smart-base/methodologies/processes/",
       "holdsGraph": [
@@ -47987,7 +48000,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/docs",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "docs",
       "path": "docs/",
       "holdsGraph": [
@@ -48000,7 +48013,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/root-docs",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "root-docs",
       "path": "docs/",
       "holdsGraph": [
@@ -48013,19 +48026,19 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio-assist-core-schemas",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-assist-core-schemas",
       "path": "folio-assistant-core/schemas/",
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/schemas",
-        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/cat-harness"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
       ],
       "description": "The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assist-core-schemas"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/large-datasets-skills",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "large-datasets-skills",
       "path": "large-datasets/skills/",
       "holdsGraph": [
@@ -48036,7 +48049,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/who-iris-skills",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "who-iris-skills",
       "path": "who-iris/skills/",
       "holdsGraph": [
@@ -48047,7 +48060,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/fhir-ig-skills",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "fhir-ig-skills",
       "path": "fhir-harness/skills/",
       "holdsGraph": [
@@ -48058,23 +48071,23 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/large-datasets-schemas",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "large-datasets-schemas",
       "path": "large-datasets/schemas/",
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/schemas",
-        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/cat-harness"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/cat-harness"
       ],
       "description": "The `large-datasets` subgraph's schema nodes -- `source-descriptor` (how to enumerate a corpus and ask it for a subset) and `artifact-store` (where an artifact too large for the site tree goes, as a declaration rather than a hardcoded host). Repository-scoped, so the path resolves against the REPO ROOT and carries no `../` -- a `../` prefix resolved OUTSIDE the checkout and every consumer silently dropped the entry (caught by CI, 2026-09-20).",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/large-datasets-schemas"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/swimlane-glossary",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "swimlane-glossary",
       "path": "glossary/",
       "holdsGraph": [
-        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/swimlane-glossary"
+        "https://litlfred.github.io/folio-assistant/cat-harness/ns#graphKind/swimlane-glossary"
       ],
       "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
       "readmePath": "glossary/README.md",
@@ -48083,7 +48096,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/cat-harness-scripts",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "cat-harness-scripts",
       "path": "scripts/",
       "holdsGraph": [
@@ -48096,7 +48109,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/cat-harness-src",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "cat-harness-src",
       "path": "src/",
       "holdsGraph": [
@@ -48109,7 +48122,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/cat-harness-adapters",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "cat-harness-adapters",
       "path": "adapters/",
       "holdsGraph": [
@@ -48122,7 +48135,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/cat-harness-tests",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "cat-harness-tests",
       "path": "test/",
       "holdsGraph": [
@@ -48135,7 +48148,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio-templates",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-templates",
       "path": "templates/",
       "holdsGraph": [
@@ -48148,7 +48161,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/folio-assistant-core-processes",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "folio-assistant-core-processes",
       "path": "folio-assistant-core/processes/",
       "holdsGraph": [
@@ -48159,7 +48172,7 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/cat-harness.jsonld#directory/cat-harness-deploy",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "cat-harness-deploy",
       "path": "deploy/",
       "holdsGraph": [

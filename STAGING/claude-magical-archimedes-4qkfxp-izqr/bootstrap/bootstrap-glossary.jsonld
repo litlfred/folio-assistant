@@ -10,6 +10,11 @@
     "label": "rdfs:label",
     "prefLabel": "skos:prefLabel",
     "altLabel": "skos:altLabel",
+    "hiddenLabel": "skos:hiddenLabel",
+    "isReplacedBy": {
+      "@id": "dcterms:isReplacedBy",
+      "@type": "@id"
+    },
     "definition": "skos:definition",
     "scopeNote": "skos:scopeNote",
     "changeNote": "skos:changeNote",
@@ -34,7 +39,7 @@
       "@type": "@id"
     },
     "actedUpon": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actedUpon",
-    "performerVaries": "https://litlfred.github.io/bootstrap/0.1.0/ns#performerVaries"
+    "performerVaries": "https://litlfred.github.io/folio-assistant/cat-harness/ns#performerVaries"
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/bootstrap/bootstrap-glossary.jsonld",
   "@type": "skos:ConceptScheme",
@@ -47,6 +52,9 @@
       "@type": "skos:Concept",
       "prefLabel": "Bootstrapping Agent",
       "definition": "An agent asked to set up a Harness with ONLY the knowledge bootstrap's README.md hands it. That constraint is the role, not a caveat on it: a Bootstrapping Agent has no MCP server, no harness, no work plan and no skills beyond those bootstrap carries, and a step that assumes any of those is a step a Bootstrapping Agent cannot perform. It stops being a Bootstrapping Agent the moment the harness is installed and it re-enters through that harness instead.",
+      "hiddenLabel": [
+        "Initiator"
+      ],
       "notation": "bootstrapping-agent",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/bootstrap/bootstrap-glossary.jsonld",
       "usage": [
@@ -171,7 +179,8 @@
       "notation": "initiator",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/bootstrap/bootstrap-glossary.jsonld",
       "deprecated": true,
-      "changeNote": "Retired 2026-09-23: no swimlane in this instance derives this term."
+      "changeNote": "Retired 2026-09-23: renamed Bootstrapping Agent.",
+      "isReplacedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-izqr/bootstrap/bootstrap.jsonld#role/bootstrapping-agent"
     }
   ]
 }

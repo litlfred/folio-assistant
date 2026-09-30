@@ -24,13 +24,24 @@ own Knowledge Graph, written out as one data file. <code>bootstrap.json</code> r
 that trade under <code>renderExemption</code>, and its <code>owes</code> field names this Skill. An
 exemption with nothing owed in its place would be a gap.</p>
 <p>bootstrap runs nothing (FR-7 of the <a href="../README.html">README</a>), so the file is
-written by a Tool of the Harness that publishes bootstrap, not by anything
-here. This Skill states what that Tool must produce. Its shape is fixed by a
-schema, and the Tool is tested against it.</p>
+written by bootstrap-tools, bootstrap's own tools repository. It is the one
+file bootstrap publishes that names what wrote it, and it says so inside
+itself: an <code>rdfs:comment</code> that it is generated and not to be edited, and
+<code>prov:wasAttributedTo</code> naming bootstrap-tools. This Skill states what the file
+must hold. Its shape is fixed by a schema, and the tool is tested against it.</p>
+<h2>In whose terms</h2>
+<p>Every class is one of bootstrap's own terms (<code>bootstrap:Skill</code>,
+<code>bootstrap:Process</code>, <code>bootstrap:Subgraph</code>, …), so the file names nothing above
+bootstrap. Every property is a published standard wherever one exists:
+<code>rdfs:label</code>; Dublin Core for <code>title</code>, <code>description</code>, <code>source</code>, <code>isPartOf</code>,
+and <code>type</code>, which points a Subgraph at the Graph Kinds it holds; BPMN's own
+<code>sourceRef</code>, <code>targetRef</code> and <code>flowNodeRef</code> for a Process's arrows and lanes;
+and PROV for provenance. Only the link from a step to the Skill it names is
+bootstrap's own, because no standard says it.</p>
 <h2>What goes in it</h2>
 <p>The declaration itself, its Subgraphs and their Graph Kinds, the declared
 Assets, the Skills in the <code>skills</code> Subgraph, the Processes in <code>processes</code>
-(with their steps and arrows), and the Roles in <code>scenarios</code>. The Tool finds each Subgraph
+(with their steps and arrows), and the Roles in <code>scenarios</code>. The tool finds each Subgraph
 <strong>through the declaration</strong>, never by walking the directory tree, so a
 Subgraph the declaration does not name is never exported by accident.</p>
 <h2>Four properties</h2>
@@ -63,10 +74,12 @@ Subgraph the declaration does not name is never exported by accident.</p>
 <p>Counts of nodes are deliberately not checked. A count cannot tell "the export
 still works" from "somebody deleted a Skill".</p>
 <h2>What it says it did not look at</h2>
-<p>The file's <code>omitted</code> list names what the Tool did not collect for bootstrap,
-such as Tools. "bootstrap has no Tools" and "nobody looked for Tools" are
-different facts, and an empty section must not be read as the first when it
-means the second. Its <code>problems</code> list names anything that could not be read.</p>
+<p>Every Subgraph is a node, but not every Subgraph's contents are read. The
+file's <code>omitted</code> list names each Subgraph whose contents were not exported
+(today <code>models</code> and <code>schemas</code>). "This Subgraph holds nothing" and "nobody
+looked inside it" are different facts, and an absent node must not be read as
+the first when it means the second. Its <code>problems</code> list names anything that
+could not be read.</p>
 <h2>Adding a Skill</h2>
 <p>Put the <code>.md</code> in <code>skills/</code> and add its name to <code>skills/package-manifest.json</code>.
 A <code>.md</code> counts as a Skill unless its front matter declares <code>$schema:</code>, which
