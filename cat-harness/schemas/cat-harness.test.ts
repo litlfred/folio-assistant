@@ -1232,9 +1232,13 @@ describe("ownDirectoryById — two entries, one path, different scopes", () => {
    * repository's. `content/pipeline/translation-index.ts` is that caller —
    * everything it computes is instance-relative.
    */
+  // A FIXTURE directory under a tmpdir that happens to share the id's name,
+  // not the published site root: named once so `site-dir-single-answer`
+  // (which forbids joining the literal site-root name) reads it as what it is.
+  const FIXTURE_DIR = "docs";
   const tree = (dirs: unknown[]): string => {
     const root = mkdtempSync(join(tmpdir(), "own-dir-by-id-"));
-    mkdirSync(join(root, "docs"), { recursive: true });
+    mkdirSync(join(root, FIXTURE_DIR), { recursive: true });
     writeFileSync(
       join(root, "probe.json"),
       JSON.stringify({ name: "probe", version: "0.1.0", directories: dirs }, null, 2),
@@ -1247,7 +1251,7 @@ describe("ownDirectoryById — two entries, one path, different scopes", () => {
       { id: "root-docs", path: "docs/", scope: "repository", graphKinds: ["docs"], dependents: "reproduce" },
       { id: "docs", path: "docs/", graphKinds: ["docs"], dependents: "reproduce" },
     ]);
-    expect(ownDirectoryById(root, "docs", "NOPE")).toBe(join(root, "docs"));
+    expect(ownDirectoryById(root, "docs", "NOPE")).toBe(join(root, FIXTURE_DIR));
   });
 
   test("a repository-scoped entry is NOT returned even when its id matches", () => {
@@ -1260,6 +1264,6 @@ describe("ownDirectoryById — two entries, one path, different scopes", () => {
 
   test("falls back to the convention path when nothing is declared", () => {
     const root = tree([]);
-    expect(ownDirectoryById(root, "docs", "docs")).toBe(join(root, "docs"));
+    expect(ownDirectoryById(root, "docs", FIXTURE_DIR)).toBe(join(root, FIXTURE_DIR));
   });
 });
