@@ -95,7 +95,7 @@ line the same day and could actually decide.
 
 All six are **strict**, which is what they already were by omission — so
 nothing changes behaviourally, and that is the point: the file now records
-the decision. The rule from [`bpmn-processes`](../../cat-harness/skills/workflow/bpmn-processes.md)
+the decision. The rule from [`bpmn-processes`](../../cat-harness/skills/process/workflow/bpmn-processes.md)
 §"Strict by default" is the axis — base processes are strict, per-content-type
 processes are advisory because their package owns what *adequate* means. These
 six are platform-level CI processes, not content-type variants.

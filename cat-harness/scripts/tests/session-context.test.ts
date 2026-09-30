@@ -81,7 +81,7 @@ describe("session context", () => {
     expect(graphLayer("session-state")).toBe("state");
     expect(processMayWrite("session-state")).toBe(true);
     // The skill names the kind it reads, not the other way (#1168, B3).
-    const skill = readFileSync(join(import.meta.dir, "../../skills/workflow/session-context.md"), "utf-8");
+    const skill = readFileSync(join(import.meta.dir, "../../skills/process/workflow/session-context.md"), "utf-8");
     const frontMatter = skill.startsWith("---\n") ? skill.slice(4, skill.indexOf("\n---", 4)) : "";
     expect(frontMatter).toContain("graph-kinds:\n  - session-state");
   });
