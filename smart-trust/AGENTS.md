@@ -12,7 +12,7 @@ published.
 > the next check either overwrites or reports.
 >
 > If something in this index is wrong, the fix is in **the pipeline**
-> (`cat-harness/scripts/ingest-ig-artifacts.ts`) or in **the upstream IG**.
+> (`folio-assistant-core/scripts/ingest-ig-artifacts.ts`) or in **the upstream IG**.
 > Never here.
 
 ## What it is

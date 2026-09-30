@@ -55,7 +55,7 @@ import { isAbsolute, join, relative, resolve } from "node:path";
 
 import { GENERIC, avatarFor, hasAvatar } from "../schemas/avatars.js";
 import { resolveThemeBackdrop } from "../schemas/theme.js";
-import { themeById } from "../schemas/themes.js";
+import { themeByRef } from "../schemas/theme-by-ref.js";
 import { instanceConfigFilename } from "../schemas/harness-config.js";
 import { flattenDependencies } from "../schemas/dependency-order.js";
 import {
@@ -930,10 +930,13 @@ function tileFor(
         `cannot be told — showing no theme avatar rather than picking by declaration order.`,
     );
   }
-  const theme = ownSticky?.theme === undefined ? undefined : themeById(ownSticky.theme);
+  // By REFERENCE, owner first (bean `v8n5`), so `{instance, themeId}` means
+  // what #1168 B8 says it means rather than being read as a bare id.
+  const found = ownSticky?.theme === undefined ? undefined : themeByRef(ownSticky.theme, repoRoot, decl.name);
+  const theme = found?.ok ? found.theme : undefined;
   if (ownSticky?.theme !== undefined && theme === undefined) {
     findings.push(
-      `${decl.name}: its sticky names theme "${ownSticky.theme}", which is not installed — ` +
+      `${decl.name}: its sticky names theme "${ownSticky.theme.themeId}", which is not installed — ` +
         `showing no theme avatar rather than a broken image.`,
     );
   }

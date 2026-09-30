@@ -1078,3 +1078,21 @@ describe("DMN decisions are nodes, linked to their gateways and to DMN 1.3", () 
     }
   });
 });
+
+describe("an actor's roles are links to Role nodes (#1168 B8)", () => {
+  // `roles` on an actor was the literal `roleName` while the role registry was
+  // not exported. It is now — one Role node per `scenarios/roles.json` entry —
+  // so the edge is minted as a link, and a link that lands nowhere is the
+  // defect the literal was protecting against.
+  const graph = (EXPORT as unknown as { "@graph": { "@id"?: string; mayTakeRole?: string[]; roleName?: unknown }[] })["@graph"];
+  const ids = new Set(graph.map((n) => n["@id"]));
+  const links = graph.flatMap((n) => (n.mayTakeRole ?? []).map((t) => ({ from: n["@id"], to: t })));
+
+  test("actors carry mayTakeRole links, not the old literal", () => {
+    expect(links.length).toBeGreaterThan(0);
+  });
+
+  test("every link lands on a node of this document", () => {
+    expect(links.filter((l) => !ids.has(l.to)).map((l) => `${l.from} -> ${l.to}`)).toEqual([]);
+  });
+});

@@ -1,12 +1,12 @@
 ---
 # folio-assistant-2b5s
 title: 'MOUNT COPIES A DIRECTORY WHOLESALE: /who-iris/ publishes 1,367 corpus files as pages, and /library/who-iris/ publishes all 1,378 a second time'
-status: todo
+status: in-progress
 type: task
 priority: normal
 parent: folio-assistant-yj32
 created_at: 2026-09-21T20:00:52Z
-updated_at: 2026-09-21T20:00:52Z
+updated_at: 2026-09-30T10:16:57Z
 ---
 
 ## What
@@ -94,3 +94,5 @@ Nothing about the bean's argument changes — the duplication it reports is real
 and the totals are right. But a reader acting on that table would double-count
 3 files and miss 6, which is why a count in prose is a claim rather than
 evidence.
+
+_2026-09-30T10:16:57Z_ — Claimed by claude/magical-archimedes-4qkfxp-2b5s — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

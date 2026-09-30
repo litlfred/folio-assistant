@@ -254,3 +254,12 @@ export const WHO_THEMES: readonly ResolvedTheme[] = RAW.map((t) => {
 export function whoThemeById(id: string): ResolvedTheme | undefined {
   return WHO_THEMES.find((t) => t.id === id);
 }
+
+/**
+ * The conventional export a harness reads to resolve `{instance: "who-iris",
+ * themeId}` (bean `v8n5`, `cat-harness/schemas/theme-by-ref.ts`). The same
+ * list as {@link WHO_THEMES}, under the name every instance's `themes.ts`
+ * carries, so the platform can find an instance's themes by its declaration
+ * without importing this file or holding any of its values.
+ */
+export const INSTANCE_THEMES: readonly ResolvedTheme[] = WHO_THEMES;

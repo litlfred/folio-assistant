@@ -4,6 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields",
@@ -2176,6 +2177,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/attribution.ts#Attribution.version",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/attribution.attributionschema.skill",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "AttributionSchema.skill"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The skill being exercised: `name` or `package/name` (#1168 B8)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/attribution.ts#AttributionSchema.skill",
       "skos:note": "candidate"
     },
     {
@@ -6492,6 +6512,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.subgraphcoverageschema.process",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SubgraphCoverageSchema.process"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The BPMN process that GOVERNS this directory — a diagram's basename, without `.bpmn`, as `document-ingestion`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema.process",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.subgraphcoverageschema.serialisations",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6732,7 +6771,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The tile's theme. Absent means the directory's, then the instance's."
+          "@value": "The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#VisualisationSchema.theme",
@@ -18056,7 +18095,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "BPMN process id — `staging-render-log` — when written inside one."
+          "@value": "BPMN process element id — `Process_RenderLog` — when written inside one."
         }
       ],
       "dcterms:source": "cat-harness/schemas/render-log.ts#RenderLogEntrySchema.process",
@@ -20374,7 +20413,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/harness.json`, `bootstrap/harness.json`, `harness.json`."
+          "@value": "The declaration this contribution came from, RELATIVE TO THE REPOSITORY — `cat-harness/cat-harness.json`, `bootstrap/bootstrap.json`: each instance's own `<instance>/<instance>.json`."
         }
       ],
       "dcterms:source": "cat-harness/schemas/sticky-contribution.ts#DeclaredContribution.declaredIn",
@@ -22338,25 +22377,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.alternativeto",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ToolDefinitionSchema.alternativeTo"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Other Tools that do the SAME job by a different mechanism."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.alternativeTo",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.maintains",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -22426,7 +22446,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Why to reach for this one. REQUIRED once `alternativeTo` is non-empty — see {@link ToolSelectionSchema}, and the refinement below."
+          "@value": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set."
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
@@ -26682,7 +26702,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "BPMN process ids, as `<bpmn:process id>` spells them — `Process_CrdmRequirements`, not a filename. Resolved against the diagrams the `cat-harness` graph carries, so a typo is a dangling reference rather than a voice that quietly never activates."
+          "@value": "BPMN process ids, as `<bpmn:process id>` spells them — `Process_CRDM_Requirements`, not a filename (#1168, B8: the element id, as `calledElement` uses it). Resolved against the loaded diagrams by `process-refs.test.ts`, so a typo is a dangling reference rather than a voice that quietly never activates."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema.processes",
@@ -26796,7 +26816,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Block kinds this voice audits. Absent means every kind the folio has."
+          "@value": "What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceProfileSchema.appliesTo",

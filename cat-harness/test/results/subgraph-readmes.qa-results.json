@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "6944d52b6a12"
+    "script_hash": "eb22fe6ed53a"
   },
   "subject": {
     "kind": "graph",
     "id": "subgraph-readmes"
   },
-  "updated_at": "2026-09-30T09:11:07.010Z",
+  "updated_at": "2026-09-30T12:38:27.201Z",
   "families": {
     "absent-directory": {
       "summary": "Declared directories not on disk and not declared `absent`: a consumer scanning them finds nothing and may report a clean run.",
@@ -17,7 +17,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 71,
+      "count": 73,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -48,6 +48,11 @@
           "instance": "bootstrap",
           "directory": "models",
           "path": "bootstrap/models"
+        },
+        {
+          "instance": "bootstrap-tools",
+          "directory": "bootstrap-tools-scripts",
+          "path": "bootstrap-tools/scripts"
         },
         {
           "instance": "cat-harness",
@@ -168,6 +173,11 @@
           "instance": "cat-harness",
           "directory": "folio-assistant-sci-methodologies",
           "path": "folio-assistant-sci/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-sci-lean-skills",
+          "path": "folio-assistant-sci/skills/lean"
         },
         {
           "instance": "cat-harness",
@@ -394,7 +404,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 91,
+      "count": 92,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -590,6 +600,11 @@
           "instance": "cat-harness",
           "directory": "folio-assistant-sci-methodologies",
           "path": "folio-assistant-sci/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-sci-lean-skills",
+          "path": "folio-assistant-sci/skills/lean"
         },
         {
           "instance": "cat-harness",
@@ -868,7 +883,12 @@
           "path": "folio-assistant-core/folios/README.md"
         }
       ]
+    },
+    "unresolved-process": {
+      "summary": "Directories whose `coverage.process` names a diagram no instance declares: the README says `could not determine` in place of the drawing. Declaring none is not here — a directory owes no process, and only a declaration that points at nothing is a finding.",
+      "count": 0,
+      "entries": []
     }
   },
-  "total": 166
+  "total": 169
 }

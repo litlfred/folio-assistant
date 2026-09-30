@@ -17,6 +17,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`lane-documentation.qa-results.json`](lane-documentation.qa-results.json) | data |  |
 | [`layout-norms.qa-results.json`](layout-norms.qa-results.json) | data |  |
 | [`methodology-evidence.qa-results.json`](methodology-evidence.qa-results.json) | data |  |
+| [`reference-direction.qa-results.json`](reference-direction.qa-results.json) | data |  |
 | [`rendered-labels.qa-results.json`](rendered-labels.qa-results.json) | data |  |
 | [`root-scan-census.qa-results.json`](root-scan-census.qa-results.json) | data |  |
 | [`skill-register.qa-results.json`](skill-register.qa-results.json) | data |  |
@@ -25,10 +26,10 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
 | [`block-qa/`](block-qa/) | 122 files | |
 | [`bootstrap/`](bootstrap/) | 16 files | |
-| [`bootstrap-tools/`](bootstrap-tools/) | 2 files | |
+| [`bootstrap-tools/`](bootstrap-tools/) | 3 files | |
 | [`detangle/`](detangle/) | 28 files | |
 | [`kg-export.@litlfred/`](kg-export.@litlfred/) | 1 file | |
-| [`kg-qa/`](kg-qa/) | 552 files | |
+| [`kg-qa/`](kg-qa/) | 555 files | |
 | [`library-qa/`](library-qa/) | 37 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |
 | [`viewer-nav/`](viewer-nav/) | 1 file | |

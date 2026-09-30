@@ -4,6 +4,7 @@
     "dcterms": "http://purl.org/dc/terms/",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#"
   },
+  "_generated": "folio-assistant-core/scripts/glossary-page.ts — do not hand-edit; run `bun run glossary:page`",
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills",
@@ -3273,6 +3274,11 @@
           "@value": "prepare-merge"
         }
       ],
+      "skos:definition": [
+        {
+          "@value": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\"."
+        }
+      ],
       "skos:notation": "prepare-merge",
       "dcterms:source": "cat-harness/skills/folio-core/prepare-merge.md",
       "skos:note": "candidate"
@@ -4895,6 +4901,26 @@
       ],
       "skos:notation": "unverified-constraints",
       "dcterms:source": "cat-harness/skills/folio-core/unverified-constraints.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills/upload-routes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "upload-routes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How a file actually REACHES `uploads/` — the two mechanisms that write bytes into a declared queue, the persona that performs one of them on somebody's behalf, and what each writer owes that the route does not do for them. The step before intake and after acquisition."
+        }
+      ],
+      "skos:notation": "upload-routes",
+      "dcterms:source": "cat-harness/skills/folio-core/upload-routes.md",
       "skos:note": "candidate"
     },
     {

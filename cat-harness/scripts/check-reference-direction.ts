@@ -38,16 +38,92 @@
  * collision answers are read off the occurrence's shape, not off anything the
  * file claims about itself.
  *
+ * ## It writes a COMMITTED sidecar, and until 2026-09-30 it did not
+ *
+ * The axis printed a verdict and committed nothing, which is the one failure
+ * this repository has already named twice. `kg:audit`: *"a printed verdict is
+ * gone, which makes 'unbound since it was drawn' and 'broken in the commit
+ * under review' indistinguishable"*. `audit:coverage` exists for the same
+ * reason one level out. For this axis both readings were available and
+ * nothing chose between them: **"never audited" and "audited clean" looked
+ * identical**, because there was nothing to look at. Bean `yj6r` recorded it
+ * as the third of three gaps.
+ *
+ * So `cat-harness/test/results/reference-direction.qa-results.json` now holds
+ * what the axis says, in the `qa-results/v1` shape every other whole-corpus
+ * result here uses.
+ *
+ * ### What is RECORDED, and what stays in the printed report
+ *
+ * The line is drawn between **a count of verdicts** and **a count of files**,
+ * and it is drawn there because those two answer different questions:
+ *
+ *  - A **verdict** count — wrong-direction, exempt, `names-repository`,
+ *    undetermined — IS this axis's answer. "1,206 occurrences point up the
+ *    arrow" is the measurement, not an incidental fact about the tree, and a
+ *    reader holding only the file needs it to tell a clean axis from an
+ *    unaudited one. It moves when the corpus's references move, which is when
+ *    a reader WANTS to see it move. Recorded, in {@link CENSUS_FAMILY}.
+ *  - A **file** count — how many files were skipped because their directory
+ *    declares a machine-written graph, how many declared themselves generator
+ *    output, how many files were walked — is a CENSUS. It moves when somebody
+ *    adds a page, says nothing about direction, and `audit-coverage` already
+ *    paid for committing one: *"a census moves on any commit and a gate keyed
+ *    on it is stale by default"*, and worse, *"regenerating the L1 verdicts
+ *    under `library/` made this report stale, so a QA writer in one graph
+ *    turned another graph's coverage gate red."* Printed, never recorded.
+ *
+ * ### Freshness: `--check` grades the STATES, never the counts
+ *
+ * A committed sidecar goes stale, and the question every one of them has to
+ * answer is what its `--check` fails on. This one fails on the **states**
+ * disagreeing — the PENDING set, the entries that no longer qualify, the
+ * multi-destination files nobody has listed, the instances that declare no
+ * `needs`. Those move when a RULING moves: somebody adds a file with no single
+ * destination, or an entry stops qualifying. That is exactly the diff a
+ * reviewer has to see, and it is not produced by an unrelated merge.
+ *
+ * It answers that ONE question and only that: `--check` does not also fail on
+ * the backlog. `audit:coverage --check` settled the same trade — staleness is
+ * the half that can fail now, the findings are reported, and a gate that
+ * refused every push until somebody drained a backlog is a gate switched off
+ * within a week. The backlog exit stays on the plain form, and the `✗` lines
+ * print on both, so a `--check` that returns 0 cannot be read as a clean axis.
+ *
+ * It does **not** fail on the verdict counts moving, even though it records
+ * them. Grading a number that changes whenever anybody writes a paragraph
+ * makes a gate that is stale by default, and a gate that is stale by default
+ * is one people learn to regenerate without reading — `audit-coverage`'s
+ * finding, applied here rather than rediscovered. {@link comparableDirection}
+ * is where the line is enforced, and the `--check` message SAYS what it
+ * compared, so nobody reads a pass as a guarantee about the counts.
+ *
+ * ### `--check` does not write, and that is bean `ymsu`
+ *
+ * A gate that repairs the tree the rest of the run is judging makes a later
+ * gate's verdict meaningless — `kg:detangle` repairs `schemas.detangle.json`
+ * and both `kg:detangle:check` and `uml:overview:check` then read the repaired
+ * copy, which is two witnesses already. A third was not going to come from
+ * here. `--check` reads, compares and returns; the plain run is the writer.
+ *
  * Usage:
- *   bun run cat-harness/scripts/check-reference-direction.ts            # summary
+ *   bun run cat-harness/scripts/check-reference-direction.ts            # summary, and WRITE the sidecar
  *   … --findings           # every wrong-direction occurrence
  *   … --undetermined       # what it declined to judge, and why
+ *   … --check              # do NOT write; fail ONLY if the committed states disagree
  *   … --strict             # exit 1 on any wrong-direction occurrence
  *
  * @module scripts/check-reference-direction
+ * @covers computed — the set it reads is DERIVED from the declarations on the
+ *   run in front of you: every declared directory whose graph kind is neither
+ *   `state` nor `derived`, plus every file that has not declared itself
+ *   generator output. Writing today's answer as a literal list of kinds would
+ *   be the snapshot that goes stale silently, which is the failure this file
+ *   already refuses for `GENERATOR_WRITTEN` and for every count in its own
+ *   prose.
  */
 
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
 import {
@@ -68,8 +144,19 @@ import {
   type ReferenceExemption,
   type ReferenceVerdict,
 } from "../schemas/reference-direction.js";
+import { buildQaResult, QA_RESULTS_DIR, writeQaResult, type QaResult } from "./qa-results.js";
 
 const REPO_ROOT = join(import.meta.dir, "..", "..");
+/**
+ * The INSTANCE root, which is where the sidecar goes — never {@link REPO_ROOT}.
+ *
+ * `QA_RESULTS_DIR` mirrors this instance's `qa-results` declaration, and
+ * `audit-coverage.ts` paid for getting this wrong: its first version wrote to
+ * `<repo>/test/results/`, a directory no declaration names, so every consumer
+ * scanning the declared graphs read a clean run over the one file it exists to
+ * produce.
+ */
+const INSTANCE_ROOT = join(import.meta.dir, "..");
 
 // ── What is scanned ─────────────────────────────────────────────
 //
@@ -160,14 +247,21 @@ const GENERATOR_WRITTEN: ReadonlySet<string> = new Set(
 /**
  * Does the file SAY a generator wrote it, in its own first lines?
  *
- * Two conventions already in the corpus, both self-declarations rather than
+ * Two conventions in the corpus, both self-declarations rather than
  * inferences from a path:
  *
- *  - a top-level `"_generated"` key in JSON, which `sync-docs-harness.ts`
- *    has emitted into `docs/_data/harness.json` all along (84 occurrences);
- *  - a `generated:` front-matter key in Markdown, which `gen-skill-docs.ts`
- *    and `gen-schema-docs.ts` now emit into the `docs/reference/**` mirrors
- *    (145 occurrences across 31 pages).
+ *  - a top-level `"_generated"` key in JSON — `sync-docs-harness.ts` into
+ *    `docs/_data/harness.json` all along, and `glossary-page.ts` into the
+ *    SKOS assets and the extracted glossary schemes (bean `ws99`);
+ *  - a `generated:` front-matter key in Markdown — `gen-skill-docs.ts` and
+ *    `gen-schema-docs.ts` into the `docs/reference/**` mirrors (#1222),
+ *    `gen-uml-overview.ts` into `docs/uml/`, and `glossary-page.ts` and
+ *    `gen-docs-pages.ts` into their own pages (`ws99`).
+ *
+ * No count of either: the summary line prints how many files take this route
+ * on the run in front of you, and a number written down here is a claim about
+ * a corpus that changes whenever a generator gains a page. This paragraph
+ * carried two such numbers and both were stale within four days.
  *
  * The mirrors are the clearest case for reading a declaration rather than a
  * path: each is a COPY of a skill that sits one directory away, so a finding
@@ -177,16 +271,43 @@ const GENERATOR_WRITTEN: ReadonlySet<string> = new Set(
  *
  * Front matter only, and only the first lines: a page that DISCUSSES
  * generation must not be able to exempt itself by mentioning the word.
+ *
+ * JSON is read the way {@link isGeneratorWritten} reads it — PARSED, and
+ * `_generated` taken from the top level wherever it sits. It was a regex
+ * anchored to the first key until bean `ws99`, which is a different rule than
+ * the one this docblock states: it made POSITION part of the contract, so a
+ * file whose first key is `$schema` or `@context` could not declare itself
+ * without moving the key that says what it IS. Both are worth keeping first —
+ * `$schema` because every validator looks for it there, `@context` because a
+ * JSON-LD reader does — so the position requirement cost the declaration
+ * rather than buying anything. The principle the regex was defending is
+ * unchanged and is met better by parsing, in the words of this file's own
+ * {@link isGeneratorWritten}: *"Parsing and reading the top level is the
+ * difference between what a file IS and what it mentions."* A `_generated`
+ * nested inside a projection of another file is still not this file's
+ * declaration, and a whole-text scan would have read it as one.
+ *
+ * Markdown keeps the head-only front-matter route unchanged: there is no
+ * top level to read in prose, so the first lines are the only place a page
+ * can speak about itself rather than about its subject.
  */
-function declaresGenerated(abs: string): boolean {
-  let head: string;
+export function declaresGenerated(abs: string): boolean {
+  let text: string;
   try {
-    head = readFileSync(abs, "utf-8").slice(0, 2000);
+    text = readFileSync(abs, "utf-8");
   } catch {
     return false;
   }
-  if (/^\s*\{\s*"_generated"\s*:/.test(head)) return true;
-  const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(head);
+  if (abs.endsWith(".json") || abs.endsWith(".jsonld")) {
+    try {
+      const top = JSON.parse(text) as unknown;
+      if (typeof top !== "object" || top === null || Array.isArray(top)) return false;
+      return (top as { _generated?: unknown })._generated !== undefined;
+    } catch {
+      return false; // unparseable is not a licence to skip it
+    }
+  }
+  const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text.slice(0, 2000));
   return fm !== null && /^generated:\s*\S/m.test(fm[1]!);
 }
 
@@ -284,6 +405,15 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
  *
  * **It compares as a SET.** A new multi-target file fails, and so does a
  * FIXED one — a PENDING that only grows stops meaning anything.
+ *
+ * That half fired on bean `ws99`, which is the first evidence it works.
+ * `cat-harness/docs/ig-publisher.md` and `cat-harness/docs/publication-workflow.md`
+ * were held here as prose naming two or three instances with no single
+ * destination. They are not prose: `gen-docs-pages.ts` writes both, and once it
+ * began saying so in their front matter they stopped being read at all. Their
+ * entries were DELETED rather than left, because an entry recording a choice
+ * nobody has to make any more is a question the owner would be asked twice.
+ * Neither file was edited to earn that — the generator was.
  */
 const PENDING: readonly { file: string; names: number }[] = [
   // THIS FILE, and it is listed rather than exempted on purpose.
@@ -307,7 +437,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/scripts/partition/instance-rules.ts", names: 2 },
   { file: "cat-harness/skills/authoring-who-smart-guidelines/smart-base-tools.md", names: 2 },
   { file: "cat-harness/skills/authoring-who-smart-guidelines/ig-artifact-ingestion.md", names: 2 },
-  { file: "cat-harness/scripts/ingest-ig-artifacts.ts", names: 3 },
+  { file: "folio-assistant-core/scripts/ingest-ig-artifacts.ts", names: 3 },
   { file: "cat-harness/schemas/ig-chrome.ts", names: 6 },
   { file: "cat-harness/schemas/cat-harness.ts", names: 2 },
   { file: "cat-harness/skills/authoring-who-smart-guidelines/dak-postprocessing.md", names: 5 },
@@ -332,12 +462,10 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "cat-harness/scripts/kg-export.ts", names: 2 },
   { file: "cat-harness/scripts/layout-norms-baseline.json", names: 2 },
   { file: "cat-harness/tools/discover.ts", names: 2 },
-  { file: "cat-harness/docs/ig-publisher.md", names: 3 },
   { file: "cat-harness/skills/folio-core/harness-tiles.md", names: 2 },
   { file: "cat-harness/schemas/harness-config.ts", names: 3 },
   { file: "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md", names: 2 },
   { file: "cat-harness/scripts/check-context-emission.ts", names: 3 },
-  { file: "cat-harness/scripts/check-artifact-index.ts", names: 2 },
   { file: "cat-harness/scripts/harness-schema-export.ts", names: 2 },
   { file: "cat-harness/docs/wireframes/voices/intent.md", names: 2 },
   { file: "smart-ig/README.md", names: 2 },
@@ -349,9 +477,7 @@ const PENDING: readonly { file: string; names: number }[] = [
   { file: "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md", names: 2 },
   { file: "cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md", names: 2 },
   { file: "cat-harness/scripts/ingest-ig-chrome.ts", names: 2 },
-  { file: "cat-harness/scripts/gen-object-model-uml.ts", names: 2 },
   { file: "cat-harness/docs/processes/index.md", names: 2 },
-  { file: "cat-harness/docs/publication-workflow.md", names: 2 },
   { file: "smart-ig/smart-ig.json", names: 2 },
 ];
 
@@ -591,15 +717,247 @@ export function analyse(root = REPO_ROOT): ReferenceReport {
   };
 }
 
+// ── The committed sidecar ───────────────────────────────────────
+
+/** The sidecar's stem: `<instance>/test/results/<stem>.qa-results.json`. */
+export const SIDECAR_STEM = "reference-direction";
+
+/**
+ * The one family {@link comparableDirection} holds OUT of the staleness key.
+ *
+ * Named rather than spelled at each use, because the whole freshness decision
+ * turns on which family this is — a second spelling one edit out of step would
+ * silently start grading the counts, or silently stop grading a state.
+ */
+export const CENSUS_FAMILY = "verdict-census";
+
+/** A `PENDING` row: a file with no single destination, and how many it names. */
+export interface PendingEntry {
+  file: string;
+  names: number;
+}
+
+/**
+ * The DETERMINATIONS this axis has reached — everything `--check` grades.
+ *
+ * Every field here moves when a RULING moves, never when somebody writes a
+ * paragraph: a file acquires or loses a second destination, an entry stops
+ * qualifying, an instance starts or stops declaring `needs`. That is the
+ * property that makes grading them worth doing, and it is the property the
+ * verdict counts do not have.
+ */
+export interface DirectionStates {
+  /** The `PENDING` list as the source declares it. Membership is the ruling. */
+  pendingHeld: PendingEntry[];
+  /** Entries that no longer qualify — the half that makes `PENDING` honest. */
+  pendingStale: { file: string; why: string }[];
+  /** Files naming several instances above them that nobody has listed. This is what exits 1. */
+  multiDestinationUnlisted: { file: string; names: number }[];
+  /** Instances that declare no `needs`, so nothing about their layer is known. */
+  undeclaredInstances: string[];
+}
+
+/**
+ * Reduce a scan to the four determinations, with no filesystem and no printing.
+ *
+ * Pure and exported so a test can exercise it on a three-file synthetic tree.
+ * The real corpus is deliberately out of reach of this suite: a prior session's
+ * tests walked it and pushed a sibling past its 5 s budget.
+ */
+export function directionStates(
+  report: ReferenceReport,
+  pending: readonly PendingEntry[],
+): DirectionStates {
+  const wrong = report.classified.filter((c) => c.verdict.verdict === "wrong-direction");
+  const byFile = new Map<string, Set<string>>();
+  for (const c of wrong) {
+    byFile.set(c.occurrence.file, new Set([...(byFile.get(c.occurrence.file) ?? []), c.occurrence.to]));
+  }
+  const listed = new Set(pending.map((p) => p.file));
+  const pendingStale = [
+    ...pending
+      .filter((p) => !byFile.has(p.file))
+      .map((p) => ({ file: p.file, why: "no wrong-direction reference left" })),
+    ...pending
+      .filter((p) => (byFile.get(p.file)?.size ?? 0) === 1)
+      .map((p) => ({ file: p.file, why: "now names ONE instance, so it has a destination and is not pending" })),
+  ].sort((a, b) => a.file.localeCompare(b.file));
+  const multiDestinationUnlisted = [...byFile]
+    .filter(([f, to]) => to.size > 1 && !listed.has(f))
+    .map(([file, to]) => ({ file, names: to.size }))
+    .sort((a, b) => a.file.localeCompare(b.file));
+  return {
+    pendingHeld: [...pending].sort((a, b) => a.file.localeCompare(b.file)),
+    pendingStale,
+    multiDestinationUnlisted,
+    undeclaredInstances: [...report.undeclared].sort(),
+  };
+}
+
+/**
+ * The verdict counts — this axis's ANSWER, recorded but never graded.
+ *
+ * Only verdicts. `skippedMachineWritten` and `skippedGeneratorWritten` are
+ * counts of FILES and stay in the printed report, for the reason the module
+ * docblock gives: a file census says nothing about direction and moves on any
+ * commit that adds a page.
+ *
+ * `pendingOccurrences` is a count of OCCURRENCES held by the `PENDING` list,
+ * which is a verdict count about a ruling rather than a census of the tree, so
+ * it belongs with these. Its membership — the part that is a decision — is in
+ * {@link DirectionStates} and IS graded.
+ */
+export function directionCensus(
+  report: ReferenceReport,
+  states: DirectionStates,
+): Record<string, number> {
+  const n = (v: ReferenceVerdict["verdict"]) => report.classified.filter((c) => c.verdict.verdict === v).length;
+  const wrong = report.classified.filter((c) => c.verdict.verdict === "wrong-direction");
+  const held = new Set(states.pendingHeld.map((p) => p.file));
+  return {
+    instances: report.instances,
+    occurrences: report.classified.length,
+    allowed: n("allowed"),
+    wrongDirection: wrong.length,
+    wrongDirectionFiles: new Set(wrong.map((c) => c.occurrence.file)).size,
+    exempt: n("exempt"),
+    namesRepository: n("names-repository"),
+    undetermined: n("undetermined"),
+    pendingFiles: states.pendingHeld.length,
+    pendingOccurrences: wrong.filter((c) => held.has(c.occurrence.file)).length,
+  };
+}
+
+/**
+ * Assemble the sidecar. Pure — takes a scan, returns the document.
+ *
+ * `exemptionsDeclared` is the number of exemptions, each of which carries a
+ * stated reason in the source. It is recorded with the states rather than with
+ * the counts because an exemption appearing or disappearing is an edit
+ * somebody made, not a corpus that moved.
+ */
+export function buildDirectionResult(args: {
+  report: ReferenceReport;
+  pending: readonly PendingEntry[];
+  exemptionsDeclared: number;
+  script?: string;
+  scriptAbsPath?: string;
+  now?: Date;
+}): QaResult {
+  const states = directionStates(args.report, args.pending);
+  const census = directionCensus(args.report, states);
+  const script = args.script ?? join("cat-harness", "scripts", "check-reference-direction.ts");
+  return buildQaResult({
+    script,
+    scriptAbsPath: args.scriptAbsPath ?? join(import.meta.dir, "check-reference-direction.ts"),
+    subject: { kind: "reference-direction", id: "instances" },
+    now: args.now,
+    families: {
+      "multi-destination-unlisted": {
+        summary:
+          "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which " +
+          "`PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one " +
+          "is an unrecorded question rather than a finding somebody can act on: \"move it up\" has " +
+          "no single destination. This is the set the script exits 1 on, and recording it is not " +
+          "resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
+        entries: states.multiDestinationUnlisted,
+      },
+      "pending-stale": {
+        summary:
+          "A `PENDING` entry that no longer qualifies — either no wrong-direction reference is left " +
+          "in the file, or it now names exactly one instance and so HAS a destination. The set is " +
+          "compared both ways on purpose: a list that only grows stops meaning anything.",
+        entries: states.pendingStale,
+      },
+      "pending-held": {
+        summary:
+          "The files held pending a ruling, as the source declares them. Not findings: the RULING, " +
+          "committed, so a reader with only this file can tell a question nobody has answered from " +
+          "an axis nobody has run. Membership moves only when somebody edits the list, which is why " +
+          "it is graded while the occurrence count it holds is not.",
+        entries: states.pendingHeld,
+      },
+      "instances-undeclared": {
+        summary:
+          "An instance that declares no `needs`, so nothing about its layer is known and every " +
+          "reference from it is `undetermined`. `[]` is the floor; absent is nobody-has-said, and " +
+          "collapsing the two would make an undeclared instance look either tangled or spotless.",
+        entries: states.undeclaredInstances.map((name) => ({ instance: name })),
+      },
+      [CENSUS_FAMILY]: {
+        summary:
+          "Not findings, and NOT graded: what the axis says on the run that wrote this. Verdict " +
+          "counts are recorded because they ARE this axis's answer — a reader holding only this " +
+          "file cannot otherwise tell `audited clean` from `never audited`, which is the whole " +
+          "reason the sidecar exists. They are not graded because they move whenever anybody " +
+          "writes a paragraph, and `audit-coverage` already established that a gate keyed on a " +
+          "number like that is stale by default. FILE counts are not here at all — how many files " +
+          "were skipped as machine-written or self-declared generator output is a census of the " +
+          "tree, not a statement about direction, and stays in the printed report. " +
+          `${states.pendingHeld.length} file(s) held pending; ${args.exemptionsDeclared} exemption(s) declared, each with a stated reason.`,
+        entries: [census],
+      },
+    },
+  });
+}
+
+/**
+ * The staleness key — everything except the timestamp and the counts.
+ *
+ * `total` goes too, because it SUMS a family that is not graded: leaving it in
+ * would grade the census through the back door, which is the same mistake in a
+ * place nobody would look for it.
+ *
+ * `producer.script_hash` stays IN. A result is allowed to be old; it is not
+ * allowed to have been written by a producer that no longer exists, because
+ * then what it says is the old code's answer — `check:harness-state`'s rule
+ * for `health`, and the reason it is a hash rather than an age.
+ */
+export function comparableDirection(r: QaResult): string {
+  const { updated_at: _when, total: _total, families, ...rest } = r;
+  const graded = Object.fromEntries(Object.entries(families).filter(([k]) => k !== CENSUS_FAMILY));
+  return JSON.stringify({ ...rest, families: graded });
+}
+
+/**
+ * Is the committed sidecar's RULING what this run computed?
+ *
+ * `absent` is its own answer and never folded into `current`. A missing
+ * sidecar reported as not-stale is the `dh4f` defect precisely — no record at
+ * all reading identically to a clean one.
+ *
+ * It reads and returns. It does not write, does not create the directory, and
+ * does not repair what it is reporting: bean `ymsu` has two witnesses already
+ * and this is not going to be the third.
+ */
+export function directionSidecarState(
+  instanceRoot: string,
+  fresh: QaResult,
+): "absent" | "stale" | "current" {
+  const p = join(instanceRoot, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`);
+  if (!existsSync(p)) return "absent";
+  try {
+    return comparableDirection(JSON.parse(readFileSync(p, "utf-8")) as QaResult) === comparableDirection(fresh)
+      ? "current"
+      : "stale";
+  } catch {
+    return "stale";
+  }
+}
+
 // ── Reporting ───────────────────────────────────────────────────
 
-function main(): void {
+function main(): number {
   const args = process.argv.slice(2);
+  // `--check` reads and compares; it never writes. Bean `ymsu` — a gate that
+  // repairs the tree the rest of the run is judging makes a later gate's
+  // verdict meaningless, and this repository has two of those already.
+  const check = args.includes("--check");
   const report = analyse();
 
   if (report.instances === 0) {
     console.error("check:reference-direction: found 0 declared instances — wrong root, or the tree moved.");
-    process.exit(2);
+    return 2;
   }
 
   const of = (v: ReferenceVerdict["verdict"]) => report.classified.filter((c) => c.verdict.verdict === v);
@@ -607,6 +965,7 @@ function main(): void {
   const undet = of("undetermined");
   const exempt = of("exempt");
   const namesRepo = of("names-repository");
+  const states = directionStates(report, PENDING);
 
   console.log(`Reference direction — ${report.instances} instances, ${report.classified.length} name occurrences pointing up the dependency arrow\n`);
   console.log(`  wrong-direction   ${String(wrong.length).padStart(5)}   in ${new Set(wrong.map((c) => c.occurrence.file)).size} files`);
@@ -616,6 +975,9 @@ function main(): void {
   // was read, it was judged, and what it names owes no direction.
   console.log(`  names-repository  ${String(namesRepo.length).padStart(5)}   names the repository or its address, which is not a layer`);
   console.log(`  undetermined      ${String(undet.length).padStart(5)}   declined to judge — NOT clean`);
+  // PRINTED, never recorded. Both are counts of FILES — they move when
+  // somebody adds a generated page and say nothing about direction. See the
+  // module docblock for where the line is drawn and why.
   console.log(`\n  Not read, both answered from a declaration rather than a path:`);
   console.log(`    ${report.skippedMachineWritten} file(s) — their DIRECTORY declares a graph a process writes (holds state/derived)`);
   console.log(`    ${report.skippedGeneratorWritten} file(s) — the FILE declares itself generator output (\`$schema\` declared generated, \`_generated\`, or \`generated:\` front matter)`);
@@ -658,36 +1020,77 @@ function main(): void {
   }
 
   // PENDING is checked BOTH ways, which is the half that makes it honest.
-  const byFile = new Map<string, Set<string>>();
-  for (const c of wrong) {
-    byFile.set(c.occurrence.file, new Set([...(byFile.get(c.occurrence.file) ?? []), c.occurrence.to]));
-  }
-  const pendingFiles = new Set(PENDING.map((p) => p.file));
-  const held = wrong.filter((c) => pendingFiles.has(c.occurrence.file));
+  const heldFiles = new Set(states.pendingHeld.map((p) => p.file));
+  const held = wrong.filter((c) => heldFiles.has(c.occurrence.file));
   console.log(
     `\n  of the wrong-direction count, ${held.length} occurrence(s) in ${PENDING.length} file(s) are PENDING —` +
       ` each names more than one instance above it, so there is no single place to move it to (issue #1219)`,
   );
 
-  const gone = PENDING.filter((p) => !byFile.has(p.file));
-  const settled = PENDING.filter((p) => (byFile.get(p.file)?.size ?? 0) === 1);
-  if (gone.length > 0 || settled.length > 0) {
-    console.error(`\n✗ ${gone.length + settled.length} PENDING entr(y/ies) no longer qualify — delete them:`);
-    for (const p of gone) console.error(`    ${p.file} — no wrong-direction reference left`);
-    for (const p of settled) console.error(`    ${p.file} — now names ONE instance, so it has a destination and is not pending`);
-    process.exit(1);
+  if (states.pendingStale.length > 0) {
+    console.error(`\n✗ ${states.pendingStale.length} PENDING entr(y/ies) no longer qualify — delete them:`);
+    for (const p of states.pendingStale) console.error(`    ${p.file} — ${p.why}`);
   }
-  const missing = [...byFile].filter(([f, to]) => to.size > 1 && !pendingFiles.has(f));
-  if (missing.length > 0) {
-    console.error(`\n✗ ${missing.length} file(s) name several instances above them and are not in PENDING:`);
-    for (const [f, to] of missing) console.error(`    ${f} — names ${to.size}`);
-    process.exit(1);
+  if (states.multiDestinationUnlisted.length > 0) {
+    console.error(`\n✗ ${states.multiDestinationUnlisted.length} file(s) name several instances above them and are not in PENDING:`);
+    for (const p of states.multiDestinationUnlisted) console.error(`    ${p.file} — names ${p.names}`);
   }
+
+  // The sidecar is built from what was just measured, and written — or, under
+  // `--check`, compared and left alone. It happens AFTER the report and BEFORE
+  // the exits, so the states that make this exit 1 are RECORDED rather than
+  // suppressed: a run that refuses still says, in a committed file, what it
+  // refused over.
+  const fresh = buildDirectionResult({
+    report,
+    pending: PENDING,
+    exemptionsDeclared: EXEMPTIONS.length,
+    script: relative(REPO_ROOT, join(INSTANCE_ROOT, "scripts", "check-reference-direction.ts")),
+    scriptAbsPath: join(INSTANCE_ROOT, "scripts", "check-reference-direction.ts"),
+  });
+  const where = relative(REPO_ROOT, join(INSTANCE_ROOT, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`));
+  const state = directionSidecarState(INSTANCE_ROOT, fresh);
+  if (!check) writeQaResult(INSTANCE_ROOT, SIDECAR_STEM, fresh);
+  // The message names WHAT was compared. A `--check` that passed silently
+  // would be read as a guarantee about the counts, which it is not and by
+  // design cannot be.
+  console.log(
+    `\n  sidecar: ${where}` +
+      `\n    graded — the PENDING set, the entries that no longer qualify, the unlisted` +
+      ` multi-destination files, the instances with no \`needs\`` +
+      `\n    recorded, NOT graded — the verdict counts, which move whenever the corpus does`,
+  );
+  if (state !== "current") {
+    const msg =
+      state === "absent" ? `no committed sidecar at ${where}` : `the committed sidecar at ${where} records different STATES from this run`;
+    console.log(check ? `\n✗ ${msg} — run \`bun run check:reference-direction\` and commit it.` : `\n· ${msg} — written.`);
+  }
+
+  // `--check` answers ONE question — is the committed ruling what this run
+  // computed — and answers only that. It does not also fail on the backlog,
+  // for `audit:coverage --check`'s reason: there, staleness is the half that
+  // can fail now and the findings are reported, because a gate that refused
+  // every push until somebody drained a backlog is a gate switched off within
+  // a week. The backlog exit below is the PLAIN form's, and it is loud on both
+  // forms — the `✗` lines above print either way, so a `--check` that returns
+  // 0 cannot be mistaken for a clean axis.
+  if (check) {
+    if (states.pendingStale.length > 0 || states.multiDestinationUnlisted.length > 0) {
+      console.log(
+        `\n  (the ${states.pendingStale.length + states.multiDestinationUnlisted.length} state(s) above are RECORDED, not graded here —` +
+          ` \`bun run check:reference-direction\` is the form that exits 1 on them)`,
+      );
+    }
+    return state === "current" ? 0 : 1;
+  }
+  // Unchanged, and deliberately so: recording a state is not resolving it.
+  if (states.pendingStale.length > 0 || states.multiDestinationUnlisted.length > 0) return 1;
 
   if (args.includes("--strict") && wrong.length > 0) {
     console.error(`\n✗ ${wrong.length} wrong-direction reference(s). A lower instance may not name one that depends on it.`);
-    process.exit(1);
+    return 1;
   }
+  return 0;
 }
 
-if (import.meta.main) main();
+if (import.meta.main) process.exit(main());

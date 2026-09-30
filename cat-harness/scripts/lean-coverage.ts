@@ -44,6 +44,7 @@
 
 import { folioDir } from "../schemas/cat-harness.js";
 import { stripLeanComments } from "../content/pipeline/lean-lexer.js";
+import { refToDecl } from "../content/pipeline/content-graph.js";
 import { readdirSync, readFileSync, existsSync, writeFileSync } from "fs";
 import { join, resolve, relative, dirname, basename } from "path";
 import { findContentRepoRoot } from "../content/pipeline/repo-root";
@@ -143,8 +144,12 @@ function resolveLeanFile(
   const sib = tsPath.replace(/\.ts$/, ".lean");
   if (existsSync(sib)) return sib;
   const m = src.match(/lean:\s*\{[^}]*ref:\s*["']([^"']+)["']/s);
-  if (!m || !m[1].startsWith("qou:")) return null;
-  const parts = m[1].slice(4).split(".");
+  if (!m) return null;
+  // Any `<package>:` prefix, not one folio's. This read `startsWith("qou:")`
+  // until 2026-09-30, so in every other folio a proof living in the library
+  // tree was never found and the ∀ mark (and a generated blueprint's
+  // \leanok) fell back to the hand-set status (folio-assistant#1492).
+  const parts = refToDecl(m[1])!.split(".");
   const decl = parts[parts.length - 1];
   const declRe = new RegExp(`\\b${decl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`);
   for (let cut = parts.length; cut > 0; cut--) {

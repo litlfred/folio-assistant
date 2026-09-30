@@ -61,6 +61,7 @@ import { z } from "zod";
 
 import { AlsoAboutSchema, NoteAnchorSchema } from "./note-anchor.js";
 import { nodeKind } from "./node-kind.js";
+import { ProcessElementIdSchema } from "./process-element-id.js";
 
 /**
  * A task, addressed as the pair it actually is.
@@ -73,7 +74,7 @@ import { nodeKind } from "./node-kind.js";
  */
 export const TaskRefSchema = z.object({
   /** BPMN process id, e.g. `Process_CRDM`. */
-  process: z.string().min(1),
+  process: ProcessElementIdSchema,
   /** Activity id within that process, e.g. `A_Implement`. */
   task: z.string().min(1),
 });

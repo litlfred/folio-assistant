@@ -374,6 +374,7 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   },
   isA: { gloss: "A role this one inherits from, statically and everywhere." },
   roleName: { gloss: "The role's own name, as a lane binds it." },
+  mayTakeRole: { gloss: "A declared role this actor may take on: a link to the Role node from `scenarios/roles.json` (#1168 B8)." },
   satisfiesStatement: { gloss: "A requirement statement this node discharges, as `req:<requirement>#<statement key>`." },
   performedBy: { gloss: "The role that performs this activity." },
   implementedBy: { gloss: "The skill that implements this activity." },

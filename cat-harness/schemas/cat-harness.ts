@@ -527,7 +527,7 @@ export interface ContentDirectory extends GraphNodeDirectory {
    * for why it lives on the directory and why the methodologies take
    * `analyst`.
    */
-  theme?: string;
+  theme?: ThemeRef;
 }
 
 /** An instance's root declaration. */
@@ -978,8 +978,8 @@ export const VisualisationSchema = z.object({
    * nowhere — which is `reader-filter.ts`'s rule on another surface.
    */
   hidden: z.boolean().optional(),
-  /** The tile's theme. Absent means the directory's, then the instance's. */
-  theme: z.string().min(1).optional(),
+  /** The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's. */
+  theme: ThemeRefSchema.optional(),
   /**
    * WHICH GLYPH the tile wears, by NAME. Absent falls back to the generic
    * node-graph glyph every tile shared before this field existed.
@@ -1157,12 +1157,63 @@ export const SubgraphCoverageSchema = z.object({
    * belongs here.
    */
   serialisations: z.string().min(1).optional(),
+  /**
+   * The BPMN process that GOVERNS this directory — a diagram's basename,
+   * without `.bpmn`, as `document-ingestion`.
+   *
+   * Owner, 2026-09-29: *"show highlevel (sub)process bpmn on the uploads
+   * page."* The uploads page is the generated subgraph README, and this is the
+   * field that tells it which diagram to draw.
+   *
+   * ## DECLARED, and the temptation not to is the whole reason it exists
+   *
+   * `document-ingestion.bpmn` opens on a start event named *"A file lands in
+   * uploads/"*. The directory is right there in the prose, so the link could
+   * be inferred by matching the path against every start event's name — and
+   * that is exactly the inference this repository keeps paying for. An event's
+   * name is EDITORIAL text: rewording it to *"a source is dropped"* would be
+   * an improvement to the diagram and would silently unlink the page, with no
+   * gate able to tell the unlinking from a directory that never had a process.
+   * The same argument `check-subgraph-coverage`'s header already makes about
+   * `visualiser`: *a declaration inside the file is the contract*.
+   *
+   * It is also many-to-one in the direction inference cannot see. A diagram
+   * may touch several directories (`document-ingestion` reads `uploads/` and
+   * writes `library/`) while only ONE of them is the directory the process is
+   * *about*. Name-matching would give `library/` the same claim.
+   *
+   * ## Absent means NOT DECLARED, never "no process"
+   *
+   * The standing rule, and the same one `readOnly` states two fields down.
+   * A directory that says nothing has not asserted that no process governs it;
+   * it has not answered. So a directory declaring none gets no process section
+   * on its README and is **not** a finding — unlike `visualiser`, this is not
+   * an obligation every directory owes, and treating silence as a gap would
+   * put 20-odd rows in a report that means nothing by them.
+   *
+   * What IS a finding is a declared name that resolves to no diagram:
+   * somebody said, and what they said points at nothing.
+   * `check:subgraph-coverage` reports that as `unresolvable`, naming the
+   * directory and the process, and the generated README says *could not
+   * determine* rather than quietly dropping the section — a printed absence
+   * and a real absence must not look alike.
+   *
+   * ## No `exempt.process`
+   *
+   * A waiver records a considered "we are not doing this" against an
+   * obligation. There is no obligation here, so there is nothing to waive:
+   * declaring nothing already IS the silence, and an `exempt` entry would be a
+   * second spelling of it, free to disagree.
+   */
+  process: z.string().min(1).optional(),
   exempt: z
     .object({
       visualiser: z.string().min(1).optional(),
       docs: z.string().min(1).optional(),
       skill: z.string().min(1).optional(),
       // NO `serialisations` — see the field above. Not an omission.
+      // NO `process` either, and for the opposite reason: there is no
+      // obligation to waive. Declaring nothing already means "not declared".
     })
     .optional(),
 });
@@ -1407,8 +1458,12 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    * reader, and that reader is what the site build, the gates and every
    * consumer of a `harness.json` go through. An unknown theme is a rendering
    * finding, not a parse error.
+   *
+   * A `ThemeRef` since #1168 B8 (owner, 2026-09-30: *"migrate to ThemeRef"*):
+   * still open — the shape is `{instance?, themeId}`, not an enum — but a
+   * cross-instance theme now says whose theme it is.
    */
-  theme: z.string().min(1).optional(),
+  theme: ThemeRefSchema.optional(),
 });
 
 /** As {@link GraphNodeDirectorySchema}, for an instance's own directories. */
@@ -3587,6 +3642,36 @@ export interface ResolvedDirectory extends ContentDirectory {
  */
 export const RENAMED_DIRECTORY_IDS: Readonly<Record<string, string>> = { "cat-harness": "skills" };
 
+/**
+ * The absolute path of a directory this instance declares by `id`, or the
+ * convention fallback joined to `root`.
+ *
+ * **`scope: "repository"` entries are excluded on purpose.** An instance may
+ * declare two entries with the same `path` and different scopes — this
+ * repository declares `docs` (instance-scoped, resolving under
+ * `cat-harness/`) and `root-docs` (`scope: "repository"`, resolving under the
+ * REPOSITORY root). They are different directories wearing one path, so a
+ * caller asking for "this instance's own `docs`" must not be handed the
+ * repository's.
+ *
+ * Lifted out of `scripts/kg-audit.ts` (2026-09-30) when a second caller
+ * appeared. Its reasoning there is kept because it is the reason the lookup is
+ * BY ID rather than by kind: *"a by-kind lookup that happens to work while one
+ * directory exists is a call that starts throwing the day a second is
+ * declared, and it would be asking the wrong question even while it worked."*
+ * The `docs`/`root-docs` pair is that second directory, and it exists now.
+ *
+ * @param root the instance root to resolve against
+ * @param id the declared entry's `id`
+ * @param fallback a path relative to `root`, used when nothing is declared
+ */
+export function ownDirectoryById(root: string, id: string, fallback: string): string {
+  const found = resolveDirectories([{ name: "(local)", root, own: true }]).find(
+    (d) => d.id === id && d.own && d.scope !== "repository",
+  );
+  return found?.absPath ?? join(root, fallback);
+}
+
 export function resolveDirectories(
   chain: Array<{ name: string; root: string; own?: boolean }>,
   registry: GraphKindRegistry = defaultGraphKinds,
@@ -5285,3 +5370,4 @@ import "./folio-graph-kind.js";
 // Core's `glossary` kind, registered the same way and for the same reason
 // (issue: owner 2026-09-23, "put glossary into folio-assistant-core").
 import "./glossary-graph-kind.js";
+import { ThemeRefSchema, type ThemeRef } from "./theme";

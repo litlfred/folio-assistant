@@ -47,6 +47,7 @@ import { registerDepsTools } from "../../src/tools/check-deps.js";
 import { registerPreferenceTools } from "../../src/tools/preferences.js";
 import { registerPreviewTools } from "../../src/tools/preview.js";
 import { registerSkillFetchTools } from "../../src/tools/skill-fetch.js";
+import { registerSkillPrompts } from "../../src/tools/skill-prompts.js";
 import { registerFolioInitTools } from "../../src/tools/folio-init.js";
 import { registerReadmeSyncTools } from "../../src/tools/readme-sync.js";
 import { registerRenderOrderTools } from "../../src/tools/render-order.js";
@@ -1180,6 +1181,11 @@ End every response with suggested follow-ups:
     registerPreferenceTools(server);
     registerPreviewTools(server);
     registerSkillFetchTools(server);
+    // The person-facing half of the same skills: each `user_invocable` one as
+    // an MCP PROMPT, which a host lists for the person rather than offering to
+    // the model. Not a tool — bean `j6t3`, and the owner's "keep tools and
+    // skills separate!".
+    registerSkillPrompts(server);
     // `folio_init` runs BEFORE a folio has a content type, so it has to be
     // reachable whichever adapter a bare repo happened to fall back to.
     registerFolioInitTools(server);
