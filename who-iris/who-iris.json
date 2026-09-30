@@ -27,7 +27,7 @@
   "_folioMount_comment": "F8/F9, bean jpjt. The reader's folio comes from cat-harness and must be the same folio in every library they browse — board-windows: \"the test is not 'is this folio good' but 'is this the same folio'\". These are the roots whose pages carry it; `check:folio-mount` fails the build for one that does not. uploads/ is EXEMPT with its reason, because it holds the captured IRIS source the replica is generated FROM, and rewriting a capture destroys the artefact ingestion exists to preserve.",
   "folioMount": {
     "roots": [
-      "library/",
+      "site/",
       "docs/"
     ],
     "exempt": [
@@ -46,8 +46,21 @@
       "graphKinds": [
         "library"
       ],
+      "_comment_corpusOnly": "CORPUS ONLY since 2026-09-30 (bean 2b5s, the owner's 'site/ + publish covers'). This entry carried `instanceRoot: true` while the replica pages lived here, and a mount copies the whole directory whose index.html it finds -- so the 1,367 ingestion sidecars were published at /who-iris/ AND /library/who-iris/ as if they were pages. The replica moved to `site/`, which is now the instance root; this directory has no index.html and is mounted nowhere. The covers the replica shows stay here, where the catalogue's localPath names them (bean yl5w), and the mount publishes exactly the ones a page embeds.",
+      "kindRouteRedirect": true,
+      "_comment_kindRouteRedirect": "/library/who-iris/ stayed a live URL while it was a verbatim mount, so it keeps answering: `mount-instance-docs.ts` writes it as a one-file redirect to this directory's library viewer, /cat-harness/library/who-iris/, rather than letting an old link 404."
+    },
+    {
+      "id": "who-iris-site",
+      "path": "site/",
+      "dependents": "skip",
+      "description": "The IRIS REPLICA: the home page, the community list, and one page per collection and per item, themed as IRIS and generated from `catalogue/` by `scripts/gen-iris-pages.ts` (gated by `bun run iris:pages:check`). It is what `/who-iris/` serves. Moved out of `library/` on 2026-09-30 (bean 2b5s) so that the corpus and its rendering are separate directories: before, the mount copied the corpus along with the pages. A page shows an item's cover by referencing `../library/<slug>-cover.png`; the build publishes exactly the files a page embeds, beside the replica, and not the directory they sit in.",
+      "graphKinds": [
+        "docs"
+      ],
+      "_graphKinds_comment": "`docs`, the one renderable kind the harness owns, because the mount publishes only renderable directories' pages and the replica is a finished HTML rendering of this instance's catalogue -- `folio` is authored block content with viewers, LaTeX and QA badges, which this is not. It shares the kind with `docs/`, and `withRoutes` settles which answers where: this directory is the instance root and serves /who-iris/, and the kind route /docs/who-iris/ stays with the sibling that is not the root, so the replica is published once rather than twice.",
       "instanceRoot": true,
-      "_comment_instanceRoot": "The themed replica is what /who-iris/ serves — the owner's ruling, 'who-iris themed at /who-iris/'. Without this the route goes to whichever kind sorts first, which is `docs`."
+      "_comment_instanceRoot": "The themed replica is what /who-iris/ serves — the owner's ruling, 'who-iris themed at /who-iris/'. Moved here from the `library` entry with the pages (bean 2b5s)."
     },
     {
       "id": "who-iris-catalogue",

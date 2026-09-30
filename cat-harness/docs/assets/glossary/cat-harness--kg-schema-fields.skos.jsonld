@@ -6189,6 +6189,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.kindrouteredirect",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.kindRouteRedirect"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`/<kind>/<instance>/` for this directory is a ONE-FILE REDIRECT to the directory's declared viewer, because the directory itself is not mounted."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.kindRouteRedirect",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.readonly",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -66,7 +66,8 @@ function main(): number {
   const r = railStandalonePages(siteAbs, built, built, routes);
   console.log(
     `rail-standalone-pages: rail on ${r.injected} page(s), ` +
-      `${r.alreadyNavigated} already navigated, ${routes.length} mount route(s) left to the mount pass`,
+      `${r.alreadyNavigated} already navigated, ${r.redirects} redirect stub(s) left bare, ` +
+      `${routes.length} mount route(s) left to the mount pass`,
   );
   if (r.skipped.length) {
     console.log(`  ${r.skipped.length} file(s) took no rail (no <body>):`);

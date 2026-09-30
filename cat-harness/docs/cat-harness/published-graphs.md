@@ -80,7 +80,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }})
 - [smart-trust]({{ '/cat-harness/docs-auto/index/docs/smart-trust-docs/' | relative_url }})
-- [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/who-iris-docs/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/docs-auto/index/docs/' | relative_url }})
 
 ### `external-schema`
 

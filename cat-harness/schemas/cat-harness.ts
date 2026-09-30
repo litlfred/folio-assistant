@@ -1415,6 +1415,27 @@ const ContentDirectoryShape = GraphNodeDirectoryShape.extend({
    */
   instanceRoot: z.boolean().optional(),
   /**
+   * `/<kind>/<instance>/` for this directory is a ONE-FILE REDIRECT to the
+   * directory's declared viewer, because the directory itself is not mounted.
+   *
+   * The case it exists for is a directory that WAS mounted and stopped being:
+   * its kind route was a live URL, somebody may have linked it, and a route
+   * that simply vanishes turns every such link into a 404. Bean `2b5s`: an
+   * instance's `library/` held both its rendered pages and its corpus, the
+   * mount copied the corpus to two routes, and moving the pages out left
+   * `/library/<instance>/` with nothing to serve.
+   *
+   * **Declared, not inferred.** "Was this route ever published" is a fact
+   * about history, which a checkout does not hold; deriving the redirect from
+   * "has a published viewer and no index" instead would emit one stub per
+   * such directory in every instance — 39 on 2026-09-30, several at routes
+   * Jekyll already serves. `mount-instance-docs.ts` refuses the redirect,
+   * naming it, when the directory IS mountable (a route cannot be both a
+   * mount and a redirect) or declares no published viewer (a redirect to
+   * nowhere).
+   */
+  kindRouteRedirect: z.boolean().optional(),
+  /**
    * This directory is AUTHORED FOR THE SITE'S PIPELINE, so compose it into the
    * Jekyll source instead of mounting its built output.
    *

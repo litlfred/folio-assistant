@@ -18,7 +18,16 @@ import { cpSync, existsSync, mkdirSync, mkdtempSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
 
-import { WITHHELD_FILE, resolve_, withRoutes, withheldFilter, withheldPaths } from "../mount-instance-docs.js";
+import {
+  WITHHELD_FILE,
+  publishedAsset,
+  redirectHtml,
+  referencedAssets,
+  resolve_,
+  withRoutes,
+  withheldFilter,
+  withheldPaths,
+} from "../mount-instance-docs.js";
 
 const r = (route: string) => ({ route });
 
@@ -174,6 +183,29 @@ describe("which kind answers at the instance's own route", () => {
     expect(candidates.filter((c) => c.route === "x")).toHaveLength(1);
   });
 
+  it("a declared root YIELDS its kind route to a same-kind sibling — bean 2b5s", () => {
+    // who-iris's replica (`site/`) and its documentation (`docs/`) are both
+    // `docs`. Without the rule both claim `docs/who-iris` and the walk refuses
+    // one; with it the replica answers at `/who-iris/` only and the kind
+    // route stays with the sibling that is not the root.
+    const site = { ...m("who-iris", "docs", true), dir: "/repo/who-iris/site" };
+    const docs = { ...m("who-iris", "docs"), dir: "/repo/who-iris/docs" };
+    const { candidates, undetermined } = withRoutes([docs, site]);
+    expect(candidates.map((c) => [c.route, c.dir]).sort()).toEqual([
+      ["docs/who-iris", "/repo/who-iris/docs"],
+      ["who-iris", "/repo/who-iris/site"],
+    ]);
+    expect(resolve_(candidates).refused).toEqual([]);
+    expect(undetermined).toEqual([]);
+  });
+
+  it("with NO same-kind sibling the root still publishes at both routes", () => {
+    // smart-trust's shape: one docs directory, marked root. The yield rule
+    // must not take a URL away from an instance it does not concern.
+    const { candidates } = withRoutes([m("smart-trust", "docs", true)]);
+    expect(candidates.map((c) => c.route).sort()).toEqual(["docs/smart-trust", "smart-trust"]);
+  });
+
   it("one instance being undetermined does not implicate another", () => {
     const { undetermined } = withRoutes([
       m("x", "docs"),
@@ -225,5 +257,73 @@ describe("a mounted directory's withheld.json is honoured — bean cw35", () => 
     expect(() => withheldPaths(d)).toThrow(/refusing to publish/);
     writeFileSync(join(d, WITHHELD_FILE), JSON.stringify({ paths: [{ nope: 1 }] }));
     expect(() => withheldPaths(d)).toThrow(/refusing to publish/);
+  });
+});
+
+describe("a page's embedded assets are published, and nothing else from their directory — bean 2b5s", () => {
+  const instance = () => {
+    const d = mkdtempSync(join(tmpdir(), "inst-"));
+    mkdirSync(join(d, "site", "sub"), { recursive: true });
+    mkdirSync(join(d, "library", "slug"), { recursive: true });
+    writeFileSync(join(d, "library", "a-cover.png"), "a");
+    writeFileSync(join(d, "library", "b-cover.png"), "b");
+    writeFileSync(join(d, "library", "unreferenced.png"), "u");
+    writeFileSync(join(d, "library", "slug", "section.md"), "corpus");
+    writeFileSync(join(d, "site", "local.png"), "l");
+    return d;
+  };
+
+  it("finds the embedded files outside the mount, and only those", () => {
+    const d = instance();
+    writeFileSync(
+      join(d, "site", "index.html"),
+      '<img src="../library/a-cover.png"><img src="local.png"><a href="../library/b-cover.png">x</a>' +
+        '<img src="https://example.org/x.png"><img src="data:image/png;base64,AA"><script src="/abs.js"></script>',
+    );
+    writeFileSync(join(d, "site", "sub", "p.html"), '<img src="../../library/b-cover.png">');
+    const { assets, problems } = referencedAssets(join(d, "site"), d);
+    expect(problems).toEqual([]);
+    // `local.png` is inside the mount and travels with it; the `href` is
+    // navigation, not an embed; remote, data and root-absolute are not files.
+    expect(assets.map((a) => [a.page, a.underInstance])).toEqual([
+      ["index.html", "library/a-cover.png"],
+      ["sub/p.html", "library/b-cover.png"],
+    ]);
+  });
+
+  it("publishes beneath the route at the instance-relative path, and rewrites the ref to match", () => {
+    const d = instance();
+    writeFileSync(join(d, "site", "index.html"), '<img src="../library/a-cover.png">');
+    writeFileSync(join(d, "site", "sub", "p.html"), '<img src="../../library/a-cover.png">');
+    const [top, deep] = referencedAssets(join(d, "site"), d).assets;
+    expect(publishedAsset("who-iris", top!)).toEqual({ dest: "who-iris/library/a-cover.png", ref: "library/a-cover.png" });
+    expect(publishedAsset("who-iris", deep!)).toEqual({ dest: "who-iris/library/a-cover.png", ref: "../library/a-cover.png" });
+  });
+
+  it("refuses, naming it, a ref that leaves the instance, resolves to nothing, or is withheld", () => {
+    const d = instance();
+    writeFileSync(
+      join(d, "library", WITHHELD_FILE),
+      JSON.stringify({ $schema: "folio-withheld/v1", paths: [{ path: "b-cover.png", reason: "copyright refused" }] }),
+    );
+    writeFileSync(
+      join(d, "site", "index.html"),
+      '<img src="../../elsewhere.png"><img src="../library/missing.png"><img src="../library/b-cover.png">',
+    );
+    const { assets, problems } = referencedAssets(join(d, "site"), d);
+    expect(assets).toEqual([]);
+    expect(problems.map((p) => p.ref)).toEqual(["../../elsewhere.png", "../library/missing.png", "../library/b-cover.png"]);
+    expect(problems[2]!.why).toContain("library/withheld.json");
+  });
+});
+
+describe("a kind route whose directory is not mounted is a one-file redirect — bean 2b5s", () => {
+  it("refreshes, declares canonical, and links visibly, all to the viewer re-based from the route", () => {
+    const html = redirectHtml("library/who-iris", "cat-harness/library/who-iris/");
+    const target = "../../cat-harness/library/who-iris/";
+    expect(html).toContain(`<meta http-equiv="refresh" content="0; url=${target}">`);
+    expect(html).toContain(`<link rel="canonical" href="${target}">`);
+    expect(html).toContain(`<a href="${target}">`);
+    expect(html).toContain('content="noindex"');
   });
 });
