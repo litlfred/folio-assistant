@@ -25,7 +25,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**117 file(s)** across 5 group(s). Each links to the file itself —
+**127 file(s)** across 5 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -38,8 +38,8 @@ would make the format's limit and somebody's omission look the same.
 
 | state | files | what it means |
 |---|---|---|
-| <span class="fg-tag fg-ok">declared</span> | 65 | carries the tag itself |
-| <span class="fg-tag fg-side">via sidecar</span> | 46 | a script, described by a tagged `.md` sibling |
+| <span class="fg-tag fg-ok">declared</span> | 70 | carries the tag itself |
+| <span class="fg-tag fg-side">via sidecar</span> | 51 | a script, described by a tagged `.md` sibling |
 | <span class="fg-tag fg-gap">undeclared</span> | 6 | **neither** — a gap, not a format limit |
 
 The 6 undeclared are listed below with the rest rather than in a
@@ -111,7 +111,7 @@ summary count is the failure this table exists to avoid.
 
 ## uploads
 
-82 file(s).
+92 file(s).
 
 | file | what it is | declares itself |
 |---|---|---|
@@ -177,6 +177,12 @@ summary count is the failure this table exists to avoid.
 | [Skills in OpenAI API.pdf.extraction.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/Skills in OpenAI API.pdf.extraction.md) | `Skills in OpenAI API.pdf.extraction.json` | <span class="fg-tag fg-ok">declared</span> |
 | [WHO-RHR-18.06-eng.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/WHO-RHR-18.06-eng.md) | `WHO-RHR-18.06-eng.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [WHO-RHR-18.06-eng.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/WHO-RHR-18.06-eng.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [arxiv-0909.4061v2.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/arxiv-0909.4061v2.md) | `arxiv-0909.4061v2.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [arxiv-0909.4061v2.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/arxiv-0909.4061v2.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [arxiv-2202.02427v1.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/arxiv-2202.02427v1.md) | `arxiv-2202.02427v1.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [arxiv-2202.02427v1.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/arxiv-2202.02427v1.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [deerwester-1990-indexing-by-lsa.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/deerwester-1990-indexing-by-lsa.md) | `deerwester-1990-indexing-by-lsa.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [deerwester-1990-indexing-by-lsa.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/deerwester-1990-indexing-by-lsa.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [dong-2025-doc-researcher.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/dong-2025-doc-researcher.md) | `dong-2025-doc-researcher.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [dong-2025-doc-researcher.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/dong-2025-doc-researcher.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [dusengumuremyi-2026-ai-mediated-raci.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/dusengumuremyi-2026-ai-mediated-raci.md) | `dusengumuremyi-2026-ai-mediated-raci.pdf` | <span class="fg-tag fg-ok">declared</span> |
@@ -185,10 +191,14 @@ summary count is the failure this table exists to avoid.
 | [feng-2023-designing-with-language.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/feng-2023-designing-with-language.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [gurel-tat-2017-swot-analysis.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/gurel-tat-2017-swot-analysis.md) | `gurel-tat-2017-swot-analysis.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [gurel-tat-2017-swot-analysis.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/gurel-tat-2017-swot-analysis.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [landauer-foltz-laham-1998-intro-lsa.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.md) | `landauer-foltz-laham-1998-intro-lsa.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [landauer-foltz-laham-1998-intro-lsa.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [milnorlink.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/milnorlink.md) | `milnorlink.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [milnorlink.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/milnorlink.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [neubauer-2025-ai-assisted-schema-creation.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.md) | `neubauer-2025-ai-assisted-schema-creation.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [neubauer-2025-ai-assisted-schema-creation.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [qi-hessen-vanderheijden-2023-ca-vs-lsa.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.md) | `qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [rfc2119-key-words-requirement-levels.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/rfc2119-key-words-requirement-levels.md) | `rfc2119-key-words-requirement-levels.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [rfc2119-key-words-requirement-levels.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/rfc2119-key-words-requirement-levels.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [rfc8174-uppercase-vs-lowercase-2119-key-words.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.md) | `rfc8174-uppercase-vs-lowercase-2119-key-words.pdf` | <span class="fg-tag fg-ok">declared</span> |

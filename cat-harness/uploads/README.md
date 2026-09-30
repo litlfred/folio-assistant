@@ -8,9 +8,4 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `uploads`, holding `uploa
 | file | what it is | used by |
 |---|---|---|
 | [`adr-madr-2026-09-22.zip`](adr-madr-2026-09-22.zip) | a file |  |
-| [`arxiv-0909.4061v2.pdf`](arxiv-0909.4061v2.pdf) | a file |  |
-| [`arxiv-2202.02427v1.pdf`](arxiv-2202.02427v1.pdf) | a file |  |
-| [`deerwester-1990-indexing-by-lsa.pdf`](deerwester-1990-indexing-by-lsa.pdf) | a file |  |
-| [`landauer-foltz-laham-1998-intro-lsa.pdf`](landauer-foltz-laham-1998-intro-lsa.pdf) | a file |  |
-| [`qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf`](qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf) | a file |  |
 <!-- kg:subgraph:end -->

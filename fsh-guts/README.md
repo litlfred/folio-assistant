@@ -10,5 +10,5 @@ Part of [C@T Harness](../cat-harness/README.md) 0.1.0, declared as `fsh-guts`, h
 | [`retired/`](retired/) | 17 files | |
 | [`samples/`](samples/) | 1 file | |
 | [`scripts/`](scripts/) | 16 files | |
-| [`uploads/`](uploads/) | 82 files | |
+| [`uploads/`](uploads/) | 92 files | |
 <!-- kg:subgraph:end -->
