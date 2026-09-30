@@ -148,7 +148,7 @@ so an unmigrated registry still validates.</p>
 <div class="tsd-comment tsd-typography"><p>Arbitrary metadata (e.g., MCP endpoint, config path).</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/7h3u-smart-trust-branding/cat-harness/schemas/assistant-types.ts#L175">cat-harness/schemas/assistant-types.ts:175</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/7h3u-smart-trust-branding/cat-harness/schemas/assistant-types.ts#L177">cat-harness/schemas/assistant-types.ts:177</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="permissions"><code class="tsd-tag">Optional</code><span>permissions</span><a href="#permissions" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">permissions</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
@@ -175,14 +175,16 @@ settled. A capability is an ENVIRONMENT PROBE — <code>detection: { method: &qu
 fact about the host, declared by whoever built the site; probing for it
 would ask the network a question the network is precisely unable to
 answer on an air-gapped box, where the probe is indistinguishable from
-an outage. Capabilities that <em>need</em> egress say so with <code>requires</code>
-instead — see <code>.claude/skills/capabilities/network-egress.json</code>.</p>
+an outage. A capability that <em>needs</em> egress would say so with <code>requires</code>
+instead. None does yet: no <code>network-egress</code> capability is declared in
+<code>cat-harness/scenarios/capabilities/</code> (checked 2026-09-30, when this line
+named that file as if it existed).</p>
 <p>Absent means UNDECLARED, which is not <code>internet</code>. Composition with the
 deployment value — asymmetric, and <code>unknown</code> as a third state — is in
 <code>schemas/actor-reach.ts</code>.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/7h3u-smart-trust-branding/cat-harness/schemas/assistant-types.ts#L173">cat-harness/schemas/assistant-types.ts:173</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/claude/7h3u-smart-trust-branding/cat-harness/schemas/assistant-types.ts#L175">cat-harness/schemas/assistant-types.ts:175</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="roles"><code class="tsd-tag">Optional</code><span>roles</span><a href="#roles" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">roles</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
