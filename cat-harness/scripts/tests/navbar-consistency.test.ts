@@ -174,6 +174,30 @@ describe("could-not-determine is never green", () => {
   }
 });
 
+describe("the themes set is iterated, not hardcoded", () => {
+  test("it reports the denominator and issues no verdict at a set size of 1", () => {
+    const { out, status } = run();
+    expect(out).toMatch(/declaring a themes graph\s+\d+ of \d+/);
+    expect(out).toContain("who-iris");
+    // `v8n5` Done-when #2 generalised: the CHECK iterates the declared set, so
+    // instance #2 is covered the day it declares one. What it must NOT do is
+    // assert which theme may style a surface — PR #1584 held exactly that for
+    // the owner (who-iris owns `webpage` and `publication`, no `sticky`), and a
+    // check answering a question the owner reserved is speculation.
+    expect(out).toContain("issues no verdict");
+    expect(status).toBe(0);
+  });
+
+  test("the themes denominator is read from `graphKinds`, not a guessed key", () => {
+    // Reading it as `graphs` measured `0 of 20` over a corpus where the answer
+    // is 1. If this ever reads 0, the key has been guessed again.
+    const { out } = run();
+    const m = out.match(/declaring a themes graph\s+(\d+) of/);
+    expect(m).not.toBeNull();
+    expect(Number(m?.[1])).toBeGreaterThan(0);
+  });
+});
+
 describe("the denominator comes from the declared enumerator", () => {
   test("`instanceRootsIn` includes the repository root and excludes graph declarations", () => {
     const names = instanceRootsIn(REPO).map((p) => p.split("/").pop());

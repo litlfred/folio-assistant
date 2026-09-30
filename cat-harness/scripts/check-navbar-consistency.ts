@@ -110,6 +110,15 @@ interface InstanceArt {
   readonly tilesDeclared: number;
   /** Tile ids with no `icon`, so sharing the fallback drawing. */
   readonly tilesOnFallback: readonly string[];
+  /**
+   * Directories this instance declares with graph kind `themes`.
+   *
+   * The field is **`graphKinds`** and not `graphs`, which cost three wrong
+   * measurements in the session that wrote this: a plausible key name read
+   * `0 of 20` over a corpus where the answer is 1. Read the declaration, never
+   * guess its spelling.
+   */
+  readonly themeDirs: readonly string[];
 }
 
 /**
@@ -127,7 +136,7 @@ function artOf(repoRoot: string, root: string): InstanceArt | undefined {
     name?: string;
     icon?: string;
     images?: { id?: string }[];
-    directories?: { id?: string; tile?: { icon?: string } }[];
+    directories?: { id?: string; path?: string; graphKinds?: string[]; tile?: { icon?: string } }[];
   };
 
   const tiles = (d.directories ?? []).filter((x) => typeof x.tile === "object" && x.tile !== null);
@@ -144,6 +153,9 @@ function artOf(repoRoot: string, root: string): InstanceArt | undefined {
     tilesDeclared: tiles.length,
     tilesOnFallback: tiles.flatMap((x) =>
       typeof x.tile?.icon === "string" ? [] : [x.id ?? "<no id>"],
+    ),
+    themeDirs: (d.directories ?? []).flatMap((x) =>
+      (x.graphKinds ?? []).includes("themes") ? [x.path ?? x.id ?? "?"] : [],
     ),
   };
 }
@@ -313,6 +325,24 @@ function main(): number {
     console.log("  NOTE: no id is drawn by both registries, so `registry-disagreement`");
     console.log("        swept an empty domain. That is not a clean result for it.\n");
   }
+
+  const themed = art.filter((a) => a.themeDirs.length > 0);
+  console.log(`  declaring a themes graph    ${themed.length} of ${art.length}` +
+    (themed.length > 0 ? `  (${themed.map((a) => a.instance).join(", ")})` : ""));
+  if (themed.length <= 1) {
+    console.log("  NOTE: `v8n5`'s Done-when #2 — a surface must not fall back to the");
+    console.log("        platform default for an instance that declares its own theme —");
+    console.log("        is read over this set. At a set size of 1 there is nothing to");
+    console.log("        COMPARE, so this reports the denominator and issues no verdict.");
+    console.log("        The set is iterated rather than hardcoded, so instance #2 is");
+    console.log("        covered the day it declares one.");
+  }
+  // And deliberately NO assertion about which theme may style a given surface.
+  // PR #1584 left exactly that open for the owner: the board styles a card only
+  // from `sticky`-kind themes, and who-iris owns a `webpage` and a
+  // `publication` theme and no `sticky` one. Picking one here would answer a
+  // question the owner held, which is not a check's to answer.
+  console.log();
 
   const blocking = findings.filter((f) => f.blocking);
   const advisory = findings.filter((f) => !f.blocking);
