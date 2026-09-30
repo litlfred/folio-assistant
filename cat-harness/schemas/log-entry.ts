@@ -214,7 +214,7 @@ export const LogEntrySchema = z.object({
   detail: z.string().optional(),
 
   // ── Who and where ──────────────────────────────────────────────
-  /** The actor id from `.claude/skills/actors/`, where one is known. */
+  /** The actor id from `cat-harness/scenarios/actors/`, where one is known. */
   actor: z.string().min(1).optional(),
   /**
    * The role the actor was acting AS — a BPMN swimlane, per the role model.

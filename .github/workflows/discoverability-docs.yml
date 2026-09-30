@@ -44,6 +44,8 @@ jobs:
     # and merged without it being seen.
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: dtolnay/rust-toolchain@stable
 
@@ -117,6 +119,8 @@ jobs:
     # and merged without it being seen.
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: actions/setup-python@v7
         with:
@@ -199,6 +203,8 @@ jobs:
     # and merged without it being seen.
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: oven-sh/setup-bun@v2
         with:

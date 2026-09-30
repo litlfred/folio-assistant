@@ -42,6 +42,8 @@ jobs:
       packages: ${{ steps.read.outputs.packages }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
       - id: read
         # The requested package comes through `env`, NOT `${{ }}` interpolation.
         # An expression is substituted into the script TEXT before bash sees it,
@@ -83,6 +85,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          submodules: true
           fetch-depth: 0  # need full history to push orphan branches
 
       - name: Install elan + Lean toolchain
@@ -154,6 +157,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          submodules: true
           fetch-depth: 0
 
       - name: List + prune lake-cache/* branches

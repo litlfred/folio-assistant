@@ -99,6 +99,15 @@ of declaring one: navigable without being held.
 | `pdf-pages.py` | no outline | one section per **page** |
 | `pdf-ocr.py` | text extraction yields almost nothing | a text layer to then page-split |
 | `pdf-tables.py` | tables or figures matter | what `pdf-structure/v1`'s Section does not carry |
+| `notebook-structure.ts` | the file is JSON with a numeric `nbformat` and a `cells` array — a **Jupyter notebook**, decided by content, never by the `.ipynb` name | `notebook-structure/v1`: one section per markdown heading, located by **cell** range; code kept as fenced code and never run; outputs not kept, and `structure_note` says so |
+
+**A notebook is a variant, not a PDF with odd pages** (bean `rkqp`, owner
+2026-09-30, "A+B"). `structure.json` has a shared base
+(`schemas/document-structure.ts`): the PDF format is one variant, unchanged, and
+the notebook format is the other. A reader that needs only sections reads either
+through `structureOf()`, which says where a section is as `{pages}` or
+`{cells}`. A page-aware reader gets nothing from a notebook, rather than a cell
+index mistaken for a page number.
 
 **The decision is mechanical, and the corpus shows all three paths.** Measured
 2026-09-19 over the four entries in `library/`:

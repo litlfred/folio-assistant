@@ -1268,3 +1268,51 @@ describe("ownDirectoryById — two entries, one path, different scopes", () => {
     expect(ownDirectoryById(root, DIR, DIR)).toBe(join(root, DIR));
   });
 });
+
+// Bean `cmsl`: an entry declared FROM WITHIN a resolved directory's
+// declaration file, answering `dependents`, is an instance directory.
+describe("resolveDirectories — from-within declarations", () => {
+  function fixture(declareSkills: boolean): string {
+    const root = mkdtempSync(join(tmpdir(), "from-within-"));
+    mkdirSync(join(root, "skills", "voices"), { recursive: true });
+    writeFileSync(
+      join(root, "fw.json"),
+      JSON.stringify({
+        name: "fw",
+        directories: declareSkills
+          ? [{ id: "skills", path: "skills/", graphKinds: ["skills"], dependents: "reproduce" }]
+          : [],
+      }),
+    );
+    writeFileSync(
+      join(root, "skills", "skills.json"),
+      JSON.stringify({
+        name: "fw-skills",
+        topics: [],
+        directories: [{ id: "voices", path: "voices", graphKinds: ["voices"], dependents: "reproduce" }],
+      }),
+    );
+    return root;
+  }
+
+  test("promotes the nested entry, under its parent's path", () => {
+    const root = fixture(true);
+    const voices = resolveDirectories([{ name: "fw", root, own: true }]).find((d) => d.id === "voices");
+    expect(voices?.within).toBe("skills");
+    expect(voices?.absPath).toBe(join(root, "skills", "voices"));
+    expect(voices?.declaredBy).toBe("fw");
+    expect(voices?.own).toBe(true);
+  });
+
+  // The parent being a built-in DEFAULT does not make the nested declaration
+  // nobody's: it is a file in the root instance's own tree. Inheriting
+  // `(default)` / `own: false` dropped two instances' voices diagrams.
+  test("a nested entry under a DEFAULT parent belongs to the root instance", () => {
+    const root = fixture(false);
+    const dirs = resolveDirectories([{ name: "fw", root, own: true }]);
+    expect(dirs.find((d) => d.id === "skills")?.declaredBy).toBe("(default)");
+    const voices = dirs.find((d) => d.id === "voices");
+    expect(voices?.declaredBy).toBe("fw");
+    expect(voices?.own).toBe(true);
+  });
+});

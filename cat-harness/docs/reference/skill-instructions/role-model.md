@@ -21,7 +21,7 @@ Four objects, each with a home:
 
 | object | what it is | declared in |
 |---|---|---|
-| **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `.claude/skills/actors/*.json` |
+| **Actor** | a concrete participant. Human, agentic or mechanical. Persists across every process. | `cat-harness/scenarios/actors/*.json` (the declared `scenarios` graph, beside the roles; `.claude/skills/actors/` until 2026-09-30, bean `rqao`) |
 | **Role** | **the swimlane** — a persona an actor *takes on* because of the lane it is acting in. Carries a collection of Skills. | `scenarios/roles.json` |
 | **Skill** | an instruction body: what the actor needs to know to perform the task it was handed. | `skills/<pkg>/*.md` (naming its `input:`/`output:` contracts, usually under `schemas/skills/<name>/`), `.claude/skills/local/` |
 | **Process / Decision** | BPMN and DMN. Lanes bind roles; activities name skills; gateways may compute their branch from a table. | `processes/*.bpmn`, `processes/decisions/*.dmn` |
@@ -278,7 +278,7 @@ how it becomes a rubber stamp.
 ## Three questions about an actor, and only two are answered on the actor
 
 ```jsonc
-// .claude/skills/actors/admin.json
+// cat-harness/scenarios/actors/admin.json
 { "id": "admin",
   "roles":        ["programme-manager", "publication-manager", "editor", "author", "reviewer"],
   "capabilities": ["git-push"] }

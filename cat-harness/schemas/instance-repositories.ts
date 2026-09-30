@@ -16,6 +16,7 @@
  * @module schemas/instance-repositories
  * @graphNode schema
  */
+import { spawnSync } from "node:child_process";
 import { relative, resolve } from "node:path";
 import { instanceRootsIn, readDeclaration, type InstanceLocation } from "./cat-harness.js";
 import { declarationChain } from "./harness-config.js";
@@ -131,8 +132,18 @@ export function resolveInstance(map: InstanceRepositoryMap, ref: string): Instan
  * An instance with no `livesAt` must sit at the checkout root itself.
  */
 export function locationMismatch(entry: InstanceRepository, checkoutRoot: string): string | undefined {
+  // An instance that is its OWN repository — a submodule, like bootstrap and
+  // bootstrap-tools since 2026-09-30 (bean `xsqm`) — sits at that repository's
+  // root, which is exactly what an absent `livesAt` says.
+  if (entry.livesAt === undefined && ownWorkTreeRoot(entry.root)) return undefined;
   const actual = relative(resolve(checkoutRoot), entry.root).split("\\").join("/");
   const declared = entry.livesAt?.path ?? "";
   if (actual === declared) return undefined;
   return `${entry.repository} declares livesAt.path ${JSON.stringify(declared)} but sits at ${JSON.stringify(actual)}`;
+}
+
+/** Is `dir` the top of its own git work tree (a repository, or a submodule of one)? */
+function ownWorkTreeRoot(dir: string): boolean {
+  const r = spawnSync("git", ["rev-parse", "--show-toplevel"], { cwd: dir, encoding: "utf-8" });
+  return r.status === 0 && resolve(r.stdout.trim()) === resolve(dir);
 }

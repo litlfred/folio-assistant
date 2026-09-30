@@ -38,8 +38,15 @@ describe("pdf-structure/v1", () => {
     expect(COMMITTED.length).toBeGreaterThan(0);
   });
 
-  test("every committed structure.json conforms", () => {
-    const bad = COMMITTED.flatMap((rel) => {
+  test("every committed PDF structure.json conforms", () => {
+    // Since bean rkqp a structure.json may be the NOTEBOOK variant; this
+    // schema's promise is about the PDF ones, selected by their own tag.
+    // document-structure.test.ts holds every file to SOME declared variant.
+    const pdfs = COMMITTED.filter(
+      (rel) => (JSON.parse(readFileSync(resolve(REPO, rel), "utf-8")) as { _schema?: string })._schema !== "notebook-structure/v1",
+    );
+    expect(pdfs.length).toBeGreaterThan(10);
+    const bad = pdfs.flatMap((rel) => {
       const r = PdfStructureSchema.safeParse(JSON.parse(readFileSync(resolve(REPO, rel), "utf-8")));
       return r.success ? [] : [`${rel}: ${r.error.issues.map((i) => `${i.path.join(".")} ${i.message}`).join("; ")}`];
     });

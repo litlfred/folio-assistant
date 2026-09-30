@@ -91,7 +91,7 @@ export type FindingKind = (typeof FINDING_KINDS)[number];
 export const FINDING_MEANING: Readonly<Record<FindingKind, string>> = {
   "no-actor": "the entry names nobody; no activity is emitted, because `prov:agent` is required and would have to be invented",
   "no-role": "the node's lane binds no role; no activity is emitted, because `ProvActivitySchema` requires `prov:hadRole` (PROV-O itself does not)",
-  "undeclared-actor": "the actor is not declared in `.claude/skills/actors/`",
+  "undeclared-actor": "the actor is not declared in `cat-harness/scenarios/actors/`",
   "not-eligible": "the actor's `roles` do not include the role the lane binds",
   unknown: "no ODRL policy grants `perform-task` here; `unknown` is never permit",
   deny: "an ODRL policy prohibits `perform-task` here",

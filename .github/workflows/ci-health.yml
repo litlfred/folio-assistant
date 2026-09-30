@@ -49,6 +49,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
+          submodules: true
           # REQUIRED, and not an optimisation to shave off. The `superseded`
           # rule asks `git log -1 --format=%cI -- <workflow file>` to find out
           # whether a red verdict predates a change to the file that produced

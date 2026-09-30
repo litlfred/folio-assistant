@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-09-30T13:54:32Z
+updated_at: 2026-09-30T16:02:22Z
 parent: folio-assistant-zzmr
 ---
 
@@ -102,3 +102,8 @@ In the three steps of the proposal: (1) folio-assistant-sci declares its own `sk
 
 ## 2026-09-30 — step 1 reverted: it is a NESTING question, not only an ownership one
 Declaring `skills/lean/` in folio-assistant-sci.json put a declared directory inside that instance's inherited `skills/`. `check:layout-norms` rejected it: "folio-assistant-sci: skills contains skills/lean". Its baseline only ever shrinks, so adding the pair to it is not a fix. The mirror in cat-harness.json does not trip the check, because there it is not inside that instance's own `skills/`. Under the owner's 2026-09-22 ruling, the correct shape is a declaration INSIDE sci's `skills/` naming `lean/`. That needs a `declarationFile` on the `skills` (kg) kind, the mechanism `voices` gained in this change (bean rkqp), whose reader now recurses. So step 1 becomes: give `skills` a from-within declaration file, then declare `lean/` there. The mirror stays until then.
+
+
+
+## Owner, 2026-09-30 (round 4): step 1 = `skills/` inherited as `reproduce`, plus a from-within `skills.json`
+The harness's `skills` entry becomes `dependents: reproduce`, so every instance inherits a declared `skills/` instead of the `(default)` convention. The `skills` kind gains `declarationFile: skills.json`, which names sub-graphs such as `voices/` and `lean/` (in folio-assistant-sci) from within. That sanctions the five baselined `skills contains skills/voices` pairs. The resolver and the checks must follow a declaration file under an inherited directory.

@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-20T14:45:12Z
-updated_at: 2026-09-30T13:43:41Z
+updated_at: 2026-09-30T19:17:49Z
 parent: folio-assistant-slw1
 ---
 
@@ -155,7 +155,7 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 - **OpenAI** (owner: '1 + 2 … share links you need'): (1) RECORDED — the PDF capture in agent-skills/library/skills-in-openai-api is one page, step 7 of a cookbook, almost all code: no authoring guidance to cite. (2) FETCHED — developers.openai.com and github.com are denied by this environment's network policy; raw.githubusercontent.com is not. The cookbook's own registry.yaml names examples/skills_in_api.ipynb; fetched, 37 cells, 2,154 words of prose (what a skill is, when to use one, the manifest, versioning, security), MIT-licensed (repository LICENSE, 'Copyright (c) 2025 OpenAI').
   - [ ] ingest it — the pipeline has NO rung for a Jupyter notebook (ingest reports the rung undetermined and refuses), so this needs a notebook rung: markdown cells to sections by heading, code cells kept as code. Then the OpenAI vendor voice.
   - Link the owner could allow for the canonical text: https://developers.openai.com/api/docs/guides/tools-skills (the notebook's own 'Skills documentation' link).
-- [ ] **Owner, 2026-09-30: 'vendors/<id>/ should be declared subgraphs along with vendors/'.** Reverses the 2026-09-22 reading ('one declaration; vendors nested inside it', schemas/voices.ts VOICE_VENDORS_DIR). The same owner ruling of 2026-09-22 (directory-conventions §'Nesting is declared FROM WITHIN') says HOW: a node inside the directory names its subdirectories — never the root declaration reaching down a path. What it left OPEN, recorded there as not an agent's to settle: **the node's name and kind**. Proposed default for the owner: reuse the beans/beans.json pattern positionally — skills/voices/voices.json declaring vendors/, and skills/voices/vendors/vendors.json declaring each <id>/, as ContentDirectory entries. Blocked on that answer.
+- [x] **Owner, 2026-09-30: 'vendors/<id>/ should be declared subgraphs along with vendors/'.** Reverses the 2026-09-22 reading ('one declaration; vendors nested inside it', schemas/voices.ts VOICE_VENDORS_DIR). The same owner ruling of 2026-09-22 (directory-conventions §'Nesting is declared FROM WITHIN') says HOW: a node inside the directory names its subdirectories — never the root declaration reaching down a path. What it left OPEN, recorded there as not an agent's to settle: **the node's name and kind**. Proposed default for the owner: reuse the beans/beans.json pattern positionally — skills/voices/voices.json declaring vendors/, and skills/voices/vendors/vendors.json declaring each <id>/, as ContentDirectory entries. Blocked on that answer.
 
 
 ## 2026-09-30 — the OpenAI notebook needs a design decision before a rung
@@ -177,9 +177,27 @@ _2026-09-30T10:39:35Z_ — Claimed by claude/brave-hawking-511rrx — pushed to 
 ## Owner, 2026-09-30 (round 3, after a measured analysis): notebook shape — A+B
 A shared `document-structure` base with two variants. `pdf-structure/v1` stays unchanged as one variant, and `notebook-structure/v1` is new. Readers of `structure.json` measured: 17 in total. Nine read only shared fields. Three are page-aware and already null-safe (gen-library-jsonld, l1-blocks, library-graph). One is a strict validator, check-l1-complete, which breaks under any option. Four are PDF-only tools (pdf-tables, extract-candidates, document-image, and materialization fixity, whose sha256 check still works).
 Plan:
-- [ ] base schema plus a `structureOf()` accessor returning a `{pages}|{cells}` locator
-- [ ] check-l1-complete and the three page-aware readers switched to the accessor
-- [ ] PDF-only tools skip a notebook with a stated reason
-- [ ] a check refusing a direct parse of structure.json outside the accessor
-- [ ] a notebook rung in ingest-document (markdown cells become sections by heading, code cells kept with their language)
-- [ ] ingest the OpenAI notebook, then write the OpenAI vendor voice
+- [x] base schema plus a `structureOf()` accessor returning a `{pages}|{cells}` locator (PR #1628)
+- [x] check-l1-complete and the three page-aware readers switched to the accessor (gen-library-jsonld, l1-blocks, library-graph; 3,824 library nodes unchanged)
+- [x] PDF-only tools skip a notebook with a stated reason: by construction, `withDerivedArms` gives a notebook only its rung and l1-blocks, and a test pins it
+- [x] a check refusing a direct parse of structure.json outside the accessor: `check:structure-accessor` (owner's pick: a literal allowlist). It refuses the quoted token on code lines outside the accessor and two existence-only readers, each with its reason. Stale entries fail too, and tests prove it catches a violation and ignores prose
+- [x] a notebook rung in ingest-document (markdown cells become sections by heading, code cells kept with their language): `scripts/notebook-structure.ts`, routed by CONTENT (PR #1628)
+- [x] ingest the OpenAI notebook, then write the OpenAI vendor voice: `agent-skills/library/skills-in-openai-api-notebook` (12 sections, L1 complete, MIT licence carried) and `agent-skill-authoring-openai` (12 `oa-*` rules, each a verbatim quote), declared in `vendors/vendors.json` (PR #1628)
+
+
+_2026-09-30 15:40_ — vendors declared from within (`voices.json` names `vendors/`, `vendors/vendors.json` names each vendor; kind `voice-vendors`) landed in PR #1483. The loader refuses an undeclared vendor. Three vendor voices now: Gemini CLI, Claude, OpenAI.
+
+
+
+## Owner, 2026-09-30 (round 4): the accessor gate is a literal allowlist
+Refuse the literal `structure.json` in TypeScript outside a short allowlist, each entry with its reason. The existence-only readers (library-ref, check-materialized-fixity, check-catalogue) are listed as such. The orphan `scenarios.detangle.json` was deleted with the owner's approval (commit 3095e92).
+
+
+## 2026-09-30 — the agentic review axis for skills (the last open item)
+- [x] `skill-voice-review-current` (kg-qa, `minor`, gated by nothing): does a CURRENT review exist of this skill against each ACTIVE voice whose rules are scoped `appliesTo: ["skill"]`. Rule-content verdicts are recorded in the sidecar's `voice_reviews` and are never a finding — the owner's "no formal gate on rule content".
+- [x] Reviews carried across `kg:audit` runs exactly like `pair_attestations`; each pins the skill's content hash and the hash of the voice's skill-scoped rules, so either moving makes it stale (the old review kept as evidence).
+- [x] `bun run voice:review` writes one (refuses a set missing a rule, judging one twice, or an unexplained fail/n/a); `--rules <voice>` prints what to judge, resolved through `extends`.
+- [x] Agent half: `skill-voice-review` skill (folio-core), bound to the `code-reviewer` lane beside `skills-and-tools`.
+- [x] The four skill-authoring voices now declare `appliesTo: ["skill"]` — until now they claimed every block kind.
+- Measured: 323 skill sidecars each gain only `n/a` (no voice is active in `folio-assistant.config.json`); nothing else moved.
+- OPEN, the owner's: which voices to ACTIVATE (`voice.active`). Nothing is reviewed until then.
