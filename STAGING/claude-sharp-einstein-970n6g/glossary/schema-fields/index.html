@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/docs-ui.css?v=1790794625">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/docs-ui.css?v=1790795043">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/narrow-viewport.css?v=1790794625">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/narrow-viewport.css?v=1790795043">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/work-plan.css?v=1790794625">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/work-plan.css?v=1790795043">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/themes.css?v=1790794625">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/themes.css?v=1790795043">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/uml.css?v=1790794625">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/uml.css?v=1790795043">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/avatars.css?v=1790794625">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/css/avatars.css?v=1790795043">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/docs-ui.js?v=1790794625" defer></script>
+<script src="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/js/docs-ui.js?v=1790795043" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -810,13 +810,13 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <p>Candidate terms extracted from every schema field with a doc comment: <code class="language-plaintext highlighter-rouge">&lt;Declaration&gt;.&lt;field&gt;</code> as the label, the comment’s first paragraph as the definition. Each is the asset’s own text, verbatim and not curated, and carries the badge “candidate, extracted”. A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/glossary/">glossary index</a>.</p>
 
-<p>From: bootstrap-tools 28 (<a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld">SKOS</a>) · cat-harness 1483 (<a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld">SKOS</a>) · folio-assistant-core 155 (<a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld">SKOS</a>) · large-datasets 18 (<a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld">SKOS</a>).</p>
+<p>From: bootstrap-tools 28 (<a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld">SKOS</a>) · cat-harness 1491 (<a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld">SKOS</a>) · folio-assistant-core 155 (<a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld">SKOS</a>) · large-datasets 18 (<a href="/folio-assistant/STAGING/claude-sharp-einstein-970n6g/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld">SKOS</a>).</p>
 
-<p><strong>Size:</strong> this page holds 1684 terms and is 924 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.</p>
+<p><strong>Size:</strong> this page holds 1692 terms and is 929 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.</p>
 
 <p><label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem" /></p>
-<p aria-live="polite"><span id="fa-gloss-n">1684</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1692</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 <h2 id="letter-A">
@@ -2164,6 +2164,13 @@ CatHarnessDeclaration.liquid <span class="fa-gloss-status">candidate, extracted<
 <p>The Liquid prefix this instance's VALUES are addressed by in authored text — <code>&#123;&#123; &lt;prefix&gt;.&lt;directory-id&gt;.&lt;entry&gt;.&lt;path&gt; }}</code> — and whether the platform resolves it or passes it through.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.liquid</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.livesat" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.livesAt <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where the instance lives TODAY when that is not the root of &#123;@link repository} — the host repository and the directory within it. Absent means it already lives at the root of its own repository.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.livesAt</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.name" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.name <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -2213,19 +2220,19 @@ CatHarnessDeclaration.renderExemption <span class="fa-gloss-status">candidate, e
 <p>What this instance is excused from rendering, and what it carries instead.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.renderExemption</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.repository" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The repository this instance IS — <code>owner/name</code>, its PLANNED home once the pre-split repository is broken apart (owner, 2026-09-30, bean <code>6rmv</code>).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.repository</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.stickies" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.stickies <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Sticky notes this layer contributes to the landing board.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stickies</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.stub" data-fa-state="extracted" data-fa-gloss="">
-CatHarnessDeclaration.stub <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The repository's short name, used as the **filename stem of every artefact this instance publishes** — <code>&lt;stub&gt;.jsonld</code> for the knowledge graph, <code>&lt;stub&gt;.schema.json</code> for its schema. Defaults to <code>name</code>.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stub</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.topology" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.topology <span class="fa-gloss-status">candidate, extracted</span>
@@ -5478,6 +5485,55 @@ InstanceGraph.order <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Every dependency the root reaches, EACH ONCE, deepest first and the root's direct dependencies last. The root itself is not in it.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/harness-config.ts"><code>cat-harness/schemas/harness-config.ts#InstanceGraph.order</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.instancelocation.path" data-fa-state="extracted" data-fa-gloss="">
+InstanceLocation.path <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The instance's directory within it, repository-relative, no leading <code>./</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#InstanceLocation.path</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.instancelocation.repository" data-fa-state="extracted" data-fa-gloss="">
+InstanceLocation.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The repository that holds the instance today, <code>owner/name</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#InstanceLocation.repository</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.livesat" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepository.livesAt <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where it sits today, when not at the root of <code>repository</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.livesAt</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.name" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepository.name <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The declaration's machine name — what <code>needs</code> resolves against.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.name</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.repository" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepository.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The planned repository, <code>owner/name</code> — the identity references use.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.repository</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.root" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepository.root <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Absolute path of the instance root in this checkout or overlay.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.root</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepositorymap.undeclared" data-fa-state="extracted" data-fa-gloss="">
+InstanceRepositoryMap.undeclared <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Roots whose declaration names no <code>repository</code> — reported, never guessed.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepositoryMap.undeclared</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--intake.intakefileschema.role" data-fa-state="extracted" data-fa-gloss="">
 IntakeFileSchema.role <span class="fa-gloss-status">candidate, extracted</span>
