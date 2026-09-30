@@ -49,7 +49,7 @@ are thin stubs pointing here.
 >
 > **A dependency's skills ARE reachable** — `resolveSkillDirs` in
 > `schemas/harness-config.ts` computes the cross-instance overlay and
-> `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` is built from it, so
+> `LOCAL_PACKAGES` in `scripts/skill-packages.ts` is built from it, so
 > `skill_list` and `skill_fetch` serve a dependency's packages. This entry said
 > the opposite until 2026-09-19 — *"no caller … not yet reachable"* — and a
 > stale gap notice is worse than none, because an agent that believes it either
