@@ -1634,17 +1634,26 @@ export const RULES: Rule[] = [
     // declaration in THIS repo describes — that is the whole point of the plan.
     prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "blueprint/", "translations/"],
     exact: [
-      // CORE: renders a DOCUMENT folio to a site through the document
-      // pipeline's own `buildDocumentMarkdown` (content/pipeline, core). Its
-      // subject is a folio's content, not the harness (bean `fyu2`).
-      "scripts/build-document-site.ts",
+      // `scripts/build-document-site.ts` STOOD HERE and is GONE as of bean
+      // `yj6r`, 2026-09-30: it now lives in `folio-assistant-core/scripts/`
+      // beside the `schemas/changeset.ts` its test reads, so the classification
+      // is carried by location. Reasoning kept: it renders a DOCUMENT folio to
+      // a site through the document pipeline's own `buildDocumentMarkdown`
+      // (content/pipeline, core), and its subject is a folio's content, not the
+      // harness (bean `fyu2`). The `gen-review-page.ts` entry above still names
+      // it as a core caller reaching DOWN into the harness, which is now true
+      // by location as well as by rule.
       "src/tools/readme-sync.ts", "src/tools/readme-audit.ts", "src/tools/render-order.ts", "src/tools/translation.ts",
       "src/tools/preview.ts", "src/qa-agent-write.ts",
-      // The voice-graph validator. It resolves each rule's citation into
-      // `library/` — a FOLIO's reference library — and `schemas/voices.ts`,
-      // which it reads, is core by the `schemas/` prefix. Arrived from `main`
-      // and fell through every prefix.
-      "scripts/check-voices.ts",
+      // `scripts/check-voices.ts` STOOD HERE and is GONE as of bean `yj6r`,
+      // 2026-09-30: it now lives in `folio-assistant-core/scripts/` beside the
+      // `schemas/library-ref.ts` it resolves citations through, so the
+      // classification is carried by location rather than by this list. The
+      // reasoning is kept because the next reader will ask why the voice-graph
+      // validator is not adjudicated — it resolves each rule's citation into
+      // `library/`, a FOLIO's reference library, and `schemas/voices.ts`, which
+      // it reads, is core by the `schemas/` prefix. It arrived from `main` and
+      // fell through every prefix, which is why it needed an exact entry at all.
       // CORE, by the same test and for the same stated reason: the subject is
       // CONTENT. It asks whether a change publishes a TRANSLATED PAGE with no
       // `.po` beside it, so both sides of the question are a folio's material —
@@ -1783,11 +1792,17 @@ export const RULES: Rule[] = [
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
       "scripts/l1-blocks.ts",               // staged entry → manifest + blocks/, the arm between the two
-      // Same test as the three above: it reads a CONTAINER a folio was
-      // given — a zip, a PDF, a saved page — and writes a
-      // `folio-extraction/v1` record beside it. Core material, and its
-      // schema (`folio-assistant-core/schemas/extraction.ts`) is core too.
-      "scripts/extract-assets.ts",          // container → extraction record, metadata by default
+      // `scripts/extract-assets.ts` STOOD HERE and is GONE as of bean `yj6r`,
+      // 2026-09-30, for the reason the materialisation trio above gives: it now
+      // lives in `folio-assistant-core/scripts/` beside the
+      // `schemas/extraction.ts` it reads, so the classification is carried by
+      // location. Its reasoning is kept rather than deleted with the entry,
+      // because the next reader will ask why a container-extraction tool is not
+      // adjudicated and "it is, by where it sits" is the answer: same test as
+      // the three above — it reads a CONTAINER a folio was given (a zip, a PDF,
+      // a saved page) and writes a `folio-extraction/v1` record beside it. Core
+      // material, and its schema is core too. A rule naming a path its own scan
+      // can no longer see fires on nothing while reading as an adjudication.
       "scripts/narratives.ts",              // the narrative review queue
       // Same test, same answer: it reads `library/<bib-slug>/blocks/` and
       // writes `summaries.json` beside them, a folio's own material, through

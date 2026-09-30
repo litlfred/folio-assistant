@@ -42,7 +42,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { buildContentGraph, type ContentGraph } from "../content/pipeline/content-graph.js";
+import { buildContentGraph, isElaborated, type ContentGraph } from "../content/pipeline/content-graph.js";
 import type { FormalizationStatus, ProofObjectsManifest } from "../schemas/formalization-types.js";
 import { bothViews, renderSvgs, safeId, sha256, svgStamp, type RenderJob } from "./plantuml-render.js";
 import { readUmlPalette } from "./uml-palette.js";
@@ -76,6 +76,20 @@ export interface BlockEdge {
 export interface BlockModel {
   nodes: BlockNode[];
   edges: BlockEdge[];
+  /**
+   * Where the formal edges came from — `undefined` when there is no formal
+   * cache. The legend states it: a lexical `scan` graph (measured recall 0.63,
+   * folio-assistant#1492) drawn without comment reads as authoritative, and no
+   * cache at all reads as "nothing depends on anything formally".
+   */
+  formalSource?: string;
+}
+
+/** The legend's formal-edge line, saying what the purple edges can be trusted for. */
+export function formalLegend(source: string | undefined): string {
+  if (source === undefined) return "  dashed purple: formal, a Lean dependency: UNAVAILABLE here (no formal cache), so none drawn";
+  if (isElaborated(source)) return `  dashed purple: formal, a Lean dependency (type / value), source ${source} (elaborated)`;
+  return `  dashed purple: formal, a Lean dependency, source ${source}: APPROXIMATE (lexical), missing edges likely`;
 }
 
 /** The status a block is drawn with: a human review, else an agentic one, else its Lean status. */
@@ -119,7 +133,7 @@ export function modelOf(g: ContentGraph, contentRoot: string, status?: Map<strin
       via: e.kind === "editorial" ? (e.editorialField ?? "uses") : (e.formalKind ?? "formal"),
     }))
     .sort((a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to) || a.via.localeCompare(b.via));
-  return { nodes, edges };
+  return { nodes, edges, formalSource: g.hasFormal ? g.formalSource : undefined };
 }
 
 // ── PlantUML ──────────────────────────────────────────────────────────────
@@ -192,7 +206,7 @@ export function contentGraphPuml(
     // Top right: at the default position ELK let a stub box run into it.
     "legend top right",
     "  solid black: editorial, a reader's prerequisite (uses / interprets)",
-    "  dashed purple: formal, a Lean dependency (type / value)",
+    formalLegend(m.formalSource),
     "  fill: formalization status, from proof-objects.json when given",
     "  dashed box: a block in another chapter",
     "endlegend",
