@@ -20,14 +20,14 @@ Owner rulings, 2026-09-29 (answers to the separation analysis, Q7/Q1/Q10/Q5):
 Analysis: session scratchpad `separation-process-analysis.md` (94 beans, cone measurements, 11 owner questions).
 
 ## Phase 1 — core (one PR)
-- [ ] `bootstrap-tools/` sibling instance: declaration, package.json (zod only), not nested in bootstrap
-- [ ] move Zod sources (graph, model-registry, glossary-ledger, requirement, discussion), gen-bootstrap-schemas, bootstrap-schema-page, release-iri, iri-sync, term-links, check-bootstrap-concepts, dependency-order's checkDeclaredOrder
-- [ ] cuts E1–E4: minimal declaration reader over KnowledgeGraphDeclarationSchema; `--root`; git ls-files instead of git-corpus
-- [ ] repoint cat-harness's 11 import sites
-- [ ] generated bootstrap/schemas byte-identical before/after (except the $id fix)
-- [ ] discussion $ids = file path; QA gate: published node IRI = release base + its path
-- [ ] closure gate: bootstrap-tools imports only its own files + zod + node builtins
-- [ ] tests move (split graph.test.ts per the analysis §3.6)
+- [x] `bootstrap-tools/` sibling instance: declaration, package.json (zod only), not nested in bootstrap
+- [x] move Zod sources (graph, model-registry, glossary-ledger, requirement, discussion), gen-bootstrap-schemas, bootstrap-schema-page, release-iri, iri-sync, term-links, check-bootstrap-concepts, dependency-order's checkDeclaredOrder
+- [x] cuts E1–E4: minimal declaration reader over KnowledgeGraphDeclarationSchema; `--root`; git ls-files instead of git-corpus
+- [x] repoint cat-harness's 11 import sites
+- [x] generated bootstrap/schemas byte-identical before/after (except the $id fix)
+- [x] discussion $ids = file path; QA gate: published node IRI = release base + its path
+- [x] closure gate: bootstrap-tools imports only its own files + zod + node builtins
+- [x] tests move (split graph.test.ts per the analysis §3.6)
 
 ## Phase 2 — README + SVG writers
 - [ ] subgraph-readmes, readme-sections (kg:processes/kg:files), render-bpmn into bootstrap-tools with cones cut
@@ -37,4 +37,4 @@ Analysis: session scratchpad `separation-process-analysis.md` (94 beans, cone me
 - [ ] reusable workflow + npm manifest, disabled/unpublished; agent-runnable role/process for the tools
 
 ## Phase 4 — the replicable separation process
-- [ ] kg-separation BPMN + skills + missing gates (analysis §6–7)
+- [ ] kg-separation BPMN + skills (done, 433d3c5) + missing gates (analysis §6–7; still open)
