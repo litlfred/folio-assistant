@@ -1244,7 +1244,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     scope: "repo",
     scopeBasis:
-      "Its three sources are platform-level: the member readers are code in `scripts/downstream-runs.ts`, the publish " +
+      "Its three sources are repository-level, not per instance: the member readers are code in `scripts/downstream-runs.ts`, the publish " +
       "verifiers are `publish-verify`'s set, and run records live under the auditor's own `qa` directory. Asked per " +
       "instance it would judge the platform's members against an instance's Tools and report every one as undeclared.",
     // `major`: unlike a stale output, which is expected between runs, an

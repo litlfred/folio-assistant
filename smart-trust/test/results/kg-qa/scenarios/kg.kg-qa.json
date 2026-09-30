@@ -29,7 +29,7 @@
       "findings": [
         {
           "where": "—",
-          "detail": "not evaluated: `downstream-tool-declared` is `repo`-scoped and this run is scoped to smart-trust. Its three sources are platform-level: the member readers are code in `scripts/downstream-runs.ts`, the publish verifiers are `publish-verify`'s set, and run records live under the auditor's own `qa` directory. Asked per instance it would judge the platform's members against an instance's Tools and report every one as undeclared."
+          "detail": "not evaluated: `downstream-tool-declared` is `repo`-scoped and this run is scoped to smart-trust. Its three sources are repository-level, not per instance: the member readers are code in `scripts/downstream-runs.ts`, the publish verifiers are `publish-verify`'s set, and run records live under the auditor's own `qa` directory. Asked per instance it would judge the platform's members against an instance's Tools and report every one as undeclared."
         }
       ]
     },
