@@ -47,7 +47,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 
-import { BASE_GRAPH_KINDS, repoRootFor } from "../schemas/cat-harness.js";
+import { defaultGraphKinds, graphKindLayer, isPublishedGraphKind, repoRootFor } from "../schemas/cat-harness.js";
+import "../schemas/folio-graph-kind.js";
+import "../schemas/glossary-graph-kind.js";
 import { LEGACY_FOLIO_NS, NS_PREFIXES, namespaceForLayer, prefixForLayer, replacementIri, termIri } from "../schemas/namespaces.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import { gitFiles } from "../schemas/git-corpus.ts";
@@ -55,7 +57,6 @@ import {
   CLASS_GLOSSES,
   PROPERTY_GLOSSES,
   TERM_LAYERS,
-  termLayer,
   type TermGloss,
   type TermLayer,
 } from "../schemas/vocabulary.js";
@@ -163,17 +164,24 @@ export function mintedTermsFromSource(root = ROOT): Set<string> {
   return out;
 }
 
-// The layer table lives in `vocabulary.ts` (`GRAPH_KIND_TYPE_LAYERS`), read
-// through `termLayer` — the same answer `termIri` mints the type's IRI from.
-
-/** The graph kinds' own summaries — read, never restated. */
-export function graphKindTerms(): Map<string, TermGloss> {
-  const out = new Map<string, TermGloss>();
-  for (const def of Object.values(BASE_GRAPH_KINDS)) {
-    const local = def.type.includes("#") ? def.type.split("#")[1] : undefined;
-    if (local && def.summary) out.set(local, { gloss: def.summary, layer: termLayer(local) });
-  }
-  return out;
+/**
+ * The graph kinds the harness and core define, as the `GraphKind` individuals
+ * kg-export names them by — `<prefix>:graphKind/<name>` — each glossed with
+ * its own summary, read, never restated. bootstrap's kinds are not here: they
+ * come verbatim from bootstrap's file, like its terms.
+ *
+ * Until 2026-09-30 each kind was ALSO a class (`SkillGraph`, `KGraph`, …),
+ * stamped on a directory as its `@type` beside the individual it `holdsGraph`
+ * — two ways to say one fact. Owner (bean `3r47`): "Drop per-kind classes".
+ */
+export function graphKindIndividuals(): Array<{ name: string; layer: TermLayer; gloss: string }> {
+  return defaultGraphKinds
+    .names()
+    .filter(isPublishedGraphKind)
+    .map((name) => ({ name, def: defaultGraphKinds.get(name)! }))
+    .filter(({ name, def }) => graphKindLayer(name, def) !== "bootstrap" && def.summary)
+    .map(({ name, def }) => ({ name, layer: graphKindLayer(name, def) as TermLayer, gloss: def.summary! }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 export interface VocabularyReport {
@@ -223,8 +231,10 @@ export function buildVocabulary(
    */
   exact = false,
 ): { doc: unknown; report: VocabularyReport } {
-  const kinds = graphKindTerms();
-  const doublyDefined = [...kinds.keys()].filter((t) => t in CLASS_GLOSSES || t in PROPERTY_GLOSSES).sort();
+  const kinds = graphKindIndividuals();
+  // A kind is an individual under `graphKind/`, so it cannot share a name
+  // with a class or a property; kept in the report so its shape is stable.
+  const doublyDefined: string[] = [];
 
   // The declared order, not a local one. `TERM_LAYERS` states that its order
   // IS the direction rule, which is exactly what these index comparisons read.
@@ -288,7 +298,22 @@ export function buildVocabulary(
   };
 
   for (const [name, g] of Object.entries(CLASS_GLOSSES)) emit(name, "class", g);
-  for (const [name, g] of [...kinds].sort(([a], [b]) => a.localeCompare(b))) emit(name, "class", g);
+  for (const k of kinds) {
+    if (!inSlice({ gloss: k.gloss, layer: k.layer })) continue;
+    const id = `${prefixForLayer(k.layer)}:graphKind/${k.name}`;
+    nodes.push({
+      "@id": id,
+      "@type": ["bootstrap:GraphKind", "skos:Concept"],
+      label: k.name,
+      comment: k.gloss,
+      prefLabel: k.name,
+      definition: k.gloss,
+      notation: id,
+      inScheme: conceptSchemeIri(k.layer),
+      isDefinedBy: conceptSchemeIri(k.layer),
+      layer: k.layer,
+    });
+  }
   for (const [name, g] of Object.entries(PROPERTY_GLOSSES)) emit(name, "property", g);
 
   // bootstrap's layer: ONE source. Its vocabulary is `bootstrap/ns.jsonld`,
@@ -339,7 +364,6 @@ export function buildVocabulary(
   // this repository switches off.
   const everything = new Set<string>([
     ...Object.keys(CLASS_GLOSSES),
-    ...kinds.keys(),
     ...Object.keys(PROPERTY_GLOSSES),
   ]);
   // THE UNION THIS FILE HAS DOCUMENTED SINCE IT WAS WRITTEN, now performed.

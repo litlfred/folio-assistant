@@ -4935,6 +4935,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.layer",
+      "prefLabel": "GraphKindDef.layer",
+      "definition": "Whose namespace the kind is named in, when it is not the harness's: `core` for the folio's own furniture (`voices`, `library`, `todos`, …). A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_KINDS`). The kind IS its individual, `<ns>graphKind/<name>` ({@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphKind` individual, and the harness now does the same.",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.layer",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.nodeschemas",
       "prefLabel": "GraphKindDef.nodeSchemas",
       "definition": "One entry per `$schema` family a node of this kind may carry, keyed by the tag. Bean `rdkm`.",
@@ -4960,13 +4967,6 @@
       "prefLabel": "GraphKindDef.schema",
       "definition": "Where the shape of a node in this graph is defined — a repo-relative module path, or a `$schema` tag the files themselves carry.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema",
-      "status": "candidate"
-    },
-    {
-      "id": "graph-kind-registry.graphkinddef.type",
-      "prefLabel": "GraphKindDef.type",
-      "definition": "The `@type` IRI this kind projects to.",
-      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.type",
       "status": "candidate"
     },
     {
@@ -8234,7 +8234,7 @@
     {
       "id": "theme.themerefschema.instance",
       "prefLabel": "ThemeRefSchema.instance",
-      "definition": "Declared instance name. Absent means the citing instance's own.",
+      "definition": "The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own.",
       "source": "cat-harness/schemas/theme.ts#ThemeRefSchema.instance",
       "status": "candidate"
     },
@@ -10166,7 +10166,7 @@
     {
       "id": "voices.voicerefschema.instance",
       "prefLabel": "VoiceRefSchema.instance",
-      "definition": "The declared name of the instance holding it. Absent means this one.",
+      "definition": "The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one.",
       "source": "cat-harness/schemas/voices.ts#VoiceRefSchema.instance",
       "status": "candidate"
     },
@@ -10187,7 +10187,7 @@
     {
       "id": "voices.voicerulesourceschema.instance",
       "prefLabel": "VoiceRuleSourceSchema.instance",
-      "definition": "The DECLARED NAME of the instance holding the corpus, when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.",
+      "definition": "The instance holding the corpus, as its planned `owner/repo` (bean `6rmv`; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged.",
       "source": "cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.instance",
       "status": "candidate"
     },

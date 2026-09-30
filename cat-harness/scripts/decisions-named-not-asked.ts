@@ -157,7 +157,7 @@ export function reminder(findings: readonly Finding[]): string {
     "  More than two options? Build a DecisionRequest and `renderDecision` it,",
     "  and put the record on the bean under `## Options` (bean `hajp`).",
     "",
-    "  Full rule: cat-harness/skills/folio-core/interaction-modality.md §4.1",
+    "  Full rule: cat-harness/skills/conduct/conduct-core/interaction-modality.md §4.1",
     "──────────────────────────────────────────────────────────────────────────────",
     "",
   ].join("\n");

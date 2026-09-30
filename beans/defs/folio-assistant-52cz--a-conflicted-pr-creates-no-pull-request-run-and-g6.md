@@ -3,9 +3,10 @@
 title: A CONFLICTED PR CREATES NO pull_request RUN, and g62s's headUnjudged cannot see it — the one absent-run case that needs no glob evaluation
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-30T14:07:18Z
+updated_at: 2026-09-30T18:25:48Z
 parent: folio-assistant-1xhc
-updated_at: 2026-09-30T18:23:03Z
 ---
 
 ## The incident, measured
@@ -84,3 +85,51 @@ That `g62s` was wrong, or that its inertness is a defect to fix by loosening
 decidable today**, and it is the one that cost a real PR two wasted pushes.
 
 _2026-09-30T18:23:03Z_ — Claimed by claude/magical-archimedes-4qkfxp-52cz — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Built 2026-09-30 — boxes 1–3; box 4 is the owner's
+
+Branch `claude/magical-archimedes-4qkfxp-52cz`.
+
+- **`prVerdict(mergeableState, headVerdict)`**, a pure function in `src/workflow/check-verdict.ts` beside the existing precedence rules:
+  - `dirty` gives **undetermined, "conflicted — no pull_request run will be created… NOT a pass"**, even over runs that all passed;
+  - `unknown` cannot confirm a pass (a failure or pending run stands);
+  - every other state falls through to the runs.
+- **`bun run ci:watch --pr <n>`** reads the PR's head and `mergeable_state` on every poll, and prints the state.
+  - **GitHub computes mergeability lazily.** Measured: seven open PRs read `unknown` on a first unauthenticated read, and one read `clean` 8 s later.
+  - So `--pr` re-reads up to four times while the state is `unknown`, and names it if it is still unknown.
+
+**Box 2 — three absent-run causes, for a PR:**
+- **conflicted** is reported as such (this bean);
+- a head with **no runs and no conflict** is `verdictOf`'s existing "no check runs on this commit — NOT a pass", which is the finding;
+- **g62s's filtered-trigger** case stays in `check:ci-health`'s `headUnjudged`, which judges the default branch, where no conflict can exist.
+
+**Box 3 — falsified on live PRs, not only fixtures** (`ci:watch --pr <n> --once`, 2026-09-30 18:24):
+- #1652, #1628, #1615, #1590 and #1581 all read **dirty → UNDETERMINED, conflicted**.
+- #1633 read `unknown` through four reads with one green quick check. The first version reported **PASS**; that is the defect the `unknown` rule now closes.
+- Tests: three new cases in `check-verdict.test.ts` (18 pass).
+
+**Box 4 is not written.** It asks whether the reading that "no suite failed" over zero suites is not a pass should become corpus guidance where agents are told how to read PR events. The bean marks that the owner's call; it is put to them 2026-09-30.
+
+## 2026-09-30 19:10 — #1664 landed the core first, and with the better signal
+
+#1664 (bean `6lre`) merged `verdictForCommit`, which reports a conflicted head as **undetermined**, cites this bean, and detects the conflict from the absence of `refs/pull/N/merge`. That is the forge's own answer. REST `mergeable_state`, which this branch had used, is computed lazily and can be served stale (`fx5r`).
+
+So #1659 was narrowed when merging main:
+- `prVerdict` and its tests are **withdrawn**, because they were a weaker duplicate.
+- What remains is `ci:watch --pr <n>`. It reads the head from `refs/pull/<n>/head` on every poll (the same ref family the probe uses) and hands it to `verdictForCommit`.
+
+Live, 2026-09-30 19:10, `ci:watch --pr <n> --once`:
+- #1668 (conflicted) → UNDETERMINED: conflicted
+- #1665 → FAIL on its real run
+
+**New finding, not fixed here:** #1652, which is **merged**, also reads "CONFLICTED". A merged PR keeps `refs/pull/N/head` but loses `refs/pull/N/merge`, so `mergeStateForHead` cannot tell merged from conflicted. That matters only for `--pr` on a closed PR. It is `check-head-has-run`'s probe to refine, not this branch's.
+
+## 2026-09-30 19:35 — a merge ref that is PRESENT can still be STALE
+
+`ci:watch --pr 1665` reported a "partial check set", while REST said `dirty`. The cause: `refs/pull/1665/merge` was 8cdfbc1, which GitHub built for the **earlier** head 1b7b537. When a new head conflicts, GitHub leaves the old merge ref in place. `mergeStateForHead` read existence alone, so it called the head `mergeable`, and `noRunAdvice` then offered to dispatch a run on a tree that will never exist.
+
+**Fixed in the follow-up to #1659:** the merge commit's second parent must BE the head. When it is not, the answer is `unknown`, never `mergeable`. It is also not `conflicted`, because a mergeable head's ref is stale too for about 15 s after a push (PR #813), and one read cannot tell the two apart.
+
+Live, 2026-09-30:
+- #1665, stale ref → `unknown`, where it used to be `mergeable`;
+- #1673, fresh ref → `mergeable`.

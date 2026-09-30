@@ -7,14 +7,14 @@
   "sources": [
     {
       "title": "Role `proof-review-agent` — its persona, in the cat-harness role graph",
-      "instance": "cat-harness",
+      "instance": "litlfred/cat-harness",
       "path": "scenarios/roles.json"
     }
   ],
   "activeIn": {
     "roles": [
       {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "role": "proof-review-agent"
       }
     ]
@@ -28,7 +28,7 @@
       "severity": "minor",
       "judgementOnly": true,
       "source": {
-        "instance": "cat-harness",
+        "instance": "litlfred/cat-harness",
         "path": "scenarios/roles.json",
         "quote": "Assumes a proof that compiles may still prove nothing. Knows the difference between a gap in the argument and a gap in the exposition, and that the second is not the lesser one."
       }

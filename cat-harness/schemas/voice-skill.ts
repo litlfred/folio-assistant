@@ -40,6 +40,7 @@
  */
 
 import { z } from "zod";
+import { RepoFullNameSchema } from "./repo-full-name.js";
 
 import {
   VoiceRuleSchema,
@@ -197,7 +198,7 @@ export const VoiceSkillSchema = z
       .array(
         z.object({
           title: z.string().min(1),
-          instance: z.string().min(1).optional(),
+          instance: RepoFullNameSchema.optional(),
           libraryId: z.string().min(1).optional(),
           path: z.string().min(1).optional(),
           url: z.string().url().optional(),

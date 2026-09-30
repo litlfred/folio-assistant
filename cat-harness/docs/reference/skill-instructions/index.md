@@ -42,6 +42,32 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [terminology-management](terminology-management.html) | `terminology-management` | [schema](../skills/terminology-management.html) | > Skill id: `terminology-management` · Package: `authoring-who-smart-guidelines` · |
 | [toolchain-ownership](toolchain-ownership.html) | `toolchain-ownership` | — | > Skill id: `toolchain-ownership` · Package: `authoring-who-smart-guidelines` · |
 
+## Agent conduct (conduct-core)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Subagent memory](agent-memory.html) | `agent-memory` | — | A subagent declaring project memory gets its own directory; the first **200 |
+| [The language you communicate in](communication-language.html) | `communication-language` | — |  |
+| [A confirmation can be waived](confirmation-waiver.html) | `confirmation-waiver` | — | Several rules here stop an agent and hand a decision back: merging to `main`, |
+| [The comparison goes BEFORE the question, not inside the options](decision-comparison.html) | `decision-comparison` | — | [`interaction-modality`](interaction-modality.md) §4.1 fixes the *order* — |
+| [Deletion requires explicit confirmation](deletion-requires-confirmation.html) | `deletion-requires-confirmation` | — | **One rule, and it has no exceptions worth the word:** |
+| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html). |
+| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
+| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
+| [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
+| [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
+| [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
+| [Never encode a constraint you have not verified](unverified-constraints.html) | `unverified-constraints` | — | Owner, 2026-09-19: **"dont encode rules against a working setup."** |
+| [Where does this go?](where-does-this-go.html) | `where-does-this-go` | — | > Skill id: `where-does-this-go` · Package: `folio-core` |
+
+## Security — values crossing a boundary (security)
+
+| Skill | Id | Schema | Summary |
+|-------|----|--------|---------|
+| [Injection](injection-boundaries.html) | `injection-boundaries` | — |   run: \| |
+| [Path containment](path-containment.html) | `path-containment` | — | `src/core/safe-path.ts` is the implementation. This is when to reach for which, |
+| [Security](security.html) | `security` | — | > **This value came from outside. What may I do with it?** |
+
 ## Lifecycle skills
 
 | Skill | Id | Schema | Summary |
@@ -74,25 +100,20 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [Activity log](activity-log.html) | `activity-log` | — | **Write an entry when you start a task, when you end one, and whenever you |
 | [Adjudication](adjudication.html) | `adjudication` | — | > Skill id: `adjudication` · Package: `folio-core` |
-| [Subagent memory](agent-memory.html) | `agent-memory` | — | A subagent declaring project memory gets its own directory; the first **200 |
 | [Blocking is a claim about the work, not a mood](bean-blocking.html) | `bean-blocking` | — | `blocked` is the most expensive status a bean can carry, because a blocked bean |
 | [Bean Coordination](bean-coordination.html) | `bean-coordination` | — | The **bean-based work-plan system** — the [`beans`](https://github.com/hmans/beans) |
 | [Block Density](block-density.html) | `block-density` | — |  |
 | [/canonical-watcher](canonical-watcher.html) | `canonical-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
 | [Chapter Complexity Review](chapter-complexity-review.html) | `chapter-complexity-review` | — |  |
 | [CI health](ci-health.html) | `ci-health` | — | **A workflow's outcome is invisible from the working tree.** Nothing in a |
-| [The language you communicate in](communication-language.html) | `communication-language` | — |  |
 | [Compute Integration Watcher](compute-integration-watcher.html) | `compute-integration-watcher` | — |  |
-| [A confirmation can be waived](confirmation-waiver.html) | `confirmation-waiver` | — | Several rules here stop an agent and hand a decision back: merging to `main`, |
 | [Content Graph](content-graph.html) | `content-graph` | — | cd content && python3 pipeline/content-graph-analysis.py |
 | [Content types](content-profiles.html) | `content-profiles` | — | A **document** folio is structured prose: policy guidance, a standard, a report. |
 | [/continual-progress](continual-progress.html) | `continual-progress` | — | Sibling agents and the author can only coordinate with work they can |
 | [/coordinate](coordinate.html) | `coordinate` | — | When several Claude branches are converging on the same long-term goal |
 | [Covered is not reachable](covered-is-not-reachable.html) | `covered-is-not-reachable` | — | **A skill can be satisfied by the *neighbours* of its mechanism while the |
 | [A decision is not a finding, and neither is a substitute for the other](decision-audit.html) | `decision-audit` | — | A **finding** is an observation — a checker, an agent or a person saw something. |
-| [The comparison goes BEFORE the question, not inside the options](decision-comparison.html) | `decision-comparison` | — | [`interaction-modality`](interaction-modality.md) §4.1 fixes the *order* — |
 | [Decision methodology selector](decision-methodology-selector.html) | `decision-methodology-selector` | — | **Input**: a decision context — what is being decided, how many alternatives, |
-| [Deletion requires explicit confirmation](deletion-requires-confirmation.html) | `deletion-requires-confirmation` | — | **One rule, and it has no exceptions worth the word:** |
 | [Delivery Summary](delivery-summary.html) | `delivery-summary` | — | After completing a feature or edit (i.e., after pushing changes), provide: |
 | [Deployment & Auth](deployment-auth.html) | `deployment-auth` | — |  |
 | [/detangler-integration-watcher](detangler-integration-watcher.html) | `detangler-integration-watcher` | — | A concrete instance of `local/integration-watcher`. The parent encodes |
@@ -105,7 +126,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Feature-branch staging](feature-staging.html) | `feature-staging` | — |  |
 | ["NOT clean" is a verdict about the RUN, not about your diff](gate-tree-mutation.html) | `gate-tree-mutation` | — | `bun run gates` snapshots the tree before the first gate and after every one, so |
 | [Generalise the fix, then attack the generalisation](generalise-the-fix.html) | `generalise-the-fix` | — | A fix that repairs one instance and leaves its siblings is half a fix. A fix |
-| [/getting-started](getting-started.html) | `getting-started` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html). |
 | [Reading GitHub state](github-state-inspection.html) | `github-state-inspection` | — | > Skill id: `github-state-inspection` · Package: `folio-core` |
 | [Goal review](goal-review.html) | `goal-review` | — | Authored 2026-09-20 from a live session (bean `mgta`, issue #578): the owner |
 | [idle-backlog](idle-backlog.html) | `idle-backlog` | — | Generalises a 5-minute idle-trigger / work-the-queue-while-idle policy that |
@@ -113,7 +133,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [/integration-backlog](integration-backlog.html) | `integration-backlog` | — | A workflow skill that turns each integration-watcher's open findings |
 | [/integration-watch](integration-watch.html) | `integration-watch` | — | A thin dispatcher in front of [`integration-watcher`](integration-watcher.md) |
 | [integration-watcher (abstract parent)](integration-watcher.html) | `integration-watcher` | — | A concrete watcher (this skill's child) **watches incoming activity** |
-| [/interaction-modality](interaction-modality.html) | `interaction-modality` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
 | [Working an issue](issue-working.html) | `issue-working` | — | Two rules. Both exist because **your view of an issue and everyone else's |
 | [MCP assembly](mcp-assembly.html) | `mcp-assembly` | — | [`mcp-projection`](mcp-projection.md) maps **one** Tool node to one MCP tool. |
 | [MCP contract](mcp-contract.html) | `mcp-contract` | — | [`mcp-projection`](mcp-projection.md) emits a server. This checks the emitted |
@@ -139,8 +158,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Readability Editing](readability-editing.html) | `readability-editing` | — |  |
 | [Related work: find it, sort it, ask](related-work-coordination.html) | `related-work-coordination` | — | Owner, 2026-09-23 (issue #1023): *"when CRDM is initiated/updated through human agent chat discussio |
 | [/rendered-verification](rendered-verification.html) | `rendered-verification` | — | [`continual-progress`](continual-progress.md) argues that **a human cannot |
-| [/repo-conversion](repo-conversion.html) | `repo-conversion` | — | Process: [`processes/getting-started.bpmn`](../../processes/getting-started.html), |
-| [A falling-off retry rate, on every error](retry-backoff.html) | `retry-backoff` | — | Owner, 2026-09-20: **"as rule, use logarithmic fall-off on all errors. core |
 | [Review comments](review-comments.html) | `review-comments` | — | > Skill id: `review-comments` · Package: `folio-core` |
 | [Review heat map](review-heatmap.html) | `review-heatmap` | — | > Skill id: `review-heatmap` · Package: `folio-core` · Bean: `qbfi` · Epic: `q4jm` |
 | [Roles are swimlanes](role-model.html) | `role-model` | — | One sentence carries the whole model: |
@@ -151,7 +168,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Swarm management](swarm-management.html) | `swarm-management` | — | A swarm is several agents working one goal in parallel. It is the most |
 | [Swimlane Glossary](swimlane-glossary.html) | `swimlane-glossary` | — |  |
 | [Running a SWOT scan](swot-analysis.html) | `swot-analysis` | — | **The method is not in this file.** It is the `swot` node in the `methodology` |
-| [symbiotic-interaction](symbiotic-interaction.html) | `symbiotic-interaction` | — |  |
 | [Task authorization](task-authorization.html) | `task-authorization` | — | > **Before an actor performs a task or answers a decision, the BPMN executor |
 | [Technical documentation](technical-documentation.html) | `technical-documentation` | — | The register is an SDO's — W3C, IHE. The reader is an implementer who was not |
 | [Test Engineer](test-engineer.html) | `test-engineer` | — | bun test                              # from scripts/tests/ |
@@ -159,8 +175,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Todo Review](todo-review.html) | `todo-review` | — | > **Disambiguation:** |
 | [Turn reporting](turn-reporting.html) | `turn-reporting` | — | Split out of `todo-manager.md` on 2026-09-19 (bean `tdmg`), which had reached |
 | [Untainted verification](untainted-verification.html) | `untainted-verification` | — | > Skill id: `untainted-verification` · Package: `folio-core` |
-| [Untrusted input](untrusted-input.html) | `untrusted-input` | — | One defect, three substrates. In every case something **substitutes a value |
-| [Never encode a constraint you have not verified](unverified-constraints.html) | `unverified-constraints` | — | Owner, 2026-09-19: **"dont encode rules against a working setup."** |
 | [Two mechanisms and a persona](upload-routes.html) | `upload-routes` | — | [`content-acquisition`](content-acquisition.md) decides *what channel* a |
 | [Adopting an upstream version bump](upstream-version-adoption.html) | `upstream-version-adoption` | — | An unpinned dependency is an unreviewed commit from a stranger, merged on every |
 | [`uses[]` Editorial Review](uses-editorial-review.html) | `uses-editorial-review` | — |  |
@@ -170,7 +184,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Voice overlay review](voice-overlay-review.html) | `voice-overlay-review` | — |  |
 | [/watch](watch.html) | `watch` | — | A unified watcher that handles **branches** (poll `git ls-remote`) and |
 | [Where a proposal goes](where-a-proposal-goes.html) | `where-a-proposal-goes` | — | **A design proposal is a comment on the issue it is for.** Not a page in |
-| [Where does this go?](where-does-this-go.html) | `where-does-this-go` | — | > Skill id: `where-does-this-go` · Package: `folio-core` |
 
 ## Document adapter (folio-document-adapter)
 
@@ -323,14 +336,6 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
 | [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
-
-## Security — values crossing a boundary (security)
-
-| Skill | Id | Schema | Summary |
-|-------|----|--------|---------|
-| [Injection](injection-boundaries.html) | `injection-boundaries` | — |   run: \| |
-| [Path containment](path-containment.html) | `path-containment` | — | `src/core/safe-path.ts` is the implementation. This is when to reach for which, |
-| [Security](security.html) | `security` | — | > **This value came from outside. What may I do with it?** |
 
 ## Spec Kit spec-driven development (skills/spec-kit)
 

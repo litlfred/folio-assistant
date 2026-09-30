@@ -33,7 +33,7 @@
 #
 # Several of these checks are about artefacts accumulating, and the obvious
 # next step is to have the workflow tidy up. It must not:
-# `skills/folio-core/deletion-requires-confirmation.md`, and bean `plj1` for
+# `skills/conduct/conduct-core/deletion-requires-confirmation.md`, and bean `plj1` for
 # what a workflow that tidies up on its own initiative actually costs. Every
 # finding names an action a PERSON takes.
 #
@@ -161,7 +161,7 @@ jobs:
             echo
             echo "**Nothing in this report has been acted on.** Every action above names something"
             echo "a person does; the sweep removes nothing on its own initiative. See"
-            echo "\`skills/folio-core/deletion-requires-confirmation.md\`."
+            echo "\`skills/conduct/conduct-core/deletion-requires-confirmation.md\`."
             echo
             echo "Reproduce locally: \`bun run health\`."
           } > "$RUNNER_TEMP/issue-body.md"

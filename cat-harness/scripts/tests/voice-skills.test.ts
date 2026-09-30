@@ -13,7 +13,7 @@
  */
 
 import { describe, expect, test } from "bun:test";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 
 import { checkVoiceSkills, restatements } from "../check-voice-skills.ts";
 import { readVoicesGraph } from "../voices-graph.ts";
@@ -148,7 +148,15 @@ describe("the structural half — what Zod cannot check", () => {
     // nothing — "no voices are declared" for a repository declaring three.
     // Found live while writing the checker. The explicit parameter is the fix,
     // and this is the regression.
-    expect(readVoicesGraph([REPO])).toBeNull();
+    //
+    // The pitfall is asserted as the DERIVATION, not as what the reader finds
+    // in the parent. `readVoicesGraph([REPO])` scans `dirname(REPO)`, a
+    // directory this repository does not own: its answer was `null` only when
+    // that directory held nothing, and a checkout placed directly in `/tmp`
+    // walked into another test's deliberately malformed fixture and threw
+    // (bean `8zsb`, box 3). Whether the wrong root finds nothing is a fact
+    // about the operator's filesystem; that it IS the wrong root is not.
+    expect(repoRootFor(REPO)).toBe(dirname(REPO));
     expect(readVoicesGraph([REPO], REPO)).not.toBeNull();
   });
 });

@@ -13390,6 +13390,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.layer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.layer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whose namespace the kind is named in, when it is not the harness's: `core` for the folio's own furniture (`voices`, `library`, `todos`, …). A kind bootstrap defines is bootstrap's whatever this says (`BOOTSTRAP_GRAPH_KINDS`). The kind IS its individual, `<ns>graphKind/<name>` ({@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean `3r47`): \"Drop per-kind classes\" — bootstrap names a kind as one `GraphKind` individual, and the harness now does the same."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.layer",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.nodeschemas",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -13463,25 +13482,6 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.type",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "GraphKindDef.type"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The `@type` IRI this kind projects to."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.type",
       "skos:note": "candidate"
     },
     {
@@ -22351,7 +22351,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Declared instance name. Absent means the citing instance's own."
+          "@value": "The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own."
         }
       ],
       "dcterms:source": "cat-harness/schemas/theme.ts#ThemeRefSchema.instance",
@@ -27595,7 +27595,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declared name of the instance holding it. Absent means this one."
+          "@value": "The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceRefSchema.instance",
@@ -27652,7 +27652,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The DECLARED NAME of the instance holding the corpus, when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged."
+          "@value": "The instance holding the corpus, as its planned `owner/repo` (bean `6rmv`; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.instance",

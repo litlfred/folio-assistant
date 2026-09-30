@@ -4,7 +4,7 @@ title: 'Drop the per-kind graph classes (KGraph, SkillGraph, VoiceGraph, …): a
 status: in-progress
 type: task
 created_at: 2026-09-30T10:04:38Z
-updated_at: 2026-09-30T19:12:25Z
+updated_at: 2026-09-30T19:12:28Z
 parent: folio-assistant-xsqm
 ---
 
@@ -20,10 +20,10 @@ Asked *"KGraph needs better name? CatHarness? … what is bootstrap's? consisten
 
 ## Done when
 
-- [ ] A directory node is typed `bootstrap:Subgraph` and says what it holds only through `holdsGraph` → `<definer ns>graphKind/<kind>`.
-- [ ] The registry identifies a kind by its individual IRI, not a class; the `kg`/`cat-harness` alias still resolves to one kind.
-- [ ] No `*Graph` class is minted for a kind (RoleGraph/PreviewGraph/FshGutsGraph etc. that type a DOCUMENT, not a directory, are reviewed separately and kept only if they are not a kind).
-- [ ] `ns-export`, the declaration projection, the UML/overview generators and their tests read the individual.
+- [x] A directory node is typed `bootstrap:Subgraph` and says what it holds only through `holdsGraph` → `<definer ns>graphKind/<kind>`.
+- [x] The registry identifies a kind by its individual IRI, not a class; the `kg`/`cat-harness` alias still resolves to one kind.
+- [x] No `*Graph` class is minted for a kind (RoleGraph/PreviewGraph/FshGutsGraph etc. that type a DOCUMENT, not a directory, are reviewed separately and kept only if they are not a kind).
+- [x] `ns-export`, the declaration projection, the UML/overview generators and their tests read the individual.
 - [ ] Docs prose that says "KGraph" for the concept (`content/docs/kgraph/`, `harness/`) is reviewed against bootstrap's term Knowledge Graph.
 
 ## Not now
@@ -31,3 +31,30 @@ Asked *"KGraph needs better name? CatHarness? … what is bootstrap's? consisten
 Owner: keep the primary focus on the bootstrap / bootstrap-tools separation. Needed for that only: bootstrap's `bs:` vocabulary is its own terms, and the harness's classes are minted in the harness's namespace (done in #1538); the classes themselves go here.
 
 _2026-09-30T19:12:25Z_ — Claimed by next/3r47 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Progress, 2026-09-30
+
+- `GraphKindDef.type` (the class IRI) is gone; a kind states `layer?: "core"`
+  and is named by `graphKindIri(name)` = `<layer ns>graphKind/<name>`. The
+  layer snapshot before the change (10 core, 5 bootstrap, 33 harness) is what
+  the explicit `layer` reproduces.
+- The declaration's JSON-LD projection types a directory `Subgraph` with
+  `holdsGraph` → the individuals (the same `dcterms:type` IRI kg-export
+  writes); the read-back reads `holdsGraph` (`registry.forIri`).
+- ns-export publishes each harness/core kind as a `bootstrap:GraphKind`
+  individual in its layer's document, so every `…graphKind/<name>` kg-export
+  mints dereferences; `GRAPH_KIND_TYPE_LAYERS` is gone; kg-export's
+  `typeIri` (the class) is dropped.
+- Document classes kept: `RoleGraph`, `PreviewGraph`, and `FshGutsGraph`
+  (now defined on its own — it was defined only through the fsh-guts kind's
+  class). `GlossaryGraph` and `UnknownGraph` keep their published definitions
+  but are no longer minted.
+
+## Owner ruling, 2026-09-30 — the KGraph chapter
+
+The `KGraph` docs chapter (`content/docs/kgraph/`, published at `/kgraph.html`,
+linked from 5 translated index pages) defines KGraph as "everything this
+harness knows about itself is one graph" — bootstrap's term Knowledge Graph
+under a coined name. Owner chose **rename, keep a redirect**: the chapter
+becomes "Knowledge Graph" at `/knowledge-graph.html`, `/kgraph.html` redirects,
+and the translated link texts are flagged for re-translation. Next change.
