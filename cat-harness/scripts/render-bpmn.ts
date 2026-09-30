@@ -32,7 +32,6 @@ import { basename, dirname, join, relative, resolve } from "node:path";
 import {
   drawing,
   openRenderer,
-  siblingLinks,
   VIEWER_BUNDLE,
   wrapShapeInLink,
 } from "../../bootstrap-tools/scripts/render-bpmn.ts";
@@ -187,7 +186,8 @@ function subprocessLinks(xml: string): Map<string, string> {
 }
 
 /**
- * Diagrams that ALSO get an SVG beside their own `.bpmn`.
+ * Diagrams that MUST have an SVG beside their own `.bpmn` — checked here,
+ * **written by the owning instance's own renderer**.
  *
  * An instance exempt from the `workflow-visualiser` obligation has no site of
  * its own, so this site's `workflows/` copy is the only drawing of its
@@ -195,6 +195,36 @@ function subprocessLinks(xml: string): Map<string, string> {
  * inside the instance, and the link would break the day the instance becomes
  * a repository of its own. Owner, 2026-09-29: *"display bpmn(s) etc in
  * README.md"*. Keyed on the declared exemption, never on an instance's name.
+ *
+ * ## This script used to WRITE these, and that made `main` permanently red
+ *
+ * Bean `bp43`, issue #1666. `3019b61729d` moved the Process renderer down to
+ * `bootstrap-tools`, and the owner's `9771531e489` taught the moved one to
+ * name itself in every file it writes into `bootstrap`. This script kept
+ * writing the same three siblings WITHOUT that note, so `--check` compared its
+ * own output against a file the other writer produced and reported stale on
+ * every run — a gate that could never go green, and whose own advice
+ * (*"re-run `bun run render:bpmn`"*) would have DELETED the note, going green
+ * by reverting owner-directed work.
+ *
+ * Two writers for one artefact has no stable resolution: teaching this script
+ * the note would make it claim authorship it does not have, and parameterising
+ * the note by the actual writer makes the bytes depend on WHICH renderer ran
+ * last. So there is one writer per artefact, and it is the instance's own.
+ *
+ * ## Why existence rather than staleness
+ *
+ * Whether a sibling is CURRENT is answered by the renderer that writes it —
+ * `bootstrap-tools/scripts/render-bpmn.ts --check` for the only exempt
+ * instance today. Re-deriving it here would reinstate the second writer in
+ * all but name.
+ *
+ * **The gap, stated rather than hidden:** an exempt instance with NO renderer
+ * of its own would pass this existence check on a sibling nothing keeps
+ * current. `bootstrap` is the only exempt instance (measured 2026-09-30), and
+ * `bootstrap-tools` covers it, so the gap is latent rather than live — but it
+ * is a gap, and `render:bpmn:check` must run both renderers for the repository
+ * to keep checking all 78 drawings rather than 75.
  */
 const besideSource = new Set(
   sources.filter((f) => {
@@ -274,18 +304,22 @@ for (const file of sources) {
   await emit(join(OUT_DIR, `${basename(file, ".bpmn")}.svg`), linked);
 
   if (besideSource.has(file)) {
-    const own = siblingLinks(file, xml, processPath);
-    // The arrowhead ids above are named for the site that renders them; the
-    // instance's own copy names nothing outside itself.
-    let local = drawing(svg, "bpmn-marker-")!;
-    for (const [id, href] of own) local = wrapShapeInLink(local, id, href);
-    const n = (local.match(/class="fa-subprocess-link"/g) ?? []).length;
-    if (n !== own.size) {
-      console.error(`✗ ${file}: ${own.size} sibling link(s) to write but ${n} wrapped`);
-      process.exitCode = 1;
-      continue;
+    // NOT written here — see the `besideSource` docblock. The owning
+    // instance's renderer writes it and answers whether it is current; this
+    // asks only whether it is THERE, because an exempt instance whose sibling
+    // is missing has a README pointing at nothing, and that is invisible from
+    // the site copy above.
+    const sibling = file.replace(/\.bpmn$/, ".svg");
+    if (!existsSync(sibling)) {
+      console.error(
+        `✗ ${relative(repoRootFor(ROOT), sibling)} is MISSING — its instance is exempt from ` +
+          `\`workflow-visualiser\`, so this sibling is the only drawing its README can link to. ` +
+          `Run that instance's own renderer; this script no longer writes it (bean \`bp43\`).`,
+      );
+      stale++;
+    } else {
+      console.log(`✓ ${relative(repoRootFor(ROOT), sibling)} present (currency: its own renderer)`);
     }
-    await emit(file.replace(/\.bpmn$/, ".svg"), local);
   }
 }
 

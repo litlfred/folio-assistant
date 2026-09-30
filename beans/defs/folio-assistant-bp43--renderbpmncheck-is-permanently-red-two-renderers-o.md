@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T18:57:28Z
-updated_at: 2026-09-30T18:57:52Z
+updated_at: 2026-09-30T19:04:43Z
 parent: folio-assistant-1xhc
 ---
 
@@ -97,3 +97,76 @@ not say cat-harness' renderer should narrow, and narrowing it silently is how
 Whether any of the other 75 files has the same two-writer problem latently —
 they are all currently `up to date` under cat-harness' renderer, but that only
 says nothing ELSE has been rewritten by a second writer yet.
+
+
+## Settled 2026-09-30 — owner said "fix and continue"
+
+**One writer per artefact, and it is the instance's own.** Implemented against
+the recommendation put to the owner; the reading that settled it is their own
+`9771531e489` — *bootstrap-tools writes into bootstrap*.
+
+### What reading the code changed about the question
+
+The two renderers were never contesting the same job, which the original
+framing above got wrong:
+
+| target | written by | contested |
+|---|---|---|
+| `cat-harness/docs/assets/img/workflows/*.svg` — 75 site copies, incl. bootstrap's 3 | cat-harness only | no |
+| `bootstrap/processes/*.svg` — 3 siblings | **both** | **yes** |
+
+So bean `oqdr` is untouched: bootstrap's diagrams still reach the site, from
+cat-harness, and are still checked there. Only the three SIBLINGS had two
+writers.
+
+The sibling write exists for a reason and is generic — keyed on a declared
+`workflow-visualiser` exemption, for instances with no site of their own, so
+their README has something inside the instance to link to. Measured: **exactly
+one instance is exempt**, `bootstrap`, and `bootstrap-tools` covers it.
+
+### Why not the other two fixes
+
+Teaching cat-harness' renderer the note would make it **claim authorship it
+does not have**. Parameterising the note by the actual writer makes the bytes
+depend on WHICH renderer ran last, so the check flaps. Neither is a resolution;
+both leave two writers.
+
+### The change
+
+- cat-harness' renderer **no longer writes** the siblings. It asserts they
+  EXIST — a missing one means an exempt instance's README points at nothing,
+  which the site copy cannot reveal — and leaves CURRENCY to the renderer that
+  writes them.
+- `render:bpmn` / `render:bpmn:check` run **both** renderers, bootstrap-tools
+  first, so the writer produces before the existence check reads.
+- `siblingLinks` import dropped: it is DEFINED in bootstrap-tools' renderer and
+  used there, and cat-harness was its only outside consumer. The factoring now
+  matches the ownership.
+
+### Measured
+
+```
+render:bpmn:check   exit 0      (was exit 1, three stale, permanently)
+render:bpmn         exit 0, tree UNCHANGED
+                                (on main: 3 files changed, 3 deletions —
+                                 the owner's note, deleted)
+coverage            81 lines = 3 siblings + 75 site + 3 existence
+                                (was 78; no drawing lost)
+generated-by note   present in all three siblings after a full write
+eslint, tsc         clean
+```
+
+**Falsified rather than assumed.** With `bootstrap/processes/log-message.svg`
+removed, cat-harness' check prints `is MISSING` and exits **1**. A check that
+cannot fail is this epic's own subject, so it was made to fail before it was
+trusted.
+
+### The gap, still stated rather than hidden
+
+An exempt instance with NO renderer of its own would pass the existence check
+on a sibling nothing keeps current. `bootstrap` is the only exempt instance
+today and `bootstrap-tools` covers it, so this is latent, not live — and it is
+written into the code's own docblock rather than only here.
+
+Still not established: whether any of the other 75 has the same two-writer
+problem latently.
