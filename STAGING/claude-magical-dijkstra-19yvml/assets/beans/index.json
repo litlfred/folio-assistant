@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 516,
+      "count": 517,
       "unit": "beans"
     }
   },
@@ -1943,6 +1943,20 @@
       "updatedAt": "2026-09-29T18:14:49Z",
       "preview": "The \"next\" recorded on bean `t8g3`. Re-render BPMN diagrams so translated\nlabels appear, handling text overflow.\n\n**Now unblocked.** Its own input list was partly broken: `schemas/translation-tools.ts`\nlisted `processes/publication-workflow.bpmn` in the `dak` entry's\n`bpmnDiagrams`, and **that file has never existed** — `docs/publication-workflow.md`\nis a PAGE embedding three diagrams. An unresolv",
       "file": "beans/defs/folio-assistant-8xx6--bpmn-re-render-for-translated-labels.md"
+    },
+    {
+      "id": "folio-assistant-8zsb",
+      "title": "bun test reads the CHECKOUT PATH: 2 tests fail in any worktree not named folio-assistant",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T17:53:09Z",
+      "updatedAt": "2026-09-30T18:13:00Z",
+      "preview": "## What was measured\n\n`bun test` on `origin/main` `da684477383`, run four times, varying **only the\ndirectory the checkout sits in**. Same commit, same `node_modules`, same\ncommand.\n\n| checkout path | basename | parent | result |\n|---|---|---|---|\n| `/home/user/folio-assistant` | `folio-assistant` | `/home/user` | pass |\n| `/tmp/probe-main/folio-assistant` | `folio-assistant` | `/tmp/probe-main` |",
+      "file": "beans/defs/folio-assistant-8zsb--bun-test-reads-the-checkout-path-2-tests-fail-in-a.md"
     },
     {
       "id": "folio-assistant-95ir",
