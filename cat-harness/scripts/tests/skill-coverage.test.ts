@@ -25,7 +25,8 @@
  * - **In `known-skills.ts` it was a latent false-dangling.** Nothing broke,
  *   because all twelve happened to resolve through a SECOND home: eleven have a
  *   `schemas/skills/<name>/` I/O contract, and `smart-base-tools` has
- *   `.claude/skills/local/smart-base-tools.json`. Delete any one of those and
+ *   `.claude/skills/local/smart-base-tools.json` (since bean `rqao`,
+ *   `smart-base/skills/skill-definitions/`). Delete any one of those and
  *   `check-workflow-refs` calls a real, present skill dangling — the failure
  *   its own header says it exists to prevent.
  *

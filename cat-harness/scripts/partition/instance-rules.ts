@@ -441,6 +441,7 @@ export const RULES: Rule[] = [
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/repo-full-name.ts",           // `owner/name` — a Tool type AND the declaration's repository (bean `6rmv`)
       "schemas/instance-repositories.ts",    // the derived owner/repo ↔ instance map (bean `6rmv`)
+      "schemas/skill-definitions-dir.ts",    // where the JSON skill definitions and conventions live (bean `rqao`)
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)

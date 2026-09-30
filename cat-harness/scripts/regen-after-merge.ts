@@ -136,6 +136,14 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   // both by name, ran commands that repair nothing, and reported `unrepaired`
   // — the verdict about the tool that `NO_WRITER` below exists to prevent.
   "check:term-mapping": "term:mapping",
+  // Found by MEASURING, not from uju6's list of four (2026-09-30): every
+  // `check:X` whose command is some writer's command plus ` --check`. Main went
+  // red on `check:glossary` at 7bdda74 while regen, not knowing this pair,
+  // could not repair it. `glossary-page.ts` regenerates from its sources.
+  "check:glossary": "glossary:page",
+  // Re-materialises a remote package's skills at its PINNED commit, so it is
+  // deterministic and is exactly the repair for a stale copy.
+  "check:remote-skills": "sync:remote-skills",
 };
 
 /**
@@ -153,6 +161,11 @@ export const NO_WRITER: Readonly<Record<string, string>> = {
   "check:raci": "raci-chart.ts only prints; it writes nothing",
   "check:subgraphs": "check-subgraphs.ts only reports",
   "check:harness-dirs": "compares two config files; harness:dirs makes directories, not what it compares",
+  // `viewer:nav:audit` does write, but what it writes is the BASELINE the gate
+  // compares against, and the gate fails only on a REGRESSION. Running it on a
+  // failure would re-baseline, so the regression would vanish and be reported
+  // as a repair. It is the one case where a writer exists and must not be run.
+  "check:viewer-nav": "its writer re-baselines, which would hide the regression the gate exists to report",
 };
 
 export type Outcome = "current" | "regenerated" | "unrepaired" | "no-writer";
