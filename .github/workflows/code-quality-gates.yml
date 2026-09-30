@@ -874,6 +874,17 @@ jobs:
           bun run cat-harness/scripts/gen-schema-docs.ts --check
           bun run skills:docs:check
 
+      # Document ingestion's FIRST step, generated from the Tool nodes that
+      # implement it (owner, 2026-09-29: "generate documentation from Tool
+      # documentation of the upload Task/Skill as first step of document
+      # ingestion process"). Its own step rather than a line appended to the
+      # one above, so a reader sees WHICH generator went stale: it derives the
+      # step, its skill and its Tools from `document-ingestion.bpmn` and the
+      # tools graph, so an edit to either of two graphs stales it and neither
+      # of those graphs' own gates would notice.
+      - name: the upload step's page is current
+        run: bun run upload-step:docs:check
+
       # The README's AUTHORED half. `readme-sections.ts` owns the marked
       # regions; this owns every other link, and `AGENTS.md` claims that
       # "between the two tools no link in a folio README is unaccounted for".

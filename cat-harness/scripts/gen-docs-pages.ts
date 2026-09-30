@@ -764,6 +764,21 @@ function renderPage(page: WebPage): string {
 
   lines.push("---");
   lines.push("layout: default");
+  // THE SAME FACT AS THE BANNER BELOW, WHERE A MACHINE CAN READ IT.
+  //
+  // The HTML comment further down has said "generated" since bean `06e3`, and
+  // it sits under the front matter — so `check:reference-direction`, which
+  // reads a declaration out of the first lines and nothing else, graded every
+  // page this writes as authored prose. That is bean `ws99`: correct
+  // information in a place the reader cannot reach is not a declaration.
+  //
+  // `generated:` is the key `gen-skill-docs.ts` and `gen-schema-docs.ts`
+  // already emit (PR #1222), spelled the same way on purpose: one reader
+  // recognising every generator here is the whole point of not inventing a
+  // second form. The comment stays — it is what a PERSON reading the source
+  // on the forge sees, and it names the manifest this page came from, which
+  // the key does not.
+  lines.push(`generated: scripts/gen-docs-pages.ts — do not hand-edit; run \`bun run docs:pages\``);
   lines.push(`title: ${page.title}`);
   if (page.parent) lines.push(`parent: ${page.parent}`);
   if (page.navOrder !== undefined) lines.push(`nav_order: ${page.navOrder}`);

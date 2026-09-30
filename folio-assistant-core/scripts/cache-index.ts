@@ -39,12 +39,12 @@
  * workflow whose shape deleted every open PR's preview with nobody deciding.
  * An ARCHIVAL copy is never a candidate: it exists to outlive its source.
  *
- * @module scripts/cache-index
+ * @module folio-assistant-core/scripts/cache-index
  */
 import { statSync } from "node:fs";
 
 import { collect, type MaterializedRecord } from "./check-materialized-fixity.js";
-import { freshness, type FreshnessVerdict, type Materialization } from "../../folio-assistant-core/schemas/materialization.js";
+import { freshness, type FreshnessVerdict, type Materialization } from "../schemas/materialization.js";
 
 export type SizeBasis = "recorded" | "measured" | "directory" | "absent";
 
