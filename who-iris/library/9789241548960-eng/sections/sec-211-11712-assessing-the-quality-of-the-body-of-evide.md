@@ -11,20 +11,16 @@ source_sha256: bfcd856e3ad7ab20
 GRADE
 The quality of the body of evidence pertaining to each outcome should be 
 assessed using GRADE, as appropriate for the type of data involved (see 
-Chapter 9). The focus is on outcomes critical for decision-making in the con­
-text of rapid advice guidelines, and not on intermediate, surrogate or other 
+Chapter 9). The focus is on outcomes critical for decision-making in the context of rapid advice guidelines, and not on intermediate, surrogate or other 
 types of outcomes. Exceptions may be made, however, when data are sparse 
 and decisions need to be based on indirect evidence, including intermediate 
 outcomes, for example.
 Assessments of the quality of the evidence using GRADE are not 
-restricted to cases in which pooled estimates of effect are available: a nar­
-rative synthesis of the evidence can also be assessed. In such situations, the 
+restricted to cases in which pooled estimates of effect are available: a narrative synthesis of the evidence can also be assessed. In such situations, the 
 effect estimate will not be a single point estimate with a 95% confidence 
 interval, but rather, a range of observed effects across included studies. The 
 consistency, precision and magnitude of the effect can be assessed, along 
-with other GRADE domains, according to routine guidance. Under the cat­
-egory of “other considerations” in GRADE, the reviewer can list any modi­
-fications of standard systematic review methods that could have affected the 
+with other GRADE domains, according to routine guidance. Under the category of “other considerations” in GRADE, the reviewer can list any modifications of standard systematic review methods that could have affected the 
 robustness of the review’s conclusions.
 Chapter 11 
 Rapid advice guidelines in the setting of a public health emergency

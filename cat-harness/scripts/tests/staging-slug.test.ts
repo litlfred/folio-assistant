@@ -160,11 +160,24 @@ describe("GUARD 3 — the workflow checks the VALUE, in every job that builds a 
     ).jobs ?? {};
     const guarded = Object.entries(jobs)
       .filter(([, j]) =>
-        (j.steps ?? []).some((s) => /case "\$SLUG" in\s*\n\s*""\|\.\|\.\.\)/.test(s.run ?? "")),
+        (j.steps ?? []).some((s) => /case "\$SLUG" in\s*\n\s*""\|\.\|\.\.(?:\|_retired)?\)/.test(s.run ?? "")),
       )
       .map(([n]) => n)
       .sort();
     expect(guarded).toEqual(["cleanup", "cleanup-dispatch", "stage"]);
+  });
+
+  test("ALL THREE jobs also refuse `_retired` — the retired-record store is not a preview (bean 6pfo)", () => {
+    // Staging a preview AT `STAGING/_retired` would replace every retired
+    // record in one deploy, and cleaning one up would delete them all.
+    const jobs = (
+      Bun.YAML.parse(yml) as { jobs?: Record<string, { steps?: { run?: string }[] }> }
+    ).jobs ?? {};
+    const refusing = Object.entries(jobs)
+      .filter(([, j]) => (j.steps ?? []).some((s) => /""\|\.\|\.\.(?:\|\*\/\*)?\|_retired\)/.test(s.run ?? "")))
+      .map(([n]) => n)
+      .sort();
+    expect(refusing).toEqual(["cleanup", "cleanup-dispatch", "stage"]);
   });
 
   test("every `rm -rf` on a slug is in a job whose slug was checked", () => {
@@ -172,7 +185,7 @@ describe("GUARD 3 — the workflow checks the VALUE, in every job that builds a 
     // in a job that did not first refuse an unsafe X.
     const rms = yml.match(/rm -rf (?:-- )?"?(?:pages\/)?STAGING\/\$\w+"?/g) ?? [];
     expect(rms.length).toBeGreaterThan(0);
-    const guardCount = (yml.match(/""\|\.\|\.\.\)/g) ?? []).length;
+    const guardCount = (yml.match(/""\|\.\|\.\.(?:\|_retired)?\)/g) ?? []).length;
     expect(guardCount).toBeGreaterThanOrEqual(rms.length);
   });
 });

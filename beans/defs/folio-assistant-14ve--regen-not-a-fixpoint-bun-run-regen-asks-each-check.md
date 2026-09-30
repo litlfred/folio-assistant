@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-29T23:42:28Z
-updated_at: 2026-09-29T23:59:55Z
+updated_at: 2026-09-30T08:28:41Z
 parent: folio-assistant-1xhc
 ---
 
@@ -24,6 +24,9 @@ Loop the ask-and-regenerate pass until one pass regenerates nothing, capped at a
 ## Done when
 - [ ] after a merge that leaves harness.json stale, one `bun run regen` leaves every check current
 - [ ] a unit test covers a two-step dependency: writer B's output is an input to check A, and A is asked first
+
+
+*2026-09-30* — Parented under **1xhc** CI RELIABILITY: it arrived on main with no parent, which fails check:bean-parents on every branch. Chosen by evidence, not taste: its two nearest filed neighbours (lsi:near) — ymsu (kg:detangle:check cannot fail inside gates, 0.55) and lxpq (clean merge, wrong artefact, 0.55) — are both under 1xhc.
 
 ## Measured again, 2026-09-30 (PR #1530 merge of main)
 

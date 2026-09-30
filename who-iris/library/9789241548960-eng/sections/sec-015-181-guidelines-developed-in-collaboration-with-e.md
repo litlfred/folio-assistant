@@ -17,22 +17,19 @@ Collaborative guidelines must adhere to the basic principles for WHO
 guidelines. When developing such guidelines, it is particularly important to 
 note that:
 ■■
-no funding can come from commercial sources, and conflicts of inter­
-est must be declared and managed as per WHO procedures;
+no funding can come from commercial sources, and conflicts of interest must be declared and managed as per WHO procedures;
 ■■
 a systematic review of the relevant evidence is required;
 ■■
 the methods used to develop the recommendations must be explicit 
 and transparent;
 ■■
-the experts who develop the recommendations must adequately repre­
-sent the guideline’s target audience, whether global or regional; and
+the experts who develop the recommendations must adequately represent the guideline’s target audience, whether global or regional; and
 ■■
 WHO Press should be consulted on publishing agreements, including 
 matters relating to copyright and open access.
 When collaborating with an external organization, WHO may not be 
-able to insist that all WHO processes and procedures for guideline devel­
-opment be followed. WHO staff planning such guidelines need to submit 
+able to insist that all WHO processes and procedures for guideline development be followed. WHO staff planning such guidelines need to submit 
 a planning proposal to the GRC describing in detail how the guideline will 
 be developed and highlighting any deviation from the procedures set out in 
 this handbook. The GRC will assess such proposals on a case-by-case basis.

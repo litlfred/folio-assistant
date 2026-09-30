@@ -47,9 +47,7 @@ changes in scopes of practice.
 	» Build trust between professionals who are considering establishing links between facilities 
 across institutions, such as through twinning programmes.
 OPPORTUNITIES 
-FOR INTEROPERA­
-BILITY AND LINK­
-AGES TO OTHER 
+FOR INTEROPERABILITY AND LINKAGES TO OTHER 
 DIGITAL HEALTH 
 INTERVENTIONS
 Use master facility lists/registries and health worker registries to facilitate information exchange 

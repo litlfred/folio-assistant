@@ -90,6 +90,7 @@ classDiagram
       _comment [0..1] string
       source [1] object
       files [0..*] File[]
+      licence [0..1] object
     }
   }
   who_iris_who_iris_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" who_iris_who_iris_uploads_folio_extraction_v1_Asset : assets

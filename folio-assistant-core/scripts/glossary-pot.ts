@@ -48,7 +48,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { directoryForGraph, repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
 import { formatPot, potWithoutTimestamp, type PotEntry } from "../../cat-harness/content/pipeline/pot-extract.ts";
 import { termIri, type LangText } from "../schemas/glossary.ts";
-import { collect, type GlossarySource } from "./glossary-page.ts";
+import { LOCALE_PAGE_STRINGS, LOCALE_PAGE_TEMPLATE, collect, type GlossarySource } from "./glossary-page.ts";
 
 const CORE = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(CORE);
@@ -104,12 +104,12 @@ export function potEntries(s: GlossarySource, repo: string = REPO): PotEntry[] {
     if (t.status !== "authored") continue;
     const iri = termIri(s.ns, s.glossary, t.id);
     const line = lineOf(t.id);
-    out.push({ source: s.file, line, msgid: sourceText(t.prefLabel), comment: `Glossary term label: ${iri}` });
+    out.push({ source: s.file, line, kind: "glossary-term", msgid: sourceText(t.prefLabel), comment: `Glossary term label: ${iri}` });
     for (const alt of t.altLabel ?? []) {
-      out.push({ source: s.file, line, msgid: alt, comment: `Glossary term alternative label: ${iri}` });
+      out.push({ source: s.file, line, kind: "glossary-term", msgid: alt, comment: `Glossary term alternative label: ${iri}` });
     }
     if (t.definition) {
-      out.push({ source: s.file, line, msgid: sourceText(t.definition), comment: `Glossary term definition: ${iri}` });
+      out.push({ source: s.file, line, kind: "glossary-term", msgid: sourceText(t.definition), comment: `Glossary term definition: ${iri}` });
     }
   }
   return out;
@@ -123,6 +123,18 @@ export function templates(c: ReturnType<typeof collect>, repo: string = REPO): M
     const entries = potEntries(s, repo);
     if (entries.length) out.set(templateName(s), entries);
   }
+  // The locale page's own words (bean c592): translated like the terms, so a
+  // translated glossary page is translated chrome and all.
+  out.set(
+    LOCALE_PAGE_TEMPLATE,
+    Object.values(LOCALE_PAGE_STRINGS).map((msgid) => ({
+      source: "folio-assistant-core/scripts/glossary-page.ts",
+      line: 1,
+      kind: "ui-string" as const,
+      msgid,
+      comment: "Glossary locale page",
+    })),
+  );
   return out;
 }
 

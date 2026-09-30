@@ -10,11 +10,9 @@ source_sha256: bfcd856e3ad7ab20
 ---
 This handbook presents the important principles of guideline development 
 and provides stepwise instruction on the technical and procedural aspects 
-of developing a WHO guideline. It aims to steer readers through the pro­
-cess to ensure that the resulting guideline is credible; the recommendations 
+of developing a WHO guideline. It aims to steer readers through the process to ensure that the resulting guideline is credible; the recommendations 
 accurately reflect the balance of potential benefits and harms; the guideline 
-meets WHO’s publication standards in terms of content, methods and pres­
-entation; the underlying evidence is accessible; and the recommendations 
+meets WHO’s publication standards in terms of content, methods and presentation; the underlying evidence is accessible; and the recommendations 
 are implementable and positive in their impact on population health.
 Chapter 1 
  Introduction
