@@ -8,16 +8,52 @@
  * @module schemas/folio-dir.test
  */
 import { folioDir } from "./cat-harness.js";
-import { describe, expect, test } from "bun:test";
-import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
+import { afterAll, describe, expect, test } from "bun:test";
+import { mkdtempSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
 import { writeDeclaration } from "../test/support/instance-fixture.js";
 
+/**
+ * Every temp root this file makes, so `afterAll` can take them away again.
+ *
+ * These leaked for as long as the file has existed: **1918** directories in
+ * one container on 2026-09-30, 1754 from `repo()` and 164 from the malformed
+ * case, the oldest a week old (bean `8zsb`, issue #1661).
+ *
+ * Litter alone would be a housekeeping note. The malformed family is not
+ * litter, and the asymmetry is the whole reason this matters: `writeDeclaration`
+ * names the file after the BODY's `name`, so a `repo()` fixture holds
+ * `probe.json` and is not a declaration OF ITS OWN DIRECTORY — while the
+ * malformed one is written as `<basename>.json` and therefore is. Put a
+ * checkout directly in `/tmp` and `/tmp` becomes the repository's parent, the
+ * resolver walks in, and it meets a declaration that is invalid ON PURPOSE.
+ *
+ * So the cleanup is not tidiness: an uncleaned deliberately-broken fixture is
+ * a trap armed for whoever works in the neighbouring directory next.
+ */
+const TEMP_ROOTS: string[] = [];
+
+/** `mkdtempSync` that the sweep below can find again. */
+function tempRoot(prefix: string): string {
+  const root = mkdtempSync(join(tmpdir(), prefix));
+  TEMP_ROOTS.push(root);
+  return root;
+}
+
+afterAll(() => {
+  for (const root of TEMP_ROOTS) {
+    // `force` because a root the test never finished creating is not a
+    // failure to report here — the test that needed it has already said so,
+    // and a throw in cleanup would replace a real verdict with this one.
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 /** A repository root with an optional declaration. */
 function repo(declaration?: Record<string, unknown>): string {
-  const root = mkdtempSync(join(tmpdir(), "folio-dir-"));
+  const root = tempRoot("folio-dir-");
   if (declaration) {
     writeDeclaration(root, JSON.stringify(declaration, null, 2));
   }
@@ -69,7 +105,7 @@ describe("folioDir", () => {
   });
 
   test("a MALFORMED declaration throws rather than guessing", () => {
-    const root = mkdtempSync(join(tmpdir(), "folio-dir-bad-"));
+    const root = tempRoot("folio-dir-bad-");
     // Named after the DIRECTORY, not "broken". An unparseable file has no
     // `name` to agree with, so since 2026-09-21 it counts as this instance's
     // broken declaration only when its stem matches the directory or a paired

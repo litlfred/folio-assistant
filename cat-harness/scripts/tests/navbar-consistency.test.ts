@@ -30,7 +30,7 @@
 import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
 import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
-import { join, resolve } from "node:path";
+import { basename, join, resolve } from "node:path";
 
 import { instanceRootsIn, siteDirFor } from "../../schemas/cat-harness.js";
 
@@ -204,8 +204,30 @@ describe("the themes set is iterated, not hardcoded", () => {
 
 describe("the denominator comes from the declared enumerator", () => {
   test("`instanceRootsIn` includes the repository root and excludes graph declarations", () => {
-    const names = instanceRootsIn(REPO).map((p) => p.split("/").pop());
-    expect(names).toContain("folio-assistant"); // the root declares
+    const roots = instanceRootsIn(REPO);
+    // THE ROOT ITSELF, compared as a PATH. The property this holds is the one
+    // the docblock above names — "it misses the repository root, which
+    // declares" — and that is a fact about the ENUMERATOR. Reading it off the
+    // directory's NAME instead asserted that the checkout is called
+    // `folio-assistant`, which is a fact about the OPERATOR'S FILESYSTEM.
+    //
+    // Those agree only by the convention that you clone into a directory named
+    // after the repository, and the worktree this repository tells agents to
+    // use — `.claude/worktrees/agent-<hash>` — breaks it. Measured 2026-09-30
+    // on `origin/main` da684477383, same commit and command, varying only the
+    // checkout's location: `folio-assistant` passed, `wt-ymsu` failed, and the
+    // received list's first entry was the directory name (bean `8zsb`,
+    // issue #1661). CI checks out into a correctly named directory, so it
+    // could not see this in either direction.
+    //
+    // The path comparison is also strictly STRONGER: a sibling that happened
+    // to be named `folio-assistant` would have satisfied the old assertion
+    // without the root being enumerated at all.
+    expect(roots).toContain(REPO);
+    // Basenames are right for THESE, because they are real subdirectory names
+    // rather than the root's. `basename` rather than `.split("/")`: a literal
+    // separator is what `check:portable-paths` exists to catch.
+    const names = roots.map((p) => basename(p));
     for (const notAnInstance of ["beans", "interaction", "todos"]) {
       expect(names).not.toContain(notAnInstance);
     }
