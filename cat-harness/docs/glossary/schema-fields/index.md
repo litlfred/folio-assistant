@@ -12,13 +12,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1488 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 154 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1483 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 154 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1688 terms and is 927 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1683 terms and is 924 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1688</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1683</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1063,41 +1063,6 @@ BoardSchema.title <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>What a reader sees in a tab or a heading.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/board.ts"><code>cat-harness/schemas/board.ts#BoardSchema.title</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.at-id" data-fa-state="extracted" data-fa-gloss="">
-BootstrapGraphDocumentSchema.@id <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Must equal the path the document is published at (bootstrap-graph-publication).</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bootstrap-graph.ts"><code>cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.@id</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.omitted" data-fa-state="extracted" data-fa-gloss="">
-BootstrapGraphDocumentSchema.omitted <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The instance-bound collectors that were NOT run. &quot;Has no tools&quot; and &quot;tools were never looked for&quot; are different facts; this is how the document says which one it means.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bootstrap-graph.ts"><code>cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.omitted</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.problems" data-fa-state="extracted" data-fa-gloss="">
-BootstrapGraphDocumentSchema.problems <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Sources that could not be read, counted rather than silently dropped.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bootstrap-graph.ts"><code>cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.problems</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.repository" data-fa-state="extracted" data-fa-gloss="">
-BootstrapGraphDocumentSchema.repository <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The instance's declared name.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bootstrap-graph.ts"><code>cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.repository</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--bootstrap-graph.bootstrapgraphdocumentschema.sourcecommitunavailable" data-fa-state="extracted" data-fa-gloss="">
-BootstrapGraphDocumentSchema.sourceCommitUnavailable <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Said instead of <code>sourceCommit*</code> when the build could not read git.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/bootstrap-graph.ts"><code>cat-harness/schemas/bootstrap-graph.ts#BootstrapGraphDocumentSchema.sourceCommitUnavailable</code></a></p>
 </dd>
 </dl>
 

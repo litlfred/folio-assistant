@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>17</b><span>specifications</span></div>
 <div class="xs-stat"><b>101</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>195</b><span>declared uses</span></div>
+<div class="xs-stat"><b>194</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -432,7 +432,6 @@ a subset of the edition rather than a transcription of it.
 |---|---|
 | [`bootstrap-tools/scripts/export-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/bootstrap-tools/scripts/export-graph.ts) | `@conformsTo` tag |
 | [`cat-harness/schemas/jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/jsonld.ts) | `@conformsTo` tag |
-| [`cat-harness/scripts/gen-bootstrap-graph.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/gen-bootstrap-graph.ts) | `@conformsTo` tag |
 | [`cat-harness/scripts/kg-export.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/kg-export.ts) | `@conformsTo` tag |
 
 **Operative terms (3).** The terms this repository acts on —

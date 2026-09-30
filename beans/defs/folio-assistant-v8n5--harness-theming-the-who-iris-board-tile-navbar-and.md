@@ -19,10 +19,10 @@ Owner, 2026-09-30, answering the GOAL 3 goal review: keep GOAL 3 **open**, and t
 An instance-declared theme has to be resolvable wherever a surface names a theme. That means resolving the who-iris themes through the same `resolveTheme` lookup the surfaces use, not copying the palette into the platform. `who-iris/themes/themes.ts` already says why it must not live in `cat-harness/schemas/`: a palette read off a WHO style guide is subject matter. The platform learns to *find* an instance's themes and never *holds* them.
 
 ## Done when
-- [ ] The who-iris board tile and navbar entry render on `iris-web` (or a theme the owner names), resolved from `who-iris/themes/`, with no WHO palette value in `cat-harness/`
-- [ ] A test fails if the surface falls back to the platform default for an instance that declares its own theme
-- [ ] `check:voices`, `iris:pages:check` and the SC 1.4.1 rule from `j66n` (state carried by word as well as colour) still hold
-- [ ] Checked on a rendered build, `preview:site` **plus** the `mount-instance-docs.ts` step (see `yg29` §"A correction worth keeping"), not inferred from generator output
+- [x] The who-iris board tile and navbar entry render on `iris-web` (or a theme the owner names), resolved from `who-iris/themes/`, with no WHO palette value in `cat-harness/`
+- [x] A test fails if the surface falls back to the platform default for an instance that declares its own theme
+- [x] `check:voices`, `iris:pages:check` and the SC 1.4.1 rule from `j66n` (state carried by word as well as colour) still hold
+- [x] Checked on a rendered build, `preview:site` **plus** the `mount-instance-docs.ts` step (see `yg29` §"A correction worth keeping"), not inferred from generator output
 
 _2026-09-30T11:02:54Z_ — Claimed by claude/magical-archimedes-4qkfxp-v8n5 — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
@@ -40,3 +40,14 @@ The options, put to the owner:
 - theme only the tile and navbar tone from `iris-web`'s accent. Its hue is about 198°, against the avatar's 199, so the tile's colour barely moves.
 
 The owner earlier called theme mapping *"authoring (human/agentic) decision/judgement"* (for `xffc`/`d3yq`), which is why this is asked rather than decided here.
+
+## 2026-09-30: built — owner's ruling (a) "Author iris-sticky", branch `claude/magical-archimedes-4qkfxp-v8n5-theme`
+
+- **Theme.** `who-iris/themes/themes.ts` gains `iris-sticky` (kind `sticky`). It `inherits` `{who-iris, iris-web}`, so its palette — accent `#008dc9`, surface `#ffffff`, ink `#212529`, edge `#ced4da` — arrives through `resolveTheme`'s palette merge from the theme measured off the captured DSpace stylesheet; the declaration holds no colour literal. Geometry is read from the platform's default sticky theme (IRIS has no sticky surface; `iris-web`'s `1140px` is a page column). No backdrop. `themes.test.ts` asserts the resolved palette equals what `client-theme.css` in the capture zip says, and that the declaration carries no hex value.
+- **CSS.** `gen-themes-css.ts` now also emits every INSTANCE-declared sticky theme, found by `instanceStickyThemes()` (new, in `schemas/theme-by-ref.ts`, same declaration-driven discovery as `themeByRef`). A collision with a platform id or across instances is refused (exit 1) rather than resolved by order, because a card writes the bare id. No instance name or colour in the generator (tested). Note: the GENERATED `cat-harness/docs/assets/css/themes.css` now carries the IRIS values — output, not source.
+- **Sticky.** `who-iris/who-iris.json` contributes its own card (`id: who-iris`, order 40, `theme: {instance: who-iris, themeId: iris-sticky}`, `bodyFrom: description`, one link to `/who-iris/`); `cat-harness/folio/who-iris.json` written by `landing:sticky`.
+- **Tile + navbar.** `hexHue()` in `schemas/theme.ts`; `harness-tiles.ts` takes `tone` from the accent's hue when the instance's own sticky resolves a theme the INSTANCE declares (not a platform theme), with `toneFrom: theme|avatar` in `harness.json`. who-iris: 199 → 198. Scoped to instance-owned themes on purpose: applied to every sticky it would re-hue five other harnesses (cat-harness 268→184, folio-assistant 236→127, core 212→88, bootstrap 96→23, smart-trust 0→211) — not asked for. The navbar entry takes the same tone (`gen-navbar-include.ts` passes `h.tone`; verified `hsl(198 45% 28%)` on the built page).
+- **Tests that fail on a fallback.** `harness-tiles.test.ts` (who-iris tone == hue of its own theme's accent, `toneFrom: theme`), `gen-themes-css.test.ts` (committed CSS has a block with each instance theme's accent), `theme-refs.test.ts` now resolves by reference, owner first.
+- **Rendered check.** `preview:site` (which runs `mount-instance-docs.ts`: 5 mounts, rail on 19 pages), served under `/folio-assistant/`, Chromium: the landing card carries `data-fa-sticky-theme="iris-sticky"` and computes `--fa-sticky-accent: #008dc9`; `#harness-who-iris` computes `--fa-tile-tone: 198`; the sidebar entry's mark is `hsl(198 45% 28%)`.
+- **Seen on the build, not fixed here:** the board uses `--fa-sticky-accent` only for the medium-priority stripe, and a landing card has no priority, so the IRIS card renders as white / `#ced4da` edge / `#212529` ink — faithful to IRIS, but the blue does not show on the card itself. Making it show needs a board CSS change or a backdrop: the owner's call.
+

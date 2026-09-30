@@ -67,10 +67,11 @@ describe("publishedInstances", () => {
   });
 
   test("a DIFFERENT script taking --instance is not this export", () => {
-    // `gen-bootstrap-graph.ts` is a real neighbour in both workflows.
-    // Running it here would report failures that say nothing about the
-    // published graph, which is how a gate earns the habit of being ignored.
-    expect(publishedInstances("bun run cat-harness/scripts/gen-bootstrap-graph.ts --instance ./bootstrap", "w.yml")).toEqual([]);
+    // A neighbour script that happens to take `--instance` (the removed
+    // `gen-bootstrap-graph.ts` was one) is not the export. Running it here
+    // would report failures that say nothing about the published graph, which
+    // is how a gate earns the habit of being ignored.
+    expect(publishedInstances("bun run cat-harness/scripts/some-other-writer.ts --instance ./bootstrap", "w.yml")).toEqual([]);
   });
 
   test("this instance's own export carries no --instance and is not counted", () => {

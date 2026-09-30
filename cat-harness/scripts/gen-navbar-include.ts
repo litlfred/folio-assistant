@@ -68,6 +68,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
 import { siteDirFor } from "../schemas/cat-harness.js";
+import { graphKindRowDecor } from "./lib/graph-kind-nav.js";
 import {
   navbarOpenInputHtml,
   navbarRegionsHtml,
@@ -128,9 +129,15 @@ interface Harness {
 function graphRows(h: Harness, staging: boolean): NavItem[] {
   return (h.visualisations ?? []).map((v) => {
     const withheld = v.stagingOnly === true && !staging;
-    if (v.path && !withheld) return { href: v.path, label: v.kind };
+    // The same distinct glyph and full accessible name the rail gives a kind
+    // row (bean `yag0`) — one answer, from `lib/graph-kind-nav.ts`.
+    // The kind's HUE is left out here: the sidebar paints these small marks
+    // on its own neutral chip in the page's ink, and a dark tone behind a
+    // dark-ink glyph would lose contrast. The shape and the words carry it.
+    const { tone: _tone, ...decor } = graphKindRowDecor(v.kind, h.label ?? h.title ?? h.name);
+    if (v.path && !withheld) return { href: v.path, label: v.kind, ...decor };
     const note = withheld ? "staging only" : v.note;
-    return { label: v.kind, ...(note ? { note } : {}) };
+    return { label: v.kind, ...decor, ...(note ? { note } : {}) };
   });
 }
 

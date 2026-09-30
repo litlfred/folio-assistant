@@ -70,6 +70,24 @@ export interface GraphSection {
 const cell = (text: string): string => text.replace(/\|/g, "\\|");
 
 /** The first sentence of `text`, markdown emphasis removed, at most ~160 characters. */
+/**
+ * A relative path as a markdown link DESTINATION: every segment
+ * percent-encoded, parentheses included.
+ *
+ * A file name is not a URL. `PIIS2589750021000388 (2).pdf` arrived through the
+ * GitHub web UI's upload on 2026-09-30, and written verbatim into `](...)` its
+ * space ended the destination, so the uploads README linked nowhere and the
+ * blocking `subgraph-readmes` test went red on main. `encodeURIComponent`
+ * handles the space but leaves `(` and `)` alone, and an unbalanced one ends a
+ * CommonMark destination just as surely, so both are encoded here too.
+ */
+export function linkTarget(path: string): string {
+  return path
+    .split("/")
+    .map((seg) => encodeURIComponent(seg).replace(/\(/g, "%28").replace(/\)/g, "%29"))
+    .join("/");
+}
+
 export function firstSentence(text: string): string {
   const flat = text.replace(/\s+/g, " ").replace(/\*\*|__/g, "").trim();
   const end = flat.search(/[.!?](\s|$)/);
@@ -304,7 +322,7 @@ export const filesSection: GraphSection = {
     // link stays the path from this README. A table under `skills/` that
     // repeats `skills/` on every row says the same thing twice.
     const row = (f: string, under = "") =>
-      `| [\`${cell(under ? relative(under, f) : f)}\`](${f}) | ${cell(describe(root, f, assets))} | ${used(f)} |`;
+      `| [\`${cell(under ? relative(under, f) : f)}\`](${linkTarget(f)}) | ${cell(describe(root, f, assets))} | ${used(f)} |`;
     const head = ["| file | what it is | used by |", "|---|---|---|"];
 
     const lines: string[] = [];

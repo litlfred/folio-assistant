@@ -1,10 +1,16 @@
 /**
  * The bootstrap graph resolves at the URL it names itself by, has exactly one
- * publisher, and is a pure function of its inputs.
+ * publisher, and holds what is on disk.
  *
- * It said "committed, current" until bean `dyd3` — it has been a build
- * artefact since 2026-09-20, and `it is NOT committed` below is the test that
- * says so.
+ * Since 2026-09-30 (owner, bean `xsqm`) the one publisher is bootstrap-tools'
+ * `export-graph.ts`, and `gen-bootstrap-graph.ts`, the cat-harness generator
+ * these tests were first written against, is gone (owner: "remove
+ * gen-bootstrap-graph"). The exporter's own properties — purity, ordering, no
+ * absolute path, provenance only when asked, the `omitted` list — are asserted
+ * beside it in `bootstrap-tools/scripts/export-graph.test.ts`. What stays here
+ * is what only this repository can see: which workflow step publishes it,
+ * where, and whether the export agrees with a disk read made independently of
+ * the declaration.
  *
  * @module scripts/tests/bootstrap-graph.test
  */
@@ -13,8 +19,6 @@ import { readFileSync, readdirSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { join, resolve } from "node:path";
 
-import { buildCatBootstrapDocument } from "../gen-bootstrap-graph.js";
-import { BootstrapGraphDocumentSchema } from "../../schemas/bootstrap-graph.js";
 import { GraphExportSchema } from "../../../bootstrap-tools/schemas/graph-export.ts";
 import { exportGraph } from "../../../bootstrap-tools/scripts/export-graph.ts";
 import { isSkillMd } from "../known-skills.js";
@@ -29,6 +33,10 @@ const ROOT = resolve(import.meta.dir, "../..");
 // `bootstrap/` is at the REPOSITORY root, not inside this instance — it is
 // the graph read before anything knows which instance it is looking at.
 const CAT_BOOTSTRAP = join(repoRootFor(ROOT), "bootstrap");
+const STUB = artefactStub(readDeclaration(CAT_BOOTSTRAP)!);
+/** The document as the site build makes it: `@id` = base + the `--out` file name. */
+const build = (provenance = false) =>
+  exportGraph(CAT_BOOTSTRAP, { docIri: `https://example.org/${STUB}/${STUB}.jsonld`, provenance });
 
 describe("the document is published where it says it is", () => {
   /**
@@ -46,16 +54,23 @@ describe("the document is published where it says it is", () => {
    * That is `blv9` in the artefact whose whole purpose is being dereferenced,
    * and it is what these assert instead.
    */
-  test("its `@id` is the URL the site build writes it to", async () => {
-    const doc = await buildCatBootstrapDocument();
-    const id = String(doc["@id"]);
-    // The build writes `./_site/bootstrap/bootstrap.jsonld`, and `_site/` is
-    // served at the site base. So the path the IRI carries must be exactly
-    // the path under `_site/` — anything else is a link that 404s.
-    expect(id.endsWith("/bootstrap/bootstrap.jsonld")).toBe(true);
+  test("its `@id` is the URL the site build writes it to", () => {
+    // Each publishing step passes `--base-url <site>/<stub>/` and
+    // `--out ./_site/<stub>/<file>`, and the exporter names the document
+    // `<base-url><file>`, so the `@id` is the served path by construction.
+    // What can still go wrong is the two arguments naming different
+    // directories, which is what this reads off each step.
+    for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
+      const text = readFileSync(join(repoRootFor(ROOT), ".github", "workflows", wf), "utf-8");
+      for (const step of bootstrapGraphPublishers(text)) {
+        const base = /--base-url\s+"[^"]*\/([^"/]+)\/"/.exec(step)?.[1];
+        const outDir = /--out\s+"\.\/_site\/([^"/]+)\//.exec(step)?.[1];
+        expect({ wf, base, outDir }).toEqual({ wf, base: outDir, outDir: expect.any(String) });
+      }
+    }
   });
 
-  test("the site build actually writes it, at that path", async () => {
+  test("the site build actually writes it, at that path", () => {
     // The assertion is against the WORKFLOW, because the failure being
     // guarded is a publication gap rather than a generator bug: the generator
     // worked perfectly for months while nothing published what it produced.
@@ -78,7 +93,7 @@ describe("the document is published where it says it is", () => {
       join(repoRootFor(ROOT), ".github", "workflows", "docs-site.yml"),
       "utf-8",
     );
-    const id = String((await buildCatBootstrapDocument())["@id"]);
+    const id = String(build()["@id"]);
     // `<base>/bootstrap/bootstrap.jsonld` → `bootstrap/bootstrap.jsonld`, the
     // path under `_site/`. Taken from the `@id` rather than written out, so
     // the two sides cannot drift into agreeing about different URLs.
@@ -112,7 +127,7 @@ describe("the document is published where it says it is", () => {
     // The inverse of the test this replaces, and it earns its place: an
     // ignored path is easy to re-add with `git add -f`, and a re-added copy
     // silently goes stale with no gate left to catch it. The file may exist
-    // locally, since `bun run bootstrap:graph` writes it; what must not
+    // locally, from a hand run of the exporter; what must not
     // exist is a TRACKED copy.
     const tracked = execFileSync("git", ["ls-files", "--", "bootstrap/bootstrap.jsonld"], {
       cwd: repoRootFor(ROOT),
@@ -122,58 +137,8 @@ describe("the document is published where it says it is", () => {
   });
 });
 
-describe("pure, because committed-and-gated demands it", () => {
-  test("two builds are byte-identical", async () => {
-    // A timestamp would make every run a diff, so `--check` would fail on a
-    // tree nobody touched and be switched off within a week.
-    const a = JSON.stringify(await buildCatBootstrapDocument());
-    const b = JSON.stringify(await buildCatBootstrapDocument());
-    expect(a).toBe(b);
-  });
-
-  test("the graph is ORDERED, so two machines agree byte for byte", async () => {
-    // The test above compares two builds in ONE process against ONE
-    // filesystem, so it compares an ordering against itself and cannot fail
-    // on ordering at all. It is a real guard for timestamps and a guard that
-    // structurally cannot fire for this.
-    //
-    // Bean `3jj9`, measured 2026-09-20: the collectors walk directories, so
-    // node order was `readdirSync` order — the FILESYSTEM's, not the
-    // repository's. The committed file held skills as `bootstrap-kg-
-    // navigation, discussion, confirm-harness, log-message`, stable on the
-    // container that wrote it and different on CI. `it is current` compares
-    // bytes, so it passed locally and failed in CI on identical inputs.
-    //
-    // Asserting the ORDER rather than re-running the build is the point: this
-    // fails on the machine that introduces the regression, not only on the
-    // one that disagrees with it later.
-    const doc = await buildCatBootstrapDocument();
-    const ids = (doc["@graph"] as Array<Record<string, unknown>>).map((n) => String(n["@id"]));
-    expect(ids.length).toBeGreaterThan(0); // not vacuous
-    expect(ids).toEqual([...ids].sort());
-  });
-
-  test("it carries no timestamp and no commit SHA", async () => {
-    // A committed generated file CANNOT carry its own commit: the best it
-    // could name is the commit before the one containing it, which is wrong by
-    // construction. Its provenance is that it is in the repository.
-    const doc = await buildCatBootstrapDocument();
-    expect(doc["generatedAt"]).toBeUndefined();
-    expect(doc["sourceCommitSha"]).toBeUndefined();
-  });
-
-  test("no value is an absolute path from the build machine", async () => {
-    // Caught before shipping: the "no .bpmn directory" problem embedded an
-    // absolute root, so CI — a different checkout path — would have failed the
-    // staleness gate on an untouched tree.
-    const text = JSON.stringify(await buildCatBootstrapDocument());
-    expect(text).not.toContain(ROOT);
-    expect(text.includes("/home/") || text.includes("/Users/")).toBe(false);
-  });
-});
-
-describe("what it contains, and what it admits it did not look at", () => {
-  test("every skill bootstrap holds is in the graph", async () => {
+describe("what it contains, read against the disk", () => {
+  test("every skill bootstrap holds is in the graph", () => {
     // DERIVED, not pinned. It asserted `Skill` === 2 until 2026-09-20 and
     // broke the moment `log-message` landed — a count makes "the export still
     // works" and "somebody deleted a skill" indistinguishable, and the failure
@@ -182,25 +147,17 @@ describe("what it contains, and what it admits it did not look at", () => {
     // The property is that the export sees what is on disk. A new skill passes
     // without an edit here; a skill the scan misses fails, which is the case
     // worth defending.
-    const doc = await buildCatBootstrapDocument();
-    expect(skillIds(doc)).toEqual(skillFilesOnDisk());
+    expect(skillIds(build())).toEqual(skillFilesOnDisk());
   });
 
-  test("bootstrap publishes only the graph kinds it DECLARES", async () => {
-    // Bean `3jj9`. `collectGraphKinds` emitted the UNIVERSAL registry into
-    // every instance, so bootstrap — whose premise is that it knows nothing
-    // yet — published 16 GraphKind nodes while its declaration names one.
-    // It advertised `folio`, `voices` and `library` (core's) and `beans` and
-    // `todos` (cat-harness's), none of which it can reach.
-    //
-    // Derived from the declaration rather than pinned to "cat-harness", for
-    // the reason the skill test above gives: a literal breaks on the change
-    // that was correct. What is defended is the RELATION — published is a
-    // subset of declared — not today's contents.
-    const doc = await buildCatBootstrapDocument();
-    const kinds = (doc["@graph"] as Array<Record<string, unknown>>)
-      .filter((n) => String(n["@type"]).endsWith("#GraphKind"))
-      .map((n) => String(n["name"]));
+  test("bootstrap publishes only the graph kinds it DECLARES", () => {
+    // Bean `3jj9`: the universal registry once leaked into every instance, so
+    // bootstrap advertised `folio`, `voices` and `beans`, none of which it can
+    // reach. Derived from the declaration, read here independently of the
+    // exporter: published is a subset of declared.
+    const kinds = (build()["@graph"] as Array<Record<string, unknown>>)
+      .filter((n) => n["@type"] === "bootstrap:Subgraph")
+      .flatMap((n) => (n["type"] as string[]).map((k) => k.split("/").pop()!));
     const declared = new Set(
       (JSON.parse(readFileSync(declarationPathIn(CAT_BOOTSTRAP)!, "utf-8")) as {
         directories?: Array<{ graphKinds?: string[] }>;
@@ -210,18 +167,7 @@ describe("what it contains, and what it admits it did not look at", () => {
     for (const k of kinds) expect([...declared]).toContain(k);
   });
 
-  test("the instance-bound collectors are named as NOT looked for", async () => {
-    // "bootstrap has no tools" and "tools were never looked for" are different
-    // facts; an empty section rendered as a clean one is the `dh4f` defect.
-    expect(doc_omitted(await buildCatBootstrapDocument()).sort()).toEqual([
-      "packages",
-      "registry",
-      "schemas",
-      "tools",
-    ]);
-  });
-
-  test("bootstrap's process IS in the graph, with its flows and lanes", async () => {
+  test("bootstrap's process IS in the graph, with its flows and lanes", () => {
     // This asserted the OPPOSITE until 2026-09-19 — "the missing BPMN
     // directory is reported rather than passed over", against the real
     // `bootstrap/`, which had no `workflows/` when it was written. #413 gave
@@ -242,13 +188,13 @@ describe("what it contains, and what it admits it did not look at", () => {
     // was ALSO stating a rule it could not enforce. "One process" was never
     // the constraint; "one place to START" is. A sub-process is a second
     // diagram and does not compete for being the thing a Bootstrapping Agent begins.
-    const doc = await buildCatBootstrapDocument();
+    const doc = build();
     const counts = doc["counts"] as Record<string, number>;
     expect({
       processes: processIds(doc),
-      hasNodes: (counts["ProcessNode"] ?? 0) > 0,
-      hasFlows: (counts["SequenceFlow"] ?? 0) > 0,
-      hasRoles: (counts["Role"] ?? 0) > 0,
+      hasNodes: (counts["bootstrap:ProcessNode"] ?? 0) > 0,
+      hasFlows: (counts["bootstrap:SequenceFlow"] ?? 0) > 0,
+      hasRoles: (counts["bootstrap:Role"] ?? 0) > 0,
     }).toEqual({ processes: diagramsOnDisk(), hasNodes: true, hasFlows: true, hasRoles: true });
     // And nothing about the diagram is reported as a problem.
     expect((doc["problems"] as string[]).filter((p) => p.includes("bpmn"))).toEqual([]);
@@ -258,11 +204,9 @@ describe("what it contains, and what it admits it did not look at", () => {
 /**
  * The steps in a workflow that publish a bootstrap GRAPH document.
  *
- * Two generators can write one: `gen-bootstrap-graph.ts`, and `kg-export.ts`
- * pointed at that instance. Both are named here because both are real — the
- * question this answers is how many of them a given build runs, and a check
- * that knew about only the surviving one could not notice the other coming
- * back. `ns-export.ts` also writes into `bootstrap/`, and is not one of these:
+ * bootstrap-tools' `export-graph.ts` is the publisher; `kg-export.ts` pointed
+ * at that instance was the previous one, and stays named so it cannot come
+ * back unnoticed as a second. `ns-export.ts` also writes into `bootstrap/`, and is not one of these:
  * it publishes the NAMESPACE document, a different subject at a different URL.
  */
 function bootstrapGraphPublishers(workflowText: string): string[] {
@@ -270,14 +214,11 @@ function bootstrapGraphPublishers(workflowText: string): string[] {
     .split("\n")
     .filter((l) => !/^\s*#/.test(l))
     .join("\n");
-  // THREE generators can write one since 2026-09-30: bootstrap-tools'
-  // `export-graph.ts` is the publisher (owner, bean `xsqm`), and the two
-  // cat-harness ones stay named so neither can come back unnoticed.
   return [...code.matchAll(/(?:cat-harness|bootstrap-tools)\/scripts\/([a-z0-9-]+)\.ts([^\n]*)/g)]
     .filter((m) => {
       const [script, rest] = [m[1]!, m[2] ?? ""];
       if (!/--out\s/.test(rest)) return false;
-      if (script === "gen-bootstrap-graph" || script === "export-graph") return true;
+      if (script === "export-graph") return true;
       return script === "kg-export" && /--instance\s+\.?\/?bootstrap\b/.test(rest);
     })
     .map((m) => `${m[1]}${m[2]}`);
@@ -305,10 +246,6 @@ function siteOutputs(workflowText: string): string[] {
   return [...workflowText.matchAll(/--out\s+"([^"]+)"/g)].map((m) => expand(m[1]!));
 }
 
-function doc_omitted(doc: Record<string, unknown>): string[] {
-  return [...(doc["omitted"] as readonly string[])];
-}
-
 /** Node ids of one `@type`, reduced to the fragment stem, sorted. */
 function idsOfType(doc: Record<string, unknown>, type: string): string[] {
   const graph = (doc["@graph"] ?? []) as Array<Record<string, unknown>>;
@@ -316,10 +253,9 @@ function idsOfType(doc: Record<string, unknown>, type: string): string[] {
     .filter((n) => {
       const t = n["@type"];
       const ts = Array.isArray(t) ? t.map(String) : [String(t)];
-      // `@type` is the full minted IRI — `<base>/bootstrap/ns#Skill` — so the
-      // fragment is what names the class. Matched on the whole fragment
-      // rather than a suffix, so `ProcessNode` does not answer for `Process`.
-      return ts.some((x) => x.split("#")[1] === type);
+      // `@type` is a CURIE, `bootstrap:Skill`. Matched on the whole local
+      // name rather than a suffix, so `ProcessNode` does not answer for `Process`.
+      return ts.some((x) => x === `bootstrap:${type}`);
     })
     .map((n) => String(n["@id"]).split("#")[1]!.split("/").slice(1).join("/"))
     .sort();
@@ -348,8 +284,8 @@ function skillFilesOnDisk(): string[] {
   // ONE directory again, named. `tools/` (earlier `render/`) held the two
   // skills governing bootstrap's own `.jsonld`/`.json` emission from bean
   // `hfkl` until bean `n350` moved them into `skills/`: they are skills, the
-  // Tool that performs the emission is cat-harness's `kg-graph-export`, and the
-  // document's shape is `BootstrapGraphDocumentSchema`.
+  // Tool that performs the emission is bootstrap-tools' `export-graph.ts`,
+  // and the document's shape is its `GraphExportSchema`.
   //
   // The list is STILL hardcoded on
   // purpose. Reading the declaration here would collapse the two axes into
@@ -375,7 +311,7 @@ function diagramsOnDisk(): string[] {
     .sort();
 }
 
-describe("the document has a schema, and both builds satisfy it (bean n350)", () => {
+describe("the document has a schema, and the published build satisfies it (bean n350)", () => {
   // `renderExemption.owes` names this document. Until n350 it had no schema:
   // its properties lived in the emission skill's prose and the code that read
   // it cast `doc.problems as string[]`.
@@ -384,7 +320,7 @@ describe("the document has a schema, and both builds satisfy it (bean n350)", ()
   // (`bootstrap-tools/scripts/export-graph.test.ts`). These two stay here
   // because the PUBLISHING — which step, with what flags — is this site's.
   test("the published document — bootstrap-tools' export-graph, the one publisher — parses", () => {
-    const doc = exportGraph(CAT_BOOTSTRAP, { docIri: "https://example.org/bootstrap/bootstrap.jsonld", provenance: true });
+    const doc = build(true);
     const r = GraphExportSchema.safeParse(doc);
     expect(r.success ? [] : r.error.issues).toEqual([]);
   });
@@ -396,14 +332,9 @@ describe("the document has a schema, and both builds satisfy it (bean n350)", ()
       const text = readFileSync(join(repoRootFor(ROOT), ".github", "workflows", wf), "utf-8");
       expect({ wf, provenance: bootstrapGraphPublishers(text).every((p) => p.includes("--provenance")) }).toEqual({ wf, provenance: true });
     }
-    const doc = exportGraph(CAT_BOOTSTRAP, { docIri: "https://example.org/bootstrap/bootstrap.jsonld", provenance: true });
+    const doc = build(true);
     expect("generatedAtTime" in doc).toBe(true);
     expect(JSON.stringify(doc["@graph"]).includes("generatedAtTime")).toBe(false);
-  });
-
-  test("the generator the four properties are tested against parses too", async () => {
-    const r = BootstrapGraphDocumentSchema.safeParse(await buildCatBootstrapDocument());
-    expect(r.success ? [] : r.error.issues).toEqual([]);
   });
 
   test("the two emission skills are in bootstrap's skills package", () => {
