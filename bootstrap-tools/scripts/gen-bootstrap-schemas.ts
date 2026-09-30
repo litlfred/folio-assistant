@@ -48,6 +48,7 @@
  *   bun run bootstrap:schemas          # write
  *   bun run bootstrap:schemas:check    # fail if stale
  */
+import { generatedNote } from "./generated-by.ts";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
@@ -261,6 +262,7 @@ export function render(t: (typeof TARGETS)[number]): string {
   const doc: Record<string, unknown> = {
     $schema: "http://json-schema.org/draft-07/schema#",
     $id: t.id,
+    $comment: generatedNote("scripts/gen-bootstrap-schemas.ts", "its Zod source", "change the Zod"),
     title: t.title,
     description: t.description,
     ...body,
