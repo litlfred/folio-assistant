@@ -190,36 +190,31 @@ describe("skill refs resolve across the `needs` chain", () => {
   }, 120_000);
 
   /**
-   * The third state, which is a rule rather than a courtesy.
+   * The third state, which is a rule rather than a courtesy — and which this
+   * repository's own corpus is no longer allowed to exhibit.
    *
-   * `needs` is OPTIONAL and an absent value is UNDETERMINED — `[]` asserts this
-   * instance is the floor, absent is nobody having said
+   * `needs` is OPTIONAL in the schema and an absent value is UNDETERMINED —
+   * `[]` asserts this instance is the floor, absent is nobody having said
    * (`schemas/cat-harness.ts`; `schemas/layer-direction.ts` refuses the same
-   * collapse for edges). MEASURED 2026-09-27: **5 of 16** instances here
-   * declare no `needs`, so this governs a third of the subject.
-   * Re-measured 2026-09-30: **0**. #1508 declared them all, so this test now
-   * judges nothing on today's corpus, and the synthetic test below carries the proof.
+   * collapse for edges). Such an instance cannot have a ref judged dangling:
+   * what it reaches was never declared, so the honest answer is `unknown`.
+   * The constructed test below proves that mechanism on an instance it builds.
    *
-   * Such an instance cannot have a ref judged dangling: what it reaches was
-   * never declared, so the honest answer is `unknown`. Reporting `fail` would
-   * blame a diagram for a declaration nobody wrote.
-   *
-   * **This test is VACUOUS on today's corpus and is kept anyway**, which is
-   * worth stating rather than discovering: measured 2026-09-27, it passes with
-   * the fix REVERTED, because no undeclared instance here happens to name a ref
-   * it does not hold. So it guards the invariant against a future corpus and
-   * proves nothing now. The test below it is the one that proves the mechanism,
-   * by building the instance this corpus does not contain.
+   * **In THIS repository the state is now gated out.** Measured 2026-09-27,
+   * 5 of 16 instances declared no `needs`; #1508 declared all five by hand,
+   * which left this test's corpus half with no subjects and its anti-vacuity
+   * floor red on `main`. The owner's ruling, 2026-09-30 (issue #1548): *"QA
+   * gates on harness declaration of dependences"* — so `check:instance-graph`
+   * now FAILS on an undeclared instance, and what this test asserts about the
+   * corpus is that gated invariant, not the coincidence it used to depend on.
+   * Should the gate ever be relaxed, the loop below judges whatever it lets in.
    */
-  test("an instance that declares no `needs` reports unknown, never a dangling failure", async () => {
-    // MAY BE EMPTY, and on 2026-09-30 it is: #1508 declared `needs` for the
-    // five instances that had none, which is the state this suite wants. An
-    // earlier version asserted at least one undeclared instance existed, so the
-    // corpus reaching its goal turned `main` red. The mechanism does not depend
-    // on this corpus: "The third state, PROVED" below builds the undeclared
-    // instance itself. This loop stays, so an instance that STOPS declaring is
-    // judged here the day it does.
+  test("no instance here leaves `needs` undeclared (gated), and any that did would report unknown", async () => {
     const undeclared = INSTANCES.filter((i) => i !== ROOT_INSTANCE && !declaresLayering(i));
+    expect(
+      undeclared.map((i) => relative(REPO, i)),
+      "check:instance-graph requires every instance to declare `needs` (issue #1548)",
+    ).toEqual([]);
 
     const offences: string[] = [];
     for (const inst of undeclared) {
