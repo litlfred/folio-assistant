@@ -760,6 +760,12 @@ jobs:
       - name: no library section carries a soft hyphen
         run: bun run check:soft-hyphens
 
+      # Bean rkqp: structure.json has two variants (pdf, notebook) read through
+      # one accessor; a reader that builds the path itself learns one and
+      # misreads the next. The owner chose a literal allowlist (2026-09-30).
+      - name: structure.json is named only by its accessor
+        run: bun run check:structure-accessor
+
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 

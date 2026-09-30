@@ -180,7 +180,7 @@ Plan:
 - [x] base schema plus a `structureOf()` accessor returning a `{pages}|{cells}` locator (PR #1628)
 - [x] check-l1-complete and the three page-aware readers switched to the accessor (gen-library-jsonld, l1-blocks, library-graph; 3,824 library nodes unchanged)
 - [x] PDF-only tools skip a notebook with a stated reason: by construction, `withDerivedArms` gives a notebook only its rung and l1-blocks, and a test pins it
-- [ ] a check refusing a direct parse of structure.json outside the accessor — BLOCKED on a design choice put to the owner: a literal allowlist (it also catches the existence-only readers in core and who-iris), a parse-site heuristic (a grep fails in both directions), or an AST check
+- [x] a check refusing a direct parse of structure.json outside the accessor: `check:structure-accessor` (owner's pick: a literal allowlist). It refuses the quoted token on code lines outside the accessor and two existence-only readers, each with its reason. Stale entries fail too, and tests prove it catches a violation and ignores prose
 - [x] a notebook rung in ingest-document (markdown cells become sections by heading, code cells kept with their language): `scripts/notebook-structure.ts`, routed by CONTENT (PR #1628)
 - [x] ingest the OpenAI notebook, then write the OpenAI vendor voice: `agent-skills/library/skills-in-openai-api-notebook` (12 sections, L1 complete, MIT licence carried) and `agent-skill-authoring-openai` (12 `oa-*` rules, each a verbatim quote), declared in `vendors/vendors.json` (PR #1628)
 

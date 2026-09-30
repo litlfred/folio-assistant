@@ -61,6 +61,7 @@ import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { refreshLibraryIndex } from "./lsi.ts";
 import { IntakeSchema } from "../schemas/intake.ts";
 import { LICENCE_FILENAME, readLicence } from "../content/pipeline/gen-library-jsonld.ts";
+import { STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -751,7 +752,7 @@ export function refreshMeta(pdf: string, libRoot = libraryRoot()): string {
   const slug = bibSlug(pdf);
   // Against INSTANCE_ROOT, same reason as the promote path below: `libraryRoot`
   // is INSTANCE-relative, and a bare `resolve` reads the CWD.
-  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, "structure.json");
+  const structure = join(resolve(INSTANCE_ROOT, libRoot), slug, STRUCTURE_FILENAME);
   if (!existsSync(structure)) throw new Error(`${structure}: no such entry to refresh`);
   // The indent is READ OFF the file, never chosen here. `pdf-structure.py`
   // writes `indent=1` and `pdf-pages.py` writes `indent=2`, so a refresh that

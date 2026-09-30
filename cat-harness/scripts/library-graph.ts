@@ -94,7 +94,7 @@ import { proseBody, type SummaryStatus } from "../schemas/block-summary.ts";
 import { withheldReason } from "./lib/withheld.ts";
 import { entryItems, type SummaryTally } from "./summaries.ts";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
-import { pagesOf, readStructure } from "../schemas/document-structure.ts";
+import { pagesOf, readStructure, STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
 
 /**
  * Whether a library entry's source upload is still on disk, and whether it is
@@ -765,7 +765,7 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
         ocrPages: filesIn(join(dir, "ocr")).length,
         hasOcr: existsSync(join(dir, "ocr")),
         hasManifest: has("manifest.jsonld"),
-        hasStructure: has("structure.json"),
+        hasStructure: has(STRUCTURE_FILENAME),
         hasImagesJson: has("images.json"),
         pageStart: pages.length ? Math.min(...pages) : null,
         pageEnd: pages.length ? Math.max(...pages) : null,

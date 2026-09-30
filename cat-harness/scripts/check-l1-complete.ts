@@ -54,7 +54,7 @@ import {
 } from "../schemas/archive-contents.ts";
 import { LIBRARY_BLOCK_ORIGIN, ProvenanceSchema, isIngested } from "../schemas/attribution.ts";
 import { NarrativeSchema } from "../schemas/narrative.ts";
-import { structureOf } from "../schemas/document-structure.ts";
+import { STRUCTURE_FILENAME, structureOf } from "../schemas/document-structure.ts";
 import {
   TABULAR_RECORDS_SCHEMA_ID,
   TabularRecordsSchema,
@@ -191,7 +191,7 @@ export const ENTRY_SIDECARS: readonly string[] = [
 ];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
-  ["paged", "structure.json"],
+  ["paged", STRUCTURE_FILENAME],
   ["tabular", "tabular.jsonld"],
   ["archive", "contents.jsonld"],
 ];
@@ -487,8 +487,8 @@ function derivableRequirements(dir: string): Requirement[] {
     }
   }
 
-  const structPath = join(dir, "structure.json");
-  if (!has("structure.json")) {
+  const structPath = join(dir, STRUCTURE_FILENAME);
+  if (!has(STRUCTURE_FILENAME)) {
     out.push({ name: "structure", state: "unmet", detail: "no structure.json" });
   } else {
     let s: Record<string, unknown> | null = null;

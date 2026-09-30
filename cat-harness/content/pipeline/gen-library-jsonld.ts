@@ -76,7 +76,7 @@ import { directoriesForGraph } from "../../schemas/cat-harness.js";
 import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.ts";
 import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
 import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";
-import { readStructure } from "../../schemas/document-structure.ts";
+import { readStructure, STRUCTURE_FILENAME } from "../../schemas/document-structure.ts";
 
 interface StructureSection {
   id: string;
@@ -396,7 +396,7 @@ export type IngestRung = "paged" | "tabular" | "none";
  * same way with `KIND_SIDECAR`.
  */
 export const RUNG_INPUT: ReadonlyArray<readonly [IngestRung, readonly string[]]> = [
-  ["paged", ["structure.json"]],
+  ["paged", [STRUCTURE_FILENAME]],
   ["tabular", ["tabular.jsonld", TABULAR_CSVW_FILENAME]],
 ];
 
