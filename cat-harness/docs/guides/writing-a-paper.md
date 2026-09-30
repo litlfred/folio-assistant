@@ -1,5 +1,6 @@
 ---
 layout: default
+generated: scripts/gen-docs-pages.ts — do not hand-edit; run `bun run docs:pages`
 title: Writing a paper with folio-assistant
 parent: Authoring guides
 nav_order: 1

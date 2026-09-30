@@ -37,6 +37,8 @@ export const PROPERTY_SKILLS = {
   // Where identifiers are minted, before the version — and the rule for which
   // audience gets the full version and which the major (instance-publication).
   iriBase: { skills: ["instance-publication"] },
+  // The instance's Node Kinds: `$schema` tag → the published schema defining it.
+  nodeSchemas: { skills: ["directory-conventions"] },
   // TWO facets, two skills: `publication.host` is what kind of thing serves
   // the rendering (document-publishing); `publication.state` is how far along
   // it is, and why "published" does not parse (instance-publication).

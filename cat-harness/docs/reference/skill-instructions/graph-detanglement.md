@@ -58,9 +58,19 @@ direction: whether an allowed edge is a *restatement* or *essential* is the
 adjudicator's call, so those edges stay `unclassified` with the verdict as
 their basis.
 
-Same rule, three scales, two vocabularies. **Prune, merge, or factor into a
+**At term scale** — a glossary declared `ordered` (owner, 2026-09-29, of
+bootstrap's terms: *"logically tight, non self-referential"*). Each term's
+`requires` must point UP, and `checkDeclaredOrder` in
+`schemas/dependency-order.ts` names every forward, self and missing use. It is
+the block-scale rule with terms for blocks: a forward `requires` is a forward
+edge, and two terms defined by each other are a cycle **no ordering removes**,
+so the moves are the same three — drop the use, merge the two terms, or factor
+the shared idea into a term above both. The rule and its form on the page are
+in [`glossary-terms`](glossary-terms.md) §"Ordered glossaries".
+
+Same rule, four scales, two vocabularies. **Prune, merge, or factor into a
 third** are the only three moves, and "the classification is wrong" is the
-fourth possibility the block-scale version does not have because a block's
+fourth possibility the block- and term-scale versions do not have because a block's
 chapter is not in doubt the way a module's layer is.
 
 Everything below is machinery for finding out which of the four you are looking
@@ -109,6 +119,10 @@ graph document.
 Only once edges are zero and the declaration stands alone. A directory move
 rather than a file-by-file sift. The five-point gate is in
 `docs/architecture/migration-plan.md` Phase II and is not restated here.
+For a Knowledge Graph leaving as its own repositories — a content repository
+and a tools repository — the rest of the method, from splitting the tools out
+to the cutover, is [`kg-separation`](kg-separation.md) and its process
+`kg-separation.bpmn`.
 
 ## The seventeen moves
 
@@ -314,4 +328,5 @@ This skill has its own process: **[A sub-graph wants to leave](../../processes/g
 | process | step(s) that name it |
 |---|---|
 | [A sub-graph wants to leave](../../processes/graph-detanglement.html) | 1 · Declare in place (nothing moves); 2a · Measure — unassigned column FIRST; 2b · Prune, merge, factor — or the classification is wrong; 3 · Isolate — own declaration, namespace, artefact; 4 · Extract — a directory move, not a file-by-file sift |
+| [A knowledge graph leaves for its own repositories](../../processes/kg-separation.html) | 1–3 · Declare, detangle, isolate |
 

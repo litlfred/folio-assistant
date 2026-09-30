@@ -71,7 +71,7 @@ import {
   resolveDirectories,
 } from "../../cat-harness/schemas/cat-harness.ts";
 import { LEGACY_FOLIO_NS } from "../../cat-harness/schemas/namespaces.ts";
-import { releaseIris } from "../../cat-harness/schemas/release-iri.ts";
+import { releaseIris } from "../../bootstrap-tools/schemas/release-iri.ts";
 import { GlossarySchema, schemeIri, toSkos, termIri, type Glossary, type LangText } from "../schemas/glossary.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
 
@@ -205,6 +205,63 @@ export function schemeOwner(
   return { owner: [...held][0] ?? declaredBy };
 }
 
+/**
+ * The terms a schema DEFINES, as an ordered glossary — or `undefined` when it
+ * defines none.
+ *
+ * A schema defines terms when its `$defs` entries carry `uses`: the authored,
+ * ordered relation bootstrap's `graph.schema.json` publishes (terms v3, owner
+ * 2026-09-29). Read here, from the published schema, rather than copied into
+ * a glossary file: one text, one place, and the glossary cannot drift from it.
+ *
+ * `authored`, not `candidate`, and that is not an extractor promoting its own
+ * output: the text is a definition a person wrote and approved in the schema's
+ * source, and this only reads it out. The order is kept (`ordered`) because
+ * the owner asked for logical rather than alphabetical order — each term is
+ * defined only by terms above it.
+ */
+export function termsOfSchema(
+  abs: string,
+  rel: string,
+  decl: { name: string; title?: string; version?: string },
+): Glossary | undefined {
+  let doc: { $id?: string; $defs?: Record<string, { description?: string; uses?: unknown; isDefinedBy?: unknown }> };
+  try {
+    doc = JSON.parse(readFileSync(abs, "utf-8"));
+  } catch {
+    return undefined;
+  }
+  const defs = Object.entries(doc.$defs ?? {});
+  if (!defs.some(([, v]) => Array.isArray(v.uses))) return undefined;
+  const id = (key: string) => key.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+  const label = (key: string) => key.replace(/([a-z])([A-Z])/g, "$1 $2");
+  const absolute = (iri: unknown): string | undefined => {
+    if (typeof iri !== "string") return undefined;
+    if (/^[a-z][a-z0-9+.-]*:\/\//i.test(iri)) return iri;
+    return doc.$id && iri.startsWith("#") ? `${doc.$id}${iri === "#" ? "" : iri}` : undefined;
+  };
+  return {
+    $schema: "folio-glossary/v1",
+    id: "terms",
+    title: `${decl.title ?? decl.name} terms`,
+    description:
+      `The terms ${decl.title ?? decl.name} defines, in order: each is defined only by terms above it, and never itself. ` +
+      `Read from the schema that defines them, ${rel}, so this glossary cannot say anything that schema does not.`,
+    ...(decl.version ? { hasVersion: decl.version } : {}),
+    source: rel,
+    ordered: true,
+    terms: defs.map(([key, v]) => ({
+      id: id(key),
+      prefLabel: label(key),
+      ...(v.description ? { definition: v.description } : {}),
+      ...(Array.isArray(v.uses) && v.uses.length ? { requires: (v.uses as string[]).map(id) } : {}),
+      ...(absolute(v.isDefinedBy) ? { isDefinedBy: absolute(v.isDefinedBy)! } : {}),
+      source: `${rel}#/$defs/${key}`,
+      status: "authored" as const,
+    })),
+  };
+}
+
 /** Every glossary document, swimlane ledger and external scheme in the repository. */
 export function collect(repo: string = REPO): {
   glossaries: GlossarySource[];
@@ -258,6 +315,21 @@ export function collect(repo: string = REPO): {
             continue;
           }
           glossaries.push({ instance: own.owner, ns: nsOf.get(own.owner)!, file: rel, glossary: r.data, declaredBy: decl.name });
+        }
+      }
+      if (kinds.includes("schemas")) {
+        for (const f of readdirSync(d.absPath).filter((f) => f.endsWith(".schema.json")).sort()) {
+          const p = join(d.absPath, f);
+          const rel = relative(repo, p).split("\\").join("/");
+          const g = termsOfSchema(p, rel, decl);
+          if (!g) continue;
+          const r = GlossarySchema.safeParse(g);
+          if (!r.success) {
+            findings.invalid.push(`${rel}: its terms do not form a glossary: ${r.error.issues.map((i) => `${i.path.join(".")} ${i.message}`).join("; ")}`);
+            continue;
+          }
+          const owner = ownerOfPath(repo, rel, owners) ?? decl.name;
+          glossaries.push({ instance: owner, ns: nsOf.get(owner)!, file: rel, glossary: r.data, declaredBy: decl.name });
         }
       }
       if (kinds.includes("swimlane-glossary")) {
@@ -439,10 +511,40 @@ function termEntry({ s, t, label }: Row): string {
     `</dt>`,
     `<dd>`,
     definition,
-    `<p class="fa-gloss-meta">${meta}${t.source ? ` · source ${sourceLink(t.source)}` : ""}</p>`,
+    ...(t.requires?.length
+      ? [
+          `<p class="fa-gloss-uses">Uses: ${t.requires
+            .map((r) => `<a href="#${esc(`${s.instance}--${s.glossary.id}--${r}`)}">${esc(labelOf(s, r))}</a>`)
+            .join(", ")}</p>`,
+        ]
+      : []),
+    `<p class="fa-gloss-meta">${meta}${t.isDefinedBy ? ` · defined by ${link(t.isDefinedBy)}` : ""}${t.source ? ` · source ${sourceLink(t.source)}` : ""}</p>`,
     ...(matches.length ? [`<ul class="fa-gloss-matches">${matches.join("")}</ul>`] : []),
     `</dd>`,
   ].join("\n");
+}
+
+/** A term's label, by its local id within its scheme. */
+function labelOf(s: GlossarySource, id: string): string {
+  const t = s.glossary.terms.find((x) => x.id === id);
+  return t ? first(t.prefLabel) : id;
+}
+
+/**
+ * An ORDERED scheme, in its own order: a numbered list where the reader meets
+ * each term after the terms its definition uses (owner, 2026-09-29: "logical
+ * rather than alphabetical order"). Its terms are not repeated under the A–Z
+ * bar — a term is on the page once.
+ */
+function orderedBlock(s: GlossarySource): string {
+  const rows: Row[] = s.glossary.terms.map((t) => ({ s, t, label: first(t.prefLabel) }));
+  return `### ${esc(s.glossary.title)}
+
+${esc(s.glossary.description ?? "")} ${skosLink(s)}.
+
+<dl class="fa-gloss fa-gloss-ordered">
+${rows.map((r, i) => termEntry(r).replace(/^(<dt [^>]*>\n)/, `$1<span class="fa-gloss-n">${i + 1}.</span> `)).join("\n")}
+</dl>`;
 }
 
 /** The filter box, the A–Z bar and the terms under their letters: the same on every page. */
@@ -482,7 +584,30 @@ dt.hidden=!ok;if(dd)dd.hidden=!ok;if(ok)k++;});n.textContent=k;}
 q.addEventListener("input",run);})();
 </script>`;
 
-const GENERATED = `<!-- Generated by folio-assistant-core/scripts/glossary-page.ts. Do not hand-edit: \`check:glossary\` fails on the difference. -->`;
+/**
+ * The writer, named once, for every file this generator owns.
+ *
+ * It is emitted in THREE forms because three readers ask the question three
+ * ways, and none of them reads the other two: {@link GENERATED} is the HTML
+ * comment a person sees in the page source, {@link GENERATED_FM} is the
+ * `generated:` front-matter key `check:reference-direction` reads, and
+ * `_generated` in {@link outputs} is the JSON form of the same fact. The
+ * comment was the only one until bean `ws99`, and it sits BELOW the front
+ * matter — correct information in the one place the checker cannot read, so
+ * every page and every JSON file this writes was being graded as authored
+ * prose. No count here on purpose: {@link outputs} is what says how many
+ * there are, and a number restated in a comment is a claim that goes stale
+ * the next time a scheme is added.
+ */
+const GENERATED_BY = "folio-assistant-core/scripts/glossary-page.ts";
+
+const GENERATED = `<!-- Generated by ${GENERATED_BY}. Do not hand-edit: \`check:glossary\` fails on the difference. -->`;
+
+/** The same fact as a front-matter key, in the form the docs mirrors already use. */
+const GENERATED_FM = `generated: ${GENERATED_BY} — do not hand-edit; run \`bun run glossary:page\``;
+
+/** The same fact for a JSON file, as a top-level `_generated`. */
+const GENERATED_JSON = `${GENERATED_BY} — do not hand-edit; run \`bun run glossary:page\``;
 
 /**
  * Render with the page's own size in it. Two passes: the page states its own
@@ -503,6 +628,7 @@ export function renderTypePage(c: ReturnType<typeof collect>, type: AssetType): 
   return sized(
     (size) => `---
 layout: default
+${GENERATED_FM}
 title: "${pageTitle(type)}"
 parent: Glossary
 nav_order: ${ASSET_TYPES.indexOf(type) + 1}
@@ -528,6 +654,8 @@ ${FILTER_SCRIPT}
 /** The index: authored terms, the counts, the sources, and a link to every asset type's page. */
 export function renderIndex(c: ReturnType<typeof collect>, typePages: ReadonlyMap<AssetType, string> = typePagesOf(c)): string {
   const rows = rowsOn(c, "index");
+  // Ordered schemes are shown in their own order, ahead of the A–Z list.
+  const ordered = c.glossaries.filter((s) => pageOf(s) === "index" && s.glossary.ordered);
   // schema.org's DefinedTermSet carries the AUTHORED terms only. It is what a
   // search engine reads as "this site defines X", and an extracted candidate
   // is not a definition anybody curated. Every term, candidates included, is
@@ -599,6 +727,7 @@ export function renderIndex(c: ReturnType<typeof collect>, typePages: ReadonlyMa
   return sized(
     (size) => `---
 layout: default
+${GENERATED_FM}
 title: Glossary
 nav_order: 90
 has_children: true
@@ -629,7 +758,7 @@ ${pagesTable(size)}
 
 ## Authored terms
 
-${termsBlock(rows)}
+${ordered.length ? `${ordered.map(orderedBlock).join("\n\n")}\n\n### Every other authored term, A–Z\n\n` : ""}${termsBlock(rows.filter((r) => !r.s.glossary.ordered))}
 
 ## Sources
 
@@ -667,8 +796,20 @@ export function renderPages(c: ReturnType<typeof collect>): Map<PageKey, string>
 export function outputs(c: ReturnType<typeof collect>): Map<string, string> {
   const out = new Map<string, string>([...renderPages(c)].map(([k, page]) => [pagePath(k), page] as const));
   for (const s of c.glossaries) {
-    out.set(join(SITE, skosAsset(s)), `${JSON.stringify(toSkos(s.glossary, s.ns), null, 2)}\n`);
-    if (s.extracted) out.set(extractedFile(s), `${JSON.stringify(s.glossary, null, 2)}\n`);
+    // `_generated` SECOND, not first: `@context` and `$schema` each have a
+    // reader that looks for them at the head — a JSON-LD processor and every
+    // validator of `folio-glossary/v1` — so the declaration goes after them.
+    // `declaresGenerated` parses rather than matching the first key (`ws99`),
+    // which is what makes that free. On the SKOS side `_generated` is an
+    // UNMAPPED term: the `@context` declares `skos` and `dcterms` and no
+    // `@vocab`, so a JSON-LD processor drops it and the graph is unchanged.
+    const skos = toSkos(s.glossary, s.ns);
+    const { "@context": context, ...skosRest } = skos;
+    out.set(join(SITE, skosAsset(s)), `${JSON.stringify({ "@context": context, _generated: GENERATED_JSON, ...skosRest }, null, 2)}\n`);
+    if (s.extracted) {
+      const { $schema, ...rest } = s.glossary;
+      out.set(extractedFile(s), `${JSON.stringify({ $schema, _generated: GENERATED_JSON, ...rest }, null, 2)}\n`);
+    }
   }
   return out;
 }
