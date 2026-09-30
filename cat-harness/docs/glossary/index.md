@@ -20,6 +20,20 @@ Every term the instances in this repository define or carry, as W3C SKOS. Terms 
 </tbody>
 </table>
 
+## Already somebody else's concept?
+
+Extracted candidates are minted from this repository's own assets and are not, by themselves, checked against any vocabulary. `check:term-mapping` asks whether each already exists as a concept somebody is authoritative for — SKOS for what a term MEANS, FHIR for a clinical code's operational semantics — and the two are separate questions with separate answers.
+
+<table class="fa-gloss-mapping">
+<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
+<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>0</td><td>2605</td><td>api.openconceptlab.org answered HTTP 403. Every fhir row is therefore <code>undetermined</code>, NOT <code>unmapped</code> — a terminology that could not answer has said nothing.</td></tr><tr><td><code>skos</code></td><td>0</td><td>2605</td><td>0</td><td>—</td></tr></tbody>
+</table>
+<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
+A vocabulary that could not be reached has said nothing, and the column above keeps that 
+apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
+be a term this corpus is right to coin.</p>
+
 ## Pages
 
 Each term is on exactly one page. Extracted candidates are split by asset type, so that no page is fetched at the size of all of them (owner, 2026-09-24).
@@ -27,15 +41,15 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <div style="overflow-x:auto"><table>
 <thead><tr><th>page</th><th>holds</th><th>terms</th><th>size</th></tr></thead>
 <tbody>
-<tr><td>this page</td><td>authored terms, counts and sources</td><td>7</td><td>16 KB</td></tr>
-<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>287</td><td>204 KB</td></tr>
-<tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>119</td><td>75 KB</td></tr>
-<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>532</td><td>407 KB</td></tr>
-<tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>7 KB</td></tr>
-<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1658</td><td>899 KB</td></tr>
+<tr><td>this page</td><td>authored terms, counts and sources</td><td>7</td><td>17 KB</td></tr>
+<tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>287</td><td>205 KB</td></tr>
+<tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>119</td><td>76 KB</td></tr>
+<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>532</td><td>408 KB</td></tr>
+<tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>8 KB</td></tr>
+<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1658</td><td>900 KB</td></tr>
 </tbody></table></div>
 
-**Size:** this page holds 7 terms and is 16 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 7 terms and is 17 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 ## Authored terms
 

@@ -233,6 +233,48 @@ export async function run(root: string): Promise<{ mappings: TermMapping[]; scop
   return { mappings, scope };
 }
 
+/**
+ * One row per (scheme, target), with all three counts and the mapped terms.
+ *
+ * Exported because `glossary-page.ts` renders these rows and must not have a
+ * second idea of their shape — the page and the record disagreeing about what
+ * a state means is the drift a shared type prevents.
+ */
+export interface SchemeState {
+  scheme: string;
+  target: string;
+  mapped: number;
+  unmapped: number;
+  undetermined: number;
+  /** Why the whole target could not be determined, where that is the case. */
+  reason?: string;
+  /** Term ids that matched, so the page can badge exactly those. */
+  mappedTerms: string[];
+}
+
+export function perScheme(
+  ms: TermMapping[],
+  target: string,
+  scope: MappingScope[],
+): SchemeState[] {
+  const of = ms.filter((m) => m.target === target);
+  const reason = scope.find((s) => s.target === target)?.unreachable_reason;
+  const schemes = [...new Set(of.map((m) => m.scheme))].sort();
+  return schemes.map((scheme) => {
+    const rows = of.filter((m) => m.scheme === scheme);
+    const n = (k: MatchState) => rows.filter((r) => r.concept === k).length;
+    return {
+      scheme,
+      target,
+      mapped: n("mapped"),
+      unmapped: n("unmapped"),
+      undetermined: n("undetermined"),
+      ...(reason ? { reason } : {}),
+      mappedTerms: rows.filter((r) => r.concept === "mapped").map((r) => r.term).sort(),
+    };
+  });
+}
+
 function summarise(ms: TermMapping[], target: string): string {
   const of = ms.filter((m) => m.target === target);
   const n = (k: MatchState) => of.filter((m) => m.concept === k).length;
@@ -273,10 +315,17 @@ async function main(): Promise<number> {
         t,
         {
           summary: summarise(mappings, t),
-          // Only the DETERMINED findings are entries: 2 594 undetermined rows
-          // would bury the ones a reader can act on, and the scope already
-          // says the whole target is undetermined and why.
-          entries: mappings.filter((m) => m.target === t && m.concept === "mapped"),
+          // PER SCHEME, not per term. One row per candidate per target is
+          // 5 210 entries here of which 5 210 say the same thing, and burying
+          // the actionable ones under them is the failure this file's whole
+          // shape exists to avoid. Per scheme is 5 rows, carries all three
+          // counts, and is what the glossary page renders.
+          //
+          // The mapped TERMS are named inside each row, because those are the
+          // ones a reader acts on and there are few of them by construction —
+          // if that ever stops being true, the page is the thing to page, not
+          // the record to truncate.
+          entries: perScheme(mappings, t, scope),
         },
       ]),
     ),

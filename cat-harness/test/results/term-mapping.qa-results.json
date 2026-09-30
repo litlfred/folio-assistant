@@ -2,24 +2,111 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/check-term-mapping.ts",
-    "script_hash": "5c02098f1af5"
+    "script_hash": "4d6bbfac2825"
   },
   "subject": {
     "kind": "glossary",
     "id": "folio-assistant-core/glossary"
   },
-  "updated_at": "2026-09-30T11:11:31.492Z",
+  "updated_at": "2026-09-30T13:41:16.125Z",
   "families": {
     "fhir": {
       "summary": "2605 candidate(s): 0 mapped, 0 unmapped, 2605 undetermined",
-      "count": 0,
-      "entries": []
+      "count": 5,
+      "entries": [
+        {
+          "scheme": "kg-bpmn-activities",
+          "target": "fhir",
+          "mapped": 0,
+          "unmapped": 0,
+          "undetermined": 532,
+          "reason": "api.openconceptlab.org answered HTTP 403. Every fhir row is therefore `undetermined`, NOT `unmapped` — a terminology that could not answer has said nothing.",
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-dmn-decisions",
+          "target": "fhir",
+          "mapped": 0,
+          "unmapped": 0,
+          "undetermined": 9,
+          "reason": "api.openconceptlab.org answered HTTP 403. Every fhir row is therefore `undetermined`, NOT `unmapped` — a terminology that could not answer has said nothing.",
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-schema-fields",
+          "target": "fhir",
+          "mapped": 0,
+          "unmapped": 0,
+          "undetermined": 1658,
+          "reason": "api.openconceptlab.org answered HTTP 403. Every fhir row is therefore `undetermined`, NOT `unmapped` — a terminology that could not answer has said nothing.",
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-skills",
+          "target": "fhir",
+          "mapped": 0,
+          "unmapped": 0,
+          "undetermined": 287,
+          "reason": "api.openconceptlab.org answered HTTP 403. Every fhir row is therefore `undetermined`, NOT `unmapped` — a terminology that could not answer has said nothing.",
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-tools",
+          "target": "fhir",
+          "mapped": 0,
+          "unmapped": 0,
+          "undetermined": 119,
+          "reason": "api.openconceptlab.org answered HTTP 403. Every fhir row is therefore `undetermined`, NOT `unmapped` — a terminology that could not answer has said nothing.",
+          "mappedTerms": []
+        }
+      ]
     },
     "skos": {
       "summary": "2605 candidate(s): 0 mapped, 2605 unmapped, 0 undetermined",
-      "count": 0,
-      "entries": []
+      "count": 5,
+      "entries": [
+        {
+          "scheme": "kg-bpmn-activities",
+          "target": "skos",
+          "mapped": 0,
+          "unmapped": 532,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-dmn-decisions",
+          "target": "skos",
+          "mapped": 0,
+          "unmapped": 9,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-schema-fields",
+          "target": "skos",
+          "mapped": 0,
+          "unmapped": 1658,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-skills",
+          "target": "skos",
+          "mapped": 0,
+          "unmapped": 287,
+          "undetermined": 0,
+          "mappedTerms": []
+        },
+        {
+          "scheme": "kg-tools",
+          "target": "skos",
+          "mapped": 0,
+          "unmapped": 119,
+          "undetermined": 0,
+          "mappedTerms": []
+        }
+      ]
     }
   },
-  "total": 0
+  "total": 10
 }

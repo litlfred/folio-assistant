@@ -73,6 +73,7 @@ import {
 import { LEGACY_FOLIO_NS } from "../../cat-harness/schemas/namespaces.ts";
 import { GlossarySchema, schemeIri, toSkos, termIri, type Glossary, type LangText } from "../schemas/glossary.ts";
 import { ASSET_TYPES, EXTRACTED_PREFIX, assetTypeTitle, assetTypeWhat, extract, type AssetType } from "./glossary-extract.ts";
+import type { SchemeState } from "../../cat-harness/scripts/check-term-mapping.ts";
 
 const CORE = resolve(import.meta.dir, "..");
 const REPO = repoRootFor(CORE);
@@ -439,6 +440,107 @@ function termEntry({ s, t, label }: Row): string {
   ].join("\n");
 }
 
+/**
+ * What `check:term-mapping` found, read from the harness instance that wrote it.
+ *
+ * Bean `7wou`. The page SHOWS the three states; it does not compute them —
+ * a second implementation of "is this term already somebody's concept" would
+ * be free to disagree with the gate's, and the reader would have no way to
+ * tell which was right.
+ *
+ * The path is resolved through `instanceOwners`, not written down: the file
+ * belongs to the instance DECLARED as `cat-harness`, and hardcoding
+ * `cat-harness/test/results/` is how a consumer stops finding it the moment
+ * the layout moves. Core may read it — core declares `needs: ["cat-harness"]`,
+ * so this is the permitted direction.
+ *
+ * **Absent returns `undefined`, and the page then says the check has not
+ * run.** Rendering "0 mapped" over a file nobody wrote would be `dh4f`
+ * exactly: could-not-determine presented as a determined empty.
+ */
+export function mappingStates(repo: string = REPO): SchemeState[] | undefined {
+  const harness = instanceOwners(repo).find((o) => o.name === "cat-harness");
+  if (!harness) return undefined;
+  const file = join(harness.root, "test", "results", "term-mapping.qa-results.json");
+  if (!existsSync(file)) return undefined;
+  try {
+    const d = JSON.parse(readFileSync(file, "utf-8")) as {
+      families?: Record<string, { entries?: SchemeState[] }>;
+    };
+    const rows = Object.values(d.families ?? {}).flatMap((f) => f.entries ?? []);
+    return rows.length ? rows : undefined;
+  } catch {
+    // A result that will not parse is `check:term-mapping`'s finding, not
+    // this page's. Saying it twice would make one defect look like two.
+    return undefined;
+  }
+}
+
+/**
+ * `\`x\`` in prose written for a terminal, rendered as `<code>` in HTML.
+ *
+ * The reason strings come from `check-term-mapping`, which writes for a
+ * console. Dropped into a raw `<td>`, kramdown leaves markdown alone inside
+ * block HTML, so the backticks would appear literally on the page — bean
+ * `mylx`, "raw markdown backticks show in rendered text", already open
+ * against six pages. Escaped FIRST, so the conversion cannot smuggle markup
+ * in from a reason string.
+ */
+export function codeSpans(text: string): string {
+  return esc(text).replace(/`([^`]+)`/g, "<code>$1</code>");
+}
+
+/**
+ * The mapping block for one scheme, or for every scheme on the index.
+ *
+ * Says all three states with their counts, and the REASON whenever a target
+ * is undetermined — that reason is the whole difference between "checked,
+ * no match" and "nobody asked", and it is stated once per target rather than
+ * repeated on 2 605 identical rows.
+ */
+export function mappingBlock(states: SchemeState[] | undefined, schemes: readonly string[]): string {
+  if (!states) {
+    return [
+      `<p class="fa-gloss-mapping fa-gloss-mapping--unrun">`,
+      `<strong>Not checked.</strong> No <code>term-mapping</code> result is committed, so whether `,
+      `these terms already exist in an authoritative vocabulary is <em>unknown</em> — which is not `,
+      `the same as “none do”. Run <code>bun run term:mapping</code>.`,
+      `</p>`,
+    ].join("");
+  }
+  const mine = states.filter((s) => schemes.includes(s.scheme));
+  if (!mine.length) return "";
+  const byTarget = new Map<string, SchemeState[]>();
+  for (const s of mine) byTarget.set(s.target, [...(byTarget.get(s.target) ?? []), s]);
+  const rows = [...byTarget.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([target, list]) => {
+      const sum = (k: "mapped" | "unmapped" | "undetermined") =>
+        list.reduce((n, s) => n + s[k], 0);
+      const reason = list.find((s) => s.reason)?.reason;
+      return [
+        `<tr>`,
+        `<td><code>${esc(target)}</code></td>`,
+        `<td>${sum("mapped")}</td>`,
+        `<td>${sum("unmapped")}</td>`,
+        `<td>${sum("undetermined")}</td>`,
+        `<td>${reason ? codeSpans(reason) : "—"}</td>`,
+        `</tr>`,
+      ].join("");
+    });
+  return [
+    `<table class="fa-gloss-mapping">`,
+    `<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>`,
+    `<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>`,
+    `<tbody>${rows.join("")}</tbody>`,
+    `</table>`,
+    `<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> `,
+    `A vocabulary that could not be reached has said nothing, and the column above keeps that `,
+    `apart from a checked miss. The counts are reported and not graded: an unmapped candidate may `,
+    `be a term this corpus is right to coin.</p>`,
+  ].join("\n");
+}
+
 /** The filter box, the A–Z bar and the terms under their letters: the same on every page. */
 function termsBlock(rows: Row[]): string {
   // A label that does not start with a letter (a digit, a quote) goes under
@@ -511,6 +613,8 @@ Candidate terms extracted from ${assetTypeWhat(type)}. Each is the asset's own t
 From: ${from}.
 
 **Size:** this page holds ${rows.length} terms and is ${size} before compression, fetched in one request, within its budget of ${sizeLabel(budgetOf(type))}. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+
+${mappingBlock(mappingStates(), [...new Set(rows.map((r) => r.s.glossary.id))])}
 
 ${termsBlock(rows)}
 
@@ -612,6 +716,12 @@ Every term the instances in this repository define or carry, as W3C SKOS. Terms 
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>${n.couldNotExtract}</td></tr>
 </tbody>
 </table>
+
+## Already somebody else's concept?
+
+Extracted candidates are minted from this repository's own assets and are not, by themselves, checked against any vocabulary. \`check:term-mapping\` asks whether each already exists as a concept somebody is authoritative for — SKOS for what a term MEANS, FHIR for a clinical code's operational semantics — and the two are separate questions with separate answers.
+
+${mappingBlock(mappingStates(), [...new Set(c.glossaries.map((g) => g.glossary.id))])}
 
 ## Pages
 

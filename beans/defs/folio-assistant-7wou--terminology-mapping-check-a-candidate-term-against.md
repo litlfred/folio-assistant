@@ -1,11 +1,11 @@
 ---
 # folio-assistant-7wou
 title: 'TERMINOLOGY / mapping: check a candidate term against an existing terminology — three states, exact AND concept'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-25T04:51:47Z
-updated_at: 2026-09-29T22:01:31Z
+updated_at: 2026-09-30T13:39:59Z
 parent: folio-assistant-5yhm
 ---
 
@@ -57,8 +57,9 @@ as a pair rather than as a boolean somebody widens later.
       `cat-harness/test/results/term-mapping.qa-results.json`
 - [x] registered as a gate: `bun run check:term-mapping`, in package.json and
       the gate workflow, verifying rather than writing
-- [ ] the glossary page shows the three states (the check exists; the page
-      does not read it yet)
+- [x] the glossary page shows the three states (2026-09-30) — a table per
+      page, all three counts per target, and the REASON whenever a target is
+      undetermined; plus a "Not checked" block when no result is committed
 - [ ] declare FHIR collections in scope, once OCL is reachable and somebody
       decides which
 
@@ -109,3 +110,37 @@ So the `undetermined` here is a transport fact, not a permanent one, and the
 resolver has somewhere to point. Which authority the row should assert is on
 `ejug` and is the owner's: a published IG at a version, or a live curated
 collection, are different claims that can disagree.
+
+## Wired to the page, 2026-09-30
+
+`glossary-page.ts` renders the states; it does not recompute them. A second
+implementation of "is this term already somebody's concept" would be free to
+disagree with the gate's, and a reader would have no way to tell which was
+right.
+
+**Per scheme, not per term.** One row per candidate per target is 5 210
+entries of which 5 210 say the same thing today, and burying the actionable
+ones under them is the failure the record's shape exists to avoid. The
+committed result now carries a row per (scheme, target) with all three counts
+and the mapped term ids, which is what the page needs and what a reader can
+read. If mapped terms ever become numerous, the PAGE is the thing to page —
+not the record to truncate.
+
+**Three states, shown as three columns**, with a fourth for *why*
+undetermined. The prose under the table says it in words too: *"Undetermined
+is never 'no match'. A vocabulary that could not be reached has said nothing."*
+
+**And a fourth state at the page level: nobody asked.** With no committed
+result the page says **Not checked**, names the command, and renders no
+table. Printing "0 mapped" over a file nobody wrote would be `dh4f` exactly —
+could-not-determine presented as a determined empty. Tested on both branches.
+
+The path is resolved through `instanceOwners`, not written down: the result
+belongs to the instance DECLARED as `cat-harness`. Core may read it — core
+declares `needs: ["cat-harness"]`, so this is the permitted direction, and
+`check:partition` is clean.
+
+`codeSpans` was needed on the way: the reason strings are written for a
+console and carry markdown backticks, which kramdown leaves alone inside
+block HTML — bean `mylx`, already open against six pages. Escaped first, so a
+reason cannot smuggle markup onto the page.
