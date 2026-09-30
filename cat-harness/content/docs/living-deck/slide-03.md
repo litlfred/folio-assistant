@@ -18,11 +18,13 @@ logic and test scenarios); the SMART Base 1.0.0 `DAK` logical model;
 [the L2 artefacts and their skills](guides/who-smart-dak.html).
 
 > **Misaligned, in three directions:** the speaker notes said 8. The figure
-> shows 9 cards, with testing beside them. The SMART Base `DAK` logical model,
-> as the repository pins it, declares 9 fields: test scenarios **in**,
+> shows 9 cards, with testing beside them. The SMART Base `DAK` logical model
+> (`DAK.fsh`) declares 9 fields: test scenarios **in**,
 > scheduling logic carried **inside** decision-support logic. The owner's
 > count is 10. WHO's IG starter kit disagrees with itself the same way: its
 > introduction counts 9 with scheduling and no testing, and its table counts 9
 > with test scenarios and scheduling inside decision support. Scheduling logic is authored as DMN decision tables but may not
 > yet be formalized as its own L2 component or L3 artefact, and that is the
-> gap the logical model shows. The notes are corrected in the owner's copy.
+> gap the logical model shows. This repository's `DAK_COMPONENTS` lists all
+> ten and marks scheduling logic as not yet formalized. The notes are
+> corrected in the owner's copy.

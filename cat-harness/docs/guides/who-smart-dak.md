@@ -82,10 +82,9 @@ sources count differently, and the difference is recorded here:
 
 - WHO's DAK figure (slide 3 of `cat-harness/library/kg-folio-asst-2026-09-30`)
   shows nine cards, with scheduling logic as #7, and testing drawn beside them.
-- The SMART Base `DAK` logical model, as `DAK_COMPONENTS` in
-  `schemas/block-kinds.ts` pins it from `DAK.fsh`, declares nine fields:
-  test scenarios **in**, and scheduling logic carried **inside**
-  decision-support logic.
+- The SMART Base `DAK` logical model (`DAK.fsh`) declares nine fields: test
+  scenarios **in**, and scheduling logic carried **inside** decision-support
+  logic.
 - The speaker notes on that slide said eight.
 - WHO's IG starter kit, *L2 DAK authoring*
   (<https://smart.who.int/ig-starter-kit/l2_dak_authoring.html>; source
@@ -96,8 +95,11 @@ sources count differently, and the difference is recorded here:
   table counts 9 with **test scenarios** as #9, and scheduling logic inside
   decision-support logic.
 
-Ten is the owner's count. A DAK read through the logical model carries nine
-until scheduling logic is formalized as its own L2 component.
+Ten is the owner's count, and this repository encodes it. `DAK_COMPONENTS` in
+`schemas/block-kinds.ts` lists ten, and names scheduling logic in
+`DAK_UNFORMALIZED_COMPONENTS`: it has a field name ready (`schedulingLogic`),
+but `DAK.fsh` does not yet declare that field. The other nine are checked
+against `DAK.fsh` field for field.
 
 ## Workflow
 {: #workflow data-fa-label="sec:guides-who-smart-dak-workflow" }

@@ -16,7 +16,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
 import { siteDirFor } from "../../schemas/cat-harness.ts";
-import { DAK_COMPONENTS } from "../../schemas/block-kinds.ts";
+import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS } from "../../schemas/block-kinds.ts";
 import { ActorDefSchema } from "../../schemas/role-graph.ts";
 
 const H = resolve(import.meta.dir, "../..");
@@ -54,12 +54,12 @@ describe("living deck: every claim about the KG still holds", () => {
     expect(body).toContain("## Decision outcome");
   });
 
-  test("slide 3 — the logical model still carries 9, test scenarios in and scheduling logic not its own field", () => {
-    // The owner's count is 10 (2026-09-30). When scheduling logic is formalized
-    // as its own L2 component, this fails and slide 3's note must be revised.
-    expect(DAK_COMPONENTS).toHaveLength(9);
+  test("slide 3 — ten components, scheduling logic marked unformalized in WHO's model", () => {
+    // The owner's count is 10 (2026-09-30). When WHO formalizes scheduling logic
+    // it leaves the unformalized list, and slide 3's note must be revised.
+    expect(DAK_COMPONENTS).toHaveLength(10);
     expect(DAK_COMPONENTS).toContain("test-scenarios");
-    expect(DAK_COMPONENTS.some((c) => c.includes("schedul"))).toBe(false);
+    expect(DAK_UNFORMALIZED_COMPONENTS).toEqual(["scheduling-logic"]);
   });
 
   test("slide 4 — the ingested SMART Base index still holds 25 StructureDefinition pages", () => {
