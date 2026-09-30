@@ -304,6 +304,8 @@
     "readme:sync:root:check": "bun run cat-harness/content/pipeline/readme-sections.ts --dir . --check",
     "readme:sync:bootstrap": "bun run render:bpmn && bun run cat-harness/content/pipeline/readme-sections.ts --dir bootstrap",
     "readme:sync:bootstrap:check": "bun run cat-harness/content/pipeline/readme-sections.ts --dir bootstrap --check",
+    "iri:sync": "bun run cat-harness/scripts/iri-sync.ts",
+    "iri:sync:check": "bun run cat-harness/scripts/iri-sync.ts --check",
     "readme:subgraphs": "bun run cat-harness/scripts/subgraph-readmes.ts",
     "readme:subgraphs:check": "bun run cat-harness/scripts/subgraph-readmes.ts --check",
     "regen": "bun run cat-harness/scripts/regen-after-merge.ts",

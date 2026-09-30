@@ -185,7 +185,13 @@ export const KG_QA_RESULTS_DIR = join("test", "results", "kg-qa");
  * @param subjectDir absolute directory the subject itself lives in
  * @param stem       the subject's filename without extension, or its id
  */
-export function kgQaSidecarPath(repoRoot: string, subjectDir: string, stem: string): string {
+export function kgQaSidecarPath(
+  repoRoot: string,
+  subjectDir: string,
+  stem: string,
+  /** The `kg-qa/` tree to write under; the instance's own by default. See `kgQaHomeFor`. */
+  tree: string = join(repoRoot, KG_QA_RESULTS_DIR),
+): string {
   // `relative` rather than string surgery: a subject reached by a different
   // spelling of the same directory must land on the same results path, or the
   // writer and the reader disagree again by another route.
@@ -202,8 +208,7 @@ export function kgQaSidecarPath(repoRoot: string, subjectDir: string, stem: stri
   // from an id that never had to be a legal filename. `req:agent-workflow` is
   // what made this repository unclonable on Windows — see `portable-path.ts`.
   return join(
-    repoRoot,
-    KG_QA_RESULTS_DIR,
+    tree,
     ...(escaped ? ["_external", ...inside] : inside),
     `${portableSegment(stem)}.kg-qa.json`,
   );
@@ -264,7 +269,12 @@ export interface OrphanSidecar {
  * reason; a person decides. Splitting the report makes that decision possible
  * rather than making it automatic.
  */
-export function sweepOrphans(root: string, written: ReadonlySet<string>): OrphanSidecar[] {
+export function sweepOrphans(
+  root: string,
+  written: ReadonlySet<string>,
+  /** The `kg-qa/` tree to sweep; the instance's own by default. */
+  tree: string = join(root, KG_QA_RESULTS_DIR),
+): OrphanSidecar[] {
   const found: OrphanSidecar[] = [];
   const walk = (dir: string): void => {
     let entries: Dirent[];
@@ -307,7 +317,7 @@ export function sweepOrphans(root: string, written: ReadonlySet<string>): Orphan
   // clean sweep over nothing on every run. It was caught only because the
   // orphan it was written for was put back and the guard stayed silent.
   // A guard that cannot fire is the defect it was written to prevent.
-  walk(join(root, KG_QA_RESULTS_DIR));
+  walk(tree);
   return found;
 }
 

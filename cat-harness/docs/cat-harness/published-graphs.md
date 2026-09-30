@@ -168,12 +168,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `methodology`
 
-1 of 3 published.
+4 of 4 published.
 {: .fa-hx-dim }
 
 - [C@T Harness]({{ '/methodologies/' | relative_url }})
-- folio-assistant-core — *declared, not published*
-- SMART Base — *declared, not published*
+- [folio-assistant-core]({{ '/methodologies/' | relative_url }})
+- [folio-assistant-sci]({{ '/methodologies/' | relative_url }})
+- [SMART Base]({{ '/methodologies/' | relative_url }})
 
 ### `models`
 
@@ -191,13 +192,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `processes`
 
-1 of 4 published.
+4 of 4 published.
 {: .fa-hx-dim }
 
-- Bootstrap — *declared, not published*
+- [Bootstrap]({{ '/processes/' | relative_url }})
 - [C@T Harness]({{ '/processes/' | relative_url }})
-- folio-assistant-core — *declared, not published*
-- SMART Base — *declared, not published*
+- [folio-assistant-core]({{ '/processes/' | relative_url }})
+- [SMART Base]({{ '/processes/' | relative_url }})
 
 ### `proposals`
 
@@ -208,11 +209,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `qa`
 
-1 of 15 published.
+1 of 14 published.
 {: .fa-hx-dim }
 
 - agent-skills — *declared, not published*
-- Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/qa/' | relative_url }})
 - FHIR IG Harness — *declared, not published*
 - folio-assistant-core — *declared, not published*
@@ -254,15 +254,15 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `skills`
 
-1 of 6 published.
+5 of 6 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/skills/' | relative_url }})
-- FHIR IG Harness — *declared, not published*
-- folio-assistant-core — *declared, not published*
-- large-datasets — *declared, not published*
-- WHO IRIS — *declared, not published*
+- [FHIR IG Harness]({{ '/cat-harness/docs-auto/index/skills/fhir-ig-skills/' | relative_url }})
+- [folio-assistant-core]({{ '/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/' | relative_url }})
+- [large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
+- [WHO IRIS]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }})
 
 ### `swimlane-glossary`
 
@@ -341,29 +341,8 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 The same viewers the navbar and the board show, by title.
 
-- [agent-skills-library]({{ '/cat-harness/library/agent-skills/' | relative_url }}) — declared on `agent-skills-library`
-- [beans]({{ '/beans/' | relative_url }}) — declared on `beans`
-- [Docs — cat-harness]({{ '/cat-harness/docs-auto/index/docs/docs/' | relative_url }}) — declared on `docs`
-- [External schemas]({{ '/external-schemas/' | relative_url }}) — declared on `external-schemas`
-- [folio]({{ '/cat-harness/folio/' | relative_url }}) — declared on `folio`
-- [folio-assist-core-schemas]({{ '/cat-harness/schemas/folio-assistant-core/' | relative_url }}) — declared on `folio-assist-core-schemas`
-- [folio-assistant-sci-library]({{ '/cat-harness/library/folio-assistant-sci/' | relative_url }}) — declared on `folio-assistant-sci-library`
 - [fsh-guts]({{ '/fsh-guts/' | relative_url }}) — declared on `fsh-guts`
-- [large-datasets-schemas]({{ '/cat-harness/schemas/large-datasets/' | relative_url }}) — declared on `large-datasets-schemas`
 - [Latent semantic indexes]({{ '/lsi/' | relative_url }}) — declared on `qa`
-- [library]({{ '/cat-harness/library/cat-harness/' | relative_url }}) — declared on `library`
-- [Methodologies]({{ '/methodologies/' | relative_url }}) — declared on `methodologies`
-- [processes]({{ '/processes/' | relative_url }}) — declared on `processes`
-- [schemas]({{ '/cat-harness/schemas/cat-harness/' | relative_url }}) — declared on `schemas`
-- [Skills — cat-harness]({{ '/cat-harness/docs-auto/index/skills/skills/' | relative_url }}) — declared on `skills`
-- [Skills — large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }}) — declared on `large-datasets-skills`
-- [Skills — who-iris]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }}) — declared on `who-iris-skills`
-- [swimlane-glossary]({{ '/cat-harness/docs-auto/glossary/swimlane-glossary/' | relative_url }}) — declared on `swimlane-glossary`
-- [todos]({{ '/todos/' | relative_url }}) — declared on `todos`
-- [Tools]({{ '/tools/' | relative_url }}) — declared on `tools`
-- [translation-sources]({{ '/translation-status/' | relative_url }}) — declared on `translation-sources`
-- [uploads]({{ '/cat-harness/uploads/' | relative_url }}) — declared on `uploads`
-- [who-iris-library]({{ '/cat-harness/library/who-iris/' | relative_url }}) — declared on `who-iris-library`
 
 ---
 

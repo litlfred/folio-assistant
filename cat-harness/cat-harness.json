@@ -495,20 +495,15 @@
     {
       "id": "tools",
       "_coverage_comment": "`docs` pointed at `cat-harness/docs/skills.md` until 2026-09-22 — a page titled \"Skills & roles\" whose headings are Skills, Roles and Capabilities, with no tools section in it. The tools graph had no documentation of its own and named a page about something else. That is worse than an absent ref, because an absent one is a legible gap while a ref that RESOLVES reports coverage: the check in force asks only whether the path exists, it did, and nothing ever flagged it. Found by applying the owner's instruction of 2026-09-21, \"keep tools and skills separate!\". `tool-graph.md` is the prose; `tools/index.md` is the generated view, and the two are different objects rather than two names for one.",
-      "coverage": {
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/tools/index.md",
-            "title": "Tools"
-          }
-        ]
-      },
       "path": "tools/",
       "dependents": "skip",
       "description": "Tool definitions, one subdirectory per contributing instance (tools/<stub>/) so a composed instance adds its own without colliding on a filename. tools/index.ts merges them and is the only path a consumer imports. Authored as .ts calling defineTool so a malformed node fails at tsc; the JSON-LD and JSON Schema renderings are generated.",
       "graphKinds": [
         "tools"
-      ]
+      ],
+      "tile": {
+        "title": "Tools"
+      }
     },
     {
       "id": "external-schemas",
@@ -519,13 +514,10 @@
         "external-schema"
       ],
       "coverage": {
-        "_visualiser_comment": "Declared 2026-09-23 under bean `yunp`: `external-schema` was one of the kinds with no published viewer, so the navbar listed it disabled and four records — an authority, an edition, its namespace IRIs, its dependents and its operative terms each — were reachable only by opening the JSON. ADDED TO THE COVERAGE BLOCK THAT WAS ALREADY HERE, not beside it: the first attempt wrote a second `coverage` key into the same object, which JSON permits and every parser resolves by taking the last — so the visualiser was silently discarded and the generator reported `no visualiser declared`. A duplicate key is not a merge.",
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/external-schemas/index.md",
-            "title": "External schemas"
-          }
-        ]
+        "_visualiser_comment": "Declared 2026-09-23 under bean `yunp`: `external-schema` was one of the kinds with no published viewer, so the navbar listed it disabled and four records — an authority, an edition, its namespace IRIs, its dependents and its operative terms each — were reachable only by opening the JSON. ADDED TO THE COVERAGE BLOCK THAT WAS ALREADY HERE, not beside it: the first attempt wrote a second `coverage` key into the same object, which JSON permits and every parser resolves by taking the last — so the visualiser was silently discarded and the generator reported `no visualiser declared`. A duplicate key is not a merge."
+      },
+      "tile": {
+        "title": "External schemas"
       }
     },
     {
@@ -545,10 +537,7 @@
       "graphKinds": [
         "schemas",
         "cat-harness"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/cat-harness/index.html"
-      }
+      ]
     },
     {
       "id": "uml",
@@ -569,13 +558,8 @@
       "graphKinds": [
         "skills"
       ],
-      "coverage": {
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/skills/index.html",
-            "title": "Skills — cat-harness"
-          }
-        ]
+      "tile": {
+        "title": "Skills — cat-harness"
       }
     },
     {
@@ -603,29 +587,23 @@
       "description": "Executable BPMN processes and the DMN tables their gateways compute from. The diagrams are the source of truth, not illustrations of one: a lane binds a Role, an activity names the Skill to run through `<folio:skill ref>`, and `workflow_complete` refuses a step that is not enabled. WHERE A RUNNING INSTANCE GOT TO is not here — that is `beans/workflows/`, kind `workflow-state`, which is `state` rather than `content`. Two questions, two graphs.",
       "graphKinds": [
         "processes"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/processes/index.md"
-      }
+      ]
     },
     {
       "id": "methodologies",
       "theme": "analyst",
       "coverage": {
-        "_visualiser_comment": "THE LIST FORM, so the entry can carry a title. Declared 2026-09-23 under bean `yunp`: `methodology` was one of seven kinds with no published viewer, which the build reports as a finding in `_data/harness.json` and the navbar renders as a disabled row. The page spans EVERY declared methodology graph, not this directory alone — `smart-base/methodologies/` and `folio-assistant-core/methodologies/` are the same kind and their nodes are on it, labelled by declaring instance. So the visualiser is declared once, here, rather than three times at one page: the obligation is per KIND and a second declaration would be a second claim on one file.",
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/methodologies/index.md",
-            "title": "Methodologies"
-          }
-        ]
+        "_visualiser_comment": "THE LIST FORM, so the entry can carry a title. Declared 2026-09-23 under bean `yunp`: `methodology` was one of seven kinds with no published viewer, which the build reports as a finding in `_data/harness.json` and the navbar renders as a disabled row. The page spans EVERY declared methodology graph, not this directory alone — `smart-base/methodologies/` and `folio-assistant-core/methodologies/` are the same kind and their nodes are on it, labelled by declaring instance. So the visualiser is declared once, here, rather than three times at one page: the obligation is per KIND and a second declaration would be a second claim on one file."
       },
       "path": "methodologies/",
       "dependents": "skip",
       "description": "Judgement methodologies the harness owns, one sub-graph each: Kepner-Tregoe for a decision, MADR for its record, DMN for the computable case. PARALLEL rather than composable — which applies is contextual, and blending them produces a house method that cites nobody. Its own graph kind rather than skills, for three properties a skill does not have: extractable (somebody else's work, adopted, so it lifts out with its declaration when the field moves on), referenced rather than inlined (two skills quoting one method is two copies free to drift), and exempt from skill criteria (skill-is-brief caps an INSTRUCTION near 280 lines; a methodology is a faithful rendering of an external standard, and truncating it to fit a house limit would misrepresent the standard). GRADE is deliberately NOT here: it is WHO guideline method, and since 2026-09-24 (bean `wg7r`) it is the `grade` skill in `skills/authoring-who-smart-guidelines/` with its vocabularies as code lists — the owner: \"needs to be part of skill/SKOS etc. … dont want smart-kg here yet, that is its own repo already\". RELOCATION, 2026-09-22, and the THREE declarations it removed. The owner: \"dont bury sub-graph assets. same for <stub>/skills, etc.\" CRDM's three skills moved to `skills/crdm/`, RACI's to `skills/raci/`, and CRDM's eight diagrams to `processes/` — the stub-level graphs that were already declared. `methodology-crdm`, `methodology-raci` and `methodology-crdm-processes` are GONE rather than repointed: a separate entry for a directory that is already a package subdirectory of the declared `skills/` graph would declare one directory twice, which is the `x4v4` graph-inside-a-graph shape one level down. `gen-skill-docs` demonstrated it rather than anyone reasoning it out — it demanded a category under BOTH the basename and the declaration id, because both discovery branches found the same directory. So this entry now has the `methodology` graph to itself, holding exactly the four nodes and no subgraph: dmn, kepner-tregoe, madr, swot. This REVERSES the placement half of bean `g43o`; its argument that a reader should meet CRDM as a thing rather than as three prefixed filenames is preserved by the package manifest, which is what makes a skill package a thing everywhere else in this tree.",
       "graphKinds": [
         "methodology"
-      ]
+      ],
+      "tile": {
+        "title": "Methodologies"
+      }
     },
     {
       "id": "qa",
@@ -677,13 +655,7 @@
     {
       "id": "beans",
       "coverage": {
-        "_visualiser_comment": "THE LIST FORM, for one visualisation, so it can carry `icon`. A bare string still parses and 26 other entries here are one; this is not the start of a migration. Owner, 2026-09-21, having gone looking for the board and landed on the origin: they asked for a tile for it and sent the bean art. `icon` names a glyph in `docs-ui.js`'s registry rather than carrying markup, because `tileLink` assigns its glyph with innerHTML and a declaration is INHERITED by dependent instances — see VisualisationSchema.icon. An unknown name falls back to the generic glyph.",
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/beans/index.html",
-            "icon": "beans"
-          }
-        ]
+        "_visualiser_comment": "THE LIST FORM, for one visualisation, so it can carry `icon`. A bare string still parses and 26 other entries here are one; this is not the start of a migration. Owner, 2026-09-21, having gone looking for the board and landed on the origin: they asked for a tile for it and sent the bean art. `icon` names a glyph in `docs-ui.js`'s registry rather than carrying markup, because `tileLink` assigns its glyph with innerHTML and a declaration is INHERITED by dependent instances — see VisualisationSchema.icon. An unknown name falls back to the generic glyph."
       },
       "path": "beans/",
       "dependents": "reproduce",
@@ -691,13 +663,13 @@
       "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency.",
       "graphKinds": [
         "beans"
-      ]
+      ],
+      "tile": {
+        "icon": "beans"
+      }
     },
     {
       "id": "todos",
-      "coverage": {
-        "visualiser": "cat-harness/docs/todos/index.html"
-      },
       "path": "todos/",
       "dependents": "reproduce",
       "scope": "repository",
@@ -742,26 +714,20 @@
       "path": "uploads/",
       "dependents": "reproduce",
       "coverage": {
-        "_visualiser_comment": "ITS OWN HARNESS, not the library viewer. Both entries declared this same path until 2026-09-21, so the uploads tile opened the corpus browser and rendered the library's entry count — 0 here, while 27 sources waited in the queue beside it. Bean v18c tabled three ways to divide one page; the owner rejected all three: \"uploads/ are not ingested, they are ingested into libray/ ... funcionally different/behavior diffent so need distinct harness\". gen-library-viz reads bib-slugs, sections/, structure.json and the OCR three-state, none of which a queue has. The two are STAGES of one pipeline (see uploads-and-library-are-two-stages-of-one-pipeline.md), and this view exists to show what is NOT in the library — which the library viewer cannot do by construction.",
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/cat-harness/uploads/index.html",
-            "icon": "uploads"
-          }
-        ]
+        "_visualiser_comment": "ITS OWN HARNESS, not the library viewer. Both entries declared this same path until 2026-09-21, so the uploads tile opened the corpus browser and rendered the library's entry count — 0 here, while 27 sources waited in the queue beside it. Bean v18c tabled three ways to divide one page; the owner rejected all three: \"uploads/ are not ingested, they are ingested into libray/ ... funcionally different/behavior diffent so need distinct harness\". gen-library-viz reads bib-slugs, sections/, structure.json and the OCR three-state, none of which a queue has. The two are STAGES of one pipeline (see uploads-and-library-are-two-stages-of-one-pipeline.md), and this view exists to show what is NOT in the library — which the library viewer cannot do by construction."
       },
       "description": "The incoming queue of the document-ingestion pipeline — raw files as dropped, before ingestion. NOT L1 and NOT greppable as corpus: the corpus checklist searches library/ only, so a source still sitting here reads as absent to every consumer while the file is on disk. That is why it is a separate declaration from library/ rather than the same directory under two names.",
       "graphKinds": [
         "uploads"
-      ]
+      ],
+      "tile": {
+        "icon": "uploads"
+      }
     },
     {
       "id": "library",
       "path": "library/",
       "dependents": "reproduce",
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/cat-harness/index.html"
-      },
       "description": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. THIS INSTANCE HOLDS NONE. Bean `frs5` moved all four entries out (the three IRIS items to who-iris, milnorlink to folio-assistant-sci) because the platform holds no content, and this entry was removed with them. It is back, on the owner's ruling of 2026-09-20, for ONE reason and it is not about this instance: `wwi6` pins the guarantee that a DEPENDENT folio materialises its own `uploads/` and `library/`, and a dependent inherits the convention — an id and a relative path — from what the harness declares. Remove this and every downstream folio silently stops getting a library. IT IS THE `dh4f` SHAPE AND THAT IS KNOWN, NOT OVERLOOKED: a declared directory this instance does not hold is exactly what that bean is about. The cost is paid deliberately and it is bounded — the consumers that scan libraries now fan out over EVERY declared one (bean `a02m`), so an empty one contributes nothing rather than shadowing the two that have content. What it must never become again is the FIRST of several silently taken as the only one. The real fix is the core relocation — `uploads`, `voices`, `translation-sources` and this moving to folio-assistant-core, per the owner's earlier \"voices, uploads library in folio-asst-core\" — after which a dependent inherits them from the layer that owns content and this entry goes for good.",
       "graphKinds": [
         "library"
@@ -775,10 +741,7 @@
       "description": "The WHO IRIS instance's library, reached from here because this repository STAGES who-iris as a sibling top-level directory ahead of it becoming its own repo -- the same pattern as `folio-assist-core-schemas` and `detangle-schemas` above. Repository-scoped, so it resolves against the repository root rather than this instance's. Declared here as well as in who-iris/harness.json because the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, the MCP server's graph roots -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect).",
       "graphKinds": [
         "library"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/who-iris/index.html"
-      }
+      ]
     },
     {
       "id": "agent-skills-library",
@@ -788,23 +751,17 @@
       "description": "The agent-skill literature instance's library -- published guidance on authoring and operating agent skills, vendor documentation and arXiv papers alike. Same staging arrangement and same reason as `who-iris-library` and `folio-assistant-sci-library` below: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect). It is NOT in cat-harness/library/ although its subject is this harness's own: `AGENTS.md` opens by saying the platform holds no content, and these are other publishers' documents.",
       "graphKinds": [
         "library"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/agent-skills/index.html"
-      }
+      ]
     },
     {
       "id": "folio-assistant-sci-library",
       "path": "folio-assistant-sci/library/",
       "scope": "repository",
       "dependents": "skip",
-      "description": "The science instance's library -- `milnorlink`, and nothing else. Same staging arrangement and same reason as `who-iris-library` above. Bean r1lz sent it here rather than to who-iris: it is not an IRIS item and never was.",
+      "description": "The science instance's library -- `milnorlink`, plus (since 2026-09-29, bean h3rw) three Lean-autoformalization papers that the science layer's methodology nodes cite as `evidence`: `arxiv-2601.22554v1`, `arxiv-2406.01940v2`, `arxiv-2602.16554v1`. Same staging arrangement and same reason as `who-iris-library` above. Bean r1lz sent it here rather than to who-iris: it is not an IRIS item and never was.",
       "graphKinds": [
         "library"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html"
-      }
+      ]
     },
     {
       "id": "folio-assistant-core-library",
@@ -829,7 +786,6 @@
     {
       "id": "translation-sources",
       "coverage": {
-        "visualiser": "cat-harness/docs/translation-status/index.html",
         "_visualiser_comment": "Bean lnur. This graph owed a visualiser and kg:audit said so — cat-harness declares several graphs with no published viewer and this was one. Generated by scripts/gen-translation-status.ts, which measures the .pot/.po files on each run. NOT a state-visualizer dashboard: that generator draws only STATE graphs, and translation-sources is the INPUT to injection rather than something a process writes as it runs, so it is correctly skipped there and always will be."
       },
       "path": "translations/",
@@ -842,8 +798,7 @@
     {
       "id": "folio",
       "coverage": {
-        "_visualiser_comment": "Bean 7ofc, on the owner's ruling of 2026-09-22: \"folio must be in cat-harness and visualizer owned by it\". `folio` is the only renderable kind — its CONTENT already comes out as the landing board via gen-landing-data — so check:subgraph-coverage never asked for this and owesVisualiser exempts the kind, exactly as it exempted library (jbx2) and voices (bu2q). What had no view was the GRAPH: which nodes exist, what each anchors to, its theme, where it was declared, and the links it carries. Generated by scripts/gen-folio-viz.ts, which re-reads the directories on every run and gives a declared-but-absent one a ROW rather than silence.",
-        "visualiser": "cat-harness/docs/cat-harness/folio/index.html"
+        "_visualiser_comment": "Bean 7ofc, on the owner's ruling of 2026-09-22: \"folio must be in cat-harness and visualizer owned by it\". `folio` is the only renderable kind — its CONTENT already comes out as the landing board via gen-landing-data — so check:subgraph-coverage never asked for this and owesVisualiser exempts the kind, exactly as it exempted library (jbx2) and voices (bu2q). What had no view was the GRAPH: which nodes exist, what each anchors to, its theme, where it was declared, and the links it carries. Generated by scripts/gen-folio-viz.ts, which re-reads the directories on every run and gives a declared-but-absent one a ROW rather than silence."
       },
       "path": "folio/",
       "dependents": "reproduce",
@@ -869,6 +824,17 @@
       "scope": "repository",
       "dependents": "skip",
       "description": "The methodologies the CORE layer adopts from its own corpus -- Doc-Researcher's multimodal document parsing and deep research. Declared beside `smart-base-methodologies` and for the same reason: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a document-ingestion method belongs to the layer whose job is what a folio holds, where it CAME FROM, and how much is present. Repository-scoped so it resolves against the repository root, like its siblings.",
+      "graphKinds": [
+        "methodology"
+      ]
+    },
+    {
+      "id": "folio-assistant-sci-methodologies",
+      "theme": "analyst",
+      "path": "folio-assistant-sci/methodologies/",
+      "scope": "repository",
+      "dependents": "skip",
+      "description": "The methodologies the SCIENCE layer adopts from its own corpus -- external methods for formalising mathematics in Lean (blueprint-driven formalization, process-driven autoformalization, bidirectional agentic autoformalization), each citing a paper held in `folio-assistant-sci/library/`. Declared beside `smart-base-methodologies` and `folio-assistant-core-methodologies` and for the same reason: `methodology-adoption` §4 places a method by ownership so that extraction is literal, and a method for formalising mathematics belongs to the layer that exists for folios that formalise mathematics. Repository-scoped so it resolves against the repository root, like its siblings. Bean h3rw.",
       "graphKinds": [
         "methodology"
       ]
@@ -902,13 +868,8 @@
       "graphKinds": [
         "docs"
       ],
-      "coverage": {
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/docs/index.html",
-            "title": "Docs — cat-harness"
-          }
-        ]
+      "tile": {
+        "title": "Docs — cat-harness"
       }
     },
     {
@@ -931,10 +892,7 @@
       "graphKinds": [
         "schemas",
         "cat-harness"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html"
-      }
+      ]
     },
     {
       "id": "large-datasets-skills",
@@ -946,13 +904,8 @@
       "graphKinds": [
         "skills"
       ],
-      "coverage": {
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/large-datasets-skills/index.html",
-            "title": "Skills — large-datasets"
-          }
-        ]
+      "tile": {
+        "title": "Skills — large-datasets"
       }
     },
     {
@@ -964,13 +917,8 @@
       "graphKinds": [
         "skills"
       ],
-      "coverage": {
-        "visualiser": [
-          {
-            "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/who-iris-skills/index.html",
-            "title": "Skills — who-iris"
-          }
-        ]
+      "tile": {
+        "title": "Skills — who-iris"
       }
     },
     {
@@ -992,19 +940,13 @@
       "graphKinds": [
         "schemas",
         "cat-harness"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html"
-      }
+      ]
     },
     {
       "id": "swimlane-glossary",
       "path": "glossary/",
       "dependents": "skip",
       "_visualiser_comment": "The docs-auto GLOSSARY INDEX, not `docs/glossary/index.html`. That was the declared value until 2026-09-22 and it was CIRCULAR: `docs/glossary/index.html` IS the state-visualiser's own page for this graph, so the page rendered “This graph is rendered elsewhere … the declaration names a visualiser for it: /glossary/” — pointing at the page you were reading. It was declared to make `published-graphs.md` count the graph as published, which made the count look right and the page say something false. The docs-auto index is a real rendering: 44 terms, each with the definition joined from the role registry.",
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/docs-auto/glossary/swimlane-glossary/index.html"
-      },
       "description": "The swimlane glossary's retirement ledger. Declared rather than hidden because a consumer must be able to find what this instance has ever called a term: the glossary document is regenerated from the corpus each run and has no memory, so the one fact that cannot be re-derived — that a concept was once minted — is committed here. Keyed by the IRI's local part, never the absolute IRI, because the publication base is a deploy-time variable and a stored absolute IRI would rot the day it moved.",
       "graphKinds": [
         "swimlane-glossary"
