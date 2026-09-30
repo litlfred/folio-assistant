@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-09-21T19:21:24Z
+updated_at: 2026-09-30T09:03:42Z
 parent: folio-assistant-zzmr
 ---
 
@@ -83,3 +83,8 @@ option 1, from the other end.
 todo. The measurement is done and reproducible
 (`instanceRootsIn` + `readDeclaration`, resolving `scope: repository` against
 the repo root). The design is not taken.
+
+## 2026-09-30 — owner chose "dependencies block"; measured: it would create cycles
+needs graph today: cat-harness→bootstrap; folio-assistant-core→cat-harness; fhir-harness→folio-assistant-core; smart-base→fhir-harness; who-iris, large-datasets, agent-skills, folio-assistant-sci need nothing.
+Of cat-harness's 23 scope:repository mirrors, 7 reach into folio-assistant-core (skills, schemas, processes, methodologies, library), fhir-harness (skills) or smart-base (library, methodologies, processes) — every one a DEPENDENT of cat-harness. Declaring them as cat-harness dependencies closes a cycle (core needs cat-harness needs core).
+The relation is the reverse of a dependency: the platform READS its dependents' graphs (to audit, render and index them). It needs its own spelling — a `reaches` / `reads` list naming <instance>#<directory id>, resolved through the owner's declaration — which is the bean's original "explicit relation field", not a dependencies block. Not built; back to the owner.
