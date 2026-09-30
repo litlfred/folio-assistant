@@ -133,7 +133,7 @@ export function registerAuthTools(server: McpServer, repoRoot: string): void {
       "verdict for a BPMN step. Always states that GitHub's role covers the whole repository, never " +
       "a sub-graph, node or query path.",
     {
-      actor: z.string().optional().describe("A declared actor you are acting as (.claude/skills/actors/)"),
+      actor: z.string().optional().describe("A declared actor you are acting as (cat-harness/scenarios/actors/)"),
       action: z.string().optional().describe("An ODRL action to ask about, e.g. content-authoring"),
       process: z.string().optional().describe("Process id, to scope the question or check a task"),
       task: z.string().optional().describe("Node id; with process, runs the task-authorization check"),

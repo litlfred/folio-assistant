@@ -260,7 +260,7 @@ decides it.
 >   its phase is not an address.
 > - **An identity is provider-qualified, and its link to an actor is optional.**
 >   `litlfred` is not an identity; `github:litlfred` is. The link to a declared
->   actor is absent whenever the person is not in `.claude/skills/actors/` — and
+>   actor is absent whenever the person is not in `cat-harness/scenarios/actors/` — and
 >   somebody who comments on a pull request is a real person with a real
 >   outstanding item whether or not the registry has heard of them. Absent means
 >   **not linked**, a third state; never anonymous, and never defaulted.

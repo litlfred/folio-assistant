@@ -428,8 +428,8 @@ export interface KgCriterionDefinition {
    * corpus can decide it*. They are independent, and the graph roll-up proves
    * it: `applies: ["graph"]` covers both `skill-in-role-or-process`, which every
    * instance can answer about its own graph, and `actor-roles-resolve`, which
-   * only the repository can — because an actor is declared once at the
-   * repository root (`.claude/skills/actors/`) while a role is a swimlane inside
+   * only the repository can — because an actor is declared once for the whole
+   * repository (`cat-harness/scenarios/actors/`) while a role is a swimlane inside
    * one instance's diagrams.
    *
    * **Required, deliberately.** A criterion that has not decided its scope does
@@ -1270,7 +1270,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     scope: "repo",
     scopeBasis:
-      "An actor is declared ONCE at the repository root (`.claude/skills/actors/`) while a role is a " +
+      "An actor is declared ONCE for the whole repository (`cat-harness/scenarios/actors/`) while a role is a " +
       "swimlane inside one instance's diagrams, so this compares a repository-level set against an " +
       "instance-level one. MEASURED 2026-09-26: `--instance ./bootstrap` produced 73 findings, one for " +
       "almost every one of the 36 repository actors, because they name roles the bootstrap graph does " +

@@ -103,7 +103,7 @@ import { ODRL_ACTIONS } from "./odrl";
 
 import { NS_PREFIXES, termIri } from "./namespaces";
 import { ACTOR_KINDS, type ActorKind } from "./skill-package";
-import { NETWORK_REACHES, type NetworkReach } from "./cat-harness";
+import { NETWORK_REACHES, directoryForGraph, type NetworkReach } from "./cat-harness";
 import { SkillNameSchema } from "./tool-types";
 
 /** Directory, relative to the `kg` graph root, holding the role declaration. */
@@ -467,6 +467,30 @@ function withoutComments(raw: unknown): unknown {
   return top;
 }
 
+/** The actor registry's directory name inside the declared `scenarios` graph. */
+export const ACTORS_DIRNAME = "actors";
+
+/**
+ * Where the actor registry lives: `actors/` inside the declared `scenarios`
+ * graph, beside `roles.json` (bean `rqao`, owner 2026-09-30). It was
+ * `.claude/skills/actors/` from 2026-03-24 (05e72abe92), when the framework
+ * began as a Claude Code skill tree. That was a vendor-named, dot-prefixed,
+ * UNDECLARED directory: the one graph every swimlane binds to was outside
+ * every declaration, so no audit could claim it.
+ *
+ * Resolved from the platform instance's declaration, never spelled as a path,
+ * so that relocating `scenarios/` moves the actors with it. Takes the
+ * REPOSITORY root. `undefined` when the platform declares no
+ * `scenarios` graph: a caller must say it could not determine, never read
+ * that as "no actors".
+ */
+export function actorsDir(repoRoot: string): string | undefined {
+  // declared-path-literal: the platform instance, as glossary-page.ts names it.
+  const platform = join(repoRoot, "cat-harness");
+  const scenarios = directoryForGraph(platform, "scenarios");
+  return scenarios === undefined ? undefined : join(scenarios, ACTORS_DIRNAME);
+}
+
 export function readRoleGraph(kgRoot: string): RoleGraph | undefined {
   // TWO PLACES, because the role graph became a DECLARED DIRECTORY on
   // 2026-09-21 instead of a subdirectory of one.
@@ -525,7 +549,7 @@ function detectCycle(graph: RoleGraph, id: string, path: string[]): void {
 /**
  * Read the actor registry.
  *
- * Reads `.claude/skills/actors/*.json`. An entry states its kind in `kind`,
+ * Reads `<scenarios>/actors/*.json` ({@link actorsDir}). An entry states its kind in `kind`,
  * against the full {@link ACTOR_KINDS} vocabulary, and an unknown value is
  * **rejected** rather than accepted and ignored — the same rule
  * {@link readRoleGraph} follows for an ACTOR's `kind` — one kind, unlike a role's set. An entry carrying the

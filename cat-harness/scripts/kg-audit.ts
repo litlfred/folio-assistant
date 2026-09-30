@@ -121,6 +121,7 @@ import { graphVerdict, proseGraphs } from "./lsi.ts";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
+import { actorsDir } from "../schemas/role-graph.ts";
 
 const ENGINE_VERSION = "1";
 
@@ -252,7 +253,7 @@ const SCENARIO_DIR = ownDirectoryById(root, "scenarios", "scenarios");
 const POLICY_DIR = ownDirectoryById(root, "policies", "policies");
 const DECISION_DIR = join(WORKFLOW_DIR, "decisions");
 const KG_ROOT = join(root, "skills");
-const ACTOR_DIR = join(repoRootFor(root), ".claude", "skills", "actors");
+const ACTOR_DIR = actorsDir(repoRootFor(root)) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })();
 const CAPABILITY_DIR = join(repoRootFor(root), ".claude", "skills", "capabilities");
 const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
 // declared-path-literal: the convention fallback, at the call site. Same

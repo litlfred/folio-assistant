@@ -41,7 +41,7 @@
  *
  * The link to a declared {@link ActorDefinition} is **optional on purpose**.
  * Somebody who comments on a pull request is a real person with a real
- * outstanding item whether or not `.claude/skills/actors/` has heard of them,
+ * outstanding item whether or not `cat-harness/scenarios/actors/` has heard of them,
  * and refusing to record the todo until they are declared would lose exactly
  * the feedback that arrives from outside. `actor: undefined` means **not
  * linked**, which is a third state — never "anonymous", and never silently

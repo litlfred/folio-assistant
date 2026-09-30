@@ -6,7 +6,7 @@
  *   1. Core framework schemas (Zod → JSON Schema → Markdown)
  *   2. Per-skill input/output schemas (schemas/skills/*)
  *   3. SkillDefinition instances (.claude/skills/local/*.json) with schemaRef links
- *   4. ActorDefinition instances (.claude/skills/actors/*.json)
+ *   4. ActorDefinition instances (cat-harness/scenarios/actors/*.json)
  *   5. CapabilityDefinition instances (.claude/skills/capabilities/*.json)
  *   6. Requirement instances (skills/requirements/*.json)
  *   7. Skill package manifests (skills/<pkg>/package-manifest.json) with Docker deps
@@ -52,6 +52,7 @@ import type {
 import type { SkillPackageManifest } from "../schemas/types.ts";
 import { instanceDirectoryForGraph, repoRootFor } from "../schemas/cat-harness.js";
 import { kgRoots } from "./known-skills.js";
+import { actorsDir } from "../../cat-harness/schemas/role-graph.ts";
 
 /**
  * The declared knowledge-graph root, or the convention.
@@ -202,7 +203,7 @@ function getTransitiveRoles(actorId: string): Set<string> {
 
 // ─── Load all data ───────────────────────────────────────────────────────────
 
-const actors = loadJsonDir<ActorDefinition>(join(rootDir, ".claude", "skills", "actors"));
+const actors = loadJsonDir<ActorDefinition>(actorsDir(rootDir) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })());
 const capabilities = loadJsonDir<CapabilityDefinition>(join(rootDir, ".claude", "skills", "capabilities"));
 const requirements = loadJsonDir<Requirement>(join(kgRoot(rootDir), "requirements"));
 const skills = loadJsonDir<SkillDefinition>(join(rootDir, ".claude", "skills", "local"));
