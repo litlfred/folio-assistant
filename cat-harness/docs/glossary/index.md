@@ -10,30 +10,16 @@ permalink: /glossary/
 
 # Glossary
 
-Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2734 terms: **38 authored** in 4 glossaries, on this page, and **2696 extracted** from knowledge-graph assets in 21 generated schemes, one page per asset type, plus the sources below.
+Every term the instances in this repository define or carry, as W3C SKOS. Terms link to the external concepts they match rather than copying them. 2711 terms: **38 authored** in 4 glossaries, on this page, and **2673 extracted** from knowledge-graph assets in 21 generated schemes, one page per asset type, plus the sources below.
 
 <table>
 <thead><tr><th>state</th><th>what it means</th><th>terms</th></tr></thead>
 <tbody>
 <tr><td>authored</td><td>A person wrote or approved the definition.</td><td>38</td></tr>
-<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2696</td></tr>
+<tr><td>candidate, extracted</td><td>Lifted from a knowledge-graph asset's own title and description, verbatim, and not curated. The definition is the asset's text, the source links to the asset, and an asset with no description gives a term with none. A person promotes one by authoring it.</td><td>2673</td></tr>
 <tr><td>could-not-extract</td><td>The source names a term the extractor could not read, and says why.</td><td>0</td></tr>
 </tbody>
 </table>
-
-## Already somebody else's concept?
-
-Extracted candidates are minted from this repository's own assets and are not, by themselves, checked against any vocabulary. `check:term-mapping` asks whether each already exists as a concept somebody is authoritative for — SKOS for what a term MEANS, FHIR for a clinical code's operational semantics — and the two are separate questions with separate answers.
-
-<table class="fa-gloss-mapping">
-<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
-<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>2696</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2696</td><td>0</td><td>—</td></tr></tbody>
-</table>
-<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
-A vocabulary that could not be reached has said nothing, and the column above keeps that 
-apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
-be a term this corpus is right to coin.</p>
 
 ## Pages
 
@@ -42,15 +28,15 @@ Each term is on exactly one page. Extracted candidates are split by asset type, 
 <div style="overflow-x:auto"><table>
 <thead><tr><th>page</th><th>holds</th><th>terms</th><th>size</th></tr></thead>
 <tbody>
-<tr><td>this page</td><td>authored terms, counts and sources</td><td>38</td><td>52 KB</td></tr>
+<tr><td>this page</td><td>authored terms, counts and sources</td><td>38</td><td>50 KB</td></tr>
 <tr><td><a href="{{ '/glossary/skills/' | relative_url }}">Skills</a></td><td>candidates, extracted</td><td>295</td><td>215 KB</td></tr>
-<tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>126</td><td>84 KB</td></tr>
-<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>551</td><td>427 KB</td></tr>
-<tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>8 KB</td></tr>
-<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1715</td><td>943 KB</td></tr>
+<tr><td><a href="{{ '/glossary/tools/' | relative_url }}">Tools</a></td><td>candidates, extracted</td><td>125</td><td>82 KB</td></tr>
+<tr><td><a href="{{ '/glossary/bpmn-activities/' | relative_url }}">BPMN activities</a></td><td>candidates, extracted</td><td>551</td><td>426 KB</td></tr>
+<tr><td><a href="{{ '/glossary/dmn-decisions/' | relative_url }}">DMN decisions</a></td><td>candidates, extracted</td><td>9</td><td>7 KB</td></tr>
+<tr><td><a href="{{ '/glossary/schema-fields/' | relative_url }}">Schema fields</a></td><td>candidates, extracted</td><td>1693</td><td>930 KB</td></tr>
 </tbody></table></div>
 
-**Size:** this page holds 38 terms and is 52 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
+**Size:** this page holds 38 terms and is 50 KB before compression, within its budget of 64 KB; each asset type's page has a budget of 1.0 MB. There is no search index: the filter on each page runs over that page, and its A–Z bar jumps within it. The SKOS files in the sources are the machine-readable form.
 
 ## Authored terms
 
@@ -248,7 +234,7 @@ actor
 </dt>
 <dd>
 <p>A concrete participant, human, agentic or mechanical, that persists across every process and takes on roles. Which login is which actor is the data store's to know.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/actor</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/role-model.md"><code>cat-harness/skills/folio-core/role-model.md</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/actor</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/role-model.md"><code>cat-harness/skills/process/process-core/role-model.md</code></a></p>
 <ul class="fa-gloss-matches"><li>closeMatch: <a href="http://www.w3.org/ns/prov#Agent">www.w3.org/ns/prov#Agent</a></li></ul>
 </dd>
 <dt id="cat-harness--platform--associated-harness" data-fa-state="authored" data-fa-gloss="">
@@ -256,7 +242,7 @@ associated harness
 </dt>
 <dd>
 <p>A harness this one knows by name, site and repository, and never loads, builds or copies. The fourth relation beside depends (needs), references (remoteGraphs) and utilizes (dependencies).</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/associated-harness</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#AssociatedHarness</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/associated-harness</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#AssociatedHarness</code></a></p>
 </dd>
 </dl>
 
@@ -267,7 +253,7 @@ bean
 </dt>
 <dd>
 <p>One item of the agent work plan, held by the beans CLI in the committed beans/ store, with a status, a parent and the beans it blocks.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/bean</code> · defined by <a href="https://github.com/hmans/beans">github.com/hmans/beans</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/todo-manager.md"><code>cat-harness/skills/folio-core/todo-manager.md</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/bean</code> · defined by <a href="https://github.com/hmans/beans">github.com/hmans/beans</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/todo-manager.md"><code>cat-harness/skills/folio-core/todo-manager.md</code></a></p>
 </dd>
 </dl>
 
@@ -278,7 +264,7 @@ external schema
 </dt>
 <dd>
 <p>A record of a specification the platform depends on but does not hold: which authority publishes it, which version is conformed to, and the operative terms used from it.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/external-schema</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/external-schema.ts"><code>cat-harness/schemas/external-schema.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/external-schema</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/external-schema.ts"><code>cat-harness/schemas/external-schema.ts</code></a></p>
 </dd>
 </dl>
 
@@ -289,7 +275,7 @@ glossary
 </dt>
 <dd>
 <p>An instance's terms and what they mean, as a SKOS concept scheme: local terms linked to external concepts, plus external concepts listed without being copied.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms · <code>https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/glossary</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/glossary.ts"><code>folio-assistant-core/schemas/glossary.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms · <code>https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/platform/glossary</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/glossary.ts"><code>folio-assistant-core/schemas/glossary.ts</code></a></p>
 <ul class="fa-gloss-matches"><li>closeMatch: <a href="http://www.w3.org/2004/02/skos/core#ConceptScheme">www.w3.org/2004/02/skos/core#ConceptScheme</a></li></ul>
 </dd>
 </dl>
@@ -301,7 +287,7 @@ JSON Schema
 </dt>
 <dd>
 <p>A JSON document that describes the shape of other JSON documents. In the platform, a node schema and a skill's input and output contracts are each a JSON Schema file.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/json-schema</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/skill-contracts.ts"><code>cat-harness/scripts/skill-contracts.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/json-schema</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/skill-contracts.ts"><code>cat-harness/scripts/skill-contracts.ts</code></a></p>
 <ul class="fa-gloss-matches"><li>closeMatch: <a href="http://json-schema.org/draft-07/schema#">json-schema.org/draft-07/schema#</a></li></ul>
 </dd>
 </dl>
@@ -313,7 +299,7 @@ KG QA report
 </dt>
 <dd>
 <p>A committed QA sidecar recording, for one knowledge-graph subject such as a process, role or skill, which of its references fail to resolve under each audit criterion.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/kg-qa-report</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kg-qa.ts"><code>cat-harness/schemas/kg-qa.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/kg-qa-report</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/kg-qa.ts"><code>cat-harness/schemas/kg-qa.ts</code></a></p>
 </dd>
 </dl>
 
@@ -324,7 +310,7 @@ permission
 </dt>
 <dd>
 <p>One ODRL rule allowing an assignee an action, optionally on a target and within constraints. A permission to a broader action permits every action included in it.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/permission</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/odrl.ts"><code>cat-harness/schemas/odrl.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/permission</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/odrl.ts"><code>cat-harness/schemas/odrl.ts</code></a></p>
 <ul class="fa-gloss-matches"><li>exactMatch: <a href="http://www.w3.org/ns/odrl/2/Permission">www.w3.org/ns/odrl/2/Permission</a></li></ul>
 </dd>
 <dt id="cat-harness--platform--policy" data-fa-state="authored" data-fa-gloss="">
@@ -332,7 +318,7 @@ policy
 </dt>
 <dd>
 <p>Which Actor may do which action, and where, written as W3C ODRL 2.2 permission and prohibition rules scoped by Process, Task and Role.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/policy</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/odrl.ts"><code>cat-harness/schemas/odrl.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/policy</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/odrl.ts"><code>cat-harness/schemas/odrl.ts</code></a></p>
 <ul class="fa-gloss-matches"><li>exactMatch: <a href="http://www.w3.org/ns/odrl/2/Policy">www.w3.org/ns/odrl/2/Policy</a></li></ul>
 </dd>
 </dl>
@@ -355,7 +341,7 @@ role
 </dt>
 <dd>
 <p>The swimlane: a persona an actor takes on because of the lane it is acting in, carrying the skills that lane's activities need.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/role</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/role-model.md"><code>cat-harness/skills/folio-core/role-model.md</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/role</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/role-model.md"><code>cat-harness/skills/process/process-core/role-model.md</code></a></p>
 <ul class="fa-gloss-matches"><li>closeMatch: <a href="http://www.w3.org/ns/prov#Role">www.w3.org/ns/prov#Role</a></li></ul>
 </dd>
 </dl>
@@ -367,7 +353,7 @@ task run
 </dt>
 <dd>
 <p>One performance of a BPMN task by an Actor in a Role under a policy, recorded as a W3C PROV-O activity whose plan is the task.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/task-run</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov.ts"><code>cat-harness/schemas/prov.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/task-run</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov.ts"><code>cat-harness/schemas/prov.ts</code></a></p>
 <ul class="fa-gloss-matches"><li>closeMatch: <a href="http://www.w3.org/ns/prov#Activity">www.w3.org/ns/prov#Activity</a></li></ul>
 </dd>
 <dt id="cat-harness--platform--test-run" data-fa-state="authored" data-fa-gloss="">
@@ -375,14 +361,14 @@ test run
 </dt>
 <dd>
 <p>One measurement of a Skill: which skill it tests, the cases it exercised, and a hash of the data and a hash of the process that produced the result, so a third party can redo it. Its cases are checked against the skill's input and output contracts.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/test-run</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/test-run.ts"><code>cat-harness/schemas/test-run.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/test-run</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/test-run.ts"><code>cat-harness/schemas/test-run.ts</code></a></p>
 </dd>
 <dt id="cat-harness--platform--todo" data-fa-state="authored" data-fa-gloss="">
 todo
 </dt>
 <dd>
 <p>One person's outstanding work, as a content node the folio owns, tagged with the roles, processes and tasks it concerns. Not the agent work plan, which is beans.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/todo</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/todo.ts"><code>cat-harness/schemas/todo.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/todo</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/todo.ts"><code>cat-harness/schemas/todo.ts</code></a></p>
 </dd>
 </dl>
 
@@ -393,7 +379,7 @@ user story
 </dt>
 <dd>
 <p>What a reader acting in a Role is trying to do, told as that role: as a &lt;role&gt;, I want &lt;want&gt;, so that &lt;so that&gt;. The story points at its role; the role names no story.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/user-story</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/user-story.ts"><code>cat-harness/schemas/user-story.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/user-story</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/user-story.ts"><code>cat-harness/schemas/user-story.ts</code></a></p>
 <ul class="fa-gloss-matches"><li>closeMatch: <a href="http://smart.who.int/base/StructureDefinition/SGUserStory">smart.who.int/base/StructureDefinition/SGUserStory</a></li></ul>
 </dd>
 </dl>
@@ -405,7 +391,7 @@ voice
 </dt>
 <dd>
 <p>A named set of writing rules for prose, active in the roles and processes it names. The voice points at the role it is written for; the role names no voice.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/voice</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/voice</code> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/voices.ts"><code>cat-harness/schemas/voices.ts</code></a></p>
 </dd>
 </dl>
 
@@ -431,14 +417,14 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
 <tbody>
 <tr><td>bootstrap</td><td>7 · <a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>16 · <a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>bootstrap-tools</td><td>1 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>28 · <a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
-<tr><td>cat-harness</td><td>274 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>110 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>522 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1514 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
+<tr><td>cat-harness</td><td>274 · <a href="{{ '/assets/glossary/cat-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>109 · <a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>522 · <a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld' | relative_url }}">SKOS</a></td><td>1492 · <a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>fhir-harness</td><td>6 · <a href="{{ '/assets/glossary/fhir-harness--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>3 · <a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>folio-assistant-core</td><td>1 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>4 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>155 · <a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>folio-assistant-sci</td><td>2 · <a href="{{ '/assets/glossary/folio-assistant-sci--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>large-datasets</td><td>3 · <a href="{{ '/assets/glossary/large-datasets--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>18 · <a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a></td></tr>
 <tr><td>smart-base</td><td>—</td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a></td><td>9 · <a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td></tr>
 <tr><td>who-iris</td><td>1 · <a href="{{ '/assets/glossary/who-iris--kg-skills.skos.jsonld' | relative_url }}">SKOS</a></td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
-<tr><td><strong>total</strong></td><td><strong>295</strong></td><td><strong>126</strong></td><td><strong>551</strong></td><td><strong>9</strong></td><td><strong>1715</strong></td></tr>
+<tr><td><strong>total</strong></td><td><strong>295</strong></td><td><strong>125</strong></td><td><strong>551</strong></td><td><strong>9</strong></td><td><strong>1693</strong></td></tr>
 </tbody></table></div>
 
 <script type="application/ld+json">
@@ -455,7 +441,7 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/actor",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/actor",
    "name": "actor",
    "description": "A concrete participant, human, agentic or mechanical, that persists across every process and takes on roles. Which login is which actor is the data store's to know."
   },
@@ -467,13 +453,13 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/associated-harness",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/associated-harness",
    "name": "associated harness",
    "description": "A harness this one knows by name, site and repository, and never loads, builds or copies. The fourth relation beside depends (needs), references (remoteGraphs) and utilizes (dependencies)."
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/bean",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/bean",
    "name": "bean",
    "description": "One item of the agent work plan, held by the beans CLI in the committed beans/ store, with a status, a parent and the beans it blocks."
   },
@@ -503,13 +489,13 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/external-schema",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/external-schema",
    "name": "external schema",
    "description": "A record of a specification the platform depends on but does not hold: which authority publishes it, which version is conformed to, and the operative terms used from it."
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/ns#glossary/platform/glossary",
+   "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/platform/glossary",
    "name": "glossary",
    "description": "An instance's terms and what they mean, as a SKOS concept scheme: local terms linked to external concepts, plus external concepts listed without being copied."
   },
@@ -527,13 +513,13 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/json-schema",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/json-schema",
    "name": "JSON Schema",
    "description": "A JSON document that describes the shape of other JSON documents. In the platform, a node schema and a skill's input and output contracts are each a JSON Schema file."
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/kg-qa-report",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/kg-qa-report",
    "name": "KG QA report",
    "description": "A committed QA sidecar recording, for one knowledge-graph subject such as a process, role or skill, which of its references fail to resolve under each audit criterion."
   },
@@ -569,13 +555,13 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/permission",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/permission",
    "name": "permission",
    "description": "One ODRL rule allowing an assignee an action, optionally on a target and within constraints. A permission to a broader action permits every action included in it."
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/policy",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/policy",
    "name": "policy",
    "description": "Which Actor may do which action, and where, written as W3C ODRL 2.2 permission and prohibition rules scoped by Process, Task and Role."
   },
@@ -611,7 +597,7 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/role",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/role",
    "name": "role",
    "description": "The swimlane: a persona an actor takes on because of the lane it is acting in, carrying the skills that lane's activities need."
   },
@@ -647,31 +633,31 @@ Generated by `folio-assistant-core/scripts/glossary-extract.ts` into `folio-assi
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/task-run",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/task-run",
    "name": "task run",
    "description": "One performance of a BPMN task by an Actor in a Role under a policy, recorded as a W3C PROV-O activity whose plan is the task."
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/test-run",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/test-run",
    "name": "test run",
    "description": "One measurement of a Skill: which skill it tests, the cases it exercised, and a hash of the data and a hash of the process that produced the result, so a third party can redo it. Its cases are checked against the skill's input and output contracts."
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/todo",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/todo",
    "name": "todo",
    "description": "One person's outstanding work, as a content node the folio owns, tagged with the roles, processes and tasks it concerns. Not the agent work plan, which is beans."
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/user-story",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/user-story",
    "name": "user story",
    "description": "What a reader acting in a Role is trying to do, told as that role: as a <role>, I want <want>, so that <so that>. The story points at its role; the role names no story."
   },
   {
    "@type": "DefinedTerm",
-   "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/platform/voice",
+   "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/voice",
    "name": "voice",
    "description": "A named set of writing rules for prose, active in the roles and processes it names. The voice points at the role it is written for; the role names no voice."
   }

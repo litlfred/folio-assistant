@@ -16,16 +16,6 @@ From: bootstrap 7 (<a href="{{ '/assets/glossary/bootstrap--kg-skills.skos.jsonl
 
 **Size:** this page holds 295 terms and is 215 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
-<table class="fa-gloss-mapping">
-<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
-<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>295</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>295</td><td>0</td><td>—</td></tr></tbody>
-</table>
-<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
-A vocabulary that could not be reached has said nothing, and the column above keeps that 
-apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
-be a term this corpus is right to coin.</p>
-
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
 <p aria-live="polite"><span id="fa-gloss-n">295</span> shown</p>
@@ -190,21 +180,21 @@ bpmn-authoring <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/bpmn-authoring.md"><code>cat-harness/skills/workflow/bpmn-authoring.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/bpmn-authoring.md"><code>cat-harness/skills/process/workflow/bpmn-authoring.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--bpmn-processes" data-fa-state="extracted" data-fa-gloss="">
 bpmn-processes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Every process here is BPMN, the diagrams are executable, and the base processes are strict. How to author one, how to run it, how a package relaxes a step and what it may never relax, and which gateways are computed rather than chosen.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/bpmn-processes.md"><code>cat-harness/skills/workflow/bpmn-processes.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/bpmn-processes.md"><code>cat-harness/skills/process/workflow/bpmn-processes.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--branch-freshness" data-fa-state="extracted" data-fa-gloss="">
 branch-freshness <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Periodically rebase or merge main into the feature branch, detect what changed upstream, and re-analyse the session workplan. Prevents stale assumptions, merge conflicts, and duplicated work — especially after session restarts, long idle periods, or heavy sibling activity on main.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/branch-freshness.md"><code>cat-harness/skills/workflow/branch-freshness.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/branch-freshness.md"><code>cat-harness/skills/process/workflow/branch-freshness.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--build-docs" data-fa-state="extracted" data-fa-gloss="">
 build-docs <span class="fa-gloss-status">candidate, extracted</span>
@@ -278,7 +268,7 @@ code-review-process <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where code review sits in the release lifecycle. Review types, who reviews what, how feedback maps to beans, and the path from review to approval to release. Works with prepare-merge-auto for mechanics and release-lifecycle for the broader flow.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/code-review-process.md"><code>cat-harness/skills/workflow/code-review-process.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/code-review-process.md"><code>cat-harness/skills/process/workflow/code-review-process.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--communication-language" data-fa-state="extracted" data-fa-gloss="">
 communication-language <span class="fa-gloss-status">candidate, extracted</span>
@@ -555,7 +545,7 @@ decision-methodology-selector <span class="fa-gloss-status">candidate, extracted
 </dt>
 <dd>
 <p>Given a decision context, select the applicable methodology from the methodology graph. Reads the graph's applies-when declarations, matches them against the context, and returns the ranked applicable methods with rationale. Extends methodology-adoption's four-question protocol with quantitative method-selection criteria from the MCDM literature.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-methodology-selector.md"><code>cat-harness/skills/folio-core/decision-methodology-selector.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/decision-methodology-selector.md"><code>cat-harness/skills/process/process-core/decision-methodology-selector.md</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-skills--deep-document-research" data-fa-state="extracted" data-fa-gloss="">
 deep-document-research <span class="fa-gloss-status">candidate, extracted</span>
@@ -604,7 +594,7 @@ deterministic-and-agentic <span class="fa-gloss-status">candidate, extracted</sp
 </dt>
 <dd>
 <p>Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository already uses to sit at different points on it, the four axes an answer has to name, what is measured today, and the three research questions — which are open, and marked as open.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/deterministic-and-agentic.md"><code>cat-harness/skills/workflow/deterministic-and-agentic.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/deterministic-and-agentic.md"><code>cat-harness/skills/process/workflow/deterministic-and-agentic.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--devils-advocate-watcher" data-fa-state="extracted" data-fa-gloss="">
 devils-advocate-watcher <span class="fa-gloss-status">candidate, extracted</span>
@@ -646,7 +636,7 @@ dmn-authoring <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/dmn-authoring.md"><code>cat-harness/skills/workflow/dmn-authoring.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/dmn-authoring.md"><code>cat-harness/skills/process/workflow/dmn-authoring.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--docs-auto" data-fa-state="extracted" data-fa-gloss="">
 docs-auto <span class="fa-gloss-status">candidate, extracted</span>
@@ -1301,7 +1291,7 @@ methodology-adoption <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>How a named external methodology enters the knowledge graph, and how an agent picks which one applies. Read before following a judgement method, before adopting a new one, and before writing a house method instead of adopting one.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/methodology-adoption.md"><code>cat-harness/skills/folio-core/methodology-adoption.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/methodology-adoption.md"><code>cat-harness/skills/process/process-core/methodology-adoption.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--milnor-exposition-standard" data-fa-state="extracted" data-fa-gloss="">
 milnor-exposition-standard <span class="fa-gloss-status">candidate, extracted</span>
@@ -1439,7 +1429,7 @@ process-state <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/process-state.md"><code>cat-harness/skills/workflow/process-state.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/process-state.md"><code>cat-harness/skills/process/workflow/process-state.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--production-vs-exploratory-discipline" data-fa-state="extracted" data-fa-gloss="">
 production-vs-exploratory-discipline <span class="fa-gloss-status">candidate, extracted</span>
@@ -1573,7 +1563,7 @@ raci <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>RACI over this repository's processes — who is Responsible, Accountable, Consulted and Informed for each activity. Three declared edge kinds over the roles and BPMN activities that already exist, not a new party registry. Use it to work out involvement when a project is initiated, and to sketch its breakdown.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/raci/raci.md"><code>cat-harness/skills/raci/raci.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/raci/raci.md"><code>cat-harness/skills/process/raci/raci.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--readability-editing" data-fa-state="extracted" data-fa-gloss="">
 readability-editing <span class="fa-gloss-status">candidate, extracted</span>
@@ -1608,14 +1598,14 @@ release-epic-planning <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Plan and track releases using bean epics. Covers epic creation, story/task decomposition, release readiness tracking, and the relationship between epics and GitHub milestones. Applies to code releases, paper publications, and project milestones.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/release-epic-planning.md"><code>cat-harness/skills/workflow/release-epic-planning.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/release-epic-planning.md"><code>cat-harness/skills/process/workflow/release-epic-planning.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--release-lifecycle" data-fa-state="extracted" data-fa-gloss="">
 release-lifecycle <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Governs the release lifecycle: semver policy, draft/named releases, changelogs, release gating, and the relationship between feature branches, PRs, beans, and releases. Applies to code releases, paper publications, and project milestones. Complements package-release (which handles the mechanics of cutting a release) with the process and policy layer.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/release-lifecycle.md"><code>cat-harness/skills/workflow/release-lifecycle.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/release-lifecycle.md"><code>cat-harness/skills/process/workflow/release-lifecycle.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--remark-audit" data-fa-state="extracted" data-fa-gloss="">
 remark-audit <span class="fa-gloss-status">candidate, extracted</span>
@@ -1692,7 +1682,7 @@ role-model <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Actors, roles and skills — who performs a BPMN task, under which swimlane, with which skills. How a role's skill set is resolved through <code>inherits</code> and through a subprocess call chain, how a lane binds to a declared role, and how <code>kg:audit</code> finds a dangling skill, lane, role or decision.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/role-model.md"><code>cat-harness/skills/folio-core/role-model.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/role-model.md"><code>cat-harness/skills/process/process-core/role-model.md</code></a></p>
 </dd>
 <dt id="bootstrap--kg-skills--root-readme" data-fa-state="extracted" data-fa-gloss="">
 root-readme <span class="fa-gloss-status">candidate, extracted</span>
@@ -1766,7 +1756,7 @@ session-context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>What a state machine tracks across a session, as against one process instance. What the record carries, why <code>actor</code> is required and the rest are not, why the session's view of a node is advisory, and what a sibling session reads it for.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-context.md"><code>cat-harness/skills/workflow/session-context.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/session-context.md"><code>cat-harness/skills/process/workflow/session-context.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--session-intent" data-fa-state="extracted" data-fa-gloss="">
 session-intent <span class="fa-gloss-status">candidate, extracted</span>
@@ -1780,7 +1770,7 @@ session-state-machine <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>An agent PLAYING a state machine rather than an engine executing one. Where the non-determinism actually lives, why the diagram stays strict, the <code>cat-harness.processes:judgement</code> marker that makes a judgement point countable, and what the machine must never do on the actor's behalf.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/session-state-machine.md"><code>cat-harness/skills/workflow/session-state-machine.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/session-state-machine.md"><code>cat-harness/skills/process/workflow/session-state-machine.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--simulator" data-fa-state="extracted" data-fa-gloss="">
 simulator <span class="fa-gloss-status">candidate, extracted</span>
@@ -1850,7 +1840,7 @@ specification-compiled-agents <span class="fa-gloss-status">candidate, extracted
 </dt>
 <dd>
 <p>When a diagram already says what the process is, the model should not be planning it. The two gaps between this repository's engine and a compiled control plane — typed node contracts and per-node context scope — what to do before either exists, and the three things not to adopt with the method.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/specification-compiled-agents.md"><code>cat-harness/skills/workflow/specification-compiled-agents.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/specification-compiled-agents.md"><code>cat-harness/skills/process/workflow/specification-compiled-agents.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--staging-review" data-fa-state="extracted" data-fa-gloss="">
 staging-review <span class="fa-gloss-status">candidate, extracted</span>
@@ -1878,14 +1868,14 @@ swimlane-glossary <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><em>The asset carries no description.</em></p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/swimlane-glossary.md"><code>cat-harness/skills/folio-core/swimlane-glossary.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/swimlane-glossary.md"><code>cat-harness/skills/process/process-core/swimlane-glossary.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--swot-analysis" data-fa-state="extracted" data-fa-gloss="">
 swot-analysis <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Running a SWOT situation analysis — the four activities of <code>swot-analysis.bpmn</code>, what each step must produce, and the one thing the technique must never be used for. The method itself lives in the <code>methodology</code> graph and is not repeated here.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/swot-analysis.md"><code>cat-harness/skills/folio-core/swot-analysis.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/swot-analysis.md"><code>cat-harness/skills/process/process-core/swot-analysis.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--symbiotic-interaction" data-fa-state="extracted" data-fa-gloss="">
 symbiotic-interaction <span class="fa-gloss-status">candidate, extracted</span>
@@ -1910,7 +1900,7 @@ task-authorization <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict since 2026-09-24, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/task-authorization.md"><code>cat-harness/skills/folio-core/task-authorization.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/process-core/task-authorization.md"><code>cat-harness/skills/process/process-core/task-authorization.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--technical-documentation" data-fa-state="extracted" data-fa-gloss="">
 technical-documentation <span class="fa-gloss-status">candidate, extracted</span>
@@ -2181,7 +2171,7 @@ workflow-state <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what <code>&lt;cat-harness.processes:bean op&gt;</code> actually performs, and why an instance and a bean must be one answer rather than two.</p>
-<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/workflow/workflow-state.md"><code>cat-harness/skills/workflow/workflow-state.md</code></a></p>
+<p class="fa-gloss-meta">Skills of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/process/workflow/workflow-state.md"><code>cat-harness/skills/process/workflow/workflow-state.md</code></a></p>
 </dd>
 </dl>
 

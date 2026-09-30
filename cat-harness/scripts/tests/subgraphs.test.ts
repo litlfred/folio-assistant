@@ -165,7 +165,7 @@ describe("the entanglement report", () => {
     // than one that is absent because it reads as coverage.
     const crdm = report.dangling.filter((d) => d.from.includes("skills/crdm/"));
     expect(crdm.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
-    const raci = report.dangling.filter((d) => d.from.includes("skills/raci/"));
+    const raci = report.dangling.filter((d) => d.from.includes("skills/process/raci/"));
     expect(raci.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
   });
 
