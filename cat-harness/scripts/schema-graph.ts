@@ -74,7 +74,7 @@ import { basename, join, relative } from "node:path";
 
 import ts from "typescript";
 
-import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { directoriesForGraph, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
 
 /**
  * EVERY declared `schemas` directory reachable from this root.
@@ -789,9 +789,12 @@ export function readSchemaGraph(root: string): SchemaGraph | null {
   /** Module path → the directory it was read from, for scoped resolution. */
   const dirOfModule = new Map<string, string>();
 
+  const rootName = readDeclaration(repoRoot)?.name ?? basename(repoRoot);
   for (const dir of dirs) {
     const dirRel = rel(dir);
-    const instance = dirRel.includes("/") ? dirRel.split("/")[0]! : basename(repoRoot);
+    // The root's DECLARED name, not the clone's folder name (bean `t5dm`,
+    // the sibling of `library-graph`'s `instanceOf`).
+    const instance = dirRel.includes("/") ? dirRel.split("/")[0]! : rootName;
     for (const f of readdirSync(dir).sort()) {
       if (!f.endsWith(".ts")) continue;
       const moduleRel = `${dirRel}/${f}`;

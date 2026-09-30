@@ -8,7 +8,7 @@
     "kind": "corpus",
     "id": "skill-registration-chain"
   },
-  "updated_at": "2026-09-30T00:25:46.869Z",
+  "updated_at": "2026-09-30T00:37:43.059Z",
   "families": {
     "declarations": {
       "summary": "Skills whose DECLARATIONS are wrong: present in no package manifest, carrying a retired front-matter key, or listed in a manifest with no file. Empty means audited and clean, not unaudited — the chain family above records whether the run happened. Only the retired key is repaired; the other two are the author's assertion to make and this command reports them rather than guessing.",
@@ -23,7 +23,7 @@
           "verify": "skills:docs:check",
           "because": "the skill's published reference page",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "check:glossary",
@@ -41,13 +41,13 @@
           "verify": "lsi:skills:check",
           "because": "the skills graph's LSI index — a new or edited skill changes its fingerprint, and kg:audit's `lsi-index-fresh` reads it next",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "kg:audit:check",
           "because": "the skill's kg-qa sidecar — masked inside `gates` by `bun test`",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "kg:detangle:check",
