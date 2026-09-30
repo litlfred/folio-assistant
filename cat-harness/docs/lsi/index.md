@@ -106,14 +106,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.40 | bean, session, graph, instance, branch, kind, page, agent | *(none)* |
+| 1 | 46.41 | bean, session, graph, instance, branch, kind, page, agent | *(none)* |
 | 2 | 27.71 | bias, studies, study, effect, statistical, causation, validity, causal | bean, instance, harness, directory, node, graph, kind, session |
 | 3 | 22.21 | proof, lean, watcher, slot, blocks, project, witness, chapter | harness, node, instance, bean, page, directory, actor, process |
-| 4 | 19.49 | dpi, color, grayscale, matplotlib, images, raster, pdf, fonts | session, queue, branch, prs, commits, coordination, sibling, beans |
+| 4 | 19.49 | dpi, color, grayscale, matplotlib, images, raster, pdf, lean | session, queue, branch, prs, commits, coordination, sibling, beans |
 | 5 | 18.55 | dpi, color, grayscale, matplotlib, contrast, raster, eps, session | lean, proof, glossary, declaration, mathlib, theorem, term, sorry |
 | 6 | 16.76 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, consider, solutions, description, correlation |
 | 7 | 16.13 | lean, mathlib, mcp, sorry, proof, search, bean, theorem | watcher, slot, backlog, voice, ledger, nesting, queue, idle |
-| 8 | 15.28 | mathlib, lean, sorry, subdirectory, lake, nesting, mcp, sessions | slot, forward, major, edges, criterion, reader, prose, band |
+| 8 | 15.28 | mathlib, lean, sorry, subdirectory, lake, mcp, nesting, sessions | slot, forward, major, edges, criterion, reader, prose, band |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 
