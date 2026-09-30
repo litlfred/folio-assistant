@@ -512,32 +512,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790777583">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790779750">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790777583">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790779750">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790777583">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790779750">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790777583">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790779750">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790777583">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790779750">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790777583">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790779750">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -554,7 +554,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790777583" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790779750" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -902,8 +902,38 @@ PDF’s ∀ mark), so the two cannot disagree: a statement once stated
   <li>The formal source is stamped on line 1. <code class="language-plaintext highlighter-rouge">--check</code> fails unless it is
 elaborated: with no cache, or a <code class="language-plaintext highlighter-rouge">scan</code> cache, the graph is not publishable.</li>
   <li>Formal targets not rendered in the document are dropped and listed; so are
-statements with proof dependencies but no proof environment.</li>
+statements with proof dependencies but no proof environment. A self-edge
+is dropped too: plasTeX’s dependency graph recurses on it without end.</li>
 </ul>
+<h3 id="the-whole-blueprintsrc-not-just-its-content">
+  
+  
+    <a href="#the-whole-blueprintsrc-not-just-its-content" class="anchor-heading" aria-labelledby="the-whole-blueprintsrc-not-just-its-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The whole <code class="language-plaintext highlighter-rouge">blueprint/src/</code>, not just its content
+  
+  
+</h3>
+    
+
+<p><code class="language-plaintext highlighter-rouge">blueprint-layout.ts</code> writes the directory leanblueprint (and
+<code class="language-plaintext highlighter-rouge">docgen-action</code> with <code class="language-plaintext highlighter-rouge">blueprint: true</code>) builds from, from the paper manifest:</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run folio-assistant-sci/content/pipeline/blueprint-layout.ts <span class="se">\</span>
+  <span class="nt">--paper</span> &lt;folio&gt;/&lt;paper&gt;/&lt;paper&gt;.ts <span class="o">[</span><span class="nt">--out</span> &lt;folio&gt;/&lt;paper&gt;/lean/blueprint/src]
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">content.tex</code> is the export above over the rendered chapters, with the
+margin annotations stripped once it has read them; <code class="language-plaintext highlighter-rouge">macros/common.tex</code>
+declares every environment the renderer emits (<code class="language-plaintext highlighter-rouge">ENV_NAMES</code>) plus the
+manifest’s <code class="language-plaintext highlighter-rouge">macros</code>; the rest is leanblueprint’s own template. The folio
+<code class="language-plaintext highlighter-rouge">blueprint.yml</code> runs it in CI — <strong>do not commit the output</strong>: a committed
+copy is a second answer that goes stale against the manifest.</p>
+
+<p><strong>plasTeX needs <code class="language-plaintext highlighter-rouge">kpsewhich</code>.</strong> Without TeX installed it cannot <code class="language-plaintext highlighter-rouge">\input</code> a
+file in a subdirectory, so <code class="language-plaintext highlighter-rouge">macros/common</code> is “not found”, every theorem
+environment is unrecognised, and plasTeX dies with <code class="language-plaintext highlighter-rouge">TypeError: unhashable
+type: 'definition'</code> — which reads like a version bug and is not.
+leanblueprint 0.0.20 + plasTeX 3.1 + plastexdepgraph 0.0.5 builds a real
+paper’s graph once <code class="language-plaintext highlighter-rouge">kpsewhich</code> resolves.</p>
 <h2 id="known-limits">
   
   
@@ -1131,7 +1161,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36727024131"><code>e718627</code></a> &middot; 2026-09-30T14:12:57Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36731723275"><code>5b8db8d</code></a> &middot; 2026-09-30T14:49:05Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">

@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 186,
+      "count": 187,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -646,6 +646,14 @@
       "graphNode": "schema",
       "summary": "JSON-LD projection of the content block model.",
       "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/kg-node-kinds.test.ts",
+      "instance": "cat-harness",
+      "name": "kg-node-kinds.test",
+      "graphNode": "undeclared",
+      "summary": "`KgRef.kind` is a closed list (#1168 B9c), so it must cover every node kind",
+      "isTest": true
     },
     {
       "module": "cat-harness/schemas/kg-node.test.ts",
@@ -5858,6 +5866,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/carried-note.ts#KgNodeKind",
+      "name": "KgNodeKind",
+      "module": "cat-harness/schemas/carried-note.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/carried-note.ts#KgRef",
       "name": "KgRef",
       "module": "cat-harness/schemas/carried-note.ts",
@@ -5879,7 +5900,7 @@
       "fields": [
         {
           "name": "kind",
-          "type": "z.string().min(1)",
+          "type": "z.enum(KG_NODE_KINDS)",
           "optional": false,
           "array": false,
           "doc": "The node kind — `skill`, `requirement`, `block`, `process`, …"
@@ -5904,6 +5925,7 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "KG_NODE_KINDS",
         "z"
       ],
       "exported": true
@@ -35857,11 +35879,10 @@
           "doc": "Page range in the source document, e.g. \"14\" or \"131-132\"."
         },
         {
-          "name": "kgRef",
+          "name": "path",
           "type": "z.string().min(1).optional()",
           "optional": true,
-          "array": false,
-          "doc": "A node of THIS instance's knowledge graph, as a repo-relative path, for a"
+          "array": false
         },
         {
           "name": "quote",
