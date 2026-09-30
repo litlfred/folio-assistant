@@ -16,31 +16,26 @@ and the guideline document has been finalized and edited.
 The review of a planning proposal includes an assessment of whether 
 the proposed guideline development process is consistent with the steps 
 described in this handbook. The review of final submissions ensures that 
-the approved process has been followed and that the final guideline docu­
-ment meets WHO standards as laid out in this handbook, contains clear and 
+the approved process has been followed and that the final guideline document meets WHO standards as laid out in this handbook, contains clear and 
 actionable recommendations, and meets all WHO reporting requirements. 
 The GRC also provides suggestions and advice on guideline development 
 processes and procedures and on the methods for developing high-quality 
-guidelines at any stage of the development process. The GRC does not pro­
-vide guidance on the technical content of the guidelines, but rather on how 
+guidelines at any stage of the development process. The GRC does not provide guidance on the technical content of the guidelines, but rather on how 
 to develop guidelines that will meet WHO standards.
 GRC approval is part of WHO’s internal clearance processes for the 
 publication of guidelines. The GRC evaluates planning proposals and final 
-guidelines that have been approved by the relevant directors of the tech­
-nical unit(s) responsible for the document or their regional counterparts, 
+guidelines that have been approved by the relevant directors of the technical unit(s) responsible for the document or their regional counterparts, 
 and before clearance of the final guideline by the assistant director-general 
 (ADG) or regional director.
 The specific terms of reference for the GRC are to (5):
 ■■
-define appropriate and standardized processes for guideline develop­
-ment at WHO;
+define appropriate and standardized processes for guideline development at WHO;
 ■■
 ensure that all guidelines published by WHO are of high quality and 
 comply with explicit standards;
 ■■
 develop and implement a plan to ensure that GRC members have the 
-necessary knowledge of the approved methods for guideline devel­
-opment and to identify opportunities to build capacity in guideline 
+necessary knowledge of the approved methods for guideline development and to identify opportunities to build capacity in guideline 
 development among WHO staff; and
 ■■
 develop collaborations with other organizations and international 

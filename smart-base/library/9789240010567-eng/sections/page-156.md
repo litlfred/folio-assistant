@@ -13,9 +13,7 @@ granularity: page
 144
 Digital implementation investment guide
 OPPORTUNITIES 
-FOR INTEROPERA­
-BILITY AND LINK­
-AGES TO OTHER 
+FOR INTEROPERABILITY AND LINKAGES TO OTHER 
 DIGITAL HEALTH 
 INTERVENTIONS
 Integrate with provider-to-provider telemedicine in cases where referral to another health worker is 

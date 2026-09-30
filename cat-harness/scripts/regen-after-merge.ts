@@ -95,10 +95,33 @@ export function scriptOf(command: string): string | undefined {
  * gap — and not as a command that silently runs nothing.
  */
 export function writerFor(scripts: Record<string, string>, check: string): string | undefined {
+  const override = WRITER_OVERRIDES[check];
+  if (override !== undefined) return scripts[override] === undefined ? undefined : override;
   if (!check.endsWith(":check")) return undefined;
   const base = check.slice(0, -":check".length);
   return scripts[base] === undefined ? undefined : base;
 }
+
+/**
+ * The checks whose writer is NOT `<check minus ":check">` — bean `eowd`.
+ *
+ * Declared, one line each, rather than inferred: the convention holds for
+ * nearly every pair, and for these it is measurably wrong. Without this table
+ * `regen` reported each as "a real defect, not staleness" while one command
+ * fixed it — a false verdict on the one line meant to be trusted.
+ *
+ * - `translate-bpmn` with no flag only REPORTS; the writing mode is
+ *   `--extract`, exposed as its own script so the writer stays a name read
+ *   from `package.json` (a writer renamed away still comes back `no-writer`).
+ * - the two audit-coverage gates are not `:check`-named at all, so the
+ *   convention never offered them; `audit:coverage` rewrites the sidecar both
+ *   compare against.
+ */
+export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
+  "translate-bpmn:check": "translate-bpmn:extract",
+  "audit:coverage:strict": "audit:coverage",
+  "audit:coverage:require-all": "audit:coverage",
+};
 
 export type Outcome = "current" | "regenerated" | "unrepaired" | "no-writer";
 
@@ -117,7 +140,7 @@ export function repairableGates(gates: readonly Gate[], scripts: Record<string, 
   const out: { check: string; writer: string | undefined }[] = [];
   for (const g of gates) {
     const script = scriptOf(g.command);
-    if (script === undefined || !script.endsWith(":check")) continue;
+    if (script === undefined || (!script.endsWith(":check") && WRITER_OVERRIDES[script] === undefined)) continue;
     if (seen.has(script)) continue;
     seen.add(script);
     out.push({ check: script, writer: writerFor(scripts, script) });

@@ -16,5 +16,4 @@ GDGs must carefully consider how the intervention might affect equity and
 human rights and strive to formulate recommendations in line with WHO’s 
 core principles. The greater the likelihood that the intervention will reduce 
 inequities or increase equity and the greater the accessibility of an option to 
-its intended recipients, the greater the likelihood that a strong recommenda­
-tion will be issued.
+its intended recipients, the greater the likelihood that a strong recommendation will be issued.

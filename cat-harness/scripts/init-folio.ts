@@ -39,6 +39,7 @@ import { instanceDeclarationFilename, resolveDirectories } from "../schemas/cat-
 import { materialiseDeclaredDirectories } from "../schemas/harness-config";
 import { relative, dirname, join, resolve, sep } from "path";
 import { spawnSync } from "child_process";
+import { BUILTIN_ADAPTERS } from "../src/builtin-adapters";
 
 /** The upstream this folio pins its platform to. */
 export const FOLIO_ASSISTANT_REPO = "https://github.com/litlfred/folio-assistant.git";
@@ -123,6 +124,48 @@ function platformDir(assistant: string): string {
   return `${assistant}/${HARNESS_SUBDIR}`;
 }
 
+/**
+ * Where a content type's adapter module sits, from the folio's own root.
+ *
+ * **This is a LOOKUP and must not go back to being a composition.** It read
+ *
+ * ```ts
+ * `./${platformDir(assistant)}/adapters/${o.contentType}/index.ts`
+ * ```
+ *
+ * which assumed every adapter lives under the same instance. That stopped
+ * being true on 2026-09-30, when `adapters/paper/` moved to
+ * `folio-assistant-sci/` (bean `y5si`): one template cannot name two
+ * instances, so every paper folio scaffolded after the move would have got an
+ * `adapterModule` pointing at a path that does not exist.
+ *
+ * **The test did not catch it and could not have.** `init-folio.test.ts`
+ * pinned the SUBSTRING `adapters/paper/index.ts`, which the broken path still
+ * contains — so the composed and the correct answer were indistinguishable to
+ * the gate. It pins the full path now.
+ *
+ * `BUILTIN_ADAPTERS` is the declaration of where each adapter is, and its
+ * `module` is relative to `cat-harness/` — the same root `platformDir` names —
+ * so joining the two is the whole conversion. An unknown content type has no
+ * declaration to read, and composing a guess for it would re-create exactly
+ * the failure above; it gets the conventional path under the harness and the
+ * scaffold's own adapter resolution reports it if nothing is there.
+ */
+function adapterModulePath(assistant: string, contentType: string): string {
+  const declared = BUILTIN_ADAPTERS.find((a) => a.contentType === contentType);
+  const rel = declared ? declared.module : `adapters/${contentType}/index.ts`;
+  // POSIX-normalised by hand: this string goes into a JSON config read on
+  // every platform, and `join` from `node:path` would emit backslashes on
+  // Windows.
+  const segments: string[] = [];
+  for (const part of `${platformDir(assistant)}/${rel}`.split("/")) {
+    if (part === "." || part === "") continue;
+    if (part === ".." && segments.length > 0 && segments[segments.length - 1] !== "..") segments.pop();
+    else segments.push(part);
+  }
+  return `./${segments.join("/")}`;
+}
+
 // ── Templates ────────────────────────────────────────────────────
 
 /**
@@ -196,7 +239,7 @@ function instanceConfig(o: InitFolioOptions, assistant: string): string {
     {
       contentType: o.contentType,
       adapter: o.contentType,
-      adapterModule: `./${platformDir(assistant)}/adapters/${o.contentType}/index.ts`,
+      adapterModule: adapterModulePath(assistant, o.contentType),
       feedbackDir: ".folio-feedback",
       skills: ".claude/skills/local",
       viewer: { dir: `${platformDir(assistant)}/viewer`, port: 8080 },

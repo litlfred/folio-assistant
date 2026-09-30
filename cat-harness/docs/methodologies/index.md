@@ -36,8 +36,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>16</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>11</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>18</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>13</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>5</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -53,11 +53,13 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[Bidirectional agentic autoformalization — extract, compile-fix, check faithfulness, then informalize back without the source](#bidirectional-agentic-autoformalization)**<br>`bidirectional-agentic-autoformalization` | **A whole paper, not a single theorem, is being formalised with an agent doing the Lean**, and the question is how to organise the run: what to extra… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-sci` |
 | **[Blueprint-driven formalization — Lean as the single source of dependency and status, the blueprint node as the unit of work](#blueprint-driven-formalization)**<br>`blueprint-driven-formalization` | **A formalization is large enough that its state has to be tracked node by node** — many interdependent definitions and theorems, several contributor… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-sci` |
 | **[Consensus-grounded subject evaluation — independent indexers as the answer key, and a panel instead of one score](#consensus-grounded-subject-evaluation)**<br>`consensus-grounded-subject-evaluation` | **Judging how good a set of controlled-vocabulary assignments is, when qualified people would themselves disagree about the exact answer.** Use it to… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[Correspondence analysis for retrieval — decompose the departure from independence, not the counts](#correspondence-analysis)**<br>`correspondence-analysis` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[DIIG — Digital Implementation Investment Guide](#diig)**<br>`diig` | Planning, costing and monitoring a DIGITAL HEALTH IMPLEMENTATION inside a health programme — from forming the team through to the budget and the moni… | <span class="mv-tag mv-cited">cited, not ingested</span> | `smart-base` |
 | **[DMN — Decision Model and Notation](#dmn)**<br>`dmn` | The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold](#doc-researcher)**<br>`doc-researcher` | **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread acros… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-core` |
 | **[Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it](#hybrid-llm-deterministic)**<br>`hybrid-llm-deterministic` | **An agent must produce an artefact that something downstream will act on.** Use it when a language model is in the loop and a wrong output would be… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Kepner-Tregoe Decision Analysis](#kepner-tregoe)**<br>`kepner-tregoe` | A decision with several candidate options and no recurring rule — a platform choice, an architecture question, which of three fixes to take. Contextu… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
+| **[Latent Semantic Indexing — retrieve and relate by co-occurrence structure, not by shared words](#lsi)**<br>`lsi` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Process-driven autoformalization — judge a formalised statement by compiling it WITH a proof, and read the first error as the step signal](#process-driven-autoformalization)**<br>`process-driven-autoformalization` | **A natural-language statement is being turned into a Lean statement and the question is how to test the candidate**, or… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-sci` |
 | **[RACI — who is involved in an activity, and in which of four ways](#raci)**<br>`raci` | **Who is involved in an activity, and how.** Use it when a process or a breakdown exists and the question is participation — who answers for this, wh… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
@@ -120,6 +122,20 @@ strictly worse than declaring none.
 
 - [`library/arxiv-2606.04382v1`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2606.04382v1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2606.04382v1/README.md) · [source](https://arxiv.org/abs/2606.04382v1)
 - [`library/arxiv-2504.07199v3`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2504.07199v3) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2504.07199v3/README.md) · [source](https://arxiv.org/abs/2504.07199v3)
+
+### Correspondence analysis for retrieval — decompose the departure from independence, not the counts
+
+<a id="correspondence-analysis"></a>
+
+`correspondence-analysis` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **The same question as `lsi` — which units of a prose graph are close in what they are about — when the answer must not be dominated by how LONG a unit is or how COMMON a term is.** CA removes those margins by construction, so it is the method to reach for when LSI's first dimensions are margins (a first dimension with no negative pole) or when the question is which units are UNUSUAL — outlier pages, specimen text, a list among prose. It answers *which units have similar term profiles, relative to independence*. Like `lsi`, every output is a PROPOSAL. Not for choosing between the two methods by blending them (`methodology-adoption` §"Parallel, not composable"), not for a controlled vocabulary (`skill-pipeline-subject-indexing`), and not for any decision.
+
+**Origin.** Correspondence analysis is Jean-Paul Benzécri's (L'Analyse des Données, 1973) and is set out in Michael Greenacre, Theory and Applications of Correspondence Analysis (Academic Press, 1984) and Correspondence Analysis in Practice (3rd ed., 2017). Its application to information retrieval, and the comparison with latent semantic analysis this node rests on, is Qianqian Qi, David J. Hessen and Peter G. M. van der Heijden, "Improving information retrieval through correspondence analysis instead of latent semantic analysis", Journal of Intelligent Information Systems (2023), doi:10.1007/s10844-023-00815-y — open access, ingested whole and read.
+
+**Ingested sources:**
+
+- `library/qi-hessen-vanderheijden-2023-ca-vs-lsa`
 
 ### DIIG — Digital Implementation Investment Guide
 
@@ -190,6 +206,24 @@ these.
 **No ingested source.** The origin above names one; nothing in this
 checkout holds it. `literature-search` is the skill that closes one of
 these.
+
+### Latent Semantic Indexing — retrieve and relate by co-occurrence structure, not by shared words
+
+<a id="lsi"></a>
+
+`lsi` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **Finding or relating units of text that discuss the same thing in different words, across a corpus too large to read whole, where no controlled vocabulary has been assigned.** Use it to ask "what else in this graph is about this?", to propose a home for an unfiled item among existing groups, to find near-duplicates, and to surface clusters nobody named. It answers *which units are close in co-occurrence structure*. It does NOT answer whether a unit is relevant, correct, or a dependency: every output is a PROPOSAL a person or an agent confirms. Not for assigning terms from a controlled vocabulary (`skill-pipeline-subject-indexing`), not for judging an assignment (`consensus-grounded-subject-evaluation`), and not for any decision (`kepner-tregoe`, `dmn`).
+
+**Origin.** Scott Deerwester, Susan T. Dumais, George W. Furnas, Thomas K. Landauer and Richard A. Harshman, "Indexing by Latent Semantic Analysis", Journal of the American Society for Information Science 41(6):391–407 (1990), for the method. Susan T. Dumais, "Improving the retrieval of information from external sources", Behavior Research Methods, Instruments & Computers 23(2):229–236 (1991), for the log-entropy term weighting. Michael W. Berry, Susan T. Dumais and Gavin W. O'Brien, "Using Linear Algebra for Intelligent Information Retrieval", SIAM Review 37(4):573–595 (1995), for folding-in and updating. Thomas K. Landauer, Peter W. Foltz and Darrell Laham, "An Introduction to Latent Semantic Analysis", Discourse Processes 25:259–284 (1998), and Thomas K. Landauer and Susan T. Dumais, "A Solution to Plato's Problem", Psychological Review 104(2):211–240 (1997), for the cognitive reading of the same computation (there called LSA), which this node does NOT adopt. Nathan Halko, Per-Gunnar Martinsson and Joel A. Tropp, "Finding Structure with Randomness", SIAM Review 53(2):217–288 (2011; arXiv:0909.4061v2), for the randomized SVD this platform computes it with — an implementation source, not part of the method.
+
+**Ingested sources:**
+
+- `library/deerwester-1990-indexing-by-lsa`
+- `library/landauer-foltz-laham-1998-intro-lsa`
+- `library/arxiv-0909.4061v2`
+- `library/qi-hessen-vanderheijden-2023-ca-vs-lsa`
+- `library/arxiv-2202.02427v1`
 
 ### MADR — Markdown Architectural Decision Records
 

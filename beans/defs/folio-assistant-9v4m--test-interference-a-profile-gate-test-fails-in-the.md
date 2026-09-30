@@ -5,8 +5,8 @@ status: todo
 type: bug
 priority: normal
 created_at: 2026-09-26T03:40:20Z
-updated_at: 2026-09-27T14:31:29Z
-parent: folio-assistant-1swy
+updated_at: 2026-09-29T20:52:42Z
+parent: folio-assistant-1xhc
 ---
 
 Measured 2026-09-26 on `985d0bada2a` (branch claude/brave-hypatia-r820sf, diff = two bean .md files only).
@@ -514,3 +514,6 @@ routes.
 exists or is planned, so nothing is waiting on the restructure; and the file's
 write-on-evaluation shape has now cost a second session time, which is an
 argument about this file generally rather than about the three lines.
+
+
+_2026-09-29_ — **Re-parented `1swy` → `1xhc`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A test that fails in the suite and passes alone is test/CI reliability, not a QA verdict.

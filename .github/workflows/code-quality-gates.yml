@@ -745,6 +745,21 @@ jobs:
       - name: every skill is declared, and declares nothing absent
         run: bun run skill:register:check
 
+      # The skills graph's LSI index is written by the registration chain
+      # (`lsi:skills`) and read by kg:audit's `lsi-index-fresh`. Checked on its
+      # own so an edited skill with a stale index names THIS step, not a
+      # kg-qa sidecar two generators away (bean `ansc`).
+      - name: the skills graph's LSI index is fresh
+        run: bun run lsi:skills:check
+
+      - name: the LSI index viewer page is current
+        run: bun run lsi:viz:check
+
+      # Bean 3spu: a soft hyphen in section text splits a word for every
+      # reader; both PDF rungs join them, and this says none came back.
+      - name: no library section carries a soft hyphen
+        run: bun run check:soft-hyphens
+
       - name: knowledge-graph audit
         run: bun run kg:audit:check
 
@@ -1452,6 +1467,13 @@ jobs:
           # about whether an instance wants a mark at all, not a regression.
           # Same line `check:theme-art` drew above, for the same reason.
           bun run check:navbar-consistency:check
+          # Every instance declaring a `themes` graph: does it load, and does
+          # each theme validate? The gate that TRULY covers the `themes` kind —
+          # three others declared `@covers themes` while resolving no themes
+          # directory (bean `z6xd`), so the kind read audited over ground
+          # nothing reached. Theme KINDS are reported and never graded: which
+          # theme may style who-iris's card is the owner's call (#1584).
+          bun run check:instance-themes:check
           # The methodologies index renders the `methodology` graph across
           # EVERY instance that declares one, so it goes stale when any of them
           # adopts a method, ingests a source, or changes an `applies-when`.

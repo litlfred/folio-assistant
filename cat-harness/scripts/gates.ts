@@ -555,6 +555,15 @@ export const STEP_EXEMPTIONS: StepExemption[] = [
       "and the client half it ships by `staging-banner.e2e.ts` in the e2e set. Both are gates",
   },
   {
+    match: "staging-record.ts",
+    kind: "ci-only",
+    reason:
+      "writes the preview's `staging-preview` record into the built `_site` at deploy time (bean `6pfo`); " +
+      "the PR, issue and the already-published record it updates exist only in CI and on `gh-pages`. " +
+      "Its rules — builtAt kept, a retired record refused as live, a corrupt one refused — are in " +
+      "`schemas/staging-preview.ts` and covered by `staging-record.test.ts` in `bun test`",
+  },
+  {
     match: "restore-staging.ts",
     kind: "ci-only",
     reason: "reconciles the `gh-pages` working tree against the open PRs' previews; needs that branch checked out",
@@ -948,6 +957,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     kind: "report",
     reason:
       "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
+  },
+  {
+    script: "check:instance-themes",
+    kind: "report",
+    reason:
+      "prints each declaring instance's themes and their kinds; `check:instance-themes:check` is the gating form and is wired",
   },
   {
     script: "check:navbar-consistency",

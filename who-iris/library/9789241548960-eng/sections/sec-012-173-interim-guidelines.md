@@ -10,8 +10,7 @@ source_sha256: bfcd856e3ad7ab20
 ---
 Interim guidelines are produced when WHO is asked to provide guidance when 
 the available data and information are most certainly incomplete, especially if 
-additional data are anticipated in the near future. This can occur when an inter­
-vention − a drug, a medical device or a health practice, for example − has just 
+additional data are anticipated in the near future. This can occur when an intervention − a drug, a medical device or a health practice, for example − has just 
 appeared or is about to be made available; a new disease or condition has emerged; 
 or new data on an existing intervention, exposure, disease or condition have been 
 reported. Interim guidelines usually have a very focused scope and a short shelf-
