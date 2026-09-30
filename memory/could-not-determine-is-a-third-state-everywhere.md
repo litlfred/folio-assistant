@@ -6,8 +6,9 @@ summary: "\"could not determine\" is a THIRD state, everywhere"
 createdAt: 2026-09-19
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 A section that cannot read its source returns `skip` and the region is left
 exactly as it was. Not decoration:

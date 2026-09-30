@@ -7,9 +7,11 @@ createdAt: 2026-09-19
 roles:
   - code-reviewer
   - validation-pipeline
-agents:
-  - ci-health-watcher
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: ci-health-watcher
+  - kind: agent
+    id: platform-boundary-guard
 ---
 Owner, 2026-09-19: **"dont encode rules against a working setup."**
 

@@ -1,7 +1,7 @@
 ---
 # folio-assistant-0fua
 title: Long flat lists with no search or filter
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
@@ -9,7 +9,7 @@ tags:
     - ui
     - cross-cutting
 created_at: 2026-09-23T10:36:14Z
-updated_at: 2026-09-30T16:12:48Z
+updated_at: 2026-09-30T16:48:12Z
 parent: folio-assistant-4ccr
 ---
 
@@ -45,3 +45,6 @@ Each finding re-measured on a local build of that commit (`preview-site.sh`, ser
 ## Reopened 2026-09-30
 
 Closed too early on #1592's landing. The 2026-09-30 re-run (section above) measured the filter on processes and tools, and NOT on the glossary (48 rows) or the skills index (273 rows): those are docs-auto pages, standalone HTML that does not load docs-ui.js. Done when the docs-auto pages carry the same filter.
+
+## Landed
+Filter half, both routes: site pages via docs-ui.js (#1592), docs-auto pages inline (#1643, merged d848b1dc). The glossary (48 rows) and skills index (273) now filter, with an e2e test driving the shipped glossary page. Grouping stays with the per-visualiser beans.

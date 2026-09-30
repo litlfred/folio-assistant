@@ -8,7 +8,7 @@ Held in the library [`agent-skills/library/`](../README.md) as `skills-in-openai
 | | |
 |---|---|
 | document id | `skills-in-openai-api` |
-| source file | `Skills in OpenAI API.pdf` (sha256 `2d261aeb7a6a…`) |
+| source file | `Skills-in-OpenAI-API.pdf` (sha256 `2d261aeb7a6a…`) |
 | provenance | ingested |
 
 | holds | count |

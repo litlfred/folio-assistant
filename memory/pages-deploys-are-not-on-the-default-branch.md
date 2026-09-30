@@ -6,8 +6,9 @@ summary: "Pages deploys are not on the default branch, and cancelled is a third 
 createdAt: 2026-09-20
 roles:
   - build-pipeline
-agents:
-  - ci-health-watcher
+references:
+  - kind: agent
+    id: ci-health-watcher
 ---
 `check:ci-health`'s default-branch query **cannot see a Pages deployment**:
 those runs are on the *publish* branch, raised by `github-pages[bot]` on the
