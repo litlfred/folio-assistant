@@ -22,3 +22,14 @@ Findings from the as-is wireframe `cat-harness/docs/wireframes/docs-index/` (int
 6. **The phone layout favours the path.** At 390 px the first column (`width: 26rem`, capped by the viewport) takes about 220 px for the name and path. That leaves about 130 px for the description, so *no description in the artefact* wraps over several lines.
 
 When fixed, re-draw `cat-harness/docs/wireframes/docs-index/` and re-run `bun run wireframe:check` and `bun run check:wireframes`.
+
+## Re-verified 2026-09-29 on `main` 35402147f
+
+Each finding re-measured on a local build of that commit, at 1280×800 and 390×844, both colour schemes where contrast is involved. 6 still present, 0 fixed, 0 could not be determined. FIXED means observed on the built page, not read from code.
+
+- **STILL-PRESENT** — 1. Most rows say nothing: 258 of 296 rows read 'no description in the artefact' (was 187/217).
+- **STILL-PRESENT** — 2. Non-pages indexed as authored documentation pages: The first 4 rows are still cat-harness/docs/_includes/{footer_custom,harness_details,head_custom,landing}.html (6 _includes rows in all). There are also 124 uml/overview rows and 44 wireframes/ rows.
+- **STILL-PRESENT** — 3. Names collide: Duplicate link texts: intent ×21, index ×20, as-is ×19, qa ×15, skills ×8, accessibility ×6.
+- **STILL-PRESENT** — 4. YAML quotes kept: 13 descriptions are wrapped in literal quotes, e.g. '"folio-assistant — إطار عمل مهارات وكيل مستقل عن المحتوى."'.
+- **STILL-PRESENT** — 5. Table cannot be searched, filtered or grouped: 296 rows in one table with 0 filter inputs and 0 h2/h3 grouping. 40 locale (ar/es/fr/ru/zh) rows are interleaved by path. docH 22,424px at 1280 and 39,202px at 390.
+- **STILL-PRESENT** — 6. Phone layout favours the path: 390x844, first body row: name+path cell 164px, description cell 132px, so 'no description in the artefact' still wraps over several lines. There is no page-level horizontal scroll (scrollWidth 390).

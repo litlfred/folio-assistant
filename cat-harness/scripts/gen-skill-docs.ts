@@ -29,6 +29,7 @@ import { join, resolve, basename, relative, isAbsolute, sep } from "path";
 import { isSkillMd, kgDirectories } from "./known-skills.js";
 import { processRows, type ProcessRow } from "./gen-processes-viz.js";
 import { siteDirFor, repoRootFor } from "../schemas/cat-harness.ts";
+import { stripInlineCode } from "../schemas/inline-code.ts";
 
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
 const REPO_ROOT = repoRootFor(INSTANCE_ROOT);
@@ -504,6 +505,7 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // The science layer's Lean tooling (folio-assistant#1492): tooling lives in
   // folio-assistant-sci, never in core.
   "folio-assistant-sci-lean-skills": "Science layer: Lean tooling (folio-assistant-sci)",
+  "folio-assistant-sci-data-skills": "Science layer: reference data (folio-assistant-sci)",
   "large-datasets-skills": "Large data sets (subsetting, materializing, publishing)",
   "who-iris-skills": "WHO IRIS (catalogue instance)",
   // The `fhir-harness` instance's two packages, keyed by BASENAME because they
@@ -1040,7 +1042,12 @@ async function main(): Promise<void> {
       // Single quotes, with YAML's own escape (a doubled quote), because a
       // title may contain a backtick and a double-quoted scalar would then
       // need backslash rules a heading has no reason to obey.
-      page.push(`title: '${title.replace(/'/g, "''")}'`);
+      //
+      // Backtick MARKERS are stripped (bean `mylx`): the theme prints `title`
+      // as plain text in the sidebar on every page, so a heading's
+      // `MathlibExt` showed its backticks about 1,000 times across the site.
+      // The page body keeps the heading as written.
+      page.push(`title: '${stripInlineCode(title).replace(/'/g, "''")}'`);
       page.push("parent: Skill instructions");
       page.push("---");
       page.push("");
