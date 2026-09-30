@@ -941,6 +941,13 @@ jobs:
       - name: bootstrap's README generated sections are current
         run: bun run readme:sync:bootstrap:check
 
+      # One README per LIBRARY ITEM, from its own manifest (bean `qgjh`, owner
+      # 2026-09-30: "like bootstrap readmes"). BEFORE the directory READMEs:
+      # a library's README links each item row to the item's README only once
+      # it exists, so `regen`, which asks these in order, must write it first.
+      - name: Every library item's README is current
+        run: bun run library:readmes:check
+
       # One README per declared directory, generated from the declaration by
       # `subgraph-readmes` (owner, 2026-09-29). The pre-commit hook runs the
       # same check; this is the gate a commit that skipped the hook still meets.

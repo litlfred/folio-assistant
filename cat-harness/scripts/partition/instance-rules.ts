@@ -750,6 +750,9 @@ export const RULES: Rule[] = [
       // A README per declared directory, from the declaration. Core beside
       // `readme-sections`, whose file description and 'used by' it reuses.
       "scripts/subgraph-readmes.ts",
+      // Its sibling for a library ITEM (bean `qgjh`): the same markers and
+      // `splice`, the words from the item's own manifest. Core beside it.
+      "scripts/library-readmes.ts",
       "scripts/check-docs-populated.ts",     // every harness owes one populated doc page
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
