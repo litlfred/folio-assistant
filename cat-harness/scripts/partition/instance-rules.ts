@@ -231,6 +231,12 @@ export const RULES: Rule[] = [
       // re-run to prove the registration still resolves without it rather
       // than assumed to.
       "scripts/check-image-roles.ts",
+      // HARNESS on the same argument as `check-image-roles` above: its two
+      // subjects are this repository's own `<instance>.json` declarations and
+      // its own client (`docs/assets/js/docs-ui.js`). It opens no folio
+      // content — the declarations it reads are the harness's, and the glyph
+      // registries it compares are the harness's own furniture.
+      "scripts/check-navbar-consistency.ts",
       // HARNESS: the one orphan-page selector (bean `s8nu`), extracted as a
       // LEAF so `state-visualizer.ts` can be a call site without importing
       // `gen-schema-viz.ts` -- a 1200-line page generator whose body is one
