@@ -1098,11 +1098,10 @@ export const RULES: Rule[] = [
       // is harness machinery, and none imports the content vocabulary.
       "scripts/beans-fallback.ts",
       "scripts/check-harness-dirs.ts",
-      // Issue #1164: bootstrap schemas name no outside concept, and a filed
-      // requirement is a valid one with no name used twice. Harness
-      // machinery over the harness's own declarations; neither imports the
-      // content vocabulary.
-      "scripts/check-bootstrap-concepts.ts",
+      // Issue #1164: a filed requirement is a valid one with no name used
+      // twice. Harness machinery over the harness's own declarations; it does
+      // not import the content vocabulary. (Its sibling check-bootstrap-concepts
+      // moved to `bootstrap-tools/`, bean `xsqm`.)
       "scripts/check-requirements.ts",
       // Bean `95ir`: declared-but-absent is reported by a scanner, never
       // dropped. Harness machinery over declarations; imports only node:fs.
@@ -1192,16 +1191,10 @@ export const RULES: Rule[] = [
       // edge `namespaces.ts` was extracted to remove. Measured on first run:
       // the prefix rule claimed it for core and the edge appeared immediately.
       "schemas/vocabulary.ts",
-      // bootstrap's Zod (owner, 2026-09-24: "Validate/zod in cat-harness. Graph
-      // and Subgraph too"). Moved in from the retired `bootstrap-tools`
-      // instance; `vocabulary.ts` above reads BOOTSTRAP_TERMS from `graph.ts`,
-      // so a core placement is a wrong-direction edge.
-      "schemas/graph.ts",
-      "schemas/discussion.ts",
+      // bootstrap's own Zod (graph, discussion, requirement) moved down to
+      // `bootstrap-tools/` (owner, 2026-09-29, bean `xsqm`), outside this
+      // partition. What stays is the harness's reading of it.
       "schemas/bootstrap-graph.ts",
-      // The Requirement bootstrap publishes (issue #1164); `skill-package.ts`
-      // builds the harness Requirement on it, so core would be an edge downward.
-      "schemas/requirement.ts",
       // Code lists (owner, 2026-09-23): the shape the ENGINE checks an
       // adjudication's codes against, and the loader `namespaces.ts` sits
       // beside. Needed to RUN a process, so harness — the same test as the
