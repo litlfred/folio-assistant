@@ -32,11 +32,15 @@ import { spawnSync } from "node:child_process";
 import { copyFileSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { instanceRootsIn } from "../../schemas/cat-harness.js";
+import { instanceRootsIn, siteDirFor } from "../../schemas/cat-harness.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 const SCRIPT = join("cat-harness", "scripts", "check-navbar-consistency.ts");
-const CLIENT = join(REPO, "cat-harness", "docs", "assets", "js", "docs-ui.js");
+// Resolved, not spelled out — `check:site-root` rejects a literal output site
+// root in any source file, and a test is a source file. `siteDirFor` answers
+// relative to the instance, so the instance root is joined in front of it.
+const CLIENT_INSTANCE = join(REPO, "cat-harness");
+const CLIENT = join(CLIENT_INSTANCE, siteDirFor(CLIENT_INSTANCE), "assets", "js", "docs-ui.js");
 const DECL = join(REPO, "cat-harness", "cat-harness.json");
 
 /** Run the check, returning its exit status and combined output. */

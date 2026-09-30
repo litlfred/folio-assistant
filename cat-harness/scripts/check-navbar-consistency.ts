@@ -65,10 +65,28 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { instanceRootsIn, readDeclaration } from "../schemas/cat-harness.js";
+import {
+  instanceRootsIn,
+  readDeclaration,
+  siteDirFor,
+} from "../schemas/cat-harness.js";
 
-/** The client that owns both glyph registries. */
-const CLIENT = join("cat-harness", "docs", "assets", "js", "docs-ui.js");
+/**
+ * The client that owns both glyph registries, resolved through `siteDirFor`
+ * rather than spelled out.
+ *
+ * It was written `join("cat-harness", "docs", "assets", "js", "docs-ui.js")`,
+ * which `check:site-root` rejected: **the output site root is one answer, and a
+ * literal is a second one free to disagree.** The declaration owns where a
+ * site is written; a script that hardcodes it keeps working right up until an
+ * instance moves its `siteDir`, and then reads an absent file — which this
+ * check would report as a refusal over a client that had simply relocated.
+ *
+ * The client belongs to the instance that ships the harness UI, so the root is
+ * asked for by name rather than guessed from the scan order.
+ */
+const CLIENT_INSTANCE = "cat-harness";
+const CLIENT_TAIL = join("assets", "js", "docs-ui.js");
 
 /**
  * One `var NAME = { a: A_GLYPH, b: B_GLYPH };` literal, as id -> constant name.
@@ -172,11 +190,30 @@ function main(): number {
   const check = process.argv.includes("--check");
   const strict = process.argv.includes("--strict");
 
+  let client: string;
+  try {
+    // `siteDirFor` answers RELATIVE to the instance ("docs"), not absolute —
+    // measured, after composing it as absolute first and getting the ROOT
+    // instance's `docs/` instead of `cat-harness/docs/`.
+    const instanceRoot = join(repoRoot, CLIENT_INSTANCE);
+    client = join(instanceRoot, siteDirFor(instanceRoot), CLIENT_TAIL);
+  } catch (e) {
+    // The declaration would not load, so WHERE the client lives is unknown.
+    // Refuse rather than fall back to a guessed path: a guess that happened to
+    // exist would report the registries clean over a file this check was never
+    // pointed at.
+    console.error(`✗ cannot resolve ${CLIENT_INSTANCE}'s site directory:`);
+    console.error(`  ${e instanceof Error ? e.message.split("\n")[0] : String(e)}`);
+    return 2;
+  }
+
+  const shown = client.startsWith(repoRoot) ? client.slice(repoRoot.length + 1) : client;
+
   let src: string;
   try {
-    src = readFileSync(join(repoRoot, CLIENT), "utf8");
+    src = readFileSync(client, "utf8");
   } catch {
-    console.error(`✗ could not read ${CLIENT} — the glyph registries live there.`);
+    console.error(`✗ could not read ${shown} — the glyph registries live there.`);
     console.error("  Could-not-determine is never green: refusing rather than");
     console.error("  reporting the glyph families clean over a file I did not read.");
     return 2;
@@ -188,7 +225,7 @@ function main(): number {
     console.error(
       `✗ could not locate ${tiles === undefined ? "TILE_GLYPHS" : ""}` +
         `${tiles === undefined && row === undefined ? " and " : ""}` +
-        `${row === undefined ? "ROW_GLYPHS" : ""} in ${CLIENT}.`,
+        `${row === undefined ? "ROW_GLYPHS" : ""} in ${shown}.`,
     );
     console.error("  Either the literal moved or its shape changed. A registry read");
     console.error("  as empty would pass every family below, so this refuses instead.");
