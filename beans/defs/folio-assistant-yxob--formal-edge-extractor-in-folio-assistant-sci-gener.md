@@ -22,7 +22,7 @@ Tracks litlfred/folio-assistant#1492. Owner decisions (2026-09-29): the hybrid, 
 - [x] skill in folio-assistant-sci (directory declared); core lean-formal-graph.md points to it
 - [x] generated leanblueprint export, formal \uses, --check — `folio-assistant-sci/content/pipeline/blueprint-export.ts` (in f-a-sci, not the paper adapter: it is Lean tooling). NOT yet wired into a workflow: which pipeline carries it is an open owner question (folio `blueprint.yml` via docgen-action, which needs a `blueprint/src/` layout folio_init never writes, vs `publish.yml`'s plasTeX job, which still names qou)
 - [ ] fix or remove the 2 broken blueprint workflows — template half DONE (dead push gates in paper `blueprint.yml` and `lean_ci.yml` now fire on a manual run of main; `template-dispatch-gates.test.ts` holds every dispatch-only template to it); `publish.yml`'s editorial-`\uses` job waits for the generated export
-- [ ] docs-site graph and Lean status page
+- [x] docs-site graph and Lean status page — the graph already existed (`gen-content-graph-uml.ts`, both relations, status fill); its legend now states the formal SOURCE in three states (elaborated / approximate / unavailable). The status page already existed too (`lean-coverage.ts`, README marker `folio:lean-coverage`); its resolver now follows `lean.ref` for any package, not only `qou:`
 
 ## Evidence
 Small-cluster measurement on #1492: the template reproduces LeanArchitect v4.25.0 on 172/172 edges (30 % tagged), plus 2 structure-field edges LeanArchitect omits; the scan fallback has recall 0.63.
@@ -45,3 +45,11 @@ Small-cluster measurement on #1492: the template reproduces LeanArchitect v4.25.
   setup the current layout does not provide from a bare CLI call. qou's
   formal cache is `scan` (1180 decls), so `--check` would correctly refuse it
   until `lean_formal_edges --ingest` runs there.
+- **`qou:` literal in the platform's Lean resolver, fixed:** `resolveLeanFile`
+  (`cat-harness/scripts/lean-coverage.ts`, used by `build.ts`) followed
+  `lean.ref` only when it began `qou:`. In any other folio a library-tree
+  proof was never found, so the ∀ mark, and the blueprint's `\leanok` read
+  from it, stayed on the hand-set status. Calibrated test: the non-qou case
+  fails before, passes after; the qou case passes both.
+- **Graph legend, fixed:** a `scan` formal graph was drawn as authoritatively
+  as an elaborated one, and "no cache" looked like "no formal dependencies".

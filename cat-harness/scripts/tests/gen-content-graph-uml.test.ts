@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 
 import { ContentGraph } from "../../content/pipeline/content-graph";
-import { buildFiles, contentGraphPuml, modelOf, statusOf, type BlockModel } from "../gen-content-graph-uml";
+import { buildFiles, contentGraphPuml, formalLegend, modelOf, statusOf, type BlockModel } from "../gen-content-graph-uml";
 import { landscapeOf } from "../plantuml-render";
 
 /**
@@ -77,5 +77,20 @@ describe("gen-content-graph-uml", () => {
     const land = landscapeOf(text);
     expect(land).toContain("left to right direction");
     expect(land).not.toContain("!pragma layout elk");
+  });
+
+  test("the legend says where the formal edges came from, in three states (#1492)", () => {
+    const { g, root } = paper();
+    const legend = (source?: string) => {
+      g.hasFormal = source !== undefined;
+      g.formalSource = source as never;
+      return contentGraphPuml(modelOf(g, root), { name: "t", title: "t", statusFill: FILL });
+    };
+    expect(legend(undefined)).toContain("UNAVAILABLE here (no formal cache)");
+    expect(legend("elaborated")).toContain("source elaborated (elaborated)");
+    expect(legend("atlas")).toContain("source atlas (elaborated)");
+    expect(legend("scan")).toContain("source scan: APPROXIMATE");
+    expect(legend("mixed")).toContain("source mixed: APPROXIMATE");
+    expect(formalLegend("scan")).not.toContain("(elaborated)");
   });
 });
