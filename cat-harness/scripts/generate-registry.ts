@@ -19,7 +19,7 @@ import type {
 import type { SkillPackageManifest } from "../schemas/skill-package.ts";
 import { kgRoots } from "./known-skills.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
-import { actorsDir } from "../schemas/role-graph.ts";
+import { actorsDir, capabilitiesDir } from "../schemas/role-graph.ts";
 
 /**
  * The declared knowledge-graph root, or the convention.
@@ -131,7 +131,7 @@ const registry: RegistryOutput = {
   repository: pkg.name || "folio-assistant",
   generatedAt: new Date().toISOString(),
   actors: loadJsonFiles<ActorDefinition>(actorsDir(rootDir) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the actor registry (bean rqao) has no home to read"); })()),
-  capabilities: loadJsonFiles<CapabilityDefinition>(join(rootDir, ".claude", "skills", "capabilities")),
+  capabilities: loadJsonFiles<CapabilityDefinition>(capabilitiesDir(rootDir) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the capability registry (bean rqao) has no home to read"); })()),
   skills: loadJsonFiles<SkillDefinition>(join(rootDir, ".claude", "skills", "local")),
   requirements: loadJsonFiles<Requirement>(join(instanceDir, "skills", "requirements")),
   packages: loadPackageManifests(),

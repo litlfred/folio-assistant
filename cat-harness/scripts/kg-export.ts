@@ -55,7 +55,7 @@ import { termLayer } from "../schemas/vocabulary.js";
 import { readPolicyGrants } from "../schemas/odrl.js";
 import { BASE_GRAPH_KINDS, KG_CONTENT_GRAPH_KINDS, declaredAssets, declaredGraphs, declaredKinds, directoriesForGraph, repoRootFor, resolveDirectories, declarationPathIn } from "../schemas/cat-harness.js";
 import { type DependsOnGap, type DependsOnRecord, dependsOnFor } from "../schemas/depends-on.js";
-import { type RoleDef, actorsDir, readRoleGraph } from "../schemas/role-graph.js";
+import { type RoleDef, actorsDir, capabilitiesDir, readRoleGraph } from "../schemas/role-graph.js";
 import { REGISTRY_GROUPS } from "../schemas/kg-node.js";
 import {
   artefactStub,
@@ -1110,9 +1110,15 @@ function collectRegistryNodes(doc: string, problems: string[]): Node[] {
     // `dh4f`, so a missing actor registry is now a problem, not a `continue`.
     // The other registry groups are still where they were.
     const abs =
-      group === "actors" ? actorsDir(repoRootFor(ROOT)) : join(repoRootFor(ROOT), ".claude", "skills", group);
+      group === "actors"
+        ? actorsDir(repoRootFor(ROOT))
+        : group === "capabilities"
+          ? capabilitiesDir(repoRootFor(ROOT))
+          : join(repoRootFor(ROOT), ".claude", "skills", group);
     if (abs === undefined || !existsSync(abs)) {
-      if (group === "actors") problems.push(`the actor registry has no home: ${abs ?? "no declared scenarios graph"}`);
+      if (group === "actors" || group === "capabilities") {
+        problems.push(`the ${group} registry has no home: ${abs ?? "no declared scenarios graph"}`);
+      }
       continue;
     }
     for (const f of readdirSync(abs)) {

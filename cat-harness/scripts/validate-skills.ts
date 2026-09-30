@@ -36,7 +36,7 @@ import {
   RequirementSchema,
   SkillDefinitionSchema,
 } from "../schemas/skill-package.js";
-import { actorsDir } from "../schemas/role-graph.js";
+import { actorsDir, capabilitiesDir } from "../schemas/role-graph.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -81,7 +81,7 @@ validateDir(
 
 // Validate capabilities
 validateDir(
-  join(rootDir, ".claude", "skills", "capabilities"),
+  capabilitiesDir(repoRootFor(rootDir)) ?? (() => { throw new Error("the platform declares no `scenarios` graph, so the capability registry (bean rqao) has no home to read"); })(),
   CapabilityDefinitionSchema,
   "capabilities",
 );

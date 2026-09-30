@@ -485,10 +485,31 @@ export const ACTORS_DIRNAME = "actors";
  * that as "no actors".
  */
 export function actorsDir(repoRoot: string): string | undefined {
+  return scenariosSubdir(repoRoot, ACTORS_DIRNAME);
+}
+
+/** The capability registry's directory name inside the declared `scenarios` graph. */
+export const CAPABILITIES_DIRNAME = "capabilities";
+
+/**
+ * Where the capability registry lives: `capabilities/` inside the declared
+ * `scenarios` graph, beside the actors that HAVE them (bean `rqao`, owner
+ * 2026-09-30, round 4). It was `.claude/skills/capabilities/`. A capability is
+ * an environment probe ("is Bun installed?"), deliberately NOT a skill: the
+ * role model keeps what an actor's environment can run apart from what its
+ * role knows. Same resolution and the same `undefined` contract as
+ * {@link actorsDir}.
+ */
+export function capabilitiesDir(repoRoot: string): string | undefined {
+  return scenariosSubdir(repoRoot, CAPABILITIES_DIRNAME);
+}
+
+/** A registry directory inside the platform's declared `scenarios` graph. */
+function scenariosSubdir(repoRoot: string, name: string): string | undefined {
   // declared-path-literal: the platform instance, as glossary-page.ts names it.
   const platform = join(repoRoot, "cat-harness");
   const scenarios = directoryForGraph(platform, "scenarios");
-  return scenarios === undefined ? undefined : join(scenarios, ACTORS_DIRNAME);
+  return scenarios === undefined ? undefined : join(scenarios, name);
 }
 
 export function readRoleGraph(kgRoot: string): RoleGraph | undefined {

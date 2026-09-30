@@ -121,7 +121,7 @@ import { graphVerdict, proseGraphs } from "./lsi.ts";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
-import { actorsDir } from "../schemas/role-graph.ts";
+import { actorsDir, capabilitiesDir } from "../schemas/role-graph.ts";
 
 const ENGINE_VERSION = "1";
 
@@ -259,7 +259,8 @@ const KG_ROOT = join(root, "skills");
 // empty list and the actor criteria then report on. It was the same before the
 // move, when the probed `.claude/skills/actors` simply did not exist.
 const ACTOR_DIR = actorsDir(repoRootFor(root)) ?? "";
-const CAPABILITY_DIR = join(repoRootFor(root), ".claude", "skills", "capabilities");
+// Declared home inside `scenarios` (bean rqao); "" when there is none, as for ACTOR_DIR.
+const CAPABILITY_DIR = capabilitiesDir(repoRootFor(root)) ?? "";
 const REQUIREMENT_DIR = join(KG_ROOT, "requirements");
 // declared-path-literal: the convention fallback, at the call site. Same
 // reasoning as `WORKFLOW_DIR`. A Tool node carries NO path of its own — the

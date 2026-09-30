@@ -1285,7 +1285,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     applies: ["graph"],
     scope: "repo",
     scopeBasis:
-      "Both sides are repository-level — actors and `.claude/skills/capabilities/` are resolved through " +
+      "Both sides are repository-level — actors and capabilities (`cat-harness/scenarios/`) are resolved through " +
       "`repoRootFor`, so `--instance` does not move either. Re-asking per instance would re-derive the " +
       "root's own answer once per declaration and report the same findings N times.",
     severity: "critical",

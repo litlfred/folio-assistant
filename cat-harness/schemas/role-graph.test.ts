@@ -12,6 +12,7 @@ import { join } from "node:path";
 import {
   readRoleGraph,
   actorsDir,
+  capabilitiesDir,
   readActors,
   resolveRoleSkills,
   resolveRoleStack,
@@ -305,7 +306,7 @@ describe("permissions are an actor property, not a role property", () => {
   test("`capabilities[]` now holds probes only — no permission and no skill leaked back in", async () => {
     const { readdirSync } = await import("node:fs");
     const probes = new Set(
-      readdirSync(join(import.meta.dir, "..", "..", ".claude", "skills", "capabilities")).map((f: string) =>
+      readdirSync(capabilitiesDir(join(import.meta.dir, "..", ".."))!).map((f: string) =>
         f.replace(/\.json$/, ""),
       ),
     );
