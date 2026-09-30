@@ -6,6 +6,11 @@
  * this checks the reference RESOLVES. Before it, an unknown theme fell back
  * silently to the default at render time — a declaration that reads as a
  * choice and renders as none.
+ *
+ * Resolved BY REFERENCE, owner first (`themeByRef`, bean `v8n5`), not against
+ * the platform table alone: who-iris's card cites its own `iris-sticky`,
+ * which the platform deliberately does not hold, and a platform-only lookup
+ * would call that correct reference broken.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -13,14 +18,15 @@ import { resolve } from "node:path";
 import { Glob } from "bun";
 
 import { declarationPathIn, instanceRootsIn } from "../../schemas/cat-harness.js";
-import { themeById } from "../../schemas/themes.js";
+import { themeByRef } from "../../schemas/theme-by-ref.js";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
 type Ref = { themeId: string; instance?: string };
+type Found = { where: string; ref: Ref; citing?: string };
 
-function refs(): { where: string; ref: Ref }[] {
-  const out: { where: string; ref: Ref }[] = [];
+function refs(): Found[] {
+  const out: Found[] = [];
   for (const root of instanceRootsIn(REPO)) {
     const p = declarationPathIn(root);
     if (!p) continue;
@@ -31,15 +37,15 @@ function refs(): { where: string; ref: Ref }[] {
     };
     const at = (s: string) => `${d.name ?? root}: ${s}`;
     for (const e of d.directories ?? []) {
-      if (e.theme) out.push({ where: at(`directory ${e.id}`), ref: e.theme });
-      if (e.tile?.theme) out.push({ where: at(`tile ${e.id}`), ref: e.tile.theme });
+      if (e.theme) out.push({ where: at(`directory ${e.id}`), ref: e.theme, citing: d.name });
+      if (e.tile?.theme) out.push({ where: at(`tile ${e.id}`), ref: e.tile.theme, citing: d.name });
     }
-    for (const s of d.stickies ?? []) if (s.theme) out.push({ where: at(`sticky ${s.id}`), ref: s.theme });
+    for (const s of d.stickies ?? []) if (s.theme) out.push({ where: at(`sticky ${s.id}`), ref: s.theme, citing: d.name });
   }
   // Sticky contributions declared as their own files.
   for (const rel of new Glob("*.json").scanSync({ cwd: resolve(REPO, "cat-harness", "folio") })) {
-    const c = JSON.parse(readFileSync(resolve(REPO, "cat-harness", "folio", rel), "utf-8")) as { theme?: Ref };
-    if (c.theme) out.push({ where: `cat-harness/folio/${rel}`, ref: c.theme });
+    const c = JSON.parse(readFileSync(resolve(REPO, "cat-harness", "folio", rel), "utf-8")) as { theme?: Ref; contributedBy?: string };
+    if (c.theme) out.push({ where: `cat-harness/folio/${rel}`, ref: c.theme, citing: c.contributedBy });
   }
   return out;
 }
@@ -53,7 +59,7 @@ describe("declared theme references resolve", () => {
 
   test("every reference is a ThemeRef naming an installed theme", () => {
     const bad = all
-      .filter(({ ref }) => typeof ref !== "object" || themeById(ref.themeId) === undefined)
+      .filter(({ ref, citing }) => typeof ref !== "object" || !themeByRef(ref, REPO, citing).ok)
       .map(({ where, ref }) => `${where} → ${JSON.stringify(ref)}`);
     expect(bad).toEqual([]);
   });

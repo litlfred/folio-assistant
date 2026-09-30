@@ -707,6 +707,28 @@ export function missingLayouts(value: unknown): ThemeLayout[] {
   return THEME_LAYOUTS.filter((l) => !(l in layouts));
 }
 
+/**
+ * The HUE of a `#rgb` / `#rrggbb` colour, in whole degrees 0–359 — or
+ * `undefined` when the value is not a hex colour or has no hue (a grey).
+ *
+ * Bean `v8n5`. A harness tile and its navbar entry are toned by a hue angle
+ * (`--fa-tile-tone`), and a theme's palette is hex. This is the one bridge
+ * between the two, so a tile can take its tone from its instance's own theme
+ * accent rather than from a hue written down a second time. A grey has no hue
+ * to take, which is a different answer from red (0°), hence `undefined`.
+ */
+export function hexHue(hex: string): number | undefined {
+  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) return undefined;
+  const h = m[1]!.length === 3 ? m[1]!.split("").map((c) => c + c).join("") : m[1]!;
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16) / 255) as [number, number, number];
+  const max = Math.max(r, g, b);
+  const d = max - Math.min(r, g, b);
+  if (d === 0) return undefined;
+  const raw = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return ((Math.round(raw * 60) % 360) + 360) % 360;
+}
+
 /** The CSS custom-property block a theme contributes, as `--fa-sticky-*` roles. */
 export function themeCssVars(theme: ResolvedTheme): string {
   const p = theme.palette;

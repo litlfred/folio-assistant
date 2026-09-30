@@ -2,7 +2,7 @@
   "$schema": "folio-graph-projection/v1",
   "tile": {
     "folio": {
-      "count": 5,
+      "count": 6,
       "unit": "stickies"
     }
   },
@@ -10,7 +10,7 @@
     {
       "dir": "cat-harness/folio",
       "present": true,
-      "nodes": 5
+      "nodes": 6
     }
   ],
   "nodes": [
@@ -122,6 +122,21 @@
       "links": [],
       "chars": 134,
       "file": "cat-harness/folio/smart-trust.json"
+    },
+    {
+      "id": "who-iris",
+      "summary": "A catalogue by reference",
+      "theme": "iris-sticky",
+      "anchor": "page:index",
+      "declaredIn": "who-iris/who-iris.json",
+      "links": [
+        {
+          "label": "The IRIS replica",
+          "href": "/who-iris/"
+        }
+      ],
+      "chars": 126,
+      "file": "cat-harness/folio/who-iris.json"
     }
   ]
 }

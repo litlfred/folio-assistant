@@ -850,3 +850,31 @@ describe("inertNote — why a row does not open", () => {
     expect(new Set(all).size).toBe(4);
   });
 });
+
+describe("an instance's OWN theme tones its tile (bean v8n5)", () => {
+  // Over THIS repository, because the subject is a real reference: who-iris's
+  // card cites `{instance: "who-iris", themeId: "iris-sticky"}`, a theme the
+  // platform does not hold. If resolution fell back to the platform default,
+  // or the tone to the avatar registry, the tile would still render — on the
+  // wrong hue — which is why this is a test and not a glance.
+  const REPO = join(import.meta.dir, "..", "..", "..");
+  const HOST = join(REPO, "cat-harness");
+  const tiles = harnessTiles(REPO, HOST, ["who-iris", "cat-harness", "bootstrap"]);
+
+  test("who-iris's tile tone is the hue of its own theme's accent, not the avatar's", async () => {
+    const { themeByRef } = await import("../../schemas/theme-by-ref.js");
+    const { hexHue } = await import("../../schemas/theme.js");
+    const r = themeByRef({ instance: "who-iris", themeId: "iris-sticky" }, REPO);
+    expect(r.ok).toBe(true);
+    const who = tiles.find((t) => t.name === "who-iris")!;
+    expect(who.toneFrom).toBe("theme");
+    expect(who.tone).toBe(hexHue(r.ok ? r.theme.palette.accent : "")!);
+    expect(who.findings.join(" ")).not.toContain("not installed");
+  });
+
+  test("an instance citing a PLATFORM theme keeps its avatar tone", () => {
+    for (const name of ["cat-harness", "bootstrap"]) {
+      expect(tiles.find((t) => t.name === name)!.toneFrom).toBe("avatar");
+    }
+  });
+});
