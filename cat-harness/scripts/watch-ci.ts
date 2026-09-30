@@ -1,0 +1,146 @@
+/**
+ * Watch ONE commit's checks to a verdict, in three states.
+ *
+ * ```sh
+ * bun run ci:watch <sha>                    # poll until decided
+ * bun run ci:watch <sha> --branch main      # which branch explains a cancellation
+ * bun run ci:watch <sha> --once             # one look, no polling
+ * ```
+ *
+ * Exit codes carry the third state, because a caller that reads "not 1" as
+ * success rebuilds the collapse this exists to stop:
+ *
+ * ```
+ * 0  pass          every judgeable check completed clean
+ * 1  fail          a check failed, timed out, or needs action
+ * 2  undetermined  cancelled/superseded, still pending, no runs, or unreadable
+ * ```
+ *
+ * ## Why this is not `check:ci-health`
+ *
+ * That asks whether the **workflows** are passing on the default branch across
+ * recent history. This asks about **one commit**: may I merge, must I fix, or
+ * do I not yet know? A workflow can be healthy while one commit's run was
+ * cancelled, and a commit can be green while a workflow has been red for a
+ * month on a path it never touched.
+ *
+ * ## Why it exists
+ *
+ * Measured 2026-09-30: an agent watching `main` after a merge folded
+ * `cancelled` into failure and reported **main red** on a commit whose every
+ * hard gate had passed. The cancelled run was a deploy job superseded by the
+ * next push. See {@link ../src/workflow/check-verdict} for the full account and
+ * the precedence rules, which are pure and tested there rather than here.
+ *
+ * `GITHUB_TOKEN` or `GH_TOKEN` is used when present. Without one the call
+ * still works for a public repository; for a private one it fails, and this
+ * reports `undetermined` rather than a pass.
+ *
+ * @module scripts/watch-ci
+ */
+import { execFileSync } from "node:child_process";
+import { resolve } from "node:path";
+
+import {
+  exitCodeFor,
+  explainSuperseded,
+  verdictOf,
+  type CheckRun,
+} from "../src/workflow/check-verdict.js";
+import { repoRootFor } from "../schemas/cat-harness.js";
+
+const USAGE = "Usage: cat-harness/scripts/watch-ci.ts <sha> [--branch <name>] [--once] [--interval <s>] [--max <n>]";
+
+/** `owner/repo` from the checkout's origin, so this is not hardcoded to one repository. */
+function slugOf(root: string): string | undefined {
+  try {
+    const url = execFileSync("git", ["remote", "get-url", "origin"], { cwd: root, encoding: "utf-8" }).trim();
+    return /github\.com[:/]([^/]+\/[^/.]+)/.exec(url)?.[1];
+  } catch {
+    return undefined;
+  }
+}
+
+async function fetchRuns(slug: string, sha: string): Promise<readonly CheckRun[] | undefined> {
+  const token = process.env["GITHUB_TOKEN"] ?? process.env["GH_TOKEN"];
+  try {
+    const r = await fetch(`https://api.github.com/repos/${slug}/commits/${sha}/check-runs`, {
+      headers: {
+        Accept: "application/vnd.github+json",
+        ...(token === undefined ? {} : { Authorization: `Bearer ${token}` }),
+      },
+    });
+    if (!r.ok) return undefined;
+    const body = (await r.json()) as { check_runs?: CheckRun[] };
+    // An absent `check_runs` key is NOT an empty list: one is "the response
+    // did not carry the field", the other is "this commit has no checks", and
+    // only the second is a fact about the commit.
+    return Array.isArray(body.check_runs) ? body.check_runs : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/** `git log <sha>..origin/<branch>`, oldest first — empty when the branch has not moved. */
+function commitsAfter(root: string, sha: string, branch: string): string[] {
+  try {
+    execFileSync("git", ["fetch", "origin", branch], { cwd: root, stdio: "ignore" });
+    return execFileSync("git", ["log", "--oneline", `${sha}..origin/${branch}`], {
+      cwd: root,
+      encoding: "utf-8",
+    })
+      .split("\n")
+      .filter((l) => l.length > 0)
+      .reverse();
+  } catch {
+    return [];
+  }
+}
+
+if (import.meta.main) {
+  const argv = process.argv.slice(2);
+  const flag = (name: string): string | undefined => {
+    const i = argv.indexOf(`--${name}`);
+    return i >= 0 ? argv[i + 1] : undefined;
+  };
+  // The ARGUMENT is tested before it is used, the order bean `1oqu` fixed
+  // elsewhere: a missing SHA is "you did not tell me what to watch", which is
+  // exit 2, not a crash.
+  const sha = argv.find((a) => !a.startsWith("--") && argv[argv.indexOf(a) - 1]?.startsWith("--") !== true);
+  if (sha === undefined) {
+    console.error(`${USAGE}\n  no commit given — nothing to watch`);
+    process.exit(2);
+  }
+  // `repoRootFor` takes an INSTANCE root and is `join(x, "..")` — it is not a
+  // cwd finder. Passing `process.cwd()` gave the repository's PARENT and the
+  // git call failed with "not a git repository", which this reported as
+  // `undetermined` rather than as a pass. Correct by construction instead:
+  // this file lives in <instance>/scripts/, so the instance root is one up.
+  const root = repoRootFor(resolve(import.meta.dir, ".."));
+  const slug = slugOf(root);
+  if (slug === undefined) {
+    console.error(`${USAGE}\n  could not read owner/repo from git remote 'origin' — NOT a pass`);
+    process.exit(2);
+  }
+  const branch = flag("branch") ?? "main";
+  const once = argv.includes("--once");
+  const interval = Number(flag("interval") ?? 45) * 1000;
+  const max = Number(flag("max") ?? 40);
+
+  for (let i = 0; i < max; i++) {
+    const v = verdictOf(await fetchRuns(slug, sha));
+    const when = new Date().toISOString().slice(11, 19);
+    const named = v.names.length > 0 ? `  ${v.names.slice(0, 4).join(", ")}` : "";
+    console.log(`${when}  ${sha.slice(0, 11)}  ${v.state.toUpperCase()} — ${v.because}${named}`);
+
+    if (v.state === "undetermined" && v.names.length > 0) {
+      // WHOSE contention? Only the branch can say, so ask it rather than
+      // assuming concurrency — an unexplained cancellation is a thing to look at.
+      console.log(`  ${explainSuperseded(commitsAfter(root, sha, branch))}`);
+    }
+    if (v.state !== "pending" || once) process.exit(exitCodeFor(v.state));
+    await Bun.sleep(interval);
+  }
+  console.error(`  still pending after ${max} poll(s) — could not determine, which is NOT a pass`);
+  process.exit(2);
+}

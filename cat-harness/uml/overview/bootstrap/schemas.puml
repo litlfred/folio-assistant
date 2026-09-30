@@ -41,15 +41,10 @@ package "bootstrap/schemas" as pkg_bootstrap_schemas <<schemas>> {
     exchange [1..*] : Exchange[]
     stillOpen [0..*] : list<harness | repositories>
   }
-  class "Glossary Ledger" as bootstrap_schemas_glossary_ledger_schema_json_Glossary_Ledger <<schema: glossary-ledger.schema.json>> #e9edf3 {
-    $schema [1] : 'glossary-ledger/1.0.0'
-    instance [1] : string
-    concepts [1] : map<object>
-  }
   class "Directory" as bootstrap_schemas_graph_schema_json_Directory <<schema: graph.schema.json>> #e9edf3 {
     id [1] : string
     path [1] : string
-    graphKinds [1..*] : list<'skills' | 'schemas' | 'scenarios' | 'processes' | 'models' | 'swimlane-glossary' | string>
+    graphKinds [1..*] : list<'skills' | 'schemas' | 'scenarios' | 'processes' | 'models' | string>
     title [0..1] : string
     description [0..1] : string
   }

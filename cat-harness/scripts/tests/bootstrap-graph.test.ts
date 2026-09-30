@@ -14,8 +14,9 @@ import { execFileSync } from "node:child_process";
 import { join, resolve } from "node:path";
 
 import { buildCatBootstrapDocument } from "../gen-bootstrap-graph.js";
-import { buildExport, publishedDocument } from "../kg-export.js";
 import { BootstrapGraphDocumentSchema } from "../../schemas/bootstrap-graph.js";
+import { GraphExportSchema } from "../../../bootstrap-tools/schemas/graph-export.ts";
+import { exportGraph } from "../../../bootstrap-tools/scripts/export-graph.ts";
 import { isSkillMd } from "../known-skills.js";
 import {
   repoRootFor,
@@ -68,7 +69,8 @@ describe("the document is published where it says it is", () => {
     // honour it — the literal it matched named `gen-bootstrap-graph.ts`. Bean
     // `dyd3` then found TWO publishers writing a bootstrap graph, disagreeing
     // about its contents, and retired this one; the site now writes that URL
-    // from `kg-export --instance ./bootstrap`. A script-name match would have
+    // from `kg-export --instance ./bootstrap`, and since 2026-09-30 from
+    // bootstrap-tools' `export-graph.ts`. A script-name match would have
     // gone red on the change that FIXED the defect it was guarding. Matching
     // the path, as the comment always said, it goes red only if nothing
     // writes there.
@@ -268,11 +270,14 @@ function bootstrapGraphPublishers(workflowText: string): string[] {
     .split("\n")
     .filter((l) => !/^\s*#/.test(l))
     .join("\n");
-  return [...code.matchAll(/cat-harness\/scripts\/([a-z0-9-]+)\.ts([^\n]*)/g)]
+  // THREE generators can write one since 2026-09-30: bootstrap-tools'
+  // `export-graph.ts` is the publisher (owner, bean `xsqm`), and the two
+  // cat-harness ones stay named so neither can come back unnoticed.
+  return [...code.matchAll(/(?:cat-harness|bootstrap-tools)\/scripts\/([a-z0-9-]+)\.ts([^\n]*)/g)]
     .filter((m) => {
       const [script, rest] = [m[1]!, m[2] ?? ""];
       if (!/--out\s/.test(rest)) return false;
-      if (script === "gen-bootstrap-graph") return true;
+      if (script === "gen-bootstrap-graph" || script === "export-graph") return true;
       return script === "kg-export" && /--instance\s+\.?\/?bootstrap\b/.test(rest);
     })
     .map((m) => `${m[1]}${m[2]}`);
@@ -374,23 +379,26 @@ describe("the document has a schema, and both builds satisfy it (bean n350)", ()
   // `renderExemption.owes` names this document. Until n350 it had no schema:
   // its properties lived in the emission skill's prose and the code that read
   // it cast `doc.problems as string[]`.
-  test("the published document — kg-export, the one publisher — parses", async () => {
-    const doc = publishedDocument(await buildExport({ instanceRoot: CAT_BOOTSTRAP }));
-    const r = BootstrapGraphDocumentSchema.safeParse(doc);
+  // The published document is bootstrap-tools' since 2026-09-30 (owner,
+  // bean `xsqm`), with its own schema; its properties are tested beside it
+  // (`bootstrap-tools/scripts/export-graph.test.ts`). These two stay here
+  // because the PUBLISHING — which step, with what flags — is this site's.
+  test("the published document — bootstrap-tools' export-graph, the one publisher — parses", () => {
+    const doc = exportGraph(CAT_BOOTSTRAP, { docIri: "https://example.org/bootstrap/bootstrap.jsonld", provenance: true });
+    const r = GraphExportSchema.safeParse(doc);
     expect(r.success ? [] : r.error.issues).toEqual([]);
   });
 
-  test("the published copy carries provenance; the @graph carries none (hwzu)", async () => {
-    // Owner, 2026-09-23: every published graph carries PROV provenance. The
-    // emission skill's rule is narrowed to the nodes: no node may carry a
-    // build timestamp or commit, so two builds of one tree agree on the graph.
-    const doc = publishedDocument(await buildExport({ instanceRoot: CAT_BOOTSTRAP })) as Record<string, unknown>;
-    expect("generatedAt" in doc).toBe(true);
-    expect("sourceCommit" in doc || "sourceCommitUnavailable" in doc).toBe(true);
-    const graph = JSON.stringify(doc["@graph"]);
-    for (const key of ["generatedAt", "sourceCommit", "sourceCommitSha", "sourceCommitAt"]) {
-      expect(graph.includes(`"${key}"`)).toBe(false);
+  test("the published copy carries provenance; the @graph carries none (hwzu)", () => {
+    // Owner, 2026-09-23: every published graph carries PROV provenance. Both
+    // workflows pass `--provenance`; no node carries a build time.
+    for (const wf of ["docs-site.yml", "feature-staging.yml"]) {
+      const text = readFileSync(join(repoRootFor(ROOT), ".github", "workflows", wf), "utf-8");
+      expect({ wf, provenance: bootstrapGraphPublishers(text).every((p) => p.includes("--provenance")) }).toEqual({ wf, provenance: true });
     }
+    const doc = exportGraph(CAT_BOOTSTRAP, { docIri: "https://example.org/bootstrap/bootstrap.jsonld", provenance: true });
+    expect("generatedAtTime" in doc).toBe(true);
+    expect(JSON.stringify(doc["@graph"]).includes("generatedAtTime")).toBe(false);
   });
 
   test("the generator the four properties are tested against parses too", async () => {

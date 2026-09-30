@@ -47,14 +47,14 @@ describe("artefactDeclarationDrift", () => {
   });
 
   it("does NOT report artefacts produced by some other command as unproduced", () => {
-    // The narrowing, stated as a test. `ns/vocabulary.jsonld` and
+    // The narrowing, stated as a test. `cat-harness/ns.jsonld` and
     // `ns/content/v1.jsonld` are maintained by Tools that do not invoke
     // `kg:schema`, so passing an empty produced-list must not indict them: this
     // script cannot see whether the site build wrote them, and a check that
     // answers a question it cannot see is worse than one that declines to.
     const { unproduced } = artefactDeclarationDrift([]);
     const flagged = unproduced.map((u) => u.artefact);
-    expect(flagged).not.toContain("ns/vocabulary.jsonld");
+    expect(flagged).not.toContain("cat-harness/ns.jsonld");
     expect(flagged).not.toContain("ns/content/v1.jsonld");
   });
 

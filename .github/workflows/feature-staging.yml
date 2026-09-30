@@ -45,6 +45,9 @@ on:
       - 'cat-harness/schemas/**'
       - 'cat-harness/content/**'
       - 'cat-harness/skills/**'
+      # bootstrap-tools writes bootstrap's graph and vocabulary for the preview
+      # (bean `xsqm`), so a change to it must rebuild the preview too.
+      - 'bootstrap-tools/**'
       # The state-dashboard generator and the bean reader behind it.
       #
       # Their OUTPUT is committed under `cat-harness/docs/`, which the first
@@ -899,10 +902,15 @@ jobs:
           # unchanged.
           mkdir -p "./_site/ns/content"
           cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
-          bun run cat-harness/scripts/ns-export.ts --out "./_site/ns/vocabulary.jsonld"
-          cp "./_site/ns/vocabulary.jsonld" "./_site/ns/vocabulary.json"
+          # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
+          # each term is defined by its layer's own document, below, and the
+          # Glossary publishes SKOS for every scheme. bootstrap's document is
+          # bootstrap's own, written by bootstrap-tools and committed, so it is
+          # copied rather than rebuilt by a harness exporter.
+          mkdir -p "./_site/bootstrap"
+          for ext in "ns.jsonld" "ns" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
 
-          for pair in "bootstrap:bootstrap" "harness:cat-harness" "core:folio-assistant-core"; do
+          for pair in "harness:cat-harness" "core:folio-assistant-core"; do
             LAYER="${pair%%:*}"; DIR="${pair##*:}"
             mkdir -p "./_site/${DIR}"
             bun run cat-harness/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
@@ -945,8 +953,9 @@ jobs:
           #
           # The surviving export moved to `<stub>/<stub>.jsonld`, which is where
           # that instance's other rendered documents (`ns.jsonld`) already sit.
+          # Written by bootstrap-tools since 2026-09-30 — see docs-site.yml.
           BOOT_STUB=$(bun run cat-harness/scripts/print-stub.ts ./bootstrap)
-          bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
+          bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${BASE}/${BOOT_STUB}/" --provenance --out "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld"
           cp "./_site/${BOOT_STUB}/${BOOT_STUB}.jsonld" "./_site/${BOOT_STUB}/${BOOT_STUB}.json"
 
           # The swimlane glossaries, on the preview too -- `check:invocation-parity`
