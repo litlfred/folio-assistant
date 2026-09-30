@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/bootstrap/0.1.0/schemas/glossary-ledger.schema.json",
+  "title": "Glossary Ledger",
+  "description": "Every term a Knowledge Graph's Processes have ever named, with the date each was first seen and the date it stopped being used. The glossary itself is regenerated each time; this is the one fact that cannot be, so a retired term is never silently reused.",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "glossary-ledger/1.0.0"
+    },
+    "instance": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Which Knowledge Graph's glossary this is: its name, never a path."
+    },
+    "concepts": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "prefLabel": {
+            "type": "string",
+            "description": "The label at the time of minting — what a retired term is shown as."
+          },
+          "firstSeen": {
+            "type": "string",
+            "description": "ISO date this key was first written."
+          },
+          "retiredOn": {
+            "description": "ISO date it stopped being used, or null while it still is.",
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "prefLabel",
+          "firstSeen",
+          "retiredOn"
+        ]
+      },
+      "description": "Keyed by the term IRI's local part, never the absolute IRI, so the file survives a change of address."
+    }
+  },
+  "required": [
+    "$schema",
+    "instance",
+    "concepts"
+  ]
+}
