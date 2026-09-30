@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 444,
+      "count": 445,
       "unit": "beans"
     }
   },
@@ -5879,6 +5879,20 @@
       "updatedAt": "2026-09-22T21:04:32Z",
       "preview": "**Why.** Every child can pass on a ten-block fixture and fall over on a real\nhandbook. Performance, the heat map's legibility at 2,000 cells and the\nnavigation's usefulness can only be judged at scale.\n\n**Candidates, measured 2026-09-22:**\n- `smart-immunizations/`: 748 artefacts indexed, 200 materialised. It is\n  **provisional** (nsbb may remove it) and deliberately renders no HTML, so it\n  can on",
       "file": "beans/defs/folio-assistant-xp72--scale-fixture-a-beforeafter-large-document-pair-wi.md"
+    },
+    {
+      "id": "folio-assistant-xsqm",
+      "title": "BOOTSTRAP-TOOLS: re-create as a sibling instance; Zod, generators and checks move down; import cone to zod only",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-vke6",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T23:42:57Z",
+      "updatedAt": "2026-09-29T23:42:57Z",
+      "preview": "Owner rulings, 2026-09-29 (answers to the separation analysis, Q7/Q1/Q10/Q5):\n\n- **Zod moves DOWN into bootstrap-tools** — reverses `319n`'s placement. Across repos, Zod in cat-harness makes a bootstrap release depend on cat-harness, which depends on bootstrap. bootstrap still knows no zod (`etg1`).\n- **bootstrap-tools owns content checks AND the README/SVG writers** (options 1+2), not a whole har",
+      "file": "beans/defs/folio-assistant-xsqm--bootstrap-tools-re-create-as-a-sibling-instance-zo.md"
     },
     {
       "id": "folio-assistant-xtpc",

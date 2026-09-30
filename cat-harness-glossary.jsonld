@@ -611,7 +611,8 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_ActorRoleAdministration/Lane_Administrator",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Admin"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Admin",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Admin"
       ]
     },
     {
@@ -631,6 +632,15 @@
       "label": "Administrator",
       "scopeNote": "Reached only after Declared, Detangled and Isolated have each independently cleared — so this lane is never asked to judge the measurement, only whether an already-clean extraction may proceed. Declining is not a refusal back to unknown: End_Declined leaves the sub-graph declared, detangled and isolated in place, which is a real outcome of this process and not merely the absence of one.",
       "source": "cat-harness/processes/graph-detanglement.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Admin",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/administrator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
+      "label": "Administrator",
+      "scopeNote": "The person's decisions: whether to separate at all, authorising the extraction, creating the repositories, and the cutover that deletes the parent's copy. An agent reports and waits at each; none of them may be relaxed by a package.",
+      "source": "cat-harness/processes/kg-separation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/programme-manager",
@@ -692,6 +702,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Lifecycle/Lane_PubMgr",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Publication/Lane_PubMgr",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_PubMgr",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Publication",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Deployment",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_PubMgr",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
@@ -725,6 +736,15 @@
       "label": "Publication manager — deploy and seed",
       "scopeNote": "Reached only past Gateway_Path's main-or-release branch, never for a PR preview — which is what makes this the one lane allowed to touch the shared cache. Task_Seed does not seed on a green build alone: it writes to a -test branch and verifies a restore from a clean clone before promoting, so what licenses the shared cache is the verified restore, not the deploy that came before it.",
       "source": "cat-harness/processes/ig-incremental-build.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Publication",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/publication-manager",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
+      "label": "Publication manager",
+      "scopeNote": "Owns where things are published: every identifier the content mints must be a file some step publishes, at /&lt;version&gt;/ for programs and /v&lt;major&gt;/ for people; and the first release.",
+      "source": "cat-harness/processes/kg-separation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Deployment",
@@ -1172,6 +1192,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_CRDM_Signoff/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_Editing/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_GraphDetanglement/Lane_Agent",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_RelatedWork/Lane_Agent",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Machine",
@@ -1324,6 +1345,15 @@
       "label": "Authoring agent",
       "scopeNote": "Runs every stage up to the edge of authorisation — brief, declare, measure, move-and-remeasure, isolate — and Task_Propose is the last thing it does off its own judgement: reporting sizes and what would break, then waiting. Verification here is always by RE-RUNNING the measurement rather than by an assignment being locally reasonable, which is why Task_Move loops back to Task_Measure and not to the gate — a move that looks right is not yet a move that measured right.",
       "source": "cat-harness/processes/graph-detanglement.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Agent",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
+      "label": "Authoring agent",
+      "scopeNote": "Briefs, measures the signals, runs declare-detangle-isolate, reports what would move, seeds the repositories once they exist, and adopts each later release. Verification is always by re-running a gate, never by a change looking right.",
+      "source": "cat-harness/processes/kg-separation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Agent",
@@ -1630,6 +1660,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_HumanTranslation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_IgIncremental/Lane_Build",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_JsonLdDrift/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_L3Fhir/Lane_Build",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
@@ -1766,6 +1797,15 @@
       "label": "CI/CD Pipeline",
       "scopeNote": "The only lane, running the one task this diagram draws deliberately as a single box rather than five: the five checks it performs are independent of each other and only sequential because one job runs them, so five boxes would assert an ordering that does not exist. Its declared job is also the reason this diagram exists at all — without it, check:workflow-coverage would have nothing here to compare a real job against.",
       "source": "cat-harness/processes/jsonld-drift-check.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
+      "label": "Build pipeline",
+      "scopeNote": "Runs the checks that decide the gateways: the tools' import closure and the content's lack of code, node identifiers against file paths, the standalone rehearsal, and dereferencing after release. A gate that cannot tell stops the process; it never reads as clean.",
+      "source": "cat-harness/processes/kg-separation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgToPortal/Lane_Pipeline",
@@ -2355,7 +2395,19 @@
       "prefLabel": "Platform authoring agent",
       "definition": "The authoring agent working on how this instance PUBLISHES itself — the MCP projection, its contract, and the rendering endpoints.",
       "notation": "platform-authoring-agent",
-      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld"
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#glossary-usage/Process_KgSeparation/Lane_Platform",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/platform-authoring-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_KgSeparation",
+      "label": "Platform authoring agent",
+      "scopeNote": "The platform-side stages: the graph's identity (version, iriBase, nodeSchemas), moving harness output about it into the host, splitting the content from its tools, and making the parent consume the pair additively.",
+      "source": "cat-harness/processes/kg-separation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/session-coordinator",
