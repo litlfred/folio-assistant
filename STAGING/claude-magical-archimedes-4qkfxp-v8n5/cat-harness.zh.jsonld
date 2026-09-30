@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T11:25:17.093Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ab2e7142c5d629fb7a3efd63139370e920b1f964",
-  "sourceCommitSha": "ab2e7142c5d629fb7a3efd63139370e920b1f964",
-  "sourceCommitAt": "2026-09-30T11:22:04Z",
+  "generatedAt": "2026-09-30T12:12:22.925Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/7d3761eebc161276ba45482e146387c6fa31944a",
+  "sourceCommitSha": "7d3761eebc161276ba45482e146387c6fa31944a",
+  "sourceCommitAt": "2026-09-30T12:08:04Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -319,7 +319,7 @@
     "Role": 149,
     "ProcessNode": 888,
     "Tool": 107,
-    "Schema": 124,
+    "Schema": 125,
     "ExternalSchema": 17,
     "GraphKind": 35,
     "Directory": 47,
@@ -1174,7 +1174,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/covered-is-not-reachable.md",
-      "instructionLines": 273,
+      "instructionLines": 272,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2475,7 +2475,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/skills-and-tools.md",
-      "instructionLines": 369,
+      "instructionLines": 382,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -38682,7 +38682,7 @@
         ],
         "outputs": [
           {
-            "name": "pages",
+            "name": "schemaReference",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/tool-types.schema.json#/$defs/RepoPath",
             "description": "The generated reference directory. Never hand-edited."
           }
@@ -38725,7 +38725,7 @@
         ],
         "outputs": [
           {
-            "name": "pages",
+            "name": "skillInstructions",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/tool-types.schema.json#/$defs/RepoPath",
             "description": "The generated instruction directory. Never hand-edited."
           }
@@ -40335,7 +40335,7 @@
         "inputs": [
           {
             "name": "file",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/tool-types.schema.json#/$defs/DelimitedTextPath",
             "description": "Path to the delimited text file.",
             "required": true
           }
@@ -40372,7 +40372,7 @@
         "inputs": [
           {
             "name": "file",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/tool-types.schema.json#/$defs/Text",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/tool-types.schema.json#/$defs/WorkbookPath",
             "description": "Path to the workbook.",
             "required": true
           }
@@ -42935,6 +42935,15 @@
       "module": "schemas/ig-menu.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/ig-menu"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/cat-harness.jsonld#schema/inline-code",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#Schema",
+      "name": "inline-code",
+      "title": "Backtick spans in authored prose, rendered as `<code>` — bean `mylx`.",
+      "module": "schemas/inline-code.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/inline-code"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-v8n5/cat-harness.jsonld#schema/intake",

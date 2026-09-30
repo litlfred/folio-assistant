@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 461,
+      "count": 466,
       "unit": "beans"
     }
   },
@@ -75,7 +75,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:14Z",
       "updatedAt": "2026-09-23T10:36:14Z",
-      "preview": "Pages of 46 to 240+ rows are one flat list with no search, filter or grouping, so finding an entry means scrolling tens of thousands of pixels on a phone. Add a filter and grouping in the shared list component.\n\nObserved on: `glossary`, `processes`, `skills-index`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.",
+      "preview": "Pages of 46 to 240+ rows are one flat list with no search, filter or grouping, so finding an entry means scrolling tens of thousands of pixels on a phone. Add a filter and grouping in the shared list component.\n\nObserved on: `glossary`, `processes`, `skills-index`, `tools` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n## Re",
       "file": "beans/defs/folio-assistant-0fua--long-flat-lists-with-no-search-or-filter.md"
     },
     {
@@ -457,6 +457,20 @@
       "updatedAt": "2026-09-30T10:16:57Z",
       "preview": "## What\n\n`mount-instance-docs.ts` mounts a directory when it carries an `index.html`\n**at its own root**, and then copies **everything beneath it**. For\n`who-iris/library/` that is 1,378 files, of which 11 are pages:\n\n| | count | what |\n|---|---|---|\n| pages | 11 | 7 `.html` (index, community-list, 2 collections, 3 items), 3 cover `.png`, `image-verdicts.json` |\n| L1 corpus | 1,367 | 813 `.jsonld`",
       "file": "beans/defs/folio-assistant-2b5s--mount-copies-a-directory-wholesale-who-iris-publis.md"
+    },
+    {
+      "id": "folio-assistant-2e39",
+      "title": "B9b (#1168): a BPMN lane is its own node; performedBy points at the registry role",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T11:21:30Z",
+      "preview": "Owner, 2026-09-30: Lane node. kg-export mints role/<lane name> per lane, so one role can get two nodes or merge by accident. Emit process/<p>/lane/<id> (type Lane) with bindsRole; performedBy goes to role/<roleRef>.\n\n## Done when\n- [ ] lanes exported as Lane nodes, not Role nodes\n- [ ] performedBy resolves to registry Role nodes, 0 dangling\n\n_2026-09-30T11:21:30Z_ — Claimed by claude/sharp-einstei",
+      "file": "beans/defs/folio-assistant-2e39--b9b-1168-a-bpmn-lane-is-its-own-node-performedby-p.md"
     },
     {
       "id": "folio-assistant-2j09",
@@ -2899,6 +2913,20 @@
       "file": "beans/defs/folio-assistant-g5o5--checkglossary-calls-kg-skills-stale-in-ci-and-curr.md"
     },
     {
+      "id": "folio-assistant-g9r2",
+      "title": "who-iris replica: top-centre handle covers the INGESTED COPY banner and a link; 3 replica pages scroll sideways at 390",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-4ccr",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-29T23:07:47Z",
+      "updatedAt": "2026-09-29T23:07:47Z",
+      "preview": "Measured 2026-09-29 on a local build of main 35402147f.\n\n1. **The handle is back over the replica's own banner.** 2vne (owner 2026-09-27) moved the ▾ Folio handle back to top-centre as a short pill. On `who-iris/collection-collection-hq-publications.html` at 390×844 it covers the \"INGESTED COPY — not WHO\" text, which is 269z's original defect. At 1280×800 its box contains the centre of the \"folio-",
+      "file": "beans/defs/folio-assistant-g9r2--who-iris-replica-top-centre-handle-covers-the-inge.md"
+    },
+    {
       "id": "folio-assistant-ga3q",
       "title": "WAIVER: a human can waive a confirmation right, scoped to a session or a process run",
       "status": "todo",
@@ -3251,14 +3279,14 @@
     {
       "id": "folio-assistant-j6t3",
       "title": "INSTALL SKILLS AS TOOLS AT RENDER TIME: 34 skills declare user_invocable, 4 are reachable — options for Claude Code, Antigravity and any MCP host",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T21:42:35Z",
-      "updatedAt": "2026-09-30T08:27:11Z",
+      "updatedAt": "2026-09-30T11:02:04Z",
       "preview": "## What — the owner's ask, verbatim\n\n2026-09-21:\n\n> bean: develop otpions onhow could we \"install\" i guess at render time new\n> skills to antigravity, caludecode as tools to improve discussion clairty\n> between huamn and agent in dicsussion\n>\n> (e.g. so /coordinate work and /prepare-merge,  different model -> diffent\n> tools)\n\n## The gap, MEASURED rather than argued\n\n| | count |\n|---|---|\n| skills",
       "file": "beans/defs/folio-assistant-j6t3--install-skills-as-tools-at-render-time-34-skills-d.md"
     },
@@ -3815,14 +3843,14 @@
     {
       "id": "folio-assistant-mylx",
       "title": "Raw Markdown backticks show in rendered text",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:13Z",
-      "updatedAt": "2026-09-29T22:51:20Z",
+      "updatedAt": "2026-09-29T23:05:45Z",
       "preview": "Descriptions carried from Markdown front matter or prose are rendered as plain text, so the backticks show. Render inline code (or strip the markers) in the shared text path.\n\nObserved on: `fsh-guts`, `glossary`, `methodologies`, `navbar`, `skills-index`, `voices` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-page detail is in each visualiser's task under the epic.\n\n_2026-09-29T22",
       "file": "beans/defs/folio-assistant-mylx--raw-markdown-backticks-show-in-rendered-text.md"
     },
@@ -4725,6 +4753,20 @@
       "updatedAt": "2026-09-18T15:00:27Z",
       "preview": "Mechanical but wide: **2,408** literal `content/` occurrences across **429**\nfiles (measured 2026-09-18). `content/` holds no content — it is 431 files /\n46,401 lines of *pipeline*.\n\n**NOT blocked on bean `fsch`.** It was scrapped 2026-09-20 and the block is\nvoid.\n\n**But the deliverable as written is IMPOSSIBLE, and the sentence that stood\nhere on 2026-09-22 argued the opposite. See §\"FALSIFIED\" b",
       "file": "beans/defs/folio-assistant-rnfl--phase-i-3-rename-content-to-folio-2408-occurrences.md"
+    },
+    {
+      "id": "folio-assistant-rogk",
+      "title": "B9a (#1168): alternatives are DERIVED — delete Tool.alternativeTo",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T11:00:04Z",
+      "preview": "Owner, 2026-09-30: \"why tools need alternativeTo? skills and tools are associated, the alternatives should be derivable\" — chose Derive + fix 3.\n\nRule: two Tools are alternatives iff they share a satisfied skill AND have the same full io signature (input name/schema/required, output name/schema) AND the same renders/maintains. Measured over 118 tools: 8 pairs, recovering all 5 declared (beans-cli/",
+      "file": "beans/defs/folio-assistant-rogk--b9a-1168-alternatives-are-derived-delete-toolalter.md"
     },
     {
       "id": "folio-assistant-rq8s",
@@ -6035,6 +6077,20 @@
       "file": "beans/defs/folio-assistant-xgd8--schema-visualiser-schemas-is-a-content-kind-with-n.md"
     },
     {
+      "id": "folio-assistant-xha9",
+      "title": "B9c (#1168): KgRef.kind is an enum of registered node kinds",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T10:54:25Z",
+      "preview": "Owner, 2026-09-30: Enum. KgRef.kind is a free string (todo.ts, carried-note.ts), so 'skil' parses. Build the enum from the graph-kind registry.\n\n## Done when\n- [ ] KgRefSchema.kind is an enum; every committed KgRef parses",
+      "file": "beans/defs/folio-assistant-xha9--b9c-1168-kgrefkind-is-an-enum-of-registered-node-k.md"
+    },
+    {
       "id": "folio-assistant-xies",
       "title": "PUBLISH TO CDN: editor signoff -> merge -> human eyes -> CDN, and GH Pages is a TOOL CHOICE not the design",
       "status": "todo",
@@ -6453,6 +6509,20 @@
       "updatedAt": "2026-09-18T17:24:16Z",
       "preview": "## The ask\n\nOwner, in chat 2026-09-18, verbatim intent:\n\n> when we get to an MVP for agent-harness and folio-assist-core, create\n> the two repo as forks of folio-asst. then delete/modify the new repos\n> until we get to a state we can test under a new/empty repo \"bootstrap a\n> litlfred/folio-assistant here\"\n\nSo: **fork twice, subtract, then prove the result bootstraps from nothing.**\n\n## Why fork-a",
       "file": "beans/defs/folio-assistant-zmdo--split-bootstrap-agentic-harness-folio-assistant-co.md"
+    },
+    {
+      "id": "folio-assistant-zmm2",
+      "title": "B9d (#1168): rename voice source kgRef → path, skill front matter capability: → requiresCapability",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-tr05",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:54:25Z",
+      "updatedAt": "2026-09-30T10:54:25Z",
+      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected",
+      "file": "beans/defs/folio-assistant-zmm2--b9d-1168-rename-voice-source-kgref-path-skill-fron.md"
     },
     {
       "id": "folio-assistant-zru7",

@@ -88,6 +88,20 @@
       "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
       "description": "A path relative to the repository root. No `..` segments."
     },
+    "DelimitedTextPath": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+      "description": "A repository path to a delimited text (CSV or TSV) file."
+    },
+    "WorkbookPath": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+      "description": "A repository path to a spreadsheet workbook."
+    },
     "Url": {
       "$schema": "https://json-schema.org/draft/2020-12/schema",
       "type": "string",
@@ -339,8 +353,8 @@
   },
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-v8n5",
-    "sha": "e522ef93210005adbbe11a4d35bc71c1efd4c7c1",
+    "sha": "1b3fd6a69988d374946a8cd2ba3b2988836faa22",
     "pr": "1584/merge",
-    "run": "36708178556"
+    "run": "36712988869"
   }
 }
