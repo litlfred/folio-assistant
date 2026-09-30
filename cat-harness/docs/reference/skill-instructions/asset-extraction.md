@@ -24,8 +24,8 @@ Owner, 2026-09-20:
 > KG. don't extract contents unless explict ask by user."*
 
 ```sh
-bun run cat-harness/scripts/extract-assets.ts <container>
-bun run cat-harness/scripts/extract-assets.ts <container> --extract <path> --because "<why>"
+bun run folio-assistant-core/scripts/extract-assets.ts <container>
+bun run folio-assistant-core/scripts/extract-assets.ts <container> --extract <path> --because "<why>"
 ```
 
 The first writes a `folio-extraction/v1` record beside the container. The

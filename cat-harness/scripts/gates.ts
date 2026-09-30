@@ -933,6 +933,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "THE SAME SCRIPT AS `check:reference-direction`, exiting 1 instead of 0 on a wrong-direction occurrence. It is the form this becomes a gate in, kept runnable and wired to nothing while the count is 574: a gate that fails on a backlog is a gate somebody switches off. Run it by hand, or from `/prepare-merge`, to see what enforcement would say today. Flipping the advisory entry above to `kind: \"gate\"` and pointing it here is the whole of the change once the backlog is drained. Bean `zhg2`",
   },
   {
+    script: "check:reference-direction:check",
+    kind: "report",
+    reason:
+      "THE SAME SCRIPT AS `check:reference-direction`, with `--check`: it does not write, and it fails ONLY on the committed sidecar (`cat-harness/test/results/reference-direction.qa-results.json`) recording different STATES from the run \u2014 the PENDING set, the entries that no longer qualify, the unlisted multi-destination files, the instances that declare no `needs`. It does NOT grade the verdict counts it records, for `audit-coverage`'s measured reason: a number that moves whenever somebody writes a paragraph makes a gate stale by default, and a gate that is stale by default is one people learn to regenerate without reading. Out of CI for the SAME reason its parent is, and not a second one: the states it grades move when a sibling merges a file naming two instances above it, so wiring it would redden a branch whose own tree is correct \u2014 the `schema:viz:check` case. It becomes wirable on the day `check:reference-direction` does, which is when the backlog reaches zero and the advisory entry above flips to `kind: \"gate\"`. Run it by hand, or from `/prepare-merge`, after regenerating with `bun run check:reference-direction`. Beans `zhg2`, `yj6r`",
+  },
+  {
     script: "check:partition:edges",
     kind: "report",
     reason: "prints the edge list; `check:partition` is the gate and is wired",

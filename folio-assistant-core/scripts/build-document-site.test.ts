@@ -9,11 +9,11 @@ import { appendFileSync, existsSync, mkdtempSync, readFileSync, rmSync, symlinkS
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { buildDocumentSite, documentManifests, type Outline } from "../build-document-site.js";
-import { readPositions } from "../../../folio-assistant-core/schemas/changeset.js";
-import { initFolio } from "../init-folio.js";
+import { buildDocumentSite, documentManifests, type Outline } from "./build-document-site.js";
+import { readPositions } from "../schemas/changeset.js";
+import { initFolio } from "../../cat-harness/scripts/init-folio.js";
 
-const REPO_ROOT = resolve(import.meta.dir, "../../..");
+const REPO_ROOT = resolve(import.meta.dir, "../..");
 
 let roots: string[] = [];
 afterEach(() => {
