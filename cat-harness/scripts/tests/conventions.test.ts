@@ -17,9 +17,10 @@ import { describe, expect, test } from "bun:test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { CONVENTION_GROUP, ConventionSchema, conventionsInForce } from "../../schemas/convention.ts";
+import { ConventionSchema, conventionsInForce } from "../../schemas/convention.ts";
 import { loadProcessModel } from "../../src/workflow/process-model.ts";
 import { repoRootFor } from "../../schemas/cat-harness.js";
+import { conventionsDir } from "../../schemas/skill-definitions-dir.ts";
 
 const INSTANCE = resolve(import.meta.dir, "../..");
 const REPO = repoRootFor(INSTANCE);
@@ -78,7 +79,7 @@ describe("the union along the scope chain", () => {
 });
 
 describe("a convention is a declared KG node", () => {
-  const dir = join(REPO, ".claude", "skills", CONVENTION_GROUP);
+  const dir = conventionsDir(REPO)!;
 
   test("the group exists and holds some — otherwise everything below is vacuous", () => {
     expect(existsSync(dir)).toBe(true);
@@ -106,7 +107,7 @@ describe("every bound ref resolves to a convention that exists", () => {
     // The dangling-reference direction. A ref pointing at nothing is the
     // `blv9` shape — a link-shaped value that does not dereference — and it
     // would leave an agent told to follow a rule it cannot read.
-    const dir = join(REPO, ".claude", "skills", CONVENTION_GROUP);
+    const dir = conventionsDir(REPO)!;
     const known = new Set(
       readdirSync(dir).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5)),
     );

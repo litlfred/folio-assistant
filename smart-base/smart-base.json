@@ -9,6 +9,15 @@
   "description": "The WHO SMART Guidelines base layer — the ingested WHO digital-health corpus, the methodologies read out of it, and the editorial voices derived from it.",
   "directories": [
     {
+      "id": "smart-base-skill-definitions",
+      "path": "skills/skill-definitions/",
+      "dependents": "reproduce",
+      "description": "The WHO SMART workflow-skill definitions this layer owns (l2-dak-authoring, smart-base-tools): JSON SkillDefinitions naming roles, capabilities and dependencies. Moved from .claude/skills/local/ by theme (owner, 2026-09-30, bean rqao).",
+      "graphKinds": [
+        "skills"
+      ]
+    },
+    {
       "id": "library",
       "path": "library/",
       "dependents": "reproduce",
