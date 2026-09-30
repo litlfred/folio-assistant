@@ -1075,7 +1075,7 @@ function registryFields(
     };
   }
   if (group === "capabilities") {
-    const { requires, fallbackTo, satisfies, ...other } = rest;
+    const { requires, fallbackTo, satisfies, setupSkill, ...other } = rest;
     return {
       ...other,
       // Not `satisfies`: that term is a LINK to a skill, and a Tool's. A
@@ -1091,6 +1091,9 @@ function registryFields(
       ...(typeof fallbackTo === "string"
         ? { fallbackToCapability: makeIri(doc, "capability", fallbackTo) }
         : {}),
+      // A LINK to the skill node, the same IRI a skill is exported under
+      // (bean rqao): the setup procedure for this capability.
+      ...(typeof setupSkill === "string" ? { setupBySkill: makeIri(doc, "skill", setupSkill) } : {}),
     };
   }
   return rest;

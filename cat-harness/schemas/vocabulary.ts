@@ -440,6 +440,11 @@ export const PROPERTY_GLOSSES: Readonly<Record<string, TermGloss>> = {
   hasCapability: { gloss: "A capability this actor's environment provides." },
   providesCapability: { gloss: "A capability this node makes available." },
   requiresCapability: { gloss: "A capability this node needs before it can run." },
+  setupBySkill: {
+    gloss:
+      "The skill that explains how to set up this capability — install, configure, verify. " +
+      "A pointer from an environment probe to a procedure, not a merge of the two kinds.",
+  },
   fallbackToCapability: {
     gloss:
       "The capability that stands in for this one when it is absent. It must not " +
