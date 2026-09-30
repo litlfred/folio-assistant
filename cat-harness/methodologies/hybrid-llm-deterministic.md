@@ -142,5 +142,5 @@ This repository was already navigating the deterministic-to-agentic spectrum
 before this node existed, through four mechanisms that do not refer to each
 other. That application — and the open research questions this source bears on
 — is in the skill:
-[`skills/workflow/deterministic-and-agentic.md`](../skills/workflow/deterministic-and-agentic.md).
+[`skills/process/workflow/deterministic-and-agentic.md`](../skills/process/workflow/deterministic-and-agentic.md).
 The method lives here once; the skill names it and does not restate it.
