@@ -2051,6 +2051,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.livesat",
+      "prefLabel": "CatHarnessDeclaration.livesAt",
+      "definition": "Where the instance lives TODAY when that is not the root of {@link repository} — the host repository and the directory within it. Absent means it already lives at the root of its own repository.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.livesAt",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.name",
       "prefLabel": "CatHarnessDeclaration.name",
       "definition": "The instance's name, e.g. `\"agentic-harness\"`.",
@@ -2100,17 +2107,17 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.repository",
+      "prefLabel": "CatHarnessDeclaration.repository",
+      "definition": "The repository this instance IS — `owner/name`, its PLANNED home once the pre-split repository is broken apart (owner, 2026-09-30, bean `6rmv`).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.repository",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.stickies",
       "prefLabel": "CatHarnessDeclaration.stickies",
       "definition": "Sticky notes this layer contributes to the landing board.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stickies",
-      "status": "candidate"
-    },
-    {
-      "id": "cat-harness.catharnessdeclaration.stub",
-      "prefLabel": "CatHarnessDeclaration.stub",
-      "definition": "The repository's short name, used as the **filename stem of every artefact this instance publishes** — `<stub>.jsonld` for the knowledge graph, `<stub>.schema.json` for its schema. Defaults to `name`.",
-      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stub",
       "status": "candidate"
     },
     {
@@ -2349,6 +2356,20 @@
       "prefLabel": "GraphNodeDirectoryShape.absent",
       "definition": "This directory is DECLARED and deliberately not on disk, with the reason.",
       "source": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape.absent",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.instancelocation.path",
+      "prefLabel": "InstanceLocation.path",
+      "definition": "The instance's directory within it, repository-relative, no leading `./`.",
+      "source": "cat-harness/schemas/cat-harness.ts#InstanceLocation.path",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.instancelocation.repository",
+      "prefLabel": "InstanceLocation.repository",
+      "definition": "The repository that holds the instance today, `owner/name`.",
+      "source": "cat-harness/schemas/cat-harness.ts#InstanceLocation.repository",
       "status": "candidate"
     },
     {
@@ -5457,6 +5478,41 @@
       "prefLabel": "IgMetadataSourceSchema.runUrl",
       "definition": "A URL for the harvest run, if one exists.",
       "source": "cat-harness/schemas/ig-metadata-index.ts#IgMetadataSourceSchema.runUrl",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-repositories.instancerepository.livesat",
+      "prefLabel": "InstanceRepository.livesAt",
+      "definition": "Where it sits today, when not at the root of `repository`.",
+      "source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.livesAt",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-repositories.instancerepository.name",
+      "prefLabel": "InstanceRepository.name",
+      "definition": "The declaration's machine name — what `needs` resolves against.",
+      "source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.name",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-repositories.instancerepository.repository",
+      "prefLabel": "InstanceRepository.repository",
+      "definition": "The planned repository, `owner/name` — the identity references use.",
+      "source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.repository",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-repositories.instancerepository.root",
+      "prefLabel": "InstanceRepository.root",
+      "definition": "Absolute path of the instance root in this checkout or overlay.",
+      "source": "cat-harness/schemas/instance-repositories.ts#InstanceRepository.root",
+      "status": "candidate"
+    },
+    {
+      "id": "instance-repositories.instancerepositorymap.undeclared",
+      "prefLabel": "InstanceRepositoryMap.undeclared",
+      "definition": "Roots whose declaration names no `repository` — reported, never guessed.",
+      "source": "cat-harness/schemas/instance-repositories.ts#InstanceRepositoryMap.undeclared",
       "status": "candidate"
     },
     {

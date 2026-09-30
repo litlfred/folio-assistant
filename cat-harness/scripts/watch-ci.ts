@@ -5,7 +5,7 @@
  * bun run ci:watch <sha>                    # poll until decided
  * bun run ci:watch <sha> --branch main      # which branch explains a cancellation
  * bun run ci:watch <sha> --once             # one look, no polling
- * bun run ci:watch --pr <n>                 # a PULL REQUEST: its head, and whether it is conflicted
+ * bun run ci:watch --pr <n>                 # follow a PR's head, re-read every poll
  * ```
  *
  * Exit codes carry the third state, because a caller that reads "not 1" as
@@ -45,11 +45,18 @@ import { resolve } from "node:path";
 import {
   exitCodeFor,
   explainSuperseded,
-  prVerdict,
+  verdictForCommit,
   verdictOf,
   type CheckRun,
+  type HeadMergeState,
+  type OwedSummary,
 } from "../src/workflow/check-verdict.js";
 import { repoRootFor } from "../schemas/cat-harness.js";
+// The owed-workflow reconciliation and the merge probe are IMPORTED, never
+// reimplemented — see `verdictForCommit`'s docblock for the two designs that
+// duplicated them before this landed (#1646). `check:head-has-run` owns these.
+import { coverageFor, mergeStateForHead, resolveCommit, runsForHead } from "./check-head-has-run.js";
+import { scanTriggers } from "../src/core/workflow-events.js";
 
 const USAGE =
   "Usage: cat-harness/scripts/watch-ci.ts <sha> | --pr <n>  [--branch <name>] [--once] [--interval <s>] [--max <n>]";
@@ -84,45 +91,6 @@ async function fetchRuns(slug: string, sha: string): Promise<readonly CheckRun[]
   }
 }
 
-/**
- * A pull request's head sha and `mergeable_state`, or `undefined` when the PR
- * could not be read. Re-read on every poll: a merge of the base changes both.
- * The state can be served STALE (bean `fx5r`: a pre-merge value 45 minutes
- * after the merge), which is why `prVerdict` only lets it DOWNGRADE a verdict.
- */
-async function fetchPr(slug: string, n: string): Promise<{ sha: string; state: string | undefined } | undefined> {
-  // GitHub computes mergeability LAZILY: the first read of a PR starts the
-  // computation and answers `unknown`; a later read answers it. Measured
-  // 2026-09-30 — seven open PRs read `unknown`, and one of them read `clean`
-  // eight seconds later. Deciding on the first answer would let `unknown`
-  // stand in for `dirty`, which is the case this mode exists to catch.
-  for (let attempt = 0; attempt < 4; attempt++) {
-    const got = await readPr(slug, n);
-    if (got === undefined || got.state !== "unknown" || attempt === 3) return got;
-    await Bun.sleep(3000);
-  }
-  return undefined;
-}
-
-async function readPr(slug: string, n: string): Promise<{ sha: string; state: string | undefined } | undefined> {
-  const token = process.env["GITHUB_TOKEN"] ?? process.env["GH_TOKEN"];
-  try {
-    const r = await fetch(`https://api.github.com/repos/${slug}/pulls/${n}`, {
-      headers: {
-        Accept: "application/vnd.github+json",
-        ...(token === undefined ? {} : { Authorization: `Bearer ${token}` }),
-      },
-    });
-    if (!r.ok) return undefined;
-    // `mergeable_state` may be stale (bean `fx5r`); it is trusted only to downgrade,
-    // never to confirm a pass — see `prVerdict`.
-    const body = (await r.json()) as { head?: { sha?: string }; mergeable_state?: string };
-    return typeof body.head?.sha === "string" ? { sha: body.head.sha, state: body.mergeable_state } : undefined;
-  } catch {
-    return undefined;
-  }
-}
-
 /** `git log <sha>..origin/<branch>`, oldest first — empty when the branch has not moved. */
 function commitsAfter(root: string, sha: string, branch: string): string[] {
   try {
@@ -139,6 +107,88 @@ function commitsAfter(root: string, sha: string, branch: string): string[] {
   }
 }
 
+
+/**
+ * Was the check set COMPLETE? — asked of the existing machinery, not rebuilt.
+ *
+ * The event matters and is derived rather than assumed: a `pull_request`
+ * workflow is not owed on a commit that no open PR heads, so judging a `main`
+ * commit against `pull_request` triggers would report every gate missing.
+ * `mergeStateForHead` answers that in the same call that detects a conflict.
+ *
+ * Returns `undefined` for either half it could not establish, because
+ * `verdictForCommit` turns that into `undetermined` rather than into a pass.
+ */
+async function completeness(
+  root: string,
+  slug: string,
+  sha: string,
+): Promise<{ owed?: OwedSummary; merge?: HeadMergeState }> {
+  // THE SHA MUST BE FULL, and this cost a falsification to find. `ci:watch`
+  // takes whatever revision the caller typed, and `prNumberForHead` compares it
+  // by EQUALITY against `git ls-remote origin refs/pull/*/head`, which lists
+  // 40-character object names. An abbreviated `32779147214` therefore matched
+  // nothing and the probe answered `not-a-pr-head` — so the owed event became
+  // `push`, the one push-triggered workflow had run, and the guard reported
+  // PASS on a fresh PR head whose `Code-quality gates` had not started.
+  //
+  // Measured 2026-09-30 18:47 against this script's own PR (#1664), where
+  // `refs/pull/1664/head` existed and `refs/pull/1664/merge` did not.
+  // Unreachable by reading: every layer was individually correct.
+  const full = resolveCommit(root, sha);
+  if (full === undefined) return {};
+  let merge: HeadMergeState | undefined;
+  try {
+    merge = mergeStateForHead(root, full);
+  } catch {
+    merge = undefined;
+  }
+  if (merge === undefined) return {};
+  const event = merge === "not-a-pr-head" ? "push" : "pull_request";
+  try {
+    const head = await runsForHead(slug, full);
+    const scan = scanTriggers(root, event);
+    const cov = coverageFor(head.state === "has-run" ? head.runs : [], scan, event);
+    return {
+      merge,
+      owed: {
+        missing: cov.required.filter((r) => !r.ran).map((r) => r.name),
+        unreadable: cov.unreadable.length,
+      },
+    };
+  } catch {
+    // The scan or the run query failed. `owed` stays absent, which is
+    // could-not-determine — never a satisfied required set.
+    return { merge };
+  }
+}
+
+/**
+ * A pull request's head commit, read from `refs/pull/<n>/head` — the same ref
+ * family `mergeStateForHead` reads, so `--pr` and the conflict probe cannot
+ * disagree about which commit is the head. `undefined` when the ref is absent
+ * or unreadable, which the caller reports as could-not-determine.
+ *
+ * Re-read on every poll, because merging the base in moves the head (bean
+ * `52cz`). Deliberately NOT `mergeable_state` from the REST API: GitHub computes
+ * it lazily (`unknown` on a first read) and can serve it stale — a pre-merge
+ * value 45 minutes after the merge (bean `fx5r`) — while the merge ref is the
+ * forge's own answer.
+ */
+function prHead(root: string, n: string): string | undefined {
+  if (!/^\d+$/.test(n)) return undefined;
+  try {
+    const out = execFileSync("git", ["ls-remote", "origin", `refs/pull/${n}/head`], {
+      cwd: root,
+      encoding: "utf-8",
+    }).trim();
+    const sha = out.split(/\s+/)[0];
+    return sha !== undefined && /^[0-9a-f]{40}$/.test(sha) ? sha : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 if (import.meta.main) {
   const argv = process.argv.slice(2);
   const flag = (name: string): string | undefined => {
@@ -149,8 +199,8 @@ if (import.meta.main) {
   // elsewhere: a missing SHA is "you did not tell me what to watch", which is
   // exit 2, not a crash.
   const pr = flag("pr");
-  const shaArg = argv.find((a) => !a.startsWith("--") && argv[argv.indexOf(a) - 1]?.startsWith("--") !== true);
-  if (shaArg === undefined && pr === undefined) {
+  const given = argv.find((a) => !a.startsWith("--") && argv[argv.indexOf(a) - 1]?.startsWith("--") !== true);
+  if (given === undefined && pr === undefined) {
     console.error(`${USAGE}\n  no commit given — nothing to watch`);
     process.exit(2);
   }
@@ -171,21 +221,16 @@ if (import.meta.main) {
   const max = Number(flag("max") ?? 40);
 
   for (let i = 0; i < max; i++) {
-    let sha = shaArg ?? "";
-    let mergeState: string | undefined;
-    if (pr !== undefined) {
-      const p = await fetchPr(slug, pr);
-      if (p === undefined) {
-        console.error(`  could not read pull request #${pr} — NOT a pass`);
-        process.exit(2);
-      }
-      sha = p.sha;
-      mergeState = p.state;
+    const sha = pr === undefined ? given : prHead(root, pr);
+    if (sha === undefined) {
+      console.error(`  could not read the head of PR #${pr} from refs/pull/${pr}/head — NOT a pass`);
+      process.exit(2);
     }
-    const v = prVerdict(mergeState, verdictOf(await fetchRuns(slug, sha)));
+    if (pr !== undefined) console.log(`  PR #${pr} head ${sha.slice(0, 11)}`);
+    const { owed, merge } = await completeness(root, slug, sha);
+    const v = verdictForCommit(verdictOf(await fetchRuns(slug, sha)), owed, merge);
     const when = new Date().toISOString().slice(11, 19);
     const named = v.names.length > 0 ? `  ${v.names.slice(0, 4).join(", ")}` : "";
-    if (pr !== undefined) console.log(`  #${pr} mergeable_state: ${mergeState ?? "(absent)"}${mergeState === "unknown" ? " — not computed yet, so a conflict cannot be ruled out" : ""}`);
     console.log(`${when}  ${sha.slice(0, 11)}  ${v.state.toUpperCase()} — ${v.because}${named}`);
 
     if (v.state === "undetermined" && v.names.length > 0) {

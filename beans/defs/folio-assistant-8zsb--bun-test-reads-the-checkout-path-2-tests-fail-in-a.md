@@ -1,11 +1,11 @@
 ---
 # folio-assistant-8zsb
 title: 'bun test reads the CHECKOUT PATH: 2 tests fail in any worktree not named folio-assistant'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T17:53:09Z
-updated_at: 2026-09-30T18:13:00Z
+updated_at: 2026-09-30T19:00:17Z
 parent: folio-assistant-1xhc
 ---
 
@@ -156,3 +156,5 @@ a careful agent does. The gap is that ruling something out of scope has no
 destination — "not this change" names where it does not belong and nowhere
 that it does. Whether that warrants a convention is a question for the owner,
 recorded here unanswered rather than decided.
+
+_2026-09-30T19:00:17Z_ — Claimed by claude/magical-archimedes-4qkfxp-8zsb — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

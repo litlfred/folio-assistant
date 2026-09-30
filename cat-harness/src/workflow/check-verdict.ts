@@ -151,48 +151,143 @@ export function explainSuperseded(newerCommits: readonly string[]): string {
   );
 }
 
-/**
- * A PULL REQUEST's verdict: its head's check runs, unless the PR is conflicted.
- *
- * Bean `52cz`, measured on #1589: GitHub creates no `pull_request` run for a
- * PR whose `mergeable_state` is `dirty`, because there is no merge commit to
- * test. The field can be served STALE (bean `fx5r`), so it only ever
- * DOWNGRADES here: a stale `dirty` costs an undetermined, and a stale `clean`
- * falls through to the head's own runs, which a new head does not yet have. Pushes to such a PR produce no run at all, and whatever check results
- * are on display describe an earlier commit nobody is testing — while a
- * `check_suite.completed` notice truthfully says no suite failed, which reads
- * like green. So `dirty` decides the verdict on its own: CI is not running,
- * and no result for this head is coming until the base is merged in.
- *
- * `unknown` means GitHub has not computed the state yet (bean `h2s9`). It
- * says nothing about the runs, so a failure or a pending run stands — but it
- * cannot confirm a PASS, because a conflict is exactly what has not been
- * ruled out. Measured: #1633 read `unknown` through four reads and its one
- * quick check was green, which the first version reported as a pass.
- */
-export function prVerdict(mergeableState: string | undefined, head: Verdict): Verdict {
-  if (mergeableState === "dirty") {
-    return {
-      state: "undetermined",
-      names: [],
-      because:
-        "conflicted — GitHub creates no pull_request run for a PR with a merge conflict, so nothing " +
-        "will judge this head until the base branch is merged in. Any result shown is an earlier commit's. NOT a pass",
-    };
-  }
-  if (mergeableState === "unknown" && head.state === "pass") {
-    return {
-      state: "undetermined",
-      names: [],
-      because:
-        "the runs passed, but GitHub has not computed whether the PR conflicts — a pass cannot be " +
-        "confirmed until it has. NOT a pass",
-    };
-  }
-  return head;
-}
-
 /** The process exit code for a state. `undetermined` is its own, never 0. */
 export function exitCodeFor(state: VerdictState): 0 | 1 | 2 {
   return state === "pass" ? 0 : state === "fail" ? 1 : 2;
+}
+
+// ───────────────────────────────────────────────────────────────────────────
+// IS THIS THE WHOLE CHECK SET? — issue #1646, bean `6lre`
+//
+// Everything above classifies the runs it is HANDED. It cannot ask the prior
+// question, and #1624 did not: **are these all the runs?**
+//
+// Measured twice on 2026-09-30:
+//
+//     16:13:58  29b10a68923  PASS — 1 check(s) completed clean
+//     17:25:41  0d714756f3d  PASS — 1 check(s) completed clean
+//
+// exit 0 both times against `total_count: 1`, while thirteen checks ran on
+// neighbouring commits of the same branch. `judgeable.length === 0` guards the
+// EMPTY list; with one clean run a PARTIAL list falls straight through to
+// `pass` — carrying a plausible number, which is what makes it convincing. The
+// second was the dangerous one: the owner had authorised merging #1637 on a
+// verified green, so the tool would have merged an unverified tree.
+//
+// ## NOTHING HERE RECONCILES ANYTHING — and that is the point
+//
+// Two earlier designs for this were wrong, differently, and both were caught
+// before any code shipped:
+//
+//  1. A rule over `GET /commits/{sha}/check-suites`. **Did not work**: run
+//     against the failing commit it also said `pass`, because the
+//     `Code-quality gates` suite did not exist at all. A live probe showed
+//     that; fixtures would not have. It also showed that `github-pages` and
+//     `claude` hold suites at `queued` with zero runs PERMANENTLY, so "any
+//     queued suite means pending" never reaches a verdict.
+//  2. Workflow-run reconciliation, written fresh. **Worked, and duplicated
+//     `check:head-has-run`** (bean `3pqn`), whose states already include
+//     *"missing a required run — it has runs, but not the ones owed"*. The
+//     owner had ruled that design on 2026-09-24: *"derive the owed workflows
+//     from `.github/workflows/`"*. A second answer to one question, free to
+//     disagree with the first, is the defect this repository names most often.
+//
+// So this function takes the answers as INPUTS. `coverageFor`, `scanTriggers`
+// and `mergeStateForHead` compute them, and the caller wires them in. If you
+// are about to add a scan or a fetch here, you are rebuilding (2).
+// ───────────────────────────────────────────────────────────────────────────
+
+/** What the owed-workflow reconciliation established, reduced to what precedence needs. */
+export interface OwedSummary {
+  /** Required workflows with no run for this event. Non-empty is the finding. */
+  readonly missing: readonly string[];
+  /**
+   * Workflow files that could not be read. While any exist the required set is
+   * NOT established, so a satisfied `missing` proves nothing — `TriggerScan`
+   * says so in its own docblock and this carries the count rather than
+   * discarding it.
+   */
+  readonly unreadable: number;
+}
+
+/** `mergeStateForHead`'s answer, re-declared so this module imports no script. */
+export type HeadMergeState = "not-a-pr-head" | "conflicted" | "mergeable" | "unknown";
+
+/**
+ * The runs verdict, re-asked against whether the set was COMPLETE.
+ *
+ * Only a would-be `pass` is re-examined. `fail` is a fact about the tree and
+ * outranks everything; `pending` and `undetermined` are already not-a-pass, so
+ * re-deciding them would change settled #1624 behaviour for no gain.
+ *
+ * `owed` is `undefined` when the tree could not be scanned and `merge` is
+ * `undefined` when the probe was not run. Either way the answer is
+ * `undetermined`, never `pass`: every registered run being clean says nothing
+ * about the runs that never registered, and calling that green is the `dh4f`
+ * defect — a consumer that looked at nothing and reported a clean sweep.
+ */
+export function verdictForCommit(
+  runs: Verdict,
+  owed: OwedSummary | undefined,
+  merge: HeadMergeState | undefined,
+): Verdict {
+  if (runs.state !== "pass") return runs;
+
+  // `conflicted` is checked before `missing` even though it implies it. A
+  // conflicted head has no `pull_request` runs at all, so `missing` would fire
+  // anyway — but with the wrong story. Bean `52cz`: the forge publishes no
+  // `refs/pull/N/merge`, and a `pull_request` run checks that ref out, so the
+  // absent checks are not slow, they are NEVER GOING TO RUN. That is a
+  // different instruction to the reader, and the more actionable one.
+  if (merge === "conflicted") {
+    return {
+      state: "undetermined",
+      names: [],
+      because:
+        "every registered run is clean, but the head is CONFLICTED with its base — no " +
+        "`pull_request` run is published for it at all (bean `52cz`), so the missing checks " +
+        "will never arrive. Merge the base in. NOT a pass",
+    };
+  }
+  if (merge === undefined) {
+    return {
+      state: "undetermined",
+      names: [],
+      because:
+        "every registered run is clean, but the head's merge state was not probed, so a " +
+        "conflicted head cannot be told from a complete one — NOT a pass",
+    };
+  }
+  if (owed === undefined) {
+    return {
+      state: "undetermined",
+      names: [],
+      because:
+        "every registered run is clean, but the tree's own workflows were not scanned, so a " +
+        "missing required run cannot be detected — NOT a pass",
+    };
+  }
+  if (owed.unreadable > 0) {
+    return {
+      state: "undetermined",
+      names: [],
+      because:
+        `every registered run is clean, but ${owed.unreadable} workflow file(s) could not be ` +
+        "read, so the required set is not established — NOT a pass",
+    };
+  }
+  if (owed.missing.length > 0) {
+    return {
+      state: "undetermined",
+      names: [...owed.missing],
+      because:
+        `every registered run is clean, but ${owed.missing.length} workflow(s) OWED for this ` +
+        "event have no run — a partial check set, not a green one",
+    };
+  }
+  return {
+    state: "pass",
+    names: [],
+    because: `${runs.because}, and every workflow owed for this event ran`,
+  };
 }

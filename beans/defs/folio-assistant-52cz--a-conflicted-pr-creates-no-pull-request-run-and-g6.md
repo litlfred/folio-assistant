@@ -109,3 +109,17 @@ Branch `claude/magical-archimedes-4qkfxp-52cz`.
 - Tests: three new cases in `check-verdict.test.ts` (18 pass).
 
 **Box 4 is not written.** It asks whether the reading that "no suite failed" over zero suites is not a pass should become corpus guidance where agents are told how to read PR events. The bean marks that the owner's call; it is put to them 2026-09-30.
+
+## 2026-09-30 19:10 — #1664 landed the core first, and with the better signal
+
+#1664 (bean `6lre`) merged `verdictForCommit`, which reports a conflicted head as **undetermined**, cites this bean, and detects the conflict from the absence of `refs/pull/N/merge`. That is the forge's own answer. REST `mergeable_state`, which this branch had used, is computed lazily and can be served stale (`fx5r`).
+
+So #1659 was narrowed when merging main:
+- `prVerdict` and its tests are **withdrawn**, because they were a weaker duplicate.
+- What remains is `ci:watch --pr <n>`. It reads the head from `refs/pull/<n>/head` on every poll (the same ref family the probe uses) and hands it to `verdictForCommit`.
+
+Live, 2026-09-30 19:10, `ci:watch --pr <n> --once`:
+- #1668 (conflicted) → UNDETERMINED: conflicted
+- #1665 → FAIL on its real run
+
+**New finding, not fixed here:** #1652, which is **merged**, also reads "CONFLICTED". A merged PR keeps `refs/pull/N/head` but loses `refs/pull/N/merge`, so `mergeStateForHead` cannot tell merged from conflicted. That matters only for `--pr` on a closed PR. It is `check-head-has-run`'s probe to refine, not this branch's.
