@@ -323,24 +323,6 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [Folio Assistant]({{ '/cat-harness/uploads/folio-assistant/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/uploads/who-iris/' | relative_url }})
 
-### `voice-vendors`
-
-0 of 1 published.
-{: .fa-hx-dim }
-
-- agent-skills — *declared, not published*
-
-### `voices`
-
-5 of 5 published.
-{: .fa-hx-dim }
-
-- [agent-skills]({{ '/cat-harness/voices/agent-skills/' | relative_url }})
-- [folio-assistant-core]({{ '/cat-harness/voices/folio-assistant-core/' | relative_url }})
-- [folio-assistant-sci]({{ '/cat-harness/voices/folio-assistant-sci/' | relative_url }})
-- [SMART Base]({{ '/cat-harness/voices/smart-base/' | relative_url }})
-- [who-style-guide]({{ '/cat-harness/voices/who-style-guide/' | relative_url }})
-
 ### `waiver`
 
 0 of 1 published.

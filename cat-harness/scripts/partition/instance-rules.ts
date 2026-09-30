@@ -1832,6 +1832,7 @@ export const RULES: Rule[] = [
       // `schemas/tabular-records.ts` — all core — and bought four
       // wrong-direction edges for the tidiness of one homogeneous list.
       "scripts/check-l1-complete.ts",       // is a `library/<bib-slug>/` entry complete
+      "scripts/check-structure-accessor.ts", // `structure.json` is named only by its accessor (bean rkqp)
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
       "scripts/l1-blocks.ts",               // staged entry → manifest + blocks/, the arm between the two
       "scripts/notebook-structure.ts",      // the notebook rung: a folio's `.ipynb` → `notebook-structure/v1` (bean rkqp)

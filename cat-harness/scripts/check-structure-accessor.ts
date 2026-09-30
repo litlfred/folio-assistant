@@ -40,6 +40,9 @@ import { gitCorpus } from "../schemas/git-corpus.ts";
 const REPO = resolve(import.meta.dir, "..", "..");
 
 /** Files that may spell the token, and why. Repo-relative. */
+// declared-path-literal: these are the allowlist's KEYS — named source files
+// this gate exempts, compared against git's corpus listing, not directories
+// any declaration resolves.
 export const ALLOWED: Readonly<Record<string, string>> = {
   "cat-harness/schemas/document-structure.ts": "the accessor itself: it defines STRUCTURE_FILENAME",
   "folio-assistant-core/schemas/library-ref.ts":

@@ -581,6 +581,34 @@ same way it gets the directory — through the overlay, resolved by id, in scan
 order. It does not re-describe a dependency's interior, and it does not have to:
 the describing node came with the directory.
 
+### A from-within entry can be an INSTANCE directory — bean `cmsl`, 2026-09-30
+
+A kind's `declarationFile` names the node. What an entry in it IS depends on
+one field: **an entry that answers `dependents` is an instance directory**,
+and `resolveDirectories` lists it exactly as if `<instance>.json` had declared
+it. It carries `within` (the id of the directory that declared it), and
+`check:layout-norms` treats that pair as the sanctioned shape. An entry
+without `dependents` (`beans.json`'s `defs`, `docs.json`'s `proposals`,
+`voices.json`'s `vendors`) is a part of one graph and stays out of the
+instance list, exactly as before.
+
+`skills/skills.json` is the worked case. It is one node with two lists:
+`topics` (subdirectories that hold skill packages, bean `9umr`) and
+`directories` (instance directories inside `skills/`: `voices/` in five
+instances, and `lean/` in folio-assistant-sci). Moving the five `voices`
+entries inward cleared all five of the baselined `skills contains
+skills/voices` pairs. Every `directoriesForGraph(…, "voices")` answer was
+identical before and after, compared instance by instance.
+
+Two rules the resolver holds, both measured the hard way:
+
+- **Never through a mirror.** A `scope: "repository"` entry points at ANOTHER
+  instance's directory. Following its declaration file made cat-harness
+  resolve core's `voices/` as its own.
+- **A declaration beats a default.** `skills/voices` is also a built-in
+  default; a from-within declaration replaces that convention, while an
+  instance-level declaration with the same id still wins over both.
+
 ### The live case this ruling settles
 
 Stream 1 of the #956 consolidation measured `cat-harness/content/docs/`,

@@ -6835,6 +6835,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.resolveddirectory.within",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ResolvedDirectory.within"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The id of the directory that declared this one FROM WITHIN (bean `cmsl`, owner 2026-09-30): an entry of its kind's declaration file, e.g. `skills/skills.json` naming `voices/`. Absent for an instance-level entry. `check:layout-norms` reads it: nesting declared this way is the sanctioned shape, not a root declaration reaching down."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.within",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.subgraphcoverageschema.process",
       "@type": "skos:Concept",
       "skos:inScheme": {

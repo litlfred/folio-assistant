@@ -3781,9 +3781,39 @@ export function resolveDirectories(
   // instance directories, and stay out of this list exactly as before.
   // An instance-level entry with the same id wins, so a declaration can move
   // inward without two answers existing at once.
-  for (const d of [...byId.values()]) promoteFromWithin(d, byId, registry, new Set());
+  for (const d of [...byId.values()]) promoteFromWithin(d, byId, registry, new Set(), rootLink);
 
   return [...byId.values()];
+}
+
+/**
+ * An instance's OWN sub-graphs: its declaration's entries as authored, then
+ * the ones it declares FROM WITHIN them (bean `cmsl`: `skills/skills.json`
+ * declaring `voices/`), with paths relative to the instance root.
+ *
+ * For a consumer that enumerates "the sub-graphs this instance has" — one
+ * diagram, one page, one visualiser per entry. Reading `decl.directories`
+ * alone silently drops every entry that moved inward: measured 2026-09-30,
+ * the UML overview deleted five voices diagrams and `check:wireframes`
+ * reported five voices pages as undeclared, with nothing else red.
+ *
+ * Unlike {@link nestedDirectories} this also reaches a nested declaration
+ * under a DEFAULT parent (agent-skills never declares `skills/`), and it
+ * returns only entries that answer `dependents` — the instance directories,
+ * not the parts of one graph (`voices.json`'s `vendors`).
+ */
+export function instanceDirectories(
+  root: string,
+  decl: CatHarnessDeclaration | undefined = readDeclaration(root),
+  registry: GraphKindRegistry = defaultGraphKinds,
+): Array<ContentDirectory & { within?: string }> {
+  if (!decl) return [];
+  const authored = decl.directories ?? [];
+  const ids = new Set(authored.map((d) => d.id));
+  const inward = resolveDirectories([{ name: decl.name, root, own: true }], registry)
+    .filter((d) => d.own && d.within !== undefined && !ids.has(d.id))
+    .map(({ declaredBy: _b, absPath: _a, own: _o, ...rest }) => rest as ContentDirectory & { within?: string });
+  return [...authored, ...inward];
 }
 
 /** Add `d`'s from-within instance directories to `byId`, recursively. */
@@ -3792,6 +3822,7 @@ function promoteFromWithin(
   byId: Map<string, ResolvedDirectory>,
   registry: GraphKindRegistry,
   seen: Set<string>,
+  rootLink: { name: string; own?: boolean } | undefined,
 ): void {
   if (seen.has(d.absPath)) return;
   seen.add(d.absPath);
@@ -3821,16 +3852,23 @@ function promoteFromWithin(
       const existing = byId.get(nd.id);
       if (existing !== undefined && existing.declaredBy !== "(default)") continue;
       const sub = nd.path.replace(/^\.\//, "").replace(/\/+$/, "");
+      // A DEFAULT parent (`skills/` that the instance never declared) is still
+      // a directory in the root link's own tree — the defaults are seeded
+      // against it — so the file that declares from within it was written by
+      // that instance. Inheriting `(default)`/`own: false` from the parent made
+      // agent-skills' and sci's `voices/` look like nobody's, and the UML
+      // overview dropped both (measured 2026-09-30).
+      const fromDefault = d.declaredBy === "(default)" && rootLink !== undefined;
       const entry = {
         ...(nd as unknown as ContentDirectory),
         path: `${d.path.replace(/\/+$/, "")}/${sub}/`,
-        declaredBy: d.declaredBy,
+        declaredBy: fromDefault ? rootLink.name : d.declaredBy,
         absPath: join(d.absPath, sub),
-        own: d.own,
+        own: fromDefault ? rootLink.own === true : d.own,
         within: d.id,
       } as ResolvedDirectory;
       byId.set(nd.id, entry);
-      promoteFromWithin(entry, byId, registry, seen);
+      promoteFromWithin(entry, byId, registry, seen, rootLink);
     }
   }
 }
