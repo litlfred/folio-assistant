@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T23:35:33.530Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/a34542e72e5922d74048c8d079cb057c7247d2a1",
-  "sourceCommitSha": "a34542e72e5922d74048c8d079cb057c7247d2a1",
-  "sourceCommitAt": "2026-09-30T23:32:13Z",
+  "generatedAt": "2026-09-30T23:42:24.225Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c721c6645fc27d82512949b8dc8462ea198c7b37",
+  "sourceCommitSha": "c721c6645fc27d82512949b8dc8462ea198c7b37",
+  "sourceCommitAt": "2026-09-30T23:39:10Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -318,7 +318,7 @@
     "Lane": 192,
     "ProcessNode": 889,
     "Tool": 111,
-    "Schema": 135,
+    "Schema": 137,
     "ExternalSchema": 17,
     "GraphKind": 36,
     "Role": 48,
@@ -3993,7 +3993,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 554,
+      "instructionLines": 624,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -45359,6 +45359,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/refactor-strategy"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#schema/referenced-source",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "referenced-source",
+      "title": "`referenced.json`: a library entry that RECORDS a source and holds none of",
+      "module": "schemas/referenced-source.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/referenced-source"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#schema/render-log",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "render-log",
@@ -45483,6 +45492,15 @@
       "module": "schemas/skill-topics.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/skill-topics"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#schema/slides-accessibility",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "slides-accessibility",
+      "title": "`accessibility.json`: a slide deck's accessibility report, written by",
+      "module": "schemas/slides-accessibility.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/slides-accessibility"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#schema/source-licence",
@@ -48047,8 +48065,8 @@
   ],
   "staging": {
     "branch": "claude/cool-fermi-htir5p",
-    "sha": "0ec70b88e58c4d4160c7a7efbcf5b117ffa7d9b9",
+    "sha": "3d06bf13445b46de5074285e24e218d7c8b090e7",
     "pr": "1723/merge",
-    "run": "36791599322"
+    "run": "36792225218"
   }
 }
