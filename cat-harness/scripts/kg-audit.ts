@@ -115,7 +115,7 @@ import {
   remotePackageSkills,
 } from "./known-skills.js";
 import { LOCAL_PACKAGES } from "../src/tools/skill-fetch.js";
-import { repoRootFor, DECLARATION_SUFFIX,  resolveDirectories, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
+import { repoRootFor, DECLARATION_SUFFIX, ownDirectoryById,  resolveDirectories, instanceDirectoriesForGraph, readDeclaration, kgQaHomeFor} from "../schemas/cat-harness.js";
 import { orderedDependencies } from "../schemas/harness-config.js";
 import { CONVENTION_GROUP } from "../schemas/convention.js";
 import { USER_STORIES_FILENAME, danglingStoryRoles, readUserStories, type UserStoryGraph } from "../schemas/user-story.js";
@@ -233,12 +233,9 @@ const root = resolve(instanceArg(process.argv.slice(2)) ?? AUDITOR_ROOT);
  * longer exists is worse than none, which is the only reason this is five
  * lines instead of one.
  */
-function ownDirectoryById(root: string, id: string, fallback: string): string {
-  const found = resolveDirectories([{ name: "(local)", root, own: true }]).find(
-    (d) => d.id === id && d.own && d.scope !== "repository",
-  );
-  return found?.absPath ?? join(root, fallback);
-}
+// `ownDirectoryById` moved to `schemas/cat-harness.ts` (2026-09-30) when
+// `content/pipeline/translation-index.ts` became its second caller. The
+// reasoning for the BY-ID lookup travelled with it.
 
 // declared-path-literal: the convention fallback, at the call site — an
 // instance that declares no `processes` directory still needs a sidecar home
