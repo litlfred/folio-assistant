@@ -62,6 +62,7 @@ import {
 } from "../schemas/tabular-records.ts";
 import { DESCRIBABLE_ROLES, ImagesSidecarSchema } from "../schemas/document-image.ts";
 import { VECTOR_LABELS_FILE, VectorLabelsSidecarSchema } from "../schemas/vector-labels.ts";
+import { LICENCE_FILENAME } from "../content/pipeline/gen-library-jsonld.ts";
 import { NARRATIVE_BEARING, narrativesIn } from "./narratives.ts";
 import { SUMMARIES_FILE } from "../schemas/block-summary.ts";
 import { entryDirs, entryItems, sidecarDefects, tally } from "./summaries.ts";
@@ -181,6 +182,9 @@ export const ENTRY_SIDECARS: readonly string[] = [
   VECTOR_LABELS_FILE,
   "manifest.jsonld",
   SUMMARIES_FILE,
+  // Authored, not produced by an arm: the licence record gen-library-jsonld
+  // carries into manifest.jsonld as meta.licence (folio-assistant#1492).
+  LICENCE_FILENAME,
 ];
 
 export const KIND_SIDECAR: ReadonlyArray<readonly [EntryKind, string]> = [
