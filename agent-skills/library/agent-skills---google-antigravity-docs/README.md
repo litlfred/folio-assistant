@@ -8,7 +8,7 @@ Held in the library [`agent-skills/library/`](../README.md) as `agent-skills---g
 | | |
 |---|---|
 | document id | `agent-skills---google-antigravity-docs` |
-| source file | `Agent Skills - Google Antigravity Docs.pdf` (sha256 `c18bd906b75d…`) |
+| source file | `Agent-Skills-Google-Antigravity-Docs.pdf` (sha256 `c18bd906b75d…`) |
 | provenance | ingested |
 
 | holds | count |

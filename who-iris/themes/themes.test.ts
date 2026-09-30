@@ -31,11 +31,32 @@ import { ResolvedThemeSchema, themeKey } from "../../cat-harness/schemas/theme.j
 import { DEFAULT_THEME_ID, themeById } from "../../cat-harness/schemas/themes.js";
 
 const INSTANCE = resolve(import.meta.dir, "..");
+/**
+ * The saved-page archive. Its CONTAINER name is normalised
+ * (`check:upload-names`, owner ruling 2026-09-30); the paths INSIDE it are
+ * not, and must not be — see {@link MEMBER}.
+ */
 const CAPTURE = join(
   INSTANCE,
   "uploads/wpr-rdo-2020-003-eng/iris-capture",
-  "Publication and information products style guide_files.zip",
+  "Publication-and-information-products-style-guide_files.zip",
 );
+
+/**
+ * A member path inside the zip, spaces and all.
+ *
+ * **This is not the same string as the zip's own name, and normalising it
+ * would break the capture.** The saved `.html` beside it references
+ * `./Publication and information products style guide_files/…` in its own
+ * markup, so the directory inside the archive has to keep that spelling for
+ * the capture to be reproducible — which is what
+ * `uploads/wpr-rdo-2020-003-eng/intake.json` is protecting.
+ *
+ * `check:upload-names` reads FILE names in a declared graph. It never opens an
+ * archive and never renames a directory, so the two do not collide; the zip's
+ * container name changed and its contents did not.
+ */
+const MEMBER = "Publication and information products style guide_files/client-theme.css";
 const SECTIONS = join(INSTANCE, "library/wpr-rdo-2020-003-eng/sections");
 
 /**
@@ -48,7 +69,7 @@ const SECTIONS = join(INSTANCE, "library/wpr-rdo-2020-003-eng/sections");
 function clientThemeCss(): string {
   return execFileSync(
     "unzip",
-    ["-p", CAPTURE, "Publication and information products style guide_files/client-theme.css"],
+    ["-p", CAPTURE, MEMBER],
     { encoding: "utf-8", maxBuffer: 8 * 1024 * 1024 },
   );
 }

@@ -906,7 +906,7 @@ function page(
 
   /* ── IRIS home replica ────────────────────────────────────────────────
      Bands in the capture's order: hero, search, Recent Submissions. Measured
-     against who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf page 1.
+     against who-iris/uploads/iris-home/iris-capture/IRIS-Home.pdf page 1.
 
      The hero bleeds to the wrap's edges rather than to the viewport: 100vw
      inside a centred column is the classic horizontal-scrollbar bug, and a
@@ -1765,7 +1765,7 @@ ${
  * > mocks the iris landing page. … go back to orinal .pdf of iris pages and
  * > validate look."*
  *
- * Validated against `who-iris/uploads/iris-home/iris-capture/IRIS Home.pdf`,
+ * Validated against `who-iris/uploads/iris-home/iris-capture/IRIS-Home.pdf`,
  * page 1, rendered at 900px on 2026-09-20. Five bands, in the source's order:
  * masthead, hero, search, Recent Submissions, footer. Everything below is
  * either read off that capture or read out of the catalogue; nothing is
