@@ -211,6 +211,10 @@
           "type": "string",
           "format": "uri"
         },
+        "iriBase": {
+          "type": "string",
+          "format": "uri"
+        },
         "previewUrl": {
           "type": "string",
           "format": "uri"
@@ -401,6 +405,44 @@
                         "minLength": 1
                       }
                     }
+                  }
+                }
+              },
+              "tile": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "surfaces": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "navbar",
+                        "board",
+                        "glass"
+                      ]
+                    }
+                  },
+                  "hidden": {
+                    "type": "boolean"
+                  },
+                  "theme": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "icon": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "publish": {
+                    "type": "string",
+                    "enum": [
+                      "staging-only"
+                    ]
                   }
                 }
               },
@@ -713,8 +755,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-output-level-corpus-detector/cat-harness.jsonld",
   "staging": {
     "branch": "claude/output-level-corpus-detector",
-    "sha": "180575569317a30ceb29dc7ed5efa4057779f1e4",
+    "sha": "a43193597ace9dd4c2384868dc086ccf1aa8d2b7",
     "pr": "1475/merge",
-    "run": "36638310229"
+    "run": "36648424525"
   }
 }

@@ -1,4 +1,21 @@
-# Schemas, drawn
+<!-- kg:subgraph:begin -->
+# schemas
+
+The schemas bootstrap is checked against: `graph.schema.json`, the shape of a declaration and the definition of every term bootstrap uses; and the input and output of the discussion Process. Their published `$id`s do not change when a file moves.
+
+Part of [Bootstrap](../README.md) 0.1.0, declared as `schemas`, holding `schemas`.
+
+| file | what it is | used by |
+|---|---|---|
+| [`discussion.input.schema.json`](discussion.input.schema.json) | Discussion Input |  |
+| [`discussion.output.schema.json`](discussion.output.schema.json) | Discussion Output |  |
+| [`glossary-ledger.schema.json`](glossary-ledger.schema.json) | Glossary Ledger |  |
+| [`graph.schema.json`](graph.schema.json) | Knowledge Graph declaration |  |
+| [`model-registry.schema.json`](model-registry.schema.json) | Model Registry |  |
+| [`requirement.schema.json`](requirement.schema.json) | Requirement |  |
+<!-- kg:subgraph:end -->
+
+## Schemas, drawn
 
 <!-- Generated from the schemas in this directory. Change a schema, not this page. -->
 
@@ -14,61 +31,97 @@ How to read a drawing:
 - A field that holds another object points to that object's box, below it.
 - `[src]` opens the schema itself.
 
-## Terms
+### Terms
 
 Each defined term, in the words of
 [`graph.schema.json`](graph.schema.json). A term whose shape is drawn below links to
 its drawing; the rest are defined in words only.
 
-### Knowledge Graph
+#### Node
 
-Information kept as files in a repository: things, and the named relations between them. It is declared by one file at its root, `<name>.json`, which gives its name and lists its Subgraphs. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/KnowledgeGraph)
+One unit of recorded knowledge, held in one file or as one identifiable part of a file, and named by an IRI. [src](graph.schema.json#/$defs/Node)
 
-### Subgraph
+#### Node Kind
 
-A named directory of a Knowledge Graph, declared with the Graph Kind or Kinds it holds. A Knowledge Graph has zero or more. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/Subgraph)
+A name for a class of Nodes, together with its Node Schema: a JSON Schema that every Node of that kind satisfies. [src](graph.schema.json#/$defs/NodeKind)
 
-### Graph Kind
+#### Sub Kind
 
-What a Subgraph holds, such as skills, processes or schemas. A reader matches on it to decide whether to look inside. [src](graph.schema.json#/$defs/GraphKind)
+A Node Kind whose Node Schema requires everything another Node Kind's does, so every Node of it is also a Node of that other kind. [src](graph.schema.json#/$defs/SubKind)
 
-### Asset
+#### Node Instance
 
-A single file a Knowledge Graph declares as its own, together with the part it plays, such as its README. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/Asset)
+A Node that states its Node Kind and satisfies that kind's Node Schema. [src](graph.schema.json#/$defs/NodeInstance)
 
-### Harness
+#### Graph Kind
 
-What an Actor uses to work with a Knowledge Graph: Skills, Processes, Roles and Tools. A Harness is itself a Knowledge Graph, declared the same way; bootstrap is the first Harness. [src](graph.schema.json#/$defs/Harness)
+A named set of Node Kinds whose instances may be held together. [src](graph.schema.json#/$defs/GraphKind)
 
-### Actor
+#### Declaration
 
-A participant, whether a person, an agent or a program, that takes a Role in each Process it takes part in. [src](graph.schema.json#/$defs/Actor)
+A JSON document, `<name>.json`, that gives a name and lists entries, each naming either a directory of Node Instances with the Graph Kinds they belong to, or a single file with its purpose. [src](graph.schema.json#/$defs/Declaration)
 
-### Role
+#### Subgraph
 
-The part an Actor plays in a Process. A Process diagram draws each Role as one lane, and a Role carries the Skills its lane needs. [src](graph.schema.json#/$defs/Role)
+A named subset of Node Instances: a Declaration's directory entry, with its id, its directory and its Graph Kinds. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/Subgraph)
 
-### Process
+#### Asset
 
-A diagram of the steps, decisions and order of some work, with one lane per Role. It is written in Business Process Model and Notation (BPMN), a standard diagram format, in a `.bpmn` file. [src](graph.schema.json#/$defs/Process)
+A Declaration's file entry: one file about the repository itself, such as its README, with its stated purpose. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/Asset)
 
-### Process Node
+#### Extension
 
-One element of a Process: a step, a decision, a start or an end. [src](graph.schema.json#/$defs/ProcessNode)
+A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning. [src](graph.schema.json#/$defs/Extension)
 
-### Sequence Flow
+#### Knowledge Graph
 
-An arrow in a Process, from one Process Node to the next. [src](graph.schema.json#/$defs/SequenceFlow)
+A semi-static description of one or more datasets or information repositories as of one version: a set of Node Schemas and Node Instances, and the Declaration that divides them into Subgraphs. Published as JSON-LD, each Subgraph is a named graph. Drawn in [Knowledge Graph declaration](#knowledge-graph-declaration). [src](graph.schema.json#/$defs/KnowledgeGraph)
 
-### Skill
+#### Dependency
 
-Written instructions an Actor follows to carry out one step of a Process, in a `.md` file. [src](graph.schema.json#/$defs/Skill)
+One Knowledge Graph depends on another when its Declaration names the other. The dependent's Nodes may refer to the other's; the other's never refer back. [src](graph.schema.json#/$defs/Dependency)
 
-### Tool
+#### Content
 
-A program an Actor calls to carry out a step. A Harness may declare Tools; bootstrap declares none, because it runs nothing. [src](graph.schema.json#/$defs/Tool)
+The Node Kinds whose instances describe the datasets and other information a Knowledge Graph is about: their records, documents, catalogues and terms, and links to other sources of knowledge inside or outside the repository. [src](graph.schema.json#/$defs/Content)
 
-## Discussion Input
+#### Actor
+
+A person, an agent or a program that can carry out work. [src](graph.schema.json#/$defs/Actor)
+
+#### Task
+
+A unit of work an Actor carries out: what it needs to begin, and what it produces. [src](graph.schema.json#/$defs/Task)
+
+#### Skill
+
+The Node Kind whose instances are natural-language instructions an Actor follows to carry out one Task. [src](graph.schema.json#/$defs/Skill)
+
+#### Tool
+
+The Node Kind whose instances describe a program an Actor may run while carrying out a Task: what it takes, what it produces, and how to run it. [src](graph.schema.json#/$defs/Tool)
+
+#### Role
+
+The Node Kind whose instances name a responsibility an Actor takes on when carrying out Tasks, and list the Skills that responsibility needs. [src](graph.schema.json#/$defs/Role)
+
+#### Process Node
+
+One element of a BPMN diagram: a Task, a decision, a start or an end. [src](graph.schema.json#/$defs/ProcessNode)
+
+#### Sequence Flow
+
+An arrow in a BPMN diagram, from one Process Node to the next. [src](graph.schema.json#/$defs/SequenceFlow)
+
+#### Process
+
+The Node Kind whose instances coordinate Tasks: a BPMN diagram whose Process Nodes are joined by Sequence Flows, in lanes that each name the Role an Actor takes to carry out that lane's Tasks. [src](graph.schema.json#/$defs/Process)
+
+#### Harness
+
+A Knowledge Graph whose Subgraphs hold Skills, Tools, Roles and Processes: what an Actor needs in order to work with another Knowledge Graph. [src](graph.schema.json#/$defs/Harness)
+
+### Discussion Input
 
 [src](discussion.input.schema.json)
 
@@ -101,7 +154,7 @@ The occasion for asking: what the agent already knows, and which unknown is stil
                                         +--------------------------------------------+
 ```
 
-## Discussion Output
+### Discussion Output
 
 [src](discussion.output.schema.json)
 
@@ -150,31 +203,34 @@ Rules the drawing cannot show:
 - If `determinedBy` is "assumed", `assumption` must be present.
 - If `outcome` is "unsettled", `stillOpen` must be present.
 
-## Knowledge Graph declaration
+### Knowledge Graph declaration
 
 [src](graph.schema.json) · describes `<name>.json`
 
-Information kept as files in a repository: things, and the named relations between them. It is declared by one file at its root, `<name>.json`, which gives its name and lists its Subgraphs. This schema is the shape of that declaration, and its `$defs` define every term bootstrap uses.
+A Declaration. Any field not listed here is an Extension: A field of a Declaration, or of one of its entries, that is not defined here. A reader that does not recognise the field ignores it, and the rest of the Declaration keeps its meaning.
 
 ```text
 +--------------------------------------+
 | Knowledge Graph declaration          |
 +--------------------------------------+
 | * name         [1]     string        |
+|   version      [0..1]  string        |
+|   iriBase      [0..1]  string        |
 |   title        [0..1]  string        |
 |   description  [0..1]  string        |
 |   directories  [0..*]  Subgraph list |
 |   assets       [0..*]  Asset list    |
 +--------------------------------------+
   |
-  +-- directories (each item) --> +---------------------------------------+
-  |                               | Subgraph                              |
-  |                               +---------------------------------------+
-  |                               | * id           [1]     string         |
-  |                               | * path         [1]     string         |
-  |                               | * graphKinds   [1..*]  list of string |
-  |                               |   description  [0..1]  string         |
-  |                               +---------------------------------------+
+  +-- directories (each item) --> +---------------------------------------------------------------------------------------------------------------------------------------+
+  |                               | Subgraph                                                                                                                              |
+  |                               +---------------------------------------------------------------------------------------------------------------------------------------+
+  |                               | * id           [1]     string                                                                                                         |
+  |                               | * path         [1]     string                                                                                                         |
+  |                               | * graphKinds   [1..*]  list of = "skills" | = "schemas" | = "scenarios" | = "processes" | = "models" | = "swimlane-glossary" | string |
+  |                               |   title        [0..1]  string                                                                                                         |
+  |                               |   description  [0..1]  string                                                                                                         |
+  |                               +---------------------------------------------------------------------------------------------------------------------------------------+
   |
   +-- assets (each item) --> +---------------------+
                              | Asset               |
@@ -185,19 +241,19 @@ Information kept as files in a repository: things, and the named relations betwe
                              +---------------------+
 ```
 
-## Model Registry
+### Model Registry
 
 [src](model-registry.schema.json) · describes `models/models.json`
 
 Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.
 
 ```text
-+------------------------------------------------+
-| Model Registry                                 |
-+------------------------------------------------+
-| * $schema  [1]     = "folio-model-registry/v1" |
-| * models   [0..*]  Model list                  |
-+------------------------------------------------+
++---------------------------------------------+
+| Model Registry                              |
++---------------------------------------------+
+| * $schema  [1]     = "model-registry/1.0.0" |
+| * models   [0..*]  Model list               |
++---------------------------------------------+
   |
   +-- models (each item) --> +----------------------------------------------------------------------------------+
                              | Model                                                                            |
@@ -212,7 +268,31 @@ Which languages a model is good at, and whether a person checked. Only `human-va
                              +----------------------------------------------------------------------------------+
 ```
 
-## Requirement
+### Glossary Ledger
+
+[src](glossary-ledger.schema.json)
+
+Every term a Knowledge Graph's Processes have ever named, with the date each was first seen and the date it stopped being used. The glossary itself is regenerated each time; this is the one fact that cannot be, so a retired term is never silently reused.
+
+```text
++--------------------------------------------+
+| Glossary Ledger                            |
++--------------------------------------------+
+| * $schema   [1]  = "glossary-ledger/1.0.0" |
+| * instance  [1]  string                    |
+| * concepts  [1]  map of key to Concept     |
++--------------------------------------------+
+  |
+  +-- concepts (each item) --> +---------------------------------+
+                               | Concept                         |
+                               +---------------------------------+
+                               | * prefLabel  [1]  string        |
+                               | * firstSeen  [1]  string        |
+                               | * retiredOn  [1]  string | null |
+                               +---------------------------------+
+```
+
+### Requirement
 
 [src](requirement.schema.json)
 
