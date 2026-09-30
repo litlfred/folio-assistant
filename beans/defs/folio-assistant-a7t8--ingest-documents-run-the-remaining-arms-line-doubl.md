@@ -1,11 +1,11 @@
 ---
 # folio-assistant-a7t8
 title: ingest-document's 'run the remaining arms' line double-nests the pdf-images output
-status: todo
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-22T20:13:04Z
-updated_at: 2026-09-29T20:52:41Z
+updated_at: 2026-09-30T00:28:36Z
 parent: folio-assistant-slw1
 ---
 
@@ -47,3 +47,10 @@ Same class as the three `'scripts/<name>.py'` CWD-relative paths that module's o
 
 
 _2026-09-29_ — **Re-parented `ahvw` → `slw1`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). A defect in ingest-document's printed next step belongs with the ingest pipeline.
+
+
+## Closed on evidence (2026-09-30) — the work had already landed
+Re-derived against HEAD, not taken from a commit message:
+- [x] printed recipe — the 'run the remaining arms' line no longer exists; withDerivedArms (cat-harness/scripts/ingest-document.ts) runs every arm in code, handing each the directory it wants (comment at the stage-mode report explains the deletion). Nothing left to copy-paste wrong.
+- [x] conventions stated — pdf-images.py --help: '-o OUT library root; the sidecar lands in <out>/<doc-id>/'; l1-blocks.ts usage: '-o <staged-entry-dir>'. Not reconciled, but each --help says which it takes, and the only caller passes the right one.
+- [x] a test pins it — cat-harness/scripts/tests/ingest-and-l1.test.ts:614-626 asserts pdf-images and pdf-vector-labels get the staging ROOT and l1-blocks the ENTRY dir.
