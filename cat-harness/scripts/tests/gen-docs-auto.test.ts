@@ -263,3 +263,29 @@ describe("a description naming another artefact on the page links to its row (be
     expect(dup).not.toContain('href="#a-g-l-json-role-reviewer"');
   });
 });
+
+describe("a code span that is not a row here links to a skill page or a file (bean qgjh)", () => {
+  const refs = {
+    skill: (n: string) => (n === "todo-manager" ? "../skill/todo-manager.html" : undefined),
+    file: (p: string) => (p === "a/b.bpmn" ? "https://example.invalid/a/b.bpmn" : undefined),
+  };
+  const html = autoDocPage(
+    TYPES[0]!,
+    [{ path: "g/l.json#role/x", name: "X", summary: "See `todo-manager`, `todo-manager.md`, `a/b.bpmn` and `claim`." }],
+    "",
+    undefined,
+    [],
+    refs,
+  );
+
+  it("a skill name, with or without .md, links to its instruction page", () => {
+    expect(html).toContain('<a href="../skill/todo-manager.html"><code>todo-manager</code></a>');
+    expect(html).toContain('<a href="../skill/todo-manager.html"><code>todo-manager.md</code></a>');
+  });
+  it("a repository path links to its source", () => {
+    expect(html).toContain('<a href="https://example.invalid/a/b.bpmn"><code>a/b.bpmn</code></a>');
+  });
+  it("a name that resolves to neither stays code", () => {
+    expect(html).toContain("and <code>claim</code>.");
+  });
+});
