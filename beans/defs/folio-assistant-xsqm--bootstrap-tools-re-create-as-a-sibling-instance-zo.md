@@ -60,6 +60,14 @@ Analysis: session scratchpad `separation-process-analysis.md` (94 beans, cone me
 - [x] described (disabled) CI workflow + no npm publish (private) ; which lane runs each tool (bootstrap-tools/AGENTS.md), every command verified from the directory
 - [ ] migration-plan Phase II: left as a record (default B), pointer to kg-separation only
 
+## Owner ruling, 2026-09-30 — seeding carries NO history
+
+"I dont want all the clutter in git history on bootstrap (still retained in
+folio-assistant)". Supersedes the earlier `git filter-repo` default: each new
+repository starts from ONE commit of its tracked files, whose message names the
+folio-assistant commit it was taken from. The history stays here; the pointer
+is how to reach it. Seeding still waits on the owner's go.
+
 ## Phase 4 — the replicable separation process
 - [x] kg-separation BPMN + skills (done, 433d3c5)
 - [x] gate: served-name collision — publish step fails on a DIFFERENT file at a taken address unless the workflow names it (`--allow-collision bootstrap.json`)

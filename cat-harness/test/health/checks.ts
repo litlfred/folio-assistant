@@ -36,7 +36,7 @@
  * Every `action` on every finding names something a **person** does. Several
  * of these checks are about artefacts accumulating, and the reflex is to have
  * the sweep tidy up. It must not: see
- * `skills/folio-core/deletion-requires-confirmation.md`, and bean `plj1` for
+ * `skills/conduct/conduct-core/deletion-requires-confirmation.md`, and bean `plj1` for
  * what a workflow that tidies up on its own initiative actually costs.
  *
  * @module test/health/checks

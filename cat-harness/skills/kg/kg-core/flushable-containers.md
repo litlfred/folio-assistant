@@ -77,7 +77,7 @@ a reader acts on it.
 ## Never flush without explicit confirmation
 
 This inherits
-[`deletion-requires-confirmation.md`](../../folio-core/deletion-requires-confirmation.md) whole:
+[`deletion-requires-confirmation.md`](../../conduct/conduct-core/deletion-requires-confirmation.md) whole:
 an agent never removes a durable artefact on its own initiative, it reports what
 would go — **with sizes and ages** — and waits to be told.
 

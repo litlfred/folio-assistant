@@ -56,7 +56,7 @@ That last row is the one distinction worth holding on to: **this file is read,
 memory is injected.** Nothing truncates a file, so it carries what an agent
 must be able to look up; memory carries what must arrive without being asked
 for, and pays a budget for it. Maintaining both is one job —
-`folio-core/agent-memory`.
+`conduct-core/agent-memory`.
 
 ---
 

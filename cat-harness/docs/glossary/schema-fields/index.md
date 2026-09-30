@@ -12,13 +12,13 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1492 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1491 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1693 terms and is 930 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1692 terms and is 930 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1693</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1692</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -3912,6 +3912,13 @@ GraphKindDef.holds <span class="fa-gloss-status">candidate, extracted</span>
 <p>Does a graph of this kind say what the instance **IS**, or where something **GOT TO**?</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.holds</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.layer" data-fa-state="extracted" data-fa-gloss="">
+GraphKindDef.layer <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Whose namespace the kind is named in, when it is not the harness's: <code>core</code> for the folio's own furniture (<code>voices</code>, <code>library</code>, <code>todos</code>, …). A kind bootstrap defines is bootstrap's whatever this says (<code>BOOTSTRAP_GRAPH_KINDS</code>). The kind IS its individual, <code>&lt;ns&gt;graphKind/&lt;name&gt;</code> (&#123;@link graphKindIri}); there is no class per kind. Owner, 2026-09-30 (bean <code>3r47</code>): &quot;Drop per-kind classes&quot; — bootstrap names a kind as one <code>GraphKind</code> individual, and the harness now does the same.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.layer</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.nodeschemas" data-fa-state="extracted" data-fa-gloss="">
 GraphKindDef.nodeSchemas <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -3939,13 +3946,6 @@ GraphKindDef.schema <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Where the shape of a node in this graph is defined — a repo-relative module path, or a <code>$schema</code> tag the files themselves carry.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.schema</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.type" data-fa-state="extracted" data-fa-gloss="">
-GraphKindDef.type <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The <code>@type</code> IRI this kind projects to.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/graph-kind-registry.ts"><code>cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.type</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--graph-kind-registry.graphkinddef.validator" data-fa-state="extracted" data-fa-gloss="">
 GraphKindDef.validator <span class="fa-gloss-status">candidate, extracted</span>
@@ -4661,13 +4661,6 @@ InstanceRepository.name <span class="fa-gloss-status">candidate, extracted</span
 <dd>
 <p>The declaration's machine name — what <code>needs</code> resolves against.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.name</code></a></p>
-</dd>
-<dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.namespace" data-fa-state="extracted" data-fa-gloss="">
-InstanceRepository.namespace <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>The vocabulary namespace its terms are minted under — &#123;@link instanceNamespace}.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/instance-repositories.ts"><code>cat-harness/schemas/instance-repositories.ts#InstanceRepository.namespace</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--instance-repositories.instancerepository.repository" data-fa-state="extracted" data-fa-gloss="">
 InstanceRepository.repository <span class="fa-gloss-status">candidate, extracted</span>

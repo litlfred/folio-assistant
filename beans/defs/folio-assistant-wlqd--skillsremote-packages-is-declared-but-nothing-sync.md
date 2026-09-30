@@ -267,7 +267,7 @@ Both branches need the author:
   linked GitHub issue, and an agent never opens one without permission.
 - **Drop the declaration** — removing two wrappers about real external
   dependencies, which
-  [`deletion-requires-confirmation`](../../cat-harness/skills/folio-core/deletion-requires-confirmation.md)
+  [`deletion-requires-confirmation`](../../cat-harness/skills/conduct/conduct-core/deletion-requires-confirmation.md)
   puts with the author too. `skill-package.ts:353` records that *"a maintainer
   chose `shallow-clone` over"* the alternatives, so the declaration carries a
   decision somebody made.

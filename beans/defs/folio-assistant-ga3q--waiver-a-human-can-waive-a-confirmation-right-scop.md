@@ -29,7 +29,7 @@ Every field on a waiver exists to keep that true.
 
 ## Landed in this change
 
-- `skills/folio-core/confirmation-waiver.md` — five required fields, the closed
+- `skills/conduct/conduct-core/confirmation-waiver.md` — five required fields, the closed
   gate vocabulary, the three-state read, and the four things an agent may never
   do (grant itself one, widen one, infer one from tone, treat one as a reason
   to skip the work).

@@ -33,7 +33,7 @@ already owns it:
 |---|---|
 | goals, and what serves each | a `milestone` bean per goal, with the epics parented to it — [`todo-manager`](todo-manager.md) §"A GOAL is a `milestone` bean"; `beans roadmap` renders it |
 | canonical status of an item | the bean itself. There is no second copy to disagree with it, which is what the "trust the ledger" rule existed to arbitrate |
-| flip-flop history | a `scrapped` bean keeps the rejected approach *with its reasons*, and a `trap` node under the declared `memory` graph keeps the failure signature — [`agent-memory`](agent-memory.md) |
+| flip-flop history | a `scrapped` bean keeps the rejected approach *with its reasons*, and a `trap` node under the declared `memory` graph keeps the failure signature — [`agent-memory`](../conduct/conduct-core/agent-memory.md) |
 | session log | the bean's body notes, plus the PR. Both are durable and both are read by the next session; a third place would be a third answer |
 
 | Artifact | Purpose |
@@ -180,7 +180,7 @@ objects carry it, and they answer different questions:
 - the approach that was rejected becomes a `scrapped` bean **with its
   reasons**, so the next agent does not re-enter it;
 - the failure *signature* — what made the wrong answer look right — becomes a
-  `trap` node in the `memory` graph ([`agent-memory`](agent-memory.md)), which
+  `trap` node in the `memory` graph ([`agent-memory`](../conduct/conduct-core/agent-memory.md)), which
   is what a flip-flop history was for.
 
 ### 3. Update the PR body
