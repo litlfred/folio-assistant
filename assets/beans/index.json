@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 453,
+      "count": 455,
       "unit": "beans"
     }
   },
@@ -447,14 +447,14 @@
     {
       "id": "folio-assistant-2b5s",
       "title": "MOUNT COPIES A DIRECTORY WHOLESALE: /who-iris/ publishes 1,367 corpus files as pages, and /library/who-iris/ publishes all 1,378 a second time",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T20:00:52Z",
-      "updatedAt": "2026-09-21T20:00:52Z",
+      "updatedAt": "2026-09-30T10:16:57Z",
       "preview": "## What\n\n`mount-instance-docs.ts` mounts a directory when it carries an `index.html`\n**at its own root**, and then copies **everything beneath it**. For\n`who-iris/library/` that is 1,378 files, of which 11 are pages:\n\n| | count | what |\n|---|---|---|\n| pages | 11 | 7 `.html` (index, community-list, 2 collections, 3 items), 3 cover `.png`, `image-verdicts.json` |\n| L1 corpus | 1,367 | 813 `.jsonld`",
       "file": "beans/defs/folio-assistant-2b5s--mount-copies-a-directory-wholesale-who-iris-publis.md"
     },
@@ -1879,12 +1879,12 @@
       "title": "B8 (#1168): string-to-reference sweep — typed refs on ~25 bare-string fields; delete SkillDefinition.roles and front-matter package:",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T21:12:05Z",
-      "updatedAt": "2026-09-29T23:45:53Z",
+      "updatedAt": "2026-09-30T08:06:07Z",
       "preview": "Mechanical sweep from the string-to-reference analysis (#1168 comment 5803006038). SkillNameSchema / ProcessIdSchema / TaskRefSchema / BeanIdSchema / BLOCK_KINDS enum / ThemeRefSchema / KgRefSchema on the listed fields; kg-export ActorDef.roles and role toJsonLd skills as @id links; resolve memory roles/agents. Delete SkillDefinition.roles (inverse of RoleDef.skills, 0 instances) and skill front-m",
       "file": "beans/defs/folio-assistant-a0s3--b8-1168-string-to-reference-sweep-typed-refs-on-25.md"
     },
@@ -3076,8 +3076,8 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T19:53:34Z",
-      "updatedAt": "2026-09-30T09:58:14Z",
-      "preview": "See #1168 plan C. After B lands.\n\n_2026-09-30T09:58:14Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).",
+      "updatedAt": "2026-09-30T09:58:17Z",
+      "preview": "See #1168 plan C. After B lands.",
       "file": "beans/defs/folio-assistant-i4i1--c-uml-task-implements-skill-voice-role-skill-io-sc.md"
     },
     {
@@ -4589,14 +4589,14 @@
     {
       "id": "folio-assistant-rjug",
       "title": "SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-uhkv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-09-29T20:03:11Z",
+      "updatedAt": "2026-09-30T10:09:58Z",
       "preview": "Three things the pipeline already produces and this graph cannot hold. Proposal\nwith **options**, because at least two of the three have more than one\ndefensible shape and picking silently is how a kind gets registered wrong.\n\n## 1. Metadata indexes\n\nAlready partly solved: `fhir-artifact-index` exists, registered\n`renderable: false`, reconstructed from four partial views with `provenance`\nnaming t",
       "file": "beans/defs/folio-assistant-rjug--schema-proposal-metadata-indexes-binary-releases-a.md"
     },
@@ -4879,6 +4879,20 @@
       "updatedAt": "2026-08-26T19:15:00Z",
       "preview": "Split out of `p2en`, whose original question — what schema consolidates math and\nhealth-policy ingestion — is answered. This is the follow-on it uncovered.\n\n## Why\n\n`p2en` landed DAK block kinds, adapter-scoped QA axes, and five DAK checkers,\nbut those criteria were written from what the corpus happens to contain. WHO\npublishes its own authoring standards, and they are the better source: a\ncriteri",
       "file": "beans/defs/folio-assistant-sopq--mine-the-who-ig-starter-kit-sops-for-dak-qa-criter.md"
+    },
+    {
+      "id": "folio-assistant-ssfp",
+      "title": "beans:claim writes to process.cwd(), so an agent working in a git worktree claims in the WRONG checkout",
+      "status": "todo",
+      "type": "bug",
+      "priority": "high",
+      "parent": "folio-assistant-ahvw",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T10:11:53Z",
+      "updatedAt": "2026-09-30T10:11:53Z",
+      "preview": "Measured 2026-09-30, on a live subagent. A session delegating to agents that\neach work in their own `git worktree` — the pattern this repository's own\nguidance pushes, and the one used for every agent in that session — has its\nclaims land in the wrong tree.\n\n## The measurement\n\nAn agent was briefed to work in `/tmp/wtRJ/folio-assistant` and claim bean\n`rjug`. Immediately after it reported the clai",
+      "file": "beans/defs/folio-assistant-ssfp--beansclaim-writes-to-processcwd-so-an-agent-workin.md"
     },
     {
       "id": "folio-assistant-supn",
@@ -5205,6 +5219,20 @@
       "updatedAt": "2026-09-18T07:50:21Z",
       "preview": "Branch `claude/windows-bat-wrappers-2026-09-18`, PR #231. 36 wrappers generated by `cat-harness/scripts/gen-bat-wrappers.sh` (moved from `scripts/` when main split into `cat-harness/`), `bun run bat:sync:check` in the code-quality gate, `.gitattributes` pins `.sh`→LF and `.bat`→CRLF.\n\nThe platform ships 49 `.sh` scripts and no Windows entry point for any of\nthem. `.mcp.json` names `scripts/sage-mc",
       "file": "beans/defs/folio-assistant-uj55--windows-bat-wrappers-for-every-sh-a-user-runs.md"
+    },
+    {
+      "id": "folio-assistant-uju6",
+      "title": "REGEN BLIND SPOT: regen pairs a check `X:check` with writer `X`, so a `check:X` gate whose writer is spelled differently is never repaired",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T08:57:47Z",
+      "updatedAt": "2026-09-30T08:57:47Z",
+      "preview": "Measured 2026-09-30 on PR #1550. `Repository gates` failed on `check:prov-qaqc`: `cat-harness/docs/prov-qaqc/index.md` was stale after #1533 added a workflow instance (`code-change-review--issue-1531-upload-step`) without regenerating it. `bun run regen` reported \"63 current, 0 regenerated\" across the whole episode. It never asked this check, because it pairs by the `X:check` → `X` spelling, and h",
+      "file": "beans/defs/folio-assistant-uju6--regen-blind-spot-regen-pairs-a-check-xcheck-with-w.md"
     },
     {
       "id": "folio-assistant-uknu",

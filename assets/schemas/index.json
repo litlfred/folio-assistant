@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 177,
+      "count": 178,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -859,6 +859,14 @@
       "name": "precision-scalar",
       "graphNode": "schema",
       "summary": "§S7 — `PrecisionScalar` envelope for round-tripping high-precision",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/process-element-id.ts",
+      "instance": "cat-harness",
+      "name": "process-element-id",
+      "graphNode": "schema",
+      "summary": "The id a BPMN `<process>` element declares — `Process_CRDM`,",
       "isTest": false
     },
     {
@@ -3199,14 +3207,17 @@
         },
         {
           "name": "skill",
-          "type": "z.string().optional()",
+          "type": "SkillRefSchema.optional()",
           "optional": true,
-          "array": false
+          "array": false,
+          "doc": "The skill being exercised: `name` or `package/name` (#1168 B8)."
         }
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/tool-types.ts#SkillRefSchema"
+      ],
       "unresolved": [],
       "external": [
         "ATTRIBUTION_KINDS",
@@ -5596,7 +5607,7 @@
       "fields": [
         {
           "name": "process",
-          "type": "z.string().min(1)",
+          "type": "ProcessElementIdSchema",
           "optional": false,
           "array": false,
           "doc": "BPMN process id, e.g. `Process_CRDM`."
@@ -5611,7 +5622,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -6146,7 +6159,7 @@
         },
         {
           "name": "theme",
-          "type": "string",
+          "type": "ThemeRef",
           "optional": true,
           "array": false,
           "doc": "Which theme this subgraph renders on — one answer for every surface that"
@@ -6159,7 +6172,8 @@
       "refs": [
         "cat-harness/schemas/cat-harness.ts#DependentMaterialisation",
         "cat-harness/schemas/cat-harness.ts#GraphNodeDirectory",
-        "cat-harness/schemas/cat-harness.ts#SubgraphCoverage"
+        "cat-harness/schemas/cat-harness.ts#SubgraphCoverage",
+        "cat-harness/schemas/theme.ts#ThemeRef"
       ],
       "unresolved": [],
       "external": [],
@@ -6242,7 +6256,7 @@
         },
         {
           "name": "theme",
-          "type": "z.string().min(1).optional()",
+          "type": "ThemeRefSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "Which theme this subgraph renders on."
@@ -6256,7 +6270,8 @@
         "cat-harness/schemas/cat-harness.ts#DependentMaterialisationSchema",
         "cat-harness/schemas/cat-harness.ts#GraphNodeDirectoryShape",
         "cat-harness/schemas/cat-harness.ts#SubgraphCoverageSchema",
-        "cat-harness/schemas/cat-harness.ts#TileSchema"
+        "cat-harness/schemas/cat-harness.ts#TileSchema",
+        "cat-harness/schemas/theme.ts#ThemeRefSchema"
       ],
       "unresolved": [],
       "external": [
@@ -7178,10 +7193,10 @@
         },
         {
           "name": "theme",
-          "type": "z.string().min(1).optional()",
+          "type": "ThemeRefSchema.optional()",
           "optional": true,
           "array": false,
-          "doc": "The tile's theme. Absent means the directory's, then the instance's."
+          "doc": "The tile's theme, by reference (#1168 B8). Absent means the directory's, then the instance's."
         },
         {
           "name": "icon",
@@ -7200,7 +7215,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/theme.ts#ThemeRefSchema"
+      ],
       "unresolved": [],
       "external": [
         "TILE_SURFACES",
@@ -18070,7 +18087,7 @@
         },
         {
           "name": "theme",
-          "type": "z.string().regex(/^[a-z][a-z0-9-]*$/, \"a theme id is lowercase kebab-case\")",
+          "type": "ThemeRefSchema",
           "optional": false,
           "array": false,
           "doc": "The theme id, by reference."
@@ -18127,7 +18144,8 @@
         "cat-harness/schemas/note-anchor.ts#PageAnchorSchema",
         "cat-harness/schemas/sticky-contribution.ts#InitiationSchema",
         "cat-harness/schemas/sticky-contribution.ts#StickyLinkSchema",
-        "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema"
+        "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema",
+        "cat-harness/schemas/theme.ts#ThemeRefSchema"
       ],
       "unresolved": [],
       "external": [
@@ -18416,7 +18434,7 @@
         },
         {
           "name": "process",
-          "type": "z.string().min(1).optional()",
+          "type": "ProcessElementIdSchema.optional()",
           "optional": true,
           "array": false,
           "doc": "BPMN process id, when the entry was written inside one."
@@ -18476,6 +18494,7 @@
       "refs": [
         "cat-harness/schemas/log-entry.ts#LogExecutionSchema",
         "cat-harness/schemas/log-entry.ts#LogReferenceSchema",
+        "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema",
         "cat-harness/schemas/tool-types.ts#BeanIdSchema"
       ],
       "unresolved": [],
@@ -20209,6 +20228,20 @@
       "name": "PrecisionScalarOrNumber",
       "module": "cat-harness/schemas/precision-scalar.ts",
       "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema",
+      "name": "ProcessElementIdSchema",
+      "module": "cat-harness/schemas/process-element-id.ts",
+      "kind": "zod-scalar",
+      "doc": "An XML NCName, as BPMN requires of an element id.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -22318,10 +22351,10 @@
         },
         {
           "name": "process",
-          "type": "z.string().min(1).optional()",
+          "type": "ProcessElementIdSchema.optional()",
           "optional": true,
           "array": false,
-          "doc": "BPMN process id — `staging-render-log` — when written inside one."
+          "doc": "BPMN process element id — `Process_RenderLog` — when written inside one."
         },
         {
           "name": "task",
@@ -22349,6 +22382,7 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/log-entry.ts#LogReferenceSchema",
+        "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema",
         "cat-harness/schemas/render-log.ts#RenderSubjectSchema"
       ],
       "unresolved": [
@@ -23459,7 +23493,7 @@
         },
         {
           "name": "process",
-          "type": "z.string().min(1)",
+          "type": "ProcessElementIdSchema",
           "optional": false,
           "array": false,
           "doc": "The BPMN process it walks. Named, so a reader need not open the instance."
@@ -23474,7 +23508,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -26670,7 +26706,7 @@
         },
         {
           "name": "theme",
-          "type": "z.string().regex(/^[a-z][a-z0-9-]*$/, \"a theme id is lowercase kebab-case\")",
+          "type": "ThemeRefSchema",
           "optional": false,
           "array": false,
           "doc": "The theme id, by reference. **No default, and that is load-bearing.**"
@@ -26743,7 +26779,8 @@
       "values": [],
       "refs": [
         "cat-harness/schemas/sticky-contribution.ts#StickyLinkSchema",
-        "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema"
+        "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema",
+        "cat-harness/schemas/theme.ts#ThemeRefSchema"
       ],
       "unresolved": [],
       "external": [
@@ -29283,7 +29320,7 @@
       "fields": [
         {
           "name": "process",
-          "type": "z.string().min(1)",
+          "type": "ProcessElementIdSchema",
           "optional": false,
           "array": false,
           "doc": "`ProcessModel.id` — which diagram."
@@ -29305,7 +29342,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -30013,6 +30052,20 @@
       "module": "cat-harness/schemas/tool-types.ts",
       "kind": "zod-scalar",
       "doc": "The name of a skill, as an activity's `<bootstrap.processes:skill ref>` writes it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-types.ts#SkillRefSchema",
+      "name": "SkillRefSchema",
+      "module": "cat-harness/schemas/tool-types.ts",
+      "kind": "zod-scalar",
+      "doc": "A reference to a skill: a bare name, or `package/name`.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -34210,7 +34263,7 @@
         },
         {
           "name": "appliesTo",
-          "type": "z.array(z.string().min(1)).optional()",
+          "type": "z.array(VoiceTargetSchema).optional()",
           "optional": true,
           "array": true
         },
@@ -34240,7 +34293,8 @@
         "cat-harness/schemas/voice-skill.ts#VoiceSkillRuleSchema",
         "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
         "cat-harness/schemas/voices.ts#VoiceRefSchema",
-        "cat-harness/schemas/voices.ts#VoiceSupersessionSchema"
+        "cat-harness/schemas/voices.ts#VoiceSupersessionSchema",
+        "cat-harness/schemas/voices.ts#VoiceTargetSchema"
       ],
       "unresolved": [
         "VOICE_PROVENANCE"
@@ -34491,7 +34545,6 @@
       "name": "VoiceProfileSchema",
       "module": "cat-harness/schemas/voices.ts",
       "kind": "zod-object",
-      "doc": "A named voice profile.",
       "fields": [
         {
           "name": "$schema",
@@ -34540,10 +34593,10 @@
         },
         {
           "name": "appliesTo",
-          "type": "z.array(z.string().min(1)).optional()",
+          "type": "z.array(VoiceTargetSchema).optional()",
           "optional": true,
           "array": true,
-          "doc": "Block kinds this voice audits. Absent means every kind the folio has."
+          "doc": "What this voice audits — block kinds or artefact kinds. Absent means every kind the folio has."
         },
         {
           "name": "provenance",
@@ -34580,7 +34633,8 @@
         "cat-harness/schemas/voices.ts#VoiceApplicabilitySchema",
         "cat-harness/schemas/voices.ts#VoiceRefSchema",
         "cat-harness/schemas/voices.ts#VoiceRuleSchema",
-        "cat-harness/schemas/voices.ts#VoiceSupersessionSchema"
+        "cat-harness/schemas/voices.ts#VoiceSupersessionSchema",
+        "cat-harness/schemas/voices.ts#VoiceTargetSchema"
       ],
       "unresolved": [],
       "external": [
@@ -34958,6 +35012,20 @@
       "external": [
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/voices.ts#VoiceTargetSchema",
+      "name": "VoiceTargetSchema",
+      "module": "cat-harness/schemas/voices.ts",
+      "kind": "zod-union",
+      "doc": "One thing a voice audits: a block kind or a declared artefact kind.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -39825,6 +39893,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/attribution.ts#AttributionSchema",
+      "to": "cat-harness/schemas/tool-types.ts#SkillRefSchema",
+      "via": "skill",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/bean-graph.ts#BeanGraphNodeSchema",
       "to": "cat-harness/schemas/cat-harness.ts#GraphNodeDirectorySchema",
       "via": "",
@@ -40145,6 +40221,14 @@
       "array": true
     },
     {
+      "from": "cat-harness/schemas/carried-note.ts#TaskRefSchema",
+      "to": "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema",
+      "via": "process",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/cat-harness.ts#AssetRoleDef",
       "to": "cat-harness/schemas/cat-harness.ts#AssetDelivery",
       "via": "delivery",
@@ -40361,6 +40445,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectory",
+      "to": "cat-harness/schemas/theme.ts#ThemeRef",
+      "via": "theme",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
       "to": "cat-harness/schemas/cat-harness.ts#DependentMaterialisationSchema",
       "via": "dependents",
@@ -40388,6 +40480,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
       "to": "cat-harness/schemas/cat-harness.ts#TileSchema",
       "via": "tile",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape",
+      "to": "cat-harness/schemas/theme.ts#ThemeRefSchema",
+      "via": "theme",
       "kind": "field",
       "optional": true,
       "array": false
@@ -40516,6 +40616,14 @@
       "from": "cat-harness/schemas/cat-harness.ts#Topology",
       "to": "cat-harness/schemas/cat-harness.ts#NetworkReach",
       "via": "network",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/cat-harness.ts#VisualisationSchema",
+      "to": "cat-harness/schemas/theme.ts#ThemeRefSchema",
+      "via": "theme",
       "kind": "field",
       "optional": true,
       "array": false
@@ -42257,6 +42365,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/landing-sticky.ts#LandingStickySchema",
+      "to": "cat-harness/schemas/theme.ts#ThemeRefSchema",
+      "via": "theme",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/landing-sticky.ts#StickyBuildContext",
       "to": "cat-harness/schemas/sticky-contribution.ts#Initiation",
       "via": "initiation",
@@ -42287,6 +42403,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness/schemas/log-entry.ts#LogEntrySchema",
+      "to": "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema",
+      "via": "process",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness/schemas/log-entry.ts#LogEntrySchema",
@@ -42778,6 +42902,14 @@
     },
     {
       "from": "cat-harness/schemas/render-log.ts#RenderLogEntrySchema",
+      "to": "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema",
+      "via": "process",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/render-log.ts#RenderLogEntrySchema",
       "to": "cat-harness/schemas/render-log.ts#RenderSubjectSchema",
       "via": "subject",
       "kind": "field",
@@ -42918,6 +43050,14 @@
       "via": "byKind",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/session-context.ts#OpenInstanceSchema",
+      "to": "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema",
+      "via": "process",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
@@ -43569,6 +43709,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/sticky-contribution.ts#StickyContributionSchema",
+      "to": "cat-harness/schemas/theme.ts#ThemeRefSchema",
+      "via": "theme",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/sticky-contribution.ts#StickyTextSchema",
       "to": "cat-harness/schemas/sticky-contribution.ts#TextBoxSchema",
       "via": "box",
@@ -43885,6 +44033,14 @@
       "to": "cat-harness/schemas/carried-note.ts#NoteTagsSchema",
       "via": "",
       "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-invocation.ts#InvocationContextSchema",
+      "to": "cat-harness/schemas/process-element-id.ts#ProcessElementIdSchema",
+      "via": "process",
+      "kind": "field",
       "optional": false,
       "array": false
     },
@@ -44617,6 +44773,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/voice-skill.ts#VoiceSkillSchema",
+      "to": "cat-harness/schemas/voices.ts#VoiceTargetSchema",
+      "via": "appliesTo",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
       "from": "cat-harness/schemas/voices.ts#ResolvedVoice",
       "to": "cat-harness/schemas/voices.ts#VoiceApplicability",
       "via": "activeIn",
@@ -44695,6 +44859,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/voices.ts#VoiceProfileSchema",
+      "to": "cat-harness/schemas/voices.ts#VoiceTargetSchema",
+      "via": "appliesTo",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/voices.ts#VoiceRuleSchema",
