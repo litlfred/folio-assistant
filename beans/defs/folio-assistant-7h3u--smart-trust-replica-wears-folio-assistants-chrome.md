@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-30T20:04:11Z
-updated_at: 2026-09-30T20:13:13Z
+updated_at: 2026-09-30T20:26:11Z
 parent: folio-assistant-o3xy
 ---
 
@@ -195,3 +195,86 @@ It also sets the testing bar: `themes.test.ts` **re-reads the source artefact**
 rather than comparing constants to a copy of themselves. Here the source is a
 git repo at a pinned sha, which is a better provenance than who-iris's capture
 zip.
+
+
+## Built 2026-09-30 — the theme is MEASURED and TESTED, and NOT YET APPLIED
+
+`smart-trust/themes/themes.ts` + `themes.test.ts`, with `who.css` vendored
+under `themes/upstream/` and the directory declared.
+
+### The palette, role by role
+
+| role | value | read from |
+|---|---|---|
+| `surface` | `#f6f7f9` | `who.css` `body{background-color:var(--toc-box-bg-color)}` |
+| `ink` | `#000000` | `who.css` `.container{color:#000 !important}` |
+| `edge` | `#eeeeee` | `bootstrap-fhir.css` `hr{border-top:1px solid #eeeeee}` |
+| `accent` | `#00477d` | `who.css` `--navbar-bg-color` |
+
+### Three values NOT taken, each recorded with its reason
+
+The `who-iris` rule — *"`--blue` is NOT the accent … `--primary` is the ROLE"* —
+applied three more times, because each refused candidate is the prettier or
+more frequent one:
+
+- **`#333333` is not `ink`.** All four `#333` declarations in `who.css` are
+  `.dropdown-menu>li>a`. The base sets `body{color:#333333}`, but `who.css`
+  overrides page content with `.container{color:#000}`. So the two files
+  agreeing on `#333` is a **coincidence of value across two roles**, and a test
+  now fails if a future upstream puts `#333` on anything body-like.
+- **`navy` is not `edge`.** `--toc-box-border: navy` is the only border colour
+  the WHO layer names, and it is scoped to one component; `edge` is documented
+  as the generic rule.
+- **`#000000` is not `surface`**, though the base declares
+  `body{background-color:#000000}` — `who.css` overrides it.
+
+### Falsified, not merely green
+
+14 tests pass. With `--navbar-bg-color` hand-staled to `#deadbe` in the vendored
+source, the accent test **fails** — so the guard fires when upstream re-skins,
+which is the risk `who.template.root#current` creates.
+
+One test failed on its first run and the failure was the test's, not the
+theme's: it asserted `navbar` appeared nowhere in `JSON.stringify(THEMES)` and
+tripped on the theme's own DESCRIPTION, which says the navbar is not
+reproduced. Narrowed to palette + layouts, with the mistake recorded in the
+test — a test that reads its subject's prose as if it were its data.
+
+### The stale-guidance trap, closed rather than created
+
+`smart-trust.json`'s top comment said the whole instance *"AUTHORS NOTHING"* and
+is entirely re-derived by `ingest:ig`. `themes/` makes that false. **Narrowed to
+the two directories it is still exactly right for**, with the date and reason,
+rather than deleted — this is the third `Done when` box, met in the same change
+that would otherwise have broken it.
+
+### NOT APPLIED — and this is the headline, not a footnote
+
+`gen-themes-css.ts` emits instance-declared **sticky** themes
+(`instanceStickyThemes`) and nothing else. A `webpage`-kind instance theme has
+**no consumer in the build today**. `who-iris` escapes this only because its own
+page generator writes literal colours into finished HTML — a path unavailable
+here on purpose, since `composed: true` is the just-the-docs machinery the owner
+asked to keep.
+
+**So the page does not look different yet.** Measured and stated in the module
+docblock rather than left for someone to find by loading the page. Two ways to
+wire it:
+
+1. `gen-themes-css` emits instance WEBPAGE themes, scoped to the instance's page
+   prefix — platform code, serves every future ingested IG.
+2. `gen-smart-trust-pages.ts` emits `themeCssVars` into a per-instance
+   stylesheet the composed pages include — local, serves one.
+
+That is a **boundary decision** (platform vs instance), which is the owner's,
+not an agent's. Recorded unanswered.
+
+## Done when
+
+- [x] the owner says which shape is wanted — option 1, theming, ruled 2026-09-30
+- [x] the 2026-09-21 *"via justthedocs pipeline"* instruction is satisfied:
+      `composed: true` is untouched and the machinery is unchanged
+- [x] `_comment_composed` / the instance comment match what is now true
+- [ ] the theme is APPLIED — needs the platform-vs-instance ruling above
+- [ ] classify how much of `who.css` beyond `--navbar-*` is structural, which
+      decides whether colour+geometry alone reaches "looks like the IG"
