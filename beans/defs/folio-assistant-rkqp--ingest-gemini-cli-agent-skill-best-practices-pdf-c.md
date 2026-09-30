@@ -178,9 +178,9 @@ _2026-09-30T10:39:35Z_ — Claimed by claude/brave-hawking-511rrx — pushed to 
 A shared `document-structure` base with two variants. `pdf-structure/v1` stays unchanged as one variant, and `notebook-structure/v1` is new. Readers of `structure.json` measured: 17 in total. Nine read only shared fields. Three are page-aware and already null-safe (gen-library-jsonld, l1-blocks, library-graph). One is a strict validator, check-l1-complete, which breaks under any option. Four are PDF-only tools (pdf-tables, extract-candidates, document-image, and materialization fixity, whose sha256 check still works).
 Plan:
 - [x] base schema plus a `structureOf()` accessor returning a `{pages}|{cells}` locator (PR #1628)
-- [ ] check-l1-complete and the three page-aware readers switched to the accessor
-- [ ] PDF-only tools skip a notebook with a stated reason
-- [ ] a check refusing a direct parse of structure.json outside the accessor
+- [x] check-l1-complete and the three page-aware readers switched to the accessor (gen-library-jsonld, l1-blocks, library-graph; 3,824 library nodes unchanged)
+- [x] PDF-only tools skip a notebook with a stated reason: by construction, `withDerivedArms` gives a notebook only its rung and l1-blocks, and a test pins it
+- [ ] a check refusing a direct parse of structure.json outside the accessor — BLOCKED on a design choice put to the owner: a literal allowlist (it also catches the existence-only readers in core and who-iris), a parse-site heuristic (a grep fails in both directions), or an AST check
 - [x] a notebook rung in ingest-document (markdown cells become sections by heading, code cells kept with their language): `scripts/notebook-structure.ts`, routed by CONTENT (PR #1628)
 - [x] ingest the OpenAI notebook, then write the OpenAI vendor voice: `agent-skills/library/skills-in-openai-api-notebook` (12 sections, L1 complete, MIT licence carried) and `agent-skill-authoring-openai` (12 `oa-*` rules, each a verbatim quote), declared in `vendors/vendors.json` (PR #1628)
 
