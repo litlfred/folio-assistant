@@ -6,8 +6,9 @@ summary: "a page is a translation because it declares `lang`, never because of i
 createdAt: 2026-09-19
 roles:
   - code-reviewer
-agents:
-  - platform-boundary-guard
+references:
+  - kind: agent
+    id: platform-boundary-guard
 ---
 `docs/fr/index.md` is French because it carries `lang: fr` and
 `translation_source: index.md`. **Never** match a directory name against a

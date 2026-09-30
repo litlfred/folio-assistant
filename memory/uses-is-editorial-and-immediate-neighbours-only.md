@@ -4,7 +4,7 @@ id: uses-is-editorial-and-immediate-neighbours-only
 label: stable
 summary: "`uses[]` is EDITORIAL, and immediate-neighbours only"
 createdAt: 2026-09-19
-archived: "true"
+archived: true
 ---
 > **Archived 2026-09-19.** Its only reader, the `content-pipeline-navigator`
 > subagent, was retired. Kept rather than deleted: the record of what was

@@ -5,7 +5,7 @@ status: todo
 type: bug
 priority: high
 created_at: 2026-09-30T16:15:00Z
-updated_at: 2026-09-30T16:15:26Z
+updated_at: 2026-09-30T17:29:28Z
 parent: folio-assistant-1xhc
 ---
 
@@ -98,3 +98,64 @@ cost of a red `main`, arrived at by a different route.
 
 Whether `ci:watch` should be what the session-start sweep runs — that is
 `2c2b`'s own open item and a different question.
+
+
+## CORRECTION 2026-09-30 — the suites fix covers ONE of TWO shapes
+
+Measured before any code was written, which is the only reason this is a
+correction rather than a shipped defect.
+
+Reproduced a SECOND time, on `0d714756f3d`:
+
+    17:25:41  0d714756f3d  PASS — 1 check(s) completed clean
+
+exit 0, `total_count: 1`. More dangerous than the first: the owner had
+authorised merging #1637 on a verified green, so the tool would have merged an
+unverified tree.
+
+**The rule proposed above, run against that commit, ALSO says pass:**
+
+    suites: 3
+      app='github-pages'    status='queued'     runs=0
+      app='claude'          status='queued'     runs=0
+      app='github-actions'  status='completed'  runs=1
+    judging apps = {'github-actions'}
+    WOULD REPORT: pass
+
+The `Code-quality gates` suite DOES NOT EXIST. The rule above was built for a
+suite created but queued with zero runs — the 16:13:58 case. This is a suite
+never created, and no rule over `check-suites` can catch it, because there is
+nothing to find.
+
+### The cause is nameable
+
+`git merge-tree origin/main HEAD`: 28 behind, 7 conflicts. Bean `52cz` — a
+conflicted PR creates no `pull_request` run. The checks were not slow; they
+were never going to happen.
+
+### Two mechanisms, because there are two causes
+
+| shape | cause | signal |
+|---|---|---|
+| suite exists, unfinished | runs still being created | a judging app's suite with `status != completed` → pending |
+| suite absent | conflict suppresses `pull_request` (`52cz`) | mergeability; locally `git merge-tree`, since `mergeable_state` reads `unknown` (`h2s9`) |
+| suite absent | not yet dispatched | reconcile against `.github/workflows/*.yml` AT THAT COMMIT |
+
+### The rejection above was right about the wrong thing
+
+It rejected "comparing against what ought to run" as a guess. Reading the BASE
+BRANCH's check names is a guess. Reading the WORKFLOW FILES IN THE TREE BEING
+JUDGED is not — it is a fact about that commit, and `code-quality-gates.yml`
+declares `on: pull_request` in plain sight. Workflow-file reconciliation is
+ADOPTED; base-branch comparison stays rejected; the write-up must not conflate
+them.
+
+### Done-when, amended
+
+- [ ] A conflicted head does not report pass. This produced the more dangerous
+      of the two live reproductions.
+- [ ] Workflow-file reconciliation at the commit, distinguished IN THE PROSE
+      from the base-branch comparison that stays rejected.
+
+The fourth item above ("the base-branch alternative is written down as
+considered and rejected") is wrong as written and is superseded by this.

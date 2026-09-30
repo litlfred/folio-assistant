@@ -7,8 +7,9 @@ createdAt: 2026-09-19
 roles:
   - build-pipeline
   - validation-pipeline
-agents:
-  - ci-health-watcher
+references:
+  - kind: agent
+    id: ci-health-watcher
 ---
 `docs-site.yml` fired on every push to `main` and **failed all 30 times over
 two months**. The trigger was fine; the *outcome* was invisible, so the
