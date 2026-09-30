@@ -8,7 +8,7 @@ Held in the library [`agent-skills/library/`](../README.md) as `equipping-agents
 | | |
 |---|---|
 | document id | `equipping-agents-for-the-real-world-with-agent-skills-anthro` |
-| source file | `Equipping agents for the real world with Agent Skills _ Anthropic.pdf` (sha256 `521af377ed65…`) |
+| source file | `Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf` (sha256 `521af377ed65…`) |
 | provenance | ingested |
 
 | holds | count |

@@ -2017,6 +2017,14 @@
       "status": "candidate"
     },
     {
+      "id": "upload-naming",
+      "prefLabel": "upload-naming",
+      "definition": "What an ingested file may be CALLED. Read before adding anything to an `uploads` or `library` graph, before writing a generator that links to one, and before \"fixing\" a broken link in a generated README. Covers which characters break what, why the name is normalised rather than the link escaped, how a sidecar stays paired with its source, and the one case the fixer refuses.",
+      "notation": "upload-naming",
+      "source": "cat-harness/skills/library/library-core/upload-naming.md",
+      "status": "candidate"
+    },
+    {
       "id": "upload-routes",
       "prefLabel": "upload-routes",
       "definition": "How a file actually REACHES `uploads/` — the two mechanisms that write bytes into a declared queue, the persona that performs one of them on somebody's behalf, and what each writer owes that the route does not do for them. The step before intake and after acquisition.",

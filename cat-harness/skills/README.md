@@ -18,7 +18,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`framework/`](framework/) | 1 file | |
 | [`hypothesis-generation/`](hypothesis-generation/) | 30 files | |
 | [`kg/`](kg/) | 34 files | |
-| [`library/`](library/) | 21 files | |
+| [`library/`](library/) | 22 files | |
 | [`permissions/`](permissions/) | 1 file | |
 | [`raci/`](raci/) | 2 files | |
 | [`remote-packages/`](remote-packages/) | 2 files | |

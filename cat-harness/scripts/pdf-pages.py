@@ -181,7 +181,7 @@ def main() -> int:
         # `slugify(text)` with its SECTION default of 48 characters, while a
         # doc-id is `DOC_ID_MAXLEN` = 60 and may be an arXiv stamp rather than
         # a filename at all. Using it here staged
-        # `Skill authoring best practices - Claude Platform Docs.pdf` as
+        # `Skill-authoring-best-practices-Claude-Platform-Docs.pdf` as
         # `...---claude-platform` (48) while every reader computed
         # `...---claude-platform-docs` (60), and staged three arXiv papers
         # under their basenames while `pdf-structure.py` used `arxiv-<id>v<n>`.
