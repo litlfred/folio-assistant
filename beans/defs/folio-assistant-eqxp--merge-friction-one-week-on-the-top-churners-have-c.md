@@ -66,10 +66,28 @@ pattern:
 - **`cat-harness/test/results/subgraph-readmes.qa-results.json`** — same writer.
   Passes if the same reading holds; VERIFY the producer individually rather than
   by family, which is the mistake this bean exists to avoid.
-- **`cat-harness/test/results/lsi/.../skills.lsi.json`** and
-  **`tool-runs/lsi-index/...`** — `scripts/lsi.ts` reads a sidecar at line 347.
-  **NOT cleared.** Whether that read is its own output and whether anything is
-  carried forward must be established before either is marked.
+- **`cat-harness/test/results/lsi/.../skills.lsi.json`** — **now cleared, and
+  the first reading was wrong.** The `readFileSync` at `lsi.ts:347` is inside
+  `graphVerdict`, which is the *auditor* judging freshness, not the producer.
+  The producer is `index()` (line 225): it composes the sidecar wholly from
+  `unitsOf(...)`, the computed index, and `opts` — a PARAMETER defaulting to
+  `DEFAULT_OPTS` — and never opens the existing file. **Passes.**
+  One caveat to carry into the entry rather than omit: `options` is recorded
+  FROM the invocation, so if a graph were ever indexed with non-default options
+  and only the sidecar recorded that, a resolution taking the wrong side would
+  switch them silently. The gate rewrite repairs it, as for every other entry,
+  but the gate must be named before marking.
+- **`cat-harness/test/results/tool-runs/lsi-index/.../skills.tool-run.json`** —
+  `writeToolRun` (`schemas/tool-run.ts:106`) composes the body from its
+  argument and reads the existing file only as
+  `readFileSync(p) === body` to skip a pointless write. Nothing carried
+  forward. **Passes.**
+
+That the first pass got `skills.lsi.json` wrong is the point of the test, not a
+digression: a grep for `readFileSync` in the producing MODULE answers a
+different question from "does the producer carry anything forward", and the
+two come apart exactly where a file has both a writer and an auditor in one
+file.
 - **`beans/README.md`**, **`cat-harness/docs/_data/harness.json`**,
   **`docs/lsi/index.md`**, the subgraph READMEs — unexamined here.
 
