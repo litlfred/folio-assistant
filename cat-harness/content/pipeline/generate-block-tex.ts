@@ -57,7 +57,7 @@ const ANNOTATION_MACROS = [
  * string.  We remove the whole call including all brace groups that follow
  * (up to 4 groups) and an optional [...] prefix argument.
  */
-function stripAnnotations(latex: string): string {
+export function stripAnnotations(latex: string): string {
   let result = latex;
   for (const macro of ANNOTATION_MACROS) {
     // Match: \macroname followed by optional [arg] then 1–4 {arg} groups.
