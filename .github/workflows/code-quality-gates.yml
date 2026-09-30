@@ -887,6 +887,16 @@ jobs:
       - name: bootstrap schemas are current
         run: bun run bootstrap:schemas:check
 
+      # The second half of the same render pipeline (owner, 2026-09-29: "need
+      # Zod usage in bootstrap tools as part of validation in rendering
+      # pipeline"; ported from PR #1514, bean `81tw`): the step above judges
+      # the SCHEMAS against their Zod; this judges the DOCUMENTS bootstrap
+      # carries — its declaration, its model registry, any discussion
+      # document — against the same Zod. A run that cannot find bootstrap, or
+      # validates nothing, fails.
+      - name: bootstrap documents parse against their Zod
+        run: bun run bootstrap:validate
+
       # `docs/reference/**` is generated from skill sources and must not be
       # hand-edited, but nothing verified it had been REGENERATED after a
       # source change. document-intake.md sat 35 lines behind its source and
@@ -955,6 +965,13 @@ jobs:
       # `render:bpmn:check`; this checks the README that shows them.
       - name: bootstrap's README generated sections are current
         run: bun run readme:sync:bootstrap:check
+
+      # One README per LIBRARY ITEM, from its own manifest (bean `qgjh`, owner
+      # 2026-09-30: "like bootstrap readmes"). BEFORE the directory READMEs:
+      # a library's README links each item row to the item's README only once
+      # it exists, so `regen`, which asks these in order, must write it first.
+      - name: Every library item's README is current
+        run: bun run library:readmes:check
 
       # One README per declared directory, generated from the declaration by
       # `subgraph-readmes` (owner, 2026-09-29). The pre-commit hook runs the

@@ -534,6 +534,14 @@ export interface ContentDirectory extends GraphNodeDirectory {
 }
 
 /** An instance's root declaration. */
+/** How an instance's values are addressed in Liquid — {@link CatHarnessDeclaration.liquid}. */
+export interface LiquidPrefix {
+  /** The first path segment(s); default the instance's `name`. */
+  prefix?: string;
+  /** Leave `{{ <prefix>.… }}` for the downstream engine (Jekyll, IG Publisher). */
+  passThrough?: boolean;
+}
+
 export interface CatHarnessDeclaration extends KgNodeLabels {
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
@@ -679,6 +687,21 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * than computed, and why it is optional.
    */
   needs?: string[];
+  /**
+   * The Liquid prefix this instance's VALUES are addressed by in authored
+   * text — `{{ <prefix>.<directory-id>.<entry>.<path> }}` — and whether the
+   * platform resolves it or passes it through.
+   *
+   * Owner, 2026-09-30 (bean `kott`, issue #1564): *"{{ site.data...}} is
+   * declared for fhir-harness only... it declares its site prefix. bootstrap is
+   * {{ bootstrap.blah }} ... so existing IG publisher works as is."*
+   *
+   * **Absent means the default: the prefix is the instance's `name`, resolved
+   * by the platform.** `passThrough: true` hands the prefix to the downstream
+   * engine untouched — fhir-harness declares `site.data`, which Jekyll and the
+   * IG Publisher resolve themselves.
+   */
+  liquid?: LiquidPrefix;
 
 
   /**
@@ -2419,6 +2442,14 @@ export const CatHarnessDeclarationSchema = z.object({
    * in this schema, and a path would break the moment a directory moved.
    */
   needs: z.array(z.string().min(1)).optional(),
+  /** See {@link CatHarnessDeclaration.liquid}. */
+  liquid: z
+    .object({
+      prefix: z.string().regex(/^[a-z][a-z0-9-]*(?:\.[a-z][a-z0-9-]*)*$/, "a dotted, lower-case Liquid path").optional(),
+      passThrough: z.boolean().optional(),
+    })
+    .strict()
+    .optional(),
   /**
    * The package identity an EXTERNAL consumer depends on — reverse-DNS.
    *

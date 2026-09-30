@@ -345,7 +345,15 @@ function uploadState(e){
 
 var COLS = [
   { k:"id",       t:"slug",     n:false, f:function(e){ return avatarHtml(e) + '<span class="slug">'+esc(e.id)+"</span>"; } },
-  { k:"title",    t:"title",    n:false, f:function(e){ return esc(e.title); } },
+  /* Bean qgjh: an entry can be OPENED. The title is a link to the item's own
+     page (its generated README) where one exists, and the document's upstream
+     record rides beside it: arXiv or DOI, from the identifier its manifest
+     records. Nothing is linked that the projection does not carry. */
+  { k:"title",    t:"title",    n:false, f:function(e){
+      var t = e.readme ? '<a href="'+esc(e.readme)+'">'+esc(e.title)+"</a>" : esc(e.title);
+      var src = e.arxiv ? "https://arxiv.org/abs/"+encodeURIComponent(e.arxiv) : e.doi ? "https://doi.org/"+e.doi : "";
+      return t + (src ? ' <a class="src" href="'+esc(src)+'">source</a>' : "");
+    } },
   { k:"instance", t:"instance", n:false, f:function(e){ return '<span class="pill">'+esc(e.instance)+"</span>"; } },
   { k:"rung",     t:"rung",     n:false, f:function(e){ return '<span class="pill '+(e.rung==="none"?"warn":"ok")+'">'+esc(e.rung)+"</span>"; } },
   { k:"sections", t:"sections", n:true },

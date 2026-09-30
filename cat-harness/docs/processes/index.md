@@ -112,109 +112,109 @@ The reverse of `<bootstrap.processes:skill ref>`, which is the join nothing else
 
 | skill | run by |
 |---|---|
-| `activity-log` | `activity-log.bpmn` |
-| `adjudication` | `adjudication.bpmn`, `content-change-review.bpmn`, `criterion-adjudication.bpmn`, `ingest-l1-completeness-gate.bpmn`, `refresh-materialized.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn`, `voice-review.bpmn` |
-| `adopt-methodology-from-source` | `methodology-from-source.bpmn` |
-| `bean-blocking` | `kg-to-portal.bpmn` |
-| `bean-coordination` | `bean-lifecycle.bpmn`, `code-change-review.bpmn` |
-| `board-diagram-interchange` | `board-place-note.bpmn`, `board-relocate.bpmn` |
-| `board-windows` | `board-open-close.bpmn`, `board-relocate.bpmn` |
-| `bootstrap-kg-navigation` | `initialize-harness.bpmn` |
-| `bpmn-authoring` | `crdm-requirements-definition.bpmn`, `l2-dak-authoring.bpmn` |
-| `ci-health` | `ci-health-watch.bpmn`, `code-change-review.bpmn`, `pr-checks-present.bpmn`, `repository-health-watch.bpmn` |
-| `code-node-review` | `code-change-review.bpmn`, `review-code.bpmn` |
-| `confirm-harness` | `initialize-harness.bpmn` |
-| `content-acquisition` | `content-acquisition.bpmn` |
-| `content-author` | `authoring-a-paper.bpmn`, `content-change-review.bpmn`, `content-lifecycle.bpmn`, `draft-to-publication.bpmn`, `editing-hci-validation.bpmn`, `evidence-retrieval.bpmn` |
-| `content-feedback` | `adjudication.bpmn`, `content-lifecycle.bpmn`, `draft-to-publication.bpmn`, `narrative-code-review.bpmn`, `review-narrative.bpmn` |
-| `content-graph` | `content-change-review.bpmn`, `crdm-requirements-definition.bpmn` |
-| `content-plan` | `authoring-a-document.bpmn`, `authoring-a-paper.bpmn`, `content-lifecycle.bpmn`, `l2-dak-authoring.bpmn` |
-| `content-publish` | `authoring-a-document.bpmn`, `authoring-a-paper.bpmn`, `content-change-review.bpmn`, `content-lifecycle.bpmn`, `draft-to-publication.bpmn`, `ig-incremental-build.bpmn`, `l3-fhir-pipeline.bpmn` |
-| `content-retire` | `content-lifecycle.bpmn` |
-| `content-review` | `authoring-a-document.bpmn`, `authoring-a-paper.bpmn`, `content-change-review.bpmn`, `content-lifecycle.bpmn`, `draft-to-publication.bpmn`, `editing-hci-validation.bpmn`, `evidence-retrieval.bpmn`, `l2-dak-authoring.bpmn`, `review-narrative.bpmn`, `review-task.bpmn` |
-| `content-test` | `content-lifecycle.bpmn`, `draft-to-publication.bpmn`, `editing-hci-validation.bpmn`, `qa-report-signing.bpmn`, `upstream-version-adoption.bpmn` |
-| `content-validate` | `authoring-a-document.bpmn`, `authoring-a-paper.bpmn`, `content-lifecycle.bpmn`, `draft-to-publication.bpmn`, `editing-hci-validation.bpmn`, `l2-dak-authoring.bpmn`, `review-task.bpmn` |
-| `continual-progress` | `actor-role-administration.bpmn`, `code-change-review.bpmn`, `kg-to-portal.bpmn` |
-| `copy-out-materialized` | `copy-out-materialized.bpmn` |
-| `covered-is-not-reachable` | `review-code.bpmn` |
-| `crdm-data-model` | `crdm-data-model.bpmn` |
-| `crdm-detect` | `crdm-requirements.bpmn` |
-| `crdm-requirements-workflow` | `crdm-close.bpmn`, `crdm-deliver.bpmn`, `crdm-issue-linking.bpmn`, `crdm-needs.bpmn`, `crdm-requirements-definition.bpmn`, `crdm-requirements.bpmn`, `crdm-signoff.bpmn` |
-| `decision-audit` | `content-change-review.bpmn`, `crdm-close.bpmn`, `crdm-signoff.bpmn`, `editing-hci-validation.bpmn`, `options-analysis.bpmn`, `upstream-version-adoption.bpmn` |
-| `decision-comparison` | `crdm-requirements-definition.bpmn` |
-| `deep-document-research` | `deep-document-research.bpmn` |
-| `deletion-requires-confirmation` | `actor-role-administration.bpmn`, `board-relocate.bpmn`, `feature-staging.bpmn`, `graph-detanglement.bpmn`, `kg-separation.bpmn`, `repository-health-watch.bpmn` |
-| `delivery-summary` | `crdm-deliver.bpmn`, `upstream-version-adoption.bpmn` |
-| `discussion` | `discussion.bpmn` |
-| `dispatch-agent` | `getting-started.bpmn` |
-| `dmn-authoring` | `l2-dak-authoring.bpmn` |
-| `document-authoring` | `authoring-a-document.bpmn` |
-| `document-intake` | `document-ingestion.bpmn`, `evidence-retrieval.bpmn`, `getting-started.bpmn`, `ingest-build-l1-kg.bpmn`, `ingest-derive-content.bpmn`, `ingest-extract-structure.bpmn`, `ingest-l1-completeness-gate.bpmn` |
-| `document-publishing` | `authoring-a-document.bpmn` |
-| `document-structure` | `authoring-a-document.bpmn` |
-| `evidence-appraisal` | `evidence-retrieval.bpmn` |
-| `feature-staging` | `content-change-review.bpmn`, `crdm-deliver.bpmn`, `docs-site-publish.bpmn`, `feature-staging.bpmn`, `upstream-version-adoption.bpmn` |
-| `fhir-validation` | `ig-incremental-build.bpmn`, `l3-fhir-pipeline.bpmn` |
-| `getting-started` | `getting-started.bpmn` |
-| `graph-detanglement` | `graph-detanglement.bpmn`, `kg-separation.bpmn` |
-| `ig-publication` | `draft-to-publication.bpmn`, `ig-incremental-build.bpmn`, `l3-fhir-pipeline.bpmn` |
-| `instance-publication` | `kg-separation.bpmn` |
-| `interaction-modality` | `getting-started.bpmn`, `session-state-machine.bpmn` |
-| `issue-working` | `code-change-review.bpmn`, `pr-checks-present.bpmn` |
-| `kg-contribution-offer` | `crdm-signoff.bpmn` |
-| `kg-export` | `kg-to-portal.bpmn` |
-| `kg-separation` | `kg-separation.bpmn` |
-| `kg-to-portal` | `kg-to-portal.bpmn` |
-| `l2-dak-authoring` | `l2-dak-authoring.bpmn` |
-| `l3-fhir-authoring` | `ig-incremental-build.bpmn`, `l3-fhir-pipeline.bpmn` |
-| `latex-authoring` | `authoring-a-paper.bpmn` |
-| `lean-formalization` | `authoring-a-paper.bpmn` |
-| `library-ingestion` | `content-acquisition.bpmn`, `document-ingestion.bpmn` |
-| `literature-search` | `options-analysis.bpmn` |
-| `log-message` | `initialize-harness.bpmn`, `log-message.bpmn` |
-| `materialize-remote` | `materialize-remote.bpmn`, `refresh-materialized.bpmn`, `sample-import.bpmn` |
-| `methodology-adoption` | `methodology-from-source.bpmn`, `options-analysis.bpmn`, `swot-analysis.bpmn`, `diig-investment-path.bpmn` |
-| `narrative-asserts-code` | `narrative-code-review.bpmn` |
-| `normative-statements` | `authoring-a-document.bpmn` |
-| `opening-brief` | `graph-detanglement.bpmn`, `kg-separation.bpmn`, `options-analysis.bpmn` |
-| `package-release` | `kg-separation.bpmn` |
-| `placement` | `crdm-signoff.bpmn` |
-| `platform-gates` | `code-change-review.bpmn`, `code-quality-gates.bpmn` |
-| `prepare-merge` | `actor-role-administration.bpmn`, `code-change-review.bpmn`, `content-change-review.bpmn`, `crdm-deliver.bpmn`, `upstream-version-adoption.bpmn` |
-| `prepare-merge-auto` | `content-change-review.bpmn` |
-| `proof-verification` | `authoring-a-paper.bpmn` |
-| `publish-verification` | `docs-site-publish.bpmn`, `kg-separation.bpmn`, `publish-alert.bpmn`, `publish-verification.bpmn` |
-| `qa-report-signing` | `qa-report-signing.bpmn` |
-| `quality-control` | `draft-to-publication.bpmn`, `ig-incremental-build.bpmn`, `l3-fhir-pipeline.bpmn` |
-| `related-work-coordination` | `related-work.bpmn` |
-| `render-logging` | `feature-staging.bpmn`, `staging-render-log.bpmn` |
-| `repo-conversion` | `getting-started.bpmn` |
-| `review-comments` | `content-change-review.bpmn` |
-| `review-heatmap` | `content-change-review.bpmn` |
-| `role-model` | `actor-role-administration.bpmn` |
-| `root-readme` | `initialize-harness.bpmn` |
-| `sample-import` | `sample-import.bpmn` |
-| `semantic-review-scoping` | `content-change-review.bpmn`, `review-task.bpmn` |
-| `session-context` | `session-state-machine.bpmn` |
-| `site-presentation-assets` | `review-code.bpmn` |
-| `skills-and-tools` | `review-code.bpmn` |
-| `staging-review` | `content-change-review.bpmn`, `feature-staging.bpmn`, `upstream-version-adoption.bpmn` |
-| `swot-analysis` | `swot-analysis.bpmn` |
-| `terminology-management` | `l2-dak-authoring.bpmn` |
-| `theme-art-intake` | `document-ingestion.bpmn`, `ingest-theme.bpmn` |
-| `theme-ui-review` | `ingest-theme.bpmn`, `theme-ui-review.bpmn` |
-| `todo-manager` | `authoring-a-document.bpmn`, `authoring-a-paper.bpmn`, `bean-lifecycle.bpmn`, `code-change-review.bpmn`, `content-change-review.bpmn`, `content-lifecycle.bpmn`, `crdm-signoff.bpmn`, `document-ingestion.bpmn`, `draft-to-publication.bpmn`, `editing-hci-validation.bpmn`, `evidence-retrieval.bpmn`, `getting-started.bpmn`, `ig-incremental-build.bpmn`, `l2-dak-authoring.bpmn`, `l3-fhir-pipeline.bpmn` |
-| `translation-manager` | `human-translation-workflow.bpmn`, `review-narrative.bpmn`, `translation-workflow.bpmn` |
-| `untainted-verification` | `adjudication.bpmn` |
-| `upload-routes` | `document-ingestion.bpmn` |
-| `uploads-watch` | `content-acquisition.bpmn` |
-| `upstream-version-adoption` | `kg-separation.bpmn`, `upstream-pin-watch.bpmn`, `upstream-version-adoption.bpmn` |
-| `uses-editorial-review` | `review-narrative.bpmn` |
-| `visual-diff` | `content-change-review.bpmn` |
-| `voice-editorial-review` | `review-narrative.bpmn` |
-| `voice-overlay-review` | `review-narrative.bpmn`, `voice-review.bpmn` |
-| `watch` | `code-change-review.bpmn`, `content-change-review.bpmn` |
-| `wireframe-design-review` | `wireframe-design-review.bpmn` |
+| [`activity-log`](../reference/skill-instructions/activity-log.html) | [`activity-log.bpmn`](activity-log.html) |
+| [`adjudication`](../reference/skill-instructions/adjudication.html) | [`adjudication.bpmn`](adjudication.html), [`content-change-review.bpmn`](content-change-review.html), [`criterion-adjudication.bpmn`](criterion-adjudication.html), [`ingest-l1-completeness-gate.bpmn`](ingest-l1-completeness-gate.html), [`refresh-materialized.bpmn`](refresh-materialized.html), [`review-narrative.bpmn`](review-narrative.html), [`translation-workflow.bpmn`](translation-workflow.html), [`voice-review.bpmn`](voice-review.html) |
+| [`adopt-methodology-from-source`](../reference/skill-instructions/adopt-methodology-from-source.html) | [`methodology-from-source.bpmn`](methodology-from-source.html) |
+| [`bean-blocking`](../reference/skill-instructions/bean-blocking.html) | [`kg-to-portal.bpmn`](kg-to-portal.html) |
+| [`bean-coordination`](../reference/skill-instructions/bean-coordination.html) | [`bean-lifecycle.bpmn`](bean-lifecycle.html), [`code-change-review.bpmn`](code-change-review.html) |
+| [`board-diagram-interchange`](../reference/skill-instructions/board-diagram-interchange.html) | [`board-place-note.bpmn`](board-place-note.html), [`board-relocate.bpmn`](board-relocate.html) |
+| [`board-windows`](../reference/skill-instructions/board-windows.html) | [`board-open-close.bpmn`](board-open-close.html), [`board-relocate.bpmn`](board-relocate.html) |
+| `bootstrap-kg-navigation` | [`initialize-harness.bpmn`](initialize-harness.html) |
+| [`bpmn-authoring`](../reference/skill-instructions/bpmn-authoring.html) | [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html), [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
+| [`ci-health`](../reference/skill-instructions/ci-health.html) | [`ci-health-watch.bpmn`](ci-health-watch.html), [`code-change-review.bpmn`](code-change-review.html), [`pr-checks-present.bpmn`](pr-checks-present.html), [`repository-health-watch.bpmn`](repository-health-watch.html) |
+| [`code-node-review`](../reference/skill-instructions/code-node-review.html) | [`code-change-review.bpmn`](code-change-review.html), [`review-code.bpmn`](review-code.html) |
+| `confirm-harness` | [`initialize-harness.bpmn`](initialize-harness.html) |
+| [`content-acquisition`](../reference/skill-instructions/content-acquisition.html) | [`content-acquisition.bpmn`](content-acquisition.html) |
+| [`content-author`](../reference/skill-instructions/content-author.html) | [`authoring-a-paper.bpmn`](authoring-a-paper.html), [`content-change-review.bpmn`](content-change-review.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html), [`evidence-retrieval.bpmn`](evidence-retrieval.html) |
+| [`content-feedback`](../reference/skill-instructions/content-feedback.html) | [`adjudication.bpmn`](adjudication.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`narrative-code-review.bpmn`](narrative-code-review.html), [`review-narrative.bpmn`](review-narrative.html) |
+| [`content-graph`](../reference/skill-instructions/content-graph.html) | [`content-change-review.bpmn`](content-change-review.html), [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html) |
+| [`content-plan`](../reference/skill-instructions/content-plan.html) | [`authoring-a-document.bpmn`](authoring-a-document.html), [`authoring-a-paper.bpmn`](authoring-a-paper.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
+| [`content-publish`](../reference/skill-instructions/content-publish.html) | [`authoring-a-document.bpmn`](authoring-a-document.html), [`authoring-a-paper.bpmn`](authoring-a-paper.html), [`content-change-review.bpmn`](content-change-review.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`ig-incremental-build.bpmn`](ig-incremental-build.html), [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.html) |
+| [`content-retire`](../reference/skill-instructions/content-retire.html) | [`content-lifecycle.bpmn`](content-lifecycle.html) |
+| [`content-review`](../reference/skill-instructions/content-review.html) | [`authoring-a-document.bpmn`](authoring-a-document.html), [`authoring-a-paper.bpmn`](authoring-a-paper.html), [`content-change-review.bpmn`](content-change-review.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html), [`evidence-retrieval.bpmn`](evidence-retrieval.html), [`l2-dak-authoring.bpmn`](l2-dak-authoring.html), [`review-narrative.bpmn`](review-narrative.html), [`review-task.bpmn`](review-task.html) |
+| [`content-test`](../reference/skill-instructions/content-test.html) | [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html), [`qa-report-signing.bpmn`](qa-report-signing.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html) |
+| [`content-validate`](../reference/skill-instructions/content-validate.html) | [`authoring-a-document.bpmn`](authoring-a-document.html), [`authoring-a-paper.bpmn`](authoring-a-paper.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html), [`l2-dak-authoring.bpmn`](l2-dak-authoring.html), [`review-task.bpmn`](review-task.html) |
+| [`continual-progress`](../reference/skill-instructions/continual-progress.html) | [`actor-role-administration.bpmn`](actor-role-administration.html), [`code-change-review.bpmn`](code-change-review.html), [`kg-to-portal.bpmn`](kg-to-portal.html) |
+| [`copy-out-materialized`](../reference/skill-instructions/copy-out-materialized.html) | [`copy-out-materialized.bpmn`](copy-out-materialized.html) |
+| [`covered-is-not-reachable`](../reference/skill-instructions/covered-is-not-reachable.html) | [`review-code.bpmn`](review-code.html) |
+| [`crdm-data-model`](../reference/skill-instructions/crdm-data-model.html) | [`crdm-data-model.bpmn`](crdm-data-model.html) |
+| [`crdm-detect`](../reference/skill-instructions/crdm-detect.html) | [`crdm-requirements.bpmn`](crdm-requirements.html) |
+| [`crdm-requirements-workflow`](../reference/skill-instructions/crdm-requirements-workflow.html) | [`crdm-close.bpmn`](crdm-close.html), [`crdm-deliver.bpmn`](crdm-deliver.html), [`crdm-issue-linking.bpmn`](crdm-issue-linking.html), [`crdm-needs.bpmn`](crdm-needs.html), [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html), [`crdm-requirements.bpmn`](crdm-requirements.html), [`crdm-signoff.bpmn`](crdm-signoff.html) |
+| [`decision-audit`](../reference/skill-instructions/decision-audit.html) | [`content-change-review.bpmn`](content-change-review.html), [`crdm-close.bpmn`](crdm-close.html), [`crdm-signoff.bpmn`](crdm-signoff.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html), [`options-analysis.bpmn`](options-analysis.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html) |
+| [`decision-comparison`](../reference/skill-instructions/decision-comparison.html) | [`crdm-requirements-definition.bpmn`](crdm-requirements-definition.html) |
+| [`deep-document-research`](../reference/skill-instructions/deep-document-research.html) | [`deep-document-research.bpmn`](deep-document-research.html) |
+| [`deletion-requires-confirmation`](../reference/skill-instructions/deletion-requires-confirmation.html) | [`actor-role-administration.bpmn`](actor-role-administration.html), [`board-relocate.bpmn`](board-relocate.html), [`feature-staging.bpmn`](feature-staging.html), [`graph-detanglement.bpmn`](graph-detanglement.html), [`kg-separation.bpmn`](kg-separation.html), [`repository-health-watch.bpmn`](repository-health-watch.html) |
+| [`delivery-summary`](../reference/skill-instructions/delivery-summary.html) | [`crdm-deliver.bpmn`](crdm-deliver.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html) |
+| `discussion` | [`discussion.bpmn`](discussion.html) |
+| [`dispatch-agent`](../reference/skill-instructions/dispatch-agent.html) | [`getting-started.bpmn`](getting-started.html) |
+| [`dmn-authoring`](../reference/skill-instructions/dmn-authoring.html) | [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
+| [`document-authoring`](../reference/skill-instructions/document-authoring.html) | [`authoring-a-document.bpmn`](authoring-a-document.html) |
+| [`document-intake`](../reference/skill-instructions/document-intake.html) | [`document-ingestion.bpmn`](document-ingestion.html), [`evidence-retrieval.bpmn`](evidence-retrieval.html), [`getting-started.bpmn`](getting-started.html), [`ingest-build-l1-kg.bpmn`](ingest-build-l1-kg.html), [`ingest-derive-content.bpmn`](ingest-derive-content.html), [`ingest-extract-structure.bpmn`](ingest-extract-structure.html), [`ingest-l1-completeness-gate.bpmn`](ingest-l1-completeness-gate.html) |
+| [`document-publishing`](../reference/skill-instructions/document-publishing.html) | [`authoring-a-document.bpmn`](authoring-a-document.html) |
+| [`document-structure`](../reference/skill-instructions/document-structure.html) | [`authoring-a-document.bpmn`](authoring-a-document.html) |
+| [`evidence-appraisal`](../reference/skill-instructions/evidence-appraisal.html) | [`evidence-retrieval.bpmn`](evidence-retrieval.html) |
+| [`feature-staging`](../reference/skill-instructions/feature-staging.html) | [`content-change-review.bpmn`](content-change-review.html), [`crdm-deliver.bpmn`](crdm-deliver.html), [`docs-site-publish.bpmn`](docs-site-publish.html), [`feature-staging.bpmn`](feature-staging.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html) |
+| [`fhir-validation`](../reference/skill-instructions/fhir-validation.html) | [`ig-incremental-build.bpmn`](ig-incremental-build.html), [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.html) |
+| [`getting-started`](../reference/skill-instructions/getting-started.html) | [`getting-started.bpmn`](getting-started.html) |
+| [`graph-detanglement`](../reference/skill-instructions/graph-detanglement.html) | [`graph-detanglement.bpmn`](graph-detanglement.html), [`kg-separation.bpmn`](kg-separation.html) |
+| [`ig-publication`](../reference/skill-instructions/ig-publication.html) | [`draft-to-publication.bpmn`](draft-to-publication.html), [`ig-incremental-build.bpmn`](ig-incremental-build.html), [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.html) |
+| [`instance-publication`](../reference/skill-instructions/instance-publication.html) | [`kg-separation.bpmn`](kg-separation.html) |
+| [`interaction-modality`](../reference/skill-instructions/interaction-modality.html) | [`getting-started.bpmn`](getting-started.html), [`session-state-machine.bpmn`](session-state-machine.html) |
+| [`issue-working`](../reference/skill-instructions/issue-working.html) | [`code-change-review.bpmn`](code-change-review.html), [`pr-checks-present.bpmn`](pr-checks-present.html) |
+| [`kg-contribution-offer`](../reference/skill-instructions/kg-contribution-offer.html) | [`crdm-signoff.bpmn`](crdm-signoff.html) |
+| [`kg-export`](../reference/skill-instructions/kg-export.html) | [`kg-to-portal.bpmn`](kg-to-portal.html) |
+| [`kg-separation`](../reference/skill-instructions/kg-separation.html) | [`kg-separation.bpmn`](kg-separation.html) |
+| [`kg-to-portal`](../reference/skill-instructions/kg-to-portal.html) | [`kg-to-portal.bpmn`](kg-to-portal.html) |
+| [`l2-dak-authoring`](../reference/skill-instructions/l2-dak-authoring.html) | [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
+| [`l3-fhir-authoring`](../reference/skill-instructions/l3-fhir-authoring.html) | [`ig-incremental-build.bpmn`](ig-incremental-build.html), [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.html) |
+| [`latex-authoring`](../reference/skill-instructions/latex-authoring.html) | [`authoring-a-paper.bpmn`](authoring-a-paper.html) |
+| [`lean-formalization`](../reference/skill-instructions/lean-formalization.html) | [`authoring-a-paper.bpmn`](authoring-a-paper.html) |
+| [`library-ingestion`](../reference/skill-instructions/library-ingestion.html) | [`content-acquisition.bpmn`](content-acquisition.html), [`document-ingestion.bpmn`](document-ingestion.html) |
+| [`literature-search`](../reference/skill-instructions/literature-search.html) | [`options-analysis.bpmn`](options-analysis.html) |
+| `log-message` | [`initialize-harness.bpmn`](initialize-harness.html), [`log-message.bpmn`](log-message.html) |
+| [`materialize-remote`](../reference/skill-instructions/materialize-remote.html) | [`materialize-remote.bpmn`](materialize-remote.html), [`refresh-materialized.bpmn`](refresh-materialized.html), [`sample-import.bpmn`](sample-import.html) |
+| [`methodology-adoption`](../reference/skill-instructions/methodology-adoption.html) | [`methodology-from-source.bpmn`](methodology-from-source.html), [`options-analysis.bpmn`](options-analysis.html), [`swot-analysis.bpmn`](swot-analysis.html), [`diig-investment-path.bpmn`](diig-investment-path.html) |
+| [`narrative-asserts-code`](../reference/skill-instructions/narrative-asserts-code.html) | [`narrative-code-review.bpmn`](narrative-code-review.html) |
+| [`normative-statements`](../reference/skill-instructions/normative-statements.html) | [`authoring-a-document.bpmn`](authoring-a-document.html) |
+| [`opening-brief`](../reference/skill-instructions/opening-brief.html) | [`graph-detanglement.bpmn`](graph-detanglement.html), [`kg-separation.bpmn`](kg-separation.html), [`options-analysis.bpmn`](options-analysis.html) |
+| [`package-release`](../reference/skill-instructions/package-release.html) | [`kg-separation.bpmn`](kg-separation.html) |
+| [`placement`](../reference/skill-instructions/placement.html) | [`crdm-signoff.bpmn`](crdm-signoff.html) |
+| [`platform-gates`](../reference/skill-instructions/platform-gates.html) | [`code-change-review.bpmn`](code-change-review.html), [`code-quality-gates.bpmn`](code-quality-gates.html) |
+| [`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | [`actor-role-administration.bpmn`](actor-role-administration.html), [`code-change-review.bpmn`](code-change-review.html), [`content-change-review.bpmn`](content-change-review.html), [`crdm-deliver.bpmn`](crdm-deliver.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html) |
+| [`prepare-merge-auto`](../reference/skill-instructions/prepare-merge-auto.html) | [`content-change-review.bpmn`](content-change-review.html) |
+| [`proof-verification`](../reference/skill-instructions/proof-verification.html) | [`authoring-a-paper.bpmn`](authoring-a-paper.html) |
+| [`publish-verification`](../reference/skill-instructions/publish-verification.html) | [`docs-site-publish.bpmn`](docs-site-publish.html), [`kg-separation.bpmn`](kg-separation.html), [`publish-alert.bpmn`](publish-alert.html), [`publish-verification.bpmn`](publish-verification.html) |
+| [`qa-report-signing`](../reference/skill-instructions/qa-report-signing.html) | [`qa-report-signing.bpmn`](qa-report-signing.html) |
+| [`quality-control`](../reference/skill-instructions/quality-control.html) | [`draft-to-publication.bpmn`](draft-to-publication.html), [`ig-incremental-build.bpmn`](ig-incremental-build.html), [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.html) |
+| [`related-work-coordination`](../reference/skill-instructions/related-work-coordination.html) | [`related-work.bpmn`](related-work.html) |
+| [`render-logging`](../reference/skill-instructions/render-logging.html) | [`feature-staging.bpmn`](feature-staging.html), [`staging-render-log.bpmn`](staging-render-log.html) |
+| [`repo-conversion`](../reference/skill-instructions/repo-conversion.html) | [`getting-started.bpmn`](getting-started.html) |
+| [`review-comments`](../reference/skill-instructions/review-comments.html) | [`content-change-review.bpmn`](content-change-review.html) |
+| [`review-heatmap`](../reference/skill-instructions/review-heatmap.html) | [`content-change-review.bpmn`](content-change-review.html) |
+| [`role-model`](../reference/skill-instructions/role-model.html) | [`actor-role-administration.bpmn`](actor-role-administration.html) |
+| `root-readme` | [`initialize-harness.bpmn`](initialize-harness.html) |
+| [`sample-import`](../reference/skill-instructions/sample-import.html) | [`sample-import.bpmn`](sample-import.html) |
+| [`semantic-review-scoping`](../reference/skill-instructions/semantic-review-scoping.html) | [`content-change-review.bpmn`](content-change-review.html), [`review-task.bpmn`](review-task.html) |
+| [`session-context`](../reference/skill-instructions/session-context.html) | [`session-state-machine.bpmn`](session-state-machine.html) |
+| [`site-presentation-assets`](../reference/skill-instructions/site-presentation-assets.html) | [`review-code.bpmn`](review-code.html) |
+| [`skills-and-tools`](../reference/skill-instructions/skills-and-tools.html) | [`review-code.bpmn`](review-code.html) |
+| [`staging-review`](../reference/skill-instructions/staging-review.html) | [`content-change-review.bpmn`](content-change-review.html), [`feature-staging.bpmn`](feature-staging.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html) |
+| [`swot-analysis`](../reference/skill-instructions/swot-analysis.html) | [`swot-analysis.bpmn`](swot-analysis.html) |
+| [`terminology-management`](../reference/skill-instructions/terminology-management.html) | [`l2-dak-authoring.bpmn`](l2-dak-authoring.html) |
+| [`theme-art-intake`](../reference/skill-instructions/theme-art-intake.html) | [`document-ingestion.bpmn`](document-ingestion.html), [`ingest-theme.bpmn`](ingest-theme.html) |
+| [`theme-ui-review`](../reference/skill-instructions/theme-ui-review.html) | [`ingest-theme.bpmn`](ingest-theme.html), [`theme-ui-review.bpmn`](theme-ui-review.html) |
+| [`todo-manager`](../reference/skill-instructions/todo-manager.html) | [`authoring-a-document.bpmn`](authoring-a-document.html), [`authoring-a-paper.bpmn`](authoring-a-paper.html), [`bean-lifecycle.bpmn`](bean-lifecycle.html), [`code-change-review.bpmn`](code-change-review.html), [`content-change-review.bpmn`](content-change-review.html), [`content-lifecycle.bpmn`](content-lifecycle.html), [`crdm-signoff.bpmn`](crdm-signoff.html), [`document-ingestion.bpmn`](document-ingestion.html), [`draft-to-publication.bpmn`](draft-to-publication.html), [`editing-hci-validation.bpmn`](editing-hci-validation.html), [`evidence-retrieval.bpmn`](evidence-retrieval.html), [`getting-started.bpmn`](getting-started.html), [`ig-incremental-build.bpmn`](ig-incremental-build.html), [`l2-dak-authoring.bpmn`](l2-dak-authoring.html), [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.html) |
+| [`translation-manager`](../reference/skill-instructions/translation-manager.html) | [`human-translation-workflow.bpmn`](human-translation-workflow.html), [`review-narrative.bpmn`](review-narrative.html), [`translation-workflow.bpmn`](translation-workflow.html) |
+| [`untainted-verification`](../reference/skill-instructions/untainted-verification.html) | [`adjudication.bpmn`](adjudication.html) |
+| [`upload-routes`](../reference/skill-instructions/upload-routes.html) | [`document-ingestion.bpmn`](document-ingestion.html) |
+| [`uploads-watch`](../reference/skill-instructions/uploads-watch.html) | [`content-acquisition.bpmn`](content-acquisition.html) |
+| [`upstream-version-adoption`](../reference/skill-instructions/upstream-version-adoption.html) | [`kg-separation.bpmn`](kg-separation.html), [`upstream-pin-watch.bpmn`](upstream-pin-watch.html), [`upstream-version-adoption.bpmn`](upstream-version-adoption.html) |
+| [`uses-editorial-review`](../reference/skill-instructions/uses-editorial-review.html) | [`review-narrative.bpmn`](review-narrative.html) |
+| [`visual-diff`](../reference/skill-instructions/visual-diff.html) | [`content-change-review.bpmn`](content-change-review.html) |
+| [`voice-editorial-review`](../reference/skill-instructions/voice-editorial-review.html) | [`review-narrative.bpmn`](review-narrative.html) |
+| [`voice-overlay-review`](../reference/skill-instructions/voice-overlay-review.html) | [`review-narrative.bpmn`](review-narrative.html), [`voice-review.bpmn`](voice-review.html) |
+| [`watch`](../reference/skill-instructions/watch.html) | [`code-change-review.bpmn`](code-change-review.html), [`content-change-review.bpmn`](content-change-review.html) |
+| [`wireframe-design-review`](../reference/skill-instructions/wireframe-design-review.html) | [`wireframe-design-review.bpmn`](wireframe-design-review.html) |
 
 ## Who appears in a process?
 

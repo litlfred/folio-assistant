@@ -247,6 +247,19 @@
       "hidden": false
     },
     {
+      "id": "folio-assistant-sci-data-skills",
+      "directory": "folio-assistant-sci-data-skills",
+      "title": "folio-assistant-sci-data-skills",
+      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-sci-data-skills/index.html",
+      "surfaces": [
+        "navbar",
+        "board",
+        "glass"
+      ],
+      "href": "/cat-harness/docs-auto/index/skills/folio-assistant-sci-data-skills/",
+      "hidden": false
+    },
+    {
       "id": "folio-assistant-sci-lean-skills",
       "directory": "folio-assistant-sci-lean-skills",
       "title": "folio-assistant-sci-lean-skills",
@@ -1584,7 +1597,7 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 50
+          "value": 51
         },
         {
           "id": "kinds",
@@ -1749,12 +1762,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 2
+          "value": 3
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 2
+          "value": 3
         },
         {
           "id": "views",
@@ -1770,10 +1783,14 @@
         {
           "kind": "schemas",
           "note": "no viewer yet"
+        },
+        {
+          "kind": "skills",
+          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "bootstrap-tools: declares 2 graph(s) with no published viewer — code, schemas. Declared and not rendered is a gap, not a dead link.",
+        "bootstrap-tools: declares 3 graph(s) with no published viewer — code, schemas, skills. Declared and not rendered is a gap, not a dead link.",
         "bootstrap-tools: no avatar declared for this instance — showing the generic mark."
       ],
       "navbarIcons": [
@@ -2336,6 +2353,15 @@
         ]
       },
       {
+        "key": "liquid",
+        "skills": [
+          {
+            "name": "witnessed-values",
+            "path": "/reference/skill-instructions/witnessed-values.html"
+          }
+        ]
+      },
+      {
         "key": "id",
         "skills": [
           {
@@ -2814,6 +2840,10 @@
             "summary": "folio-assistant-core"
           },
           {
+            "key": "liquid",
+            "summary": "{ prefix, passThrough }"
+          },
+          {
             "key": "version",
             "summary": "0.1.0"
           }
@@ -2941,7 +2971,7 @@
           },
           {
             "key": "directories",
-            "summary": "48: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "49: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
           },
           {
             "key": "associatedHarnesses",
@@ -2987,7 +3017,7 @@
           },
           {
             "key": "directories",
-            "summary": "2: bootstrap-tools-schemas, bootstrap-tools-scripts"
+            "summary": "3: bootstrap-tools-schemas, bootstrap-tools-scripts, bootstrap-tools-skills"
           },
           {
             "key": "needs",

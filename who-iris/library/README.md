@@ -20,7 +20,7 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `who-iris-
 | [`who-pub-tps-931-cover.png`](who-pub-tps-931-cover.png) | a file |  |
 | [`withheld.json`](withheld.json) | data |  |
 | [`wpr-rdo-2020-003-eng-cover.png`](wpr-rdo-2020-003-eng-cover.png) | a file |  |
-| [`9789241548960-eng/`](9789241548960-eng/) | 757 files | |
-| [`who-pub-tps-931/`](who-pub-tps-931/) | 487 files | |
-| [`wpr-rdo-2020-003-eng/`](wpr-rdo-2020-003-eng/) | 121 files | |
+| [`9789241548960-eng/`](9789241548960-eng/README.md) | 758 files | |
+| [`who-pub-tps-931/`](who-pub-tps-931/README.md) | 488 files | |
+| [`wpr-rdo-2020-003-eng/`](wpr-rdo-2020-003-eng/README.md) | 122 files | |
 <!-- kg:subgraph:end -->

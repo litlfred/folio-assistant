@@ -80,7 +80,16 @@ import type { LibraryRef } from "./library-refs.ts";
 import { basename, dirname, extname, join, relative } from "node:path";
 import { createHash } from "node:crypto";
 
-import { directoriesForGraph, readDeclaration, repoRootFor } from "../schemas/cat-harness.js";
+import { directoriesForGraph, readDeclaration, repoRootFor, sourceLinks } from "../schemas/cat-harness.js";
+import { detectRepoUrl } from "../src/core/git-refs.js";
+import { arxivId } from "./library-readmes.ts";
+
+/** The repository's URL, asked once per root. */
+const repoUrls = new Map<string, string | undefined>();
+const REPO_URL = (root: string): string | undefined => {
+  if (!repoUrls.has(root)) repoUrls.set(root, detectRepoUrl(root));
+  return repoUrls.get(root);
+};
 import { proseBody, type SummaryStatus } from "../schemas/block-summary.ts";
 import { withheldReason } from "./lib/withheld.ts";
 import { entryItems, type SummaryTally } from "./summaries.ts";
@@ -126,6 +135,8 @@ export interface LibraryEntry {
   hasManifest: boolean;
   hasStructure: boolean;
   hasImagesJson: boolean;
+  /** The item's generated README on the repository host, when it has one. */
+  readme?: string;
   /** First and last page the structure covers, or `null`. */
   pageStart: number | null;
   pageEnd: number | null;
@@ -731,7 +742,9 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
         docId: str("doc_id"),
         sourceFile,
         sourceSha256: sourceSha,
-        arxiv: str("arxiv"),
+        // The manifest records arXiv as `{ id, version }`; `str` flattened that
+        // to "" for every item (bean `qgjh`). Read as the item's README reads it.
+        arxiv: arxivId(meta.arxiv),
         doi: str("doi"),
         documentClass: str("document_class"),
         sections: filesIn(join(dir, "sections")).filter((f) => f.endsWith(".md")).length,
@@ -751,6 +764,11 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
         // and deciding it here would mean deciding it without the file.
         upload: sourceFile ? "absent" : "unknown",
         uploadInstance: "",
+        // The item's own page (bean `qgjh`): its generated README, on the
+        // repository host, only when that README exists.
+        ...(existsSync(join(dir, "README.md"))
+          ? { readme: sourceLinks(REPO_URL(repoRoot), `${relative(repoRoot, dir).split("\\").join("/")}/README.md`, "main")?.viewHref }
+          : {}),
         ...(() => {
           const withheld = withheldReason(dir);
           if (withheld) return { withheld };
