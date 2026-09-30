@@ -10,6 +10,11 @@
     "label": "rdfs:label",
     "prefLabel": "skos:prefLabel",
     "altLabel": "skos:altLabel",
+    "hiddenLabel": "skos:hiddenLabel",
+    "isReplacedBy": {
+      "@id": "dcterms:isReplacedBy",
+      "@type": "@id"
+    },
     "definition": "skos:definition",
     "scopeNote": "skos:scopeNote",
     "changeNote": "skos:changeNote",
@@ -34,7 +39,7 @@
       "@type": "@id"
     },
     "actedUpon": "https://litlfred.github.io/folio-assistant/cat-harness/ns#actedUpon",
-    "performerVaries": "https://litlfred.github.io/bootstrap/0.1.0/ns#performerVaries"
+    "performerVaries": "https://litlfred.github.io/folio-assistant/cat-harness/ns#performerVaries"
   },
   "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-sharp-einstein-970n6g/cat-harness-glossary.jsonld",
   "@type": "skos:ConceptScheme",
