@@ -10198,6 +10198,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.documentimageschema.same_as",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DocumentImageSchema.same_as"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The SAME PICTURE is already held elsewhere in the repository, and `file` points there instead of at a copy (bean `scfh`, `scripts/image-reuse.py`)."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/document-image.ts#DocumentImageSchema.same_as",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/document-image.geometrybasisschema.coverage",
       "@type": "skos:Concept",
       "skos:inScheme": {

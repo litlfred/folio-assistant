@@ -275,11 +275,12 @@ describe("substitutable Tools are DERIVED, and say how to choose (#1168, B9a)", 
     // Every pair that was declared by hand before the field was removed, and
     // nothing else. A new pair here is either a real alternative (add it, and
     // its `selection`) or a Tool typed more loosely than what it reads (type
-    // it). `release-please` / `package-release-manual` were declared too; their
-    // I/O differs (a release PR against a tag), so the rule does not pair them.
+    // it). The release pair is stated at the level of the release — a package
+    // in, a tag out — so the rule pairs it (owner, 2026-09-30).
     expect(pairs).toEqual([
       "beans-cli ~ beans-manual",
       "ingest-extended ~ ingest-stdlib",
+      "package-release-manual ~ release-please",
       "transcribe-faster-whisper ~ transcribe-vosk",
       "transcribe-faster-whisper ~ transcribe-whisper-cpp",
       "transcribe-vosk ~ transcribe-whisper-cpp",

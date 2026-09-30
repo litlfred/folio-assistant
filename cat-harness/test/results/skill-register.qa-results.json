@@ -2,13 +2,13 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/skill-register.ts",
-    "script_hash": "5061be1b7dfa"
+    "script_hash": "019952a53d8f"
   },
   "subject": {
     "kind": "corpus",
     "id": "skill-registration-chain"
   },
-  "updated_at": "2026-09-30T14:55:44.856Z",
+  "updated_at": "2026-09-30T14:30:53.773Z",
   "families": {
     "declarations": {
       "summary": "Skills whose DECLARATIONS are wrong: present in no package manifest, carrying a retired front-matter key, or listed in a manifest with no file. Empty means audited and clean, not unaudited — the chain family above records whether the run happened. Only the retired key is repaired; the other two are the author's assertion to make and this command reports them rather than guessing.",
@@ -35,7 +35,7 @@
           "verify": "check:glossary",
           "because": "the glossary page and its SKOS projection",
           "ran": true,
-          "current": false
+          "current": true
         },
         {
           "verify": "docs:auto:check",
