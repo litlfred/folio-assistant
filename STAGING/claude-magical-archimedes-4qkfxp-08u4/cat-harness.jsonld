@@ -297,18 +297,18 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T09:49:35.603Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6b8e62da3b001d0c15652094c8b4e104c504393d",
-  "sourceCommitSha": "6b8e62da3b001d0c15652094c8b4e104c504393d",
-  "sourceCommitAt": "2026-09-30T09:39:55Z",
+  "generatedAt": "2026-09-30T10:25:39.469Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/ba9d7f90ac40c6ae415e3020ca9df46c182070bb",
+  "sourceCommitSha": "ba9d7f90ac40c6ae415e3020ca9df46c182070bb",
+  "sourceCommitAt": "2026-09-30T10:23:06Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 283,
+    "Skill": 284,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
-    "SkillPackage": 22,
+    "SkillPackage": 23,
     "Decision": 9,
     "Process": 72,
     "SequenceFlow": 940,
@@ -318,7 +318,7 @@
     "Schema": 123,
     "ExternalSchema": 17,
     "GraphKind": 35,
-    "Directory": 46,
+    "Directory": 47,
     "Asset": 3
   },
   "@graph": [
@@ -1678,7 +1678,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/associate-harness.md",
-      "instructionLines": 74,
+      "instructionLines": 90,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4252,7 +4252,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/lean-formal-graph.md",
-      "instructionLines": 100,
+      "instructionLines": 109,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4942,6 +4942,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/scientific-visualization"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#skill/lean-formal-edges",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "lean-formal-edges",
+      "title": "Lean formal edges (elaborated)",
+      "description": "Extract ELABORATED formal dependencies between a folio's lean.ref declarations — the trustworthy replacement for the lexical `--scan` cache. Use when the formal graph matters (impact analysis, staleness, a blueprint's \\uses), when `lean-formal-graph` reports source \"scan\", or before trusting a type/value split.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#package/lean"
+      ],
+      "instructionsPath": "../folio-assistant-sci/skills/lean/lean-formal-edges.md",
+      "instructionLines": 117,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#directory/folio-assistant-sci-lean-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/lean-formal-edges"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#skill/deep-document-research",
@@ -6273,6 +6290,15 @@
         "python"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#convention/comment-why-not-what"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#package/lean",
+      "@type": "https://litlfred.github.io/folio-assistant/cat-harness/ns#SkillPackage",
+      "name": "lean",
+      "path": "../folio-assistant-sci/skills/lean",
+      "hasManifest": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#directory/folio-assistant-sci-lean-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/lean"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#package/skills",
@@ -45487,6 +45513,17 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-methodologies"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#directory/folio-assistant-sci-lean-skills",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
+      "name": "folio-assistant-sci-lean-skills",
+      "path": "folio-assistant-sci/skills/lean/",
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/0.1.0/ns#graphKind/skills"
+      ],
+      "description": "The SCIENCE layer's Lean tooling skills: `lean-formal-edges`, which runs the elaborated formal-edge extractor (folio-assistant#1492). Under the science layer, not core, per the owner's cut 'f-a-core has high level processes only, no tooling'. A subdirectory of `folio-assistant-sci/skills/` rather than that directory itself, because `skills/voices/` is already declared as the `voices` kind, and one directory declared under two kinds would be scanned twice. Repository-scoped, like `folio-assistant-core-skills`, so the consumers that resolve a skill ref from this root can see it.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/folio-assistant-sci-lean-skills"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-08u4/cat-harness.jsonld#directory/folio-assistant-core-skills",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Directory",
       "name": "folio-assistant-core-skills",
@@ -45727,8 +45764,8 @@
   ],
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-08u4",
-    "sha": "90778ed65430748cff242b1919e293c6028423e4",
+    "sha": "71a18ae126b556f6d651c551b788a7afda009951",
     "pr": "1528/merge",
-    "run": "36698278233"
+    "run": "36702099631"
   }
 }
