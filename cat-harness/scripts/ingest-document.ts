@@ -60,6 +60,7 @@ import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { refreshLibraryIndex } from "./lsi.ts";
 import { IntakeSchema } from "../schemas/intake.ts";
+import { LICENCE_FILENAME, readLicence } from "../content/pipeline/gen-library-jsonld.ts";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -243,16 +244,18 @@ export function earlyLicence(upload: string): EarlyLicence {
 }
 
 /**
- * Carry the upload's licence into the staged manifest (bean `7bg9`, the step
+ * Carry the upload's licence into the staged entry (bean `7bg9`, the step
  * after the early verdict). The early step READ the licence from the upload;
- * this is where it becomes the entry's own `meta.licence`, which is what
- * `check:source-licence` reads — so a licence recorded at intake is not lost
- * at the library boundary.
+ * this writes it as the entry's `licence.json` — the AUTHORED sidecar
+ * `gen-library-jsonld` carries verbatim into `manifest.jsonld`'s `meta.licence`
+ * (folio-assistant#1530), which is what `check:source-licence` reads. Not into
+ * the manifest itself: the manifest is generated, and a record written there
+ * is erased by the next `gen:jsonld`.
  *
- * Never overwrites. A manifest that already carries a licence holds a finding
+ * Never overwrites. A `licence.json` already beside the entry is a finding
  * somebody made (issue #1023); if it disagrees with the intake the two are
- * REPORTED as a conflict and the manifest is left as it is — which one is
- * right is a person's call, not this step's.
+ * REPORTED as a conflict and the sidecar is left as it is — which one is right
+ * is a person's call, not this step's.
  */
 export type LicenceCarry =
   | { outcome: "carried"; status: string }
@@ -266,18 +269,14 @@ export function carryIntakeLicence(upload: string, stagedEntry: string): Licence
   if (!parsed.success || parsed.data.licence === undefined)
     return { outcome: "nothing", detail: parsed.success ? "intake.json records no licence" : "intake.json does not validate" };
   const from = parsed.data.licence;
-  const manifestPath = join(stagedEntry, "manifest.jsonld");
-  if (!existsSync(manifestPath)) return { outcome: "nothing", detail: "no staged manifest to carry it into" };
-  const manifest = JSON.parse(readFileSync(manifestPath, "utf-8")) as { meta?: Record<string, unknown> };
-  const existing = manifest.meta?.licence;
+  if (!existsSync(stagedEntry)) return { outcome: "nothing", detail: "no staged entry to carry it into" };
+  const existing = readLicence(stagedEntry);
   if (existing !== undefined) {
-    const same = JSON.stringify(existing) === JSON.stringify(from);
-    return same
-      ? { outcome: "kept", detail: "the manifest already carries the same licence" }
-      : { outcome: "conflict", detail: `manifest says ${JSON.stringify(existing)}, intake says ${JSON.stringify(from)} — left as the manifest has it` };
+    return JSON.stringify(existing) === JSON.stringify(from)
+      ? { outcome: "kept", detail: `${LICENCE_FILENAME} already carries the same licence` }
+      : { outcome: "conflict", detail: `${LICENCE_FILENAME} says ${JSON.stringify(existing)}, intake says ${JSON.stringify(from)} — left as ${LICENCE_FILENAME} has it` };
   }
-  manifest.meta = { ...(manifest.meta ?? {}), licence: from };
-  writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+  writeFileSync(join(stagedEntry, LICENCE_FILENAME), `${JSON.stringify(from, null, 2)}\n`);
   return { outcome: "carried", status: from.status };
 }
 
@@ -900,10 +899,11 @@ if (import.meta.main) {
   // is what "refuse to promote" has to mean when ingestion is a pipeline
   // rather than a single command.
   if (ingestMode(argv) === "stage") {
-    // The licence the upload recorded becomes the entry's own meta.licence —
-    // never overwriting one already there (bean 7bg9).
+    // The licence the upload recorded becomes the entry's licence.json, which
+    // gen-library-jsonld carries into meta.licence — never overwriting one
+    // already there (bean 7bg9).
     const carried = carryIntakeLicence(pdf, staging);
-    if (carried.outcome === "carried") console.log(`  licence: carried into the staged manifest (${carried.status})`);
+    if (carried.outcome === "carried") console.log(`  licence: carried into the staged entry as licence.json (${carried.status})`);
     else if (carried.outcome === "conflict") console.log(`  licence CONFLICT: ${carried.detail}`);
     const staged = checkEntry(staging);
     const pending = staged.requirements.filter((r) => r.state === "unmet");

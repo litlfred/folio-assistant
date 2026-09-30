@@ -3,7 +3,7 @@
  * outcomes, and undetermined is never reported as cleared.
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { carryIntakeLicence, earlyLicence } from "../ingest-document.ts";
@@ -56,29 +56,30 @@ describe("earlyLicence (bean 7bg9)", () => {
 });
 
 describe("carryIntakeLicence (bean 7bg9)", () => {
-  function staged(manifestMeta: Record<string, unknown> = {}): string {
+  function staged(sidecar?: unknown): string {
     const d = mkdtempSync(join(tmpdir(), "7bg9-entry-"));
     made.push(d);
-    writeFileSync(join(d, "manifest.jsonld"), JSON.stringify({ "@id": "x/manifest", meta: { doc_id: "doc", ...manifestMeta } }));
+    if (sidecar !== undefined) writeFileSync(join(d, "licence.json"), JSON.stringify(sidecar));
     return d;
   }
-  const readLicence = (d: string) => JSON.parse(readFileSync(join(d, "manifest.jsonld"), "utf-8")).meta.licence;
+  const sidecarOf = (d: string) => (existsSync(join(d, "licence.json")) ? JSON.parse(readFileSync(join(d, "licence.json"), "utf-8")) : undefined);
   const stated = { status: "stated", id: "CC-BY-4.0", basis: "the PDF's copyright page" };
 
-  test("a licence recorded at intake becomes the entry's meta.licence", () => {
+  test("a licence recorded at intake becomes the entry's licence.json — the sidecar gen:jsonld carries, not the generated manifest", () => {
     const entry = staged();
     expect(carryIntakeLicence(upload({ "intake.json": intake(stated) }), entry).outcome).toBe("carried");
-    expect(readLicence(entry)).toEqual(stated);
+    expect(sidecarOf(entry)).toEqual(stated);
+    expect(existsSync(join(entry, "manifest.jsonld"))).toBe(false);
   });
-  test("never overwrites: a different licence already on the manifest is a CONFLICT, and left alone", () => {
+  test("never overwrites: a different licence.json already there is a CONFLICT, and left alone", () => {
     const mine = { status: "unknown", searched: [{ where: "publisher", result: "silent" }] };
-    const entry = staged({ licence: mine });
+    const entry = staged(mine);
     expect(carryIntakeLicence(upload({ "intake.json": intake(stated) }), entry).outcome).toBe("conflict");
-    expect(readLicence(entry)).toEqual(mine);
+    expect(sidecarOf(entry)).toEqual(mine);
   });
   test("nothing recorded at intake writes nothing — absence is not a licence", () => {
     const entry = staged();
     expect(carryIntakeLicence(upload({ "intake.json": intake() }), entry).outcome).toBe("nothing");
-    expect(readLicence(entry)).toBeUndefined();
+    expect(sidecarOf(entry)).toBeUndefined();
   });
 });

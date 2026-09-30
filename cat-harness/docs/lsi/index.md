@@ -42,6 +42,7 @@ the same as fine. The same verdict is `kg:audit`'s `lsi-index-fresh`.
 | `cat-harness/beans` | <span class="lv-na">n/a</span> | state graph — indexed on demand, never committed |
 | `cat-harness/docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs` |
 | `cat-harness/folio` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
+| `cat-harness/folio-assistant-sci-lean-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/library` | <span class="lv-pass">pass</span> | fresh |
 | `cat-harness/memory` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
@@ -105,10 +106,10 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 46.40 | bean, session, graph, instance, branch, kind, page, agent | *(none)* |
+| 1 | 46.39 | bean, session, graph, branch, instance, kind, page, agent | *(none)* |
 | 2 | 27.71 | bias, studies, study, effect, statistical, causation, validity, causal | bean, instance, harness, directory, node, graph, kind, session |
 | 3 | 22.21 | proof, lean, watcher, slot, blocks, project, witness, chapter | harness, node, bean, instance, page, directory, actor, process |
-| 4 | 19.49 | dpi, color, grayscale, matplotlib, images, raster, pdf, fonts | session, queue, branch, prs, commits, coordination, sibling, beans |
+| 4 | 19.48 | dpi, color, grayscale, matplotlib, images, raster, pdf, fonts | session, queue, branch, prs, commits, coordination, sibling, beans |
 | 5 | 18.55 | dpi, color, grayscale, matplotlib, contrast, raster, eps, session | lean, proof, glossary, declaration, mathlib, theorem, sorry, term |
 | 6 | 16.76 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, consider, solutions, description, correlation |
 | 7 | 16.13 | lean, mathlib, mcp, sorry, proof, search, bean, theorem | watcher, slot, backlog, voice, ledger, nesting, queue, idle |
