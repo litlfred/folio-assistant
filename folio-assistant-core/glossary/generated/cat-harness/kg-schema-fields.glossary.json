@@ -2198,6 +2198,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclarationschema.separation",
+      "prefLabel": "CatHarnessDeclarationSchema.separation",
+      "definition": "Which half of a kg-separation pair this instance's planned `repository` is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the code that writes and checks a content repository).",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.separation",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclarationschema.version",
       "prefLabel": "CatHarnessDeclarationSchema.version",
       "definition": "The version — an exact semver triple, `current` or `dev`. Never a range.",
