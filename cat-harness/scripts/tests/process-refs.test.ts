@@ -5,7 +5,8 @@
  * Owner, 2026-09-30 (*"BPMN element id"*): a process is referred to by the id
  * its `<bpmn:process>` element declares — `Process_CRDM` — the form BPMN's own
  * `calledElement` uses and every committed reference already used. The schema
- * (`ProcessElementIdSchema`) checks the shape; this checks that it resolves.
+ * (`ProcessElementIdSchema`) checks the shape; this checks that it resolves —
+ * workflow instances, workflow policies, and a voice's `activeIn.processes`.
  */
 import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
@@ -35,6 +36,16 @@ describe("recorded process references resolve", () => {
     if (rel.includes("node_modules/")) continue;
     const text = readFileSync(join(REPO, rel), "utf-8");
     for (const m of text.matchAll(/"process":\s*"([^"]+)"/g)) refs.push({ where: rel, id: m[1]! });
+  }
+
+  // A voice scoped to processes names them by element id too. None does
+  // today, so these add nothing yet; the scan is here so the first one is
+  // checked rather than trusted.
+  for (const rel of new Glob("**/skills/voices/**/*.json").scanSync({ cwd: REPO })) {
+    if (rel.includes("node_modules/")) continue;
+    const doc = JSON.parse(readFileSync(join(REPO, rel), "utf-8")) as { $schema?: string; activeIn?: { processes?: string[] } };
+    if (!doc.$schema?.startsWith("folio-voice")) continue;
+    for (const id of doc.activeIn?.processes ?? []) refs.push({ where: `${rel} activeIn.processes`, id });
   }
 
   test("the corpus is non-empty, so the assertion below is not vacuous", () => {
