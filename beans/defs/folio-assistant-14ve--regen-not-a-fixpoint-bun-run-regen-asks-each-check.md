@@ -5,6 +5,7 @@ status: todo
 type: bug
 created_at: 2026-09-29T23:42:28Z
 updated_at: 2026-09-29T23:42:28Z
+parent: folio-assistant-1xhc
 ---
 
 Measured 2026-09-29 on claude/sharp-einstein-970n6g (PR #1511), after merging main:

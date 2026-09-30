@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 181,
+      "count": 186,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -506,6 +506,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness/schemas/glossary-ledger.ts",
+      "instance": "cat-harness",
+      "name": "glossary-ledger",
+      "graphNode": "schema",
+      "summary": "The swimlane glossary's retirement ledger: its tag and its shape.",
+      "isTest": false
+    },
+    {
       "module": "cat-harness/schemas/graph-kind-registry.ts",
       "instance": "cat-harness",
       "name": "graph-kind-registry",
@@ -591,6 +599,21 @@
       "graphNode": "none",
       "reason": "a re-export barrel: it defines nothing of its own",
       "summary": "Re-exports all types, Zod validation schemas, and builder functions.",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/inline-code.test.ts",
+      "instance": "cat-harness",
+      "name": "inline-code.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/inline-code.ts",
+      "instance": "cat-harness",
+      "name": "inline-code",
+      "graphNode": "schema",
+      "summary": "Backtick spans in authored prose, rendered as `<code>` — bean `mylx`.",
       "isTest": false
     },
     {
@@ -989,6 +1012,22 @@
       "graphNode": "none",
       "reason": "a classification function: it defines no schema",
       "summary": "reference-direction.ts — does this PROSE reference follow the dependency arrow?",
+      "isTest": false
+    },
+    {
+      "module": "cat-harness/schemas/release-iri.test.ts",
+      "instance": "cat-harness",
+      "name": "release-iri.test",
+      "graphNode": "undeclared",
+      "summary": "An instance's release addresses, and the sync that keeps literal copies of",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness/schemas/release-iri.ts",
+      "instance": "cat-harness",
+      "name": "release-iri",
+      "graphNode": "schema",
+      "summary": "An instance's release addresses: where its identifiers live at the version",
       "isTest": false
     },
     {
@@ -6040,6 +6079,13 @@
           "type": "z.string().url().optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "iriBase",
+          "type": "z.string().url().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The address this instance's IRIs are minted under, BEFORE the version —"
         },
         {
           "name": "previewUrl",
@@ -15245,6 +15291,77 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/glossary-ledger.ts#LedgerEntrySchema",
+      "name": "LedgerEntrySchema",
+      "module": "cat-harness/schemas/glossary-ledger.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "prefLabel",
+          "type": "z.string().describe(\"The label at the time of minting — what a retired term is shown as.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "firstSeen",
+          "type": "z.string().describe(\"ISO date this key was first written.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "retiredOn",
+          "type": "z.string().nullable().describe(\"ISO date it stopped being used, or null while it still is.\")",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/glossary-ledger.ts#LedgerSchema",
+      "name": "LedgerSchema",
+      "module": "cat-harness/schemas/glossary-ledger.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(LEDGER_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "instance",
+          "type": "z.string().min(1).describe(\"Which Knowledge Graph's glossary this is: its name, never a path.\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "concepts",
+          "type": "z .record(z.string(), LedgerEntrySchema) .describe(\"Keyed by the term IRI's local part, never the absolute IRI, so the …",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/glossary-ledger.ts#LedgerEntrySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "LEDGER_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
       "name": "GraphKind",
       "module": "cat-harness/schemas/graph-kind-registry.ts",
@@ -15420,10 +15537,37 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/graph.ts#BootstrapGraphKind",
+      "name": "BootstrapGraphKind",
+      "module": "cat-harness/schemas/graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/graph.ts#BootstrapTerm",
       "name": "BootstrapTerm",
       "module": "cat-harness/schemas/graph.ts",
       "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/graph.ts#GraphKindSchema",
+      "name": "GraphKindSchema",
+      "module": "cat-harness/schemas/graph.ts",
+      "kind": "zod-union",
+      "doc": "One entry of a Subgraph's `graphKinds`: one of bootstrap's, or an Extension.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -15443,6 +15587,18 @@
           "name": "name",
           "type": "z.string().min(1).describe(\"The Knowledge Graph's name. The declaration file is `<name>.json`.\")",
           "optional": false,
+          "array": false
+        },
+        {
+          "name": "version",
+          "type": "z .string() .regex(/^\\d+\\.\\d+\\.\\d+$/) .optional() .describe(\"Its version, as MAJOR.MINOR.PATCH (semantic versioning).\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "iriBase",
+          "type": "z .string() .url() .optional() .describe( \"The address its IRIs are minted under, before the version. An identifier a p…",
+          "optional": true,
           "array": false
         },
         {
@@ -15502,7 +15658,7 @@
         },
         {
           "name": "graphKinds",
-          "type": "z.array(z.string().min(1)).min(1).describe(\"The Graph Kinds it holds.\")",
+          "type": "z.array(GraphKindSchema).min(1).describe(\"The Graph Kinds it holds.\")",
           "optional": false,
           "array": true
         },
@@ -15521,7 +15677,9 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [],
+      "refs": [
+        "cat-harness/schemas/graph.ts#GraphKindSchema"
+      ],
       "unresolved": [],
       "external": [
         "z"
@@ -19409,7 +19567,7 @@
       "fields": [
         {
           "name": "$schema",
-          "type": "z.literal(\"folio-model-registry/v1\")",
+          "type": "z.literal(MODEL_REGISTRY_SCHEMA)",
           "optional": false,
           "array": false
         },
@@ -19427,6 +19585,7 @@
       ],
       "unresolved": [],
       "external": [
+        "MODEL_REGISTRY_SCHEMA",
         "z"
       ],
       "exported": true
@@ -22776,6 +22935,56 @@
       "module": "cat-harness/schemas/reference-direction.ts",
       "kind": "type-alias",
       "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/release-iri.ts#ReleaseIris",
+      "name": "ReleaseIris",
+      "module": "cat-harness/schemas/release-iri.ts",
+      "kind": "interface",
+      "doc": "An instance's release, as both audiences address it.",
+      "fields": [
+        {
+          "name": "iriBase",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The declared `iriBase`, ending in `/`."
+        },
+        {
+          "name": "version",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "The declared version, `MAJOR.MINOR.PATCH`."
+        },
+        {
+          "name": "major",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "`MAJOR` alone, as a number."
+        },
+        {
+          "name": "agent",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`<iriBase><version>/` — what a program reads."
+        },
+        {
+          "name": "human",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "`<iriBase>v<major>/` — what a person reads."
+        }
+      ],
       "extendsNames": [],
       "values": [],
       "refs": [],
@@ -42731,6 +42940,14 @@
       "array": false
     },
     {
+      "from": "cat-harness/schemas/glossary-ledger.ts#LedgerSchema",
+      "to": "cat-harness/schemas/glossary-ledger.ts#LedgerEntrySchema",
+      "via": "concepts",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
       "to": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
       "via": "holds",
@@ -42760,6 +42977,14 @@
       "via": "directories",
       "kind": "field",
       "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/graph.ts#SubgraphSchema",
+      "to": "cat-harness/schemas/graph.ts#GraphKindSchema",
+      "via": "graphKinds",
+      "kind": "field",
+      "optional": false,
       "array": true
     },
     {
