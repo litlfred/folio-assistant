@@ -182,7 +182,7 @@ So, as part of recovery, before step 3's confirmation:
   a person who remembers; "everything is fine" is not.
 - **Do not move anything back on your own judgement.** Re-anchoring to undo is
   another unlogged move, and it is a durable change made to cover one — see
-  [`deletion-requires-confirmation.md`](../folio-core/deletion-requires-confirmation.md),
+  [`deletion-requires-confirmation.md`](../conduct/conduct-core/deletion-requires-confirmation.md),
   which is the same rule about a different verb.
 
 **Considered and rejected: giving the note its own history.** A `movedFrom`

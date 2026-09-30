@@ -14,7 +14,7 @@ import { registerFolioGraphKind } from "./folio-graph-kind";
 import { THEMES } from "./themes";
 import { BEAN_GRAPH_FILE } from "./bean-graph";
 import { TODO_GRAPH_FILE } from "./todo-graph";
-import { defaultGraphKinds, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, GraphNodeDirectorySchema, instanceRootsIn, ownDirectoryById, toJsonLd, type ResolvedDirectory } from "./cat-harness";
+import { defaultGraphKinds, graphKindIri, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, GraphNodeDirectorySchema, instanceRootsIn, ownDirectoryById, toJsonLd, type ResolvedDirectory } from "./cat-harness";
 import { writeDeclaration } from "../test/support/instance-fixture.js";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
@@ -291,7 +291,7 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
   it("registering a DIFFERENT definition under one name throws", () => {
     const reg = new GraphKindRegistry();
     registerFolioGraphKind(reg);
-    expect(() => reg.register("folio", { type: "urn:other", renderable: false, holds: "content", summary: "x" }))
+    expect(() => reg.register("folio", { renderable: false, holds: "content", summary: "x" }))
       .toThrow(GraphKindConflictError);
   });
 
@@ -402,10 +402,10 @@ describe("graph kinds — the harness declares its own, core adds folio", () => 
     expect(() => reg.register("probe", { ...def, summary: "worded differently" })).not.toThrow();
   });
 
-  it("every registered kind projects to a distinct @type", () => {
+  it("every registered kind is a distinct GraphKind individual", () => {
     const names = defaultGraphKinds.names();
-    const types = names.map((n) => defaultGraphKinds.get(n)!.type);
-    expect(new Set(types).size).toBe(names.length);
+    const iris = names.map((n) => graphKindIri(n, defaultGraphKinds.get(n)));
+    expect(new Set(iris).size).toBe(names.length);
   });
 });
 

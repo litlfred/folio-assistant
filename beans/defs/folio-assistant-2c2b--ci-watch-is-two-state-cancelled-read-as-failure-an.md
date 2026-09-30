@@ -146,6 +146,8 @@ observations are not a rate.
       are not a rate; this needs the run history, which `ci-health` already
       fetches.
 
+_2026-09-30T19:42:58Z_ — Claimed by claude/magical-archimedes-4qkfxp-2c2b — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
 ## Box 6 measured — 2026-09-30 19:45, from the run history
 
 `docs-site.yml` on `main`, its last 100 runs (2026-09-29 17:51 → 2026-09-30 19:41, about 26 h, all `push`):

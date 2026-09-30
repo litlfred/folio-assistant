@@ -10,9 +10,10 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`skills.json`](skills.json) | data |  |
 | [`authoring-math/`](authoring-math/) | 5 files | |
 | [`authoring-who-smart-guidelines/`](authoring-who-smart-guidelines/) | 15 files | |
+| [`conduct/`](conduct/) | 18 files | |
 | [`content-lifecycle/`](content-lifecycle/) | 11 files | |
 | [`crdm/`](crdm/) | 7 files | |
-| [`folio-core/`](folio-core/) | 109 files | |
+| [`folio-core/`](folio-core/) | 96 files | |
 | [`folio-document-adapter/`](folio-document-adapter/) | 6 files | |
 | [`folio-paper-adapter/`](folio-paper-adapter/) | 66 files | |
 | [`framework/`](framework/) | 1 file | |
@@ -25,7 +26,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`requirements/`](requirements/) | 7 files | |
 | [`scientific-critical-thinking/`](scientific-critical-thinking/) | 11 files | |
 | [`scientific-visualization/`](scientific-visualization/) | 21 files | |
-| [`security/`](security/) | 4 files | |
 | [`spec-kit/`](spec-kit/) | 2 files | |
 | [`ui/`](ui/) | 28 files | |
 | [`workflow/`](workflow/) | 14 files | |

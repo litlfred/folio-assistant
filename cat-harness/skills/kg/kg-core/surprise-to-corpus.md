@@ -119,7 +119,7 @@ is how a corpus acquires vocabulary without acquiring discipline.
 ## 3. PROMPT, never write
 
 **The agent proposes; a person decides.** This is
-[`deletion-requires-confirmation`](../../folio-core/deletion-requires-confirmation.md) pointed
+[`deletion-requires-confirmation`](../../conduct/conduct-core/deletion-requires-confirmation.md) pointed
 the other way — that skill governs removing a durable artefact on your own
 initiative, this one governs ADDING durable guidance on your own initiative,
 and the argument is the same: the corpus is read by every future session, so
@@ -127,7 +127,7 @@ a wrong line in it is a wrong line everywhere, and the person who has to live
 with it should be the one who agreed to it.
 
 What a good prompt contains — the same six parts
-[`interaction-modality`](../../folio-core/interaction-modality.md) §4.1 binds every handed-over
+[`interaction-modality`](../../conduct/conduct-core/interaction-modality.md) §4.1 binds every handed-over
 decision to, and the test is identical: **can the reader answer without
 opening anything?**
 
@@ -136,7 +136,7 @@ opening anything?**
 3. **Why it will recur** — the filter above, argued rather than asserted.
 4. **What you propose**: a new skill, a line in an existing one, or a tool
    change. Say which, and where it would live —
-   [`where-does-this-go`](../../folio-core/where-does-this-go.md) is how you answer that.
+   [`where-does-this-go`](../../conduct/conduct-core/where-does-this-go.md) is how you answer that.
 5. **Your recommendation**, marked as such.
 6. **What happens if they say nothing**: nothing gets written, and the
    candidate is filed as a bean so it is not lost.
@@ -185,7 +185,7 @@ reading of the slip exclusion in §2. What it did not contribute, deliberately:
 - **No timeline reconstruction.** AAR for an outage rebuilds a sequence
   because the sequence is contested. Here the agent was present for the whole
   turn and the transcript is the timeline.
-- **Nothing for part 2.** The routing half, [`where-does-this-go`](../../folio-core/where-does-this-go.md),
+- **Nothing for part 2.** The routing half, [`where-does-this-go`](../../conduct/conduct-core/where-does-this-go.md),
   draws on no methodology. Information architecture was considered and
   declined on scale: nine rules is below the point where faceted
   classification earns its complexity, and what the corpus lacked was an
