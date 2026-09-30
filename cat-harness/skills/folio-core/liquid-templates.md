@@ -79,7 +79,7 @@ programs, which pin exactly ([`instance-publication`](instance-publication.md)
 
 Open every template with a `{%- comment -%}` block. Its **first sentence** is
 what the directory README's "what it is" column shows for the file
-(`describe()` in `content/pipeline/readme-graph-sections.ts`), so write it for
+(`describe()` in `bootstrap-tools/scripts/readme-graph-sections.ts`), so write it for
 a reader of that table — "The file table: files directly in the directory,
 then its subdirectories." — and put the variables it reads in the lines after.
 No comment and the row says only "a template".

@@ -61,7 +61,7 @@ import {
   readDeclaration,
   repoRootFor,
 } from "../schemas/cat-harness.ts";
-import { describe as describeFile, usedByIndex } from "../content/pipeline/readme-graph-sections.ts";
+import { describe as describeFile, usedByIndex } from "../../bootstrap-tools/scripts/readme-graph-sections.ts";
 import { buildQaResult, writeQaResult } from "./qa-results.ts";
 import { gitCorpus } from "../schemas/git-corpus.ts";
 

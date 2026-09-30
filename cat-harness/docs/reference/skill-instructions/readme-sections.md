@@ -145,7 +145,7 @@ failing anything**. A gate that stops covering something still reports green.
 ## `kg:processes` and `kg:files` — an instance's diagrams and files, from its declaration
 
 Two sections any instance's README may carry, both read from the instance's
-own declaration and the files it names (`content/pipeline/readme-graph-sections.ts`).
+own declaration and the files it names (`bootstrap-tools/scripts/readme-graph-sections.ts`).
 Owner, 2026-09-29: *"display bpmn(s) etc in README.md"*, *"part of readme.md
 generation is to do rendering"*, and the file list at the end must be *"a
 skill and tool in cat-harness"*.

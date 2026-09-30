@@ -34,11 +34,11 @@
  * @module scripts/iri-sync
  * @covers cat-harness
  */
-import { spawnSync } from "node:child_process";
 import { readFileSync, statSync, writeFileSync } from "node:fs";
 import { join, relative } from "node:path";
 
 import { knowledgeGraphsIn } from "../schemas/declaration.ts";
+import { gitFiles } from "./git-files.ts";
 import { type ReleaseIris, releaseIris } from "../schemas/release-iri.ts";
 
 /** Text a person or program reads; binaries and lockfiles are never IRI carriers here. */
@@ -82,18 +82,6 @@ export function releases(repoRoot: string): { root: string; release: ReleaseIris
     if (r) out.push({ root, release: r });
   }
   return out;
-}
-
-/**
- * Every file git accounts for — tracked, or untracked and not ignored — or
- * `undefined` when git cannot answer. `git ls-files` directly, rather than
- * cat-harness's general corpus module, which would pull a harness utility
- * into a package that may depend on bootstrap alone.
- */
-function gitFiles(repo: string): string[] | undefined {
-  const r = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], { cwd: repo, encoding: "utf-8" });
-  if (r.error !== undefined || r.status !== 0) return undefined;
-  return r.stdout.split("\0").filter(Boolean).map((p) => join(repo, p));
 }
 
 if (import.meta.main) {
