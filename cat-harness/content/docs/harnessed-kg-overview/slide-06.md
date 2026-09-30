@@ -21,6 +21,21 @@ execution anywhere on the deterministic-to-agentic spectrum.
 
 </details>
 
+**How the slide labels the diagram.** On the slide the terms sit around the
+BPMN picture and lines tie each one to a part of it:
+
+- **Process** points at the whole diagram, captioned *(publication lifecycle)*,
+  with *(Context)* beside it.
+- **User Story** is tied to **Role**, and **Role** to one lane, the one labelled
+  *Editor* (editors and authoring agents).
+- **Task** points at one node in that lane, *Edit Doc* (today: editing and HCI
+  validation).
+- **Skill** hangs off that task, and **Test** hangs off the skill.
+- The beans icon sits by agentic state and the sticky note by human state.
+
+So the slide says a user story names a role, a role is a lane, a task is a node
+in it, a skill belongs to a task, and a test belongs to a skill.
+
 **Sources:** `processes/content-lifecycle.bpmn` (the picture above is generated
 from it); [beans and todos](beans-and-todos.html).
 

@@ -12,6 +12,10 @@ exactly one of `url`, `canonical` or an inline `instance`.
 
 <img src="{{ '/assets/img/kg-deck/img-p004-2.webp' | relative_url }}" alt="A QR code with a small pixel-art dinosaur in its centre. It was not decoded for this description; the slide prints https://smart.who.int/base/dak-api.html beside it." height="140" style="height:140px;width:auto;display:inline-block;vertical-align:middle" loading="lazy">
 
+On the slide the JSON Schema is drawn over the list as a callout of one entry,
+`DecisionSupportLogicSource`, so it reads as "this is what one of these
+entries holds". The QR code beside it points at the API page.
+
 **Source:** <https://smart.who.int/base/dak-api.html>; the ingested index
 `smart-base/fhir-artifact-index`.
 

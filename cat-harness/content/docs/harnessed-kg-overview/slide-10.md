@@ -13,8 +13,24 @@
   execute their decision logic or indicator calculations, and use test and tool
   repos to develop, prepare for a connectathon or test compliance.
 
-Relations: a test repo **depends** on content, a tool repo **references** it,
-and apps **utilize** all three.
+**How the slide relates them.** Slide 10 draws named repositories joined by
+labelled lines. The lines carry no arrowheads, so the direction below is read
+from each label, not from the drawing:
+
+| from | relation | to |
+|---|---|---|
+| `who/smart-kg` | depends on | `who/smart-base` |
+| `who/smart-immz` | depends on | `who/smart-base` |
+| `who/smart-kg` | references | `who/smart-kg-tools` |
+| `who/smart-base` | references | `who/smart-base-tools` |
+| `who/smart-immz` | references | `who/smart-imz-test` |
+| `who/smart-kg-tools` | utilizes | `who/smart-base-tools` |
+| `who/smart-imz-test` | utilizes | `who/smart-base-tools` |
+| consumer apps | utilize | `who/smart-immz`, `who/smart-imz-test` |
+
+Read as a rule: **depends on** runs content to content, **references** runs from
+content to its own tools and tests, and **utilizes** runs from a tool, a test or
+an app to what it uses.
 
 **Sources:** [Repo taxonomy](architecture/repo-taxonomy.html);
 [KGraph repositories](kgraph.html).
