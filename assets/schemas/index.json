@@ -39258,6 +39258,13 @@
           "doc": "The schema or standard that defines the term (rdfs:isDefinedBy)."
         },
         {
+          "name": "iri",
+          "type": "Iri.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The concept's IRI when its defining vocabulary already mints one. The"
+        },
+        {
           "name": "source",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -46903,6 +46910,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#Iri",
+      "via": "iri",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",

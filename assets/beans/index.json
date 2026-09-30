@@ -103,7 +103,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-19T08:55:36Z",
       "updatedAt": "2026-09-29T18:14:47Z",
-      "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"no github,\nlocal git only. tools (several options) to run lightweight server locally for\nskill of hosting content (using mime time data whch github tool cant)\" and\n\"github on private repo so gh-pages not avaialbe. use local server skill.\"\n\n## This hole is already documented, deliberately\n\n`skills/folio-core/serving-renderings.md",
+      "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"no github,\nlocal git only. tools (several options) to run lightweight server locally for\nskill of hosting content (using mime time data whch github tool cant)\" and\n\"github on private repo so gh-pages not avaialbe. use local server skill.\"\n\n## This hole is already documented, deliberately\n\n`skills/ui/ui-core/serving-renderings.md",
       "file": "beans/defs/folio-assistant-0hi8--deploy-a-local-http-server-that-serves-a-rendering.md"
     },
     {
@@ -4909,14 +4909,14 @@
     {
       "id": "folio-assistant-qgjh",
       "title": "References are shown as plain text, not links",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-4ccr",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:13Z",
-      "updatedAt": "2026-09-30T16:12:47Z",
+      "updatedAt": "2026-09-30T17:43:41Z",
       "preview": "Slugs, file names, skills and related nodes are printed as code or plain text although the target exists, so the relationship a page exists to show cannot be followed. Emit links wherever the target resolves.\n\nObserved on: `catalogue`, `external-schemas`, `folio`, `glossary`, `library`, `methodologies`, `processes`, `tools`, `voices` (see each `cat-harness/docs/wireframes/<kind>/intent.md`). Per-p",
       "file": "beans/defs/folio-assistant-qgjh--references-are-shown-as-plain-text-not-links.md"
     },
@@ -5429,14 +5429,14 @@
     {
       "id": "folio-assistant-ssfp",
       "title": "beans:claim writes to process.cwd(), so an agent working in a git worktree claims in the WRONG checkout",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-ahvw",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:11:53Z",
-      "updatedAt": "2026-09-30T17:47:07Z",
+      "updatedAt": "2026-09-30T17:48:33Z",
       "preview": "Measured 2026-09-30, on a live subagent. A session delegating to agents that\neach work in their own `git worktree` — the pattern this repository's own\nguidance pushes, and the one used for every agent in that session — has its\nclaims land in the wrong tree.\n\n## The measurement\n\nAn agent was briefed to work in `/tmp/wtRJ/folio-assistant` and claim bean\n`rjug`. Immediately after it reported the clai",
       "file": "beans/defs/folio-assistant-ssfp--beansclaim-writes-to-processcwd-so-an-agent-workin.md"
     },
@@ -6940,7 +6940,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-25T18:38:34Z",
-      "updatedAt": "2026-09-30T10:57:00Z",
+      "updatedAt": "2026-09-30T15:14:04Z",
       "preview": "Measured 2026-09-25, while establishing whether PR #1348 still had anything to\nfix. It is the ROOT CAUSE of #1348's own subject: the detangle staleness that\nbroke `main` was invisible to `bun run gates` and surfaced only because a test\nrun left the working tree dirty.\n\n## The mechanism\n\n`bun run gates` runs 152 gates in order. Gate 1 is `bun test`. Somewhere in that\nsuite the detangle **writer** r",
       "file": "beans/defs/folio-assistant-ymsu--kgdetanglecheck-cannot-fail-inside-bun-run-gates-b.md"
     },
