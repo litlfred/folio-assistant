@@ -959,6 +959,18 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
   },
   {
+    script: "check:bean-parent-prose",
+    kind: "report",
+    reason:
+      "prints the placement-phrase ratio that justifies the check's own scope; `check:bean-parent-prose:check` is the gating form and is wired",
+  },
+  {
+    script: "check:instance-themes",
+    kind: "report",
+    reason:
+      "prints each declaring instance's themes and their kinds; `check:instance-themes:check` is the gating form and is wired",
+  },
+  {
     script: "check:navbar-consistency",
     kind: "report",
     reason:

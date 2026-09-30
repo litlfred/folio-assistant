@@ -5,7 +5,11 @@
  *
  * @module scripts/gen-bootstrap-graph
  *
- * ## It publishes NOTHING — `kg-export --instance ./bootstrap` does
+ * ## It publishes NOTHING — bootstrap-tools' `export-graph.ts` does
+ *
+ * Since 2026-09-30 (owner, bean `xsqm`) the published document is written by
+ * bootstrap-tools in bootstrap's own classes and standard properties. Until
+ * then it was `kg-export --instance ./bootstrap`, which is the history below.
  *
  * Two generators wrote this document. This one, at
  * `<base>/bootstrap/bootstrap.jsonld`, and `kg-export` at

@@ -9,7 +9,6 @@ Part of [Bootstrap](../README.md) 0.1.0, declared as `schemas`, holding `schemas
 |---|---|---|
 | [`discussion.input.schema.json`](discussion.input.schema.json) | Discussion Input |  |
 | [`discussion.output.schema.json`](discussion.output.schema.json) | Discussion Output |  |
-| [`glossary-ledger.schema.json`](glossary-ledger.schema.json) | Glossary Ledger |  |
 | [`graph.schema.json`](graph.schema.json) | [Knowledge Graph](README.md#knowledge-graph) declaration |  |
 | [`model-registry.schema.json`](model-registry.schema.json) | Model Registry |  |
 | [`requirement.schema.json`](requirement.schema.json) | Requirement |  |
@@ -168,15 +167,15 @@ A Declaration. Any field not listed here is an Extension: A field of a Declarati
 |   assets       [0..*]  Asset list           |
 +---------------------------------------------+
   |
-  +-- directories (each item) --> +---------------------------------------------------------------------------------------------------------------------------------------+
-  |                               | Subgraph                                                                                                                              |
-  |                               +---------------------------------------------------------------------------------------------------------------------------------------+
-  |                               | * id           [1]     string                                                                                                         |
-  |                               | * path         [1]     string                                                                                                         |
-  |                               | * graphKinds   [1..*]  list of = "skills" | = "schemas" | = "scenarios" | = "processes" | = "models" | = "swimlane-glossary" | string |
-  |                               |   title        [0..1]  string                                                                                                         |
-  |                               |   description  [0..1]  string                                                                                                         |
-  |                               +---------------------------------------------------------------------------------------------------------------------------------------+
+  +-- directories (each item) --> +---------------------------------------------------------------------------------------------------------------+
+  |                               | Subgraph                                                                                                      |
+  |                               +---------------------------------------------------------------------------------------------------------------+
+  |                               | * id           [1]     string                                                                                 |
+  |                               | * path         [1]     string                                                                                 |
+  |                               | * graphKinds   [1..*]  list of = "skills" | = "schemas" | = "scenarios" | = "processes" | = "models" | string |
+  |                               |   title        [0..1]  string                                                                                 |
+  |                               |   description  [0..1]  string                                                                                 |
+  |                               +---------------------------------------------------------------------------------------------------------------+
   |
   +-- assets (each item) --> +---------------------+
                              | Asset               |
@@ -212,30 +211,6 @@ Which languages a model is good at, and whether a person checked. Only `human-va
                              |   validatedOn         [0..1]  string                                             |
                              |   note                [0..1]  string                                             |
                              +----------------------------------------------------------------------------------+
-```
-
-### Glossary Ledger
-
-[src](glossary-ledger.schema.json)
-
-Every term a Knowledge Graph's Processes have ever named, with the date each was first seen and the date it stopped being used. The glossary itself is regenerated each time; this is the one fact that cannot be, so a retired term is never silently reused.
-
-```text
-+--------------------------------------------+
-| Glossary Ledger                            |
-+--------------------------------------------+
-| * $schema   [1]  = "glossary-ledger/1.0.0" |
-| * instance  [1]  string                    |
-| * concepts  [1]  map of key to Concept     |
-+--------------------------------------------+
-  |
-  +-- concepts (each item) --> +---------------------------------+
-                               | Concept                         |
-                               +---------------------------------+
-                               | * prefLabel  [1]  string        |
-                               | * firstSeen  [1]  string        |
-                               | * retiredOn  [1]  string | null |
-                               +---------------------------------+
 ```
 
 ### Requirement

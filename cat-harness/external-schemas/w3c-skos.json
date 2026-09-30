@@ -43,6 +43,10 @@
       "operative": "What the term MEANS, taken from the role's authored `description` — one author, one place to fix. Absent by design on a lane whose performer varies, which is honest rather than indistinguishable from a lane nobody bound."
     },
     {
+      "term": "skos:hiddenLabel",
+      "operative": "a role's former names (`formerNames` in roles.json), emitted by glossary-export: findable by a reader holding an old name, never offered as current"
+    },
+    {
       "term": "skos:inScheme",
       "operative": "Binds a concept to its instance's glossary document. Each concept's `inScheme` names that document's own published URL, so a preview that publishes the graph without the glossary serves a 404ing scheme IRI — which `check:invocation-parity` refuses."
     },

@@ -27,18 +27,18 @@
  * belongs in both content types, it belongs in the base class; if it needs a
  * TeX or Lean installation, it belongs here.
  *
- * @module folio-assistant/adapters/paper
+ * @module folio-assistant-sci/adapters/paper
  */
 
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
-import { DocumentContentAdapter } from "../document/index.js";
+import { DocumentContentAdapter } from "../../../cat-harness/adapters/document/index.js";
 import { registerLeanTools } from "./tools/lean.js";
-import { registerLatexRenderTools } from "../document/tools/render.js";
-import { registerPaperAuditTools } from "../document/tools/audit.js";
-import { registerPaperQaTools } from "../document/tools/qa.js";
-import { registerPaperBuildTools } from "../document/tools/validate.js";
-import { registerPaperTransformTools } from "../document/tools/transform.js";
+import { registerLatexRenderTools } from "../../../cat-harness/adapters/document/tools/render.js";
+import { registerPaperAuditTools } from "../../../cat-harness/adapters/document/tools/audit.js";
+import { registerPaperQaTools } from "../../../cat-harness/adapters/document/tools/qa.js";
+import { registerPaperBuildTools } from "../../../cat-harness/adapters/document/tools/validate.js";
+import { registerPaperTransformTools } from "../../../cat-harness/adapters/document/tools/transform.js";
 
 export class PaperContentAdapter extends DocumentContentAdapter {
   readonly type: string = "paper";

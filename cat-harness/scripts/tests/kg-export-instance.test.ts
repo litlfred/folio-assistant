@@ -48,10 +48,10 @@ describe("a minimal instance exports through the same code path", () => {
   test("and its declaration, without borrowing this repository's", async () => {
     const problems: string[] = [];
     const { nodes } = await collectInstanceNodes(join(repoRootFor(ROOT), "bootstrap"), DOC, BASE, problems);
-    const dirs = typesOf(nodes).get("Directory") ?? 0;
+    const dirs = typesOf(nodes).get("Subgraph") ?? 0;
     const rootDirs = typesOf(
       (await collectInstanceNodes(ROOT, DOC, BASE, [])).nodes,
-    ).get("Directory")!;
+    ).get("Subgraph")!;
     // Strictly fewer than the root's, and NOT a pinned number.
     //
     // This asserted `toBe(1)` until 2026-09-19 and broke the moment bootstrap

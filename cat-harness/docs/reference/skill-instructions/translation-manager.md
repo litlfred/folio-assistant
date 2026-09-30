@@ -608,6 +608,16 @@ The `translations/` directory contains **only** three file types:
 Rendered output lives in `docs/<locale>/`; QA and status are properties of
 the TranslationNode manifest.
 
+**An instance with no `translations` directory of its own is hosted.**
+`translationsHomeFor` (`schemas/cat-harness.ts`) puts its templates in the
+extracting harness's `translations/<locale>/<stub>/` —
+`cat-harness/translations/<locale>/bootstrap/processes/*.pot` for bootstrap's
+three diagrams — rather than inside the instance, which holds no translation
+machinery. The templates are extracted from the bootstrap the harness has
+pinned; when bootstrap is its own repository they stay here, since a
+template is the harness's work over bootstrap's text, not part of it
+([`kg-separation`](kg-separation.md) §"The pair").
+
 ## WHO smart-base integration
 
 The WHO `smart-base` repository defines the formal actor

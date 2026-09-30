@@ -1,11 +1,12 @@
 ---
 # folio-assistant-tlj9
 title: 'PARENT INTEGRITY: a bean''s body names a parent its front matter does not carry (4ccr), so a goal''s open count is wrong'
-status: todo
+status: in-progress
 type: task
+priority: normal
 created_at: 2026-09-30T11:33:55Z
+updated_at: 2026-09-30T15:07:40Z
 parent: folio-assistant-ahvw
-updated_at: 2026-09-30T11:33:55Z
 ---
 
 ## The finding, and how it was measured
@@ -187,3 +188,86 @@ others. The figure moves with main; 49 is what it is on this head.
 `check:bean-parents`, `check:bean-bodies`, `check:bean-front-matter`,
 `readme:subgraphs:check`, `check:navbar-consistency:check` and
 `audit:coverage:require-all` all pass.
+
+---
+
+## 2026-09-30 — Done-when #2 and #3 delivered, and the check found a defect I had just created
+
+`bun run check:bean-parent-prose`, wired as `check:bean-parent-prose:check`.
+
+### The scope is a MEASUREMENT, not a preference
+
+Bean bodies cross-reference each other constantly, so the risk was never
+missing a defect — it was a detector that fires across the store:
+
+| | |
+|---|---|
+| beans read | 496 |
+| bodies naming at least one bean id | **113** (22 %) |
+| id mentions in bodies | **338** |
+| ...inside a placement phrase | **1** |
+
+That last ratio is the check's justification and is printed on every run, with a
+test that fails if placement claims ever reach a tenth of all mentions — the
+signal the phrase set has stopped discriminating, whose remedy is to narrow the
+phrases rather than accept the noise. The phrases are the ones that ASSERT
+placement: *belongs to/under*, *parent is*, *should hang from*, *parented to*,
+*sits under*, each requiring the id within ~60 characters.
+
+### Quotations are not claims, and that was not hypothetical
+
+The raw phrase set found **2** sites. The second was **this bean**, whose body
+quotes `4ccr`'s sentence as evidence — so without the blockquote skip the bean
+reporting the defect reports itself. Blockquote and fenced lines are dropped
+first, which takes the candidate set to 1.
+
+### It immediately found a live defect, and the defect was mine
+
+With the skip in place the one remaining finding was:
+
+    ✗ folio-assistant-4ccr: body says it belongs to/under folio-assistant-10uc
+        front matter declares folio-assistant-p5wm
+
+**My own reparent created it.** The owner's ruling moved `4ccr` to `p5wm`; I
+changed the front matter and left the prose saying `10uc`. The bean about
+prose-vs-front-matter drift produced prose-vs-front-matter drift within hours.
+`4ccr`'s sentence now states its real parent, why it hangs from `p5wm` rather
+than the `10uc` stream it belongs to by subject (`check:bean-parents` requires
+an epic to hang from a `milestone`, and `10uc` is a `task`), and points at this
+check.
+
+### One reader of the store
+
+It uses `readBeans` from `scripts/beans.ts`. `check-bean-parents.ts`'s own
+import comment records why that matters: every other script had grown its own
+front-matter parser and its own `beanDefsDir`. `BeanNode` already carries `id`,
+`parent` **and** `body`, so nothing is re-parsed — and `beansIn` is
+deliberately non-recursive, so `beans/defs/archive/` (631 terminal beans, its
+own declaration, its own reader) cannot fold into the count. A directory walk
+here would have swept them in; a test asserts the import and the absence of
+`readdirSync`.
+
+**A first draft imported `beanDefsDirs` from `schemas/bean-graph.ts`. No such
+export exists** — invented, and caught before running. That is the same
+wrong-instrument class as the six earlier in this session, and the fix was the
+same: find the one answer and call it.
+
+### Falsified four ways
+
+| planted | verdict |
+|---|---|
+| prose disagreeing with the front matter | exit **1**, naming both values |
+| prose AGREEING | exit **0**, still counted as a claim checked |
+| the same claim inside a blockquote | not counted at all |
+| the corrected store | exit **0** |
+
+An empty domain is reported as a **determined empty rather than a clean sweep**
+— the distinction `check:instance-themes` draws, and it matters here because the
+corrected store now has zero placement claims, so "0 disagreements" is a fact
+about the domain and not about the store.
+
+## Done when
+- [x] `4ccr` carries a parent — `p5wm`, by the owner's ruling, merged in #1623
+- [x] a check fails on a bean whose body names a parent its front matter does
+      not carry, scoped to one phrasing family with the ratio to justify it
+- [x] falsified before shipping — four directions, above
