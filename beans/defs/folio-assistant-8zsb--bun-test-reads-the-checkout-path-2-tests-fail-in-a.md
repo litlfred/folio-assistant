@@ -1,7 +1,7 @@
 ---
 # folio-assistant-8zsb
 title: 'bun test reads the CHECKOUT PATH: 2 tests fail in any worktree not named folio-assistant'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T17:53:09Z
@@ -102,7 +102,7 @@ worktree's name.
       is already covered by the denominator test beside it
 - [x] the `folio-dir-bad-*` fixture cleans up after itself (`afterEach`/
       `rmSync`), so a crashed run leaves at most one
-- [ ] decide — separately, and **not** in the same change — whether
+- [x] decide — separately, and **not** in the same change — whether
       `resolveDirectories` walking the checkout's **parent** is intended.
       It may well be; that is what finds sibling instances. If it is, the fix
       is entirely in the fixture, and this box closes with that reasoning
@@ -174,3 +174,12 @@ The code's own documentation leans towards **"the climb is not intended for the 
 - `rootForScope` (`scope: "repository"` → `repoRootFor`) and `declaredKindsEntryRoot` still compose `repoRootFor` unconditionally. For the root instance, whose instance root IS the repository, that lands in the parent directory, which is `/tmp` for a checkout placed directly in `/tmp`.
 
 **Not established:** which of these produced the voice-skills stack (`readVoicesGraph` → `directoriesForGraph` → `resolveDirectories` → `readDeclaration`). A fix is a resolver change touching every declared `scope: "repository"` path, so per this bean it is a separate change, and it needs that call identified first.
+
+## Box 3 answered — 2026-09-30, branch `claude/magical-archimedes-4qkfxp-8zsb-2`
+
+**Which call climbed:** the test, not a production path. `voice-skills.test.ts:151` calls `readVoicesGraph([REPO])` WITHOUT the repository root **on purpose**, to pin the documented pitfall. That pitfall is that `repoRootFor(REPO)` is `dirname(REPO)`, so the reader scans the checkout's parent. The test asserted the result was `null`, and that is true only while the parent holds no instances. In `/tmp` the walk reached `/tmp/folio-dir-bad-*` and threw. Reproduced from a checkout at `/tmp/wt-probe8`, with this stack:
+`readVoicesGraph` (voices-graph.ts:276, `instanceRootsIn(repoRootFor(REPO))`) → `directoriesForGraph` → `resolveDirectories` → `readDeclaration`.
+
+**Is the climb intended?** No, not for the root instance. It is the pitfall that `siblingScopeFor`, `resolveCoveragePath` and `readVoicesGraph`'s own `repoRootIn` parameter each exist to avoid. The production callers pass the root explicitly. **No resolver change is made.** `rootForScope` and `declaredKindsEntryRoot` still compose `repoRootFor`, but no failure has been traced to them, so changing them would be speculative.
+
+**The change:** the test now asserts the DERIVATION (`repoRootFor(REPO) === dirname(REPO)`), which does not depend on what the parent holds, instead of what the wrong root happens to find. Falsified: from a checkout at `/tmp/wt-probe9`, `voice-skills.test.ts` went from 1 fail to 13 pass. It also passes 13 of 13 from `/home/user/wt-8zsb`.

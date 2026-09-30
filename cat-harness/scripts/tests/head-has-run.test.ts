@@ -191,14 +191,25 @@ const HEADS = [
   "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\trefs/pull/22/head",
 ].join("\n");
 
-/** A forge where PR 11 is mergeable and PR 22 is not. */
+/**
+ * A forge where PR 11 is mergeable and PR 22 is not. A merge ref is named
+ * `merge<N>`, and its second parent is PR N's head unless `staleFor` says the
+ * ref was built for an earlier head.
+ */
 const fakeGit =
-  (heads = HEADS, mergeable = new Set(["11"])): GitRunner =>
+  (heads = HEADS, mergeable = new Set(["11"]), staleFor = new Set<string>()): GitRunner =>
   (args) => {
     const ref = args[args.length - 1] ?? "";
     if (ref === "refs/pull/*/head") return heads;
+    if (args[0] === "fetch") return "";
+    const parent = /^merge(\d+)\^2$/.exec(ref)?.[1];
+    if (args[0] === "rev-parse" && parent !== undefined) {
+      if (staleFor.has(parent)) return "d".repeat(40);
+      const head = heads.split("\n").find((l) => l.endsWith(`refs/pull/${parent}/head`));
+      return head?.split("\t")[0] ?? "";
+    }
     const n = /refs\/pull\/(\d+)\/merge/.exec(ref)?.[1];
-    return n && mergeable.has(n) ? `cafe\t${ref}\n` : "";
+    return n && mergeable.has(n) ? `merge${n}\t${ref}\n` : "";
   };
 
 describe("sddf — the merge ref is the discriminator, not the clock", () => {
@@ -220,6 +231,14 @@ describe("sddf — the merge ref is the discriminator, not the clock", () => {
     // The measurement, PR #813: conflicted -> no merge ref for 433s and no
     // `pull_request` run; resolved -> merge ref within 15s and runs in 7s.
     expect(mergeStateForHead(".", "b".repeat(40), fakeGit())).toBe("conflicted");
+  });
+
+  test("a merge ref built for an EARLIER head is `unknown`, never `mergeable` (52cz, #1665)", () => {
+    // The forge leaves the old merge ref in place when a new head conflicts.
+    // Existence alone read that as mergeable and offered dispatch.
+    expect(mergeStateForHead(".", "a".repeat(40), fakeGit(HEADS, new Set(["11"]), new Set(["11"])))).toBe(
+      "unknown",
+    );
   });
 
   test("a FAILING probe is `unknown`, never `conflicted`", () => {

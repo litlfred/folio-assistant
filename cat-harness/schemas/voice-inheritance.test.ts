@@ -119,12 +119,12 @@ describe("the chain has to terminate, and say so when it does not", () => {
   });
 
   test("a voice extending one nothing serves names the id and the instance", () => {
-    const child = voice("child", ["x"], { extends: { instance: "elsewhere", voiceId: "missing" } });
+    const child = voice("child", ["x"], { extends: { instance: "someone/elsewhere", voiceId: "missing" } });
     const r = resolveVoice({ instance: "i", voice: child }, lookupOver({}));
     expect(r.ok).toBe(false);
     if (r.ok) return;
     const said = explainVoiceFailure(r.failure);
-    expect(said).toContain("elsewhere/missing");
+    expect(said).toContain("someone/elsewhere/missing");
     expect(said).toContain("voices");
   });
 });

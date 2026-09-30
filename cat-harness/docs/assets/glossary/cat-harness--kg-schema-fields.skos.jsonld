@@ -22332,7 +22332,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Declared instance name. Absent means the citing instance's own."
+          "@value": "The owning instance, as `owner/repo` (bean `6rmv`). Absent means the citing instance's own."
         }
       ],
       "dcterms:source": "cat-harness/schemas/theme.ts#ThemeRefSchema.instance",
@@ -27728,7 +27728,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The declared name of the instance holding it. Absent means this one."
+          "@value": "The instance holding it, as `owner/repo` (bean `6rmv`). Absent means this one."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceRefSchema.instance",
@@ -27785,7 +27785,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The DECLARED NAME of the instance holding the corpus, when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged."
+          "@value": "The instance holding the corpus, as its planned `owner/repo` (bean `6rmv`; it was the declared name until then), when it is not this one. Absent means this instance, so every existing citation keeps its meaning unchanged."
         }
       ],
       "dcterms:source": "cat-harness/schemas/voices.ts#VoiceRuleSourceSchema.instance",

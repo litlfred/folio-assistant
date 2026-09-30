@@ -2851,6 +2851,19 @@ export function findInstanceRoot(start: string): string | undefined {
 }
 
 /**
+ * Whether a declaration is the instance a reference names — by its planned
+ * repository (`owner/name`, the form references take since bean `6rmv`) or
+ * by its machine `name`, which internal callers and `needs` edges still use.
+ * One predicate so every resolver answers "which instance is this" alike.
+ */
+export function declaresInstance(
+  decl: { name?: string; repository?: string } | undefined,
+  ref: string,
+): boolean {
+  return decl !== undefined && (decl.name === ref || (decl.repository !== undefined && decl.repository === ref));
+}
+
+/**
  * Every instance in `repoRoot` — the repository root itself when it declares,
  * plus each immediate subdirectory that does.
  *
