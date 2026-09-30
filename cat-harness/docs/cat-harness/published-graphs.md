@@ -278,9 +278,10 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `themes`
 
-0 of 1 published.
+0 of 2 published.
 {: .fa-hx-dim }
 
+- smart-trust — *declared, not published*
 - WHO IRIS — *declared, not published*
 
 ### `todos`
