@@ -1050,8 +1050,11 @@ jobs:
       # `processes/publish-verification.bpmn`), so a preview is never greener
       # than the release it previews. A failure fails THIS PR's check; it does
       # not alert the publication manager, because a preview is not a release.
+      # `--search-index borrowed`: this tree serves the PUBLISHED search index
+      # or a declared-empty one (the step above), so its coverage is the
+      # published site's and only presence and parsing are asked (bean fq5u).
       - name: Verify the export before deploying the preview
-        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site
+        run: bun run cat-harness/scripts/publish-verify.ts --dir ./_site --search-index borrowed
 
       - name: Disable Jekyll on published branch
         run: touch ./_site/.nojekyll

@@ -1778,6 +1778,60 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       ],
     }),
 
+    // ── Downstream outputs ─────────────────────────────────────────────
+    //
+    // Bean `fq5u`: a Tool that keeps a derived output current declares it,
+    // with its inputs, so `kg:audit`'s `tool-downstream-fresh` can say whether
+    // the last run SUCCEEDED over the current inputs — and never reads "no
+    // run recorded" as green. See `schemas/tool.ts#ToolDownstreamSchema`.
+    defineTool({
+      id: "lsi-index",
+      title: "Build the Latent Semantic Indexing index of a prose graph",
+      description:
+        "Build the per-graph LSI index sidecar for every declared prose graph (or the one named): input fingerprint, parameters, dimension summaries, nearest neighbours and near-duplicate findings, never the vectors. Records each run's outcome and input fingerprint, success or failure, as a `folio-tool-run/v1` record.",
+      install: { none: true },
+      invoke: { shell: "bun run lsi index" },
+      io: {
+        inputs: [
+          { name: "instance", schema: t("Slug"), required: false, arg: { flag: "--instance" }, description: "Instance declaring the graph, e.g. `cat-harness`." },
+          { name: "graph", schema: t("Slug"), required: false, arg: { flag: "--graph" }, description: "Graph id within the instance, e.g. `skills`." },
+        ],
+        outputs: [
+          { name: "index", schema: t("RepoPath"), description: "`test/results/lsi/<instance>/<graph>.lsi.json`, and the run record under `test/results/tool-runs/lsi-index/`." },
+        ],
+      },
+      satisfies: ["lsi-indexing"],
+      requires: { runtime: ["bun"], network: false },
+      downstream: {
+        output: "cat-harness/test/results/lsi/",
+        inputs: ["every declared prose graph (graph kinds library, skills, folio, docs, methodology, memory, policies, glossary)"],
+        judgedAt: "checkout",
+      },
+    }),
+
+    defineTool({
+      id: "site-search-index",
+      title: "Site search index",
+      description:
+        "The just-the-docs search index, `assets/js/search-data.json`, which the theme writes as part of the Jekyll site build: one entry per page section, searched by every page's search box. Built implicitly by the build rather than by a command of its own.",
+      install: { none: true },
+      invoke: { shell: "bun run preview:site" },
+      io: {
+        inputs: [],
+        outputs: [
+          { name: "index", schema: t("RepoPath"), description: "`_site/assets/js/search-data.json` in the assembled site." },
+        ],
+      },
+      satisfies: ["docs-generation"],
+      requires: { runtime: ["bun", "ruby"], network: false },
+      downstream: {
+        output: "assets/js/search-data.json",
+        inputs: ["the pages of the Jekyll site build (`cat-harness/docs/`)"],
+        judgedAt: "published",
+        verifier: "search-index",
+      },
+    }),
+
     // ── Logging ────────────────────────────────────────────────────────
     //
     // Declared HERE although the skill and the sub-process it serves live in

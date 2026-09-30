@@ -2,7 +2,7 @@
   "$schema": "folio-workflow-instance/v1",
   "id": "sampleimport--xlg2-wpro-trial-original",
   "processId": "Process_SampleImport",
-  "source": "cat-harness/processes/sample-import.bpmn",
+  "source": "large-datasets/processes/sample-import.bpmn",
   "subject": "xlg2-wpro-trial-original",
   "bean": "folio-assistant-xlg2",
   "tokens": [],
@@ -245,7 +245,7 @@
     "Call_Materialize": {
       "id": "sampleimport--xlg2-wpro-trial-original/Call_Materialize",
       "processId": "Process_MaterializeRemote",
-      "source": "cat-harness/processes/materialize-remote.bpmn",
+      "source": "large-datasets/processes/materialize-remote.bpmn",
       "subject": "xlg2-wpro-trial-original",
       "bean": "folio-assistant-xlg2",
       "tokens": [],
