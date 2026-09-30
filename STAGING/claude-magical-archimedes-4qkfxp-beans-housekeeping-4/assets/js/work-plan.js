@@ -1,0 +1,817 @@
+/**
+ * The work-plan dashboard — what a harness instance's state graphs HOLD.
+ *
+ * ## One file, two surfaces, and that is the point
+ *
+ * This renderer is served two ways and exists once:
+ *
+ *   - the docs site loads it as a `<script>` beside `docs-ui.js`, and it
+ *     mounts into the `beans-and-todos` page's container;
+ *   - `scripts/state-visualizer.ts` INLINES these exact bytes into every
+ *     generated visualiser page, so `<base>/<stub>/state-visualizer/` needs no
+ *     network fetch for its own code.
+ *
+ * It lived inside `docs-ui.js` for one commit. Moving it out is what stops the
+ * second surface becoming a second copy — and a second copy of a renderer is
+ * two answers to "what does the work plan look like", free to disagree while
+ * both look right in review.
+ *
+ * ## It self-mounts, so neither surface has to remember to call it
+ *
+ * Any page carrying `[data-fa-workplan]` gets a dashboard. A page without one
+ * pays a single failed `querySelector`. `docs-ui.js` does not call in here and
+ * does not need to know it exists.
+ *
+ * ## No dependencies, no CDN, no build step
+ *
+ * The same rule `kg-viewer.ts` states for its own page: a view of this
+ * repository's data must be openable from a file, reviewable offline, and must
+ * not add a third party to its own trust boundary.
+ */
+(function () {
+  "use strict";
+
+  function el(tag, attrs, text) {
+    var node = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { node.setAttribute(k, attrs[k]); });
+    if (text != null) node.textContent = text;
+    return node;
+  }
+
+  /** Untouched for this long, an `in-progress` bean is worth a second look. */
+  var BEAN_STALE_DAYS = 14;
+
+  /**
+   * Status roles, and the reason these four are the only coloured things here.
+   *
+   * `good` / `warning` / `serious` are reserved for state and are never reused
+   * as series colours. The bean STATUSES deliberately take none of them: a
+   * bean being `todo` is not a warning, and painting a work plan's ordinary
+   * resting state amber teaches a reader to ignore amber.
+   */
+  var WORKPLAN_FINDING = {
+    "blocker-closed": { role: "serious", label: "Block never lifted" },
+    "blocked-without-expiry": { role: "warning", label: "No expiry" },
+    "blocking-unknown": { role: "critical", label: "Unknown bean" },
+    "stale-in-progress": { role: "warning", label: "Untouched" }
+  };
+
+  var WORKPLAN_GLYPH = {
+    // A filled ring: state, not decoration. One shape per role would be
+    // better still; one shape plus a LABEL is the floor, and the label is
+    // always present beside it.
+    good:
+      '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" class="fa-workplan-icon">' +
+      '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/>' +
+      '<path d="M5 8.4l2.1 2.1L11 6.6" fill="none" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    warning:
+      '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" class="fa-workplan-icon">' +
+      '<path d="M8 2l6 11H2z" fill="none" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linejoin="round"/><path d="M8 6.5v3" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linecap="round"/><circle cx="8" cy="11.6" r="0.9" fill="currentColor"/></svg>',
+    serious:
+      '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" class="fa-workplan-icon">' +
+      '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/>' +
+      '<path d="M8 4.8v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
+      '<circle cx="8" cy="11.3" r="0.9" fill="currentColor"/></svg>',
+    critical:
+      '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" class="fa-workplan-icon">' +
+      '<circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="2"/>' +
+      '<path d="M5.8 5.8l4.4 4.4M10.2 5.8l-4.4 4.4" stroke="currentColor" stroke-width="2" ' +
+      'stroke-linecap="round"/></svg>'
+  };
+
+  var WORKPLAN_OPEN = { "todo": true, "in-progress": true };
+
+  /**
+   * The forge this data came from, or `""`.
+   *
+   * Read off the projection (`repoWeb`), never composed here. A literal
+   * repository URL in this file would be one instance's address inside code
+   * three instances share — the rule `editHref` already follows on the
+   * generator side. Empty is a real answer: a checkout with no `origin` still
+   * renders every panel, and its identifiers stay as text.
+   */
+  var repoWeb = "";
+
+  /** `<repo>/blob/main/<file>`, or `null` when either half is missing. */
+  function viewHref(file) {
+    return repoWeb && file ? repoWeb + "/blob/main/" + file : null;
+  }
+
+  /** `<repo>/edit/main/<file>` — where writing actually happens. */
+  function editHrefFor(file) {
+    return repoWeb && file ? repoWeb + "/edit/main/" + file : null;
+  }
+
+  /**
+   * A bean id looks like `<instance>-<four>`, and only IDS IN THE STORE link.
+   *
+   * Checking the shape alone would link any hyphenated token of the right
+   * length; checking membership means a token becomes a link exactly when
+   * there is something to open. A reference to a bean nobody has on disk stays
+   * as text, which is the third state `todoRelations` already reports as
+   * `dangling` against `not-checked` — "this points somewhere I could not
+   * reach" is not the same as "this points nowhere".
+   */
+  var BEAN_TOKEN = /`?\b([a-z][a-z0-9]*(?:-[a-z0-9]+)*-[a-z0-9]{4})\b`?/g;
+
+  /** `#123` — an issue or a PR. GitHub redirects `/issues/N` to whichever. */
+  var FORGE_REF = /#(\d+)\b/g;
+
+  /**
+   * Append `text` to `node`, turning bean ids and `#123` into links.
+   *
+   * Built with `createTextNode` and `createElement` throughout: a bean's title
+   * and a finding's detail are authored, travel through a JSON file and land
+   * here, so no input ever reaches `innerHTML`. That is the same rule the
+   * sticky board follows, and the reason is that the string which closes a tag
+   * is exactly the string somebody eventually writes.
+   */
+  function linkify(node, text, byId) {
+    var i = 0;
+    // One pass over both patterns, so a `#12` inside a bean id cannot be
+    // matched twice and the offsets never disagree.
+    var hits = [];
+    var m;
+    BEAN_TOKEN.lastIndex = 0;
+    while ((m = BEAN_TOKEN.exec(text)) !== null) {
+      if (byId[m[1]]) hits.push({ at: m.index, len: m[0].length, label: m[1], bean: byId[m[1]] });
+    }
+    FORGE_REF.lastIndex = 0;
+    while ((m = FORGE_REF.exec(text)) !== null) {
+      hits.push({ at: m.index, len: m[0].length, label: m[0], issue: m[1] });
+    }
+    hits.sort(function (a, b) { return a.at - b.at; });
+
+    for (var k = 0; k < hits.length; k++) {
+      var h = hits[k];
+      if (h.at < i) continue;                       // overlapped a previous hit
+      if (h.at > i) node.appendChild(document.createTextNode(text.slice(i, h.at)));
+      var href = h.bean ? viewHref(h.bean.file)
+                        : (repoWeb ? repoWeb + "/issues/" + h.issue : null);
+      var label = h.bean ? (h.bean.title || h.label) : h.label;
+      if (href) {
+        var a = el("a", { class: "fa-workplan-ref", href: href }, label);
+        node.appendChild(a);
+      } else {
+        node.appendChild(document.createTextNode(label));
+      }
+      i = h.at + h.len;
+    }
+    if (i < text.length) node.appendChild(document.createTextNode(text.slice(i)));
+    return node;
+  }
+
+  /** Whole days since an ISO timestamp, or `null` when there is no usable one. */
+  function daysSince(iso) {
+    if (!iso) return null;
+    var t = Date.parse(iso);
+    if (isNaN(t)) return null;
+    return Math.floor((Date.now() - t) / 86400000);
+  }
+
+  /**
+   * Fetch a published index by its `<meta>` name.
+   *
+   * THREE answers, and keeping them apart is the whole of this function:
+   *
+   *   - `undefined` — the page carries no such meta, so it never meant to show
+   *     this graph. A per-graph visualiser page carries exactly one of the two.
+   *   - `null` — the meta is there and the fetch failed. Something is wrong.
+   *   - the document — it was read.
+   *
+   * Collapsing the first two is how a page that deliberately shows only beans
+   * comes to report "the todo index could not be read", which is an error
+   * message about a decision.
+   */
+  function fetchIndex(metaName, done) {
+    var src = document.querySelector('meta[name="' + metaName + '"]');
+    var url = src && src.getAttribute("content");
+    if (!url) return done(undefined);
+    fetch(url)
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (doc) {
+        done(doc && Array.isArray(doc.items) ? doc : null);
+      })
+      .catch(function (e) {
+        // Third state, reported and never rendered as "nothing outstanding".
+        // A dashboard that opens at zero is indistinguishable from a store
+        // with no work in it, and those are opposite facts.
+        console.warn("work-plan: could not read " + url + " (" + e.message + "); " +
+                     "that half of the work-plan dashboard was not mounted.");
+        done(null);
+      });
+  }
+
+  /** One `<dt>/<dd>` pair in a count row. */
+  function countItem(label, value, hero) {
+    var item = el("div", { class: "fa-workplan-count" + (hero ? " is-hero" : "") });
+    item.appendChild(el("dd", { class: "fa-workplan-count-value" }, String(value)));
+    item.appendChild(el("dt", { class: "fa-workplan-count-label" }, label));
+    return item;
+  }
+
+  /**
+   * Open beans per epic, largest first.
+   *
+   * Only OPEN beans and only real epics: a completed bean is history, and
+   * `check-bean-parents.ts` already guarantees every open non-epic bean names
+   * an epic that exists, so an "unparented" bucket here would be a column that
+   * is always zero — and a chart with a permanently empty category teaches a
+   * reader to stop reading its categories.
+   */
+  function epicDistribution(beans) {
+    var titles = {};
+    var files = {};
+    var i;
+    for (i = 0; i < beans.length; i++) {
+      if (beans[i].type !== "epic") continue;
+      titles[beans[i].id] = beans[i].title || beans[i].id;
+      files[beans[i].id] = beans[i].file;
+    }
+    var counts = {};
+    for (i = 0; i < beans.length; i++) {
+      var b = beans[i];
+      if (!WORKPLAN_OPEN[b.status] || b.type === "epic") continue;
+      if (!b.parent || !titles[b.parent]) continue;
+      counts[b.parent] = (counts[b.parent] || 0) + 1;
+    }
+    var rows = Object.keys(counts).map(function (id) {
+      return { id: id, title: titles[id], count: counts[id], file: files[id] };
+    });
+    // Descending by count, then by id — so two epics on the same count do not
+    // swap places between builds. A chart that reorders on reload looks like
+    // it is reporting a change.
+    rows.sort(function (a, c) { return c.count - a.count || a.id.localeCompare(c.id); });
+    return rows;
+  }
+
+  /**
+   * The epic the dashboard is currently scoped to, or "" for everything.
+   *
+   * Module state rather than a parameter threaded through six functions,
+   * because every panel has to agree on it: the dataviz rule is that filters
+   * scope EVERYTHING below them, so a panel that kept its own copy is a panel
+   * free to disagree with the chart above it.
+   */
+  var SCOPE = "";
+  /**
+   * The bean type the dashboard is filtered to, or "" for all types.
+   *
+   * Same pattern as SCOPE: module state, because every panel must agree.
+   * Composable with SCOPE — you can filter by epic AND by type.
+   */
+  var TYPE_SCOPE = "";
+  /** Every bean, so an expanded epic can list its children without refetching. */
+  var ALL_BEANS = [];
+  /** Re-render inputs, kept so a scope change does not refetch. */
+  var BOARD = null;
+
+  /** The OPEN, non-epic beans belonging to one epic. */
+  function beansOfEpic(beans, epicId) {
+    var out = [];
+    for (var i = 0; i < beans.length; i++) {
+      var b = beans[i];
+      if (b.parent !== epicId || b.type === "epic") continue;
+      if (!WORKPLAN_OPEN[b.status]) continue;
+      out.push(b);
+    }
+    // In-progress first — it is what somebody is actually holding — then by
+    // id, which is stable. Sorting by title would reorder on a rename.
+    out.sort(function (x, y) {
+      if ((x.status === "in-progress") !== (y.status === "in-progress")) {
+        return x.status === "in-progress" ? -1 : 1;
+      }
+      return x.id < y.id ? -1 : x.id > y.id ? 1 : 0;
+    });
+    return out;
+  }
+
+  /**
+   * The beans a scoped view is about: the epic itself plus its children.
+   *
+   * The epic is INCLUDED, so the counts under a scope add up to something a
+   * reader can reconcile with the bar they clicked plus the epic row itself.
+   */
+  function inScope(beans) {
+    if (!SCOPE && !TYPE_SCOPE) return beans;
+    var out = [];
+    for (var i = 0; i < beans.length; i++) {
+      var b = beans[i];
+      // Epic scope: the epic itself plus its children
+      if (SCOPE && b.id !== SCOPE && b.parent !== SCOPE) continue;
+      // Type scope: only beans of the selected type
+      if (TYPE_SCOPE && b.type !== TYPE_SCOPE) continue;
+      out.push(b);
+    }
+    return out;
+  }
+
+  /** One bean, as a row inside an expanded epic. */
+  function beanRow(b) {
+    var li = el("li", { class: "fa-workplan-bean-row" });
+    var href = viewHref(b.file);
+    var name = href
+      ? el("a", { class: "fa-workplan-bean-link", href: href }, b.title)
+      : el("span", { class: "fa-workplan-bean-link" }, b.title);
+    li.appendChild(el("span", {
+      class: "fa-workplan-bean-status is-" + b.status,
+    }, b.status === "in-progress" ? "in progress" : b.status));
+    li.appendChild(name);
+    // A blocked bean says so here rather than only in the findings panel: the
+    // reader who opened this epic is asking what is in it, and "blocked" is
+    // the first thing that changes what they do about it.
+    if (b.blockedBy && b.blockedBy.length) {
+      li.appendChild(el("span", { class: "fa-workplan-bean-blocked" }, "blocked"));
+    }
+    return li;
+  }
+
+  /** The bar chart: one row per epic, label and value as text on every row. */
+  function epicChart(rows) {
+    var fig = el("figure", { class: "fa-workplan-chart" });
+    var cap = el("figcaption", { class: "fa-workplan-chart-title" },
+                 "Open beans by epic");
+    fig.appendChild(cap);
+    if (rows.length === 0) {
+      fig.appendChild(el("p", { class: "fa-workplan-empty" }, "No open beans."));
+      return fig;
+    }
+    var max = rows[0].count;
+    var list = el("ol", { class: "fa-workplan-bars" });
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      var li = el("li", { class: "fa-workplan-bar-row" });
+      var panelId = "fa-wp-epic-" + row.id;
+
+      // THE WHOLE BAR IS THE CONTROL, and it is a <button>.
+      //
+      // It used to be an <a> on the title alone, underlined only on :hover —
+      // so the one control on this chart was invisible until a pointer landed
+      // on it, on an instance that declares a low-dexterity interaction
+      // profile. A button also gives the row keyboard focus and a hit target
+      // the width of the panel, which `interaction.md` asks for ("the hit
+      // target is bigger than the mark").
+      //
+      // The epic's link moves INTO the disclosure below rather than nesting an
+      // <a> inside a <button>, which is invalid and which no browser agrees
+      // how to focus.
+      var toggle = el("button", {
+        type: "button",
+        class: "fa-workplan-bar-toggle",
+        "aria-expanded": "false",
+        "aria-controls": panelId,
+        title: row.title,
+      });
+      toggle.appendChild(el("span", { class: "fa-workplan-bar-label" }, row.title));
+      var track = el("span", { class: "fa-workplan-bar-track" });
+      var fill = el("span", { class: "fa-workplan-bar-fill" });
+      // Percent of the LARGEST bar, not of the total: this is a magnitude
+      // comparison between epics, not a part-to-whole.
+      fill.style.width = Math.max(2, Math.round((row.count / max) * 100)) + "%";
+      track.appendChild(fill);
+      toggle.appendChild(track);
+      toggle.appendChild(el("span", { class: "fa-workplan-bar-value" }, String(row.count)));
+
+      var panel = el("div", { class: "fa-workplan-bar-detail", id: panelId });
+      panel.hidden = true;
+      var actions = el("div", { class: "fa-workplan-bar-actions" });
+      var epicHref = viewHref(row.file);
+      if (epicHref) {
+        actions.appendChild(el("a", { class: "fa-workplan-action", href: epicHref },
+                               "Open the epic"));
+      }
+      // The filter, reached from inside the thing it filters. Offering it as a
+      // second control ON the bar would make one row two targets that look
+      // alike; here the reader has already said which epic they mean.
+      var scopeBtn = el("button", { type: "button", class: "fa-workplan-action" },
+                        "Show only this epic");
+      scopeBtn.setAttribute("data-scope", row.id);
+      actions.appendChild(scopeBtn);
+      panel.appendChild(actions);
+
+      var kids = beansOfEpic(ALL_BEANS, row.id);
+      if (kids.length) {
+        var ul = el("ul", { class: "fa-workplan-bean-list" });
+        for (var k = 0; k < kids.length; k++) ul.appendChild(beanRow(kids[k]));
+        panel.appendChild(ul);
+      } else {
+        // Not zeros: an epic whose bar has a count but no listable children
+        // would be a contradiction, so say which it is.
+        panel.appendChild(el("p", { class: "fa-workplan-bean-empty" },
+                              "No open beans name this epic as their parent."));
+      }
+
+      if (SCOPE === row.id) {
+        li.className += " is-scoped";
+        // Announced, not only painted: a reader who cannot see the accent
+        // rule still gets told which bar the board is scoped to.
+        toggle.setAttribute("aria-current", "true");
+      }
+      li.appendChild(toggle);
+      li.appendChild(panel);
+      list.appendChild(li);
+    }
+    fig.appendChild(list);
+    return fig;
+  }
+
+  var EDIT_GLYPH =
+    '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false" class="fa-workplan-icon">' +
+    '<path d="M11.2 2.4l2.4 2.4L5.6 12.8 2.4 13.6l0.8-3.2z" fill="none" stroke="currentColor" ' +
+    'stroke-width="1.6" stroke-linejoin="round"/></svg>';
+
+  /**
+   * One finding row: icon, role word, the sentence, then a pencil.
+   *
+   * The sentence is LINKIFIED rather than wrapped in a single anchor. A
+   * finding names two beans — the one holding the block and the one held — and
+   * making the whole row one link to one of them sends half the readers to the
+   * wrong bean. Each identifier is its own link to its own subject.
+   *
+   * The pencil is `.fa-node-edit`'s argument applied here: a published page
+   * cannot write back to the repository, so the honest control is the one that
+   * takes you where writing happens.
+   */
+  function findingRow(role, label, text, byId, editFile) {
+    var li = el("li", { class: "fa-workplan-finding is-" + role });
+    var badge = el("span", { class: "fa-workplan-finding-badge" });
+    badge.innerHTML = WORKPLAN_GLYPH[role] || WORKPLAN_GLYPH.warning;  // static constant
+    badge.appendChild(el("span", { class: "fa-workplan-finding-role" }, label));
+    li.appendChild(badge);
+
+    var body = el("span", { class: "fa-workplan-finding-text" });
+    linkify(body, text, byId || {});
+    var edit = editHrefFor(editFile);
+    if (edit) {
+      var a = el("a", {
+        class: "fa-workplan-edit",
+        href: edit,
+        title: "Edit " + editFile,
+        "aria-label": "Edit " + editFile,
+      });
+      a.innerHTML = EDIT_GLYPH;                                        // static constant
+      body.appendChild(document.createTextNode(" "));
+      body.appendChild(a);
+    }
+    li.appendChild(body);
+    return li;
+  }
+
+  /**
+   * The findings panel — the generator's structural findings, plus the
+   * time-relative one this page is the only place that can compute.
+   */
+  function findingsPanel(beans, findings) {
+    var byId = {};
+    var i;
+    for (i = 0; i < beans.length; i++) byId[beans[i].id] = beans[i];
+
+    var section = el("section", { class: "fa-workplan-panel" });
+    section.appendChild(el("h3", { class: "fa-workplan-panel-title" }, "What is stuck"));
+    var list = el("ul", { class: "fa-workplan-findings" });
+
+    for (i = 0; i < findings.length; i++) {
+      var f = findings[i];
+      var spec = WORKPLAN_FINDING[f.kind] || { role: "warning", label: f.kind };
+      var subject = byId[f.bean];
+      // The blocker's id is left IN the sentence rather than resolved to a
+      // title here, so `linkify` turns both ends into their own links.
+      var text = f.bean + " — " + f.detail;
+      list.appendChild(findingRow(spec.role, spec.label, text, byId,
+                                  subject ? subject.file : null));
+    }
+
+    // Computed here rather than in the projection. See the module note.
+    var stale = [];
+    for (i = 0; i < beans.length; i++) {
+      var b = beans[i];
+      if (b.status !== "in-progress") continue;
+      var age = daysSince(b.updatedAt);
+      if (age !== null && age > BEAN_STALE_DAYS) stale.push({ bean: b, age: age });
+    }
+    stale.sort(function (a, c) { return c.age - a.age; });
+    for (i = 0; i < stale.length; i++) {
+      list.appendChild(findingRow(
+        "warning", WORKPLAN_FINDING["stale-in-progress"].label,
+        stale[i].bean.id + " — claimed in-progress and untouched for " +
+          stale[i].age + " days",
+        byId, stale[i].bean.file));
+    }
+
+    if (list.childNodes.length === 0) {
+      list.appendChild(findingRow(
+        "good", "Clear",
+        "No unlifted blocks, no block without an expiry, and nothing claimed " +
+        "and left for more than " + BEAN_STALE_DAYS + " days.", byId, null));
+    }
+    section.appendChild(list);
+    return section;
+  }
+
+  /** The counts panel, both stores side by side. */
+  function countsPanel(beans, todos) {
+    var status = {};
+    var i;
+    for (i = 0; i < beans.length; i++) {
+      status[beans[i].status] = (status[beans[i].status] || 0) + 1;
+    }
+    var open = (status["todo"] || 0) + (status["in-progress"] || 0);
+
+    var section = el("section", { class: "fa-workplan-panel" });
+    section.appendChild(el("h3", { class: "fa-workplan-panel-title" },
+                            "Beans — the agent work plan"));
+    var row = el("dl", { class: "fa-workplan-counts" });
+    row.appendChild(countItem("open", open, true));
+    row.appendChild(countItem("todo", status["todo"] || 0));
+    row.appendChild(countItem("in progress", status["in-progress"] || 0));
+    row.appendChild(countItem("completed", status["completed"] || 0));
+    row.appendChild(countItem("scrapped", status["scrapped"] || 0));
+    section.appendChild(row);
+
+    // The human half. Absent is NOT zero: a failed fetch and an empty store
+    // are opposite facts and the panel says which one it is looking at.
+    var todoHead = el("h3", { class: "fa-workplan-panel-title" },
+                       "Todos — the human half");
+    section.appendChild(todoHead);
+    // Absent by design — this page was not asked to show todos — so the
+    // heading comes off with it rather than standing over an apology.
+    if (todos === undefined) {
+      section.removeChild(todoHead);
+      return section;
+    }
+    if (todos === null) {
+      section.appendChild(el("p", { class: "fa-workplan-empty" },
+                              "The todo index could not be read."));
+      return section;
+    }
+    var todoOpen = 0;
+    for (i = 0; i < todos.length; i++) if (todos[i].status === "open") todoOpen++;
+    var todoRow = el("dl", { class: "fa-workplan-counts" });
+    todoRow.appendChild(countItem("open", todoOpen, true));
+    todoRow.appendChild(countItem("total", todos.length));
+    section.appendChild(todoRow);
+    return section;
+  }
+
+  /**
+   * The todos panel on its own, for a page whose only graph is `todos/`.
+   *
+   * Separate from `countsPanel` rather than a flag on it: that function's job
+   * is "both stores side by side", and a boolean turning half of it off is how
+   * one function comes to mean two things.
+   */
+  function todoOnlyPanel(todos) {
+    var section = el("section", { class: "fa-workplan-panel" });
+    section.appendChild(el("h3", { class: "fa-workplan-panel-title" },
+                            "Todos — the human half"));
+    if (!todos) {
+      section.appendChild(el("p", { class: "fa-workplan-empty" },
+                              "The todo index could not be read."));
+      return section;
+    }
+    var open = 0;
+    for (var i = 0; i < todos.length; i++) if (todos[i].status === "open") open++;
+    var row = el("dl", { class: "fa-workplan-counts" });
+    row.appendChild(countItem("open", open, true));
+    row.appendChild(countItem("total", todos.length));
+    section.appendChild(row);
+    return section;
+  }
+
+  /**
+   * Mount the dashboard into the container the page declares.
+   *
+   * The page carries `<div data-fa-workplan>` with prose inside it saying
+   * where the data lives. That fallback is REPLACED on success and LEFT ALONE
+   * on failure, so a reader with no JavaScript, or on a build where the
+   * projection is missing, still gets a working link to the file rather than
+   * an empty box.
+   */
+  /**
+   * The filter row: what the board is scoped to, and the way out of it.
+   *
+   * ONE ROW, ABOVE THE PANELS — `interaction.md`: filters sit above the
+   * content they scope, never inside a chart card. Absent entirely when
+   * nothing is scoped, because a control reading "all" is a permanent row of
+   * chrome saying nothing happened.
+   */
+  function filterRow(epic) {
+    var row = el("div", { class: "fa-workplan-filter" });
+    var labels = [];
+    if (SCOPE) {
+      labels.push(epic ? epic.title : SCOPE);
+    }
+    if (TYPE_SCOPE) {
+      labels.push("type: " + TYPE_SCOPE);
+    }
+    row.appendChild(el("span", { class: "fa-workplan-filter-label" }, "Showing only"));
+    row.appendChild(el("span", { class: "fa-workplan-filter-value" },
+                       labels.join(" · ")));
+    var clear = el("button", { type: "button", class: "fa-workplan-action" },
+                   "Show everything");
+    clear.setAttribute("data-scope", "");
+    clear.setAttribute("data-type-scope", "");
+    row.appendChild(clear);
+    return row;
+  }
+
+  /**
+   * Type filter buttons — always visible above the board.
+   *
+   * Unlike the epic filter row (which appears only when scoped), this bar is
+   * always shown because the user asked for type filtering as a primary
+   * interaction. The active type is highlighted.
+   */
+  function typeFilterBar(beans) {
+    // Collect the types that actually appear in the (possibly epic-scoped) set
+    var typeCounts = {};
+    var totalOpen = 0;
+    for (var i = 0; i < beans.length; i++) {
+      var b = beans[i];
+      if (!WORKPLAN_OPEN[b.status]) continue;
+      // When epic-scoped, only count beans in that epic
+      if (SCOPE && b.id !== SCOPE && b.parent !== SCOPE) continue;
+      var t = b.type || "other";
+      typeCounts[t] = (typeCounts[t] || 0) + 1;
+      totalOpen++;
+    }
+    // Stable order: the types we know, then anything else
+    var ORDER = ["task", "feature", "bug", "epic", "milestone"];
+    var types = [];
+    for (var j = 0; j < ORDER.length; j++) {
+      if (typeCounts[ORDER[j]]) types.push(ORDER[j]);
+    }
+    // Any types not in ORDER
+    var seen = {};
+    for (j = 0; j < ORDER.length; j++) seen[ORDER[j]] = true;
+    var allTypes = Object.keys(typeCounts);
+    for (j = 0; j < allTypes.length; j++) {
+      if (!seen[allTypes[j]]) types.push(allTypes[j]);
+    }
+
+    var bar = el("div", { class: "fa-workplan-type-bar" });
+
+    // "All" button
+    var allBtn = el("button", {
+      type: "button",
+      class: "fa-workplan-type-btn" + (!TYPE_SCOPE ? " is-active" : "")
+    });
+    allBtn.setAttribute("data-type-scope", "");
+    allBtn.textContent = "All (" + totalOpen + ")";
+    bar.appendChild(allBtn);
+
+    // One button per type
+    for (var k = 0; k < types.length; k++) {
+      var t = types[k];
+      var btn = el("button", {
+        type: "button",
+        class: "fa-workplan-type-btn" + (TYPE_SCOPE === t ? " is-active" : "")
+      });
+      btn.setAttribute("data-type-scope", t);
+      btn.textContent = t + " (" + typeCounts[t] + ")";
+      bar.appendChild(btn);
+    }
+    return bar;
+  }
+
+  /**
+   * Build the board for the current SCOPE. Re-entrant: a scope change calls
+   * this again over the same data rather than refetching.
+   */
+  function buildBoard() {
+    var beans = BOARD.beans;
+    var board = el("div", { class: "fa-workplan-board" });
+
+    if (beans) {
+      // Type filter bar — always visible so the user can filter by type
+      board.appendChild(typeFilterBar(beans));
+      var scoped = inScope(beans);
+      if (SCOPE || TYPE_SCOPE) {
+        var epic = null;
+        if (SCOPE) {
+          for (var i = 0; i < beans.length; i++) if (beans[i].id === SCOPE) epic = beans[i];
+        }
+        board.appendChild(filterRow(epic));
+      }
+      // Counts and findings take the SCOPED set so every number on the page
+      // answers the same question. `findingsPanel` still gets the full bean
+      // array for its id lookup — `linkify` has to resolve a blocker that
+      // lives outside the scope, or the sentence loses its link.
+      board.appendChild(countsPanel(scoped, SCOPE ? undefined : BOARD.todos));
+      var findings = BOARD.findings;
+      if (SCOPE || TYPE_SCOPE) {
+        findings = findings.filter(function (f) {
+          for (var j = 0; j < scoped.length; j++) if (scoped[j].id === f.bean) return true;
+          return false;
+        });
+      }
+      board.appendChild(findingsPanel(beans, findings));
+      // The chart keeps EVERY bar under a scope rather than collapsing to the
+      // one selected. `color-formula.md`: a filter that changes the series
+      // count must not repaint the survivors — and a one-bar chart would also
+      // remove the way back to the others.
+      var chartPanel = el("section", { class: "fa-workplan-panel fa-workplan-panel--wide" });
+      chartPanel.appendChild(epicChart(epicDistribution(beans)));
+      board.appendChild(chartPanel);
+    } else {
+      board.appendChild(todoOnlyPanel(BOARD.todos));
+    }
+    return board;
+  }
+
+  /** Swap the board in place, preserving nothing but the scope. */
+  function renderBoard(host) {
+    host.textContent = "";
+    host.appendChild(buildBoard());
+  }
+
+  /**
+   * One delegated listener for the whole board, because the board is replaced
+   * wholesale on every scope change and per-node listeners would be re-bound
+   * each time — or, worse, leak against nodes that are gone.
+   */
+  function wireBoard(host) {
+    host.addEventListener("click", function (ev) {
+      // Type filter buttons — check FIRST because the "Show everything"
+      // button carries BOTH data-scope and data-type-scope
+      var typer = ev.target.closest ? ev.target.closest("[data-type-scope]") : null;
+      if (typer) {
+        var newType = typer.getAttribute("data-type-scope");
+        // "Show everything" also has data-scope="" to clear the epic scope
+        if (typer.hasAttribute("data-scope")) {
+          SCOPE = typer.getAttribute("data-scope");
+        }
+        TYPE_SCOPE = newType;
+        renderBoard(host);
+        // Focus the clicked button's new position
+        var focus = host.querySelector(".fa-workplan-type-btn.is-active");
+        if (focus) focus.focus();
+        return;
+      }
+      var scoper = ev.target.closest ? ev.target.closest("[data-scope]") : null;
+      if (scoper) {
+        SCOPE = scoper.getAttribute("data-scope");
+        renderBoard(host);
+        // Focus lands where the reader was looking. Without this, replacing
+        // the board drops focus to <body> and a keyboard user restarts at the
+        // top of the document.
+        var back = host.querySelector(SCOPE
+          ? ".fa-workplan-filter .fa-workplan-action"
+          : ".fa-workplan-bar-toggle");
+        if (back) back.focus();
+        return;
+      }
+      var toggle = ev.target.closest ? ev.target.closest(".fa-workplan-bar-toggle") : null;
+      if (!toggle) return;
+      var open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", open ? "false" : "true");
+      var panel = document.getElementById(toggle.getAttribute("aria-controls"));
+      if (panel) panel.hidden = open;
+    });
+  }
+
+  function mountWorkPlan() {
+    var host = document.querySelector("[data-fa-workplan]");
+    if (!host) return;
+    fetchIndex("fa-beans-src", function (beanDoc) {
+      fetchIndex("fa-todo-src", function (todoDoc) {
+        // Nothing to show at all — a fetch that failed, or a page carrying
+        // neither meta. The container's fallback prose stays put, because it
+        // links the data directly and an empty box would not.
+        if (!beanDoc && !todoDoc) return;
+
+        // Either projection carries it and both agree, because one generator
+        // detects it once. Taking the first that has it means a todos-only
+        // page still gets its links.
+        repoWeb = (beanDoc && beanDoc.repoWeb) || (todoDoc && todoDoc.repoWeb) || "";
+
+        var todoItems = todoDoc === undefined ? undefined : (todoDoc ? todoDoc.items : null);
+
+        // A todos-only page keeps `beans` null, and `buildBoard` renders the
+        // todo panel alone. The bean panels are NOT stubbed out with zeros:
+        // this page was never asked about beans, and a zero is an answer.
+        ALL_BEANS = beanDoc ? beanDoc.items : [];
+        BOARD = {
+          beans: beanDoc ? beanDoc.items : null,
+          todos: todoItems,
+          findings: beanDoc && Array.isArray(beanDoc.findings) ? beanDoc.findings : [],
+        };
+
+        renderBoard(host);
+        wireBoard(host);
+      });
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", mountWorkPlan);
+  } else {
+    mountWorkPlan();
+  }
+})();
