@@ -616,7 +616,7 @@ three diagrams — rather than inside the instance, which holds no translation
 machinery. The templates are extracted from the bootstrap the harness has
 pinned; when bootstrap is its own repository they stay here, since a
 template is the harness's work over bootstrap's text, not part of it
-([`kg-separation`](../graph-management/kg-separation.md) §"The pair").
+([`kg-separation`](kg-separation.md) §"The pair").
 
 ## WHO smart-base integration
 
