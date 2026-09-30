@@ -64,15 +64,31 @@ import { DiscussionInputSchema, DiscussionOutputSchema } from "../schemas/discus
 
 const REPO = join(import.meta.dir, "..", "..");
 
+/** The published file each discussion schema is written to, and the Zod it is generated from. */
+const DISCUSSION_FILES: ReadonlyArray<readonly [string, z.ZodType]> = [
+  ["discussion.input.schema.json", DiscussionInputSchema],
+  ["discussion.output.schema.json", DiscussionOutputSchema],
+];
+
 /**
- * The two discussion `$id`s, as published. Stated rather than imported from the
- * generator: the generator writes files at module scope, and these strings are
- * a published contract that `bootstrap:schemas:check` already pins.
+ * The two discussion `$id`s, READ from the published schemas rather than typed
+ * here. They are minted from bootstrap's declared iriBase and version (the
+ * generator's `releaseIri`), so a literal would go stale on the next release
+ * and this run would then find no discussion document at all — reporting a
+ * clean zero over exactly the files it exists to judge. A published schema
+ * that is missing or carries no `$id` throws: not runnable is a failure.
  */
-export const DISCUSSION_IDS: Readonly<Record<string, z.ZodType>> = {
-  "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/input.schema.json": DiscussionInputSchema,
-  "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/output.schema.json": DiscussionOutputSchema,
-};
+export function discussionIds(root: string): Readonly<Record<string, z.ZodType>> {
+  const out: Record<string, z.ZodType> = {};
+  for (const [file, schema] of DISCUSSION_FILES) {
+    // declared-path-literal: the published schemas' directory, the same tail the generator writes into.
+    const path = join(root, "schemas", file);
+    const id = (JSON.parse(readFileSync(path, "utf8")) as { $id?: unknown }).$id;
+    if (typeof id !== "string") throw new Error(`${relative(REPO, path)} carries no \`$id\``);
+    out[id] = schema;
+  }
+  return out;
+}
 
 export interface Target {
   /** What the document is, for the report. */
@@ -144,7 +160,7 @@ function jsonFilesUnder(dir: string): string[] {
 }
 
 /** The files under `root` that declare themselves a discussion document by `$schema`. */
-export function discussionDocuments(root: string): Target[] {
+export function discussionDocuments(root: string, ids = discussionIds(root)): Target[] {
   const out: Target[] = [];
   for (const p of jsonFilesUnder(root)) {
     let top: unknown;
@@ -156,11 +172,11 @@ export function discussionDocuments(root: string): Target[] {
       continue;
     }
     const id = (top as { $schema?: unknown } | null)?.$schema;
-    if (typeof id === "string" && id in DISCUSSION_IDS) {
+    if (typeof id === "string" && id in ids) {
       out.push({
         label: "discussion document",
         path: p,
-        schema: DISCUSSION_IDS[id]!,
+        schema: ids[id]!,
         required: true,
         stripSelfDeclaration: true,
       });

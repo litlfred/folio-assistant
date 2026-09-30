@@ -242,7 +242,10 @@ export function viewerPlacement(
  * to ask an ownership question. */
 import { orphanSubjectPages } from "./orphan-pages.ts";
 import { makeEmit, type ViewerNav } from "./viewer-page.ts";
-import { withRenders } from "./viewer-declarations.js";
+import { withRenders, withViewers } from "./viewer-declarations.js";
+
+/** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
+const VIEWER_TOOL = "schemas-viewer";
 
 export { orphanSubjectPages, declaresItsOwnDirectory, carriesMarker } from "./orphan-pages.ts";
 export type { OwnershipTest } from "./orphan-pages.ts";
@@ -1215,7 +1218,7 @@ if (import.meta.main) {
   //
   // The rule that falls out: look the ref up in the SAME list the tiles came
   // from, or the ids do not correspond to tiles at all.
-  const byRef = directoryByVisualisationRef(readDeclaration(ROOT)?.directories ?? []);
+  const byRef = directoryByVisualisationRef(withViewers(readDeclaration(ROOT)?.directories ?? [], ROOT));
   const scoped: Record<string, readonly [number, string]> = {};
   /** The repo-relative ref of a page this run emits, as a declaration spells it. */
   const refOf = (dirPath: string): string =>
@@ -1264,11 +1267,11 @@ if (import.meta.main) {
     g.roots.filter((r) =>
       subject === undefined || g.modules.some((m) => m.instance === subject && m.module.startsWith(`${r}/`)),
     );
-  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn()));
+  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref), drawn(), VIEWER_TOOL));
 
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject)));
+    emitPage({ ...nav, instance: subject })(join(sub.pageDir, "index.html"), withRenders(viewerHtml(sub.dataHref, subject), drawn(subject), VIEWER_TOOL));
   }
 
 

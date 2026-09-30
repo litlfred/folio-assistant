@@ -5598,6 +5598,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.iribase",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.iriBase"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The address this instance's IRIs are minted under, BEFORE the version — bootstrap's `iriBase` (see `graph.ts`), and the one place a fork edits."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.navbaricons",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5861,6 +5880,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.theme",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/cat-harness.contentdirectoryshape.tile",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentDirectoryShape.tile"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How this directory's tile looks. See {@link TileSchema}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectoryShape.tile",
       "skos:note": "candidate"
     },
     {
@@ -17945,6 +17983,101 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/reference-direction.ts#ReferenceExemption.to",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/release-iri.releaseiris.agent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseIris.agent"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`<iriBase><version>/` — what a program reads."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/release-iri.ts#ReleaseIris.agent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/release-iri.releaseiris.human",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseIris.human"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`<iriBase>v<major>/` — what a person reads."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/release-iri.ts#ReleaseIris.human",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/release-iri.releaseiris.iribase",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseIris.iriBase"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declared `iriBase`, ending in `/`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/release-iri.ts#ReleaseIris.iriBase",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/release-iri.releaseiris.major",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseIris.major"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`MAJOR` alone, as a number."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/release-iri.ts#ReleaseIris.major",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields/release-iri.releaseiris.version",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReleaseIris.version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declared version, `MAJOR.MINOR.PATCH`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/release-iri.ts#ReleaseIris.version",
       "skos:note": "candidate"
     },
     {

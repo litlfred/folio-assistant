@@ -13,7 +13,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "nod
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { bootstrapRoot, discussionDocuments, isFailure, run } from "../validate-bootstrap.ts";
+import { bootstrapRoot, discussionDocuments, discussionIds, isFailure, run } from "../validate-bootstrap.ts";
 
 const REAL = bootstrapRoot();
 const trees: string[] = [];
@@ -27,6 +27,12 @@ function tree(models: unknown, extra: Record<string, unknown> = {}): string {
   trees.push(root);
   // The real declaration, so the fixture differs from bootstrap only where a test says.
   writeFileSync(join(root, "bootstrap.json"), readFileSync(join(REAL, "bootstrap.json")));
+  // ...and the published discussion schemas, whose `$id`s say what a
+  // discussion document is.
+  mkdirSync(join(root, "schemas"));
+  for (const f of ["discussion.input.schema.json", "discussion.output.schema.json"]) {
+    writeFileSync(join(root, "schemas", f), readFileSync(join(REAL, "schemas", f)));
+  }
   mkdirSync(join(root, "models"));
   writeFileSync(join(root, "models", "models.json"), JSON.stringify(models));
   for (const [p, v] of Object.entries(extra)) writeFileSync(join(root, p), typeof v === "string" ? v : JSON.stringify(v));
@@ -34,7 +40,8 @@ function tree(models: unknown, extra: Record<string, unknown> = {}): string {
 }
 
 const validModels = JSON.parse(readFileSync(join(REAL, "models", "models.json"), "utf8"));
-const INPUT_ID = "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/input.schema.json";
+// Read, not typed: the `$id` is minted from bootstrap's release.
+const INPUT_ID = (JSON.parse(readFileSync(join(REAL, "schemas", "discussion.input.schema.json"), "utf8")) as { $id: string }).$id;
 
 describe("the committed corpus", () => {
   test("every document bootstrap carries parses", () => {
@@ -82,6 +89,12 @@ describe("a valid and an invalid fixture", () => {
     expect(discussionDocuments(root).length).toBe(2);
     const failed = run(root).filter(isFailure);
     expect(failed.map((r) => r.target.path.split("/").pop())).toEqual(["bad.json"]);
+  });
+
+  test("a published discussion schema with no `$id` makes the run unrunnable, not clean", () => {
+    const root = tree(validModels);
+    writeFileSync(join(root, "schemas", "discussion.input.schema.json"), "{}");
+    expect(() => discussionIds(root)).toThrow();
   });
 
   test("an explicit graph path must exist and parse", () => {

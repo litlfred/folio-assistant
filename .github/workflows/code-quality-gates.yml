@@ -931,6 +931,13 @@ jobs:
       - name: Every declared directory's README is current
         run: bun run readme:subgraphs:check
 
+      # An instance's IRIs are `<iriBase><version>/…` for programs and
+      # `<iriBase>v<major>/…` for people (owner, 2026-09-29). The copies that
+      # cannot be derived at read time — BPMN xmlns, code-list values, fixture
+      # strings — must match the declared version; `bun run iri:sync` fixes them.
+      - name: Every literal release IRI is at its declared version
+        run: bun run iri:sync:check
+
       # Agent memory is authored under `memory/` and ASSEMBLED into
       # `.claude/agent-memory/<agent>/MEMORY.md`, which is what the Claude Code
       # harness injects. An entry edited and never assembled is a fact the

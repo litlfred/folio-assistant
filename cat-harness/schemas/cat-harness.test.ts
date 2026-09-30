@@ -1204,8 +1204,12 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     // METHOD, and the theme describes methods rather than the layer that holds
     // them. A second theme for core's copy would say the two graphs render
     // differently, which nobody decided and which the pages do not do.
+    // THREE since 2026-09-29 (bean `h3rw`): `folio-assistant-sci-methodologies`
+    // holds the science layer's Lean-formalization methods, and takes
+    // `analyst` for the same reason.
     expect(themed.map((d) => d.id).sort()).toEqual([
       "folio-assistant-core-methodologies",
+      "folio-assistant-sci-methodologies",
       "methodologies",
     ]);
     for (const d of themed) expect(d.theme).toBe("analyst");

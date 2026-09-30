@@ -54,6 +54,7 @@ import {
   CLASS_GLOSSES,
   PROPERTY_GLOSSES,
   TERM_LAYERS,
+  termLayer,
   type TermGloss,
   type TermLayer,
 } from "../schemas/vocabulary.js";
@@ -153,40 +154,15 @@ export function mintedTermsFromSource(root = ROOT): Set<string> {
   return out;
 }
 
-/**
- * Which layer each declared graph kind belongs to.
- *
- * Keyed by the DECLARATION's kind name, not the class name, because that is
- * what `BASE_GRAPH_KINDS` is keyed by and translating between the two in a
- * second place is how they drift.
- *
- * A kind absent from this map is `harness` — the middle. That default is
- * deliberate and is the safe direction: a term wrongly called harness is
- * merely carried by an instance that did not need it, while a term wrongly
- * called bootstrap makes the base layer depend on something above it, which
- * is the one thing the direction rule forbids.
- */
-const GRAPH_KIND_LAYERS: Readonly<Record<string, TermLayer>> = {
-  "cat-harness": "bootstrap",
-  schemas: "bootstrap",
-  // Everything the owner named as NOT bootstrap, plus the rest of the folio's
-  // own furniture: "we shouldnt need voicegraph or librarygrph or
-  // previewgrapjh in bootstrap!!"
-  voices: "core",
-  library: "core",
-  uploads: "core",
-  todos: "core",
-  "todo-items": "core",
-  "todo-feedback": "core",
-  "review-verdicts": "core",
-};
+// The layer table lives in `vocabulary.ts` (`GRAPH_KIND_TYPE_LAYERS`), read
+// through `termLayer` — the same answer `termIri` mints the type's IRI from.
 
 /** The graph kinds' own summaries — read, never restated. */
 export function graphKindTerms(): Map<string, TermGloss> {
   const out = new Map<string, TermGloss>();
-  for (const [name, def] of Object.entries(BASE_GRAPH_KINDS)) {
+  for (const def of Object.values(BASE_GRAPH_KINDS)) {
     const local = def.type.includes("#") ? def.type.split("#")[1] : undefined;
-    if (local && def.summary) out.set(local, { gloss: def.summary, layer: GRAPH_KIND_LAYERS[name] ?? "harness" });
+    if (local && def.summary) out.set(local, { gloss: def.summary, layer: termLayer(local) });
   }
   return out;
 }

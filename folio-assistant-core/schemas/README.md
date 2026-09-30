@@ -3,7 +3,7 @@
 
 The schemas of the content layer's Node Kinds, kept as their own Subgraph until this repository is split.
 
-Part of [C@T Harness](../../cat-harness/README.md), declared as `folio-assist-core-schemas`, holding `schemas`, `cat-harness`.
+Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-assist-core-schemas`, holding `schemas`, `cat-harness`.
 
 | file | what it is | used by |
 |---|---|---|

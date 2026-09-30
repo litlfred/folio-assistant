@@ -30,7 +30,9 @@ const BASE = {
 
 const text = (v: unknown): string => `${JSON.stringify(v, null, 2)}\n`;
 const bump = (head: unknown): string => classify(text(BASE), text(head)).bump;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- a mutable fixture edited by path in each case
 const edit = (f: (s: Record<string, any>) => void): Record<string, unknown> => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- as above
   const s = structuredClone(BASE) as Record<string, any>;
   f(s);
   return s;
@@ -72,6 +74,11 @@ describe("minor — only widens", () => {
 
 describe("patch and none", () => {
   test("a description rewritten", () => expect(bump(edit((s) => (s.properties.name.description = "The name.")))).toBe("patch"));
+  test("a release IRI moving to the next version is not a change to what validates", () => {
+    const v1 = edit((s) => (s.$id = "https://example.org/b/0.1.0/x.schema.json"));
+    const v2 = edit((s) => (s.$id = "https://example.org/b/0.2.0/x.schema.json"));
+    expect(classify(text(v1), text(v2)).bump).toBe("none");
+  });
   test("key order and indentation are not a change", () => {
     const reordered = JSON.stringify(Object.fromEntries(Object.entries(BASE).reverse()));
     expect(classify(text(BASE), reordered).bump).toBe("none");

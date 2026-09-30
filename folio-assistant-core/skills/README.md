@@ -3,7 +3,7 @@
 
 The core layer's skills, reached from here for the same reason its library and methodologies are: the consumers that resolve a `<folio:skill ref>` run from this root, and a skill they cannot see is a DANGLING ref reported against a diagram that is correct.
 
-Part of [C@T Harness](../../cat-harness/README.md), declared as `folio-assistant-core-skills`, holding `skills`.
+Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-assistant-core-skills`, holding `skills`.
 
 | file | what it is | used by |
 |---|---|---|

@@ -51,6 +51,12 @@ Two consequences worth stating, because each reads wrong at first:
   a document that validated — which is the definition above, whatever the
   intent.
 
+**A `$id` moving to the next release is not a change.** bootstrap mints each
+`$id` from its declared iriBase and version (`…/bootstrap/<version>/…`), so
+every release rewrites that segment while the previous release stays at its
+own address. The classifier blanks the version segment before comparing; any
+OTHER change to a `$id` repoints consumers and is MAJOR.
+
 A keyword the classifier does not recognise is graded **MAJOR**. A change that
 cannot be proved harmless is not called harmless.
 

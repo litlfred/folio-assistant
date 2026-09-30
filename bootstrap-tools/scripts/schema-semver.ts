@@ -90,6 +90,9 @@ function setMove(base: string[], head: string[]): "same" | "wider" | "narrower" 
   return removed.length ? "narrower" : "wider";
 }
 
+/** A `$id` with its release segment (`/1.2.3/`) blanked, so two releases of one schema compare equal. */
+export const unversioned = (id: string): string => id.replace(/\/\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?\//, "/{version}/");
+
 /** Is an object schema CLOSED — does it reject keys it does not list? */
 const closed = (s: Obj): boolean => s.additionalProperties === false;
 
@@ -116,6 +119,12 @@ export function diffSchema(base: Json, head: Json, at = ""): Change[] {
 
     if (ANNOTATIONS.has(k)) {
       add("patch", here, `annotation \`${k}\` changed`);
+    } else if (k === "$id" && typeof b === "string" && typeof h === "string" && unversioned(b) === unversioned(h)) {
+      // A release IRI moving to the next version is the bump being PUBLISHED,
+      // not a change to what validates: bootstrap mints each `$id` from its
+      // declared iriBase and version, so every release changes this segment
+      // and the previous release stays at its own address.
+      continue;
     } else if (k === "$id" || k === "$schema") {
       add("major", here, `\`${k}\` changed — every consumer following the old one is repointed`);
     } else if (k === "type" || k === "enum") {

@@ -27,10 +27,7 @@
       "description": "The ingested corpus — one `<bib-slug>/` per document, holding `sections/*.md` and `structure.json`. THREE PUBLISHERS AND TWO KINDS, and the distinction is load-bearing rather than bibliographic: the vendor documentation is ASSERTION (a publisher describing its own product, revisable without notice and in one case describing a product that no longer exists), while the arXiv papers are EVIDENCE (a measurement somebody else can repeat). A voice rule derived from the first is a convention; one derived from the second is a finding. Nothing in the schema can tell them apart, which is why each document's `structure.json` carries its publisher and why the voices state which kind they are reading.",
       "graphKinds": [
         "library"
-      ],
-      "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/library/agent-skills/index.html"
-      }
+      ]
     },
     {
       "id": "voices",
@@ -41,7 +38,6 @@
         "voices"
       ],
       "coverage": {
-        "visualiser": "cat-harness/docs/cat-harness/voices/index.html",
         "_visualiser_comment": "the index, not a subject page: this instance declares the graph and ships no voice, so the generator writes it no page of its own. Bean `26tu`."
       }
     },

@@ -41,7 +41,7 @@
  * currently REJECTS. That is a contract weakened invisibly, which is the
  * failure this repository works hardest against, so the conditionals are
  * re-applied from `JSON_SCHEMA_CONDITIONALS` and
- * `cat-harness/schemas/discussion.test.ts` proves it with documents
+ * `bootstrap-tools/schemas/discussion.test.ts` proves it with documents
  * that must fail.
  *
  * Usage:
@@ -61,9 +61,14 @@ import {
   DiscussionOutputObjectSchema,
   JSON_SCHEMA_CONDITIONALS,
 } from "../schemas/discussion.ts";
-import { BOOTSTRAP_TERMS, KnowledgeGraphDeclarationSchema } from "../../cat-harness/schemas/graph.ts";
+import { BOOTSTRAP_TERMS, BOOTSTRAP_TERM_SHAPES, KnowledgeGraphDeclarationSchema } from "../../cat-harness/schemas/graph.ts";
 import { renderSchemaPage, type PageDocument } from "./bootstrap-schema-page.ts";
 import { ModelRegistrySchema } from "../../cat-harness/schemas/model-registry.ts";
+import { LedgerSchema } from "../../cat-harness/schemas/glossary-ledger.ts";
+import { bootstrapRelease, releaseIri } from "../../cat-harness/schemas/release-iri.ts";
+
+/** Every `$id` below is minted from bootstrap's declared iriBase and version, never typed. */
+const RELEASE = bootstrapRelease();
 import {
   REQUIREMENT_JSON_SCHEMA_CONDITIONALS,
   RequirementSchema,
@@ -113,7 +118,7 @@ const TARGETS = [
     // it is half of a published contract cited from five languages'
     // catalogues, and ids are stable across a relocation while paths are not.
     file: "schemas/discussion.input.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/input.schema.json",
+    id: releaseIri(RELEASE, "skills/discussion/input.schema.json", "agent"),
     title: "Discussion Input",
     description:
       "The occasion for asking: what the agent already knows, and which unknown is still open. Deliberately small — a Bootstrapping Agent has read one README and can look nothing up, so an input it cannot populate is an input that stops the process.",
@@ -124,7 +129,7 @@ const TARGETS = [
   {
     // declared-path-literal: as above — path moved, `$id` deliberately not.
     file: "schemas/discussion.output.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/skills/discussion/output.schema.json",
+    id: releaseIri(RELEASE, "skills/discussion/output.schema.json", "agent"),
     title: "Discussion Output",
     description:
       "What the exchange determined: which harness, which repositories, on whose word, and by what means. This document existing and conforming is what finishes the task — not that a conversation took place.",
@@ -137,7 +142,7 @@ const TARGETS = [
     // (owner, 2026-09-23: "bootstrap = self definitional … all terms have a
     // schema"). `bootstrap/README.md` links each term's first use here.
     file: "schemas/graph.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/graph.schema.json",
+    id: releaseIri(RELEASE, "schemas/graph.schema.json", "agent"),
     title: "Knowledge Graph declaration",
     description:
       BOOTSTRAP_TERMS.KnowledgeGraph +
@@ -151,7 +156,7 @@ const TARGETS = [
     // into cat-harness on 2026-09-23 (bean iwtn, FR-7: bootstrap holds no
     // code); this document is what a reader with nothing installed opens.
     file: "schemas/model-registry.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/model-registry.schema.json",
+    id: releaseIri(RELEASE, "schemas/model-registry.schema.json", "agent"),
     title: "Model Registry",
     description:
       "Which languages a model is good at, and whether a person checked. Only `human-validated` is ever acted on, and only a person can grant it.",
@@ -160,11 +165,24 @@ const TARGETS = [
     terms: {} as Readonly<Record<string, string>>,
   },
   {
+    // The shape of `glossary/glossary-ledger.json`. Its tag was
+    // `folio-glossary-ledger/v1` and resolved to no schema inside bootstrap;
+    // now every `$schema` a bootstrap file carries does (bean r3gy, D2).
+    file: "schemas/glossary-ledger.schema.json",
+    id: releaseIri(RELEASE, "schemas/glossary-ledger.schema.json", "agent"),
+    title: "Glossary Ledger",
+    description:
+      "Every term a Knowledge Graph's Processes have ever named, with the date each was first seen and the date it stopped being used. The glossary itself is regenerated each time; this is the one fact that cannot be, so a retired term is never silently reused.",
+    schema: LedgerSchema,
+    conditionals: [] as readonly unknown[],
+    terms: {} as Readonly<Record<string, string>>,
+  },
+  {
     // What a harness, or something built with one, must do (issue #1164).
     // Bootstrap publishes it because a harness states its requirements before
     // anything above bootstrap has loaded; the Zod is in cat-harness (FR-7, 319n).
     file: "schemas/requirement.schema.json",
-    id: "https://litlfred.github.io/folio-assistant/bootstrap/schemas/requirement.schema.json",
+    id: releaseIri(RELEASE, "schemas/requirement.schema.json", "agent"),
     title: "Requirement",
     description:
       "What a harness, or something built with one, must do, said so it can be checked: a titled set of numbered statements, each with a level (SHALL, SHOULD, MAY, SHALL NOT) and one sentence. A test run points at a statement as `req:<slug>#<key>`; the requirement does not list its tests. Statement keys are unique within a requirement.",
@@ -254,7 +272,18 @@ export function render(t: (typeof TARGETS)[number]): string {
   // definition only, which JSON Schema expresses as a title and a description.
   const terms = Object.entries(t.terms);
   if (terms.length) {
-    doc.$defs = Object.fromEntries(terms.map(([name, definition]) => [name, { title: name, description: definition }]));
+    // A term with a shape of its own (GraphKind: bootstrap's kinds, open to a
+    // Harness's) carries it beside the definition, so the list is published
+    // where the term is, not only inline in the field that uses it.
+    const shapes = t.terms === BOOTSTRAP_TERMS ? (BOOTSTRAP_TERM_SHAPES as Record<string, z.ZodType>) : {};
+    doc.$defs = Object.fromEntries(
+      terms.map(([name, definition]) => {
+        const shape = shapes[name];
+        const extra = shape ? (z.toJSONSchema(shape, { io: "input", reused: "inline" }) as Record<string, unknown>) : {};
+        delete extra.$schema;
+        return [name, { title: name, ...extra, description: definition }];
+      }),
+    );
   }
 
   return `${JSON.stringify(doc, null, 2)}\n`;
