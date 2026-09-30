@@ -169,6 +169,7 @@ export const RULES: Rule[] = [
       "scripts/render-bpmn.ts",              // BPMN → SVG (the processes one)
       "scripts/generate-registry.ts",        // scans skills/ → SkillRegistry
       "scripts/gen-skill-docs.ts",           // skill instruction bodies → docs
+      "scripts/gen-upload-step-docs.ts",     // a process step's Tools → docs; both graphs are harness concepts
       "scripts/validate-skills.ts",          // skill package manifests
       "scripts/init-folio.ts",               // runs BEFORE a content type exists
       // HARNESS: the review page is rendered surface, which the harness owns

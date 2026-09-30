@@ -767,6 +767,22 @@
       "status": "candidate"
     },
     {
+      "id": "upload-step-docs",
+      "prefLabel": "The upload step, from its Tools",
+      "definition": "Render document ingestion's FIRST step as a reference page, generated from the Tool nodes that implement it: the step, its lane and role, its skill and every Tool whose `satisfies` names that skill, with each Tool's description, installation, invocation, typed ports and selection triple. Everything but the process file's own path is derived — the start event, the activity its single outgoing flow reaches, and that activity's skill — so a step inserted, renamed or re-pointed moves the page rather than staling a literal. Refuses rather than emitting a partial page when the start event flows nowhere or to more than one place, when the first step is not an activity, when it names no skill or several, or when NO Tool satisfies that skill — the last because an empty page reads as a documented absence of mechanism, which is a finding rather than a document.",
+      "notation": "upload-step-docs",
+      "source": "cat-harness/tools/index.ts#upload-step-docs",
+      "status": "candidate"
+    },
+    {
+      "id": "upload-url",
+      "prefLabel": "Where to drop a file — the queue's upload URL",
+      "definition": "Compose the forge URL a person can drop a file at, from the instance's own declaration: the `uploads` graph's directory, resolved against the ROOT its scope names, expressed relative to the repository, and appended to the origin remote as GitHub's `/upload/<branch>/<path>`. Every failure is NAMED and no URL is guessed — no declaration, no declared `uploads` graph, a declared queue absent from disk, no `origin` remote, and a non-github.com remote each return a reason and a remedy instead. It exists because the obvious composition mints a live 404: the declared path `uploads/` is relative to the INSTANCE and a forge URL needs it relative to the REPOSITORY, so pasting the declared path drops the `cat-harness/` segment. Owner, 2026-09-20, on the hand-written form: \"were it to exist, but it doesmt on main!!!!!\"",
+      "notation": "upload-url",
+      "source": "cat-harness/tools/index.ts#upload-url",
+      "status": "candidate"
+    },
+    {
       "id": "uploads-viewer",
       "prefLabel": "Uploads viewer",
       "definition": "Render each declared uploads directory's intakes as a page per subject instance.",
