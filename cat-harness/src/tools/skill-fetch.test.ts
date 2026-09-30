@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync, readdirSync 
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
-import { LOCAL_PACKAGES, discoverLocalPackages } from "./skill-fetch.js";
+import { LOCAL_PACKAGES, discoverLocalPackages, locateLocalSkill } from "./skill-fetch.js";
 import { writeInstanceConfig } from "../../test/support/instance-fixture.js";
 import {  } from "../../schemas/cat-harness.js";
 import { writeDeclaration } from "../../test/support/instance-fixture.js";
@@ -308,5 +308,28 @@ describe("a directly-held set is named by ITS instance, not by the caller's root
     expect(Object.values(live).some((p) => p.includes("bootstrap/tools"))).toBe(false);
     const paths = Object.values(live);
     expect(paths.length).toBe(new Set(paths).size);
+  });
+});
+
+describe("locateLocalSkill — a skill asked for in a package that no longer holds it (bean 9umr)", () => {
+  const dir = mkdtempSync(join(tmpdir(), "skill-locate-"));
+  for (const [pkg, skills] of [["core", ["stays"]], ["kg", ["moved", "twice"]], ["lib", ["twice"]]] as const) {
+    mkdirSync(join(dir, pkg));
+    for (const s of skills) writeFileSync(join(dir, pkg, `${s}.md`), `# ${s}\n`);
+  }
+  const packages = { core: join(dir, "core"), kg: join(dir, "kg"), lib: join(dir, "lib") };
+
+  test("the named package wins when it holds the skill", () => {
+    expect(locateLocalSkill("stays", "core", packages)).toEqual({ package: "core", dir: packages.core });
+  });
+  test("a moved skill is found in the one package that holds it", () => {
+    expect(locateLocalSkill("moved", "core", packages)).toEqual({ package: "kg", dir: packages.kg });
+  });
+  test("two holders is an error naming both, never a pick", () => {
+    const r = locateLocalSkill("twice", "core", packages);
+    expect("error" in r && r.error).toMatch(/kg, lib/);
+  });
+  test("a skill nobody holds is still unknown", () => {
+    expect("error" in locateLocalSkill("nowhere", "core", packages)).toBe(true);
   });
 });

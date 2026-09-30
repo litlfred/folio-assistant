@@ -102,9 +102,9 @@ export function resolvePath(obj: unknown, path: string): unknown {
  * normalise to a decimal string before formatting so f64 conversion
  * never silently truncates the witness.
  */
-type RawScalar = { kind: "string"; value: string } | { kind: "number"; value: number };
+export type RawScalar = { kind: "string"; value: string } | { kind: "number"; value: number };
 
-function asScalar(raw: unknown): RawScalar | null {
+export function asScalar(raw: unknown): RawScalar | null {
   if (typeof raw === "string") return { kind: "string", value: raw };
   if (typeof raw === "number" && Number.isFinite(raw)) {
     return { kind: "number", value: raw };

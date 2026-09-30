@@ -750,6 +750,9 @@ export const RULES: Rule[] = [
       // A README per declared directory, from the declaration. Core beside
       // `readme-sections`, whose file description and 'used by' it reuses.
       "scripts/subgraph-readmes.ts",
+      // Its sibling for a library ITEM (bean `qgjh`): the same markers and
+      // `splice`, the words from the item's own manifest. Core beside it.
+      "scripts/library-readmes.ts",
       "scripts/check-docs-populated.ts",     // every harness owes one populated doc page
       "scripts/library-refs.ts",             // who references a slug — the L1 property
       "scripts/library-graph.ts",            // library/ + uploads/ → the L1 corpus
@@ -770,6 +773,13 @@ export const RULES: Rule[] = [
       // CORE beside `external-schemas.ts` itself, which is already here.
       "scripts/gen-external-schemas-viz.ts",
       "scripts/gen-processes-viz.ts", // the processes graph → a searchable index over every executable BPMN diagram
+      // Its shared answer to "does this skill have a page" (bean `qgjh`): the
+      // tools and processes visualisers link a skill only where one is, so the
+      // module sits beside the two viewers that read it.
+      "scripts/lib/skill-pages.ts",
+      // Its library twin (bean `qgjh`): where a library reference links — the
+      // viewer, the item README, the upstream record — read, never composed.
+      "scripts/lib/library-links.ts",
       "scripts/gen-folio-viz.ts",            // the folio GRAPH → projection + viewer. Its content already renders as the landing board; this is a view of the nodes behind it (bean `7ofc`)
       // The three materialisation modules that stood here — `check-materialized-fixity.ts`
       // (materialized bytes vs their recorded digest, the read-only rule enforced),
@@ -892,6 +902,10 @@ export const RULES: Rule[] = [
       // everything else in that tree and wrong for these two.
       "schemas/theme.ts",
       "schemas/themes.ts",
+      // Resolves a ThemeRef against its owner's declared themes (bean `v8n5`):
+      // the same sticky-note theme layer as the two above, reached through a
+      // declaration rather than an import, so it holds no folio's values.
+      "schemas/theme-by-ref.ts",
       // Exposed by moving `test/health/` here — the same reveal-on-move
       // pattern, third time in this pass. Both are harness by their own
       // headers: "Repository health reports — what the daily sweep under
@@ -1156,6 +1170,11 @@ export const RULES: Rule[] = [
       // ...and stage A, what that prose SAYS about the code (bean `ca4a`).
       "scripts/pair-claims.ts",
       "scripts/known-skills.ts",
+      // Which skill packages this checkout serves — moved here from the
+      // `skill_fetch` Tool (bean `9umr`) so the harness callers, `kg-audit`
+      // and the workflow engine, stop importing from a Tool. Harness beside
+      // `known-skills.ts`, which it builds on.
+      "scripts/skill-packages.ts",
       // The checkout-portability gate, beside the module it runs. Harness by
       // subject: it reads `git ls-files` over THIS repository and grades the
       // tree's own filenames, which is a fact about the checkout and not about
