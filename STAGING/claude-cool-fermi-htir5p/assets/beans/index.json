@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 482,
+      "count": 483,
       "unit": "beans"
     }
   },
@@ -842,7 +842,7 @@
       "status": "todo",
       "type": "epic",
       "priority": "",
-      "parent": "folio-assistant-10uc",
+      "parent": "folio-assistant-p5wm",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-23T10:36:13Z",
@@ -1003,6 +1003,20 @@
       "updatedAt": "2026-09-19T17:04:01Z",
       "preview": "**Uncaptured owner requirement**, same comment as `folio-assistant-cy4p`\nand `folio-assistant-3q47` —\n[#363](https://github.com/litlfred/folio-assistant/issues/363#issuecomment-5740727385),\n09:20, not beaned until 17:0x.\n\n> comparision scenarios: give LLM BPMN and force them along it, givem LLM\n> BPMN and let them manage workflow. do behaviour outcomes change? how\n> much time/compute was needed?\n\n",
       "file": "beans/defs/folio-assistant-502c--experiment-forced-along-a-bpmn-vs-managing-it-do-o.md"
+    },
+    {
+      "id": "folio-assistant-52cz",
+      "title": "A CONFLICTED PR CREATES NO pull_request RUN, and g62s's headUnjudged cannot see it — the one absent-run case that needs no glob evaluation",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T14:07:18Z",
+      "updatedAt": "2026-09-30T14:07:18Z",
+      "preview": "## The incident, measured\n\nPR #1589, 2026-09-30. `Repository gates (hard)` failed on `86e403cdfdd`. I\nfixed the cause (`readme:subgraphs`, two stale directory READMEs), pushed twice,\nand **no `Code-quality gates` run was ever created for either new head.** The\nPR went on showing a red from a superseded commit.\n\nThe cause was not the queue and not a path filter. The PR was\n**`mergeable_state: \"dirt",
+      "file": "beans/defs/folio-assistant-52cz--a-conflicted-pr-creates-no-pull-request-run-and-g6.md"
     },
     {
       "id": "folio-assistant-52dz",
@@ -1893,12 +1907,12 @@
       "title": "Concern subgraphs: cat-harness skills live in one declared subgraph per semantic concern (first: KG + library out of folio-core)",
       "status": "in-progress",
       "type": "epic",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:12:08Z",
-      "updatedAt": "2026-09-30T12:47:36Z",
+      "updatedAt": "2026-09-30T13:55:08Z",
       "preview": "Owner 2026-09-29: 'declared sub-graphs of cat-harness based on semantic concern (see sibling work on bootstrap definitions as named subset). dont need a separate facet. built into location.' Ruled 2026-09-30: **eight groups, KG + library move first**.\n\nA Subgraph is bootstrap's term (cat-harness/schemas/graph.ts): 'a named subset of Node Instances: a Declaration's directory entry, with its id, its",
       "file": "beans/defs/folio-assistant-9umr--concern-subgraphs-cat-harness-skills-live-in-one-d.md"
     },
@@ -5885,12 +5899,12 @@
       "title": "cat-harness-tools: split the MCP server and tool implementations into their own instance, depending on cat-harness",
       "status": "todo",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-vuip",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:12:08Z",
-      "updatedAt": "2026-09-30T08:12:08Z",
+      "updatedAt": "2026-09-30T13:55:08Z",
       "preview": "Owner 2026-09-29/30: 'i want to split out cat-harness-tools too https://github.com/litlfred/cat-harness-tools' — 'see sibling work' (#1514, bootstrap-tools, bean 81tw). Direction ruled 2026-09-30: **tools depend on the harness** — cat-harness never imports the new instance.\n\nMeasured 2026-09-30: litlfred/cat-harness-tools is EMPTY (no commits). In scope: cat-harness/tools/ (8 files: discover, inde",
       "file": "beans/defs/folio-assistant-w2gr--cat-harness-tools-split-the-mcp-server-and-tool-im.md"
     },
@@ -6739,13 +6753,13 @@
       "title": "B9d (#1168): rename voice source kgRef → path, skill front matter capability: → requiresCapability",
       "status": "in-progress",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-tr05",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T10:54:25Z",
-      "updatedAt": "2026-09-30T12:51:45Z",
-      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected\n\n_2026-09-30T12:51:45Z_ — Claimed by claude/sharp-einstein-970n",
+      "updatedAt": "2026-09-30T12:53:05Z",
+      "preview": "Owner, 2026-09-30: Rename both. Voice source kgRef holds a file path (76 uses); skill front-matter capability: (19 files) collides with the Capability kind. Codemod plus retired-name record so the old names fail loudly.\n\n## Done when\n- [ ] both renamed across the corpus, readers updated\n- [ ] old names recorded as retired and rejected\n\n\n\n## 2026-09-30 progress\n- [x] voice source kgRef → path (37 v",
       "file": "beans/defs/folio-assistant-zmm2--b9d-1168-rename-voice-source-kgref-path-skill-fron.md"
     },
     {
