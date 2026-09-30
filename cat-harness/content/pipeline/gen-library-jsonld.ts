@@ -68,7 +68,7 @@
  */
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "fs";
-import { join } from "path";
+import { basename, dirname, join } from "path";
 import { CONTENT_CONTEXT_URL, typesForKind } from "../../schemas/jsonld";
 import { LABEL_PREFIXES } from "../../schemas/constraints";
 import { findContentRepoRoot } from "./repo-root";
@@ -77,6 +77,7 @@ import type { DocumentImage, ImagesSidecar } from "../../schemas/document-image.
 import { buildTabularNodes, tabularShapeOf } from "./tabular-nodes.ts";
 import { TABULAR_CSVW_FILENAME } from "../../schemas/tabular-csvw.ts";
 import { readStructure, STRUCTURE_FILENAME } from "../../schemas/document-structure.ts";
+import type { INGEST_RUNGS } from "../../schemas/site-indexes.ts";
 
 interface StructureSection {
   id: string;
@@ -385,7 +386,7 @@ function readJson<T>(path: string): T | undefined {
 }
 
 /** Which ingest rung an entry is on — bean `p67i`. */
-export type IngestRung = "paged" | "tabular" | "none";
+export type IngestRung = (typeof INGEST_RUNGS)[number];
 
 /**
  * The input file that puts an entry on each rung, in precedence order.
@@ -398,6 +399,9 @@ export type IngestRung = "paged" | "tabular" | "none";
 export const RUNG_INPUT: ReadonlyArray<readonly [IngestRung, readonly string[]]> = [
   ["paged", [STRUCTURE_FILENAME]],
   ["tabular", ["tabular.jsonld", TABULAR_CSVW_FILENAME]],
+  // A source RECORDED and not held (bean `scfh`): `referenced-source.py`
+  // writes the record, and this writes the manifest, as for every other rung.
+  ["referenced", ["referenced.json"]],
 ];
 
 /**
@@ -571,6 +575,38 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
     };
   }
 
+  if (rung === "referenced") {
+    const record = readJson<{
+      identity?: { title?: string };
+      source?: { file?: string; sha256?: string };
+    }>(join(dir, "referenced.json"));
+    if (!record?.source?.sha256) return { state: "unreadable", rung };
+    const manifest = {
+      "@context": CONTENT_CONTEXT_URL,
+      "@id": docIri(docId, "manifest"),
+      "@type": ["folio-assistant-core:SourceDocument"],
+      title: record.identity?.title ?? docId,
+      // EMPTY on purpose: the entry holds no content nodes. The manifest says
+      // the source exists and that none of it is held here.
+      contains: [],
+      // The same value every manifest carries; `disposition` below says that
+      // none of the source's text is held.
+      provenance: "ingested",
+      meta: {
+        doc_id: docId,
+        source_file: record.source.file,
+        source_sha256: record.source.sha256,
+        disposition: "referenced source — recorded, text withheld by licence",
+        licence: readLicence(dir),
+      },
+    };
+    return {
+      state: "built",
+      rung,
+      files: [{ path: "manifest.jsonld", content: JSON.stringify(manifest, null, 2) + "\n" }],
+    };
+  }
+
   // Not a parse failure to hide: an entry with no ingest input simply has not
   // been processed, and saying so is the point.
   return { state: "no-input" };
@@ -578,6 +614,24 @@ export function buildEntryNodes(docId: string, dir: string): EntryOutcome {
 
 async function run(): Promise<number> {
   const argv = process.argv.slice(2);
+  // ONE entry directory, wherever it is — a STAGED entry, before promotion.
+  // `ingest-document.ts` runs this as the `referenced` rung's manifest arm
+  // (bean `scfh`), so the manifest has one writer whether the entry is staged
+  // or already in a library.
+  if (argv.includes("--entry")) {
+    const dir = argv[argv.indexOf("--entry") + 1]!;
+    const outcome = buildEntryNodes(basename(dir), dir);
+    if (outcome.state !== "built") {
+      console.error(`gen-library-jsonld: ${dir}: ${outcome.state}`);
+      return 1;
+    }
+    for (const f of outcome.files) {
+      mkdirSync(dirname(join(dir, f.path)), { recursive: true });
+      writeFileSync(join(dir, f.path), f.content);
+    }
+    console.log(`ok  ${basename(dir)}  ${outcome.files.length} file(s), rung ${outcome.rung}`);
+    return 0;
+  }
   const check = argv.includes("--check");
   const only = argv.includes("--doc") ? argv[argv.indexOf("--doc") + 1] : undefined;
 

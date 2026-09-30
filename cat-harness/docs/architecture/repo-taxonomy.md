@@ -140,6 +140,13 @@ that operate on them change when the tooling improves. Different cadences,
 different reviewers, so different repos. Whereas splitting a Content repo's
 schemas from its instances would give two repos that always change together.
 
+**Where that example stands.** `smart-kg` is already its own repository. The
+owner, 2026-09-23: *"that is its own repo already"*. The stub `smart-kg/`
+directory that sat here was removed for that reason (bean `wg7r`), so nothing in
+this checkout is `smart-kg` content. `smart-kg-tools` is still the proposed
+split, not yet a repository. The example is about two repositories, and that is
+the case it describes.
+
 ---
 
 Next: [Current state](current-state.html) — what this repo is today, measured.

@@ -114,8 +114,7 @@ export const PYTHON_DEPS: readonly PythonDep[] = [
     distribution: "pillow",
     imports: "PIL",
     tier: "lean",
-    transitive: true,
-    why: "Required by `pypdf` for image extraction: without it `page.images` raises `ImportError: pillow is required` at the point of use, while `len(page.images)` quietly returns 0 — a false zero measured 2026-09-19 while scoping `d5f1`.",
+    why: "Required by `pypdf` for image extraction: without it `page.images` raises `ImportError: pillow is required` at the point of use, while `len(page.images)` quietly returns 0 — a false zero measured 2026-09-19 while scoping `d5f1`. Also imported directly by `image-reuse.py`, which needs WebP decoding to match an ingested image against theme art (bean `scfh`).",
   },
   {
     distribution: "pdfplumber",
