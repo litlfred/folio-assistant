@@ -209,7 +209,7 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
   const walk = (d: string) => {
     for (const f of readdirSync(d)) {
       const p = join(d, f);
-      // No skip. `translations/` used to be excepted here because bootstrap held
+      // One skip, `.git` (below). `translations/` used to be excepted here because bootstrap held
       // 15 `.pot` extraction templates, which are tooling OUTPUT — nobody reads
       // a `.pot`, so they contradicted bootstrap's own promise of "a file you
       // read, not something you run" and have moved to
@@ -218,6 +218,9 @@ describe("nothing in bootstrap/ names anything above it (bean iwtn)", () => {
       // The exception is gone rather than kept-and-unused, because while it
       // stood this test scanned 23 of 38 files under a name claiming all of
       // them. It now scans every file in `bootstrap/`, which is what it says.
+      // `.git` is version-control metadata, not bootstrap's content — and a
+      // standalone clone has one (found by `rehearse-standalone`, bean xsqm).
+      if (f === ".git") continue;
       if (statSync(p).isDirectory()) walk(p);
       else files.push(p);
     }
