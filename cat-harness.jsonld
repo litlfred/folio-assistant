@@ -293,10 +293,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T08:56:19.720Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d1b0be927d6e34828d99ce732984fc298ae4bfb4",
-  "sourceCommitSha": "d1b0be927d6e34828d99ce732984fc298ae4bfb4",
-  "sourceCommitAt": "2026-09-30T10:53:28+02:00",
+  "generatedAt": "2026-09-30T09:08:18.376Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/27090a171c2b8c02fd276df3264c662196610a5f",
+  "sourceCommitSha": "27090a171c2b8c02fd276df3264c662196610a5f",
+  "sourceCommitAt": "2026-09-30T11:04:28+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1975,7 +1975,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-core"
       ],
       "instructionsPath": "skills/folio-core/glossary-build.md",
-      "instructionLines": 137,
+      "instructionLines": 147,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3921,7 +3921,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/folio-paper-adapter"
       ],
       "instructionsPath": "skills/folio-paper-adapter/content-validation.md",
-      "instructionLines": 294,
+      "instructionLines": 296,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -37626,7 +37626,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run cat-harness/content/pipeline/build-glossary.ts"
+        "shell": "bun run folio-assistant-core/scripts/build-glossary.ts"
       },
       "io": {
         "inputs": [
@@ -42998,8 +42998,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "d1b0be927d6e34828d99ce732984fc298ae4bfb4",
+    "sha": "27090a171c2b8c02fd276df3264c662196610a5f",
     "pr": "main",
-    "run": "36692557770"
+    "run": "36693746575"
   }
 }
