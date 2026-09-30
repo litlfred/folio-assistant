@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 517,
+      "count": 518,
       "unit": "beans"
     }
   },
@@ -1199,6 +1199,20 @@
       "updatedAt": "2026-09-27T06:16:21Z",
       "preview": "Measured 2026-09-27 while driving #1439: **three** merges of `origin/main` in\nabout forty minutes, and `docs/assets/beans/index.json` conflicted on the third\none. `oxka` fixed this for three files and marked them\n`linguist-generated=true -diff -merge` in `.gitattributes`. This file is a fourth\nwith the same shape and is not marked.\n\n| file | conflicts paid today | marked `-merge`? |\n|---|---|---|\n",
       "file": "beans/defs/folio-assistant-5gqn--merge-friction-beans-indexjson-should-join-oxka-me.md"
+    },
+    {
+      "id": "folio-assistant-5qq3",
+      "title": "REGEN SCOPE: the browser jobs' artefacts are outside regen's fast set, and a stale one only surfaces in CI",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-2upx",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T18:53:17Z",
+      "updatedAt": "2026-09-30T18:53:36Z",
+      "preview": "Found 2026-09-30 on PR #1633, by CI rather than by `regen`.\n\n`End-to-end + accessibility (hard)` failed on `render:bpmn:check` with three\nstale drawings — `bootstrap/processes/{discussion,initialize-harness,log-message}.svg`\n— on a tree where `bun run regen` had just reported a fixed point.\n\n## This is NOT the same defect as `check:X` (the prefix-convention false clean)\n\nWorth separating, because ",
+      "file": "beans/defs/folio-assistant-5qq3--regen-scope-the-browser-jobs-artefacts-are-outside.md"
     },
     {
       "id": "folio-assistant-5uuf",
