@@ -170,6 +170,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
+          submodules: true
           ref: ${{ github.event.pull_request.head.ref || inputs.branch || github.ref }}
 
       - uses: oven-sh/setup-bun@v2

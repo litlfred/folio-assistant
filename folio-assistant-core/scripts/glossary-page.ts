@@ -69,6 +69,7 @@ import {
   readDeclaration,
   repoRootFor,
   resolveDirectories,
+  forgeLocation,
 } from "../../cat-harness/schemas/cat-harness.ts";
 import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
 import { instanceNamespace } from "../../cat-harness/schemas/instance-repositories.ts";
@@ -95,7 +96,12 @@ function generatedDir(): string {
   return join(dir, "generated");
 }
 /** Where a reader follows a `source` to. The forge the repository is published on; the same base `gen-docs-auto.ts` links with. */
-const BLOB = "https://github.com/litlfred/folio-assistant/blob/main";
+const FORGE = "https://github.com/litlfred/folio-assistant";
+/** A file's page on the forge — in its submodule's own repository when it sits in one. */
+const blobUrl = (path: string): string => {
+  const at = forgeLocation(path, FORGE);
+  return `${at.repoUrl}/blob/main/${at.path}`;
+};
 
 export interface GlossarySource {
   /**
@@ -504,7 +510,7 @@ const link = (u: string) => `<a href="${esc(u)}">${esc(u.replace(/^https?:\/\//,
 const sourceLink = (src: string) => {
   if (/^[a-z][a-z0-9+.-]*:\/\//i.test(src)) return link(src);
   const path = src.split("#", 2)[0]!;
-  return `<a href="${esc(`${BLOB}/${path}`)}"><code>${esc(src)}</code></a>`;
+  return `<a href="${esc(blobUrl(path))}"><code>${esc(src)}</code></a>`;
 };
 const pageLink = (k: PageKey, text: string) => `<a href="{{ '${permalinkOf(k)}' | relative_url }}">${esc(text)}</a>`;
 const skosLink = (s: GlossarySource) => `<a href="{{ '/${skosAsset(s)}' | relative_url }}">SKOS</a>`;

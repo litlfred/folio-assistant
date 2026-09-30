@@ -124,6 +124,8 @@ jobs:
       cancel-in-progress: false
     steps:
       - uses: actions/checkout@v7
+        with:
+          submodules: true
 
       - uses: oven-sh/setup-bun@v2
         with:
