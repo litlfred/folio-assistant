@@ -70,7 +70,7 @@ import { parseFrontMatter, scalar, type FrontMatter } from "../schemas/front-mat
 // holds a different NODE KIND, and a scan that took them for skills would
 // publish a convention as something an activity could implement.
 export const NON_SKILL_GROUPS = new Set([
-  "actors", "capabilities", "roles", "hooks", "requirements", "conventions",
+  "actors", "capabilities", "roles", "hooks", "requirements", "conventions", "skill-definitions",
 ]);
 
 /**
@@ -326,7 +326,8 @@ export function isSkillMd(path: string): boolean {
  * Nothing had broken, and that is the point. All twelve resolved anyway
  * through a SECOND home — eleven because they also have a
  * `schemas/skills/<name>/` I/O contract, and `smart-base-tools` because it
- * also has `.claude/skills/local/smart-base-tools.json`. Delete any one of
+ * also had `.claude/skills/local/smart-base-tools.json` (now under
+ * `smart-base/skills/skill-definitions/`, bean `rqao`). Delete any one of
  * those second homes and `check-workflow-refs` reports a real, present skill
  * as dangling: the "wall of false dangling refs" this module's own header says
  * it exists to prevent, arriving from the module itself.

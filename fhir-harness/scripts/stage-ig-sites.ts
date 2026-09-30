@@ -13,6 +13,12 @@
  * An instance with no menu, or a menu with no sushi-config source, is skipped
  * and reported: nothing to build is not the same as a build that failed.
  *
+ * The site wears the palette of the ONE `webpage` theme the instance declares
+ * (bean `u3cd`), resolved through `instanceThemes` — the same answer every
+ * other generator reads, so the palette has one home. None declared builds
+ * with just-the-docs' default scheme and says so; two declared is refused,
+ * because nothing says which one dresses the IG.
+ *
  * Usage:
  *   bun run fhir-harness/scripts/stage-ig-sites.ts --work <dir> --baseurl <site baseurl> \
  *     [--plantuml-jar <jar>] [--remote-theme <owner/repo@ref>]
@@ -25,8 +31,9 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
-import { instanceRootsIn } from "../../cat-harness/schemas/cat-harness.js";
-import { describeStage, stageIgSite, type IgMenu } from "./build-ig-site";
+import { instanceRootsIn, readDeclaration } from "../../cat-harness/schemas/cat-harness.js";
+import { instanceThemes } from "../../cat-harness/schemas/theme-by-ref.js";
+import { describeStage, stageIgSite, type IgMenu, type SitePalette } from "./build-ig-site";
 
 interface MenuFile extends IgMenu {
   source?: { kind?: string; of?: string; ref?: string };
@@ -37,6 +44,18 @@ export interface IgToBuild {
   menuPath: string;
   repo: string;
   ref: string;
+  /** The instance's declared name — what `instanceThemes` keys on. */
+  declaredAs: string;
+}
+
+/** The palette of the one webpage theme an instance declares, or why there is none. */
+export function webpagePalette(repoRoot: string, instance: string): { palette?: SitePalette; note: string } {
+  const found = instanceThemes(repoRoot, instance);
+  if (!found.ok) return { note: `${instance}: no webpage theme (${found.miss.kind})` };
+  const web = found.themes.filter((t) => t.kind === "webpage");
+  if (web.length > 1) throw new Error(`${instance} declares ${web.length} webpage themes (${web.map((t) => t.id).join(", ")}) — nothing says which dresses its IG site`);
+  if (web.length === 0) return { note: `${instance}: declares themes, none of kind webpage` };
+  return { palette: web[0].palette as SitePalette, note: `${instance}: webpage theme ${web[0].id}` };
 }
 
 /** Every instance whose IG menu records a cloneable sushi-config source. */
@@ -52,7 +71,7 @@ export function igsToBuild(repoRoot: string): { build: IgToBuild[]; skipped: str
       skipped.push(`${instance}: menu.json records no sushi-config source repository and commit`);
       continue;
     }
-    build.push({ instance, menuPath, repo: m.source.of, ref: m.source.ref });
+    build.push({ instance, menuPath, repo: m.source.of, ref: m.source.ref, declaredAs: readDeclaration(root)?.name ?? instance });
   }
   return { build, skipped };
 }
@@ -77,7 +96,10 @@ if (import.meta.main) {
     git("init", "-q");
     git("fetch", "-q", "--depth", "1", ig.repo, ig.ref);
     git("checkout", "-q", "FETCH_HEAD");
+    const theme = webpagePalette(resolve("."), ig.declaredAs);
+    console.error(theme.note);
     const r = stageIgSite(src, site, {
+      palette: theme.palette,
       baseurl: `${base.replace(/\/$/, "")}/${ig.instance}/ig`,
       plantumlJar: opt("--plantuml-jar"),
       menu: JSON.parse(readFileSync(ig.menuPath, "utf-8")) as IgMenu,

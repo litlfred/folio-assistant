@@ -43,16 +43,16 @@ import { registerQaTools } from "./tools/qa.js";
 import { registerBibTools } from "./tools/bib.js";
 import { registerTransformTools } from "./tools/transform.js";
 import { registerDocumentAuditTools } from "./tools/audit.js";
-import { registerDepsTools } from "../../src/tools/check-deps.js";
-import { registerPreferenceTools } from "../../src/tools/preferences.js";
-import { registerPreviewTools } from "../../src/tools/preview.js";
-import { registerSkillFetchTools } from "../../src/tools/skill-fetch.js";
-import { registerSkillPrompts } from "../../src/tools/skill-prompts.js";
-import { registerFolioInitTools } from "../../src/tools/folio-init.js";
-import { registerReadmeSyncTools } from "../../src/tools/readme-sync.js";
-import { registerRenderOrderTools } from "../../src/tools/render-order.js";
-import { registerReadmeAuditTools } from "../../src/tools/readme-audit.js";
-import { registerLsiQueryTools } from "../../src/tools/lsi-query.js";
+import { registerDepsTools } from "../../../cat-harness/src/tools/check-deps.js";
+import { registerPreferenceTools } from "../../../cat-harness/src/tools/preferences.js";
+import { registerPreviewTools } from "../../../cat-harness/src/tools/preview.js";
+import { registerSkillFetchTools } from "../../../cat-harness/src/tools/skill-fetch.js";
+import { registerSkillPrompts } from "../../../cat-harness/src/tools/skill-prompts.js";
+import { registerFolioInitTools } from "../../../cat-harness/src/tools/folio-init.js";
+import { registerReadmeSyncTools } from "../../../cat-harness/src/tools/readme-sync.js";
+import { registerRenderOrderTools } from "../../../cat-harness/src/tools/render-order.js";
+import { registerReadmeAuditTools } from "../../../cat-harness/src/tools/readme-audit.js";
+import { registerLsiQueryTools } from "../../../cat-harness/src/tools/lsi-query.js";
 
 import type {
   ContentAdapter,
@@ -62,7 +62,7 @@ import type {
   BlockDiff,
   BranchCharacterization,
   TriageResult,
-  UserRole } from "../../src/types.js";
+  UserRole } from "../../../cat-harness/src/types.js";
 // The REAL feedback type, straight from the schema that validates it.
 //
 // It used to come through `src/types.ts`, which re-exported it from here —
@@ -71,14 +71,14 @@ import type {
 // core -> core and adds no edge; it also means the adapter works with the
 // full type rather than the structural minimum the HARNESS needs, which is
 // all `TodoRef` in `src/types.ts` ever claimed to be.
-import type { FeedbackItem } from "../../schemas/types.js";
-import type { GitHelper } from "../../src/core/git.js";
-import { FeedbackStore } from "../../src/core/feedback.js";
-import { log } from "../../src/core/logging.js";
-import { allows, forbidden } from "../../src/core/rbac.js";
+import type { FeedbackItem } from "../../../cat-harness/schemas/types.js";
+import type { GitHelper } from "../../../cat-harness/src/core/git.js";
+import { FeedbackStore } from "../../../cat-harness/src/core/feedback.js";
+import { log } from "../../../cat-harness/src/core/logging.js";
+import { allows, forbidden } from "../../../cat-harness/src/core/rbac.js";
 import { PaperResolver } from "./resolver.js";
-import { getAnthropic } from "../../src/routes/chat.js";
-import { directoryForGraph, folioDir } from "../../schemas/cat-harness.js";
+import { getAnthropic } from "../../../cat-harness/src/routes/chat.js";
+import { directoryForGraph, folioDir } from "../../../cat-harness/schemas/cat-harness.js";
 
 /**
  * The declared `uploads` graph for a folio, or the convention.

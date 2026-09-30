@@ -72,6 +72,12 @@ on:
   # while the `pull_request` trigger above stays filtered. That asymmetry is
   # deliberate: the queue needs a verdict from this workflow on every entry,
   # and the `stage` job below skips, so the verdict costs nothing.
+  #
+  # UNREACHABLE HERE — bean `1hjm`: `Require merge queue` is absent from this
+  # repository's ruleset form, so no `merge_group` event can be delivered and
+  # the hang described above cannot occur either. Kept for the same reason
+  # `code-quality-gates.yml` keeps its trigger: correct with no work if the
+  # repository ever moves under an organization.
   merge_group:
   pull_request_target:
     types: [closed]

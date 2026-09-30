@@ -664,7 +664,7 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     severity: "critical",
     summary:
       "A `<cat-harness.processes:convention ref>` on a process, lane or activity names a convention that is not in " +
-      "`.claude/skills/conventions/`. The agent is told a rule applies and cannot read it.",
+      "`cat-harness/skills/conventions/` (`conventionsDir`). The agent is told a rule applies and cannot read it.",
   },
   {
     id: "activity-names-skill",
