@@ -301,14 +301,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-09-30T21:43:31.888Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2cbeb326a425ef955b5819a608bd80d976680427",
-  "sourceCommitSha": "2cbeb326a425ef955b5819a608bd80d976680427",
-  "sourceCommitAt": "2026-09-30T21:33:07Z",
+  "generatedAt": "2026-09-30T21:53:52.679Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bbc9c6ff0ddce2052e749e5a316d1860139a9bf4",
+  "sourceCommitSha": "bbc9c6ff0ddce2052e749e5a316d1860139a9bf4",
+  "sourceCommitAt": "2026-09-30T21:49:51Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 287,
+    "Skill": 288,
     "Actor": 36,
     "Capability": 28,
     "Convention": 2,
@@ -319,9 +319,9 @@
     "Lane": 192,
     "ProcessNode": 889,
     "Tool": 111,
-    "Schema": 133,
+    "Schema": 134,
     "ExternalSchema": 17,
-    "GraphKind": 35,
+    "GraphKind": 36,
     "Role": 48,
     "Subgraph": 49,
     "Asset": 3
@@ -3646,6 +3646,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/instance-kinds"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/skill-voice-review",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "skill-voice-review",
+      "title": "Skill voice review",
+      "description": "Reviews a skill against a voice that judges skills — the base `agent-skill-authoring` voice or a vendor override such as Claude's, Gemini CLI's or OpenAI's — rule by rule, with each rule's citation open, and records the verdicts with `voice:review`. Use when `skill-voice-review-current` reports a skill never reviewed or reviewed before the skill or the voice changed, or when asked whether a skill follows a vendor's authoring guidance. The agent half of that axis; the mechanical half, in `scripts/skill-voice-review.ts`, only says whether a current review exists.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/skill-voice-review.md",
+      "instructionLines": 93,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/skill-voice-review"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/data-modelling",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "data-modelling",
@@ -3790,7 +3807,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1182,
+      "instructionLines": 1210,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3977,7 +3994,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 545,
+      "instructionLines": 554,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6832,6 +6849,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/placement",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/schema-management",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/skill-registration",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/skill-voice-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/surprise-to-corpus",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/uml-overview",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/vocabulary-authority"
@@ -45017,6 +45035,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-image"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#schema/document-structure",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "document-structure",
+      "title": "`structure.json` as a BASE with VARIANTS — bean `rkqp`, owner 2026-09-30",
+      "module": "schemas/document-structure.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-structure"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#schema/external-schema",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "external-schema",
@@ -46409,6 +46436,14 @@
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/voices",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
+      "name": "voices",
+      "renderable": false,
+      "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
+      "validator": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#schema/voices"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todo-feedback",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "todo-feedback",
@@ -46608,6 +46643,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/placement",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/site-presentation-assets",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/skills-and-tools",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/skill-voice-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/test-engineer"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/code-reviewer"
