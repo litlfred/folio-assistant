@@ -70,6 +70,7 @@ classDiagram
       <<ts: VerdictFile>>
       inspected_by [1] unknown
       inspected_at [1] string
+      attribution [0..1] Record~string,  inspected_by: unknown; inspected_at: string ~
       verdicts [1] Record~string, Record~string, Verdict~~
     }
     class who_iris_library_folio_section_verdicts_v1_folio_section_verdicts_v1["folio-section-verdicts/v1"] {

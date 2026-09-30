@@ -242,6 +242,10 @@ describe("the real corpus", () => {
     if (reports === undefined) return;
     expect(reports.length).toBeGreaterThan(0);
     for (const r of reports) {
+      // A `referenced` entry records a source and holds NO blocks, by design
+      // (bean `scfh`); `referenced-record` refuses one that does. There is no
+      // prose here to have a provenance, so the requirement does not apply.
+      if (r.requirements.some((x) => x.name === "referenced-record")) continue;
       const q = r.requirements.find((x) => x.name === "narrative-provenance");
       // `toBe`, not `toContain("met")` — "unmet" CONTAINS "met", so that
       // assertion passed in both directions. Caught by reading it back.

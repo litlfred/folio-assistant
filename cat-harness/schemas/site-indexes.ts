@@ -178,6 +178,14 @@ export const SchemaGraphIndexSchema = z
 
 const PageNumber = z.number().int().nullable();
 
+/**
+ * Which ingest rung a library entry sits on. The one list: `IngestRung` in
+ * `content/pipeline/gen-library-jsonld.ts` is derived from it, so a rung added
+ * there is a rung this index accepts. It was two lists until the `referenced`
+ * rung (bean `scfh`) met an index that knew only three.
+ */
+export const INGEST_RUNGS = ["paged", "tabular", "referenced", "none"] as const;
+
 export const LibraryIndexEntrySchema = z
   .object({
     id: z.string().min(1),
@@ -185,7 +193,7 @@ export const LibraryIndexEntrySchema = z
     dir: z.string(),
     title: z.string(),
     provenance: z.string(),
-    rung: z.enum(["paged", "tabular", "none"]),
+    rung: z.enum(INGEST_RUNGS),
     docId: z.string(),
     sourceFile: z.string(),
     sourceSha256: z.string(),
