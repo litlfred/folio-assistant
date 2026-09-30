@@ -2550,7 +2550,13 @@ export function exportIdentity(opts: ExportOptions = {}): {
   // `@id`s — 88 subjects with two identities no consumer would ever merge.
   // Measured 2026-09-21: the site-root path had the 2 links and violated the
   // rule; the `bootstrap/` path conformed and had none.
-  const docPath = foreignInstance ? `${stub}/${stub}.jsonld` : `${stub}.jsonld`;
+  //
+  // UNLESS THE INSTANCE DECLARES ITS OWN `canonicalUrl`. Then the base is its
+  // own site, where it is the host, so it sits at `<canonicalUrl>/<stub>.jsonld`.
+  // Appending the foreign segment there doubled it: `fhir-harness` minted
+  // `…/fhir-harness/fhir-harness/fhir-harness.jsonld` (issue #1548, measured
+  // 2026-09-30). `bootstrap` declares no base and is unchanged.
+  const docPath = foreignInstance && !ownCanonical ? `${stub}/${stub}.jsonld` : `${stub}.jsonld`;
   const docIri = renderingPath(base, docPath);
   const canonicalIri = canonicalBase ? renderingPath(canonicalBase, docPath) : undefined;
   return {
