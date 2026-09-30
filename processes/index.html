@@ -493,32 +493,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790802397">
+<link rel="stylesheet" href="/folio-assistant/assets/css/docs-ui.css?v=1790803563">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790802397">
+<link rel="stylesheet" href="/folio-assistant/assets/css/narrow-viewport.css?v=1790803563">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790802397">
+<link rel="stylesheet" href="/folio-assistant/assets/css/work-plan.css?v=1790803563">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790802397">
+<link rel="stylesheet" href="/folio-assistant/assets/css/themes.css?v=1790803563">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790802397">
+<link rel="stylesheet" href="/folio-assistant/assets/css/uml.css?v=1790803563">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790802397">
+<link rel="stylesheet" href="/folio-assistant/assets/css/avatars.css?v=1790803563">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -535,7 +535,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/assets/js/docs-ui.js?v=1790802397" defer></script>
+<script src="/folio-assistant/assets/js/docs-ui.js?v=1790803563" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -750,7 +750,11 @@
   <tbody>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">cat-harness/processes/</code></td>
-      <td>70</td>
+      <td>66</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">large-datasets/processes/</code></td>
+      <td>4</td>
     </tr>
     <tr>
       <td><code class="language-plaintext highlighter-rouge">bootstrap/processes/</code></td>
@@ -879,11 +883,6 @@
     <tr>
       <td><a href="content-lifecycle.html">Content lifecycle</a></td>
       <td>8</td>
-      <td>—</td>
-    </tr>
-    <tr>
-      <td><a href="copy-out-materialized.html">Copy out materialized content — to work on somebody else’s bytes</a></td>
-      <td>5</td>
       <td>—</td>
     </tr>
     <tr>
@@ -1032,11 +1031,6 @@
       <td>—</td>
     </tr>
     <tr>
-      <td><a href="materialize-remote.html">Materialize remote content — the shared subprocess</a></td>
-      <td>10</td>
-      <td>—</td>
-    </tr>
-    <tr>
       <td><a href="methodology-from-source.html">Adopt a methodology from a source document</a></td>
       <td>8</td>
       <td>1</td>
@@ -1072,11 +1066,6 @@
       <td>—</td>
     </tr>
     <tr>
-      <td><a href="refresh-materialized.html">Refresh materialized remote content</a></td>
-      <td>8</td>
-      <td>—</td>
-    </tr>
-    <tr>
       <td><a href="related-work.html">Related work: find, sort, summarize, ask to coordinate</a></td>
       <td>5</td>
       <td>1</td>
@@ -1099,11 +1088,6 @@
     <tr>
       <td><a href="review-task.html">Review task</a></td>
       <td>6</td>
-      <td>—</td>
-    </tr>
-    <tr>
-      <td><a href="sample-import.html">Sample import into a structured data store</a></td>
-      <td>7</td>
       <td>—</td>
     </tr>
     <tr>
@@ -1157,6 +1141,26 @@
       <td>—</td>
     </tr>
     <tr>
+      <td><a href="copy-out-materialized.html">Copy out materialized content — to work on somebody else’s bytes</a></td>
+      <td>5</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><a href="materialize-remote.html">Materialize remote content — the shared subprocess</a></td>
+      <td>10</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><a href="refresh-materialized.html">Refresh materialized remote content</a></td>
+      <td>8</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><a href="sample-import.html">Sample import into a structured data store</a></td>
+      <td>7</td>
+      <td>—</td>
+    </tr>
+    <tr>
       <td><a href="diig-investment-path.html">DIIG — from a health system bottleneck to a costed implementation plan</a></td>
       <td>9</td>
       <td>—</td>
@@ -1190,7 +1194,7 @@
     </tr>
     <tr>
       <td><a href="../reference/skill-instructions/adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication</code></a></td>
-      <td><a href="adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication.bpmn</code></a>, <a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="criterion-adjudication.html"><code class="language-plaintext highlighter-rouge">criterion-adjudication.bpmn</code></a>, <a href="ingest-l1-completeness-gate.html"><code class="language-plaintext highlighter-rouge">ingest-l1-completeness-gate.bpmn</code></a>, <a href="refresh-materialized.html"><code class="language-plaintext highlighter-rouge">refresh-materialized.bpmn</code></a>, <a href="review-narrative.html"><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></a>, <a href="translation-workflow.html"><code class="language-plaintext highlighter-rouge">translation-workflow.bpmn</code></a>, <a href="voice-review.html"><code class="language-plaintext highlighter-rouge">voice-review.bpmn</code></a></td>
+      <td><a href="adjudication.html"><code class="language-plaintext highlighter-rouge">adjudication.bpmn</code></a>, <a href="content-change-review.html"><code class="language-plaintext highlighter-rouge">content-change-review.bpmn</code></a>, <a href="criterion-adjudication.html"><code class="language-plaintext highlighter-rouge">criterion-adjudication.bpmn</code></a>, <a href="ingest-l1-completeness-gate.html"><code class="language-plaintext highlighter-rouge">ingest-l1-completeness-gate.bpmn</code></a>, <a href="review-narrative.html"><code class="language-plaintext highlighter-rouge">review-narrative.bpmn</code></a>, <a href="translation-workflow.html"><code class="language-plaintext highlighter-rouge">translation-workflow.bpmn</code></a>, <a href="voice-review.html"><code class="language-plaintext highlighter-rouge">voice-review.bpmn</code></a>, <a href="refresh-materialized.html"><code class="language-plaintext highlighter-rouge">refresh-materialized.bpmn</code></a></td>
     </tr>
     <tr>
       <td><a href="../reference/skill-instructions/adopt-methodology-from-source.html"><code class="language-plaintext highlighter-rouge">adopt-methodology-from-source</code></a></td>
@@ -2392,7 +2396,7 @@ just not tied to the two moments named above.</p>
 </section>
 <p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36777127325"><code>1b9fff1</code></a> &middot; 2026-09-30T21:06:33Z</p>
+  <a href="https://github.com/litlfred/folio-assistant/actions/runs/36779244607"><code>4f02c67</code></a> &middot; 2026-09-30T21:25:56Z</p>
 
 
   <div class="d-md-none mt-4 fs-2">
