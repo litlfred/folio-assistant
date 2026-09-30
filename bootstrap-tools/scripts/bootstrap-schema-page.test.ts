@@ -11,9 +11,9 @@ import { describe, expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { anchor, renderSchemaPage, rules, spaced } from "../bootstrap-schema-page.ts";
+import { anchor, renderSchemaPage, rules, spaced } from "./bootstrap-schema-page.ts";
 
-const SCHEMAS = join(import.meta.dir, "..", "..", "..", "bootstrap", "schemas");
+const SCHEMAS = join(import.meta.dir, "..", "..", "bootstrap", "schemas");
 
 const doc = {
   file: "x.schema.json",
@@ -46,9 +46,11 @@ describe("drawing", () => {
     expect(page).toContain('- If `mode` is "a", `parts` must be present.');
   });
 
-  test("each term has a heading, its drawing and its [src]", () => {
-    expect(page).toContain("### Thing");
-    expect(page).toContain("Drawn in [Thing](#thing). [src](x.schema.json#/$defs/Thing)");
+  test("each term is a row with its own anchor, its drawing and its [src]", () => {
+    // A table row with an explicit `<a id>`, not a heading: the staging
+    // site's kramdown gave headings no ids, so a deep link needs its own.
+    expect(page).toContain("| # | Term | Definition | Uses | Defined by |");
+    expect(page).toMatch(/\| 1 \| <a id="thing"><\/a>\*\*Thing\*\* \| .*Drawn in \[Thing\]\(#thing\)\. \| — \| \[src\]\(x\.schema\.json#\/\$defs\/Thing\) \|/);
   });
 });
 

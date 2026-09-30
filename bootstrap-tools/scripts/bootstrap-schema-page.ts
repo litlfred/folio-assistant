@@ -54,7 +54,7 @@ interface SchemaNode {
   anyOf?: SchemaNode[];
   oneOf?: SchemaNode[];
   allOf?: unknown[];
-  $defs?: Record<string, { title?: string; description?: string }>;
+  $defs?: Record<string, { title?: string; description?: string; uses?: string[]; isDefinedBy?: string }>;
 }
 
 /** One published document, and how the page should present it. */
@@ -71,6 +71,19 @@ export interface PageDocument {
    */
   boxNames?: Readonly<Record<string, string>>;
 }
+
+/**
+ * The published standards a term may be defined by, named for a reader:
+ * `[prefix, name, show the fragment?]`. An IRI matching none is shown by its
+ * host, which is honest if unlovely — add a row rather than guess a name.
+ */
+const STANDARDS: readonly (readonly [string, string, boolean])[] = [
+  ["https://www.w3.org/TR/json-ld11/", "JSON-LD 1.1 node object", false],
+  ["https://www.rfc-editor.org/rfc/rfc3987", "IRI (RFC 3987)", false],
+  ["http://json-schema.org/draft-07/schema", "JSON Schema draft-07", false],
+  ["https://www.omg.org/spec/BPMN/2.0/", "BPMN 2.0", true],
+  ["http://www.w3.org/ns/prov#", "PROV-O", true],
+];
 
 /** `KnowledgeGraph` → `Knowledge Graph`. */
 export function spaced(name: string): string {
@@ -283,9 +296,14 @@ export function renderSchemaPage(docs: readonly PageDocument[], termsFrom: strin
     "### Terms",
     "",
     "Each defined term, in the words of",
-    `[\`${termsFrom}\`](${termsFrom}). A term whose shape is drawn below links to`,
-    "its drawing; the rest are defined in words only.",
+    `[\`${termsFrom}\`](${termsFrom}), in order: each definition uses only terms`,
+    "above it, and never itself. **Uses** lists them. **Defined by** is the",
+    "schema that defines the term: `src` is its entry in this directory, anything",
+    "else is the published standard bootstrap builds on. A term whose shape is",
+    "drawn below links to its drawing.",
     "",
+    "| # | Term | Definition | Uses | Defined by |",
+    "|---:|---|---|---|---|",
   ];
   const roots = docs.map((d) => buildBox(d.schema.title ?? d.file, d.schema, d.boxNames ?? {}));
   // Which section draws a box named for a term. The declaration's root box is
@@ -296,11 +314,28 @@ export function renderSchemaPage(docs: readonly PageDocument[], termsFrom: strin
     const i = roots.findIndex((r) => boxNames(r).some((b) => b === t || b.startsWith(`${t} `)));
     return i === -1 ? undefined : roots[i]!.name;
   };
-  for (const [name, def] of Object.entries(termDoc.schema.$defs)) {
+  const cell = (s: string) => s.replace(/\|/g, "\\|").replace(/\n+/g, " ");
+  const definedBy = (name: string, iri: string | undefined): string => {
+    if (!iri || iri.startsWith("#")) {
+      const pointer = !iri || iri === "#" ? "" : iri.slice(1);
+      return `[src](${termsFrom}#${pointer || `/$defs/${name}`})`;
+    }
+    const standard = STANDARDS.find(([prefix]) => iri.startsWith(prefix));
+    const label = standard ? `${standard[1]}${iri.includes("#") && standard[2] ? ` \`${iri.split("#")[1]}\`` : ""}` : new URL(iri).hostname;
+    return `[${label}](${iri})`;
+  };
+  Object.entries(termDoc.schema.$defs).forEach(([name, def], i) => {
     const at = drawnIn(name);
     const drawn = at ? ` Drawn in [${at}](#${anchor(at)}).` : "";
-    out.push(`#### ${spaced(name)}`, "", `${def.description ?? ""}${drawn} [src](${termsFrom}#/$defs/${name})`, "");
-  }
+    // An EXPLICIT anchor, not the heading's: Jekyll's kramdown gave the
+    // headings no ids on the staging site, so a deep link from
+    // bootstrap/README.md landed at the top of the page. `<a id>` works on
+    // GitHub (as user-content-…) and on the site alike.
+    const term = `<a id="${anchor(spaced(name))}"></a>**${spaced(name)}**`;
+    const uses = (def.uses ?? []).map((u) => `[${spaced(u)}](#${anchor(spaced(u))})`).join(", ") || "—";
+    out.push(`| ${i + 1} | ${term} | ${cell(def.description ?? "")}${drawn} | ${uses} | ${definedBy(name, def.isDefinedBy)} |`);
+  });
+  out.push("");
   docs.forEach((doc, i) => out.push(...section(doc, roots[i]!)));
   return `${out.join("\n").trimEnd()}\n`;
 }

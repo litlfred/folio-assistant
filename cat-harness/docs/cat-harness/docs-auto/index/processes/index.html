@@ -126,7 +126,7 @@
 
 <ul class="subs">
 <li><a href="../folio-assistant-core-processes/">folio-assistant-core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">1</span></li>
-<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">69</span></li>
+<li><a href="../processes/">processes</a> <span class="p">cat-harness/processes</span> <span class="n">70</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
 
@@ -302,6 +302,10 @@
   <td>A GENERATED FILE THAT IS COMMITTED CAN GO STALE, AND A STALE ONE IS CONSULTED.<div class="f"><span class="k">activities</span> 1</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div></td>
 </tr>
 <tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>A knowledge graph leaves for its own repositories</code></a><br><span class="p">cat-harness/processes/kg-separation.bpmn</span></td>
+  <td>THE METHOD FOR A KNOWLEDGE GRAPH THAT LEAVES FOR ITS OWN REPOSITORIES, AND IT IS TWO REPOSITORIES, NOT ONE.<div class="f"><span class="k">activities</span> 17</div><div class="f"><span class="k">lanes</span> Authoring agent · Platform authoring agent · Publication manager · Build pipeline · Administrator</div><div class="f"><span class="k">skills</span> deletion-requires-confirmation, graph-detanglement, instance-publication, kg-separation, opening-brief, package-release, publish-verification, upstream-version-adoption</div></td>
+</tr>
+<tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-to-portal.bpmn"><code>KG to public portal</code></a><br><span class="p">cat-harness/processes/kg-to-portal.bpmn</span></td>
   <td>folio-assistant — KG to public portal.<div class="f"><span class="k">activities</span> 10</div><div class="f"><span class="k">lanes</span> Editorial · Deployment owner · Build pipeline · Attestation (GDHCN / WHO SMART Trust) · Publish target · Portal (external consumer)</div><div class="f"><span class="k">skills</span> bean-blocking, continual-progress, kg-export, kg-to-portal</div></td>
 </tr>
@@ -355,7 +359,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/repository-health-watch.bpmn"><code>Is the repository itself healthy?</code></a><br><span class="p">cat-harness/processes/repository-health-watch.bpmn</span></td>
-  <td>THE SAME SHAPE AS <code>ci-health</code>, ONE LEVEL OUT.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Scheduled log sweep</div><div class="f"><span class="k">skills</span> ci-health, deletion-requires-confirmation</div></td>
+  <td>THE SAME SHAPE AS `ci-health`, ONE LEVEL OUT.<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Scheduled log sweep</div><div class="f"><span class="k">skills</span> ci-health, deletion-requires-confirmation</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-code.bpmn"><code>Code node review</code></a><br><span class="p">cat-harness/processes/review-code.bpmn</span></td>
@@ -379,7 +383,7 @@
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/staging-render-log.bpmn"><code>Render log — the publish branch keeps its own history</code></a><br><span class="p">cat-harness/processes/staging-render-log.bpmn</span></td>
-  <td>Every change to the publish branch appends an entry to <code>_render-log/&lt;day&gt;.jsonl</code>.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> render-logging</div></td>
+  <td>Every change to the publish branch appends an entry to `_render-log/&lt;day&gt;.jsonl`.<div class="f"><span class="k">activities</span> 6</div><div class="f"><span class="k">lanes</span> CI/CD Pipeline</div><div class="f"><span class="k">skills</span> render-logging</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/swot-analysis.bpmn"><code>SWOT situation analysis</code></a><br><span class="p">cat-harness/processes/swot-analysis.bpmn</span></td>

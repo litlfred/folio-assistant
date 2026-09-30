@@ -17,7 +17,7 @@ Bean vigi, owner 2026-09-23: a set of post-processing tools that verify what the
 
 ## How it connects
 
-- **Called by:** [Publishing the docs site, and keeping the previews alive](docs-site-publish.html)
+- **Called by:** [Publishing the docs site, and keeping the previews alive](docs-site-publish.html), [A knowledge graph leaves for its own repositories](kg-separation.html)
 - **Calls:** none
 - **Names the `publish-verification` skill without calling this process:** [Alert the publication manager](publish-alert.html) — `activity-calls-skill-process` asks whether each should be a call activity.
 - **Presented on:** no docs page section shows this diagram

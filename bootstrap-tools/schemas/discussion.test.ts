@@ -171,10 +171,10 @@ const INPUT_CASES: Array<{ why: string; doc: unknown; valid: boolean }> = [
 describe("the generated bootstrap schemas", () => {
   test("keep their published `$id` — it is a contract, cited from five languages' catalogues", () => {
     expect(INPUT.$id).toBe(
-      "https://litlfred.github.io/bootstrap/0.1.0/skills/discussion/input.schema.json",
+      "https://litlfred.github.io/bootstrap/0.1.0/schemas/discussion.input.schema.json",
     );
     expect(OUTPUT.$id).toBe(
-      "https://litlfred.github.io/bootstrap/0.1.0/skills/discussion/output.schema.json",
+      "https://litlfred.github.io/bootstrap/0.1.0/schemas/discussion.output.schema.json",
     );
   });
 

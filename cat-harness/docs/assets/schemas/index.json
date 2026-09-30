@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "schemas": {
-      "count": 186,
+      "count": 181,
       "unit": "modules"
     },
     "folio-assist-core-schemas": {
@@ -392,7 +392,7 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/discussion.test.ts",
+      "module": "bootstrap-tools/schemas/discussion.test.ts",
       "instance": "cat-harness",
       "name": "discussion.test",
       "graphNode": "none",
@@ -401,7 +401,7 @@
       "isTest": true
     },
     {
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "instance": "cat-harness",
       "name": "discussion",
       "graphNode": "schema",
@@ -506,14 +506,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/glossary-ledger.ts",
-      "instance": "cat-harness",
-      "name": "glossary-ledger",
-      "graphNode": "schema",
-      "summary": "The swimlane glossary's retirement ledger: its tag and its shape.",
-      "isTest": false
-    },
-    {
       "module": "cat-harness/schemas/graph-kind-registry.ts",
       "instance": "cat-harness",
       "name": "graph-kind-registry",
@@ -522,7 +514,7 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/graph.test.ts",
+      "module": "bootstrap-tools/schemas/graph.test.ts",
       "instance": "cat-harness",
       "name": "graph.test",
       "graphNode": "undeclared",
@@ -530,7 +522,7 @@
       "isTest": true
     },
     {
-      "module": "cat-harness/schemas/graph.ts",
+      "module": "bootstrap-tools/schemas/graph.ts",
       "instance": "cat-harness",
       "name": "graph",
       "graphNode": "schema",
@@ -599,21 +591,6 @@
       "graphNode": "none",
       "reason": "a re-export barrel: it defines nothing of its own",
       "summary": "Re-exports all types, Zod validation schemas, and builder functions.",
-      "isTest": false
-    },
-    {
-      "module": "cat-harness/schemas/inline-code.test.ts",
-      "instance": "cat-harness",
-      "name": "inline-code.test",
-      "graphNode": "undeclared",
-      "isTest": true
-    },
-    {
-      "module": "cat-harness/schemas/inline-code.ts",
-      "instance": "cat-harness",
-      "name": "inline-code",
-      "graphNode": "schema",
-      "summary": "Backtick spans in authored prose, rendered as `<code>` — bean `mylx`.",
       "isTest": false
     },
     {
@@ -771,7 +748,7 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/model-registry.ts",
+      "module": "bootstrap-tools/schemas/model-registry.ts",
       "instance": "cat-harness",
       "name": "model-registry",
       "graphNode": "schema",
@@ -1015,22 +992,6 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/release-iri.test.ts",
-      "instance": "cat-harness",
-      "name": "release-iri.test",
-      "graphNode": "undeclared",
-      "summary": "An instance's release addresses, and the sync that keeps literal copies of",
-      "isTest": true
-    },
-    {
-      "module": "cat-harness/schemas/release-iri.ts",
-      "instance": "cat-harness",
-      "name": "release-iri",
-      "graphNode": "schema",
-      "summary": "An instance's release addresses: where its identifiers live at the version",
-      "isTest": false
-    },
-    {
       "module": "cat-harness/schemas/render-exemption.test.ts",
       "instance": "cat-harness",
       "name": "render-exemption.test",
@@ -1055,7 +1016,7 @@
       "isTest": false
     },
     {
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "instance": "cat-harness",
       "name": "requirement",
       "graphNode": "schema",
@@ -6079,13 +6040,6 @@
           "type": "z.string().url().optional()",
           "optional": true,
           "array": false
-        },
-        {
-          "name": "iriBase",
-          "type": "z.string().url().optional()",
-          "optional": true,
-          "array": false,
-          "doc": "The address this instance's IRIs are minted under, BEFORE the version —"
         },
         {
           "name": "previewUrl",
@@ -12053,9 +12007,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#DiscussionInput",
+      "id": "bootstrap-tools/schemas/discussion.ts#DiscussionInput",
       "name": "DiscussionInput",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -12066,9 +12020,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#DiscussionInputSchema",
+      "id": "bootstrap-tools/schemas/discussion.ts#DiscussionInputSchema",
       "name": "DiscussionInputSchema",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "zod-object",
       "doc": "The occasion for asking: what the agent already knows, and which unknown is",
       "fields": [
@@ -12106,8 +12060,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/discussion.ts#ParticipantSchema",
-        "cat-harness/schemas/discussion.ts#RepositoryRefSchema"
+        "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
+        "bootstrap-tools/schemas/discussion.ts#RepositoryRefSchema"
       ],
       "unresolved": [],
       "external": [
@@ -12117,9 +12071,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#DiscussionOutput",
+      "id": "bootstrap-tools/schemas/discussion.ts#DiscussionOutput",
       "name": "DiscussionOutput",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -12130,9 +12084,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema",
+      "id": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema",
       "name": "DiscussionOutputObjectSchema",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "zod-object",
       "doc": "The output document's shape, before the two conditional rules.",
       "fields": [
@@ -12188,9 +12142,9 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/discussion.ts#ExchangeEntrySchema",
-        "cat-harness/schemas/discussion.ts#ParticipantSchema",
-        "cat-harness/schemas/discussion.ts#RepositoryRefSchema"
+        "bootstrap-tools/schemas/discussion.ts#ExchangeEntrySchema",
+        "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
+        "bootstrap-tools/schemas/discussion.ts#RepositoryRefSchema"
       ],
       "unresolved": [],
       "external": [
@@ -12200,9 +12154,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#DiscussionOutputSchema",
+      "id": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputSchema",
       "name": "DiscussionOutputSchema",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "zod-object",
       "doc": "What the exchange determined: which harness, which repositories, on whose",
       "fields": [],
@@ -12211,16 +12165,16 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema"
+        "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema"
       ],
       "unresolved": [],
       "external": [],
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#ExchangeEntry",
+      "id": "bootstrap-tools/schemas/discussion.ts#ExchangeEntry",
       "name": "ExchangeEntry",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -12231,9 +12185,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#ExchangeEntrySchema",
+      "id": "bootstrap-tools/schemas/discussion.ts#ExchangeEntrySchema",
       "name": "ExchangeEntrySchema",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "zod-object",
       "doc": "One question put, and what came back.",
       "fields": [
@@ -12266,9 +12220,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#Participant",
+      "id": "bootstrap-tools/schemas/discussion.ts#Participant",
       "name": "Participant",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -12279,9 +12233,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#ParticipantSchema",
+      "id": "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
       "name": "ParticipantSchema",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "zod-object",
       "doc": "Who is being asked, or who answered.",
       "fields": [
@@ -12308,9 +12262,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#RepositoryRef",
+      "id": "bootstrap-tools/schemas/discussion.ts#RepositoryRef",
       "name": "RepositoryRef",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -12321,9 +12275,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/discussion.ts#RepositoryRefSchema",
+      "id": "bootstrap-tools/schemas/discussion.ts#RepositoryRefSchema",
       "name": "RepositoryRefSchema",
-      "module": "cat-harness/schemas/discussion.ts",
+      "module": "bootstrap-tools/schemas/discussion.ts",
       "kind": "zod-object",
       "doc": "A repository and the part it plays.",
       "fields": [
@@ -15291,77 +15245,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/glossary-ledger.ts#LedgerEntrySchema",
-      "name": "LedgerEntrySchema",
-      "module": "cat-harness/schemas/glossary-ledger.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "prefLabel",
-          "type": "z.string().describe(\"The label at the time of minting — what a retired term is shown as.\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "firstSeen",
-          "type": "z.string().describe(\"ISO date this key was first written.\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "retiredOn",
-          "type": "z.string().nullable().describe(\"ISO date it stopped being used, or null while it still is.\")",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [
-        "z"
-      ],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/glossary-ledger.ts#LedgerSchema",
-      "name": "LedgerSchema",
-      "module": "cat-harness/schemas/glossary-ledger.ts",
-      "kind": "zod-object",
-      "fields": [
-        {
-          "name": "$schema",
-          "type": "z.literal(LEDGER_SCHEMA)",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "instance",
-          "type": "z.string().min(1).describe(\"Which Knowledge Graph's glossary this is: its name, never a path.\")",
-          "optional": false,
-          "array": false
-        },
-        {
-          "name": "concepts",
-          "type": "z .record(z.string(), LedgerEntrySchema) .describe(\"Keyed by the term IRI's local part, never the absolute IRI, so the …",
-          "optional": false,
-          "array": false
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [
-        "cat-harness/schemas/glossary-ledger.ts#LedgerEntrySchema"
-      ],
-      "unresolved": [],
-      "external": [
-        "LEDGER_SCHEMA",
-        "z"
-      ],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/graph-kind-registry.ts#GraphKind",
       "name": "GraphKind",
       "module": "cat-harness/schemas/graph-kind-registry.ts",
@@ -15503,9 +15386,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph.ts#AssetSchema",
+      "id": "bootstrap-tools/schemas/graph.ts#AssetSchema",
       "name": "AssetSchema",
-      "module": "cat-harness/schemas/graph.ts",
+      "module": "bootstrap-tools/schemas/graph.ts",
       "kind": "zod-object",
       "fields": [
         {
@@ -15537,22 +15420,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph.ts#BootstrapGraphKind",
-      "name": "BootstrapGraphKind",
-      "module": "cat-harness/schemas/graph.ts",
-      "kind": "type-alias",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/graph.ts#BootstrapTerm",
+      "id": "bootstrap-tools/schemas/graph.ts#BootstrapTerm",
       "name": "BootstrapTerm",
-      "module": "cat-harness/schemas/graph.ts",
+      "module": "bootstrap-tools/schemas/graph.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -15563,23 +15433,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph.ts#GraphKindSchema",
-      "name": "GraphKindSchema",
-      "module": "cat-harness/schemas/graph.ts",
-      "kind": "zod-union",
-      "doc": "One entry of a Subgraph's `graphKinds`: one of bootstrap's, or an Extension.",
-      "fields": [],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
-      "id": "cat-harness/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
+      "id": "bootstrap-tools/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
       "name": "KnowledgeGraphDeclarationSchema",
-      "module": "cat-harness/schemas/graph.ts",
+      "module": "bootstrap-tools/schemas/graph.ts",
       "kind": "zod-object",
       "doc": "The shape every `<name>.json` shares. Loose on purpose: a Harness above bootstrap adds fields.",
       "fields": [
@@ -15587,18 +15443,6 @@
           "name": "name",
           "type": "z.string().min(1).describe(\"The Knowledge Graph's name. The declaration file is `<name>.json`.\")",
           "optional": false,
-          "array": false
-        },
-        {
-          "name": "version",
-          "type": "z .string() .regex(/^\\d+\\.\\d+\\.\\d+$/) .optional() .describe(\"Its version, as MAJOR.MINOR.PATCH (semantic versioning).\")",
-          "optional": true,
-          "array": false
-        },
-        {
-          "name": "iriBase",
-          "type": "z .string() .url() .optional() .describe( \"The address its IRIs are minted under, before the version. An identifier a p…",
-          "optional": true,
           "array": false
         },
         {
@@ -15629,8 +15473,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/graph.ts#AssetSchema",
-        "cat-harness/schemas/graph.ts#SubgraphSchema"
+        "bootstrap-tools/schemas/graph.ts#AssetSchema",
+        "bootstrap-tools/schemas/graph.ts#SubgraphSchema"
       ],
       "unresolved": [],
       "external": [
@@ -15639,9 +15483,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/graph.ts#SubgraphSchema",
+      "id": "bootstrap-tools/schemas/graph.ts#SubgraphSchema",
       "name": "SubgraphSchema",
-      "module": "cat-harness/schemas/graph.ts",
+      "module": "bootstrap-tools/schemas/graph.ts",
       "kind": "zod-object",
       "fields": [
         {
@@ -15658,7 +15502,7 @@
         },
         {
           "name": "graphKinds",
-          "type": "z.array(GraphKindSchema).min(1).describe(\"The Graph Kinds it holds.\")",
+          "type": "z.array(z.string().min(1)).min(1).describe(\"The Graph Kinds it holds.\")",
           "optional": false,
           "array": true
         },
@@ -15677,9 +15521,7 @@
       ],
       "extendsNames": [],
       "values": [],
-      "refs": [
-        "cat-harness/schemas/graph.ts#GraphKindSchema"
-      ],
+      "refs": [],
       "unresolved": [],
       "external": [
         "z"
@@ -19468,9 +19310,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/model-registry.ts#ModelEntry",
+      "id": "bootstrap-tools/schemas/model-registry.ts#ModelEntry",
       "name": "ModelEntry",
-      "module": "cat-harness/schemas/model-registry.ts",
+      "module": "bootstrap-tools/schemas/model-registry.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -19481,9 +19323,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/model-registry.ts#ModelEntrySchema",
+      "id": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema",
       "name": "ModelEntrySchema",
-      "module": "cat-harness/schemas/model-registry.ts",
+      "module": "bootstrap-tools/schemas/model-registry.ts",
       "kind": "zod-object",
       "fields": [
         {
@@ -19547,9 +19389,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/model-registry.ts#ModelRegistry",
+      "id": "bootstrap-tools/schemas/model-registry.ts#ModelRegistry",
       "name": "ModelRegistry",
-      "module": "cat-harness/schemas/model-registry.ts",
+      "module": "bootstrap-tools/schemas/model-registry.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -19560,14 +19402,14 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/model-registry.ts#ModelRegistrySchema",
+      "id": "bootstrap-tools/schemas/model-registry.ts#ModelRegistrySchema",
       "name": "ModelRegistrySchema",
-      "module": "cat-harness/schemas/model-registry.ts",
+      "module": "bootstrap-tools/schemas/model-registry.ts",
       "kind": "zod-object",
       "fields": [
         {
           "name": "$schema",
-          "type": "z.literal(MODEL_REGISTRY_SCHEMA)",
+          "type": "z.literal(\"folio-model-registry/v1\")",
           "optional": false,
           "array": false
         },
@@ -19581,19 +19423,18 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/model-registry.ts#ModelEntrySchema"
+        "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema"
       ],
       "unresolved": [],
       "external": [
-        "MODEL_REGISTRY_SCHEMA",
         "z"
       ],
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/model-registry.ts#ValidationState",
+      "id": "bootstrap-tools/schemas/model-registry.ts#ValidationState",
       "name": "ValidationState",
-      "module": "cat-harness/schemas/model-registry.ts",
+      "module": "bootstrap-tools/schemas/model-registry.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -22943,56 +22784,6 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/release-iri.ts#ReleaseIris",
-      "name": "ReleaseIris",
-      "module": "cat-harness/schemas/release-iri.ts",
-      "kind": "interface",
-      "doc": "An instance's release, as both audiences address it.",
-      "fields": [
-        {
-          "name": "iriBase",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The declared `iriBase`, ending in `/`."
-        },
-        {
-          "name": "version",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "The declared version, `MAJOR.MINOR.PATCH`."
-        },
-        {
-          "name": "major",
-          "type": "number",
-          "optional": false,
-          "array": false,
-          "doc": "`MAJOR` alone, as a number."
-        },
-        {
-          "name": "agent",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "`<iriBase><version>/` — what a program reads."
-        },
-        {
-          "name": "human",
-          "type": "string",
-          "optional": false,
-          "array": false,
-          "doc": "`<iriBase>v<major>/` — what a person reads."
-        }
-      ],
-      "extendsNames": [],
-      "values": [],
-      "refs": [],
-      "unresolved": [],
-      "external": [],
-      "exported": true
-    },
-    {
       "id": "cat-harness/schemas/render-log.ts#RenderEvent",
       "name": "RenderEvent",
       "module": "cat-harness/schemas/render-log.ts",
@@ -23275,9 +23066,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#Requirement",
+      "id": "bootstrap-tools/schemas/requirement.ts#Requirement",
       "name": "Requirement",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -23288,9 +23079,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementFields",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementFields",
       "name": "RequirementFields",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "zod-object",
       "doc": "The requirement's FIELDS, before its refinement — for a harness to extend.",
       "fields": [
@@ -23362,8 +23153,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/requirement.ts#RequirementStatementSchema",
-        "cat-harness/schemas/requirement.ts#RequirementStatusSchema"
+        "bootstrap-tools/schemas/requirement.ts#RequirementStatementSchema",
+        "bootstrap-tools/schemas/requirement.ts#RequirementStatusSchema"
       ],
       "unresolved": [],
       "external": [
@@ -23372,9 +23163,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementLevel",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementLevel",
       "name": "RequirementLevel",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -23385,9 +23176,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementLevelSchema",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementLevelSchema",
       "name": "RequirementLevelSchema",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "zod-enum",
       "doc": "How strongly a statement binds.",
       "fields": [],
@@ -23404,9 +23195,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementRef",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementRef",
       "name": "RequirementRef",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -23417,9 +23208,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementRefSchema",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementRefSchema",
       "name": "RequirementRefSchema",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "zod-scalar",
       "doc": "The address of a requirement or one of its statements: `req:<slug>` or",
       "fields": [],
@@ -23431,9 +23222,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementSchema",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementSchema",
       "name": "RequirementSchema",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "zod-object",
       "fields": [],
       "extendsNames": [
@@ -23441,16 +23232,16 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/requirement.ts#RequirementFields"
+        "bootstrap-tools/schemas/requirement.ts#RequirementFields"
       ],
       "unresolved": [],
       "external": [],
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementStatement",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementStatement",
       "name": "RequirementStatement",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -23461,9 +23252,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementStatementFields",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields",
       "name": "RequirementStatementFields",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "zod-object",
       "doc": "The statement's FIELDS, before the kind-consistency refinement — exported so",
       "fields": [
@@ -23546,8 +23337,8 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/requirement.ts#RequirementLevelSchema",
-        "cat-harness/schemas/requirement.ts#StatementKindSchema"
+        "bootstrap-tools/schemas/requirement.ts#RequirementLevelSchema",
+        "bootstrap-tools/schemas/requirement.ts#StatementKindSchema"
       ],
       "unresolved": [],
       "external": [
@@ -23556,9 +23347,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementStatementSchema",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementStatementSchema",
       "name": "RequirementStatementSchema",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "zod-object",
       "fields": [],
       "extendsNames": [
@@ -23566,16 +23357,16 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/requirement.ts#RequirementStatementFields"
+        "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields"
       ],
       "unresolved": [],
       "external": [],
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementStatus",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementStatus",
       "name": "RequirementStatus",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -23586,9 +23377,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#RequirementStatusSchema",
+      "id": "bootstrap-tools/schemas/requirement.ts#RequirementStatusSchema",
       "name": "RequirementStatusSchema",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "zod-enum",
       "doc": "Where a feature's requirement is in its life. A proposal is `proposed`; a",
       "fields": [],
@@ -23605,9 +23396,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#StatementKind",
+      "id": "bootstrap-tools/schemas/requirement.ts#StatementKind",
       "name": "StatementKind",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "type-alias",
       "fields": [],
       "extendsNames": [],
@@ -23618,9 +23409,9 @@
       "exported": true
     },
     {
-      "id": "cat-harness/schemas/requirement.ts#StatementKindSchema",
+      "id": "bootstrap-tools/schemas/requirement.ts#StatementKindSchema",
       "name": "StatementKindSchema",
-      "module": "cat-harness/schemas/requirement.ts",
+      "module": "bootstrap-tools/schemas/requirement.ts",
       "kind": "zod-enum",
       "doc": "What a statement is about: something someone can do, or how well it is done.",
       "fields": [],
@@ -25885,7 +25676,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/requirement.ts#RequirementLevelSchema"
+        "bootstrap-tools/schemas/requirement.ts#RequirementLevelSchema"
       ],
       "unresolved": [],
       "external": [],
@@ -26446,7 +26237,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/requirement.ts#RequirementFields",
+        "bootstrap-tools/schemas/requirement.ts#RequirementFields",
         "cat-harness/schemas/skill-package.ts#RequirementStatementSchema"
       ],
       "unresolved": [],
@@ -26507,7 +26298,7 @@
       ],
       "values": [],
       "refs": [
-        "cat-harness/schemas/requirement.ts#RequirementStatementFields"
+        "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields"
       ],
       "unresolved": [],
       "external": [],
@@ -28744,7 +28535,7 @@
       "extendsNames": [],
       "values": [],
       "refs": [
-        "cat-harness/schemas/requirement.ts#RequirementRefSchema",
+        "bootstrap-tools/schemas/requirement.ts#RequirementRefSchema",
         "cat-harness/schemas/test-run.ts#HashBasisSchema",
         "cat-harness/schemas/test-run.ts#TestCaseSchema",
         "cat-harness/schemas/tool-types.ts#SkillNameSchema"
@@ -42492,48 +42283,48 @@
       "array": true
     },
     {
-      "from": "cat-harness/schemas/discussion.ts#DiscussionInputSchema",
-      "to": "cat-harness/schemas/discussion.ts#ParticipantSchema",
+      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionInputSchema",
+      "to": "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
       "via": "askedOf",
       "kind": "field",
       "optional": false,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/discussion.ts#DiscussionInputSchema",
-      "to": "cat-harness/schemas/discussion.ts#RepositoryRefSchema",
+      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionInputSchema",
+      "to": "bootstrap-tools/schemas/discussion.ts#RepositoryRefSchema",
       "via": "knownRepositories",
       "kind": "field",
       "optional": true,
       "array": true
     },
     {
-      "from": "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema",
-      "to": "cat-harness/schemas/discussion.ts#ExchangeEntrySchema",
+      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema",
+      "to": "bootstrap-tools/schemas/discussion.ts#ExchangeEntrySchema",
       "via": "exchange",
       "kind": "field",
       "optional": false,
       "array": true
     },
     {
-      "from": "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema",
-      "to": "cat-harness/schemas/discussion.ts#ParticipantSchema",
+      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema",
+      "to": "bootstrap-tools/schemas/discussion.ts#ParticipantSchema",
       "via": "answeredBy",
       "kind": "field",
       "optional": false,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema",
-      "to": "cat-harness/schemas/discussion.ts#RepositoryRefSchema",
+      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema",
+      "to": "bootstrap-tools/schemas/discussion.ts#RepositoryRefSchema",
       "via": "repositories",
       "kind": "field",
       "optional": true,
       "array": true
     },
     {
-      "from": "cat-harness/schemas/discussion.ts#DiscussionOutputSchema",
-      "to": "cat-harness/schemas/discussion.ts#DiscussionOutputObjectSchema",
+      "from": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputSchema",
+      "to": "bootstrap-tools/schemas/discussion.ts#DiscussionOutputObjectSchema",
       "via": "",
       "kind": "extends",
       "optional": false,
@@ -42940,14 +42731,6 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/glossary-ledger.ts#LedgerSchema",
-      "to": "cat-harness/schemas/glossary-ledger.ts#LedgerEntrySchema",
-      "via": "concepts",
-      "kind": "field",
-      "optional": false,
-      "array": false
-    },
-    {
       "from": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef",
       "to": "cat-harness/schemas/graph-kind-registry.ts#GraphLayer",
       "via": "holds",
@@ -42964,27 +42747,19 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
-      "to": "cat-harness/schemas/graph.ts#AssetSchema",
+      "from": "bootstrap-tools/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
+      "to": "bootstrap-tools/schemas/graph.ts#AssetSchema",
       "via": "assets",
       "kind": "field",
       "optional": true,
       "array": true
     },
     {
-      "from": "cat-harness/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
-      "to": "cat-harness/schemas/graph.ts#SubgraphSchema",
+      "from": "bootstrap-tools/schemas/graph.ts#KnowledgeGraphDeclarationSchema",
+      "to": "bootstrap-tools/schemas/graph.ts#SubgraphSchema",
       "via": "directories",
       "kind": "field",
       "optional": true,
-      "array": true
-    },
-    {
-      "from": "cat-harness/schemas/graph.ts#SubgraphSchema",
-      "to": "cat-harness/schemas/graph.ts#GraphKindSchema",
-      "via": "graphKinds",
-      "kind": "field",
-      "optional": false,
       "array": true
     },
     {
@@ -43500,8 +43275,8 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/model-registry.ts#ModelRegistrySchema",
-      "to": "cat-harness/schemas/model-registry.ts#ModelEntrySchema",
+      "from": "bootstrap-tools/schemas/model-registry.ts#ModelRegistrySchema",
+      "to": "bootstrap-tools/schemas/model-registry.ts#ModelEntrySchema",
       "via": "models",
       "kind": "field",
       "optional": false,
@@ -43980,48 +43755,48 @@
       "array": false
     },
     {
-      "from": "cat-harness/schemas/requirement.ts#RequirementFields",
-      "to": "cat-harness/schemas/requirement.ts#RequirementStatementSchema",
+      "from": "bootstrap-tools/schemas/requirement.ts#RequirementFields",
+      "to": "bootstrap-tools/schemas/requirement.ts#RequirementStatementSchema",
       "via": "statements",
       "kind": "field",
       "optional": false,
       "array": true
     },
     {
-      "from": "cat-harness/schemas/requirement.ts#RequirementFields",
-      "to": "cat-harness/schemas/requirement.ts#RequirementStatusSchema",
+      "from": "bootstrap-tools/schemas/requirement.ts#RequirementFields",
+      "to": "bootstrap-tools/schemas/requirement.ts#RequirementStatusSchema",
       "via": "status",
       "kind": "field",
       "optional": true,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/requirement.ts#RequirementSchema",
-      "to": "cat-harness/schemas/requirement.ts#RequirementFields",
+      "from": "bootstrap-tools/schemas/requirement.ts#RequirementSchema",
+      "to": "bootstrap-tools/schemas/requirement.ts#RequirementFields",
       "via": "",
       "kind": "extends",
       "optional": false,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/requirement.ts#RequirementStatementFields",
-      "to": "cat-harness/schemas/requirement.ts#RequirementLevelSchema",
+      "from": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields",
+      "to": "bootstrap-tools/schemas/requirement.ts#RequirementLevelSchema",
       "via": "conformance",
       "kind": "field",
       "optional": false,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/requirement.ts#RequirementStatementFields",
-      "to": "cat-harness/schemas/requirement.ts#StatementKindSchema",
+      "from": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields",
+      "to": "bootstrap-tools/schemas/requirement.ts#StatementKindSchema",
       "via": "kind",
       "kind": "field",
       "optional": true,
       "array": false
     },
     {
-      "from": "cat-harness/schemas/requirement.ts#RequirementStatementSchema",
-      "to": "cat-harness/schemas/requirement.ts#RequirementStatementFields",
+      "from": "bootstrap-tools/schemas/requirement.ts#RequirementStatementSchema",
+      "to": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields",
       "via": "",
       "kind": "extends",
       "optional": false,
@@ -44501,7 +44276,7 @@
     },
     {
       "from": "cat-harness/schemas/skill-package.ts#ConformanceSchema",
-      "to": "cat-harness/schemas/requirement.ts#RequirementLevelSchema",
+      "to": "bootstrap-tools/schemas/requirement.ts#RequirementLevelSchema",
       "via": "",
       "kind": "extends",
       "optional": false,
@@ -44541,7 +44316,7 @@
     },
     {
       "from": "cat-harness/schemas/skill-package.ts#RequirementSchema",
-      "to": "cat-harness/schemas/requirement.ts#RequirementFields",
+      "to": "bootstrap-tools/schemas/requirement.ts#RequirementFields",
       "via": "",
       "kind": "extends",
       "optional": false,
@@ -44557,7 +44332,7 @@
     },
     {
       "from": "cat-harness/schemas/skill-package.ts#RequirementStatementSchema",
-      "to": "cat-harness/schemas/requirement.ts#RequirementStatementFields",
+      "to": "bootstrap-tools/schemas/requirement.ts#RequirementStatementFields",
       "via": "",
       "kind": "extends",
       "optional": false,
@@ -44853,7 +44628,7 @@
     },
     {
       "from": "cat-harness/schemas/test-run.ts#TestRunSchema",
-      "to": "cat-harness/schemas/requirement.ts#RequirementRefSchema",
+      "to": "bootstrap-tools/schemas/requirement.ts#RequirementRefSchema",
       "via": "requirements",
       "kind": "field",
       "optional": true,

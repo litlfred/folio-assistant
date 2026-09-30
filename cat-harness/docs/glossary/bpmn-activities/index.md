@@ -11,13 +11,13 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 503 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 520 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 532 terms and is 411 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 549 terms and is 418 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">532</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">549</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-0-9">0–9</a> <a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -27,7 +27,7 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 1 · Declare in place (nothing moves) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A <code>&lt;name&gt;.json</code> entry with its <code>graphs[]</code> kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</p>
+<p>A `&lt;name&gt;.json` entry with its `graphs[]` kinds. A sub-graph that owns its own layout gains a NESTED declaration whose paths resolve against its own directory, so the whole graph relocates by moving one folder.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Declare</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_plan" data-fa-state="extracted" data-fa-gloss="">
@@ -43,6 +43,41 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <dd>
 <p>Scope the paper: chapters, the blocks each needs, what gets formalised.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Plan</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_detangle" data-fa-state="extracted" data-fa-gloss="">
+1–3 · Declare, detangle, isolate <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The graph-detanglement practice, all of its gates: declared in place, zero wrong-direction edges on every axis, and standing alone with its own declaration, namespace and artefact. A plain task on purpose, not a call to graph-detanglement.bpmn: that process ends in its own authorise-and-extract steps, which here are stages 9-13 of this one, and calling it would run them twice.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Detangle</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_seed" data-fa-state="extracted" data-fa-gloss="">
+10 · Seed both repositories <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Seed main, then bring the content and the tools in as reviewed pull requests with their history, so neither repository's first commit is unreviewable.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Seed</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_consume" data-fa-state="extracted" data-fa-gloss="">
+11 · Parent consumes, additively <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The parent pins the pair (a commit while staging, a version once released), repoints its imports, and keeps its own copy until it is green with the dependency declared.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Consume</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_release" data-fa-state="extracted" data-fa-gloss="">
+12 · First release <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Tag each repository, publish /&lt;version&gt;/ and /v&lt;major&gt;/. From here the two are versioned independently; a tools release lists the content majors it supports.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Release</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_cutover" data-fa-state="extracted" data-fa-gloss="">
+13 · Cutover: delete the parent's copy <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Cutover</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_seedplan" data-fa-state="extracted" data-fa-gloss="">
 2 · Seed the work plan [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
@@ -62,7 +97,7 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 2a · Measure — unassigned column FIRST <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>bun run check:partition</code>. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in.</p>
+<p>`bun run check:partition`. Read the unassigned column before the edge count, and quote BOTH numbers rather than only the one that improved. The count rising when the measurement improves is correct: 43 to 49 when thirteen previously-unjudged edges were folded in.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Measure</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_move" data-fa-state="extracted" data-fa-gloss="">
@@ -90,7 +125,7 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 3 · Scaffold the folio repo [content-plan] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Create the folio repository with <code>bun run init-folio</code> (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.</p>
+<p>Create the folio repository with `bun run init-folio` (or the folio_init tool): content/, the document, chapter and first block manifests, the builder shim, AGENTS.md, .mcp.json, the session-start hook and the beans store, with the platform linked rather than copied.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Scaffold</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_paperauthoring.task_authorblocks" data-fa-state="extracted" data-fa-gloss="">
@@ -114,6 +149,13 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <p>Only once edges are zero and the declaration stands alone: move the sub-graph out as one directory move, not a file-by-file sift. Its nested declaration resolves paths against its own directory, so moving the folder moves the graph. The five-point gate is in migration-plan.md Phase II.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Extract</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_identity" data-fa-state="extracted" data-fa-gloss="">
+4 · Identity: version, iriBase, nodeSchemas <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The declaration carries name, version, iriBase, needs and nodeSchemas. A base move is `bun run iri:sync -- --from &lt;old base&gt;`, once; then `iri:sync:check` and `check:node-iris` are green.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Identity</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_profilecheck" data-fa-state="extracted" data-fa-gloss="">
 5 · Check the profile [content-validate] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -127,6 +169,20 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <dd>
 <p>Give each formal block (definition, theorem, lemma, proposition, corollary, conjecture, proof) a .lean sibling that Lean 4 accepts, in the order lean-formalization sets out. A compiling declaration is not a formalised claim: check vacuity and narrative drift before calling it done, and record the status with proof-verification.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Formalize</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_hosted" data-fa-state="extracted" data-fa-gloss="">
+5 · Move harness output about it to the host <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>QA verdicts, translation templates, the exported graph and the glossary ledger are harness output ABOUT the graph: they live with the harness (kgQaHomeFor, translationsHomeFor). The content keeps only what its own checks need; the leak test's pending list is empty.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Hosted</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_split" data-fa-state="extracted" data-fa-gloss="">
+6 · Split content from tools <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Create &lt;name&gt;-tools as a sibling directory and move the code: the Zod source, the generators, the README and diagram writers, the content checks. Cut its import cone to its own files and declared packages. Both start at the content's version.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Split</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_validate" data-fa-state="extracted" data-fa-gloss="">
 6 · Validate [content-validate] <span class="fa-gloss-status">candidate, extracted</span>
@@ -142,6 +198,13 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <p>Run content validation over the folio: schemas, the content profile (formal kinds only in a paper), cross-block consistency and that the Lean builds. Loop back rather than rendering over a failure.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Validate</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_plan" data-fa-state="extracted" data-fa-gloss="">
+7 · Plan publication <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Every identifier the content mints is a file some step publishes: /&lt;version&gt;/ for what programs read, kept for every version; /v&lt;major&gt;/ for pages people read. Name collisions between published files are resolved here.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Plan</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_render" data-fa-state="extracted" data-fa-gloss="">
 7 · Render MD / HTML / PDF [document-publishing] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -156,6 +219,13 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <p>Typeset the paper through LaTeX to PDF and HTML. Run latex_preflight first — missing packages, fonts or engine — rather than discovering them twenty minutes in. The preamble, class and macros belong to the folio, never to the platform.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Render</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_rehearse" data-fa-state="extracted" data-fa-gloss="">
+8 · Rehearse standalone <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Copy the content and the tools alone into a temporary directory, with nothing else on the path, and run the tools' checks there. An empty tree must exit non-zero, so a rehearsal over nothing cannot pass.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Rehearse</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_review" data-fa-state="extracted" data-fa-gloss="">
 8 · Review and feedback [content-review] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -169,6 +239,13 @@ From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.
 <dd>
 <p>Review the rendered paper, not a description of it, and record the feedback. The outcome is iterate — back to authoring — or approved for the publication path.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/authoring-a-paper.bpmn"><code>cat-harness/processes/authoring-a-paper.bpmn#Task_Review</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_authorise" data-fa-state="extracted" data-fa-gloss="">
+9 · Authorise the extraction <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>A repository cut changes the substrate every other process binds to; that is a person's decision. Declining leaves the graph declared, detangled, isolated and split in place.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Authorise</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_documentauthoring.task_publish" data-fa-state="extracted" data-fa-gloss="">
 9 · Publish [content-publish] <span class="fa-gloss-status">candidate, extracted</span>
@@ -248,21 +325,21 @@ Adjudicate the conflict <span class="fa-gloss-status">candidate, extracted</span
 Adjudicate the criterion disagreement <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. <code>cat-harness.processes:adjudication codes</code> sits here rather than on <code>A_Adjudicate</code> inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two. <code>Process_Adjudication</code> may also leave at <code>End_NotAdjudicable</code> — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record.</p>
+<p>The shared judgement — entry condition, untainted dispatch, person-or-agent restriction — asked with THIS question's permitted answers. `cat-harness.processes:adjudication codes` sits here rather than on `A_Adjudicate` inside it because the answers depend on what was asked, and the gateway below is what acts on them: the engine refuses a mismatch between the two. `Process_Adjudication` may also leave at `End_NotAdjudicable` — one entry and no other side is a review or a gate, not a disagreement — in which case nothing below runs and there is nothing to record.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/criterion-adjudication.bpmn"><code>cat-harness/processes/criterion-adjudication.bpmn#Call_Adjudicate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_adjudication.a_adjudicate" data-fa-state="extracted" data-fa-gloss="">
 Adjudicate the disagreement <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. It declares NO <code>cat-harness.processes:adjudication codes</code> on purpose, and that absence is the whole of bean <code>bvuk</code>. This step used to name three — stands, scope, dispensation — and six diagrams called it: <code>review-narrative</code> and <code>voice-review</code>, whose question those three answer, and four whose question they do not. <code>refresh-materialized</code> asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: <code>cat-harness.processes:adjudication codes</code> on its OWN call activity, with its own gateway acting on them. <code>criterion-adjudication.bpmn</code> is that for the QA-criterion question. What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed <code>local-wins</code> would have had it pointing at <code>A_ScopeCriterion</code>. The branches had to move, not the enum.</p>
+<p>The judgement itself, and the one step nothing here can check: if a mechanism could decide it, the process would not have been entered. It declares NO `cat-harness.processes:adjudication codes` on purpose, and that absence is the whole of bean `bvuk`. This step used to name three — stands, scope, dispensation — and six diagrams called it: `review-narrative` and `voice-review`, whose question those three answer, and four whose question they do not. `refresh-materialized` asks which side wins a local-vs-remote conflict; there is no criterion to scope there and no dispensation to grant, yet the outcome half ran regardless. Since the caller's question decides the permitted answers, the caller declares them: `cat-harness.processes:adjudication codes` on its OWN call activity, with its own gateway acting on them. `criterion-adjudication.bpmn` is that for the QA-criterion question. What could NOT be fixed by passing the codes as data, which was this bean's first recommendation: the three branches ran three different TASKS, so a caller handed `local-wins` would have had it pointing at `A_ScopeCriterion`. The branches had to move, not the enum.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/adjudication.bpmn"><code>cat-harness/processes/adjudication.bpmn#A_Adjudicate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.call_adjudication" data-fa-state="extracted" data-fa-gloss="">
 Adjudicate the disagreement [adjudication] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to <code>adjudicated</code> with the Decision that closed it. Permitted answers (bean <code>bvuk</code>, owner 2026-09-23): <code>stands</code> — the finding is right and the author addresses it; <code>withdrawn</code> — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check.</p>
+<p>adjudication.bpmn. When the editor and a reviewer, or two reviewers, disagree about a finding, an adjudicator settles it and records why; the review comment moves to `adjudicated` with the Decision that closed it. Permitted answers (bean `bvuk`, owner 2026-09-23): `stands` — the finding is right and the author addresses it; `withdrawn` — the finding is wrong and the comment closes. Recorded on the comment, not branched: either way the flow goes on to the coverage check.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Call_Adjudication</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_l1gate.task_flagdrift" data-fa-state="extracted" data-fa-gloss="">
@@ -276,7 +353,7 @@ Adjudicate the flagged passage <span class="fa-gloss-status">candidate, extracte
 Adjudicate the voice findings <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Three outcomes, all legitimate: the register is wrong for this genre; the criterion does not belong in this genre and should carry <code>profiles</code>; or the block is a stated exception and a reviewer entry records why.</p>
+<p>Three outcomes, all legitimate: the register is wrong for this genre; the criterion does not belong in this genre and should carry `profiles`; or the block is a stated exception and a reviewer entry records why.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-narrative.bpmn"><code>cat-harness/processes/review-narrative.bpmn#Task_AdjudicateVoice</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_voicereview.task_adjudicate" data-fa-state="extracted" data-fa-gloss="">
@@ -290,7 +367,7 @@ Adjudicate: prose, scope, or exception <span class="fa-gloss-status">candidate, 
 Adjudication <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. Reviewers disagreeing on ONE criterion is a criterion disagreement, so this calls the QA-criterion specialisation (bean <code>bvuk</code>, owner 2026-09-23): the failing entry stands, the criterion does not apply to this screen, or a dispensation is granted with its reason. FOR THIS CALLER THE SPLIT WAS A REGRESSION, not a fix, and that is worth keeping because the PR that made it said the opposite. When <code>bvuk</code> moved the outcome half out of <code>adjudication.bpmn</code>, #1074 reported that all four remaining callers &quot;no longer reach A_ScopeCriterion or A_Dispensation&quot; and framed it as the intended effect. True for three of them, whose question never admitted those steps. Here it removed the two steps the sentence above already documents, so the call was left pointing at a shared judgement that no longer runs either. Repointing restores what the documentation always claimed rather than changing it. The entry condition matches exactly rather than approximately: GW_Agree asks whether the blind reviewers' entries agree and takes <code>no</code> here, and <code>Process_CriterionAdjudication</code> starts at &quot;entries for one criterion disagree&quot; — R_Review records pass, warn or fail PER CRITERION with a reason, so the disagreement reaching this step is a per-criterion disagreement between reviewer entries and nothing else.</p>
+<p>folio-assistant's adjudication: the adjudication leads, the checker's entry is kept, and the dispensation carries its reason. Reviewers disagreeing on ONE criterion is a criterion disagreement, so this calls the QA-criterion specialisation (bean `bvuk`, owner 2026-09-23): the failing entry stands, the criterion does not apply to this screen, or a dispensation is granted with its reason. FOR THIS CALLER THE SPLIT WAS A REGRESSION, not a fix, and that is worth keeping because the PR that made it said the opposite. When `bvuk` moved the outcome half out of `adjudication.bpmn`, #1074 reported that all four remaining callers &quot;no longer reach A_ScopeCriterion or A_Dispensation&quot; and framed it as the intended effect. True for three of them, whose question never admitted those steps. Here it removed the two steps the sentence above already documents, so the call was left pointing at a shared judgement that no longer runs either. Repointing restores what the documentation always claimed rather than changing it. The entry condition matches exactly rather than approximately: GW_Agree asks whether the blind reviewers' entries agree and takes `no` here, and `Process_CriterionAdjudication` starts at &quot;entries for one criterion disagree&quot; — R_Review records pass, warn or fail PER CRITERION with a reason, so the disagreement reaching this step is a per-criterion disagreement between reviewer entries and nothing else.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/wireframe-design-review.bpmn"><code>cat-harness/processes/wireframe-design-review.bpmn#Call_Adjudicate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreampinwatch.call_adopt" data-fa-state="extracted" data-fa-gloss="">
@@ -304,7 +381,7 @@ Adopt the version bump <span class="fa-gloss-status">candidate, extracted</span>
 Adopt, hold or decline <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A PERSON decides. The lane admits <code>person</code> only, so <code>activity-fulfilment-kind</code> fails the moment somebody makes an agent the accepting party, and <code>relaxable=&quot;false&quot;</code> means no package may relax the step. The publication manager rather than the editor because a pin is not a change to the corpus — it is a change to what the published artefact is BUILT FROM, and that role is the one accountable for what is live. Deliberately NOT a DMN-backed gateway. Every computed gateway in this repository reduces to arithmetic over tool output; this one weighs a rendering nobody can score against the cost of staying behind, and a table here would look authoritative without being so.</p>
+<p>A PERSON decides. The lane admits `person` only, so `activity-fulfilment-kind` fails the moment somebody makes an agent the accepting party, and `relaxable=&quot;false&quot;` means no package may relax the step. The publication manager rather than the editor because a pin is not a change to the corpus — it is a change to what the published artefact is BUILT FROM, and that role is the one accountable for what is live. Deliberately NOT a DMN-backed gateway. Every computed gateway in this repository reduces to arithmetic over tool output; this one weighs a rendering nobody can score against the cost of staying behind, and a table here would look authoritative without being so.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-version-adoption.bpmn"><code>cat-harness/processes/upstream-version-adoption.bpmn#PM_Decide</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_agentreview" data-fa-state="extracted" data-fa-gloss="">
@@ -332,46 +409,46 @@ Announce the branch on the issue <span class="fa-gloss-status">candidate, extrac
 Answer, or decline <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The Requestor lane, filled by a person or by a sibling agent. Declining is a permitted move and not an error: it produces <code>outcome: unsettled</code> with what is still open, never a guess.</p>
+<p>The Requestor lane, filled by a person or by a sibling agent. Declining is a permitted move and not an error: it produces `outcome: unsettled` with what is still open, never a guess.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_Answer</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_renderlog.a_logremoved" data-fa-state="extracted" data-fa-gloss="">
-Append <code>removed</code> with the reason <span class="fa-gloss-status">candidate, extracted</span>
+Append `removed` with the reason <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>BEFORE the removal, not after: a job that dies mid-step must leave a record of the intent rather than an artefact that vanished with no entry. A reason is REQUIRED — an entry saying an artefact went and not why is the ambiguity this log exists to prevent.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/staging-render-log.bpmn"><code>cat-harness/processes/staging-render-log.bpmn#A_LogRemoved</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_renderlog.a_logrendered" data-fa-state="extracted" data-fa-gloss="">
-Append <code>rendered</code> <span class="fa-gloss-status">candidate, extracted</span>
+Append `rendered` <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>A re-deploy is a rendering, so it gets its own entry rather than overwriting the last. &quot;When was this last built&quot; is then answerable without diffing commits.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/staging-render-log.bpmn"><code>cat-harness/processes/staging-render-log.bpmn#A_LogRendered</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_featurestaging.task_logrendered" data-fa-state="extracted" data-fa-gloss="">
-Append <code>rendered</code> to the render log <span class="fa-gloss-status">candidate, extracted</span>
+Append `rendered` to the render log <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Its OWN commit, not part of the deploy. The publish action writes only into <code>destination_dir</code>, so an entry riding in <code>_site</code> would land at <code>STAGING/&lt;slug&gt;/_render-log/</code> — inside the directory a cleanup removes, which is the one place a record of the removal must not be. <code>continue-on-error</code>: a preview that deployed and whose entry did not is a gap in the record, not a failed deploy.</p>
+<p>Its OWN commit, not part of the deploy. The publish action writes only into `destination_dir`, so an entry riding in `_site` would land at `STAGING/&lt;slug&gt;/_render-log/` — inside the directory a cleanup removes, which is the one place a record of the removal must not be. `continue-on-error`: a preview that deployed and whose entry did not is a gap in the record, not a failed deploy.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_LogRendered</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_renderlog.a_logrestored" data-fa-state="extracted" data-fa-gloss="">
-Append <code>restored</code> <span class="fa-gloss-status">candidate, extracted</span>
+Append `restored` <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A full-replace deploy (<code>docs-site.yml</code>, the only publisher without keep_files) wipes the branch; <code>restore-staging</code> carries the previews AND this log back in. Its own event rather than a second <code>rendered</code>, because &quot;somebody pushed this branch&quot; and &quot;an unrelated merge nearly deleted it&quot; are different facts — and bean <code>plj1</code> is what happens when the second is invisible.</p>
+<p>A full-replace deploy (`docs-site.yml`, the only publisher without keep_files) wipes the branch; `restore-staging` carries the previews AND this log back in. Its own event rather than a second `rendered`, because &quot;somebody pushed this branch&quot; and &quot;an unrelated merge nearly deleted it&quot; are different facts — and bean `plj1` is what happens when the second is invisible.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/staging-render-log.bpmn"><code>cat-harness/processes/staging-render-log.bpmn#A_LogRestored</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_renderlog.a_logretained" data-fa-state="extracted" data-fa-gloss="">
-Append <code>retained</code> with the reason <span class="fa-gloss-status">candidate, extracted</span>
+Append `retained` with the reason <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>THE ENTRY THAT MAKES THE LOG WORTH READING. A preview still standing because a signal fired leaves no trace otherwise, and the next person asking &quot;why is this still up&quot; has nothing to consult. A reason is REQUIRED — the tool refuses without one.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/staging-render-log.bpmn"><code>cat-harness/processes/staging-render-log.bpmn#A_LogRetained</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_featurestaging.task_logretained" data-fa-state="extracted" data-fa-gloss="">
-Append <code>retained</code>, with why it stays <span class="fa-gloss-status">candidate, extracted</span>
+Append `retained`, with why it stays <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The event that makes the log worth reading. A removal was CONSIDERED and refused; without an entry that leaves no trace on the branch at all, and the next person asking *&quot;why is this preview still up&quot;* has only a comment on a pull request that may itself be closed.</p>
@@ -437,7 +514,7 @@ Ask BA to create or link issue <span class="fa-gloss-status">candidate, extracte
 Ask who is acting <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The one step that needs a person. Asked ONCE and recorded, never re-asked: <code>interaction/interaction.json</code> and the record exist so that a preference stated once is not requested again, which is WCAG 2.2 SC 3.3.7.</p>
+<p>The one step that needs a person. Asked ONCE and recorded, never re-asked: `interaction/interaction.json` and the record exist so that a preference stated once is not requested again, which is WCAG 2.2 SC 3.3.7.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>cat-harness/processes/session-state-machine.bpmn#A_AskWhoIsActing</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_prcheckspresent.task_sweep" data-fa-state="extracted" data-fa-gloss="">
@@ -486,21 +563,21 @@ Attach the evidence to the recommendation [content-author] <span class="fa-gloss
 Attest the pair, with a reason <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The prose holds: record it with <code>bun run pairs:attest -- --sidecar … --by agent|human --reason &quot;…&quot;</code>, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again.</p>
+<p>The prose holds: record it with `bun run pairs:attest -- --sidecar … --by agent|human --reason &quot;…&quot;`, naming what was compared. The attestation moves the pair's baseline to the current hashes, so the staleness flag clears and stays cleared until the code moves again.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/narrative-code-review.bpmn"><code>cat-harness/processes/narrative-code-review.bpmn#A_Attest</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_deliver.a_codeaudit" data-fa-state="extracted" data-fa-gloss="">
 Audit the code nodes the increment adds <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Descend into the review task for what this increment CHANGED IN THE GRAPH — Tool definitions in <code>tools/</code> and schema definition nodes under <code>schemas/</code>. It runs before the summary, and therefore before an MVP can be shared: a Tool or schema node shipped in an MVP is the version stakeholders start building expectations on, and a node that names a skill nobody wrote is cheaper to catch here than after sign-off. Called, not inherited: the agent keeps its implementing role and takes on the <code>code-reviewer</code> lane inside Process_CodeReview for that call path only.</p>
+<p>Descend into the review task for what this increment CHANGED IN THE GRAPH — Tool definitions in `tools/` and schema definition nodes under `schemas/`. It runs before the summary, and therefore before an MVP can be shared: a Tool or schema node shipped in an MVP is the version stakeholders start building expectations on, and a node that names a skill nobody wrote is cheaper to catch here than after sign-off. Called, not inherited: the agent keeps its implementing role and takes on the `code-reviewer` lane inside Process_CodeReview for that call path only.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-deliver.bpmn"><code>cat-harness/processes/crdm-deliver.bpmn#A_CodeAudit</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_actorroleadministration.task_runkgaudit" data-fa-state="extracted" data-fa-gloss="">
 Audit the graph [kg:audit] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>AFTER the change, not before. Every criterion here is a join — role to lane, actor to role, activity to skill — so what an administrative edit breaks is not in the file it edited. The sidecars under <code>test/results/kg-qa/</code> are committed for the reason a printed verdict is not: without them, &quot;unbound since it was drawn&quot; and &quot;broken by this change&quot; are indistinguishable.</p>
+<p>AFTER the change, not before. Every criterion here is a join — role to lane, actor to role, activity to skill — so what an administrative edit breaks is not in the file it edited. The sidecars under `test/results/kg-qa/` are committed for the reason a printed verdict is not: without them, &quot;unbound since it was drawn&quot; and &quot;broken by this change&quot; are indistinguishable.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/actor-role-administration.bpmn"><code>cat-harness/processes/actor-role-administration.bpmn#Task_RunKgAudit</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_l3fhir.task_authorfsh" data-fa-state="extracted" data-fa-gloss="">
@@ -577,6 +654,13 @@ Brief the topic before touching anything <span class="fa-gloss-status">candidate
 <p>What am I doing and why is it worth doing; what do I already know, with each measurement's provenance; how do I plan to do it and WHAT WOULD FALSIFY THE APPROACH. A falsifier that never fires is decoration — this practice's own fired, took edges 5 to 12, and rewrote the plan.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Brief</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_brief" data-fa-state="extracted" data-fa-gloss="">
+Brief, and claim the bean <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What is separating and why, what is already measured with its provenance, how it will be done, and what would falsify the approach. Claim the bean so a sibling session sees the work.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Brief</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_buildgates" data-fa-state="extracted" data-fa-gloss="">
 Build and QA gates [content-test] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -648,7 +732,7 @@ Categorize and summarize <span class="fa-gloss-status">candidate, extracted</spa
 Check before you create (exact-title search) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>STRICT. <code>beans create</code> is not idempotent: it mints a fresh id every call and dedupes on nothing, so re-entering a step duplicates the plan instead of no-op'ing. In the qou folio an unguarded re-run produced 14,688 duplicate beans — 92% of every open bean — which starved the idle-backlog policy of signal and collided with 15 real ids.</p>
+<p>STRICT. `beans create` is not idempotent: it mints a fresh id every call and dedupes on nothing, so re-entering a step duplicates the plan instead of no-op'ing. In the qou folio an unguarded re-run produced 14,688 duplicate beans — 92% of every open bean — which starved the idle-backlog policy of signal and collided with 15 real ids.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/bean-lifecycle.bpmn"><code>cat-harness/processes/bean-lifecycle.bpmn#Task_CheckExists</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_translation.task_stalenesscheck" data-fa-state="extracted" data-fa-gloss="">
@@ -662,14 +746,14 @@ Check staleness (source hash) <span class="fa-gloss-status">candidate, extracted
 Check the selected methodology's evidence base <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Before applying a methodology, establish that the thing being applied is what it claims to be. A methodology is adopted because it is somebody else's named, external work; this step checks that the <code>origin</code> it cites resolves to a source in a declared library, and reads the <code>methodology-evidence</code> QA sidecar for it. WHY THE CHECK IS HERE AND NOT AT ADOPTION. Adoption happens once; selection happens every time a decision is made. A source that was reachable when the methodology was adopted can stop being so, and a methodology adopted before this axis existed was never checked at all. Measured 2026-09-22: six methodologies cited an origin and NONE had that source in any library, so every selection made until then rested on an unverifiable citation. WHAT A GAP DOES AND DOES NOT DO. A missing source does NOT block the decision, and this step has no branch that stops the process — that would make a documentation gap into an outage, and the owner decides whether an unbacked methodology may still be used. It does two things: it runs <code>literature-search</code> to try to close the gap, and it puts the evidence state into the record <code>A_Record</code> writes, so a reader can tell a decision made on a verified method from one made on a citation nobody could follow. The third state is the one that matters. &quot;Source ingested&quot;, &quot;source located but unreachable from here&quot; and &quot;no source found&quot; are three different facts, and <code>literature-search</code> exists largely to stop the middle one being reported as the last.</p>
+<p>Before applying a methodology, establish that the thing being applied is what it claims to be. A methodology is adopted because it is somebody else's named, external work; this step checks that the `origin` it cites resolves to a source in a declared library, and reads the `methodology-evidence` QA sidecar for it. WHY THE CHECK IS HERE AND NOT AT ADOPTION. Adoption happens once; selection happens every time a decision is made. A source that was reachable when the methodology was adopted can stop being so, and a methodology adopted before this axis existed was never checked at all. Measured 2026-09-22: six methodologies cited an origin and NONE had that source in any library, so every selection made until then rested on an unverifiable citation. WHAT A GAP DOES AND DOES NOT DO. A missing source does NOT block the decision, and this step has no branch that stops the process — that would make a documentation gap into an outage, and the owner decides whether an unbacked methodology may still be used. It does two things: it runs `literature-search` to try to close the gap, and it puts the evidence state into the record `A_Record` writes, so a reader can tell a decision made on a verified method from one made on a citation nobody could follow. The third state is the one that matters. &quot;Source ingested&quot;, &quot;source located but unreachable from here&quot; and &quot;no source found&quot; are three different facts, and `literature-search` exists largely to stop the middle one being reported as the last.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/options-analysis.bpmn"><code>cat-harness/processes/options-analysis.bpmn#A_CheckEvidence</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_featurestaging.task_validate" data-fa-state="extracted" data-fa-gloss="">
 Check the slug's SHAPE and that the confirmation repeats it <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Guarded three ways because a dispatch input is a DELETION TRIGGER. <code>workflow_dispatch</code> is available only to an actor with write access; the slug must match exactly the characters the sed pipeline can produce, with <code>.</code> and <code>..</code> refused by name; and the confirmation must repeat the slug, so a confirmation cannot be carried over from an earlier run against a different preview.</p>
+<p>Guarded three ways because a dispatch input is a DELETION TRIGGER. `workflow_dispatch` is available only to an actor with write access; the slug must match exactly the characters the sed pipeline can produce, with `.` and `..` refused by name; and the confirmation must repeat the slug, so a confirmation cannot be carried over from an earlier run against a different preview.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Validate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_humantranslation.task_checkcompleteness" data-fa-state="extracted" data-fa-gloss="">
@@ -690,7 +774,7 @@ Choose a candidate <span class="fa-gloss-status">candidate, extracted</span>
 Choose a destination, or none <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A PERSON'S STEP, and <code>none</code> is one of the answers rather than a refusal to answer. A requirement whose whole content is carried by the code becomes a commit and nothing else; a graph that acquires a node for it is a graph with a node nobody will ever read. The default creates NOTHING. An agent that decides on its own that a requirement &quot;is really a skill&quot; has manufactured a node nobody asked for, in a graph somebody else maintains — which is what this step exists to prevent.</p>
+<p>A PERSON'S STEP, and `none` is one of the answers rather than a refusal to answer. A requirement whose whole content is carried by the code becomes a commit and nothing else; a graph that acquires a node for it is a graph with a node nobody will ever read. The default creates NOTHING. An agent that decides on its own that a requirement &quot;is really a skill&quot; has manufactured a node nobody asked for, in a graph somebody else maintains — which is what this step exists to prevent.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-signoff.bpmn"><code>cat-harness/processes/crdm-signoff.bpmn#BA_ChooseKg</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_gettingstarted.task_askintent" data-fa-state="extracted" data-fa-gloss="">
@@ -830,7 +914,7 @@ Close-out <span class="fa-gloss-status">candidate, extracted</span>
 Code node review <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Descend into Process_CodeReview. The actor takes on the <code>code-reviewer</code> lane for this call path only.</p>
+<p>Descend into Process_CodeReview. The actor takes on the `code-reviewer` lane for this call path only.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-task.bpmn"><code>cat-harness/processes/review-task.bpmn#Call_CodeReview</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_collatefindings" data-fa-state="extracted" data-fa-gloss="">
@@ -900,7 +984,7 @@ Compare main vs staging <span class="fa-gloss-status">candidate, extracted</span
 Complete (no unchecked todos left) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Only once nothing is unchecked, and with a summary of what changed. The engine's <code>resolve</code> completes a bean only after the instance itself has completed — whether work is done is a judgement, and a bean is not closed on someone else's say-so.</p>
+<p>Only once nothing is unchecked, and with a summary of what changed. The engine's `resolve` completes a bean only after the instance itself has completed — whether work is done is a judgement, and a bean is not closed on someone else's say-so.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/bean-lifecycle.bpmn"><code>cat-harness/processes/bean-lifecycle.bpmn#Task_Complete</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_logmessage.a_compose" data-fa-state="extracted" data-fa-gloss="">
@@ -984,8 +1068,15 @@ Create feature branch <span class="fa-gloss-status">candidate, extracted</span>
 Create the bean (agent CLI, not an engine op) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>beans create &quot;&lt;title&gt;&quot;</code>. This is the AGENT's call. The workflow engine has no <code>create</code> op — its vocabulary is claim, note and resolve, all of which act on an instance's existing bean.</p>
+<p>`beans create &quot;&lt;title&gt;&quot;`. This is the AGENT's call. The workflow engine has no `create` op — its vocabulary is claim, note and resolve, all of which act on an instance's existing bean.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/bean-lifecycle.bpmn"><code>cat-harness/processes/bean-lifecycle.bpmn#Task_Create</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_create" data-fa-state="extracted" data-fa-gloss="">
+Create the repositories <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The owner creates the content and tools repositories and their Pages. Nothing is committed to them before this.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Create</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_gettingstarted.task_createrepo" data-fa-state="extracted" data-fa-gloss="">
 Create the repository <span class="fa-gloss-status">candidate, extracted</span>
@@ -1048,10 +1139,10 @@ Declare the model where a tool can read it <span class="fa-gloss-status">candida
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-data-model.bpmn"><code>cat-harness/processes/crdm-data-model.bpmn#A_Declare</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_materializeremote.task_declare" data-fa-state="extracted" data-fa-gloss="">
-Declare the node <code>materialized</code> <span class="fa-gloss-status">candidate, extracted</span>
+Declare the node `materialized` <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The node's state moves from <code>referenced</code> to <code>materialized</code>, carrying purpose, localPath, gates and (archival) fixity. There is NO default state: a node that has not said is invalid, because 'the author did not say' and 'the author said they could not tell' are different facts.</p>
+<p>The node's state moves from `referenced` to `materialized`, carrying purpose, localPath, gates and (archival) fixity. There is NO default state: a node that has not said is invalid, because 'the author did not say' and 'the author said they could not tell' are different facts.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/materialize-remote.bpmn"><code>cat-harness/processes/materialize-remote.bpmn#Task_Declare</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_materializeremote.task_purpose" data-fa-state="extracted" data-fa-gloss="">
@@ -1072,14 +1163,14 @@ Deduplicate, and keep what is actually relevant <span class="fa-gloss-status">ca
 Dependency advisories (WARN-ONLY) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean <code>j41m</code> — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. <code>.github/dependabot.yml</code> is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule.</p>
+<p>Asks the one question the lockfile cannot: is anything in the resolved tree KNOWN-VULNERABLE? Warn-only by the owner's ruling on bean `j41m` — a hard gate here would hand a transitive advisory nobody can patch the power to red every PR, and the suppression that follows is what rots. `.github/dependabot.yml` is the other half of that ruling and is NOT drawn here: it is not a job in this workflow, it runs on Dependabot's schedule.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-quality-gates.bpmn"><code>cat-harness/processes/code-quality-gates.bpmn#Task_Advisories</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_deliver.a_deploystaging" data-fa-state="extracted" data-fa-gloss="">
 Deploy the MVP to staging <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>An MVP is shared AS A STAGING DEPLOY, not as a description of one. <code>feature-staging.yml</code> publishes the branch under <code>STAGING/&lt;branch-slug&gt;/</code> on gh-pages and comments the URL on the PR, so the stakeholder who tests it is looking at the built artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work. Measured in this repo on 2026-09-16: holding a rendered change back for assessment made assessment harder, not safer.</p>
+<p>An MVP is shared AS A STAGING DEPLOY, not as a description of one. `feature-staging.yml` publishes the branch under `STAGING/&lt;branch-slug&gt;/` on gh-pages and comments the URL on the PR, so the stakeholder who tests it is looking at the built artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work. Measured in this repo on 2026-09-16: holding a rendered change back for assessment made assessment harder, not safer.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-deliver.bpmn"><code>cat-harness/processes/crdm-deliver.bpmn#A_DeployStaging</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_igincremental.task_deploypreview" data-fa-state="extracted" data-fa-gloss="">
@@ -1170,7 +1261,7 @@ Detect the interaction modality <span class="fa-gloss-status">candidate, extract
 Determine appropriate digital health interventions <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>DIIG Chapter 4. Select interventions for the prioritized challenges, assess whether the enabling environment can support them, identify functional requirements and user stories, map the future-state workflow, and check whether existing applications already meet the requirements. The interventions CONSIDERED AND NOT CHOSEN are part of the output, with why — <code>methodology-adoption</code>'s fourth refusal. A deleted alternative leaves the next reader unable to tell a decision from an oversight. Selection is from the Classification, and the <code>who-digital-health</code> voice governs the naming: an intervention is a capability, not the software that delivers it.</p>
+<p>DIIG Chapter 4. Select interventions for the prioritized challenges, assess whether the enabling environment can support them, identify functional requirements and user stories, map the future-state workflow, and check whether existing applications already meet the requirements. The interventions CONSIDERED AND NOT CHOSEN are part of the output, with why — `methodology-adoption`'s fourth refusal. A deleted alternative leaves the next reader unable to tell a decision from an oversight. Selection is from the Classification, and the `who-digital-health` voice governs the naming: an intervention is a capability, not the software that delivers it.</p>
 <p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>smart-base/methodologies/processes/diig-investment-path.bpmn#A_DetermineInterventions</code></a></p>
 </dd>
 <dt id="smart-base--kg-bpmn-activities--process_diig.a_developbudget" data-fa-state="extracted" data-fa-gloss="">
@@ -1198,7 +1289,7 @@ Discard one entry by id <span class="fa-gloss-status">candidate, extracted</span
 Dispatch with adjudicator_sees — never the artefact <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>UntaintedDispatch</code> on the criterion declares what each party is given; the caller names a subject and a criterion and does not hand-assemble a brief, because the party composing a brief by hand is the producer. <code>untaintedPartitionDefects</code> reports <code>overlap</code> when the checker and the adjudicator can read the same file — one of them is then grading its own input, and the verdict measures nothing while raising no error.</p>
+<p>`UntaintedDispatch` on the criterion declares what each party is given; the caller names a subject and a criterion and does not hand-assemble a brief, because the party composing a brief by hand is the producer. `untaintedPartitionDefects` reports `overlap` when the checker and the adjudicator can read the same file — one of them is then grading its own input, and the verdict measures nothing while raising no error.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/adjudication.bpmn"><code>cat-harness/processes/adjudication.bpmn#A_Dispatch</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_activitylog.a_dowork" data-fa-state="extracted" data-fa-gloss="">
@@ -1293,7 +1384,7 @@ End-to-end + accessibility (HARD) <span class="fa-gloss-status">candidate, extra
 Ensure the publication-manager label <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The alert is a tracking issue labelled <code>publication-manager</code> — the role, not a person, because no actor declares a GitHub account for it. Whoever watches that label is alerted.</p>
+<p>The alert is a tracking issue labelled `publication-manager` — the role, not a person, because no actor declares a GitHub account for it. Whoever watches that label is alerted.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/publish-alert.bpmn"><code>cat-harness/processes/publish-alert.bpmn#A_Label</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_cihealth.task_label" data-fa-state="extracted" data-fa-gloss="">
@@ -1335,8 +1426,15 @@ Establish origin and licence <span class="fa-gloss-status">candidate, extracted<
 Establish who is acting <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The first step and not a formality: <code>actor</code> is the one field of the record that nothing else can supply. Every other field is recoverable by reading the repository; who is acting is not.</p>
+<p>The first step and not a formality: `actor` is the one field of the record that nothing else can supply. Every other field is recoverable by reading the repository; who is acting is not.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>cat-harness/processes/session-state-machine.bpmn#A_IdentifyActor</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_verify" data-fa-state="extracted" data-fa-gloss="">
+Every identifier dereferences <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>After the release is live, every published identifier resolves to the file it names.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Verify</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_methodologyfromsource.a_tools" data-fa-state="extracted" data-fa-gloss="">
 Every skill and tool used becomes a Tool <span class="fa-gloss-status">candidate, extracted</span>
@@ -1437,7 +1535,7 @@ File QC findings as beans [todo-manager] <span class="fa-gloss-status">candidate
 Filter the corpus, choose the granularity, decompose the question <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The paper's Planner. Three outputs, and the middle one is the method's substance: a filtered document subset, the granularity to search at, and the sub-questions. CHOOSING THE GRANULARITY PER QUESTION is the whole point of parsing at several. A broad question is answered from summaries and a specific one from chunks; a pipeline that picks once has answered every future question the same way. This checkout cannot yet offer the choice — <code>l1-blocks.ts</code> produces blocks, there is no summary level — so this step SAYS which granularity it searched rather than implying the corpus offered alternatives. Re-entered on every iteration, not only the first: the sub-questions are re-derived from what has been found so far, which is what makes the loop a search rather than a retry.</p>
+<p>The paper's Planner. Three outputs, and the middle one is the method's substance: a filtered document subset, the granularity to search at, and the sub-questions. CHOOSING THE GRANULARITY PER QUESTION is the whole point of parsing at several. A broad question is answered from summaries and a specific one from chunks; a pipeline that picks once has answered every future question the same way. This checkout cannot yet offer the choice — `l1-blocks.ts` produces blocks, there is no summary level — so this step SAYS which granularity it searched rather than implying the corpus offered alternatives. Re-entered on every iteration, not only the first: the sub-questions are re-derived from what has been found so far, which is what makes the loop a search rather than a retry.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/deep-document-research.bpmn"><code>folio-assistant-core/processes/deep-document-research.bpmn#A_Plan</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_initializeharness.a_install" data-fa-state="extracted" data-fa-gloss="">
@@ -1497,7 +1595,7 @@ Give a link, a description, or neither <span class="fa-gloss-status">candidate, 
 Grant a dispensation, with its reason <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The rule applies and this subject is a stated exception. A <code>kind: &quot;human&quot;</code> entry with <code>result: &quot;pass&quot;</code> overrides the script's <code>fail</code> for that criterion, and ONLY while its <code>field_hash</code> matches the current source — so the dispensation is scoped to the version it was granted against, lapses when the block changes, and never becomes precedent. There is nothing to overturn later; the source moving overturns it. A dispensation with no <code>notes</code> is not a dispensation. It is an override somebody applied to get to green, and nobody can review it afterwards — which is why this step is not relaxable.</p>
+<p>The rule applies and this subject is a stated exception. A `kind: &quot;human&quot;` entry with `result: &quot;pass&quot;` overrides the script's `fail` for that criterion, and ONLY while its `field_hash` matches the current source — so the dispensation is scoped to the version it was granted against, lapses when the block changes, and never becomes precedent. There is nothing to overturn later; the source moving overturns it. A dispensation with no `notes` is not a dispensation. It is an override somebody applied to get to green, and nobody can review it afterwards — which is why this step is not relaxable.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/criterion-adjudication.bpmn"><code>cat-harness/processes/criterion-adjudication.bpmn#A_Dispensation</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_actorroleadministration.task_grantorrevoke" data-fa-state="extracted" data-fa-gloss="">
@@ -1522,7 +1620,7 @@ Hand over the live link <span class="fa-gloss-status">candidate, extracted</span
 Hand the candidates to a decision methodology <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The candidate strategies go to <code>options-analysis</code>, which selects the decision methodology by context and applies it. SWOT does not make that selection and does not make the decision. What is handed over includes the ambiguities from A_RecordAmbiguous and the fact that the candidates are UNRANKED. A receiving methodology that assumed an ordered list would be reading a priority SWOT never established.</p>
+<p>The candidate strategies go to `options-analysis`, which selects the decision methodology by context and applies it. SWOT does not make that selection and does not make the decision. What is handed over includes the ambiguities from A_RecordAmbiguous and the fact that the candidates are UNRANKED. A receiving methodology that assumed an ordered list would be reading a priority SWOT never established.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/swot-analysis.bpmn"><code>cat-harness/processes/swot-analysis.bpmn#A_HandOff</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_smereview" data-fa-state="extracted" data-fa-gloss="">
@@ -1568,7 +1666,7 @@ IG Publisher build [ig-publication] <span class="fa-gloss-status">candidate, ext
 Impact analysis what of ours binds it <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The half a changelog cannot supply, because upstream does not know what you reached into. Worked from the row's <code>binds</code> list in <code>upstream-pins.json</code>. For the theme: <code>docs/assets/js/docs-ui.js</code> MOVES the theme's own search markup into the action launcher and binds <code>.search</code>, <code>#search-input</code> and <code>.search-label</code>; <code>docs-ui.css</code> overrides <code>.side-bar</code>, <code>.site-header</code> and <code>.main-header</code>; three e2e specs assert the structure the theme emits. An upstream rename of any of those is not a build failure — it is a shipped feature that quietly stops working.</p>
+<p>The half a changelog cannot supply, because upstream does not know what you reached into. Worked from the row's `binds` list in `upstream-pins.json`. For the theme: `docs/assets/js/docs-ui.js` MOVES the theme's own search markup into the action launcher and binds `.search`, `#search-input` and `.search-label`; `docs-ui.css` overrides `.side-bar`, `.site-header` and `.main-header`; three e2e specs assert the structure the theme emits. An upstream rename of any of those is not a build failure — it is a shipped feature that quietly stops working.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-version-adoption.bpmn"><code>cat-harness/processes/upstream-version-adoption.bpmn#A_Impact</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_sampleimport.task_importtest" data-fa-state="extracted" data-fa-gloss="">
@@ -1603,7 +1701,7 @@ Ingest into library/ <span class="fa-gloss-status">candidate, extracted</span>
 Ingest tagged review comments [folio-review-comments] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Every PR conversation comment that starts with <code>block: &lt;label&gt;</code> becomes a <code>folio-review-comment/v1</code> todo (open), idempotently, and is published with the preview as <code>review-comments.json</code>. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the <code>ingest</code> transition of REVIEW_TRANSITIONS.</p>
+<p>Every PR conversation comment that starts with `block: &lt;label&gt;` becomes a `folio-review-comment/v1` todo (open), idempotently, and is published with the preview as `review-comments.json`. The staging workflow runs this on every push and on every tagged comment; the coordinator owns that it has run before slicing, because the slices are cut around what reviewers have already said. This is the `ingest` transition of REVIEW_TRANSITIONS.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Task_IngestComments</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_ingestion.callactivity_ingesttheme" data-fa-state="extracted" data-fa-gloss="">
@@ -1670,7 +1768,7 @@ Iterate on author feedback <span class="fa-gloss-status">candidate, extracted</s
 Judge the assets in their design <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A person looks at the ingested assets laid out in the design they are for, at BOTH a web and a mobile width. THIS IS A HUMAN STEP INSIDE INGESTION, and that is stated rather than hidden: <code>ingest-theme.bpmn</code> used to refuse to call this process for exactly that reason. The owner's ruling puts theme review at ingestion only, and a ruling that moves a review does not remove the person who performs it — so ingestion of a THEME SOURCE is attended at this step, while ingestion of everything else stays unattended because <code>Gateway_ThemeSource</code> routes it past. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking.</p>
+<p>A person looks at the ingested assets laid out in the design they are for, at BOTH a web and a mobile width. THIS IS A HUMAN STEP INSIDE INGESTION, and that is stated rather than hidden: `ingest-theme.bpmn` used to refuse to call this process for exactly that reason. The owner's ruling puts theme review at ingestion only, and a ruling that moves a review does not remove the person who performs it — so ingestion of a THEME SOURCE is attended at this step, while ingestion of everything else stays unattended because `Gateway_ThemeSource` routes it past. A judgement made at one viewport is incomplete, not passed, and the wireframe of the surface (wireframe-design-review) says what each layout was meant to be. Three defects in the landing board — a selector matching nothing, a crop cutting the subject, a fade wrong in both directions — were invisible to a clean build, a passing suite and every gate, and were found only by rendering the page and looking.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>cat-harness/processes/theme-ui-review.bpmn#R_Judge</code></a></p>
 </dd>
 </dl>
@@ -1681,7 +1779,7 @@ Judge the assets in their design <span class="fa-gloss-status">candidate, extrac
 Keep it as a trial: the unpublished trashcan <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A trial goes to the kept trashcan: addressable, exported, never published. Its node declares <code>$schema: folio-fsh-guts/v1</code> and carries the bean or issue it was written under, since it was never moved from anywhere and a <code>movedFrom</code> would be invented provenance. It is NOT refreshed: a trial records what the source looked like when it was tried. Promoting a trial means running this process again with permanent = yes, so the gates are asked afresh.</p>
+<p>A trial goes to the kept trashcan: addressable, exported, never published. Its node declares `$schema: folio-fsh-guts/v1` and carries the bean or issue it was written under, since it was never moved from anywhere and a `movedFrom` would be invented provenance. It is NOT refreshed: a trial records what the source looked like when it was tried. Promoting a trial means running this process again with permanent = yes, so the gates are asked afresh.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sample-import.bpmn"><code>cat-harness/processes/sample-import.bpmn#Task_Trial</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_refreshmaterialized.task_keeplocal" data-fa-state="extracted" data-fa-gloss="">
@@ -1699,7 +1797,7 @@ Keep the local edit, and re-pin so it stops being asked <span class="fa-gloss-st
 L1 completeness gate <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named <code>paper-relevance-triage</code>, which has never existed, and is not <code>proof-triage</code> (that one triages proofs). Left uncovered until the skill is written. The gate contains one adjudication (Task_FlagDrift: <code>real</code>, <code>spurious</code> or <code>source-wrong</code>), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.</p>
+<p>See ingest-l1-completeness-gate.bpmn. NOT YET SKILL-BACKED. This step named `paper-relevance-triage`, which has never existed, and is not `proof-triage` (that one triages proofs). Left uncovered until the skill is written. The gate contains one adjudication (Task_FlagDrift: `real`, `spurious` or `source-wrong`), and its own Task_Verdict records the answer as a reason against the verdict before returning. So both answers reach this step, and nothing here branches on them; Gateway_Complete branches on the gate's completeness verdict instead.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/document-ingestion.bpmn"><code>cat-harness/processes/document-ingestion.bpmn#CallActivity_Gate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_sampleimport.task_library" data-fa-state="extracted" data-fa-gloss="">
@@ -1713,7 +1811,7 @@ Land it in library/ <span class="fa-gloss-status">candidate, extracted</span>
 Land the bytes in the copier's own folio/ <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Into the copier's own declared <code>folio/</code>, never a scratch area — a directory nobody declared is a directory nobody gates, and the copy would be publishable by accident. The copy is NOT read-only: it is the copier's own content, makes no claim about anybody else's bytes, and freezing it too would mean the next person needs a copy of the copy.</p>
+<p>Into the copier's own declared `folio/`, never a scratch area — a directory nobody declared is a directory nobody gates, and the copy would be publishable by accident. The copy is NOT read-only: it is the copier's own content, makes no claim about anybody else's bytes, and freezing it too would mean the next person needs a copy of the copy.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/copy-out-materialized.bpmn"><code>cat-harness/processes/copy-out-materialized.bpmn#Task_Land</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_themeuireview.a_locales" data-fa-state="extracted" data-fa-gloss="">
@@ -1724,10 +1822,10 @@ Languages: extracted, rendered, and RTL <span class="fa-gloss-status">candidate,
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/theme-ui-review.bpmn"><code>cat-harness/processes/theme-ui-review.bpmn#A_Locales</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_lean" data-fa-state="extracted" data-fa-gloss="">
-Lean: no bare <code>import Mathlib</code> (HARD) <span class="fa-gloss-status">candidate, extracted</span>
+Lean: no bare `import Mathlib` (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Fail on any bare <code>import Mathlib</code> in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</p>
+<p>Fail on any bare `import Mathlib` in content/**/*.lean — targeted imports only. In this platform repo there is no content/, so the job prints SKIP and states that nothing was scanned rather than passing silently.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-quality-gates.bpmn"><code>cat-harness/processes/code-quality-gates.bpmn#Task_Lean</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_boardopenclose.a_offerwayback" data-fa-state="extracted" data-fa-gloss="">
@@ -1738,10 +1836,10 @@ Leave a reachable way back <span class="fa-gloss-status">candidate, extracted</s
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/board-open-close.bpmn"><code>cat-harness/processes/board-open-close.bpmn#A_OfferWayBack</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_materializeremote.task_stayref" data-fa-state="extracted" data-fa-gloss="">
-Leave it <code>referenced</code>, record why <span class="fa-gloss-status">candidate, extracted</span>
+Leave it `referenced`, record why <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A refusal is not a failure of the process — it is the process working. The node stays <code>referenced</code>, which means the graph still knows it exists and where, and the refusing gate's basis is recorded so the next caller does not re-litigate it.</p>
+<p>A refusal is not a failure of the process — it is the process working. The node stays `referenced`, which means the graph still knows it exists and where, and the refusing gate's basis is recorded so the next caller does not re-litigate it.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/materialize-remote.bpmn"><code>cat-harness/processes/materialize-remote.bpmn#Task_StayRef</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_beanlifecycle.task_leavealone" data-fa-state="extracted" data-fa-gloss="">
@@ -1804,7 +1902,7 @@ List the locations this could install to <span class="fa-gloss-status">candidate
 List upstream releases and compare to the pin <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>git ls-remote --tags</code>, filtered by the row's <code>tagPattern</code> and ordered by version. Nothing is cloned and no API token is needed, so the check runs the same way on a laptop and in CI.</p>
+<p>`git ls-remote --tags`, filtered by the row's `tagPattern` and ordered by version. Nothing is cloned and no API token is needed, so the check runs the same way on a laptop and in CI.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-pin-watch.bpmn"><code>cat-harness/processes/upstream-pin-watch.bpmn#Task_QueryUpstream</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_igincremental.task_contextload" data-fa-state="extracted" data-fa-gloss="">
@@ -1825,7 +1923,7 @@ Load the active voices <span class="fa-gloss-status">candidate, extracted</span>
 Log a message or an error <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Write a message or error entry whenever a later reader would need it. A command run goes in <code>execution</code> (command, exit code, where output went) — never the output itself, and never a secret, token or credential: capture on puts entries in git.</p>
+<p>Write a message or error entry whenever a later reader would need it. A command run goes in `execution` (command, exit code, where output went) — never the output itself, and never a secret, token or credential: capture on puts entries in git.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/activity-log.bpmn"><code>cat-harness/processes/activity-log.bpmn#A_LogMessage</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_logfindings" data-fa-state="extracted" data-fa-gloss="">
@@ -1874,7 +1972,7 @@ Log the failure <span class="fa-gloss-status">candidate, extracted</span>
 Log the start of the install <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: <code>log-message</code> is an independent sub-process, one of bootstrap's own diagrams. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy.</p>
+<p>REQUIRED logging, which is what drawing the call says. Logged before anything is written, so an install interrupted halfway is distinguishable from one never begun. A callActivity rather than a task: `log-message` is an independent sub-process, one of bootstrap's own diagrams. Any step may call it without being drawn; this one is drawn because here it is a step rather than a courtesy.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_LogInstallStart</code></a></p>
 </dd>
 </dl>
@@ -1892,7 +1990,7 @@ Make the change <span class="fa-gloss-status">candidate, extracted</span>
 Make the value proposition and set next steps <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>DIIG Chapter 9. The case made to whoever pays, and what follows. Scaling up is a different method and a different publication — <code>9789241509510-eng</code>, The MAPS Toolkit — which begins where this implementation ends.</p>
+<p>DIIG Chapter 9. The case made to whoever pays, and what follows. Scaling up is a different method and a different publication — `9789241509510-eng`, The MAPS Toolkit — which begins where this implementation ends.</p>
 <p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>smart-base/methodologies/processes/diig-investment-path.bpmn#A_ValueProposition</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_l3fhir.task_mapl2" data-fa-state="extracted" data-fa-gloss="">
@@ -1923,6 +2021,13 @@ Materialize remote content (the five gates) <span class="fa-gloss-status">candid
 <p>The shared subprocess. It resolves the request against the source descriptor, then asks size, restrictions, copyright, retention and source loss, and either fetches with fixity or leaves the content referenced. This process does not restate any of that; it waits for the outcome.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/sample-import.bpmn"><code>cat-harness/processes/sample-import.bpmn#Call_Materialize</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_measure" data-fa-state="extracted" data-fa-gloss="">
+Measure the signals <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Files and bytes per instance, clone cost (`bun run health`), gate time, merge contention, the candidate's cohesion and cut (`kg:detangle`), wrong-direction edges, and the would-be tools package's import cone. Recorded in the bean; none alone is a trigger.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Measure</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_wireframedesignreview.d_check" data-fa-state="extracted" data-fa-gloss="">
 Mechanical checks, both viewports <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1948,7 +2053,7 @@ Merge, on explicit confirmation <span class="fa-gloss-status">candidate, extract
 Monitor, and use data effectively <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>DIIG Chapter 8. Establish a logic model, plan the monitoring and evaluation, establish a culture of data use, and manage adaptively — using the data to optimize the interventions rather than only to report on them. The full treatment of this chapter is a separate publication in this library, <code>9789241511766-eng</code>, Monitoring and Evaluating Digital Health Interventions. It is a parallel track, not a sub-step: do not blend the two.</p>
+<p>DIIG Chapter 8. Establish a logic model, plan the monitoring and evaluation, establish a culture of data use, and manage adaptively — using the data to optimize the interventions rather than only to report on them. The full treatment of this chapter is a separate publication in this library, `9789241511766-eng`, Monitoring and Evaluating Digital Health Interventions. It is a parallel track, not a sub-step: do not blend the two.</p>
 <p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/methodologies/processes/diig-investment-path.bpmn"><code>smart-base/methodologies/processes/diig-investment-path.bpmn#A_MonitorAndUseData</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_ingestion.task_promote" data-fa-state="extracted" data-fa-gloss="">
@@ -1962,14 +2067,14 @@ Move into library/&lt;bib-slug&gt;/ <span class="fa-gloss-status">candidate, ext
 Move the pin and open the PR <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The pin literal moves in the one file <code>upstream-pins.json</code> declares, and the PR body says what the version range changed in RENDERED output — the evidence, not just the verdict.</p>
+<p>The pin literal moves in the one file `upstream-pins.json` declares, and the PR body says what the version range changed in RENDERED output — the evidence, not just the verdict.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-version-adoption.bpmn"><code>cat-harness/processes/upstream-version-adoption.bpmn#A_ApplyPin</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreamadoption.task_mvp" data-fa-state="extracted" data-fa-gloss="">
 MVP: build the candidate on a staging branch <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>An MVP is a DEPLOYED BUILD, not a description of one. The pin is moved on a branch and <code>feature-staging.yml</code> publishes it under <code>STAGING/&lt;branch-slug&gt;/</code>, so the reviewer looks at the artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work.</p>
+<p>An MVP is a DEPLOYED BUILD, not a description of one. The pin is moved on a branch and `feature-staging.yml` publishes it under `STAGING/&lt;branch-slug&gt;/`, so the reviewer looks at the artefact rather than at a screenshot — the same argument the merge discipline makes about rendered work.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-version-adoption.bpmn"><code>cat-harness/processes/upstream-version-adoption.bpmn#Task_Mvp</code></a></p>
 </dd>
 </dl>
@@ -2001,21 +2106,21 @@ Narrative description per image, localized <span class="fa-gloss-status">candida
 Narrative review <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Descend into Process_NarrativeReview. The actor takes on the <code>narrative-reviewer</code> lane for this call path only.</p>
+<p>Descend into Process_NarrativeReview. The actor takes on the `narrative-reviewer` lane for this call path only.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-task.bpmn"><code>cat-harness/processes/review-task.bpmn#Call_NarrativeReview</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_discussion.a_narrowcandidates" data-fa-state="extracted" data-fa-gloss="">
 Narrow the candidates from context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Before asking. A repository whose root already holds a declaration, <code>&lt;name&gt;.json</code>, is not a blank slate, and a question whose candidates the agent could have worked out itself wastes the one question it is entitled to.</p>
+<p>Before asking. A repository whose root already holds a declaration, `&lt;name&gt;.json`, is not a blank slate, and a question whose candidates the agent could have worked out itself wastes the one question it is entitled to.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_NarrowCandidates</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_watchmainci" data-fa-state="extracted" data-fa-gloss="">
 Note the main-branch watch [watch] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Second dispatch point: the change was approved and merged, and the root of the site has been rebuilt from main. This is the moment docs-site.yml failed all 30 times over two months (bean xom7) while looking exactly like a green run from inside the repo. <code>note</code> rather than <code>claim</code>, and the difference is not cosmetic. By here the branch-watch bean already exists, and whether the publish SUCCEEDED is a judgement this step cannot make -- the build reports its own exit code, and xom7 is the record of that being believed. AGENTS.md: a bean is not closed on someone else's say-so. So the step records what it observed and leaves the verdict to the watcher.</p>
+<p>Second dispatch point: the change was approved and merged, and the root of the site has been rebuilt from main. This is the moment docs-site.yml failed all 30 times over two months (bean xom7) while looking exactly like a green run from inside the repo. `note` rather than `claim`, and the difference is not cosmetic. By here the branch-watch bean already exists, and whether the publish SUCCEEDED is a judgement this step cannot make -- the build reports its own exit code, and xom7 is the record of that being believed. AGENTS.md: a bean is not closed on someone else's say-so. So the step records what it observed and leaves the verdict to the watcher.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Task_WatchMainCI</code></a></p>
 </dd>
 </dl>
@@ -2033,7 +2138,7 @@ OCR to ocr/page-*.txt <span class="fa-gloss-status">candidate, extracted</span>
 Offer the knowledge-graph destinations for the agreed set <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>THE STEP THAT WAS MISSING. Requirements were elicited, agreed and signed off, and then existed as an issue and a conversation — so the output of the process that exists to produce durable requirements was the one thing the knowledge graph never learned. ONE question for the SET, not one per requirement: a six-phase run can agree many, and asking six times is the same failure as a form that re-asks what it was already told. The options are DERIVED from the graphs this instance declares in <code>&lt;name&gt;.json</code>, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory.</p>
+<p>THE STEP THAT WAS MISSING. Requirements were elicited, agreed and signed off, and then existed as an issue and a conversation — so the output of the process that exists to produce durable requirements was the one thing the knowledge graph never learned. ONE question for the SET, not one per requirement: a six-phase run can agree many, and asking six times is the same failure as a form that re-asks what it was already told. The options are DERIVED from the graphs this instance declares in `&lt;name&gt;.json`, read at the time of asking, so an instance that adds a graph gets it in the offer without anybody editing a skill. Never a list typed from memory.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-signoff.bpmn"><code>cat-harness/processes/crdm-signoff.bpmn#A_OfferKg</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_evidenceretrieval.task_recordunverified" data-fa-state="extracted" data-fa-gloss="">
@@ -2061,7 +2166,7 @@ Open or claim the release bean [todo-manager] <span class="fa-gloss-status">cand
 Open or close a role to an actor <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The join every other diagram depends on. An empty <code>roles</code> is a DETERMINED empty — it says the actor takes on none — and is not the same as an absent one, which asserts nothing.</p>
+<p>The join every other diagram depends on. An empty `roles` is a DETERMINED empty — it says the actor takes on none — and is not the same as an absent one, which asserts nothing.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/actor-role-administration.bpmn"><code>cat-harness/processes/actor-role-administration.bpmn#Task_AssignRoles</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_cihealth.task_track" data-fa-state="extracted" data-fa-gloss="">
@@ -2103,14 +2208,14 @@ Open the branch-watch bean [watch] <span class="fa-gloss-status">candidate, extr
 Open the rule's citation <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Every rule resolves to a real <code>library/</code> section or a KG node, and carries the quote it was read from. Opening it is what lets a reviewer say WHY the rule applies — and it is the only way to catch a rule that misread its own source.</p>
+<p>Every rule resolves to a real `library/` section or a KG node, and carries the quote it was read from. Opening it is what lets a reviewer say WHY the rule applies — and it is the only way to catch a rule that misread its own source.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>cat-harness/processes/voice-review.bpmn#Task_OpenCitation</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_sessionstatemachine.a_opensession" data-fa-state="extracted" data-fa-gloss="">
 Open the session record <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Writes <code>id</code>, <code>actor</code> and <code>startedAt</code>, with <code>open</code> and <code>claimed</code> empty. An empty <code>open</code> is the NORMAL state, not an unfinished one: an agent reading, answering or deciding is in no process at all.</p>
+<p>Writes `id`, `actor` and `startedAt`, with `open` and `claimed` empty. An empty `open` is the NORMAL state, not an unfinished one: an agent reading, answering or deciding is in no process at all.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>cat-harness/processes/session-state-machine.bpmn#A_OpenSession</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_publishalert.a_open" data-fa-state="extracted" data-fa-gloss="">
@@ -2124,28 +2229,28 @@ Open the tracking issue, naming the failed step <span class="fa-gloss-status">ca
 Options analysis accept · revise · discard <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>On the edge out of <code>Task_ReviewFindings</code> and before <code>Task_RecordDecision</code>: the findings are the evidence, so the options can only be weighed once they exist, and after <code>Task_RecordDecision</code> the decision is already written down. NOT between <code>Gateway_EditorDecision</code> and <code>Task_RecordDecision</code>, which is the pair the work-plan named — in this diagram those run the OTHER WAY ROUND. <code>Flow_21b</code> goes <code>Task_RecordDecision</code> -&gt; <code>Gateway_EditorDecision</code>, so the gateway reads a decision that has already been recorded, and interposing there would analyse options after the choice was made. In the Agent lane, and this diagram makes the reason sharp. <code>Task_RecordDecision</code> is a <code>userTask</code> in <code>Lane_Editor</code> that already names <code>decision-audit</code>, and <code>Process_OptionsAnalysis</code> ends with its own <code>decision-audit</code> note. Those are two different acts — the subprocess records that the options were WEIGHED, the editor records WHAT WAS CHOSEN — and putting the analysis in the editor's lane would collapse them, making the same party both analyse and decide. The subprocess's own documentation refuses that: it produces options and a recommendation, and the authorisation belongs to the calling step. <code>CallActivity_Evidence</code> sits in <code>Lane_Editor</code> instead, and that is not an inconsistency: the author performs the evidence retrieval, whereas here the point is that the analyst is not the decider. On the trigger: <code>A_Frame</code> opens the subprocess on <code>opening-brief</code>'s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached <code>Task_ReviewFindings</code> with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not.</p>
+<p>On the edge out of `Task_ReviewFindings` and before `Task_RecordDecision`: the findings are the evidence, so the options can only be weighed once they exist, and after `Task_RecordDecision` the decision is already written down. NOT between `Gateway_EditorDecision` and `Task_RecordDecision`, which is the pair the work-plan named — in this diagram those run the OTHER WAY ROUND. `Flow_21b` goes `Task_RecordDecision` -&gt; `Gateway_EditorDecision`, so the gateway reads a decision that has already been recorded, and interposing there would analyse options after the choice was made. In the Agent lane, and this diagram makes the reason sharp. `Task_RecordDecision` is a `userTask` in `Lane_Editor` that already names `decision-audit`, and `Process_OptionsAnalysis` ends with its own `decision-audit` note. Those are two different acts — the subprocess records that the options were WEIGHED, the editor records WHAT WAS CHOSEN — and putting the analysis in the editor's lane would collapse them, making the same party both analyse and decide. The subprocess's own documentation refuses that: it produces options and a recommendation, and the authorisation belongs to the calling step. `CallActivity_Evidence` sits in `Lane_Editor` instead, and that is not an inconsistency: the author performs the evidence retrieval, whereas here the point is that the analyst is not the decider. On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — irreversibility and surprise — and leaving there is a correct outcome. A spelling fix that reached `Task_ReviewFindings` with one mechanical finding exits immediately; a revise-or-discard on a block other content depends on does not.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/editing-hci-validation.bpmn"><code>cat-harness/processes/editing-hci-validation.bpmn#Call_OptionsAnalysis</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreamadoption.call_optionsanalysis" data-fa-state="extracted" data-fa-gloss="">
 Options analysis adopt · hold · decline <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>On the single edge into <code>PM_Decide</code>, and deliberately not earlier: the MVP build and its gates are HOW the options' costs are measured, so an analysis before <code>Task_Mvp</code> would weigh alternatives against no evidence. Everything the decider needs exists by the time the reviewer has finished and the fixable findings are fixed. In the Agent lane, because this step produces the analysis and does not make the decision — <code>PM_Decide</code> is a <code>userTask</code> whose lane admits <code>person</code> only, and putting the analysis in the agent's lane is what keeps that separation legible rather than implied. A subprocess that decided would be a second accepting party. Reached through the loop as well as straight through: <code>SF_UA_8</code> re-enters at <code>A_Impact</code>, so a run where the reviewer found something fixable arrives here a second time with different evidence. That is a genuine re-analysis and its <code>op=&quot;note&quot;</code> appends rather than deduping, which is the behaviour wanted — a second note records that the options were weighed again against changed inputs.</p>
+<p>On the single edge into `PM_Decide`, and deliberately not earlier: the MVP build and its gates are HOW the options' costs are measured, so an analysis before `Task_Mvp` would weigh alternatives against no evidence. Everything the decider needs exists by the time the reviewer has finished and the fixable findings are fixed. In the Agent lane, because this step produces the analysis and does not make the decision — `PM_Decide` is a `userTask` whose lane admits `person` only, and putting the analysis in the agent's lane is what keeps that separation legible rather than implied. A subprocess that decided would be a second accepting party. Reached through the loop as well as straight through: `SF_UA_8` re-enters at `A_Impact`, so a run where the reviewer found something fixable arrives here a second time with different evidence. That is a genuine re-analysis and its `op=&quot;note&quot;` appends rather than deduping, which is the behaviour wanted — a second note records that the options were weighed again against changed inputs.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-version-adoption.bpmn"><code>cat-harness/processes/upstream-version-adoption.bpmn#Call_OptionsAnalysis</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.call_optionsanalysis" data-fa-state="extracted" data-fa-gloss="">
 Options analysis how to absorb the impact <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>On the edge OUT of <code>Task_AssessImpact</code> and before <code>Task_CommitPush</code>, because the impact assessment is the evidence the options are weighed against. An analysis before it would compare ways of absorbing a downstream effect nobody has measured yet; one after the commit would be a rationalisation of a choice already pushed. NOT between <code>Task_AssessImpact</code> and <code>Task_ReviewImpact</code>, although that is the handoff the work-plan named. Those two tasks are in DIFFERENT LANES with no sequence flow between them — the agent's assessment reaches the committee through <code>Task_CompareBeforeAfter</code>, not directly — so there was no edge there to interpose on. The conceptual handoff is real; the edge was not. In the Agent lane, matching <code>upstream-version-adoption</code>: this step produces the options and their trade-offs, and <code>GW_Approved</code> in the Review Committee lane is where a decision is taken. A subprocess in the reviewer's lane would read as the committee analysing its own options, which is a different process. On the trigger: reaching this call is not the same as running the whole of it. <code>Process_OptionsAnalysis</code> opens with <code>A_Frame</code>, whose trigger is <code>opening-brief</code>'s — irreversibility and surprise, not size — and leaving at that first activity is a correct outcome rather than a skipped step. A copy-edit exits immediately; a logic change that moves an indicator does not, and this is the diagram where that distinction has teeth, since <code>Task_EditLogic</code> feeds straight into the assessment.</p>
+<p>On the edge OUT of `Task_AssessImpact` and before `Task_CommitPush`, because the impact assessment is the evidence the options are weighed against. An analysis before it would compare ways of absorbing a downstream effect nobody has measured yet; one after the commit would be a rationalisation of a choice already pushed. NOT between `Task_AssessImpact` and `Task_ReviewImpact`, although that is the handoff the work-plan named. Those two tasks are in DIFFERENT LANES with no sequence flow between them — the agent's assessment reaches the committee through `Task_CompareBeforeAfter`, not directly — so there was no edge there to interpose on. The conceptual handoff is real; the edge was not. In the Agent lane, matching `upstream-version-adoption`: this step produces the options and their trade-offs, and `GW_Approved` in the Review Committee lane is where a decision is taken. A subprocess in the reviewer's lane would read as the committee analysing its own options, which is a different process. On the trigger: reaching this call is not the same as running the whole of it. `Process_OptionsAnalysis` opens with `A_Frame`, whose trigger is `opening-brief`'s — irreversibility and surprise, not size — and leaving at that first activity is a correct outcome rather than a skipped step. A copy-edit exits immediately; a logic change that moves an indicator does not, and this is the diagram where that distinction has teeth, since `Task_EditLogic` feeds straight into the assessment.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Call_OptionsAnalysis</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_deliver.call_optionsanalysis" data-fa-state="extracted" data-fa-gloss="">
 Options analysis how to implement <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>On the single edge from <code>Start_Process_CRDM_Deliver</code> into <code>A_Implement</code>, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at <code>Call_Needs</code> there is nothing to weigh, and after <code>A_Implement</code> the choice has been made in code. Note where this is NOT. The work-plan named <code>crdm-requirements-workflow</code>, and <code>A_Implement</code> is not in that diagram — <code>crdm-requirements.bpmn</code> is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in <code>crdm-deliver.bpmn</code>. The call goes where the step is, not where the plan said to look. The three loop-backs into <code>A_Implement</code> — <code>_5</code> (increment rejected), <code>_7</code> (MVP not ready), <code>_13</code> (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in <code>crdm-requirements.bpmn</code>. Contrast <code>upstream-version-adoption</code>, where the loop DOES re-enter the analysis. There the loop-back returns to <code>A_Impact</code>, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. <code>A_Implement</code> carries <code>cat-harness.processes:bean op=&quot;claim&quot;</code>; this step carries no bean op, because <code>Process_OptionsAnalysis</code> ends with its own <code>decision-audit</code> note on the bean the caller claimed.</p>
+<p>On the single edge from `Start_Process_CRDM_Deliver` into `A_Implement`, so the approach is chosen before any code exists. By Phase 6 the needs, requirements and data model are signed off, which is exactly the evidence an options analysis needs and the reason it belongs here rather than earlier: at `Call_Needs` there is nothing to weigh, and after `A_Implement` the choice has been made in code. Note where this is NOT. The work-plan named `crdm-requirements-workflow`, and `A_Implement` is not in that diagram — `crdm-requirements.bpmn` is the orchestrator, seven call activities and a gateway, and Phase 6 lives here in `crdm-deliver.bpmn`. The call goes where the step is, not where the plan said to look. The three loop-backs into `A_Implement` — `_5` (increment rejected), `_7` (MVP not ready), `_13` (feedback translated) — deliberately BYPASS this call. Routing them through it would run the subprocess on every iteration of the inner loop, which is the ceremony this design refuses: a gate invoked on every pass stops being read. An iteration reworks an approach already chosen; if the APPROACH is what is wrong, that is not a loop iteration and it belongs to the calling step in `crdm-requirements.bpmn`. Contrast `upstream-version-adoption`, where the loop DOES re-enter the analysis. There the loop-back returns to `A_Impact`, which re-gathers the evidence, so the second pass weighs genuinely different inputs. Here the loop returns to implementation with the evidence unchanged. `A_Implement` carries `cat-harness.processes:bean op=&quot;claim&quot;`; this step carries no bean op, because `Process_OptionsAnalysis` ends with its own `decision-audit` note on the bean the caller claimed.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-deliver.bpmn"><code>cat-harness/processes/crdm-deliver.bpmn#Call_OptionsAnalysis</code></a></p>
 </dd>
 </dl>
@@ -2219,7 +2324,7 @@ Phase 5 Beans + sign-off <span class="fa-gloss-status">candidate, extracted</spa
 Phase 5: Create beans <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The agent mints the implementation beans itself with <code>beans create</code>, running the exact-title existence check first. The engine has no <code>create</code> op — it claims, notes and resolves the instance's OWN bean — so what this step records here is a note that the plan now exists.</p>
+<p>The agent mints the implementation beans itself with `beans create`, running the exact-title existence check first. The engine has no `create` op — it claims, notes and resolves the instance's OWN bean — so what this step records here is a note that the plan now exists.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-signoff.bpmn"><code>cat-harness/processes/crdm-signoff.bpmn#A_CreateBeans</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm.call_deliver" data-fa-state="extracted" data-fa-gloss="">
@@ -2324,7 +2429,7 @@ Post the retention notice on the PR <span class="fa-gloss-status">candidate, ext
 Preflight: is the preview live? <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>previewLiveness</code> — a disjunction over open-pr, unmerged-branch and recent-commit, shared with the health sweep so the two cannot disagree. Bean <code>w2g5</code>: a preview whose pull request is closed is NOT an abandoned one.</p>
+<p>`previewLiveness` — a disjunction over open-pr, unmerged-branch and recent-commit, shared with the health sweep so the two cannot disagree. Bean `w2g5`: a preview whose pull request is closed is NOT an abandoned one.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/staging-render-log.bpmn"><code>cat-harness/processes/staging-render-log.bpmn#A_Preflight</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_humantranslation.task_prepareglossary" data-fa-state="extracted" data-fa-gloss="">
@@ -2338,7 +2443,7 @@ Prepare domain glossary <span class="fa-gloss-status">candidate, extracted</span
 Prepare the merge, and watch it through <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>prepare-merge</code> brings the base in, re-runs the gates and pushes — it does NOT merge. <code>watch</code> follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition.</p>
+<p>`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-change-review.bpmn"><code>cat-harness/processes/code-change-review.bpmn#Task_PrepareMerge</code></a></p>
 </dd>
 <dt id="smart-base--kg-bpmn-activities--process_diig.a_prioritizebottlenecks" data-fa-state="extracted" data-fa-gloss="">
@@ -2380,7 +2485,7 @@ Prose and the code it describes <span class="fa-gloss-status">candidate, extract
 Prose blocks enter the summary queue [library-ingestion] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Owner, 2026-09-24: &quot;Make as QA sidecar as part of general doc ingestion to slowly drain.&quot; Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: <code>bun run summaries:next -- --n K</code> hands it the next K blocks with their text, it writes a short summary of each in its own words, and <code>bun run summaries:record</code> writes them into library/&lt;bib-slug&gt;/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and <code>ingested</code>. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (<code>block-summaries</code>) without failing on it. Confirming or rejecting a draft is a person's act, in <code>bun run narratives</code>.</p>
+<p>Owner, 2026-09-24: &quot;Make as QA sidecar as part of general doc ingestion to slowly drain.&quot; Nothing is written to ENQUEUE a block: the queue is derived (every prose block in every declared library, minus those whose summaries.json record is a current draft or confirmation), so a promoted entry is in it the moment its blocks are. A re-ingested document whose text changed re-enters it on its own, because the record's source_hash no longer matches. What an agent doing ingestion work does here is DRAIN a few: `bun run summaries:next -- --n K` hands it the next K blocks with their text, it writes a short summary of each in its own words, and `bun run summaries:record` writes them into library/&lt;bib-slug&gt;/summaries.json as drafts naming the agent and its model. The block itself stays verbatim and `ingested`. ADVISORY, never a gate: this step does not hold up Task_Citeable, and check:l1-complete reports the backlog (`block-summaries`) without failing on it. Confirming or rejecting a draft is a person's act, in `bun run narratives`.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/document-ingestion.bpmn"><code>cat-harness/processes/document-ingestion.bpmn#Task_SummaryQueue</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_l3fhir.task_publishig" data-fa-state="extracted" data-fa-gloss="">
@@ -2401,7 +2506,7 @@ Publish to gh-pages (FULL REPLACE) <span class="fa-gloss-status">candidate, extr
 Publish to STAGING/&amp;lt;slug&amp;gt; <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>keep_files: true</code> and a <code>destination_dir</code>, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to <code>gh-pages</code> without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled.</p>
+<p>`keep_files: true` and a `destination_dir`, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Deploy</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.a_distribute" data-fa-state="extracted" data-fa-gloss="">
@@ -2415,7 +2520,7 @@ Publish to the origin (a cache may front it) <span class="fa-gloss-status">candi
 Put the question, with its candidates named <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Uses the <code>discuss</code> tool. One question where one will do — the Bootstrapping Agent's persona is &quot;asks exactly one question when it must&quot;. A question a reader must go and research is not ready to be asked.</p>
+<p>Uses the `discuss` tool. One question where one will do — the Bootstrapping Agent's persona is &quot;asks exactly one question when it must&quot;. A question a reader must go and research is not ready to be asked.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_PutQuestion</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_python" data-fa-state="extracted" data-fa-gloss="">
@@ -2479,7 +2584,7 @@ Raise the window the reader selected <span class="fa-gloss-status">candidate, ex
 Re-evaluate liveness AT REMOVAL TIME <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Re-evaluated AT REMOVAL TIME, through the same <code>previewLiveness</code> the health sweep uses rather than a second implementation of it. The sweep runs daily and proposes; this acts. Between them a branch can come back to life — bean <code>w2g5</code> documents exactly that, a session reusing one branch across five successive pull requests.</p>
+<p>Re-evaluated AT REMOVAL TIME, through the same `previewLiveness` the health sweep uses rather than a second implementation of it. The sweep runs daily and proposes; this acts. Between them a branch can come back to life — bean `w2g5` documents exactly that, a session reusing one branch across five successive pull requests.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Preflight</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_refreshmaterialized.task_apply" data-fa-state="extracted" data-fa-gloss="">
@@ -2514,21 +2619,21 @@ Read the guide's own stated rules <span class="fa-gloss-status">candidate, extra
 Read the harness's declaration and instructions <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: <code>&lt;stub&gt;/docs/bootstrap/initialization.md</code>, the same for every harness, which is what lets a Bootstrapping Agent be pointed at one nobody has written yet.</p>
+<p>Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: `&lt;stub&gt;/docs/bootstrap/initialization.md`, the same for every harness, which is what lets a Bootstrapping Agent be pointed at one nobody has written yet.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ReadDeclaration</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_copyoutmaterialized.task_readsource" data-fa-state="extracted" data-fa-gloss="">
 Read the original — and write nothing <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A read, and the only interaction this process has with the source. Its digest and <code>provenance</code> are carried forward: the digest so Task_VerifySourceUntouched has something to check against, and <code>provenance</code> so the copy can name what it came out of without re-deriving it.</p>
+<p>A read, and the only interaction this process has with the source. Its digest and `provenance` are carried forward: the digest so Task_VerifySourceUntouched has something to check against, and `provenance` so the copy can name what it came out of without re-deriving it.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/copy-out-materialized.bpmn"><code>cat-harness/processes/copy-out-materialized.bpmn#Task_ReadSource</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_narrativecodereview.a_readpairfindings" data-fa-state="extracted" data-fa-gloss="">
 Read the pair checks' findings <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — <code>bun run pairs:claims</code> prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing.</p>
+<p>Open the subject's kg-qa sidecar and list what is open: a failing prose-reviewed-since-code-changed (code moved, prose did not), and every false or undetermined claim from prose-claims-resolve — `bun run pairs:claims` prints the full list, including what it did not check. Claims that hold and pairs that are not stale need nothing.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/narrative-code-review.bpmn"><code>cat-harness/processes/narrative-code-review.bpmn#A_ReadPairFindings</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreampinwatch.task_readpins" data-fa-state="extracted" data-fa-gloss="">
@@ -2542,7 +2647,7 @@ Read the pin registry upstream-pins.json <span class="fa-gloss-status">candidate
 Read the repository facts <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Mechanical, read-only: does a <code>&lt;name&gt;.config.json</code> declare a contentType, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project.</p>
+<p>Mechanical, read-only: does a `&lt;name&gt;.config.json` declare a contentType, does the working tree hold somebody's existing project, and what has the user actually said. These are the three inputs to folio-intent.dmn. Non-relaxable: scaffolding without looking first is how a folio gets written over somebody's project.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/getting-started.bpmn"><code>cat-harness/processes/getting-started.bpmn#Task_ReadFacts</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_ingesttheme.task_readstylesheet" data-fa-state="extracted" data-fa-gloss="">
@@ -2556,14 +2661,14 @@ Read the served stylesheet's declarations <span class="fa-gloss-status">candidat
 Read the sidecar findings <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Open the block's <code>.qa.json</code>, not just the evidence line: register is a property of the passage, and the sidecar quotes one line of it.</p>
+<p>Open the block's `.qa.json`, not just the evidence line: register is a property of the passage, and the sidecar quotes one line of it.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-narrative.bpmn"><code>cat-harness/processes/review-narrative.bpmn#Task_ReadFindings</code></a></p>
 </dd>
 <dt id="bootstrap--kg-bpmn-activities--process_initializeharness.a_readlocation" data-fa-state="extracted" data-fa-gloss="">
 Read what each location already is <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. <code>&lt;name&gt;.json</code> present and parsing is the whole test, and <code>bootstrap-kg-navigation</code> says what the three answers mean — absent (not an instance yet, which is this process's case), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either. Before reading the chosen harness rather than after, deliberately: if the location is spoken for there is nothing to learn from the harness, and fetching it first only makes the failure more expensive.</p>
+<p>Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. `&lt;name&gt;.json` present and parsing is the whole test, and `bootstrap-kg-navigation` says what the three answers mean — absent (not an instance yet, which is this process's case), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either. Before reading the chosen harness rather than after, deliberately: if the location is spoken for there is nothing to learn from the harness, and fetching it first only makes the failure more expensive.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_ReadLocation</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_rebuildmain" data-fa-state="extracted" data-fa-gloss="">
@@ -2633,21 +2738,21 @@ Record it where a person can read it <span class="fa-gloss-status">candidate, ex
 Record on the block's QA sidecar <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Through <code>qa-merge-findings</code>, so the icon and the published witness agree with the decision. The adjudication LEADS the criterion and the script entry is kept beneath it: a disagreement between a checker and a reviewer is information.</p>
+<p>Through `qa-merge-findings`, so the icon and the published witness agree with the decision. The adjudication LEADS the criterion and the script entry is kept beneath it: a disagreement between a checker and a reviewer is information.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>cat-harness/processes/voice-review.bpmn#Task_RecordOnSidecar</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_copyoutmaterialized.task_recordprovenance" data-fa-state="extracted" data-fa-gloss="">
 Record provenance.local — what this is a copy OF <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The step that is easy to omit and impossible to reconstruct afterwards. <code>provenance</code> is a PAIR: <code>upstream</code> is the remote thing, <code>local</code> is the original in this repository. A copy-out writes <code>local</code>; it does not overwrite <code>upstream</code>, and it does not reuse <code>upstream</code> for a local value — that was one field until 2026-09-22, and by then 5 of the 9 who-iris item records were using it for a local one in violation of its own documentation. Without <code>local</code>, one rename later the copy is indistinguishable from original work and nothing downstream can repair it, because the information was never written down.</p>
+<p>The step that is easy to omit and impossible to reconstruct afterwards. `provenance` is a PAIR: `upstream` is the remote thing, `local` is the original in this repository. A copy-out writes `local`; it does not overwrite `upstream`, and it does not reuse `upstream` for a local value — that was one field until 2026-09-22, and by then 5 of the 9 who-iris item records were using it for a local one in violation of its own documentation. Without `local`, one rename later the copy is indistinguishable from original work and nothing downstream can repair it, because the information was never written down.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/copy-out-materialized.bpmn"><code>cat-harness/processes/copy-out-materialized.bpmn#Task_RecordProvenance</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_beanlifecycle.task_recordblocker" data-fa-state="extracted" data-fa-gloss="">
 Record the blocker and hand back <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Blocked is not scrapped. Set <code>--blocked-by</code>, say in the body what would unblock it, and return it to <code>todo</code> so it is visible to whoever can act. An in-progress bean nobody is progressing reads as active work.</p>
+<p>Blocked is not scrapped. Set `--blocked-by`, say in the body what would unblock it, and return it to `todo` so it is visible to whoever can act. An in-progress bean nobody is progressing reads as active work.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/bean-lifecycle.bpmn"><code>cat-harness/processes/bean-lifecycle.bpmn#Task_RecordBlocker</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_refreshmaterialized.task_recordconflict" data-fa-state="extracted" data-fa-gloss="">
@@ -2661,7 +2766,7 @@ Record the conflict, decide nothing, and do NOT re-pin <span class="fa-gloss-sta
 Record the decision and its audit note [decision-audit] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A decision is an act ABOUT the findings, not a finding. Record the outcome, every finding it weighed, every finding it overrules — and an audit note saying why it was made, or why a finding in it was left. Each note cites corpus evidence: a witness, another finding, a QA report, a block, a file range. An overruled mechanical finding stays on the record; a gate whose findings vanish when somebody disagrees with them cannot be audited. An agent may assemble the citations and is recorded as <code>proposed_by</code>; the author is whoever decided.</p>
+<p>A decision is an act ABOUT the findings, not a finding. Record the outcome, every finding it weighed, every finding it overrules — and an audit note saying why it was made, or why a finding in it was left. Each note cites corpus evidence: a witness, another finding, a QA report, a block, a file range. An overruled mechanical finding stays on the record; a gate whose findings vanish when somebody disagrees with them cannot be audited. An agent may assemble the citations and is recorded as `proposed_by`; the author is whoever decided.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/editing-hci-validation.bpmn"><code>cat-harness/processes/editing-hci-validation.bpmn#Task_RecordDecision</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.d_undetermined" data-fa-state="extracted" data-fa-gloss="">
@@ -2675,7 +2780,7 @@ Record the decision as still open <span class="fa-gloss-status">candidate, extra
 Record the determination <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Writes a document conforming to <code>discussion.output.schema.json</code>: the harness, the repositories as read-from / written-to pairs, <code>determinedBy</code>, and who answered. This artefact is what finishes the task.</p>
+<p>Writes a document conforming to `discussion.output.schema.json`: the harness, the repositories as read-from / written-to pairs, `determinedBy`, and who answered. This artefact is what finishes the task.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_RecordDetermination</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_evidenceretrieval.task_recordgap" data-fa-state="extracted" data-fa-gloss="">
@@ -2710,7 +2815,7 @@ Record the L1 completeness verdict <span class="fa-gloss-status">candidate, extr
 Record the recommendation AND the rejected options <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The rejected options and why they lost are part of the output, not an appendix. A rejected option with no record is a dead end nobody marked, and the next agent walks into it — the same argument <code>bean-coordination</code> makes for <code>scrapped</code> over deleted. In a bean context the form is MADR's. Which methodology was followed is named here, so a reader can check the method rather than take the conclusion.</p>
+<p>The rejected options and why they lost are part of the output, not an appendix. A rejected option with no record is a dead end nobody marked, and the next agent walks into it — the same argument `bean-coordination` makes for `scrapped` over deleted. In a bean context the form is MADR's. Which methodology was followed is named here, so a reader can check the method rather than take the conclusion.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/options-analysis.bpmn"><code>cat-harness/processes/options-analysis.bpmn#A_Record</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codereview.task_recordverdict" data-fa-state="extracted" data-fa-gloss="">
@@ -2738,7 +2843,7 @@ Record what failed <span class="fa-gloss-status">candidate, extracted</span>
 Record what is still open <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The declined route. <code>outcome: unsettled</code> with <code>stillOpen</code>, so the next actor resumes rather than restarts. An agent that reaches for a default here has produced a guess, not a determination.</p>
+<p>The declined route. `outcome: unsettled` with `stillOpen`, so the next actor resumes rather than restarts. An agent that reaches for a default here has produced a guess, not a determination.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/discussion.bpmn"><code>bootstrap/processes/discussion.bpmn#A_RecordUnsettled</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codechangereview.task_closebean" data-fa-state="extracted" data-fa-gloss="">
@@ -2763,7 +2868,7 @@ Record x,y for this note on THIS board <span class="fa-gloss-status">candidate, 
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/board-place-note.bpmn"><code>cat-harness/processes/board-place-note.bpmn#A_Place</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_sessionstatemachine.a_touch" data-fa-state="extracted" data-fa-gloss="">
-Refresh <code>updatedAt</code> only <span class="fa-gloss-status">candidate, extracted</span>
+Refresh `updatedAt` only <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Nothing changed, and saying so is the point. A record that stops being written looks exactly like an abandoned session; a refreshed timestamp with no other change says the session is alive and idle, which is a different fact and the commonest one.</p>
@@ -2826,10 +2931,10 @@ Relocate the content to the trashcan <span class="fa-gloss-status">candidate, ex
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/board-relocate.bpmn"><code>cat-harness/processes/board-relocate.bpmn#A_MoveContent</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_featurestaging.task_removedisp" data-fa-state="extracted" data-fa-gloss="">
-Remove it AND append <code>removed</code> — one commit <span class="fa-gloss-status">candidate, extracted</span>
+Remove it AND append `removed` — one commit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Say what is going — size and file count — then remove STAGING/&lt;slug&gt;/ and append <code>removed</code> to the render log in the SAME commit, so a preview cannot vanish without a record of who dispatched it and why. The slug is a dispatch input, so the tool re-checks it by value rather than trusting the guard.</p>
+<p>Say what is going — size and file count — then remove STAGING/&lt;slug&gt;/ and append `removed` to the render log in the SAME commit, so a preview cannot vanish without a record of who dispatched it and why. The slug is a dispatch input, so the tool re-checks it by value rather than trusting the guard.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_RemoveDisp</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_cleanupstaging" data-fa-state="extracted" data-fa-gloss="">
@@ -2843,14 +2948,14 @@ Remove STAGING/&lt;slug&gt;/ <span class="fa-gloss-status">candidate, extracted<
 Remove the artefact <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>rm -rf STAGING/&lt;slug&gt;</code>. Cannot reach the log, which lives outside STAGING/ — structural rather than guarded, because a branch named to collide with a directory under STAGING/ slugifies to exactly that name and git permits the ref.</p>
+<p>`rm -rf STAGING/&lt;slug&gt;`. Cannot reach the log, which lives outside STAGING/ — structural rather than guarded, because a branch named to collide with a directory under STAGING/ slugifies to exactly that name and git permits the ref.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/staging-render-log.bpmn"><code>cat-harness/processes/staging-render-log.bpmn#A_Remove</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_featurestaging.task_remove" data-fa-state="extracted" data-fa-gloss="">
-Remove the preview AND append <code>removed</code> — one commit <span class="fa-gloss-status">candidate, extracted</span>
+Remove the preview AND append `removed` — one commit <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>ONE COMMIT for the removal and its record. A separate log push can fail on its own and leave a preview that vanished with nothing saying why — which is the exact state bean <code>plj1</code> left the branch in. <code>render-log.ts</code> refuses a <code>removed</code> entry with no reason, so this step fails loudly rather than writing a record that says an artefact went and not why.</p>
+<p>ONE COMMIT for the removal and its record. A separate log push can fail on its own and leave a preview that vanished with nothing saying why — which is the exact state bean `plj1` left the branch in. `render-log.ts` refuses a `removed` entry with no reason, so this step fails loudly rather than writing a record that says an artefact went and not why.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/feature-staging.bpmn"><code>cat-harness/processes/feature-staging.bpmn#Task_Remove</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_boardopenclose.a_renderavatars" data-fa-state="extracted" data-fa-gloss="">
@@ -2881,18 +2986,25 @@ Report the capture state <span class="fa-gloss-status">candidate, extracted</spa
 <p>Capture is off or unknown, so nothing is committed. Say which of the two it is: off is somebody's decision, unknown means nobody could tell, and an agent that believes it has an audit trail when it has none acts on a false belief.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/activity-log.bpmn"><code>cat-harness/processes/activity-log.bpmn#A_ReportCaptureState</code></a></p>
 </dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_propose" data-fa-state="extracted" data-fa-gloss="">
+Report what moves — sizes, what breaks <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The agent reports and waits: what moves, how large, what in the parent breaks, and the rollback. It never relocates a durable artefact on its own initiative.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Propose</code></a></p>
+</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_graphdetanglement.task_propose" data-fa-state="extracted" data-fa-gloss="">
 Report what would move — sizes, and what breaks <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The agent reports and waits. <code>deletion-requires-confirmation</code> is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative.</p>
+<p>The agent reports and waits. `deletion-requires-confirmation` is not a courtesy to waive: an agent never removes or relocates a durable artefact on its own initiative.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/graph-detanglement.bpmn"><code>cat-harness/processes/graph-detanglement.bpmn#Task_Propose</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_repositorygates" data-fa-state="extracted" data-fa-gloss="">
 Repository gates (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 <code>bun run</code> invocations in all. A SEPARATE job from Task_TypeScript since bean <code>om30</code>: they were one job in which <code>bun test</code> came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on <code>main</code> meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is <code>xom7</code> at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. <code>bun run gates</code> derives its list from BOTH jobs, so the local set still cannot drift from CI's.</p>
+<p>The 43 repository-gate steps — workflow refs, lane and process documentation, kg:audit:check, detangle, skills, published packages — 150 `bun run` invocations in all. A SEPARATE job from Task_TypeScript since bean `om30`: they were one job in which `bun test` came second of 47 steps, and because Actions stops a job at its first failing step and no step was continue-on-error, a deliberate test failure on `main` meant none of these ran. A gate never asked and a gate that passed are indistinguishable from outside, which is `xom7` at the step rather than the workflow. No sequence dependency on Task_TypeScript is drawn because there is none: a red test must not stop these being asked. `bun run gates` derives its list from BOTH jobs, so the local set still cannot drift from CI's.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-quality-gates.bpmn"><code>cat-harness/processes/code-quality-gates.bpmn#Task_RepositoryGates</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_requestchanges" data-fa-state="extracted" data-fa-gloss="">
@@ -2962,14 +3074,14 @@ Restricted checkout of the backward cone <span class="fa-gloss-status">candidate
 RESTRICTIONS unknown is an answer, not a green light <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The owner's phrase is 'no restrictions known in context', and that is a STATE, not a green light. GateVerdict is three-valued for this reason alone, and <code>unknown</code> is never rendered as <code>permitted</code>.</p>
+<p>The owner's phrase is 'no restrictions known in context', and that is a STATE, not a green light. GateVerdict is three-valued for this reason alone, and `unknown` is never rendered as `permitted`.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/materialize-remote.bpmn"><code>cat-harness/processes/materialize-remote.bpmn#Task_Restrictions</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_materializeremote.task_retention" data-fa-state="extracted" data-fa-gloss="">
 RETENTION what expires this copy <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A copy with no expiry cannot be told from an abandoned one — the same argument bean-blocking makes about a block with no expiry. An ARCHIVAL copy is the exception and it is a specification rather than an omission: freshness() reports it <code>permanent</code>, not <code>no-expiry</code>.</p>
+<p>A copy with no expiry cannot be told from an abandoned one — the same argument bean-blocking makes about a block with no expiry. An ARCHIVAL copy is the exception and it is a specification rather than an omission: freshness() reports it `permanent`, not `no-expiry`.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/materialize-remote.bpmn"><code>cat-harness/processes/materialize-remote.bpmn#Task_Retention</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_actorroleadministration.task_retireactor" data-fa-state="extracted" data-fa-gloss="">
@@ -3004,7 +3116,7 @@ Return for correction with annotations <span class="fa-gloss-status">candidate, 
 Review each slice [review-task] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>review-task.bpmn, once per slice, in parallel lanes by role. What kind of thing changed decides which review the slice descends into; the reviewer takes on that inner lane's role for the call only. Each reviewer gives the slice's blocks a verdict, and comments on the pull request with the <code>block:</code> tag where something needs saying.</p>
+<p>review-task.bpmn, once per slice, in parallel lanes by role. What kind of thing changed decides which review the slice descends into; the reviewer takes on that inner lane's role for the call only. Each reviewer gives the slice's blocks a verdict, and comments on the pull request with the `block:` tag where something needs saying.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Call_ReviewSlices</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_reviewimpact" data-fa-state="extracted" data-fa-gloss="">
@@ -3067,7 +3179,7 @@ Review the draft publication [content-review] <span class="fa-gloss-status">cand
 Review the editorial dependencies <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>uses[]</code> is what a READER must have read to follow the block — never populated from the formal dependency graph.</p>
+<p>`uses[]` is what a READER must have read to follow the block — never populated from the formal dependency graph.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-narrative.bpmn"><code>cat-harness/processes/review-narrative.bpmn#Task_ReviewUses</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_editing.task_reviewfindings" data-fa-state="extracted" data-fa-gloss="">
@@ -3088,7 +3200,7 @@ Review the guidance already in this content [content-review] <span class="fa-glo
 Review the MVP against what we bind to <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A narrower question than &quot;is the new version good&quot;: does everything in <code>binds</code> still hold, checked against the deployed page. A <code>userTask</code>, and the lane admits <code>person</code> and <code>agent</code> — a review agent is a legitimate reviewer here, and the separation that matters is the next lane's: a reviewer cannot accept.</p>
+<p>A narrower question than &quot;is the new version good&quot;: does everything in `binds` still hold, checked against the deployed page. A `userTask`, and the lane admits `person` and `agent` — a review agent is a legitimate reviewer here, and the separation that matters is the next lane's: a reviewer cannot accept.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-version-adoption.bpmn"><code>cat-harness/processes/upstream-version-adoption.bpmn#R_Review</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codereview.task_reviewschema" data-fa-state="extracted" data-fa-gloss="">
@@ -3172,14 +3284,14 @@ Run check:ci-health, WRITING the report file <span class="fa-gloss-status">candi
 Run every verifier over the export <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Run the verifier set (scripts/publish-verify.ts, <code>bun run publish:verify -- --dir &lt;site&gt;</code>) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block.</p>
+<p>Run the verifier set (scripts/publish-verify.ts, `bun run publish:verify -- --dir &lt;site&gt;`) over the built tree. A SET: each verifier is one entry, and adding one changes nothing else. The first is JSON-LD expansion under a real processor, network refused — a property the context does not declare, a relative IRI or a context that will not load is a finding. Only documents of OURS are verified; third-party data in the tree is counted and cannot block.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/publish-verification.bpmn"><code>cat-harness/processes/publish-verification.bpmn#A_Verify</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_signoff.a_recordkg" data-fa-state="extracted" data-fa-gloss="">
 Run placement, and raise a bean for the authoring <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The offer produces a DECISION, not a node. <code>placement</code> then decides instance, graph and node kind — it is the step that catches a hardcoded path or a literal naming one folio — and the authoring itself becomes a bean, because work here is a bean before it is a file. <code>op=&quot;note&quot;</code> and not <code>create</code>, for the reason <code>A_CreateBeans</code> above states: the engine has no <code>create</code> op — it claims, notes and resolves the instance's OWN bean. The agent mints the authoring bean itself with <code>beans create</code>, running the exact-title existence check first, and what this step records is a note that the decision was taken.</p>
+<p>The offer produces a DECISION, not a node. `placement` then decides instance, graph and node kind — it is the step that catches a hardcoded path or a literal naming one folio — and the authoring itself becomes a bean, because work here is a bean before it is a file. `op=&quot;note&quot;` and not `create`, for the reason `A_CreateBeans` above states: the engine has no `create` op — it claims, notes and resolves the instance's OWN bean. The agent mints the authoring bean itself with `beans create`, running the exact-title existence check first, and what this step records is a note that the decision was taken.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/crdm-signoff.bpmn"><code>cat-harness/processes/crdm-signoff.bpmn#A_RecordKg</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_publication.task_publicationqa" data-fa-state="extracted" data-fa-gloss="">
@@ -3207,35 +3319,35 @@ Run the health checks, keeping the report either way <span class="fa-gloss-statu
 Run the node audits <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>check:tools</code>, <code>kg:audit</code> and <code>typecheck</code>. Read the kg-qa sidecar rather than the summary: it is written per node so an inherited defect and a new one are distinguishable.</p>
+<p>`check:tools`, `kg:audit` and `typecheck`. Read the kg-qa sidecar rather than the summary: it is written per node so an inherited defect and a new one are distinguishable.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/review-code.bpmn"><code>cat-harness/processes/review-code.bpmn#Task_RunNodeAudits</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codechangereview.task_rungates" data-fa-state="extracted" data-fa-gloss="">
 Run the platform's own gates <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Before pushing, not after CI says so. <code>bun test</code> passing is NOT the gates passing: measured 2026-09-19, a green unit suite sat beside a <code>tsc</code> failure and a missing <code>@graphNode</code> tag, and the second broke a QA sidecar comparison as well — one cause, two symptoms, and an agent running only the tests would have pushed all three.</p>
+<p>Before pushing, not after CI says so. `bun test` passing is NOT the gates passing: measured 2026-09-19, a green unit suite sat beside a `tsc` failure and a missing `@graphNode` tag, and the second broke a QA sidecar comparison as well — one cause, two symptoms, and an agent running only the tests would have pushed all three.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-change-review.bpmn"><code>cat-harness/processes/code-change-review.bpmn#Task_RunGates</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreamadoption.task_gates" data-fa-state="extracted" data-fa-gloss="">
 Run the row's gates tests · e2e · site-links <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The <code>mvp</code> commands declared for this tenant. For the theme: <code>bun test</code>, <code>CI=1 bunx playwright test</code> (a11y, action tiles, sidebar panels, QA panel) and <code>scripts/site-links.ts --site ./_site</code>, which checks the navbar tiles against the BUILT site rather than against the attribute — the distinction that let a 404 ship unnoticed once already. A red gate is EVIDENCE, not an exit. It does not end the process and it does not loop by itself: &quot;this version breaks us&quot; is a finding the decider needs, not a reason to stop before they see it.</p>
+<p>The `mvp` commands declared for this tenant. For the theme: `bun test`, `CI=1 bunx playwright test` (a11y, action tiles, sidebar panels, QA panel) and `scripts/site-links.ts --site ./_site`, which checks the navbar tiles against the BUILT site rather than against the attribute — the distinction that let a 404 ship unnoticed once already. A red gate is EVIDENCE, not an exit. It does not end the process and it does not loop by itself: &quot;this version breaks us&quot; is a finding the decider needs, not a reason to stop before they see it.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-version-adoption.bpmn"><code>cat-harness/processes/upstream-version-adoption.bpmn#Task_Gates</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_voicereview.task_mechanicalhalf" data-fa-state="extracted" data-fa-gloss="">
 Run the rule's mechanical half <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Whatever <code>patterns</code> and <code>terminology</code> the rule carries. A <code>judgementOnly</code> rule has no mechanical half by declaration, which is different from nobody having written one yet.</p>
+<p>Whatever `patterns` and `terminology` the rule carries. A `judgementOnly` rule has no mechanical half by declaration, which is different from nobody having written one yet.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>cat-harness/processes/voice-review.bpmn#Task_MechanicalHalf</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codequalitygates.task_rust" data-fa-state="extracted" data-fa-gloss="">
 Rust wildcard imports (WARN-ONLY) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Report non-test <code>use …::*;</code> in tools/**/*.rs, excluding <code>use super::*;</code>. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.</p>
+<p>Report non-test `use …::*;` in tools/**/*.rs, excluding `use super::*;`. continue-on-error: it reports and never blocks, which is why it is labelled WARN-ONLY rather than drawn like the hard jobs.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-quality-gates.bpmn"><code>cat-harness/processes/code-quality-gates.bpmn#Task_Rust</code></a></p>
 </dd>
 </dl>
@@ -3330,7 +3442,7 @@ Scope the DAK [content-plan] <span class="fa-gloss-status">candidate, extracted<
 Scope the delta pinned → candidate <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Restricted to the directories that reach our output — for a Jekyll theme <code>_sass</code>, <code>_includes</code>, <code>_layouts</code>, <code>assets</code>. Upstream's own docs, CI and tests cannot reach us, and counting them makes a harmless release look alarming. The changelog is the claim; <code>git diff --stat pinned..candidate</code> over those paths is the evidence.</p>
+<p>Restricted to the directories that reach our output — for a Jekyll theme `_sass`, `_includes`, `_layouts`, `assets`. Upstream's own docs, CI and tests cannot reach us, and counting them makes a harmless release look alarming. The changelog is the claim; `git diff --stat pinned..candidate` over those paths is the evidence.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/upstream-version-adoption.bpmn"><code>cat-harness/processes/upstream-version-adoption.bpmn#A_Scope</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_sampleimport.task_scope" data-fa-state="extracted" data-fa-gloss="">
@@ -3344,7 +3456,7 @@ Scope the sample: which items, which store, and is it PERMANENT? <span class="fa
 Scrap with reasons NEVER delete <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>status: scrapped</code>, plus a &quot;Reasons for Scrapping&quot; section. This is what &quot;disable&quot; means here — the CLI has no disabled state; its vocabulary is draft, todo, in-progress, completed, scrapped. DELETION IS NEVER THE ANSWER, even though <code>beans delete</code> exists. A scrapped bean records that the work was considered and rejected, and why; a deleted one leaves a sibling session unable to tell abandonment from accident, and leaves the next agent free to re-open the same dead end.</p>
+<p>`status: scrapped`, plus a &quot;Reasons for Scrapping&quot; section. This is what &quot;disable&quot; means here — the CLI has no disabled state; its vocabulary is draft, todo, in-progress, completed, scrapped. DELETION IS NEVER THE ANSWER, even though `beans delete` exists. A scrapped bean records that the work was considered and rejected, and why; a deleted one leaves a sibling session unable to tell abandonment from accident, and leaves the next agent free to re-open the same dead end.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/bean-lifecycle.bpmn"><code>cat-harness/processes/bean-lifecycle.bpmn#Task_Scrap</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_relatedwork.a_searchbeans" data-fa-state="extracted" data-fa-gloss="">
@@ -3365,7 +3477,7 @@ Search issues and open PRs <span class="fa-gloss-status">candidate, extracted</s
 Search trusted CONTENT — L2 DAKs, L3 IGs <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Already-adjudicated guidance: WHO SMART DAKs at L2 and FHIR Implementation Guides at L3. A recommendation adopted in a published DAK is evidence of a different kind from a primary study -- it is a prior decision, with its own provenance, and must be cited as that rather than laundered into primary evidence. NOT YET SKILL-BACKED. This step named <code>corpus-search</code>, which has never existed. It is not <code>corpus-grep</code>, whose job is the pre-declaration check that something really is an open gap — searching adjudicated L2/L3 content for evidence is a different task, so pointing the ref there would have been a plausible-looking wrong answer. Left uncovered until the skill is written.</p>
+<p>Already-adjudicated guidance: WHO SMART DAKs at L2 and FHIR Implementation Guides at L3. A recommendation adopted in a published DAK is evidence of a different kind from a primary study -- it is a prior decision, with its own provenance, and must be cited as that rather than laundered into primary evidence. NOT YET SKILL-BACKED. This step named `corpus-search`, which has never existed. It is not `corpus-grep`, whose job is the pre-declaration check that something really is an open gap — searching adjudicated L2/L3 content for evidence is a different task, so pointing the ref there would have been a plausible-looking wrong answer. Left uncovered until the skill is written.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/evidence-retrieval.bpmn"><code>cat-harness/processes/evidence-retrieval.bpmn#Task_L2L3Content</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_evidenceretrieval.task_l1sources" data-fa-state="extracted" data-fa-gloss="">
@@ -3407,8 +3519,15 @@ Seed the work plan [todo-manager] <span class="fa-gloss-status">candidate, extra
 Select the methodology by context <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Ask the selection question in order, first yes decides: do the criteria RECUR with the same inputs having to produce the same answer; is this the CERTAINTY of a body of evidence behind a recommendation; is the context a BEAN recording a decision; otherwise a one-off choice among candidates. If none fits, that is a finding — say which question the decision is and that no adopted methodology covers it. Do not improvise one and do not stretch the nearest fit. The declared set is the contents of the <code>methodology</code> graph. Ask for it; do not remember it.</p>
+<p>Ask the selection question in order, first yes decides: do the criteria RECUR with the same inputs having to produce the same answer; is this the CERTAINTY of a body of evidence behind a recommendation; is the context a BEAN recording a decision; otherwise a one-off choice among candidates. If none fits, that is a finding — say which question the decision is and that no adopted methodology covers it. Do not improvise one and do not stretch the nearest fit. The declared set is the contents of the `methodology` graph. Ask for it; do not remember it.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/options-analysis.bpmn"><code>cat-harness/processes/options-analysis.bpmn#A_Select</code></a></p>
+</dd>
+<dt id="cat-harness--kg-bpmn-activities--process_kgseparation.task_decide" data-fa-state="extracted" data-fa-gloss="">
+Separate this graph? <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The owner decides from the measured signals, and also decides the address base for its identifiers, where verdicts about it live, and what its tools repository owns. Declining is a real outcome: the graph stays where it is.</p>
+<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-separation.bpmn"><code>cat-harness/processes/kg-separation.bpmn#Task_Decide</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.a_serialize" data-fa-state="extracted" data-fa-gloss="">
 Serialize to JSON-LD <span class="fa-gloss-status">candidate, extracted</span>
@@ -3435,7 +3554,7 @@ Sheet names, headers, shape, narrative <span class="fa-gloss-status">candidate, 
 Sign as release authority <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A person attests the run hashes out of band. This is a userTask, not a serviceTask, and the distinction is enforced: <code>fulfilmentKindsForBpmnType</code> will not let a system actor fill it, which is what stops the air-gapped route quietly becoming another machine route.</p>
+<p>A person attests the run hashes out of band. This is a userTask, not a serviceTask, and the distinction is enforced: `fulfilmentKindsForBpmnType` will not let a system actor fill it, which is what stops the air-gapped route quietly becoming another machine route.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-report-signing.bpmn"><code>cat-harness/processes/qa-report-signing.bpmn#Task_HumanSign</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_signoff.ba_signoff" data-fa-state="extracted" data-fa-gloss="">
@@ -3470,7 +3589,7 @@ Sign over the API <span class="fa-gloss-status">candidate, extracted</span>
 Sign the package and/or each asset <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>THE TRUST ANCHOR IS GDHCN, SPECIFIED BY THE WHO SMART TRUST IG (owner, 2026-09-20: <code>propsal signing = GDHCN</code>, then <code>smart-trust</code>). READ OFF THAT IG rather than from general knowledge: a GDHCN trustlist distributes KEY MATERIAL as W3C DID documents, and says nothing about what you wrap your bytes in — the health-certificate envelope is a separate specification in the same IG, and a document package is not a health certificate. So what is settled is where a verifier GETS THE KEY, not what it verifies. A portal that can fetch the bytes but not reach the trustlist cannot verify, which is <code>unknown</code> and not a failure — air-gapped is a declared deployment value, so that case is answered rather than assumed away. Still OPEN and unread: the rotation and revocation model, and whether a document-package signature can be expressed for a GDHCN-aware verifier at all. Two schemes with different properties remain to choose between, and the trustlist does not choose between them. A PACKAGE signature over the manifest verifies the SET — nothing added, removed or altered — and must be reissued whenever any file changes. A PER-ASSET signature verifies one file independently, which is what an edge cache serving one asset can actually check, and it cannot detect a removal because there is nothing left to verify. They compose; composing them is the safer and more expensive default, and it is the deployment's choice rather than the pipeline's.</p>
+<p>THE TRUST ANCHOR IS GDHCN, SPECIFIED BY THE WHO SMART TRUST IG (owner, 2026-09-20: `propsal signing = GDHCN`, then `smart-trust`). READ OFF THAT IG rather than from general knowledge: a GDHCN trustlist distributes KEY MATERIAL as W3C DID documents, and says nothing about what you wrap your bytes in — the health-certificate envelope is a separate specification in the same IG, and a document package is not a health certificate. So what is settled is where a verifier GETS THE KEY, not what it verifies. A portal that can fetch the bytes but not reach the trustlist cannot verify, which is `unknown` and not a failure — air-gapped is a declared deployment value, so that case is answered rather than assumed away. Still OPEN and unread: the rotation and revocation model, and whether a document-package signature can be expressed for a GDHCN-aware verifier at all. Two schemes with different properties remain to choose between, and the trustlist does not choose between them. A PACKAGE signature over the manifest verifies the SET — nothing added, removed or altered — and must be reissued whenever any file changes. A PER-ASSET signature verifies one file independently, which is what an edge cache serving one asset can actually check, and it cannot detect a removal because there is nothing left to verify. They compose; composing them is the safer and more expensive default, and it is the deployment's choice rather than the pipeline's.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-to-portal.bpmn"><code>cat-harness/processes/kg-to-portal.bpmn#S_Sign</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_materializeremote.task_size" data-fa-state="extracted" data-fa-gloss="">
@@ -3484,7 +3603,7 @@ SIZE what fraction, and what the whole would cost <span class="fa-gloss-status">
 Skill-registration chain (UNMASKED) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Runs the five <code>--check</code> commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read &quot;the only place those five are read against the tree as checked out&quot;, because at the time all six lived in one job behind <code>bun test</code>, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean <code>ymsu</code>). Task_RepositoryGates is now a separate job that runs all six and never runs <code>bun test</code>, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (<code>bun run skill:register</code>) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean <code>v625</code>'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on <code>kg:detangle:check</code> and the cause was <code>kg-detangle.ts</code> counting 1214 files of a gitignored <code>node_modules/</code> as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of <code>bun test</code> either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans <code>v625</code>, <code>fjwi</code>.</p>
+<p>Runs the five `--check` commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read &quot;the only place those five are read against the tree as checked out&quot;, because at the time all six lived in one job behind `bun test`, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean `ymsu`). Task_RepositoryGates is now a separate job that runs all six and never runs `bun test`, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (`bun run skill:register`) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean `v625`'s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on `kg:detangle:check` and the cause was `kg-detangle.ts` counting 1214 files of a gitignored `node_modules/` as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of `bun test` either: measured on main's run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans `v625`, `fjwi`.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-quality-gates.bpmn"><code>cat-harness/processes/code-quality-gates.bpmn#Task_SkillChain</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_sliceandassign" data-fa-state="extracted" data-fa-gloss="">
@@ -3582,7 +3701,7 @@ Syntax, spelling and links [content-validate] <span class="fa-gloss-status">cand
 Synthesise, cite to a location, and say what was not found <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The paper's Reporter, with two obligations it does not state. CITE TO A LOCATION, not to a document — the page and bounding box the parse preserved, so a reader verifies a claim where it was made rather than being sent to a PDF. AND SAY WHAT WAS NOT FOUND. The failure this method makes easy is that a search which ended quietly looks exactly like one that succeeded. Sub-questions that returned nothing are reported, distinguishing &quot;not in the corpus&quot; from &quot;not found by this search&quot; — only the first is a fact about the folio. A figure description an agent drafted is NOT reported as what the figure shows. <code>schemas/narrative.ts</code> holds that line and this step does not cross it.</p>
+<p>The paper's Reporter, with two obligations it does not state. CITE TO A LOCATION, not to a document — the page and bounding box the parse preserved, so a reader verifies a claim where it was made rather than being sent to a PDF. AND SAY WHAT WAS NOT FOUND. The failure this method makes easy is that a search which ended quietly looks exactly like one that succeeded. Sub-questions that returned nothing are reported, distinguishing &quot;not in the corpus&quot; from &quot;not found by this search&quot; — only the first is a fact about the folio. A figure description an agent drafted is NOT reported as what the figure shows. `schemas/narrative.ts` holds that line and this step does not cross it.</p>
 <p class="fa-gloss-meta">BPMN activities of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/processes/deep-document-research.bpmn"><code>folio-assistant-core/processes/deep-document-research.bpmn#A_Report</code></a></p>
 </dd>
 </dl>
@@ -3614,14 +3733,14 @@ Test MVP in own context <span class="fa-gloss-status">candidate, extracted</span
 The RULE is the defect — bean it <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A rule its own quote does not support is a finding against the voice, not against the block. Measured precedent: <code>voice-editorializing</code> flags &quot;clearly&quot;, and the exemplar the Milnor gate is named after uses it fourteen times as proof economy (bean <code>2t41</code>).</p>
+<p>A rule its own quote does not support is a finding against the voice, not against the block. Measured precedent: `voice-editorializing` flags &quot;clearly&quot;, and the exemplar the Milnor gate is named after uses it fourteen times as proof economy (bean `2t41`).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/voice-review.bpmn"><code>cat-harness/processes/voice-review.bpmn#Task_RuleIsWrong</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_ingesttheme.task_review" data-fa-state="extracted" data-fa-gloss="">
 Theme and UI review [theme-ui-review] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>THEME REVIEW HAPPENS HERE AND NOWHERE ELSE. Owner, 2026-09-23: &quot;theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI&quot;; asked directly on 2026-09-24 whether that meant ONLY at ingestion: &quot;Yes only at ingestion&quot;. Bean <code>9fdi</code>. So this step now CALLS <code>theme-ui-review.bpmn</code> rather than performing one automated check out of it. Until 2026-09-24 it carried a <code>folio:no-call</code> reason — &quot;calling it would put a human gate into an automated ingest&quot; — and the review ran post-MVP from <code>crdm-deliver.bpmn</code> instead. That call is gone, and the reason for not calling is withdrawn rather than left standing beside a call it contradicts. WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step, <code>R_Judge</code>: a person looks at the ingested assets laid out in their design at a web and a mobile width. So ingesting a THEME SOURCE is attended at that step. Ingesting anything else stays unattended — <code>Gateway_ThemeSource</code> in <code>document-ingestion.bpmn</code> routes non-theme documents past this subprocess entirely. THE OLD AUTOMATED CHECK IS INSIDE THE CALL, NOT DROPPED. &quot;A theme sets the stripe's hue; it never sets its width to zero&quot; — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees (&quot;Never red with green, never blue with yellow&quot;). That check is <code>A_Accessibility</code> in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning.</p>
+<p>THEME REVIEW HAPPENS HERE AND NOWHERE ELSE. Owner, 2026-09-23: &quot;theme review to ingestion of graphical assets in context of website or app design and determining graphical assets/UI&quot;; asked directly on 2026-09-24 whether that meant ONLY at ingestion: &quot;Yes only at ingestion&quot;. Bean `9fdi`. So this step now CALLS `theme-ui-review.bpmn` rather than performing one automated check out of it. Until 2026-09-24 it carried a `folio:no-call` reason — &quot;calling it would put a human gate into an automated ingest&quot; — and the review ran post-MVP from `crdm-deliver.bpmn` instead. That call is gone, and the reason for not calling is withdrawn rather than left standing beside a call it contradicts. WHAT THE CALL COSTS, stated rather than hidden. The subprocess has a human step, `R_Judge`: a person looks at the ingested assets laid out in their design at a web and a mobile width. So ingesting a THEME SOURCE is attended at that step. Ingesting anything else stays unattended — `Gateway_ThemeSource` in `document-ingestion.bpmn` routes non-theme documents past this subprocess entirely. THE OLD AUTOMATED CHECK IS INSIDE THE CALL, NOT DROPPED. &quot;A theme sets the stripe's hue; it never sets its width to zero&quot; — colour alone carrying a whole signal fails WCAG SC 1.4.1, and the WHO guide agrees (&quot;Never red with green, never blue with yellow&quot;). That check is `A_Accessibility` in the called process, which measures contrast against the real ground and requires a non-colour channel wherever colour carries meaning.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ingest-theme.bpmn"><code>cat-harness/processes/ingest-theme.bpmn#Task_Review</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_derivecontent.task_audio" data-fa-state="extracted" data-fa-gloss="">
@@ -3663,7 +3782,7 @@ Triage the failure: hold or fix forward <span class="fa-gloss-status">candidate,
 TypeScript: lint, types and tests (HARD) <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Three checks and nothing else: <code>bun run lint</code>, <code>tsc --noEmit</code>, then <code>bun test</code>. The repository gates it used to carry are Task_RepositoryGates now (bean <code>om30</code>). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so <code>bun test</code> — red on <code>main</code> by the owner's decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on <code>main</code> at all.</p>
+<p>Three checks and nothing else: `bun run lint`, `tsc --noEmit`, then `bun test`. The repository gates it used to carry are Task_RepositoryGates now (bean `om30`). Order inside the job is load-bearing rather than stylistic: Actions stops a job at its first failing step, so `bun test` — red on `main` by the owner's decision — runs LAST, with nothing behind it to mask. While it ran first, lint and typecheck did not execute on `main` at all.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-quality-gates.bpmn"><code>cat-harness/processes/code-quality-gates.bpmn#Task_TypeScript</code></a></p>
 </dd>
 </dl>
@@ -3702,14 +3821,14 @@ Verify the export [publish-verification] <span class="fa-gloss-status">candidate
 Verify the ORIGINAL still hashes to its digest <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p><code>check:materialized-fixity</code>. Run against the SOURCE, not the copy — the copy is new content with no claim to verify, and the source is the thing a botched copy-out would have disturbed. A mismatch here means the copy-out was an edit in place wearing a copy's clothes, and it is the only signal that tells the two apart.</p>
+<p>`check:materialized-fixity`. Run against the SOURCE, not the copy — the copy is new content with no claim to verify, and the source is the thing a botched copy-out would have disturbed. A mismatch here means the copy-out was an edit in place wearing a copy's clothes, and it is the only signal that tells the two apart.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/copy-out-materialized.bpmn"><code>cat-harness/processes/copy-out-materialized.bpmn#Task_VerifySourceUntouched</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.p_verify" data-fa-state="extracted" data-fa-gloss="">
 Verify what arrived against what was signed <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Against a GDHCN DID trustlist, which means the verifier needs THE NETWORK and not only the bytes — the key is resolved from the trustlist rather than read out of the package. The trustlist is itself static JSON served from a CDN (<code>tng-cdn.who.int</code>), and its path is a hierarchical filter — domain, participant, key usage, with <code>-</code> as a wildcard — so a verifier fetches the slice it needs rather than the whole list. WHO's own trust network is therefore the same shape as this diagram one layer down, which is the strongest argument the design has. The stage that gets dropped, because every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. A portal that CANNOT verify reports <code>unknown</code> — a portal nobody asked is not a portal that checked.</p>
+<p>Against a GDHCN DID trustlist, which means the verifier needs THE NETWORK and not only the bytes — the key is resolved from the trustlist rather than read out of the package. The trustlist is itself static JSON served from a CDN (`tng-cdn.who.int`), and its path is a hierarchical filter — domain, participant, key usage, with `-` as a wildcard — so a verifier fetches the slice it needs rather than the whole list. WHO's own trust network is therefore the same shape as this diagram one layer down, which is the strongest argument the design has. The stage that gets dropped, because every other stage produces something visible and this one produces nothing when it passes. A package that is signed and never verified is a package whose signature is decoration. A portal that CANNOT verify reports `unknown` — a portal nobody asked is not a portal that checked.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-to-portal.bpmn"><code>cat-harness/processes/kg-to-portal.bpmn#P_Verify</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_publication.task_publishrelease" data-fa-state="extracted" data-fa-gloss="">
@@ -3741,7 +3860,7 @@ What changed LOCALLY since <span class="fa-gloss-status">candidate, extracted</s
 Withdraw a review comment [folio-review-comment-move] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The reviewer who made a comment takes it back (it was a misreading, or a later slice answered it). Recorded with <code>folio-review-comment-move --to withdrawn</code>, committed to the edit-set's feature branch like every status change. This is the <code>withdraw</code> transition of REVIEW_TRANSITIONS.</p>
+<p>The reviewer who made a comment takes it back (it was a misreading, or a later slice answered it). Recorded with `folio-review-comment-move --to withdrawn`, committed to the edit-set's feature branch like every status change. This is the `withdraw` transition of REVIEW_TRANSITIONS.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Task_WithdrawComment</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_beanlifecycle.task_work" data-fa-state="extracted" data-fa-gloss="">
@@ -3755,7 +3874,7 @@ Work, keeping the body current (this is 'edit') <span class="fa-gloss-status">ca
 WORKING what changed upstream <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Compare the recorded upstreamVersion against the source. <code>could not reach the source</code> is a THIRD answer and is never reported as <code>unchanged</code> — an unreachable source is the sourceLoss gate firing late.</p>
+<p>Compare the recorded upstreamVersion against the source. `could not reach the source` is a THIRD answer and is never reported as `unchanged` — an unreachable source is the sourceLoss gate firing late.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/refresh-materialized.bpmn"><code>cat-harness/processes/refresh-materialized.bpmn#Task_Upstream</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_buildl1kg.task_dublin" data-fa-state="extracted" data-fa-gloss="">
@@ -3811,7 +3930,7 @@ Write the design intent <span class="fa-gloss-status">candidate, extracted</span
 Write the entry that LEADS — keeping the checker's beneath it <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Not relaxable, and the one step here that is not. A judgement nobody wrote down is indistinguishable from a checker that was never run, so the judgement is free and the record is not. Do not resolve the disagreement away: both entries stay, the adjudication on top under the sweep's most-recent-matching-hash rule. A disagreement between a checker and a reviewer is information, and somebody re-running the check next month needs to find that a checker read it differently rather than a clean pass. <code>/api/relevance/adjudicate</code> reached the same rule independently — <code>human_adjudicated</code> written alongside, never over, the agent's <code>assessed_by</code>.</p>
+<p>Not relaxable, and the one step here that is not. A judgement nobody wrote down is indistinguishable from a checker that was never run, so the judgement is free and the record is not. Do not resolve the disagreement away: both entries stay, the adjudication on top under the sweep's most-recent-matching-hash rule. A disagreement between a checker and a reviewer is information, and somebody re-running the check next month needs to find that a checker read it differently rather than a clean pass. `/api/relevance/adjudicate` reached the same rule independently — `human_adjudicated` written alongside, never over, the agent's `assessed_by`.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/criterion-adjudication.bpmn"><code>cat-harness/processes/criterion-adjudication.bpmn#A_RecordEntry</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_boardplacenote.a_createnote" data-fa-state="extracted" data-fa-gloss="">
@@ -3825,14 +3944,14 @@ Write the note into the folio — with no coordinate <span class="fa-gloss-statu
 Write the root README, if it is not there <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The repository now IS an instance of something, and nothing at its root says so. A person landing on the checkout — or an agent that arrives before it has found any declaration — reads README.md first, and until this step there was no guarantee one existed. It carries two things and no more: a LINK to the harness that was installed, and the OVERALL install status across every location A_Install touched. Not one line per location buried in a log — the status a reader wants is &quot;is this repository set up, and as what&quot;. WHEN ABSENT, never replacing. A repository that already has a README has one somebody wrote, and overwriting it would destroy authored content to state a fact that belongs in a generated region. Where a README is already there, the link and status go in a marker pair the harness's own README tool maintains. WRITING IT IS NOT A PROCESS WRITE. <code>instance-readme</code> declares <code>layer: context</code> — read at session start, never written by a running process — and this step writes one. Both hold, because INITIALISATION IS NOT PROCESS RUNTIME: the rule governs a process operating on an instance that exists, and this is the act that brings the instance into being. The harness states the same rule in its own skill on context and state.</p>
+<p>The repository now IS an instance of something, and nothing at its root says so. A person landing on the checkout — or an agent that arrives before it has found any declaration — reads README.md first, and until this step there was no guarantee one existed. It carries two things and no more: a LINK to the harness that was installed, and the OVERALL install status across every location A_Install touched. Not one line per location buried in a log — the status a reader wants is &quot;is this repository set up, and as what&quot;. WHEN ABSENT, never replacing. A repository that already has a README has one somebody wrote, and overwriting it would destroy authored content to state a fact that belongs in a generated region. Where a README is already there, the link and status go in a marker pair the harness's own README tool maintains. WRITING IT IS NOT A PROCESS WRITE. `instance-readme` declares `layer: context` — read at session start, never written by a running process — and this step writes one. Both hold, because INITIALISATION IS NOT PROCESS RUNTIME: the rule governs a process operating on an instance that exists, and this is the act that brings the instance into being. The harness states the same rule in its own skill on context and state.</p>
 <p class="fa-gloss-meta">BPMN activities of bootstrap · source <a href="https://github.com/litlfred/folio-assistant/blob/main/bootstrap/processes/initialize-harness.bpmn"><code>bootstrap/processes/initialize-harness.bpmn#A_WriteRootReadme</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_sessionstatemachine.a_updatesession" data-fa-state="extracted" data-fa-gloss="">
 Write what changed <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO <code>cat-harness.processes:bean</code> on this step. It records that a claim happened; it does not claim.</p>
+<p>An instance opened or closed, a bean claimed, a wait started or ended. All by REFERENCE: the bean and the instance are each the authority on themselves, and a status copied here would be free to contradict them. NO `cat-harness.processes:bean` on this step. It records that a claim happened; it does not claim.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>cat-harness/processes/session-state-machine.bpmn#A_UpdateSession</code></a></p>
 </dd>
 </dl>

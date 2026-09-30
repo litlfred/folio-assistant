@@ -7,5 +7,5 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `folio-ass
 
 | file | what it is | used by |
 |---|---|---|
-| [`deep-document-research.bpmn`](deep-document-research.bpmn) | a Process: Deep document research |  |
+| [`deep-document-research.bpmn`](deep-document-research.bpmn) | a [Process](../../bootstrap/schemas/README.md#process): Deep document research |  |
 <!-- kg:subgraph:end -->

@@ -664,6 +664,13 @@
       "status": "candidate"
     },
     {
+      "id": "glossary.glossaryschema.ordered",
+      "prefLabel": "GlossarySchema.ordered",
+      "definition": "The terms are in a LOGICAL order, each defined only by terms above it, and a reader should meet them in that order — not alphabetically. The owner, 2026-09-29, of bootstrap's terms: keep \"logical rather than alphabetical order\". Published as a skos:OrderedCollection.",
+      "source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.ordered",
+      "status": "candidate"
+    },
+    {
       "id": "glossary.glossaryschema.source",
       "prefLabel": "GlossarySchema.source",
       "definition": "dcterms:source: what the terms were drawn from.",
@@ -678,6 +685,13 @@
       "status": "candidate"
     },
     {
+      "id": "glossary.termschema.isdefinedby",
+      "prefLabel": "TermSchema.isDefinedBy",
+      "definition": "The schema or standard that defines the term (rdfs:isDefinedBy).",
+      "source": "folio-assistant-core/schemas/glossary.ts#TermSchema.isDefinedBy",
+      "status": "candidate"
+    },
+    {
       "id": "glossary.termschema.notation",
       "prefLabel": "TermSchema.notation",
       "definition": "The code. SKOS's own word for it.",
@@ -689,6 +703,13 @@
       "prefLabel": "TermSchema.reason",
       "definition": "Required for `could-not-extract`: a person must be able to act on it.",
       "source": "folio-assistant-core/schemas/glossary.ts#TermSchema.reason",
+      "status": "candidate"
+    },
+    {
+      "id": "glossary.termschema.requires",
+      "prefLabel": "TermSchema.requires",
+      "definition": "Local ids of the terms this definition USES — what a reader must know first (dcterms:requires). In an `ordered` glossary each must come earlier; the scheme refuses one that does not.",
+      "source": "folio-assistant-core/schemas/glossary.ts#TermSchema.requires",
       "status": "candidate"
     },
     {

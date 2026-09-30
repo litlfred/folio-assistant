@@ -5,7 +5,7 @@
     "id": "platform-authoring-agent",
     "path": "scenarios/roles.json"
   },
-  "source_hash": "sha256:0b454bddea6c31698e348735c3cf2ca197dbd597ec106b8e1303db0a8a123e0d",
+  "source_hash": "sha256:f1683f59868350ebbd37a6dc5695695dd1f1d39a9055046d3839ccf2f9b16ce2",
   "criteria": {
     "role-skills-resolve": {
       "result": "pass",
@@ -16,13 +16,8 @@
       "findings": []
     },
     "role-binds-a-lane": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "platform-authoring-agent",
-          "detail": "role \"platform-authoring-agent\" is bound by no lane's <bootstrap.processes:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "role-has-persona": {
       "result": "pass",
@@ -42,8 +37,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 1,
+    "pass": 7,
+    "fail": 0,
     "n/a": 0,
     "unknown": 0
   }
