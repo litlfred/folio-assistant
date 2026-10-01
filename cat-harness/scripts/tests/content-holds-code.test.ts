@@ -9,6 +9,7 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 
 import { codeFiles, contentCodeFindings, contentInstanceCode } from "../content-holds-code.ts";
+import { KG_CRITERIA_BY_ID } from "../../schemas/kg-qa.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..", "..");
 
@@ -78,12 +79,21 @@ describe("contentInstanceCode — planted", () => {
 });
 
 describe("contentInstanceCode — this checkout", () => {
-  test("who-iris fails, naming its IRIS-specific code", () => {
+  // Owner ruling 2026-10-01: a QA WARNING, not a failure — but one that still
+  // NAMES every file. Bean `eayu`.
+  test("who-iris is a QA warning, naming its five IRIS-specific code files", () => {
+    expect(KG_CRITERIA_BY_ID["content-instance-holds-code"]?.severity).toBe("minor");
     const v = contentInstanceCode(join(REPO, "who-iris"));
     expect(v.state).toBe("judged");
     if (v.state !== "judged") return;
-    expect(v.files).toContain("scripts/gen-iris-pages.ts");
-    expect(v.files).toContain("themes/themes.ts");
+    expect(v.files).toEqual([
+      "scripts/gen-iris-pages.ts",
+      "scripts/tests/catalogue-links.test.ts",
+      "scripts/tests/gen-iris-pages.test.ts",
+      "themes/themes.test.ts",
+      "themes/themes.ts",
+    ]);
+    expect(contentCodeFindings(v).map((f) => f.where)).toEqual(v.files);
     // The generic code left: none of the moved files may reappear here.
     expect(v.files.some((f) => /check-catalogue|gen-covers|lib\/bytes|lib\/local-path/.test(f))).toBe(false);
   });
