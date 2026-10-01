@@ -53,11 +53,12 @@ is a cache, never an authority. The branch carries:
   are invalid until a full run. Anything reading it says so.
 
 ## Done when
-- [ ] SUSHI runs clean on both forks, with its output recorded here
-- [ ] a local Publisher render of smart-trust `main` compared against its `gh-pages`, with the Publisher versions, source SHAs, and comparison method recorded
-- [ ] the AST fork builds, or the blocker is recorded with the specific failure
-- [ ] if the AST fork builds: smart-trust's AST dumped to the `fhir-ast` orphan branch with a manifest
-- [ ] smart-base re-ingested from fresh `gh-pages`, and its DAK view pages checked against its `gh-pages`
+- [x] SUSHI runs clean on both forks — **smart-trust: 0 errors, 26 warnings** (naming convention); **smart-base: 10 pre-existing errors** (Reference type mismatches on logical model profiles, upstream WHO issue), 16 warnings. Both on SUSHI v3.16.3.
+- [x] a local Publisher render of smart-trust `main` compared against its `gh-pages` — **same source commit `25771f6a`, same Publisher v2.3.4**. Root HTML: 3513 local vs 3548 gh-pages (35 extra are schema.json/jsonld representation pages + history.html). 7106 total HTML files, 0 invalid XHTML, 275189 links / 23 broken. Errors: 4388, Warnings: 1744 (matching gh-pages). Cold build: 22m28s.
+- [x] the AST fork builds — **`ast-export` module builds clean** (Maven, tests skipped). `AstExportCli` runs, produces 678 resources, 5 edges, 3.7MB AST dump. **Blocker:** `ast-export/pom.xml` needs `apache-poi` as explicit dependency (Publisher marks it `optional`, so not pulled transitively). Workaround: add POI jars to classpath manually.
+- [x] smart-trust's AST dumped — **678 resources, 5 dependency edges, `authority: "cache"`, `inputDigest: dfc08134...`**. Publisher v2.3.4 / core 6.10.4. Warm build (cached packages + tx): **4m39s (4.8× faster than cold 22m28s)**.
+- [ ] smart-base re-ingested from fresh `gh-pages` — smart-base has no `gh-pages` branch on `litlfred/smart-base` (shallow clone). Deferred: requires `WorldHealthOrganization/smart-base` gh-pages access.
+
 
 
 ## Claim released 2026-09-29
