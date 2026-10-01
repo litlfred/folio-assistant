@@ -14,17 +14,7 @@ Candidate terms extracted from every Tool node: `title` as the label, `descripti
 
 From: cat-harness 112 (<a href="{{ '/assets/glossary/cat-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 4 (<a href="{{ '/assets/glossary/fhir-harness--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-tools.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 129 terms and is 86 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
-
-<table class="fa-gloss-mapping">
-<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
-<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
-<tbody><tr><td><code>fhir</code></td><td>0</td><td>129</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>129</td><td>0</td><td>—</td></tr></tbody>
-</table>
-<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
-A vocabulary that could not be reached has said nothing, and the column above keeps that 
-apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
-be a term this corpus is right to coin.</p>
+**Size:** this page holds 129 terms and is 85 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
@@ -296,11 +286,18 @@ GitHub <span class="fa-gloss-status">candidate, extracted</span>
 <p>Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#github</code></a></p>
 </dd>
+<dt id="cat-harness--kg-tools--gh-pages" data-fa-state="extracted" data-fa-gloss="">
+GitHub Pages (gh-pages) <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Push a rendered Knowledge Graph to GitHub Pages at a publication root URL — a staging preview (<code>STAGING/&lt;slug&gt;/</code>) or the release root, the same steps either way — and report the push: a status (pushed, not pushed, could not determine) and one message carrying the commit merged onto <code>gh-pages</code> and the QA result. Its steps are bootstrap-tools' <code>render-kg-to-github-pages</code> process, which first provisions the target: an orphan <code>gh-pages</code> branch, then Pages switched on to serve it.</p>
+<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#gh-pages</code></a></p>
+</dd>
 <dt id="cat-harness--kg-tools--pages-publish" data-fa-state="extracted" data-fa-gloss="">
 GitHub Pages publish <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Push a built directory to the <code>gh-pages</code> branch, where it is served. How the knowledge graph and its schema reach a URL.</p>
+<p>Push a built directory to the <a href="#cat-harness--kg-tools--gh-pages"><code>gh-pages</code></a> branch, where it is served. How the knowledge graph and its schema reach a URL.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pages-publish</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--glossary-build" data-fa-state="extracted" data-fa-gloss="">
@@ -742,13 +739,6 @@ Skill instruction reference <span class="fa-gloss-status">candidate, extracted</
 <dd>
 <p>Render the skill instruction bodies — the prose an agent actually loads — as browsable pages with an index, so a reader can see what an agent is told without cloning the repository.</p>
 <p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#skill-docs</code></a></p>
-</dd>
-<dt id="cat-harness--kg-tools--pin-smart-base-terminology" data-fa-state="extracted" data-fa-gloss="">
-Snapshot a published IG's terminology at its pinned version <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Read every CodeSystem concept out of a smart-base clone and write <code>external-schemas/who-smart-base.terminology.json</code>, the offline snapshot <code>check:term-mapping</code> resolves its <code>fhir</code> target against. 585 concepts across 12 code systems at v1.0.0.</p>
-<p class="fa-gloss-meta">Tools of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/index.ts"><code>cat-harness/tools/index.ts#pin-smart-base-terminology</code></a></p>
 </dd>
 <dt id="cat-harness--kg-tools--tabular-xlsx" data-fa-state="extracted" data-fa-gloss="">
 Spreadsheet tabular metadata (STUB) <span class="fa-gloss-status">candidate, extracted</span>

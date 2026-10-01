@@ -63,6 +63,7 @@ classDiagram
       maintains [0..*] Maintain[]
       downstream [0..1] object
       renders [0..*] string[]
+      subprocess [0..1] object
     }
   }
   folio_assistant_core_core_tools_ToolDefinition *-- "0..*" folio_assistant_core_core_tools_Maintain : maintains

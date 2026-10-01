@@ -75,6 +75,22 @@ reconciled away: the two count different sets (a `satisfies` naming a skill
 that does not resolve is in one and not the other), and neither is wrong for
 its own question.
 
+### A Tool may carry its own subprocess; a general diagram names the Tool's skill, not its steps
+
+Owner, 2026-09-30: *"in general tools can describe their own specific
+subprocesses if needed to not bog down general skills"*. When one mechanism's
+steps are worth drawing, they go in **the Tool's own diagram**, which the Tool
+declares in `subprocess` (`schemas/tool.ts`). The general diagram keeps a
+single call activity that names the general skill and writes **no
+`calledElement`** — the call is bound by whichever Tool satisfies that skill
+(`activity → skill → Tool → subprocess`, the join above, extended one step).
+
+`render-kg-to-cdn.bpmn` is the first case: it names no GitHub step, and the
+`gh-pages` Tool points at bootstrap-tools' `Process_RenderKgToGitHubPages`. A
+caller that is itself specific — `docs-site-publish`, `feature-staging` —
+calls the general process with `calledElement`, and keeps only the steps that
+are its own around the call.
+
 ### Binding the extension namespaces
 
 **An element's prefix names the Subgraph that declares it** (owner, 2026-09-24,

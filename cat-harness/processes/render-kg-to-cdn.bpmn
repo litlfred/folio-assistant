@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/0.1.0/processes/ns#"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/0.1.0/processes/ns#"
+                  id="Definitions_Process_RenderKgToCdn" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:collaboration id="Collaboration_Process_RenderKgToCdn">
+    <bpmn:participant id="Participant_Process_RenderKgToCdn" name="Render a Knowledge Graph to a CDN" processRef="Process_RenderKgToCdn"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_RenderKgToCdn" name="Render a Knowledge Graph to a CDN" isExecutable="false">
+    <bpmn:documentation>Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — for publication to a CDN at a publication root URL, and report a STATUS and a MESSAGE. Owner, 2026-09-30: &quot;render content of a KG (or list of subgraphs within) for publication to a CDN at a given publication root URL … independent of staging vs publication … just rendering … output is status of push to CDN + message&quot;.
+
+STAGING AND RELEASE ARE THE SAME PROCESS. A preview is this with a root under the release root; a release is this with the release root. What differs — who may start it, what is verified first, what else on the host must survive the push — belongs to the CALLER: `feature-staging` and `docs-site-publish` call this and keep their own steps around the call.
+
+TOOL-AGNOSTIC ON PURPOSE. Owner, 2026-09-30: &quot;tools can describe their own specific subprocesses if needed to not bog down general skills&quot;. The one call activity names the skill; the Tool for the chosen target satisfies it and declares its own `subprocess`, which is what the call descends into. For GitHub Pages that is the `gh-pages` Tool and bootstrap-tools' Process_RenderKgToGitHubPages. No step here is GitHub's.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <!-- STRICT: the report is the output. A push nobody reported on cannot
+           be told from no push, and a caller deciding what to do next needs
+           the status on every path, including the one with no Tool. -->
+      <cat-harness.processes:policy enforcement="strict"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_RenderKgToCdn">
+      <bpmn:lane id="Lane_Ci" name="Build pipeline">
+        <bpmn:documentation>Whoever renders: a workflow running the Tool's commands, or an agent running the same ones. A fixed program either way — the judgement about whether to publish was made by the caller before it got here.</bpmn:documentation>
+        <bpmn:extensionElements><bootstrap.processes:role ref="build-pipeline"/></bpmn:extensionElements>
+        <bpmn:flowNodeRef>Start_Render</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Resolve</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Tool</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_ToolSubprocess</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Report</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_Pushed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Pushed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_NotPushed</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Render" name="A Knowledge Graph, a&#10;root URL, a CDN target">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Resolve" name="Resolve the Subgraphs,&#10;the root URL and the&#10;target's Tool">
+      <bpmn:documentation>Every Subgraph id asked for must be one the declaration lists; none means the whole graph. The root URL is the one given. The target's Tool is the one that `satisfies: [&quot;render-kg-to-cdn&quot;]` for that CDN — `gh-pages` for GitHub Pages. A caller that already rendered and verified its tree hands the tree over instead of the graph, and the Tool pushes it without rendering again.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="render-kg-to-cdn"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Tool" name="A Tool for&#10;this target?">
+      <bpmn:documentation>Answered by the Tool registry: does any Tool satisfy `render-kg-to-cdn` for the named CDN? `no` reports not-pushed and names the missing Tool, rather than guessing a mechanism.</bpmn:documentation>
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="Call_ToolSubprocess" name="Render and push with&#10;the target's Tool&#10;[its own subprocess]">
+      <bpmn:documentation>BOUND BY THE TOOL, so no `calledElement` is written here: the activity names the skill, the Tool satisfies it, and the Tool's `subprocess` is what this descends into — for `gh-pages`, bootstrap-tools' Process_RenderKgToGitHubPages (stage, check the staging, deploy, check what is served). A diagram that named it would make every other CDN a second copy of this process. Whatever the Tool, it returns the two outputs below.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="render-kg-to-cdn"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:task id="Task_Report" name="Report the push:&#10;status and message">
+      <bpmn:documentation>The output, on every path: `pushed`, `not-pushed` or `could-not-determine`, and one message — what is live (a commit), at which root URL, and the QA result. From the no-Tool branch the status is `not-pushed` and the message names the target nobody implements. A check that could not look is never reported as pushed.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="render-kg-to-cdn"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Pushed" name="Status is&#10;pushed?">
+      <bpmn:documentation>Read off the status just reported. Anything but `pushed` ends at End_NotPushed, and the caller decides what that means for it — an alert, a retry, a person.</bpmn:documentation>
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Pushed" name="Pushed; the message&#10;says what is live">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_NotPushed" name="Not pushed, or could&#10;not tell; the message&#10;says why">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Render" targetRef="Task_Resolve"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Resolve" targetRef="GW_Tool"/>
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="GW_Tool" targetRef="Call_ToolSubprocess" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="GW_Tool" targetRef="Task_Report" name="no"/>
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="Call_ToolSubprocess" targetRef="Task_Report"/>
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_Report" targetRef="GW_Pushed"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="GW_Pushed" targetRef="End_Pushed" name="yes"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="GW_Pushed" targetRef="End_NotPushed" name="no, or could not tell"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_RenderKgToCdn">
+    <bpmndi:BPMNPlane id="Plane_Process_RenderKgToCdn" bpmnElement="Collaboration_Process_RenderKgToCdn">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_RenderKgToCdn" bpmnElement="Participant_Process_RenderKgToCdn" isHorizontal="true">
+        <dc:Bounds x="140" y="80" width="1160" height="320"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Ci" bpmnElement="Lane_Ci" isHorizontal="true">
+        <dc:Bounds x="170" y="80" width="1130" height="320"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Render" bpmnElement="Start_Render">
+        <dc:Bounds x="212" y="212" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Resolve" bpmnElement="Task_Resolve">
+        <dc:Bounds x="290" y="190" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Tool" bpmnElement="GW_Tool" isMarkerVisible="true">
+        <dc:Bounds x="490" y="205" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_ToolSubprocess" bpmnElement="Call_ToolSubprocess">
+        <dc:Bounds x="580" y="190" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Report" bpmnElement="Task_Report">
+        <dc:Bounds x="800" y="190" width="150" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Pushed" bpmnElement="GW_Pushed" isMarkerVisible="true">
+        <dc:Bounds x="1010" y="205" width="50" height="50"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Pushed" bpmnElement="End_Pushed">
+        <dc:Bounds x="1132" y="142" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_NotPushed" bpmnElement="End_NotPushed">
+        <dc:Bounds x="1132" y="282" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
+        <di:waypoint x="248" y="230"/>
+        <di:waypoint x="290" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2">
+        <di:waypoint x="440" y="230"/>
+        <di:waypoint x="490" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3">
+        <di:waypoint x="540" y="230"/>
+        <di:waypoint x="580" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_4" bpmnElement="Flow_4">
+        <di:waypoint x="515" y="255"/>
+        <di:waypoint x="515" y="340"/>
+        <di:waypoint x="875" y="340"/>
+        <di:waypoint x="875" y="270"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_5" bpmnElement="Flow_5">
+        <di:waypoint x="730" y="230"/>
+        <di:waypoint x="800" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6">
+        <di:waypoint x="950" y="230"/>
+        <di:waypoint x="1010" y="230"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_7" bpmnElement="Flow_7">
+        <di:waypoint x="1035" y="205"/>
+        <di:waypoint x="1035" y="160"/>
+        <di:waypoint x="1132" y="160"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_8" bpmnElement="Flow_8">
+        <di:waypoint x="1035" y="255"/>
+        <di:waypoint x="1035" y="300"/>
+        <di:waypoint x="1132" y="300"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -204,6 +204,19 @@ stay in `agentic-harness`, stated generically, and a `github` Tool node carries
 the invocations. Adding GitLab later is then a second Tool node satisfying the
 same skills — not a repository, not a fork, and not a rewrite of the prose.
 
+### A Tool may describe its own subprocess
+
+Owner, 2026-09-30: *"in general tools can describe their own specific
+subprocesses if needed to not bog down general skills"*. When one mechanism
+takes several steps, they belong to **the Tool**, not to the general skill: the
+Tool declares `subprocess` (a process id, the instance holding it, its path),
+and a general diagram's call activity is bound by it. **General skills name the
+Tool, never its steps.** First case: `render-kg-to-cdn` is the general step
+(render a Knowledge Graph for a CDN at a publication root URL; output a status
+and a message), and `gh-pages` is one Tool for it whose subprocess is
+bootstrap-tools' `render-kg-to-github-pages.bpmn` — declared below the harness,
+so the reference points down.
+
 ### Vocabulary — name the concept, not the vendor's word for it
 
 GitHub calls it a pull request; GitLab calls it a merge request; Gerrit calls it
