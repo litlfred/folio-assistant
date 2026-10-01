@@ -2994,6 +2994,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/merge-conflict-patterns",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "merge-conflict-patterns"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Merge the base branch in and resolve, without a person, only the conflicts a DECLARED pattern covers — generated files, generated README regions, QA sidecars — then prove the result with the gate set. Refuses the whole merge when any conflict is authored or undeclared. Use for \"merge main\", \"resolve the conflicts\", \"the PR is conflicted again\", \"auto-resolve\", and when adding a pattern for a new kind of churn."
+        }
+      ],
+      "skos:notation": "merge-conflict-patterns",
+      "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/merge-conflict-patterns.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/methodology-adoption",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -53,6 +53,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`kg-to-portal.bpmn`](kg-to-portal.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): KG to public portal |  |
 | [`l2-dak-authoring.bpmn`](l2-dak-authoring.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): L2 DAK authoring |  |
 | [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): L3 FHIR IG pipeline |  |
+| [`merge-base.bpmn`](merge-base.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Merge the base branch in | "Code change and review" |
 | [`methodology-from-source.bpmn`](methodology-from-source.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Adopt a methodology from a source document |  |
 | [`narrative-code-review.bpmn`](narrative-code-review.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Prose and the code it describes | "Review task" |
 | [`ns.jsonld`](ns.jsonld) | cat-harness's diagram elements |  |

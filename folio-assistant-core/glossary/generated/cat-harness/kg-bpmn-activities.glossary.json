@@ -465,7 +465,7 @@
     {
       "id": "process_codechangereview.task_preparemerge",
       "prefLabel": "Prepare the merge, and watch it through",
-      "definition": "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition.",
+      "definition": "`prepare-merge` brings the base in, re-runs the gates and pushes — it does NOT merge. Bringing the base in IS `merge-base.bpmn` (`bun run merge:main`): conflicts a declared pattern covers are resolved and proved by the gate set; anything else aborts the merge and comes back to the agent (bean `y7b3`, #1707). `watch` follows the PR until it is merged or closed, because webhooks do not reliably deliver CI success or a merge-conflict transition.",
       "notation": "Task_PrepareMerge",
       "source": "cat-harness/processes/code-change-review.bpmn#Task_PrepareMerge",
       "status": "candidate"
@@ -2868,6 +2868,60 @@
       "definition": "Corpus-wide checks that a single-block gate cannot make: cross-references, build green, proof status, QA axes across the whole folio.",
       "notation": "Task_Test",
       "source": "cat-harness/processes/content-lifecycle.bpmn#Task_Test",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergebase.task_abort",
+      "prefLabel": "Abort, restore the tree, list what was refused",
+      "definition": "`git merge --abort`. Each refused path is listed with its pattern's reason, or \"no declared pattern\".",
+      "notation": "Task_Abort",
+      "source": "cat-harness/processes/merge-base.bpmn#Task_Abort",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergebase.task_byhand",
+      "prefLabel": "Resolve by hand, then regenerate",
+      "notation": "Task_ByHand",
+      "source": "cat-harness/processes/merge-base.bpmn#Task_ByHand",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergebase.task_classify",
+      "prefLabel": "Classify every conflicted path against the declared patterns",
+      "definition": "The first matching pattern decides: take-base, generated-regions, qa-sidecar, or refuse. A path no pattern names refuses.",
+      "notation": "Task_Classify",
+      "source": "cat-harness/processes/merge-base.bpmn#Task_Classify",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergebase.task_commit",
+      "prefLabel": "Commit the merge",
+      "notation": "Task_Commit",
+      "source": "cat-harness/processes/merge-base.bpmn#Task_Commit",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergebase.task_merge",
+      "prefLabel": "Merge the base in, without committing",
+      "definition": "`git merge --no-ff --no-commit origin/main` on a clean tree (untracked files refuse too, so the final stage cannot sweep in a scratch file).",
+      "notation": "Task_Merge",
+      "source": "cat-harness/processes/merge-base.bpmn#Task_Merge",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergebase.task_regen",
+      "prefLabel": "Regenerate, asking every CI gate",
+      "definition": "`bun run regen`: every check/writer pair the CI workflow runs, repeated until the tree settles.",
+      "notation": "Task_Regen",
+      "source": "cat-harness/processes/merge-base.bpmn#Task_Regen",
+      "status": "candidate"
+    },
+    {
+      "id": "process_mergebase.task_resolve",
+      "prefLabel": "Resolve each by its declared strategy",
+      "definition": "qa-sidecar paths first, through `qa:resolve-conflicts`; take-base paths take the base's copy; generated-regions files take the base's side of each hunk, which lies inside a generated region by construction.",
+      "notation": "Task_Resolve",
+      "source": "cat-harness/processes/merge-base.bpmn#Task_Resolve",
       "status": "candidate"
     },
     {
