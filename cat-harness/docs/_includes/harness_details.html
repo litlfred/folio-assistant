@@ -123,6 +123,41 @@
     <p class="fa-harness-section__gap">Nothing published to open yet.</p>
     {%- endif -%}
     {%- comment -%}
+      LOCAL AND REMOTE — `603s`'s last item: *"a tab for all materizled local
+      subgraphs and declared remote graphs. opening up content should indicate
+      if local or remote"*. Here, on the page the harness tab OPENS, and not in
+      the sidebar: the owner's `owt6` ruling, "dividers, not a dashboard".
+
+      Folded on arrival — the viewers above are what a reader came for — and a
+      `<details>` so it opens from the keyboard and announces its own state.
+      The where-tag is TEXT inside the row, not a colour: "local" and "remote"
+      read the same with no stylesheet and to a screen reader (`gjli`).
+      A remote row links OUT and says so; a local row names its path and
+      links nowhere, because a directory is not a page.
+    {%- endcomment -%}
+    {%- if t.subgraphs and t.subgraphs.size > 0 -%}
+    {%- assign t_local = t.subgraphs | where: "where", "local" -%}
+    {%- assign t_remote = t.subgraphs | where: "where", "remote" -%}
+    <details class="fa-harness-section__subgraphs">
+      <summary>Subgraphs — {{ t_local.size }} local, {{ t_remote.size }} remote</summary>
+      <ul>
+        {%- for g in t.subgraphs -%}
+        <li data-fa-where="{{ g.where }}">
+          <span class="fa-harness-section__where">{{ g.where }}</span>
+          {%- if g.where == "remote" %}
+          <a href="{{ g.url }}" rel="noopener">{{ g.id }}</a>
+          {%- if g.via == "subscription" %} <span class="fa-harness-section__via">subscribed at <code>{{ g.ref }}</code></span>{% endif -%}
+          {%- if g.materialised and g.materialised.size > 0 %} <span class="fa-harness-section__via">materialised here: {{ g.materialised | join: ", " }}</span>{% endif -%}
+          {%- else %}
+          <code>{{ g.id }}</code> <span class="fa-harness-section__via">{{ g.path }}</span>
+          {%- endif -%}
+          {%- if g.kinds.size > 0 %} <span class="fa-harness-section__kinds">· {{ g.kinds | join: ", " }}</span>{% endif -%}
+        </li>
+        {%- endfor -%}
+      </ul>
+    </details>
+    {%- endif -%}
+    {%- comment -%}
       THE FINDINGS, shown rather than kept in the data file. Each one names
       something a reader can act on — a graph declared with no viewer, a
       viewer published for a graph nobody declared, an icon that cannot be

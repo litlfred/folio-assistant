@@ -182,6 +182,18 @@ export function subscribedTile(h: SubscribedHarness): HarnessTile {
       { id: "views", label: "visualisations you can open", value: 0 },
     ],
     visualisations: kinds.map((kind) => ({ kind, note: `referenced from ${pin}, not held here` })),
+    // EVERY graph of a subscribed harness is REMOTE (`603s`): it lives in the
+    // subscribed repository at the pin, and the subgraphs the subscription
+    // names are the ones copied in — materialised, still remote in origin.
+    subgraphs: (decl?.directories ?? []).map((d) => ({
+      id: d.id,
+      kinds: [...d.graphKinds],
+      where: "remote" as const,
+      url: `https://github.com/${s.repository}/tree/${s.ref}/${d.path}`,
+      via: "subscription" as const,
+      ref: s.ref.slice(0, 7),
+      ...((s.subgraphs ?? []).includes(d.id) ? { materialised: [d.id] } : {}),
+    })),
     findings,
   };
 }
