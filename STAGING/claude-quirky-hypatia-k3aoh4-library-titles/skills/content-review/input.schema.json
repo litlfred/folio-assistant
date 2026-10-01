@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-library-titles/skills/content-review/input.schema.json",
+  "title": "Content Review Input",
+  "description": "Input schema for formal content review and approval workflow.",
+  "type": "object",
+  "required": [
+    "reviewType",
+    "contentRef"
+  ],
+  "properties": {
+    "reviewType": {
+      "type": "string",
+      "enum": [
+        "l2-to-l3-gate",
+        "l3-to-publish-gate",
+        "change-assessment",
+        "final-signoff"
+      ],
+      "description": "Type of review phase gate."
+    },
+    "contentRef": {
+      "type": "string",
+      "description": "Git ref or path to the content being reviewed."
+    },
+    "previousVersion": {
+      "type": "string",
+      "description": "Git ref of the previous approved version (for diff)."
+    },
+    "validationReport": {
+      "type": "string",
+      "description": "Path to the validation report for this content."
+    }
+  },
+  "staging": {
+    "branch": "claude/quirky-hypatia-k3aoh4-library-titles",
+    "sha": "b2e36affe5a194d8ca93e985f5fa0d1753804a6c",
+    "pr": "1822/merge",
+    "run": "36920033370"
+  }
+}
