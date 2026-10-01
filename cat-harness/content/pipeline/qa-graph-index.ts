@@ -114,13 +114,11 @@ export interface QaFamily {
 }
 
 /**
- * The `qa` graph, projected — a census, or an honest "not available".
- *
- * The registry names this type as the shape of `folio-qa-graph/v1`, so it is
- * the union: a consumer must handle both, and the unknown carries no `files`
- * for a careless reader to show as a count.
+ * The `qa` graph, projected — a census ({@link QaGraphIndex}), or an honest
+ * "not available". A consumer of the published file must handle both, and the
+ * unknown carries no `files` for a careless reader to show as a count.
  */
-export type QaGraphIndex = QaGraphCensus | QaGraphUnknown;
+export type QaGraphProjection = QaGraphIndex | QaGraphUnknown;
 
 /**
  * The `qa` graph could not be read in this build. `availability` rather than
@@ -140,7 +138,7 @@ export interface QaGraphUnknown {
  * **There is no cross-family verdict field here and there must not be one.**
  * See the module note; `qa-graph-index.test.ts` asserts the absence.
  */
-export interface QaGraphCensus {
+export interface QaGraphIndex {
   $schema: typeof QA_GRAPH_INDEX_SCHEMA;
   /** Documents scanned. A count of files, not a verdict about any of them. */
   files: number;
@@ -206,7 +204,7 @@ export function rollUpFieldOf(doc: Record<string, unknown>): "totals" | "counts"
  * The projection a build should publish. `corpusPresent` is the caller's
  * answer, taken BEFORE it wrote into `dir` — see the module note.
  */
-export function projectQaGraph(dir: string, corpusPresent: boolean, reason?: string): QaGraphIndex {
+export function projectQaGraph(dir: string, corpusPresent: boolean, reason?: string): QaGraphProjection {
   if (!corpusPresent) {
     return {
       $schema: QA_GRAPH_INDEX_SCHEMA,
@@ -221,12 +219,12 @@ export function projectQaGraph(dir: string, corpusPresent: boolean, reason?: str
 }
 
 /** Is this projection the "not available" one? */
-export function isQaGraphUnknown(ix: QaGraphIndex): ix is QaGraphUnknown {
+export function isQaGraphUnknown(ix: QaGraphProjection): ix is QaGraphUnknown {
   return (ix as QaGraphUnknown).availability === "unknown";
 }
 
 /** Read the `qa` graph under `dir` and project it. */
-export function readQaGraph(dir: string): QaGraphCensus {
+export function readQaGraph(dir: string): QaGraphIndex {
   const acc = new Map<string, { files: number; field: "totals" | "counts" | null; buckets: Record<string, number> }>();
   let unclassified = 0;
   let unreadable = 0;

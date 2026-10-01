@@ -89,7 +89,9 @@ const RESULTS = join(ROOT, "cat-harness", "test", "results");
  * entries are what this gate exists to judge, and they stay on `main` when the
  * derived results leave it — so this is the half that is never "not fetched".
  */
-const ATTESTATIONS = directoryForGraph(join(ROOT, "cat-harness"), "attestations");
+function attestationsDir(): string | undefined {
+  return directoryForGraph(join(ROOT, "cat-harness"), "attestations");
+}
 const BASELINE = join(import.meta.dir, "qa-reviewer-permission-baseline.json");
 const PERMISSION = "qa-reporting";
 
@@ -244,6 +246,7 @@ export function report(findings: Finding[], known: Set<string>) {
 if (import.meta.main) {
   const write = process.argv.includes("--write-baseline");
   const actors = readActors();
+  const ATTESTATIONS = attestationsDir();
   const derived = scanCounted(RESULTS, actors);
   const judged = ATTESTATIONS
     ? scanCounted(ATTESTATIONS, actors)

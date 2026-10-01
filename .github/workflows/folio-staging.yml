@@ -309,8 +309,10 @@ jobs:
             echo "::notice title=qa fetch::not a pull request; no pr/<n> entry to fetch — the checkout's verdicts (if any) are used"
             exit 0
           fi
-          rc=0
-          bun run "$PLATFORM_DIR/cat-harness/scripts/qa-store.ts" fetch --ref "pr/$PR" || rc=$?
+          set +e
+          bun run "$PLATFORM_DIR/cat-harness/scripts/qa-store.ts" fetch --ref "pr/$PR"
+          rc=$?
+          set -e
           case "$rc" in
             0) echo "fetched the folio's QA results for pr/$PR" ;;
             1) echo "::notice title=qa fetch::no qa-reports entry for pr/$PR — a miss is not a clean result; the checkout's verdicts (if any) are used" ;;
