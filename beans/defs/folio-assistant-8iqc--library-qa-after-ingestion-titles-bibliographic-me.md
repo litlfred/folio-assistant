@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-01T16:39:43Z
-updated_at: 2026-10-01T17:00:16Z
+updated_at: 2026-10-01T19:40:22Z
 parent: folio-assistant-slw1
 ---
 
@@ -17,3 +17,9 @@ A library entry is never judged after ingestion or the KG build. Measured on mai
 - `bun run check:library-qa` writes a committed qa-results/v1 sidecar under `cat-harness/test/results/` with one family per criterion of #1794 (title-missing, title-implausible, bibliographic-missing, block-no-content, summary-backlog), each finding naming the entry, its instance and the source field read.
 - `check:library-qa:check` is in CI and fails only on a stale sidecar or a could-not-determine entry; findings are advisory.
 - The cause of 'Abies' and of the empty blocks is traced to code and reported on the PR.
+
+
+
+## 2026-10-01 — title authority order implemented (PR #1822, stacked on #1799)
+
+The owner ruled, choosing option 2 of 4: catalogue record (DC) → referenced.json → PDF Info /Title → slug, and never the page-1 parse. That is now implemented in one resolver (cat-harness/content/pipeline/library-title.ts), used by gen-library-jsonld and check-library-qa. Manifests record meta.title_source and meta.title_from. pdf-pages.py now writes metadata.docinfo, and --docinfo-into backfilled 23 entries after checking each sha256. 59 entries: dc-record 3, referenced 2, pdf-info 29, text-heading 6, slug 19 (was 25 slug/file-name). who-pub-tps-931: Abies -> WHO editorial style manual. QA: title-missing 25->19, title-implausible 15->1. All 8 mutation runs went red. Open interpretation for the owner: text/notebook sources take their declared heading (text-heading) at the pdf-info rank.
