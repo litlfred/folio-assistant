@@ -715,8 +715,9 @@ carries only the sentence still works: the row then says the sentence.
 The row and banner code is `scripts/lib/library-withheld-view.ts`, embedded in
 the page verbatim so `library-withheld-view.test.ts` runs the same text the
 browser does; `library-withheld-viewer.e2e.ts` opens the rendered page.
-Drafting the summaries is a separate backlog — `bun run summaries:next -- --entry
-<slug>` serves a withheld entry's text to the summariser like any other.
+Drafting the summaries is a separate backlog (bean `r96p`):
+`bun run summaries:next -- --entry <slug>` serves a withheld entry's text to the
+summariser like any other.
 
 ### Describing a document's images — and why it is an ARM, not a step you run
 

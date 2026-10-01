@@ -29863,6 +29863,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/withheld.withheldentryschema.gates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WithheldEntrySchema.gates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The gates that refused, STRUCTURED — issue #1794. Optional because a generator may know only the sentence; when present, a reader shows \"copyright not granted\" from the gate itself rather than parsing {@link reason}, which is prose and free to change shape."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.gates",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/withheld.withheldentryschema.path",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -29898,6 +29917,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/withheld.withheldentryschema.record",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WithheldEntrySchema.record"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Where a reader can see what the work IS without being shown the work — the catalogue record. `page` is a SITE-ROOT path (leading `/`) to a published record page; `uri` is the upstream identifier (a Handle IRI, say). Either may be absent; a viewer links `page` first, `uri` second, and nothing at all rather than a guess."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/withheld.ts#WithheldEntrySchema.record",
       "skos:note": "candidate"
     }
   ]

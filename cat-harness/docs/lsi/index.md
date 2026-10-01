@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**213** units · **5841** terms · k = **100** · retains **79.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**213** units · **5842** terms · k = **100** · retains **79.7 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -130,14 +130,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.62 | instance, harness, kind, session, directory, graph, block, page | *(none)* |
-| 2 | 21.42 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
+| 1 | 43.70 | instance, harness, kind, session, directory, graph, block, page | *(none)* |
+| 2 | 21.42 | watcher, slot, sibling, queue, prs, backlog, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
 | 3 | 17.77 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
-| 4 | 16.41 | page, block, section, sections, blocks, chapter, manifest, text | ledger, sibling, subdirectory, items, sessions, window, queue, renderable |
-| 5 | 14.80 | locale, navbar, translated, page, translation, staging, french, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
-| 6 | 14.77 | lane, requirements, actor, role, feature, task, phase, stakeholders | rung, queue, slide, arm, bytes, archive, zip, sniff |
-| 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
-| 8 | 14.12 | locale, translation, translated, french, back-translation, badge, translations, trip | preview, feature, phase, option, sha, impact, theme, user |
+| 4 | 16.47 | page, block, sections, text, section, blocks, chapter, manifest | ledger, sibling, subdirectory, items, sessions, window, renderable, relocation |
+| 5 | 14.92 | rung, queue, withheld, arm, slide, bytes, zip, sniff | lane, role, requirements, actor, feature, task, impact, phase |
+| 6 | 14.79 | locale, translated, navbar, translation, page, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
+| 7 | 14.41 | edges, forward, edge, preview, backward, cross-chapter, energy, logical | actor, lane, role, requirement, login, process, backlog, task |
+| 8 | 14.13 | locale, translated, translation, claim, french, back-translation, trip, adjudicator | feature, preview, phase, impact, feedback, option, post, staging |
 
 **Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
 
