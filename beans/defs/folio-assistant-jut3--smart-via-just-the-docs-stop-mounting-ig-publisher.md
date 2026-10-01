@@ -595,3 +595,31 @@ After re-ingest, with the file now fetched client-side (bean `680p`), **all 33
 DAK view pages display exactly what the Publisher's pages display**
 (Chromium, via Playwright). The tab-bar differences remain and are the second
 decision.
+
+## 2026-10-01: `dak-api.html` replicated as its own page
+
+The owner asked to *"replicate dak-api.html seperately"*. The page lives at
+`/smart-trust/dak-api.html`.
+
+- **Ingest.** The hub is the region of the published `dak-api.html` between
+  its `DAK_API_HUB_START`/`END` markers, which smart-base's
+  `generate_dak_api_hub.py` writes after the Publisher has run. The IG's source
+  page holds only a placeholder. The ingest keeps the fragment verbatim as
+  `fhir-artifact-index/dak/dak-api-hub.html` and records it as `dakApiHub`.
+- **Page.** `templates/ig-pages/dak-api.liquid` plus `dak-hub.js`. The loader
+  fetches the fragment from the served graph and re-points each link through a
+  map `dakHubLinks` computes: artefact pages go under `artifact/`, held DAK
+  files to the served graph, and the rest to the Publisher's copy.
+- **Checked in Chromium:** the text is identical to the Publisher's hub
+  (8,735 characters). All 53 on-site links resolve; 9 go to the Publisher.
+  Those 9 are `openapi/index.html`, the enumeration schemas, and three pages
+  the Publisher never wrote (`ValueSets-enumeration.html`,
+  `LogicalModels-enumeration.html`, `LogicalModels.html`). Those three are
+  upstream dead links, kept visibly as the Publisher's.
+
+**Parity correction.** The parity table counted the IG site's narrative
+`dak-api` page as matched. It is not: our `/smart-trust/ig/dak-api.html`
+renders the source page, which holds only the `<!-- DAK_API_CONTENT -->`
+placeholder, and lacks the hub. That page is now a gap for P0, to be closed
+by pointing it at the replica or by injecting the hub as a DAK overlay. The
+overlay belongs in smart-base, not fhir-harness.

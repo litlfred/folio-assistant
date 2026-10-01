@@ -5,7 +5,7 @@
 import { describe, expect, it } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { DAK_VIEW_SCRIPT, dakViewData, dakViews } from "./dak-views.ts";
+import { DAK_VIEW_SCRIPT, dakHubLinks, dakViewData, dakViews } from "./dak-views.ts";
 import type { FhirArtifact } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
 const a = {
@@ -49,5 +49,15 @@ describe("dak views", () => {
     const t = readFileSync(join(import.meta.dir, "templates", "ig-pages", "dak-view.liquid"), "utf8");
     expect(t.startsWith("{%- comment -%}")).toBe(true);
     expect(t).not.toMatch(/\|\s*(plus|minus|size|replace|jsonify)\b/);
+  });
+
+  it("hub links: artefact pages go under artifact/, held files to the served graph, the rest to the Publisher", () => {
+    const frag = '<a href="ValueSet-Actors.html">x</a><a href="ValueSet-Actors.schema.json">s</a>' +
+      '<a href="openapi/index.html">o</a><a href="https://x/y">abs</a><a href="#top">t</a><a href="ValueSet-Actors.html">again</a>';
+    expect(dakHubLinks([a], "https://p/", frag)).toEqual({
+      "ValueSet-Actors.html": "artifact/ValueSet-Actors.html",
+      "ValueSet-Actors.schema.json": "fhir-artifact-index/dak/ValueSet-Actors.schema.json",
+      "openapi/index.html": "https://p/openapi/index.html",
+    });
   });
 });

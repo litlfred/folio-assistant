@@ -1,0 +1,336 @@
+<!-- DAK_API_HUB_START -->
+<div class="dak-api-hub">
+    <p>This page provides access to all available DAK (Data Access Kit) API endpoints and schemas.
+    The DAK API provides structured access to ValueSet enumerations and Logical Model definitions used throughout this implementation guide.</p>
+
+    <h2>OpenAPI Documentation</h2>
+
+    <p>Interactive Swagger UI documentation for all generated schemas and external API specifications is available in the OpenAPI documentation hub:
+    <a href="openapi/index.html">View OpenAPI Documentation</a></p>
+
+    <h2>Using the DAK API</h2>
+    
+    <div class="usage-info">
+        <h3>Schema Validation</h3>
+        <p>Each JSON Schema can be used to validate data structures in your applications. 
+        The schemas follow the JSON Schema Draft 2020-12 specification and include:</p>
+        <ul>
+            <li>Type definitions and constraints</li>
+            <li>Property descriptions and examples</li>
+            <li>Required field specifications</li>
+            <li>Enumeration values with links to definitions</li>
+        </ul>
+        
+        <h3>JSON-LD Semantic Integration</h3>
+        <p>The JSON-LD vocabularies provide semantic web integration for ValueSet enumerations. Each vocabulary includes:</p>
+        <ul>
+            <li>Enumeration class definitions with schema.org compatibility</li>
+            <li>Individual code instances with canonical IRIs</li>
+            <li>Property definitions with range constraints</li>
+            <li>FHIR metadata integration (system URIs, ValueSet references)</li>
+        </ul>
+        
+        <h3>Integration with FHIR</h3>
+        <p>All schemas are derived from the FHIR definitions in this implementation guide. 
+        Each schema page includes links to the corresponding FHIR resource definitions for complete context.</p>
+        
+        <h3>API Endpoints</h3>
+        <p>The enumeration endpoints provide machine-readable lists of all available schemas, 
+        making it easy to discover and integrate with the available data structures programmatically.</p>
+    </div>
+
+    <h2>Logical Models</h2>
+    
+    <p>The following logical models define the structure for computable representations of WHO DAK content:</p>
+    
+    <div class="schema-grid">
+
+        <div class="schema-card">
+            <h4><a href="StructureDefinition-COSEHeader.html">COSE Headers (DRAFT)</a></h4>
+            <p>Data elements for COSE Headers https://www.iana.org/assignments/cose/cose.xhtml#header-parameters</p>
+            <div class="schema-links"><a href="StructureDefinition-COSEHeader.html" class="schema-link fhir-link">FHIR Definition</a><a href="StructureDefinition-COSEHeader.schema.json" class="schema-link">JSON Schema</a><a href="StructureDefinition-COSEHeader.openapi.json" class="schema-link">OpenAPI</a></div>
+        </div>
+
+        <div class="schema-card">
+            <h4><a href="StructureDefinition-SchemeInformation.html">Scheme Information</a></h4>
+            <p>Logical Model for Information on the trusted list and its issuing scheme</p>
+            <div class="schema-links"><a href="StructureDefinition-SchemeInformation.html" class="schema-link fhir-link">FHIR Definition</a><a href="StructureDefinition-SchemeInformation.schema.json" class="schema-link">JSON Schema</a><a href="StructureDefinition-SchemeInformation.openapi.json" class="schema-link">OpenAPI</a></div>
+        </div>
+
+        <div class="schema-card">
+            <h4><a href="StructureDefinition-HCert.html">Health Certificate</a></h4>
+            <p>Logical Model for the HCERT</p>
+            <div class="schema-links"><a href="StructureDefinition-HCert.html" class="schema-link fhir-link">FHIR Definition</a><a href="StructureDefinition-HCert.schema.json" class="schema-link">JSON Schema</a><a href="StructureDefinition-HCert.openapi.json" class="schema-link">OpenAPI</a></div>
+        </div>
+
+        <div class="schema-card">
+            <h4><a href="LogicalModels.html">Logical Model Enumeration Schema</a></h4>
+            <p>JSON Schema defining the structure of the Logical Model enumeration endpoint response</p>
+            <div class="schema-links"><a href="LogicalModels.html" class="schema-link fhir-link">FHIR Definition</a><a href="LogicalModels.schema.json" class="schema-link">JSON Schema</a><a href="LogicalModels.openapi.json" class="schema-link">OpenAPI</a></div>
+        </div>
+
+        <div class="schema-card">
+            <h4><a href="StructureDefinition-CWTPayload.html">CBOR Web Token (CWT) Payload (Common)</a></h4>
+            <p>Logical Model for CBOR Web Token (CWT) Payload Logical Modelin CWT Payload https://www.iana.org/assignments/cwt/cwt.xhtml </p>
+            <div class="schema-links"><a href="StructureDefinition-CWTPayload.html" class="schema-link fhir-link">FHIR Definition</a><a href="StructureDefinition-CWTPayload.schema.json" class="schema-link">JSON Schema</a><a href="StructureDefinition-CWTPayload.openapi.json" class="schema-link">OpenAPI</a></div>
+        </div>
+
+        <div class="schema-card">
+            <h4><a href="StructureDefinition-CWT.html">CBOR Web Token (CWT) Claim</a></h4>
+            <p>Logical Model for Data elements in CBOR Web Token (CWT) https://www.iana.org/assignments/cwt/cwt.xhtml</p>
+            <div class="schema-links"><a href="StructureDefinition-CWT.html" class="schema-link fhir-link">FHIR Definition</a><a href="StructureDefinition-CWT.schema.json" class="schema-link">JSON Schema</a><a href="StructureDefinition-CWT.openapi.json" class="schema-link">OpenAPI</a></div>
+        </div>
+
+    </div>
+
+    <h2>API Endpoints</h2>
+    
+    <p>These endpoints provide lists of all available schemas and vocabularies of each type:</p>
+    
+    <div class="enumeration-endpoints">
+
+        <div class="endpoint-card">
+            <h4><a href="ValueSets-enumeration.html">ValueSets.schema.json</a></h4>
+            <p>Enumeration of all available ValueSet schemas</p>
+            <div class="endpoint-list">
+                <h5>Available Endpoints:</h5>
+                <ul>
+                    <li><a href="ValueSet-KeyUsage-UAT.schema.json">ValueSet-KeyUsage-UAT.schema.json</a> - JSON Schema for WHO GDHCN  Key Usage ValueSet - UAT Schema</li>
+                    <li><a href="ValueSet-KeyUsage-UAT.jsonld">ValueSet-KeyUsage-UAT.jsonld</a> - JSON-LD vocabulary for WHO GDHCN  Key Usage ValueSet - UAT Schema</li>
+                    <li><a href="ValueSet-KeyUsage.schema.json">ValueSet-KeyUsage.schema.json</a> - JSON Schema for WHO GDHCN  Key Usage ValueSet Schema</li>
+                    <li><a href="ValueSet-KeyUsage.jsonld">ValueSet-KeyUsage.jsonld</a> - JSON-LD vocabulary for WHO GDHCN  Key Usage ValueSet Schema</li>
+                    <li><a href="ValueSet-WHORegionalOffices.schema.json">ValueSet-WHORegionalOffices.schema.json</a> - JSON Schema for WHO Regional Offices Schema</li>
+                    <li><a href="ValueSet-WHORegionalOffices.jsonld">ValueSet-WHORegionalOffices.jsonld</a> - JSON-LD vocabulary for WHO Regional Offices Schema</li>
+                    <li><a href="ValueSet-PayloadTypes.schema.json">ValueSet-PayloadTypes.schema.json</a> - JSON Schema for WHO GDHCN Payload Types Schema</li>
+                    <li><a href="ValueSet-PayloadTypes.jsonld">ValueSet-PayloadTypes.jsonld</a> - JSON-LD vocabulary for WHO GDHCN Payload Types Schema</li>
+                    <li><a href="ValueSet-Domains-DEV.schema.json">ValueSet-Domains-DEV.schema.json</a> - JSON Schema for WHO GDHCN Trust Domains - DEV Schema</li>
+                    <li><a href="ValueSet-Domains-DEV.jsonld">ValueSet-Domains-DEV.jsonld</a> - JSON-LD vocabulary for WHO GDHCN Trust Domains - DEV Schema</li>
+                    <li><a href="ValueSet-ConnectionTypes.schema.json">ValueSet-ConnectionTypes.schema.json</a> - JSON Schema for WHO GDHCN Connection Types Schema</li>
+                    <li><a href="ValueSet-ConnectionTypes.jsonld">ValueSet-ConnectionTypes.jsonld</a> - JSON-LD vocabulary for WHO GDHCN Connection Types Schema</li>
+                    <li><a href="ValueSet-Domains.schema.json">ValueSet-Domains.schema.json</a> - JSON Schema for WHO GDHCN Trust Domains Schema</li>
+                    <li><a href="ValueSet-Domains.jsonld">ValueSet-Domains.jsonld</a> - JSON-LD vocabulary for WHO GDHCN Trust Domains Schema</li>
+                    <li><a href="ValueSet-Actors.schema.json">ValueSet-Actors.schema.json</a> - JSON Schema for WHO GDHCN Actor ValueSet of actor codes Schema</li>
+                    <li><a href="ValueSet-Actors.jsonld">ValueSet-Actors.jsonld</a> - JSON-LD vocabulary for WHO GDHCN Actor ValueSet of actor codes Schema</li>
+                    <li><a href="ValueSet-Participants-UAT.schema.json">ValueSet-Participants-UAT.schema.json</a> - JSON Schema for WHO GDHCN Trust Network Participant - UAT Schema</li>
+                    <li><a href="ValueSet-Participants-UAT.jsonld">ValueSet-Participants-UAT.jsonld</a> - JSON-LD vocabulary for WHO GDHCN Trust Network Participant - UAT Schema</li>
+                    <li><a href="ValueSet-Participants.schema.json">ValueSet-Participants.schema.json</a> - JSON Schema for WHO GDHCN Trust Network Participant Schema</li>
+                    <li><a href="ValueSet-Participants.jsonld">ValueSet-Participants.jsonld</a> - JSON-LD vocabulary for WHO GDHCN Trust Network Participant Schema</li>
+                    <li><a href="ValueSets.schema.json">ValueSets.schema.json</a> - JSON Schema for ValueSet Enumeration Schema</li>
+                    <li><a href="ValueSet-Domains-UAT.schema.json">ValueSet-Domains-UAT.schema.json</a> - JSON Schema for WHO GDHCN Trust Domains - UAT Schema</li>
+                    <li><a href="ValueSet-Domains-UAT.jsonld">ValueSet-Domains-UAT.jsonld</a> - JSON-LD vocabulary for WHO GDHCN Trust Domains - UAT Schema</li>
+                    <li><a href="ValueSet-Participants-DEV.schema.json">ValueSet-Participants-DEV.schema.json</a> - JSON Schema for WHO GDHCN Trust Network Participant - DEV Schema</li>
+                    <li><a href="ValueSet-Participants-DEV.jsonld">ValueSet-Participants-DEV.jsonld</a> - JSON-LD vocabulary for WHO GDHCN Trust Network Participant - DEV Schema</li>
+                    <li><a href="ValueSet-Transactions.schema.json">ValueSet-Transactions.schema.json</a> - JSON Schema for WHO GDHCN Transaction Codes Schema</li>
+                    <li><a href="ValueSet-Transactions.jsonld">ValueSet-Transactions.jsonld</a> - JSON-LD vocabulary for WHO GDHCN Transaction Codes Schema</li>
+                    <li><a href="ValueSet-KeyUsage-DEV.schema.json">ValueSet-KeyUsage-DEV.schema.json</a> - JSON Schema for WHO GDHCN  Key Usage ValueSet - DEV Schema</li>
+                    <li><a href="ValueSet-KeyUsage-DEV.jsonld">ValueSet-KeyUsage-DEV.jsonld</a> - JSON-LD vocabulary for WHO GDHCN  Key Usage ValueSet - DEV Schema</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="endpoint-card">
+            <h4><a href="LogicalModels-enumeration.html">LogicalModels.schema.json</a></h4>
+            <p>Enumeration of all available Logical Model schemas</p>
+            <div class="endpoint-list">
+                <h5>Available Endpoints:</h5>
+                <ul>
+                    <li><a href="StructureDefinition-COSEHeader.schema.json">StructureDefinition-COSEHeader.schema.json</a> - JSON Schema for COSE Headers (DRAFT)</li>
+                    <li><a href="StructureDefinition-SchemeInformation.schema.json">StructureDefinition-SchemeInformation.schema.json</a> - JSON Schema for Scheme Information</li>
+                    <li><a href="StructureDefinition-HCert.schema.json">StructureDefinition-HCert.schema.json</a> - JSON Schema for Health Certificate</li>
+                    <li><a href="LogicalModels.schema.json">LogicalModels.schema.json</a> - JSON Schema for Logical Model Enumeration Schema</li>
+                    <li><a href="StructureDefinition-CWTPayload.schema.json">StructureDefinition-CWTPayload.schema.json</a> - JSON Schema for CBOR Web Token (CWT) Payload (Common)</li>
+                    <li><a href="StructureDefinition-CWT.schema.json">StructureDefinition-CWT.schema.json</a> - JSON Schema for CBOR Web Token (CWT) Claim</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+/* DAK API Hub styling that integrates with IG theme */
+.dak-api-hub {
+    margin: 1rem 0;
+}
+
+.enumeration-endpoints, .schema-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.endpoint-card, .schema-card {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 1rem;
+    background: #f8f9fa;
+    transition: box-shadow 0.2s ease;
+}
+
+.endpoint-card:hover, .schema-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.endpoint-card h4, .schema-card h4 {
+    margin: 0 0 0.5rem 0;
+    color: #00477d;
+}
+
+.endpoint-card h4 a, .schema-card h4 a {
+    color: #00477d;
+    text-decoration: none;
+}
+
+.endpoint-card h4 a:hover, .schema-card h4 a:hover {
+    color: #0070A1;
+    text-decoration: underline;
+}
+
+.endpoint-card p, .schema-card p {
+    margin: 0 0 0.5rem 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.endpoint-list {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.endpoint-list h5 {
+    margin: 0 0 0.5rem 0;
+    color: #00477d;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.endpoint-list ul {
+    margin: 0;
+    padding-left: 1.2rem;
+    list-style-type: disc;
+}
+
+.endpoint-list li {
+    margin: 0.25rem 0;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.endpoint-list a {
+    color: #17a2b8;
+    text-decoration: none;
+    font-family: monospace;
+    font-weight: 500;
+}
+
+.endpoint-list a:hover {
+    color: #138496;
+    text-decoration: underline;
+}
+
+.schema-links {
+    margin: 0.75rem 0 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.schema-link {
+    display: inline-block;
+    background-color: #17a2b8;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.schema-link:hover {
+    background-color: #138496;
+    color: white;
+    text-decoration: none;
+}
+
+.schema-link.fhir-link {
+    background-color: #28a745;
+}
+
+.schema-link.fhir-link:hover {
+    background-color: #218838;
+}
+
+.usage-info {
+    background: #e7f3ff;
+    border: 1px solid #b8daff;
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.usage-info h3 {
+    color: #00477d;
+    margin-top: 1rem;
+}
+
+.usage-info h3:first-child {
+    margin-top: 0;
+}
+
+.usage-info ul {
+    margin: 0.5rem 0;
+}
+
+.usage-info li {
+    margin: 0.25rem 0;
+}
+
+/* JSON-LD specific styling */
+.jsonld-list {
+    margin: 0.75rem 0 0 0;
+    padding: 0.75rem;
+    background: #fff;
+    border: 1px solid #e1ecf4;
+    border-radius: 4px;
+}
+
+.jsonld-item {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border-left: 3px solid #17a2b8;
+    background: #f8f9fa;
+}
+
+.jsonld-item:last-child {
+    margin-bottom: 0;
+}
+
+.jsonld-link {
+    font-weight: 600;
+    color: #17a2b8;
+    text-decoration: none;
+    margin-bottom: 0.25rem;
+}
+
+.jsonld-link:hover {
+    color: #138496;
+    text-decoration: underline;
+}
+
+.jsonld-description {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-style: italic;
+}
+</style>
+
+<hr>
+
+<p><em>This documentation hub is automatically generated from the available schema and API definitions.</em></p>
+<!-- DAK_API_HUB_END -->

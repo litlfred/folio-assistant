@@ -510,6 +510,34 @@ function main(): void {
     }
   }
 
+  // ── The DAK API hub, a fragment of `dak-api.html` ──────────────────────
+  // The hub is generated AFTER the Publisher, into a page whose source holds
+  // only a placeholder, so the published page is the one place it exists.
+  // Held verbatim between its own markers: a page fetches it (bean `680p`)
+  // instead of retyping prose that smart-base's generator owns.
+  const HUB_START = "<!-- DAK_API_HUB_START -->";
+  const HUB_END = "<!-- DAK_API_HUB_END -->";
+  let hub: { fragment: string; rep: Representation } | undefined;
+  const hubPage = join(source, "dak-api.html");
+  if (materializeDak && dakApi === "present" && existsSync(hubPage)) {
+    const html = readFileSync(hubPage, "utf8");
+    const a = html.indexOf(HUB_START);
+    const b = html.indexOf(HUB_END);
+    if (a >= 0 && b > a) {
+      const fragment = `${html.slice(a, b + HUB_END.length)}\n`;
+      hub = {
+        fragment,
+        rep: {
+          url: `${base.replace(/\/$/, "")}/dak-api.html`,
+          localPath: join("fhir-artifact-index", "dak", "dak-api-hub.html"),
+          bytes: Buffer.byteLength(fragment),
+        },
+      };
+    } else {
+      console.log("  dak-api.html carries no DAK_API_HUB_START/END pair — no hub held");
+    }
+  }
+
   // ── Canonical base ────────────────────────────────────────────────────
   // Taken from the IG's OWN canonical by stripping the resource segments the
   // publisher appends — never composed from the Pages URL, which is a
@@ -532,6 +560,7 @@ function main(): void {
     provenance,
     dakApi,
     ...(contexts.length ? { contexts } : {}),
+    ...(hub ? { dakApiHub: hub.rep } : {}),
     ...(unbound.length ? { dakUnbound: unbound } : {}),
     count: artifacts.length,
     artifacts,
@@ -563,6 +592,7 @@ function main(): void {
     mkdirSync(join(dakDir, "contexts"), { recursive: true });
     for (const [from, to] of materialized) copyFileSync(join(source, from), join(dakDir, to));
   }
+  if (hub) writeFileSync(join(graphDir, "dak", "dak-api-hub.html"), hub.fragment);
 
   const census = materializationCensus(artifacts);
   const dakCensus = dakOverlayCensus(artifacts);
@@ -576,6 +606,7 @@ function main(): void {
     if (divergentSidecars.length > 5) console.log(`    …and ${divergentSidecars.length - 5} more`);
   }
   console.log(`  contexts: ${contexts.length}`);
+  if (hub) console.log(`  DAK API hub: ${hub.rep.bytes} bytes from dak-api.html`);
   if (unbound.length) {
     console.log(`  UNBOUND sidecars: ${unbound.length} — listed by an enumeration, matched to no artefact:`);
     for (const u of unbound.slice(0, 5)) console.log(`    ${u.filename}${u.title ? ` (${u.title})` : ""}`);

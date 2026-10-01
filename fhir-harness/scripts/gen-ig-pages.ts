@@ -75,7 +75,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
-import { DAK_VIEW_SCRIPT, dakViewData, dakViews } from "./dak-views.ts";
+import { DAK_VIEW_SCRIPT, dakHubLinks, dakViewData, dakViews } from "./dak-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
 import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
@@ -152,6 +152,10 @@ function dakViewServing(): { ok: true } | { ok: false; why: string } {
 const DAK_VIEW_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "dak-view.liquid");
 /** Their one shared loader, copied to `docs/assets/` (bean `680p`, `visualizer-loading`). */
 const DAK_VIEW_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-view.js");
+/** The DAK API hub page's template and loader — the Publisher's `dak-api.html`, replicated. */
+const DAK_HUB_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "dak-api.liquid");
+const DAK_HUB_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-hub.js");
+const DAK_HUB_SCRIPT = "assets/dak-hub.js";
 
 /**
  * The instance that OWNS the template chrome, or none.
@@ -625,6 +629,8 @@ function indexPage(ix: FhirArtifactIndex): string {
     stat(dak.jsonld, "JSON-LD"),
     `</div>`,
     ``,
+    // Linked only when the hub page is written — the same two conditions.
+    ...(ix.dakApiHub?.localPath && dakViewServing().ok ? [`The IG's own [DAK API hub](dak-api.html) lists them as the Publisher's \`dak-api.html\` does.`, ``] : []),
     `## Every artefact, by category`,
     ``,
     `Grouped as the IG's own \`artifacts.html\` groups them. An artefact with a DAK API sidecar links`,
@@ -942,6 +948,27 @@ for (const a of dakServing.ok ? ix.artifacts : []) {
   }
 }
 if (dakViewCount > 0) pages.set(DAK_VIEW_SCRIPT, readFileSync(DAK_VIEW_LOADER, "utf8"));
+
+// THE DAK API HUB — the Publisher's `dak-api.html`, as its own page (owner,
+// 2026-10-01: "replicate dak-api.html seperately"). The hub fragment is held
+// in the served graph and fetched; what is computed here is where each of its
+// links should go on THIS site, because the Publisher's relative links assume
+// its flat layout.
+const hubLinks = ix.dakApiHub?.localPath && dakServing.ok ? dakHubLinks(ix.artifacts, ix.source.of, readFileSync(join(INSTANCE, ix.dakApiHub.localPath), "utf8")) : undefined;
+if (hubLinks && ix.dakApiHub?.localPath) {
+  pages.set(
+    "dak-api.md",
+    shell(
+      "DAK API Documentation Hub",
+      `The ${LABEL} IG's DAK API hub: its logical models, ValueSet schemas, JSON-LD vocabularies and enumeration endpoints.`,
+      readFileSync(DAK_HUB_TEMPLATE, "utf8"),
+      { kind: "leaf" },
+      "fixture",
+      { hub: { src: ix.dakApiHub.localPath, published: ix.dakApiHub.url, links: hubLinks, script: DAK_HUB_SCRIPT } },
+    ),
+  );
+  pages.set(DAK_HUB_SCRIPT, readFileSync(DAK_HUB_LOADER, "utf8"));
+}
 
 // A page for each category too large to inline, so "too many to list here"
 // points somewhere. Driven by the SAME `INLINE_LIMIT` comparison the index

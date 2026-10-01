@@ -9,5 +9,5 @@ Part of [smart-trust](../README.md) 0.1.0, declared as `smart-trust-artifact-ind
 |---|---|---|
 | [`index.json`](index.json) | smart.who.int.trust — artefact index |  |
 | [`menu.json`](menu.json) | data |  |
-| [`dak/`](dak/) | 69 files | |
+| [`dak/`](dak/) | 70 files | |
 <!-- kg:subgraph:end -->

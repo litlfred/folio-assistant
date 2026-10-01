@@ -134,6 +134,8 @@ are counted separately rather than as one "has DAK" tally.
 <div class="st-stat"><b>14</b><span>JSON-LD</span></div>
 </div>
 
+The IG's own [DAK API hub](dak-api.html) lists them as the Publisher's `dak-api.html` does.
+
 ## Every artefact, by category
 
 Grouped as the IG's own `artifacts.html` groups them. An artefact with a DAK API sidecar links

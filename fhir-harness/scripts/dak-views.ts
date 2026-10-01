@@ -88,3 +88,28 @@ export function dakViewData(a: FhirArtifact, view: DakView, servedFrom = "../"):
     script: `../${DAK_VIEW_SCRIPT}`,
   };
 }
+
+/**
+ * Where each link in the hub fragment goes on this site. The Publisher's are
+ * relative to its flat root; here an artefact page is under `artifact/` and a
+ * DAK file is in the served graph. Anything neither — `openapi/index.html`,
+ * the enumeration schemas, the two `*-enumeration.html` pages the Publisher
+ * never wrote — keeps the Publisher's copy, absolute, so a dead link upstream
+ * stays visibly the Publisher's rather than becoming a broken one here.
+ */
+export function dakHubLinks(artifacts: readonly FhirArtifact[], publishedAt: string, fragment: string): Record<string, string> {
+  const pagesByName = new Set(artifacts.map((a) => `${artifactPageName(a)}.html`));
+  const held = new Map<string, string>();
+  for (const a of artifacts) {
+    for (const r of Object.values(a.dak ?? {})) {
+      if (typeof r === "object" && r && "localPath" in r && r.localPath) held.set(r.localPath.split("/").pop()!, r.localPath);
+    }
+  }
+  const upstream = publishedAt.replace(/\/+$/, "");
+  const out: Record<string, string> = {};
+  for (const [, h] of fragment.matchAll(/href="([^"]+)"/g)) {
+    if (/^[a-z][a-z0-9+.-]*:|^\/|^#/i.test(h) || h in out) continue;
+    out[h] = pagesByName.has(h) ? `artifact/${h}` : held.has(h) ? held.get(h)! : `${upstream}/${h}`;
+  }
+  return out;
+}

@@ -12,9 +12,9 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1598 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 156 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1598 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 157 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1800 terms and is 993 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1801 terms and is 994 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1800</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1801</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -3497,6 +3497,13 @@ FhirArtifactIndexSchema.canonicalBase <span class="fa-gloss-status">candidate, e
 <dd>
 <p>The canonical base every artefact's canonical URL extends, e.g. <code>http://smart.who.int/trust</code>.</p>
 <p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/fhir-artifact-index.ts"><code>folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.canonicalBase</code></a></p>
+</dd>
+<dt id="folio-assistant-core--kg-schema-fields--fhir-artifact-index.fhirartifactindexschema.dakapihub" data-fa-state="extracted" data-fa-gloss="">
+FhirArtifactIndexSchema.dakApiHub <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The DAK API hub: the region of the IG's <code>dak-api.html</code> between its <code>DAK_API_HUB_START</code> and <code>DAK_API_HUB_END</code> markers, which smart-base's <code>generate_dak_api_hub.py</code> writes after the Publisher has run. <code>url</code> is the page it was read from; <code>localPath</code> is the fragment, held so a page can fetch it (bean <code>680p</code>) rather than retype its prose. Absent means the IG publishes no hub, or it was not materialised.</p>
+<p class="fa-gloss-meta">Schema fields of folio-assistant-core · source <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/fhir-artifact-index.ts"><code>folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.dakApiHub</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--fhir-artifact-index.fhirartifactindexschema.dakunbound" data-fa-state="extracted" data-fa-gloss="">
 FhirArtifactIndexSchema.dakUnbound <span class="fa-gloss-status">candidate, extracted</span>
