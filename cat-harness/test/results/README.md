@@ -29,8 +29,8 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`block-qa/`](block-qa/) | 122 files | |
 | [`bootstrap/`](bootstrap/) | 22 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 7 files | |
-| [`detangle/`](detangle/) | 40 files | |
-| [`kg-qa/`](kg-qa/) | 475 files | |
+| [`detangle/`](detangle/) | 32 files | |
+| [`kg-qa/`](kg-qa/) | 476 files | |
 | [`library-qa/`](library-qa/) | 51 files | |
 | [`lsi/`](lsi/) | 5 files | |
 | [`tool-runs/`](tool-runs/) | 3 files | |
