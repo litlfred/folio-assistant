@@ -91,7 +91,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-[← all 674 artefacts](../)
+[← all 678 artefacts](../)
 
 ## WHO GDHCN Trust Domains - DEV
 
@@ -106,7 +106,7 @@ ValueSet of WHO GDHCN Trust Domains for Development environment
 | | |
 |---|---|
 | Canonical URL | `http://smart.who.int/trust/ValueSet/Domains-DEV` |
-| Published | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-DEV.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-DEV.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-DEV.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-DEV.html">html</a> |
+| Published | <a href="https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.json">json</a> · <a href="https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.xml">xml</a> · <a href="https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.ttl">ttl</a> · <a href="https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.html">html</a> |
 | Materialization | <span class="st-tag st-held">materialized</span> — working copy, regenerable by re-running the ingest |
 
 ## DAK API
@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Domains-DEV.schema.json> | `fhir-artifact-index/dak/ValueSet-Domains-DEV.schema.json` |
-| Displays | <https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Domains-DEV.displays.json> | `fhir-artifact-index/dak/ValueSet-Domains-DEV.displays.json` |
-| OpenAPI | <https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-Domains-DEV.openapi.json> | `fhir-artifact-index/dak/ValueSet-Domains-DEV.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-trust/ValueSet-Domains-DEV.jsonld> | `fhir-artifact-index/dak/ValueSet-Domains-DEV.jsonld` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Domains-DEV.schema.json> | `fhir-artifact-index/dak/ValueSet-Domains-DEV.schema.json` |
+| Displays | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Domains-DEV.displays.json> | `fhir-artifact-index/dak/ValueSet-Domains-DEV.displays.json` |
+| OpenAPI | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Domains-DEV.openapi.json> | `fhir-artifact-index/dak/ValueSet-Domains-DEV.openapi.json` |
+| JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-Domains-DEV.jsonld> | `fhir-artifact-index/dak/ValueSet-Domains-DEV.jsonld` |

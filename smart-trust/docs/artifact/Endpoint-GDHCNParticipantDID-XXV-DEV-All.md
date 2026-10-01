@@ -91,13 +91,13 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-[← all 674 artefacts](../)
+[← all 678 artefacts](../)
 
 ## GDHCNParticipantDID-XXV-DEV-All
 
 `Endpoint/GDHCNParticipantDID-XXV-DEV-All`
 
-test city Trustlist (DID v2) - DEV - All keys did:web:tng-cdn.who.int:v2:trustlist:-:XXV resolvable at https://tng-cdn-dev.who.int/v2/trustlist/-/XXV/did.json
+TEST CITY Trustlist (DID v2) - DEV - All keys did:web:tng-cdn.who.int:v2:trustlist:-:XXV resolvable at https://tng-cdn-dev.who.int/v2/trustlist/-/XXV/did.json
 
 <div class="st-grid"><div class="st-stat"><b>Endpoint</b><span>resource type</span></div><div class="st-stat"><b>—</b><span>version</span></div><div class="st-stat"><b>Other</b><span>category</span></div></div>
 
@@ -106,11 +106,11 @@ test city Trustlist (DID v2) - DEV - All keys did:web:tng-cdn.who.int:v2:trustli
 | | |
 |---|---|
 | Canonical URL | *none — examples and instances have no canonical URL* |
-| Published | <a href="https://worldhealthorganization.github.io/smart-trust/Endpoint-GDHCNParticipantDID-XXV-DEV-All.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Endpoint-GDHCNParticipantDID-XXV-DEV-All.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Endpoint-GDHCNParticipantDID-XXV-DEV-All.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Endpoint-GDHCNParticipantDID-XXV-DEV-All.html">html</a> |
+| Published | <a href="https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-XXV-DEV-All.json">json</a> · <a href="https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-XXV-DEV-All.xml">xml</a> · <a href="https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-XXV-DEV-All.ttl">ttl</a> · <a href="https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-XXV-DEV-All.html">html</a> |
 | Materialization | <span class="st-tag st-ref">referenced</span> — upstream, not held here |
 
 ## DAK API
 
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
-19 of 674 carry one.
+19 of 678 carry one.

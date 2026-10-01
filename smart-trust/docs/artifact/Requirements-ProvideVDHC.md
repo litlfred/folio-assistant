@@ -91,7 +91,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-[← all 674 artefacts](../)
+[← all 678 artefacts](../)
 
 ## Provide Verifiable Digital Health Certificate
 
@@ -106,11 +106,11 @@ Provide a Verifiable Digital Health Certificate to a Receiver
 | | |
 |---|---|
 | Canonical URL | `http://smart.who.int/trust/Requirements/ProvideVDHC` |
-| Published | <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ProvideVDHC.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ProvideVDHC.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ProvideVDHC.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/Requirements-ProvideVDHC.html">html</a> |
+| Published | <a href="https://litlfred.github.io/smart-trust/Requirements-ProvideVDHC.json">json</a> · <a href="https://litlfred.github.io/smart-trust/Requirements-ProvideVDHC.xml">xml</a> · <a href="https://litlfred.github.io/smart-trust/Requirements-ProvideVDHC.ttl">ttl</a> · <a href="https://litlfred.github.io/smart-trust/Requirements-ProvideVDHC.html">html</a> |
 | Materialization | <span class="st-tag st-ref">referenced</span> — upstream, not held here |
 
 ## DAK API
 
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
-19 of 674 carry one.
+19 of 678 carry one.

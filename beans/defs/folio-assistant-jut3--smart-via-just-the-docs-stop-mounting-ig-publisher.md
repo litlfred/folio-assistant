@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T12:18:07Z
+updated_at: 2026-10-01T12:27:51Z
 parent: folio-assistant-uhkv
 ---
 
@@ -479,3 +479,13 @@ The P0 rule from the skill (`ig-publisher-reduction`, owner approval 2026-09-30)
 - **Cheap and in reach now:** 4 stale artefacts (re-ingest), `artifacts`/`toc` (derivable), and 33 DAK views (outputs already exist).
 
 **The MVP call against this table is the owner's**, and so is whether representation views wait for P2.
+
+## 2026-10-01: parity step 1 — index re-ingested from the fork
+
+`ingest:ig` was re-run over `litlfred/smart-trust` `gh-pages` (`9bd9643`, the deploy of `main` `25771f6`), with `--base https://litlfred.github.io/smart-trust`, following the owner's ruling that the fork is the source.
+
+- **Result:** 678 artefacts. The 4 `IRL` artefacts were added and none removed. The DAK sidecars still cover 19 materialised artefacts; their only change is the expansion timestamp.
+- **Changed fields:** `materialization.provenance.upstream` now points at the fork; one upstream description changed ("test city" became "TEST CITY").
+- **Checks:** `ingest:ig:check` passes against that checkout, and `check:materialized-fixity` verifies 272 artefacts with 0 edited.
+- **Parity gap closed:** "artefact not in our index" goes from 4 to 0.
+- **Lesson:** the first attempt skipped `gh-pages`' subfolders (`schemas/`, `openapi/`) and silently dropped every DAK schema sidecar. The ingest reported it as a thinner index (`schema=0`), and it was caught by comparing with the previous counts.

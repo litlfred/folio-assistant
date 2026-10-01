@@ -91,7 +91,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-[← all 674 artefacts](../)
+[← all 678 artefacts](../)
 
 ## WHO Regional Offices
 
@@ -106,7 +106,7 @@ ValueSet of WHO Regional Offices
 | | |
 |---|---|
 | Canonical URL | `http://smart.who.int/trust/ValueSet/WHORegionalOffices` |
-| Published | <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-WHORegionalOffices.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-WHORegionalOffices.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-WHORegionalOffices.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/ValueSet-WHORegionalOffices.html">html</a> |
+| Published | <a href="https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.json">json</a> · <a href="https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.xml">xml</a> · <a href="https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.ttl">ttl</a> · <a href="https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.html">html</a> |
 | Materialization | <span class="st-tag st-held">materialized</span> — working copy, regenerable by re-running the ingest |
 
 ## DAK API
@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-WHORegionalOffices.schema.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.schema.json` |
-| Displays | <https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-WHORegionalOffices.displays.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.displays.json` |
-| OpenAPI | <https://worldhealthorganization.github.io/smart-trust/schemas/ValueSet-WHORegionalOffices.openapi.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.openapi.json` |
-| JSON-LD | <https://worldhealthorganization.github.io/smart-trust/ValueSet-WHORegionalOffices.jsonld> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.jsonld` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-WHORegionalOffices.schema.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.schema.json` |
+| Displays | <https://litlfred.github.io/smart-trust/schemas/ValueSet-WHORegionalOffices.displays.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.displays.json` |
+| OpenAPI | <https://litlfred.github.io/smart-trust/schemas/ValueSet-WHORegionalOffices.openapi.json> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.openapi.json` |
+| JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-WHORegionalOffices.jsonld> | `fhir-artifact-index/dak/ValueSet-WHORegionalOffices.jsonld` |

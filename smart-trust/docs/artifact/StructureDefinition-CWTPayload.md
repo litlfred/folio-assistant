@@ -91,7 +91,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-[← all 674 artefacts](../)
+[← all 678 artefacts](../)
 
 ## CBOR Web Token (CWT) Payload (Common)
 
@@ -99,14 +99,14 @@ nav_exclude: true
 
 Logical Model for CBOR Web Token (CWT) Payload Logical Modelin CWT Payload https://www.iana.org/assignments/cwt/cwt.xhtml
 
-<div class="st-grid"><div class="st-stat"><b>StructureDefinition</b><span>resource type</span></div><div class="st-stat"><b>1.8.0</b><span>version</span></div><div class="st-stat"><b>Structures: Logical Models</b><span>category</span></div></div>
+<div class="st-grid"><div class="st-stat"><b>StructureDefinition</b><span>resource type</span></div><div class="st-stat"><b>1.8.0</b><span>version</span></div><div class="st-stat"><b>Structures: Logical Models</b><span>category</span></div><div class="st-stat"><b>5</b><span>properties</span></div></div>
 
 ## Identity and bytes are different questions
 
 | | |
 |---|---|
 | Canonical URL | `http://smart.who.int/trust/StructureDefinition/CWTPayload` |
-| Published | <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWTPayload.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWTPayload.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWTPayload.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-CWTPayload.html">html</a> |
+| Published | <a href="https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload.json">json</a> · <a href="https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload.xml">xml</a> · <a href="https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload.ttl">ttl</a> · <a href="https://litlfred.github.io/smart-trust/StructureDefinition-CWTPayload.html">html</a> |
 | Materialization | <span class="st-tag st-held">materialized</span> — working copy, regenerable by re-running the ingest |
 
 ## DAK API
@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-CWTPayload.schema.json> | `fhir-artifact-index/dak/StructureDefinition-CWTPayload.schema.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/StructureDefinition-CWTPayload.schema.json> | `fhir-artifact-index/dak/StructureDefinition-CWTPayload.schema.json` |
 | Displays | *not published for this artefact* | |
-| OpenAPI | <https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-CWTPayload.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-CWTPayload.openapi.json` |
+| OpenAPI | <https://litlfred.github.io/smart-trust/schemas/StructureDefinition-CWTPayload.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-CWTPayload.openapi.json` |
 | JSON-LD | *not published for this artefact* | |

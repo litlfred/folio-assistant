@@ -91,7 +91,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-[← all 674 artefacts](../)
+[← all 678 artefacts](../)
 
 ## COSE Headers (DRAFT)
 
@@ -99,14 +99,14 @@ nav_exclude: true
 
 Data elements for COSE Headers https://www.iana.org/assignments/cose/cose.xhtml#header-parameters
 
-<div class="st-grid"><div class="st-stat"><b>StructureDefinition</b><span>resource type</span></div><div class="st-stat"><b>1.8.0</b><span>version</span></div><div class="st-stat"><b>Structures: Logical Models</b><span>category</span></div></div>
+<div class="st-grid"><div class="st-stat"><b>StructureDefinition</b><span>resource type</span></div><div class="st-stat"><b>1.8.0</b><span>version</span></div><div class="st-stat"><b>Structures: Logical Models</b><span>category</span></div><div class="st-stat"><b>3</b><span>properties</span></div></div>
 
 ## Identity and bytes are different questions
 
 | | |
 |---|---|
 | Canonical URL | `http://smart.who.int/trust/StructureDefinition/COSEHeader` |
-| Published | <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-COSEHeader.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-COSEHeader.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-COSEHeader.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/StructureDefinition-COSEHeader.html">html</a> |
+| Published | <a href="https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.json">json</a> · <a href="https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.xml">xml</a> · <a href="https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.ttl">ttl</a> · <a href="https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.html">html</a> |
 | Materialization | <span class="st-tag st-held">materialized</span> — working copy, regenerable by re-running the ingest |
 
 ## DAK API
@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-COSEHeader.schema.json> | `fhir-artifact-index/dak/StructureDefinition-COSEHeader.schema.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/StructureDefinition-COSEHeader.schema.json> | `fhir-artifact-index/dak/StructureDefinition-COSEHeader.schema.json` |
 | Displays | *not published for this artefact* | |
-| OpenAPI | <https://worldhealthorganization.github.io/smart-trust/schemas/StructureDefinition-COSEHeader.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-COSEHeader.openapi.json` |
+| OpenAPI | <https://litlfred.github.io/smart-trust/schemas/StructureDefinition-COSEHeader.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-COSEHeader.openapi.json` |
 | JSON-LD | *not published for this artefact* | |

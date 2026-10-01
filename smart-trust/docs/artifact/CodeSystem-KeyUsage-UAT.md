@@ -91,7 +91,7 @@ nav_exclude: true
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-[← all 674 artefacts](../)
+[← all 678 artefacts](../)
 
 ## WHO GDHCN Key Usage CodeSystem - UAT
 
@@ -106,11 +106,11 @@ CodeSystem for GDHCN Key Usage that has usage codes for verification keys publis
 | | |
 |---|---|
 | Canonical URL | `http://smart.who.int/trust/CodeSystem/KeyUsage-UAT` |
-| Published | <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-UAT.json">json</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-UAT.xml">xml</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-UAT.ttl">ttl</a> · <a href="https://worldhealthorganization.github.io/smart-trust/CodeSystem-KeyUsage-UAT.html">html</a> |
+| Published | <a href="https://litlfred.github.io/smart-trust/CodeSystem-KeyUsage-UAT.json">json</a> · <a href="https://litlfred.github.io/smart-trust/CodeSystem-KeyUsage-UAT.xml">xml</a> · <a href="https://litlfred.github.io/smart-trust/CodeSystem-KeyUsage-UAT.ttl">ttl</a> · <a href="https://litlfred.github.io/smart-trust/CodeSystem-KeyUsage-UAT.html">html</a> |
 | Materialization | <span class="st-tag st-ref">referenced</span> — upstream, not held here |
 
 ## DAK API
 
 No DAK API sidecar is published for this artefact. That is a fact about the IG,
 not a gap in this index — sidecars are published per artefact, and
-19 of 674 carry one.
+19 of 678 carry one.

@@ -94,7 +94,11 @@ describe("the two failures are told apart", () => {
     const r = run(["--out", "smart-trust", "--check"]);
     expect(r.code).toBe(1);
     expect(r.err).toContain("smart-trust/fhir-artifact-index/index.json");
-    expect(r.err).toContain("https://worldhealthorganization.github.io/smart-trust");
+    // The origin the index RECORDS, read from it rather than restated: it was
+    // WHO's published site until 2026-10-01, when the owner made the fork the
+    // source (bean `jut3`), and a literal here broke on that re-ingest.
+    const recorded = (JSON.parse(readFileSync(join(REPO, "smart-trust/fhir-artifact-index/index.json"), "utf-8")) as { source: { of: string } }).source.of;
+    expect(r.err).toContain(recorded);
     expect(r.err).not.toContain("usage: ingest-ig-artifacts.ts");
   });
 
