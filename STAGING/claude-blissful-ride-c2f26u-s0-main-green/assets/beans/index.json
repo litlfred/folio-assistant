@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 573,
+      "count": 575,
       "unit": "beans"
     }
   },
@@ -1959,6 +1959,20 @@
       "file": "beans/defs/folio-assistant-7wou--terminology-mapping-check-a-candidate-term-against.md"
     },
     {
+      "id": "folio-assistant-7x5n",
+      "title": "SEPARATION ARC: one workplan consolidating five stalled sessions' GOAL 1 work (S0–S8)",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "high",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T08:14:10Z",
+      "updatedAt": "2026-10-01T08:31:09Z",
+      "preview": "Consolidates the handovers of five stalled sessions (iirv, w2gr/9umr, cjvs/vke6, fnx4/eayu, d33q) into one arc. Plan, status bars, gap analysis (G1–G14), migration checklist and delegation rules: cat-harness/docs/proposals/separation-arc-2026-10-01.md. Stories S0–S8 are children; each story points at the existing beans it absorbs and owns no new code of its own.\n\nStrategy adopted from sibling bean",
+      "file": "beans/defs/folio-assistant-7x5n--separation-arc-one-workplan-consolidating-five-sta.md"
+    },
+    {
       "id": "folio-assistant-7x7g",
       "title": "external-schemas visualiser: 8 wireframe findings",
       "status": "todo",
@@ -3356,7 +3370,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:52:49Z",
-      "updatedAt": "2026-10-01T00:25:25Z",
+      "updatedAt": "2026-10-01T08:56:29Z",
       "preview": "## Why\nOwner ruling 2026-09-30, verbatim: \"dspace scripts generic in folio-assistant. iris specific tools for now ok in who-iris/ but make sure fails QA finding\".\n\nwho-iris/ is a staged instance that will move to its own CONTENT repository (litlfred/who-iris). kg-separation / bootstrap FR-7: a content repository holds no code. who-iris-tools is NOT authorised.\n\n## Done when\n- every code file under",
       "file": "beans/defs/folio-assistant-eayu--who-iris-separation-generic-dspace-code-to-the-pla.md"
     },
@@ -3989,6 +4003,20 @@
       "updatedAt": "2026-09-22T18:18:42Z",
       "preview": "Owner, 2026-09-20: *\"content/ shouldnt be expected anymore. folio/ was\nrenamed as default/convention.\"* Then, on being shown a compatibility-fallback\ndesign: **\"no content/ fallback. excise!!!!!\"**\n\nMeasured on `0392892c`.\n\n## Where the rename HAS landed\n\n- `cat-harness/harness.json` declares `folio/` holding the `folio` graph, and\n  carries no `content` entry at all\n- the `folio` graph kind exist",
       "file": "beans/defs/folio-assistant-hs08--migration-the-content-folio-rename-has-reached-the.md"
+    },
+    {
+      "id": "folio-assistant-hx65",
+      "title": "S0 main green: five red jobs on cdb0a018, submodule pins, orphan-sidecar ruling",
+      "status": "todo",
+      "type": "task",
+      "priority": "critical",
+      "parent": "folio-assistant-7x5n",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T08:14:33Z",
+      "updatedAt": "2026-10-01T08:14:33Z",
+      "preview": "Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill refs'; TypeScript #7 'bun test'; E2E #7 'playwright test'; Skill-registration chain #5 'registration chain is current'; Docs site #7 'Regenerate skill instruction pages'. Four merges landed before CI finished.\n\n## Done when\n- [ ] each failing job named with step and cause\n- [ ] fix PR merged on per-job verified green\n- [ ",
+      "file": "beans/defs/folio-assistant-hx65--s0-main-green-five-red-jobs-on-cdb0a018-submodule.md"
     },
     {
       "id": "folio-assistant-hylg",

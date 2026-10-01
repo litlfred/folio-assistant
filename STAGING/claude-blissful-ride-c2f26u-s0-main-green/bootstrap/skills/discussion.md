@@ -11,7 +11,11 @@ file it can reach:
 
 No instruction body produces those. They are judgements held by whoever asked
 for the harness, and the only way to obtain one is to **ask**. This skill is
-how that asking is performed, and what it must produce.
+what that asking must produce. **How** to ask is not particular to this
+question: [`processes/discussion.bpmn`](../processes/discussion.bpmn) narrows
+the candidates and then calls
+[`human-agent-discussion`](human-agent-discussion.md), the one reusable way
+bootstrap asks a person anything, with **no default allowed**.
 
 ## What a skill is, and where the tool comes in
 
@@ -52,6 +56,26 @@ The output records **who** answered (`kind: person | agent`), because an
 answer from a sibling agent is evidence of a different weight from an answer
 by the person who wants the harness. Neither is refused; they are not
 conflated.
+
+## First, say where you are
+
+Before narrowing anything ([`processes/discussion.bpmn`](../processes/discussion.bpmn),
+`A_DetermineWhere`), the Bootstrapping Agent determines the three things
+[`human-agent-discussion`](human-agent-discussion.md#before-you-ask-determine-where-you-are)
+requires before any question (owner, 2026-10-01):
+
+- **the Process** — *Initialize a harness*, at its first step, inside
+  *Determine the harness and repositories*. A Bootstrapping Agent can be
+  nowhere else (FR-2); if it cannot say so, it is out of process;
+- **the Roles** — itself as the Bootstrapping Agent, because it was told so;
+  the person it will ask as the Requestor, the one who asked for the harness.
+  A request relayed by somebody else leaves the Requestor undetermined;
+- **the context** — what the request said, and what the checkout holds: a
+  declaration at its root, a harness named in the request.
+
+They go into the called discussion with the candidates. One that cannot be
+determined is never filled with a default: it is asked about **first**, and
+the harness question waits.
 
 ## Rules
 

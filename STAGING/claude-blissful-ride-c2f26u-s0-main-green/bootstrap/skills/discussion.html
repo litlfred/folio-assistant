@@ -30,7 +30,11 @@ where the new declaration is written to, and whether they are the same.</li>
 </ul>
 <p>No instruction body produces those. They are judgements held by whoever asked
 for the harness, and the only way to obtain one is to <strong>ask</strong>. This skill is
-how that asking is performed, and what it must produce.</p>
+what that asking must produce. <strong>How</strong> to ask is not particular to this
+question: <a href="../processes/discussion.bpmn"><code>processes/discussion.bpmn</code></a> narrows
+the candidates and then calls
+<a href="human-agent-discussion.html"><code>human-agent-discussion</code></a>, the one reusable way
+bootstrap asks a person anything, with <strong>no default allowed</strong>.</p>
 <h2>What a skill is, and where the tool comes in</h2>
 <blockquote>
 <p>A skill declares an <strong>input schema</strong> and an <strong>output schema</strong>. The actor
@@ -88,6 +92,24 @@ Bootstrapping Agent asks it rather than re-deriving it.</li>
 answer from a sibling agent is evidence of a different weight from an answer
 by the person who wants the harness. Neither is refused; they are not
 conflated.</p>
+<h2>First, say where you are</h2>
+<p>Before narrowing anything (<a href="../processes/discussion.bpmn"><code>processes/discussion.bpmn</code></a>,
+<code>A_DetermineWhere</code>), the Bootstrapping Agent determines the three things
+<a href="human-agent-discussion.html#before-you-ask-determine-where-you-are"><code>human-agent-discussion</code></a>
+requires before any question (owner, 2026-10-01):</p>
+<ul>
+<li><strong>the Process</strong> — <em>Initialize a harness</em>, at its first step, inside
+<em>Determine the harness and repositories</em>. A Bootstrapping Agent can be
+nowhere else (FR-2); if it cannot say so, it is out of process;</li>
+<li><strong>the Roles</strong> — itself as the Bootstrapping Agent, because it was told so;
+the person it will ask as the Requestor, the one who asked for the harness.
+A request relayed by somebody else leaves the Requestor undetermined;</li>
+<li><strong>the context</strong> — what the request said, and what the checkout holds: a
+declaration at its root, a harness named in the request.</li>
+</ul>
+<p>They go into the called discussion with the candidates. One that cannot be
+determined is never filled with a default: it is asked about <strong>first</strong>, and
+the harness question waits.</p>
 <h2>Rules</h2>
 <p><strong>Ask the fewest questions that settle it.</strong> The Bootstrapping Agent's persona is
 "asks exactly one question when it must". Narrow the candidate list from

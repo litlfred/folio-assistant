@@ -36,6 +36,14 @@ is only how you reach them — the git CLI, or a forge's API.
 
 ## Asking
 
+Before you ask, say where you are — *Initialize a harness*, determining the
+harness and repositories, as the Bootstrapping Agent, asking the Requestor —
+and if you cannot tell that the person in front of you is the Requestor, ask
+that first ([`human-agent-discussion`](human-agent-discussion.md#before-you-ask-determine-where-you-are)).
+
+Ask through [`human-agent-discussion`](human-agent-discussion.md): context,
+the candidates as options, your recommendation, and, said before the
+question, that **there is no default**: with no answer, the process stops.
 Ask **once**, with what you found, and make it answerable by picking:
 
 > **What should this become?** I can see *(list)*. If it is none of those, name
