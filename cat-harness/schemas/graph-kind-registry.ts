@@ -1562,7 +1562,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // in its SOURCE config, at a commit. Two provenances, so two documents:
       // folding the menu into the index would give one file two answers to
       // "where did this come from" (bean `0818`).
-      "folio-ig-menu/v1": { validator: "cat-harness:schemas/ig-menu.ts#IgMenuSchema" },
+      "folio-ig-menu/v1": { validator: "fhir-harness:schemas/ig-menu.ts#IgMenuSchema" },
       // The IG's own CHROME — its palette, its status watermark, its publish
       // box — resolved from the `fhir.template` chain its `ig.ini` names. A
       // THIRD family in this directory because it comes from a third SOURCE,
@@ -1570,7 +1570,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // the IG's published output, the menu from its `sushi-config.yaml`, and
       // the chrome from separate template repositories the IG merely depends
       // on. Three provenances, three documents (bean `ajx9`).
-      "folio-ig-chrome/v1": { validator: "cat-harness:schemas/ig-chrome.ts#IgChromeSchema" },
+      "folio-ig-chrome/v1": { validator: "fhir-harness:schemas/ig-chrome.ts#IgChromeSchema" },
       "https://json-schema.org/draft/2020-12/schema": { external: "JSON Schema 2020-12" },
     },
     summary:
@@ -1649,13 +1649,12 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     renderable: false,
     holds: "derived",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    // Unlike `fhir-artifact-index`, whose schema lives in core and which
-    // therefore declares none, this kind's schema is in `cat-harness/` — the
-    // same place `ig-menu.ts` and `ig-chrome.ts` sit — so the pointer
-    // resolves under the declaring instance's root and `check:kind-validators`
-    // can run it.
-    schema: "schemas/ig-metadata-index.ts",
-    validator: "schemas/ig-metadata-index.ts#IgMetadataIndexSchema",
+    // The schema lives in `fhir-harness/`, beside `ig-menu.ts` and
+    // `ig-chrome.ts`: it describes any FHIR IG's Publisher exports and nothing
+    // in it is the platform's (#1767, stage B). So the pointer is
+    // instance-qualified, as `fhir-artifact-index`'s already are, and
+    // `check:kind-validators` resolves it under fhir-harness's root.
+    validator: "fhir-harness:schemas/ig-metadata-index.ts#IgMetadataIndexSchema",
     summary:
       "The IG Publisher's own metadata exports for one published IG, harvested verbatim — " +
       "ValueSet→CodeSystem edges, CodeSystem `uses`, and extension/profile usage paths. " +
