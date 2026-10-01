@@ -60,24 +60,9 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 ## Does every `satisfies` name a skill that exists?
 
-**12 of 68 do not.** A `satisfies` naming a skill that is
-not in this checkout is a dangling reference — the tool advertises a capability
-the graph cannot locate.
-
-| unresolved skill | named by |
-|---|---|
-| `build-docs` | `paper-preferences` |
-| `build-pdf` | `paper-preferences` |
-| `content-validation` | `content-manifest-validate`, `paper-latex-build` |
-| `latex-validation` | `latex-overfull`, `latex-preflight`, `tex-snippet-validate`, `tex-source-audit` |
-| `lean-build-fix` | `lean-build` |
-| `lean-cache-restore` | `lean-cache` |
-| `lean-completeness-audit` | `lean-coverage` |
-| `lean-environment-setup` | `lean-toolchain-setup` |
-| `lean-proof-vacuity-audit` | `lean-audit` |
-| `proof-status-tracking` | `proof-dependency-graph`, `proof-objects-extract`, `proof-status-update` |
-| `rendering-auditor` | `paper-preview` |
-| `verify-local-substrate` | `check-dependencies` |
+Yes — all **68** skills named across **113** tools resolve to a
+skill document in this checkout. A `satisfies` pointing at nothing would be a
+tool advertising a capability the graph cannot locate.
 
 ## Every tool
 
