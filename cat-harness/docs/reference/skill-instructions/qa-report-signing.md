@@ -150,4 +150,5 @@ This skill has its own process: **[QA report signing](../../processes/qa-report-
 | process | step(s) that name it |
 |---|---|
 | [QA report signing](../../processes/qa-report-signing.html) | Build the test run [folio-test-run/v1]; Resolve the performer's reach [effectiveReach + signing-api probe]; Sign over the API; Sign as release authority; Record which route signed it |
+| [Test-plan execution](../../processes/test-plan-execution.html) | Sign the certification (calls a sub-process) |
 

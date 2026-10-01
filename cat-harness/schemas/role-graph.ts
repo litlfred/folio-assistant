@@ -103,7 +103,7 @@ import { RepoFullNameSchema } from "./repo-full-name.js";
 import { ODRL_ACTIONS } from "./odrl";
 
 import { NS_PREFIXES, termIri } from "./namespaces";
-import { ACTOR_KINDS, type ActorKind } from "./skill-package";
+import { ACTOR_KINDS, SUT_ACTOR_KINDS, SystemUnderTestFacetSchema, type ActorKind, type SystemUnderTestFacet } from "./skill-package";
 import { NETWORK_REACHES, directoryForGraph, type NetworkReach } from "./cat-harness";
 import { SkillNameSchema } from "./tool-types";
 
@@ -710,6 +710,12 @@ export interface LoadedActor extends ActorDef {
    * `schemas/actor-reach.ts` for how it composes with the deployment's.
    */
   reach?: NetworkReach;
+  /**
+   * The system-under-test facet (bean `3o5b`) — present when the actor can be
+   * executed against a `test-plan/v1`. Beside `reach` for the same reason:
+   * it is a fact about the participant, not something its lane knows.
+   */
+  systemUnderTest?: SystemUnderTestFacet;
   /** The file it came from, so a finding can name it. */
   path: string;
   /** Carries `inherits` — i.e. it is modelling a role, not an actor. */
@@ -755,6 +761,25 @@ function actorReachOf(raw: Record<string, unknown>, path: string): NetworkReach 
   return raw.reach as NetworkReach;
 }
 
+/**
+ * The `systemUnderTest` facet, validated. A malformed facet THROWS, like a bad
+ * `reach`: coerced or dropped, it would silently take an actor out of every
+ * test-plan join it was declared for.
+ */
+function actorSutOf(raw: Record<string, unknown>, kind: ActorKind, path: string): SystemUnderTestFacet | undefined {
+  if (raw.systemUnderTest === undefined) return undefined;
+  const parsed = SystemUnderTestFacetSchema.safeParse(raw.systemUnderTest);
+  if (!parsed.success) {
+    throw new Error(
+      `${path}: systemUnderTest is malformed — ${parsed.error.issues.map((i) => `${i.path.join(".") || "(facet)"}: ${i.message}`).join("; ")}.`,
+    );
+  }
+  if (!(SUT_ACTOR_KINDS as readonly string[]).includes(kind)) {
+    throw new Error(`${path}: a ${kind} actor cannot carry systemUnderTest — only ${SUT_ACTOR_KINDS.join(" or ")} actors are executed against a plan.`);
+  }
+  return parsed.data;
+}
+
 function grantsFor(grants: ReadonlyMap<string, readonly string[]> | undefined, id: string): string[] | undefined {
   const g = grants?.get(id);
   return g ? [...g] : undefined;
@@ -782,10 +807,12 @@ export function readActors(actorsDir: string, grants?: ReadonlyMap<string, reado
     // An EXTENSION of another instance's actor (placement PR0b) is not an
     // actor; `overlayActors` in `scenario-overlay.ts` applies it.
     if (typeof raw.extends === "string") continue;
+    const kind = actorKindOf(raw, p);
+    const systemUnderTest = actorSutOf(raw, kind, p);
     out.push({
       id: String(raw.id ?? f.slice(0, -5)),
       title: String(raw.title ?? raw.id ?? f.slice(0, -5)),
-      kind: actorKindOf(raw, p),
+      kind,
       description: typeof raw.description === "string" ? raw.description : undefined,
       roles: Array.isArray(raw.roles) ? (raw.roles as string[]) : undefined,
       capabilities: Array.isArray(raw.capabilities) ? (raw.capabilities as string[]) : undefined,
@@ -793,6 +820,7 @@ export function readActors(actorsDir: string, grants?: ReadonlyMap<string, reado
         ? (raw.permissions as string[])
         : grantsFor(grants, String(raw.id ?? f.slice(0, -5))),
       reach: actorReachOf(raw, p),
+      ...(systemUnderTest === undefined ? {} : { systemUnderTest }),
       path: p,
       looksLikeRole: Array.isArray(raw.inherits) && raw.inherits.length > 0,
     });

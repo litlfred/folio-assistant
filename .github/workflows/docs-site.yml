@@ -173,6 +173,13 @@ jobs:
       - name: Regenerate content-backed docs pages
         run: bun run cat-harness/scripts/gen-docs-pages.ts
 
+      # The /qa/ page (docs/qa/index.html) is written by the state visualiser
+      # from the QA results this build fetched. It was committed and never
+      # regenerated here, so once QA leaves `main` (bean 5hox) it would show a
+      # frozen count. Owner ruling 2026-10-01: regenerate it in the build.
+      - name: Regenerate the QA state page from this build's results
+        run: bun run state:visualizer
+
       # The schema graph's projection and its viewer. Same reasoning as the
       # regenerations above: the committed copy is browsable on GitHub and the
       # PUBLISHED one must never be the stale half of that pair. `schemas/` is

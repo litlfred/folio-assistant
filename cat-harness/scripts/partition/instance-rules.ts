@@ -377,6 +377,7 @@ export const RULES: Rule[] = [
       "scripts/plantuml-render.ts",          // shared: portrait/landscape, hash stamp, pinned jar, page figure
       "scripts/skill-contracts.ts",          // where a skill's input/output contracts are, read from the skill (#1168)
       "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
+      "scripts/test-plan-audit.ts",          // plan <- run <- report, the four test-process criteria (bean `3o5b`)
       "scripts/arrow-direction.ts",          // general nodes point only at general nodes (#1168)
       "scripts/prose-names.ts",              // file names in general nodes' prose still resolve (bean `epbt`)
       "scripts/content-holds-code.ts",       // a content instance holds no code (kg-separation FR-7, bean `eayu`)
@@ -1408,6 +1409,22 @@ export const RULES: Rule[] = [
       // It was the single `folio-assist-core -> smart-base` edge.
       "schemas/front-matter.ts",    // "this repository's self-declaring files"
       "schemas/test-run.ts",        // what was measured, with what; only eval-crdm-detect reads it
+      // The TEST PROCESS's other two schemas (beans `ygzh`, `3o5b`), by the
+      // same test as `test-run.ts` beside them: a plan and a report describe
+      // how a SYSTEM UNDER TEST is judged, not a folio's content, and their
+      // reader is `kg-audit` (harness) through `scripts/test-plan-audit.ts`.
+      // Left `core` by the `schemas/` rule they made `kg-audit` import core,
+      // and the system-under-test facet on `skill-package.ts` (harness) import
+      // `test-plan.ts` for `SUT_KINDS` — two wrong-direction edges.
+      "schemas/test-plan.ts",
+      "schemas/test-report.ts",
+      // ...which forces `attribution.ts` too: both import `ATTRIBUTION_KINDS`
+      // from it. It is the reviewer-identity vocabulary of every QA verdict
+      // (`script` / `agent` / `human`), it imports only `tool-types.ts`
+      // (harness) and bootstrap's model registry, and its core consumers
+      // (`apply-image-verdicts.ts`, the narrative and image schemas) may import
+      // the harness — so the move adds no wrong-direction edge. Bean `3o5b`.
+      "schemas/attribution.ts",
       "schemas/note-anchor.ts",     // read only by `carried-note.ts`, already harness
       // Declaration vocabulary, by the same test as the four above: it imports
       // only zod, and it carries no part of the content model. The direction is

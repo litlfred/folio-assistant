@@ -1420,6 +1420,48 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A recorded test run that cannot be checked against its skill's contract: the skill declares none, " +
       "the contract is external, or the run records only aggregates. Could-not-check, never a pass.",
   },
+  // The test process (bean `3o5b`, proposal §3.2). Implemented once, in
+  // `scripts/test-plan-audit.ts`, by following plan ← run ← report through the
+  // schemas that already state each rule. `n/a` while no plan, plan-run or
+  // report exists — never a pass over nothing.
+  {
+    id: "test-plan-resolves",
+    applies: ["graph"],
+    scope: "instance",
+    severity: "critical",
+    summary:
+      "A test plan does not parse or names an exit-criteria DMN that does not resolve, or a plan-run or " +
+      "test report names a plan, a plan version or a system under test that cannot be followed (an " +
+      "undeclared actor, one with no system-under-test facet, or one of a different kind from the plan's scope).",
+  },
+  {
+    id: "test-case-executed-or-skipped",
+    applies: ["graph"],
+    scope: "instance",
+    severity: "major",
+    summary:
+      "A terminal test report leaves a case of its plan with no verdict, or gives a verdict for a case the " +
+      "plan does not contain. Every case is executed or explicitly skipped with a reason; a report whose plan " +
+      "cannot be followed is `unknown`, never a pass.",
+  },
+  {
+    id: "test-data-hash-present",
+    applies: ["graph"],
+    scope: "instance",
+    severity: "major",
+    summary:
+      "A plan-run's data hash is `unknown`, or a test report's run carries no known data hash — what was " +
+      "tested cannot be established, so the result cannot be certified (zz0a).",
+  },
+  {
+    id: "test-sut-not-self-judged",
+    applies: ["graph"],
+    scope: "instance",
+    severity: "critical",
+    summary:
+      "A verdict in a test report names the system under test as its reviewer — a system judging itself " +
+      "(untainted-verification). The schema refuses it; this records it under its own name.",
+  },
   {
     id: "arrow-direction",
     applies: ["graph"],

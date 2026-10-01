@@ -98,12 +98,17 @@ describe("the real attestation store", () => {
     // What `kg-audit` sees on a folio that never migrated: no attestation
     // directory, and the judgements still inside the sidecars. The readers it
     // uses must hand back exactly those entries (so nothing is re-baselined
-    // and nothing is dropped), for every one of the real store's 32 files.
+    // and nothing is dropped), for every file in the real store. The store
+    // grows as new subjects are judged (d6bw added qa-publish), so the count is
+    // the store's own; the 32 measured at the move is pinned by the history test.
     const tmp = mkdtempSync(join(tmpdir(), "att-ruling2-"));
     let files = 0;
     let entries = 0;
+    let expected = 0;
     for (const [i, row] of rows.entries()) {
       const judged = JSON.parse(readFileSync(row.store, "utf-8")) as Record<string, unknown>;
+      const fp = entryFingerprints(judged);
+      expected += fp["pair_attestations"]!.length + fp["voice_reviews"]!.length;
       const sidecar = join(tmp, `s${i}.kg-qa.json`);
       writeFileSync(sidecar, `${JSON.stringify({ $schema: "kg-qa/v1", subject: judged["subject"], criteria: {}, totals: {}, ...judged }, null, 2)}\n`);
       const absentStore = join(tmp, "no-store");
@@ -117,8 +122,9 @@ describe("the real attestation store", () => {
       files++;
       entries += pairs.moved + reviews.moved;
     }
-    expect(files).toBe(32);
-    expect(entries).toBe(32);
+    expect(rows.length).toBeGreaterThanOrEqual(32);
+    expect(files).toBe(rows.length);
+    expect(entries).toBe(expected);
   });
 
   test("against history: every judgement the sidecars held before the move is in the store, unchanged", () => {
