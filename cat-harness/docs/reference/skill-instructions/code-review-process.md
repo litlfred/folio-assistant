@@ -73,5 +73,5 @@ the arbiter. If ambiguous, ask the BA.
 - [`release-lifecycle`](release-lifecycle.md) — the broader release flow
 - [`../folio-core/prepare-merge-auto.md`](prepare-merge-auto.md) — merge mechanics
 - [`../folio-core/staging-review.md`](staging-review.md) — visual comparison
-- [`../../skills/crdm/crdm-requirements-template.md`](crdm-requirements-template.md) — acceptance criteria
+- [`../../skills/sdlc/crdm/crdm-requirements-template.md`](crdm-requirements-template.md) — acceptance criteria
 {% endraw %}

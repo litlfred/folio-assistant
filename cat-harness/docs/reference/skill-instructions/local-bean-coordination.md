@@ -21,7 +21,7 @@ parent: Skill instructions
 **This is a stub. The skill lives in the `kg` graph, not here.**
 
 `skill_fetch("bean-coordination")` serves
-[`skills/folio-core/bean-coordination.md`](../../../skills/folio-core/bean-coordination.md)
+[`skills/sdlc/sdlc-core/bean-coordination.md`](../../../skills/sdlc/sdlc-core/bean-coordination.md)
 — `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` holds `skills/folio-core` and
 no `.claude/skills/local` entry.
 

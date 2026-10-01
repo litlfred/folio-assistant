@@ -7,8 +7,8 @@ back to its authoritative sources.
 | Session start sweep | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | Bean protocol | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../skills/folio-core/) |
 | Commit and PR discipline | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Feature-request detection | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md) |
-| CRDM requirements workflow | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../skills/crdm/crdm-requirements-workflow.md) |
+| Feature-request detection | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../skills/sdlc/crdm/crdm-detect.md) |
+| CRDM requirements workflow | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../skills/sdlc/crdm/crdm-requirements-workflow.md) |
 | Content authoring (paper) | authoring-math skills | [`skills/authoring/authoring-math/`](../skills/authoring/authoring-math/) |
 | Content authoring (document) | folio-document-adapter skills | [`skills/authoring/folio-document-adapter/`](../skills/authoring/folio-document-adapter/) |
 | Content lifecycle | content-lifecycle skills | [`skills/authoring/content-lifecycle/`](../skills/authoring/content-lifecycle/) |

@@ -484,7 +484,7 @@ entry of its own, and adding one declares the same directory twice — the same
 defect, one level down from where it was.
 
 That is not a judgement call made in prose: on 2026-09-22 CRDM's skills were
-repointed from `methodologies/crdm/` to `skills/crdm/` with the entry kept, and
+repointed from `methodologies/crdm/` to `skills/sdlc/crdm/` with the entry kept, and
 `gen-skill-docs` immediately demanded a category under **both** the basename
 and the declaration id, because both discovery branches found the one
 directory. The three entries were dropped and `methodologies/` now holds its

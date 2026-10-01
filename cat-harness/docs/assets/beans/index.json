@@ -2361,7 +2361,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-19T08:55:37Z",
       "updatedAt": "2026-09-19T08:55:37Z",
-      "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"test/swarm\nmode: may have a stack of models, to queue work on (a cross-model swarm mode).\nshared or indepedent work queues.\"\n\n## What exists\n\n`skills/folio-core/swarm-management.md` and `docs/swarm-management.md`. The rule\nrecorded in `AGENTS.md` is that a swarm is **asked for every time, per swarm,\nwith agent count, model level",
+      "preview": "From [#363](https://github.com/litlfred/folio-assistant/issues/363): \"test/swarm\nmode: may have a stack of models, to queue work on (a cross-model swarm mode).\nshared or indepedent work queues.\"\n\n## What exists\n\n`skills/sdlc/sdlc-core/swarm-management.md` and `docs/swarm-management.md`. The rule\nrecorded in `AGENTS.md` is that a swarm is **asked for every time, per swarm,\nwith agent count, model level",
       "file": "beans/defs/folio-assistant-amom--mode-testswarm-a-stack-of-models-over-shared-or-in.md"
     },
     {
@@ -5059,7 +5059,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-30T14:59:54Z",
       "updatedAt": "2026-09-30T15:00:28Z",
-      "preview": "Owner 2026-09-30: Typed SkillRef. 7 files → folio-core/integration-watcher (6 used local/, 1 bare); resolved by resolveSkillRef in a check.\n## Done when\n- [ ] all 7 values resolve; a check fails on one that does not\n\n\n\n## Done\n7 values → folio-core/integration-watcher; skill-refs.test resolves every skill inherits: (local/integration-watcher resolves missing, verified).",
+      "preview": "Owner 2026-09-30: Typed SkillRef. 7 files → sdlc-core/integration-watcher (6 used local/, 1 bare); resolved by resolveSkillRef in a check.\n## Done when\n- [ ] all 7 values resolve; a check fails on one that does not\n\n\n\n## Done\n7 values → sdlc-core/integration-watcher; skill-refs.test resolves every skill inherits: (local/integration-watcher resolves missing, verified).",
       "file": "beans/defs/folio-assistant-q90t--b10d-1168-skill-front-matter-inherits-is-a-typed-s.md"
     },
     {
@@ -5905,7 +5905,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-26T04:09:28Z",
       "updatedAt": "2026-09-26T07:10:10Z",
-      "preview": "Measured 2026-09-26 on `origin/main` at `6840b14097b`. **This fails every open PR, not one.**\n\n## The two failures\n\nBoth name the same three files, added by main's commit `7edf7b7ed5a` (*\"feat: CRDM Phase 4b prioritization, SDLC/release skills, CRDM phase detail skills\"*):\n\n    cat-harness/skills/crdm/crdm-needs-assessment.md\n    cat-harness/skills/crdm/crdm-impact-analysis.md\n    cat-harness/skil",
+      "preview": "Measured 2026-09-26 on `origin/main` at `6840b14097b`. **This fails every open PR, not one.**\n\n## The two failures\n\nBoth name the same three files, added by main's commit `7edf7b7ed5a` (*\"feat: CRDM Phase 4b prioritization, SDLC/release skills, CRDM phase detail skills\"*):\n\n    cat-harness/skills/sdlc/crdm/crdm-needs-assessment.md\n    cat-harness/skills/sdlc/crdm/crdm-impact-analysis.md\n    cat-harness/skil",
       "file": "beans/defs/folio-assistant-tuvg--main-is-red-three-crdm-skills-are-in-no-package-ma.md"
     },
     {
@@ -7349,7 +7349,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-22T11:43:50Z",
       "updatedAt": "2026-09-22T11:50:46Z",
-      "preview": "Found 2026-09-22 by a dispatched audit of the in-progress population, then\nre-derived from `origin/main` rather than from the audit's report.\n\n## The contradiction, checked three ways\n\n| source | says |\n|---|---|\n| `skills/folio-core/bean-blocking.md` §\"When it really is blocked\" | its worked example is **`status: blocked`** · waits on · since · expires · handoff |\n| `beans update --help` | *\"New ",
+      "preview": "Found 2026-09-22 by a dispatched audit of the in-progress population, then\nre-derived from `origin/main` rather than from the audit's report.\n\n## The contradiction, checked three ways\n\n| source | says |\n|---|---|\n| `skills/sdlc/sdlc-core/bean-blocking.md` §\"When it really is blocked\" | its worked example is **`status: blocked`** · waits on · since · expires · handoff |\n| `beans update --help` | *\"New ",
       "file": "beans/defs/folio-assistant-zldg--blocking-is-unrecordable-the-skill-prescribes-stat.md"
     },
     {

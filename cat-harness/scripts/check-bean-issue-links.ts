@@ -207,7 +207,7 @@ function formatReport(r: BeanIssueReport): string {
     }
     out.push("");
     out.push("  Name the issue in the bean that owns its subject, or open one. See");
-    out.push("  skills/folio-core/issue-working.md §\"When the work has a BEAN and no issue\".");
+    out.push("  skills/sdlc/sdlc-core/issue-working.md §\"When the work has a BEAN and no issue\".");
   }
   if (r.reverse.state === "unknown") {
     // NOT a pass. The direction was the whole of this bean's second

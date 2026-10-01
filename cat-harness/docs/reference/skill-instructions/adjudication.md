@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/adjudication.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/adjudication.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/adjudication.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/adjudication.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/adjudication.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/adjudication.md){: .fa-edit-source }
 
 {% raw %}
 # Adjudication — judgement, when the mechanism ran out of facts

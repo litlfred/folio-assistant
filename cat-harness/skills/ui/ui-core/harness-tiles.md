@@ -83,7 +83,7 @@ and the check flagging its own docstring.
 A predicate that cannot separate its two senses is not a check. It is an
 **adjudication**, and this corpus already says what that means: if a mechanism
 could decide it, the process would not have been entered
-([`adjudication`](../../folio-core/adjudication.md)).
+([`adjudication`](../../sdlc/sdlc-core/adjudication.md)).
 
 **What to do instead when the word is load-bearing:** say which sense, or say
 the fact. *"instantiated here"* and *"a layer downstream repos instantiate"*

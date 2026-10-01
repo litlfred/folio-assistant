@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/crdm/crdm-requirements-template.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-requirements-template.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/crdm/crdm-requirements-template.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/crdm/crdm-requirements-template.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-requirements-template.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/crdm/crdm-requirements-template.md){: .fa-edit-source }
 
 {% raw %}
 # Phase 3 — Requirements definition (detail)
@@ -124,5 +124,5 @@ PR (Phase 6)
 - [`crdm-requirements-workflow`](crdm-requirements-workflow.md) — Phase 3
 - [`crdm-impact-analysis`](crdm-impact-analysis.md) — Phase 4 follows this
 - [`crdm-detect`](crdm-detect.md) — detection
-- [`../../skills/folio-core/todo-manager.md`](todo-manager.md) — bean creation
+- [`../../skills/sdlc/sdlc-core/todo-manager.md`](todo-manager.md) — bean creation
 {% endraw %}

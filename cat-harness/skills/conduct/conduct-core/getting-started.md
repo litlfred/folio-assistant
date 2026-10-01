@@ -185,7 +185,7 @@ jumping straight to a branch.
 
 1. **Seed the work plan.** One bean per top-level thing the author named in
    step 3. Run the exact-title existence check in
-   [`todo-manager.md`](../../folio-core/todo-manager.md) §"Check before you create" first —
+   [`todo-manager.md`](../../sdlc/sdlc-core/todo-manager.md) §"Check before you create" first —
    `beans create` is not idempotent.
 2. **Start the Pages build and report the URL.** Run
    `bun run scripts/pages-bootstrap.ts --wait`. It derives the site address,

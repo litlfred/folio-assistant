@@ -153,8 +153,8 @@ close a bean a sibling is mid-flight on (a finished one closes on evidence, not 
 store. Do not `beans create` bulk machine-generated queues (`*.qa.json`,
 witness files) — those stay as bulk JSON.
 
-Full discipline: `skills/folio-core/todo-manager.md`,
-`skills/folio-core/bean-coordination.md`.
+Full discipline: `skills/sdlc/sdlc-core/todo-manager.md`,
+`skills/sdlc/sdlc-core/bean-coordination.md`.
 
 ## 7. QA sidecars and axes
 

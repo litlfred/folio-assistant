@@ -177,7 +177,7 @@ does not reach the site, so a composed URL 404s on a page that is there.
 `pending, total_count 0` on a green PR. Check its `head_sha` against the PR's
 current head.
 
-Skill: `skills/folio-core/github-state-inspection.md`.
+Skill: `skills/sdlc/sdlc-core/github-state-inspection.md`.
 
 More: `detail/read-the-ref-not-the-url.md`
 

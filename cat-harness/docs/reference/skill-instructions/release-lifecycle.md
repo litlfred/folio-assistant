@@ -111,7 +111,7 @@ The process is identical; the artefacts differ.
 
 - [`../folio-core/package-release.md`](package-release.md) — release mechanics
 - [`code-review-process.md`](code-review-process.md) — review in release context
-- [`../../skills/crdm/crdm-requirements-workflow.md`](crdm-requirements-workflow.md) — Phase 6 feeds into release
+- [`../../skills/sdlc/crdm/crdm-requirements-workflow.md`](crdm-requirements-workflow.md) — Phase 6 feeds into release
 - [`../folio-core/staging-review.md`](staging-review.md) — staging previews for RCs
 - [`../folio-core/todo-manager.md`](todo-manager.md) — bean management within epics
 {% endraw %}

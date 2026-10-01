@@ -177,7 +177,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 | [Path containment](path-containment.html) | `path-containment` | — | `src/core/safe-path.ts` is the implementation. This is when to reach for which, |
 | [Security](security.html) | `security` | — | > **This value came from outside. What may I do with it?** |
 
-## CRDM requirements methodology (skills/crdm)
+## CRDM requirements methodology (skills/sdlc/crdm)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
@@ -366,7 +366,7 @@ roles, and how they compose with the LLM, see [Skills & roles](../../skills.html
 |-------|----|--------|---------|
 | [Scientific Visualization](scientific-visualization.html) | `scientific-visualization` | — | Build figures that preserve scientific meaning before optimizing appearance. Separate universal prin |
 
-## Spec Kit spec-driven development (skills/spec-kit)
+## Spec Kit spec-driven development (skills/sdlc/spec-kit)
 
 | Skill | Id | Schema | Summary |
 |-------|----|--------|---------|
