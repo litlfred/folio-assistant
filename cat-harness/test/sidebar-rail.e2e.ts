@@ -88,7 +88,8 @@ function page(): string {
               display: flex; flex-flow: column nowrap; align-items: flex-end;
               background: #27262b; color: #fff; z-index: 0; }
   .site-header { width: 100%; max-height: 3.75rem; overflow: hidden; display: flex; align-items: center; }
-  .site-title { flex: 1; }
+  /* The theme sizes the avatar link to its 3.75rem header; it is a link now (the open control). */
+  .site-title { flex: 1; display: flex; align-items: center; min-height: 3.75rem; }
   .site-nav { width: 100%; overflow-y: auto; }
   .nav-list { margin: 0; padding: 0; list-style: none; }
   .site-nav a { display: block; padding: 4px 32px; font-size: 14px; line-height: 24px; color: #9ec5fe; }
@@ -99,7 +100,7 @@ function page(): string {
 </style></head><body>
   <script type="application/json" id="fa-navbar-row">${JSON.stringify(HARNESS.navbar)}<\/script>
   <div class="side-bar">
-    <div class="site-header"><a class="site-title"><span class="fa-site-mark"></span><span class="fa-site-title">folio-assistant</span></a></div>
+    <div class="site-header"><a class="site-title" href="/folio-assistant/"><span class="fa-site-mark"></span><span class="fa-site-title">folio-assistant</span></a></div>
     <nav aria-label="Main" id="site-nav" class="site-nav"><ul class="nav-list">${NAV_ITEMS}</ul></nav>
     <div class="d-md-block d-none site-footer">${footer()}</div>
   </div>
@@ -140,7 +141,17 @@ async function scrolling(p: Page): Promise<{ scrollers: string[]; clipped: numbe
       .map((e) => e.tagName.toLowerCase() + "." + Array.from(e.classList).join("."));
     // A bar with overflow hidden that is taller inside than out is hiding
     // content nobody can scroll to -- a scroller that does not admit to it.
-    return { scrollers, clipped: Math.max(0, bar.scrollHeight - bar.clientHeight - 1) };
+    // The same question of every region INSIDE the one scroller: a flex
+    // child allowed to shrink is clipped rather than scrolled, which is how an
+    // open "On this page" was once squeezed to a sliver.
+    const mid = bar.querySelector(".fa-nav-middle");
+    const inner = mid
+      ? Array.from(mid.children as HTMLCollectionOf<HTMLElement>).reduce(
+          (n, e) => n + Math.max(0, e.scrollHeight - e.clientHeight - 1),
+          0,
+        )
+      : 0;
+    return { scrollers, clipped: Math.max(0, bar.scrollHeight - bar.clientHeight - 1) + inner };
   });
 }
 
@@ -224,5 +235,39 @@ test.describe("the theme sidebar has the viewer rail's layout (ob3m finding 7)",
       for (const e of Array.from(document.querySelectorAll<HTMLElement>(".side-bar, .side-bar *"))) e.scrollTop = 0;
     });
     expect(await visiblePageLinks(page)).toBeGreaterThanOrEqual(1);
+  });
+
+  for (const [w, h] of [[1280, 800], [390, 844]] as const) {
+    test("no ☰ and no × of the sidebar's own at " + w + "x" + h + " (ob3m finding 8)", async ({ page }) => {
+      // Owner, 2026-10-01, option 1 of 4: the theme's avatar opens and closes
+      // the sidebar, so its own ☰ and [x] go, as #1762 removed them from the
+      // rail. Their rules all sat inside the 50rem block, so below 800px a
+      // copy rendered as loose unstyled text. Asserted by class AND by glyph:
+      // a control that came back under a new class name is the same defect.
+      const errors = await load(page);
+      expect(errors).toEqual([]);
+      await page.setViewportSize({ width: w, height: h });
+      await page.waitForTimeout(200);
+      await expect(page.locator(".fa-nav-close, .fa-nav-toggle, .fa-nav-head")).toHaveCount(0);
+      const glyphs = await page.evaluate(() =>
+        Array.from(document.querySelectorAll<HTMLElement>(".side-bar *, .site-footer *"))
+          .filter((e) => e.getClientRects().length > 0)
+          .filter((e) => Array.from(e.childNodes).some((n) => n.nodeType === 3 && /[\u2630\u00d7]/.test(n.textContent ?? "")))
+          .map((e) => e.tagName.toLowerCase() + "." + Array.from(e.classList).join(".")),
+      );
+      expect(glyphs).toEqual([]);
+    });
+  }
+
+  test("the avatar is the one control: it opens and closes, by pointer and by keyboard", async ({ page }) => {
+    await load(page);
+    const avatar = page.locator(".side-bar .site-title");
+    // load() pinned it open by a click; a second click closes it.
+    await avatar.click();
+    await expect(page.locator("#fa-nav-open")).not.toBeChecked();
+    await avatar.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#fa-nav-open")).toBeChecked();
+    await expect(avatar).toHaveAttribute("aria-expanded", "true");
   });
 });

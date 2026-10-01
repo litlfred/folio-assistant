@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**212** units · **5831** terms · k = **100** · retains **79.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**212** units · **5832** terms · k = **100** · retains **79.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -134,10 +134,10 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 | 2 | 21.41 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
 | 3 | 17.77 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
 | 4 | 16.40 | page, block, section, sections, blocks, chapter, manifest, text | ledger, sibling, subdirectory, items, sessions, queue, window, renderable |
-| 5 | 14.81 | locale, translated, navbar, translation, page, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
-| 6 | 14.77 | lane, actor, requirements, role, feature, task, phase, impact | queue, rung, slide, bytes, arm, sha, zip, images |
-| 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
-| 8 | 14.14 | locale, translation, translated, french, back-translation, translations, badge, language | preview, feature, phase, theme, option, merge, sha, staging |
+| 5 | 14.82 | locale, translated, navbar, translation, page, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
+| 6 | 14.77 | lane, requirements, actor, role, feature, task, phase, impact | rung, queue, slide, arm, bytes, zip, archive, sha |
+| 7 | 14.38 | edges, forward, preview, edge, backward, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
+| 8 | 14.14 | locale, translation, translated, french, back-translation, translations, language, badge | preview, feature, theme, phase, option, merge, sha, staging |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

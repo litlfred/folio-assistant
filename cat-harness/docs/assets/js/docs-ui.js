@@ -9889,21 +9889,6 @@
     scheme.addEventListener("click", toggleScheme);
     host.appendChild(scheme);
 
-    /* THE [x] IN THE ROW, as its last item — owner, 2026-09-27: *"make close
-     * navigation in line with the rest of icons"*. It was PAINTED over the
-     * row's end from `.site-footer` (absolute, with its own box), and never
-     * quite sat on the row's line. It is a `<label for="fa-nav-open">`, and a
-     * label drives its checkbox from anywhere, so moving it keeps the no-script
-     * behaviour; it is moved only when `mountNavPreference` has run (the
-     * `.fa-nav-js` mark), because that handler is what makes the hover-case
-     * click mean "close" rather than "pin". Without script it stays where the
-     * stylesheet already places it. */
-    var closeCtl = bar.querySelector(".fa-nav-close");
-    if (closeCtl && bar.classList.contains("fa-nav-js")) {
-      closeCtl.classList.add("fa-nav-icon", "fa-nav-close--in-row");
-      host.appendChild(closeCtl);
-    }
-
     // AFTER the header: line 1 is the avatar and the name, line 2 is this.
     var header = bar.querySelector(".site-header");
     if (header && header.nextSibling) bar.insertBefore(host, header.nextSibling);
@@ -10270,33 +10255,10 @@
     applyNavPref(readNavPref());
 
     var box = document.getElementById("fa-nav-open");
-    var close = document.querySelector(".fa-nav-close");
-    // `.fa-nav-head` is the SAME control as `lib/navbar.ts` renders it (`sjic`).
-    // Only the old Liquid markup said `.fa-nav-toggle`, so on the live footer
-    // this handler never attached and a stay-closed bar could not be lifted by
-    // the ☰ (found 2026-09-27).
-    var open = document.querySelector(".fa-nav-toggle, .side-bar .fa-nav-head");
-
-    if (close) {
-      close.addEventListener("click", function (e) {
-        // Pinned: let the label do its own work — that is the no-script path
-        // and it is already correct. Not pinned: the label would CHECK the box
-        // and pin the bar open, so the default is refused.
-        if (box && !box.checked) e.preventDefault();
-        writeNavPref("closed");
-        applyNavPref("closed");
-      });
-    }
-
-    if (open) {
-      // `☰` is how the preference is LIFTED. A control whose inverse is not
-      // reachable is not a toggle (`l4zi`), and without this the bar could be
-      // closed and never peek again.
-      open.addEventListener("click", function () {
-        writeNavPref(null);
-        applyNavPref(null);
-      });
-    }
+    // NO ☰ AND NO [x] (#1757 on the rail, ob3m finding 8 here). The avatar
+    // below is the one control: it pins the bar open, lifting stay-closed, and
+    // closes it, setting stay-closed -- so the preference keeps both of its
+    // directions (`l4zi`) with one control instead of three.
 
     /* THE AVATAR OPENS AND CLOSES THE BAR — owner, 2026-09-27: *"navbar
      * starts hidden, click avatar opens for a split second then returns to
