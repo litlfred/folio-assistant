@@ -9,3 +9,22 @@ Part of [folio-assistant-sci](../../README.md) 0.1.0, declared as `voices`, hold
 |---|---|---|
 | [`milnor/`](milnor/) | 2 files | |
 <!-- kg:subgraph:end -->
+
+## `milnor` — the Milnor Exposition Standard
+
+Moved here 2026-10-01 from the harness layer's voices guide, which may not link
+up the dependency arrow to the instances that ship voices (bean `rfuq`, issue
+#1770). What a voice *is*, how to activate one and how review works stay
+there: [`cat-harness/docs/guides/voices.md`](../../../cat-harness/docs/guides/voices.md);
+the author-facing rubric is the harness skill
+[`milnor-exposition-standard`](../../../cat-harness/skills/authoring/authoring-core/milnor-exposition-standard.md).
+
+A scoring gate derived from John Milnor's "Link Groups" paper
+([`library/milnorlink/`](../../library/milnorlink/)) covering the eight
+hallmarks of mathematical exposition (H1-H8).
+[`SKILL.md`](milnor/SKILL.md) · [`voice.json`](milnor/voice.json)
+
+- **Scope:** mathematical and scientific exposition.
+- **Key rules:** economy of introductions; naming the tool's purpose before its
+  definition; linear arguments without excessive lemmas; measured prose (no
+  superlatives, minimal first-person pronouns except for acknowledgements).

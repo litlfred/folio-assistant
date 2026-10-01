@@ -534,3 +534,5 @@ In the owner's words: *"Keep P2 as approved: drop XML and Turtle, and treat the 
 - XML and Turtle representation views (1,331 pages on smart-trust) are **not rendered**.
 - Each one is recorded as a refusal. That record is the **accepted, documented exception** to the cross-phase rule that every phase renders equivalent to the standard IG render.
 - JSON views remain in scope (673 pages).
+
+_2026-10-01T12:16:24Z_ — Claimed by claude/wonderful-curie-gbfeuy — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

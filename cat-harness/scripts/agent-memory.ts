@@ -66,8 +66,9 @@ import {
   type MemoryLabel,
   type MemoryNode,
 } from "../schemas/memory.js";
-import { checkoutDirectoriesForGraph, deferResolution, repoRootFor } from "../schemas/cat-harness.js";
+import { deferResolution, repoRootFor } from "../schemas/cat-harness.js";
 import { portableSegment } from "../schemas/portable-path";
+import { corpusDirectoryForGraph } from "../schemas/harness-config.js";
 
 export const ROOT = resolve(import.meta.dir, "..");
 /**
@@ -84,7 +85,7 @@ export const ROOT = resolve(import.meta.dir, "..");
  * without an edit, which composing a path does not.
  */
 export const MEMORY_DIRS = deferResolution(
-  () => checkoutDirectoriesForGraph(ROOT, "memory").filter((d): d is string => d !== undefined && existsSync(d)),
+  () => [corpusDirectoryForGraph(ROOT, "memory")].filter((d): d is string => d !== undefined && existsSync(d)),
   { moduleUrl: import.meta.url, what: "its memory directories", under: ROOT },
 );
 // declared-path-literal: the convention fallback, so a generator in an

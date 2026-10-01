@@ -417,6 +417,14 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "fhir-ig-authoring": "FHIR IG authoring (fhir-ig-authoring)",
   "content-lifecycle-ext": "Content lifecycle refinements (content-lifecycle-ext)",
   ingestion: "Document ingestion methods (ingestion)",
+  // Declared directories that hold their skills DIRECTLY, so they are keyed by
+  // the declaration's id, like `crdm` and `bootstrap` below. All three were
+  // declared in `cat-harness.json` with no label here, which made
+  // `skills:docs` — and through it `skill:register` — throw on main
+  // (found 2026-10-01 while working #1757).
+  "folio-assistant-core-skills": "Core layer — high-level processes (folio-assistant-core-skills)",
+  "folio-assistant-sci-lean-skills": "Science layer — Lean tooling (folio-assistant-sci-lean-skills)",
+  "folio-assistant-sci-data-skills": "Science layer — reference data (folio-assistant-sci-data-skills)",
   // Stubs for skills a remote package DECLARES and this instance does not
   // vendor. The heading says "not implemented" in the reader's own words,
   // because the published page is where somebody meets one of these first and

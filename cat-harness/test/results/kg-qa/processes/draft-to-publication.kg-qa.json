@@ -97,13 +97,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_PublishRelease",
-          "detail": "needs skill \"ig-publication\", but its lane's role \"publication-manager\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -155,8 +150,8 @@
     }
   },
   "totals": {
-    "pass": 16,
-    "fail": 2,
+    "pass": 17,
+    "fail": 1,
     "n/a": 7,
     "unknown": 0
   }
