@@ -22,5 +22,5 @@ Owner decisions (2026-10-01, structured questions):
 - [x] D3 smart-l1/ and smart-dak/ retired (owner OK); root needs, hardcoded lists (4 places) and docs follow
 - [x] D4 dak.ts + dak-content-type.ts (+ tests) into smart-base/schemas; no upward import from core. dak-blocks.ts stays in core: owner chose the split (2026-10-01) — bean 1335 builds the extension point it needs
 - [ ] D5 L1 and DAK document kinds with visualizers in smart-base (bean qvxh)
-- [ ] D6 l3-fhir-authoring input generalised to a source model; smart-base supplies the L2->L3 specialisation
+- [x] D6 l3-fhir-authoring input generalised to a source model; smart-base supplies the L2->L3 specialisation
 - [ ] CI green on the stage D PR

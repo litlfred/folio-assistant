@@ -28,19 +28,19 @@
           "verify": "skills:docs:check",
           "because": "the skill's published reference page",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "check:glossary",
           "because": "the glossary page and its SKOS projection",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "docs:auto:check",
           "because": "the generated docs index",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "lsi:skills:check",
@@ -58,13 +58,13 @@
           "verify": "kg:audit:check",
           "because": "the skill's kg-qa sidecar — masked inside `gates` by `bun test`",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "kg:detangle:check",
           "because": "the skills subgraph gains a node, so its detangle sidecar moves",
           "ran": true,
-          "current": true
+          "current": false
         },
         {
           "verify": "uml:overview:check",
