@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T01:55:29.952Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0cbfb284e3342e079d03b016ae7d416d5ba60d8f",
-  "sourceCommitSha": "0cbfb284e3342e079d03b016ae7d416d5ba60d8f",
-  "sourceCommitAt": "2026-10-01T01:51:47Z",
+  "generatedAt": "2026-10-01T02:03:36.677Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9e2ea8538339deac107c44f7f45892c3c27d5b33",
+  "sourceCommitSha": "9e2ea8538339deac107c44f7f45892c3c27d5b33",
+  "sourceCommitAt": "2026-10-01T01:59:34Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2442,23 +2442,6 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/mcp-projection"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/upload-routes",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "upload-routes",
-      "title": "Two mechanisms and a persona",
-      "description": "How a file actually REACHES `uploads/` — the two mechanisms that write bytes into a declared queue, the persona that performs one of them on somebody's behalf, and what each writer owes that the route does not do for them. The step before intake and after acquisition.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/folio-core"
-      ],
-      "instructionsPath": "skills/folio-core/upload-routes.md",
-      "instructionLines": 193,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/skills-and-tools",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "skills-and-tools",
@@ -3068,6 +3051,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/glossary-terms"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/upload-routes",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "upload-routes",
+      "title": "Two mechanisms and a persona",
+      "description": "How a file actually REACHES `uploads/` — the two mechanisms that write bytes into a declared queue, the persona that performs one of them on somebody's behalf, and what each writer owes that the route does not do for them. The step before intake and after acquisition.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/upload-routes.md",
+      "instructionLines": 193,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/upload-routes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/bib-qa",
@@ -6684,7 +6684,7 @@
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#SkillPackage",
       "name": "folio-core",
       "version": "0.1.0",
-      "description": "Content-agnostic platform skills that have not yet moved into a topic: the MCP tool surface (assembly, contract, projection), skills-and-tools and tool coverage, and upload routes. Synced into a content repo as a folio-core bundle. The knowledge-graph, library, UI, conduct, process, authoring and SDLC skills moved into their topics (bean 9umr).",
+      "description": "Content-agnostic platform skills that have not yet moved into a topic: the MCP tool surface (assembly, contract, projection), skills-and-tools and tool coverage. Synced into a content repo as a folio-core bundle. The knowledge-graph, library, UI, conduct, process, authoring and SDLC skills moved into their topics (bean 9umr).",
       "path": "skills/folio-core",
       "hasManifest": true,
       "declaresSkill": [
@@ -6692,8 +6692,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/mcp-assembly",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/mcp-contract",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/mcp-projection",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/skills-and-tools",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/upload-routes"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/skills-and-tools"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#capability/git-push",
@@ -6820,6 +6819,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/tabular-metadata",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/translation-manager",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/upload-naming",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/upload-routes",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/uploads-watch"
       ],
       "providesCapability": [],
