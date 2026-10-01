@@ -19,6 +19,7 @@ import {
   type KgAttestations,
 } from "./qa-attestations";
 import { defaultGraphKinds } from "./cat-harness";
+import { KgQaReportSchema } from "./kg-qa";
 
 const pair = {
   kind: "implements" as const,
@@ -129,5 +130,14 @@ describe("reading — four states, and only a miss is 'never attested'", () => {
     if (r.state !== "hit") return;
     expect(JSON.stringify(r.file)).toBe(JSON.stringify(reordered));
     expect(r.text.endsWith("\n")).toBe(true);
+  });
+});
+
+describe("the kg-qa sidecar no longer carries judgements", () => {
+  test("KgQaReportSchema refuses pair_attestations and voice_reviews", () => {
+    const derived = { $schema: "kg-qa/v1", subject: { kind: "process", id: "P", path: "p.bpmn" }, source_hash: null, criteria: {}, totals: { pass: 0, fail: 0, "n/a": 0, unknown: 0 } };
+    expect(KgQaReportSchema.safeParse(derived).success).toBe(true);
+    expect(KgQaReportSchema.safeParse({ ...derived, pair_attestations: [pair] }).success).toBe(false);
+    expect(KgQaReportSchema.safeParse({ ...derived, voice_reviews: [] }).success).toBe(false);
   });
 });

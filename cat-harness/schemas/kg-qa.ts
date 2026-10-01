@@ -1554,8 +1554,8 @@ export const KgQaReportSchema = z.object({
   // Refused, not merely dropped: a sidecar carrying a judgement is the mixed
   // file D2 split, and parsing it as clean would hide that it was written by
   // a writer that never learned about the store. See `schemas/qa-attestations.ts`.
-  pair_attestations: z.undefined({ error: "pair_attestations belong in the attestation store (schemas/qa-attestations.ts), not a kg-qa sidecar" }).optional(),
-  voice_reviews: z.undefined({ error: "voice_reviews belong in the attestation store (schemas/qa-attestations.ts), not a kg-qa sidecar" }).optional(),
+  pair_attestations: z.never({ error: "pair_attestations belong in the attestation store (schemas/qa-attestations.ts), not a kg-qa sidecar" }).optional(),
+  voice_reviews: z.never({ error: "voice_reviews belong in the attestation store (schemas/qa-attestations.ts), not a kg-qa sidecar" }).optional(),
 });
 
 export const KgQaManifestSchema = z.object({
