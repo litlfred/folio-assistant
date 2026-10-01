@@ -2,7 +2,7 @@
 title: "Services and Application Types: Data Management Services — JSON-LD"
 description: "The JSON-LD sidecar of ValueSet/CDSCv2.D, from the IG's DAK API."
 nav_exclude: true
-dak: {"label":"JSON-LD","file":"ValueSet-CDSCv2.D.jsonld","artifact":{"title":"Services and Application Types: Data Management Services","page":"ValueSet-CDSCv2.D.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-CDSCv2.D.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.D.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.D.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.D.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-CDSCv2.D.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-CDSCv2.D.jsonld.html","active":true}],"script":"../assets/dak-view.js"}
+dak: {"label":"JSON-LD","file":"ValueSet-CDSCv2.D.jsonld","src":"../fhir-artifact-index/dak/ValueSet-CDSCv2.D.jsonld","artifact":{"title":"Services and Application Types: Data Management Services","page":"ValueSet-CDSCv2.D.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-CDSCv2.D.html","active":false},{"label":"XML","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.D.xml","active":false},{"label":"JSON","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.D.json","active":false},{"label":"TTL","href":"https://worldhealthorganization.github.io/smart-base/ValueSet-CDSCv2.D.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-CDSCv2.D.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-CDSCv2.D.jsonld.html","active":true}],"script":"../assets/dak-view.js"}
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
@@ -95,7 +95,7 @@ dak: {"label":"JSON-LD","file":"ValueSet-CDSCv2.D.jsonld","artifact":{"title":"S
 {%- comment -%}
 A DAK sidecar's view page, the Publisher's `<Name>.schema.json.html` or `<Name>.jsonld.html`, rendered by Jekyll.
 Reads `page.dak`, every field written by `gen-smart-trust-pages.ts`:
-`label` (JSON Schema | JSON-LD), `file` (the raw file, published beside this page),
+`label` (JSON Schema | JSON-LD), `file` (the file's name), `src` (where it is served, in the artefact-index graph),
 `artifact.title` and `artifact.page`, `tabs[]` (`label`, `href`, `active`) in the Publisher's order,
 and `script` (the shared loader's path). The file's text is NOT in the page: `dak-view.js` fetches
 it in the browser, as the Publisher's page does (bean `680p`). This file only arranges.
@@ -106,8 +106,8 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 
 ## {{ page.dak.label }}
 
-[Raw {{ page.dak.label }}]({{ page.dak.file }}) · [Download]({{ page.dak.file }}){: download=""}
+[Raw {{ page.dak.label }}]({{ page.dak.src }}) · [Download]({{ page.dak.src }}){: download="{{ page.dak.file }}"}
 
-<pre><code class="language-json" data-dak-src="{{ page.dak.file }}">Loading…</code></pre>
-<noscript><p>This view needs JavaScript; the <a href="{{ page.dak.file }}">raw file</a> does not.</p></noscript>
+<pre><code class="language-json" data-dak-src="{{ page.dak.src }}">Loading…</code></pre>
+<noscript><p>This view needs JavaScript; the <a href="{{ page.dak.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.dak.script }}" defer></script>

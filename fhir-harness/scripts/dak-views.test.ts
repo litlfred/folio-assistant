@@ -34,6 +34,8 @@ describe("dak views", () => {
     expect(d.tabs[0]!.href).toBe("ValueSet-Actors.html");
     expect(d.label).toBe("JSON-LD");
     expect(d.script).toBe(`../${DAK_VIEW_SCRIPT}`);
+    // Fetched from the SERVED graph, not from a copy beside the page.
+    expect(d.src).toBe("../fhir-artifact-index/dak/ValueSet-Actors.jsonld");
     // The page carries no file text: the loader fetches it (bean `680p`).
     expect(JSON.stringify(d)).not.toContain("@context");
   });

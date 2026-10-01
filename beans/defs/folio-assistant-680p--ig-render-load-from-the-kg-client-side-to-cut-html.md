@@ -34,3 +34,20 @@ Publisher's page does: fetch, then `JSON.stringify(parsed, null, 2)`.
   chrome, not content.
 - **No JS:** a `<noscript>` line points to the raw file, which renders without
   JavaScript.
+
+## Owner ruling 2026-10-01: serve the graph, no copies
+
+The owner chose option 1: publish the KG directory itself rather than copy its
+files into `docs/`.
+
+- **The `served` field.** A directory entry can now declare `served: true`
+  (schema `cat-harness.ts`), and `mount-instance-docs.ts` publishes its bytes
+  verbatim at `/<instance>/<path>` after Jekyll. The step is opt-in, honours
+  `withheld.json`, and refuses to write over anything already published.
+- **Declared on** smart-trust's and smart-base's `fhir-artifact-index/`.
+- **The view pages** fetch `../fhir-artifact-index/dak/<file>`. The 19 copied
+  schema files and the docs-kind exception they needed are gone.
+- **Refusal.** `gen-ig-pages` writes no view page when the index directory is
+  not served, and says so.
+- **Verified in Chromium:** all 33 smart-trust view pages still display
+  exactly what the Publisher's pages display.

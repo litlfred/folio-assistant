@@ -29,7 +29,7 @@ export const DAK_VIEW_KINDS = [
 ] as const;
 
 export interface DakView {
-  /** The raw file's name, published beside the page (`ValueSet-Actors.schema.json`). */
+  /** The file's name (`ValueSet-Actors.schema.json`) — the page is `<file>.html`. */
   file: string;
   /** Repository-relative path of the held copy, from the index. */
   localPath: string;
@@ -47,6 +47,8 @@ export function dakViews(a: FhirArtifact): DakView[] {
 export interface DakViewData {
   label: string;
   file: string;
+  /** Where the file is fetched from: the SERVED artefact-index graph, relative to the page — never a copy beside it (bean `680p`). */
+  src: string;
   artifact: { title: string; page: string };
   tabs: Array<{ label: string; href: string; active: boolean }>;
   /** The shared loader, relative to the page. */
@@ -62,7 +64,12 @@ export const DAK_VIEW_SCRIPT = "assets/dak-view.js";
  * P2 this site renders none of them), then each DAK view, the current one
  * active.
  */
-export function dakViewData(a: FhirArtifact, view: DakView): DakViewData {
+/**
+ * @param servedFrom the page's path to the instance root's served data — `../`
+ *   from `artifact/`, so a `localPath` of `fhir-artifact-index/dak/X` is fetched
+ *   at `../fhir-artifact-index/dak/X`.
+ */
+export function dakViewData(a: FhirArtifact, view: DakView, servedFrom = "../"): DakViewData {
   const page = `${artifactPageName(a)}.html`;
   const reps = (["xml", "json", "ttl"] as const).flatMap((k) => {
     const url = a.published?.[k]?.url;
@@ -71,6 +78,7 @@ export function dakViewData(a: FhirArtifact, view: DakView): DakViewData {
   return {
     label: view.label,
     file: view.file,
+    src: `${servedFrom}${view.localPath}`,
     artifact: { title: a.title ?? a.name ?? a.id, page },
     tabs: [
       { label: "Narrative Content", href: page, active: false },

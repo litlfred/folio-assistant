@@ -1,7 +1,7 @@
 {%- comment -%}
 A DAK sidecar's view page, the Publisher's `<Name>.schema.json.html` or `<Name>.jsonld.html`, rendered by Jekyll.
 Reads `page.dak`, every field written by `gen-smart-trust-pages.ts`:
-`label` (JSON Schema | JSON-LD), `file` (the raw file, published beside this page),
+`label` (JSON Schema | JSON-LD), `file` (the file's name), `src` (where it is served, in the artefact-index graph),
 `artifact.title` and `artifact.page`, `tabs[]` (`label`, `href`, `active`) in the Publisher's order,
 and `script` (the shared loader's path). The file's text is NOT in the page: `dak-view.js` fetches
 it in the browser, as the Publisher's page does (bean `680p`). This file only arranges.
@@ -12,8 +12,8 @@ it in the browser, as the Publisher's page does (bean `680p`). This file only ar
 
 ## {{ page.dak.label }}
 
-[Raw {{ page.dak.label }}]({{ page.dak.file }}) · [Download]({{ page.dak.file }}){: download=""}
+[Raw {{ page.dak.label }}]({{ page.dak.src }}) · [Download]({{ page.dak.src }}){: download="{{ page.dak.file }}"}
 
-<pre><code class="language-json" data-dak-src="{{ page.dak.file }}">Loading…</code></pre>
-<noscript><p>This view needs JavaScript; the <a href="{{ page.dak.file }}">raw file</a> does not.</p></noscript>
+<pre><code class="language-json" data-dak-src="{{ page.dak.src }}">Loading…</code></pre>
+<noscript><p>This view needs JavaScript; the <a href="{{ page.dak.src }}">raw file</a> does not.</p></noscript>
 <script src="{{ page.dak.script }}" defer></script>

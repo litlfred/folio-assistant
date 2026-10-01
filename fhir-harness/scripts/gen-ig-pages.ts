@@ -128,6 +128,26 @@ const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
  */
 const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
+/**
+ * Whether this instance's DAK files are on the site for a view page to fetch:
+ * its artefact-index directory is declared `served`, and its docs directory is
+ * the instance's root route, so `artifact/<page>` reaches `<path>…` as `../`.
+ */
+function dakViewServing(): { ok: true } | { ok: false; why: string } {
+  let d: { directories?: { path?: string; graphKinds?: string[]; served?: boolean; instanceRoot?: boolean; composed?: boolean }[] };
+  try {
+    d = JSON.parse(readFileSync(join(INSTANCE, `${INSTANCE_NAME}.json`), "utf8"));
+  } catch {
+    return { ok: false, why: `${INSTANCE_NAME}.json could not be read` };
+  }
+  const dirs = d.directories ?? [];
+  const index = dirs.find((x) => x.graphKinds?.includes("fhir-artifact-index"));
+  const docs = dirs.find((x) => x.path === "docs/");
+  if (!index?.served) return { ok: false, why: "its fhir-artifact-index directory is not declared `served`" };
+  if (!(docs?.instanceRoot && docs.composed)) return { ok: false, why: "its docs/ is not the composed instance root, so `../` does not reach the served data" };
+  return { ok: true };
+}
+
 /** The DAK view pages' Liquid template (`liquid-templates`: a file of this directory, beside its writer). */
 const DAK_VIEW_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "dak-view.liquid");
 /** Their one shared loader, copied to `docs/assets/` (bean `680p`, `visualizer-loading`). */
@@ -893,12 +913,20 @@ for (const a of ix.artifacts) {
 // `dak-views.ts` computed. The file's text is fetched in the browser by one
 // shared loader, never copied into the page (bean `680p`). An IG with no DAK
 // overlay writes none of these.
+//
+// The pages FETCH from the served artefact-index graph (owner, 2026-10-01:
+// publish the graph directory rather than copy its files beside the pages).
+// That needs two declarations, and without either the pages would link data
+// that is not on the site — so they are not written, and the run says why.
 const dakTemplate = readFileSync(DAK_VIEW_TEMPLATE, "utf8");
+const dakServing = dakViewServing();
 let dakViewCount = 0;
-for (const a of ix.artifacts) {
+if (dakServing.ok === false && ix.artifacts.some((a) => dakViews(a).length > 0)) {
+  console.log(`  DAK view pages NOT written: ${dakServing.why}`);
+}
+for (const a of dakServing.ok ? ix.artifacts : []) {
   for (const v of dakViews(a)) {
     const data = dakViewData(a, v);
-    pages.set(join("artifact", v.file), readFileSync(join(INSTANCE, v.localPath), "utf8"));
     dakViewCount += 1;
     pages.set(
       join("artifact", `${v.file}.md`),

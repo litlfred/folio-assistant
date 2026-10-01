@@ -59,6 +59,21 @@ Move a block when it is **large or repeated** and **already a KG file**. A
 block that would need a new file published just to be fetched is a design
 question for the owner, not a default.
 
+## Where the data is served from — `served: true`
+
+The fetched file is the KG's own, published verbatim. A directory declares
+`served: true` in its instance's `<instance>.json`, and `mount-instance-docs`
+copies its bytes to `/<instance>/<path>` after Jekyll: no Liquid, no layout, no
+index page. Pages under the instance's composed docs then reach it with a
+relative path; the DAK view pages fetch
+`../fhir-artifact-index/dak/<file>`.
+
+**Never copy the file into `docs/` beside the page instead.** That was the
+first version: 19 schema files duplicated under `smart-trust/docs/artifact/`,
+which a gate flagged as an unknown file family in a docs directory. The owner
+chose serving the graph (2026-10-01, bean `680p`). A generator whose data is
+not served writes no page that would fetch it, and says why.
+
 ## How to fetch
 
 - **Relative to the page's own location**, never via a configured base URL, so
@@ -66,7 +81,7 @@ question for the owner, not a default.
   §"The page is generated, not committed").
 - **One shared loader per visualizer kind**, published once and referenced by
   every page, never inlined in each page. The DAK view pages share
-  `assets/dak-view.js`.
+  `assets/dak-view.js` (source: `fhir-harness/scripts/templates/ig-pages/`).
 - **No dependencies:** no CDN or framework. Same reason as `kg-viewer`: the
   data is this repository's, and a third party in its trust boundary is at
   odds with that.

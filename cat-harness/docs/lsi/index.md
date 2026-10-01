@@ -130,12 +130,12 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.55 | instance, harness, kind, directory, session, graph, block, page | *(none)* |
+| 1 | 43.55 | instance, harness, kind, session, directory, graph, block, page | *(none)* |
 | 2 | 21.41 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
 | 3 | 17.76 | session, beans, branch, store, goals, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
-| 4 | 16.39 | page, block, section, sections, blocks, chapter, manifest, text | ledger, sibling, subdirectory, items, sessions, queue, renderable, window |
+| 4 | 16.39 | page, block, section, sections, blocks, chapter, manifest, text | ledger, subdirectory, sibling, items, sessions, queue, renderable, window |
 | 5 | 14.82 | locale, translated, navbar, translation, page, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
-| 6 | 14.77 | lane, requirements, actor, role, feature, task, phase, impact | queue, rung, slide, arm, bytes, zip, sha, images |
+| 6 | 14.77 | lane, requirements, actor, role, feature, task, phase, impact | rung, queue, slide, arm, bytes, zip, archive, sha |
 | 7 | 14.37 | edges, forward, preview, edge, backward, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, requirement |
 | 8 | 14.13 | locale, translation, translated, french, back-translation, translations, badge, trip | preview, feature, phase, theme, option, merge, sha, staging |
 
