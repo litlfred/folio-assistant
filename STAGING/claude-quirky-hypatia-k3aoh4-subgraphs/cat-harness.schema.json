@@ -16,6 +16,18 @@
           "type": "string",
           "minLength": 1
         },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alsoWritten": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "images": {
           "type": "array",
           "items": {
@@ -1010,8 +1022,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-subgraphs/cat-harness.jsonld",
   "staging": {
     "branch": "claude/quirky-hypatia-k3aoh4-subgraphs",
-    "sha": "b472dda5b7b575cd59a8ace0b6320b8f463beb42",
+    "sha": "146ff4791697057a8d398158426ad265d1b1052e",
     "pr": "1775/merge",
-    "run": "36896767615"
+    "run": "36913151729"
   }
 }
