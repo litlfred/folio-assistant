@@ -5,7 +5,7 @@ status: in-progress
 type: feature
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-01T09:41:06Z
+updated_at: 2026-10-01T11:37:04Z
 parent: folio-assistant-3fva
 ---
 
@@ -39,3 +39,9 @@ Held by session https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR (sub-age
 - [ ] the first scheduled prune
 
 Measured read-only against the real remote: `qa:fetch` on `qa-reports` returns a MISS (exit 1), because the branch does not exist yet. A read of spike entry `qa-reports-spike:main/cdb0a018…` returns CORRUPT (exit 3) in 2.4 s, because spike manifests have no `payloadTree`.
+
+
+## Production evidence 2026-10-01 11:3xZ (parent session)
+Merged into `claude/quirky-davinci-ixuymr` (`1d49d343`, `475e5ca7`). The agent's own full-gate run was cut off by a container restart, so the parent verified instead: tsc 0, eslint 0, qa-store/storage/CI tests 48/48, `check:workflows` 0, `audit:coverage:check` 0. CI `bun test` on `475e5ca7`: 21 failing tests, all on main's list too; none new.
+
+**First real publish:** the `qa-publish` job on PR #1764 created `qa-reports` at `6cb19a24` (author `folio-qa-bot`): `index.json` plus `pr/1764/475e5ca7…/`, 1150 files, 8,231,995 bytes. It ran after red gates, as designed (`always()`).
