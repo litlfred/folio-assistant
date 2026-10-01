@@ -22,9 +22,9 @@ audited and published without the code that runs it. The owner ruled on
 
 ## Where it sits
 
-It needs `folio-assistant-core`, which inherits `cat-harness`. Core does not
-depend on it — the document adapter's server half comes here, and its content
-half stays in core.
+It needs `cat-harness` and `bootstrap-tools`, and sits BELOW the content core,
+which needs it (owner ruling C1, 2026-10-01). Nothing here may import the
+content layers above; a server part that needs one moves up into it.
 
 ## Status
 

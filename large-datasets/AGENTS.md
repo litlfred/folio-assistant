@@ -7,17 +7,20 @@ this layer does **not** answer.
 ## This layer does not decide whether to take something
 
 *"May we take this, and what does holding it cost"* is
-[`materialize-remote`](../folio-assistant-core/schemas/materialization.ts) —
-five gates, three states, in the **core** layer. This one answers the question
-before it:
+[`materialize-remote`](skills/materialize-remote.md) — five gates, three
+states, recorded as a `folio-materialization/v1` record. This layer answers the
+question before it:
 
 > How do you enumerate a corpus, and how do you ask it for a *part*?
 
 So a change here that starts gating, budgeting or deciding is a change that
-belongs one layer over. It belongs to neither neighbour otherwise:
-`folio-assist-core` is the content layer and this is about sources the
-instance will **never hold**; `cat-harness` is about the harness. It is the
-third thing.
+belongs in that skill, not in a descriptor. And it is not content: this is
+about sources the instance will **never hold**, so it sits below the content
+layer and **imports nothing from above `cat-harness`** — owner ruling
+2026-10-01 makes it a subgraph of `cat-harness` (bean `rfuq`). A schema you
+want from the content layer is restated here as the narrow projection you read
+(`CatalogueNodeReadSchema` in `schemas/id-lookup.ts` is the worked case), never
+imported.
 
 ## A descriptor is written down or it does not exist
 
