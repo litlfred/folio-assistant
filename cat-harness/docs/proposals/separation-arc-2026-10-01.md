@@ -268,7 +268,7 @@ PLACEMENT    ████████░░░░░░░░░░░░  945 O
 | 7 | core's `catalogue`, `dublin-core`, `fhir-artifact-index` schemas | **split**: the generic shape stays in core; IRIS/FHIR specifics go to who-iris / fhir-harness and register on load |
 
 Other audit findings, now on the checklist:
-- [ ] `cat-harness-tools.json` `needs` → `["cat-harness","bootstrap-tools"]`, and core adds `cat-harness-tools` (C1). 0 of tools' 27 files import core.
+- [x] `cat-harness-tools.json` `needs` → `["cat-harness","bootstrap-tools"]`, and core adds `cat-harness-tools` (C1, bean `rmi6`). 0 of tools' 27 files import core.
 - [ ] 34 cat-harness skills that point at sci and are in no PR yet (mostly authoring-core, sdlc-core)
 - [ ] 90 code files that name higher instances by literal path → resolve through the checkout overlay (PR0a)
 
