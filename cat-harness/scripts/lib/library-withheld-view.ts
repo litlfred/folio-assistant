@@ -108,7 +108,7 @@ function withheldBanner(e, bs){
   var rec = withheldRecord(e);
   return '<div class="wh-banner" role="note" title="' + esc(e.withheld) + '">' +
     "<p><b>" + esc(withheldLine(e)) + ".</b> This work's text is held here but is not published: " +
-    (gates ? "its publication gates refused it (" + esc(gates) + ")." : esc(e.withheld) + ".") +
+    (gates ? "the publication gates named above did not grant it." : esc(e.withheld) + ".") +
     " Each section is listed by page and title only. Where a section has a summary — an account of it, not its words — the summary is shown instead.</p>" +
     "<p>" + (rec ? 'What the work is, and who holds it: <a href="' + esc(rec.href) + '">' + esc(rec.label) + "</a>. " : "") +
     "<b>" + n + "</b> of " + bs.length + " section" + (bs.length === 1 ? "" : "s") + " summarised.</p></div>";
