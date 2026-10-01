@@ -223,6 +223,28 @@ export function qaResultPath(root: string, stem: string): string {
   return join(root, QA_RESULTS_DIR, `${stem}.qa-results.json`);
 }
 
+/**
+ * The graph kinds the `qa-reports` arc moves off `main` — proposal
+ * `qa-reports-branch-and-test-process` §2.1: every DERIVED `qa` verdict, and
+ * the `health` report. Attestations stay (D2) but live in their own
+ * directory, so they are not a reason to expect a `qa` directory here.
+ */
+export const OFF_MAIN_KINDS: readonly string[] = ["qa", "health"];
+
+/**
+ * May a declared directory be absent from a checkout without that being a
+ * finding? Yes when it declares `storage` (bean `16ei`), or when every kind it
+ * holds is one the arc moves off `main` — the state after owner rulings D1/D4
+ * and before the declarations say so (bean `5hox`). Bean `0dav`: measured with
+ * the results moved aside, `readme:subgraphs` counted all 15 such directories
+ * as `absent-directory` findings.
+ */
+export function mayLeaveMain(dir: { graphKinds?: readonly string[]; storage?: unknown }): boolean {
+  if (dir.storage) return true;
+  const kinds = dir.graphKinds ?? [];
+  return kinds.length > 0 && kinds.every((k) => OFF_MAIN_KINDS.includes(k));
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // BASELINES — the committed copy, or the `qa-reports` branch (bean `id4s`)
 // ─────────────────────────────────────────────────────────────────────────────
