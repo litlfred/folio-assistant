@@ -1,0 +1,500 @@
+{
+  "$schema": "folio-library-entry/v1",
+  "id": "arxiv-2504.19675v2",
+  "blocks": [
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-000",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Introduction",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-000-introduction.md",
+      "narrative": null,
+      "content": "Subject indexing is an important aspect of improv-\ning the discoverability of bibliographic databases\nand digital collections. Systems for automating\nsubject indexing have traditionally been based\non natural language processing (NLP) and tra-\nditional machine learning (ML) methods.\nThe\nrise of generative AI and large language mod-\nels (LLMs) holds some promise to revolutionise\nmany automation tasks, yet producing accurate\nsubject predictions using LLMs remains elusive\n(e.g. (Eric H. C. Chow and Li, 2024), (Martins,\n2024)). The LLMs4Subjects challenge (D’Souza\net al., 2025) invited teams to pro",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-001",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Synthetic training data",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-001-synthetic-training-data.md",
+      "narrative": null,
+      "content": "LLMs, 3) including XTransformer in an ensemble\nof algorithms, and 4) generating suggestions us-\ning separate monolingual prediction pipelines and\nmerging their results.\nOur system ranked 1st in the all-subjects cate-\ngory and 2nd in the tib-core-subjects category in the\nquantitative evaluation. It was ranked 4th in qualita-\ntive evaluations. We discovered that our approach,\nbased mainly on traditional NLP and ML, remains\ncompetitive against other systems that make heav-\nier use of LLMs. We also found ways to efficiently\ntranslate bibliographic records and to produce ad-\nditional synthetic trai",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-002",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Background",
+      "pageStart": 1,
+      "pageEnd": 2,
+      "target": "../sections/sec-002-background.md",
+      "narrative": null,
+      "content": "The task involved developing LLM-based systems\nthat recommend the most relevant subjects from the\nGND subject vocabulary to tag a given TIBKAT\nrecord based on its title and abstract, which is a type\nof extreme multilabel text classification (XMTC)\nproblem. The organisers provided two variants\nof the GND subject vocabulary: all-subjects (all\n200,035 GND subjects) and tib-core-subjects (a\n1https://annif.org\n2https://github.com/NatLibFi/\nAnnif-LLMs4Subjects/\n3https://huggingface.co/NatLibFi/\nAnnif-LLMs4Subjects-data\narXiv:2504.19675v2  [cs.CL]  21 Aug 2025\nsubset of 78,741 subjects especially imp",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-front-matter",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Front matter",
+      "pageStart": 1,
+      "pageEnd": 1,
+      "target": "../sections/sec-front-matter.md",
+      "narrative": null,
+      "content": "Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs\nOsma Suominen and Juho Inkinen and Mona Lehtinen\nNational Library of Finland, University of Helsinki\nfirstname.lastname@helsinki.fi\nAbstract\nThis paper presents the Annif system in\nSemEval-2025 Task 5 (LLMs4Subjects), which\nfocussed on subject indexing using large lan-\nguage models (LLMs).\nThe task required\ncreating subject predictions for bibliographic\nrecords from the bilingual TIBKAT database\nusing the GND subject vocabulary. Our ap-\nproach combines traditional natural language\nprocessing and machine learning techniques im-\npl",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-003",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "System overview",
+      "pageStart": 2,
+      "pageEnd": 2,
+      "target": "../sections/sec-003-system-overview.md",
+      "narrative": null,
+      "content": "We based our system on the Annif automated sub-\nject indexing toolkit. It provides a selection of\nXMTC algorithms as configurable backends which\ncan be used for subject indexing by setting up\nprojects that define the vocabulary and specific con-\nfiguration settings of a backend.\nWe chose three Annif backends for this task: 1)\nOmikuji5, an implementation of a family of effi-\ncient machine learning algorithms for multilabel\nclassification based on the idea of partitioned la-\nbel trees, including Parabel (Prabhu et al., 2018)\nand Bonsai (Khandagale et al., 2020). We used the\nBonsai-style configur",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-004",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Translation of data sets",
+      "pageStart": 2,
+      "pageEnd": 3,
+      "target": "../sections/sec-004-translation-of-data-sets.md",
+      "narrative": null,
+      "content": "We\nused\nthe\nLlama-3.1-8B-Instruct\nLLM\n(Grattafiori et al., 2024) for translating the titles\nand abstracts of all records.\nEach record was\ntranslated separately into a German-only and\nEnglish-only record (step 1 in Figure 1). More\ndetails on LLM processing are given in Appendix\nD.\noriginal \nrecords\nGerman \nonly\nEnglish \nonly\nGerman \nsynthetic \npart 1\nGerman \nsynthetic \npart 2\nGerman \nsynthetic \npart 3\nEnglish \nsynthetic \npart 1\nEnglish \nsynthetic \npart 2\nEnglish \nsynthetic \npart 3\n1. translation\n2. generation of synthetic records\nFigure 1: LLM pre-processing steps for the data sets.\nThe MLLM le",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-005",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Experimental setup",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-005-experimental-setup.md",
+      "narrative": null,
+      "content": "We first set up, trained and evaluated the three kinds",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-006",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Base projects",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-006-base-projects.md",
+      "narrative": null,
+      "content": "uation scores, measured against the development\nset, by exploring various approaches and settings.\nOnce satisfied with the performance of the base\nprojects, we combined them into ensembles that\nwere finally used to produce our system output.\nFor evaluation during system development, we\nused two common XMTC metrics built in to the\nAnnif toolkit: F1@5 (F1 score calculated using the\ntop 5 suggestions from the system) and nDCG@10\n(Normalised Discounted Cumulative Gain (Järvelin\nand Kekäläinen, 2002), a ranking metric calculated\nusing the top 10 suggestions from the system).\n4.1\nBase projects\nWe se",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-007",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Adding synthetic data",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-007-adding-synthetic-data.md",
+      "narrative": null,
+      "content": "We repeated the synthetic data generation process\nthree times per language and GND variant (total\n3 × 2 × 2 times). The nDCG@10 scores of the\nBonsai projects increased by ~0.02 when adding\nthe first part of synthetic data, but the 2nd and 3rd\nsynthetic sets only increased the scores modestly\n(see Figure 3 in Appendix A), so we stopped at\n1 part original and 3 parts synthetic data.\nWe\ndidn’t use the synthetic data for training the MLLM\nand XTransformer projects. MLLM does not need",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-008",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results",
+      "pageStart": 3,
+      "pageEnd": 3,
+      "target": "../sections/sec-008-results.md",
+      "narrative": null,
+      "content": "did not improve when adding synthetic data.\nThe final evaluation scores for the base projects\nare shown in Table 3 in Appendix B. The Bon-\nsai projects achieved the best scores in all cases,\nfollowed by XTransformer and MLLM.\n4.3",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-009",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Ensemble projects",
+      "pageStart": 3,
+      "pageEnd": 4,
+      "target": "../sections/sec-009-ensemble-projects.md",
+      "narrative": null,
+      "content": "We set up three kinds of ensemble projects that\ncombined the base projects in different ways: two\n\"BM\" ensembles (simple and neural) combining\nBonsai and MLLM, and a \"BMX\" simple ensemble\nthat combines all three base projects (see Figure 2).\nBM simple ensemble\nBM neural ensemble\nBMX simple ensemble\nBonsai\nMLLM\nXTransformer\nensemble/fusion projects\nregular projects\ntrained on\nruns\n1,2,3\n4,5,6\n7,8,9\nFigure 2: Overview of Annif projects and how they\nwere combined into ensembles.\nWe tuned the ensembles using the automated hy-\nperparameter optimisation facility built into Annif\nto select the weight",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-010",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Test set predictions",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-010-test-set-predictions.md",
+      "narrative": null,
+      "content": "For both GND variants, teams were allowed to\nsubmit up to 10 separate runs (up to 50 subject\npredictions per test set record). We LLM-translated\nthe test set records to produce German-only and\nEnglish-only versions of each record. For each of\nthe three ensemble types, we produced three runs:\n1) using the German ensemble and the German-\nonly record, 2) using the English ensemble and\nEnglish-only record, and 3) combining the two\nmonolingual predictions into a single prediction by\nsumming the scores of the predicted subjects and\nchoosing the top 50 subjects by score. This gave us\na total of 9 run",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-011",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Qualitative evaluation",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-011-qualitative-evaluation.md",
+      "narrative": null,
+      "content": "were performed by the task organisers.\n5.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-012",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Quantitative evaluation",
+      "pageStart": 4,
+      "pageEnd": 4,
+      "target": "../sections/sec-012-quantitative-evaluation.md",
+      "narrative": null,
+      "content": "The quantitative evaluation involved comparing\nthe subject predictions with subject annotations\nin TIBKAT records using precision, recall, and F1\nscores (with various thresholds from 5 to 50). The\noverall ranking was determined by average recall,\ncalculated by averaging the recall scores over all\nthreshold values. Our #9 runs, BMX simple ensem-\nble with combined languages (de+en), ranked 1st\nin the all-subjects category with an average recall\nscore of 0.6295 and 2nd in the tib-core-subjects cat-\negory with a score of 0.5899 (see Table 1 for full\nresults).\n5.2\nQualitative evaluation\nThe qualita",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-013",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Analysis",
+      "pageStart": 4,
+      "pageEnd": 6,
+      "target": "../sections/sec-013-analysis.md",
+      "narrative": null,
+      "content": "We trained parallel English and German versions of\neach model, demonstrating successful LLM-based\ntranslation of multilingual input data. In all but\ndevelopment set\ntest set\nVocab\nSystem\nRun#\nEnsemble\nLang\nF1@5\nnDCG@10\nF1@5\nAvg recall\nRank\nall\nAnnif (ours)\n1\nBM simple\nde\n0.3174\n0.5459\n0.3108\n0.5736\n2\nen\n0.3312\n0.5677\n0.3184\n0.5890\n3\nde+en\n-\n-\n0.3376\n0.6201\n4\nBM neural\nde\n0.3337*\n0.5726*\n0.3029\n0.5447\n5\nen\n0.3504*\n0.6008*\n0.3116\n0.5599\n6\nde+en\n-\n-\n0.3318\n0.6005\n7\nBMX simple\nde\n0.3263\n0.5614\n0.3185\n0.5859\n8\nen\n0.3411\n0.5842\n0.3276\n0.6038\n9\nde+en\n-\n-\n0.3432\n0.6295\n1st\nDUTIR831\n3\n0.3346\n0.6045\n2nd",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-014",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Conclusions",
+      "pageStart": 6,
+      "pageEnd": 6,
+      "target": "../sections/sec-014-conclusions.md",
+      "narrative": null,
+      "content": "In conclusion, our participation in the SemEval-\n2025 Task 5 (LLMs4Subjects) provided valuable",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-015",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Performance",
+      "pageStart": 6,
+      "pageEnd": 7,
+      "target": "../sections/sec-015-performance.md",
+      "narrative": null,
+      "content": "Annif, particularly when augmented with large lan-\nguage models (LLMs) for data preparation. By\nleveraging traditional XMTC algorithms such as\nOmikuji Bonsai, MLLM, and XTransformer, and\nenhancing them with LLM-generated synthetic\ndata and translations, we demonstrated competi-\ntive results across multiple categories. While this\ntask focused only on the resulting quality of the\nsubject indexing, we note that the computational\nrequirements, energy consumption and processing\nlatency of traditional ML approaches are modest in\ncomparison to LLMs.\nAcknowledgments\nThe authors wish to thank the Finni",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-016",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Effect of synthetic data",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-016-effect-of-synthetic-data.md",
+      "narrative": null,
+      "content": "Proportions of original + synthetic training data\nnDCG@10\n0.45\n0.50\n0.55\n0.60\n1+0\n1+1\n1+2\n1+3\nall-subjects / de\nall-subjects / en\ntib-core-subjects / de\ntib-core-subjects / en\nFigure 3: Effect of adding synthetic training data for\nOmikuji Bonsai models. The models were evaluated\nagainst the development set.\nB",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-017",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Results for base projects",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-017-results-for-base-projects.md",
+      "narrative": null,
+      "content": "Vocab\nBackend\nLang\nF1@5\nnDCG@10\nall\nBonsai\nde\n0.3003\n0.5144\nen\n0.3234\n0.5532\nMLLM\nde\n0.2428\n0.4245\nen\n0.2281\n0.4005\nXTrans\nde\n0.2928\n0.5056\nen\n0.3091\n0.5326\ntib-core\nBonsai\nde\n0.2625\n0.5233\nen\n0.2934\n0.5807\nMLLM\nde\n0.2087\n0.4157\nen\n0.2160\n0.4291\nXTrans\nde\n0.2552\n0.5052\nen\n0.2761\n0.5419\nTable 3: Evaluation scores of the base projects measured\nagainst the development set. The best scores for each\nvocabulary and language have been set in bold.\nC",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-018",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Ensemble weights",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-018-ensemble-weights.md",
+      "narrative": null,
+      "content": "Type\nVocab\nLang\nBonsai\nMLLM\nXTrans\nBM\nall\nde\n0.8070\n0.1930\n-\nen\n0.8377\n0.1623\n-\ntib-core\nde\n0.8432\n0.1568\n-\nen\n0.8729\n0.1271\n-\nBMX\nall\nde\n0.4713\n0.1964\n0.3323\nen\n0.5387\n0.1417\n0.3196\ntib-core\nde\n0.4891\n0.1837\n0.3272\nen\n0.6197\n0.1671\n0.2132\nTable 4: Optimised weights of the base projects in the\nBM and BMX ensembles.\nD",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-019",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Details about LLM usage",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-019-details-about-llm-usage.md",
+      "narrative": null,
+      "content": "We used the vLLM10 inference engine to translate\nand synthesise records using the Llama-3.1-8B-\nInstruct LLM. For the processing, we used a single\nNVIDIA A100 GPU with 80GB VRAM from the\nUniversity of Helsinki HPC cluster Turso.\nFor translating GND into English, we used the\nGPT-4o-mini LLM on the Azure OpenAI Service\ncloud platform.\nD.1\nPerformance\nUsing vLLM, we achieved a throughput of ap-\nproximately 4 records/second for translation and 8\nrecords/second for synthesising new records.\nD.2",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-020",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Processing example",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-020-processing-example.md",
+      "narrative": null,
+      "content": "The process of LLM translation and record synthe-\nsis has been illustrated in Figure 4.\nD.3",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-021",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Prompt templates",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-021-prompt-templates.md",
+      "narrative": null,
+      "content": "In the following prompt templates, the system\nprompt is set in italics. Tags in the template were re-\nplaced with relevant information from the records.\nD.3.1",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-022",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Record translation",
+      "pageStart": 7,
+      "pageEnd": 7,
+      "target": "../sections/sec-022-record-translation.md",
+      "narrative": null,
+      "content": "This prompt was used to translate records:\nYou are a professional translator specialized in translating\nbibliographic metadata.\nYour task is to ensure that the given document title and\ndescription are in <LANGUAGE> language, translating the\ntext if necessary. If the text is already in <LANGUAGE>, do\nnot change or summarize it, keep it all as it is.\nRespond with only the text, nothing else.\nGive this title and description in <LANGUAGE>:\n<TITLE>\n<DESCRIPTION>\nD.3.2",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-023",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "Record synthesis",
+      "pageStart": 7,
+      "pageEnd": 8,
+      "target": "../sections/sec-023-record-synthesis.md",
+      "narrative": null,
+      "content": "This prompt was used to synthesise new records:\nYou are a professional metadata manager.\nYour task is to create new bibliographic metadata: document\ntitles and descriptions.\nHere is an example document title and description in\n<LANGUAGE> with the following subject keywords:\n<OLD_KEYWORDS>\n<TITLE_DESC>\nGenerate a new document title and description in\n<LANGUAGE>. Respond with only the title and description,\nnothing else. Create a new title and description that match the\nfollowing subject keywords: <NEW_KEYWORDS>\n10https://docs.vllm.ai\nD.3.3",
+      "truncated": false,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    },
+    {
+      "id": "library/arxiv-2504.19675v2/blocks/prose-sec-024",
+      "types": [
+        "folio-assistant-core:Prose",
+        "doco:Section"
+      ],
+      "kind": "prose",
+      "title": "GND translation",
+      "pageStart": 8,
+      "pageEnd": 8,
+      "target": "../sections/sec-024-gnd-translation.md",
+      "narrative": null,
+      "content": "This prompt was used to translate the GND pre-\nferred terms into English in batches of 100 terms:\nYou are a professional translator specialized in translating\ncontrolled vocabularies such as information retrieval thesauri\nand classifications.\nYour task is to translate terms from the The Gemeinsame\nNormdatei (GND, Integrated Authority File), a carefully\ncurated thesaurus known for its precise and respectful\nterminology. These terms are used for academic and\ninformational purposes and are presented in German. Please\nmaintain the list structure and translate each term into English.\nOnly return th",
+      "truncated": true,
+      "provenance": "ingested",
+      "summary": {
+        "status": "not-summarised"
+      }
+    }
+  ]
+}
