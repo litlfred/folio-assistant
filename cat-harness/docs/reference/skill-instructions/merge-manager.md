@@ -88,7 +88,7 @@ branch it did not create, or change repository settings.
 5. **Regenerate.** `bun run regen` runs as many passes as it needs until
    nothing changes (see [`prepare-merge`](prepare-merge.md) §"A clean merge can
    produce a wrong artefact"). Then run `bun run readme:subgraphs` **last**,
-   because generated READMEs read what the other generators wrote. Then run
+   because generated READMEs read what the other generators wrote. The tail of the order matters too, measured 2026-10-01 on #1802: `readme:subgraphs`, then `state:visualizer`, then `docs:harness` (it snapshots `docs/_data/harness.json` from what the others wrote), and only then their `:check` forms. Then run
    `bun run regen --dry-run` to confirm that nothing is still stale. (`merge:main`
    has already run `regen`; this step is for a hand merge, and for the README
    ordering.)

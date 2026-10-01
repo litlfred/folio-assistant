@@ -183,7 +183,7 @@ carries it in full. In outline:
    `git submodule update --init bootstrap bootstrap-tools` before staging.
 5. **Regenerate in order.** Run `bun run regen`, which repeats passes until a
    pass changes nothing. Then run `bun run readme:subgraphs` **last**, because
-   generated READMEs summarise what the other generators wrote. Finally,
+   generated READMEs summarise what the other generators wrote. The tail of the order matters too, measured 2026-10-01 on #1802: `readme:subgraphs`, then `state:visualizer`, then `docs:harness` (it snapshots `docs/_data/harness.json` from what the others wrote), and only then their `:check` forms. Finally,
    `bun run regen --dry-run` must report nothing stale.
 6. **Full local gates.** Run `bun run gates`. CI stops at the first failing
    gate, so fixes surface one per push. A local run shows them all at once.
