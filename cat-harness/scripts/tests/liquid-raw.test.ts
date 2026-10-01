@@ -76,7 +76,7 @@ describe("wrapRaw", () => {
   it.skipIf(!rubyLiquid)("round-trips every case through Ruby Liquid (strict)", () => {
     const script =
       'require "liquid"; require "json"; ' +
-      "JSON.parse(STDIN.read).each { |s| print JSON.generate(Liquid::Template.parse(s, error_mode: :strict).render), \"\\n\" }";
+      "JSON.parse(STDIN.read.force_encoding('UTF-8')).each { |s| print JSON.generate(Liquid::Template.parse(s, error_mode: :strict).render), \"\\n\" }";
     const inputs = Object.values(CASES).map((t) => wrapRaw(t).join(""));
     const res = spawnSync("ruby", ["-e", script], { input: JSON.stringify(inputs), encoding: "utf-8" });
     expect(res.stderr).toBe("");

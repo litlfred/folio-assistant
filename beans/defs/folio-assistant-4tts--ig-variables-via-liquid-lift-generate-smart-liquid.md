@@ -28,10 +28,10 @@ Related:
 - **Blocks:** `jut3` (P0's variables half).
 
 ## Done when
-- [ ] `generate_smart_liquid.py` read from the owner's `litlfred/smart-base` fork; variable families and inputs listed
-- [ ] the lifted variables written to the IG site's `_data/` in the same build that consumes them
-- [ ] at least one Publisher-generated page kind rendered from a Liquid template over that data, instead of from a TS string generator
-- [ ] the Publisher-equivalence invariant (owner, 2026-10-01) checked on that page kind against the Publisher's render
+- [x] `generate_smart_liquid.py` read from the owner's `litlfred/smart-base` fork; variable families and inputs listed
+- [x] the lifted variables written to the IG site's `_data/` in the same build that consumes them
+- [x] at least one Publisher-generated page kind rendered from a Liquid template over that data, instead of from a TS string generator
+- [x] the Publisher-equivalence invariant (owner, 2026-10-01) checked on that page kind against the Publisher's render
 
 ## 2026-10-01: first slice — variables lifted; `artifacts` rendered by a Liquid template
 
@@ -46,7 +46,12 @@ Related:
   1. Uncategorised artefacts are left off the page, because category comes *from* that page (the ImplementationGuide itself).
   2. A new optional `listedAt` field in `folio-fhir-artifact/v1`: the ingest records each artefact's position on `artifacts.html`, which was previously parsed and thrown away. The index was re-ingested.
 
-- [x] `generate_smart_liquid.py` read; variable families and inputs listed
-- [x] lifted variables written to the IG site's `_data/` in the same build that consumes them
-- [x] one Publisher page kind (`artifacts`) rendered from a Liquid template over that data
-- [x] Publisher equivalence checked on it: same set, same sequence, same category order
+## 2026-10-01: the template moved to a declared `.liquid` file
+
+`liquid-templates` refuses an inline template in a `.ts` file and puts
+computation in the generator. The artifacts template is now
+`fhir-harness/scripts/templates/ig-site/artifacts.liquid` (directory declared
+as `fhir-ig-scripts`); `artifactVariables` computes `artifacts_listed` and
+`text.label`, so the template neither counts nor escapes. Re-verified by a
+Jekyll build: 677 artefacts, same sequence and 7 categories as the
+Publisher's `artifacts.html`.
