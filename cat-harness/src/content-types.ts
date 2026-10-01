@@ -5,7 +5,9 @@
  * server's plug-in contract and moves to `cat-harness-tools`; these types are
  * what a content package (`folio-assistant-core`'s document adapter, sci's
  * paper adapter) implements and returns, and the owner ruled on 2026-10-01 that
- * core does not depend on `cat-harness-tools`. So they stay here, and
+ * core does not depend on that layer. (Superseded the same day by ruling C1,
+ * which put the tools layer BELOW core; the content model staying in the
+ * harness is now simply where both layers can reach it.) So they stay here, and
  * `src/types.ts` re-exports them unchanged for its existing importers.
  *
  * Like `src/types.ts`, this imports nothing from `schemas/`: the harness may

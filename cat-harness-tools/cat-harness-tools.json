@@ -1,5 +1,5 @@
 {
-  "_comment": "THE TOOL IMPLEMENTATION LAYER of the harness, created 2026-10-01 for bean w2gr. The owner's rulings: (2026-09-30, option A) tool DEFINITIONS stay in cat-harness (cat-harness/tools/ and its discover.ts reader) and this instance IMPLEMENTS them -- the split bootstrap / bootstrap-tools already uses; (2026-10-01) folio-assistant-core does NOT depend on this instance, so the document adapter was cut into a server-free content class that stays in core and a server wrapper that comes here; (2026-10-01) it carries its OWN package.json, like bootstrap-tools; and sci's server half lives in a named subgraph of folio-assistant-sci rather than here. Step 3a moves the standalone MCP server (adapters/mcp-server/) in and nothing else, so this declaration names only what exists (bean dh4f). The layout MIRRORS cat-harness's (adapters/, src/, test/) so that, as step 3b moves src/ here, the relative imports between modules that move together come out unchanged.",
+  "_comment": "THE TOOL IMPLEMENTATION LAYER of the harness, created 2026-10-01 for bean w2gr. The owner's rulings: (2026-09-30, option A) tool DEFINITIONS stay in cat-harness (cat-harness/tools/ and its discover.ts reader) and this instance IMPLEMENTS them -- the split bootstrap / bootstrap-tools already uses; (2026-10-01) the content core does NOT depend on this instance, so the document adapter was cut into a server-free content class and a server wrapper -- SUPERSEDED the same day by ruling C1, which put this layer BELOW the content core (see `_needs_comment`): the core may depend on it, it may not depend on the core, and a server part that needs the core moves up into it; (2026-10-01) it carries its OWN package.json, like bootstrap-tools; and a content package's own server half lives in a named subgraph of that package rather than here. Step 3a moves the standalone MCP server (adapters/mcp-server/) in and nothing else, so this declaration names only what exists (bean dh4f). The layout MIRRORS cat-harness's (adapters/, src/, test/) so that, as step 3b moves src/ here, the relative imports between modules that move together come out unchanged.",
   "name": "cat-harness-tools",
   "repository": "litlfred/cat-harness-tools",
   "livesAt": {
@@ -44,9 +44,10 @@
       "description": "What the layer is and how it relates to cat-harness's Tool definitions."
     }
   ],
-  "_needs_comment": "It sits on folio-assistant-core, which inherits cat-harness. It needs core because the document adapter's server wrapper (step 3b) extends core's server-free DocumentContent. The reverse edge is the one the owner forbade on 2026-10-01: core does not depend on this layer.",
+  "_needs_comment": "The layers this instance sits on: cat-harness, whose Tool DEFINITIONS it implements, and bootstrap-tools, the tool layer one level down. Owner ruling C1 (2026-10-01, epic 7x5n, bean rmi6): this layer sits BELOW the content core -- the order is bootstrap, bootstrap-tools, cat-harness, this layer, then the content layers. It declared the content core as its one need until then, for the document adapter's server wrapper; the placement audit measured 0 of this layer's 27 files importing the core, so the edge was declared and never used. The core now needs THIS layer, and the reverse edge -- anything here importing a layer above -- is wrong-direction, which `check:import-direction` enforces from the declared `needs` lists rather than from any table. The layer above is deliberately not named here: a lower layer naming a higher one is the wrong direction `check:reference-direction` grades.",
   "needs": [
-    "folio-assistant-core"
+    "cat-harness",
+    "bootstrap-tools"
   ],
   "liquid": {
     "prefix": "site.data",
@@ -54,5 +55,5 @@
   },
   "_canonicalUrl_comment": "A placeholder base under this repository's own publication root, not a FHIR canonical. It exists because a Tool node's I/O type IRIs are minted against it at load and Zod refuses a relative one.",
   "canonicalUrl": "https://litlfred.github.io/folio-assistant/cat-harness-tools",
-  "_name_comment": "THE NAME IS NOT AN INSTANTIATION CLAIM. Instantiation is a `<name>.config.json` at the repository root (`harness-tiles`, bean `6n23`), and there is none for this layer. Staged as a sibling directory like fhir-harness; after the split it becomes its own repository and only `livesAt` changes."
+  "_name_comment": "THE NAME IS NOT AN INSTANTIATION CLAIM. Instantiation is a `<name>.config.json` at the repository root (`harness-tiles`, bean `6n23`), and there is none for this layer. Staged as a sibling directory like bootstrap-tools; after the split it becomes its own repository and only `livesAt` changes."
 }
