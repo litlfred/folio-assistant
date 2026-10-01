@@ -102,9 +102,10 @@ a locale no generator writes (`de/`) is refused.
 ### `viewer-pages` — take the base, regenerate
 
 `docs/external-schemas/index.md`, `docs/methodologies/index.md`,
-`docs/processes/*.md` and `docs/translation-status/index.html`: whole-file
-viewer pages, each with its writer's `--check` in the CI workflow
-(`external-schemas:viz`, `methodologies:viz`, `processes:viz`,
+`docs/processes/*.md`, `docs/qa/index.html` and
+`docs/translation-status/index.html`: whole-file viewer pages, each with its
+writer's `--check` in the CI workflow (`external-schemas:viz`,
+`methodologies:viz`, `processes:viz`, `state:visualizer`,
 `translation:status`). A new schema, diagram or translation anywhere rewrites
 them. Found the same way, on the same merge.
 
@@ -124,6 +125,21 @@ health-check workflow, so the base's copy is simply the newer measurement and
 a branch's older one carries nothing worth keeping. `check:harness-state`
 judges its producer hash; if the merge changed the producer, `bun run health`
 rewrites it. Found on the same merge.
+
+### `qa-witnesses` — take the base, regenerate
+
+`test/results/witnesses/**`: witness projections (`qa-witness/v1`) and page
+verdict indexes, written by `gen-docs-pages.ts` from the kg-qa sidecars and the
+live subject. A projection, never an attestation — the sidecars it reads are
+the delegated `kg-qa-sidecar` family — and the docs-site build regenerates them
+at publish. Found on #1754's eighth merge, 2026-10-01.
+
+### `pot-templates` — take the base, regenerate
+
+`translations/**/*.pot`: gettext templates extracted from the English pages by
+`pot-for-pages.ts` (`translation:pot:check`), so every edit to a source page
+rewrites its template in every locale. The `.po` files beside them are
+**authored translations** and stay refused. Found on the same merge.
 
 ### `site-data` — take the base, regenerate (36)
 

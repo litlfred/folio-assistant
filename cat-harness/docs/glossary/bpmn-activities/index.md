@@ -12,7 +12,7 @@ permalink: /glossary/bpmn-activities/
 
 Candidate terms extracted from every BPMN task and call activity: `name` as the label, its own `<documentation>` as the definition, the element id as the code. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap 33 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 506 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 41 (<a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap 33 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · bootstrap-tools 7 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 496 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 41 (<a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 19 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
 **Size:** this page holds 600 terms and is 466 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
@@ -570,12 +570,12 @@ Ask, per open PR, whether its HEAD has a run — skipping heads younger than 15 
 <p>Run check:prs-have-runs --min-age-minutes 15, writing the report file first. A head younger than 15 minutes legitimately has no run yet and is skipped. Exit 0 clean, 1 findings, 2 could not determine; an exit 1 with no report file is a crash and is treated as could-not-determine.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/pr-checks-present.bpmn"><code>cat-harness/processes/pr-checks-present.bpmn#Task_Sweep</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_assembledak" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-bpmn-activities--process_l2dak.task_assembledak" data-fa-state="extracted" data-fa-gloss="">
 Assemble and validate the DAK [content-validate] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l2-dak-authoring.bpmn"><code>cat-harness/processes/l2-dak-authoring.bpmn#Task_AssembleDak</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn"><code>smart-base/processes/l2-dak-authoring.bpmn#Task_AssembleDak</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_igincremental.task_site" data-fa-state="extracted" data-fa-gloss="">
 Assemble the site (template · Jekyll) [ig-publication] <span class="fa-gloss-status">candidate, extracted</span>
@@ -756,12 +756,12 @@ Build the test run [folio-test-run/v1] <span class="fa-gloss-status">candidate, 
 <p>Assemble the run record the signature will cover: the data hash and the process hash, each all-or-nothing. An UNKNOWN_HASH never reproduces another unknown, so a run that could not be hashed is signable only as what it is — unverifiable.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/qa-report-signing.bpmn"><code>cat-harness/processes/qa-report-signing.bpmn#Task_BuildRun</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_bpmn" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-bpmn-activities--process_l2dak.task_bpmn" data-fa-state="extracted" data-fa-gloss="">
 Business processes · BPMN 2.0 [bpmn-authoring] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l2-dak-authoring.bpmn"><code>cat-harness/processes/l2-dak-authoring.bpmn#Task_Bpmn</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn"><code>smart-base/processes/l2-dak-authoring.bpmn#Task_Bpmn</code></a></p>
 </dd>
 </dl>
 
@@ -928,12 +928,12 @@ Clinical / scientific sign-off [content-review] <span class="fa-gloss-status">ca
 <p>Domain sign-off: clinical SMEs for a guideline, subject-matter reviewers for a paper.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/draft-to-publication.bpmn"><code>cat-harness/processes/draft-to-publication.bpmn#Task_SmeSignoff</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_smevalidate" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-bpmn-activities--process_l2dak.task_smevalidate" data-fa-state="extracted" data-fa-gloss="">
 Clinical validation [content-review] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Ground truth: does the DAK say what the guideline says?</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l2-dak-authoring.bpmn"><code>cat-harness/processes/l2-dak-authoring.bpmn#Task_SmeValidate</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn"><code>smart-base/processes/l2-dak-authoring.bpmn#Task_SmeValidate</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_close.a_close" data-fa-state="extracted" data-fa-gloss="">
 Close issue ONLY on BA authorisation <span class="fa-gloss-status">candidate, extracted</span>
@@ -1198,12 +1198,12 @@ Cut the subgraph that leaves <span class="fa-gloss-status">candidate, extracted<
 
 <h2 id="letter-D">D</h2>
 <dl class="fa-gloss">
-<dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_datadict" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-bpmn-activities--process_l2dak.task_datadict" data-fa-state="extracted" data-fa-gloss="">
 Data dictionary and core data elements [l2-dak-authoring] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l2-dak-authoring.bpmn"><code>cat-harness/processes/l2-dak-authoring.bpmn#Task_DataDict</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn"><code>smart-base/processes/l2-dak-authoring.bpmn#Task_DataDict</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm.call_datamodel" data-fa-state="extracted" data-fa-gloss="">
 Data model Entities + cardinalities <span class="fa-gloss-status">candidate, extracted</span>
@@ -1219,12 +1219,12 @@ Decide what may leave the repository <span class="fa-gloss-status">candidate, ex
 <p>EDITORIAL, and it is stage 1 rather than a filter bolted to the exporter. kg-export produces the WHOLE graph because inspection wants the whole graph; a portal wants what its readers may see. Running the second as the first is how a QA verdict, a bean's blocking note or an unpublished draft reaches a public cache. Decided once, here, rather than at each consumer.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/kg-to-portal.bpmn"><code>cat-harness/processes/kg-to-portal.bpmn#E_Scope</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_dmn" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-bpmn-activities--process_l2dak.task_dmn" data-fa-state="extracted" data-fa-gloss="">
 Decision logic · DMN tables [dmn-authoring] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l2-dak-authoring.bpmn"><code>cat-harness/processes/l2-dak-authoring.bpmn#Task_Dmn</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn"><code>smart-base/processes/l2-dak-authoring.bpmn#Task_Dmn</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_datamodel.a_declare" data-fa-state="extracted" data-fa-gloss="">
 Declare the model where a tool can read it <span class="fa-gloss-status">candidate, extracted</span>
@@ -1834,12 +1834,12 @@ Import what, where, and who does it <span class="fa-gloss-status">candidate, ext
 <p>Three questions the scan cannot answer: import these or not; library or content for each group; leave the files where they are or reorganize to declutter. Plus whether to dispatch one ingestion agent or a small swarm. Non-relaxable: nobody's files are moved or imported on inference.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/getting-started.bpmn"><code>cat-harness/processes/getting-started.bpmn#Task_ConfirmImport</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_indicators" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-bpmn-activities--process_l2dak.task_indicators" data-fa-state="extracted" data-fa-gloss="">
 Indicators and requirements [l2-dak-authoring] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l2-dak-authoring.bpmn"><code>cat-harness/processes/l2-dak-authoring.bpmn#Task_Indicators</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn"><code>smart-base/processes/l2-dak-authoring.bpmn#Task_Indicators</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_methodologyfromsource.call_ingest" data-fa-state="extracted" data-fa-gloss="">
 Ingest into library/ <span class="fa-gloss-status">candidate, extracted</span>
@@ -2485,12 +2485,12 @@ Persist the log to the data store <span class="fa-gloss-status">candidate, extra
 <p>Capture is explicitly on — by &lt;cat-harness.processes:log capture=&quot;on&quot;/&gt; on the process or by config — so the entries go to the git data store. Only this branch commits anything.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/activity-log.bpmn"><code>cat-harness/processes/activity-log.bpmn#A_PersistLog</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_personas" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-bpmn-activities--process_l2dak.task_personas" data-fa-state="extracted" data-fa-gloss="">
 Personas and scenarios [l2-dak-authoring] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l2-dak-authoring.bpmn"><code>cat-harness/processes/l2-dak-authoring.bpmn#Task_Personas</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn"><code>smart-base/processes/l2-dak-authoring.bpmn#Task_Personas</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm.call_needs" data-fa-state="extracted" data-fa-gloss="">
 Phase 1 Needs <span class="fa-gloss-status">candidate, extracted</span>
@@ -3785,12 +3785,12 @@ Scope the criterion so it stops applying here <span class="fa-gloss-status">cand
 <p>One edit to the criterion rather than ten overrules on the blocks it should never have covered. This branch is the one an adjudicator under time pressure converts into a dispensation, and the conversion is a defect: a dispensation lapses when the source moves, so a mis-scoped criterion granted its way past comes back every time anybody touches the block.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/criterion-adjudication.bpmn"><code>cat-harness/processes/criterion-adjudication.bpmn#A_ScopeCriterion</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_scopedak" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-bpmn-activities--process_l2dak.task_scopedak" data-fa-state="extracted" data-fa-gloss="">
 Scope the DAK [content-plan] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Enumerate the processes, decisions and data elements the guideline implies; identify the actors.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l2-dak-authoring.bpmn"><code>cat-harness/processes/l2-dak-authoring.bpmn#Task_ScopeDak</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn"><code>smart-base/processes/l2-dak-authoring.bpmn#Task_ScopeDak</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_upstreamadoption.a_scope" data-fa-state="extracted" data-fa-gloss="">
 Scope the delta pinned → candidate <span class="fa-gloss-status">candidate, extracted</span>
@@ -3855,19 +3855,19 @@ Seed the work plan <span class="fa-gloss-status">candidate, extracted</span>
 <p>The first beans: what the author said they want to get started on, one bean per top-level content object they named.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/getting-started.bpmn"><code>cat-harness/processes/getting-started.bpmn#Task_SeedPlan</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_seedbeans" data-fa-state="extracted" data-fa-gloss="">
-Seed the work plan [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
-</dt>
-<dd>
-<p>Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l2-dak-authoring.bpmn"><code>cat-harness/processes/l2-dak-authoring.bpmn#Task_SeedBeans</code></a></p>
-</dd>
 <dt id="cat-harness--kg-bpmn-activities--process_lifecycle.task_seedbeans" data-fa-state="extracted" data-fa-gloss="">
 Seed the work plan [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The plan becomes beans. From here on, beans/ is the shared answer to 'what is done, what is next' — for humans and agents alike.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-lifecycle.bpmn"><code>cat-harness/processes/content-lifecycle.bpmn#Task_SeedBeans</code></a></p>
+</dd>
+<dt id="smart-base--kg-bpmn-activities--process_l2dak.task_seedbeans" data-fa-state="extracted" data-fa-gloss="">
+Seed the work plan [todo-manager] <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan.</p>
+<p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn"><code>smart-base/processes/l2-dak-authoring.bpmn#Task_SeedBeans</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_optionsanalysis.a_select" data-fa-state="extracted" data-fa-gloss="">
 Select the methodology by context <span class="fa-gloss-status">candidate, extracted</span>
@@ -4076,12 +4076,12 @@ Take in the turn <span class="fa-gloss-status">candidate, extracted</span>
 <p>A turn is anything that arrives — a person's message, a tool result, a notification. The machine advances on turns rather than on a clock, because a session that has been told nothing has not changed.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/session-state-machine.bpmn"><code>cat-harness/processes/session-state-machine.bpmn#A_ReadTurn</code></a></p>
 </dd>
-<dt id="cat-harness--kg-bpmn-activities--process_l2dak.task_terminology" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-bpmn-activities--process_l2dak.task_terminology" data-fa-state="extracted" data-fa-gloss="">
 Terminology bindings [terminology-management] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them.</p>
-<p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l2-dak-authoring.bpmn"><code>cat-harness/processes/l2-dak-authoring.bpmn#Task_Terminology</code></a></p>
+<p class="fa-gloss-meta">BPMN activities of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn"><code>smart-base/processes/l2-dak-authoring.bpmn#Task_Terminology</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_deliver.s_testmvp" data-fa-state="extracted" data-fa-gloss="">
 Test MVP in own context <span class="fa-gloss-status">candidate, extracted</span>

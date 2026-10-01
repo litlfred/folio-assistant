@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jcet
 title: 'STANDARDS MISMATCHES the W3C methodology nodes recorded: PROV_CONTEXT IRI, JSON-LD @base in an external context, ODRL conflict default'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-01T12:32:06Z
-updated_at: 2026-10-01T12:32:37Z
+updated_at: 2026-10-01T15:57:39Z
 parent: folio-assistant-scfh
 ---
 
@@ -23,3 +23,5 @@ Found while writing the three W3C methodology nodes (bean 6306, PR #1769), each 
 
 ## 2026-10-01 — @base measured (item 2)
 Emitted .jsonld reference the context BY URL ("@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"), i.e. the external case. Expanding {"@id": "papers/x/blocks/def-foo"} with jsonld.js 8.3.3, the published context served by a local documentLoader and the document loaded from https://example.org/somewhere/else/: the @id resolves to https://litlfred.github.io/folio/papers/x/blocks/def-foo — the SAME as with the context inline. So jsonld.js applies @base from a remote context, which the held JSON-LD 1.1 text (§4.1.3) says is ignored. Our IRIs are correct today only through that processor's behaviour; a strictly conforming 1.1 processor would resolve relative @ids against each document's own URL. Not a live defect in this repo's pipeline; a portability defect for any consumer. Options: emit absolute @ids, or put @base in each document (or an embedded context) rather than in the remote one.
+
+_2026-10-01T15:57:39Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

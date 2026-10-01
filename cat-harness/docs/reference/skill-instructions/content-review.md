@@ -61,7 +61,7 @@ Findings and a decision — two things, not one. See
 | [Draft, review and publish](../../processes/draft-to-publication.html) | Circulate the draft; Review the draft publication; Clinical / scientific sign-off |
 | [Editing and HCI validation](../../processes/editing-hci-validation.html) | Agent review of the change; Human / SME review |
 | [Evidence for a recommendation](../../processes/evidence-retrieval.html) | Review the guidance already in this content |
-| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Clinical validation |
 | [Narrative review](../../processes/review-narrative.html) | Read the sidecar findings |
 | [Review task](../../processes/review-task.html) | Consolidate findings |
+| [L2 DAK authoring](../../processes/l2-dak-authoring.html) | Clinical validation |
 
