@@ -623,3 +623,28 @@ renders the source page, which holds only the `<!-- DAK_API_CONTENT -->`
 placeholder, and lacks the hub. That page is now a gap for P0, to be closed
 by pointing it at the replica or by injecting the hub as a DAK overlay. The
 overlay belongs in smart-base, not fhir-harness.
+
+## 2026-10-01: the DAK API section on artefact pages — 14 of 14 equivalent
+
+smart-base's post-processing (`_generate_html_content`) appends "API
+Information" and "Endpoints" to each ValueSet's Publisher page. It builds them
+from the ValueSet's OpenAPI sidecar, and it skips logical models.
+
+- **Our version.** The artefact page carries a host element, and
+  `dak-openapi.js` builds the same elements, classes, text, fallbacks and
+  style in the browser, from the OpenAPI file in the served graph (bean
+  `680p`).
+- **Checked in Chromium:** all 14 Publisher pages carrying the section show
+  identical displayed text and element structure. A test pins the page set to
+  exactly the ValueSets with a held OpenAPI file.
+- **The owner's v1.7.2 PDF** (`StructureDefinition-COSEHeader`) shows the
+  section, plus a "Schema Definition" block, on a StructureDefinition page.
+  The current generator omits "Schema Definition" on purpose ("intentionally
+  omitted … to avoid duplicate content") and skips logical models. So the
+  fork's 1.8.0 render, with no section on the 5 StructureDefinition pages, is
+  current upstream behaviour, and ours matches it.
+- **A whitespace trap, met and fixed.** The template is appended to an
+  artefact page. A whitespace-stripping opening tag glued its `<div>` onto the
+  page's last table row, and kramdown printed it as text. This template
+  therefore opens with an unstripped comment tag; the
+  README reader accepts both forms.

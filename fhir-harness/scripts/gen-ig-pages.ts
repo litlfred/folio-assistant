@@ -156,6 +156,10 @@ const DAK_VIEW_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-view
 const DAK_HUB_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "dak-api.liquid");
 const DAK_HUB_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-hub.js");
 const DAK_HUB_SCRIPT = "assets/dak-hub.js";
+/** An artefact page's DAK API section: its template and the loader that builds it from the OpenAPI sidecar. */
+const DAK_OPENAPI_BODY = readFileSync(join(import.meta.dir, "templates", "ig-pages", "dak-openapi.liquid"), "utf8");
+const DAK_OPENAPI_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-openapi.js");
+const DAK_OPENAPI_SCRIPT = "assets/dak-openapi.js";
 
 /**
  * The instance that OWNS the template chrome, or none.
@@ -743,6 +747,16 @@ function stateTag(a: FhirArtifact): string {
 
 function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   const name = a.title ?? a.name ?? a.id;
+  // THE DAK API SECTION — what smart-base's post-processing appends to a
+  // ValueSet's Publisher page ("API Information", "Endpoints"), built in the
+  // browser from the OpenAPI sidecar in the served graph (bean `680p`). Only
+  // for a ValueSet: the generator skips logical models, so the Publisher's
+  // StructureDefinition pages carry none, and a section here would be a
+  // difference from the standard render rather than a match.
+  const openapi =
+    a.resourceType === "ValueSet" && a.dak?.openapi?.localPath && dakViewServing().ok
+      ? { src: `../${a.dak.openapi.localPath}`, script: `../${DAK_OPENAPI_SCRIPT}` }
+      : undefined;
 
   const dakRows = (["schema", "displays", "openapi", "jsonld"] as const).map((k) => {
     const r = a.dak?.[k];
@@ -819,8 +833,10 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
   return shell(
     `${name} — ${LABEL} artefact`,
     `${a.key} in the ${LABEL} IG, with its canonical URL, published representations and DAK API sidecars.`,
-    body,
+    openapi ? `${body}\n\n${DAK_OPENAPI_BODY}` : body,
     { kind: "leaf" },
+    "fixture",
+    openapi ? { dak_openapi: openapi } : {},
   );
 }
 
@@ -948,6 +964,7 @@ for (const a of dakServing.ok ? ix.artifacts : []) {
   }
 }
 if (dakViewCount > 0) pages.set(DAK_VIEW_SCRIPT, readFileSync(DAK_VIEW_LOADER, "utf8"));
+if ([...pages.values()].some((p) => p.includes("data-dak-openapi-src"))) pages.set(DAK_OPENAPI_SCRIPT, readFileSync(DAK_OPENAPI_LOADER, "utf8"));
 
 // THE DAK API HUB — the Publisher's `dak-api.html`, as its own page (owner,
 // 2026-10-01: "replicate dak-api.html seperately"). The hub fragment is held

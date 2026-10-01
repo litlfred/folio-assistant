@@ -2,6 +2,7 @@
 title: "WHO GDHCN Key Usage ValueSet — WHO SMART Trust artefact"
 description: "ValueSet/KeyUsage in the WHO SMART Trust IG, with its canonical URL, published representations and DAK API sidecars."
 nav_exclude: true
+dak_openapi: {"src":"../fhir-artifact-index/dak/ValueSet-KeyUsage.openapi.json","script":"../assets/dak-openapi.js"}
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
@@ -120,3 +121,17 @@ IG rather than a gap in this index.
 | Displays | <https://litlfred.github.io/smart-trust/ValueSet-KeyUsage.displays.json> | `fhir-artifact-index/dak/ValueSet-KeyUsage.displays.json` |
 | OpenAPI | <https://litlfred.github.io/smart-trust/ValueSet-KeyUsage.openapi.json> | `fhir-artifact-index/dak/ValueSet-KeyUsage.openapi.json` |
 | JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-KeyUsage.jsonld> | `fhir-artifact-index/dak/ValueSet-KeyUsage.jsonld` · [view](ValueSet-KeyUsage.jsonld.html) |
+
+
+{% comment %}
+An artefact page's DAK API section ("API Information", "Endpoints"), appended to the page by `gen-ig-pages.ts`.
+Reads `page.dak_openapi`: `src` (the artefact's OpenAPI sidecar in the served artefact-index graph) and
+`script` (the loader). The section is built in the browser by `dak-openapi.js` from that file, as
+smart-base's post-processing builds it into the Publisher's page; nothing of it is baked in here.
+No whitespace control on these tags, unlike a template that IS a page: this one is APPENDED to an
+artefact page, and a whitespace-stripping opening tag ate the blank line after that page's last table row, so the
+<div> became part of the row and kramdown printed it as text (`liquid-templates` §"Whitespace").
+{% endcomment %}
+<div class="dak-openapi-host" data-dak-openapi-src="{{ page.dak_openapi.src }}"><p>Loading the API information…</p></div>
+<noscript><p>The API information needs JavaScript; the <a href="{{ page.dak_openapi.src }}">OpenAPI file</a> does not.</p></noscript>
+<script src="{{ page.dak_openapi.script }}" defer></script>

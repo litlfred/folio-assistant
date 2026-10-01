@@ -410,3 +410,24 @@ describe("left-hand nav — three roles, one per page kind", () => {
     }
   });
 });
+
+describe("the DAK API section is on exactly the pages the Publisher puts it on", () => {
+  /**
+   * smart-base's post-processing appends "API Information" / "Endpoints" to a
+   * ValueSet's page and skips logical models (`generate_dak_api_hub.py`), so
+   * the section belongs on the ValueSets whose OpenAPI sidecar is held — and
+   * on nothing else, since an extra section is a difference from the
+   * standard render too (bean `jut3`).
+   */
+  const full = ix as unknown as { artifacts: { resourceType: string; id: string; dak?: { openapi?: { localPath?: string } } }[] };
+  const expected = full.artifacts
+    .filter((a) => a.resourceType === "ValueSet" && a.dak?.openapi?.localPath)
+    .map((a) => `${a.resourceType}-${a.id}.md`)
+    .sort();
+  const carrying = artifactFiles.filter((f) => readFileSync(join(ARTIFACTS, f), "utf-8").includes("data-dak-openapi-src")).sort();
+
+  it("the set matches, and is not empty", () => {
+    expect(carrying).toEqual(expected);
+    expect(carrying.length).toBeGreaterThan(0);
+  });
+});

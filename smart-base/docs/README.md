@@ -9,5 +9,5 @@ Part of [SMART Base](../README.md) 0.1.0, declared as `smart-base-docs`, holding
 |---|---|---|
 | [`index.md`](index.md) | "All 225 artefacts of the WHO SMART Base IG 0.3.0, reconstructed from its published output." |  |
 | [`artifact/`](artifact/) | 294 files | |
-| [`assets/`](assets/) | 1 file | |
+| [`assets/`](assets/) | 2 files | |
 <!-- kg:subgraph:end -->

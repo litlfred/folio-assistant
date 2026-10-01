@@ -19,5 +19,5 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`ig-site-data.ts`](ig-site-data.ts) | a file |  |
 | [`stage-ig-sites.test.ts`](stage-ig-sites.test.ts) | a file |  |
 | [`stage-ig-sites.ts`](stage-ig-sites.ts) | a file |  |
-| [`templates/`](templates/) | 5 files | |
+| [`templates/`](templates/) | 7 files | |
 <!-- kg:subgraph:end -->
