@@ -106,7 +106,16 @@ if (import.meta.main) {
   // ("not uptodate. Cannot merge"), and this used to print "tree restored"
   // over a half-merged tree regardless. The restore is now CHECKED; when it
   // did not happen the person is told, and nothing destructive runs unasked.
+  //
+  // Staging first is what makes the abort succeed: `merge --abort` is
+  // `reset --merge`, which keeps (and so refuses over) index/worktree
+  // differences, and resets everything that is staged. The run started from
+  // a clean tree with no untracked files (checked above), so every change
+  // present is this run's own and staging it loses nothing. Measured
+  // 2026-10-01 on #1754: unstaged regen output left the merge in progress;
+  // `add -A` then `merge --abort` restored the tree to 0 changes.
   const abort: (why: string) => never = (why) => {
+    spawnSync("git", ["-C", root, "add", "-A"], { stdio: "inherit" });
     spawnSync("git", ["-C", root, "merge", "--abort"], { stdio: "inherit" });
     const merging = spawnSync("git", ["-C", root, "rev-parse", "-q", "--verify", "MERGE_HEAD"]).status === 0;
     const restored = !merging && !git(root, "status", "--porcelain");
