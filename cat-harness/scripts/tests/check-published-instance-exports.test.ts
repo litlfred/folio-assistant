@@ -252,3 +252,23 @@ describe("committedSidecarSubjects — the comparison has a subject (bean r7v6, 
     expect(out).toContain("no workflow runs `kg-export.ts --instance` for ./bootstrap");
   });
 });
+
+describe("the bootstrap kg-export sidecar has a WORKFLOW producer (bean 0utt)", () => {
+  test("code-quality-gates.yml runs `kg-export.ts --instance ./bootstrap`, so the sidecar is no orphan", () => {
+    // Owner ruling 2026-10-01: keep the file and give it a producer. The
+    // qa-publish job regenerates it before publishing, and this gate reads that
+    // line as the producer, so it stops reporting "no workflow producer".
+    const found = publishedInstances(readFileSync(wf("code-quality-gates.yml"), "utf-8"), "code-quality-gates.yml");
+    expect(found.filter((i) => i.tool === "kg-export").map((i) => i.instance)).toContain("./bootstrap");
+    const r = sidecarSubjectsFrom(found);
+    if (r.unknown === undefined) expect(r.subjects.map((s) => s.instance)).not.toContain("./bootstrap");
+  });
+
+  test("the producer step is in the PUBLISH job, ahead of the publish", () => {
+    const text = readFileSync(wf("code-quality-gates.yml"), "utf-8");
+    const job = text.slice(text.indexOf("\n  qa-publish:"));
+    const produce = job.indexOf("kg-export.ts --instance ./bootstrap");
+    expect(produce).toBeGreaterThan(-1);
+    expect(produce).toBeLessThan(job.indexOf("bun run qa:publish"));
+  });
+});

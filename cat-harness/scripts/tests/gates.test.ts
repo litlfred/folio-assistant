@@ -233,7 +233,12 @@ describe("a strict reader and a loose one agree", () => {
         .filter((g) => !found.has(g.command))
         .map((g) => g.command),
     );
-    expect([...published].every((c) => c.includes("qa:publish"))).toBe(true);
+    // The publish itself, and the step that PRODUCES what it publishes — bean
+    // `0utt`: the bootstrap kg-export sidecar is regenerated in that job, and
+    // `check:published-instance-exports` (a gate) already runs the same export.
+    const named = (c: string) =>
+      c.includes("qa:publish") || /kg-export\.ts --instance \.\/bootstrap\b/.test(c);
+    expect([...published].filter((c) => !named(c))).toEqual([]);
     expect(loose.filter((c) => !found.has(c) && !published.has(c))).toEqual([]);
     // And the guard is not vacuous — a loose scan that matched nothing would
     // pass the filter above while proving nothing at all.

@@ -366,7 +366,13 @@ function runExport(inv: Invocation, outDir: string, against?: string): ExportRes
   // stub. Composed here rather than parsed out of the export's output, because
   // a gate that reads a path off stdout breaks when a log line is reworded.
   const qaStem = `kg-export.${basename(resolve(REPO_ROOT, inv.instance))}`;
-  const fresh = readQaResult(qaResultPath(outDir, qaStem));
+  // ONLY for a kg-export row (bean `0utt`). Every invocation shares `outDir`,
+  // so an `export-graph` row — which writes no sidecar — read the one a
+  // kg-export row had just written there and reported "QA sidecar current"
+  // for a comparison it never made. Latent while the kg-export row came LAST
+  // (it was only ever the committed-sidecar subject); exposed the moment a
+  // workflow line producing that sidecar sorted ahead of the deploys.
+  const fresh = (inv.tool ?? "kg-export") === "kg-export" ? readQaResult(qaResultPath(outDir, qaStem)) : undefined;
   // Through qa-store's four states (bean `id4s`): the working copy, or the
   // `qa-reports` branch with `--against`.
   const qaSidecar = fresh === undefined ? undefined : qaResultState(qaResultPath(QA_ROOT, qaStem), fresh, { against });

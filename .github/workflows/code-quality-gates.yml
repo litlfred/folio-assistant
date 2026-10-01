@@ -2338,6 +2338,17 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      # The PRODUCER of `kg-export.bootstrap.qa-results.json` (bean `0utt`,
+      # owner ruling 2026-10-01: keep the file, give it a producer). Both
+      # deploys publish bootstrap through bootstrap-tools' `export-graph.ts`,
+      # which writes no QA sidecar, so before this step only a hand run wrote
+      # it and `check:published-instance-exports` reported "no workflow
+      # producer". Run here, before the publish, so what reaches `qa-reports`
+      # is this commit's export. The document goes to the runner's temp dir:
+      # the sidecar is the product. That gate reads this line as the producer.
+      - name: Regenerate the bootstrap kg-export QA sidecar
+        run: bun run cat-harness/scripts/kg-export.ts --instance ./bootstrap --out "$RUNNER_TEMP/bootstrap-kg-export.jsonld"
+
       # Every write to `qa-reports` goes through `qa-store.ts`: fetch the tip,
       # splice, `commit-tree -p`, push without `-f`, three attempts with the
       # backoff from `backoff-sleep.ts`. `check:workflows` fails a raw push
