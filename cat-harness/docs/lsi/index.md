@@ -123,7 +123,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**309** units · **7638** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**309** units · **7637** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -131,14 +131,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 47.64 | bean, instance, graph, session, page, kind, branch, directory | *(none)* |
+| 1 | 47.61 | bean, instance, session, graph, page, kind, branch, directory | *(none)* |
 | 2 | 27.81 | bias, studies, study, statistical, effect, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, declared |
 | 3 | 22.38 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, page, directory, bias, actor |
-| 4 | 19.56 | dpi, color, grayscale, lean, pdf, images, text, matplotlib | session, branch, queue, prs, beans, commits, coordination, bean |
+| 4 | 19.57 | dpi, color, grayscale, lean, pdf, images, text, matplotlib | session, branch, queue, prs, commits, beans, coordination, sibling |
 | 5 | 18.72 | dpi, color, grayscale, images, contrast, raster, matplotlib, fonts | proof, lean, glossary, declaration, term, theorem, stub, mathlib |
 | 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, description, solutions, consider, ignoring |
 | 7 | 16.34 | lean, mathlib, search, mcp, sorry, proof, page, build | watcher, voice, slot, backlog, queue, nesting, ledger, objection |
-| 8 | 15.39 | mathlib, lean, sorry, lake, goal, session, mcp, oleans | slot, watcher, backlog, criterion, band, forward, major, section |
+| 8 | 15.40 | mathlib, lean, sorry, lake, goal, session, mcp, sessions | slot, watcher, backlog, criterion, band, major, forward, auto-discharge |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

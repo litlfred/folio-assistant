@@ -2,14 +2,14 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "55edc157f206"
+    "script_hash": "d4d64806a93a"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-10-01T02:20:12.099Z",
-  "verdict": "findings",
+  "updated_at": "2026-10-01T08:00:05.092Z",
+  "verdict": "unknown",
   "checks": [
     {
       "id": "staging-preview-size",
@@ -27,20 +27,20 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 5807165992,
+          "value": 6517214853,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 27,
+          "value": 30,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
         }
       ],
       "findings": [
         {
-          "summary": "27 staging preview(s) total 5.41 GB, over the 500.0 MB warning point.",
+          "summary": "30 staging preview(s) total 6.07 GB, over the 500.0 MB warning point.",
           "metric": "staging-total-bytes",
           "severity": "major",
           "action": "Report the list below to the owner and ask which are finished with. Removal is by adding `staging:cleanup` to that PR WHILE IT IS STILL OPEN, or a `feature-staging.yml` dispatch once it has closed (bean `7umv`) — never by this sweep, and never on an agent's own initiative."
@@ -79,7 +79,7 @@
     },
     {
       "id": "staging-preview-orphans",
-      "state": "finding",
+      "state": "unknown",
       "summary": "A `STAGING/` preview that no liveness signal claims — no open pull request, no branch carrying unmerged work, no recent commit. Retained by policy, not by mistake: this is the list a person needs in order to decide, never a list to act on unasked.",
       "thresholds": [
         {
@@ -90,83 +90,9 @@
           "severity": "minor"
         }
       ],
-      "measurements": [
-        {
-          "metric": "staging-orphan-count",
-          "value": 11,
-          "unit": "count",
-          "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
-        },
-        {
-          "metric": "staging-orphan-bytes",
-          "value": 2359159120,
-          "unit": "bytes",
-          "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug>"
-        },
-        {
-          "metric": "staging-live-count",
-          "value": 16,
-          "unit": "count",
-          "command": "git ls-tree -r -l FETCH_HEAD:STAGING/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
-        }
-      ],
-      "findings": [
-        {
-          "summary": "`STAGING/_retired` (20.9 kB, 26 files) — no open pull request; and no branch on the remote slugifies to it.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `_retired` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: _retired` and `cleanup_confirm: _retired`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-7h3u-smart-trust-branding` (453.6 MB, 2859 files) — no open pull request; `claude/7h3u-smart-trust-branding` is already in `main`, tip 4.3 h old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-7h3u-smart-trust-branding` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: claude-7h3u-smart-trust-branding` and `cleanup_confirm: claude-7h3u-smart-trust-branding`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-cool-fermi-htir5p` (278.7 MB, 1922 files) — no open pull request; `claude/cool-fermi-htir5p` is already in `main`, tip 2.0 h old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-cool-fermi-htir5p` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: claude-cool-fermi-htir5p` and `cleanup_confirm: claude-cool-fermi-htir5p`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-folio-handle-scroll-overlap` (175.4 MB, 1569 files) — no open pull request; `claude/folio-handle-scroll-overlap` is already in `main`, tip 3.1 h old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-folio-handle-scroll-overlap` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: claude-folio-handle-scroll-overlap` and `cleanup_confirm: claude-folio-handle-scroll-overlap`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-magical-archimedes-4qkfxp-regen` (174.5 MB, 1558 files) — no open pull request; `claude/magical-archimedes-4qkfxp-regen` is already in `main`, tip 4.7 h old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-magical-archimedes-4qkfxp-regen` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: claude-magical-archimedes-4qkfxp-regen` and `cleanup_confirm: claude-magical-archimedes-4qkfxp-regen`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-magical-archimedes-4qkfxp-regen-glossary` (176.8 MB, 1566 files) — no open pull request; `claude/magical-archimedes-4qkfxp-regen-glossary` is already in `main`, tip 4.2 h old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-magical-archimedes-4qkfxp-regen-glossary` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: claude-magical-archimedes-4qkfxp-regen-glossary` and `cleanup_confirm: claude-magical-archimedes-4qkfxp-regen-glossary`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-magical-dijkstra-19yvml` (282.2 MB, 1929 files) — no open pull request; `claude/magical-dijkstra-19yvml` is already in `main`, tip 77 min old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-magical-dijkstra-19yvml` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: claude-magical-dijkstra-19yvml` and `cleanup_confirm: claude-magical-dijkstra-19yvml`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-mqueue-unavailable` (173.8 MB, 1572 files) — no open pull request; `claude/mqueue-unavailable` is already in `main`, tip 3.2 h old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-mqueue-unavailable` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: claude-mqueue-unavailable` and `cleanup_confirm: claude-mqueue-unavailable`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-practical-ride-e0v0aq` (178.5 MB, 1605 files) — no open pull request; `claude/practical-ride-e0v0aq` is already in `main`, tip 2.9 h old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-practical-ride-e0v0aq` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: claude-practical-ride-e0v0aq` and `cleanup_confirm: claude-practical-ride-e0v0aq`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-search-collapsible` (177.9 MB, 1605 files) — no open pull request; `claude/search-collapsible` is already in `main`, tip 116 min old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-search-collapsible` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: claude-search-collapsible` and `cleanup_confirm: claude-search-collapsible`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`STAGING/claude-sharp-einstein-970n6g` (178.5 MB, 1605 files) — no open pull request; `claude/sharp-einstein-970n6g` is already in `main`, tip 2.0 h old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `claude-sharp-einstein-970n6g` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: claude-sharp-einstein-970n6g` and `cleanup_confirm: claude-sharp-einstein-970n6g`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        }
-      ]
+      "measurements": [],
+      "findings": [],
+      "reason": "7 preview(s) could not be judged: `STAGING/claude-0uu2-declaration-gap` — `claude/0uu2-declaration-gap`: this clone's history of `main` is truncated at a graft boundary, so \"not an ancestor of main\" cannot be told from \"the merge point was never fetched\". Re-run with the full history (`fetch-depth: 0`).; `STAGING/claude-eager-thompson-3bb3kq` — `claude/eager-thompson-3bb3kq`: this clone's history of `main` is truncated at a graft boundary, so \"not an ancestor of main\" cannot be told from \"the merge point was never fetched\". Re-run with the full history (`fetch-depth: 0`).; `STAGING/claude-kgqa-sidecar-7e59` — `claude/kgqa-sidecar-7e59`: this clone's history of `main` is truncated at a graft boundary, so \"not an ancestor of main\" cannot be told from \"the merge point was never fetched\". Re-run with the full history (`fetch-depth: 0`).; `STAGING/claude-oe98-generator-prefix` — `claude/oe98-generator-prefix`: this clone's history of `main` is truncated at a graft boundary, so \"not an ancestor of main\" cannot be told from \"the merge point was never fetched\". Re-run with the full history (`fetch-depth: 0`).; `STAGING/claude-peaceful-heisenberg-dzgsf1` — `claude/peaceful-heisenberg-dzgsf1`: this clone's history of `main` is truncated at a graft boundary, so \"not an ancestor of main\" cannot be told from \"the merge point was never fetched\". Re-run with the full history (`fetch-depth: 0`).; `STAGING/claude-stream-2-goal2-surface` — `claude/stream-2-goal2-surface`: this clone's history of `main` is truncated at a graft boundary, so \"not an ancestor of main\" cannot be told from \"the merge point was never fetched\". Re-run with the full history (`fetch-depth: 0`).; `STAGING/claude-stream-4-instruments` — `claude/stream-4-instruments`: this clone's history of `main` is truncated at a graft boundary, so \"not an ancestor of main\" cannot be told from \"the merge point was never fetched\". Re-run with the full history (`fetch-depth: 0`).. A signal that cannot be evaluated sends that preview to `unknown`, never to the orphan list. Determined but NOT reported this run: `STAGING/_retired`, `STAGING/claude-7h3u-smart-trust-branding`, `STAGING/claude-before-after-preview-skill`, `STAGING/claude-charming-curie-n04agq`, `STAGING/claude-ci-health-immediate`, `STAGING/claude-cool-fermi-htir5p`, `STAGING/claude-folio-handle-scroll-overlap`, `STAGING/claude-magical-archimedes-4qkfxp-regen`, `STAGING/claude-magical-archimedes-4qkfxp-regen-glossary`, `STAGING/claude-magical-dijkstra-19yvml`, `STAGING/claude-mqueue-unavailable`, `STAGING/claude-practical-ride-e0v0aq`, `STAGING/claude-search-collapsible`, `STAGING/claude-search-pinned`, `STAGING/claude-sharp-einstein-970n6g`, `STAGING/claude-tbdl-jekyll-doc-index`, `STAGING/claude-vibrant-franklin-d0ulgh` — named here so the measurement is not lost, but nothing should be acted on while a signal is unreadable."
     },
     {
       "id": "repository-size",
@@ -205,47 +131,41 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 378756685,
+          "value": 394283257,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 4948623914,
+          "value": 815359920,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 4856114176,
+          "value": 720654336,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
         {
           "metric": "pack-count",
-          "value": 113,
+          "value": 55,
           "unit": "count",
           "command": "git count-objects -v"
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 13.07,
+          "value": 2.07,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "Tracked content at HEAD is 361.2 MB, past the 250 MB early-warning point.",
+          "summary": "Tracked content at HEAD is 376.0 MB, past the 250 MB early-warning point.",
           "metric": "tracked-tree-bytes",
           "severity": "minor",
           "action": "Note it and re-measure next sweep. No action is due until it approaches 1 GB; this exists so the approach is visible rather than sudden."
-        },
-        {
-          "summary": "`.git` is 4.61 GB against 361.2 MB of tracked content — 13.1x, in 113 pack(s).",
-          "metric": "git-dir-to-tree-ratio",
-          "severity": "minor",
-          "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
         }
       ]
     },
@@ -272,7 +192,7 @@
           "metric": "bean-self-declared-done",
           "value": 0,
           "unit": "count",
-          "basis": "NO EXTERNAL STANDARD; calibrated here, and zero because the condition has no tolerant form. `bean-coordination` makes `in-progress` a CLAIM a sibling is expected to honour, so a bean whose every Done-when box is ticked while its front matter still says claimed is two answers to one question — and the one a sibling reads first is the wrong one. Measured 2026-09-21 and the cost is not hypothetical: `tyyc` was picked up as fresh work and turned out to have landed, gate registered in CI and passing, costing a session's opening to re-derive. MINOR because the remedy is a person re-deriving and closing, not a broken consumer. Of 96 claimed beans that day, 4 met this and 6 had met a cruder body-wide version — the difference is `z4mq` and the reason `doneWhenState` has an `unreadable` state.",
+          "basis": "NO EXTERNAL STANDARD; calibrated here, and zero because the condition has no tolerant form. `bean-coordination` makes `in-progress` a CLAIM a sibling is expected to honour, so a bean whose every Done-when box is ticked while its front matter still says claimed is two answers to one question — and the one a sibling reads first is the wrong one. Measured 2026-09-21 and the cost is not hypothetical: `tyyc` was picked up as fresh work and turned out to have landed, gate registered in CI and passing, costing a session's opening to re-derive. MINOR because the remedy is a person re-deriving and closing, not a broken consumer. Of 96 claimed beans that day, 4 met this and 6 had met a cruder body-wide version — the difference is `z4mq` and the reason `doneWhenState` has an `unreadable` state. ONLY A CLOSABLE BEAN IS COUNTED (bean `v9ah`). Measured 2026-09-25: every bean this named was inside the 72 h mid-flight window, which `bean-coordination` puts off limits, and `5a3l` had 16 open children of 26, so its own ticked boxes could not close it at any age. Both are now counted separately, as `bean-self-declared-done-mid-flight` and `bean-self-declared-done-open-children`, and never silently dropped. THE EPIC CASE IS RULED IN THE CHECK: a parent with an open child is not self-declared done, because its children are the work.",
           "severity": "minor"
         },
         {
@@ -307,19 +227,19 @@
       "measurements": [
         {
           "metric": "bean-total",
-          "value": 539,
+          "value": 548,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-open",
-          "value": 298,
+          "value": 301,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 241,
+          "value": 247,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -343,7 +263,7 @@
         },
         {
           "metric": "bean-claimed",
-          "value": 101,
+          "value": 106,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -379,380 +299,344 @@
         },
         {
           "metric": "bean-claimed-with-criteria",
-          "value": 101,
+          "value": 106,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
         {
           "metric": "bean-claimed-criteria-absent",
-          "value": 24,
+          "value": 25,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
         {
           "metric": "bean-claimed-criteria-unreadable",
-          "value": 10,
+          "value": 11,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
         {
           "metric": "bean-self-declared-done",
-          "value": 12,
+          "value": 4,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
+        },
+        {
+          "metric": "bean-self-declared-done-mid-flight",
+          "value": 6,
+          "unit": "count",
+          "command": "beans/defs/*.md — task-list items under every `## Done when` heading, touched within 72 h"
+        },
+        {
+          "metric": "bean-self-declared-done-open-children",
+          "value": 2,
+          "unit": "count",
+          "command": "beans/defs/*.md — task-list items under every `## Done when` heading, with an open child"
         }
       ],
       "findings": [
         {
-          "summary": "`folio-assistant-d4m4` is `in-progress` with all 3 of its Done-when boxes ticked (\"MCP COMMANDS: the root .mcp.json named two moved scripts, and check:command-paths never read it\").",
+          "summary": "`folio-assistant-qj9a` is `in-progress` with all 4 of its Done-when boxes ticked, untouched for over 72 h and with no open child (\"STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement\").",
           "metric": "bean-self-declared-done",
           "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
+          "action": "It is past the mid-flight window, so you MAY act on it — but RE-DERIVE IT first, then close it or record why not; never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
         },
         {
-          "summary": "`folio-assistant-y5si` is `in-progress` with all 7 of its Done-when boxes ticked (\"ADAPTERS CLOSURE step 1/2: adapters/paper/ -> folio-assistant-sci/, escape axis unchanged at 2\").",
+          "summary": "`folio-assistant-lvk9` is `in-progress` with all 7 of its Done-when boxes ticked, untouched for over 72 h and with no open child (\"EXTRACTION: list items and blockquotes are extracted PER LINE, so a msgid depends on the author''s hard wrap — translators get sentences in halves\").",
           "metric": "bean-self-declared-done",
           "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
+          "action": "It is past the mid-flight window, so you MAY act on it — but RE-DERIVE IT first, then close it or record why not; never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
         },
         {
-          "summary": "`folio-assistant-nf2z` is `in-progress` with all 4 of its Done-when boxes ticked (\"WORKFLOW TOOLS SEE NO PROCESS: from the repo root workflow_list reports none — diagrams live in dependencies, the resolver is root-only\").",
+          "summary": "`folio-assistant-10uc` is `in-progress` with all 4 of its Done-when boxes ticked, untouched for over 72 h and with no open child (\"STREAM 2/3: GOAL 2 — the rendered surface: navbar, visualisers, stickies (p5wm, 39 open beans)\").",
           "metric": "bean-self-declared-done",
           "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
+          "action": "It is past the mid-flight window, so you MAY act on it — but RE-DERIVE IT first, then close it or record why not; never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
         },
         {
-          "summary": "`folio-assistant-qj9a` is `in-progress` with all 4 of its Done-when boxes ticked (\"STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement\").",
+          "summary": "`folio-assistant-sff8` is `in-progress` with all 4 of its Done-when boxes ticked, untouched for over 72 h and with no open child (\"Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main\").",
           "metric": "bean-self-declared-done",
           "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
+          "action": "It is past the mid-flight window, so you MAY act on it — but RE-DERIVE IT first, then close it or record why not; never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
         },
         {
-          "summary": "`folio-assistant-a8wy` is `in-progress` with all 6 of its Done-when boxes ticked (\"VECTOR FIGURE ARM: extract positioned labels from vector-only figures — 69 of 87 caption pages\").",
-          "metric": "bean-self-declared-done",
-          "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
-        },
-        {
-          "summary": "`folio-assistant-lvk9` is `in-progress` with all 7 of its Done-when boxes ticked (\"EXTRACTION: list items and blockquotes are extracted PER LINE, so a msgid depends on the author''s hard wrap — translators get sentences in halves\").",
-          "metric": "bean-self-declared-done",
-          "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
-        },
-        {
-          "summary": "`folio-assistant-yg29` is `in-progress` with all 4 of its Done-when boxes ticked (\"GOAL 3: showing who-iris with its existing materialised assets, through a themed harness\").",
-          "metric": "bean-self-declared-done",
-          "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
-        },
-        {
-          "summary": "`folio-assistant-10uc` is `in-progress` with all 4 of its Done-when boxes ticked (\"STREAM 2/3: GOAL 2 — the rendered surface: navbar, visualisers, stickies (p5wm, 39 open beans)\").",
-          "metric": "bean-self-declared-done",
-          "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
-        },
-        {
-          "summary": "`folio-assistant-sff8` is `in-progress` with all 4 of its Done-when boxes ticked (\"Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main\").",
-          "metric": "bean-self-declared-done",
-          "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
-        },
-        {
-          "summary": "`folio-assistant-5a3l` is `in-progress` with all 4 of its Done-when boxes ticked (\"DEPLOYMENT: topologies and operating modes are two axes, not one list of modes\").",
-          "metric": "bean-self-declared-done",
-          "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
-        },
-        {
-          "summary": "`folio-assistant-v8n5` is `in-progress` with all 4 of its Done-when boxes ticked (\"HARNESS THEMING: the who-iris board tile, navbar and stickies render on the IRIS theme, not only its pages\").",
-          "metric": "bean-self-declared-done",
-          "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
-        },
-        {
-          "summary": "`folio-assistant-rjug` is `in-progress` with all 3 of its Done-when boxes ticked (\"SCHEMA PROPOSAL: metadata indexes, binary releases and QA reports as declared graph kinds — options, not a single answer\").",
-          "metric": "bean-self-declared-done",
-          "severity": "minor",
-          "action": "RE-DERIVE IT, then close it or record why not — never close it on the strength of its ticks. The boxes are the bean's claim about itself: measured 2026-09-21, four of six such beans had genuinely landed, `jijc` disagreed with its own gate (which prints an open judgement on it while its last box says that work was migrated), and `z4mq` was not finished at all. If it has landed, close it with the evidence you re-derived; if it has not, untick what is not done."
-        },
-        {
-          "summary": "`folio-assistant-u9r9` has been `in-progress` with no change for 113 hours (\"TWO TypeDoc steps name a working-directory that does not exist, and both workflows are unjudged so nothing has said so\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-u9r9` has been `in-progress` with no change for 118 hours (\"TWO TypeDoc steps name a working-directory that does not exist, and both workflows are unjudged so nothing has said so\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-hajp` has been `in-progress` with no change for 118 hours (\"INTERACTION: the asking rule is enforced by three layers, not remembered\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-hajp` has been `in-progress` with no change for 124 hours (\"INTERACTION: the asking rule is enforced by three layers, not remembered\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-qrlc` has been `in-progress` with no change for 81 hours (\"LIVE vs LATENT: does a scanner''s committed OUTPUT change when gitignored content is present? The detector xd1g could not build\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-qrlc` has been `in-progress` with no change for 87 hours (\"LIVE vs LATENT: does a scanner''s committed OUTPUT change when gitignored content is present? The detector xd1g could not build\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-jh2j` has been `in-progress` with no change for 118 hours (\"TOOL 7/13: Task_Render — LaTeX / PDF rendering (16 files, 3 entry points)\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-jh2j` has been `in-progress` with no change for 124 hours (\"TOOL 7/13: Task_Render — LaTeX / PDF rendering (16 files, 3 entry points)\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-uj55` has been `in-progress` with no change for 306 hours (\"Windows .bat wrappers for every .sh a user runs from the normal workflow\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-uj55` has been `in-progress` with no change for 312 hours (\"Windows .bat wrappers for every .sh a user runs from the normal workflow\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-kfkh` has been `in-progress` with no change for 87 hours (\"A clean merge produces a DUPLICATE front-matter key — three instances, no conflict marker on any of them\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-kfkh` has been `in-progress` with no change for 93 hours (\"A clean merge produces a DUPLICATE front-matter key — three instances, no conflict marker on any of them\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-x3bd` has been `in-progress` with no change for 262 hours (\"Top-level topical KG directories, bootstrap/ first\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-x3bd` has been `in-progress` with no change for 267 hours (\"Top-level topical KG directories, bootstrap/ first\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-zlmp` has been `in-progress` with no change for 200 hours (\"Drain the wrong-direction import edges so the repo split can cut\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-zlmp` has been `in-progress` with no change for 205 hours (\"Drain the wrong-direction import edges so the repo split can cut\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-tvf8` has been `in-progress` with no change for 111 hours (\"STALE OPEN PRs: three untouched 4-8 days, and #229''s ''clean'' merge would RESURRECT a path main deleted\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-tvf8` has been `in-progress` with no change for 117 hours (\"STALE OPEN PRs: three untouched 4-8 days, and #229''s ''clean'' merge would RESURRECT a path main deleted\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-d308` has been `in-progress` with no change for 261 hours (\"CODE DISPENSATION: 868 code files → 13 Tool nodes, each bound to a BPMN task\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-d308` has been `in-progress` with no change for 267 hours (\"CODE DISPENSATION: 868 code files → 13 Tool nodes, each bound to a BPMN task\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-qook` has been `in-progress` with no change for 87 hours (\"check:merged reports a merged tree defective when no real checkout of it is — a symlinked node_modules leaks into the corpus\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-qook` has been `in-progress` with no change for 93 hours (\"check:merged reports a merged tree defective when no real checkout of it is — a symlinked node_modules leaks into the corpus\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-nytj` has been `in-progress` with no change for 180 hours (\"A sidecar records its auditor's hash, so two concurrent PRs go green alone and red together\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-nytj` has been `in-progress` with no change for 186 hours (\"A sidecar records its auditor's hash, so two concurrent PRs go green alone and red together\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-iwtn` has been `in-progress` with no change for 92 hours (\"BOOTSTRAP SELF-DEFINITIONAL: ~130 mentions of harnesses above bootstrap across 16 files (bpmn, skills, bootstrap.json)\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-iwtn` has been `in-progress` with no change for 98 hours (\"BOOTSTRAP SELF-DEFINITIONAL: ~130 mentions of harnesses above bootstrap across 16 files (bpmn, skills, bootstrap.json)\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-88mg` has been `in-progress` with no change for 222 hours (\"CONSOLIDATION: one voice over bootstrap and cat-harness docs, with skills and docs sharing content rather than restating it\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-88mg` has been `in-progress` with no change for 228 hours (\"CONSOLIDATION: one voice over bootstrap and cat-harness docs, with skills and docs sharing content rather than restating it\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-om30` has been `in-progress` with no change for 87 hours (\"MAIN''S RED-BY-DECISION TEST MASKED 151 GATE INVOCATIONS, lint and tsc among them: bun test was step 2 of 47 with nothing continue-on-error — SPLIT, owner''s choice\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-om30` has been `in-progress` with no change for 93 hours (\"MAIN''S RED-BY-DECISION TEST MASKED 151 GATE INVOCATIONS, lint and tsc among them: bun test was step 2 of 47 with nothing continue-on-error — SPLIT, owner''s choice\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-bjzs` has been `in-progress` with no change for 86 hours (\"PER-INSTANCE GATES: kg:audit, render:bpmn and check:workflow-refs run at the root only, so 15 nested instances are counted and none is audited\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-bjzs` has been `in-progress` with no change for 92 hours (\"PER-INSTANCE GATES: kg:audit, render:bpmn and check:workflow-refs run at the root only, so 15 nested instances are counted and none is audited\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-iym1` has been `in-progress` with no change for 89 hours (\"VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-iym1` has been `in-progress` with no change for 94 hours (\"VACUITY IS GUARDED ONE SCRIPT AT A TIME: no cross-gate reader pins a corpus-walking gate non-empty\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-qj9a` has been `in-progress` with no change for 128 hours (\"STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-qj9a` has been `in-progress` with no change for 133 hours (\"STAGING SIZE: the measurement is right and the SEVERITY is an unverifiable claim — critical predicts a failed publish, and nothing in this repo can observe enforcement\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-h2s9` has been `in-progress` with no change for 205 hours (\"The sweep asks gh for mergeable, whose UNKNOWN means 'not computed yet' — and renders it as 'could not be read'\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-h2s9` has been `in-progress` with no change for 211 hours (\"The sweep asks gh for mergeable, whose UNKNOWN means 'not computed yet' — and renders it as 'could not be read'\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-j79e` has been `in-progress` with no change for 177 hours (\"DETANGLE: a candidate subgraph is MEASURED (cohesive, low-cut), not chosen by taste — and the same process runs on modules, Lean and paper layout\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-j79e` has been `in-progress` with no change for 183 hours (\"DETANGLE: a candidate subgraph is MEASURED (cohesive, low-cut), not chosen by taste — and the same process runs on modules, Lean and paper layout\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-vrfx` has been `in-progress` with no change for 88 hours (\"stripLeanComments eats newlines inside block comments, so 99% of Lean QA hit lines are wrong\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-vrfx` has been `in-progress` with no change for 93 hours (\"stripLeanComments eats newlines inside block comments, so 99% of Lean QA hit lines are wrong\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-zhg2` has been `in-progress` with no change for 158 hours (\"REFERENCE DIRECTION: generalise bootstrap''s no-upward-reference rule to all 17 instances, sharing check:partition''s direction computation\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-zhg2` has been `in-progress` with no change for 164 hours (\"REFERENCE DIRECTION: generalise bootstrap''s no-upward-reference rule to all 17 instances, sharing check:partition''s direction computation\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-pesg` has been `in-progress` with no change for 89 hours (\"A review re-derived a finding the instrument had already computed, and got it wrong\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-pesg` has been `in-progress` with no change for 95 hours (\"A review re-derived a finding the instrument had already computed, and got it wrong\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-0uu2` has been `in-progress` with no change for 163 hours (\"DECLARATION GAP: every top-level directory is a declared subgraph — the split, and the headline count was wrong three ways\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-0uu2` has been `in-progress` with no change for 169 hours (\"DECLARATION GAP: every top-level directory is a declared subgraph — the split, and the headline count was wrong three ways\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-v7bg` has been `in-progress` with no change for 249 hours (\"TOOL 1/13: Task_Publish — publication & export (34 files, 19 entry points)\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-v7bg` has been `in-progress` with no change for 255 hours (\"TOOL 1/13: Task_Publish — publication & export (34 files, 19 entry points)\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-zru7` has been `in-progress` with no change for 87 hours (\"ACCESSIBILITY: all 70 translated pages serve html lang=en-US; 56 are never corrected even at runtime\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-zru7` has been `in-progress` with no change for 93 hours (\"ACCESSIBILITY: all 70 translated pages serve html lang=en-US; 56 are never corrected even at runtime\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-lvk9` has been `in-progress` with no change for 93 hours (\"EXTRACTION: list items and blockquotes are extracted PER LINE, so a msgid depends on the author''s hard wrap — translators get sentences in halves\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-lvk9` has been `in-progress` with no change for 98 hours (\"EXTRACTION: list items and blockquotes are extracted PER LINE, so a msgid depends on the author''s hard wrap — translators get sentences in halves\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-hs08` has been `in-progress` with no change for 200 hours (\"MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-hs08` has been `in-progress` with no change for 205 hours (\"MIGRATION: the content/ -> folio/ rename has reached the declaration and NOTHING that reads a folio\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-10uc` has been `in-progress` with no change for 200 hours (\"STREAM 2/3: GOAL 2 — the rendered surface: navbar, visualisers, stickies (p5wm, 39 open beans)\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-10uc` has been `in-progress` with no change for 205 hours (\"STREAM 2/3: GOAL 2 — the rendered surface: navbar, visualisers, stickies (p5wm, 39 open beans)\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-sff8` has been `in-progress` with no change for 79 hours (\"Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-sff8` has been `in-progress` with no change for 85 hours (\"Contention inflates a per-test budget ~35x, and vxho fixed ONE of 505 files — two more just failed on main\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-603s` has been `in-progress` with no change for 118 hours (\"LANDING: the LHS navbar is one themed section per instance, scanned from the root, rendered in dependency order\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-603s` has been `in-progress` with no change for 124 hours (\"LANDING: the LHS navbar is one themed section per instance, scanned from the root, rendered in dependency order\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-3mo4` has been `in-progress` with no change for 90 hours (\"EXTRACTION: cleanMarkdownText leaves literal **** in a msgid when a code span is wrapped in emphasis, and eats the spacing when there are two\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-3mo4` has been `in-progress` with no change for 95 hours (\"EXTRACTION: cleanMarkdownText leaves literal **** in a msgid when a code span is wrapped in emphasis, and eats the spacing when there are two\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-x4a6` has been `in-progress` with no change for 200 hours (\"Declare docs/ as the instance's renderable graph — core's folio registration reaches 31 of 31 readers, so the blocker is withdrawn\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-x4a6` has been `in-progress` with no change for 205 hours (\"Declare docs/ as the instance's renderable graph — core's folio registration reaches 31 of 31 readers, so the blocker is withdrawn\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-k8rc` has been `in-progress` with no change for 220 hours (\"The TypeScript prose backlog: 344 mentions, and the exemption does not cover all of them\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-k8rc` has been `in-progress` with no change for 226 hours (\"The TypeScript prose backlog: 344 mentions, and the exemption does not cover all of them\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-g196` has been `in-progress` with no change for 249 hours (\"Every preview stores a full copy of the site because per-preview facts are baked into every page\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-g196` has been `in-progress` with no change for 255 hours (\"Every preview stores a full copy of the site because per-preview facts are baked into every page\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-k59d` has been `in-progress` with no change for 118 hours (\"MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-k59d` has been `in-progress` with no change for 124 hours (\"MILESTONE CRITICAL PATHS GO STALE: p5wm and yg29 both advertise blockers that are completed or settled, and check:bean-bodies cannot see them\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-46l0` has been `in-progress` with no change for 83 hours (\"The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-46l0` has been `in-progress` with no change for 89 hours (\"The same commit fails DIFFERENTLY in three environments, so a green run cannot be read as a green tree\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-wggr` has been `in-progress` with no change for 272 hours (\"SPLIT: invert the stub pattern — <stub>/docs not docs/<stub>, so a repo is one directory\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-wggr` has been `in-progress` with no change for 277 hours (\"SPLIT: invert the stub pattern — <stub>/docs not docs/<stub>, so a repo is one directory\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-8xtj` has been `in-progress` with no change for 247 hours (\"INSTANCE NAMES: folio-assist-core published every core term to a path no term names — fixed, plus the 247-reference residue a sweep must not touch\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-8xtj` has been `in-progress` with no change for 252 hours (\"INSTANCE NAMES: folio-assist-core published every core term to a path no term names — fixed, plus the 247-reference residue a sweep must not touch\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-b963` has been `in-progress` with no change for 244 hours (\"COLD START: the entry documents named scripts/ for the whole split, and nothing checks a command path\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-b963` has been `in-progress` with no change for 250 hours (\"COLD START: the entry documents named scripts/ for the whole split, and nothing checks a command path\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-pv51` has been `in-progress` with no change for 176 hours (\"BOOTSTRAP README: one-voice rewrite — repetitive and not condensed (owner)\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-pv51` has been `in-progress` with no change for 182 hours (\"BOOTSTRAP README: one-voice rewrite — repetitive and not condensed (owner)\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-tuvg` has been `in-progress` with no change for 115 hours (\"MAIN IS RED: three crdm skills are in no package manifest and carry a retired roles: field\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-tuvg` has been `in-progress` with no change for 120 hours (\"MAIN IS RED: three crdm skills are in no package manifest and carry a retired roles: field\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-v625` has been `in-progress` with no change for 108 hours (\"MAIN IS RED: six skills landed with no manifest entry and no reference page — one cause, four failing gates\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-v625` has been `in-progress` with no change for 113 hours (\"MAIN IS RED: six skills landed with no manifest entry and no reference page — one cause, four failing gates\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-p5wm` has been `in-progress` with no change for 247 hours (\"GOAL 2: LHS navbar working with instantiated harness, showing folios with the bootstrap exception, and stickies that move around on the folio\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-p5wm` has been `in-progress` with no change for 253 hours (\"GOAL 2: LHS navbar working with instantiated harness, showing folios with the bootstrap exception, and stickies that move around on the folio\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-rfev` has been `in-progress` with no change for 226 hours (\"C: built-ins self-register at the outermost layer — wire the ContributionRegistry for the first time\") — 45 of 101 claims are quiet.",
+          "summary": "`folio-assistant-rfev` has been `in-progress` with no change for 232 hours (\"C: built-ins self-register at the outermost layer — wire the ContributionRegistry for the first time\") — 45 of 106 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "241 completed or scrapped beans are still inline in `beans/defs/`.",
+          "summary": "247 completed or scrapped beans are still inline in `beans/defs/`.",
           "metric": "bean-resolved-inline",
           "severity": "minor",
           "action": "Run `beans archive`, which MOVES them to the archive rather than removing them — the one tidy-up in this sweep that is not a deletion. Confirm with the owner first all the same: it rewrites the store a sibling session may be reading."
         },
         {
-          "summary": "298 open beans (todo + in-progress), past the 150 calibration point.",
+          "summary": "301 open beans (todo + in-progress), past the 150 calibration point.",
           "metric": "bean-open",
           "severity": "minor",
           "action": "Read `beans roadmap` rather than `beans list` and check the backlog still has a shape. This is a fact about the plan, not about any one item."

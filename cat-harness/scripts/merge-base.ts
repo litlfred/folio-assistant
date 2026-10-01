@@ -102,9 +102,19 @@ if (import.meta.main) {
   for (const c of p.resolvable) console.log(`  ✓ ${describe(c)}`);
   for (const c of p.refused) console.log(`  ✗ ${describe(c)}${c.pattern ? ` — ${c.pattern.why}` : ""}`);
 
+  // `git merge --abort` refuses once regen has written unstaged changes
+  // ("not uptodate. Cannot merge"), and this used to print "tree restored"
+  // over a half-merged tree regardless. The restore is now CHECKED; when it
+  // did not happen the person is told, and nothing destructive runs unasked.
   const abort: (why: string) => never = (why) => {
     spawnSync("git", ["-C", root, "merge", "--abort"], { stdio: "inherit" });
-    console.error(`\nmerge-base: ABORTED, tree restored — ${why}`);
+    const merging = spawnSync("git", ["-C", root, "rev-parse", "-q", "--verify", "MERGE_HEAD"]).status === 0;
+    const restored = !merging && !git(root, "status", "--porcelain");
+    console.error(restored
+      ? `\nmerge-base: ABORTED, tree restored — ${why}`
+      : `\nmerge-base: ABORTED, but the merge is still in progress and the tree is NOT restored — ${why}\n` +
+        "  Everything changed since the clean start is this run's own: either finish the merge by hand,\n" +
+        "  or discard it yourself with `git reset --merge` (check `git status` first).");
     process.exit(1);
   };
 
