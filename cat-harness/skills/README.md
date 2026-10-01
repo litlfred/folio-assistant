@@ -18,7 +18,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `skills`, holding `skills
 | [`permissions/`](permissions/) | 1 file | |
 | [`process/`](process/) | 24 files | |
 | [`requirements/`](requirements/) | 7 files | |
-| [`sdlc/`](sdlc/) | 64 files | |
+| [`sdlc/`](sdlc/) | 65 files | |
 | [`skill-definitions/`](skill-definitions/) | 2 files | |
 | [`ui/`](ui/) | 28 files | |
 <!-- kg:subgraph:end -->

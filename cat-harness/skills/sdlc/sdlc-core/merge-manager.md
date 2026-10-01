@@ -73,20 +73,27 @@ branch it did not create, or change repository settings.
    not intake. Comment that the hand-over is stale and leave the label alone.
 2. **Order.** Oldest `ready:` comment first, unless the owner names an order.
    A PR that unblocks others, such as a fix for a red `main`, goes first.
-3. **Bring main in.** `git fetch origin main`, then `git merge origin/main`
-   (a merge, not a rebase, so there is no force-push).
-4. **Re-pin submodules before staging anything.** Run
-   `git submodule update --init bootstrap bootstrap-tools`, then check that
-   `git ls-files -s bootstrap bootstrap-tools` equals
-   `git ls-tree origin/main bootstrap bootstrap-tools`, unless the PR itself
-   changes a pin. **Never `git add -A` with submodules checked out at the
-   branch's old commit.** That records the stale pin and silently reverts
-   `main`'s (measured 2026-10-01; caught only by `render:bpmn:check`).
+3. **Bring main in with `bun run merge:main`.** It is the
+   [`merge-conflict-patterns`](merge-conflict-patterns.md) command and executes
+   `processes/merge-base.bpmn`. It merges (it does not rebase, so nobody
+   force-pushes) and resolves only the conflicts a declared pattern covers.
+   If any conflict is authored or undeclared, it aborts the whole merge.
+   It then runs `bun run regen`. A conflict it refuses goes to step 12.
+4. **Check the submodule pins before pushing.** `merge:main` re-syncs the
+   submodule checkouts. Still check that `git ls-files -s bootstrap
+   bootstrap-tools` equals `git ls-tree origin/main bootstrap bootstrap-tools`,
+   unless the PR itself changes a pin. **Never `git add -A` with submodules
+   checked out at the branch's old commit.** That records the stale pin and
+   silently reverts `main`'s (measured 2026-10-01; caught only by
+   `render:bpmn:check`). A hand merge done without `merge:main` must run
+   `git submodule update --init bootstrap bootstrap-tools` before staging.
 5. **Regenerate.** `bun run regen` runs as many passes as it needs until
    nothing changes (see [`prepare-merge`](prepare-merge.md) §"A clean merge can
    produce a wrong artefact"). Then run `bun run readme:subgraphs` **last**,
    because generated READMEs read what the other generators wrote. Then run
-   `bun run regen --dry-run` to confirm that nothing is still stale.
+   `bun run regen --dry-run` to confirm that nothing is still stale. (`merge:main`
+   has already run `regen`; this step is for a hand merge, and for the README
+   ordering.)
 6. **Full local gates.** Run `bun run gates`. CI stops at the first failing
    gate, so a local run is the only place you see every failure at once.
 7. **Push once, then wait for the verdict** on that head. Read it from the
@@ -114,6 +121,8 @@ branch it did not create, or change repository settings.
 
 - [`prepare-merge`](prepare-merge.md): the per-branch recipe this runs once
   per merge.
+- [`merge-conflict-patterns`](merge-conflict-patterns.md): `bun run merge:main`,
+  the base merge in step 3.
 - [`continual-progress`](continual-progress.md): authors still push freely
   and open their PR at commit 1.
 - [`ci-health`](ci-health.md): reading the verdict of a run you could not see.

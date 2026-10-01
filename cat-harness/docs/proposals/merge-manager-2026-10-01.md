@@ -169,12 +169,18 @@ carries it in full. In outline:
    so and do not merge.
 2. **Order.** Oldest `ready:` first. Fixes for a red `main` and PRs that
    unblock others jump the queue. The owner can name any other order.
-3. **Bring main in** with a merge, never a rebase, so that nobody force-pushes.
-4. **Submodule-pin guard.** Run `git submodule update --init bootstrap
-   bootstrap-tools` *before* staging. Then check that `git ls-files -s
-   bootstrap bootstrap-tools` equals `git ls-tree origin/main bootstrap
-   bootstrap-tools`, unless the PR intends a pin change. **Never `git add -A`
-   over a stale checkout**: that is the 2026-10-01 defect.
+3. **Bring main in with `bun run merge:main`.** This landed on `main` the
+   same day, as skill `merge-conflict-patterns` and process `merge-base.bpmn`.
+   It merges rather than rebases, resolves only conflicts a declared pattern
+   covers (generated files, generated README regions, QA sidecars), aborts the
+   whole merge on any authored conflict, re-syncs submodule checkouts, and runs
+   `bun run regen`. **The Merge Manager is that command's main caller, not a
+   rival to it.**
+4. **Submodule-pin guard.** Check that `git ls-files -s bootstrap
+   bootstrap-tools` equals `git ls-tree origin/main bootstrap bootstrap-tools`,
+   unless the PR intends a pin change. **Never `git add -A` over a stale
+   checkout**: that is the 2026-10-01 defect. A hand merge must run
+   `git submodule update --init bootstrap bootstrap-tools` before staging.
 5. **Regenerate in order.** Run `bun run regen`, which repeats passes until a
    pass changes nothing. Then run `bun run readme:subgraphs` **last**, because
    generated READMEs summarise what the other generators wrote. Finally,
@@ -249,12 +255,13 @@ an organisation.** The reasons:
 
 | name | kind | status | what it does |
 |---|---|---|---|
+| `merge-conflict-patterns` + `bun run merge:main` | skill + command + `merge-base.bpmn` | **exists** (landed on `main` 2026-10-01) | the base merge that resolves declared generated-file conflicts and runs `regen`; the Merge Manager's step 3 |
 | `merge-manager` | skill, `sdlc-core` | **added as DRAFT** | the role, RACI and the 13-step SOP |
 | `pr-ready-for-merge` | Tool, `cat-harness/tools/merge.ts` | **added as DRAFT** | the author's hand-over, carrying the owner's tagging policy **verbatim**. Steps: re-read the head sha and verify every CI job on it is green; mark Ready for review; add `ready-to-merge`, keeping existing labels; comment exactly `ready: <40-char sha>`; on a bounce-back, fix, push and hand over again. Satisfies `merge-manager` and `prepare-merge`, the skill the PR-author lane (`authoring-agent`) holds |
 | `merge-manager` role | `scenarios/roles.json` | **proposed only** | the swimlane; arrives with the BPMN |
 | `merge-manager.bpmn` | process, `cat-harness/processes/` | **proposed only** | the lanes in §2 |
 | `merge-queue-status` | Tool + script | proposed | lists PRs carrying `ready-to-merge`, whether the `ready:` sha matches the head, and the green or red verdict from check runs: the Merge Manager's intake view |
-| `check:submodule-pins` | script (not wired into CI) | proposed | fails when the index's gitlinks differ from `origin/main`'s and the branch did not intend it; the §3 step-4 guard as a command |
+| `check:submodule-pins` | script (not wired into CI) | proposed | fails when the index's gitlinks differ from `origin/main`'s and the branch did not intend it; the §3 step-4 guard as a command. `merge:main` already re-syncs the checkouts; this catches the hand merge and `git add -A` |
 | `regen --final readme:subgraphs` | option on `bun run regen` | proposed | makes "README generators last" part of the command rather than a remembered rule |
 
 ---

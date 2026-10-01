@@ -923,6 +923,14 @@
       "status": "candidate"
     },
     {
+      "id": "merge-manager",
+      "prefLabel": "merge-manager",
+      "definition": "DRAFT — PROPOSED, NOT YET RULED ON (issue #1800). How green pull requests land on a default branch that moves faster than any one PR can keep up with: one Merge Manager merges, every other agent hands over with a label and a `ready: <sha>` comment. Covers when the role is needed and when it is not, intake, queue order, bringing main in, regenerating, the submodule-pin guard, the merge itself, the bounce-back protocol and the audit trail. Use when several green PRs are waiting on a busy main, when you are asked to act as the merge steward, or when you are an author wondering how your PR gets merged.",
+      "notation": "merge-manager",
+      "source": "cat-harness/skills/sdlc/sdlc-core/merge-manager.md",
+      "status": "candidate"
+    },
+    {
       "id": "methodology-adoption",
       "prefLabel": "methodology-adoption",
       "definition": "How a named external methodology enters the knowledge graph, and how an agent picks which one applies. Read before following a judgement method, before adopting a new one, and before writing a house method instead of adopting one.",
