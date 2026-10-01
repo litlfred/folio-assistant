@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/docs-ui.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/docs-ui.css?v=1790879099">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/narrow-viewport.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/narrow-viewport.css?v=1790879099">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/work-plan.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/work-plan.css?v=1790879099">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/themes.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/themes.css?v=1790879099">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/uml.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/uml.css?v=1790879099">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/avatars.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/avatars.css?v=1790879099">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/js/docs-ui.js?v=1790877761" defer></script>
+<script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/js/docs-ui.js?v=1790879099" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -867,14 +867,19 @@ Do not treat anything here as a substitute for the spec.</p>
 <p><code class="language-plaintext highlighter-rouge">fhir-harness/schemas/skills/l3-fhir-authoring/</code>:</p>
 
 <ul>
-  <li><strong>in</strong> — <code class="language-plaintext highlighter-rouge">artifactType</code> (required), <code class="language-plaintext highlighter-rouge">l2Source</code> (required), <code class="language-plaintext highlighter-rouge">fshOutputDir</code>,
+  <li><strong>in</strong> — <code class="language-plaintext highlighter-rouge">artifactType</code> (required), <code class="language-plaintext highlighter-rouge">sourceModel</code> (required), <code class="language-plaintext highlighter-rouge">fshOutputDir</code>,
 <code class="language-plaintext highlighter-rouge">igRoot</code></li>
   <li><strong>out</strong> — <code class="language-plaintext highlighter-rouge">fshFiles</code>, <code class="language-plaintext highlighter-rouge">sushiResult</code>, <code class="language-plaintext highlighter-rouge">generatedResources</code></li>
 </ul>
 
-<p><code class="language-plaintext highlighter-rouge">l2Source</code> being required is the design: <strong>L3 is derived, not authored from
-scratch.</strong> An L3 artefact with no L2 behind it is a profile nobody can review
-clinically, and it is the commonest way a DAK drifts from its guideline.</p>
+<p><code class="language-plaintext highlighter-rouge">sourceModel</code> being required is the design: <strong>L3 is derived, not authored from
+scratch.</strong> An L3 artefact with no source behind it is a profile nobody can
+review against what it was meant to encode. Which source is the layer above’s
+to say: a WHO SMART guideline passes its DAK’s L2 content, and the WHO L3
+pipeline (<code class="language-plaintext highlighter-rouge">l3-fhir-pipeline.bpmn</code>, “Map L2 → L3”) binds <code class="language-plaintext highlighter-rouge">l2-dak-authoring</code>
+beside this skill. This skill names no DAK, because <code class="language-plaintext highlighter-rouge">fhir-harness</code> may not
+(<code class="language-plaintext highlighter-rouge">fhir-harness/AGENTS.md</code>). Until stage D of the smart-* separation (#1767)
+the input was <code class="language-plaintext highlighter-rouge">l2Source</code> and the skill <code class="language-plaintext highlighter-rouge">dependsOn</code> <code class="language-plaintext highlighter-rouge">l2-dak-authoring</code>.</p>
 
 <p>CQL — clinical decision logic — is part of this skill, not a separate one; the
 input schema already carries <code class="language-plaintext highlighter-rouge">cql</code> among its artefact types.</p>

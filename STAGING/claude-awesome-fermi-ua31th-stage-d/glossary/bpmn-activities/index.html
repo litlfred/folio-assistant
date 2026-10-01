@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/docs-ui.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/docs-ui.css?v=1790879099">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/narrow-viewport.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/narrow-viewport.css?v=1790879099">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/work-plan.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/work-plan.css?v=1790879099">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/themes.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/themes.css?v=1790879099">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/uml.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/uml.css?v=1790879099">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/avatars.css?v=1790877761">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/css/avatars.css?v=1790879099">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/js/docs-ui.js?v=1790877761" defer></script>
+<script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d/assets/js/docs-ui.js?v=1790879099" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -3070,7 +3070,7 @@ Make the value proposition and set next steps <span class="fa-gloss-status">cand
 Map L2 → L3 [l3-fhir-authoring] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library.</p>
+<p>Each data element becomes a profile, each value set a ValueSet, each decision a PlanDefinition / Library. The DAK's L2 content is l3-fhir-authoring's sourceModel; this step binds l2-dak-authoring beside it, which is where the WHO L2 → L3 ordering lives now that the generic skill names no DAK (smart-* separation stage D, #1767).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/l3-fhir-pipeline.bpmn"><code>cat-harness/processes/l3-fhir-pipeline.bpmn#Task_MapL2</code></a></p>
 </dd>
 <dt id="smart-base--kg-bpmn-activities--process_diig.a_mapcurrentstate" data-fa-state="extracted" data-fa-gloss="">
