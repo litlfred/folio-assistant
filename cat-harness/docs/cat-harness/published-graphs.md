@@ -269,7 +269,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - Bootstrap tools — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/skills/' | relative_url }})
 - [FHIR IG Harness]({{ '/cat-harness/docs-auto/index/skills/fhir-ig-skills/' | relative_url }})
-- [folio-assistant-core]({{ '/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/' | relative_url }})
+- [folio-assistant-core]({{ '/cat-harness/docs-auto/index/skills/' | relative_url }})
 - folio-assistant-sci — *declared, not published*
 - [large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }})
