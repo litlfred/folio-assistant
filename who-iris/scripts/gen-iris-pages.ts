@@ -55,7 +55,7 @@ import { withRoutes } from "../../cat-harness/scripts/mount-instance-docs.ts";
 import { libraryResolver } from "../../cat-harness/scripts/lib/library-links.ts";
 import { withViewerNav } from "../../cat-harness/scripts/viewer-page.ts";
 import { whoThemeById } from "../themes/themes.js";
-import { bytesFor, repoRelative } from "./lib/bytes.js";
+import { bytesFor, repoRelative } from "../../folio-assistant-core/scripts/lib/bytes.js";
 import { resolvableIri, type CatalogueNode } from "../../folio-assistant-core/schemas/catalogue.js";
 import { publicationBlockers } from "../../folio-assistant-core/schemas/materialization.js";
 import { withInlineCode } from "../../cat-harness/schemas/inline-code.ts";
@@ -462,11 +462,11 @@ function assetHref(
   );
   if (!b) return undefined;
   // Where the bytes ARE, which is not where the catalogue says — bean `yl5w`,
-  // and the resolution order is in `lib/bytes.ts` so the workaround has one
+  // and the resolution order is in core's `scripts/lib/bytes.ts` so the workaround has one
   // home to be deleted from.
-  const found = bytesFor(b.materialization?.localPath, b.name);
+  const found = bytesFor(INSTANCE, b.materialization?.localPath, b.name);
   if (!found) return undefined;
-  const rel = encPath(repoRelative(found));
+  const rel = encPath(repoRelative(REPO_ROOT, found));
   const gates = b.materialization?.gates;
   const withheld = publicationBlockers(gates).map(
     (k) => `${k}: ${gates?.[k]?.verdict ?? "not recorded"}${gates?.[k]?.basis ? ` — ${gates[k].basis}` : ""}`,
@@ -536,7 +536,7 @@ function linkOrWithheld(a: NonNullable<ReturnType<typeof assetHref>>, withSize: 
  * The cover thumbnail, or nothing.
  *
  * A THUMBNAIL-bundle bitstream **this repository rendered itself** — not the
- * one DSpace generates upstream. `who-iris/scripts/gen-covers.ts` writes the
+ * one DSpace generates upstream. `folio-assistant-core/scripts/gen-covers.ts` writes the
  * bytes and the node records the derivation; here it is only read.
  *
  * Nothing is invented when it is absent, and nothing is guessed when it is

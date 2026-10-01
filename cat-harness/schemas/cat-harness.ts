@@ -668,6 +668,12 @@ export interface CatHarnessDeclaration extends KgNodeLabels {
    * Absent means it already lives at the root of its own repository.
    */
   livesAt?: InstanceLocation;
+  /**
+   * Which half of a kg-separation pair the planned {@link repository} is —
+   * see `separation` on {@link CatHarnessDeclarationSchema}. Absent is "has
+   * not said". Bean `eayu`.
+   */
+  separation?: "content" | "tools";
   stub?: string;
   /**
    * Where this instance's artefacts are published — the base every `@id` in
@@ -2432,6 +2438,20 @@ export const CatHarnessDeclarationSchema = z.object({
   navbarIcons: NavbarIconsSchema.optional(),
   repository: RepoFullNameSchema.optional(),
   livesAt: InstanceLocationSchema.optional(),
+  /**
+   * Which half of a kg-separation pair this instance's planned `repository`
+   * is: `content` (files to read — no code, bootstrap FR-7) or `tools` (the
+   * code that writes and checks a content repository).
+   *
+   * Optional, and absent is "has not said", never "not content": most staged
+   * instances here have not been through the split, and a default would claim
+   * a decision nobody made. Added 2026-09-30 (bean `eayu`) because who-iris is
+   * staged as a CONTENT repository with no tools repository authorised, so
+   * nothing else in the tree says it must hold no code; kg:audit's
+   * `content-instance-holds-code` reads it. An instance a declared tools
+   * instance `supports` is content too, and is read as such without this.
+   */
+  separation: z.enum(["content", "tools"]).optional(),
   stub: z.string().min(1).optional(),
   canonicalUrl: z.string().url().optional(),
   /**

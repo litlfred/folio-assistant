@@ -31,7 +31,7 @@ function load(slug: string): DublinCoreRecord {
   const raw = JSON.parse(readFileSync(join(RECORDS, `${slug}.dc.json`), "utf-8"));
   // `_`-prefixed keys are this repository's spelling for "documentation, not
   // data", which is what makes the schema's `.strict()` affordable. Stripped
-  // here exactly as `who-iris/scripts/check-catalogue.ts` strips them, so this
+  // here exactly as `folio-assistant-core/scripts/check-catalogue.ts` strips them, so this
   // test reads the records the way the gate does rather than a way of its own.
   for (const k of Object.keys(raw)) if (k.startsWith("_")) delete raw[k];
   // Parsed through the schema, not cast: a test that casts is testing the

@@ -53,6 +53,7 @@ import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
 import { contractFile, contractRefProblem, skillContracts } from "./skill-contracts.js";
 import { checkTestRuns } from "./test-run-conformance.js";
 import { processArrowFindings, schemaArrowFindings } from "./arrow-direction.js";
+import { contentCodeFindings, contentInstanceCode } from "./content-holds-code.js";
 import { classifyName, diagramProse, generalDeclarationProse, namedFiles } from "./prose-names.js";
 import { readSchemaGraph } from "./schema-graph.js";
 import { checkTools, unresolvedPaths } from "./check-tools.js";
@@ -1986,6 +1987,14 @@ function unreadNestedInstances(): KgFinding[] {
   return out.sort((a, b) => a.where.localeCompare(b.where));
 }
 
+/** `content-instance-holds-code`, from {@link contentInstanceCode}: n/a, unknown, or one finding per file. */
+function contentInstanceHoldsCode(): KgCriterionEntry {
+  const v = contentInstanceCode(root);
+  if (v.state === "n/a") return entry([], false);
+  if (v.state === "unknown") return { result: "unknown", findings: [{ where: "—", detail: v.reason }] };
+  return entry(contentCodeFindings(v));
+}
+
 /**
  * The graph directories this audit actually read, as a phrase for a finding.
  *
@@ -2296,6 +2305,8 @@ function auditGraph(
       "prose-names-resolve": proseNamesResolve(),
       "skill-contract-claimed": entry(unclaimedSkillContracts()),
       "nested-instance-audited": entry(unreadNestedInstances()),
+      // A content instance holding code (bean `eayu`) — see content-holds-code.ts.
+      "content-instance-holds-code": contentInstanceHoldsCode(),
     },
   );
 }
