@@ -19,6 +19,7 @@ import { join, resolve } from "node:path";
 import {
   COMMITTED_SIDECAR,
   committedSidecarSubjects,
+  sidecarSubjectsFrom,
   formatReport,
   publishedInstances,
 } from "../check-published-instance-exports.js";
@@ -207,9 +208,31 @@ describe("committedSidecarSubjects — the comparison has a subject (bean r7v6, 
     }
   });
 
-  test("the real checkout's committed bootstrap sidecar is a subject", () => {
+  test("the real checkout's committed bootstrap sidecar is a subject — or its absence is UNKNOWN, never an empty list", () => {
     const found = publishedInstances(readFileSync(wf("docs-site.yml"), "utf-8"), "docs-site.yml");
+    const r = sidecarSubjectsFrom(found);
+    // Bean id4s: with `test/results/` off `main` the subjects cannot be
+    // listed, and that must be SAID — the C2 shape was exactly a comparison
+    // that silently had nothing to compare.
+    if (r.unknown !== undefined) {
+      expect(r.subjects).toEqual([]);
+      expect(r.unknown).toContain("--against");
+      return;
+    }
+    expect(r.subjects.map((s) => s.instance)).toContain("./bootstrap");
     expect(committedSidecarSubjects(found).map((s) => s.instance)).toContain("./bootstrap");
+  });
+
+  test("an unlisted subject set is reported, not dropped", () => {
+    const out = formatReport({
+      invocations: [graphInv],
+      sidecarSubjects: [],
+      sidecarSubjectsUnknown: "cat-harness/test/results is not in this checkout",
+      results: [{ ...graphInv, ok: true, nodes: 82 }],
+      workflowsRead: 33,
+    });
+    expect(out).toContain("UNKNOWN");
+    expect(out).toContain("NOT made");
   });
 
   test("the report says a compared sidecar has no workflow producer, and shows each row's sidecar state", () => {

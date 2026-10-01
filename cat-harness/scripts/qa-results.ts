@@ -41,7 +41,9 @@
  */
 import { existsSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
-import { dirname, join } from "node:path";
+import { dirname, join, resolve, sep } from "node:path";
+
+import { parseQaRef, QaUsageError, readQa, resolveQaLocation, type QaStoreOptions } from "./qa-store.js";
 
 /** Where every QA result is written. Mirrors the `qa-results` declaration. */
 export const QA_RESULTS_DIR = join("test", "results");
@@ -167,9 +169,21 @@ function key(r: QaResult): string {
  *
  * The document carries no timestamp (`y7b3`), so an unchanged result is
  * byte-identical and this guard only avoids a pointless write.
+ *
+ * ## It writes the WORKING COPY, and that survives the move (bean `id4s`)
+ *
+ * After the `qa-reports` branch (arc `3fva`, owner rulings D1/D4) a writer
+ * still writes `<instance>/test/results/` — proposal §2.4: "a writer still
+ * writes to `<instance>/test/results/`, as the working copy" — and
+ * `qa:publish` ({@link publishQa}) pushes the whole tree to the branch once per
+ * CI run. So the prior-key skip reads the working copy, not the branch, on
+ * purpose: reading the branch here would put a network fetch in front of
+ * every one of this function's ~22 callers to save a local write, and the
+ * branch already dedupes identical bytes as one blob. Absent, the skip has
+ * nothing to compare and the file is written — correct in both states.
  */
 export function writeQaResult(root: string, stem: string, result: QaResult): string {
-  const out = join(root, QA_RESULTS_DIR, `${stem}.qa-results.json`);
+  const out = qaResultPath(root, stem);
   mkdirSync(dirname(out), { recursive: true });
 
   if (existsSync(out)) {
@@ -188,15 +202,189 @@ export function writeQaResult(root: string, stem: string, result: QaResult): str
 }
 
 /**
- * The four states a committed QA result can be in against a freshly computed
- * one. Not three, and never two — bean `ymsu`, and this repository's standing
- * rule that could-not-determine is a state of its own.
+ * The states a committed QA result can be in against a freshly computed one.
+ * Not three, and never two — bean `ymsu`, and this repository's standing rule
+ * that could-not-determine is a state of its own.
+ *
+ * `unknown` is the fifth (bean `id4s`): the baseline was asked of the
+ * `qa-reports` branch (`--against`) and the branch could not answer — the
+ * remote or git failed — or it was never asked, because the directory is
+ * stored there and no ref was given. **Never `current`.**
  */
-export type QaResultState = "current" | "stale" | "absent" | "unreadable";
+export type QaResultState = "current" | "stale" | "absent" | "unreadable" | "unknown";
 
-/** Where a stem's result lives under a given root. One composition, two readers. */
+/**
+ * Where a stem's result lives under a given root. THE one composition of
+ * `<root>/test/results/<stem>.qa-results.json` — bean `id4s`'s done-when is
+ * that no caller spells `QA_RESULTS_DIR` itself, so the day the working copy
+ * moves there is one line to change and a grep that proves it.
+ */
 export function qaResultPath(root: string, stem: string): string {
-  return join(root, QA_RESULTS_DIR, `${stem}.qa-results.json`);
+  return qaResultsFile(root, `${stem}.qa-results.json`);
+}
+
+/**
+ * Any file under an instance's QA results directory, by its path inside it —
+ * for the QA records that are not `qa-results/v1` (`viewer-nav/viewer-nav.qa.json`).
+ * The same one composition as {@link qaResultPath}.
+ */
+export function qaResultsFile(root: string, rel: string): string {
+  return join(root, QA_RESULTS_DIR, rel);
+}
+
+/**
+ * The graph kinds the `qa-reports` arc moves off `main` — proposal
+ * `qa-reports-branch-and-test-process` §2.1: every DERIVED `qa` verdict, and
+ * the `health` report. Attestations stay (D2) but live in their own
+ * directory, so they are not a reason to expect a `qa` directory here.
+ */
+export const OFF_MAIN_KINDS: readonly string[] = ["qa", "health"];
+
+/**
+ * May a declared directory be absent from a checkout without that being a
+ * finding? Yes when it declares `storage` (bean `16ei`), or when every kind it
+ * holds is one the arc moves off `main` — the state after owner rulings D1/D4
+ * and before the declarations say so (bean `5hox`). Bean `0dav`: measured with
+ * the results moved aside, `readme:subgraphs` counted all 15 such directories
+ * as `absent-directory` findings.
+ */
+export function mayLeaveMain(dir: { graphKinds?: readonly string[]; storage?: unknown }): boolean {
+  if (dir.storage) return true;
+  const kinds = dir.graphKinds ?? [];
+  return kinds.length > 0 && kinds.every((k) => OFF_MAIN_KINDS.includes(k));
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// BASELINES — the committed copy, or the `qa-reports` branch (bean `id4s`)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * The flag that names a baseline on the `qa-reports` branch — proposal
+ * `qa-reports-branch-and-test-process` §2.3: "optional `--against <ref>` diffs
+ * the fresh run with `qa-reports:main/<merge-base>`, reporting **new** findings
+ * separately from inherited ones". The value is any qa-store read ref:
+ * `main`, `<sha>`, `main/<sha>`, `pr/<n>`, `pr/<n>/<sha>`.
+ */
+export const AGAINST_FLAG = "--against";
+
+/**
+ * The `--against` ref this run was given, or `undefined`.
+ *
+ * Validated here rather than at the first read: a malformed ref is a USAGE
+ * error (`QaUsageError`, exit 2), and folding it into `miss` would make a typo
+ * read as "the branch has no baseline", which a gate does not fail on.
+ */
+export function againstRef(argv: readonly string[] = process.argv): string | undefined {
+  const i = argv.indexOf(AGAINST_FLAG);
+  const inline = argv.find((a) => a.startsWith(`${AGAINST_FLAG}=`));
+  if (i < 0 && inline === undefined) return undefined;
+  const ref = inline !== undefined ? inline.slice(AGAINST_FLAG.length + 1) : argv[i + 1];
+  if (ref === undefined || ref === "" || ref.startsWith("--")) {
+    throw new QaUsageError(`${AGAINST_FLAG} needs a ref: main | <sha> | main/<sha> | pr/<n> | pr/<n>/<sha>`);
+  }
+  parseQaRef(ref);
+  return ref;
+}
+
+/** `argv` without `--against <ref>`, for producers that check their own flags. */
+export function withoutAgainst(argv: readonly string[]): string[] {
+  const out: string[] = [];
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === AGAINST_FLAG) {
+      i++;
+      continue;
+    }
+    if (argv[i]!.startsWith(`${AGAINST_FLAG}=`)) continue;
+    out.push(argv[i]!);
+  }
+  return out;
+}
+
+/** Where a baseline was looked for, and the four qa-store states it can end in. */
+export type BaselineRead =
+  | { state: "hit"; text: string; from: string }
+  | { state: "miss" | "corrupt" | "unknown"; reason: string; from: string };
+
+/**
+ * Is `absPath` inside a `qa` directory that declares `storage` (bean `16ei`)?
+ * Such a directory's working copy is a measurement of the contributor's last
+ * `qa:fetch`, not a record, so it is never read as a baseline.
+ */
+function storedOn(absPath: string, repoRoot?: string): string | undefined {
+  try {
+    const loc = resolveQaLocation(repoRoot);
+    const abs = resolve(absPath);
+    return loc.directories.find((x) => x.storage && (abs === x.absPath || abs.startsWith(x.absPath + sep)))?.storage?.branch;
+  } catch {
+    // Not inside a checkout (a test's temp directory), or the declarations do
+    // not resolve: nothing here is stored, which is the pre-move default.
+    return undefined;
+  }
+}
+
+/**
+ * Read a baseline: from the `qa-reports` branch when `against` names a ref,
+ * otherwise from the working copy at `absPath`.
+ *
+ * Four states, qa-store's, whichever the source — and **a miss is never
+ * clean**: it carries no text, so a caller has nothing to read as "no
+ * findings". The working copy is the pre-move source (the committed file is
+ * still there today); once its directory declares `storage` it stops being
+ * one, and with no `--against` the answer is `unknown`, never an empty read.
+ */
+export function readBaseline(absPath: string, opts: { against?: string; store?: QaStoreOptions } = {}): BaselineRead {
+  if (opts.against !== undefined) {
+    const from = `qa-reports:${opts.against}`;
+    try {
+      const r = readQa(opts.against, absPath, opts.store);
+      return r.state === "hit" ? { state: "hit", text: r.text, from: `qa-reports:${r.key}` } : { ...r, from };
+    } catch (e) {
+      // A bad ref was refused by `againstRef` before any read; what reaches
+      // here is "no remote" / "not a checkout" — could not ASK, so unknown.
+      return { state: "unknown", reason: (e as Error).message, from };
+    }
+  }
+  const branch = storedOn(absPath, opts.store?.repoRoot);
+  if (branch !== undefined) {
+    return {
+      state: "unknown",
+      reason: `this directory is stored on \`${branch}\`, and its working copy is not a record — pass ${AGAINST_FLAG} <ref>`,
+      from: "working copy",
+    };
+  }
+  if (!existsSync(absPath)) return { state: "miss", reason: "not in this checkout", from: "working copy" };
+  let text: string;
+  try {
+    text = readFileSync(absPath, "utf-8");
+  } catch (e) {
+    return { state: "unknown", reason: (e as Error).message, from: "working copy" };
+  }
+  if (absPath.endsWith(".json")) {
+    try {
+      JSON.parse(text);
+    } catch (e) {
+      return { state: "corrupt", reason: `does not parse: ${(e as Error).message}`, from: "working copy" };
+    }
+  }
+  return { state: "hit", text, from: "working copy" };
+}
+
+/** A baseline read as a QA result: a hit that is not `qa-results/v1` is `corrupt`. */
+export type QaResultRead =
+  | { state: "hit"; result: QaResult; from: string }
+  | { state: "miss" | "corrupt" | "unknown"; reason: string; from: string };
+
+/** {@link readBaseline}, parsed — the thin wrapper over qa-store's `readQa`. */
+export function readQaResultFrom(absPath: string, opts: { against?: string; store?: QaStoreOptions } = {}): QaResultRead {
+  const b = readBaseline(absPath, opts);
+  if (b.state !== "hit") return b;
+  try {
+    const r = JSON.parse(b.text) as QaResult;
+    if (r?.$schema !== "qa-results/v1") return { state: "corrupt", reason: "not a qa-results/v1 document", from: b.from };
+    return { state: "hit", result: r, from: b.from };
+  } catch (e) {
+    return { state: "corrupt", reason: (e as Error).message, from: b.from };
+  }
 }
 
 /**
@@ -204,15 +392,13 @@ export function qaResultPath(root: string, stem: string): string {
  *
  * `undefined` for absent or unparseable — which a caller must report as
  * could-not-determine rather than as agreement. A producer failing to write its
- * own sidecar is a finding about the producer, not a clean run.
+ * own sidecar is a finding about the producer, not a clean run. Use
+ * {@link readQaResultFrom} where the four states matter; this stays for the
+ * callers that read back a file they just wrote into a temp directory.
  */
 export function readQaResult(path: string): QaResult | undefined {
-  if (!existsSync(path)) return undefined;
-  try {
-    return JSON.parse(readFileSync(path, "utf-8")) as QaResult;
-  } catch {
-    return undefined;
-  }
+  const r = readQaResultFrom(path);
+  return r.state === "hit" ? r.result : undefined;
 }
 
 /**
@@ -227,36 +413,77 @@ export function readQaResult(path: string): QaResult | undefined {
  * gates exited **0** and the hash came back repaired — a checker comparing the
  * writer's output to the writer's output.
  *
- * Sending the exporter's sidecar to a temp directory (`--qa-root`) stops the
- * repair, and ON ITS OWN that would be a WEAKENING rather than a fix: the
- * staleness would simply stop being noticed, where before it at least surfaced
- * as the runner's mutation guard. `main` was carrying exactly that —
- * `kg-export.bootstrap.qa-results.json` at `b539167517cb` against a true
- * `0456470f68c8` — and only the guard saw it.
+ * So the repair was replaced by a COMPARISON: compute into a temp directory
+ * and **report** rather than repair. Every field is compared, including
+ * `producer.script_hash`, the one actually wrong on `main` then.
  *
- * So the repair is replaced by a COMPARISON, which is the bean's own
- * prescription: compute into a temp directory and **report** rather than repair.
+ * ## The non-verdicts are not agreement
  *
- * ## Every field is compared
- *
- * Including `producer.script_hash`, the one actually wrong on `main`. The
- * document once carried `updated_at`, held out here because it moved on every
- * run; it is gone (`y7b3`), so nothing is held out.
- *
- * ## The two non-verdicts are not agreement
- *
- * `absent` means nothing is committed yet, which is a first run rather than a
- * defect. `unreadable` means the question could not be asked: a sidecar that
- * will not parse is not one that disagrees, and calling it `stale` would send a
- * reader to regenerate a file whose problem is that it is corrupt. Neither may
- * be rendered as `current`; whether a caller FAILS on them is the caller's
- * call, and each says so where it decides.
+ * `absent` means there is no baseline where it was looked for — the working
+ * copy, or (with `against`) the branch entry. `unreadable` means it would not
+ * parse, and calling it `stale` would send a reader to regenerate a file whose
+ * problem is that it is corrupt. `unknown` means the branch could not be asked
+ * (bean `id4s`). None may be rendered as `current`; whether a caller FAILS on
+ * them is the caller's call, and each says so where it decides.
  */
-export function qaResultState(committedPath: string, fresh: QaResult): QaResultState {
-  if (!existsSync(committedPath)) return "absent";
-  const committed = readQaResult(committedPath);
-  if (committed === undefined) return "unreadable";
-  return key(committed) === key(fresh) ? "current" : "stale";
+export function qaResultState(
+  committedPath: string,
+  fresh: QaResult,
+  opts: { against?: string; store?: QaStoreOptions } = {},
+): QaResultState {
+  const r = readQaResultFrom(committedPath, opts);
+  if (r.state !== "hit") return r.state === "miss" ? "absent" : r.state === "corrupt" ? "unreadable" : "unknown";
+  return key(r.result) === key(fresh) ? "current" : "stale";
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NEW vs INHERITED — what a baseline is FOR (proposal §2.3)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** Key-order-independent JSON, so an entry's identity does not depend on how it was built. */
+function canonical(v: unknown): string {
+  if (Array.isArray(v)) return `[${v.map(canonical).join(",")}]`;
+  if (v !== null && typeof v === "object") {
+    const o = v as Record<string, unknown>;
+    return `{${Object.keys(o)
+      .filter((k) => o[k] !== undefined)
+      .sort()
+      .map((k) => `${JSON.stringify(k)}:${canonical(o[k])}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(v);
+}
+
+/** Per family: the entries the fresh run has that the baseline does not, and the counts of the rest. */
+export interface FindingDiff {
+  /** Family → entries NEW in the fresh run. Only families with at least one. */
+  added: Record<string, unknown[]>;
+  /** Entries present in both — inherited, not this change's. */
+  inherited: number;
+  /** Entries the baseline had and the fresh run does not. */
+  resolved: number;
+}
+
+/**
+ * Split each named family's entries into new / inherited / resolved, by entry
+ * identity (canonical JSON). An entry is the producer's own shape, so an entry
+ * whose detail text changed reads as one resolved plus one new — the
+ * conservative direction for a gate.
+ */
+export function diffFindings(baseline: QaResult, fresh: QaResult, families: readonly string[]): FindingDiff {
+  const added: Record<string, unknown[]> = {};
+  let inherited = 0;
+  let resolved = 0;
+  for (const f of families) {
+    const before = new Set((baseline.families?.[f]?.entries ?? []).map(canonical));
+    const now = fresh.families?.[f]?.entries ?? [];
+    const nowKeys = new Set(now.map(canonical));
+    const isNew = now.filter((e) => !before.has(canonical(e)));
+    if (isNew.length > 0) added[f] = isNew;
+    inherited += now.length - isNew.length;
+    for (const k of before) if (!nowKeys.has(k)) resolved++;
+  }
+  return { added, inherited, resolved };
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -339,7 +566,8 @@ export function judgementOf(args: { failing: number; undetermined?: boolean }): 
  */
 export function unknownFlags(argv: readonly string[], allowed: readonly string[]): string[] {
   const known = new Set([JUDGE_FLAG, ...allowed]);
-  return argv.filter((a) => a.startsWith("--") && !known.has(a));
+  // `--against=<ref>` is the flag `--against`; its value is not a flag.
+  return argv.filter((a) => a.startsWith("--") && !known.has(a.split("=")[0]!));
 }
 
 /**
@@ -351,16 +579,30 @@ export function unknownFlags(argv: readonly string[], allowed: readonly string[]
  * then, and the staleness of a file that will not exist cannot be what fails a
  * gate. It is printed so that until then a stale copy is still SEEN rather than
  * silently left behind.
+ *
+ * `unknowns`, when given, are parts of the question that could not be
+ * determined because a STORED record was not available — no `--against`, or
+ * the branch has no baseline (bean `id4s`). Proposal §2.3: such a part is
+ * "`unknown`, reported as such and never as a pass. It does not fail a PR,
+ * because an unwritten baseline is not this PR's defect." So each is printed
+ * as an UNKNOWN line, an `ok` verdict says it is NOT a full pass, and the exit
+ * is left to what WAS determined. A source that would not read — a blind
+ * spot in the run itself — is `undetermined` instead, and that does fail (2).
  */
 export function concludeJudgement(args: {
   gate: string;
   judgement: Judgement;
   detail?: string;
   committed?: { root: string; stem: string; fresh: QaResult; writer: string };
+  unknowns?: readonly string[];
 }): number {
   const exit = JUDGEMENT_EXIT[args.judgement];
+  const unknowns = args.unknowns ?? [];
   const label = {
-    ok: "OK — no finding the gate fails on",
+    ok:
+      unknowns.length > 0
+        ? `OK on what was determined — ${unknowns.length} part(s) UNKNOWN, so NOT a full pass (not gated: proposal §2.3)`
+        : "OK — no finding the gate fails on",
     finding: "FINDING — the gate fails on what it found",
     unknown: "UNKNOWN — could not determine; this is NOT a pass",
     error: "ERROR — the run itself is wrong; nothing was judged",
@@ -368,6 +610,7 @@ export function concludeJudgement(args: {
   const line = `${args.gate} (judge mode, wrote nothing): ${label}${args.detail ? ` — ${args.detail}` : ""}`;
   if (exit === 0) console.log(line);
   else console.error(line);
+  for (const u of unknowns) console.log(`  ? UNKNOWN — ${u}`);
   if (args.committed) {
     const { root, stem, fresh, writer } = args.committed;
     const state = qaResultState(qaResultPath(root, stem), fresh);
@@ -391,4 +634,136 @@ export function judgeUsage(gate: string, argv: readonly string[], allowed: reado
   const bad = unknownFlags(argv, allowed);
   if (bad.length === 0) return undefined;
   return concludeJudgement({ gate, judgement: "error", detail: `unknown flag(s): ${bad.join(" ")}` });
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// COMPUTE AND JUDGE AGAINST A BASELINE (bean `0dav`)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/** What {@link judgeQaResult} decided, for a caller (or a test) that wants more than the exit. */
+export interface QaVerdict {
+  judgement: Judgement;
+  exit: number;
+  /** How many findings the exit was decided on. */
+  failing: number;
+  /** Where the baseline was looked for, and what came back. */
+  baseline: { state: "hit" | "miss" | "corrupt" | "unknown"; from: string; reason?: string };
+  /** Present when the baseline was a hit. */
+  diff?: FindingDiff;
+  /** Lines reported as UNKNOWN and not gated. */
+  unknowns: string[];
+}
+
+/**
+ * The judge every self-sidecar gate shares (bean `0dav`): COMPUTE the result,
+ * JUDGE it, and write nothing. "Stale" is not a state any more — there is
+ * nothing committed to be stale once QA leaves `main` (proposal §2.3).
+ *
+ * ## Two kinds of failing family
+ *
+ * - `failOn` — findings the gate fails on whatever the baseline says (an
+ *   `audit:coverage --strict` kind nothing reaches). Against a branch baseline
+ *   (`--against`) only the NEW ones fail: an inherited finding is not this
+ *   PR's, which is the point of the flag. Against the working copy they all
+ *   fail, exactly as before this bean — the committed copy is the author's own
+ *   and cannot excuse their own finding.
+ * - `failOnNew` — findings the gate fails on only when they are NEW against a
+ *   baseline: the drift gates (`root-scan-census`, `check:reference-direction
+ *   --check`), whose old failure was "the committed census moved and nobody
+ *   looked". Before the move the baseline is the committed working copy; after
+ *   it, `--against <ref>`.
+ *
+ * ## A missing baseline is unknown, and does not fail
+ *
+ * `miss` / `corrupt` / `unknown` from the baseline: `failOn` is still judged
+ * (in full — nothing can be called inherited), and the new-vs-inherited split
+ * is reported UNKNOWN — never as "no new findings", and never as a failure.
+ *
+ * `undetermined` is different: the RUN could not ask part of its question
+ * (nothing to scan, a source that would not read). That is exit 2.
+ */
+export function judgeQaResult(args: {
+  gate: string;
+  fresh: QaResult;
+  failOn?: readonly string[];
+  failOnNew?: readonly string[];
+  /** Why part of the run could not be asked — exit 2. */
+  undetermined?: string;
+  /** Extra stored-record unknowns the producer found itself (not gated). */
+  unknowns?: readonly string[];
+  detail?: string;
+  /** The committed sidecar this run would write, and the writer that writes it. */
+  baseline: { root: string; stem: string; writer: string; against?: string; store?: QaStoreOptions };
+  /** How many new entries to name per family. Default 10. */
+  show?: number;
+}): QaVerdict {
+  const failOn = [...(args.failOn ?? [])];
+  const failOnNew = (args.failOnNew ?? []).filter((f) => !failOn.includes(f));
+  const { root, stem, writer, against, store } = args.baseline;
+  const read = readQaResultFrom(qaResultPath(root, stem), { against, store });
+  const unknowns = [...(args.unknowns ?? [])];
+  const count = (fams: readonly string[]) => fams.reduce((n, f) => n + (args.fresh.families[f]?.count ?? 0), 0);
+
+  let failing: number;
+  let diff: FindingDiff | undefined;
+  if (read.state === "hit") {
+    const fromBranch = against !== undefined;
+    diff = diffFindings(read.result, args.fresh, [...failOn, ...failOnNew]);
+    const newIn = (fams: readonly string[]) => fams.reduce((n, f) => n + (diff!.added[f]?.length ?? 0), 0);
+    failing = (fromBranch ? newIn(failOn) : count(failOn)) + newIn(failOnNew);
+    console.log(
+      `  baseline (${read.from}): ${Object.values(diff.added).reduce((n, e) => n + e.length, 0)} NEW finding(s), ` +
+        `${diff.inherited} inherited, ${diff.resolved} resolved — over ${[...failOn, ...failOnNew].join(", ") || "no graded family"}` +
+        (fromBranch ? "" : " (the committed working copy; pass --against <ref> to judge against the qa-reports branch)"),
+    );
+    const show = args.show ?? 10;
+    for (const [f, entries] of Object.entries(diff.added)) {
+      console.log(`    new in ${f}:`);
+      for (const e of entries.slice(0, show)) console.log(`      + ${JSON.stringify(e)}`);
+      if (entries.length > show) console.log(`      …and ${entries.length - show} more`);
+    }
+    if (!fromBranch && key(read.result) !== key(args.fresh)) {
+      console.log(
+        `  advisory: the committed ${stem}.qa-results.json is STALE against this run. ` +
+          `Not gated (bean 0dav: judge, never compare). \`bun run ${writer}\` rewrites it.`,
+      );
+    }
+  } else {
+    failing = count(failOn);
+    if (failOnNew.length > 0 || against !== undefined) {
+      unknowns.push(
+        `no baseline to split NEW from inherited findings (${read.from}: ${read.state}, ${read.reason}). ` +
+          `Not "no new findings" — the comparison was not made. Not this change's defect either, so not gated.`,
+      );
+    } else {
+      // Nothing is graded against a baseline here, so its absence decides
+      // nothing — but it is still said, so a reader can tell "compared, no
+      // change" from "nothing to compare with".
+      console.log(`  baseline (${read.from}): ${read.state} — ${read.reason}. Nothing here is judged against one.`);
+    }
+  }
+  const judgement = judgementOf({ failing, undetermined: args.undetermined !== undefined });
+  const detail = [args.detail, args.undetermined].filter(Boolean).join(" — ") || undefined;
+  const exit = concludeJudgement({ gate: args.gate, judgement, detail, unknowns });
+  return {
+    judgement,
+    exit,
+    failing,
+    baseline: read.state === "hit" ? { state: "hit", from: read.from } : { state: read.state, from: read.from, reason: read.reason },
+    ...(diff ? { diff } : {}),
+    unknowns,
+  };
+}
+
+/**
+ * The `--against` prelude for a gate: parse it, or end the run as a usage
+ * error. Returns `{ exit }` to stop with, or `{ against }` to carry on.
+ */
+export function againstOrUsage(gate: string, argv: readonly string[] = process.argv): { against?: string; exit?: number } {
+  try {
+    return { against: againstRef(argv) };
+  } catch (e) {
+    if (!(e instanceof QaUsageError)) throw e;
+    return { exit: concludeJudgement({ gate, judgement: "error", detail: e.message }) };
+  }
 }

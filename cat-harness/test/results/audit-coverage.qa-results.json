@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "25f2a2d567d7"
+    "script_hash": "aa3097bc587c"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 52 of 52 declared kind(s), 204 gate(s), 73 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 52 of 52 declared kind(s), 203 gate(s), 73 criteria.",
       "count": 52,
       "entries": [
         {
@@ -23,8 +23,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run kg:audit:check",
-            "bun run qa:attestations:migrate:check"
+            "bun run kg:audit:check"
           ],
           "typed": true,
           "hasFiles": true
@@ -655,7 +654,6 @@
             "bun run check:orphan-verdicts",
             "bun run check:tabular-stubs",
             "bun run lsi:viz:check",
-            "bun run qa:attestations:migrate:check",
             "bun run translation:block-qa:check"
           ],
           "typed": true,
@@ -1219,7 +1217,12 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 204 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 203 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "count": 0,
+      "entries": []
+    },
+    "kinds-unknown": {
+      "summary": "A declared directory of this kind is not in the checkout and declares no `storage`, and nothing else of the kind was counted — the census was not taken (bean `0dav`, readers-audit C8). Never `empty`: that would print an absent answer as a determined zero. Not gated: proposal §2.3.",
       "count": 0,
       "entries": []
     }

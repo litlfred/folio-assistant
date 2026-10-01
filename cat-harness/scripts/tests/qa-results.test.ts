@@ -12,7 +12,17 @@ import { tmpdir } from "node:os";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { buildQaResult, qaResultState, sourceHashOf, writeQaResult, QA_RESULTS_DIR } from "../qa-results.js";
+import {
+  buildQaResult,
+  mayLeaveMain,
+  qaResultPath,
+  qaResultState,
+  qaResultsFile,
+  readQaResultFrom,
+  sourceHashOf,
+  writeQaResult,
+  QA_RESULTS_DIR,
+} from "../qa-results.js";
 import { readDeclaration, repoRootFor } from "../../schemas/cat-harness.js";
 import { siteDirFor } from "../../schemas/cat-harness.ts";
 import { exitCodeFor, verifySiteLinks, type CheckableLink } from "../site-links.js";
@@ -33,10 +43,18 @@ describe("the results directory is DECLARED, not merely created", () => {
     expect(entry!.graphKinds).toContain("qa");
   });
 
-  it("...and the directory it declares actually exists", () => {
+  it("...and the directory it declares exists — or is a kind that leaves `main`", () => {
     // `AGENTS.md`: "Declare only what exists — a declared-but-absent directory
     // is the bean `dh4f` defect, where a consumer scans nothing and reports a
-    // clean run over it." The declaration above is only true if this holds.
+    // clean run over it." Bean `0dav`: a `qa` directory is the one exception
+    // the qa-reports arc makes (owner rulings D1/D4) — its working copy may be
+    // absent — and every reader of it now says UNKNOWN rather than scanning
+    // nothing and reporting clean. So absence is allowed only for that kind.
+    const entry = readDeclaration(ROOT)!.directories.find((d) => d.path.replace(/\/+$/, "") === QA_RESULTS_DIR)!;
+    if (!existsSync(join(ROOT, QA_RESULTS_DIR))) {
+      expect(mayLeaveMain(entry as { graphKinds?: string[] })).toBe(true);
+      return;
+    }
     expect(existsSync(join(ROOT, QA_RESULTS_DIR))).toBe(true);
   });
 });
@@ -55,19 +73,18 @@ describe("the result and the document are two renderings of ONE computation", ()
     // Two computations can disagree; two renderings of one cannot. This is the
     // rule `feature-staging.yml` follows when it copies the `.json` alias AFTER
     // the staging stamp, and the reason `stagingStamp` is one function rather
-    // than one per exporter. Asserted against the COMMITTED file, so a drift
-    // between what the exporter computes and what was last written is caught.
-    const f = join(ROOT, QA_RESULTS_DIR, "kg-export.qa-results.json");
-    expect(existsSync(f)).toBe(true);
-    const result = JSON.parse(readFileSync(f, "utf-8")) as {
-      $schema: string;
-      total: number;
-      families: Record<string, { count: number; entries: unknown[] }>;
-    };
+    // than one per exporter. Asserted against the COMMITTED file when there is
+    // one, so a drift between what the exporter computes and what was last
+    // written is caught — and against the exporter's own renderer always, so
+    // the claim still holds with `test/results/` off `main` (bean `id4s`).
+    const { buildExport, kgExportQaDocument } = await import("../kg-export.js");
+    const doc = await buildExport();
+    const committed = readQaResultFrom(qaResultPath(ROOT, "kg-export"));
+    // A miss is the only acceptable non-hit: corrupt or unknown is a finding.
+    expect(["hit", "miss"]).toContain(committed.state);
+    const result = committed.state === "hit" ? committed.result : kgExportQaDocument(doc, "kg-export.jsonld");
     expect(result.$schema).toBe("qa-results/v1");
 
-    const { buildExport } = await import("../kg-export.js");
-    const doc = await buildExport();
     for (const [family, field] of [
       ["undeclaredTerms", doc.undeclaredTerms],
       ["undeclaredSchemaModules", doc.undeclaredSchemaModules],
@@ -116,13 +133,15 @@ describe("provenance is never fabricated", () => {
 });
 
 describe("the witnesses are committed in one place and published in another", () => {
-  const WITNESS_DIR = join(ROOT, QA_RESULTS_DIR, "witnesses");
+  const WITNESS_DIR = qaResultsFile(ROOT, "witnesses");
 
   it("they live under the declared results tree, not under docs/", () => {
     // Provenance, not consumption: a witness is `qa-witness.ts`'s projection of
     // what a checker found. It sat in `docs/` only because that is where Jekyll
     // could reach it, which is a fact about the build, not about the artefact.
-    expect(existsSync(WITNESS_DIR)).toBe(true);
+    // With the results tree off `main` (bean `0dav`) there is nothing to find
+    // here; the docs/ half below still holds, and is what the move protects.
+    if (existsSync(dirname(WITNESS_DIR))) expect(existsSync(WITNESS_DIR)).toBe(true);
 
     // NARROWED 2026-09-21. This asserted that `docs/assets/qa/` does not exist
     // AT ALL, as a proxy for "no witnesses under docs/". The proxy stopped
