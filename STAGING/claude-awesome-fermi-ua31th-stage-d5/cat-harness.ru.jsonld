@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T18:25:08.087Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e18e81ac499289ef7461d86b399a15eb72ed5cd4",
-  "sourceCommitSha": "e18e81ac499289ef7461d86b399a15eb72ed5cd4",
-  "sourceCommitAt": "2026-10-01T18:20:42Z",
+  "generatedAt": "2026-10-01T19:39:30.776Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4c476c98db04778bc0d8e84264c453926023aa01",
+  "sourceCommitSha": "4c476c98db04778bc0d8e84264c453926023aa01",
+  "sourceCommitAt": "2026-10-01T19:28:32Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -317,8 +317,8 @@
     "SequenceFlow": 982,
     "Lane": 199,
     "ProcessNode": 927,
-    "Tool": 112,
-    "Schema": 144,
+    "Tool": 113,
+    "Schema": 145,
     "ExternalSchema": 17,
     "GraphKind": 23,
     "Role": 48,
@@ -1729,7 +1729,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1303,
+      "instructionLines": 1304,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -44319,6 +44319,49 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/voices-viewer"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/cat-harness.jsonld#tool/document-kinds-viewer",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
+      "name": "document-kinds-viewer",
+      "title": "Document kinds viewer",
+      "description": "Render each declared document-kinds directory: every kind's structure, sections and sources, one page per subject instance.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run document-kinds:viz"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/tool-types.schema.json#/$defs/Flag",
+            "description": "Fail if a page is stale, instead of writing.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "pages",
+            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The viewer pages, under the published site directory."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/cat-harness.jsonld#skill/graph-rendering"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/document-kinds-viewer"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/cat-harness.jsonld#tool/state-viewer",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
       "name": "state-viewer",
@@ -46380,6 +46423,15 @@
       "module": "schemas/document-image.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-image"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/cat-harness.jsonld#schema/document-kind",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "document-kind",
+      "title": "A document KIND — a named structure of sections that a document authored",
+      "module": "schemas/document-kind.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/document-kind"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/cat-harness.jsonld#schema/document-structure",
