@@ -1,0 +1,3273 @@
+{
+  "_generated": "check-reference-direction.ts — seeded once by --seed on 2b942036c34; every later write only removes, narrows or re-keys along a rename (one-way ratchet). Do not add entries by hand.",
+  "_comment": "Every file holding a wrong-direction reference — naming one or more instances above it (owner Q-B 2026-10-01, A.10). status 'held' = the 2026-09-24 PENDING list (issue #1219), folded in; status 'baselined' = 'baselined 2026-10-01'. The fix is to REWORD in place (Q1). A new offender fails; a fixed entry is trimmed by `bun run check:reference-direction` (and `bun run regen`). The drain is done when `entries` is empty.",
+  "entries": {
+    "bootstrap-tools/scripts/check-bootstrap-concepts.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "cat-harness"
+      ]
+    },
+    "bootstrap-tools/scripts/iri-sync.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "cat-harness"
+      ]
+    },
+    "bootstrap-tools/skills/package-manifest.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "bootstrap/.github/workflows/pages.yml": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/README.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/bootstrap.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/ns.jsonld": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/processes/complete-initialization.bpmn": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/schemas/README.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/schemas/discussion.input.schema.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/schemas/discussion.output.schema.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/schemas/graph.schema.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/schemas/model-registry.schema.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/schemas/requirement.schema.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/skills/bootstrap-graph-emission.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/skills/bootstrap-graph-publication.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/skills/initialization-steps.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "bootstrap/skills/publish-documents.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "bootstrap-tools"
+      ]
+    },
+    "cat-harness/cat-harness.json": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base",
+        "who-iris"
+      ]
+    },
+    "cat-harness/code-lists/own-namespaces.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/content/docs/content-types/content-types.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/docs/fhir-content/the-three-layers.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/docs/guides-who-smart-dak/guides-who-smart-dak.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/docs/guides-who-smart-ig/making-the-build-incremental.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-immunizations"
+      ]
+    },
+    "cat-harness/content/docs/guides-writing-a-document/where-things-are.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/content/docs/harness/overview.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/content/docs/harness/the-dependency-walk.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/content/docs/harnessed-kg-overview/slide-01.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/docs/harnessed-kg-overview/slide-02.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/content/docs/harnessed-kg-overview/slide-04.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/docs/harnessed-kg-overview/slide-09.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "smart-base",
+        "smart-immunizations",
+        "who-iris"
+      ]
+    },
+    "cat-harness/content/docs/harnessed-kg-overview/slide-10.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "cat-harness/content/docs/ig-publisher/what-only-it-can-do.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/docs/knowledge-graph/what-is-declared-today.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets",
+        "smart-base",
+        "who-iris"
+      ]
+    },
+    "cat-harness/content/pipeline/content-graph.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/content/pipeline/fsh-cone.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-immunizations"
+      ]
+    },
+    "cat-harness/content/pipeline/gen-library-jsonld.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/pipeline/gen-site-jsonld.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/pipeline/lean-atlas-ingest.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/content/pipeline/liquid-values.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness"
+      ]
+    },
+    "cat-harness/content/pipeline/lsi.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/content/pipeline/po-inject.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/pipeline/pot-extract.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/pipeline/qa-checker-discovery.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/content/pipeline/qa-checkers-dak.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base",
+        "smart-immunizations"
+      ]
+    },
+    "cat-harness/content/pipeline/qa-criteria-registry.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/content/pipeline/qa-sweep.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/content/pipeline/repo-root.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/content/pipeline/script-sidecars/proof-compile-cost.script.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/content/pipeline/script-sidecars/proof-no-cost-regression.script.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/content/pipeline/voice-criteria.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/docs/architecture/cat-harness-minimum.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "cat-harness-tools",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/architecture/current-state.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/architecture/folio-board-requirements.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/architecture/future-state.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/architecture/migration-plan.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/assets/harness/tiles.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/cat-harness/published-graphs.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "agent-skills",
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "smart-immunizations",
+        "smart-trust",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/docs/detangle.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci",
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/external-schemas/index.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets",
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/installation.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "cat-harness-tools"
+      ]
+    },
+    "cat-harness/docs/lsi/index.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "fhir-harness",
+        "folio-assistant",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "smart-trust",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/docs/methodologies/index.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/processes/copy-out-materialized.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/processes/deep-document-research.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/docs/processes/diig-investment-path.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/processes/graph-detanglement.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/processes/human-translation-workflow.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/processes/ig-ast-delta-review.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/docs/processes/ig-incremental-build.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-immunizations"
+      ]
+    },
+    "cat-harness/docs/processes/index.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets",
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/processes/kg-separation.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "cat-harness-tools"
+      ]
+    },
+    "cat-harness/docs/processes/kg-to-portal.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/processes/l2-dak-authoring.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/processes/materialize-remote.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets"
+      ]
+    },
+    "cat-harness/docs/processes/refresh-materialized.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets"
+      ]
+    },
+    "cat-harness/docs/processes/sample-import.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/processes/subscribe-kg.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets"
+      ]
+    },
+    "cat-harness/docs/processes/translation-workflow.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/proposals/cat-harness-tools-split-2026-10-01.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "cat-harness-tools",
+        "fhir-harness",
+        "folio-assistant-core",
+        "large-datasets",
+        "smart-base",
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/proposals/cmsl-external-directories-2026-09-30.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/proposals/declaration-gap.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/docs/proposals/index.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "smart-base",
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "cat-harness/docs/proposals/instance-versioning.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/docs/proposals/kg-subscriptions.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/proposals/lsi-applicability.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "smart-base",
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/proposals/lsi-epic-filing-2026-09-29.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base",
+        "smart-immunizations",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/proposals/lsi-who-iris-2026-09-29.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/docs/proposals/odrl-prov-actor-model.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust"
+      ]
+    },
+    "cat-harness/docs/proposals/placement-audit-2026-10-01.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "cat-harness-tools",
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "smart-ig",
+        "smart-l1",
+        "smart-trust",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/docs/proposals/placement-audit-2026-10-01.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "cat-harness-tools",
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "smart-dak",
+        "smart-ig",
+        "smart-immunizations",
+        "smart-l1",
+        "smart-trust",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/docs/proposals/placement-concern-groups-2026-10-01.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "cat-harness-tools",
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "smart-immunizations",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/proposals/separation-arc-2026-10-01.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "cat-harness-tools",
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "smart-trust",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/docs/proposals/smart-separation-2026-10-01.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "cat-harness-tools",
+        "fhir-harness",
+        "smart-base",
+        "smart-dak",
+        "smart-ig",
+        "smart-immunizations",
+        "smart-l1",
+        "smart-trust"
+      ]
+    },
+    "cat-harness/docs/skills.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/docs/subgraph-viewers.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-sci",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/translation-support.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/wireframes/catalogue/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/wireframes/docs-index/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/wireframes/external-schemas/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/docs/wireframes/glossary-page/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets"
+      ]
+    },
+    "cat-harness/docs/wireframes/harness-config/decision.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust"
+      ]
+    },
+    "cat-harness/docs/wireframes/harness-config/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust"
+      ]
+    },
+    "cat-harness/docs/wireframes/harness-config/reviews/agent-1.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets",
+        "smart-trust"
+      ]
+    },
+    "cat-harness/docs/wireframes/index.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/docs/wireframes/library/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-sci",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/wireframes/lsi/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/wireframes/methodologies/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/docs/wireframes/navbar/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/wireframes/schemas/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets"
+      ]
+    },
+    "cat-harness/docs/wireframes/skills-index/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/wireframes/tools/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust"
+      ]
+    },
+    "cat-harness/docs/wireframes/uploads/intent.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/docs/wireframes/voices/intent.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/external-schemas/w3c-skos.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/folio/README.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/folio/folio-assist-core.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/folio/smart-trust.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust"
+      ]
+    },
+    "cat-harness/folio/who-iris.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/methodologies/README.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/methodologies/correspondence-analysis.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/methodologies/json-ld-serialisation.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/methodologies/lsi.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/processes/graph-detanglement.bpmn": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/processes/human-translation-workflow.bpmn": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/processes/translation-workflow.bpmn": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/scenarios/actors/deep-researcher.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/scenarios/capabilities/smart-base.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/scenarios/stories.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/assistant-types.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/avatars.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-core",
+        "smart-base",
+        "smart-dak",
+        "smart-ig",
+        "smart-l1",
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/binary-release.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "smart-trust"
+      ]
+    },
+    "cat-harness/schemas/block-kinds.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/block-qa.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/schemas/cat-harness.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "agent-skills",
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/content-type.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/content-types-base.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/contributions.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/dak-blocks.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/dak-content-type.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/dak.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-base",
+        "smart-immunizations"
+      ]
+    },
+    "cat-harness/schemas/detangle-sidecar.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/schemas/external-schema.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/schemas/glossary-graph-kind.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/schemas/graph-kind-registry.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base",
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/harness-config.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-core",
+        "large-datasets",
+        "smart-base",
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/jsonld.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant-core",
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/kg-node.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/kg-qa.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "smart-dak",
+        "smart-ig",
+        "smart-immunizations",
+        "smart-l1",
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/namespaces.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant-core",
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/pdf-structure.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/property-skills.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets"
+      ]
+    },
+    "cat-harness/schemas/qa-report.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/reference-direction.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/schemas/scenario-overlay.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/skill-definitions-dir.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/skill-topics.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/schemas/source-provenance.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/theme-by-ref.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/theme.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant",
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/themes.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/translation-tools.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/viewer-nav-qa.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/schemas/vocabulary.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/schemas/voice-skill.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-core",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/schemas/voices.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/schemas/withheld.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/apply-image-verdicts.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills"
+      ]
+    },
+    "cat-harness/scripts/check-avatar-instances.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-bean-restates-skill.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness"
+      ]
+    },
+    "cat-harness/scripts/check-command-paths.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-context-emission.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant-core",
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "cat-harness/scripts/check-declaration-filename.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/scripts/check-declared-assets.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci",
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-declared-dirs.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-escaped-markup.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/scripts/check-folio-mount.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-graph-kind-work.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-import-direction.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/scripts/check-instance-themes.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-l1-complete.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/scripts/check-layout-norms.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/scripts/check-module-scope-resolution.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/scripts/check-navbar-consistency.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-read-only-graphs.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-secret-leaks.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/scripts/check-soft-hyphens.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/scripts/check-structure-accessor.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/scripts/check-subgraph-coverage.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-tabular-stubs.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/check-term-mapping.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/scripts/check-tools.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets"
+      ]
+    },
+    "cat-harness/scripts/check-uploads-retired.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/compose-docs.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/content-holds-code.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/dak-pdf.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-base",
+        "smart-immunizations"
+      ]
+    },
+    "cat-harness/scripts/ensure-landing-sticky.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/scripts/external-schemas.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant-core",
+        "smart-base",
+        "smart-trust"
+      ]
+    },
+    "cat-harness/scripts/folio-mount.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/gates.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/scripts/gen-docs-auto.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base",
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/gen-handler-index.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/gen-library-viz.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/gen-methodologies-viz.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "smart-base"
+      ]
+    },
+    "cat-harness/scripts/gen-navbar-include.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/gen-object-model-uml.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "smart-base"
+      ]
+    },
+    "cat-harness/scripts/gen-schema-docs.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets"
+      ]
+    },
+    "cat-harness/scripts/gen-schema-viz.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-core",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/gen-skill-docs.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/scripts/gen-themes-css.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness"
+      ]
+    },
+    "cat-harness/scripts/gen-uml-overview.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/scripts/gen-upload-step-docs.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "smart-base"
+      ]
+    },
+    "cat-harness/scripts/gen-uploads-viz.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-sci",
+        "smart-base",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/gen-voices-viz.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/scripts/glossary-export.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/scripts/graph-tiles.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets"
+      ]
+    },
+    "cat-harness/scripts/harness-schema-export.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets",
+        "smart-base"
+      ]
+    },
+    "cat-harness/scripts/harness-tiles.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/ingest-document.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/init-folio.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/scripts/kg-audit.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/scripts/kg-export.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "agent-skills",
+        "fhir-harness",
+        "folio-assistant-core",
+        "large-datasets",
+        "smart-base",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/scripts/known-skills.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-sci",
+        "smart-base"
+      ]
+    },
+    "cat-harness/scripts/layout-norms-baseline.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/scripts/lib/declared-presence.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/lib/graph-kind-nav.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/lib/navbar.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/library-graph.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/measure-logic-layer-edges.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-immunizations"
+      ]
+    },
+    "cat-harness/scripts/mount-instance-docs.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/ns-export.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/scripts/orphan-pages.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/render-selection.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/root-scan-census.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/scripts/schema-graph.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets"
+      ]
+    },
+    "cat-harness/scripts/schema-nodes.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets"
+      ]
+    },
+    "cat-harness/scripts/skill-governance.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "smart-base",
+        "smart-trust"
+      ]
+    },
+    "cat-harness/scripts/skill-packages.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/skill-register.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-core",
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/staging-banner.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/sync-remote-skills.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness"
+      ]
+    },
+    "cat-harness/scripts/viewer-declarations.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/viewer-page.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/scripts/voices-graph.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-sci",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/skills/authoring/authoring-core/evidence-review.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/skills/authoring/authoring-core/review-comments.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/authoring/authoring-core/technical-documentation.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills"
+      ]
+    },
+    "cat-harness/skills/authoring/authoring-core/todo-review.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets"
+      ]
+    },
+    "cat-harness/skills/authoring/content-lifecycle/evidence-appraisal.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/skills/conduct/conduct-core/getting-started.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/conduct/conduct-core/interaction-modality.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/conduct/conduct-core/repo-conversion.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/conduct/conduct-core/untrusted-input.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/skills/conduct/security/package-manifest.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/skills/kg/graph-management/graph-detanglement.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/skills/kg/graph-management/kg-detangle.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/kg/graph-management/kg-separation.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "cat-harness-tools",
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/kg/graph-management/lsi-indexing.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/directory-conventions.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "smart-base",
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/harness-requirements.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/instance-kinds.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/instance-publication.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base",
+        "smart-trust"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/kg-contribution-offer.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/kg-export.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "folio-assistant-core",
+        "smart-base"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/kg-to-portal.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/placement.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base",
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/schema-management.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci",
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/skill-voice-review.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills"
+      ]
+    },
+    "cat-harness/skills/kg/kg-core/vocabulary-authority.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/kg/kg-navigation/package-manifest.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/library/library-core/asset-extraction.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/library/library-core/glossary-build.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/library/library-core/glossary-terms.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/library/library-core/library-ingestion.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/library/library-core/translation-manager.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/skills/library/library-core/upload-naming.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/process/process-core/role-model.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/process/process-core/swimlane-glossary.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/process/workflow/bpmn-authoring.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/skills/process/workflow/bpmn-processes.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-core",
+        "smart-base"
+      ]
+    },
+    "cat-harness/skills/process/workflow/dmn-authoring.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/skills/sdlc/sdlc-core/adjudication.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/skills/sdlc/sdlc-core/before-after-preview.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "fhir-harness",
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/skills/sdlc/sdlc-core/continual-progress.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/sdlc/sdlc-core/coordinate.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/sdlc/sdlc-core/diff.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/sdlc/sdlc-core/github-state-inspection.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant"
+      ]
+    },
+    "cat-harness/skills/sdlc/sdlc-core/narrative-asserts-code.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/skills/sdlc/sdlc-core/prepare-merge.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/sdlc/sdlc-core/rendered-verification.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/sdlc/sdlc-core/staging-review.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/ui/theming/package-manifest.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/skills/ui/ui-core/board-windows.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/ui/ui-core/docs-auto.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/ui/ui-core/harness-tiles.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "fhir-harness",
+        "smart-base",
+        "who-iris"
+      ]
+    },
+    "cat-harness/skills/ui/ui-core/readme-sections.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-immunizations"
+      ]
+    },
+    "cat-harness/src/builtin-adapters.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/src/content-types.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "cat-harness-tools",
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/src/core/anthropic.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "cat-harness-tools",
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/src/docs/declaration-claims.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-sci",
+        "who-iris"
+      ]
+    },
+    "cat-harness/src/sessions/staleness.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/src/tools/beans-prime.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant"
+      ]
+    },
+    "cat-harness/src/tools/lsi-query.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "cat-harness/src/tools/skill-fetch.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/src/tools/translation.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "cat-harness/src/tools/workflow.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant"
+      ]
+    },
+    "cat-harness/src/workflow/process-model.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core",
+        "large-datasets"
+      ]
+    },
+    "cat-harness/templates/paper/github/workflows/blueprint.yml": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "cat-harness/tools/discover.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "fhir-harness",
+        "smart-base"
+      ]
+    },
+    "cat-harness/tools/index.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-core"
+      ]
+    },
+    "cat-harness/tools/mcp.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "fhir-harness/AGENTS.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-base",
+        "smart-dak",
+        "smart-ig",
+        "smart-l1"
+      ]
+    },
+    "fhir-harness/fhir-harness.json": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-base",
+        "smart-dak",
+        "smart-ig",
+        "smart-immunizations",
+        "smart-l1",
+        "smart-trust"
+      ]
+    },
+    "fhir-harness/schemas/ig-chrome.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-base",
+        "smart-dak",
+        "smart-ig",
+        "smart-l1",
+        "smart-trust"
+      ]
+    },
+    "fhir-harness/schemas/ig-menu.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust"
+      ]
+    },
+    "fhir-harness/scripts/gen-ig-pages.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-base",
+        "smart-ig",
+        "smart-trust"
+      ]
+    },
+    "fhir-harness/scripts/ig-site-data.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "fhir-harness/scripts/ingest-ig-chrome.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-base",
+        "smart-trust"
+      ]
+    },
+    "fhir-harness/scripts/ingest-ig-menu.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust"
+      ]
+    },
+    "fhir-harness/scripts/pin-ig-terminology.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "fhir-harness/skills/content/fhir-ig-authoring/ig-publication.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "fhir-harness/skills/content/fhir-ig-authoring/l3-fhir-authoring.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "fhir-harness/skills/content/fhir-ig-authoring/terminology-management.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "fhir-harness/skills/fhir-ig-base/ig-build-pipeline.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base",
+        "smart-dak"
+      ]
+    },
+    "fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-base",
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "fhir-harness/skills/fhir-ig-base/ig-render-jekyll.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base"
+      ]
+    },
+    "fhir-harness/tools/index.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-base",
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "folio-assistant-core/README.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/adapters/README.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "folio-assistant-core/adapters/document/index.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust"
+      ]
+    },
+    "folio-assistant-core/folio-assistant-core.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci",
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/schemas/catalogue.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/schemas/dublin-core.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/schemas/fhir-artifact-index.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust",
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/schemas/library-ref.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "folio-assistant-sci",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "folio-assistant-core/schemas/materialization.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/scripts/backfill-materialized-fixity.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/scripts/check-artifact-index.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust"
+      ]
+    },
+    "folio-assistant-core/scripts/check-catalogue.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/scripts/check-materialized-fixity.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-immunizations",
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/scripts/check-voices.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "folio-assistant-core/scripts/gen-covers.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/scripts/ingest-ig-artifacts.ts": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "folio-assistant-core/scripts/lib/bytes.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/scripts/lib/local-path.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/scripts/sample-import-check.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/scripts/sample-import-run.ts": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "who-iris"
+      ]
+    },
+    "folio-assistant-core/skills/library/ingestion/document-intake.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "folio-assistant-sci"
+      ]
+    },
+    "folio-assistant-core/skills/skills.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "folio-assistant-core/skills/voices/README.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills",
+        "who-iris",
+        "who-style-guide"
+      ]
+    },
+    "folio-assistant-core/skills/voices/technical-writer/voice.json": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "agent-skills"
+      ]
+    },
+    "smart-base/AGENTS.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "smart-base/README.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-dak",
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-dak"
+      ]
+    },
+    "smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md": {
+      "status": "baselined",
+      "since": "2026-10-01",
+      "note": "baselined 2026-10-01 (owner Q-B: reword in place)",
+      "targets": [
+        "smart-trust"
+      ]
+    },
+    "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "smart-base/smart-base.json": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "smart-ig/AGENTS.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "smart-ig/README.md": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    },
+    "smart-ig/smart-ig.json": {
+      "status": "held",
+      "since": "2026-09-24",
+      "note": "PENDING, issue #1219",
+      "targets": [
+        "smart-immunizations",
+        "smart-trust"
+      ]
+    }
+  }
+}
