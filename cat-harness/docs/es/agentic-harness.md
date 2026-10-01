@@ -398,8 +398,8 @@ con sus fuentes autorizadas.
 | Disciplina de commits y PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
 | Detección de solicitudes de funcionalidad | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
 | Flujo de trabajo de requisitos CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
-| Autoría de contenido (paper) | habilidades authoring-math | [`skills/authoring/authoring-math/`](../../skills/authoring/authoring-math/) |
-| Autoría de contenido (document) | habilidades folio-document-adapter | [`skills/authoring/folio-document-adapter/`](../../skills/authoring/folio-document-adapter/) |
+| Autoría de contenido (paper) | habilidades authoring-math | `skill_list` → `authoring-math` |
+| Autoría de contenido (document) | habilidades folio-document-adapter | `skill_list` → `folio-document-adapter` |
 | Ciclo de vida de contenido | habilidades content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | Ingesta de documentos | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Despacho y coordinación | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |

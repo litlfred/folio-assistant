@@ -3,6 +3,8 @@
   "name": "who-iris",
   "repository": "litlfred/who-iris",
   "livesAt": { "repository": "litlfred/folio-assistant", "path": "who-iris" },
+  "_separation_comment": "CONTENT, per the owner's 2026-09-20 plan ('a new repo ... which is an instance of fa-core, and is for the who-iris cataloge') and kg-separation: a content repository holds no code (bootstrap FR-7). No who-iris-tools is authorised, so the IRIS-specific code that remains here is TOLERATED rather than settled -- owner, 2026-09-30: 'iris specific tools for now ok in who-iris/ but make sure fails QA finding', and 2026-10-01: 'QA warning. not failure.. ok b/c small # tools'. kg:audit's content-instance-holds-code reads this field and records a minor WARNING naming each file until that code has a home. Bean eayu. (Dropped by a 'take main' merge on the #1728 branch, 473805a37; restored by S0, bean hx65.)",
+  "separation": "content",
   "version": "0.1.0",
   "needs": [
     "folio-assistant-core"
@@ -101,7 +103,11 @@
       "description": "Deliberately thin, per 'mionimal tools in who specific stuff'. ONE skill: `iris-dspace`, how IRIS uses DSpace and qualified Dublin Core, with what a later tool needs stated as nine checkable requirements. The Dublin Core TYPE is generic and lives in folio-assist-core; enumeration and subsetting live in large-datasets; OCR stays a cat-harness platform tool.",
       "graphKinds": [
         "skills"
-      ]
+      ],
+      "tile": {
+        "title": "Skills — who-iris"
+      },
+      "_tile_comment": "Carried over from cat-harness's mirror of this directory, which placement PR0 (bean ejye) removed: the tile title is the owner's to state."
     },
     {
       "_comment": "Themes this instance DERIVED from sources it holds, bean j66n. `iris-web` is read off the compiled stylesheet DSpace served with the captured item page; `who-wpro-publication` is read off the style guide's own pages 6, 7, 12, 14 and 18. Declared rather than left implicit because an undeclared directory is the dh4f defect -- every declaration-driven consumer scans nothing and reports a clean run over it, which is exactly what `docs/` did with 241 files until 2026-09-20. These are NOT the platform's twelve themes: those are cat-harness's own furniture, and a palette read off a WHO style guide is subject matter, which the root AGENTS.md keeps out of the platform.",

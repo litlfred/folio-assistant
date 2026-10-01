@@ -16,6 +16,7 @@ import { BEAN_GRAPH_FILE } from "./bean-graph";
 import { TODO_GRAPH_FILE } from "./todo-graph";
 import { defaultGraphKinds, graphKindIri, GraphKindRegistry, graphLayer, isContentGraph, isContextGraph, isStateGraph, processMayWrite, graphKindsOfLayer, BASE_GRAPH_KINDS, GraphKindConflictError, isRenderable, readDeclaration, keepMarker, materialiseDirectories, renderableDirectories, DEFAULT_DIRECTORIES, declaredKinds, directoryForGraph, directoriesForGraph, resolveDirectories, resolveGraphKind, ContentDirectorySchema, GraphNodeDirectorySchema, instanceRootsIn, ownDirectoryById, toJsonLd, type ResolvedDirectory } from "./cat-harness";
 import { writeDeclaration } from "../test/support/instance-fixture.js";
+import { checkoutDirectories, corpusDirectoriesForGraph } from "./harness-config";
 
 const TMP = join(import.meta.dir, "__test_agent_harness__");
 const INSTANCE_ROOT = resolve(import.meta.dir, "..");
@@ -568,7 +569,14 @@ describe("materialiseDirectories", () => {
     // carry documents.
     const ids = libraries.map((d) => d.id);
     expect(ids).toContain("library");
-    expect(libraries.length).toBeGreaterThan(1);
+    // ...and the CORPUS is reached from the CHECKOUT, not from the platform's
+    // own declaration (placement PR0, bean `ejye`): until then this asserted
+    // `libraries.length > 1` on the line above, which was true only because
+    // cat-harness declared five of its dependents' libraries as
+    // `scope: "repository"` mirrors. The platform resolved alone now holds
+    // one; the checkout holds every instance's.
+    expect(libraries.length).toBe(1);
+    expect(corpusDirectoriesForGraph(INSTANCE_ROOT, "library").length).toBeGreaterThan(1);
     // The platform's own library EXISTS. It was absent for a few hours between
     // `frs5` and the owner's 2026-09-20 ruling; `harness:dirs:check` reports a
     // declared-but-missing directory, so re-declaring it required re-creating
@@ -1018,6 +1026,12 @@ describe("instanceRootsIn — discovered, never listed", () => {
       // which declares `bootstrap-tools.json` and is therefore an instance.
       "bootstrap-tools",
       "cat-harness",
+      // Added 2026-10-01 with bean `w2gr` (step 3a): the tool IMPLEMENTATION
+      // layer, holding the MCP server while cat-harness keeps the Tool
+      // definitions -- the bootstrap / bootstrap-tools split, on the owner's
+      // option-A ruling. It sorts after `cat-harness` ("cat-harness" <
+      // "cat-harness-tools").
+      "cat-harness-tools",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
       // `folio-assistant-sci` sorts after it. The list is the assertion, so
@@ -1146,8 +1160,10 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     // misspelled theme parses (it is an open string by design) and would fall
     // back silently at render time.
     const repo = resolve(import.meta.dir, "..", "..");
-    const decl = readDeclaration(join(repo, "cat-harness"));
-    const themed = (decl?.directories ?? []).filter((d) => d.theme !== undefined);
+    // Over the CHECKOUT since placement PR0 (bean `ejye`): the core and sci
+    // methodology graphs are themed in their OWNERS' declarations, under the
+    // owners' ids, now that cat-harness no longer mirrors them.
+    const themed = checkoutDirectories(repo).filter((d) => d.theme !== undefined && d.member === d.declaredBy);
     // TWO, not four, since 2026-09-22. `methodology-crdm` and
     // `methodology-raci` were dropped when the owner's "dont bury sub-graph
     // assets" moved their skills into `skills/` — a package subdirectory of
@@ -1172,11 +1188,7 @@ describe("a directory declares the theme it renders on (owner, 2026-09-20)", () 
     // THREE since 2026-09-29 (bean `h3rw`): `folio-assistant-sci-methodologies`
     // holds the science layer's Lean-formalization methods, and takes
     // `analyst` for the same reason.
-    expect(themed.map((d) => d.id).sort()).toEqual([
-      "folio-assistant-core-methodologies",
-      "folio-assistant-sci-methodologies",
-      "methodologies",
-    ]);
+    expect(themed.map((d) => d.id).sort()).toEqual(["core-methodologies", "methodologies", "sci-methodologies"]);
     for (const d of themed) expect(d.theme?.themeId).toBe("analyst");
     expect(THEMES.map((t) => t.id)).toContain("analyst");
   });

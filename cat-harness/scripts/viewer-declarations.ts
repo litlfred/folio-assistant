@@ -24,9 +24,10 @@
  * @module scripts/viewer-declarations
  */
 import { readFileSync } from "node:fs";
-import { basename, join, relative, sep } from "node:path";
+import { basename, join, relative, resolve, sep } from "node:path";
 
 import {
+  declarationPathIn,
   directoriesForGraph,
   instanceDirectoryForGraph,
   repoRootFor,
@@ -34,6 +35,7 @@ import {
   type Tile,
   type Visualisation,
 } from "../schemas/cat-harness.js";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 import { tools } from "../tools/discover.js";
 import { frontMatterList } from "./skill-governance.js";
 
@@ -147,9 +149,20 @@ export function withRendersFrontMatter(md: string, paths: readonly string[], too
  * The directories of a kind the handler instance declares, as a page names
  * them. For a generator drawing ONE page per kind: it renders what its
  * instance handles, which is what its declaration says.
+ *
+ * `corpus`: the handler AND every instance stacked on it (placement PR0, bean
+ * `ejye`) — for a page that drew its dependents' directories through the
+ * platform's `scope: "repository"` mirrors (the methodology viewer), and now
+ * asks the checkout for them instead. Default is the handler alone.
  */
-export function handledDirectories(repoRoot: string, handlerRoot: string, kind: string): string[] {
-  return directoriesForGraph(handlerRoot, kind).map((d) => renderedPath(repoRoot, d));
+export function handledDirectories(
+  repoRoot: string,
+  handlerRoot: string,
+  kind: string,
+  scope: "instance" | "corpus" = "instance",
+): string[] {
+  const dirs = scope === "corpus" ? corpusDirectoriesForGraph(handlerRoot, kind) : directoriesForGraph(handlerRoot, kind);
+  return dirs.map((d) => renderedPath(repoRoot, d));
 }
 
 /**
@@ -242,6 +255,33 @@ export function viewersOf(
  * it is read from disk, and everything downstream keeps asking
  * `visualisationsOf` exactly as before. The declaration on disk is untouched.
  */
+export function siteDirectories<T extends ViewedDirectory>(
+  own: readonly T[],
+  instanceRoot: string,
+  repoRoot: string = repoRootFor(instanceRoot),
+): T[] {
+  // The site this instance builds draws the CHECKOUT, and since placement PR0
+  // (bean `ejye`) the checkout's own directories — `beans/`, `todos/`,
+  // `fsh-guts/`, `memory/`, the root docs overlay — are declared by the
+  // checkout's ROOT instance rather than mirrored here with
+  // `scope: "repository"`. They are read from there and presented exactly as
+  // they were: repository-scoped entries of this site, with their ids
+  // unchanged, so a tile, an icon and a dashboard keep their address. An id
+  // this instance already declares wins (its own `docs`, `uploads`).
+  if (resolve(repoRoot) === resolve(instanceRoot)) return [...own];
+  const p = declarationPathIn(repoRoot);
+  if (p === undefined) return [...own];
+  let root: { directories?: T[] };
+  try {
+    root = JSON.parse(readFileSync(p, "utf-8")) as { directories?: T[] };
+  } catch {
+    return [...own];
+  }
+  const ids = new Set(own.map((d) => d.id));
+  const checkout = (root.directories ?? []).filter((d) => !ids.has(d.id)).map((d) => ({ ...d, scope: "repository" }));
+  return [...own, ...checkout];
+}
+
 export function withViewers<T extends ViewedDirectory>(
   dirs: readonly T[],
   instanceRoot: string,

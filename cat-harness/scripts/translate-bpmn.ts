@@ -78,7 +78,7 @@
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { localeDirIn, translationsHomeFor } from "../schemas/cat-harness.js";
-import { workflowFiles } from "./known-skills.js";
+import { workflowFiles, corpusScopeFor } from "./known-skills.js";
 import { basename, dirname, join, relative, resolve } from "node:path";
 import { extractBpmn, injectBpmn } from "../content/pipeline/bpmn-translate.js";
 import { formatPot, potWithoutTimestamp } from "../content/pipeline/pot-extract.js";
@@ -152,7 +152,7 @@ if (wantInject && !locale) {
 // its own; it names roles drawn in another instance rather than hiding them.
 // The skill says so: `swimlane-glossary` §"Run it once per instance — never
 // widen the scan" (widening re-opens the `7u3g` leak).
-const diagrams = workflowFiles(root).filter((f) => f.endsWith(".bpmn"));
+const diagrams = workflowFiles(root, corpusScopeFor(root)).filter((f) => f.endsWith(".bpmn"));
 if (diagrams.length === 0) {
   console.error("No .bpmn files in any declared knowledge-graph directory.");
   process.exit(2);

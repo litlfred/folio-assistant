@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>1764</b><span>units indexed</span></div>
+<div class="lv-stat"><b>1667</b><span>units indexed</span></div>
 <div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -42,13 +42,12 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `bootstrap/skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs` |
 | `cat-harness/folio` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `cat-harness/folio-assistant-sci-data-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `cat-harness/folio-assistant-sci-lean-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/library` | <span class="lv-fail">fail</span> | stale — re-run `bun run lsi index --instance cat-harness --graph library` |
 | `cat-harness/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/policies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/skills` | <span class="lv-pass">pass</span> | fresh |
 | `fhir-harness/fhir-ig-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
+| `fhir-harness/library` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-core/core-library` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-core/core-methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-core/core-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
@@ -122,7 +121,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**309** units · **7636** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**212** units · **5831** terms · k = **100** · retains **79.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -130,14 +129,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 47.66 | bean, instance, session, graph, page, kind, directory, branch | *(none)* |
-| 2 | 27.80 | bias, studies, study, statistical, effect, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, session |
-| 3 | 22.38 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, page, directory, bias, actor |
-| 4 | 19.58 | session, branch, queue, prs, beans, commits, coordination, bean | dpi, color, lean, grayscale, pdf, images, text, matplotlib |
-| 5 | 18.72 | dpi, color, grayscale, contrast, raster, images, matplotlib, fonts | proof, lean, glossary, declaration, term, theorem, stub, mathlib |
-| 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, solutions, description, consider, ignoring |
-| 7 | 16.34 | lean, mathlib, search, mcp, sorry, proof, page, build | watcher, voice, slot, backlog, queue, nesting, ledger, objection |
-| 8 | 15.39 | mathlib, lean, sorry, lake, mcp, oleans, sessions, goal | slot, watcher, backlog, criterion, band, forward, major, auto-discharge |
+| 1 | 43.61 | instance, harness, kind, directory, session, graph, block, page | *(none)* |
+| 2 | 21.41 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
+| 3 | 17.77 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
+| 4 | 16.39 | page, block, section, sections, blocks, chapter, manifest, text | ledger, sibling, subdirectory, items, sessions, queue, window, renderable |
+| 5 | 14.81 | locale, translated, navbar, translation, page, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
+| 6 | 14.77 | lane, requirements, actor, role, feature, task, phase, impact | rung, queue, slide, arm, bytes, zip, archive, sha |
+| 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
+| 8 | 14.14 | locale, translation, translated, french, back-translation, translations, badge, language | preview, feature, phase, theme, option, sha, merge, staging |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

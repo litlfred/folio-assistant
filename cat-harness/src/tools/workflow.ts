@@ -167,7 +167,12 @@ export function registerWorkflowTools(server: McpServer, repoRoot: string): void
         let graph: RoleGraph | undefined;
         for (const r of [...processRoots(root)].reverse()) {
           graph = roleGraphFor(r);
-          if (graph) break;
+          // A graph that declares no role of its own is a layer of
+          // EXTENSIONS by id (placement PR0b/PR1, e.g. core's
+          // `scenarios/roles.json`), not the graph a lane binds into: keep
+          // going down to the instance that declares the roles, whose
+          // checkout answer already carries every extension.
+          if (graph && graph.roles.length > 0) break;
         }
         rolesCache = { graph };
       } catch {

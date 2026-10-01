@@ -72,7 +72,7 @@ import { fileURLToPath } from "node:url";
 
 import { tools } from "../tools/discover.js";
 import { loadProcessModel } from "../src/workflow/process-model.js";
-import { isSkillMd, kgRoots } from "./known-skills.js";
+import { isSkillMd, kgRoots, corpusScopeFor } from "./known-skills.js";
 import { packageDirsIn } from "./skill-topics.js";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -231,7 +231,7 @@ export interface SkillTriage {
  */
 function skillDirs(): string[] {
   const d: string[] = [];
-  for (const abs of kgRoots(ROOT)) {
+  for (const abs of kgRoots(ROOT, corpusScopeFor(ROOT))) {
     const rel = relative(ROOT, abs);
     if (holdsSkillMd(abs)) d.push(rel);
     // One level, or two inside a topic `skills.json` declares (bean `9umr`).

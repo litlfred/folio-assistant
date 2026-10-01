@@ -379,6 +379,7 @@ export const RULES: Rule[] = [
       "scripts/test-run-conformance.ts",     // a test run's cases against its skill's contract (#1168)
       "scripts/arrow-direction.ts",          // general nodes point only at general nodes (#1168)
       "scripts/prose-names.ts",              // file names in general nodes' prose still resolve (bean `epbt`)
+      "scripts/content-holds-code.ts",       // a content instance holds no code (kg-separation FR-7, bean `eayu`)
       "scripts/spec-users.ts",               // who declares each external spec — read from the users (bean `u63y`)
       // Same relation as the line above, checked from the other end: that one
       // WRITES the maintained artefacts, this one asks whether every `maintains`
@@ -413,6 +414,10 @@ export const RULES: Rule[] = [
       // differently, only add a row.
       "scripts/harness-tiles.ts",            // every initiated harness → its navbar tile
       "scripts/harness-panel.ts",            // every harness → its config panel row (issue #1146)
+      // The tile half of a KG subscription (issue #1719): which chosen harnesses
+      // are instantiated at the root, read from their snapshots. HARNESS so the
+      // tile above may import it; `kg-instantiate.ts` (core) imports it too.
+      "scripts/subscribed-harnesses.ts",
       // Beside its sibling, and HARNESS rather than core — the opposite
       // classification to `gen-default-boards.ts`, for the reason that entry
       // records: what settles it is what a module is ABOUT. That one produces
@@ -483,6 +488,14 @@ export const RULES: Rule[] = [
       "schemas/skill-package.ts",
       // `skills.json`'s shape (bean `9umr`); read by `scripts/skill-topics.ts`.
       "schemas/skill-topics.ts",
+      // The other grouping kinds' from-within group declaration (placement
+      // PR0c, bean `ejye`); imports only zod. Concern groups are how the
+      // harness's own subgraphs are laid out, not content.
+      "schemas/concern-groups.ts",
+      // Roles, actors and capabilities extended by id from a dependent's
+      // `scenarios/` (placement PR0b). The role model is harness vocabulary
+      // (`role-graph.ts` below), and this reads it and `harness-config.ts`.
+      "schemas/scenario-overlay.ts",
       // What happened when a Tool ran, and under whose authority. Tools are
       // the HARNESS's vocabulary — the `tools` graph is declared by
       // `agentic-harness`, not by any folio — and this file imports only
@@ -828,6 +841,9 @@ export const RULES: Rule[] = [
       // than by a rule, and an `exact` entry naming a path this scan can no longer see
       // would be a rule that fires on nothing while reading as an adjudication.
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
+      "scripts/kg-subscribe.ts",             // subscribe to an external Knowledge Graph at a pin: judge its root declaration, record the subscription (issue #1719)
+      "scripts/kg-instantiate.ts",           // instantiate a harness a subscription chose: its config at the root and its state directories (issue #1719)
+      "scripts/subscriptions-viz.ts",        // the KG subscriptions page: known substrates, and what each instance subscribed to and chose (issue #1719)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
@@ -1231,6 +1247,10 @@ export const RULES: Rule[] = [
       // ...and the topic level it walks through (bean `9umr`): which
       // subdirectories of a skills directory are topics, from `skills.json`.
       "scripts/skill-topics.ts",
+      // ...which now delegates to the ONE grouped walk every grouping kind
+      // shares (placement PR0c, bean `ejye`), and that walk's gate.
+      "scripts/concern-groups.ts",
+      "scripts/check-concern-groups.ts",
       // The checkout-portability gate, beside the module it runs. Harness by
       // subject: it reads `git ls-files` over THIS repository and grades the
       // tree's own filenames, which is a fact about the checkout and not about
@@ -1388,6 +1408,7 @@ export const RULES: Rule[] = [
       "schemas/fsh-guts.ts",        // the trashcan, not FHIR Shorthand
       "schemas/python-deps.ts",     // the repository's own Python toolchain
       "schemas/avatars.ts",         // an avatar for every declared kind
+      "schemas/substrate-snapshot.ts", // the node schema of `substrate-snapshot`, a kind the harness registers (issue #1719)
       "schemas/kind-validator.ts",  // a graph kind's validator
       "schemas/actor-reach.ts",     // which actors a declaration can reach
       // WHAT A REPOSITORY IS — the markers it carries. The word "content" in
@@ -1665,8 +1686,11 @@ export const RULES: Rule[] = [
     // `cat-harness/`, so the prefix now matches nothing — and a rule that
     // fires on nothing while reading as a live adjudication is worse than no
     // rule, because the next reader takes it as evidence the file is still
-    // here. The reasoning is kept; the dead prefix is not.
-    prefixes: ["skills/authoring/authoring-math/", "skills/authoring/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
+    // here. The reasoning is kept; the dead prefix is not. The same went for
+    // `skills/authoring/{authoring-math,folio-paper-adapter}/` on 2026-10-01:
+    // placement PR1 (bean `ybwt`) moved both packages to
+    // `folio-assistant-sci/skills/content/`.
+    prefixes: ["computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
     exact: ["schemas/formalization-types.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
   },
   {
@@ -1675,23 +1699,21 @@ export const RULES: Rule[] = [
   },
 
   // ── smart-base: WHO L2-L3, DAK, FHIR, OCL
-  {
-    repo: "base",
-    // declared-path-literal: the TARGET layout of the five-repo split, which no
-    // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["skills/authoring/authoring-who-smart-guidelines/"],
-    // `schemas/dak-blocks.ts` was here and is CORE. Measured: core's own
-    // `schemas/block-kinds.ts` already declares `CONTENT_ADAPTERS =
-    // ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so the DAK block kinds are
-    // part of the core content model by the core's own declaration. Calling
-    // the module that defines their schemas `smart-base` made the core barrel
-    // re-export a smart-base module — the one `folio-assist-core → smart-base`
-    // wrong-direction edge, and it was the classification that was wrong
-    // rather than the import.
-    //
-    // What IS smart-base is the L2/L3 AUTHORING skills above: the procedures
-    // for producing a DAK, as against the block kinds a folio may contain.
-  },
+  // `skills/authoring/authoring-who-smart-guidelines/` was the one prefix of a
+  // smart-base rule here until placement PR1 (bean `ybwt`, 2026-10-01) moved
+  // the package to `smart-base/skills/content/` and its four generic FHIR IG
+  // skills to `fhir-harness/skills/content/fhir-ig-authoring/`. Its note stays:
+  // `schemas/dak-blocks.ts` was here and is CORE. Measured: core's own
+  // `schemas/block-kinds.ts` already declares `CONTENT_ADAPTERS =
+  // ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so the DAK block kinds are
+  // part of the core content model by the core's own declaration. Calling
+  // the module that defines their schemas `smart-base` made the core barrel
+  // re-export a smart-base module — the one `folio-assist-core → smart-base`
+  // wrong-direction edge, and it was the classification that was wrong
+  // rather than the import.
+  //
+  // What IS smart-base is the L2/L3 AUTHORING skills above: the procedures
+  // for producing a DAK, as against the block kinds a folio may contain.
   {
     repo: "base",
     exact: [
@@ -1740,7 +1762,7 @@ export const RULES: Rule[] = [
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/authoring/folio-document-adapter/", "skills/authoring-document/", "skills/authoring/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
+    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/authoring-document/", "skills/authoring/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
     // `blueprint/` STOOD in the prefixes above until 2026-09-30 (bean `vov0`):
     // it held a hand-written QOU blueprint, folio content in the platform, and
     // is removed now that `blueprint-layout.ts` generates a paper's
@@ -1909,6 +1931,7 @@ export const RULES: Rule[] = [
       "scripts/ingest-document.ts",         // `uploads/` → `library/<bib-slug>/`
       "scripts/l1-blocks.ts",               // staged entry → manifest + blocks/, the arm between the two
       "scripts/notebook-structure.ts",      // the notebook rung: a folio's `.ipynb` → `notebook-structure/v1` (bean rkqp)
+      "scripts/text-structure.ts",          // the text rung: Markdown/XML at a commit → `text-structure/v1` (bean y4uj)
       // `scripts/extract-assets.ts` STOOD HERE and is GONE as of bean `yj6r`,
       // 2026-09-30, for the reason the materialisation trio above gives: it now
       // lives in `folio-assistant-core/scripts/` beside the

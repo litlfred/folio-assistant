@@ -52,5 +52,5 @@ because "could not check" is never green.
 
 Nothing in this directory is hand-edited. See
 [`AGENTS.md`](AGENTS.md) and the
-[`ig-artifact-ingestion`](../cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-artifact-ingestion.md)
+[`ig-artifact-ingestion`](../smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md)
 skill.

@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>17</b><span>specifications</span></div>
 <div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>189</b><span>declared uses</span></div>
+<div class="xs-stat"><b>193</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -195,8 +195,9 @@ a subset of the edition rather than a transcription of it.
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | [`cat-harness/src/workflow/process-model.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/src/workflow/process-model.ts) | `@conformsTo` tag |
 | `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
-| `large-datasets/processes/*.bpmn (4)` | `xmlns` binding |
+| `large-datasets/processes/*.bpmn (5)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
+| `smart-base/processes/*.bpmn (1)` | `xmlns` binding |
 
 **Operative terms (22).** The terms this repository acts on —
 derived by the tooling from the corpus, never hand-listed, and deliberately
@@ -245,8 +246,9 @@ a subset of the edition rather than a transcription of it.
 | `cat-harness/processes/*.bpmn (67)` | `xmlns` binding |
 | [`cat-harness/scripts/render-bpmn.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/scripts/render-bpmn.ts) | `@conformsTo` tag |
 | `folio-assistant-core/processes/*.bpmn (1)` | `xmlns` binding |
-| `large-datasets/processes/*.bpmn (4)` | `xmlns` binding |
+| `large-datasets/processes/*.bpmn (5)` | `xmlns` binding |
 | `smart-base/methodologies/processes/*.bpmn (1)` | `xmlns` binding |
+| `smart-base/processes/*.bpmn (1)` | `xmlns` binding |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the

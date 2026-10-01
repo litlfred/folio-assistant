@@ -331,6 +331,17 @@ export const AVATARS: Readonly<Record<string, Avatar>> = {
     tone: 208,
     reads: "two bound volumes with the ties between them — somebody else's specification, pinned to an edition, beside what we do with it",
   },
+  // A SEALED ENVELOPE with a pin through its corner: somebody else's
+  // declaration, received and kept unopened at the commit it was pinned to.
+  // Not `external-schema`'s two volumes — that is a specification we read and
+  // apply; this is a snapshot we hold and never edit. `tone: 216` is unused and
+  // sits between `external-schema`'s 208 and `uml`'s 220, all three being
+  // about the shape of something defined elsewhere.
+  "substrate-snapshot": {
+    glyph: "M3 7h14v11H3zM3 7l7 6 7-6M17 4l4 4M19 6l-3 3",
+    tone: 216,
+    reads: "a sealed envelope, pinned — another Knowledge Graph's declaration, kept byte for byte at the commit it was subscribed at",
+  },
   // A LIST OF ENTRIES, each a short code tag beside a longer line: a code and
   // what it means, which is the whole of a code list. Deliberately not the
   // glossary's book — a book is looked up; a code list is CHOSEN from, closed,

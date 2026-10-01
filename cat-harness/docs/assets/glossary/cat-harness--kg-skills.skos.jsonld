@@ -424,46 +424,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/build-docs",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "build-docs"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Builds the Lean HTML documentation (doc-gen4) locally in the workspace, for any paper folio's Lean package."
-        }
-      ],
-      "skos:notation": "build-docs",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/build-docs.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/build-pdf",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "build-pdf"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Builds a paper folio's PDF locally in the workspace — the monolithic PDF plus split per-chapter PDFs."
-        }
-      ],
-      "skos:notation": "build-pdf",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/build-pdf.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/canonical-watcher",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -481,46 +441,6 @@
       ],
       "skos:notation": "canonical-watcher",
       "dcterms:source": "cat-harness/skills/authoring/authoring-core/canonical-watcher.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/category-theory",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "category-theory"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Category Theory formalization skill — handles diagram chasing, universal properties, functorial translation, and whiskering in Lean 4. Integrates with Mathlib's typeclass-centric category theory and provides tactic strategies for commutativity proofs."
-        }
-      ],
-      "skos:notation": "category-theory",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/category-theory.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/chapter-analysis",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "chapter-analysis"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Thorough analysis and Lean 4 formalization of a single manuscript chapter. Extracts all narrative definitions/propositions (excluding remarks), identifies missing glossary terms, writes comprehensive Lean stubs using mathlib, and proves limiting-case and structural theorems where possible."
-        }
-      ],
-      "skos:notation": "chapter-analysis",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/chapter-analysis.md",
       "skos:note": "candidate"
     },
     {
@@ -644,46 +564,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/compute-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "compute-audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Audit compute scripts for a catalogue of correctness and performance antipatterns extracted from a long review of the project's compute history. Distinguishes CORRECTNESS antipatterns from PERFORMANCE antipatterns. Produces a ranked workplan citing concrete files+lines."
-        }
-      ],
-      "skos:notation": "compute-audit",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/compute-audit.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/compute-author",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "compute-author"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Pre-work briefing + durable patterns for anyone writing or modifying compute scripts (or the native crates they call). Read this BEFORE you write or change compute code — it covers precision discipline, the native↔script boundary cost, exact-arithmetic choices (big-integer vs big-rational vs arbitrary-precision float), algebraic-preflight requirements before optimization shortcuts, and witness-emission discipline. Sibling to `compute-audit` (post-hoc); this skill is pre-work."
-        }
-      ],
-      "skos:notation": "compute-author",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/compute-author.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/compute-integration-watcher",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -756,26 +636,6 @@
       ],
       "skos:notation": "content-author",
       "dcterms:source": "cat-harness/skills/authoring/content-lifecycle/content-author.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/content-block-review",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "content-block-review"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Reviews existing content blocks for adherence to all requirements — structural integrity, Lean proof rules, cross-reference consistency, status accuracy, and naming conventions. Flags violations with actionable diagnostics."
-        }
-      ],
-      "skos:notation": "content-block-review",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/content-block-review.md",
       "skos:note": "candidate"
     },
     {
@@ -941,21 +801,6 @@
       ],
       "skos:notation": "content-validate",
       "dcterms:source": "cat-harness/skills/authoring/content-lifecycle/content-validate.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/content-validation",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "content-validation"
-        }
-      ],
-      "skos:notation": "content-validation",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/content-validation.md",
       "skos:note": "candidate"
     },
     {
@@ -1174,66 +1019,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/critical-path-analysis",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "critical-path-analysis"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Analyse the critical path of the paper's argument chain, audit statement and proof contexts (e.g. general vs specialised assumptions), identify blocks that need rewriting, and propose cleanups. Also covers \"statement and proof context review\" — classifying each result by whether its statement, proof, or both require specialisation assumptions."
-        }
-      ],
-      "skos:notation": "critical-path-analysis",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/critical-path-analysis.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/dak-postprocessing",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "dak-postprocessing"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "What the DAK post-processing phase accomplishes after the IG Publisher runs — the JSON/JSON-LD surface, the DAK API hub, and the metadata-to-Liquid bridge that is the seam the just-the-docs transition cuts at. Read before changing a post-processing step, and before assuming the Publisher produced something it did not."
-        }
-      ],
-      "skos:notation": "dak-postprocessing",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/dak-postprocessing.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/dak-preprocessing",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "dak-preprocessing"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "What the DAK pre-processing phase actually accomplishes, step by step, before the IG Publisher runs — and which of its steps exist only to satisfy the Publisher's own page index. Read before changing a pre-processing step, before assuming one is needed, and before moving one to another layer."
-        }
-      ],
-      "skos:notation": "dak-preprocessing",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/dak-preprocessing.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/data-modelling",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1311,26 +1096,6 @@
       ],
       "skos:notation": "decision-methodology-selector",
       "dcterms:source": "cat-harness/skills/process/process-core/decision-methodology-selector.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/definition-clarity-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "definition-clarity-audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Definition / statement clarity + concision audit. A content block can validate (schema-clean, refs resolve, formal-proof sibling present) and still read badly: the defined term is never emphasised, the definition is buried under paragraphs of motivation, or one `definition` block silently bundles three or four distinct definienda. No existing QA axis (voice / structure / bib / proof / …) measures clarity of the statement itself. Use when asked to \"bold defined terms\", \"tighten definitions\", \"no rambling definitions\", \"one definition per block\", \"tight theorem/proposition/lemma statements\", or to set up / run a clarity audit. Also runs the inverse audit — a non-`definition` block that secretly carries a definition (`clarity-defn-misplaced`) — plus a statement-purity check (`clarity-stmt-pure`: a theorem/prop/lemma/conjecture carries only its claim; embedded remark / interpretation moves to a follow-on `remark`) and a register check (`clarity-grad-style`: graduate-level formal-math prose — no contractions, second-person, hype, colloquialism, or emoji). Emits per-block QA sidecar params under the `clarity-*` criteria via `content/pipeline/definition-clarity-audit.ts`."
-        }
-      ],
-      "skos:notation": "definition-clarity-audit",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/definition-clarity-audit.md",
       "skos:note": "candidate"
     },
     {
@@ -1559,71 +1324,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/document-authoring",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "document-authoring"
-        }
-      ],
-      "skos:notation": "document-authoring",
-      "dcterms:source": "cat-harness/skills/authoring/folio-document-adapter/document-authoring.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/document-intake",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "document-intake"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects."
-        }
-      ],
-      "skos:notation": "document-intake",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/document-intake.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/document-publishing",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "document-publishing"
-        }
-      ],
-      "skos:notation": "document-publishing",
-      "dcterms:source": "cat-harness/skills/authoring/folio-document-adapter/document-publishing.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/document-structure",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "document-structure"
-        }
-      ],
-      "skos:notation": "document-structure",
-      "dcterms:source": "cat-harness/skills/authoring/folio-document-adapter/document-structure.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/domain-fencing",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1754,41 +1454,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/ffi-roundtrip-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ffi-roundtrip-audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Audit compute scripts for script ↔ native ping-pong patterns — loops that cross the FFI / subprocess boundary per iteration, instead of one boundary crossing for the whole pipeline. Each occurrence forfeits a meaningful fraction of wall time to marshalling + script-side combine overhead. Performance-only — no correctness change."
-        }
-      ],
-      "skos:notation": "ffi-roundtrip-audit",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/ffi-roundtrip-audit.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/fhir-validation",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "fhir-validation"
-        }
-      ],
-      "skos:notation": "fhir-validation",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/fhir-validation.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/filing-dublin-core",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1826,26 +1491,6 @@
       ],
       "skos:notation": "flushable-containers",
       "dcterms:source": "cat-harness/skills/kg/kg-core/flushable-containers.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/formalizer",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "formalizer"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Lean 4 Formalizer — translates the logical skeleton of narrative mathematical proofs into Lean 4 tactic blocks. Uses the Ontologist's glossary to resolve types, maps narrative proof phrases to Lean tactics, and generates sorry-bridged partial proofs that compile."
-        }
-      ],
-      "skos:notation": "formalizer",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/formalizer.md",
       "skos:note": "candidate"
     },
     {
@@ -1984,26 +1629,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/grade",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "grade"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "GRADE — the grading system a WHO guideline folio declares for certainty of evidence, and the Evidence-to-Decision judgement a recommendation rests on. Read when a folio's `Task_AppraiseGrade` runs under GRADE, before recording a certainty, an EtD judgement or a recommendation's direction and strength."
-        }
-      ],
-      "skos:notation": "grade",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/grade.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/graph-detanglement",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2041,26 +1666,6 @@
       ],
       "skos:notation": "graph-rendering",
       "dcterms:source": "cat-harness/skills/kg/graph-management/graph-rendering.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/groebner-basis",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "groebner-basis"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Compute Gröbner bases and normal forms for (possibly non-commutative) algebraic structures using a CAS (e.g. Singular letterplace) or an instrumented project routine. Reduce words to normal form with step-by-step logging, extract invariants, and emit witness JSON."
-        }
-      ],
-      "skos:notation": "groebner-basis",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/groebner-basis.md",
       "skos:note": "candidate"
     },
     {
@@ -2119,26 +1724,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/hypothesis-generation",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "hypothesis-generation"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Formulate evidence-bounded scientific questions, candidate hypotheses, rival explanations, causal or associational claims, discriminating predictions, measurements, and preregistration-ready analysis plans. Use when turning observations or preliminary findings into transparent, testable research plans without treating hypotheses as facts."
-        }
-      ],
-      "skos:notation": "hypothesis-generation",
-      "dcterms:source": "cat-harness/skills/hypothesis-generation/hypothesis-generation.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/idle-backlog",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2156,36 +1741,6 @@
       ],
       "skos:notation": "idle-backlog",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/idle-backlog.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/ig-artifact-ingestion",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ig-artifact-ingestion"
-        }
-      ],
-      "skos:notation": "ig-artifact-ingestion",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-artifact-ingestion.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/ig-publication",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ig-publication"
-        }
-      ],
-      "skos:notation": "ig-publication",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/ig-publication.md",
       "skos:note": "candidate"
     },
     {
@@ -2509,321 +2064,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/l2-dak-authoring",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "l2-dak-authoring"
-        }
-      ],
-      "skos:notation": "l2-dak-authoring",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/l2-dak-authoring.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/l3-fhir-authoring",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "l3-fhir-authoring"
-        }
-      ],
-      "skos:notation": "l3-fhir-authoring",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/l3-fhir-authoring.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/latex-authoring",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "latex-authoring"
-        }
-      ],
-      "skos:notation": "latex-authoring",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-math/latex-authoring.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/latex-build-cache",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "latex-build-cache"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work: getting a TeX engine into the sandbox (`cat-harness/scripts/install-tex.sh`) and quick changed-chapter feature builds (`cat-harness/scripts/feature-build.sh`). Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes."
-        }
-      ],
-      "skos:notation": "latex-build-cache",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/latex-build-cache.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/latex-validation",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "latex-validation"
-        }
-      ],
-      "skos:notation": "latex-validation",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/latex-validation.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-build-fix",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-build-fix"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Iteratively fix Lean build errors and linter warnings until the build passes cleanly. Uses MCP diagnostics when available, falls back to parsing lake build output."
-        }
-      ],
-      "skos:notation": "lean-build-fix",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-build-fix.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-cache-restore",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-cache-restore"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The Lean build loop — restore a warm cache before working, and contribute your build back when done. One command each. A restore is ~2 minutes; a cold Mathlib build is 30-60."
-        }
-      ],
-      "skos:notation": "lean-cache-restore",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-cache-restore.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-completeness-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-completeness-audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Audit Lean formalization completeness across all papers: verify Lake project setup, check import coverage, identify missing .lean files for content blocks that require them, report formalization gaps, and detect stale witnesses."
-        }
-      ],
-      "skos:notation": "lean-completeness-audit",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-completeness-audit.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-environment-setup",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-environment-setup"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Sets up and troubleshoots the Lean 4 environment for Claude Code sessions. Ensures elan, lake, lean are installed so the paper-assistant MCP's Lean tools are operational. Handles sandboxed/cloud environments where downloads may be restricted."
-        }
-      ],
-      "skos:notation": "lean-environment-setup",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-environment-setup.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-formal-graph",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-formal-graph"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Build and query the FORMAL dependency graph — what a proof actually invokes, derived from `lean.ref`. Distinct from `uses[]`, which is editorial. Use for impact analysis, exposition gaps, and declaration ownership."
-        }
-      ],
-      "skos:notation": "lean-formal-graph",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-formal-graph.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-formalization",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-formalization"
-        }
-      ],
-      "skos:notation": "lean-formalization",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-math/lean-formalization.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-generation",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-generation"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Extract theorem-like objects from LaTeX source and generate corresponding Lean 4 stub files with `sorry` placeholders. Maintains the proof-objects.json manifest linking LaTeX labels to Lean declarations by doc-gen4 URL."
-        }
-      ],
-      "skos:notation": "lean-generation",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-generation.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-mathlibext-curator",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-mathlibext-curator"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Curate `<Paper>/MathlibExt.lean` — the staging area for upstream- candidate lemmas (List/sort plumbing, Foldl/foldr at Monoid level, Real-function bridges). Decide what lives in `MathlibExt` vs inline, and tag candidates with `-- TODO upstream: …`."
-        }
-      ],
-      "skos:notation": "lean-mathlibext-curator",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-mathlibext-curator.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-proof-review",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-proof-review"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Review Lean 4 proofs for correctness, style, and completeness. Tracks review scores from multiple reviewers (human and agentic) in proof-objects.json. Integrates with the agent-review pipeline."
-        }
-      ],
-      "skos:notation": "lean-proof-review",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-proof-review.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-proof-vacuity-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-proof-vacuity-audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Detect and fix Lean \"vacuous proof\" anti-patterns — declarations that type-check, are sorry-free and axiom-clean, and whose statement matches the .md, yet carry NO mathematical content (they assume what they claim, conclude something trivially true, or rest on a false premise). These slip past `proof-statement-integrity` (which only checks signature-stability + an axiom sweep), so detection is semantic and agent-checked. Use when auditing Lean for circular / vacuous / trivially-true proofs, after a batch proof-statement-integrity normalization (the batch \"wrap the conclusion in a structure field and project it\" fix produces these), or when a \"theorem\" looks too easy. Emits per-block QA sidecar params under the `proof-no-*` criteria."
-        }
-      ],
-      "skos:notation": "lean-proof-vacuity-audit",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-proof-vacuity-audit.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-substantive-pass",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-substantive-pass"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Convert abstract `holds : Prop` / `claim : Prop` placeholder Lean stubs into typed sub-claim contexts with manuscript-semantic field names. Three escalation levels: hand-craft per-block (highest fidelity), bulk-script split on numbered sub-claims, and docstring enrichment (extract first-sentence summaries from .md). Use this skill after `local/lean-generation` has created the placeholder stubs and the backlog is structurally closed."
-        }
-      ],
-      "skos:notation": "lean-substantive-pass",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-substantive-pass.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/lean-witness-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "lean-witness-audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Audit computation scripts (typically Python) that produce witness statements for Lean formalization. Verify witnesses are complete, self-documenting, use paper notation, link to a content block, and emit Lean-compatible declarations. Detects staleness via script content hash and git commit SHA."
-        }
-      ],
-      "skos:notation": "lean-witness-audit",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/lean-witness-audit.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/library-ingestion",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3054,21 +2294,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/normative-statements",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "normative-statements"
-        }
-      ],
-      "skos:notation": "normative-statements",
-      "dcterms:source": "cat-harness/skills/authoring/folio-document-adapter/normative-statements.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/one-voice-audit",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3181,26 +2406,6 @@
       ],
       "skos:notation": "package-release",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/package-release.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/paper-importer",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "paper-importer"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Import external papers from PDF, LaTeX, or arXiv into the content object system. Scans for theorems, definitions, propositions, lemmas, and other formal environments. Generates .ts manifests and .md content files, optionally creates .lean stubs with sorry-bridged proofs citing the original source. Integrates with proof-writer skills so imported theorems can inform and accelerate formalization of the main paper."
-        }
-      ],
-      "skos:notation": "paper-importer",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/paper-importer.md",
       "skos:note": "candidate"
     },
     {
@@ -3384,221 +2589,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proof-conciseness",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proof-conciseness"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Tighten narrative (human-readable) proofs without changing mathematical content. Targets verbose prose patterns in `.md` proof files — padding phrases, re-explained elementary steps, redundant restatement, long case analyses that collapse into tables. Complements proof-simplifier (Lean tactics) and readability-editing (chapter prose); this skill operates on the proof block's `.md` specifically and preserves every logical step."
-        }
-      ],
-      "skos:notation": "proof-conciseness",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/proof-conciseness.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proof-editor",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proof-editor"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Coordinator skill for proof review and repair. Runs the full proof skill suite (gap audit, lean review, completeness, simplifier, triage), deduplicates findings across reviewers, ranks by severity and dependency order, and delivers a single author-ready action plan with concrete suggested edits (never applying them without author approval)."
-        }
-      ],
-      "skos:notation": "proof-editor",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/proof-editor.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proof-exposition-review",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proof-exposition-review"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Paper-wide retrospective review of a single proof block. Given the current state of the paper — including all blocks added since the proof was written — suggest simplifications to the statement, proof, or surrounding exposition. Complements proof-simplifier (which operates on 2-4 block local clusters) by considering the full dependency graph and all recently-added content."
-        }
-      ],
-      "skos:notation": "proof-exposition-review",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/proof-exposition-review.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proof-gap-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proof-gap-audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Audit individual proofs and the network of proofs for gaps. Detects intra-proof gaps (unproved assertions, existence without proof, uniqueness asserted but not shown, hand-waving, missing citations) and inter-proof gaps (missing bridging lemmas, broken chains of implication, unstated propositions needed to tie results together)."
-        }
-      ],
-      "skos:notation": "proof-gap-audit",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/proof-gap-audit.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proof-integration-watcher",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proof-integration-watcher"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Proof-QA integration watcher — watches origin/main + open active PRs + newly-opened PRs for narrative-proof (`.md`) or Lean-proof (`.lean`) changes, runs the proof QA skill suite on every detected change, queues gaps, attempts auto-discharge for easy sorries / naked conjectures with provable scaffolding, and escalates the rest to the author. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake, post-completion one-voice, sibling-PR comment protocol) from `local/integration-watcher`."
-        }
-      ],
-      "skos:notation": "proof-integration-watcher",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/proof-integration-watcher.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proof-narrative-lean-equivalence",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proof-narrative-lean-equivalence"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "For each content block with both a narrative proof (.md) and a Lean sibling (.lean), verify the two prove the same thing. Detect stub-weakening (Lean claims less than the paper), overreach (Lean claims more than the paper), hypothesis mismatches, and notation drift. Produces a structured equivalence report; no edits."
-        }
-      ],
-      "skos:notation": "proof-narrative-lean-equivalence",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/proof-narrative-lean-equivalence.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proof-simplifier",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proof-simplifier"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Analyse small clusters (2–4) of connected proofs to find simplifications: shared lemmas, redundant constructions, factored abstractions, or shorter proof paths through the dependency graph."
-        }
-      ],
-      "skos:notation": "proof-simplifier",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/proof-simplifier.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proof-status-tracking",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proof-status-tracking"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Maintain the proof-objects.json manifest tracking formalization status, review records, and LaTeX-to-Lean linkages. Generate status dashboards and enforce review policies."
-        }
-      ],
-      "skos:notation": "proof-status-tracking",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/proof-status-tracking.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proof-triage",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proof-triage"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Systematically triages and resolves `sorry` stubs across the Lean codebase. Inventories all sorry sites, orders them by dependency, attempts proofs using mathlib/library search, and escalates to a proof writer with similar-lemma suggestions when stuck."
-        }
-      ],
-      "skos:notation": "proof-triage",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/proof-triage.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proof-verification",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proof-verification"
-        }
-      ],
-      "skos:notation": "proof-verification",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-math/proof-verification.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/proposition-consolidation-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "proposition-consolidation-audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Scan a chapter (or the whole paper) for propositions/theorems/lemmas that overlap structurally — same boxed equation under different parametrisations, near-identical proof skeletons, explicit \"specialisation of\"/\"case of\"/\"corollary of\" wording in `.md`, or high-overlap on (uses, cites, tags). Reports candidates for consolidation: parent → corollary, true duplicates, mergeable statements. Run after large-scale chapter work or when the user notices the exposition has accreted special cases."
-        }
-      ],
-      "skos:notation": "proposition-consolidation-audit",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/proposition-consolidation-audit.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/publish-verification",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3616,26 +2606,6 @@
       ],
       "skos:notation": "publish-verification",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/publish-verification.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/q-usage-watcher",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "q-usage-watcher"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "q-usage integration watcher — detects how each content block treats the substrate parameter $q$ (symbolic / generic-R / real-positive / q > 1 / |q| > 1 / unit-circle / root-of-unity / fixed q_0 / n/a) and cross-checks the detected regime vector against the chapter's narrative-expected profile. Emits per-block `<block>.qa.json` sidecars under the `q-usage-*` criteria and a global witness JSON. Inherits shared mechanics (Monitor, subscriptions, queue, ledger, idle sweep, author-ask, watch-prepared-PRs, witness-drift recovery, billing-quick-fail flake) from `local/integration-watcher`."
-        }
-      ],
-      "skos:notation": "q-usage-watcher",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/q-usage-watcher.md",
       "skos:note": "candidate"
     },
     {
@@ -3671,21 +2641,6 @@
       ],
       "skos:notation": "qa-witness",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/qa-witness.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/quality-control",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "quality-control"
-        }
-      ],
-      "skos:notation": "quality-control",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/quality-control.md",
       "skos:note": "candidate"
     },
     {
@@ -3804,23 +2759,23 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/remark-audit",
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/render-kg-to-cdn",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
       },
       "skos:prefLabel": [
         {
-          "@value": "remark-audit"
+          "@value": "render-kg-to-cdn"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Audit remarks for provable content. Every remark must interpret a mathematical statement that can be formalized in Lean. Detects dangling remarks (no `interprets` link), ambiguous domain terms, and missing formalization."
+          "@value": "Render a Knowledge Graph, or a list of its Subgraphs, for publication to a CDN at a publication root URL, and report a status and one message. The same step for a staging preview and for a release — only the root URL and the target differ. Names the target's Tool, never its steps: GitHub Pages (`gh-pages`) is one Tool, and it carries its own subprocess."
         }
       ],
-      "skos:notation": "remark-audit",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/remark-audit.md",
+      "skos:notation": "render-kg-to-cdn",
+      "dcterms:source": "cat-harness/skills/process/workflow/render-kg-to-cdn.md",
       "skos:note": "candidate"
     },
     {
@@ -3876,46 +2831,6 @@
       ],
       "skos:notation": "rendered-verification",
       "dcterms:source": "cat-harness/skills/sdlc/sdlc-core/rendered-verification.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/rendering-auditor",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "rendering-auditor"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Multi-pass rendering auditor for content blocks. Validates markdown+TeX syntax, notation consistency, compilation, layout, and visual output across both HTML and PDF pipelines. Used by author agents after edits and as part of QC reports."
-        }
-      ],
-      "skos:notation": "rendering-auditor",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/rendering-auditor.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/rendering-fixes",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "rendering-fixes"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Quick-fix reference for common rendering errors found by the rendering-auditor. Agents should consult this when editing content blocks to avoid introducing issues and to fix flagged problems efficiently."
-        }
-      ],
-      "skos:notation": "rendering-fixes",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/rendering-fixes.md",
       "skos:note": "candidate"
     },
     {
@@ -4019,26 +2934,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/sample-import",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "sample-import"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied."
-        }
-      ],
-      "skos:notation": "sample-import",
-      "dcterms:source": "cat-harness/skills/authoring/content-lifecycle/sample-import.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/schema-management",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4074,46 +2969,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/scientific-critical-thinking",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "scientific-critical-thinking"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Evaluate scientific claims and evidence quality. Use for assessing experimental design validity, identifying biases and confounders, applying evidence grading frameworks (GRADE, Cochrane Risk of Bias), or teaching critical analysis. Best for understanding evidence quality, identifying flaws. For formal peer review writing use peer-review."
-        }
-      ],
-      "skos:notation": "scientific-critical-thinking",
-      "dcterms:source": "cat-harness/skills/scientific-critical-thinking/scientific-critical-thinking.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/scientific-visualization",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "scientific-visualization"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Create and audit truthful, accessible, publication-ready scientific figures with Matplotlib, Seaborn, or Plotly. Use for figure design, multi-panel layouts, uncertainty and missing-data displays, color/contrast review, image metadata validation, and journal export planning."
-        }
-      ],
-      "skos:notation": "scientific-visualization",
-      "dcterms:source": "cat-harness/skills/scientific-visualization/scientific-visualization.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/security",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4131,26 +2986,6 @@
       ],
       "skos:notation": "security",
       "dcterms:source": "cat-harness/skills/conduct/security/security.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/semantic-review-scoping",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "semantic-review-scoping"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Decide what to review FIRST. Computes which blocks' semantic correctness can actually affect a target theorem, so agent-adjudicated criteria are spent where they matter instead of swept in file order."
-        }
-      ],
-      "skos:notation": "semantic-review-scoping",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/semantic-review-scoping.md",
       "skos:note": "candidate"
     },
     {
@@ -4226,41 +3061,6 @@
       ],
       "skos:notation": "session-state-machine",
       "dcterms:source": "cat-harness/skills/process/workflow/session-state-machine.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/simulator",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "simulator"
-        }
-      ],
-      "skos:notation": "simulator",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/simulator.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/simulator-math-audit",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "simulator-math-audit"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Audit simulator content objects against the formal mathematics they visualise — formulas and physical constants must be derived from the paper's canonical sources, never hardcoded in the visualisation."
-        }
-      ],
-      "skos:notation": "simulator-math-audit",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/simulator-math-audit.md",
       "skos:note": "candidate"
     },
     {
@@ -4341,41 +3141,6 @@
       ],
       "skos:notation": "skills-and-tools",
       "dcterms:source": "cat-harness/skills/folio-core/skills-and-tools.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/smart-base-tools",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "smart-base-tools"
-        }
-      ],
-      "skos:notation": "smart-base-tools",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-base-tools.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/smart-stack-layering",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "smart-stack-layering"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Which of the five layers a WHO SMART asset, rule, script or page belongs to, and the one question that settles it. Read before adding anything to fhir-harness, smart-base, smart-l1, smart-dak or smart-ig, before creating a per-IG harness, and before moving a pre/post-processing step."
-        }
-      ],
-      "skos:notation": "smart-stack-layering",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md",
       "skos:note": "candidate"
     },
     {
@@ -4594,21 +3359,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/terminology-management",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "terminology-management"
-        }
-      ],
-      "skos:notation": "terminology-management",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/terminology-management.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/test-engineer",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4801,26 +3551,6 @@
       ],
       "skos:notation": "todo-review",
       "dcterms:source": "cat-harness/skills/authoring/authoring-core/todo-review.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/toolchain-ownership",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "toolchain-ownership"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Taking ownership of the WHO smart-base scripts in a litlfred fork, rewriting them to the Skill I/O contract, and the one gate that governs when a script may actually move. Read before touching, copying or rewriting any upstream smart-base script."
-        }
-      ],
-      "skos:notation": "toolchain-ownership",
-      "dcterms:source": "cat-harness/skills/authoring/authoring-who-smart-guidelines/toolchain-ownership.md",
       "skos:note": "candidate"
     },
     {
@@ -5064,26 +3794,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/verify-local-substrate",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "verify-local-substrate"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Verify that every result block of a designated class traces back to a designated anchor definition through the uses[] dependency graph. Identifies gaps where claims lack a formal connection to the anchor, and suggests fixes."
-        }
-      ],
-      "skos:notation": "verify-local-substrate",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/verify-local-substrate.md",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/visual-diff",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5256,21 +3966,6 @@
       ],
       "skos:notation": "wireframe-design-review",
       "dcterms:source": "cat-harness/skills/ui/ui-core/wireframe-design-review.md",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills/witnessed-values",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-skills"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "witnessed-values"
-        }
-      ],
-      "skos:notation": "witnessed-values",
-      "dcterms:source": "cat-harness/skills/authoring/folio-paper-adapter/witnessed-values.md",
       "skos:note": "candidate"
     },
     {

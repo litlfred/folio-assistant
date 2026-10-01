@@ -401,8 +401,8 @@ dispersés à travers le dépôt. Cette section rattache le comportement consoli
 | Discipline des commits et PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
 | Détection des demandes de fonctionnalités | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
 | Flux de travail des exigences CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
-| Rédaction de contenu (article) | compétences authoring-math | [`skills/authoring/authoring-math/`](../../skills/authoring/authoring-math/) |
-| Rédaction de contenu (document) | compétences folio-document-adapter | [`skills/authoring/folio-document-adapter/`](../../skills/authoring/folio-document-adapter/) |
+| Rédaction de contenu (article) | compétences authoring-math | `skill_list` → `authoring-math` |
+| Rédaction de contenu (document) | compétences folio-document-adapter | `skill_list` → `folio-document-adapter` |
 | Cycle de vie du contenu | compétences content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | Ingestion de documents | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Répartition et coordination | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |

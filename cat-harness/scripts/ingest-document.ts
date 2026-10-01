@@ -58,11 +58,11 @@ import { ARCHIVE_MIMETYPES } from "../schemas/archive-contents.ts";
 import { checkEntry, type Requirement } from "./check-l1-complete.ts";
 import { TABULAR_MIMETYPES } from "../schemas/tabular-records.ts";
 import { SLIDE_MIMETYPES } from "../schemas/pdf-structure.ts";
-import { directoriesForGraph } from "../schemas/cat-harness.ts";
 import { refreshLibraryIndex } from "./lsi.ts";
 import { IntakeSchema } from "../schemas/intake.ts";
 import { LICENCE_FILENAME, readLicence } from "../content/pipeline/gen-library-jsonld.ts";
 import { STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
+import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
 /**
  * This module's own instance root — where its `harness.json` is.
@@ -144,7 +144,7 @@ export function libraryRoot(root = INSTANCE_ROOT, choice?: string): string {
   //                     first: a WHO publication landing in the science
   //                     library reads as ingested and is in the wrong corpus,
   //                     and nothing downstream can tell.
-  const declared = directoriesForGraph(root, "library");
+  const declared = corpusDirectoriesForGraph(root, "library");
   if (declared.length === 0) {
     throw new Error(
       "this instance declares no `library` graph in its `<name>.json` — " +

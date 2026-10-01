@@ -62,11 +62,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `code`
 
-0 of 8 published.
+0 of 9 published.
 {: .fa-hx-dim }
 
 - Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
+- C@T Harness Tools — *declared, not published*
 - Folio Assistant — *declared, not published*
 - folio-assistant-core — *declared, not published*
 - folio-assistant-sci — *declared, not published*
@@ -153,11 +154,12 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `library`
 
-6 of 6 published.
+7 of 7 published.
 {: .fa-hx-dim }
 
 - [agent-skills]({{ '/cat-harness/library/agent-skills/' | relative_url }})
 - [C@T Harness]({{ '/cat-harness/library/cat-harness/' | relative_url }})
+- [FHIR IG Harness]({{ '/cat-harness/library/fhir-harness/' | relative_url }})
 - [folio-assistant-core]({{ '/cat-harness/library/folio-assistant-core/' | relative_url }})
 - [folio-assistant-sci]({{ '/cat-harness/library/folio-assistant-sci/' | relative_url }})
 - [SMART Base]({{ '/cat-harness/library/smart-base/' | relative_url }})
@@ -196,10 +198,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `processes`
 
-5 of 5 published.
+6 of 6 published.
 {: .fa-hx-dim }
 
 - [Bootstrap]({{ '/processes/' | relative_url }})
+- [Bootstrap tools]({{ '/processes/' | relative_url }})
 - [C@T Harness]({{ '/processes/' | relative_url }})
 - [folio-assistant-core]({{ '/processes/' | relative_url }})
 - [large-datasets]({{ '/processes/' | relative_url }})
@@ -241,10 +244,11 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 
 ### `scenarios`
 
-0 of 2 published.
+0 of 3 published.
 {: .fa-hx-dim }
 
 - Bootstrap — *declared, not published*
+- Bootstrap tools — *declared, not published*
 - C@T Harness — *declared, not published*
 
 ### `schemas`
@@ -267,10 +271,17 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - Bootstrap tools — *declared, not published*
 - [C@T Harness]({{ '/cat-harness/docs-auto/index/skills/skills/' | relative_url }})
 - [FHIR IG Harness]({{ '/cat-harness/docs-auto/index/skills/fhir-ig-skills/' | relative_url }})
-- [folio-assistant-core]({{ '/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/' | relative_url }})
+- [folio-assistant-core]({{ '/cat-harness/docs-auto/index/skills/core-skills/' | relative_url }})
 - folio-assistant-sci — *declared, not published*
 - [large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }})
+
+### `substrate-snapshot`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
 
 ### `swimlane-glossary`
 

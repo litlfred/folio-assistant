@@ -39,10 +39,11 @@
  * @module scripts/tests/remote-skill-servable
  */
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { knownSkills, remotePackageDeclarations } from "../known-skills.js";
+import { syncedPackageDir, wrapperSkillsDirs } from "../sync-remote-skills.js";
 
 const ROOT = join(import.meta.dir, "..", "..");
 
@@ -99,10 +100,17 @@ describe("remote-package declarations vs what this instance can serve", () => {
     for (const name of EXPECTED_MATERIALIZED) {
       expect(declaredNames.has(name), `${name} is no longer declared by any wrapper`).toBe(true);
       expect(servable.has(name), `${name} is declared but has no body to serve`).toBe(true);
-      const rec = JSON.parse(readFileSync(join(ROOT, "skills", name, "materialization.json"), "utf-8"));
+      // Asked of the wrapper's own skills directory, not the harness's: the
+      // synced packages moved up with their wrapper (placement PR1, bean
+      // `ybwt` — sci's `skills/content/`).
+      const pkg = wrapperSkillsDirs(ROOT)
+        .map((d) => syncedPackageDir(d, name))
+        .find((d) => existsSync(join(d, "materialization.json")));
+      expect(pkg, `${name} has no materialization record in any wrapper's skills directory`).toBeDefined();
+      const rec = JSON.parse(readFileSync(join(pkg!, "materialization.json"), "utf-8"));
       expect(rec.files.length).toBeGreaterThan(0);
       for (const f of rec.files) expect(f.materialization.fixity.algorithm).toBe("sha256");
-      const body = readFileSync(join(ROOT, "skills", name, `${name}.md`), "utf-8");
+      const body = readFileSync(join(pkg!, `${name}.md`), "utf-8");
       expect(/^stub:\s*\S/m.test(body), `${name}.md is still a stub`).toBe(false);
     }
   });

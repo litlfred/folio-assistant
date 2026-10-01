@@ -27,6 +27,7 @@ package "folio-assistant-core/core-tools" as pkg_folio_assistant_core_core_tools
     maintains [0..*] : Maintain[]
     downstream [0..1] : object
     renders [0..*] : string[]
+    subprocesses [0..*] : string[]
   }
 }
 

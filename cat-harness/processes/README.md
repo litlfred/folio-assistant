@@ -51,7 +51,6 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`jsonld-drift-check.bpmn`](jsonld-drift-check.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Are the .jsonld siblings still in sync with their .ts manifests? |  |
 | [`kg-separation.bpmn`](kg-separation.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): A knowledge graph leaves for its own repositories |  |
 | [`kg-to-portal.bpmn`](kg-to-portal.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): KG to public portal |  |
-| [`l2-dak-authoring.bpmn`](l2-dak-authoring.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): L2 DAK authoring |  |
 | [`l3-fhir-pipeline.bpmn`](l3-fhir-pipeline.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): L3 FHIR IG pipeline |  |
 | [`methodology-from-source.bpmn`](methodology-from-source.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Adopt a methodology from a source document |  |
 | [`narrative-code-review.bpmn`](narrative-code-review.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Prose and the code it describes | "Review task" |
@@ -62,6 +61,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`publish-verification.bpmn`](publish-verification.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Verify the export before it is deployed | "Publishing the docs site, and keeping the previews alive", "A knowledge graph leaves for its own repositories" |
 | [`qa-report-signing.bpmn`](qa-report-signing.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): QA report signing |  |
 | [`related-work.bpmn`](related-work.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Related work: find, sort, summarize, ask to coordinate | "CRDM — link the work to an issue", "Adopt a methodology from a source document" |
+| [`render-kg-to-cdn.bpmn`](render-kg-to-cdn.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Render a [Knowledge Graph](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#knowledge-graph) to a CDN | "Publishing the docs site, and keeping the previews alive", "Staging a feature branch preview, and taking it down" |
 | [`repository-health-watch.bpmn`](repository-health-watch.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Is the repository itself healthy? |  |
 | [`review-code.bpmn`](review-code.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Code node review | "Review task" |
 | [`review-narrative.bpmn`](review-narrative.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Narrative review | "Review task" |

@@ -16,11 +16,11 @@
       "findings": []
     },
     "skill-in-role-or-process": {
-      "result": "unknown",
+      "result": "fail",
       "findings": [
         {
-          "where": "—",
-          "detail": "no role graph declared."
+          "where": "bootstrap-contract-semver",
+          "detail": "no role carries \"bootstrap-contract-semver\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `bootstrap-tools-skills` at `skills/`, `bootstrap-tools-processes` at `processes/`, `bootstrap-tools-scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
         }
       ]
     },
@@ -106,22 +106,12 @@
       "findings": []
     },
     "arrow-direction": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no BPMN extension element was found in any diagram, so the process half checked nothing."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-names-resolve": {
-      "result": "unknown",
-      "findings": [
-        {
-          "where": "—",
-          "detail": "no file name was found in any general node's prose, so nothing was checked."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "skill-contract-claimed": {
       "result": "pass",
@@ -135,12 +125,16 @@
           "detail": "not evaluated: `nested-instance-audited` is `repo`-scoped and this run is scoped to bootstrap-tools. `unreadNestedInstances()` walks from `repoRootFor(root)` to find declarations, so it asks a question ABOUT the repository's set of instances. MEASURED 2026-09-26: it fired 15 inside the bootstrap run, reporting bootstrap's siblings as unread from inside bootstrap — which is the root's question being asked in a place that cannot act on it."
         }
       ]
+    },
+    "content-instance-holds-code": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 7,
-    "fail": 0,
-    "n/a": 11,
-    "unknown": 3
+    "pass": 9,
+    "fail": 1,
+    "n/a": 12,
+    "unknown": 0
   }
 }

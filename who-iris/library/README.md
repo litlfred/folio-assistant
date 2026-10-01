@@ -1,9 +1,9 @@
 <!-- kg:subgraph:begin -->
-# who-iris-library
+# library
 
-The WHO IRIS instance's library, reached from here because this repository STAGES who-iris as a sibling top-level directory ahead of it becoming its own repo -- the same pattern as `folio-assist-core-schemas` and `detangle-schemas` above. Repository-scoped, so it resolves against the repository root rather than this instance's. Declared here as well as in who-iris/harness.json because the consumers that scan libraries -- `check:l1-complete`, the narrative queue, `gen-library-jsonld`, the MCP server's graph roots -- run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the dh4f defect).
+The three IRIS items this instance holds rather than merely names: `wpr-rdo-2020-003-eng` (the WPRO publication style guide, and the worked example whose full DSpace item record drives the `iris-dspace` skill), `who-pub-tps-931` and `9789241548960-eng`. They are the `materialized` end of the catalogue -- every other node under `catalogue/nodes/` is `referenced`, and the three here are what a materialization actually looks like. `milnorlink` is NOT here and never was an IRIS item; it went to folio-assistant-sci (bean r1lz). The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.
 
-Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `who-iris-library`, holding `library`.
+Part of [WHO IRIS](../README.md) 0.1.0, declared as `library`, holding `library`.
 
 | file | what it is | used by |
 |---|---|---|

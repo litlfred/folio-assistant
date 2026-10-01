@@ -1452,6 +1452,25 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
       "A user story in `scenarios/stories.json` is told as a role the role graph does not declare — a story " +
       "told as nobody, which no author can write for and no reviewer can check against.",
   },
+  {
+    id: "content-instance-holds-code",
+    applies: ["graph"],
+    scope: "instance",
+    // `minor` — a QA WARNING, not a failure — by owner ruling, 2026-10-01:
+    // "QA warning. not failure.. ok b/c small # tools" (bean `eayu`; separation
+    // arc S0, #1770). It was `major` on the argument that FR-7 admits no
+    // exception; the owner overruled that for the tolerated case: the five
+    // IRIS-specific files STAY in who-iris/ and no who-iris-tools repository is
+    // authorised. `minor` still records `fail` and still names every file, so
+    // the detection is kept and the violation stays visible — it simply fails
+    // neither `kg:audit --check` nor `--strict`. The ruling's warrant is that
+    // the tolerated set is SMALL; revisit the severity if it grows.
+    severity: "minor",
+    summary:
+      "An instance declared as a CONTENT repository (`separation: \"content\"`, or the content half a " +
+      "declared tools instance `supports`) holds code. A content repository holds no code (kg-separation, " +
+      "bootstrap FR-7); each file is named, and belongs in the platform or a `<name>-tools` repository.",
+  },
 ] as const;
 
 export const KG_CRITERIA_BY_ID: Readonly<Record<string, KgCriterionDefinition>> = Object.fromEntries(

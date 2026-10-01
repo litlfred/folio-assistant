@@ -27,7 +27,8 @@ neither.
 
 Diagrams: [`materialize-remote.bpmn`](../../processes/materialize-remote.html)
 and [`refresh-materialized.bpmn`](../../processes/refresh-materialized.html).
-Schema: `folio-assistant-core/schemas/materialization.ts`. Nothing here restates
+Schema: the `folio-materialization/v1` record (`MaterializationSchema`, owned
+by the content layer above this one — named here, not linked). Nothing here restates
 either — where they disagree, the schema wins and this file is wrong.
 
 ## Ask the purpose FIRST
@@ -106,4 +107,5 @@ This skill has its own process: **[Materialize remote content — the shared sub
 | [Materialize remote content — the shared subprocess](../../processes/materialize-remote.html) | Declare the purpose: working or archival; ENUMERATE + SUBSET against the source descriptor; SIZE what fraction, and what the whole would cost; RESTRICTIONS unknown is an answer, not a green light; COPYRIGHT per bitstream, and for the derived work; RETENTION what expires this copy; SOURCE LOSS what survives if the origin goes; Fetch, and record fixity; Declare the node `materialized`; Leave it `referenced`, record why |
 | [Refresh materialized remote content](../../processes/refresh-materialized.html) | ARCHIVAL verify fixity — never re-fetch; WORKING what changed upstream; What changed LOCALLY since; Adjudicate the conflict (calls a sub-process); Reconcile the two by hand; Re-materialize, re-asking the five gates — and record the new fixity; Keep the local edit, and re-pin so it stops being asked; Record the conflict, decide nothing, and do NOT re-pin |
 | [Sample import into a structured data store](../../processes/sample-import.html) | Materialize remote content (the five gates) (calls a sub-process); Refresh materialized content (calls a sub-process) |
+| [Subscribe to an external knowledge graph](../../processes/subscribe-kg.html) | Refresh the held part (calls a sub-process); Materialise the part (calls a sub-process) |
 

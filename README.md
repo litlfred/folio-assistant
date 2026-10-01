@@ -104,6 +104,7 @@ rename a directory and the links follow.
 | `bootstrap` | bootstrap | [AGENTS.md](./bootstrap/AGENTS.md) | [README](./bootstrap/README.md) |
 | `bootstrap-tools` | bootstrap-tools | [AGENTS.md](./bootstrap-tools/AGENTS.md) | [README](./bootstrap-tools/README.md) |
 | `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
+| `cat-harness-tools` | cat-harness-tools | [AGENTS.md](./cat-harness-tools/AGENTS.md) | [README](./cat-harness-tools/README.md) |
 | `fhir-harness` | fhir-harness | [AGENTS.md](./fhir-harness/AGENTS.md) | [README](./fhir-harness/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) | [README](./folio-assistant-core/README.md) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
@@ -117,7 +118,7 @@ rename a directory and the links follow.
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 | `who-style-guide` | who-style-guide | [AGENTS.md](./who-style-guide/AGENTS.md) | [README](./who-style-guide/README.md) |
 
-> **13 of 17** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+> **14 of 18** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 
 *`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
 *`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*
@@ -245,7 +246,7 @@ findings, resolved on commit — so a human and an agent read the same answer to
 |---------|--------------|
 | [`authoring-a-document.bpmn`](cat-harness/processes/authoring-a-document.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-document.svg) | Documents & policy guidance |
 | [`authoring-a-paper.bpmn`](cat-harness/processes/authoring-a-paper.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/authoring-a-paper.svg) | Scientific papers & books |
-| [`l2-dak-authoring.bpmn`](cat-harness/processes/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
+| [`l2-dak-authoring.bpmn`](smart-base/processes/l2-dak-authoring.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l2-dak-authoring.svg) | WHO SMART Guidelines DAK (L2) |
 | [`l3-fhir-pipeline.bpmn`](cat-harness/processes/l3-fhir-pipeline.bpmn) · [SVG](cat-harness/docs/assets/img/workflows/l3-fhir-pipeline.svg) | WHO SMART Implementation Guide (L3) |
 
 ---

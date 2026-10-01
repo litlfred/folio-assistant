@@ -11,7 +11,7 @@ references:
     id: platform-boundary-guard
 ---
 A normative statement is a labelled, titled `prose` block; the convention and
-its limits are in `skills/authoring/folio-document-adapter/normative-statements.md`. A
+its limits are in `folio-assistant-core/skills/content/folio-document-adapter/normative-statements.md`. A
 real kind means a builder, a Zod schema, a label prefix, viewer registration,
 constraint rows and QA criteria — about **thirty files** — and is tracked
 separately rather than half-done.

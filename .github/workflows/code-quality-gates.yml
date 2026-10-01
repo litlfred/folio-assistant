@@ -541,6 +541,13 @@ jobs:
       - name: PROV-O QA/QC report
         run: bun run check:prov-qaqc
 
+      # KG subscriptions (issue #1719, epic bean `fnx4`): the known substrates,
+      # derived from the declarations wherever a fact exists, and every
+      # subscription with the state of each chosen part. Generated and
+      # network-free; this fails only when the page is stale.
+      - name: KG subscriptions page is current
+        run: bun run subscriptions:viz:check
+
       # The graph per locale -- bean `jmpb`, on the owner's ruling. This gate
       # is NOT about how much is translated (nothing is, measured 2026-09-22:
       # 58 of 62 .pot templates are diagrams and none has a .po). It checks
@@ -879,6 +886,13 @@ jobs:
       # family has not cleared the others.
       - name: harness state graphs are judged, not just typed
         run: bun run check:harness-state:check
+
+      # Issue #1719, slice 4: every subscription has its substrate snapshot at
+      # its pin, each snapshot's bytes match their digest and re-judge to the
+      # committed summary, and none is orphaned. Offline — it reads what
+      # `kg:subscribe` wrote and never fetches. It JUDGES `substrate-snapshot`.
+      - name: KG subscriptions have their snapshots, and each holds
+        run: bun run kg:subscribe:check
 
       # And `--strict` too, now that it is GREEN — the four `typed-only` kinds
       # were the only thing holding it red, and the step above judges them. Wired
@@ -1294,10 +1308,42 @@ jobs:
           # names the range it used either way.
           if [ -n "$CATALOGUE_BASE_SHA" ]; then
             git fetch --no-tags --depth=1 origin "$CATALOGUE_BASE_SHA"
+            bun run translation:catalogue:check
           else
+            # NO pull-request context: a `workflow_dispatch` or `merge_group`
+            # run. `CATALOGUE_BASE_SHA` is empty, and the old fallback then ran
+            # the three-dot path against an `origin/main` this very fetch had
+            # just CREATED as a shallow graft — which has no merge base, so the
+            # script exited 2, "could not determine", every time.
+            #
+            # That made a dispatched run of this workflow UNPASSABLE, which is
+            # not a nuisance but a trap: `check-head-has-run.ts` tells an
+            # operator to dispatch when a head has no run, so following the
+            # repository's own advice attached a red hard gate to a PR that had
+            # not earned it. Measured on #1633, 2026-10-01, run 36789391040 —
+            # the only red among twelve checks, and it was the advice, not the
+            # branch. Issue #823, bean `sddf`.
+            #
+            # Deepen until a merge base EXISTS, then name it. `--base` is the
+            # script's two-dot path and needs no merge base of its own, but a
+            # base still has to be supplied.
             git fetch --no-tags --prune --depth=200 origin main || true
+            base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
+            if [ -z "$base" ]; then
+              git fetch --no-tags --unshallow origin main 2>/dev/null \
+                || git fetch --no-tags --deepen=2000 origin main 2>/dev/null || true
+              base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
+            fi
+            if [ -n "$base" ]; then
+              bun run translation:catalogue:check -- --base "$base"
+            else
+              # Still could-not-determine, and it stays exit 2 rather than
+              # becoming a pass. `dh4f`: the one thing this must never do is
+              # render "I could not look" as "nothing is wrong".
+              echo "::error::no merge base against origin/main after deepening — the catalogue check cannot run on this event"
+              exit 2
+            fi
           fi
-          bun run translation:catalogue:check
 
       - name: gates that were registered and never run
         run: |
@@ -1726,6 +1772,12 @@ jobs:
           # `a1lq`), because a partial checkout looks the same; CI has the
           # whole checkout, so here it fails.
           bun run check:instance-graph
+          # Concern groups (placement PR0c, bean `ejye`): every grouping
+          # kind's groups are declared from within, are codes of
+          # `code-lists/concern-group.json`, are declared once, and a higher
+          # instance's same-named directory is a member rather than a group
+          # of its own.
+          bun run check:concern-groups
           # No module scope resolves the folio directory. `folioDir` throws
           # on a malformed declaration, and a throw during evaluation strands
           # every export below it — which is how bean `95s1` got an error

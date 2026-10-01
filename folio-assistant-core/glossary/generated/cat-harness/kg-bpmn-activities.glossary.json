@@ -1352,8 +1352,8 @@
     },
     {
       "id": "process_docssite.task_publish",
-      "prefLabel": "Publish to gh-pages (FULL REPLACE)",
-      "definition": "Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived.",
+      "prefLabel": "Push to the CDN [render-kg-to-cdn] gh-pages, FULL REPLACE",
+      "definition": "THIS SITE IS ONE INSTANCE OF THE GENERAL STEP (owner, 2026-09-30: gh-pages is \"one specific tool of general 'publish to CDN'\"). Process_RenderKgToCdn, entered with the tree this build already rendered and verified, the site root as the publication root URL, and GitHub Pages as the target — so its `gh-pages` Tool pushes. Here that push is a FULL REPLACE of the `gh-pages` branch: anything on it this build did not produce is gone unless the restore put it back, which is why the restore and the survival check either side of this call stay in THIS process rather than in the general one. The call returns the push's status and message (the gh-pages merge commit and the QA result); a status other than `pushed` takes the `no` branch of Did the deploy succeed?.",
       "notation": "Task_Publish",
       "source": "cat-harness/processes/docs-site-publish.bpmn#Task_Publish",
       "status": "candidate"
@@ -1728,8 +1728,8 @@
     },
     {
       "id": "process_featurestaging.task_deploy",
-      "prefLabel": "Publish to STAGING/&lt;slug&gt;",
-      "definition": "`keep_files: true` and a `destination_dir`, so this push adds one directory beside whatever else is on the branch. It is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled.",
+      "prefLabel": "Push to the CDN at STAGING/&lt;slug&gt;/ [render-kg-to-cdn]",
+      "definition": "A PREVIEW IS THE GENERAL STEP WITH A DIFFERENT ROOT (owner, 2026-09-30: \"independent of staging vs publication … just rendering\"). Process_RenderKgToCdn, entered with the tree Task_Build rendered, `STAGING/<slug>/` under the site root as the publication root URL, and GitHub Pages as the target, so its `gh-pages` Tool pushes. For this target the push is `keep_files: true` with a `destination_dir`, so it adds one directory beside whatever else is on the branch; it is also RETRIED once: five other workflows push to `gh-pages` without joining this one's concurrency group, and a queue does not help because GitHub CANCELS a pending job when a newer one arrives for the same group rather than queueing it. Measured 2026-09-19: three staging runs from three different branches inside 17 seconds, two cancelled. The call returns the push's status and message; the render log and the PR comment that follow are this process's own.",
       "notation": "Task_Deploy",
       "source": "cat-harness/processes/feature-staging.bpmn#Task_Deploy",
       "status": "candidate"
@@ -2663,86 +2663,6 @@
       "status": "candidate"
     },
     {
-      "id": "process_l2dak.task_assembledak",
-      "prefLabel": "Assemble and validate the DAK [content-validate]",
-      "definition": "Assemble the validated components and run content validation: schemas, cross-component consistency and terminology bindings. The smart-base extractors read the authored artefacts; with SMART_BASE_HOME unset they report skip, never a clean run.",
-      "notation": "Task_AssembleDak",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_AssembleDak",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l2dak.task_bpmn",
-      "prefLabel": "Business processes · BPMN 2.0 [bpmn-authoring]",
-      "definition": "Author the DAK's L2 business processes as BPMN 2.0, with Diagram Interchange: a .bpmn with no x/y on its shapes parses and renders blank. Stay at L2 — reviewable by a clinician, not FHIR.",
-      "notation": "Task_Bpmn",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Bpmn",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l2dak.task_datadict",
-      "prefLabel": "Data dictionary and core data elements [l2-dak-authoring]",
-      "definition": "Author the data dictionary and core data elements for this component. Stay structured but not FHIR: a data element a clinician can review, from which L3 can later be derived rather than written twice.",
-      "notation": "Task_DataDict",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_DataDict",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l2dak.task_dmn",
-      "prefLabel": "Decision logic · DMN tables [dmn-authoring]",
-      "definition": "Author the decision logic as DMN tables, within the FEEL subset the interpreter implements (any, literals, comparisons, one-of). Ranges, not() and function calls are refused at load, so write inside the subset.",
-      "notation": "Task_Dmn",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Dmn",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l2dak.task_indicators",
-      "prefLabel": "Indicators and requirements [l2-dak-authoring]",
-      "definition": "Author the component's indicators and its functional and non-functional requirements. These are the DAK's requirements, distinct from skills/requirements/*.json, which are this harness's own conformance obligations.",
-      "notation": "Task_Indicators",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Indicators",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l2dak.task_personas",
-      "prefLabel": "Personas and scenarios [l2-dak-authoring]",
-      "definition": "Author the DAK's personas and the user journeys (scenarios) they appear in. These are the DAK's own actors, not this harness's scenarios/roles.json — the two vocabularies must not be conflated.",
-      "notation": "Task_Personas",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Personas",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l2dak.task_scopedak",
-      "prefLabel": "Scope the DAK [content-plan]",
-      "definition": "Enumerate the processes, decisions and data elements the guideline implies; identify the actors.",
-      "notation": "Task_ScopeDak",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_ScopeDak",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l2dak.task_seedbeans",
-      "prefLabel": "Seed the work plan [todo-manager]",
-      "definition": "Turn the scope into beans on the shared work plan — one per DAK component, since a DAK is completed component by component. beans create is not idempotent: check for an existing bean before every create, or a re-run duplicates the plan.",
-      "notation": "Task_SeedBeans",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_SeedBeans",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l2dak.task_smevalidate",
-      "prefLabel": "Clinical validation [content-review]",
-      "definition": "Ground truth: does the DAK say what the guideline says?",
-      "notation": "Task_SmeValidate",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_SmeValidate",
-      "status": "candidate"
-    },
-    {
-      "id": "process_l2dak.task_terminology",
-      "prefLabel": "Terminology bindings [terminology-management]",
-      "definition": "ICD-11, SNOMED CT, LOINC bindings — governed separately from the artifacts that cite them.",
-      "notation": "Task_Terminology",
-      "source": "cat-harness/processes/l2-dak-authoring.bpmn#Task_Terminology",
-      "status": "candidate"
-    },
-    {
       "id": "process_l3fhir.task_authorfsh",
       "prefLabel": "Author FSH profiles [l3-fhir-authoring]",
       "definition": "Write the FSH profiles, value sets and definitions the L2 mapping calls for. This is the stage where profiles, slicing and invariants belong — a decision that can only be expressed in FHIR comes here, not back into L2.",
@@ -3240,7 +3160,7 @@
     {
       "id": "process_publication.task_publishrelease",
       "prefLabel": "Version, tag and publish [content-publish]",
-      "definition": "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform.",
+      "definition": "Version bump, release notes, tag, build the final artifacts, deploy to the publication platform. The deploy is the general render-kg-to-cdn step with the RELEASE root as its publication root URL — the same step a staging preview takes with a root under it; the target (GitHub Pages, or a folio's own platform) is chosen by its Tool.",
       "notation": "Task_PublishRelease",
       "source": "cat-harness/processes/draft-to-publication.bpmn#Task_PublishRelease",
       "status": "candidate"
@@ -3378,6 +3298,30 @@
       "prefLabel": "Coordinate? How?",
       "notation": "U_Coordinate",
       "source": "cat-harness/processes/related-work.bpmn#U_Coordinate",
+      "status": "candidate"
+    },
+    {
+      "id": "process_renderkgtocdn.call_toolsubprocess",
+      "prefLabel": "Render and push with the target's Tool [its own subprocess]",
+      "definition": "BOUND BY THE TOOL, so no `calledElement` is written here: the activity names the skill, the Tool satisfies it, and the Tool's `subprocesses` are what this descends into — for `gh-pages`, bootstrap-tools' render-kg-to-github-pages (make sure gh-pages exists and Pages serves it, stage, check the staging, commit onto gh-pages, check what is served). A diagram that named it would make every other CDN a second copy of this process. Whatever the Tool, it returns the two outputs below.",
+      "notation": "Call_ToolSubprocess",
+      "source": "cat-harness/processes/render-kg-to-cdn.bpmn#Call_ToolSubprocess",
+      "status": "candidate"
+    },
+    {
+      "id": "process_renderkgtocdn.task_report",
+      "prefLabel": "Report the push: status and message",
+      "definition": "The output, on every path: `pushed`, `not-pushed` or `could-not-determine`, and one message — what is live (a commit), at which root URL, and the QA result. From the no-Tool branch the status is `not-pushed` and the message names the target nobody implements. A check that could not look is never reported as pushed.",
+      "notation": "Task_Report",
+      "source": "cat-harness/processes/render-kg-to-cdn.bpmn#Task_Report",
+      "status": "candidate"
+    },
+    {
+      "id": "process_renderkgtocdn.task_resolve",
+      "prefLabel": "Resolve the Subgraphs, the root URL and the target's Tool",
+      "definition": "Every Subgraph id asked for must be one the declaration lists; none means the whole graph. The root URL is the one given. The target's Tool is the one that `satisfies: [\"render-kg-to-cdn\"]` for that CDN — `gh-pages` for GitHub Pages. A caller that already rendered and verified its tree hands the tree over instead of the graph, and the Tool pushes it without rendering again.",
+      "notation": "Task_Resolve",
+      "source": "cat-harness/processes/render-kg-to-cdn.bpmn#Task_Resolve",
       "status": "candidate"
     },
     {

@@ -168,6 +168,19 @@ export function docsLayers(repo = REPO): { layers: DocsLayer[]; missing: DocsLay
     const root = repositoryScoped ? repo : join(repo, "cat-harness");
     found.push({ id: e.id, dir: join(root, e.path), repositoryScoped });
   }
+  // The REPOSITORY overlay is the checkout root instance's `docs` entry since
+  // placement PR0 (bean `ejye`): the root declares the directories at its own
+  // root, so the platform no longer reaches up for `root-docs` with
+  // `scope: "repository"`. Same layer, same order — the overlay goes last.
+  const rootDeclPath = declarationPathIn(repo);
+  if (rootDeclPath !== undefined && existsSync(rootDeclPath)) {
+    const rootDecl = JSON.parse(readFileSync(rootDeclPath, "utf-8")) as { directories?: DeclEntry[] };
+    for (const e of rootDecl.directories ?? []) {
+      if (!e.path || !e.id || !(e.graphKinds ?? []).includes("docs")) continue;
+      if (found.some((f) => f.id === e.id)) continue;
+      found.push({ id: e.id, dir: join(repo, e.path), repositoryScoped: true });
+    }
+  }
   // Base (instance-scoped) before overlay (repository-scoped): later wins.
   found.sort((a, b) => Number(a.repositoryScoped) - Number(b.repositoryScoped));
   return {

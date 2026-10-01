@@ -113,16 +113,14 @@ Mechanical throughout. There is no human lane, which is what makes `build-pipeli
       <bpmn:incoming>Flow_V2</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Task_Publish" name="Publish to gh-pages&#10;(FULL REPLACE)">
-
-
-      <bpmn:documentation>Publish to gh-pages as a FULL REPLACE: anything on the branch this build did not produce is gone unless the restore put it back. The verify step that follows reads the deployed ref to confirm the previews survived.</bpmn:documentation>
+    <bpmn:callActivity id="Task_Publish" name="Push to the CDN&#10;[render-kg-to-cdn]&#10;gh-pages, FULL REPLACE" calledElement="Process_RenderKgToCdn">
+      <bpmn:documentation>THIS SITE IS ONE INSTANCE OF THE GENERAL STEP (owner, 2026-09-30: gh-pages is &quot;one specific tool of general 'publish to CDN'&quot;). Process_RenderKgToCdn, entered with the tree this build already rendered and verified, the site root as the publication root URL, and GitHub Pages as the target — so its `gh-pages` Tool pushes. Here that push is a FULL REPLACE of the `gh-pages` branch: anything on it this build did not produce is gone unless the restore put it back, which is why the restore and the survival check either side of this call stay in THIS process rather than in the general one. The call returns the push's status and message (the gh-pages merge commit and the QA result); a status other than `pushed` takes the `no` branch of Did the deploy succeed?.</bpmn:documentation>
       <bpmn:extensionElements>
-        <cat-harness.processes:no-skill reason="A mechanical actor force-pushes the built tree. The DECISIONS around it are the two tasks either side — what to carry across the replace, and whether it survived — and those carry the skill. This step is the push itself."/>
+        <bootstrap.processes:skill ref="render-kg-to-cdn"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_6</bpmn:incoming>
       <bpmn:outgoing>Flow_7</bpmn:outgoing>
-    </bpmn:task>
+    </bpmn:callActivity>
     <bpmn:exclusiveGateway id="GW_Deployed" name="Did the deploy&#10;succeed?">
       <bpmn:documentation>Answered by the deploy step itself. `no` goes to the alert: a failed deploy after the publish button is exactly the failure the owner asked to be told about. `yes` checks the previews survived.</bpmn:documentation>
       <bpmn:incoming>Flow_7</bpmn:incoming>
