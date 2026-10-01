@@ -47,7 +47,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { basename, join, relative } from "node:path";
 
 import { releaseIris, releaseIri } from "../../bootstrap-tools/schemas/release-iri.ts";
-import { instanceRootsIn, readDeclaration } from "./cat-harness.ts";
+import { instanceDirectoryForGraph, instanceRootsIn, readDeclaration } from "./cat-harness.ts";
 import { CAT_HARNESS_NS, FOLIO_BASE } from "./namespaces.ts";
 import type { ProvActivity } from "./prov.ts";
 
@@ -111,15 +111,19 @@ export function addressBook(repo: string): AddressBook {
   const plans = new Map<string, Owned>();
 
   for (const root of roots) {
-    const actorDir = join(root, "scenarios", "actors");
+    // The instance's own declared `scenarios` graph, never a composed path:
+    // an instance that declares none holds no actors or roles to address.
+    const scenarios = instanceDirectoryForGraph(root, "scenarios");
+    if (!scenarios) continue;
+    const actorDir = join(scenarios, "actors");
     for (const f of existsSync(actorDir) ? readdirSync(actorDir).filter((x) => x.endsWith(".json")) : []) {
       const id = basename(f, ".json");
-      if (!actors.has(id)) actors.set(id, { root, path: `scenarios/actors/${id}` });
+      if (!actors.has(id)) actors.set(id, { root, path: rel(root, join(actorDir, f)) });
     }
-    const rolesFile = join(root, "scenarios", "roles.json");
+    const rolesFile = join(scenarios, "roles.json");
     if (existsSync(rolesFile)) {
       const doc = JSON.parse(readFileSync(rolesFile, "utf-8")) as { roles?: { id?: string }[] };
-      for (const r of doc.roles ?? []) if (r.id && !roles.has(r.id)) roles.set(r.id, { root, path: "scenarios/roles", fragment: r.id });
+      for (const r of doc.roles ?? []) if (r.id && !roles.has(r.id)) roles.set(r.id, { root, path: rel(root, rolesFile), fragment: r.id });
     }
   }
   for (const f of filesUnder(repo, ".bpmn")) {
