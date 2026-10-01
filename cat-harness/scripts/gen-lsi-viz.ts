@@ -29,11 +29,29 @@
  *
  *   bun run lsi:viz            # write cat-harness/docs/lsi/index.md
  *   bun run lsi:viz:check      # exit 1 if the committed page is stale
+ *   ... --ref main|<sha>|pr/<n> # with no index in the checkout: which qa-reports entry to read
+ *
+ * With no `test/results/lsi/` in the checkout, both read the indexes from the
+ * `qa-reports` branch ({@link readIndexes}). When that read is not a hit, both
+ * exit 2 (could not determine) and write nothing.
  */
 
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
-import { graphVerdict, proseGraphs, VIEWER_DIR, type LsiSidecar } from "./lsi.ts";
+import {
+  CHECKOUT_SOURCE,
+  graphVerdict,
+  INDEX_DIR,
+  indexesInCheckout,
+  proseGraphs,
+  RUN_RECORD_DIR,
+  sourceFromFiles,
+  VIEWER_DIR,
+  type IndexSource,
+  type LsiSidecar,
+} from "./lsi.ts";
+import { readQaTree } from "./qa-store.ts";
+import { JUDGEMENT_EXIT } from "./qa-results.ts";
 import { handledDirectories, withRendersFrontMatter } from "./viewer-declarations.ts";
 
 /** This generator's Tool node (`tools/viewers.ts`), named on every page it draws. */
@@ -57,10 +75,62 @@ function sidecars(dir = RESULTS, out: string[] = []): string[] {
 const code = (s: string): string => "`" + s + "`";
 const esc = (s: string): string => s.replace(/\|/g, "\\|").replace(/</g, "&lt;");
 
+/**
+ * The indexes the page draws, and where they came from.
+ *
+ * ## The checkout first, then the store by ref, and a miss is never a page
+ *
+ * Bean `oq1j` (arc `3fva`, reader `R14`). The page draws the INDEXES, so it
+ * needs them. With `test/results/lsi/` in the checkout it draws those, as it
+ * always has. Without it, the indexes are on the `qa-reports` branch, and this
+ * reads them by ref through `qa-store`, together with the run records the
+ * verdict table needs. Anything but a hit is returned AS the answer: an
+ * absent directory must not render as "0 committed indexes". That would be
+ * a page about nothing, and in write mode it would replace the real page.
+ *
+ * It does not recompute the indexes, as `lsi:skills:check` does. A recomputed
+ * page would change with every edit to any graph that needs an index (seven,
+ * including all of `cat-harness/docs/`), and so every docs PR would stale a
+ * committed page.
+ */
+export type IndexesRead =
+  | { state: "hit"; from: string; files: string[]; src: IndexSource }
+  | { state: "miss" | "corrupt" | "unknown"; reason: string };
+
+export function readIndexes(ref = "main"): IndexesRead {
+  if (indexesInCheckout()) return { state: "hit", from: "the checkout", files: sidecars(), src: CHECKOUT_SOURCE };
+  const tree = readQaTree(ref, INDEX_DIR);
+  if (tree.state !== "hit") return { state: tree.state, reason: `${INDEX_DIR}/ is not in the checkout, and the qa-reports branch at ${ref}: ${tree.reason}` };
+  // The run records are optional on the branch as on disk: none is a
+  // `not-run` verdict, which is never green. A corrupt or unknown read is
+  // not "none", so it stops the page.
+  const runs = readQaTree(ref, RUN_RECORD_DIR);
+  if (runs.state === "corrupt" || runs.state === "unknown") return { state: runs.state, reason: `run records at ${ref}: ${runs.reason}` };
+  const files = new Map([...tree.files, ...(runs.state === "hit" ? runs.files : [])]);
+  return {
+    state: "hit",
+    from: `qa-reports ${tree.key}`,
+    files: [...tree.files.keys()].filter((p) => p.endsWith(".lsi.json")).map((p) => join(REPO, p)).sort(),
+    src: sourceFromFiles(files),
+  };
+}
+
+/** The page, or why it could not be drawn. */
+export function renderFrom(read: IndexesRead): { state: "hit"; page: string } | { state: "miss" | "corrupt" | "unknown"; reason: string } {
+  if (read.state !== "hit") return read;
+  return { state: "hit", page: draw(read) };
+}
+
+/** The page over the checkout's indexes. Throws when it cannot be drawn: a test or a caller must not get an empty page back. */
 export function render(): string {
-  const files = sidecars();
-  const indexes = files.map((f) => ({ file: f, s: JSON.parse(readFileSync(f, "utf8")) as LsiSidecar }));
-  const verdicts = proseGraphs().map((t) => ({ t, v: graphVerdict(t) }));
+  const r = renderFrom(readIndexes());
+  if (r.state !== "hit") throw new Error(`lsi viewer: ${r.state.toUpperCase()} — ${r.reason}`);
+  return r.page;
+}
+
+function draw(read: Extract<IndexesRead, { state: "hit" }>): string {
+  const indexes = read.files.map((f) => ({ file: f, s: JSON.parse(read.src.read(relative(REPO, f).split("\\").join("/"))!) as LsiSidecar }));
+  const verdicts = proseGraphs().map((t) => ({ t, v: graphVerdict(t, read.src) }));
   const needing = verdicts.filter(({ v }) => v.result === "fail").length;
   const units = indexes.reduce((n, { s }) => n + s.units, 0);
 
@@ -159,7 +229,25 @@ export function render(): string {
 }
 
 if (import.meta.main) {
-  const page = render();
+  const refAt = process.argv.indexOf("--ref");
+  const ref = refAt > 0 ? process.argv[refAt + 1] : undefined;
+  if (refAt > 0 && !ref) {
+    console.error("usage: gen-lsi-viz.ts [--check] [--ref main|<sha>|pr/<n>]");
+    process.exit(JUDGEMENT_EXIT.error);
+  }
+  const read = readIndexes(ref);
+  const drawn = renderFrom(read);
+  if (drawn.state !== "hit") {
+    // Neither "stale" nor "current", and never a page written from nothing.
+    console.error(
+      `lsi viewer: ${drawn.state.toUpperCase()} — could not determine; this is NOT a pass, and nothing was written.\n` +
+        `  ${drawn.reason}\n` +
+        "  The page draws the indexes, and none could be read. `bun run qa:fetch` materialises them, or `bun run lsi index` rebuilds them.",
+    );
+    process.exit(JUDGEMENT_EXIT.unknown);
+  }
+  const page = drawn.page;
+  if (read.state === "hit" && read.from !== "the checkout") console.log(`lsi viewer: indexes read from ${read.from}`);
   if (process.argv.includes("--check")) {
     const cur = existsSync(OUT) ? readFileSync(OUT, "utf8") : "";
     if (cur !== page) {

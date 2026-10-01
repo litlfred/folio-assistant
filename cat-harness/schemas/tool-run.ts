@@ -94,8 +94,18 @@ export function toolRunPath(instanceRoot: string, tool: string, target: string):
 export function readToolRun(instanceRoot: string, tool: string, target: string): ToolRunRecord | undefined {
   const p = toolRunPath(instanceRoot, tool, target);
   if (!existsSync(p)) return undefined;
+  return parseToolRun(readFileSync(p, "utf8"));
+}
+
+/**
+ * The record a file's TEXT holds, wherever the text came from: the checkout,
+ * or a tree read from the `qa-reports` branch through `scripts/qa-store.ts`
+ * (bean `oq1j`). `undefined` for no text, and for text that is not a record.
+ */
+export function parseToolRun(text: string | undefined): ToolRunRecord | undefined {
+  if (text === undefined) return undefined;
   try {
-    const parsed = ToolRunRecordSchema.safeParse(JSON.parse(readFileSync(p, "utf8")));
+    const parsed = ToolRunRecordSchema.safeParse(JSON.parse(text));
     return parsed.success ? parsed.data : undefined;
   } catch {
     return undefined;

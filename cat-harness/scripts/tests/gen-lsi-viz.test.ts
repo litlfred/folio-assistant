@@ -6,49 +6,52 @@
  * row, and every table row has the columns its header promises.
  */
 import { describe, expect, test } from "bun:test";
-import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join, resolve } from "node:path";
-import { render } from "../gen-lsi-viz.ts";
+import { existsSync, readFileSync } from "node:fs";
+import { join, relative, resolve } from "node:path";
+import { readIndexes, renderFrom } from "../gen-lsi-viz.ts";
 import { proseGraphs } from "../lsi.ts";
 
 const REPO = resolve(import.meta.dir, "../../..");
-const page = render();
-
-function sidecarFiles(dir: string, out: string[] = []): string[] {
-  if (!existsSync(dir)) return out;
-  for (const e of readdirSync(dir, { withFileTypes: true })) {
-    const p = join(dir, e.name);
-    if (e.isDirectory()) sidecarFiles(p, out);
-    else if (e.name.endsWith(".lsi.json")) out.push(p);
-  }
-  return out;
-}
+// Read once, from the checkout or (with no index directory in it) from the
+// qa-reports branch. Not `render()`: that throws when nothing could be read,
+// and a throw at load would fail this file without saying which test, or why.
+const read = readIndexes();
+const drawn = renderFrom(read);
+const page = drawn.state === "hit" ? drawn.page : "";
+// The tests below are about a page. With none drawn they are SKIPPED, not
+// passed, and the first test fails with the read's state and reason, so the
+// one cause is reported once rather than as five unrelated-looking failures.
+const onPage = test.if(drawn.state === "hit");
 
 describe("the LSI viewer page", () => {
-  test("is exactly what is committed", () => {
+  test("could be drawn — a miss is reported with its reason, never as an empty page", () => {
+    expect(drawn.state === "hit" ? "hit" : `${drawn.state}: ${drawn.reason}`).toBe("hit");
+  });
+
+  onPage("is exactly what is committed", () => {
     expect(readFileSync(join(REPO, "cat-harness/docs/lsi/index.md"), "utf8")).toBe(page);
   });
 
-  test("has a section for every committed index", () => {
-    const files = sidecarFiles(join(REPO, "cat-harness/test/results/lsi"));
+  onPage("has a section for every index it read", () => {
+    const files = read.state === "hit" ? read.files : [];
     expect(files.length).toBeGreaterThan(0);
     for (const f of files) {
-      const s = JSON.parse(readFileSync(f, "utf8"));
+      const s = JSON.parse(read.state === "hit" ? read.src.read(relative(REPO, f))! : "{}");
       expect(page).toContain("## " + s.instance + " / " + s.graph);
     }
   });
 
-  test("has a verdict row for every declared prose graph", () => {
+  onPage("has a verdict row for every declared prose graph", () => {
     for (const t of proseGraphs()) expect(page).toContain("| `" + t.instance + "/" + t.id + "` |");
   });
 
-  test("every unit it names is a file in this checkout", () => {
+  onPage("every unit it names is a file in this checkout", () => {
     const named = [...page.matchAll(/`([^`\s]+\/sections\/[^`\s]+\.md|[^`\s]+\.md)`/g)].map((m) => m[1]).filter((p) => p.includes("/"));
     expect(named.length).toBeGreaterThan(0);
     for (const p of named) if (!p.startsWith("scripts/")) expect(existsSync(join(REPO, p))).toBe(true);
   });
 
-  test("every table row has as many cells as its header", () => {
+  onPage("every table row has as many cells as its header", () => {
     let cols = 0;
     for (const line of page.split("\n")) {
       if (!line.startsWith("|")) { cols = 0; continue; }
