@@ -59,6 +59,11 @@ function git(root: string, ...args: string[]): string {
   return execFileSync("git", ["-C", root, ...args], { encoding: "utf-8", stdio: ["ignore", "pipe", "pipe"] }).trim();
 }
 
+/** Check each submodule out at the commit the index pins. */
+function syncSubmodules(root: string): void {
+  spawnSync("git", ["-C", root, "submodule", "update", "--init", "--recursive"], { stdio: "inherit" });
+}
+
 function describe(c: Classified): string {
   return c.pattern ? `${c.path}  [${c.pattern.id}: ${c.strategy}]` : `${c.path}  [no declared pattern]`;
 }
@@ -117,6 +122,7 @@ if (import.meta.main) {
   const abort: (why: string) => never = (why) => {
     spawnSync("git", ["-C", root, "add", "-A"], { stdio: "inherit" });
     spawnSync("git", ["-C", root, "merge", "--abort"], { stdio: "inherit" });
+    syncSubmodules(root); // back to the branch's pins, or the tree reads as dirty
     const merging = spawnSync("git", ["-C", root, "rev-parse", "-q", "--verify", "MERGE_HEAD"]).status === 0;
     const restored = !merging && !git(root, "status", "--porcelain");
     console.error(restored
@@ -155,6 +161,13 @@ if (import.meta.main) {
     git(root, "add", "--", c.path);
   }
 
+  // The merge moves the submodule GITLINKS but not their checkouts, so without
+  // this regen judges the merged tree against the branch's old submodule
+  // content. Measured 2026-10-01 on #1754: main had bumped `bootstrap` and
+  // `bootstrap-tools`, and `kg:audit:all:check` and
+  // `translate-bpmn:bootstrap:check` came back "unrepaired" — a defect in the
+  // tool's view, not in the merge.
+  syncSubmodules(root);
   console.log("\nmerge-base: regenerating, and asking every gate the CI workflow runs …");
   const regen = spawnSync("bun", ["run", "regen"], { cwd: root, stdio: "inherit" });
   if (regen.status !== 0) abort("the gate set could not reproduce the resolution (regen reported unrepaired checks)");
