@@ -46,6 +46,7 @@ import { instanceRepositories } from "../schemas/instance-repositories.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const INSTANCE = resolve(import.meta.dir, "..");
+// declared-path-literal: the page's route under the site directory, not the `subscriptions/` snapshot directory of the same name
 export const OUT = join(INSTANCE, siteDirFor(INSTANCE), "subscriptions", "index.md");
 
 export type SubstrateSource = "staged instance" | "associated harness" | "hand-entered";
