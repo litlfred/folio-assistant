@@ -1,0 +1,85 @@
+# SPIKE (bean folio-assistant-3ds9) — throwaway; drop this commit after the spike.
+#
+# Can a CI job push a results tree to an orphan qa-reports branch with the
+# default GITHUB_TOKEN? Mirrors the container-side measurement: hash the
+# results into the object store, splice them under pr/<n>/<head-sha>/ onto
+# the CURRENT tip, commit-tree -p tip, push WITHOUT -f, retry on rejection.
+# Nothing is checked out on the spike branch; the temporary index below is
+# never the checkout's index.
+name: qa-reports spike (3ds9)
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/qa-reports-spike.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: qa-reports-spike-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  write:
+    name: write results to qa-reports-spike-b
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Build and push an entry (no checkout of the branch, no -f)
+        env:
+          BR: qa-reports-spike-b
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          SRC: cat-harness/test/results
+        run: |
+          set -euo pipefail
+          git config user.name folio-qa-bot
+          git config user.email folio-qa-bot@users.noreply.github.com
+          prefix="pr/${PR_NUMBER}/${HEAD_SHA}"
+          idx="$RUNNER_TEMP/qa.idx"
+          t0=$(date +%s.%N)
+          # hash-object -w for every file, nested trees, via a private index
+          rm -f "$idx"
+          GIT_INDEX_FILE="$idx" git add -- "$SRC"
+          payload=$(GIT_INDEX_FILE="$idx" git write-tree --prefix="$SRC/")
+          nfiles=$(find "$SRC" -type f | wc -l)
+          nbytes=$(find "$SRC" -type f -printf '%s\n' | awk '{s+=$1} END{print s+0}')
+          manifest=$(printf '{"$schema":"qa-reports-manifest/v1","source":"%s","prefix":"%s","files":%s,"bytes":%s}\n' \
+            "$HEAD_SHA" "$prefix" "$nfiles" "$nbytes" | git hash-object -w --stdin)
+          # entry tree = { <SRC as nested path>, manifest.json }
+          rm -f "$idx"
+          GIT_INDEX_FILE="$idx" git read-tree --prefix="$SRC/" "$payload"
+          GIT_INDEX_FILE="$idx" git update-index --add --cacheinfo "100644,$manifest,manifest.json"
+          entry=$(GIT_INDEX_FILE="$idx" git write-tree)
+          echo "entry $entry: $nfiles files, $nbytes bytes, built in $(echo "$(date +%s.%N)-$t0" | bc) s"
+          for attempt in 1 2 3; do
+            tip=""
+            if git fetch -q --depth=1 --filter=blob:none origin "+refs/heads/$BR:refs/qa-tip"; then
+              tip=$(git rev-parse refs/qa-tip)
+            fi
+            rm -f "$idx"
+            if [ -n "$tip" ]; then
+              if git cat-file -e "$tip:$prefix" 2>/dev/null; then
+                echo "$prefix already on $BR; nothing to do"; exit 0
+              fi
+              GIT_INDEX_FILE="$idx" git read-tree "$tip"
+            fi
+            GIT_INDEX_FILE="$idx" git read-tree --prefix="$prefix/" "$entry"
+            tree=$(GIT_INDEX_FILE="$idx" git write-tree)
+            msg="qa-reports: $prefix ($nfiles files, $nbytes bytes)"
+            if [ -n "$tip" ]; then commit=$(git commit-tree "$tree" -p "$tip" -m "$msg")
+            else commit=$(git commit-tree "$tree" -m "$msg"); fi
+            t2=$(date +%s.%N)
+            if git push origin "$commit:refs/heads/$BR"; then
+              echo "pushed $commit on attempt $attempt in $(echo "$(date +%s.%N)-$t2" | bc) s"
+              exit 0
+            fi
+            echo "push rejected on attempt $attempt; rebuilding on the new tip"
+            sleep $(( attempt * 2 ))
+          done
+          echo "::error::gave up after 3 attempts"; exit 1
