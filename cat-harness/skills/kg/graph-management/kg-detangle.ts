@@ -120,7 +120,20 @@ function declaredSkillScan(literal: ReadonlyArray<{ path: string }>): Array<{ pa
   return out;
 }
 
-const SCAN: Array<{ path: string }> = declaredSkillScan(LITERAL_SCAN);
+/**
+ * `--gate-direction` keeps the LITERAL scan, for now. Widening it to every
+ * instance's skills turns 104 refs that were dangling (and so excluded) into
+ * resolved WRONG-DIRECTION edges — 91 of them harness BPMN naming skills that
+ * placement PR1 moved up, which PR1 deferred to PR3 (bean `63wl`, which moves
+ * those diagrams to their owners), plus `cat-harness/scenarios/roles.json`
+ * naming upper-layer skills. They are real placement debt, not noise; the
+ * owner's ruling widened the MEASUREMENT (sidecars), and turning a hard gate
+ * red over debt with a scheduled fix is a separate decision. Measured
+ * 2026-10-01 (S0, bean `hx65`): `kg:detangle --gate-direction` over the
+ * widened scan reports 104. Drop this exception when PR3 lands.
+ */
+const GATING_DIRECTION = process.argv.includes("--gate-direction");
+const SCAN: Array<{ path: string }> = GATING_DIRECTION ? [...LITERAL_SCAN] : declaredSkillScan(LITERAL_SCAN);
 const WIDENED = new Set(SCAN.slice(LITERAL_SCAN.length).map((s) => s.path));
 
 /**
