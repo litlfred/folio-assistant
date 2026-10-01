@@ -25,7 +25,7 @@ WHERE TOOLS ARE AVAILABLE, a toolset may perform the checks: bootstrap-tools' `i
 
 NO work-plan element on any activity, and isExecutable is false, for the reasons initialize-harness gives.
 
-_No rendered diagram — run `bun run render:bpmn`._
+<img src="../assets/img/workflows/complete-initialization.svg" alt="BPMN diagram: Complete initialization" style="max-width:100%">
 
 ## How it connects
 
