@@ -185,6 +185,15 @@ function sweepRoots(instance: string, repo: string): string[] {
     // consumer does.
     dirs.push(...kgRoots(instance));
   }
+  // The CHECKOUT's root instance too (placement PR0, bean `ejye`): `memory/`,
+  // `beans/` and `fsh-guts/` are declared there now that the platform no
+  // longer mirrors them with `scope: "repository"`, and a sweep of this
+  // instance alone would lose them — the exemption test is what notices.
+  const checkoutDecl = resolve(repo) === resolve(instance) ? undefined : declarationPathIn(repo);
+  if (checkoutDecl !== undefined && existsSync(checkoutDecl)) {
+    const decl = JSON.parse(readFileSync(checkoutDecl, "utf-8")) as { directories?: { path?: string }[] };
+    for (const d of decl.directories ?? []) if (typeof d.path === "string") dirs.push(resolve(repo, d.path));
+  }
   // `.claude/skills/` is a local convention rather than a declared graph,
   // and since #437 it sits beside the instance rather than inside it.
   // Checking one place would silently skip it.

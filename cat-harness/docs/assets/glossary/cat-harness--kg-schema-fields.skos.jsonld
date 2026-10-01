@@ -7215,6 +7215,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/concern-groups.concerngroupsschema.directories",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConcernGroupsSchema.directories"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Instance directories declared from within, as in `skills.json`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema.directories",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/concern-groups.concerngroupsschema.groups",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConcernGroupsSchema.groups"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The concern groups this directory holds, by code; each is `<dir>/<code>/`."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema.groups",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/constraints.blockbaseschema.audience",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -13542,6 +13580,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.concerngroups",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.concernGroups"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Is a directory of this kind GROUPED BY CONCERN — `<dir>/<group>/`, with the groups named from within by {@link declarationFile} and drawn from the `concern-group` code list (bean `9umr`; placement PR0c, bean `ejye`)?"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.concernGroups",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.declarationfile",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -19584,6 +19641,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/role-graph.roleextension.role",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RoleExtension.role"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The id of a role declared by an instance this one depends on."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleExtension.role",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/role-graph.roleextension.skills",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RoleExtension.skills"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Skills the role gains in this instance's checkout."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleExtension.skills",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/role-graph.rolegraph.actors",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -19600,6 +19695,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleGraph.actors",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/role-graph.rolegraph.extensions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RoleGraph.extensions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Roles of a LOWER instance this graph adds skills to, BY ID (placement PR0b, bean `ejye`). See {@link RoleExtension}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/role-graph.ts#RoleGraph.extensions",
       "skos:note": "candidate"
     },
     {
@@ -19676,6 +19790,44 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/role-graph.ts#SkillProvenance.via",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/scenario-overlay.scenariolayer.dir",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScenarioLayer.dir"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Absolute path of its `scenarios` directory."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer.dir",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/scenario-overlay.scenariolayer.instance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ScenarioLayer.instance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance's declared name."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer.instance",
       "skos:note": "candidate"
     },
     {
@@ -23457,6 +23609,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/tool.tooldefinitionschema.subprocesses",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ToolDefinitionSchema.subprocesses"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Process ids of the BPMN this Tool's OWN specific procedure is drawn as."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.subprocesses",
       "skos:note": "candidate"
     },
     {

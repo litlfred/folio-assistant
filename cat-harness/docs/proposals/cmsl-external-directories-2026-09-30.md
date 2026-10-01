@@ -5,6 +5,17 @@ description: "Why each exists, which way its arrow points, and the options for m
 
 # The 23 directories cat-harness declares but does not hold
 
+> **Status, 2026-10-01: option A is built** (placement PR0, bean `ejye`).
+> Steps 1–3 landed together: folio-assistant-sci declares `skills/lean/` and
+> `skills/data/` from within its own `skills/skills.json`; the root instance
+> declares Group 1 and `needs` every staged instance; cat-harness declares no
+> `scope: "repository"` entry; corpus-wide tools ask
+> `checkoutDirectories` / `corpusDirectoriesForGraph`; and
+> `check:instance-graph` refuses a new mirror or an unstaged instance. The
+> falsifier below is kept as a test
+> (`scripts/tests/placement-pr0-mechanisms.test.ts`). The rest of this page
+> is the analysis as it stood when the option was chosen.
+
 Owner, 2026-09-30, on bean `cmsl`: *"analyze and characterize the 23 externals.
 why? options for relocation/changing arrow directions? schema issues/location
 issues?"* Every number below was measured on this branch after merging `main`

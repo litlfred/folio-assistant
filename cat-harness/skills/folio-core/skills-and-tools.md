@@ -46,6 +46,13 @@ of the capability; performing the fallback is a mechanism.** The skill must say
 a fallback exists and when to reach for it, because an agent that does not know
 one exists will stop. What it must not do is spell out the edit.
 
+**When the mechanism is itself a procedure**, it is the Tool's subprocess
+(owner, 2026-09-30: *"tools can describe their own specific subprocesses if
+needed to not bog down general skills"*). The Tool node names the BPMN in
+`subprocesses` (process ids, checked by `check:tools`), conventionally under
+`processes/tools/`; the skill keeps the portable sentence. See
+[`bpmn-processes`](../process/workflow/bpmn-processes.md).
+
 ## Every bean skill has (at least) two Tools
 
 The work-plan skills are the worked example, because the harness has carried

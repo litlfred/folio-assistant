@@ -431,6 +431,38 @@ resolveRoleStack(graph, ["editor", "viewer"]) // scoped: the union for this call
 skill any caller ever had, and a closure that broad cannot fail an audit, which
 is the same as not having one.
 
+## A higher instance EXTENDS a role by id — it never edits it (placement PR0b)
+
+A third relation, across instances rather than within one graph. When a skill
+belongs above the harness (a core cataloguing skill, a sci Lean skill), the
+role→skill edge naming it must not stay in `cat-harness/scenarios/roles.json`
+— that is an upward reference. So the **dependent holds the pointer**, the
+way a voice points at the role it addresses and a story at the role it is
+told as (#1168):
+
+```jsonc
+// folio-assistant-core/scenarios/roles.json
+{ "name": "folio-assistant-core", "roles": [],
+  "extensions": [{ "role": "librarian", "skills": ["filing-dublin-core"] }] }
+```
+
+| a dependent's `scenarios/` may | it may NOT |
+|---|---|
+| add skills to a lower role (`extensions`) | change its title, description, `inherits`, `actorKinds` or persona |
+| add a NEW role, which may `inherits` a lower one | redeclare a lower id — refused, "extend it instead" |
+| extend a lower actor: `actors/<f>.json` with `"extends": "<id>"`, adding `roles` / `capabilities` | carry any other field on an extension |
+| extend a capability: `"extends"` adding `requires`; or add a new probe | point an extension UP or sideways — only at an id declared below it |
+
+`schemas/scenario-overlay.ts` applies it (`checkoutRoleGraph`,
+`checkoutActors`, `checkoutCapabilities`); the layers are the checkout's
+instances that depend on the role's owner, deepest first. Resolved alone, the
+harness sees only its own roles. `kg:audit`, `check:raci`,
+`check:fallback-roles`, `check:actor-reach`, `kg-export` and the
+stakeholder map read the checkout's view on the platform's own run.
+
+It does **not** restore `roles:` in skill front matter (above): the edge is
+still on a role graph — just the graph of the instance that owns the skill.
+
 ## Lanes are free text — which is the problem the role graph solves
 
 Measured across the twenty diagrams on 2026-09-18: **60 distinct lane names for

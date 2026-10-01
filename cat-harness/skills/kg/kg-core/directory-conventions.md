@@ -562,6 +562,43 @@ resolved **12** directories and created all 12 — six of them the platform's
 own, each with a committed keep marker: `dh4f` shipped downstream.
 `perInstance` keeps that fixed.
 
+### The checkout aggregates — no instance declares another's directory (STRICT)
+
+Owner, 2026-09-30 (bean `cmsl`, round 3, option A), built by placement PR0
+(bean `ejye`). Until then `cat-harness.json` carried 19 `scope: "repository"`
+entries naming its **dependents'** directories (`folio-assistant-core/skills/`,
+`who-iris/library/`, …) so that a corpus-wide tool asking the platform for
+"every library" got every library. Every owner `needs` cat-harness, so the
+platform was naming its users — and 5 of the 19 had already drifted from the
+owner's own id.
+
+The rule now:
+
+- **The checkout's root instance aggregates.** `folio-assistant.json` `needs`
+  every instance the checkout stages, and declares the checkout-level state
+  it physically holds (`beans`, `todos`, `memory`, `interaction`,
+  `issue-marks`, `fsh-guts`, `root-docs` — ids unchanged, new declarer).
+- **Only that instance declares at the checkout's scope.** A
+  `scope: "repository"` entry anywhere else is a MIRROR, and
+  `check:instance-graph` refuses it (`repository-mirror`), as it refuses an
+  instance the root does not reach (`unstaged`).
+- **A corpus-wide question is asked of the checkout, not the platform.**
+  `checkoutDirectories` / `checkoutDirectoriesForGraph` in
+  `schemas/harness-config.ts` resolve every staged instance through its OWN
+  chain and union the members — per instance, because one long chain would
+  override sibling ids (`smart-base`'s `processes` would replace the
+  harness's). A tool shipped BY an instance asks
+  `corpusDirectoriesForGraph(instance, kind)`: that instance plus everything
+  stacked on it, never its own dependencies (those are its overlay).
+  Known-skills callers say which question they ask: `CorpusScope`
+  (`"instance"` | `"checkout"`), and `corpusScopeFor(root)` gives the
+  pre-PR0 behaviour as a rule — the platform's own run is corpus-wide,
+  `--instance <x>` is that instance alone.
+- **Falsifier, kept as a test:** the platform resolved ALONE sees nothing
+  above it. A split checkout running against one folio sees that folio and
+  its dependencies — what it contains, not what the platform remembers having
+  been next to.
+
 ## Nesting is declared FROM WITHIN, by a node in the first subdirectory (STRICT)
 
 Owner's ruling, 2026-09-22:
@@ -611,14 +648,48 @@ entries inward cleared all five of the baselined `skills contains
 skills/voices` pairs. Every `directoriesForGraph(…, "voices")` answer was
 identical before and after, compared instance by instance.
 
-Two rules the resolver holds, both measured the hard way:
+Three rules the resolver holds, all measured the hard way:
 
 - **Never through a mirror.** A `scope: "repository"` entry points at ANOTHER
   instance's directory. Following its declaration file made cat-harness
-  resolve core's `voices/` as its own.
+  resolve core's `voices/` as its own. (Mirrors are retired — see "The
+  checkout aggregates" — but the guard stays for a downstream folio that
+  has not migrated.)
 - **A declaration beats a default.** `skills/voices` is also a built-in
   default; a from-within declaration replaces that convention, while an
   instance-level declaration with the same id still wins over both.
+- **A MEMBER's own declaration file is read, not only the declarer's**
+  (placement PR0c). In sci's chain `skills` is cat-harness's entry, and
+  until PR0 only `cat-harness/skills/skills.json` was opened — so sci's
+  `lean/`, `data/` and `voices/` existed only when sci was resolved alone. A
+  member's from-within entries are now members of the chain too, named
+  `member: "<instance>"`, `within: "<subgraph id>"`.
+
+### Concern groups — a sub-subgraph in every grouping kind (placement PR0c)
+
+Owner, 2026-09-29/30 (bean `9umr`): eight groups — `sdlc`, `process`,
+`tools`, `kg`, `library`, `content`, `ui`, `conduct` — *"built into
+location"*, split across *schemas, skills, uml, processes, library, tests*.
+The same from-within rule, one more use of it:
+
+- **Which kinds group** is a fact about the kind: `GraphKindDef.concernGroups`,
+  with the kind's `declarationFile` as where groups are named —
+  `skills/skills.json` (`topics`), `processes/processes.json`,
+  `schemas/schemas.json`, `library/library.json`, `uml/uml.json`, a test
+  directory's `code.json` (`groups`, `"$schema": "concern-groups/v1"`).
+- **A group is a CODE** of `code-lists/concern-group.json`, which carries its
+  title and definition once; its directory is the code (`processes/sdlc/`).
+  A ninth code is a ruling, not an edit.
+- **Declared once, inherited as members** — option A one level down. The
+  harness declares a group; each higher instance's same-named
+  `<dir>/<group>/` is a member (core's `skills/library/` of the harness's
+  `library`). A higher instance adds no group of its own; content-type work
+  goes in as PACKAGES under `content/`.
+- **Declare only what exists.** A group is declared in the PR that first
+  fills it; a declared-but-absent group throws.
+- **One walker:** `scripts/concern-groups.ts` (`groupedChildrenIn`,
+  `resolveGroups`); `packageDirsIn` delegates to it. `check:concern-groups`
+  holds the four rules and prints each group with its members.
 
 ### The live case this ruling settles
 

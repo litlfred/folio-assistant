@@ -14,7 +14,7 @@
 import { readdirSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
 
-import { isSkillMd } from "./known-skills.js";
+import { isSkillMd, kgRoots, corpusScopeFor } from "./known-skills.js";
 import { packageDirsIn } from "./skill-topics.js";
 import { resolveSkillDirs } from "../schemas/harness-config.js";
 // The `folio` graph kind is registered by CORE. This module is a LIBRARY, so it
@@ -92,7 +92,12 @@ export function discoverLocalPackages(root: string): Record<string, string> {
   // `nameDirectlyHeld`. Deciding it inline made the answer depend on
   // iteration order, which is the defect rather than the implementation.
   const held: string[] = [];
-  for (const kgDir of resolveSkillDirs(root)) {
+  // The overlay (dependencies, then this instance), and on the platform's own
+  // run the CORPUS stacked on it — which the 19 `scope: "repository"` mirrors
+  // supplied until placement PR0 (bean `ejye`), so core's, sci's and the
+  // others' packages stay servable from here with the arrow the right way round.
+  const kgDirs = [...new Set([...resolveSkillDirs(root), ...kgRoots(root, corpusScopeFor(root))].map((d) => resolve(d)))];
+  for (const kgDir of kgDirs) {
     // A kg directory may hold skills DIRECTLY as well as in subdirectories,
     // and BOTH shapes are real: `skills/` holds none directly and every
     // package is a subdirectory, while `bootstrap/skills/` and

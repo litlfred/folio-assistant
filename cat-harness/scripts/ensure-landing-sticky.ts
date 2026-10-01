@@ -390,6 +390,13 @@ export function contributingRoots(root: string): string[] {
       if (abs === own) continue;
       if (findDeclarationFile(abs) !== undefined) nested.push(abs);
     }
+    // THE CHECKOUT'S ROOT INSTANCE, when the repository root is one. It was
+    // reached only through the walk above, because this instance declared
+    // `beans/` at `scope: "repository"` and the root's declaration owns that
+    // path — so the root's card was on the board by accident of a mirror.
+    // Placement PR0 (bean `ejye`) moved `beans/` to the root's own
+    // declaration, and the card went with the accident; it is named here.
+    if (findDeclarationFile(repoRoot) !== undefined) nested.push(resolve(repoRoot));
   }
 
   // The instance LAST, so its own contributions are read after its nested

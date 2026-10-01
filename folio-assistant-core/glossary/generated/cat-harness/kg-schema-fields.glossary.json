@@ -2660,6 +2660,20 @@
       "status": "candidate"
     },
     {
+      "id": "concern-groups.concerngroupsschema.directories",
+      "prefLabel": "ConcernGroupsSchema.directories",
+      "definition": "Instance directories declared from within, as in `skills.json`.",
+      "source": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema.directories",
+      "status": "candidate"
+    },
+    {
+      "id": "concern-groups.concerngroupsschema.groups",
+      "prefLabel": "ConcernGroupsSchema.groups",
+      "definition": "The concern groups this directory holds, by code; each is `<dir>/<code>/`.",
+      "source": "cat-harness/schemas/concern-groups.ts#ConcernGroupsSchema.groups",
+      "status": "candidate"
+    },
+    {
       "id": "constraints.blockbaseschema.audience",
       "prefLabel": "BlockBaseSchema.audience",
       "definition": "Role ids from the instance's KG — see `BlockBase.audience` in `schemas/types.ts`. Declared HERE as well as there because Zod strips what it does not know: a field TypeScript accepts and Zod drops is written by an author, type-checks, and vanishes (bean `zdrf`).",
@@ -4991,6 +5005,13 @@
       "status": "candidate"
     },
     {
+      "id": "graph-kind-registry.graphkinddef.concerngroups",
+      "prefLabel": "GraphKindDef.concernGroups",
+      "definition": "Is a directory of this kind GROUPED BY CONCERN — `<dir>/<group>/`, with the groups named from within by {@link declarationFile} and drawn from the `concern-group` code list (bean `9umr`; placement PR0c, bean `ejye`)?",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.concernGroups",
+      "status": "candidate"
+    },
+    {
       "id": "graph-kind-registry.graphkinddef.declarationfile",
       "prefLabel": "GraphKindDef.declarationFile",
       "definition": "The NESTED DECLARATION a directory of this kind carries, by filename.",
@@ -7217,10 +7238,31 @@
       "status": "candidate"
     },
     {
+      "id": "role-graph.roleextension.role",
+      "prefLabel": "RoleExtension.role",
+      "definition": "The id of a role declared by an instance this one depends on.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleExtension.role",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.roleextension.skills",
+      "prefLabel": "RoleExtension.skills",
+      "definition": "Skills the role gains in this instance's checkout.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleExtension.skills",
+      "status": "candidate"
+    },
+    {
       "id": "role-graph.rolegraph.actors",
       "prefLabel": "RoleGraph.actors",
       "definition": "Actors, when declared alongside. Usually read from the actor directory.",
       "source": "cat-harness/schemas/role-graph.ts#RoleGraph.actors",
+      "status": "candidate"
+    },
+    {
+      "id": "role-graph.rolegraph.extensions",
+      "prefLabel": "RoleGraph.extensions",
+      "definition": "Roles of a LOWER instance this graph adds skills to, BY ID (placement PR0b, bean `ejye`). See {@link RoleExtension}.",
+      "source": "cat-harness/schemas/role-graph.ts#RoleGraph.extensions",
       "status": "candidate"
     },
     {
@@ -7249,6 +7291,20 @@
       "prefLabel": "SkillProvenance.via",
       "definition": "The role that declared it — may be an ancestor, not the role asked for.",
       "source": "cat-harness/schemas/role-graph.ts#SkillProvenance.via",
+      "status": "candidate"
+    },
+    {
+      "id": "scenario-overlay.scenariolayer.dir",
+      "prefLabel": "ScenarioLayer.dir",
+      "definition": "Absolute path of its `scenarios` directory.",
+      "source": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer.dir",
+      "status": "candidate"
+    },
+    {
+      "id": "scenario-overlay.scenariolayer.instance",
+      "prefLabel": "ScenarioLayer.instance",
+      "definition": "The instance's declared name.",
+      "source": "cat-harness/schemas/scenario-overlay.ts#ScenarioLayer.instance",
       "status": "candidate"
     },
     {
@@ -8642,6 +8698,13 @@
       "prefLabel": "ToolDefinitionSchema.selection",
       "definition": "Why to reach for this one. REQUIRED when the Tool has a derived alternative ({@link deriveAlternatives}); `check-tools` enforces it, since whether a Tool has one is a fact about the whole set.",
       "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.selection",
+      "status": "candidate"
+    },
+    {
+      "id": "tool.tooldefinitionschema.subprocesses",
+      "prefLabel": "ToolDefinitionSchema.subprocesses",
+      "definition": "Process ids of the BPMN this Tool's OWN specific procedure is drawn as.",
+      "source": "cat-harness/schemas/tool.ts#ToolDefinitionSchema.subprocesses",
       "status": "candidate"
     },
     {

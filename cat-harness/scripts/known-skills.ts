@@ -42,10 +42,14 @@ const OWN_INSTANCE = resolve(dirname(fileURLToPath(import.meta.url)), "..");
  *   that resolve downward already walk `orderedDependencies`. Paths are still
  *   composed relative to `root`, so a caller's ids do not change shape.
  *
- * Explicit at the call site on purpose: before PR0 the corpus-wide answer came
- * from 19 `scope: "repository"` mirrors in the platform's declaration, so
- * every call with the platform's root was silently corpus-wide. Saying which
- * question is asked is what made the mirrors removable.
+ * Before PR0 the corpus-wide answer came from 19 `scope: "repository"`
+ * mirrors in the platform's declaration, so every call with the platform's
+ * root was silently corpus-wide. The DEFAULT is therefore
+ * {@link corpusScopeFor} — that same behaviour, now a rule rather than a
+ * declaration, so no caller shrinks in silence — and the corpus-wide scripts
+ * also say so at the call site. Pass `"instance"` to ask about the platform
+ * alone, which is what the cmsl falsifier ("resolved alone, it sees nothing
+ * above it") is held to.
  */
 export type CorpusScope = "instance" | "checkout";
 
@@ -142,7 +146,7 @@ function holdsMarkdown(abs: string): boolean {
  */
 export function kgDirectories(
   root: string,
-  scope: CorpusScope = "instance",
+  scope: CorpusScope = corpusScopeFor(root),
 ): Array<{ id: string; path: string; absPath: string }> {
   try {
     return (scope === "checkout" ? checkoutDirectories(root, { stackedOn: root }) : resolveDirectories([{ name: "(local)", root, own: true }]))
@@ -221,7 +225,7 @@ export function kgDirectories(
  * first root is the `dh4f` defect arriving through the helper written to
  * prevent it. One root is today's shape, never the contract.
  */
-export function roleGraphFor(root: string, scope: CorpusScope = "instance"): RoleGraph | undefined {
+export function roleGraphFor(root: string, scope: CorpusScope = corpusScopeFor(root)): RoleGraph | undefined {
   // NOT `kgRoots(root, "checkout")`: that is deepest-first, so its first role
   // graph is bootstrap's 4 roles rather than this instance's 48 — the `[0]`
   // hazard above, one level out. The checkout's answer is this instance's
@@ -234,7 +238,7 @@ export function roleGraphFor(root: string, scope: CorpusScope = "instance"): Rol
   return scope === "checkout" ? checkoutRoleGraph(root, own)?.graph : own;
 }
 
-export function kgRoots(root: string, scope: CorpusScope = "instance"): string[] {
+export function kgRoots(root: string, scope: CorpusScope = corpusScopeFor(root)): string[] {
   return kgDirectories(root, scope).map((d) => d.absPath);
 }
 
@@ -395,7 +399,7 @@ export function isSkillMd(path: string): boolean {
  * directory's name, because a name list is the thing this module exists to
  * stop and a directory's contents can be mixed.
  */
-export function skillMdDirs(root: string, scope: CorpusScope = "instance"): string[][] {
+export function skillMdDirs(root: string, scope: CorpusScope = corpusScopeFor(root)): string[][] {
   const dirs: string[][] = [];
 
   // Every directory the instance DECLARES as holding a `cat-harness` graph —
@@ -464,7 +468,17 @@ export function skillMdDirs(root: string, scope: CorpusScope = "instance"): stri
       }
     }
   }
-  return dirs;
+  // ONE entry per directory. Over the checkout a directory can be reached two
+  // ways — sci's `skills/lean/` is a package of the `skills/` member AND a
+  // root declared from within it (placement PR0) — and every caller here walks
+  // what it is given, so a duplicate is every skill in it counted twice.
+  const seen = new Set<string>();
+  return dirs.filter((p) => {
+    const k = p.join("/");
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
 }
 
 
@@ -555,7 +569,7 @@ export function remotePackageDeclarations(root: string): RemoteDeclaration[] {
  * a union at each call site, because the union IS the rule and two call sites
  * spelling it out is how they come to disagree.
  */
-export function manifestResolvableSkills(root: string, scope: CorpusScope = "instance"): Set<string> {
+export function manifestResolvableSkills(root: string, scope: CorpusScope = corpusScopeFor(root)): Set<string> {
   return new Set([...knownSkills(root, scope), ...remotePackageSkills(root)]);
 }
 
@@ -596,7 +610,7 @@ export function manifestResolvableSkills(root: string, scope: CorpusScope = "ins
  * a lane or a role claims — so a wrong annotation is a finding rather than
  * a quiet exemption.
  */
-export function consultedSkills(root: string, scope: CorpusScope = "instance"): Set<string> {
+export function consultedSkills(root: string, scope: CorpusScope = corpusScopeFor(root)): Set<string> {
   const out = new Set<string>();
   for (const parts of skillMdDirs(root, scope)) {
     const dir = join(root, ...parts);
@@ -654,7 +668,7 @@ export function consultedSkills(root: string, scope: CorpusScope = "instance"): 
  * stays performed. Here, treating one as publishable would LEAK it, so it
  * stays unpublished.
  */
-export function unpublishedSkills(root: string, scope: CorpusScope = "instance"): Set<string> {
+export function unpublishedSkills(root: string, scope: CorpusScope = corpusScopeFor(root)): Set<string> {
   const out = new Set<string>();
   for (const parts of skillMdDirs(root, scope)) {
     const dir = join(root, ...parts);
@@ -675,7 +689,7 @@ export function unpublishedSkills(root: string, scope: CorpusScope = "instance")
 }
 
 /** Every skill name this instance can resolve. */
-export function knownSkills(root: string, scope: CorpusScope = "instance"): Set<string> {
+export function knownSkills(root: string, scope: CorpusScope = corpusScopeFor(root)): Set<string> {
   const names = new Set<string>();
 
   for (const parts of skillMdDirs(root, scope)) {
@@ -782,7 +796,7 @@ export function knownSkills(root: string, scope: CorpusScope = "instance"): Set<
  * Returns ABSOLUTE paths, unlike {@link skillMdDirs}, because every caller
  * reads files from them rather than composing repo-relative ids.
  */
-export function workflowDirs(root: string, scope: CorpusScope = "instance"): string[] {
+export function workflowDirs(root: string, scope: CorpusScope = corpusScopeFor(root)): string[] {
   const out: string[] = [];
   for (const d of kgDirectories(root, scope)) {
     // `processes/`, the convention since 2026-09-21. An instance that has not
@@ -819,7 +833,7 @@ export function workflowDirs(root: string, scope: CorpusScope = "instance"): str
  * One call for the common case, so a caller that only wants the files does not
  * have to re-derive "and their `decisions/` subdirectory too".
  */
-export function workflowFiles(root: string, scope: CorpusScope = "instance"): string[] {
+export function workflowFiles(root: string, scope: CorpusScope = corpusScopeFor(root)): string[] {
   const out: string[] = [];
   const walk = (dir: string): void => {
     if (!existsSync(dir)) return;
@@ -844,7 +858,7 @@ export function workflowFiles(root: string, scope: CorpusScope = "instance"): st
  * {@link resolveSkillRef} say "ambiguous" instead of picking (#1168 B8).
  * A package is the declared directory's last segment, e.g. `folio-core`.
  */
-export function skillIndex(root: string, scope: CorpusScope = "instance"): Map<string, string[]> {
+export function skillIndex(root: string, scope: CorpusScope = corpusScopeFor(root)): Map<string, string[]> {
   const out = new Map<string, string[]>();
   for (const parts of skillMdDirs(root, scope)) {
     const dir = join(root, ...parts);

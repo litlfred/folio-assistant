@@ -78,15 +78,16 @@ describe("the verdict is asked of the REPOSITORY, not one instance", () => {
     rmSync(root, { recursive: true, force: true });
   });
 
-  it("this repository is ACTIVE, on cat-harness's beans and todos", () => {
+  it("this repository is ACTIVE, on the checkout's beans and todos", () => {
     const repo = resolve(import.meta.dir, "..", "..", "..");
     expect(isActiveKg(repo)).toBe(true);
     const { plan } = workPlanGraphsIn(repo);
-    expect(plan.map((p) => p.instance)).toContain("cat-harness");
-    // The ROOT instance declares no work-plan graph of its own — cat-harness
-    // declares beans at `scope: "repository"`. Asking per instance would call
-    // the one place a reader actually stands static.
-    expect(plan.map((p) => p.instance)).not.toContain("folio-assistant");
+    // The ROOT instance declares the work plan since placement PR0 (bean
+    // `ejye`): `beans/` and `todos/` sit at the checkout's root and belong to
+    // the checkout. Until then cat-harness declared them at
+    // `scope: "repository"`, and this asserted the opposite pair.
+    expect(plan.map((p) => p.instance)).toContain("folio-assistant");
+    expect(plan.map((p) => p.instance)).not.toContain("cat-harness");
   });
 });
 

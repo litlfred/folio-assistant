@@ -190,11 +190,17 @@ classDiagram
       description [0..1] string
       roles [0..*] string[]
     }
+    class bootstrap_scenarios_Extension["Extension"] {
+      <<json: RoleGraphSchema>>
+      role [1] string
+      skills [1..*] string[]
+    }
     class bootstrap_scenarios_RoleGraph["RoleGraph"] {
       <<json: RoleGraphSchema>>
       name [1] string
       roles [0..*] Role[]
       actors [0..*] Actor[]
+      extensions [0..*] Extension[]
     }
   }
   namespace bootstrap__processes {
@@ -265,9 +271,11 @@ classDiagram
   bootstrap_scenarios_Role *-- "0..*" bootstrap_scenarios_FormerName : formerNames
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Role : roles
   bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Actor : actors
+  bootstrap_scenarios_RoleGraph *-- "0..*" bootstrap_scenarios_Extension : extensions
   cssClass "bootstrap_scenarios_FormerName" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_Role" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_Actor" fa_uml_kind_scenarios
+  cssClass "bootstrap_scenarios_Extension" fa_uml_kind_scenarios
   cssClass "bootstrap_scenarios_RoleGraph" fa_uml_kind_scenarios
   cssClass "bootstrap_processes_omg_bpmn_2_0" fa_uml_kind_processes
   bootstrap_models_ModelRegistry *-- "0..*" bootstrap_models_Model : models

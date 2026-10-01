@@ -72,6 +72,7 @@ classDiagram
       maintains [0..*] Maintain[]
       downstream [0..1] object
       renders [0..*] string[]
+      subprocesses [0..*] string[]
     }
   }
   namespace fhir_harness__qa {
