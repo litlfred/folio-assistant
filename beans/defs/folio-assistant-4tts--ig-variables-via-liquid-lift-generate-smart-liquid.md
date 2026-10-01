@@ -3,8 +3,9 @@
 title: 'IG VARIABLES via Liquid: lift generate_smart_liquid.py into site.data and render IG pages from Jekyll/Liquid templates in one pass'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-01T12:36:15Z
-updated_at: 2026-10-01T12:36:15Z
+updated_at: 2026-10-01T12:42:30Z
 parent: folio-assistant-uhkv
 ---
 
@@ -31,3 +32,21 @@ Related:
 - [ ] the lifted variables written to the IG site's `_data/` in the same build that consumes them
 - [ ] at least one Publisher-generated page kind rendered from a Liquid template over that data, instead of from a TS string generator
 - [ ] the Publisher-equivalence invariant (owner, 2026-10-01) checked on that page kind against the Publisher's render
+
+## 2026-10-01: first slice — variables lifted; `artifacts` rendered by a Liquid template
+
+- **Read** `generate_smart_liquid.py` (`litlfred/smart-base` `e151a4d`). It writes `{% assign smart__<Type>__<id>__<family>__<key> %}` into `_includes/smart.liquid`, plus a page processed on the *next* Publisher build.
+- **Lifted** the variables as `site.data.fhir.artifacts.<Type>__<id>.{url.canonical, url.page, url.json, url.xml, url.ttl, text.display, link.html, elements.*}`.
+  - Same families and keys, no `smart__` prefix.
+  - Written to `_data/fhir.json` by `build-ig-site.ts` in the build that reads them, so it converges in one pass.
+  - `elements` holds only what the index has (`name`, `title`, `description`, `version`). The other eight keys are reported as not sourced and never written empty.
+- **Template:** `artifacts.md` is now `ARTIFACTS_TEMPLATE`, a Liquid template over `site.data.fhir` that **Jekyll renders**. No artefact data is baked into the page.
+- **Equivalence (owner, 2026-10-01).** Built locally with Jekyll 4.4.1 from `litlfred/smart-trust` at `25771f6`, the rendered `artifacts.html` lists the **same 677 artefacts, in the same sequence, under the same 7 categories in the same order** as the Publisher's `artifacts.html` on the fork's `gh-pages`. All 677 links resolve and no Liquid is left in the output.
+- **What equivalence required:**
+  1. Uncategorised artefacts are left off the page, because category comes *from* that page (the ImplementationGuide itself).
+  2. A new optional `listedAt` field in `folio-fhir-artifact/v1`: the ingest records each artefact's position on `artifacts.html`, which was previously parsed and thrown away. The index was re-ingested.
+
+- [x] `generate_smart_liquid.py` read; variable families and inputs listed
+- [x] lifted variables written to the IG site's `_data/` in the same build that consumes them
+- [x] one Publisher page kind (`artifacts`) rendered from a Liquid template over that data
+- [x] Publisher equivalence checked on it: same set, same sequence, same category order

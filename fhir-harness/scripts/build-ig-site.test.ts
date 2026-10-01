@@ -6,8 +6,9 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
+import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { artifactsPage, colourScheme, contrast, dedupeIds, includeTargets, pageNav, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACTS_TEMPLATE, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { artifactPageName } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
 let dir: string;
@@ -180,20 +181,37 @@ describe("pages the Publisher generates, written from data the build holds (bean
     expect(readFileSync(join(out, "toc.md"), "utf-8")).toContain("[Change Log](changes.html)");
   });
 
-  test("artifacts groups by category and links each artefact by the shared page-name rule", () => {
+  test("the lifted variables keep generate_smart_liquid's families and keys, minus the smart__ prefix", () => {
     const list = [
-      { resourceType: "ValueSet", id: "a b", title: "A [b]", category: "Terminology" },
+      { resourceType: "ValueSet", id: "a-b", title: "A [b]", category: "Terminology", canonical: "http://x/ValueSet/a-b", version: "1.0", published: { json: { url: "https://p/ValueSet-a-b.json" }, xml: { url: "https://p/ValueSet-a-b.xml" } } },
       { resourceType: "Endpoint", id: "e", category: undefined },
     ];
-    const p = artifactsPage(list, "../artifact/");
-    expect(p).toContain("This IG has 2 artefact(s).");
-    expect(p).toContain("## Terminology");
-    expect(p).toContain("## Uncategorised");
-    // Brackets in a title must not end the link label early.
-    expect(p).toContain(`- [A \\[b\\]](../artifact/${artifactPageName(list[0]!)}.html)`);
-    expect(artifactPageName(list[0]!)).toBe("ValueSet-a_b");
-    // Raw-wrapped: an artefact title holding Liquid syntax renders as text.
-    expect(p).toContain("{% raw %}");
+    const { vars, notSourced } = artifactVariables(list, "../artifact/");
+    // smart__ValueSet__a_b__url__page  ->  site.data.fhir.artifacts.ValueSet__a_b.url.page
+    const v = vars.artifacts["ValueSet__a_b"]!;
+    expect(v.url.page).toBe(`../artifact/${artifactPageName(list[0]!)}.html`);
+    expect(v.url.canonical).toBe("http://x/ValueSet/a-b");
+    expect(v.url.json).toBe("https://p/ValueSet-a-b.json");
+    expect(v.text.display).toBe("A [b]");
+    expect(v.link.html).toBe('<a href="../artifact/ValueSet-a-b.html">A [b]</a>');
+    expect(v.elements).toEqual({ title: "A [b]", version: "1.0" });
+    // Uncategorised = not on the Publisher's artifacts.html: variables written, not grouped.
+    expect(vars.artifact_categories).toEqual([{ name: "Terminology", keys: ["ValueSet__a_b"] }]);
+    expect(vars.artifacts["Endpoint__e"]).toBeDefined();
+    // What no source holds is REPORTED, never written empty.
+    expect(notSourced).toContain("status");
+    expect(Object.values(vars.artifacts).every((a) => !("status" in a.elements))).toBe(true);
+  });
+
+  const ruby = spawnSync("ruby", ["-e", 'require "liquid"'], { encoding: "utf-8" }).status === 0;
+  test.skipIf(!ruby)("the artifacts TEMPLATE renders the variables through real Liquid", () => {
+    const { vars } = artifactVariables([{ resourceType: "ValueSet", id: "v", title: "V [x]", category: "T" }], "../artifact/");
+    const script = 'require "liquid"; require "json"; d = JSON.parse(STDIN.read.force_encoding("UTF-8")); print Liquid::Template.parse(d["t"], error_mode: :strict).render("site" => { "data" => { "fhir" => d["v"] } })';
+    const r = spawnSync("ruby", ["-e", script], { input: JSON.stringify({ t: ARTIFACTS_TEMPLATE, v: vars }), encoding: "utf-8" });
+    expect(r.stderr).toBe("");
+    expect(r.stdout).toContain("This IG has 1 artefact(s).");
+    expect(r.stdout).toContain("## T");
+    expect(r.stdout).toContain("- [V \\[x\\]](../artifact/ValueSet-v.html) — `ValueSet/v`");
   });
 
   test("without an index there is no artifacts page, and the menu still reports it missing", () => {

@@ -39,7 +39,7 @@ import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSyn
 import { basename, extname, join, resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
 import { describeSiteData, igSiteData, type IgSiteDataResult } from "./ig-site-data";
-import { artifactPageName, byCategory } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import { artifactPageName } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 import { wrapRaw } from "../../cat-harness/scripts/lib/liquid-raw.ts";
 
 /** One page's navigation, from `sushi-config.yaml` `pages:`. */
@@ -128,6 +128,8 @@ export interface StageResult {
   pages: string[];
   /** Pages the Publisher generates, written here from data this build holds (`toc`, `artifacts`). */
   generated: string[];
+  /** The lifted per-artefact variables: how many artefacts, and which `elements__*` keys no source holds. */
+  variables?: { artifacts: number; notSourced: string[] };
   /** Pages the navigation source does not list: titled by file name (and, with a menu, kept out of the nav). */
   unlisted: string[];
   /** Menu items pointing at a page this source does not hold (the Publisher generates it). */
@@ -177,12 +179,100 @@ export interface StageOptions {
   artifacts?: { list: ReadonlyArray<IndexedArtifact>; pagesHref: string };
 }
 
-/** The fields of a `folio-fhir-artifact/v1` entry the `artifacts` page reads. */
+/** The fields of a `folio-fhir-artifact/v1` entry this build reads. */
 export interface IndexedArtifact {
   resourceType: string;
   id: string;
   title?: string;
   category?: string;
+  /** Position on the Publisher's `artifacts.html` (see `FhirArtifactSchema.listedAt`). */
+  listedAt?: number;
+  canonical?: string;
+  name?: string;
+  version?: string;
+  description?: string;
+  published?: Partial<Record<"json" | "xml" | "ttl" | "html", { url: string }>>;
+}
+
+/**
+ * The element keys WHO's `generate_smart_liquid.py` exposes under
+ * `elements__*`, in its order. Only the ones the artefact index holds are
+ * written; the rest are REPORTED as not sourced, never written empty.
+ */
+export const ELEMENT_KEYS = ["name", "title", "description", "purpose", "status", "version", "date", "publisher", "copyright", "experimental", "kind", "type"] as const;
+
+/** `<ResourceType>__<id with non-alphanumerics as _>`, the lifted script's own key rule. */
+export const variableKey = (a: { resourceType: string; id: string }) => `${a.resourceType}__${a.id.replace(/[^A-Za-z0-9]/g, "_")}`;
+
+export interface ArtifactVariables {
+  /** `site.data.fhir.artifacts.<key>.{url,text,link,elements}` — one entry per artefact. */
+  artifacts: Record<string, {
+    url: { canonical?: string; page: string; json?: string; xml?: string; ttl?: string };
+    text: { display: string };
+    link: { html: string };
+    elements: Partial<Record<(typeof ELEMENT_KEYS)[number], string>>;
+    category?: string;
+    reference: string;
+  }>;
+  /** Categories in index order, each naming its artefacts' keys — what a template iterates. Uncategorised artefacts (not on the Publisher's `artifacts.html`) are left out. */
+  artifact_categories: Array<{ name: string; keys: string[] }>;
+}
+
+/**
+ * The per-artefact Liquid variables WHO's `generate_smart_liquid.py` computes
+ * (`smart__<Type>__<id>__url__page`, …), LIFTED rather than redesigned
+ * (`ig-render-jekyll`, `ig-publisher-reduction` §P0; bean `4tts`):
+ *
+ * - the same families and keys, under `site.data.fhir.artifacts.<Type>__<id>`
+ *   — so `smart__ValueSet__Actors__url__page` reads
+ *   `site.data.fhir.artifacts.ValueSet__Actors.url.page`;
+ * - **no `smart__` prefix**: it is WHO's, and this layer does not know WHO;
+ * - **computed in the build that consumes it.** The script writes its include
+ *   for the IG Publisher's NEXT build, so its surface takes two builds to
+ *   converge; `_data/` is read by the same Jekyll run.
+ *
+ * Source: the instance's artefact index — the Publisher's post-processed
+ * output. `url.page` is this site's page; `url.json/xml/ttl` are where the
+ * Publisher published them (under P2 only JSON is rendered here; XML and
+ * Turtle remain links to the Publisher's copy).
+ */
+export function artifactVariables(list: ReadonlyArray<IndexedArtifact>, pagesHref: string): { vars: ArtifactVariables; notSourced: string[] } {
+  const artifacts: ArtifactVariables["artifacts"] = {};
+  const order: ArtifactVariables["artifact_categories"] = [];
+  const held = new Set<string>();
+  // The Publisher's page order: by `listedAt`, which orders the categories
+  // (first appearance) and the artefacts within each. Unlisted ones last.
+  const ordered = [...list].sort((x, y) => (x.listedAt ?? Infinity) - (y.listedAt ?? Infinity));
+  for (const a of ordered) {
+    const key = variableKey(a);
+    const page = `${pagesHref}${artifactPageName(a)}.html`;
+    const display = a.title ?? a.name ?? a.id;
+    const elements: ArtifactVariables["artifacts"][string]["elements"] = {};
+    for (const k of ["name", "title", "description", "version"] as const) {
+      const v = a[k];
+      if (v !== undefined) {
+        elements[k] = v;
+        held.add(k);
+      }
+    }
+    artifacts[key] = {
+      url: { canonical: a.canonical, page, json: a.published?.json?.url, xml: a.published?.xml?.url, ttl: a.published?.ttl?.url },
+      text: { display },
+      link: { html: `<a href="${page}">${display.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</a>` },
+      elements,
+      category: a.category,
+      reference: `${a.resourceType}/${a.id}`,
+    };
+    // An artefact's category comes FROM the Publisher's `artifacts.html`, so
+    // one with none is one that page does not list (smart-trust: the
+    // ImplementationGuide itself). Its variables are written; it is not
+    // grouped, so the template lists exactly what the Publisher's page does.
+    if (a.category === undefined) continue;
+    let g = order.find((c) => c.name === a.category);
+    if (!g) order.push((g = { name: a.category, keys: [] }));
+    g.keys.push(key);
+  }
+  return { vars: { artifacts, artifact_categories: order }, notSourced: ELEMENT_KEYS.filter((k) => !held.has(k)) };
 }
 
 /** Text safe inside a markdown link label. */
@@ -211,18 +301,26 @@ export function tocPage(pages: unknown, has: (stem: string) => boolean): string 
   return ["# Table of Contents", "", ...wrapRaw(lines.join("\n")), ""].join("\n");
 }
 
-/** The Publisher's `artifacts.html`: every artefact, grouped by its category in index order. */
-export function artifactsPage(list: ReadonlyArray<IndexedArtifact>, pagesHref: string): string {
-  const out: string[] = [`This IG has ${list.length} artefact(s).`, ""];
-  for (const [category, items] of byCategory([...list] as never)) {
-    out.push(`## ${category ?? "Uncategorised"}`, "");
-    for (const a of items as IndexedArtifact[]) {
-      out.push(`- [${mdLabel(a.title ?? a.id)}](${pagesHref}${artifactPageName(a)}.html) — \`${a.resourceType}/${a.id}\``);
-    }
-    out.push("");
-  }
-  return ["# Artifacts Summary", "", ...wrapRaw(out.join("\n").trimEnd()), ""].join("\n");
-}
+/**
+ * The Publisher's `artifacts.html`, as a LIQUID TEMPLATE over
+ * `site.data.fhir` — Jekyll renders it, from the variables this same build
+ * wrote (owner, 2026-10-01: "make use of jekyll/liquid templates"). No
+ * artefact data is baked into the page; change the data and the page follows.
+ */
+export const ARTIFACTS_TEMPLATE = [
+  "# Artifacts Summary",
+  "",
+  "{% assign arts = site.data.fhir.artifacts %}",
+  "{% assign listed = 0 %}{% for cat in site.data.fhir.artifact_categories %}{% assign listed = listed | plus: cat.keys.size %}{% endfor %}This IG has {{ listed }} artefact(s).",
+  "",
+  "{% for cat in site.data.fhir.artifact_categories %}",
+  "## {{ cat.name }}",
+  "",
+  "{% for k in cat.keys %}{% assign a = arts[k] %}- [{{ a.text.display | replace: '[', '\\[' | replace: ']', '\\]' }}]({{ a.url.page }}) — `{{ a.reference }}`",
+  "{% endfor %}",
+  "{% endfor %}",
+  "",
+].join("\n");
 
 /**
  * The four roles a theme palette carries (`ThemePaletteSchema` in
@@ -364,7 +462,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   const generated: string[] = [];
   if (opts.artifacts && !pages.includes("artifacts.md")) {
     const n = nav.get("artifacts") ?? { title: "Artifacts Summary", navOrder: 999, navExclude: true };
-    writeFileSync(join(out, "artifacts.md"), frontMatter(n) + artifactsPage(opts.artifacts.list, opts.artifacts.pagesHref));
+    writeFileSync(join(out, "artifacts.md"), frontMatter(n) + ARTIFACTS_TEMPLATE);
     generated.push("artifacts.md");
   }
   if (!pages.includes("toc.md")) {
@@ -433,7 +531,10 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   }
 
   const siteData = igSiteData(src);
-  writeFileSync(join(out, "_data", "fhir.json"), JSON.stringify(siteData.data, null, 2) + "\n");
+  // The per-artefact variables ride in the same `site.data.fhir` the IG's
+  // metadata does (bean `4tts`), written in THIS build, read by THIS build.
+  const lifted = opts.artifacts ? artifactVariables(opts.artifacts.list, opts.artifacts.pagesHref) : undefined;
+  writeFileSync(join(out, "_data", "fhir.json"), JSON.stringify({ ...siteData.data, ...(lifted?.vars ?? {}) }, null, 2) + "\n");
   const title = typeof sushi.title === "string" ? sushi.title : String(sushi.id ?? "IG");
   const scheme = opts.palette ? colourScheme(opts.palette) : undefined;
   if (scheme) {
@@ -456,7 +557,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
       "",
     ].join("\n"),
   );
-  return { pages: pages.sort(), generated, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, scheme, siteData };
+  return { pages: pages.sort(), generated, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, scheme, siteData };
 }
 
 /**
@@ -505,6 +606,7 @@ export function describeStage(r: StageResult): string {
   return [
     `pages: ${r.pages.length}; includes: ${r.includes}; images: ${r.images}; diagrams rendered: ${r.rendered.length}`,
     ...(r.generated.length ? [`generated from data this build holds (the Publisher generates these): ${r.generated.join(", ")}`] : []),
+    ...(r.variables ? [`site.data.fhir.artifacts: ${r.variables.artifacts} artefact(s); elements not sourced (not written): ${r.variables.notSourced.join(", ") || "none"}`] : []),
     ...(r.notRendered.length ? [`NOT RENDERED (a visible marker stands in): ${r.notRendered.join(", ")}`] : []),
     ...(r.unparseable.length ? [`NOT PUBLISHED (not valid JSON in the IG source): ${r.unparseable.join("; ")}`] : []),
     r.scheme

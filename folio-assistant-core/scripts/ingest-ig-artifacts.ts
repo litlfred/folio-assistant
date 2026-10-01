@@ -223,6 +223,9 @@ function main(): void {
   const htmlEntries = htmlRaw ? parseArtifactsHtml(htmlRaw) : [];
   if (htmlRaw) provenance.artifactsHtml = "artifacts.html";
   const htmlByKey = new Map(htmlEntries.map((e) => [e.key, e]));
+  // First appearance on the page: the Publisher's own order (see `listedAt`).
+  const htmlPosition = new Map<string, number>();
+  htmlEntries.forEach((e, i) => { if (!htmlPosition.has(e.key)) htmlPosition.set(e.key, i); });
 
   // ── DAK API detection ─────────────────────────────────────────────────
   // Keyed off the ENUMERATION SCHEMAS at the published root. Never off the
@@ -263,6 +266,7 @@ function main(): void {
     if (!resourceType || rest.length === 0) continue;
     const a = ensure(resourceType, rest.join("/"));
     a.category = e.category;
+    a.listedAt = htmlPosition.get(key);
     if (e.title) a.title = e.title;
     if (e.description) a.description = e.description;
   }

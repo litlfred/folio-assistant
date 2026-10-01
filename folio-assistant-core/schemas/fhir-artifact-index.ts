@@ -238,6 +238,14 @@ export const FhirArtifactSchema = z
     version: z.string().min(1).optional(),
     /** Editorial grouping from `artifacts.html`. Absent means the IG published no artefact page. */
     category: z.string().min(1).optional(),
+    /**
+     * Position on the Publisher's `artifacts.html`, 0-based, first appearance.
+     * The category's order and the artefact's order within it are both read
+     * off this — a renderer that must match the Publisher's page (owner,
+     * 2026-10-01: every phase renders equivalent to the standard IG render)
+     * has no other source for either. Absent exactly when `category` is.
+     */
+    listedAt: z.number().int().nonnegative().optional(),
     published: PublishedFormatsSchema,
     dak: DakOverlaySchema.optional(),
     materialization: MaterializationSchema,
