@@ -663,8 +663,9 @@ function computeDetangle(): Map<string, DetangleNumbers> | null {
 }
 
 function runDetangle(): Map<string, DetangleNumbers> | null {
-  const script = join(HARNESS, "skills", "kg", "graph-management", "kg-detangle.ts");
-  const r = spawnSync(process.execPath, [script, "--check", "--json"], { cwd: REPO, encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
+  // Run the detangler by its package script, which is the one place its path
+  // is declared; a path literal here would restate it (check:declared-paths).
+  const r = spawnSync(process.execPath, ["run", "kg:detangle", "--check", "--json"], { cwd: REPO, encoding: "utf8", maxBuffer: 256 * 1024 * 1024 });
   try {
     const { results } = JSON.parse(r.stdout) as { results: Parameters<typeof sidecarFor>[0][] };
     return new Map(results.map((m) => [m.group, sidecarFor(m)]));
