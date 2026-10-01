@@ -62,7 +62,7 @@ import { instanceRootsIn, repoRootFor, siteDirFor } from "../schemas/cat-harness
 import { directoryByVisualisationRef } from "./graph-tiles.ts";
 import { tileCounts } from "../schemas/tile-count.js";
 import { itemState } from "./gen-uploads-viz.ts";
-import { makeEmit, type ViewerNav } from "./viewer-page.ts";
+import { makeEmit, type ViewerNav, subjectSection } from "./viewer-page.ts";
 import { renderedPath, withRenders, withViewers } from "./viewer-declarations.js";
 import { corpusDirectoriesForGraph } from "../schemas/harness-config.js";
 
@@ -1027,10 +1027,18 @@ if (import.meta.main) {
     ]
       .filter(([, instance]) => subject === undefined || instance === subject)
       .map(([p]) => p);
-  emitPage(nav)(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount), drawn(), VIEWER_TOOL));
+  // The rail section (#1757): the static regions the script draws into.
+  // `#desktop` and `#blocks` are left out — they start `hidden`, and a rail
+  // row that scrolls to nothing is a dead control.
+  const regions = [
+    { label: "Summary", id: "badges" },
+    { label: "Entries", id: "listing" },
+    { label: "Queue", id: "queue" },
+  ];
+  emitPage({ ...nav, section: subjectSection(subjects, undefined, regions) })(join(pageDir, "index.html"), withRenders(viewerHtml(dataHref, "", folioMount), drawn(), VIEWER_TOOL));
   for (const subject of subjects) {
     const sub = viewerPlacement(site, `${handler}/${seg}/${subject}`, seg);
-    emitPage({ ...nav, instance: subject })(
+    emitPage({ ...nav, instance: subject, section: subjectSection(subjects, subject, regions) })(
       join(sub.pageDir, "index.html"),
       withRenders(viewerHtml(sub.dataHref, subject, folioMount), drawn(subject), VIEWER_TOOL),
     );

@@ -5,7 +5,7 @@ output: schemas/skills/fhir-validation/output.schema.json
 
 # fhir-validation
 
-> Skill id: `fhir-validation` · Package: `authoring-who-smart-guidelines` ·
+> Skill id: `fhir-validation` · Package: `fhir-ig-authoring` ·
 > Named by `l3-fhir-pipeline.bpmn` (**Validate against profiles**, `Build
 > pipeline` lane) and `ig-incremental-build.bpmn` (**Validate the cone
 > (fhir_validate)**, `Publisher + validator services (JVM)` lane).

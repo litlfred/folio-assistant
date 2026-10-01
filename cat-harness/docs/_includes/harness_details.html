@@ -17,32 +17,52 @@
 
   Every value is GENERATED into `docs/_data/harness.json` and gated by
   `docs:harness:check`. This template decides nothing.
+
+  `instance=<name>` renders ONE harness's section, for the landing page an
+  instance generates for itself (`fhir-harness/scripts/gen-ig-pages.ts
+  --summary`; #1767). Same data, same markup, so the site root and the
+  instance's own page cannot describe the instance two ways. The heading does
+  not link there, because "there" is the page it is on.
 {%- endcomment -%}
 {%- assign tiles = site.data.harness.harnesses -%}
+{%- if include.instance -%}
+{%- assign instantiated = tiles | where: "name", include.instance -%}
+{%- else -%}
 {%- assign instantiated = tiles | where: "instantiated", true -%}
+{%- endif -%}
 {%- if instantiated.size > 0 -%}
 <section class="fa-harness-sections" id="harnesses">
+  {%- unless include.instance -%}
   <h2 id="harnesses-heading">What each harness holds</h2>
   <p class="fa-harness-sections__lead">
     One section per instantiated harness, in the same order as the dividers in
     the sidebar — the floor last.
   </p>
+  {%- endunless -%}
   {%- for t in instantiated -%}
   <section class="fa-harness-section" id="harness-{{ t.name }}"
            style="--fa-tile-tone: {{ t.tone }}; --fa-tile-on: {% if t.genericAvatar %}0{% else %}1{% endif %}">
     <h3 class="fa-harness-section__title" id="harness-{{ t.name }}-heading">
-      {%- if t.href -%}
+      {%- if t.href and include.instance == nil -%}
       <a href="{{ t.href | relative_url }}">{{ t.label | default: t.title }}</a>
       {%- else -%}
       {{ t.label | default: t.title }}
       {%- endif -%}
     </h3>
-    {%- if t.description and t.description != "" -%}
-    {%- comment -%} Backtick spans in the declared description render as
-    <code> rather than showing their markers (bean `mylx`). `markdownify`
-    wraps its output in one <p>, which the existing paragraph already is.
-    {%- endcomment %}
-    <p class="fa-harness-section__description">{{ t.description | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
+    {%- comment -%} The READER's line: `summary` when the instance declares
+    one, else the description (`ob3m` 4/5 — a description is written for an
+    author). Backtick spans render as <code> rather than showing their markers
+    (bean `mylx`). `markdownify` wraps its output in one <p>, which the
+    existing paragraph already is.
+    {%- endcomment -%}
+    {%- assign t_line = t.summary | default: t.description -%}
+    {%- if t_line and t_line != "" -%}
+    <p class="fa-harness-section__description">{{ t_line | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
+    {%- endif -%}
+    {%- if t.alsoWritten and t.alsoWritten.size > 0 -%}
+    <p class="fa-harness-section__also">Also written:
+      {%- for w in t.alsoWritten %} <code>{{ w }}</code>{% unless forloop.last %},{% endunless %}{%- endfor -%}
+    </p>
     {%- endif -%}
     {%- if t.stats.size > 0 -%}
     <dl class="fa-harness-section__stats">
