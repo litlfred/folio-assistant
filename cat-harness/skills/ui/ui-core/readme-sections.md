@@ -134,11 +134,54 @@ so the difference could not show. Use the pair:
 | `readme:sync` · `readme:audit` | the cat-harness instance's README |
 | `readme:sync:root` · `readme:audit:root` | the REPOSITORY's README |
 | `readme:sync:bootstrap` | bootstrap's README — renders its diagrams first |
+| `readme:sync:all` | EVERY instance's README, each against its own declaration |
 
 Both are gated in `code-quality-gates.yml`, and that is not belt and braces:
 when the split landed, the bare `readme:audit` silently narrowed to
 cat-harness's and took the root README's 41 links out of the gate **without
 failing anything**. A gate that stops covering something still reports green.
+
+## `readme:toc` — every harness README's own table of contents
+
+Owner, 2026-09-30: *"generated README.md ... missing TOC, probably need on all
+harnesses"*. A nested list of the README's **own** h2/h3 headings, linked by the
+anchor GitHub assigns them. Every instance README carries it under a bold
+**Contents** line, above its first `##`; the root README too.
+
+**Not `folio:toc`.** The shared word hides two different sections: `folio:toc`
+is a folio's *contents* — papers, chapters, verified PDFs — and says nothing
+about the file it sits in. `readme:toc` is the file's outline and needs no
+folio at all. Both may sit in one README.
+
+**Anchors are GitHub's, not a tidy approximation of them** (`githubSlug`,
+github-slugger's rule): lowercase, drop everything but letters, marks, digits,
+`_`, `-` and space, then each space becomes `-` — **not collapsed**, so
+`Corpus → draft` is `#corpus--draft`. Inline markup is stripped first, as the
+renderer does (`` `code` `` → `code`, `[x](y)` → `x`). Duplicates become `-1`,
+`-2` counted over **every** heading level, h1 and h4+ included, because GitHub
+counts them all; a suffixed anchor colliding with a literal heading is bumped
+past it. A TOC link that is almost right is a dead link that reads as live.
+
+**What is not a heading is not in it:** lines inside a code fence (closed only
+by a fence of the same character at least as long), inside an HTML comment,
+indented four or more spaces, and inside the TOC's own region — so the
+section is never an input to itself and a second run is a no-op.
+
+**It is registered LAST, on purpose.** It reads the README as the sections
+before it have left it, so a heading another section generates (`folio:toc`'s
+`### <paper>`) is outlined on the same run. Registered earlier, every sync
+would leave the TOC one run behind and `--check` would fail on a README that
+had just been synced.
+
+**Zero h2/h3 is a determined empty** (*"This README has no sections yet."*),
+and a README with nothing to outline is better without the marker — which is
+why `smart-immunizations` carries none. A renderer called with no README text
+is **undetermined** and leaves the region alone.
+
+**Gated by `readme:sync:all:check`**, over every declared instance. The three
+single-README checks above name one file each; a generated region in the
+other instances that nothing checked would be a hand-kept list, wrong the
+first time somebody added a heading.
 
 ## `kg:processes` and `kg:files` — an instance's diagrams and files, from its declaration
 
