@@ -29,17 +29,18 @@ GOAL 1  vuip  repo separation          ██████████░░░�
   fnx4  KG subscriptions               ████████████░░░░░░░░  slices 1–4,7,8 merged; 5+6 in #1756
   uhkv  SMART stack (sibling: n3ni)    ████████░░░░░░░░░░░░   5/13
 
-ARC 7x5n stories (09:16 UTC)
-  S0 main green          ███░░░░░░░  #1774: workflow-skill-refs fixed; 3 hard jobs still red
+ARC 7x5n stories (11:30 UTC)
+  S0 main green          ██████░░░░  #1774 b4b9e0eb8: repo gates now reach step 17 (13→16→17); reg-chain, bun test, e2e still red
   S1 bookkeeping         ███████░░░  3 beans wait on S0
-  S2 merge treadmill     ▒░░░░░░░░░  #1754 agent running
+  S2 merge treadmill     ███░░░░░░░  2 commits parked on claude/awesome-feynman-0rt8ra-s2-wip; waits on S0
   S3 drain PRs           ▒░░░░░░░░░  #1747 agent running (R1)
-  S4 direction/placement ▒▒░░░░░░░░  #1776 (R5/R6, large-datasets import) + placement audit running
-  S5 code → tools        ░░░░░░░░░░  runs alone, after S4
+  S4 direction/placement █████░░░░░  #1776 ready (R5 26→0, R6 →0, large-datasets import 1→0); audit #1778: 7/7 questions ruled
+  S5 code → tools        ░░░░░░░░░░  790 CODE + 127 TO-JSON rows mapped to 70lx/8lcl/y9r6
   S6 standalone          ░░░░░░░░░░
   S7 seed repos          █████░░░░░  all 5 target repos exist and are empty
   S8 cut over            ░░░░░░░░░░
-main CI                                RED: 5 jobs at cdb0a018/d1a5d6e, being fixed in S0 (#1774)
+  UPSTREAM               ▒░░░░░░░░░  bootstrap + bootstrap-tools: README via published IRIs, README CI check, live render
+main CI                                RED at d1a5d6e (S0 is the critical path)
 ```
 
 **Legend for the story row:** `░░` todo, `▒▒` in progress, `██` done, `!!` blocked on the owner.
