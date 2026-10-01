@@ -271,6 +271,13 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 - [large-datasets]({{ '/cat-harness/docs-auto/index/skills/large-datasets-skills/' | relative_url }})
 - [WHO IRIS]({{ '/cat-harness/docs-auto/index/skills/who-iris-skills/' | relative_url }})
 
+### `substrate-snapshot`
+
+0 of 1 published.
+{: .fa-hx-dim }
+
+- C@T Harness — *declared, not published*
+
 ### `swimlane-glossary`
 
 1 of 1 published.

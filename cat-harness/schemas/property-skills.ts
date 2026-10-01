@@ -54,6 +54,16 @@ export const PROPERTY_SKILLS = {
   directories: { skills: ["directory-conventions", "schema-management"] },
   remoteGraphs: { skills: ["library-ingestion", "materialize-remote"] },
   associatedHarnesses: { skills: ["associate-harness"] },
+  // Issue #1719: the `kg-subscription` skill is slice 8 of the proposal and
+  // does not exist yet, so both are recorded gaps rather than left blank.
+  subscriptions: {
+    skills: [],
+    gap: "no skill governs `subscriptions` yet: `bun run kg:subscribe` writes it, and the `kg-subscription` skill is slice 8 of the kg-subscriptions proposal (issue #1719)",
+  },
+  knownSubstrates: {
+    skills: [],
+    gap: "no skill governs `knownSubstrates` yet: the rule (hand rows only where no declaration names the substrate) is on KnownSubstrateSchema; the skill is slice 8 of the kg-subscriptions proposal (issue #1719)",
+  },
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },

@@ -824,6 +824,7 @@ export const RULES: Rule[] = [
       // than by a rule, and an `exact` entry naming a path this scan can no longer see
       // would be a rule that fires on nothing while reading as an adjudication.
       "scripts/sync-remote-skills.ts",       // a remote package's declared skills, materialized at its pinned commit (issue #556)
+      "scripts/kg-subscribe.ts",             // subscribe to an external Knowledge Graph at a pin: judge its root declaration, record the subscription (issue #1719)
       "scripts/check-read-only-graphs.ts", // a directory's `readOnly` declaration vs what its nodes say — the DECLARATION half of the same rule
       "scripts/gen-fsh-guts-viz.ts",         // the fsh-guts graph → projection + viewer; staging-only, so the page is withheld from the canonical deploy
       "scripts/gen-handler-index.ts",        // the handler namespace's own index, over the tiles model
