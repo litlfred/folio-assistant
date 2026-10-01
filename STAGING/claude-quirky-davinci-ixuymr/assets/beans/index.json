@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 599,
+      "count": 600,
       "unit": "beans"
     }
   },
@@ -175,6 +175,20 @@
       "updatedAt": "2026-09-19T11:43:44Z",
       "preview": "The block kinds and adapters an author actually writes against.\n\n`55ao` is the one with the largest blast radius — a real `recommendation` kind\nmeans a builder, a Zod schema, a label prefix, viewer registration, constraint\nrows and QA criteria, about thirty files — and it is tracked rather than\nhalf-done for exactly that reason. `cz17` brings the DAK type in properly.\n\n`6xaz` and `bqrg` are the au",
       "file": "beans/defs/folio-assistant-0lmb--content-model-block-kinds-adapters-and-the-authori.md"
+    },
+    {
+      "id": "folio-assistant-0utt",
+      "title": "PRODUCER: kg-export.bootstrap.qa-results.json is read by check:published-instance-exports but produced by no workflow",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-3fva",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T09:30:19Z",
+      "updatedAt": "2026-10-01T09:30:19Z",
+      "preview": "Found by the r7v6 agent (C2 fix, 2026-10-01). The C2 gate now actually compares the committed `cat-harness/test/results/kg-export.bootstrap.qa-results.json` with a fresh re-export. On its first run it found the file stale (different producer hash, untagged modules 0→3), and the file was refreshed by hand in `ba1908fa`.\n\n**Owner ruling 2026-10-01:** keep the file and add a producer. Do not delete i",
+      "file": "beans/defs/folio-assistant-0utt--producer-kg-exportbootstrapqa-resultsjson-is-read.md"
     },
     {
       "id": "folio-assistant-0uu2",
@@ -3447,14 +3461,14 @@
     {
       "id": "folio-assistant-de9k",
       "title": "BUG: three committed kg-qa sidecars on main hold git conflict markers, and every reader treats them as empty",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "critical",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:14Z",
-      "updatedAt": "2026-10-01T08:47:14Z",
+      "updatedAt": "2026-10-01T09:30:18Z",
       "preview": "Arc `3fva`, found by reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md` §4.1, **C1**). **Live on `main` today, and not blocked on `16ei`.**\n\n## The defect, measured\nThree committed `kg-qa/v1` sidecars on `origin/main` (`cdb0a018`) hold git conflict markers (`<<<<<<<< HEAD:` … `>>>>>>>> pr1-content-up:`):\n- `cat-harness/test/results/bootstrap/kg-qa/skills/initializatio",
       "file": "beans/defs/folio-assistant-de9k--bug-three-committed-kg-qa-sidecars-on-main-hold-gi.md"
     },
@@ -6019,14 +6033,14 @@
     {
       "id": "folio-assistant-r7v6",
       "title": "BUG: QA readers already wrong today — the health artifact is never uploaded, a dead export comparison, a legacy qa-agent-write path, gates that write in --check",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:15Z",
-      "updatedAt": "2026-10-01T08:47:15Z",
+      "updatedAt": "2026-10-01T08:57:48Z",
       "preview": "Arc `3fva`, found by reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md` §4.1, **C2 and C3**, plus R11, R21, R50). **Live today, and not blocked on `16ei`.** Each item is a reader that is wrong already, whatever happens to the branch.\n\n## Readers and defects\n- **C3** `.github/workflows/health-check.yml:132` uploads `test/health/results/repository.health-report.json`, w",
       "file": "beans/defs/folio-assistant-r7v6--bug-qa-readers-already-wrong-today-the-health-arti.md"
     },
@@ -8111,14 +8125,14 @@
     {
       "id": "folio-assistant-ygzh",
       "title": "TEST PLAN schema: test-plan/v1 (FHIR R5 TestPlan shape), test-run gains plan + sut, test-report/v1 per-plan rollup",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:47Z",
-      "updatedAt": "2026-10-01T08:00:47Z",
+      "updatedAt": "2026-10-01T09:30:19Z",
       "preview": "Arc `3fva`, proposal §3.2 and §4 items 5.1 and 5.2. Can be dispatched now: these are new files, and only the graph-kind registry edit is shared.\n\n- `test-plan/v1` has:\n  - `scope` (the system-under-test kind and version range)\n  - `requirements[]` as `req:` refs\n  - `testCases[]`, each with an id, assertions whose ids are criterion ids, `testData` refs and an optional Gherkin `.feature`\n  - `depen",
       "file": "beans/defs/folio-assistant-ygzh--test-plan-schema-test-planv1-fhir-r5-testplan-shap.md"
     },

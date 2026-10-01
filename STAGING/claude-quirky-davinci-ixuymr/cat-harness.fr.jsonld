@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T09:17:06.391Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/41f5f86d7513ec0cda0397012f77bc6c62f06bc0",
-  "sourceCommitSha": "41f5f86d7513ec0cda0397012f77bc6c62f06bc0",
-  "sourceCommitAt": "2026-10-01T09:12:35Z",
+  "generatedAt": "2026-10-01T09:36:26.689Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bc42b0f309298280ae26cd00fae5d9ff85b5fd7b",
+  "sourceCommitSha": "bc42b0f309298280ae26cd00fae5d9ff85b5fd7b",
+  "sourceCommitAt": "2026-10-01T09:31:45Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -318,7 +318,7 @@
     "Lane": 199,
     "ProcessNode": 927,
     "Tool": 113,
-    "Schema": 143,
+    "Schema": 145,
     "ExternalSchema": 17,
     "GraphKind": 24,
     "Role": 48,
@@ -1729,7 +1729,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1303,
+      "instructionLines": 1305,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -47233,6 +47233,15 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/term-mapping"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#schema/test-plan",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "test-plan",
+      "title": "A TEST PLAN — what a system under test must do, case by case, and the rule",
+      "module": "schemas/test-plan.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-plan"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#schema/test-preload",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
       "name": "test-preload",
@@ -47240,6 +47249,15 @@
       "module": "schemas/test-preload.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-preload"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#schema/test-report",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Schema",
+      "name": "test-report",
+      "title": "A TEST REPORT — the verdicts one run of one plan reached against one system",
+      "module": "schemas/test-report.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/test-report"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#schema/test-run",
