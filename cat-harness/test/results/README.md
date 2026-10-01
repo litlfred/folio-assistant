@@ -25,14 +25,12 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`source-licence.qa-results.json`](source-licence.qa-results.json) | data |  |
 | [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
 | [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
-| [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
-| [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
 | [`block-qa/`](block-qa/) | 122 files | |
 | [`bootstrap/`](bootstrap/) | 22 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 7 files | |
 | [`cat-harness-tools/`](cat-harness-tools/) | 2 files | |
-| [`detangle/`](detangle/) | 63 files | |
+| [`detangle/`](detangle/) | 61 files | |
 | [`kg-qa/`](kg-qa/) | 488 files | |
 | [`library-qa/`](library-qa/) | 60 files | |
 | [`lsi/`](lsi/) | 5 files | |
