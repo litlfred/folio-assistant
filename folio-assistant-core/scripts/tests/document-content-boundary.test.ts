@@ -2,7 +2,10 @@
  * The content half of the document adapter imports nothing that moves to
  * `cat-harness-tools` (bean `w2gr`, step 2).
  *
- * The owner ruled on 2026-10-01 that `folio-assistant-core` does not depend on
+ * Ruling C1 (2026-10-01, later the same day) put `cat-harness-tools` BELOW core,
+ * so the rule this test keeps is now "core must not depend on the MCP server".
+ * It was first written against the earlier ruling, that `folio-assistant-core`
+ * does not depend on
  * `cat-harness-tools`, where the MCP server, the HTTP routes and RBAC are
  * moving. So the document adapter was cut in two: `content.ts` is what a
  * document folio IS, and `index.ts` is the server wrapper step 3 moves out.
