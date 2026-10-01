@@ -120,7 +120,7 @@ a check that did not exist when the bean was written. That is the most useful
 thing this re-measurement found, and it is why item 3 could be written as an
 inference rule rather than a warning about five named tests.
 
-### Item 3 — done, in `skills/folio-core/prepare-merge.md`
+### Item 3 — done, in `skills/sdlc/sdlc-core/prepare-merge.md`
 
 A new section, *"What a green LOCAL run entitles you to claim"*, beside the
 existing *"A clean merge can produce a wrong artefact"* — same family: a green

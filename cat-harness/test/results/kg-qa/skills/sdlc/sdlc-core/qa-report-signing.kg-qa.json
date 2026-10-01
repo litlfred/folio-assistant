@@ -1,0 +1,60 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "skill",
+    "id": "qa-report-signing",
+    "path": "skills/sdlc/sdlc-core/qa-report-signing.md"
+  },
+  "source_hash": "7c557e42793d",
+  "criteria": {
+    "skill-is-a-stub": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-is-brief": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-not-a-document": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-no-repeated-heading": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "cat-harness/skills/sdlc/sdlc-core/qa-report-signing.ts",
+          "detail": "cat-harness/skills/sdlc/sdlc-core/qa-report-signing.ts changed since cat-harness/skills/sdlc/sdlc-core/qa-report-signing.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-voice-review-current": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 1,
+    "n/a": 2,
+    "unknown": 0
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "cat-harness/skills/sdlc/sdlc-core/qa-report-signing.md",
+      "code": "cat-harness/skills/sdlc/sdlc-core/qa-report-signing.ts",
+      "prose_hash": "7c557e42793d",
+      "code_hash": "44587545ea22",
+      "by": "baseline"
+    }
+  ]
+}

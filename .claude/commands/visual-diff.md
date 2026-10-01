@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /visual-diff
 
-Run the `visual-diff` skill. Read [`cat-harness/skills/folio-core/visual-diff.md`](../../cat-harness/skills/folio-core/visual-diff.md) and follow it.
+Run the `visual-diff` skill. Read [`cat-harness/skills/sdlc/sdlc-core/visual-diff.md`](../../cat-harness/skills/sdlc/sdlc-core/visual-diff.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

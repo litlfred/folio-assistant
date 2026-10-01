@@ -12,7 +12,7 @@ description: >-
 > Skill id: `evidence-review` · Package: `folio-core`
 
 This skill exists to demonstrate a claim rather than to assert it.
-[`untainted-verification`](../../folio-core/untainted-verification.md) states a discipline and
+[`untainted-verification`](../../sdlc/sdlc-core/untainted-verification.md) states a discipline and
 says it is generic. **One instance is an example; two unrelated ones are
 evidence.** The first is the translation round trip. This is the second, and it
 is as far from translation as the platform reaches: the appraisal of evidence
@@ -60,7 +60,7 @@ here pretends otherwise. What the two share is the shape a consumer must
 respect either way: *"verified on DATE against THESE inputs"* is a different
 claim from *"verified"*, and a reader given the second cannot tell a current
 verdict from a lapsed one. Any folio implementing surveillance owes an explicit
-expiry, in the same way [`bean-blocking`](../../folio-core/bean-blocking.md) requires one on a
+expiry, in the same way [`bean-blocking`](../../sdlc/sdlc-core/bean-blocking.md) requires one on a
 block: a verdict with no expiry cannot be told from an abandoned one.
 
 ## The fencing analysis — which rules are the platform's, and which are not
@@ -100,7 +100,7 @@ This is the same line `content-profiles` draws for block kinds and
 
 ## Related
 
-- [`untainted-verification`](../../folio-core/untainted-verification.md) — the discipline. Read
+- [`untainted-verification`](../../sdlc/sdlc-core/untainted-verification.md) — the discipline. Read
   it first; this skill adds only what evidence review instantiates.
 - [`translation-manager`](../../library/library-core/translation-manager.md) §"The agentic round trip" —
   the other instance, deliberately unrelated to this one.

@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/crdm/crdm-impact-analysis.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/crdm/crdm-impact-analysis.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/crdm/crdm-impact-analysis.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/crdm/crdm-impact-analysis.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/crdm/crdm-impact-analysis.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/crdm/crdm-impact-analysis.md){: .fa-edit-source }
 
 {% raw %}
 # Phase 4 — Impact analysis (detail)
@@ -90,7 +90,7 @@ Post this table to the GitHub issue:
 | Pipeline | Yes/No | `content/pipeline/validate.ts` | ... | ... |
 | Adapter | Yes/No | `adapters/paper/` | ... | ... |
 | Folio | Yes/No | `qou`, `who-smart` | ... | ... |
-| Skills | Yes/No | `skills/crdm/` | ... | ... |
+| Skills | Yes/No | `skills/sdlc/crdm/` | ... | ... |
 | Migration | Yes/No | — | ... | ... |
 | Tests/Docs | Yes/No | `scripts/tests/` | ... | ... |
 
@@ -133,6 +133,6 @@ rg "CONCEPT" cat-harness/docs/
 - [`crdm-requirements-workflow`](crdm-requirements-workflow.md) — Phase 4
 - [`crdm-requirements-template`](crdm-requirements-template.md) — Phase 3 feeds this
 - [`crdm-detect`](crdm-detect.md) — detection
-- [`../../skills/folio-core/staging-review.md`](staging-review.md) — staging
-- [`../../skills/folio-core/todo-manager.md`](todo-manager.md) — beans
+- [`../../skills/sdlc/sdlc-core/staging-review.md`](staging-review.md) — staging
+- [`../../skills/sdlc/sdlc-core/todo-manager.md`](todo-manager.md) — beans
 {% endraw %}

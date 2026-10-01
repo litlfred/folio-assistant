@@ -1,7 +1,7 @@
 ---
 name: canonical-watcher
 user_invocable: true
-inherits: folio-core/integration-watcher
+inherits: sdlc-core/integration-watcher
 watch_arg: canonical
 description: >
   Derivation-discipline integration watcher — watches the default

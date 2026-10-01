@@ -15,7 +15,7 @@ shared or indepedent work queues."
 
 ## What exists
 
-`skills/folio-core/swarm-management.md` and `docs/swarm-management.md`. The rule
+`skills/sdlc/sdlc-core/swarm-management.md` and `docs/swarm-management.md`. The rule
 recorded in `AGENTS.md` is that a swarm is **asked for every time, per swarm,
 with agent count, model level and rough cost**. That rule survives this bean
 unchanged — nothing here makes a swarm automatic.

@@ -263,7 +263,7 @@ from the shared function now, so a fixture cannot drift from what the auditor
 writes.
 
 **Docs moved with the wiring**, per this repo's own rule: `cat-harness.json`
-(both the `cat-harness` and `qa` entries), `skills/folio-core/qa-witness.md`
+(both the `cat-harness` and `qa` entries), `skills/sdlc/sdlc-core/qa-witness.md`
 plus its generated mirror and sidecar, and `AGENTS.md`. One `kg-qa/` mention
 stays in `AGENTS.md` and is correct — it is past tense, about 25 bogus sidecars
 that *were* written beside memory nodes.

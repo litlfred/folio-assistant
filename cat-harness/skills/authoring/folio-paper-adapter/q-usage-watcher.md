@@ -1,7 +1,7 @@
 ---
 name: q-usage-watcher
 user_invocable: true
-inherits: folio-core/integration-watcher
+inherits: sdlc-core/integration-watcher
 watch_arg: q-usage
 description: >
   q-usage integration watcher — detects how each content block treats
@@ -32,7 +32,7 @@ allowed-tools: Read Edit Write Bash Grep Glob Agent Monitor Skill
 > `content/pipeline/qa-criteria-registry.ts`.
 
 
-A concrete instance of [`local/integration-watcher`](../../folio-core/integration-watcher.md).
+A concrete instance of [`local/integration-watcher`](../../sdlc/sdlc-core/integration-watcher.md).
 The parent encodes the shared mechanics; this file fills the nine
 domain-specific slots A–I and documents the q-regime taxonomy.
 
@@ -318,7 +318,7 @@ bun run content/pipeline/q-usage-audit.ts --no-write --strict
 
 ## Cross-references
 
-- Parent: [`local/integration-watcher`](../../folio-core/integration-watcher.md)
+- Parent: [`local/integration-watcher`](../../sdlc/sdlc-core/integration-watcher.md)
 - Sibling watchers: [`canonical-watcher`](../authoring-core/canonical-watcher.md),
   [`proof-integration-watcher`](proof-integration-watcher.md),
   [`compute-integration-watcher`](../authoring-core/compute-integration-watcher.md),

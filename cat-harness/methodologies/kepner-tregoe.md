@@ -36,7 +36,7 @@ analysis honest: most options die on a MUST, and an analysis that scores every
 option on every axis hides that.
 
 The adverse-consequence pass is the same act as
-[`opening-brief`](../skills/folio-core/opening-brief.md)'s *"what would falsify
+[`opening-brief`](../skills/sdlc/sdlc-core/opening-brief.md)'s *"what would falsify
 the approach"*, arrived at independently. Asking it of the **leader** specifically
 is KT's contribution: the option you are about to take is the one whose failure
 mode you have thought about least.
