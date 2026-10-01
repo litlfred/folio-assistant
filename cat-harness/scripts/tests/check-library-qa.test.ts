@@ -21,7 +21,36 @@ import {
   usableSourceTitle,
   yearOf,
 } from "../check-library-qa.ts";
-import type { LibraryEntry } from "../library-graph.ts";
+import { readLibraryGraph, type LibraryEntry } from "../library-graph.ts";
+import { repoRootFor } from "../../schemas/cat-harness.js";
+import { readStructure, STRUCTURE_FILENAME } from "../../schemas/document-structure.ts";
+
+const REPO = repoRootFor(join(import.meta.dir, "..", ".."));
+
+/**
+ * A REAL structure of the given variant, taken from the corpus and edited.
+ *
+ * Not hand-written: the reader goes through the schema accessor (bean
+ * `rkqp`), so a fixture that does not conform would test the could-not-
+ * determine path instead of the one named. Found by variant rather than by
+ * path, so an entry moving does not break the test.
+ */
+function realStructure(variant: "pdf" | "text", edit: (raw: Record<string, unknown>) => void): Record<string, unknown> {
+  for (const e of readLibraryGraph([join(REPO, "cat-harness"), REPO], REPO)?.entries ?? []) {
+    const s = readStructure(join(REPO, e.dir));
+    // One that carries `metadata`: not every pdf-structure does, and adding
+    // the block by hand would be guessing at its required fields.
+    if ("reason" in s || s.variant !== variant || !(s.raw as { metadata?: unknown }).metadata) continue;
+    const raw = structuredClone(s.raw) as unknown as Record<string, unknown>;
+    edit(raw);
+    return raw;
+  }
+  throw new Error(`no ${variant} structure in the corpus to build a fixture from`);
+}
+const withMeta = (meta: Record<string, unknown>, file: string) => (raw: Record<string, unknown>) => {
+  raw.metadata = { ...(raw.metadata as object), ...meta };
+  raw.source = { ...(raw.source as object), file };
+};
 
 function write(path: string, body: unknown): void {
   mkdirSync(join(path, ".."), { recursive: true });
@@ -86,12 +115,12 @@ describe("title-implausible", () => {
   });
 
   test("a truncated title disagrees with the PDF Info /Title", () => {
-    const src = { file: "structure.json", field: "metadata.docinfo.Title", value: "Algorithmic Approaches to Sequential Decision-Making and Social Epistemology" };
+    const src = { file: STRUCTURE_FILENAME, field: "metadata.docinfo.Title", value: "Algorithmic Approaches to Sequential Decision-Making and Social Epistemology" };
     expect(titleImplausible({ title: "Algorithmic Approaches to", sourceTitles: [src] })).toHaveLength(1);
   });
 
   test("extraction damage alone does not count as disagreement", () => {
-    const src = { file: "structure.json", field: "metadata.docinfo.Title", value: "MerLean: An Agentic Framework for Autoformalization in Quantum Computation" };
+    const src = { file: STRUCTURE_FILENAME, field: "metadata.docinfo.Title", value: "MerLean: An Agentic Framework for Autoformalization in Quantum Computation" };
     expect(titleImplausible({ title: "MERLEAN: AN AGENTIC FRAMEWORK FOR AUTOFOR- MALIZATION IN QUANTUM COMPUTATION", sourceTitles: [src] })).toEqual([]);
     expect(similarity("A Skill-Based Agentic Pipeline", "A Skill-Based AI Agentic Pipeline")).toBeGreaterThan(0.9);
   });
@@ -113,7 +142,7 @@ describe("reading an entry", () => {
       ],
     });
     const dir = entry(root, "x", { title: "Abies", meta: { source_file: "x.pdf" } }, {
-      "structure.json": { source: { file: "x.pdf" }, metadata: { docinfo: { Title: "Some PDF title" } } },
+      [STRUCTURE_FILENAME]: realStructure("pdf", withMeta({ docinfo: { Title: "Some PDF title" } }, "x.pdf")),
     });
     const f = readEntryFacts(dir, "x", "fixture");
     expect(f.sourceTitles.map((s) => s.field)).toEqual(["dc.title", "metadata.docinfo.Title"]);
@@ -124,22 +153,25 @@ describe("reading an entry", () => {
   test("a PDF source with no extraction to read is could-not-determine, never a pass", () => {
     const root = instance();
     const dir = entry(root, "y", { title: "A Real Title", meta: { source_file: "y.pdf" } });
-    expect(readEntryFacts(dir, "y", "fixture").unreadable.map((u) => u.file)).toEqual(["structure.json"]);
+    expect(readEntryFacts(dir, "y", "fixture").unreadable.map((u) => u.file)).toEqual([STRUCTURE_FILENAME]);
   });
 
   test("an unparseable structure.json is could-not-determine", () => {
     const root = instance();
-    const dir = entry(root, "z", { title: "A Real Title", meta: { source_file: "z.pdf" } }, { "structure.json": "{ not json" });
-    expect(readEntryFacts(dir, "z", "fixture").unreadable).toContainEqual({ file: "structure.json", why: "will not parse" });
+    const dir = entry(root, "z", { title: "A Real Title", meta: { source_file: "z.pdf" } }, { [STRUCTURE_FILENAME]: "{ not json" });
+    const u = readEntryFacts(dir, "z", "fixture").unreadable;
+    expect(u).toHaveLength(1);
+    expect(u[0]!.why).toContain("will not parse");
   });
 
   test("a non-PDF source with no record is title-source-absent, said aloud", () => {
     const root = instance();
     const dir = entry(root, "readme", { title: "beans", meta: { source_file: "README.md" } }, {
-      "structure.json": { source: { file: "README.md" }, metadata: {} },
+      [STRUCTURE_FILENAME]: realStructure("text", withMeta({}, "README.md")),
     });
     const f = readEntryFacts(dir, "readme", "fixture");
     expect(f.unreadable).toEqual([]);
+    expect(f.sourceTitles).toEqual([]);
     expect(f.noSourceTitleBecause).toContain("not a PDF");
   });
 });
@@ -164,7 +196,7 @@ describe("bibliographic-missing", () => {
 describe("judge — block-no-content", () => {
   function paged(root: string, slug: string, bodies: string[]): string {
     const dir = entry(root, slug, { title: "A Real Title Here", meta: { source_file: "README.md" } }, {
-      "structure.json": { source: { file: "README.md" }, metadata: {} },
+      [STRUCTURE_FILENAME]: realStructure("text", withMeta({}, "README.md")),
     });
     bodies.forEach((body, i) => {
       const n = String(i + 1).padStart(3, "0");

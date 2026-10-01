@@ -64,6 +64,7 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { basename, dirname, extname, join, resolve } from "node:path";
 
 import { directoriesForGraph, repoRootFor } from "../schemas/cat-harness.js";
+import { readStructure, STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
 import { readEntryBlocks, readLibraryGraph, type LibraryEntry } from "./library-graph.ts";
 import { tally } from "./summaries.ts";
 import { buildQaResult, qaResultPath, qaResultState, writeQaResult, type QaResult } from "./qa-results.js";
@@ -176,7 +177,12 @@ export function readEntryFacts(dir: string, id: string, instance: string): Entry
   const manifest = read("manifest.jsonld");
   if (manifest === undefined && !unreadable.length) unreadable.push({ file: "manifest.jsonld", why: "absent" });
   const meta = obj(manifest?.meta);
-  const structure = read("structure.json");
+  // Through the accessor (bean `rkqp`): a variant nobody declared is a
+  // reason, which lands in could-not-determine rather than reading as "no title".
+  const hasStructure = existsSync(join(dir, STRUCTURE_FILENAME));
+  const sread = hasStructure ? readStructure(dir) : undefined;
+  if (sread && "reason" in sread) unreadable.push({ file: STRUCTURE_FILENAME, why: sread.reason.replace(dir, "<entry>") });
+  const structure: Json | undefined = sread && !("reason" in sread) ? obj(sread.raw) : undefined;
   const referenced = read("referenced.json");
   const tabular = read("tabular.jsonld");
   const smeta = obj(structure?.metadata);
@@ -189,7 +195,7 @@ export function readEntryFacts(dir: string, id: string, instance: string): Entry
 
   const sourceFiles = [
     ...fr("manifest.jsonld", "meta.source_file", meta.source_file),
-    ...fr("structure.json", "source.file", obj(structure?.source).file),
+    ...fr(STRUCTURE_FILENAME, "source.file", obj(structure?.source).file),
     ...fr("referenced.json", "source.file", obj(referenced?.source).file),
     ...fr("tabular.jsonld", "source.file", tsource.file),
   ];
@@ -202,7 +208,7 @@ export function readEntryFacts(dir: string, id: string, instance: string): Entry
   const sourceTitles = [
     ...(dc ? fr(cat!.file, "dc.title", dcValue(dc, "title")) : []),
     ...fr("referenced.json", "identity.title", identity.title),
-    ...fr("structure.json", "metadata.docinfo.Title", docinfo.Title).filter((t) => usableSourceTitle(t.value, sourceFiles)),
+    ...fr(STRUCTURE_FILENAME, "metadata.docinfo.Title", docinfo.Title).filter((t) => usableSourceTitle(t.value, sourceFiles)),
   ];
 
   // Why no source title was looked for. A source that is not a PDF has no
@@ -210,8 +216,8 @@ export function readEntryFacts(dir: string, id: string, instance: string): Entry
   let noSourceTitleBecause: string | null = null;
   if (sourceTitles.length === 0) {
     const isPdf = sourceFiles.some((s) => extname(s.value).toLowerCase() === ".pdf");
-    if (isPdf && structure === undefined && referenced === undefined) {
-      unreadable.push({ file: "structure.json", why: "the source is a PDF and no extraction of its Info dictionary is on disk" });
+    if (isPdf && !hasStructure && referenced === undefined) {
+      unreadable.push({ file: STRUCTURE_FILENAME, why: "the source is a PDF and no extraction of its Info dictionary is on disk" });
     } else if (isPdf) {
       noSourceTitleBecause = "the PDF Info dictionary carries no usable /Title and no catalogue record names this entry";
     } else {
@@ -234,11 +240,11 @@ export function readEntryFacts(dir: string, id: string, instance: string): Entry
     agent: [
       ...(dc ? fr(cat!.file, "dc.contributor.author", dcValue(dc, "contributor", "author")) : []),
       ...(dc ? fr(cat!.file, "dc.publisher", dcValue(dc, "publisher")) : []),
-      ...fr("structure.json", "metadata.docinfo.Author", docinfo.Author),
+      ...fr(STRUCTURE_FILENAME, "metadata.docinfo.Author", docinfo.Author),
     ],
     year: [
       ...(dc ? fr(cat!.file, "dc.date.issued", yearOf(dcValue(dc, "date", "issued"))) : []),
-      ...fr("structure.json", "metadata.docinfo.CreationDate", yearOf(str(docinfo.CreationDate))),
+      ...fr(STRUCTURE_FILENAME, "metadata.docinfo.CreationDate", yearOf(str(docinfo.CreationDate))),
     ],
   };
 
