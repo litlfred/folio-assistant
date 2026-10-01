@@ -33,8 +33,8 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`detangle/`](detangle/) | 61 files | |
 | [`kg-qa/`](kg-qa/) | 487 files | |
 | [`library-qa/`](library-qa/) | 59 files | |
-| [`lsi/`](lsi/) | 7 files | |
-| [`tool-runs/`](tool-runs/) | 5 files | |
+| [`lsi/`](lsi/) | 5 files | |
+| [`tool-runs/`](tool-runs/) | 3 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |
 | [`viewer-nav/`](viewer-nav/) | 1 file | |
 | [`witnesses/`](witnesses/) | 163 files | |
