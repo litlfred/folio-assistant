@@ -12,7 +12,7 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1568 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1564 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · fhir-harness 60 (<a href="{{ '/assets/glossary/fhir-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 127 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 4 (<a href="{{ '/assets/glossary/smart-base--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
 **Size:** this page holds 1801 terms and is 993 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
@@ -2475,33 +2475,33 @@ DakBlockBase.realises <span class="fa-gloss-status">candidate, extracted</span>
 <p>Label of the L1 recommendation or L2 component this block realises.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/dak-blocks.ts"><code>cat-harness/schemas/dak-blocks.ts#DakBlockBase.realises</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--dak.dakdeclaration.canonicalurl" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-schema-fields--dak.dakdeclaration.canonicalurl" data-fa-state="extracted" data-fa-gloss="">
 DakDeclaration.canonicalUrl <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where the published DAK lives — the base its <code>@id</code>s are minted against.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/dak.ts"><code>cat-harness/schemas/dak.ts#DakDeclaration.canonicalUrl</code></a></p>
+<p class="fa-gloss-meta">Schema fields of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/dak.ts"><code>smart-base/schemas/dak.ts#DakDeclaration.canonicalUrl</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--dak.dakdeclaration.name" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-schema-fields--dak.dakdeclaration.name" data-fa-state="extracted" data-fa-gloss="">
 DakDeclaration.name <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The instance's name, e.g. <code>&quot;smart-immunizations&quot;</code>.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/dak.ts"><code>cat-harness/schemas/dak.ts#DakDeclaration.name</code></a></p>
+<p class="fa-gloss-meta">Schema fields of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/dak.ts"><code>smart-base/schemas/dak.ts#DakDeclaration.name</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--dak.dakdeclaration.previewurl" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-schema-fields--dak.dakdeclaration.previewurl" data-fa-state="extracted" data-fa-gloss="">
 DakDeclaration.previewUrl <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where CI previews are served.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/dak.ts"><code>cat-harness/schemas/dak.ts#DakDeclaration.previewUrl</code></a></p>
+<p class="fa-gloss-meta">Schema fields of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/dak.ts"><code>smart-base/schemas/dak.ts#DakDeclaration.previewUrl</code></a></p>
 </dd>
-<dt id="cat-harness--kg-schema-fields--dak.dakdeclaration.publicationurl" data-fa-state="extracted" data-fa-gloss="">
+<dt id="smart-base--kg-schema-fields--dak.dakdeclaration.publicationurl" data-fa-state="extracted" data-fa-gloss="">
 DakDeclaration.publicationUrl <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where the built IG is published, when that differs from <code>canonicalUrl</code>.</p>
-<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/dak.ts"><code>cat-harness/schemas/dak.ts#DakDeclaration.publicationUrl</code></a></p>
+<p class="fa-gloss-meta">Schema fields of smart-base · source <a href="https://github.com/litlfred/folio-assistant/blob/main/smart-base/schemas/dak.ts"><code>smart-base/schemas/dak.ts#DakDeclaration.publicationUrl</code></a></p>
 </dd>
 <dt id="folio-assistant-core--kg-schema-fields--dublin-core.dcfieldschema.schema" data-fa-state="extracted" data-fa-gloss="">
 DcFieldSchema.schema <span class="fa-gloss-status">candidate, extracted</span>
