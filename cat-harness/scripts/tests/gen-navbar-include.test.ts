@@ -81,13 +81,17 @@ describe("what Jekyll is handed", () => {
     expect(guard![1]).toContain('id="fa-nav-open"');
   });
 
-  test("the labels are present in BOTH variants, so either copy opens it", () => {
-    // The mechanism is one control operated from two places. A variant that
-    // rendered no label would leave that copy of the sidebar with no way in.
+  test("neither variant renders a label: the theme's avatar is the way in (#1757)", () => {
+    // There were two labels per copy, the `☰` and the `[x]`, and the owner
+    // asked for both to go because they duplicated the avatar. So the way in
+    // is no longer in this include at all — it is `.site-title`, which
+    // `docs-ui.js` makes toggle this checkbox. Assert BOTH halves, or removing
+    // the labels would read as leaving the sidebar with no way in.
     const { canonical, staging } = variants(file());
-    for (const v of [canonical, staging]) {
-      expect(v).toContain('for="fa-nav-open"');
-    }
+    for (const v of [canonical, staging]) expect(v).not.toContain('for="fa-nav-open"');
+    const js = readFileSync(join(import.meta.dir, "../../docs/assets/js/docs-ui.js"), "utf8");
+    expect(js).toContain('bar.querySelector(".site-title")');
+    expect(js).toMatch(/box\.checked = !box\.checked/);
   });
 });
 
