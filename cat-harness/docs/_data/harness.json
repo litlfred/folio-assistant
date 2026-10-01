@@ -936,18 +936,18 @@
       "reads": "a broad base under narrowing courses — the layer the SMART stack rests on, in WHO blue",
       "genericAvatar": false,
       "instantiated": true,
-      "href": "/cat-harness/library/smart-base/",
-      "hrefKind": "viewer",
+      "href": "/smart-base/",
+      "hrefKind": "folio",
       "stats": [
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 7
+          "value": 8
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 7
+          "value": 8
         },
         {
           "id": "views",
@@ -956,6 +956,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "docs",
+          "note": "no viewer yet"
+        },
         {
           "kind": "fhir-artifact-index",
           "readOnly": true,
@@ -987,9 +991,8 @@
         }
       ],
       "findings": [
-        "smart-base: declares 3 graph(s) with no published viewer — fhir-artifact-index, qa, tools. Declared and not rendered is a gap, not a dead link.",
-        "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
-        "smart-base: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/smart-base/) rather than the instance's own themed root."
+        "smart-base: declares 4 graph(s) with no published viewer — docs, fhir-artifact-index, qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
       ],
       "navbarIcons": [
         "close",
@@ -2326,6 +2329,15 @@
         ]
       },
       {
+        "key": "separation",
+        "skills": [
+          {
+            "name": "kg-separation",
+            "path": "/reference/skill-instructions/kg-separation.html"
+          }
+        ]
+      },
+      {
         "key": "stub",
         "skills": [
           {
@@ -2827,7 +2839,7 @@
           },
           {
             "key": "directories",
-            "summary": "6: library, methodologies, processes, smart-base-artifact-index, tools, qa"
+            "summary": "7: smart-base-docs, library, methodologies, processes, smart-base-artifact-index, tools, qa"
           },
           {
             "key": "needs",

@@ -161,6 +161,34 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       },
       requires: { runtime: ["bun"], network: false },
     }),
+    defineTool({
+      id: "ig-pages",
+      title: "Generate an IG instance's reader-facing pages from its artefact index",
+      description:
+        "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its `/smart-base/` landing page with `--summary`. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published.",
+      install: { none: true },
+      invoke: { shell: "bun run fhir-harness/scripts/gen-ig-pages.ts" },
+      io: {
+        inputs: [
+          { name: "instance", schema: t("RepoPath"), required: true, description: "The instance directory: holds `fhir-artifact-index/` and receives `docs/`." },
+          { name: "label", schema: t("Text"), required: false, description: "The IG's display name. The index carries only the package id, which stands in when this is absent." },
+          { name: "chrome-owner", schema: t("Text"), required: false, description: "The instance whose `chrome.json` styles the pages. Absent, the pages are unstyled and the build says so. The banner's identity is always the index's; a chrome ingested from another IG lends its tokens, never its status." },
+          { name: "summary", schema: t("Flag"), required: false, description: "Open the index page with the instance's own declaration (`harness_details.html` with `instance=`), making it the instance's landing page." },
+          { name: "check", schema: t("Flag"), required: false, description: "Write nothing; exit 1 when any page is stale or orphaned." },
+        ],
+        outputs: [
+          { name: "pages", schema: t("Count"), description: "Pages written; the menu and chrome are reported as present or COULD NOT DETERMINE, never silently absent." },
+        ],
+      },
+      satisfies: ["ig-build-pipeline"],
+      selection: {
+        when: "An ingested IG needs a URL on the docs site and its source repository is not at hand.",
+        limits:
+          "Narrative pages are not held — the harvest keeps artefacts — so menu entries link upstream. Bodies are still partly HTML inside markdown (`jut3`).",
+        cost: "Seconds; one file per artefact.",
+      },
+      requires: { runtime: ["bun"], network: false },
+    }),
     // ── The IG AST (bean `a9tx`) ─────────────────────────────────────────────
     // The producer is `ast-export`, a library ON TOP of the IG Publisher in
     // litlfred/fhir-ig-publisher@claude/ast-export; the consumer is
