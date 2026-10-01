@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `large-datasets/processes/subscribe-kg.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `cat-harness/processes/subscribe-kg.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # Subscribe to an external knowledge graph
@@ -17,7 +17,7 @@ A SUBSCRIPTION IS NOT A NEW MECHANISM, and this diagram is where that claim is k
 
 A SUBSTRATE is a repository whose root declaration meets bootstrap's schema requirements and declares at least one harness (the owner's definition). Both are answerable from the declaration file alone, so validating one never needs the whole repository.
 
-WHY IT LIVES IN large-datasets, not cat-harness (proposal decision #3, default taken). It calls Process_MaterializeRemote and Process_RefreshMaterialized, which large-datasets owns, and names the kg-subscription and materialize-remote skills, which live in large-datasets/skills/. cat-harness needs only bootstrap, so a diagram there would run every one of those edges against the dependency arrow — the defect bean cjvs moved 25 skill refs out of cat-harness to remove. Here the calls are siblings and the remaining refs point down.
+WHY IT LIVES IN large-datasets, not cat-harness (proposal decision #3, default taken). It calls Process_MaterializeRemote and Process_RefreshMaterialized, which large-datasets owns, and names the kg-subscription and materialize-remote skills, which live in cat-harness/skills/library/large-datasets/. cat-harness needs only bootstrap, so a diagram there would run every one of those edges against the dependency arrow — the defect bean cjvs moved 25 skill refs out of cat-harness to remove. Here the calls are siblings and the remaining refs point down.
 
 STRICT. The pin and the five gates are the reason: an unpinned subscription is how two subscribers see two graphs under one name, and a copy that skipped the gates is the xom7 shape — a check nobody fails because it only ever warned.
 

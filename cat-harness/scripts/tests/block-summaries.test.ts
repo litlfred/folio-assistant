@@ -378,11 +378,12 @@ describe("a library whose owner holds summaries back (bean x80s)", () => {
   test("is named as held, and the drain never offers its blocks", async () => {
     const { heldLibraries, next } = await import("../summaries.ts");
     const held = heldLibraries(ROOT);
-    // The owner's 2026-09-24 decision, declared on agent-skills' own library entry.
-    expect(held.some((d) => d.endsWith("agent-skills/library"))).toBe(true);
+    // The owner's 2026-09-24 decision, declared on agent-skills' library and
+    // carried per entry when that corpus dissolved into cat-harness's (bean j7ql).
+    expect(held.some((d) => d.endsWith("library/arxiv-2607.25032v1"))).toBe(true);
     for (const b of next(ROOT, { n: 10_000 })) {
       expect(held.some((d) => d.endsWith(`/${b.entry}`) || existsSync(join(d, b.entry)))).toBe(false);
     }
-    expect(entryDirs(ROOT).some((e) => held.some((d) => e.startsWith(d + "/")))).toBe(false);
+    expect(entryDirs(ROOT).some((e) => held.some((d) => e === d || e.startsWith(d + "/")))).toBe(false);
   });
 });

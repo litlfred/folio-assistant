@@ -1,11 +1,11 @@
 ---
 # folio-assistant-j7ql
 title: 'S4-b: fold agent-skills and large-datasets into cat-harness concern groups (38 rows)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T12:16:24Z
-updated_at: 2026-10-01T12:16:25Z
+updated_at: 2026-10-01T13:47:16Z
 parent: folio-assistant-7x5n
 blocked_by:
     - folio-assistant-hx65

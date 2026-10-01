@@ -403,35 +403,35 @@ ArtifactStoreSchema.basis <span class="fa-gloss-status">candidate, extracted</sp
 </dt>
 <dd>
 <p>Why this store, in one sentence — it is a choice, and a choice with no reason cannot be revisited.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/artifact-store.ts"><code>large-datasets/schemas/artifact-store.ts#ArtifactStoreSchema.basis</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/artifact-store.ts"><code>cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.basis</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--artifact-store.artifactstoreschema.cachettlseconds" data-fa-state="extracted" data-fa-gloss="">
 ArtifactStoreSchema.cacheTtlSeconds <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>What a CDN in front of this store will hold onto. Absent means unstated, never zero.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/artifact-store.ts"><code>large-datasets/schemas/artifact-store.ts#ArtifactStoreSchema.cacheTtlSeconds</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/artifact-store.ts"><code>cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.cacheTtlSeconds</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--artifact-store.artifactstoreschema.immutableurls" data-fa-state="extracted" data-fa-gloss="">
 ArtifactStoreSchema.immutableUrls <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Whether the store's URLs are immutable once published. <code>true</code> means a re-publish MUST use a new path; <code>false</code> means readers may be served a cached old copy for up to <code>cacheTtlSeconds</code>.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/artifact-store.ts"><code>large-datasets/schemas/artifact-store.ts#ArtifactStoreSchema.immutableUrls</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/artifact-store.ts"><code>cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.immutableUrls</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--artifact-store.artifactstoreschema.maxartifactbytes" data-fa-state="extracted" data-fa-gloss="">
 ArtifactStoreSchema.maxArtifactBytes <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Largest single artifact, where the host states one. Absent means unstated, never unlimited.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/artifact-store.ts"><code>large-datasets/schemas/artifact-store.ts#ArtifactStoreSchema.maxArtifactBytes</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/artifact-store.ts"><code>cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.maxArtifactBytes</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--artifact-store.artifactstoreschema.publicbaseurl" data-fa-state="extracted" data-fa-gloss="">
 ArtifactStoreSchema.publicBaseUrl <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The base the artifact will be READABLE at. Required, and it is the &quot;EXTREME care in URL handling&quot; clause in schema form: a published URL is a promise, and the address has to be decided before the upload rather than discovered from whatever the host returned.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/artifact-store.ts"><code>large-datasets/schemas/artifact-store.ts#ArtifactStoreSchema.publicBaseUrl</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/artifact-store.ts"><code>cat-harness/schemas/artifact-store.ts#ArtifactStoreSchema.publicBaseUrl</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.assetroledef.delivery" data-fa-state="extracted" data-fa-gloss="">
 AssetRoleDef.delivery <span class="fa-gloss-status">candidate, extracted</span>
@@ -4418,35 +4418,35 @@ IdentifierSystemSchema.authoritative <span class="fa-gloss-status">candidate, ex
 </dt>
 <dd>
 <p>Whether this identifier is guaranteed by an authority outside the source. A Handle is; a DSpace UUID is the source's own; a local slug is neither. The distinction decides which identifier survives the source moving, and IRIS is the worked case — one of its two handles points at a regional instance that was merged away.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>large-datasets/schemas/source-descriptor.ts#IdentifierSystemSchema.authoritative</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>cat-harness/schemas/source-descriptor.ts#IdentifierSystemSchema.authoritative</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--id-lookup.identry.id" data-fa-state="extracted" data-fa-gloss="">
 IdEntry.id <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><code>kind/local</code>, lower-case, as the catalogue names the node.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#IdEntry.id</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>cat-harness/schemas/id-lookup.ts#IdEntry.id</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--id-lookup.identry.url" data-fa-state="extracted" data-fa-gloss="">
 IdEntry.url <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Where the node is held: the source's own page for it.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#IdEntry.url</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>cat-harness/schemas/id-lookup.ts#IdEntry.url</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--id-lookup.idlookupmanifestschema.selection" data-fa-state="extracted" data-fa-gloss="">
 IdLookupManifestSchema.selection <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Which nodes, and from where. A count with no statement of what was counted cannot be checked.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema.selection</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema.selection</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--id-lookup.idlookupmanifestschema.source" data-fa-state="extracted" data-fa-gloss="">
 IdLookupManifestSchema.source <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The corpus this indexes, by its instance name.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#IdLookupManifestSchema.source</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>cat-harness/schemas/id-lookup.ts#IdLookupManifestSchema.source</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--ig-chrome.igchromeconflictschema.kind" data-fa-state="extracted" data-fa-gloss="">
 IgChromeConflictSchema.kind <span class="fa-gloss-status">candidate, extracted</span>
@@ -6328,7 +6328,7 @@ NamespaceIndexSchema.shards <span class="fa-gloss-status">candidate, extracted</
 </dt>
 <dd>
 <p>Every shard file in this namespace, relative to it. A prefix not listed has no entries, so no request is needed to say so.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#NamespaceIndexSchema.shards</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>cat-harness/schemas/id-lookup.ts#NamespaceIndexSchema.shards</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--formalization-types.narrativemapping.context" data-fa-state="extracted" data-fa-gloss="">
 NarrativeMapping.context <span class="fa-gloss-status">candidate, extracted</span>
@@ -9337,7 +9337,7 @@ ShardSchema.entries <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p><code>[id, title, url]</code>, sorted by id. Arrays rather than objects: the keys would be most of the bytes.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>large-datasets/schemas/id-lookup.ts#ShardSchema.entries</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/id-lookup.ts"><code>cat-harness/schemas/id-lookup.ts#ShardSchema.entries</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--tabular-csvw.sheetanchorschema.cell" data-fa-state="extracted" data-fa-gloss="">
 SheetAnchorSchema.cell <span class="fa-gloss-status">candidate, extracted</span>
@@ -9750,42 +9750,42 @@ SourceDescriptorSchema.character <span class="fa-gloss-status">candidate, extrac
 </dt>
 <dd>
 <p>The characterisation the &quot;ingest a new data source&quot; process produces. Required — these are what decide how the source may be REFERENCED, and a descriptor that has not said cannot answer that question.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>large-datasets/schemas/source-descriptor.ts#SourceDescriptorSchema.character</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.character</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--source-descriptor.sourcedescriptorschema.nodekind" data-fa-state="extracted" data-fa-gloss="">
 SourceDescriptorSchema.nodeKind <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>What one node IS in this corpus. Different per source, and never assumed.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>large-datasets/schemas/source-descriptor.ts#SourceDescriptorSchema.nodeKind</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.nodeKind</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--source-descriptor.sourcedescriptorschema.subsetbasis" data-fa-state="extracted" data-fa-gloss="">
 SourceDescriptorSchema.subsetBasis <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Why <code>subsetIsSelfContained</code> has the value it has. Optional, because a self-contained source (IRIS: fetch an item and you have it) has little to say; the <code>false</code> case is the one that needs its reason recorded.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>large-datasets/schemas/source-descriptor.ts#SourceDescriptorSchema.subsetBasis</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.subsetBasis</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--source-descriptor.sourcedescriptorschema.subsetisselfcontained" data-fa-state="extracted" data-fa-gloss="">
 SourceDescriptorSchema.subsetIsSelfContained <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Whether a subset chosen by the strategies above stands on its own. <code>false</code> means every request must be closed over dependencies first.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>large-datasets/schemas/source-descriptor.ts#SourceDescriptorSchema.subsetIsSelfContained</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.subsetIsSelfContained</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--source-descriptor.sourcedescriptorschema.system" data-fa-state="extracted" data-fa-gloss="">
 SourceDescriptorSchema.system <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>The software, where there is some — <code>DSpace 7</code>, <code>Lean 4 / Lake</code>. Descriptors for one system are often reusable.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>large-datasets/schemas/source-descriptor.ts#SourceDescriptorSchema.system</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.system</code></a></p>
 </dd>
 <dt id="large-datasets--kg-schema-fields--source-descriptor.sourcedescriptorschema.termsurl" data-fa-state="extracted" data-fa-gloss="">
 SourceDescriptorSchema.termsUrl <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Whether the source states terms, and where. Feeds the <code>restrictions</code> and <code>copyright</code> gates; <code>unknown</code> stays unknown.</p>
-<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>large-datasets/schemas/source-descriptor.ts#SourceDescriptorSchema.termsUrl</code></a></p>
+<p class="fa-gloss-meta">Schema fields of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/schemas/source-descriptor.ts"><code>cat-harness/schemas/source-descriptor.ts#SourceDescriptorSchema.termsUrl</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--source-provenance.sourceprovenanceschema.local" data-fa-state="extracted" data-fa-gloss="">
 SourceProvenanceSchema.local <span class="fa-gloss-status">candidate, extracted</span>

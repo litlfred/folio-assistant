@@ -446,7 +446,7 @@ copy-out-materialized <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Materialized content is read-only. To work on it you take a copy into your own folio/, and the copy records what it is a copy of — the local-provenance edge, which is not the upstream one.</p>
-<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/copy-out-materialized.md"><code>large-datasets/skills/copy-out-materialized.md</code></a></p>
+<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/copy-out-materialized.md"><code>cat-harness/skills/library/large-datasets/copy-out-materialized.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--corpus-grep" data-fa-state="extracted" data-fa-gloss="">
 corpus-grep <span class="fa-gloss-status">candidate, extracted</span>
@@ -1097,7 +1097,7 @@ kg-subscription <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Subscribing a folio or harness to an external knowledge graph — a substrate — and walking its parts from referenced to materialised, one at a time and only through the shared materialisation gates. When to subscribe, what makes a repository a substrate, choosing subgraphs, assets and harnesses, the five gates, instantiating a harness so it reaches the navbar, moving the pin, and what never to do.</p>
-<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/kg-subscription.md"><code>large-datasets/skills/kg-subscription.md</code></a></p>
+<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/kg-subscription.md"><code>cat-harness/skills/library/large-datasets/kg-subscription.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--kg-to-portal" data-fa-state="extracted" data-fa-gloss="">
 kg-to-portal <span class="fa-gloss-status">candidate, extracted</span>
@@ -1294,14 +1294,14 @@ materialize-on-demand <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>After bootstrap, a person asks for part of a remote subgraph to be held locally. Check what is already here (cache:index), put a number on the ask before anything is fetched, then run materialize-remote. Eviction is a report, never an act.</p>
-<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-on-demand.md"><code>large-datasets/skills/materialize-on-demand.md</code></a></p>
+<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-on-demand.md"><code>cat-harness/skills/library/large-datasets/materialize-on-demand.md</code></a></p>
 </dd>
 <dt id="large-datasets--kg-skills--materialize-remote" data-fa-state="extracted" data-fa-gloss="">
 materialize-remote <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Landing remote content locally — the five gates, the three states, and the two purposes. One process, shared by catalogue import and harness bootstrap, plus the refresh that is not a re-import.</p>
-<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-remote.md"><code>large-datasets/skills/materialize-remote.md</code></a></p>
+<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/materialize-remote.md"><code>cat-harness/skills/library/large-datasets/materialize-remote.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--mcp-assembly" data-fa-state="extracted" data-fa-gloss="">
 mcp-assembly <span class="fa-gloss-status">candidate, extracted</span>
@@ -1773,7 +1773,7 @@ sample-import <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
 <p>Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied.</p>
-<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/sample-import.md"><code>large-datasets/skills/sample-import.md</code></a></p>
+<p class="fa-gloss-meta">Skills of large-datasets · source <a href="https://github.com/litlfred/folio-assistant/blob/main/large-datasets/skills/sample-import.md"><code>cat-harness/skills/library/large-datasets/sample-import.md</code></a></p>
 </dd>
 <dt id="cat-harness--kg-skills--schema-management" data-fa-state="extracted" data-fa-gloss="">
 schema-management <span class="fa-gloss-status">candidate, extracted</span>
