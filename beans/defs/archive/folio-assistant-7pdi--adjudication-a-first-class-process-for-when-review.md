@@ -336,7 +336,7 @@ over `processes/*.bpmn` and `src/`:
   both moved out. For where they are now and why, read the skill rather than
   this bean:
 
-  > [`skills/folio-core/adjudication.md`](../../../cat-harness/skills/folio-core/adjudication.md)
+  > [`skills/folio-core/adjudication.md`](../../../cat-harness/skills/sdlc/sdlc-core/adjudication.md)
   > §"One judgement, six questions — and the split that followed"
 
   Removed rather than re-synced, per `AGENTS.md`'s rule — *where a skill and a

@@ -818,9 +818,29 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
     validator: "cat-harness:schemas/external-schema.ts#ExternalSchemaSchema",
+    // A SECOND family in the same directory — bean `7wou`. A record pins an
+    // edition; this is that edition's CONTENT, snapshotted so
+    // `check:term-mapping`'s fhir half can assert "this code is in the
+    // published IG at version X" offline. The directory is a place to look
+    // and the file declares what it is, which is why `loadSpecs` now reads
+    // `$schema` instead of parsing every `*.json` as a record.
+    // BOTH families are listed. Declaring `nodeSchemas` at all makes this the
+    // complete account of the directory, so the record's own family has to
+    // appear beside the new one — `check:kind-validators` reports an unlisted
+    // family as unmapped, which is the right answer and the reason the
+    // kind-level `validator` above is not a fallback.
+    nodeSchemas: {
+      "folio-external-schema/v1": {
+        validator: "schemas/external-schema.ts#ExternalSchemaSchema",
+      },
+      "folio-pinned-terminology/v1": {
+        validator: "schemas/pinned-terminology.ts#PinnedTerminologySchema",
+      },
+    },
     summary:
       "The specifications this instance depends on — one record per specification, pinning the " +
-      "EDITION in use, with the operative terms derived from the corpus rather than hand-listed.",
+      "EDITION in use, with the operative terms derived from the corpus rather than hand-listed; " +
+      "and, beside a record, the pinned edition's own codes where something resolves against them.",
   },
   // Code lists — a closed set of codes, each with a label, a definition and a
   // source, published as a SKOS concept scheme (schemas/code-list.ts). Owner,
@@ -1369,6 +1389,16 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
       // measure coverage on, no `xref` to dedupe by and no pixel to inspect,
       // so `role` and `basis` would each mean two things.
       "folio-vector-labels/v1": { validator: "schemas/vector-labels.ts#VectorLabelsSidecarSchema" },
+      // The JUDGEMENT half of the vector arm — bean `a8wy`. Stands to
+      // `folio-vector-labels` as `folio-image-verdicts` stands to
+      // `folio-document-images`: the measurement says where every text line
+      // sits, this says what somebody reading them concluded, and its
+      // required `basis` records whether they rendered the page. A
+      // labels-only reading gets the nouns right and the relations wrong, so
+      // a reader has to be able to tell the two apart.
+      "folio-figure-descriptions/v1": {
+        validator: "schemas/figure-description.ts#FigureDescriptionsFileSchema",
+      },
       // Agent summaries of prose blocks, beside the blocks rather than in
       // them — the blocks stay verbatim and `ingested` (owner, 2026-09-24).
       // The semantic half of its QA is `block-summaries` in check-l1-complete.

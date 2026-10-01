@@ -269,7 +269,7 @@ gap that says it is a gap — a reader who sees the tick stops asking.
 ### The agentic round trip — an INSTANCE of untainted verification
 
 **The discipline is generic and lives in
-[`untainted-verification`](../../folio-core/untainted-verification.md)**: the two parties, why
+[`untainted-verification`](../../sdlc/sdlc-core/untainted-verification.md)**: the two parties, why
 neither may see what would let it shortcut, the `TOOLS_USED` declaration that
 is recorded rather than assumed, which party rules, how both are written as
 witnesses, the `model` / `model_source` rule, and the two traps — a sweep

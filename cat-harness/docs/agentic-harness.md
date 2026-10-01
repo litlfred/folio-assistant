@@ -122,7 +122,7 @@ classification determines which workflow the agent enters.
 | **Content authoring** | Write, edit, extend folio content (chapters, blocks, sections) | Authoring workflow (paper or document) |
 | **Content review** | Review, validate, provide feedback on existing content | Content lifecycle / editing-HCI workflow |
 | **Content ingestion** | Ingest a source document into the folio | Document ingestion workflow |
-| **Feature request** | Request new platform capability (see [crdm-detect](../skills/crdm/crdm-detect.md)) | CRDM requirements workflow |
+| **Feature request** | Request new platform capability (see [crdm-detect](../skills/sdlc/crdm/crdm-detect.md)) | CRDM requirements workflow |
 | **Information request** | Ask about the platform, content, or process | No workflow — answer directly |
 | **Tool invocation** | Run a specific tool (`content_validate`, `qa_sweep`, etc.) | No workflow — execute and report |
 | **Work-plan management** | Create, update, or query beans | No workflow — execute and report |
@@ -132,7 +132,7 @@ classification determines which workflow the agent enters.
 
 The critical classification boundary is between **content authoring** and
 **feature request**. The `crdm-detect` skill
-([`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md))
+([`skills/sdlc/crdm/crdm-detect.md`](../skills/sdlc/crdm/crdm-detect.md))
 provides the detailed detection signals. The summary rule:
 
 > If implementing the request would require changes to **folio-assistant**
@@ -274,7 +274,7 @@ requirements workflow existed only as ad-hoc conversation.
 
 ### How the agent enters CRDM
 
-The detection logic is in [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md).
+The detection logic is in [`skills/sdlc/crdm/crdm-detect.md`](../skills/sdlc/crdm/crdm-detect.md).
 Three scenarios:
 
 **New session, first request is a feature:**
@@ -398,17 +398,17 @@ back to its authoritative sources.
 | Behaviour | Source skill / document | Location |
 |---|---|---|
 | Session start sweep | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
-| Bean protocol | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../skills/folio-core/) |
+| Bean protocol | `todo-manager.md`, `bean-coordination.md` | [`skills/sdlc/sdlc-core/`](../skills/sdlc/sdlc-core/) |
 | Commit and PR discipline | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Feature-request detection | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../skills/crdm/crdm-detect.md) |
-| CRDM requirements workflow | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../skills/crdm/crdm-requirements-workflow.md) |
+| Feature-request detection | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../skills/sdlc/crdm/crdm-detect.md) |
+| CRDM requirements workflow | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../skills/sdlc/crdm/crdm-requirements-workflow.md) |
 | Content authoring (paper) | authoring-math skills | [`skills/authoring/authoring-math/`](../skills/authoring/authoring-math/) |
 | Content authoring (document) | folio-document-adapter skills | [`skills/authoring/folio-document-adapter/`](../skills/authoring/folio-document-adapter/) |
 | Content lifecycle | content-lifecycle skills | [`skills/authoring/content-lifecycle/`](../skills/authoring/content-lifecycle/) |
 | Document ingestion | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../skills/ui/ui-core/docs-generation.md) |
-| Dispatch and coordination | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../skills/folio-core/) |
+| Dispatch and coordination | `dispatch-agent.md`, `coordinate.md` | [`skills/sdlc/sdlc-core/`](../skills/sdlc/sdlc-core/) |
 | Content types and adapters | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |
-| BPMN diagram authoring | `bpmn-authoring` skill | [`skills/folio-core/`](../skills/folio-core/) |
+| BPMN diagram authoring | `bpmn-authoring` skill | [`skills/process/workflow/`](../skills/process/workflow/) |
 
 **When a skill and this page disagree, the skill wins.** This page is a
 consolidation, not a new authority. If you find a discrepancy, fix this page.

@@ -232,7 +232,7 @@ that was not checked is a guess."* Two Done-when rows stay open on it.
 
 ## Two drift hazards found in passing, one fixed
 
-`skills/folio-core/feature-staging.md` described a **"yellow staging
+`skills/sdlc/sdlc-core/feature-staging.md` described a **"yellow staging
 banner"** — stale since the contrast fix that replaced `#d946ef` (3.46:1
 against its own white text, failing AA) with `#4F6F52` (5.63:1). Fixed, with
 the measurement, so the next editor does not restore a colour for looking

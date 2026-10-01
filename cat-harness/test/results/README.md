@@ -24,13 +24,14 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`skill-register.qa-results.json`](skill-register.qa-results.json) | data |  |
 | [`source-licence.qa-results.json`](source-licence.qa-results.json) | data |  |
 | [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
+| [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
 | [`block-qa/`](block-qa/) | 122 files | |
 | [`bootstrap/`](bootstrap/) | 16 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 3 files | |
-| [`detangle/`](detangle/) | 39 files | |
-| [`kg-qa/`](kg-qa/) | 564 files | |
-| [`library-qa/`](library-qa/) | 48 files | |
+| [`detangle/`](detangle/) | 40 files | |
+| [`kg-qa/`](kg-qa/) | 565 files | |
+| [`library-qa/`](library-qa/) | 51 files | |
 | [`lsi/`](lsi/) | 5 files | |
 | [`tool-runs/`](tool-runs/) | 3 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |

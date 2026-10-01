@@ -14,6 +14,16 @@ built *before* the DAK phases were added, so it is a shape that demonstrably
 worked rather than a design invented here — and it is what any non-WHO
 implementation guide instantiates.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Scope](#scope)
+- [Two steps came down from the WHO build](#two-steps-came-down-from-the-who-build)
+- [Skills](#skills)
+
+<!-- readme:toc:end -->
+
 ## Scope
 
 | in | out |

@@ -1,7 +1,7 @@
 ---
 name: compute-integration-watcher
 user_invocable: true
-inherits: folio-core/integration-watcher
+inherits: sdlc-core/integration-watcher
 watch_arg: compute
 description: >
   Cross-layer wiring auditor — watches for newly-landed formal/analytic

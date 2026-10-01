@@ -9,6 +9,17 @@ arrangement as [`who-iris/`](../who-iris/),
 [`folio-assistant-sci/`](../folio-assistant-sci/) and
 [`folio-assistant-core/`](../folio-assistant-core/).
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [The three](#the-three)
+- [Why the citations point somewhere else](#why-the-citations-point-somewhere-else)
+- [What is not here](#what-is-not-here)
+- [Checking it](#checking-it)
+
+<!-- readme:toc:end -->
+
 ## The three
 
 | voice | read from | rules |

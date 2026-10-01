@@ -25,4 +25,4 @@ This is the skill's own rule 4 ("a window boundary is an artefact") one level do
 
 ## Summary of Changes
 
-Amended `cat-harness/skills/folio-core/goal-review.md` (and `.claude/commands/goal-review.md` for tjj6) on branch claude/magical-archimedes-4qkfxp-goal-review-gaps; every done-when box addressed in the skill text.
+Amended `cat-harness/skills/sdlc/sdlc-core/goal-review.md` (and `.claude/commands/goal-review.md` for tjj6) on branch claude/magical-archimedes-4qkfxp-goal-review-gaps; every done-when box addressed in the skill text.

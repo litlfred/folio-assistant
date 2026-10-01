@@ -16,6 +16,22 @@ description: "ar: 30/38 — من المصطلحات المحرَّرة مترج�
 
 **30 / 38** من المصطلحات المحرَّرة مترجَمة بالكامل. هذه الترجمات غير رسمية: صاغها وكيل ذكي ولم يعتمدها شخص بعد (issue #206). النص المعلَّم بأنه غير مترجَم هو النص الأصلي، ويُعرَض بدل إخفائه.
 
+## Already somebody else's concept? _(غير مترجَم)_
+
+Extracted candidates are minted from this repository's own assets and are not, by themselves, checked against any vocabulary. `check:term-mapping` asks whether each already exists as a concept somebody is authoritative for — SKOS for what a term MEANS, FHIR for a clinical code's operational semantics — and the two are separate questions with separate answers. _(غير مترجَم)_
+
+The table's labels are in the source language: it reports counts per scheme, computed by the gate rather than authored here. _(غير مترجَم)_
+
+<table class="fa-gloss-mapping">
+<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
+<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2724</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2724</td><td>0</td><td>—</td></tr></tbody>
+</table>
+<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
+A vocabulary that could not be reached has said nothing, and the column above keeps that 
+apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
+be a term this corpus is right to coin.</p>
+
 ## الصفحات
 
 لا تُترجَم المرشّحات المستخرَجة: فهي مأخوذة حرفياً من أصول الرسم البياني المعرفي وغير مُراجَعة. صفحاتها بلغة المصدر. [المسرد بلغة المصدر، مع جميع المصطلحات المستخرَجة]({{ '/glossary/' | relative_url }}).

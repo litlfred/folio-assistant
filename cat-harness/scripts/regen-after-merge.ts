@@ -126,6 +126,16 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
   // `no-writer`. #1550 went red on this one while regen reported "63 current,
   // 0 regenerated". `prov-qaqc.ts` without `--check` rewrites the page.
   "check:prov-qaqc": "prov:qaqc",
+  // Same bean, one gate later: `check:term-mapping` arrived with #1633 and is
+  // a genuine pair — `check-term-mapping.ts` without `--check` REWRITES
+  // `test/results/term-mapping.qa-results.json`, which the `--check` form
+  // compares against. Declared here rather than inferred from the name,
+  // because the writer is spelled `term:mapping` where the check is spelled
+  // `check:term-mapping`, and because inference is what got `check:raci` and
+  // `check:subgraphs` wrong: an earlier version of this fix on #1633 paired
+  // both by name, ran commands that repair nothing, and reported `unrepaired`
+  // — the verdict about the tool that `NO_WRITER` below exists to prevent.
+  "check:term-mapping": "term:mapping",
   // Found by MEASURING, not from uju6's list of four (2026-09-30): every
   // `check:X` whose command is some writer's command plus ` --check`. Main went
   // red on `check:glossary` at 7bdda74 while regen, not knowing this pair,
