@@ -9,11 +9,11 @@ updated_at: 2026-09-30T15:00:28Z
 parent: folio-assistant-tr05
 ---
 
-Owner 2026-09-30: Typed SkillRef. 7 files → folio-core/integration-watcher (6 used local/, 1 bare); resolved by resolveSkillRef in a check.
+Owner 2026-09-30: Typed SkillRef. 7 files → sdlc-core/integration-watcher (6 used local/, 1 bare); resolved by resolveSkillRef in a check.
 ## Done when
 - [ ] all 7 values resolve; a check fails on one that does not
 
 
 
 ## Done
-7 values → folio-core/integration-watcher; skill-refs.test resolves every skill inherits: (local/integration-watcher resolves missing, verified).
+7 values → sdlc-core/integration-watcher; skill-refs.test resolves every skill inherits: (local/integration-watcher resolves missing, verified).

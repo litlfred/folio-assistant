@@ -80,7 +80,7 @@ describe("localeSegmentIndex — a locale directory at ANY depth", () => {
 describe("depthSensitive — a link whose meaning does not depend on where the page sits", () => {
   test("a relative path is", () => {
     expect(depthSensitive("reference/skills/x.html")).toBe(true);
-    expect(depthSensitive("../skills/crdm/crdm-detect.md")).toBe(true);
+    expect(depthSensitive("../skills/sdlc/crdm/crdm-detect.md")).toBe(true);
   });
 
   test("site-absolute, fragment-only and external are NOT", () => {

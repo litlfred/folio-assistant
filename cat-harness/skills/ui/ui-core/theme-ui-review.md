@@ -119,7 +119,7 @@ to diverge on a value the CSS must agree on.
 A finding goes back to whoever authored the choice, **because the choice was
 theirs**. There is no mapping to correct instead, and a reviewer who quietly
 re-themes a note has substituted their judgement for the author's without saying
-so — which is the same objection [`decision-audit`](../../folio-core/decision-audit.md) makes to
+so — which is the same objection [`decision-audit`](../../sdlc/sdlc-core/decision-audit.md) makes to
 editing a finding rather than overruling it with a note.
 
 The one exception is the one this repository already allows everywhere: a defect

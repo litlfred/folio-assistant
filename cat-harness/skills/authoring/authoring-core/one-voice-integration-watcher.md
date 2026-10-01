@@ -1,7 +1,7 @@
 ---
 name: one-voice-integration-watcher
 user_invocable: true
-inherits: folio-core/integration-watcher
+inherits: sdlc-core/integration-watcher
 watch_arg: one-voice
 description: >
   One-voice integration watcher — watches origin/main + open active
@@ -23,7 +23,7 @@ allowed-tools: Read Edit Write Bash Grep Glob Agent Monitor Skill
 
 # /one-voice-integration-watcher
 
-A concrete instance of [`local/integration-watcher`](../../folio-core/integration-watcher.md).
+A concrete instance of [`local/integration-watcher`](../../sdlc/sdlc-core/integration-watcher.md).
 The parent encodes the shared mechanics (Monitor, subscriptions,
 queue, ledger, idle sweep, author-ask, watch-PRs-you-prepare,
 sibling-PR comment protocol, witness-drift recovery, billing

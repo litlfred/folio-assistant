@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /before-after-preview
 
-Run the `before-after-preview` skill. Read [`cat-harness/skills/folio-core/before-after-preview.md`](../../cat-harness/skills/folio-core/before-after-preview.md) and follow it.
+Run the `before-after-preview` skill. Read [`cat-harness/skills/sdlc/sdlc-core/before-after-preview.md`](../../cat-harness/skills/sdlc/sdlc-core/before-after-preview.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

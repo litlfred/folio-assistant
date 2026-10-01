@@ -233,14 +233,14 @@ record no holder, and `beans:claim` answered "go ahead" for every one of them
 closing your own bean, `--body-append`, `--blocked-by`.
 
 **The discipline is in the skill, not here.**
-[`skills/folio-core/todo-manager.md`](cat-harness/skills/folio-core/todo-manager.md) carries
+[`skills/sdlc/sdlc-core/todo-manager.md`](cat-harness/skills/sdlc/sdlc-core/todo-manager.md) carries
 the store itself, including §"Check before you create" — `beans create` is
 **not idempotent** and dedupes on nothing, which is how an unguarded re-run once
 produced **14,688** duplicates, 92 % of every open bean in that repo.
-[`opening-brief.md`](cat-harness/skills/folio-core/opening-brief.md) and
-[`turn-reporting.md`](cat-harness/skills/folio-core/turn-reporting.md) carry the brief you
+[`opening-brief.md`](cat-harness/skills/sdlc/sdlc-core/opening-brief.md) and
+[`turn-reporting.md`](cat-harness/skills/sdlc/sdlc-core/turn-reporting.md) carry the brief you
 open a topic with and the turn-report formats with their seven rules.
-[`skills/folio-core/bean-coordination.md`](cat-harness/skills/folio-core/bean-coordination.md)
+[`skills/sdlc/sdlc-core/bean-coordination.md`](cat-harness/skills/sdlc/sdlc-core/bean-coordination.md)
 carries the cross-session half: **claim before you work** — and §"A claim is
 branch-local" for why a claim **announces rather than reserves** until your PR
 exists, with the two checks to run first; §"Closing a bean whose work has
@@ -316,7 +316,7 @@ repository saying so. Bean `xom7`.
 GitHub holds *about* this repository rather than one the repository holds, so
 it is asked externally every run and cached nowhere. The session-start sweep
 prints both.
-[`skills/folio-core/ci-health.md`](cat-harness/skills/folio-core/ci-health.md) carries the
+[`skills/sdlc/sdlc-core/ci-health.md`](cat-harness/skills/sdlc/sdlc-core/ci-health.md) carries the
 three rules for reading it — "could not check" is never green, a red that has
 not re-run in a week is *possibly stale*, and a red whose workflow file changed
 after the failing run is `superseded` — plus why a report alone cannot cover the
@@ -461,7 +461,7 @@ once it is available. Run the pieces by hand with `beans prime`, `beans list`,
 `beans roadmap`.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/todo-manager.md`](cat-harness/skills/folio-core/todo-manager.md) carries
+[`skills/sdlc/sdlc-core/todo-manager.md`](cat-harness/skills/sdlc/sdlc-core/todo-manager.md) carries
 the fallback's commands and why a read-only one is no fallback for an agent, the
 2026-09-18 session that did two merged PRs' worth of work **unclaimed**, and
 what the session-start sweep emits and in what order. Set `BEANS_CHECKOUT_ROOT`
@@ -481,9 +481,9 @@ When a user request is a **feature request** (platform capability change rather
 than content work), the agent enters the
 [CRDM requirements workflow](https://litlfred.github.io/folio-assistant/crdm-methodology.html)
 rather than implementing directly. Detection signals and session-state handling
-are in [`skills/crdm/crdm-detect.md`](cat-harness/skills/crdm/crdm-detect.md);
+are in [`skills/sdlc/crdm/crdm-detect.md`](cat-harness/skills/sdlc/crdm/crdm-detect.md);
 the full six-phase process is in
-[`skills/crdm/crdm-requirements-workflow.md`](cat-harness/skills/crdm/crdm-requirements-workflow.md).
+[`skills/sdlc/crdm/crdm-requirements-workflow.md`](cat-harness/skills/sdlc/crdm/crdm-requirements-workflow.md).
 
 **The CRDM process is executable — do not hand-roll a phase tracker.**
 `processes/crdm-requirements.bpmn` loads like every other diagram here,
@@ -507,12 +507,12 @@ the *pointer*, with the skill as the text:
 
 | rule | where it lives |
 |---|---|
-| feature work is linked to a GitHub issue — scan before creating one, and never create one without permission | [`crdm-detect`](cat-harness/skills/crdm/crdm-detect.md) §"Issue association" |
-| branch, commit, push and open the PR — from commit #1, never asking permission | [`continual-progress`](cat-harness/skills/folio-core/continual-progress.md) invariant 1 |
-| explicit user confirmation before merging to `main` | [`crdm-requirements-workflow`](cat-harness/skills/crdm/crdm-requirements-workflow.md) §"Phase 6 — Iterative development" |
-| a round summary on the ISSUE, not only on the PR — **after each round**, not only at merge | [`issue-working`](cat-harness/skills/folio-core/issue-working.md), [`crdm-requirements-workflow`](cat-harness/skills/crdm/crdm-requirements-workflow.md) |
-| issue, PR and bean are three different objects — sign-off, code review, work plan | [`issue-working`](cat-harness/skills/folio-core/issue-working.md) §"What an issue is *for*, against its neighbours" |
-| an agent never closes an issue on its own say-so | [`issue-working`](cat-harness/skills/folio-core/issue-working.md), and `crdm-close.bpmn` executes it |
+| feature work is linked to a GitHub issue — scan before creating one, and never create one without permission | [`crdm-detect`](cat-harness/skills/sdlc/crdm/crdm-detect.md) §"Issue association" |
+| branch, commit, push and open the PR — from commit #1, never asking permission | [`continual-progress`](cat-harness/skills/sdlc/sdlc-core/continual-progress.md) invariant 1 |
+| explicit user confirmation before merging to `main` | [`crdm-requirements-workflow`](cat-harness/skills/sdlc/crdm/crdm-requirements-workflow.md) §"Phase 6 — Iterative development" |
+| a round summary on the ISSUE, not only on the PR — **after each round**, not only at merge | [`issue-working`](cat-harness/skills/sdlc/sdlc-core/issue-working.md), [`crdm-requirements-workflow`](cat-harness/skills/sdlc/crdm/crdm-requirements-workflow.md) |
+| issue, PR and bean are three different objects — sign-off, code review, work plan | [`issue-working`](cat-harness/skills/sdlc/sdlc-core/issue-working.md) §"What an issue is *for*, against its neighbours" |
+| an agent never closes an issue on its own say-so | [`issue-working`](cat-harness/skills/sdlc/sdlc-core/issue-working.md), and `crdm-close.bpmn` executes it |
 
 Six rows for seven bullets: *"use a feature branch"* and *"always PR"* were
 two statements of one invariant, and `continual-progress` already states it as
@@ -549,7 +549,7 @@ else's: **announce the branch when you create it**, not when you finish, and
 comment keeps its id, and an edited requirement is a changed requirement.
 The discipline, the two marks to track, and the session that missed five
 owner comments in eighty-four minutes are in
-[`skills/folio-core/issue-working.md`](cat-harness/skills/folio-core/issue-working.md).
+[`skills/sdlc/sdlc-core/issue-working.md`](cat-harness/skills/sdlc/sdlc-core/issue-working.md).
 It also carries what an issue is *for* against a PR and a bean, and the rule
 that an agent never closes one on its own say-so.
 
@@ -566,7 +566,7 @@ look at it** — that is the rule agents invert in the name of care, and inverti
 it is not caution, it is a blocked reviewer.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/continual-progress.md`](cat-harness/skills/folio-core/continual-progress.md)
+[`skills/sdlc/sdlc-core/continual-progress.md`](cat-harness/skills/sdlc/sdlc-core/continual-progress.md)
 carries the five invariants, why a human cannot assess a rendered artefact from
 a description of it (measured on PR #178, 2026-09-16), what to do with the thing
 you could not verify, and the three narrow exceptions — none of which is "I am
@@ -600,7 +600,7 @@ agent enforcing it: **with several decisions open, ask ONE in full and give a
 COUNT for the rest** — never a compact list of option names — and a
 **write-time pass** over the report you actually wrote, since the failure
 happens while composing a status update rather than a question
-([`turn-reporting.md`](cat-harness/skills/folio-core/turn-reporting.md)).
+([`turn-reporting.md`](cat-harness/skills/sdlc/sdlc-core/turn-reporting.md)).
 
 ## Opening a bean or a topic — brief it before you touch anything (STRICT)
 
@@ -612,7 +612,7 @@ provenance; how do I plan to do it, what will I verify against, and **what would
 falsify the approach**. Then what you are *not* doing, and why.
 
 **The discipline is in the skill, not here** —
-[`skills/folio-core/opening-brief.md`](cat-harness/skills/folio-core/opening-brief.md)
+[`skills/sdlc/sdlc-core/opening-brief.md`](cat-harness/skills/sdlc/sdlc-core/opening-brief.md)
 carries the four parts, when the rule applies (the trigger is
 **irreversibility and surprise**, not line count), a worked ~200-word brief, the
 thin one that fails and why, and the cheapest correct move when you do not want
@@ -677,10 +677,10 @@ to spend the words: **do not start the topic.**
   Bean status defaults to **non-blocking**; a real block carries what it waits
   on, since, an **expiry** and a handoff, because a block with no expiry cannot
   be told from abandoned work —
-  [`skills/folio-core/bean-blocking.md`](cat-harness/skills/folio-core/bean-blocking.md).
+  [`skills/sdlc/sdlc-core/bean-blocking.md`](cat-harness/skills/sdlc/sdlc-core/bean-blocking.md).
   A swarm is **asked for every time**, per swarm, with agent count, model level
   and rough cost —
-  [`skills/folio-core/swarm-management.md`](cat-harness/skills/folio-core/swarm-management.md)
+  [`skills/sdlc/sdlc-core/swarm-management.md`](cat-harness/skills/sdlc/sdlc-core/swarm-management.md)
   and the [reader-facing page](cat-harness/docs/swarm-management.md).
 - **An instance declares the directories it scans — `<instance>.json` at that
   instance's own root.** Each entry names a directory and the **kind of graph**
@@ -747,7 +747,7 @@ to spend the words: **do not start the topic.**
   folio's **content-type-specific** gates (paper → content_validate / qa_sweep /
   proof_status / latex_preflight / lean_build; WHO IG → fhir-validation / QC),
   then pushes. It does not merge. Command: `.claude/commands/prepare-merge.md`;
-  full discipline: `skills/folio-core/prepare-merge.md`.
+  full discipline: `skills/sdlc/sdlc-core/prepare-merge.md`.
 - Watching a sibling PR — `/watch <pr|branch>` subscribes to a PR's CI / review /
   comment activity and follows through until it's merged or closed:
   `.claude/commands/watch.md`.

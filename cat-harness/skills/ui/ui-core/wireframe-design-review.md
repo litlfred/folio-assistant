@@ -71,5 +71,5 @@ There are no scores and no averages (`methodology-adoption`, Refusals).
 ## Related
 
 - [`theme-ui-review`](theme-ui-review.md): reviews the **ingested graphical assets** in their design, also at both viewports. At ingestion only (bean `9fdi`) — it no longer reviews the built result.
-- [`adjudication`](../../folio-core/adjudication.md)
+- [`adjudication`](../../sdlc/sdlc-core/adjudication.md)
 - [`methodology-adoption`](../../process/process-core/methodology-adoption.md)

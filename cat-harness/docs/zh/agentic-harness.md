@@ -96,7 +96,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 | **内容撰写** | 编写、编辑、扩充 folio 内容（章节、块、小节） | 撰写工作流（论文或文档） |
 | **内容评审** | 评审、验证现有内容并提供反馈 | 内容生命周期 / editing-HCI 工作流 |
 | **内容摄取** | 将源文档摄取到 folio 中 | 文档摄取工作流 |
-| **功能需求** | 请求新的平台功能（参见 [crdm-detect](../../skills/crdm/crdm-detect.md)） | CRDM 需求工作流 |
+| **功能需求** | 请求新的平台功能（参见 [crdm-detect](../../skills/sdlc/crdm/crdm-detect.md)） | CRDM 需求工作流 |
 | **信息咨询** | 询问有关平台、内容或流程的问题 | 无工作流 — 直接回答 |
 | **工具调用** | 运行特定工具（`content_validate`、`qa_sweep` 等） | 无工作流 — 执行并报告 |
 | **工作计划管理** | 创建、更新或查询 beans | 无工作流 — 执行并报告 |
@@ -104,7 +104,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 ### 功能需求检测规则
 
-最关键的分类边界存在于**内容撰写**与**功能需求**之间。`crdm-detect` 技能（[`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md)）提供了详细的检测信号。总结性规则如下：
+最关键的分类边界存在于**内容撰写**与**功能需求**之间。`crdm-detect` 技能（[`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md)）提供了详细的检测信号。总结性规则如下：
 
 > 如果实现该请求需要修改 **folio-assistant**（平台仓库）而非 **folio 仓库**，则该请求属于新功能，智能体应当进入 CRDM 工作流。
 
@@ -182,7 +182,7 @@ _本页面生成自 [`content/docs/agentic-harness/`](https://github.com/litlfre
 
 ### 智能体如何进入 CRDM
 
-检测逻辑位于 [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md)。三种场景：
+检测逻辑位于 [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md)。三种场景：
 
 **新会话，首个请求即为功能需求：**
 → 确认请求，说明将首先协助梳理需求，进入阶段 1。
@@ -285,8 +285,8 @@ CRDM 工作流在满足以下条件时退出：
 | 会话启动巡检 | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | Bean 协议 | `todo-manager.md`、`bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | 提交与 PR 纪律 | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| 功能需求检测 | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
-| CRDM 需求工作流 | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
+| 功能需求检测 | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
+| CRDM 需求工作流 | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
 | 内容撰写（论文） | authoring-math 技能 | [`skills/authoring/authoring-math/`](../../skills/authoring/authoring-math/) |
 | 内容撰写（文档） | folio-document-adapter 技能 | [`skills/authoring/folio-document-adapter/`](../../skills/authoring/folio-document-adapter/) |
 | 内容生命周期 | content-lifecycle 技能 | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |

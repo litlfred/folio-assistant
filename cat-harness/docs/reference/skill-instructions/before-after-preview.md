@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/before-after-preview.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/before-after-preview.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/before-after-preview.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/before-after-preview.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/before-after-preview.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/before-after-preview.md){: .fa-edit-source }
 
 {% raw %}
 # /before-after-preview — show the reviewer the change, not a description of it
 
-> Skill id: `before-after-preview` · Package: `folio-core` · Issue: #1710 ·
+> Skill id: `before-after-preview` · Package: `sdlc-core` · Issue: #1710 ·
 > Bean: `y2jh` · Worked example: the Folio tab, #1693 / PR #1709
 
 [`continual-progress`](continual-progress.md) holds that **a human cannot

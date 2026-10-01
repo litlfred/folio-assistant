@@ -6,14 +6,14 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/visual-diff.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/visual-diff.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/visual-diff.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/visual-diff.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/visual-diff.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/visual-diff.md){: .fa-edit-source }
 
 {% raw %}
 # Visual diff — see a figure change
 
-> Skill id: `visual-diff` · Package: `folio-core` · Bean: `0rxe` · Epic: `q4jm`
+> Skill id: `visual-diff` · Package: `sdlc-core` · Bean: `0rxe` · Epic: `q4jm`
 
 For a figure, a diagram, a table, an equation or a simulator, the change a
 reviewer must judge is how the block LOOKS. The Markdown or SVG diff of a

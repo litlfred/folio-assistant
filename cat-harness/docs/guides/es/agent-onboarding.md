@@ -135,8 +135,8 @@ resuelva ni elimine el bean de un homólogo. No cree un almacén de tareas
 paralelo. No ejecute `beans create` para colas masivas generadas por máquinas (`*.qa.json`,
 archivos de testigos) — esas permanecen como JSON masivo.
 
-Disciplina completa: `skills/folio-core/todo-manager.md`,
-`skills/folio-core/bean-coordination.md`.
+Disciplina completa: `skills/sdlc/sdlc-core/todo-manager.md`,
+`skills/sdlc/sdlc-core/bean-coordination.md`.
 
 ## 7. Sidecars y ejes de QA
 

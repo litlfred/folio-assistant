@@ -17,8 +17,8 @@ solved here.
    *content* decision — change the prose, author a local term with its reason,
    or record that the vocabulary is wrong for this domain. Nothing covers this.
 2. **Two judges disagree about a mapping.** Already
-   [`adjudication`](../../cat-harness/skills/folio-core/adjudication.md) plus
-   [`untainted-verification`](../../cat-harness/skills/folio-core/untainted-verification.md).
+   [`adjudication`](../../cat-harness/skills/sdlc/sdlc-core/adjudication.md) plus
+   [`untainted-verification`](../../cat-harness/skills/sdlc/sdlc-core/untainted-verification.md).
    This must **call** them, never restate them: `adjudication.md` already
    defines the entry condition (*"entries for ONE criterion disagree"*) and
    consensus (*"entries of different kinds agree on one criterion"*), and

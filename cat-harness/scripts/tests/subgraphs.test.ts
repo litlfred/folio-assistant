@@ -159,11 +159,11 @@ describe("the entanglement report", () => {
   test("CRDM's relocations left no broken links behind — both of them", () => {
     // 13 were left by `g43o` (into `methodologies/crdm/`) and repaired when
     // this check first surfaced them. CRDM moved AGAIN on 2026-09-22, into
-    // `skills/crdm/`, so this guard is re-keyed: `methodology-crdm` is no
+    // `skills/sdlc/crdm/`, so this guard is re-keyed: `methodology-crdm` is no
     // longer a declared id, and a filter on it would now match nothing and
     // pass for the wrong reason — a guard that cannot fail, which is worse
     // than one that is absent because it reads as coverage.
-    const crdm = report.dangling.filter((d) => d.from.includes("skills/crdm/"));
+    const crdm = report.dangling.filter((d) => d.from.includes("skills/sdlc/crdm/"));
     expect(crdm.map((d) => `${d.from} → ${d.target}`)).toEqual([]);
     const raci = report.dangling.filter((d) => d.from.includes("skills/process/raci/"));
     expect(raci.map((d) => `${d.from} → ${d.target}`)).toEqual([]);

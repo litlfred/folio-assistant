@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-09-30T13:55:08Z
+updated_at: 2026-10-01T01:58:37Z
 parent: folio-assistant-vuip
 ---
 
@@ -32,3 +32,6 @@ A topic directory HOLDS packages: skills/<topic>/<package>/ (e.g. skills/kg/grap
 Step 1 landed in #1594: discovery is in scripts/skill-packages.ts, gate.ts no longer assumes kgRoots()[0], and skill_fetch serves a moved skill from its one holder.
 
 Next, the mechanism: one helper, packageDirsIn(kgDir), replacing the six one-level walks — skill-packages.ts:156, known-skills.ts:395, kg-export.ts:1236, gen-skill-docs.ts:583, validate-skills.ts:112, skill-register.ts:271 — plus skill-coverage.test.ts's p[1].
+
+
+*2026-10-01* — Step 8 merged in #1729: skills/sdlc/ holds crdm, spec-kit and a new sdlc-core package with the 46 SDLC skills from folio-core. folio-core now holds six: the tool surface (mcp-assembly, mcp-contract, mcp-projection, skills-and-tools, covered-is-not-reachable), waiting on w2gr, and upload-routes, which the classification could not place. Three more flat walks found and fixed on the way: registry.test, skill-manifest-coverage.test (#1689) and front-matter.test (#1729); skill_fetch's package_name list is now built from discovery.

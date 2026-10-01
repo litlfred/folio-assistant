@@ -79,7 +79,7 @@ same third state it would have been with no retry at all. Backoff makes that
 state rarer. It never converts it into a pass or a finding.
 
 That is the rule this repository applies everywhere else
-([`ci-health`](../../folio-core/ci-health.md), the QA third state, the health sweep) meeting
+([`ci-health`](../../sdlc/sdlc-core/ci-health.md), the QA third state, the health sweep) meeting
 this one: a check that retried hard and still could not look has **not**
 established anything, and must not render as clean.
 
@@ -117,5 +117,5 @@ rejected push.
 
 | | |
 |---|---|
-| the three states, and never rendering the third as clean | [`ci-health`](../../folio-core/ci-health.md) |
+| the three states, and never rendering the third as clean | [`ci-health`](../../sdlc/sdlc-core/ci-health.md) |
 | do not encode a constraint you have not verified | [`unverified-constraints`](unverified-constraints.md) |

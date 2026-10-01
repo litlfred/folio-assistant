@@ -52,7 +52,7 @@ doing it correctly is the one who gets bitten.
 
 Owner's pick: **"close in PR"**, which is the first of the fixes listed above, made the rule. The third one comes along as a report.
 
-- **The rule**: `skills/folio-core/bean-coordination.md` §"Complete it in the
+- **The rule**: `skills/sdlc/sdlc-core/bean-coordination.md` §"Complete it in the
   PR's own last commit". Complete the bean in the last commit of the PR that
   does its work, with the Done-when ticked and its evidence. A bean not yet
   done stays open with a note. Practised for eight beans on 2026-09-23 with no
