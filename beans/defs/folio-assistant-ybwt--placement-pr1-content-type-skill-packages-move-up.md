@@ -5,8 +5,10 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T05:31:12Z
-updated_at: 2026-10-01T05:31:19Z
+updated_at: 2026-10-01T08:15:15Z
 parent: folio-assistant-9umr
+blocked_by:
+    - folio-assistant-hx65
 ---
 
 PR1 of the approved placement proposal (owner rulings 2026-09-30; bean 9umr's eight groups; PR0 mechanisms in bean ejye). Move the content-type skill packages out of `cat-harness/skills/` to the instance that owns them, into the `content` / `library` concern group there:
@@ -48,3 +50,7 @@ kg-qa sidecars and `schemas/skills/<skill>/` travel with their skill. Role->skil
 **Needs the owner**: 8 orphaned `kg-detangle` sidecars (the moved groups; ~300 bytes each, numbers only) are removed in a SEPARATE commit marked for confirmation; the alternative is widening `kg-detangle`'s SCAN to the owners' `skills/`, which that script records as a person's decision.
 
 **Gates** (2026-10-01, after merging origin/main 9c3dd4227c4): 7 of 197 fail, the same 7 as 9962556 after `regen` (bun test: entanglement-report dangling + bootstrap render SVG + ingest fixtures; glossary:check:bootstrap; translate-bpmn:bootstrap:check; check:command-paths; check:l1-complete; check:subgraphs 4 links). The 7th is the bootstrap-tools README staleness, reported as readme:sync:all:check here and check:bootstrap-standalone on base. check:import-direction --all and kg:detangle:direction: clean.
+
+
+## 2026-10-01 — separation arc (7x5n)
+Merged (#1758 / #1760). Remaining boxes need green gates ON MAIN, which is red at cdb0a018, so this waits on S0 (hx65) and closes in S1 (a4of).

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-ybp4
 title: 'ADAPTERS CLOSURE step 2/2: adapters/document/ + its 6 consuming tests -> folio-assistant-core, escape axis 2 -> 0'
-status: in-progress
+status: completed
 type: task
 priority: high
 created_at: 2026-09-30T20:04:19Z
-updated_at: 2026-09-30T21:00:35Z
+updated_at: 2026-10-01T08:15:15Z
 parent: folio-assistant-vke6
 ---
 
@@ -118,4 +118,8 @@ cheap fix was never reachable from this route.
 - [x] typecheck program conserved, 24 -> 24, asserted rather than assumed
 - [x] the four silent-failure sites in the same commit
 - [x] `check:bean-bodies` and `init-folio.test.ts` fixed
-- [ ] CI green on the head that carries all of it
+- [x] CI green on the head that carries all of it (#1687 merged e3298fc5c66 on per-job verified green, per the 01MSKrDXE3 handover)
+
+
+## Summary of Changes
+adapters/document/ + 6 tests moved to folio-assistant-core in #1687 (e3298fc5c66), escape axis 2 -> 0, typecheck 24 -> 24. Closed 2026-10-01 by the separation arc (7x5n, S1 a4of) on that evidence.
