@@ -60,7 +60,7 @@ export const CACHE_FILE = join("build", "regen-cache", "input-hashes.json");
 /** Bump to invalidate every recorded hash when the fingerprint's recipe changes. */
 export const RECIPE_VERSION = 1;
 
-export type Fingerprint = { hash: string; files: number } | { undetermined: string };
+export type Fingerprint = { hash: string; files: number; wholeTree?: boolean } | { undetermined: string };
 
 /** What a pair declares about itself, in `task-io.ts`. */
 export interface PairIO {
@@ -332,7 +332,7 @@ export function fingerprint(
   if (existsSync(join(root, "bun.lock"))) all.add("bun.lock");
   const sorted = [...all].sort();
   for (const f of sorted) h.update(`${f}\0${digests.digest(f)}\n`);
-  return { hash: h.digest("hex"), files: sorted.length };
+  return { hash: h.digest("hex"), files: sorted.length, wholeTree: tree !== undefined };
 }
 
 export interface HashCache {
@@ -368,11 +368,15 @@ export function cacheEnabled(argv: readonly string[], env: Readonly<Record<strin
 /** The decision for one pair, with the reason `--explain` prints. */
 export type SkipDecision = { skip: true; why: string } | { skip: false; why: string };
 
+function scope(fp: { files: number; wholeTree?: boolean }): string {
+  return fp.wholeTree ? "the whole working tree" : `${fp.files} files`;
+}
+
 export function decide(cache: HashCache | undefined, key: string, fp: Fingerprint): SkipDecision {
   if (cache === undefined) return { skip: false, why: "cache disabled (--no-cache or CI)" };
   if ("undetermined" in fp) return { skip: false, why: `inputs could not be determined: ${fp.undetermined}` };
   const prev = cache.pairs[key];
-  if (prev === undefined) return { skip: false, why: `no hash recorded at a previous green run (${fp.files} files)` };
-  if (prev !== fp.hash) return { skip: false, why: `inputs changed since the last green run (${fp.files} files)` };
-  return { skip: true, why: `inputs unchanged since the last green run (${fp.files} files)` };
+  if (prev === undefined) return { skip: false, why: `no hash recorded at a previous green run (${scope(fp)})` };
+  if (prev !== fp.hash) return { skip: false, why: `inputs changed since the last green run (${scope(fp)})` };
+  return { skip: true, why: `inputs unchanged since the last green run (${scope(fp)})` };
 }
