@@ -17,7 +17,7 @@ Found while writing the three W3C methodology nodes (bean 6306, PR #1769), each 
 
 ## Done when
 - [x] PROV_CONTEXT decided and fixed; @id coercion for the three object properties (owner: PROV-JSONLD, held locally; PR #1791)
-- [ ] @base verified against a real resolution; moved or documented
+- [x] @base verified against a real resolution; moved or documented (documented: bean text, voice rule `ld-no-base-in-a-remote-context`; PROV moved in #1791; content documents → bean `bh4q`)
 - [x] Owner ruling on the ODRL conflict default (keep prohibit as a stated profile departure, or follow §2.10)
 
 
