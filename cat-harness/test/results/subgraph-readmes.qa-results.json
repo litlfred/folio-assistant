@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/subgraph-readmes.ts",
-    "script_hash": "70ec174e4c49"
+    "script_hash": "8ef39e10c6c3"
   },
   "subject": {
     "kind": "graph",
@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 79,
+      "count": 80,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -72,6 +72,11 @@
           "instance": "agent-skills",
           "directory": "voices",
           "path": "agent-skills/skills/voices"
+        },
+        {
+          "instance": "bootstrap",
+          "directory": "processes",
+          "path": "bootstrap/processes"
         },
         {
           "instance": "bootstrap",
@@ -969,5 +974,5 @@
       "entries": []
     }
   },
-  "total": 185
+  "total": 186
 }
