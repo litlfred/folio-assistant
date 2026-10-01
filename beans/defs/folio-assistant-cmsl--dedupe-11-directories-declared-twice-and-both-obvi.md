@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-09-30T22:09:25Z
+updated_at: 2026-10-01T01:54:43Z
 parent: folio-assistant-zzmr
 ---
 
@@ -112,3 +112,14 @@ The harness's `skills` entry becomes `dependents: reproduce`, so every instance 
 ## Owner, 2026-09-30 (round 5): steps 2 and 3 accepted as proposed — issue #1694
 - Step 2: the root instance declares the seven checkout-level state entries; **accepted** that their navbar tiles move from the C@T Harness tab to Folio Assistant (tiles come from the declaring instance — measured in `harness-tiles.ts`), and every lookup rooted at `cat-harness/` switches to the checkout root.
 - Step 3: remove the 16 mirrors; **falsifier accepted** — a checkout that does not stage every instance shows corpus tools less, which is what that checkout contains.
+
+
+## 2026-10-01 — step 2 done (PR #1704); step 3 measured, then parked on an owner decision
+Step 2: the root instance declares the seven checkout-state entries; every reader that lost them was found by measurement and fixed (see #1694).
+Step 3, tried and measured, not committed: there are **19** mirrors, not 16. Removing them, against the baseline:
+- `LOCAL_PACKAGES` (what `skill_fetch` serves) lost 7 packages (fhir-client, fhir-ig-base, folio-assistant-core, large-datasets, lean, data, who-iris) — restored by having `resolveSkillDirs` include the checkout's other instances (identical map after).
+- `folio-assistant-sci/skills/data/` was declared by NOBODY but the mirror — sci must declare it from within (`data-skills`).
+- `skills:docs` (13 pages "produced by no source"), `translate-bpmn` (30 `.pot` templates "with no diagram"), `kg:audit`/`kg:audit:all` (6 sidecars of subjects cat-harness no longer declares) and `skill:register:check` all went red: SITE-level and corpus-level consumers enumerated the checkout through the mirrors.
+- **The blocker:** those consumers key pages and categories by DIRECTORY ID, and the mirror ids differ from the owners' own: core `core-skills`/`core-library`/`core-schemas`/`core-processes`/`core-methodologies`, sci `sci-methodologies`/`lean-skills`/`data-skills` vs `folio-assistant-core-skills`, `folio-assist-core-schemas`, `folio-assistant-sci-lean-skills`, … Whichever ids win decides published URLs (e.g. `/docs-auto/index/skills/folio-assistant-core-skills/`). Asked of the owner.
+- Second decision: the 6 kg-qa sidecars cat-harness wrote for other instances' subjects become orphans (each owner audits its own) — deleting them is the owner's call.
+The authored diff (3 files) is preserved; regen also measured ~2x slower `resolveSkillDirs` (41 → 89 ms/call, measured under load).
