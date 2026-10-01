@@ -906,7 +906,7 @@ html-rendering-qc <span class="fa-gloss-status">candidate, extracted</span>
 human-agent-discussion <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Ask a person (or a sibling agent) for what no file holds: context, then the options, then a recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it needs a person; it records the answer, an applied default, or what is still open, and never a guess.</p>
+<p>Ask a person (or a sibling agent) for what no file holds. First determine where you are — the context, the Role you act as and theirs, the Process and task (or that you are idle) — and ask about whichever you cannot determine before anything else. Then context, the options, a recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it needs a person; it records the answer, an applied default, or what is still open, and never a guess.</p>
 <p class="fa-gloss-meta">Skills of bootstrap · source <a href="https://github.com/litlfred/bootstrap/blob/main/skills/human-agent-discussion.md"><code>bootstrap/skills/human-agent-discussion.md</code></a></p>
 </dd>
 <dt id="folio-assistant-sci--kg-skills--hypothesis-generation" data-fa-state="extracted" data-fa-gloss="">
