@@ -281,3 +281,17 @@ Other audit findings, now on the checklist:
 ## S4 evidence (#1776, the upward-links PR)
 
 R5 upward markdown links 26 → **0** · R6 root links (md) 12 → **0** · large-datasets → core import 1 → **0** · `check:reference-direction` 1667 → 1640 occurrences. The 6 R6 `.ts` items are paths written into *emitted* files (`init-folio.ts:279,290,318,344`, `translate-kg-viewer.ts:153`, `translation.ts:225`), not root references. One upward name remains in large-datasets (`gen-id-lookup.ts` `SOURCE = "who-iris"`, plus prose naming core); it goes with the `needs` change.
+
+## Upstream fixes (2026-10-01): done
+
+Owner: *"also fix any upstream issues"*. Both PRs were merged with every job green, and both repos' `main` is green on Check and Pages.
+
+| repo | PR | new `main` | what |
+|---|---|---|---|
+| litlfred/bootstrap-tools | [#4](https://github.com/litlfred/bootstrap-tools/pull/4) | `30464126ed93` | `term-links.ts`: outside bootstrap, cross-repo terms link to the **published IRI** (`https://litlfred.github.io/bootstrap/schemas/#<term>`), never to `../bootstrap/…`, so the README is byte-identical standalone and hosted. New `check.yml` runs the README checks standalone. |
+| litlfred/bootstrap | [#1](https://github.com/litlfred/bootstrap/pull/1) | `f75a2167d226` | new `check.yml` checks out bootstrap-tools beside it and checks the READMEs, subgraph READMEs and schema pages |
+
+- [x] Live render. The proxy blocks the live host, so each repo's real `gh-pages` branch was built locally with Jekyll: `index.html` redirects to `README.html`, the generated-by notices and the no-edit footer are present, and no `../bootstrap/` links remain.
+- [ ] **Follow-up after S0:** bump folio-assistant's pins to `f75a216` / `3046412`, re-extract the bootstrap translation templates, and regenerate the bootstrap kg-qa sidecars.
+- [ ] Minor: bootstrap-tools publishes `scripts/templates/site/default.html` raw, so its Liquid is visible at that URL. Exclude `scripts/templates/` in `site.ts`.
+- [ ] Minor: bootstrap-tools' unit tests need bootstrap beside them (19 fail standalone), so its CI runs only the README checks.
