@@ -5,7 +5,7 @@
  * `docs/proposals/kg-subscriptions.md` §"Known substrates" and §"The visualizer".
  *
  * ```sh
- * bun run subscriptions:viz          # write docs/subscriptions/index.md
+ * bun run subscriptions:viz          # write cat-harness/docs/subscriptions/index.md
  * bun run subscriptions:viz:check    # fail when it is stale
  * ```
  *
@@ -51,6 +51,7 @@ import { partRecordsIn, snapshotDirOf, type PartView } from "./kg-subscribe.ts";
 
 const REPO = resolve(import.meta.dir, "..", "..");
 const INSTANCE = resolve(import.meta.dir, "..");
+// declared-path-literal: a PAGE under the site root (permalink /subscriptions/), not the declared `subscriptions/` directory it shares a name with
 export const OUT = join(INSTANCE, siteDirFor(INSTANCE), "subscriptions", "index.md");
 
 export type SubstrateSource = "staged instance" | "associated harness" | "hand-entered";

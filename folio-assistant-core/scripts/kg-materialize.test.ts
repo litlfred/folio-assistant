@@ -9,6 +9,7 @@
  * wrong-direction edge the writer's placement avoids.
  */
 import { afterEach, describe, expect, test } from "bun:test";
+import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
@@ -117,7 +118,6 @@ function checkout(sub: Sub = {}, opts: { snapshotRef?: string } = {}): { repo: s
   const raw = UPSTREAM["ihris-kb.json"]!;
   const v = judgeDeclaration("ihris-kb.json", raw);
   if (v.state !== "substrate") throw new Error("fixture substrate does not judge");
-  const { createHash } = require("node:crypto") as typeof import("node:crypto");
   writeFileSync(
     join(snapDir, `${entry.id}${SNAPSHOT_SUFFIX}`),
     `${JSON.stringify(
