@@ -834,6 +834,36 @@
             "minLength": 1
           }
         },
+        "contentAdapters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "contentType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "className": {
+                "type": "string",
+                "minLength": 1
+              },
+              "extends": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "contentType",
+              "module",
+              "className"
+            ],
+            "additionalProperties": false
+          }
+        },
         "liquid": {
           "type": "object",
           "properties": {
@@ -867,8 +897,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-before-after-preview-skill/cat-harness.jsonld",
   "staging": {
     "branch": "claude/before-after-preview-skill",
-    "sha": "718f028183141c2be30d35a0a3d5b5482bf623a3",
+    "sha": "9c0a1d0ae47d0b2cb9ec95e6eff7c0a0866e6038",
     "pr": "1713/merge",
-    "run": "36801173383"
+    "run": "36822405947"
   }
 }

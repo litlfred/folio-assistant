@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/docs-ui.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/docs-ui.css?v=1790834492">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/narrow-viewport.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/narrow-viewport.css?v=1790834492">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/work-plan.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/work-plan.css?v=1790834492">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/themes.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/themes.css?v=1790834492">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/uml.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/uml.css?v=1790834492">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/avatars.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/avatars.css?v=1790834492">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/docs-ui.js?v=1790818177" defer></script>
+<script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/docs-ui.js?v=1790834492" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -832,14 +832,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 
 <blockquote>
   <p><strong>This is a stub, not the skill.</strong> The skill is
-<a href="todo-manager.html">Session Task Manager (folio-core)</a>, from <code class="language-plaintext highlighter-rouge">cat-harness/skills/folio-core</code>,
+<a href="todo-manager.html">Session Task Manager (folio-core)</a>, from <code class="language-plaintext highlighter-rouge">cat-harness/skills/sdlc/sdlc-core</code>,
 which is what <code class="language-plaintext highlighter-rouge">skill_fetch</code> serves. Read that one; this page exists
 only so an old link still lands somewhere truthful.</p>
 </blockquote>
-<h1 id="todo-manager--see-skillsfolio-core">
+<h1 id="todo-manager--see-skillssdlcsdlc-core">
   
   
-    <a href="#todo-manager--see-skillsfolio-core" class="anchor-heading" aria-labelledby="todo-manager--see-skillsfolio-core"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> todo-manager — see <code class="language-plaintext highlighter-rouge">skills/folio-core/</code>
+    <a href="#todo-manager--see-skillssdlcsdlc-core" class="anchor-heading" aria-labelledby="todo-manager--see-skillssdlcsdlc-core"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> todo-manager — see <code class="language-plaintext highlighter-rouge">skills/sdlc/sdlc-core/</code>
   
   
 </h1>
@@ -848,8 +848,8 @@ only so an old link still lands somewhere truthful.</p>
 <p><strong>This is a stub. The skill lives in the <code class="language-plaintext highlighter-rouge">kg</code> graph, not here.</strong></p>
 
 <p><code class="language-plaintext highlighter-rouge">skill_fetch("todo-manager")</code> serves
-<a href="../../../skills/folio-core/todo-manager.md"><code class="language-plaintext highlighter-rouge">skills/folio-core/todo-manager.md</code></a>
-— <code class="language-plaintext highlighter-rouge">LOCAL_PACKAGES</code> in <code class="language-plaintext highlighter-rouge">src/tools/skill-fetch.ts</code> holds <code class="language-plaintext highlighter-rouge">skills/folio-core</code> and
+<a href="../../../skills/sdlc/sdlc-core/todo-manager.md"><code class="language-plaintext highlighter-rouge">skills/sdlc/sdlc-core/todo-manager.md</code></a>
+— <code class="language-plaintext highlighter-rouge">LOCAL_PACKAGES</code> in <code class="language-plaintext highlighter-rouge">src/tools/skill-fetch.ts</code> holds <code class="language-plaintext highlighter-rouge">skills/sdlc/sdlc-core</code> and
 no <code class="language-plaintext highlighter-rouge">.claude/skills/local</code> entry — so that file is what an agent asking for this
 skill by name has always received.</p>
 
@@ -873,15 +873,15 @@ nothing was dropped. Bean <code class="language-plaintext highlighter-rouge">tdm
   </thead>
   <tbody>
     <tr>
-      <td><a href="../../../skills/folio-core/todo-manager.md"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
+      <td><a href="../../../skills/sdlc/sdlc-core/todo-manager.md"><code class="language-plaintext highlighter-rouge">todo-manager</code></a></td>
       <td>bean mechanics: the CLI, the STRICT check before <code class="language-plaintext highlighter-rouge">beans create</code>, the fallback when the CLI is absent, the status vocabulary, coordination</td>
     </tr>
     <tr>
-      <td><a href="../../../skills/folio-core/opening-brief.md"><code class="language-plaintext highlighter-rouge">opening-brief</code></a></td>
+      <td><a href="../../../skills/sdlc/sdlc-core/opening-brief.md"><code class="language-plaintext highlighter-rouge">opening-brief</code></a></td>
       <td>what you say <strong>before</strong> starting a bean or a topic</td>
     </tr>
     <tr>
-      <td><a href="../../../skills/folio-core/turn-reporting.md"><code class="language-plaintext highlighter-rouge">turn-reporting</code></a></td>
+      <td><a href="../../../skills/sdlc/sdlc-core/turn-reporting.md"><code class="language-plaintext highlighter-rouge">turn-reporting</code></a></td>
       <td>what you say <strong>during and after</strong> each turn, including the STRICT “next”-line rule</td>
     </tr>
   </tbody>

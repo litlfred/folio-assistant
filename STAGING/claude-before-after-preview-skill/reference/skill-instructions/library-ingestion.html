@@ -508,32 +508,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/docs-ui.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/docs-ui.css?v=1790834492">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/narrow-viewport.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/narrow-viewport.css?v=1790834492">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/work-plan.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/work-plan.css?v=1790834492">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/themes.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/themes.css?v=1790834492">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/uml.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/uml.css?v=1790834492">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/avatars.css?v=1790818177">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/css/avatars.css?v=1790834492">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -550,7 +550,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/docs-ui.js?v=1790818177" defer></script>
+<script src="/folio-assistant/STAGING/claude-before-after-preview-skill/assets/js/docs-ui.js?v=1790834492" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -1334,94 +1334,114 @@ index mistaken for a page number.</p>
 <p>A deck is a zip that <strong>declares</strong> its type (<code class="language-plaintext highlighter-rouge">[Content_Types].xml</code>, or ODF’s
 <code class="language-plaintext highlighter-rouge">mimetype</code> member), so it routes on the sniff, before the archive rung, exactly
 as a workbook does. <code class="language-plaintext highlighter-rouge">slides-structure.py</code> writes the same <code class="language-plaintext highlighter-rouge">pdf-structure/v1</code>
-shape a paged PDF gets — one section per slide, `page_start == page_end ==</p>
-<slide>`, `granularity: "slide"` — so `l1-blocks.ts`, the manifest and
-`check:l1-complete` read it unchanged. Two differences from the PDF rungs, both
-measured on the #1614 deck:
+shape a paged PDF gets — one section per slide,
+<code class="language-plaintext highlighter-rouge">page_start == page_end == &lt;slide&gt;</code>, <code class="language-plaintext highlighter-rouge">granularity: "slide"</code> — so
+<code class="language-plaintext highlighter-rouge">l1-blocks.ts</code>, the manifest and
+<code class="language-plaintext highlighter-rouge">check:l1-complete</code> read it unchanged. Two differences from the PDF rungs, both
+measured on the #1614 deck:</p>
 
-- **A slide's title is its title placeholder, or it is `Slide N`.** Never the
-  largest text box: that is the inferred-TOC failure below in a new format. It is
-  also an accessibility finding, because a slide with no title placeholder cannot
-  be navigated to by name, so the two questions share one answer
-  (`title_source: placeholder | none` in each section's front matter).
-- **No image is a `page-scan`.** A full-bleed picture alone on a slide is the
-  slide's content, not a scan of text already extracted.
+<ul>
+  <li><strong>A slide’s title is its title placeholder, or it is <code class="language-plaintext highlighter-rouge">Slide N</code>.</strong> Never the
+largest text box: that is the inferred-TOC failure below in a new format. It is
+also an accessibility finding, because a slide with no title placeholder cannot
+be navigated to by name, so the two questions share one answer
+(<code class="language-plaintext highlighter-rouge">title_source: placeholder | none</code> in each section’s front matter).</li>
+  <li><strong>No image is a <code class="language-plaintext highlighter-rouge">page-scan</code>.</strong> A full-bleed picture alone on a slide is the
+slide’s content, not a scan of text already extracted.</li>
+</ul>
 
-`accessibility.json` reports, per check, what the package can answer — slide
-titles, alt text (with editor auto-captions such as *"Description automatically
-generated"* counted as **failing**, since nobody wrote them), decorative marks,
-language tags, document title, speaker notes — and says `undetermined` for the
-three it cannot: reading order, images of text, contrast. **It gives no overall
-score.** A single number would weigh a missing title against a missing alt text,
-and nothing supports that weighting.
+<p><code class="language-plaintext highlighter-rouge">accessibility.json</code> reports, per check, what the package can answer — slide
+titles, alt text (with editor auto-captions such as <em>“Description automatically
+generated”</em> counted as <strong>failing</strong>, since nobody wrote them), decorative marks,
+language tags, document title, speaker notes — and says <code class="language-plaintext highlighter-rouge">undetermined</code> for the
+three it cannot: reading order, images of text, contrast. <strong>It gives no overall
+score.</strong> A single number would weigh a missing title against a missing alt text,
+and nothing supports that weighting.</p>
 
-**Two copies of one deck? Compare before you choose which to ingest:**
+<p><strong>Two copies of one deck? Compare before you choose which to ingest:</strong></p>
 
-```sh
-python3 cat-harness/scripts/slides-structure.py --a11y-only DECK.pptx DECK.odp
-```
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python3 cat-harness/scripts/slides-structure.py <span class="nt">--a11y-only</span> DECK.pptx DECK.odp
+</code></pre></div></div>
 
-On #1614 the two were Google Slides exports with identical image bytes. The PPTX
-kept per-run `lang` and the author's few alt texts; the ODP export dropped **all**
+<p>On #1614 the two were Google Slides exports with identical image bytes. The PPTX
+kept per-run <code class="language-plaintext highlighter-rouge">lang</code> and the author’s few alt texts; the ODP export dropped <strong>all</strong>
 alt text and kept the language only on the default style. Prefer the copy that
 wins the per-check comparison. An export can lose what the author wrote, and the
-format's reputation does not tell you which way this particular export went.
+format’s reputation does not tell you which way this particular export went.</p>
 
-Image descriptions go in the library's `image-verdicts.json` as for a PDF. Put
-the inspector in `attribution.<doc-id>` when they are not the file's
-`inspected_by`; without it the deck inherits the first inspector's name and
-date.
+<p>Image descriptions go in the library’s <code class="language-plaintext highlighter-rouge">image-verdicts.json</code> as for a PDF. Put
+the inspector in <code class="language-plaintext highlighter-rouge">attribution.&lt;doc-id&gt;</code> when they are not the file’s
+<code class="language-plaintext highlighter-rouge">inspected_by</code>; without it the deck inherits the first inspector’s name and
+date.</p>
+<h2 id="a-source-whose-licence-forbids-a-copy--record-it-do-not-ingest-it-bean-scfh">
+  
+  
+    <a href="#a-source-whose-licence-forbids-a-copy--record-it-do-not-ingest-it-bean-scfh" class="anchor-heading" aria-labelledby="a-source-whose-licence-forbids-a-copy--record-it-do-not-ingest-it-bean-scfh"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A source whose licence forbids a copy — record it, do not ingest it (bean <code class="language-plaintext highlighter-rouge">scfh</code>)
+  
+  
+</h2>
+    
 
-## A source whose licence forbids a copy — record it, do not ingest it (bean `scfh`)
+<p>Some sources may be read but not reposted. The OMG BPMN and DMN specifications
+permit use on condition that a copy “will not be copied or posted on any
+network computer or broadcast in any media”. A normal ingest commits every
+section’s text to a public repository, which breaks that condition. It does so
+silently, because nothing in the text layer says so.</p>
 
-Some sources may be read but not reposted. The OMG BPMN and DMN specifications
-permit use on condition that a copy "will not be copied or posted on any
-network computer or broadcast in any media". A normal ingest commits every
-section's text to a public repository, which breaks that condition. It does so
-silently, because nothing in the text layer says so.
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run ingest FILE.pdf <span class="nt">--reference</span> IDENTITY.json <span class="nt">--library</span> &lt;name&gt;
+</code></pre></div></div>
 
-```sh
-bun run ingest FILE.pdf --reference IDENTITY.json --library <name>
-```
-
-`IDENTITY.json` holds the title, version, document number, date, publisher,
-URL and the licence clause, **read off the document**. A missing field is
-refused, never guessed. The entry holds `referenced.json` — the exact bytes'
+<p><code class="language-plaintext highlighter-rouge">IDENTITY.json</code> holds the title, version, document number, date, publisher,
+URL and the licence clause, <strong>read off the document</strong>. A missing field is
+refused, never guessed. The entry holds <code class="language-plaintext highlighter-rouge">referenced.json</code> — the exact bytes’
 sha256, the embedded outline (clause titles and pages, so a citation can still
-name a clause), a `folio-materialization/v1` record in state `referenced`, and
-why the text is withheld — plus a manifest with an empty `contains`, and a
-`licence.json` quoting the clause.
+name a clause), a <code class="language-plaintext highlighter-rouge">folio-materialization/v1</code> record in state <code class="language-plaintext highlighter-rouge">referenced</code>, and
+why the text is withheld — plus a manifest with an empty <code class="language-plaintext highlighter-rouge">contains</code>, and a
+<code class="language-plaintext highlighter-rouge">licence.json</code> quoting the clause.</p>
 
-**The choice is the caller's, never inferred.** Whether a licence permits
-posting is a reading of the licence, not of the bytes. `check:l1-complete`
-knows the kind, and **refuses** a `referenced` entry that holds `sections/`,
-`blocks/` or `images/`. That would be the copy this kind exists not to make.
+<p><strong>The choice is the caller’s, never inferred.</strong> Whether a licence permits
+posting is a reading of the licence, not of the bytes. <code class="language-plaintext highlighter-rouge">check:l1-complete</code>
+knows the kind, and <strong>refuses</strong> a <code class="language-plaintext highlighter-rouge">referenced</code> entry that holds <code class="language-plaintext highlighter-rouge">sections/</code>,
+<code class="language-plaintext highlighter-rouge">blocks/</code> or <code class="language-plaintext highlighter-rouge">images/</code>. That would be the copy this kind exists not to make.</p>
+<h2 id="an-inferred-chapter-tree-is-refused-not-guessed">
+  
+  
+    <a href="#an-inferred-chapter-tree-is-refused-not-guessed" class="anchor-heading" aria-labelledby="an-inferred-chapter-tree-is-refused-not-guessed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An inferred chapter tree is refused, not guessed
+  
+  
+</h2>
+    
 
-## An inferred chapter tree is refused, not guessed
+<p>This is the rule most worth understanding, because the failure it prevents is
+<strong>silent</strong>.</p>
 
-This is the rule most worth understanding, because the failure it prevents is
-**silent**.
-
-Without an outline, a heading-detector *can* infer a table of contents — and an
+<p>Without an outline, a heading-detector <em>can</em> infer a table of contents — and an
 inferred TOC is confidently wrong in a way the output does not show. Two
-measured cases, both recorded in bean `6xaz`:
+measured cases, both recorded in bean <code class="language-plaintext highlighter-rouge">6xaz</code>:</p>
 
-- `WPR-RDO-2020-003-eng.pdf` — 11 of 13 inferred sections were named after a
-  **different publication**, because page 22 reproduces a sample table from one
-  as a design example.
-- `WHO_PUB_TPS_93.1.pdf` — inferred entries took page numbers from the
-  *contents* pages, so 26 of 42 sections came out under 500 characters while
-  37,923 characters landed in one section misnamed `18-usetul-reference-books`.
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">WPR-RDO-2020-003-eng.pdf</code> — 11 of 13 inferred sections were named after a
+<strong>different publication</strong>, because page 22 reproduces a sample table from one
+as a design example.</li>
+  <li><code class="language-plaintext highlighter-rouge">WHO_PUB_TPS_93.1.pdf</code> — inferred entries took page numbers from the
+<em>contents</em> pages, so 26 of 42 sections came out under 500 characters while
+37,923 characters landed in one section misnamed <code class="language-plaintext highlighter-rouge">18-usetul-reference-books</code>.</li>
+</ul>
 
-So `pdf-pages` claims **no** chapter tree and says so in `structure_note`. **A
-page is a determined division; an inferred chapter was not.** Same third-state
+<p>So <code class="language-plaintext highlighter-rouge">pdf-pages</code> claims <strong>no</strong> chapter tree and says so in <code class="language-plaintext highlighter-rouge">structure_note</code>. <strong>A
+page is a determined division; an inferred chapter was not.</strong> Same third-state
 rule the rest of this repository keeps: a structure that could not be determined
-is never rendered as one that was.
+is never rendered as one that was.</p>
+<h2 id="what-a-complete-l1-entry-holds">
+  
+  
+    <a href="#what-a-complete-l1-entry-holds" class="anchor-heading" aria-labelledby="what-a-complete-l1-entry-holds"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What a complete L1 entry holds
+  
+  
+</h2>
+    
 
-## What a complete L1 entry holds
-
-```
-library/<bib-slug>/
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>library/&lt;bib-slug&gt;/
   structure.json     "$schema": "pdf-structure/v1" — doc_id, toc_source,
                      granularity, sections[], structure_note,
                      source{} (see below; source.text_source says embedded|ocr)
@@ -1430,416 +1450,536 @@ library/<bib-slug>/
   manifest.jsonld    @id, @type folio:SourceDocument, contains[], provenance
   summaries.json     agent summaries of prose blocks, a QA sidecar (see below)
   ocr/               page-NNN.txt, only where the source was scanned
-```
+</code></pre></div></div>
 
-`bun run check:l1-complete` is the gate. It reports three states, never two: a
-requirement **met**, **unmet**, or **not yet derivable** — the last because the
+<p><code class="language-plaintext highlighter-rouge">bun run check:l1-complete</code> is the gate. It reports three states, never two: a
+requirement <strong>met</strong>, <strong>unmet</strong>, or <strong>not yet derivable</strong> — the last because the
 per-format arms (images, audio, tables, archives) are tracked separately and a
-check that cannot run must not read as a pass. Bean `pn6j`.
+check that cannot run must not read as a pass. Bean <code class="language-plaintext highlighter-rouge">pn6j</code>.</p>
+<h2 id="source--the-technical-facts-written-by-whichever-rung-ran">
+  
+  
+    <a href="#source--the-technical-facts-written-by-whichever-rung-ran" class="anchor-heading" aria-labelledby="source--the-technical-facts-written-by-whichever-rung-ran"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">source{}</code> — the technical facts, written by whichever rung ran
+  
+  
+</h2>
+    
 
-## `source{}` — the technical facts, written by whichever rung ran
+<p>Every rung writes <code class="language-plaintext highlighter-rouge">source</code> on <code class="language-plaintext highlighter-rouge">structure.json</code>, from the single definition in
+<code class="language-plaintext highlighter-rouge">scripts/_tech_meta.py</code>: <code class="language-plaintext highlighter-rouge">file</code>, full 64-hex <code class="language-plaintext highlighter-rouge">sha256</code>, <code class="language-plaintext highlighter-rouge">bytes</code>, <code class="language-plaintext highlighter-rouge">mtime</code> (the
+SOURCE’s, UTC to the second — not the ingest time, because what tells you a
+re-fetch got something new is the file changing), <code class="language-plaintext highlighter-rouge">mimetype_sniffed</code> and
+<code class="language-plaintext highlighter-rouge">mimetype_source</code>. Both rungs add <code class="language-plaintext highlighter-rouge">text_source</code>, <code class="language-plaintext highlighter-rouge">embedded</code> or <code class="language-plaintext highlighter-rouge">ocr</code>: ONE field and ONE
+vocabulary for where the section text came from (issue #1121; <code class="language-plaintext highlighter-rouge">pdf-pages</code> used to write a
+top-level <code class="language-plaintext highlighter-rouge">text-layer</code>). <code class="language-plaintext highlighter-rouge">pdf-structure</code> also adds <code class="language-plaintext highlighter-rouge">pages</code> and <code class="language-plaintext highlighter-rouge">extractor</code>.</p>
 
-Every rung writes `source` on `structure.json`, from the single definition in
-`scripts/_tech_meta.py`: `file`, full 64-hex `sha256`, `bytes`, `mtime` (the
-SOURCE's, UTC to the second — not the ingest time, because what tells you a
-re-fetch got something new is the file changing), `mimetype_sniffed` and
-`mimetype_source`. Both rungs add `text_source`, `embedded` or `ocr`: ONE field and ONE
-vocabulary for where the section text came from (issue #1121; `pdf-pages` used to write a
-top-level `text-layer`). `pdf-structure` also adds `pages` and `extractor`.
-
-**The mimetype is sniffed from the leading bytes and never falls back to the
-extension.** An extension is a claim by whoever named the file; the magic bytes
-are what the content is, and a `.pdf` that is really an HTML error page
+<p><strong>The mimetype is sniffed from the leading bytes and never falls back to the
+extension.</strong> An extension is a claim by whoever named the file; the magic bytes
+are what the content is, and a <code class="language-plaintext highlighter-rouge">.pdf</code> that is really an HTML error page
 extracts to nothing while every downstream verdict is about the wrong document.
-Unrecognised bytes give `mimetype_sniffed: null` with `mimetype_source:
-"unrecognised"` — the third state again, and it is load-bearing: a guess that
+Unrecognised bytes give <code class="language-plaintext highlighter-rouge">mimetype_sniffed: null</code> with <code class="language-plaintext highlighter-rouge">mimetype_source:
+"unrecognised"</code> — the third state again, and it is load-bearing: a guess that
 agrees with the filename is indistinguishable from a real sniff, which would
-make the field worthless for the one case it exists to catch.
+make the field worthless for the one case it exists to catch.</p>
 
-This was a **gap in the no-outline rung**, not a new requirement.
-`pdf-structure.py` wrote `source`; `pdf-pages.py` wrote none and merged into
-whatever file already existed — so `library/milnorlink/`, the one entry
-`pdf-structure` never touched, carried no technical metadata at all, and the
-other page-granularity entries had it only because `pdf-structure` ran on them
-first. Bean `nso8`.
+<p>This was a <strong>gap in the no-outline rung</strong>, not a new requirement.
+<code class="language-plaintext highlighter-rouge">pdf-structure.py</code> wrote <code class="language-plaintext highlighter-rouge">source</code>; <code class="language-plaintext highlighter-rouge">pdf-pages.py</code> wrote none and merged into
+whatever file already existed — so <code class="language-plaintext highlighter-rouge">library/milnorlink/</code>, the one entry
+<code class="language-plaintext highlighter-rouge">pdf-structure</code> never touched, carried no technical metadata at all, and the
+other page-granularity entries had it only because <code class="language-plaintext highlighter-rouge">pdf-structure</code> ran on them
+first. Bean <code class="language-plaintext highlighter-rouge">nso8</code>.</p>
 
-`bun run scripts/ingest-document.ts <pdf> --refresh-meta` backfills an existing
-entry. It **reads the indent off the file** rather than choosing one: the two
+<p><code class="language-plaintext highlighter-rouge">bun run scripts/ingest-document.ts &lt;pdf&gt; --refresh-meta</code> backfills an existing
+entry. It <strong>reads the indent off the file</strong> rather than choosing one: the two
 rungs write at different widths, and hardcoding either reformats every entry
-the other authored — measured at 4 349 changed lines to add three fields.
+the other authored — measured at 4 349 changed lines to add three fields.</p>
+<h2 id="provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible">
+  
+  
+    <a href="#provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible" class="anchor-heading" aria-labelledby="provenance--who-wrote-it-and-the-closed-union-that-makes-omission-impossible"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">provenance</code> — who wrote it, and the closed union that makes omission impossible
+  
+  
+</h2>
+    
 
-## `provenance` — who wrote it, and the closed union that makes omission impossible
+<p>Every block declares how its text came to be. The vocabulary is
+<code class="language-plaintext highlighter-rouge">schemas/attribution.ts</code>, and it is <strong>closed</strong>:</p>
 
-Every block declares how its text came to be. The vocabulary is
-`schemas/attribution.ts`, and it is **closed**:
+<ul>
+  <li>the literal <code class="language-plaintext highlighter-rouge">"ingested"</code> — verbatim source text. There is no author to name;
+the document it came out of is recorded by <code class="language-plaintext highlighter-rouge">source{}</code> above.</li>
+  <li>an <code class="language-plaintext highlighter-rouge">Attribution</code> — <code class="language-plaintext highlighter-rouge">kind</code> (<code class="language-plaintext highlighter-rouge">script | agent | human</code>), <code class="language-plaintext highlighter-rouge">id</code>, and optionally
+<code class="language-plaintext highlighter-rouge">version</code>, <code class="language-plaintext highlighter-rouge">model</code>, <code class="language-plaintext highlighter-rouge">session</code>, <code class="language-plaintext highlighter-rouge">date</code>, <code class="language-plaintext highlighter-rouge">skill</code>.</li>
+</ul>
 
-- the literal `"ingested"` — verbatim source text. There is no author to name;
-  the document it came out of is recorded by `source{}` above.
-- an `Attribution` — `kind` (`script | agent | human`), `id`, and optionally
-  `version`, `model`, `session`, `date`, `skill`.
-
-**An `agent` must name its `model`, structurally.** A narrative is a claim by
-somebody, and the difference between "a curator described this figure" and "a
-model described it, version X" is exactly what a reader needs in order to weigh
+<p><strong>An <code class="language-plaintext highlighter-rouge">agent</code> must name its <code class="language-plaintext highlighter-rouge">model</code>, structurally.</strong> A narrative is a claim by
+somebody, and the difference between “a curator described this figure” and “a
+model described it, version X” is exactly what a reader needs in order to weigh
 it — and what makes the set re-generatable when that model is superseded. An
 agent attribution with no model records that a machine wrote it while losing
-the only part anyone can act on, so `AttributionSchema` refuses it.
+the only part anyone can act on, so <code class="language-plaintext highlighter-rouge">AttributionSchema</code> refuses it.</p>
 
-**The vocabulary is the QA reviewer's, not a second one.** `block-qa.ts`
-re-exports `ATTRIBUTION_KINDS` as `QA_REVIEWER_KINDS`; the same three
-participants review and author. What is *not* shared is `QaReviewer` itself,
-most of which is about whether a criterion's cached verdict is stale.
+<p><strong>The vocabulary is the QA reviewer’s, not a second one.</strong> <code class="language-plaintext highlighter-rouge">block-qa.ts</code>
+re-exports <code class="language-plaintext highlighter-rouge">ATTRIBUTION_KINDS</code> as <code class="language-plaintext highlighter-rouge">QA_REVIEWER_KINDS</code>; the same three
+participants review and author. What is <em>not</em> shared is <code class="language-plaintext highlighter-rouge">QaReviewer</code> itself,
+most of which is about whether a criterion’s cached verdict is stale.</p>
+<h3 id="what-the-gate-can-and-cannot-enforce">
+  
+  
+    <a href="#what-the-gate-can-and-cannot-enforce" class="anchor-heading" aria-labelledby="what-the-gate-can-and-cannot-enforce"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the gate can and cannot enforce
+  
+  
+</h3>
+    
 
-### What the gate can and cannot enforce
+<p><code class="language-plaintext highlighter-rouge">check:l1-complete</code> checks two things per block, and the second is the point:</p>
 
-`check:l1-complete` checks two things per block, and the second is the point:
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">provenance</code> parses as a <code class="language-plaintext highlighter-rouge">Provenance</code>. An open string, a malformed
+attribution, an <code class="language-plaintext highlighter-rouge">agent</code> with no <code class="language-plaintext highlighter-rouge">model</code> — all <code class="language-plaintext highlighter-rouge">unmet</code>.</li>
+  <li>A block of an <strong>authored</strong> kind must not claim <code class="language-plaintext highlighter-rouge">"ingested"</code>.</li>
+</ol>
 
-1. `provenance` parses as a `Provenance`. An open string, a malformed
-   attribution, an `agent` with no `model` — all `unmet`.
-2. A block of an **authored** kind must not claim `"ingested"`.
+<p><code class="language-plaintext highlighter-rouge">LIBRARY_BLOCK_ORIGIN</code> classifies each library block kind as <code class="language-plaintext highlighter-rouge">extracted</code> or
+<code class="language-plaintext highlighter-rouge">authored</code>, and a test asserts it is <strong>total over what actually occurs in
+<code class="language-plaintext highlighter-rouge">library/</code></strong> — so a narrative arm cannot land a new kind without classifying
+it, and classifying one <code class="language-plaintext highlighter-rouge">authored</code> arms requirement 2 immediately.</p>
 
-`LIBRARY_BLOCK_ORIGIN` classifies each library block kind as `extracted` or
-`authored`, and a test asserts it is **total over what actually occurs in
-`library/`** — so a narrative arm cannot land a new kind without classifying
-it, and classifying one `authored` arms requirement 2 immediately.
+<p>Closing the union does not stop an arm asserting something false. It makes the
+<strong>omission</strong> impossible: a new arm has to choose, and choosing <code class="language-plaintext highlighter-rouge">"ingested"</code> for
+a generated description is a false statement rather than a missing field.</p>
 
-Closing the union does not stop an arm asserting something false. It makes the
-**omission** impossible: a new arm has to choose, and choosing `"ingested"` for
-a generated description is a false statement rather than a missing field.
-
-**Today every one of the 424 blocks is extracted prose**, so the narrative count
+<p><strong>Today every one of the 424 blocks is extracted prose</strong>, so the narrative count
 is a real, reported zero — never silence. The authored branch is proved to fire
-by fixtures in `scripts/tests/attribution.test.ts`, not by the corpus: a checker
-that returned "fine" unconditionally would pass the corpus just as well. Each of
+by fixtures in <code class="language-plaintext highlighter-rouge">scripts/tests/attribution.test.ts</code>, not by the corpus: a checker
+that returned “fine” unconditionally would pass the corpus just as well. Each of
 the three branches is mutation-checked — removing it fails a named test. Bean
-`iqim`.
+<code class="language-plaintext highlighter-rouge">iqim</code>.</p>
+<h2 id="archives--the-entry-list-is-data-and-the-rung-is-chosen-by-content">
+  
+  
+    <a href="#archives--the-entry-list-is-data-and-the-rung-is-chosen-by-content" class="anchor-heading" aria-labelledby="archives--the-entry-list-is-data-and-the-rung-is-chosen-by-content"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Archives — the entry list is data, and the rung is chosen by CONTENT
+  
+  
+</h2>
+    
 
-## Archives — the entry list is data, and the rung is chosen by CONTENT
-
-A tar or zip in `uploads/` is opaque to every grep in the corpus: a search for
+<p>A tar or zip in <code class="language-plaintext highlighter-rouge">uploads/</code> is opaque to every grep in the corpus: a search for
 a filename inside one finds nothing, and that absence is indistinguishable from
-the file not being there. `scripts/archive-contents.py` writes
-`library/<slug>/contents.jsonld` — **one schema whatever the container**
-(`schemas/archive-contents.ts`), so a consumer reads archives without knowing
-whether it was tar or zip.
+the file not being there. <code class="language-plaintext highlighter-rouge">scripts/archive-contents.py</code> writes
+<code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/contents.jsonld</code> — <strong>one schema whatever the container</strong>
+(<code class="language-plaintext highlighter-rouge">schemas/archive-contents.ts</code>), so a consumer reads archives without knowing
+whether it was tar or zip.</p>
 
-Per entry: `path`, `bytes`, `sha256`, `mtime`, `mimetype_sniffed`,
-`mimetype_source` — the `source{}` vocabulary above, reused verbatim, because
-**an archive entry is not a different kind of thing from a loose file**. The
-mimetype is sniffed from the entry's own leading bytes, never from its name,
-for the same reason it is outside an archive.
+<p>Per entry: <code class="language-plaintext highlighter-rouge">path</code>, <code class="language-plaintext highlighter-rouge">bytes</code>, <code class="language-plaintext highlighter-rouge">sha256</code>, <code class="language-plaintext highlighter-rouge">mtime</code>, <code class="language-plaintext highlighter-rouge">mimetype_sniffed</code>,
+<code class="language-plaintext highlighter-rouge">mimetype_source</code> — the <code class="language-plaintext highlighter-rouge">source{}</code> vocabulary above, reused verbatim, because
+<strong>an archive entry is not a different kind of thing from a loose file</strong>. The
+mimetype is sniffed from the entry’s own leading bytes, never from its name,
+for the same reason it is outside an archive.</p>
 
-Four entry states, not two: a `directory` carries no size and no digest (a zero
+<p>Four entry states, not two: a <code class="language-plaintext highlighter-rouge">directory</code> carries no size and no digest (a zero
 would be a measurement nobody made); an unreadable member is
-`mimetype_source: "unreadable"`, which is not an empty file; a `symlink` or
-`special` is listed with its kind rather than dropped. Dropping directories
+<code class="language-plaintext highlighter-rouge">mimetype_source: "unreadable"</code>, which is not an empty file; a <code class="language-plaintext highlighter-rouge">symlink</code> or
+<code class="language-plaintext highlighter-rouge">special</code> is listed with its kind rather than dropped. Dropping directories
 would make an archive of empty ones indistinguishable from an empty archive.
-A file the sniffer does not recognise as an archive is **refused** — an empty
-`entries[]` would read as an empty archive, a different fact.
+A file the sniffer does not recognise as an archive is <strong>refused</strong> — an empty
+<code class="language-plaintext highlighter-rouge">entries[]</code> would read as an empty archive, a different fact.</p>
+<h3 id="the-rung-is-chosen-before-anything-opens-the-file-as-a-pdf">
+  
+  
+    <a href="#the-rung-is-chosen-before-anything-opens-the-file-as-a-pdf" class="anchor-heading" aria-labelledby="the-rung-is-chosen-before-anything-opens-the-file-as-a-pdf"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The rung is chosen before anything opens the file as a PDF
+  
+  
+</h3>
+    
 
-### The rung is chosen before anything opens the file as a PDF
-
-`planFor` sniffs first. Handing it a zip used to answer `undetermined` with
-`why: "no PDF backend: No module named 'fitz'"` — the **refusal was right and
-the diagnosis was wrong**: it reported a missing tool when the fact was that
+<p><code class="language-plaintext highlighter-rouge">planFor</code> sniffs first. Handing it a zip used to answer <code class="language-plaintext highlighter-rouge">undetermined</code> with
+<code class="language-plaintext highlighter-rouge">why: "no PDF backend: No module named 'fitz'"</code> — the <strong>refusal was right and
+the diagnosis was wrong</strong>: it reported a missing tool when the fact was that
 the file is not a PDF, and a reader would go install PyMuPDF and fail again.
-A file *named* `.pdf` that is really a zip now takes the archive rung, which is
-the case only a sniff can decide.
+A file <em>named</em> <code class="language-plaintext highlighter-rouge">.pdf</code> that is really a zip now takes the archive rung, which is
+the case only a sniff can decide.</p>
+<h3 id="what-the-gate-checks-and-the-determined-zero">
+  
+  
+    <a href="#what-the-gate-checks-and-the-determined-zero" class="anchor-heading" aria-labelledby="what-the-gate-checks-and-the-determined-zero"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> What the gate checks, and the determined zero
+  
+  
+</h3>
+    
 
-### What the gate checks, and the determined zero
+<p>Which entries the requirement applies to is <strong>derived, not guessed</strong>: <code class="language-plaintext highlighter-rouge">source.
+mimetype_sniffed</code> is already on every entry, so “this came from a zip” is a
+recorded fact. An archive entry must carry a <code class="language-plaintext highlighter-rouge">contents.jsonld</code> that validates
+against the declared schema.</p>
 
-Which entries the requirement applies to is **derived, not guessed**: `source.
-mimetype_sniffed` is already on every entry, so "this came from a zip" is a
-recorded fact. An archive entry must carry a `contents.jsonld` that validates
-against the declared schema.
-
-`uploads/` holds four PDFs and **no archives**, so every entry reports
-`not an archive (application/pdf)` — said out loud rather than passed in
-silence, because "nothing to check here" and "the check never ran" are
+<p><code class="language-plaintext highlighter-rouge">uploads/</code> holds four PDFs and <strong>no archives</strong>, so every entry reports
+<code class="language-plaintext highlighter-rouge">not an archive (application/pdf)</code> — said out loud rather than passed in
+silence, because “nothing to check here” and “the check never ran” are
 different facts. The requirement is proved to fire by fixture archives built in
-`scripts/tests/archive-contents.test.ts`, and each of its four branches is
-mutation-checked. Bean `twqe`.
+<code class="language-plaintext highlighter-rouge">scripts/tests/archive-contents.test.ts</code>, and each of its four branches is
+mutation-checked. Bean <code class="language-plaintext highlighter-rouge">twqe</code>.</p>
+<h2 id="datasets--findable-by-their-headers-and-the-narrative-nobody-wrote">
+  
+  
+    <a href="#datasets--findable-by-their-headers-and-the-narrative-nobody-wrote" class="anchor-heading" aria-labelledby="datasets--findable-by-their-headers-and-the-narrative-nobody-wrote"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Datasets — findable by their headers, and the narrative nobody wrote
+  
+  
+</h2>
+    
 
-## Datasets — findable by their headers, and the narrative nobody wrote
-
-`scripts/tabular-records.py` writes `library/<slug>/tabular.jsonld`: sheet
-names, the header row, and the shape of each sheet. `header_vocabulary` is the
-union across sheets, and it is the field a `grep` for a column name lands in —
+<p><code class="language-plaintext highlighter-rouge">scripts/tabular-records.py</code> writes <code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/tabular.jsonld</code>: sheet
+names, the header row, and the shape of each sheet. <code class="language-plaintext highlighter-rouge">header_vocabulary</code> is the
+union across sheets, and it is the field a <code class="language-plaintext highlighter-rouge">grep</code> for a column name lands in —
 without it a dataset is stored but not findable, and a failed search is
-indistinguishable from the dataset not having that column.
+indistinguishable from the dataset not having that column.</p>
 
-**The record is real JSON-LD, and so is `contents.jsonld`** (bean `yh6u`).
-Both used to be named `.jsonld` with an `@id` and no `@context`, so a JSON-LD
+<p><strong>The record is real JSON-LD, and so is <code class="language-plaintext highlighter-rouge">contents.jsonld</code></strong> (bean <code class="language-plaintext highlighter-rouge">yh6u</code>).
+Both used to be named <code class="language-plaintext highlighter-rouge">.jsonld</code> with an <code class="language-plaintext highlighter-rouge">@id</code> and no <code class="language-plaintext highlighter-rouge">@context</code>, so a JSON-LD
 processor dropped every key they wrote. Both arms now emit the published
-content context (the URL lives once, in `scripts/_content_context.py`, pinned
-to `CONTENT_CONTEXT_URL` by a test), and every key is a declared term. The
-facts a consumer queries across documents — `format`, the counts,
-`header_vocabulary` — are real terms; the nested structures that are ours —
-`sheets`, `entries`, the technical metadata, the `narrative` — are `@json`
-literals, **because that is how their nulls survive**: `rows: null` means
-"could not be counted" and `narrative.text: null` means "nobody has written
-one", and JSON-LD drops a null anywhere else. Records written before this
-carry no `@context`; the schemas accept that, since folio repositories hold
-them.
+content context (the URL lives once, in <code class="language-plaintext highlighter-rouge">scripts/_content_context.py</code>, pinned
+to <code class="language-plaintext highlighter-rouge">CONTENT_CONTEXT_URL</code> by a test), and every key is a declared term. The
+facts a consumer queries across documents — <code class="language-plaintext highlighter-rouge">format</code>, the counts,
+<code class="language-plaintext highlighter-rouge">header_vocabulary</code> — are real terms; the nested structures that are ours —
+<code class="language-plaintext highlighter-rouge">sheets</code>, <code class="language-plaintext highlighter-rouge">entries</code>, the technical metadata, the <code class="language-plaintext highlighter-rouge">narrative</code> — are <code class="language-plaintext highlighter-rouge">@json</code>
+literals, <strong>because that is how their nulls survive</strong>: <code class="language-plaintext highlighter-rouge">rows: null</code> means
+“could not be counted” and <code class="language-plaintext highlighter-rouge">narrative.text: null</code> means “nobody has written
+one”, and JSON-LD drops a null anywhere else. Records written before this
+carry no <code class="language-plaintext highlighter-rouge">@context</code>; the schemas accept that, since folio repositories hold
+them.</p>
 
-**Stdlib only** (`zipfile` + `xml.etree`, `csv`). This repository declares no
-Python dependencies — no `requirements.txt`, and CI installs only `ruff` — so a
+<p><strong>Stdlib only</strong> (<code class="language-plaintext highlighter-rouge">zipfile</code> + <code class="language-plaintext highlighter-rouge">xml.etree</code>, <code class="language-plaintext highlighter-rouge">csv</code>). This repository declares no
+Python dependencies — no <code class="language-plaintext highlighter-rouge">requirements.txt</code>, and CI installs only <code class="language-plaintext highlighter-rouge">ruff</code> — so a
 tool needing openpyxl would pass locally and fail there. Everything this arm
-needs is in `xl/workbook.xml` and each sheet's `<dimension>`. Verified by
-reading back a workbook openpyxl itself wrote, **with openpyxl uninstalled**.
+needs is in <code class="language-plaintext highlighter-rouge">xl/workbook.xml</code> and each sheet’s <code class="language-plaintext highlighter-rouge">&lt;dimension&gt;</code>. Verified by
+reading back a workbook openpyxl itself wrote, <strong>with openpyxl uninstalled</strong>.</p>
+<h3 id="the-narrative-is-a-state-machine--drafted-by-an-agent-confirmed-by-a-person">
+  
+  
+    <a href="#the-narrative-is-a-state-machine--drafted-by-an-agent-confirmed-by-a-person" class="anchor-heading" aria-labelledby="the-narrative-is-a-state-machine--drafted-by-an-agent-confirmed-by-a-person"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The narrative is a state machine — drafted by an agent, confirmed by a person
+  
+  
+</h3>
+    
 
-### The narrative is a state machine — drafted by an agent, confirmed by a person
-
-`schemas/narrative.ts`: `not-authored` → `draft` → `confirmed`, with `rejected`
+<p><code class="language-plaintext highlighter-rouge">schemas/narrative.ts</code>: <code class="language-plaintext highlighter-rouge">not-authored</code> → <code class="language-plaintext highlighter-rouge">draft</code> → <code class="language-plaintext highlighter-rouge">confirmed</code>, with <code class="language-plaintext highlighter-rouge">rejected</code>
 as a real fourth state. The owner chose this (2026-09-19) over plain agent
-attribution and over writing every narrative by hand.
+attribution and over writing every narrative by hand.</p>
 
-**Two attributions, because they are two acts.** `drafted_by` is who wrote the
-words; `confirmed_by` is who accepted them. The question a reader most wants
-answered is not "did a machine touch this" but "has a person agreed to it".
+<p><strong>Two attributions, because they are two acts.</strong> <code class="language-plaintext highlighter-rouge">drafted_by</code> is who wrote the
+words; <code class="language-plaintext highlighter-rouge">confirmed_by</code> is who accepted them. The question a reader most wants
+answered is not “did a machine touch this” but “has a person agreed to it”.</p>
 
-**An agent cannot confirm its own draft** — `confirmed_by.kind` must be
-`"human"`, structurally. That one refinement is the entire difference between
-the chosen design and the one it replaced: without it, `confirmed` degrades
-into "an agent said so twice".
+<p><strong>An agent cannot confirm its own draft</strong> — <code class="language-plaintext highlighter-rouge">confirmed_by.kind</code> must be
+<code class="language-plaintext highlighter-rouge">"human"</code>, structurally. That one refinement is the entire difference between
+the chosen design and the one it replaced: without it, <code class="language-plaintext highlighter-rouge">confirmed</code> degrades
+into “an agent said so twice”.</p>
 
-**But a rule about who may act cannot be enforced by a rule about what is
-written.** Driving the CLI in an agent container wrote
-`"rejected_by": {"kind": "human", "id": "Claude"}` — `git config user.name` is
-the agent's, so it recorded *itself* as the reviewer, and the schema could not
-see it. `reviewer()` therefore refuses outside a terminal: a person confirming
-at a prompt has one, an agent's subprocess and CI do not. **This stops accident,
-not fraud** — an agent that set out to forge a confirmation could allocate a pty
-— but it makes it impossible to confirm a narrative *while going about other
-work*, which is the failure that would actually have happened.
+<p><strong>But a rule about who may act cannot be enforced by a rule about what is
+written.</strong> Driving the CLI in an agent container wrote
+<code class="language-plaintext highlighter-rouge">"rejected_by": {"kind": "human", "id": "Claude"}</code> — <code class="language-plaintext highlighter-rouge">git config user.name</code> is
+the agent’s, so it recorded <em>itself</em> as the reviewer, and the schema could not
+see it. <code class="language-plaintext highlighter-rouge">reviewer()</code> therefore refuses outside a terminal: a person confirming
+at a prompt has one, an agent’s subprocess and CI do not. <strong>This stops accident,
+not fraud</strong> — an agent that set out to forge a confirmation could allocate a pty
+— but it makes it impossible to confirm a narrative <em>while going about other
+work</em>, which is the failure that would actually have happened.</p>
 
-**`rejected` keeps its reasons.** A rejected draft silently re-offered wastes
-the reviewer's time; one that vanishes lets the next agent redraft the identical
-thing — the argument `scrapped` wins on for beans, and the one
-`qa-review.ts`'s `Decision` makes by requiring a note saying why this outcome
-and not another.
+<p><strong><code class="language-plaintext highlighter-rouge">rejected</code> keeps its reasons.</strong> A rejected draft silently re-offered wastes
+the reviewer’s time; one that vanishes lets the next agent redraft the identical
+thing — the argument <code class="language-plaintext highlighter-rouge">scrapped</code> wins on for beans, and the one
+<code class="language-plaintext highlighter-rouge">qa-review.ts</code>’s <code class="language-plaintext highlighter-rouge">Decision</code> makes by requiring a note saying why this outcome
+and not another.</p>
+<h3 id="reviewing-bun-run-narratives">
+  
+  
+    <a href="#reviewing-bun-run-narratives" class="anchor-heading" aria-labelledby="reviewing-bun-run-narratives"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reviewing: <code class="language-plaintext highlighter-rouge">bun run narratives</code>
+  
+  
+</h3>
+    
 
-### Reviewing: `bun run narratives`
-
-Numbered list, numbered reasons, because the owner has very limited hand
+<p>Numbered list, numbered reasons, because the owner has very limited hand
 function and a review step that demands a typed sentence is one that will not
-happen — at which point `confirmed` means "nobody got round to objecting",
-which is worse than not having the state.
+happen — at which point <code class="language-plaintext highlighter-rouge">confirmed</code> means “nobody got round to objecting”,
+which is worse than not having the state.</p>
 
-```sh
-bun run narratives                     # what is waiting on you
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run narratives                     <span class="c"># what is waiting on you</span>
 bun run narratives:confirm 1
-bun run narratives:reject 1 --why 2    # or --why-text "..."
-```
+bun run narratives:reject 1 <span class="nt">--why</span> 2    <span class="c"># or --why-text "..."</span>
+</code></pre></div></div>
 
-`check:l1-complete`'s `narrative-review` validates every narrative-bearing file.
-A `draft` is **reported, not failed**: it is work waiting on a person, and
-failing it would make an unreviewed queue indistinguishable from a broken arm.
+<p><code class="language-plaintext highlighter-rouge">check:l1-complete</code>’s <code class="language-plaintext highlighter-rouge">narrative-review</code> validates every narrative-bearing file.
+A <code class="language-plaintext highlighter-rouge">draft</code> is <strong>reported, not failed</strong>: it is work waiting on a person, and
+failing it would make an unreviewed queue indistinguishable from a broken arm.</p>
 
-A null `rows`/`columns` is likewise not an empty sheet: `shape_source` says
-whether the shape was read, counted, or `undetermined`.
+<p>A null <code class="language-plaintext highlighter-rouge">rows</code>/<code class="language-plaintext highlighter-rouge">columns</code> is likewise not an empty sheet: <code class="language-plaintext highlighter-rouge">shape_source</code> says
+whether the shape was read, counted, or <code class="language-plaintext highlighter-rouge">undetermined</code>.</p>
+<h3 id="summarising-prose-blocks--a-qa-sidecar-drained-slowly">
+  
+  
+    <a href="#summarising-prose-blocks--a-qa-sidecar-drained-slowly" class="anchor-heading" aria-labelledby="summarising-prose-blocks--a-qa-sidecar-drained-slowly"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Summarising prose blocks — a QA sidecar, drained slowly
+  
+  
+</h3>
+    
 
-### Summarising prose blocks — a QA sidecar, drained slowly
+<p>Owner, 2026-09-24: <em>“on library/ page, the extract of a node is shown, but no
+agentic summary”</em>, and on scope: <em>“Make as QA sidecar as part of general doc
+ingestion to slowly drain.”</em></p>
 
-Owner, 2026-09-24: *"on library/ page, the extract of a node is shown, but no
-agentic summary"*, and on scope: *"Make as QA sidecar as part of general doc
-ingestion to slowly drain."*
+<p><strong>The block stays verbatim.</strong> A prose block is the source’s text,
+<code class="language-plaintext highlighter-rouge">provenance: "ingested"</code>, and re-ingestion regenerates it. A summary is an
+agent’s account of that text, so it lives beside the blocks in
+<code class="language-plaintext highlighter-rouge">library/&lt;slug&gt;/summaries.json</code> (<code class="language-plaintext highlighter-rouge">folio-block-summaries/v1</code>,
+<code class="language-plaintext highlighter-rouge">schemas/block-summary.ts</code>): one record per block, holding <code class="language-plaintext highlighter-rouge">block</code>, <code class="language-plaintext highlighter-rouge">source</code>
+(the section file), <code class="language-plaintext highlighter-rouge">source_hash</code> and a <code class="language-plaintext highlighter-rouge">narrative</code>. That narrative is the
+state machine above, not a second one: <code class="language-plaintext highlighter-rouge">draft</code>, <code class="language-plaintext highlighter-rouge">confirmed</code> by a person only,
+<code class="language-plaintext highlighter-rouge">rejected</code> with a reason, and an agent author must name its model.</p>
 
-**The block stays verbatim.** A prose block is the source's text,
-`provenance: "ingested"`, and re-ingestion regenerates it. A summary is an
-agent's account of that text, so it lives beside the blocks in
-`library/<slug>/summaries.json` (`folio-block-summaries/v1`,
-`schemas/block-summary.ts`): one record per block, holding `block`, `source`
-(the section file), `source_hash` and a `narrative`. That narrative is the
-state machine above, not a second one: `draft`, `confirmed` by a person only,
-`rejected` with a reason, and an agent author must name its model.
-
-**`source_hash` makes a changed source read as STALE.** It is the sha256 of
-the section text the summariser was shown (`proseBody`). Re-ingest a document
+<p><strong><code class="language-plaintext highlighter-rouge">source_hash</code> makes a changed source read as STALE.</strong> It is the sha256 of
+the section text the summariser was shown (<code class="language-plaintext highlighter-rouge">proseBody</code>). Re-ingest a document
 and any section whose text moved puts its summary back in the queue, marked
-stale. `bun run narratives` shows it and refuses to confirm it.
+stale. <code class="language-plaintext highlighter-rouge">bun run narratives</code> shows it and refuses to confirm it.</p>
 
-**The queue is derived, so nothing enqueues.** Every prose block in every
+<p><strong>The queue is derived, so nothing enqueues.</strong> Every prose block in every
 declared library is in it until it has a current draft or confirmation. A
-rejected draft is back in it, and its rejection reason travels with it.
+rejected draft is back in it, and its rejection reason travels with it.</p>
 
-```sh
-bun run summaries                                   # the backlog, per entry
-bun run summaries:next -- --n 5 [--entry <slug>]    # next K blocks WITH their text, as JSON
-bun run summaries:record -- drafts.json             # write drafts; validated, all or nothing
-```
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run summaries                                   <span class="c"># the backlog, per entry</span>
+bun run summaries:next <span class="nt">--</span> <span class="nt">--n</span> 5 <span class="o">[</span><span class="nt">--entry</span> &lt;slug&gt;]    <span class="c"># next K blocks WITH their text, as JSON</span>
+bun run summaries:record <span class="nt">--</span> drafts.json             <span class="c"># write drafts; validated, all or nothing</span>
+</code></pre></div></div>
 
-`drafts.json` is `{drafted_by: {kind: "agent", id, model, session}, drafted_at,
-drafts: [{block, source_hash, text}]}`, with `source_hash` echoed from
-`summaries:next`. `record` refuses a state other than `draft`, a hash that no
-longer matches, and a block that already has a current summary.
+<p><code class="language-plaintext highlighter-rouge">drafts.json</code> is <code class="language-plaintext highlighter-rouge">{drafted_by: {kind: "agent", id, model, session}, drafted_at,
+drafts: [{block, source_hash, text}]}</code>, with <code class="language-plaintext highlighter-rouge">source_hash</code> echoed from
+<code class="language-plaintext highlighter-rouge">summaries:next</code>. <code class="language-plaintext highlighter-rouge">record</code> refuses a state other than <code class="language-plaintext highlighter-rouge">draft</code>, a hash that no
+longer matches, and a block that already has a current summary.</p>
 
-**Drain K at a time during ingestion work**, not all at once: a thousand
+<p><strong>Drain K at a time during ingestion work</strong>, not all at once: a thousand
 unreviewed drafts at once is a buried reviewer. Write 1–3 sentences in your
-own words, from the block's text only, adding nothing from outside it. If the
+own words, from the block’s text only, adding nothing from outside it. If the
 extraction put the wrong text under a heading, summarise what is there and say
-so. The backlog is reported by `check:l1-complete` (`block-summaries`) and on
+so. The backlog is reported by <code class="language-plaintext highlighter-rouge">check:l1-complete</code> (<code class="language-plaintext highlighter-rouge">block-summaries</code>) and on
 the library page. It is advisory, never a gate. What the gate does fail is a
 sidecar that does not parse, names another entry, or holds a record for a block
-or source that is not there.
+or source that is not there.</p>
+<h3 id="describing-a-documents-images--and-why-it-is-an-arm-not-a-step-you-run">
+  
+  
+    <a href="#describing-a-documents-images--and-why-it-is-an-arm-not-a-step-you-run" class="anchor-heading" aria-labelledby="describing-a-documents-images--and-why-it-is-an-arm-not-a-step-you-run"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Describing a document’s images — and why it is an ARM, not a step you run
+  
+  
+</h3>
+    
 
-### Describing a document's images — and why it is an ARM, not a step you run
-
-`pdf-images.py` classifies by geometry, which answers exactly one question: is
+<p><code class="language-plaintext highlighter-rouge">pdf-images.py</code> classifies by geometry, which answers exactly one question: is
 this image the whole page, or something on it. It cannot tell a logo from a
-chart. The finer roles come from LOOKING, and that judgement is **data** —
-`<library>/image-verdicts.json`, one entry per image, reviewable line by line.
+chart. The finer roles come from LOOKING, and that judgement is <strong>data</strong> —
+<code class="language-plaintext highlighter-rouge">&lt;library&gt;/image-verdicts.json</code>, one entry per image, reviewable line by line.</p>
 
-```sh
-bun run ingest uploads/FILE.pdf --library <lib>   # stage; reports what is unmet
-# look at ingest-staging/<doc-id>/images/, write the verdicts into
-# <lib>/image-verdicts.json, then:
-bun run ingest uploads/FILE.pdf --library <lib>   # re-stage: the arm applies them
-bun run ingest uploads/FILE.pdf --library <lib> --promote
-```
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run ingest uploads/FILE.pdf <span class="nt">--library</span> &lt;lib&gt;   <span class="c"># stage; reports what is unmet</span>
+<span class="c"># look at ingest-staging/&lt;doc-id&gt;/images/, write the verdicts into</span>
+<span class="c"># &lt;lib&gt;/image-verdicts.json, then:</span>
+bun run ingest uploads/FILE.pdf <span class="nt">--library</span> &lt;lib&gt;   <span class="c"># re-stage: the arm applies them</span>
+bun run ingest uploads/FILE.pdf <span class="nt">--library</span> &lt;lib&gt; <span class="nt">--promote</span>
+</code></pre></div></div>
 
-**Re-running `ingest` is the second step, not a separate apply command**, and
-that is the whole design rather than a convenience. Bean `8suc`:
+<p><strong>Re-running <code class="language-plaintext highlighter-rouge">ingest</code> is the second step, not a separate apply command</strong>, and
+that is the whole design rather than a convenience. Bean <code class="language-plaintext highlighter-rouge">8suc</code>:</p>
 
-- `--promote` refuses an entry whose `image-descriptions` requirement is unmet;
-- both writers of a narrative — `apply-image-verdicts.ts` and `narratives.ts` —
-  resolved their targets through `directoriesForGraph(root, "library")`.
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">--promote</code> refuses an entry whose <code class="language-plaintext highlighter-rouge">image-descriptions</code> requirement is unmet;</li>
+  <li>both writers of a narrative — <code class="language-plaintext highlighter-rouge">apply-image-verdicts.ts</code> and <code class="language-plaintext highlighter-rouge">narratives.ts</code> —
+resolved their targets through <code class="language-plaintext highlighter-rouge">directoriesForGraph(root, "library")</code>.</li>
+</ul>
 
-So a document with describable images could not be promoted without
+<p>So a document with describable images could not be promoted without
 descriptions, and could not be given descriptions without being promoted. A
 cycle, and every staged document sat in it. It went unnoticed because every
 entry carrying applied verdicts predated the gate, so the tool always found
-it — the path that fails was the one nothing had walked.
+it — the path that fails was the one nothing had walked.</p>
 
-**Applying by hand works exactly once.** `pdf-images.py` opens the sidecar with
-`"w"` — no existence check, no merge — so the next `ingest` overwrites the
-descriptions, and overwrites them *quietly*: the file still parses and still
+<p><strong>Applying by hand works exactly once.</strong> <code class="language-plaintext highlighter-rouge">pdf-images.py</code> opens the sidecar with
+<code class="language-plaintext highlighter-rouge">"w"</code> — no existence check, no merge — so the next <code class="language-plaintext highlighter-rouge">ingest</code> overwrites the
+descriptions, and overwrites them <em>quietly</em>: the file still parses and still
 validates, it simply has no narratives in it any more. Running the application
-as the fourth arm, **after** `pdf-images.py`, makes a re-run RE-APPLY instead —
+as the fourth arm, <strong>after</strong> <code class="language-plaintext highlighter-rouge">pdf-images.py</code>, makes a re-run RE-APPLY instead —
 the sidecar is rebuilt from the PDF and the committed judgement is laid back
-over it.
+over it.</p>
 
-`--staging <entry-dir> --library <lib-dir>` is available directly if you need
-it, and `--library` is **required**: a staging directory does not say which
-library a document is being promoted into (`v1hw` — a queue does not determine
-a library). An absent verdicts file exits **0**, because the first ingest
-necessarily runs before anybody has looked at the images; `image-descriptions`
-is the gate that refuses, not that script. An *orphaned* verdict — one naming
-an image the sidecar does not have — still fails, in either mode.
+<p><code class="language-plaintext highlighter-rouge">--staging &lt;entry-dir&gt; --library &lt;lib-dir&gt;</code> is available directly if you need
+it, and <code class="language-plaintext highlighter-rouge">--library</code> is <strong>required</strong>: a staging directory does not say which
+library a document is being promoted into (<code class="language-plaintext highlighter-rouge">v1hw</code> — a queue does not determine
+a library). An absent verdicts file exits <strong>0</strong>, because the first ingest
+necessarily runs before anybody has looked at the images; <code class="language-plaintext highlighter-rouge">image-descriptions</code>
+is the gate that refuses, not that script. An <em>orphaned</em> verdict — one naming
+an image the sidecar does not have — still fails, in either mode.</p>
 
-Every narrative it writes lands as `draft`. Only a person confirms one.
+<p>Every narrative it writes lands as <code class="language-plaintext highlighter-rouge">draft</code>. Only a person confirms one.</p>
+<h4 id="reading-a-figure-the-text-layer-is-not-the-figure">
+  
+  
+    <a href="#reading-a-figure-the-text-layer-is-not-the-figure" class="anchor-heading" aria-labelledby="reading-a-figure-the-text-layer-is-not-the-figure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reading a figure: the text layer is not the figure
+  
+  
+</h4>
+    
 
-#### Reading a figure: the text layer is not the figure
+<p>Two findings from <code class="language-plaintext highlighter-rouge">xeg6</code>, both of which would have shipped as descriptions:</p>
 
-Two findings from `xeg6`, both of which would have shipped as descriptions:
-
-**A diverging axis's SIGN cannot be read from the text layer.** `get_text`
-returned `0.2 0.4 0.6` below the zero of a `Delta Pass Rate` bar with **no
-sign at any codepoint** — matplotlib draws U+2212 as a vector path, so the
+<p><strong>A diverging axis’s SIGN cannot be read from the text layer.</strong> <code class="language-plaintext highlighter-rouge">get_text</code>
+returned <code class="language-plaintext highlighter-rouge">0.2 0.4 0.6</code> below the zero of a <code class="language-plaintext highlighter-rouge">Delta Pass Rate</code> bar with <strong>no
+sign at any codepoint</strong> — matplotlib draws U+2212 as a vector path, so the
 minus exists in the rendering and not in the text. Rendering the region showed
-`-0.2 -0.4 -0.6` plainly. A verdict trusting the extraction would have called
-a `-0.6` endpoint `+0.6`.
+<code class="language-plaintext highlighter-rouge">-0.2 -0.4 -0.6</code> plainly. A verdict trusting the extraction would have called
+a <code class="language-plaintext highlighter-rouge">-0.6</code> endpoint <code class="language-plaintext highlighter-rouge">+0.6</code>.</p>
 
-**And the direction is a fact about the axis, not about the colours.** The
-recorded inspection said a bar ran *"blue low to red high"*. Its ticks said
-`Pass Rate`, `1.0` at the top in dark blue: blue was HIGH. A reader given the
-original sentence reads every heatmap in the paper inverted — **worse than no
-description**, because a missing one is visibly missing.
+<p><strong>And the direction is a fact about the axis, not about the colours.</strong> The
+recorded inspection said a bar ran <em>“blue low to red high”</em>. Its ticks said
+<code class="language-plaintext highlighter-rouge">Pass Rate</code>, <code class="language-plaintext highlighter-rouge">1.0</code> at the top in dark blue: blue was HIGH. A reader given the
+original sentence reads every heatmap in the paper inverted — <strong>worse than no
+description</strong>, because a missing one is visibly missing.</p>
 
-So: render the region and read the ticks. Two images that look alike need the
+<p>So: render the region and read the ticks. Two images that look alike need the
 same check each — the same record called three bars one repeated legend when
 the third was a different, signed scale, and it had the disconfirming datum
-(5188 bytes against 5167 twice) already written down beside the claim.
+(5188 bytes against 5167 twice) already written down beside the claim.</p>
+<h3 id="the-figure-that-is-drawn--pdf-vector-labelspy-the-other-arm">
+  
+  
+    <a href="#the-figure-that-is-drawn--pdf-vector-labelspy-the-other-arm" class="anchor-heading" aria-labelledby="the-figure-that-is-drawn--pdf-vector-labelspy-the-other-arm"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The figure that is DRAWN — <code class="language-plaintext highlighter-rouge">pdf-vector-labels.py</code>, the other arm
+  
+  
+</h3>
+    
 
-### The figure that is DRAWN — `pdf-vector-labels.py`, the other arm
-
-`pdf-images.py` answers "what does this page PLACE". A WHO conceptual figure —
+<p><code class="language-plaintext highlighter-rouge">pdf-images.py</code> answers “what does this page PLACE”. A WHO conceptual figure —
 a framework, a maturity model, a taxonomy, a process flow — is drawn in path
 operators and text, so it places nothing, and the raster arm is silent about
-it truthfully. `9789240120747-eng` declares six captioned figures, places zero
-images, and `image-descriptions` reported *"0 image(s), 0 describable and all
-described"* over it: **a determined empty that is true about raster and
-misleading about figures.** Bean `m4xy`.
+it truthfully. <code class="language-plaintext highlighter-rouge">9789240120747-eng</code> declares six captioned figures, places zero
+images, and <code class="language-plaintext highlighter-rouge">image-descriptions</code> reported <em>“0 image(s), 0 describable and all
+described”</em> over it: <strong>a determined empty that is true about raster and
+misleading about figures.</strong> Bean <code class="language-plaintext highlighter-rouge">m4xy</code>.</p>
 
-The vector arm (bean `a8wy`) runs beside the raster one in `withDerivedArms`
-and writes `vector-labels.json` — every positioned text line on a page that
+<p>The vector arm (bean <code class="language-plaintext highlighter-rouge">a8wy</code>) runs beside the raster one in <code class="language-plaintext highlighter-rouge">withDerivedArms</code>
+and writes <code class="language-plaintext highlighter-rouge">vector-labels.json</code> — every positioned text line on a page that
 declares a figure, with its rectangle in the visible frame, its fonts and
-sizes, and whether it intersects a drawing.
+sizes, and whether it intersects a drawing.</p>
 
-**Read the sidecar, not a count.** Three things it deliberately does not do,
-each because the obvious version of it was tried and failed on a real page:
+<p><strong>Read the sidecar, not a count.</strong> Three things it deliberately does not do,
+each because the obvious version of it was tried and failed on a real page:</p>
 
-- **It does not say which labels belong to the figure.** `intersectsDrawing`
-  is recorded and never filtered on. On `9789240120747-eng` page 34 it
-  separates perfectly; on `9789240010567-eng` page 25 it is false for thirty
-  labels that are plainly figure content, because they sit in the white space
-  *between* the drawn boxes.
-- **It does not group above the MuPDF LINE.** A block on that same page holds
-  six circled numerals 200 pt apart across three different diagrams.
-- **It does not compare its counts to anything.** `m4xy`'s rule: declared
-  figures and recovered labels are not commensurable.
+<ul>
+  <li><strong>It does not say which labels belong to the figure.</strong> <code class="language-plaintext highlighter-rouge">intersectsDrawing</code>
+is recorded and never filtered on. On <code class="language-plaintext highlighter-rouge">9789240120747-eng</code> page 34 it
+separates perfectly; on <code class="language-plaintext highlighter-rouge">9789240010567-eng</code> page 25 it is false for thirty
+labels that are plainly figure content, because they sit in the white space
+<em>between</em> the drawn boxes.</li>
+  <li><strong>It does not group above the MuPDF LINE.</strong> A block on that same page holds
+six circled numerals 200 pt apart across three different diagrams.</li>
+  <li><strong>It does not compare its counts to anything.</strong> <code class="language-plaintext highlighter-rouge">m4xy</code>’s rule: declared
+figures and recovered labels are not commensurable.</li>
+</ul>
 
-So when you describe such a figure, the labels are your evidence and the
+<p>So when you describe such a figure, the labels are your evidence and the
 grouping is your judgement — which is the same split as
-`image-verdicts.json`, one level over. The rule from the section above holds
-here with more force, not less: **render the page and look at it.** The arm
+<code class="language-plaintext highlighter-rouge">image-verdicts.json</code>, one level over. The rule from the section above holds
+here with more force, not less: <strong>render the page and look at it.</strong> The arm
 recovers what the text layer says; it cannot tell you that the arrows run
-clockwise.
+clockwise.</p>
 
-The determined empty is still meaningful: `who-rhr-1806-eng` records zero
-pages because it contains no `Fig.` or `Figure` mention at all. A document with
-**no text layer** returns `pages: null` with a reason instead — the one place
-this arm could otherwise report a clean run over an unread scan (`dh4f`).
+<p>The determined empty is still meaningful: <code class="language-plaintext highlighter-rouge">who-rhr-1806-eng</code> records zero
+pages because it contains no <code class="language-plaintext highlighter-rouge">Fig.</code> or <code class="language-plaintext highlighter-rouge">Figure</code> mention at all. A document with
+<strong>no text layer</strong> returns <code class="language-plaintext highlighter-rouge">pages: null</code> with a reason instead — the one place
+this arm could otherwise report a clean run over an unread scan (<code class="language-plaintext highlighter-rouge">dh4f</code>).</p>
+<h3 id="an-xlsx-is-a-zip-and-that-broke-the-archive-routing">
+  
+  
+    <a href="#an-xlsx-is-a-zip-and-that-broke-the-archive-routing" class="anchor-heading" aria-labelledby="an-xlsx-is-a-zip-and-that-broke-the-archive-routing"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> An <code class="language-plaintext highlighter-rouge">.xlsx</code> IS a zip, and that broke the archive routing
+  
+  
+</h3>
+    
 
-### An `.xlsx` IS a zip, and that broke the archive routing
-
-The magic bytes of an OOXML or ODF document say `application/zip`, which is
+<p>The magic bytes of an OOXML or ODF document say <code class="language-plaintext highlighter-rouge">application/zip</code>, which is
 true and useless: it sent every spreadsheet to the archive rung to be listed as
 a bag of XML parts. The magic cannot tell them apart, so
-`_tech_meta.sniff_zip_package` asks the **container**, which declares itself —
-OOXML by `[Content_Types].xml` plus the part names, ODF by its `mimetype`
-member. Same principle as the byte sniff, one level in.
+<code class="language-plaintext highlighter-rouge">_tech_meta.sniff_zip_package</code> asks the <strong>container</strong>, which declares itself —
+OOXML by <code class="language-plaintext highlighter-rouge">[Content_Types].xml</code> plus the part names, ODF by its <code class="language-plaintext highlighter-rouge">mimetype</code>
+member. Same principle as the byte sniff, one level in.</p>
 
-`sniff_effective_mimetype` is the single answer the router and the recorder
-both ask. They disagreed for one commit — `planFor` called the magic-only
-function, so an `.xlsx` routed as an archive while its own `source` block
-correctly called it a workbook.
+<p><code class="language-plaintext highlighter-rouge">sniff_effective_mimetype</code> is the single answer the router and the recorder
+both ask. They disagreed for one commit — <code class="language-plaintext highlighter-rouge">planFor</code> called the magic-only
+function, so an <code class="language-plaintext highlighter-rouge">.xlsx</code> routed as an archive while its own <code class="language-plaintext highlighter-rouge">source</code> block
+correctly called it a workbook.</p>
 
-**A CSV has no magic bytes at all**, so routing one cannot be a sniff and must
-not become an extension guess. `is_tabular_text` asks the only content question
-available: do the first rows split into the *same* number of fields, more than
+<p><strong>A CSV has no magic bytes at all</strong>, so routing one cannot be a sniff and must
+not become an extension guess. <code class="language-plaintext highlighter-rouge">is_tabular_text</code> asks the only content question
+available: do the first rows split into the <em>same</em> number of fields, more than
 one? Prose, a single column and anything ragged all answer no — a one-column
-"table" is indistinguishable from a list of lines.
+“table” is indistinguishable from a list of lines.</p>
 
-Proved on fixtures built at test time, all five branches mutation-checked.
-Bean `p67i`.
+<p>Proved on fixtures built at test time, all five branches mutation-checked.
+Bean <code class="language-plaintext highlighter-rouge">p67i</code>.</p>
+<h2 id="ingestion-is-a-harness-capability-not-cores">
+  
+  
+    <a href="#ingestion-is-a-harness-capability-not-cores" class="anchor-heading" aria-labelledby="ingestion-is-a-harness-capability-not-cores"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Ingestion is a HARNESS capability, not core’s
+  
+  
+</h2>
+    
 
-## Ingestion is a HARNESS capability, not core's
+<p><code class="language-plaintext highlighter-rouge">uploads</code> and <code class="language-plaintext highlighter-rouge">library</code> are both graph kinds declared by the <strong>harness</strong> layer;
+<code class="language-plaintext highlighter-rouge">folio</code> — authored content — is <code class="language-plaintext highlighter-rouge">folio-assist-core</code>’s. So this skill and its
+tooling belong with the harness.</p>
 
-`uploads` and `library` are both graph kinds declared by the **harness** layer;
-`folio` — authored content — is `folio-assist-core`'s. So this skill and its
-tooling belong with the harness.
-
-Putting ingestion in core would make the harness's own `library` graph writable
+<p>Putting ingestion in core would make the harness’s own <code class="language-plaintext highlighter-rouge">library</code> graph writable
 only from a layer above it: a wrong-direction dependency, and after the split
 (issue #223) a circular one between repositories. That is exactly what bean
-`zlmp` exists to drain.
+<code class="language-plaintext highlighter-rouge">zlmp</code> exists to drain.</p>
+<h2 id="related">
+  
+  
+    <a href="#related" class="anchor-heading" aria-labelledby="related"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related
+  
+  
+</h2>
+    
 
-## Related
+<ul>
+  <li><a href="/folio-assistant/STAGING/claude-before-after-preview-skill/reference/skill-instructions/directory-conventions.html"><code class="language-plaintext highlighter-rouge">directory-conventions</code></a> — the graph kinds and who declares them</li>
+  <li><a href="/folio-assistant/STAGING/claude-before-after-preview-skill/reference/skill-instructions/bib-qa.html"><code class="language-plaintext highlighter-rouge">bib-qa</code></a> — auditing what is already in <code class="language-plaintext highlighter-rouge">library/</code></li>
+  <li><code class="language-plaintext highlighter-rouge">processes/document-ingestion.bpmn</code> — the process this sits inside</li>
+</ul>
+<h2 id="processes-that-run-this-skill">
+  
+  
+    <a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2>
+    
 
-- [`directory-conventions`](/folio-assistant/STAGING/claude-before-after-preview-skill/reference/skill-instructions/directory-conventions.html) — the graph kinds and who declares them
-- [`bib-qa`](/folio-assistant/STAGING/claude-before-after-preview-skill/reference/skill-instructions/bib-qa.html) — auditing what is already in `library/`
-- `processes/document-ingestion.bpmn` — the process this sits inside
-
-
-## Processes that run this skill
-
-| process | step(s) that name it |
-|---|---|
-| [Content acquisition](../../processes/content-acquisition.html) | Route it, and watch the queue |
-| [Document ingestion — uploads/ to the L1 source knowledge graph](../../processes/document-ingestion.html) | L1 completeness gate (calls a sub-process); Prose blocks enter the summary queue |
-
-</lib-dir></entry-dir></lib></lib></lib></doc-id></lib></library></slug></slug></dimension></slug></slug></pdf></bib-slug></name></doc-id></slide>
+<div class="table-wrapper"><table>
+  <thead>
+    <tr>
+      <th>process</th>
+      <th>step(s) that name it</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="../../processes/content-acquisition.html">Content acquisition</a></td>
+      <td>Route it, and watch the queue</td>
+    </tr>
+    <tr>
+      <td><a href="../../processes/document-ingestion.html">Document ingestion — uploads/ to the L1 source knowledge graph</a></td>
+      <td>L1 completeness gate (calls a sub-process); Prose blocks enter the summary queue</td>
+    </tr>
+  </tbody>
+</table></div>
 
           
 
