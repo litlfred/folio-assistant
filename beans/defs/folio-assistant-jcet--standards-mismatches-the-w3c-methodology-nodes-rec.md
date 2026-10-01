@@ -5,7 +5,7 @@ status: in-progress
 type: bug
 priority: normal
 created_at: 2026-10-01T12:32:06Z
-updated_at: 2026-10-01T15:57:39Z
+updated_at: 2026-10-01T15:58:34Z
 parent: folio-assistant-scfh
 ---
 
@@ -18,10 +18,14 @@ Found while writing the three W3C methodology nodes (bean 6306, PR #1769), each 
 ## Done when
 - [ ] PROV_CONTEXT decided and fixed; @id coercion for the three object properties
 - [ ] @base verified against a real resolution; moved or documented
-- [ ] Owner ruling on the ODRL conflict default (keep prohibit as a stated profile departure, or follow §2.10)
+- [x] Owner ruling on the ODRL conflict default (keep prohibit as a stated profile departure, or follow §2.10)
 
 
 ## 2026-10-01 — @base measured (item 2)
 Emitted .jsonld reference the context BY URL ("@context": "https://litlfred.github.io/folio-assistant/ns/content/v1.jsonld"), i.e. the external case. Expanding {"@id": "papers/x/blocks/def-foo"} with jsonld.js 8.3.3, the published context served by a local documentLoader and the document loaded from https://example.org/somewhere/else/: the @id resolves to https://litlfred.github.io/folio/papers/x/blocks/def-foo — the SAME as with the context inline. So jsonld.js applies @base from a remote context, which the held JSON-LD 1.1 text (§4.1.3) says is ignored. Our IRIs are correct today only through that processor's behaviour; a strictly conforming 1.1 processor would resolve relative @ids against each document's own URL. Not a live defect in this repo's pipeline; a portability defect for any consumer. Options: emit absolute @ids, or put @base in each document (or an embedded context) rather than in the remote one.
 
 _2026-10-01T15:57:39Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## 2026-10-01 — item 3 ruled: keep prohibit, documented (owner, option 1)
+The owner chose to keep odrl:prohibit as the default conflict strategy, as a STATED profile departure from ODRL 2.2 §2.10's invalid. Recorded at FOLIO_DEFAULT_CONFLICT (schemas/odrl.ts, with the §2.10 quote), in methodologies/odrl-policies.md departure 4, and pinned by a test in schemas/odrl.test.ts. Also fixed: policies/folio-defaults.jsonld's comment named scripts/tests/odrl-policies.test.ts, which never existed; the check it describes is schemas/odrl.test.ts.
