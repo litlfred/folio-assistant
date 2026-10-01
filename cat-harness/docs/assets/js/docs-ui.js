@@ -4909,6 +4909,9 @@
         var lh = parseFloat(gcs.lineHeight) || 0;
         var room = gist.clientHeight - (parseFloat(gcs.paddingTop) || 0) - (parseFloat(gcs.paddingBottom) || 0);
         var lines = lh ? Math.max(1, Math.floor((room + 1) / lh)) : 3;
+        // A library card's gist is its TITLE, captioning the cover: two lines
+        // at most, so the cover stays the face.
+        if (kind === "library") lines = Math.min(lines, 2);
         gist.style.webkitLineClamp = String(lines);
         gist.style.lineClamp = String(lines);
         gist.style.flex = "0 1 auto";
@@ -5018,6 +5021,7 @@
       // so the ResizeObserver never hears of it. Asked here instead.
       Array.prototype.forEach.call(shelf.querySelectorAll(".fa-glass-asset"), zoomGlassCard);
       placePanel();
+      followMeta();
     }
 
     /* A TILE'S POP-OUT RIDES ON THE FOLIO — owner, 2026-09-24: *"dragging
@@ -5277,6 +5281,165 @@
       moveBar.setAttribute("hidden", "hidden");
     }
 
+    /* ── HOVERING (OR FOCUSING) A CARD SHOWS WHAT IT IS ───────────────────
+     *
+     * Owner, 2026-10-01: *"where is title of thing from library? hovering
+     * should show metadata."* A card zoomed to its cover says nothing about
+     * the document behind it, and a todo's gist is cut at a few lines.
+     *
+     * ONE POPOVER FOR THE GLASS, not one per card, and outside the shelf: a
+     * card clips its overflow (the cover fills it) and the shelf is scaled,
+     * so a popover inside either would be cut off or shrunk to 25% with the
+     * view. Drawn at a constant size beside the card.
+     *
+     * HOVER AND FOCUS ALIKE (WCAG 1.4.13): it opens when the pointer is over
+     * the card or focus is inside it (the title link, the tools), stays open
+     * while the pointer moves onto it, and Escape dismisses it without also
+     * putting the glass away. The same facts are the card's accessible
+     * DESCRIPTION (`aria-describedby`), so the popover itself is
+     * `aria-hidden` — a screen reader hears them once, from the card.
+     *
+     * Only what the published data says. The library index records no
+     * author, publisher or year for any entry today, so the popover says
+     * that rather than leaving a reader to wonder whether it was dropped. */
+    var metaPop = el("div", { class: "fa-glass-meta", "aria-hidden": "true", hidden: "hidden" });
+    layer.appendChild(metaPop);
+    var metaFor = null;
+    var metaSeq = 0;
+    function hideMeta() {
+      metaFor = null;
+      metaPop.setAttribute("hidden", "hidden");
+    }
+    function showMeta(card) {
+      var rows = card.__faMeta || [];
+      if (!rows.length) return;
+      metaFor = card;
+      while (metaPop.firstChild) metaPop.removeChild(metaPop.firstChild);
+      var dl = el("dl", { class: "fa-glass-meta-list" });
+      rows.forEach(function (r) {
+        dl.appendChild(el("dt", null, r[0]));
+        dl.appendChild(el("dd", null, r[1]));
+      });
+      metaPop.appendChild(dl);
+      metaPop.removeAttribute("hidden");
+      var rc = card.getBoundingClientRect();
+      var pw = metaPop.offsetWidth, ph = metaPop.offsetHeight;
+      var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+      var left = rc.right + 8;
+      if (left + pw > vw - 8) left = rc.left - pw - 8;
+      if (left < 8) left = Math.max(8, Math.min(vw - pw - 8, rc.left));
+      var top = Math.max(8, Math.min(vh - ph - 8, rc.top));
+      metaPop.style.left = Math.round(left) + "px";
+      metaPop.style.top = Math.round(top) + "px";
+    }
+    metaPop.addEventListener("mouseleave", function (e) {
+      if (metaFor && !(e.relatedTarget && metaFor.contains(e.relatedTarget))) hideMeta();
+    });
+    // CAPTURE, so it runs before the glass's own Escape: one press dismisses
+    // the popover, the next puts the glass away. A card in move mode keeps
+    // Escape for leaving the mode.
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape" || !metaFor || metaPop.hasAttribute("hidden")) return;
+      if (metaFor.getAttribute("data-fa-moving") === "true") { hideMeta(); return; }
+      hideMeta();
+      e.stopPropagation();
+    }, true);
+    // The glass scrolled or zoomed under an open popover: it follows its card,
+    // and goes when the card has left the screen.
+    function followMeta() {
+      if (!metaFor || metaPop.hasAttribute("hidden")) return;
+      var rc = metaFor.getBoundingClientRect();
+      if (!metaFor.isConnected || rc.bottom < 0 || rc.top > window.innerHeight) { hideMeta(); return; }
+      showMeta(metaFor);
+    }
+    sheet.addEventListener("scroll", followMeta, { passive: true });
+
+    /** Set what a card's popover and accessible description say: `[label, value]` rows. */
+    function setCardMeta(card, rows) {
+      rows = rows.filter(function (r) { return r && r[1] != null && String(r[1]).trim() !== ""; });
+      card.__faMeta = rows;
+      var desc = card.querySelector(".fa-glass-asset-desc");
+      if (desc) desc.textContent = rows.map(function (r) { return r[0] + ": " + r[1]; }).join(". ");
+      if (metaFor === card) showMeta(card);
+    }
+    function wireCardMeta(card) {
+      var id = "fa-glass-desc-" + (++metaSeq);
+      card.appendChild(el("span", { class: "fa-sr-only fa-glass-asset-desc", id: id }));
+      card.setAttribute("aria-describedby", id);
+      card.addEventListener("mouseenter", function () { showMeta(card); });
+      card.addEventListener("mouseleave", function (e) {
+        if (e.relatedTarget && metaPop.contains(e.relatedTarget)) return;
+        if (card.contains(document.activeElement)) return;
+        if (metaFor === card) hideMeta();
+      });
+      card.addEventListener("focusin", function () { showMeta(card); });
+      card.addEventListener("focusout", function (e) {
+        if (e.relatedTarget && card.contains(e.relatedTarget)) return;
+        if (metaFor === card && !card.matches(":hover")) hideMeta();
+      });
+      // A card being dragged is not a card being read.
+      card.addEventListener("pointerdown", function (e) {
+        if (!(e.target && e.target.closest && e.target.closest("button, a"))) hideMeta();
+      });
+    }
+
+    /** The library entry's facts, from the published index; `null` entry means only the stored title is known. */
+    function libraryMetaRows(a, key, entry) {
+      var rows = [["Title", (entry && entry.title && entry.title !== entry.id) ? entry.title : a.title]];
+      if (!entry) {
+        rows.push(["Library", key.split("/")[0]]);
+        return rows;
+      }
+      var who = entry.authors || entry.author || entry.creator;
+      if (Array.isArray(who)) who = who.join(", ");
+      if (who) rows.push(["Author", who]);
+      if (entry.publisher) rows.push(["Publisher", entry.publisher]);
+      if (entry.year || entry.date) rows.push(["Year", entry.year || entry.date]);
+      if (!who && !entry.publisher && !(entry.year || entry.date)) {
+        rows.push(["Author, year", "not recorded in the library index"]);
+      }
+      rows.push(["Kind", entry.documentClass || "library document"]);
+      rows.push(["Library", entry.instance]);
+      if (entry.sourceFile) rows.push(["Source", entry.sourceFile]);
+      if (entry.pageStart != null && entry.pageEnd != null) {
+        rows.push(["Pages", entry.pageStart === entry.pageEnd ? String(entry.pageStart) : entry.pageStart + "–" + entry.pageEnd]);
+      }
+      if (typeof entry.words === "number") rows.push(["Words", entry.words.toLocaleString()]);
+      if (entry.doi) rows.push(["DOI", entry.doi]);
+      if (entry.arxiv) rows.push(["arXiv", entry.arxiv]);
+      return rows;
+    }
+
+    /** The library index, fetched once per page, as `{ "<instance>/<id>": entry }`; `null` when unreadable. */
+    var glassLibIdx;
+    var glassLibWaiting = null;
+    function glassLibraryIndex(done) {
+      if (glassLibIdx !== undefined) return done(glassLibIdx);
+      if (glassLibWaiting) { glassLibWaiting.push(done); return; }
+      glassLibWaiting = [done];
+      function settle(v) {
+        glassLibIdx = v;
+        var w = glassLibWaiting;
+        glassLibWaiting = null;
+        w.forEach(function (f) { f(v); });
+      }
+      var m = document.querySelector('meta[name="fa-library-src"]');
+      fetch((m && m.getAttribute("content")) || withBase("/assets/library/index.json"))
+        .then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+        .then(function (doc) {
+          var by = {};
+          (doc && Array.isArray(doc.entries) ? doc.entries : []).forEach(function (e) {
+            if (e && e.instance && e.id) by[e.instance + "/" + e.id] = e;
+          });
+          settle(by);
+        })
+        .catch(function (e) {
+          console.warn("docs-ui: the glass could not read the library index (" + e.message +
+                       "); library cards show their stored title only.");
+          settle(null);
+        });
+    }
+
     function buildGlassCard(key, a) {
       var card = el("article", {
         class: "fa-glass-asset",
@@ -5392,6 +5555,27 @@
       tools.appendChild(close);
       card.appendChild(tools);
       card.appendChild(live);
+      wireCardMeta(card);
+      if (zoomKindOf(a) === "library") {
+        setCardMeta(card, libraryMetaRows(a, key, null));
+        glassLibraryIndex(function (idx) {
+          var entry = idx && idx[key];
+          if (!entry) return;
+          setCardMeta(card, libraryMetaRows(a, key, entry));
+          // A row stored before the entry had a real title (or one whose
+          // title IS its id) shows the index's title instead.
+          var better = entry.title && entry.title !== entry.id ? entry.title : "";
+          if (better && (a.title === key || a.title === entry.id)) {
+            var nm = card.querySelector(".fa-glass-asset-name");
+            if (nm) nm.textContent = better;
+            card.setAttribute("aria-label", better);
+            var g = card.querySelector(".fa-glass-asset-gist");
+            if (g) g.textContent = gistOf([better]);
+          }
+        });
+      } else {
+        setCardMeta(card, [["Title", a.title]]);
+      }
 
       // SELECTING ANY PART RAISES IT — the owner's rule for windows,
       // 2026-09-20, and the same one here: a card the reader is touching is
@@ -5488,6 +5672,16 @@
       // The small state's gist now has the note's words, not only its title.
       var gist = card.querySelector(".fa-glass-asset-gist");
       if (gist) gist.textContent = gistOf([todo.summary, todo.comment]);
+      // And its popover / description: the WHOLE title, where it stands, and
+      // the node it is attached to.
+      var t = todo.target || {};
+      var on = t.page ? t.page + (t.node ? " › " + t.node : "") : (todo.targetLabel || "");
+      setCardMeta(card, [
+        ["Todo", plainGist(todo.summary) || card.getAttribute("aria-label") || ""],
+        ["Status", String(todo.status || "").replace(/_/g, " ")],
+        ["Priority", todo.priority || ""],
+        ["Attached to", on],
+      ]);
       zoomGlassCard(card);
     }
 
@@ -5495,6 +5689,7 @@
       // The cards are about to be rebuilt; a bar for a card that is gone
       // would move nothing.
       hideMoveBar();
+      hideMeta();
       while (shelf.firstChild) shelf.removeChild(shelf.firstChild);
       while (notes.firstChild) notes.removeChild(notes.firstChild);
       var all = folioAssets();
