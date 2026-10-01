@@ -11,7 +11,7 @@
   "families": {
     "covered": {
       "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
-      "count": 44,
+      "count": 47,
       "entries": [
         {
           "ref": "cat-harness/docs/beans/index.html",
@@ -188,6 +188,18 @@
         {
           "ref": "cat-harness/docs/translation-status/index.html",
           "wireframe": "translation-status"
+        },
+        {
+          "ref": "smart-base/docs/index.md",
+          "wireframe": "fhir-artifact-index"
+        },
+        {
+          "ref": "smart-immunizations/docs/index.md",
+          "wireframe": "fhir-artifact-index"
+        },
+        {
+          "ref": "smart-trust/docs/index.md",
+          "wireframe": "fhir-artifact-index"
         }
       ]
     },
@@ -208,8 +220,15 @@
     },
     "uncovered": {
       "summary": "A declared visualiser that no wireframe covers.",
-      "count": 0,
-      "entries": []
+      "count": 2,
+      "entries": [
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/smart-base-docs/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/docs/smart-immunizations-docs/index.html"
+        }
+      ]
     },
     "unknown-ref": {
       "summary": "index.json names a ref that no declaration declares: a stale or mistyped mapping.",
@@ -217,5 +236,5 @@
       "entries": []
     }
   },
-  "total": 44
+  "total": 49
 }
