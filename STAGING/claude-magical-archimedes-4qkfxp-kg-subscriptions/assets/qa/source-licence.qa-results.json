@@ -1,0 +1,197 @@
+{
+  "$schema": "qa-results/v1",
+  "producer": {
+    "script": "cat-harness/scripts/check-source-licence.ts",
+    "script_hash": "717d4c6981ff"
+  },
+  "subject": {
+    "kind": "corpus",
+    "id": "library-source-licences"
+  },
+  "families": {
+    "malformed": {
+      "summary": "A licence record that claims something it cannot back. This is the only family that fails the check.",
+      "count": 0,
+      "entries": []
+    },
+    "not-recorded": {
+      "summary": "No licence recorded at all: nobody has looked yet. Reported, not gated; the field is new.",
+      "count": 40,
+      "entries": [
+        {
+          "entry": "agent-skills/library/agent-skill-best-practices---gemini-cli"
+        },
+        {
+          "entry": "agent-skills/library/agent-skills---google-antigravity-docs"
+        },
+        {
+          "entry": "agent-skills/library/arxiv-2602.12670v4"
+        },
+        {
+          "entry": "agent-skills/library/arxiv-2607.25032v1"
+        },
+        {
+          "entry": "agent-skills/library/arxiv-2608.08453v1"
+        },
+        {
+          "entry": "agent-skills/library/best-practices---google-antigravity-docs"
+        },
+        {
+          "entry": "agent-skills/library/equipping-agents-for-the-real-world-with-agent-skills-anthro"
+        },
+        {
+          "entry": "agent-skills/library/rfc2119-key-words-requirement-levels"
+        },
+        {
+          "entry": "agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words"
+        },
+        {
+          "entry": "agent-skills/library/skill-authoring-best-practices---claude-platform-docs"
+        },
+        {
+          "entry": "agent-skills/library/skills-in-openai-api"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-0909.4061v2"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2202.02427v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2312.07755v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2504.07199v3"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2504.19675v2"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2504.21474v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2508.05192v2"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2605.03537v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2606.04382v1"
+        },
+        {
+          "entry": "cat-harness/library/arxiv-2607.14456v1"
+        },
+        {
+          "entry": "cat-harness/library/deerwester-1990-indexing-by-lsa"
+        },
+        {
+          "entry": "cat-harness/library/dusengumuremyi-2026-ai-mediated-raci"
+        },
+        {
+          "entry": "cat-harness/library/gurel-tat-2017-swot-analysis"
+        },
+        {
+          "entry": "cat-harness/library/kg-folio-asst-2026-09-30"
+        },
+        {
+          "entry": "cat-harness/library/landauer-foltz-laham-1998-intro-lsa"
+        },
+        {
+          "entry": "cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa"
+        },
+        {
+          "entry": "cat-harness/library/sammut-bonnici-galea-2015-swot-analysis"
+        },
+        {
+          "entry": "folio-assistant-core/library/arxiv-2510.21603v1"
+        },
+        {
+          "entry": "folio-assistant-sci/library/milnorlink"
+        },
+        {
+          "entry": "smart-base/library/9789240010567-eng"
+        },
+        {
+          "entry": "smart-base/library/9789240081949-eng"
+        },
+        {
+          "entry": "smart-base/library/9789240093362-eng"
+        },
+        {
+          "entry": "smart-base/library/9789240120747-eng"
+        },
+        {
+          "entry": "smart-base/library/9789241509510-eng"
+        },
+        {
+          "entry": "smart-base/library/9789241511766-eng"
+        },
+        {
+          "entry": "smart-base/library/who-rhr-1806-eng"
+        },
+        {
+          "entry": "who-iris/library/9789241548960-eng"
+        },
+        {
+          "entry": "who-iris/library/who-pub-tps-931"
+        },
+        {
+          "entry": "who-iris/library/wpr-rdo-2020-003-eng"
+        }
+      ]
+    },
+    "stated": {
+      "summary": "The licence is known, and the record says where it is stated.",
+      "count": 4,
+      "entries": [
+        {
+          "entry": "agent-skills/library/skills-in-openai-api-notebook",
+          "id": "MIT",
+          "basis": "https://raw.githubusercontent.com/openai/openai-cookbook/main/LICENSE — the repository's LICENSE, 'MIT License, Copyright (c) 2025 OpenAI', read 2026-09-30"
+        },
+        {
+          "entry": "cat-harness/library/omg-2013-bpmn-2-0-2",
+          "id": "LicenseRef-OMG-Specification",
+          "basis": "The specification's own permission notice, PDF page 2: a fully-paid, non-exclusive, non-transferable licence to use, copy and distribute the specification, on condition (2) that copies are for informational purposes and \"will not be copied or posted on any network computer or broadcast in any media\". Hence this entry records the source and holds none of its text (issue #1614)."
+        },
+        {
+          "entry": "cat-harness/library/omg-2024-dmn-1-5",
+          "id": "LicenseRef-OMG-Specification",
+          "basis": "The specification's own permission notice, PDF page 2: a fully-paid, non-exclusive, non-transferable licence to use, copy and distribute the specification, on condition (2) that copies are for informational purposes and \"will not be copied or posted on any network computer or broadcast in any media\". Hence this entry records the source and holds none of its text (issue #1614)."
+        },
+        {
+          "entry": "smart-base/library/mehl-2021-who-smart-guidelines",
+          "id": "CC-BY-3.0-IGO",
+          "basis": "The article's own footer, p. e215: \"Copyright © 2021 World Health Organization; licensee Elsevier. This is an Open Access article published under the CC BY 3.0 IGO license.\""
+        }
+      ]
+    },
+    "unknown": {
+      "summary": "Somebody looked and could not establish the licence. Each entry records where it searched. Holding the source may still be the owner's call, but a reader must not assume it is openly licensed.",
+      "count": 4,
+      "entries": [
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2406.01940v2",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2601.22554v1",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/arxiv-2602.16554v1",
+          "searched": 2,
+          "note": "Next place to look: the arXiv abstract page's licence link, from an environment that can reach arxiv.org."
+        },
+        {
+          "entry": "folio-assistant-sci/library/codata-2022",
+          "searched": 2,
+          "note": "CODATA values are published by NIST as Standard Reference Data; whether the SRD Act (15 U.S.C. 290e) or U.S. government-work status governs reuse is NOT established here. Next place to look: NIST's CODATA terms-of-use page, from an environment that can reach physics.nist.gov."
+        }
+      ]
+    }
+  },
+  "total": 48
+}
