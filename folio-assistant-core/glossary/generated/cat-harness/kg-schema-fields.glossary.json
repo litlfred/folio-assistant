@@ -2016,6 +2016,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclaration.contentadapters",
+      "prefLabel": "CatHarnessDeclaration.contentAdapters",
+      "definition": "The content adapters this instance SHIPS, which the harness's composition root discovers rather than names. See {@link ContentAdapterDeclaration}.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.contentAdapters",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclaration.directories",
       "prefLabel": "CatHarnessDeclaration.directories",
       "definition": "Directories this instance scans, before inheritance.",
@@ -2163,6 +2170,13 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.catharnessdeclarationschema.contentadapters",
+      "prefLabel": "CatHarnessDeclarationSchema.contentAdapters",
+      "definition": "The content adapters this instance ships — see {@link ContentAdapterDeclaration}.",
+      "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.contentAdapters",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.catharnessdeclarationschema.id",
       "prefLabel": "CatHarnessDeclarationSchema.id",
       "definition": "The package identity an EXTERNAL consumer depends on — reverse-DNS.",
@@ -2230,6 +2244,34 @@
       "prefLabel": "CatHarnessDeclarationSchema.version",
       "definition": "The version — an exact semver triple, `current` or `dev`. Never a range.",
       "source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.version",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentadapterdeclaration.classname",
+      "prefLabel": "ContentAdapterDeclaration.className",
+      "definition": "The exported class.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration.className",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentadapterdeclaration.contenttype",
+      "prefLabel": "ContentAdapterDeclaration.contentType",
+      "definition": "The `contentType` a folio's config names to get this adapter.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration.contentType",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentadapterdeclaration.extends",
+      "prefLabel": "ContentAdapterDeclaration.extends",
+      "definition": "The `contentType` this adapter specialises, if any.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration.extends",
+      "status": "candidate"
+    },
+    {
+      "id": "cat-harness.contentadapterdeclaration.module",
+      "prefLabel": "ContentAdapterDeclaration.module",
+      "definition": "Instance-relative module path.",
+      "source": "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration.module",
       "status": "candidate"
     },
     {

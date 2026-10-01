@@ -210,6 +210,10 @@ export const RULES: Rule[] = [
       // — the module this tool already shares — so both axes are classified
       // by the same test and answer to the same declaration (bean `zhg2`).
       "scripts/check-reference-direction.ts",
+      // The IMPORT half of that arrow, over every declared instance (bean
+      // `p11x`). Harness for the same reason: it reads declarations and module
+      // specifiers, consumes the same `layer-direction.ts`, and no folio content.
+      "scripts/check-import-direction.ts",
       "scripts/check-instance-config.ts",    // the config-naming gate
       // HARNESS, by the same test as `check-ci-health` above: its subject is
       // this repository's own Jekyll templates and the baseurl its site is

@@ -5467,6 +5467,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.contentadapters",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclaration.contentAdapters"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content adapters this instance SHIPS, which the harness's composition root discovers rather than names. See {@link ContentAdapterDeclaration}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.contentAdapters",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclaration.directories",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -5866,6 +5885,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.contentadapters",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CatHarnessDeclarationSchema.contentAdapters"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content adapters this instance ships — see {@link ContentAdapterDeclaration}."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.contentAdapters",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.catharnessdeclarationschema.id",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6053,6 +6091,82 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.version",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentadapterdeclaration.classname",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentAdapterDeclaration.className"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The exported class."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration.className",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentadapterdeclaration.contenttype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentAdapterDeclaration.contentType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `contentType` a folio's config names to get this adapter."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration.contentType",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentadapterdeclaration.extends",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentAdapterDeclaration.extends"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The `contentType` this adapter specialises, if any."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration.extends",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentadapterdeclaration.module",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ContentAdapterDeclaration.module"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Instance-relative module path."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentAdapterDeclaration.module",
       "skos:note": "candidate"
     },
     {

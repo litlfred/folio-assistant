@@ -961,6 +961,27 @@ jobs:
       - name: no wrong-direction edges across declared instances
         run: bun run kg:detangle:direction
 
+      # The same direction rule, over MODULE LOADS in every code file of every
+      # declared instance — no scan list. The step above reaches only the
+      # directories in `kg-detangle.ts`'s `SCAN`, and states that an import
+      # from an unlisted directory is "real and invisible to it": with `bf5l`'s
+      # sabotage planted in `cat-harness/adapters/` (not in `SCAN`), measured
+      # 2026-09-30, the step above printed 0 and exited 0, this one printed 1
+      # and exited 1. This does NOT widen `SCAN` or touch that step's pinned
+      # adjudications (the owner's Option 2 ruling on `p11x` stands); it is a
+      # second subject — a module an instance cannot be lifted out without —
+      # judged by the same `allowedFromNeeds`, so the two cannot disagree about
+      # an edge both see.
+      #
+      # `--all` because every instance's count was 0 once `builtin-adapters.ts`
+      # stopped holding `../<instance>/` paths (the adapters are now declared by
+      # the instances that ship them), and a check becomes an error once its
+      # count is zero. It also catches a module-path literal handed to a
+      # variable `import()` — the shape that table had — and PRINTS the
+      # `import(expr)` calls it cannot read as could-not-determine, never as 0.
+      - name: no module imports from an instance built on top of its own
+        run: bun run check:import-direction --all
+
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
       # 2026-09-19 nothing served that stem at all — the dead-link walk in
