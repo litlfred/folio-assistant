@@ -56,6 +56,7 @@ const QR = readFileSync(join(ROOT, SITE, "assets/js/vendor/qrcode.js"), "utf8");
  */
 const HARNESS_DATA = JSON.parse(readFileSync(join(ROOT, SITE, "_data/harness.json"), "utf8")) as {
   links: { id: string; path?: string; url?: string }[];
+  tiles?: { id: string; title: string; href?: string; icon?: string; hidden?: boolean }[];
 };
 const BASEURL = "/folio-assistant";
 const LINK_MAP: Record<string, string> = {};
@@ -104,8 +105,37 @@ const SEARCH_MARKUP =
  * and the file stops parsing. The note you are reading was in that comment
  * until it did exactly that.
  */
-function harness(links: string | null, search: string = SEARCH_MARKUP): string {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><style>
+/**
+ * The DECLARED tiles, as `head_custom.html` hands them to the client.
+ *
+ * `<meta name="fa-tiles" content="{{ site.data.harness.tiles | jsonify | escape }}">`
+ * at `_includes/head_custom.html:403` — so the fixture reads the same
+ * generated file the page does rather than restating a tile list here. A
+ * fixture that carries its own copy of the population under test cannot catch
+ * the population changing, which is the whole subject of the test below.
+ *
+ * DEFAULT OFF, and that is not tidiness. Supplying these adds thirty tiles to
+ * the panel, and the caption assertions elsewhere in this file name their
+ * tiles exactly (`["Search", "Settings", "Language", "QR code"]`). A third
+ * parameter that defaults to `null` leaves every existing call byte-identical
+ * in behaviour; putting the meta into the shared HARNESS would have rewritten
+ * six unrelated tests to accommodate one new one.
+ */
+const DECLARED_TILES = JSON.stringify(HARNESS_DATA.tiles ?? []);
+
+/** Liquid's `escape` on the attribute value; `innerHTML` is never used on it. */
+function escapeAttr(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function harness(
+  links: string | null,
+  search: string = SEARCH_MARKUP,
+  tilesMeta: string | null = null,
+): string {
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8">${
+    tilesMeta === null ? "" : `<meta name="fa-tiles" content="${escapeAttr(tilesMeta)}">`
+  }<style>
   body { margin: 0; }
   .side-bar { position: fixed; top: 0; left: 0; width: 16.5rem; height: 100%;
               display: flex; flex-flow: column nowrap; align-items: flex-end;
@@ -518,4 +548,104 @@ test.describe("action tiles", () => {
     await page.keyboard.press("Enter");
     await expect(page.locator(".fa-tiles-view .fa-theme-toggle")).toBeVisible();
   });
+
+  /* ── Finding 11's RENDERED half (bean `ob3m`) ────────────────────────── */
+
+  test("the declared tiles' glyphs: every tile draws one, and sameness only improves", async ({ page }) => {
+    /*
+     * Bean `ob3m` finding 11, the half `check:navbar-consistency` structurally
+     * cannot reach. That check reads DECLARATIONS; this reads the rendered
+     * panel, and the two answer different questions.
+     *
+     * THREE DENOMINATORS, and the bean is explicit that they must not be
+     * quoted as one. Its render said "18 of 20 draw the identical outline";
+     * its declaration half said "2 of 11 declared tiles name a glyph"; today
+     * `harness.json` carries THIRTY. So no number is hardcoded from the bean's
+     * prose below — every figure is computed from the fixture at run time, and
+     * the only literal is the ratchet.
+     *
+     * WHY A RATCHET RATHER THAN AN EQUALITY. `TILE_GLYPHS` holds two entries
+     * and `glyphFor` falls back to `NET_GLYPH` for every other name, so
+     * sameness is this panel's DEFAULT rather than an accident. Pinning the
+     * current figure as an equality would go red the first time somebody draws
+     * a new glyph — it would fail on the improvement it exists to encourage.
+     * Pinning it as a ceiling fails only when sameness gets WORSE, which is
+     * the regression, and quietly permits every step toward fixing it.
+     */
+    await page.setContent(harness(LINKS, SEARCH_MARKUP, DECLARED_TILES));
+    await page.locator(".fa-tiles-toggle").click();
+
+    const declared = (HARNESS_DATA.tiles ?? []).filter((x) => !x.hidden);
+    const named = declared.filter((x) => typeof x.icon === "string" && x.icon.length > 0);
+
+    // The fixture has to actually mount them, or everything after it is
+    // vacuous — a panel that rendered none of the declared tiles would pass
+    // every assertion below (`dh4f`). The first probe of this spec rendered
+    // SIX tiles and reported them all distinct, because it was measuring the
+    // built-in controls and not the declared tiles at all.
+    const grid = page.locator(".fa-tiles-grid .fa-tile");
+    expect(declared.length).toBeGreaterThan(10);
+    expect(await grid.count()).toBeGreaterThan(declared.length);
+
+    // Every tile draws SOMETHING. A tile with no glyph is a worse defect than
+    // a repeated one: the fallback is at least a mark you can aim at.
+    expect(await page.locator(".fa-tiles-grid .fa-tile:not(:has(svg))").count()).toBe(0);
+
+    const svgs = await page
+      .locator(".fa-tiles-grid .fa-tile svg")
+      .evaluateAll((ns) => ns.map((n) => (n as SVGElement).outerHTML));
+    const groups = new Map<string, number>();
+    for (const s of svgs) groups.set(s, (groups.get(s) ?? 0) + 1);
+    const largestIdenticalGroup = Math.max(...groups.values());
+
+    /*
+     * THE RATCHET. Measured 2026-09-30 on this fixture: of 30 declared tiles,
+     * 2 name a glyph (`beans`, `uploads` — exactly the two `TILE_GLYPHS` has),
+     * so 28 fall back to one drawing and that is the largest identical group.
+     * Lower this number when you draw a glyph; it must never be raised.
+     */
+    const FALLBACK_CEILING = 28;
+    expect(
+      largestIdenticalGroup,
+      `${largestIdenticalGroup} tiles draw the SAME glyph, out of ${svgs.length} rendered ` +
+        `(${named.length} of ${declared.length} declared tiles name one, and ` +
+        `${groups.size} distinct drawings appear). The ceiling is ${FALLBACK_CEILING}. ` +
+        "If you drew a new glyph, LOWER the ceiling to what you measured. If this rose " +
+        "without anyone drawing one, a glyph name stopped resolving — check TILE_GLYPHS " +
+        "against the `icon` values in docs/_data/harness.json.",
+    ).toBeLessThanOrEqual(FALLBACK_CEILING);
+
+    /*
+     * NAMING AN ICON HAS TO BUY SOMETHING — and the first version of this
+     * assertion could not tell whether it did. It read
+     * `expect(groups.size).toBeGreaterThan(1)`, over the WHOLE panel. The
+     * built-in controls (Settings, Language, QR code, Knowledge graph,
+     * JSON-LD, Source) each carry their own hardcoded drawing and never go
+     * through `glyphFor`, so nine distinct drawings appear no matter what the
+     * registry does: the assertion passed with every declared tile on the
+     * fallback, which is the state it was written to reject. Vacuous, in the
+     * `dh4f` sense, and caught by trying to falsify it rather than by reading
+     * it.
+     *
+     * What it checks now is the actual property: the tile of each tile that
+     * NAMES a glyph draws something other than the fallback. The fallback is
+     * identified as the dominant drawing rather than assumed to be
+     * `NET_GLYPH`, so this keeps working if the fallback is redrawn.
+     */
+    const dominant = [...groups.entries()].sort((a, b) => b[1] - a[1])[0][0];
+    for (const tile of named) {
+      const svg = await page
+        .locator(".fa-tiles-grid .fa-tile", { hasText: tile.title })
+        .first()
+        .locator("svg")
+        .evaluate((n) => (n as SVGElement).outerHTML);
+      expect(
+        svg,
+        `tile "${tile.title}" declares icon "${tile.icon}" but draws the FALLBACK. ` +
+          "Either the name is missing from TILE_GLYPHS in docs-ui.js, or it is " +
+          "registered to the fallback drawing — either way the declaration buys nothing.",
+      ).not.toBe(dominant);
+    }
+  });
+
 });
