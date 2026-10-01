@@ -26,7 +26,7 @@
   "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsGraph",
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 72,
+  "nodeCount": 75,
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
@@ -870,6 +870,42 @@
       "body": "# `Skills in OpenAI API.pdf.extraction.json`\n\nMoved with [`Skills in OpenAI API.pdf`](./Skills in OpenAI API.pdf) under the owner's ruling 2026-09-29 that an\ningested upload is archival. It is derived rather than original: the source is\nthe PDF beside it, and what the ingest made of that source is in\n[`agent-skills/library/skills-in-openai-api`](../../agent-skills/library/skills-in-openai-api/).\n\nKept rather than dropped because it records how *this* extraction ran, which\na re-derivation can be compared against. See\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/w3c-2013-prov-o.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "w3c-2013-prov-o.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/w3c-2013-prov-o.md",
+      "movedOn": "2026-10-01",
+      "movedFrom": "uploads/w3c-2013-prov-o.pdf",
+      "bean": "folio-assistant-f1qz",
+      "description": "The archival copy of the source ingested to `cat-harness/library/w3c-2013-prov-o` (sha256 9238233b5b20d9804c…): PROV-O: The PROV Ontology, W3C Recommendation 30 April 2013. Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `w3c-2013-prov-o.pdf`\n\nIngested to [`cat-harness/library/w3c-2013-prov-o`](../../cat-harness/library/w3c-2013-prov-o/),\nwhich holds what was derived from it. A library entry may not hold the source\nbytes, so this is where the original lives. Its sha256 is\n`9238233b5b20d9804cea9e04d46ebf4917d11bb8bdcc5924e7d776d5aa78324d`, recorded as `source_sha256` in that entry's manifest.\n\n**This PDF is a print, not a W3C download.** w3.org is unreachable from the\ncontainer that ingested it, so the Recommendation's HTML was taken from the\nWorking Group's own publication snapshot, `github.com/w3c/prov@aa82bd71b6bb1f7b735bf3f7f5b948fae87764f0:ontology/releases/REC-prov-o-20130430/Overview.html`, and printed offline with\nheadless Chromium 141 (network blocked, document outline generated from the\nheadings). Styles and the W3C logo, which load from w3.org, are missing from\nthe print; the text and the repository-local figures are present. The entry's\n`licence.json` records the licence, the notice it requires, and the\nprovenance in full. Issue #1614, bean `f1qz`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/w3c-2018-odrl-model-2-2.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "w3c-2018-odrl-model-2-2.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/w3c-2018-odrl-model-2-2.md",
+      "movedOn": "2026-10-01",
+      "movedFrom": "uploads/w3c-2018-odrl-model-2-2.pdf",
+      "bean": "folio-assistant-f1qz",
+      "description": "The archival copy of the source ingested to `cat-harness/library/w3c-2018-odrl-model-2-2` (sha256 6d70216ccdd8df7b2f…): ODRL Information Model 2.2, W3C Recommendation 15 February 2018. Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `w3c-2018-odrl-model-2-2.pdf`\n\nIngested to [`cat-harness/library/w3c-2018-odrl-model-2-2`](../../cat-harness/library/w3c-2018-odrl-model-2-2/),\nwhich holds what was derived from it. A library entry may not hold the source\nbytes, so this is where the original lives. Its sha256 is\n`6d70216ccdd8df7b2fedfd0870aa48e2f1aae2ffd4cf512d77827a2a5b5471b3`, recorded as `source_sha256` in that entry's manifest.\n\n**This PDF is a print, not a W3C download.** w3.org is unreachable from the\ncontainer that ingested it, so the Recommendation's HTML was taken from the\nWorking Group's own publication snapshot, `github.com/w3c/poe@e3a45ad650e370c9c520520a5c759fce3bb2075e:snapshots/REC-odrl-model-20180215/index.html`, and printed offline with\nheadless Chromium 141 (network blocked, document outline generated from the\nheadings). Styles and the W3C logo, which load from w3.org, are missing from\nthe print; the text and the repository-local figures are present. The entry's\n`licence.json` records the licence, the notice it requires, and the\nprovenance in full. Issue #1614, bean `f1qz`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/w3c-2020-json-ld-1-1.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "w3c-2020-json-ld-1-1.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/w3c-2020-json-ld-1-1.md",
+      "movedOn": "2026-10-01",
+      "movedFrom": "uploads/w3c-2020-json-ld-1-1.pdf",
+      "bean": "folio-assistant-f1qz",
+      "description": "The archival copy of the source ingested to `cat-harness/library/w3c-2020-json-ld-1-1` (sha256 251b1757427a335239…): JSON-LD 1.1, W3C Recommendation 16 July 2020. Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `w3c-2020-json-ld-1-1.pdf`\n\nIngested to [`cat-harness/library/w3c-2020-json-ld-1-1`](../../cat-harness/library/w3c-2020-json-ld-1-1/),\nwhich holds what was derived from it. A library entry may not hold the source\nbytes, so this is where the original lives. Its sha256 is\n`251b1757427a335239dd0db70f0c191d3bd32d1352aafb3b798bdf6ea801eb15`, recorded as `source_sha256` in that entry's manifest.\n\n**This PDF is a print, not a W3C download.** w3.org is unreachable from the\ncontainer that ingested it, so the Recommendation's HTML was taken from the\nWorking Group's own publication snapshot, `github.com/w3c/json-ld-syntax@029777cff904bfa59cfdfc19e2c6c6098e33ef60:publication-snapshots/REC/Overview.html`, and printed offline with\nheadless Chromium 141 (network blocked, document outline generated from the\nheadings). Styles and the W3C logo, which load from w3.org, are missing from\nthe print; the text and the repository-local figures are present. The entry's\n`licence.json` records the licence, the notice it requires, and the\nprovenance in full. Issue #1614, bean `f1qz`."
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.md",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
       "name": "wang-rangaiah-2026-mcdm-aggregation.pdf",
@@ -1126,6 +1162,18 @@
     {
       "path": "fsh-guts/uploads/Skills-in-OpenAI-API.pdf.extraction.json",
       "reason": "declares itself `folio-extraction/v1`, which is not folio-fsh-guts/v1"
+    },
+    {
+      "path": "fsh-guts/uploads/w3c-2013-prov-o.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/w3c-2018-odrl-model-2-2.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/w3c-2020-json-ld-1-1.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
     },
     {
       "path": "fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.pdf",

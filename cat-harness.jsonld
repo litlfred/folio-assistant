@@ -297,10 +297,10 @@
   "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "@type": "http://www.w3.org/ns/prov#Entity",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T06:38:05.333Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/adc024eb6144331364ac816129d0f703d44cfa47",
-  "sourceCommitSha": "adc024eb6144331364ac816129d0f703d44cfa47",
-  "sourceCommitAt": "2026-10-01T08:34:51+02:00",
+  "generatedAt": "2026-10-01T07:28:35.046Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/aeeb6bab82aed4c24d912d4c88293608a42b47af",
+  "sourceCommitSha": "aeeb6bab82aed4c24d912d4c88293608a42b47af",
+  "sourceCommitAt": "2026-10-01T09:25:23+02:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -316,9 +316,9 @@
     "Tool": 112,
     "Schema": 140,
     "ExternalSchema": 17,
-    "GraphKind": 36,
+    "GraphKind": 23,
     "Role": 48,
-    "Subgraph": 49,
+    "Subgraph": 44,
     "Asset": 3
   },
   "@graph": [
@@ -1125,22 +1125,6 @@
       "outputSchema": "https://litlfred.github.io/folio-assistant/skills/content-publish/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "sample-import",
-      "title": "Sample import",
-      "description": "Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/content-lifecycle"
-      ],
-      "instructionsPath": "skills/authoring/content-lifecycle/sample-import.md",
-      "instructionLines": 87,
-      "hasInstructions": true,
-      "hasIOContract": false,
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/skills"
     },
@@ -2946,7 +2930,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 796,
+      "instructionLines": 833,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3872,7 +3856,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/bean-coordination.md",
-      "instructionLines": 751,
+      "instructionLines": 758,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4811,6 +4795,22 @@
       ],
       "instructionsPath": "../large-datasets/skills/materialize-on-demand.md",
       "instructionLines": 70,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/large-datasets-skills"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "sample-import",
+      "title": "Sample import",
+      "description": "Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#package/large-datasets"
+      ],
+      "instructionsPath": "../large-datasets/skills/sample-import.md",
+      "instructionLines": 87,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6191,8 +6191,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-review",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-test",
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-validate",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-appraisal",
-        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import"
+        "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/evidence-appraisal"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#capability/git-push",
@@ -31924,7 +31923,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CiHealth/node/Start_Sweep",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Weekly (Mon 09:17 UTC), or on dispatch",
+      "name": "Weekly (Mon 09:17 UTC), a FAILING gating run on main, or on dispatch",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CiHealth",
@@ -44047,66 +44046,6 @@
       "summary": "A Subgraph recording every term a Knowledge Graph's Processes have ever named, and when each stopped being used, so a retired term is never silently reused."
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/beans",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "beans",
-      "renderable": false,
-      "summary": "The work plan — what is being worked on, and where each running BPMN instance got to. Its inner directories are declared by `beans/beans.json`."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/bean-defs",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "bean-defs",
-      "renderable": false,
-      "summary": "Work items — one Markdown file each, in the layout the `beans` CLI reads. Authored and edited by people and agents.",
-      "validatorNotApplicable": "no instance declares a directory of this kind — it is nested inside `beans/`, declared by `beans/beans.json`, and reached through its parent. There is nothing here to validate; `check:bean-front-matter` and its four siblings grade the bean store."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/session-survey",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "session-survey",
-      "renderable": false,
-      "summary": "Published surveys of a commit window — one JSON file each, carrying `\"$schema\": \"folio-session-survey/v1\"` and the window's two edge commits, so a later session can compute what it is NOT covered for instead of re-deriving the whole range (bean `6ptx`)."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/workflow-state",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "workflow-state",
-      "renderable": false,
-      "summary": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todos",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "todos",
-      "renderable": false,
-      "summary": "Human actors' outstanding work — content, owned by the folio, tagged by role, process, task and identity. Its inner directories are declared by `todos/todos.json`."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/boards",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "boards",
-      "renderable": false,
-      "summary": "Boards — one JSON file each, carrying `\"$schema\": \"folio-board/v1\"`. A board is a diagram OF a folio: it declares what it shows, and a folio with no board is complete. Schema: `schemas/board.ts`.",
-      "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/board"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/board-positions",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "board-positions",
-      "renderable": false,
-      "summary": "Where each note sits on each board — `board-positions.json`, keyed by board then by note id, in board units. The layout layer, which points at notes and is never pointed back at. Schema: `schemas/board-positions.ts`.",
-      "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/board-positions"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todo-items",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "todo-items",
-      "renderable": false,
-      "summary": "Todo nodes — one file each, carrying `\"$schema\": \"folio-todo/v1\"`. Authored by people and by agents on their behalf.",
-      "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/todo"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/uploads",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
       "name": "uploads",
@@ -44127,44 +44066,6 @@
       "renderable": false,
       "summary": "Editorial voice profiles — one JSON each, carrying `\"$schema\": \"folio-voice/v1\"`. Every rule cites the ingested source or KG node it was derived from. Opt-in per folio.",
       "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/voices"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todo-feedback",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "todo-feedback",
-      "renderable": false,
-      "summary": "Feedback items — todos raised against a specific block, carrying the submitter's identity. Read by the `todo-review` skill.",
-      "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/constraints"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/interaction",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "interaction",
-      "renderable": false,
-      "summary": "How a person wants to be asked — read at session start, never written by a process."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/issue-marks",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "issue-marks",
-      "renderable": false,
-      "summary": "How far an agent has read an issue — the comment id and the edit time it accounted for."
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/memory",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "memory",
-      "renderable": false,
-      "summary": "Durable facts an agent carries between sessions. Read during a process, never written by one.",
-      "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/memory"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/waiver",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#GraphKind",
-      "name": "waiver",
-      "renderable": false,
-      "summary": "Confirmations a person granted in advance — each naming one gate, scoped to a session or a process run, each expiring.",
-      "validator": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#schema/waiver"
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/translation-sources",
@@ -45245,57 +45146,6 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/health"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/beans",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "beans",
-      "path": "beans/",
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/beans"
-      ],
-      "description": "The work plan. `beans/beans.json` declares its nodes — `defs` (work items) and `workflows` (running BPMN instance state). REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/todos",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "todos",
-      "path": "todos/",
-      "holdsGraph": [
-        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/todos"
-      ],
-      "description": "A PERSON's outstanding items — the human half of memory, as against `beans/`, which is the agent's workflow management. Not a second work plan: the two sit in different quadrants of one 2x2 (memory vs workflow management, human vs agent), and human workflow management is EMPTY, deliberately. `todos/todos.json` declares its nodes — `items` (raised about anything) and `feedback` (raised against a specific block, carrying the submitter's identity) — the same shape as `beans/beans.json`. REPOSITORY-scoped: it sits at the top of the checkout, not inside this instance, and it is deliberately never overlaid by a dependency."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/memory",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "memory",
-      "path": "memory/",
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/memory",
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/waiver"
-      ],
-      "description": "Agent memory — durable facts an agent carries between sessions, one `\"$schema\": \"folio-memory/v1\"` node each, assembled into `.claude/agent-memory/<agent>/MEMORY.md`. `context` by the axis bean `mhh9` settled: read during a process, never written by one; it changes when a human directs an authoring agent. It sat in `skills/memory/` until 2026-09-20 — inside the `cat-harness` directory, which is `content` — so the CONTAINING kind and the contents were on opposite layers, and a nested declaration is the defect #263 names. Moving it was held back from the classification change on purpose (#395's rule, and bean `auap`'s precedent: a relocation is its own change) and is bean `07xs`. SCOPE IS `repository`, like `beans/`: these are facts about this REPOSITORY carried by the agents working in it, and `.claude/agents/` — the consumers — sit at the repository root too."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/interaction",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "interaction",
-      "path": "interaction/",
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/interaction"
-      ],
-      "description": "How a PERSON wants to be asked — committed, read at session start by every agent. `context` by the same test as agent memory: read during a process, never written by one, changed when a person states a preference. It sat in `.harness/`, undeclared, until 2026-09-20, which this repository's own dot-prefix guard forbids: a dot-prefixed directory is absent from a plain `ls`, from most file browsers and from a forge's web tree, and the file read at the start of every session was in the one place the conventions reject. The path is also `harness.config.json`'s `interaction` key, which defaults here — the declaration and the config now name the same place instead of one of them being a literal nobody checks. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/issue-marks",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "issue-marks",
-      "path": "issue-marks/",
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/issue-marks"
-      ],
-      "description": "How far an agent has read an issue: `lastCommentId`, `lastUpdatedAt` and `checkedAt`, one file per issue. NOT the comments — the marks say what was seen, and one of the two files here says so in its own note. Two marks rather than one because a comment EDITED after being read keeps its id, so the id alone would call it seen and an edited requirement is a changed requirement (`issue-working`). `state`: a running process writes one each time it checks. Moved out of `.harness/issue-comments/` on 2026-09-20 for the reason `.beans/` and `.harness/workflow/` moved on 2026-09-18 — the artefacts a person looks for first were the hardest to find. SCOPE IS `repository`, and omitting it was a live defect for an hour on 2026-09-20: without it the path resolves against the INSTANCE, so a consumer looked in `cat-harness/` while the content sat at the repository root — and `harness:dirs` then created the empty instance-level directory to satisfy the declaration, turning declared-but-absent into declared-and-empty, which is the `dh4f` false pass wearing a tidier face. Repository, not instance, for the same reason `beans/` and `todos/` are: these are read by every agent working in this repository, not by this instance's code."
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/uploads",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
       "name": "uploads",
@@ -45368,6 +45218,16 @@
         "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/library"
       ],
       "description": "The WHO digital-health corpus `smart-base` holds -- the publications the DIIG methodology and the WHO digital-health voices are derived FROM. Declared here, with `scope: repository` and an id distinct from the conventional `library`, for the same reason the three entries above are: this is a SIBLING instance's directory seen from the harness layer, and giving it the conventional id would override the harness's OWN library rather than joining it. `smart-base/smart-base.json` declares the same directory as plain `library` in its own namespace, which is the override that belongs there. Bean `ve07`; issue #877."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/fhir-harness-library",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
+      "name": "fhir-harness-library",
+      "path": "fhir-harness/library/",
+      "holdsGraph": [
+        "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#graphKind/library"
+      ],
+      "description": "The bare FHIR layer's library -- the test-side literature a FHIR implementation guide relies on: the R5 TestPlan resource's source, the Gherkin reference and the Interoperability Test Bed README (bean `y4uj`, issue #1614 item 4). Same staging arrangement and the same reason as `smart-base-library` and `folio-assistant-core-library`: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the `dh4f` defect). A distinct id, because the conventional `library` would override the harness's own library rather than join it."
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/translation-sources",
@@ -45472,18 +45332,6 @@
         "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs"
       ],
       "description": "Documentation about the Knowledge Graph itself: the pages of the published site, some written by people and some generated from the graph.",
-      "readmePath": "docs/README.md",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/root-docs",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Subgraph",
-      "name": "root-docs",
-      "path": "docs/",
-      "holdsGraph": [
-        "https://litlfred.github.io/cat-harness/0.1.0/ns#graphKind/docs"
-      ],
-      "description": "THE REPOSITORY ROOT'S DOCUMENTATION OVERLAY, managed by this instance. Owner's ruling, 2026-09-21, answering whether the root declares its own docs: \"harness can have docs/ which then get listed under cat-harness/docs/<harness>, there is also docs/ dir in repo root managed by cat-harness. other harness augment or overlay ontop of that (content and behviors)\". SEPARATE FROM THE `docs` ENTRY ABOVE, AND IT HAS TO BE. That one is instance-scoped and `reproduce`, which is what makes a DEPENDENT materialise its own docs/ (bean n0nf slice 1). This one is `scope: \"repository\"`, and a repository-scoped entry is filtered out for dependencies -- cat-harness.ts:3261 and :3507 both skip it unless `link.own`. Re-scoping the existing entry instead of adding this one would therefore have UNDONE slice 1 silently: a dependent would simply stop getting a docs/ and nothing would fail. Two directories answering two questions, so two entries, with distinct ids -- the convention `who-iris-docs` already follows. `dependents` is `skip` for the same reason every other cross-instance repository-scoped entry here is: a dependent never reaches this one at all, and claiming it reproduces would be a promise the resolver does not keep. WHAT MAKES IT NOT `dh4f`: a declared directory that nothing reads is this repository's most-paid-for defect, and an empty overlay is exactly that shape. It is consumed by the site build, which composes it OVER cat-harness/docs/ -- so what it contributes today is nothing VERIFIABLY, pinned by a test asserting an empty overlay produces a byte-identical site, rather than nothing unnoticed.",
       "readmePath": "docs/README.md",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#directory/docs"
     },
@@ -45674,8 +45522,8 @@
   ],
   "staging": {
     "branch": "main",
-    "sha": "adc024eb6144331364ac816129d0f703d44cfa47",
+    "sha": "aeeb6bab82aed4c24d912d4c88293608a42b47af",
     "pr": "main",
-    "run": "36825534007"
+    "run": "36830230992"
   }
 }

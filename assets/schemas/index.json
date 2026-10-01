@@ -13114,7 +13114,7 @@
       "fields": [
         {
           "name": "variant",
-          "type": "\"pdf\" | \"notebook\"",
+          "type": "\"pdf\" | \"notebook\" | \"text\"",
           "optional": false,
           "array": false
         },
@@ -13433,6 +13433,357 @@
       "unresolved": [],
       "external": [],
       "exported": false
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#TextFileSchema",
+      "name": "TextFileSchema",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "zod-object",
+      "doc": "One file of a text source, with its own digest so each can be re-fetched and compared alone.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sha256",
+          "type": "Sha256",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lines",
+          "type": "z.number().int().min(0).nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "Line count, or null for a file not read as text (an image the source carries)."
+        },
+        {
+          "name": "format",
+          "type": "z.enum([\"markdown\", \"verbatim\", \"image\"])",
+          "optional": false,
+          "array": false,
+          "doc": "How the rung read it, decided by CONTENT: `markdown` when it has an ATX"
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-structure.ts#Sha256"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#TextSectionSchema",
+      "name": "TextSectionSchema",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "zod-object",
+      "doc": "One section of a text source: a heading and the lines under it, or a whole file.",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "number",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "level",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The file the section is in, as recorded in `source.files[].path`."
+        },
+        {
+          "name": "line_start",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "One-based first line, inclusive."
+        },
+        {
+          "name": "line_end",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "One-based last line, inclusive."
+        },
+        {
+          "name": "unit",
+          "type": "z.enum([\"heading\", \"file\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`heading`: divided by the file's own heading. `file`: the whole file, which carries none the rung reads."
+        },
+        {
+          "name": "n_chars",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "n_words",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#TextSourceSchema",
+      "name": "TextSourceSchema",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "file",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "A display name for the whole source: the file's name, or the bundle's."
+        },
+        {
+          "name": "sha256",
+          "type": "Sha256",
+          "optional": false,
+          "array": false,
+          "doc": "With one file, that file's sha256. With several, the sha256 of their"
+        },
+        {
+          "name": "digest",
+          "type": "z.enum([\"file\", \"listing\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "bytes",
+          "type": "z.number().int().min(0)",
+          "optional": false,
+          "array": false,
+          "doc": "Total bytes over every file."
+        },
+        {
+          "name": "mtime",
+          "type": "z.string().nullable()",
+          "optional": false,
+          "array": false,
+          "doc": "The source's own time. For a repository checkout a file's mtime is the"
+        },
+        {
+          "name": "mimetype_sniffed",
+          "type": "z.literal(\"text/plain\")",
+          "optional": false,
+          "array": false,
+          "doc": "Text has no magic bytes; what it is was decided by reading it."
+        },
+        {
+          "name": "mimetype_source",
+          "type": "z.literal(\"content\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "files",
+          "type": "z.array(TextFileSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "upstream",
+          "type": "TextUpstreamSchema.nullable()",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-structure.ts#Sha256",
+        "cat-harness/schemas/document-structure.ts#TextFileSchema",
+        "cat-harness/schemas/document-structure.ts#TextUpstreamSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#TextStructure",
+      "name": "TextStructure",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#TextStructureSchema",
+      "name": "TextStructureSchema",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "_schema",
+          "type": "z.literal(TEXT_STRUCTURE_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "doc_id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "source",
+          "type": "TextSourceSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "metadata",
+          "type": "z.object({ title: z.string().nullable() }).passthrough()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "toc_source",
+          "type": "z.enum([\"headings\", \"files\"])",
+          "optional": false,
+          "array": false,
+          "doc": "`headings`: at least one file was divided by its own headings. `files`: none was, so each file is one section."
+        },
+        {
+          "name": "sections",
+          "type": "z.array(TextSectionSchema)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "structure_note",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the rung did NOT claim. Always required: a text source always omits something (rendering, shortcodes, images)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-structure.ts#TextSectionSchema",
+        "cat-harness/schemas/document-structure.ts#TextSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "TEXT_STRUCTURE_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-structure.ts#TextUpstreamSchema",
+      "name": "TextUpstreamSchema",
+      "module": "cat-harness/schemas/document-structure.ts",
+      "kind": "zod-object",
+      "doc": "Where the files came from, when they came from a repository rather than an",
+      "fields": [
+        {
+          "name": "repository",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "commit",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "ref",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The ref the commit was taken from (a branch or tag name)."
+        },
+        {
+          "name": "committed",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Commit time, ISO 8601, as git reports it."
+        },
+        {
+          "name": "path",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Path of the files within the repository."
+        },
+        {
+          "name": "published",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "retrieved",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "When it was retrieved, ISO date."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
     },
     {
       "id": "cat-harness/schemas/external-schema.ts#ExternalSchema",
@@ -44920,6 +45271,54 @@
     {
       "from": "cat-harness/schemas/document-structure.ts#NotebookStructureSchema",
       "to": "cat-harness/schemas/document-structure.ts#NotebookSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#TextFileSchema",
+      "to": "cat-harness/schemas/document-structure.ts#Sha256",
+      "via": "sha256",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#TextSourceSchema",
+      "to": "cat-harness/schemas/document-structure.ts#Sha256",
+      "via": "sha256",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#TextSourceSchema",
+      "to": "cat-harness/schemas/document-structure.ts#TextFileSchema",
+      "via": "files",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#TextSourceSchema",
+      "to": "cat-harness/schemas/document-structure.ts#TextUpstreamSchema",
+      "via": "upstream",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#TextStructureSchema",
+      "to": "cat-harness/schemas/document-structure.ts#TextSectionSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness/schemas/document-structure.ts#TextStructureSchema",
+      "to": "cat-harness/schemas/document-structure.ts#TextSourceSchema",
       "via": "source",
       "kind": "field",
       "optional": false,
