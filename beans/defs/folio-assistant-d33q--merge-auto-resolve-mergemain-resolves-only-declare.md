@@ -3,8 +3,9 @@
 title: 'MERGE AUTO-RESOLVE: merge:main resolves only DECLARED conflict patterns, proves the result with the gate set, and is the merge-base.bpmn sub-process'
 status: in-progress
 type: feature
+priority: normal
 created_at: 2026-10-01T06:57:14Z
-updated_at: 2026-10-01T16:04:07Z
+updated_at: 2026-10-01T17:42:08Z
 parent: folio-assistant-1xhc
 ---
 
@@ -88,3 +89,8 @@ faster regen, not a weaker proof.
 **Not doing.** No new patterns from CI (a pattern is declared by a person, with
 its `why`); no merging to `main`; no running on PRs that have not opted in —
 a bot commit on somebody's in-flight branch is a coordination event.
+
+
+## 2026-10-01 late — part B approved
+
+Owner approved CI merge:main (this bean's part B) as speed-up 3 of 4 for the merge treadmill (session_01ToWZR4RgTRCWeSsgxsSQfT). Siblings created alongside it under `0mf0`: input-hash skip, parallel checks, CI sharding + BPMN cache + shallow checkout.
