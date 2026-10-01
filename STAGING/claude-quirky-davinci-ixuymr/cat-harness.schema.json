@@ -541,6 +541,24 @@
               "kindRouteRedirect": {
                 "type": "boolean"
               },
+              "storage": {
+                "type": "object",
+                "properties": {
+                  "branch": {
+                    "type": "string",
+                    "pattern": "^(?!-)(?!refs\\/)[A-Za-z0-9._/-]+$"
+                  },
+                  "keyedBy": {
+                    "type": "string",
+                    "const": "commit"
+                  }
+                },
+                "required": [
+                  "branch",
+                  "keyedBy"
+                ],
+                "additionalProperties": false
+              },
               "composed": {
                 "type": "boolean"
               },
@@ -1010,8 +1028,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld",
   "staging": {
     "branch": "claude/quirky-davinci-ixuymr",
-    "sha": "20775e20e82458317773ea709f0a24353dae6af8",
+    "sha": "8cc66166b2c676d48f2d1370a8e707b11a117171",
     "pr": "1764/merge",
-    "run": "36843336443"
+    "run": "36855679884"
   }
 }

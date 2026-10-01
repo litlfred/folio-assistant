@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/docs-ui.css?v=1790847196">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/docs-ui.css?v=1790854233">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/narrow-viewport.css?v=1790847196">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/narrow-viewport.css?v=1790854233">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/work-plan.css?v=1790847196">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/work-plan.css?v=1790854233">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/themes.css?v=1790847196">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/themes.css?v=1790854233">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/uml.css?v=1790847196">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/uml.css?v=1790854233">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/avatars.css?v=1790847196">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/css/avatars.css?v=1790854233">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/js/docs-ui.js?v=1790847196" defer></script>
+<script src="/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/assets/js/docs-ui.js?v=1790854233" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -810,7 +810,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h1>
     
 
-<p><code class="language-plaintext highlighter-rouge">Process_CodeQualityGates</code> · strict · 8 step(s)</p>
+<p><code class="language-plaintext highlighter-rouge">Process_CodeQualityGates</code> · strict · 9 step(s)</p>
 
 <p>EVERY JOB IS INDEPENDENT, AND NOTHING IN THE YAML SAYS SO IN ONE PLACE. Bean <code class="language-plaintext highlighter-rouge">7yvd</code>. The file reads as a long sequence; it is not one. NO job declares <code class="language-plaintext highlighter-rouge">needs:</code>, so they all start together and the wall-clock cost of the whole workflow is the SLOWEST job, not the sum. That is the single most useful thing to know before adding a gate, and it is recoverable today only by checking for <code class="language-plaintext highlighter-rouge">needs:</code> keys that are not there. COUNT THE <code class="language-plaintext highlighter-rouge"># bpmn-node:</code> DECLARATIONS rather than trusting a number here: this paragraph said SIX until 2026-09-26, by which point there were eight — <code class="language-plaintext highlighter-rouge">typescript</code> had been split into <code class="language-plaintext highlighter-rouge">typescript</code> + <code class="language-plaintext highlighter-rouge">gates</code> and <code class="language-plaintext highlighter-rouge">skill-registration-chain</code> added — and the count was wrong in the one place a reader checks the shape.</p>
 
@@ -873,7 +873,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p>Every one of the 8 step(s) is documented.</p>
+<p>Every one of the 9 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -932,6 +932,12 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td>CI/CD Pipeline</td>
       <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
       <td>Runs the five <code class="language-plaintext highlighter-rouge">--check</code> commands that adding a skill stales, each on its own: gen-skill-docs, check:glossary, docs:auto:check, kg:audit:check, kg:detangle:check. CORRECTED 2026-09-26, after main split this workflow: the original justification is GONE. It read “the only place those five are read against the tree as checked out”, because at the time all six lived in one job behind <code class="language-plaintext highlighter-rouge">bun test</code>, which runs the kg-audit and detangle WRITERS and repaired two artefacts before their checks read them (bean <code class="language-plaintext highlighter-rouge">ymsu</code>). Task_RepositoryGates is now a separate job that runs all six and never runs <code class="language-plaintext highlighter-rouge">bun test</code>, so they are unmasked THERE. What survives is narrower and is the reason this is kept: one command a skill author runs (<code class="language-plaintext highlighter-rouge">bun run skill:register</code>) that regenerates and verifies the chain together, a committed QA sidecar saying which steps ran, and ONE named failure instead of six unrelated generated files — which is bean <code class="language-plaintext highlighter-rouge">v625</code>’s actual complaint. The unmasking argument belongs to Task_RepositoryGates now. Its first CI run earned the place: it went red on <code class="language-plaintext highlighter-rouge">kg:detangle:check</code> and the cause was <code class="language-plaintext highlighter-rouge">kg-detangle.ts</code> counting 1214 files of a gitignored <code class="language-plaintext highlighter-rouge">node_modules/</code> as graph nodes — 1441 where a clean checkout computes 227, pinned in a committed sidecar. Not a step in front of <code class="language-plaintext highlighter-rouge">bun test</code> either: measured on main’s run 36234052354, a failing step SKIPS every step behind it, so a red there would turn one named failure into forty-five unevaluated ones. 13s, in parallel. Beans <code class="language-plaintext highlighter-rouge">v625</code>, <code class="language-plaintext highlighter-rouge">fjwi</code>.</td>
+    </tr>
+    <tr>
+      <td><strong>Publish QA results to qa-reports (NOT A GATE)</strong><br /><code class="language-plaintext highlighter-rouge">Task_QaPublish</code></td>
+      <td>CI/CD Pipeline</td>
+      <td><a href="../reference/skill-instructions/platform-gates.html"><code class="language-plaintext highlighter-rouge">platform-gates</code></a></td>
+      <td>Bean <code class="language-plaintext highlighter-rouge">16ei</code>, arc <code class="language-plaintext highlighter-rouge">3fva</code>. After Task_RepositoryGates, WHATEVER it concluded (<code class="language-plaintext highlighter-rouge">needs: gates</code> with <code class="language-plaintext highlighter-rouge">always()</code>), <code class="language-plaintext highlighter-rouge">qa:publish --github</code> writes this run’s <code class="language-plaintext highlighter-rouge">test/results</code> trees to the orphan <code class="language-plaintext highlighter-rouge">qa-reports</code> branch: <code class="language-plaintext highlighter-rouge">main/&lt;sha&gt;/</code> on a push to main, <code class="language-plaintext highlighter-rouge">pr/&lt;n&gt;/&lt;head-sha&gt;/</code> on a same-repository PR (owner rulings D1, D3). A fork PR’s token is read-only, so it is skipped with a <code class="language-plaintext highlighter-rouge">::notice</code> naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding <code class="language-plaintext highlighter-rouge">contents: write</code>, which is also how <code class="language-plaintext highlighter-rouge">bun run gates</code> knows not to run it locally.</td>
     </tr>
   </tbody>
 </table></div>

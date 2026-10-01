@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T09:36:26.689Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/bc42b0f309298280ae26cd00fae5d9ff85b5fd7b",
-  "sourceCommitSha": "bc42b0f309298280ae26cd00fae5d9ff85b5fd7b",
-  "sourceCommitAt": "2026-10-01T09:31:45Z",
+  "generatedAt": "2026-10-01T11:33:42.461Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/475e5ca7a934588d716c99b14a3d01cfc21beaad",
+  "sourceCommitSha": "475e5ca7a934588d716c99b14a3d01cfc21beaad",
+  "sourceCommitAt": "2026-10-01T11:29:13Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -314,9 +314,9 @@
     "SkillPackage": 33,
     "Decision": 9,
     "Process": 75,
-    "SequenceFlow": 982,
+    "SequenceFlow": 984,
     "Lane": 199,
-    "ProcessNode": 927,
+    "ProcessNode": 929,
     "Tool": 113,
     "Schema": 145,
     "ExternalSchema": 17,
@@ -23987,8 +23987,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/node/Start_Change"
       ],
-      "nodeCount": 14,
-      "flowCount": 20,
+      "nodeCount": 16,
+      "flowCount": 22,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -24183,6 +24183,24 @@
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_19"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_20",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_20"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_21",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Published",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_21"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
@@ -24396,7 +24414,8 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_16"
       ],
       "outgoing": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_17",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_20"
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_RepositoryGates"
@@ -24423,6 +24442,48 @@
       ],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_SkillChain"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Publish QA results to qa-reports (NOT A GATE)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#skill/platform-gates"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_20"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_21"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/Task_QaPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Published",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "QA results published (or skipped, with a reason)",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/flow/Flow_21"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_CodeQualityGates/node/End_Published"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld#process/Process_CodeQualityGates/node/GW_Join",

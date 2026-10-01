@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "d95ade53ee6c"
+    "script_hash": "25f2a2d567d7"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 51 of 51 declared kind(s), 201 gate(s), 73 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 51 of 51 declared kind(s), 203 gate(s), 73 criteria.",
       "count": 51,
       "entries": [
         {
@@ -132,6 +132,7 @@
           ],
           "gates": [
             "bun run check:asset-roles",
+            "bun run check:avatar-coverage:check",
             "bun run check:avatar-instances",
             "bun run check:concern-groups",
             "bun run check:declaration-claims",
@@ -145,24 +146,25 @@
             "bun run check:instance-config",
             "bun run check:instance-graph",
             "bun run check:instance-render",
-            "bun run check:layout-norms",
+            "bun run check:layout-norms:check",
             "bun run check:publishable",
             "bun run check:published-instance-exports",
             "bun run check:published-packages",
             "bun run check:published-refs",
             "bun run check:read-only-graphs",
-            "bun run check:rendered-labels",
+            "bun run check:rendered-labels:check",
             "bun run check:subgraph-coverage",
             "bun run check:subgraphs",
             "bun run check:undeclared-files:check",
             "bun run check:version-bump",
-            "bun run check:wireframes",
+            "bun run check:wireframes:check",
             "bun run harness:dirs:check",
             "bun run iri:sync:check",
             "bun run kg:audit:all:check",
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
             "bun run kg:detangle:direction",
+            "bun run kg:export:check",
             "bun run kg:locale:check",
             "bun run kg:locale:check:bootstrap",
             "bun run kg:schema:check",
@@ -281,7 +283,7 @@
             "bun run check:stale-field-advice",
             "bun run check:viewer-backticks",
             "bun run check:viewer-nav",
-            "bun run check:wireframes",
+            "bun run check:wireframes:check",
             "bun run docs:auto:check",
             "bun run docs:harness:check",
             "bun run docs:pages:check",
@@ -457,9 +459,9 @@
           "gates": [
             "bun run check:l1-complete",
             "bun run check:l1-complete -- --check",
-            "bun run check:methodology-evidence",
+            "bun run check:methodology-evidence:check",
             "bun run check:soft-hyphens",
-            "bun run check:source-licence",
+            "bun run check:source-licence:check",
             "bun run check:structure-accessor",
             "bun run check:upload-names:check",
             "bun run check:uploads-retired",
@@ -496,7 +498,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run check:methodology-evidence",
+            "bun run check:methodology-evidence:check",
             "bun run lsi:skills:check",
             "bun run methodologies:viz:check"
           ],
@@ -578,7 +580,7 @@
             "process"
           ],
           "gates": [
-            "bun run check:lane-documentation",
+            "bun run check:lane-documentation:check",
             "bun run check:process-documentation",
             "bun run check:raci",
             "bun run check:stale-field-advice",
@@ -587,6 +589,7 @@
             "bun run check:xml-comments",
             "bun run kg:audit:all:check",
             "bun run kg:audit:check",
+            "bun run kg:export:check",
             "bun run processes:viz:check",
             "bun run render:bpmn:check",
             "bun run translate-bpmn:bootstrap:check",
@@ -697,7 +700,7 @@
           "gates": [
             "bun run check:actor-reach",
             "bun run check:fallback-roles",
-            "bun run check:lane-documentation",
+            "bun run check:lane-documentation:check",
             "bun run check:prov-qaqc",
             "bun run check:qa-reviewer-permission",
             "bun run check:raci",
@@ -734,6 +737,7 @@
             "bun run check:node-iris",
             "bun run check:schema-nodes",
             "bun run gen:jsonld:check",
+            "bun run kg:export:check",
             "bun run kg:schema:check"
           ],
           "typed": true,
@@ -810,6 +814,7 @@
             "bun run kg:audit:check",
             "bun run kg:detangle:check",
             "bun run kg:detangle:direction",
+            "bun run kg:export:check",
             "bun run lsi:skills:check",
             "bun run skill:commands:check",
             "bun run skill:register:check",
@@ -944,6 +949,7 @@
             "bun run check:tools",
             "bun run kg:audit:all:check",
             "bun run kg:audit:check",
+            "bun run kg:export:check",
             "bun run tools:viz:check",
             "bun run upload-step:docs:check"
           ],
@@ -999,7 +1005,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
-            "bun run check:source-licence",
+            "bun run check:source-licence:check",
             "bun run check:upload-names:check",
             "bun run check:uploads-retired",
             "bun run gen:jsonld:check",
@@ -1193,7 +1199,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 201 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 203 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     }

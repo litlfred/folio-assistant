@@ -291,14 +291,14 @@
     {
       "id": "folio-assistant-16ei",
       "title": "qa-store: one read/write API for QA results, qa:fetch / qa:publish, ContentDirectory.storage, CI publish and a prune that fires",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:46Z",
-      "updatedAt": "2026-10-01T08:00:55Z",
+      "updatedAt": "2026-10-01T09:41:06Z",
       "preview": "Arc `3fva`, proposal §2.2–2.4 and §4 Phase 2. Blocked on the SPIKE bean. Serial, one agent: everything else depends on this.\n\n- `qa-store` module:\n  - `readQa(ref, path)` returns hit / miss / corrupt / unknown, and a miss is never read as clean;\n  - `publishQa(ref)` follows the lake-cache write path, with fetch → rebuild-on-tip → push, 3 attempts and `backoff-sleep.ts`, and never `-f`.\n- `bun run ",
       "file": "beans/defs/folio-assistant-16ei--qa-store-one-readwrite-api-for-qa-results-qafetch.md"
     },
@@ -2969,14 +2969,14 @@
     {
       "id": "folio-assistant-bo44",
       "title": "WRITER-ONLY GATES: nine check scripts always write their sidecar and cannot fail on its content — the general form of uju6/i2kp",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "high",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:46Z",
-      "updatedAt": "2026-10-01T08:00:46Z",
+      "updatedAt": "2026-10-01T13:00:00Z",
       "preview": "Arc `3fva`, proposal §4 item 0.3 and §4.3. The handover (session 01NtKBtj6Yk4kSTVMX3z2Tgy) named this sweep \"the general form\", and nobody has run it.\n\n`uju6` classified 4 of 103 `check:*` scripts. It looked for misspelled writers, not for scripts that write their own sidecar, and so it missed `check:source-licence` (`i2kp`, #1751, draft #1753).\n\nMeasured at `61b1e747`: these writers have no judge",
       "file": "beans/defs/folio-assistant-bo44--writer-only-gates-nine-check-scripts-always-write.md"
     },
