@@ -1,11 +1,11 @@
 ---
 # folio-assistant-pw9j
 title: Bump bootstrap/bootstrap-tools pins to the fixed upstream (f75a216 / 3046412); re-extract translation templates
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T15:09:20Z
-updated_at: 2026-10-01T15:09:20Z
+updated_at: 2026-10-01T15:57:57Z
 parent: folio-assistant-7x5n
 ---
 
