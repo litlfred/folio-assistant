@@ -46,10 +46,18 @@ const LITERAL = /(?<![.\w])(?:join|resolve)\s*\([^,()]*(?:\([^()]*\))?[^,()]*,\s
 /** The one module that may spell it, because it is where the answer lives. */
 const BASE_CASE = "cat-harness/schemas/cat-harness.ts";
 
+/**
+ * The harness and the layer that implements its tools. The MCP server moved to
+ * `cat-harness-tools` (bean `w2gr`, step 3a) and took many of the `folioDir`
+ * call sites with it. Scanning only this instance would let that code escape
+ * the rule, and would make the floor below fail for a reason unrelated to it.
+ */
+const SCANNED = [INSTANCE, resolve(ROOT, "cat-harness-tools")];
+
 function sourceFiles(): string[] {
   const out = new Set<string>();
-  for (const pattern of ["**/*.ts"]) {
-    for (const f of new Bun.Glob(pattern).scanSync({ cwd: INSTANCE, absolute: true })) {
+  for (const cwd of SCANNED) {
+    for (const f of new Bun.Glob("**/*.ts").scanSync({ cwd, absolute: true })) {
       if (f.includes("/node_modules/") || f.endsWith(".test.ts")) continue;
       out.add(f);
     }
