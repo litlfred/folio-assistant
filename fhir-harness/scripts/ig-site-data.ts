@@ -36,10 +36,11 @@
  * 2. `fhir-artifact-index/index.json` — read from a published IG; carries
  *    `packageId`, `version`, `fhirVersion`, `canonicalBase`, but not `id`,
  *    `name` or `publisher`.
- *    `fhir-artifact-index/chrome.json` supplies `status` ONLY when it describes
- *    the same package: measured 2026-09-30, `smart-base`'s chrome describes
- *    `smart.who.int.trust` 1.8.0 while its index is `smart.who.int.base`
- *    0.3.0, so merging blindly would publish another IG's status.
+ *    `fhir-artifact-index/ig-identity.json` supplies `status` ONLY when it
+ *    names the same package. It used to come from `chrome.json`, which
+ *    measured 2026-09-30 described `smart.who.int.trust` 1.8.0 under
+ *    smart-base's `smart.who.int.base` 0.3.0; stage D (#1767) keyed the chrome
+ *    by its template and gave each IG an identity file of its own.
  *
  * Usage:
  *   bun run fhir-harness/scripts/ig-site-data.ts --ig <IG root> --out <site>/_data/fhir.json [--check]
@@ -47,6 +48,7 @@
  * @module fhir-harness/scripts/ig-site-data
  */
 
+import { IG_IDENTITY_FILENAME, readIgIdentity, statusOf } from "../schemas/ig-identity.js";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { parse as parseYaml } from "yaml";
@@ -107,7 +109,6 @@ export function igSiteData(igRoot: string): IgSiteDataResult {
 
   const sushiPath = join(igRoot, "sushi-config.yaml");
   const indexPath = join(igRoot, "fhir-artifact-index", "index.json");
-  const chromePath = join(igRoot, "fhir-artifact-index", "chrome.json");
 
   if (existsSync(sushiPath)) {
     const s = (parseYaml(readFileSync(sushiPath, "utf-8")) ?? {}) as Record<string, unknown>;
@@ -135,13 +136,17 @@ export function igSiteData(igRoot: string): IgSiteDataResult {
     set("canonical", str(idx.canonicalBase), from);
     set("ig.version", str(idx.version), from);
     if (Array.isArray(idx.fhirVersion)) set("ig.fhirVersion", idx.fhirVersion.map(String), from);
-    const chrome = existsSync(chromePath) ? readJson(chromePath) : undefined;
-    if (chrome) {
-      if (str(chrome.id) && str(chrome.id) === data.packageId) {
-        set("ig.status", str(chrome.status), "fhir-artifact-index/chrome.json");
+    // Status is THIS IG's own fact, read from its own sushi-config into
+    // `ig-identity.json` beside the index. The chrome is the template chain's
+    // (`folio-ig-chrome/v2`) and states no IG's status at all.
+    const identity = readIgIdentity(join(igRoot, "fhir-artifact-index"));
+    if (identity) {
+      const status = statusOf(identity, data.packageId);
+      if (status !== undefined) {
+        set("ig.status", status, `fhir-artifact-index/${IG_IDENTITY_FILENAME}`);
       } else {
         refused.push(
-          `fhir-artifact-index/chrome.json describes ${str(chrome.id) ?? "an unnamed package"} ${str(chrome.version) ?? ""}`.trim() +
+          `fhir-artifact-index/${IG_IDENTITY_FILENAME} names ${identity.id} ${identity.version ?? ""}`.trim() +
             `, not ${data.packageId ?? "this IG"} — its status is another IG's`,
         );
       }
