@@ -9,11 +9,15 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 |---|---|---|
 | [`build-ig-site.test.ts`](build-ig-site.test.ts) | a file |  |
 | [`build-ig-site.ts`](build-ig-site.ts) | a file |  |
+| [`dak-views.test.ts`](dak-views.test.ts) | a file |  |
+| [`dak-views.ts`](dak-views.ts) | a file |  |
+| [`gen-ig-pages.test.ts`](gen-ig-pages.test.ts) | a file |  |
+| [`gen-ig-pages.ts`](gen-ig-pages.ts) | a file |  |
 | [`ig-ast.test.ts`](ig-ast.test.ts) | a file |  |
 | [`ig-ast.ts`](ig-ast.ts) | a file |  |
 | [`ig-site-data.test.ts`](ig-site-data.test.ts) | a file |  |
 | [`ig-site-data.ts`](ig-site-data.ts) | a file |  |
 | [`stage-ig-sites.test.ts`](stage-ig-sites.test.ts) | a file |  |
 | [`stage-ig-sites.ts`](stage-ig-sites.ts) | a file |  |
-| [`templates/`](templates/) | 1 file | |
+| [`templates/`](templates/) | 3 files | |
 <!-- kg:subgraph:end -->
