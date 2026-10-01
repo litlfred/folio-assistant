@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cjvs
 title: '190 dangling refs in the KG: 137 ts-import, 28 md-link, 25 bpmn-skill'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-10-01T05:32:19Z
+updated_at: 2026-10-01T07:11:26Z
 parent: folio-assistant-vke6
 ---
 
@@ -428,3 +428,7 @@ lives in large-datasets. Moving the skill would be a second ruling, and this
 change does not presume it. The two fhir-harness md-links are untouched.
 
 _2026-10-01T05:32:19Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+
+_2026-10-01_ — Done in PR #1750 (owner's rulings: fix + re-pin; move sample-import). kg-detangle resolves extensionless TS imports: dangling ts-import 156 → 44 (all out-of-SCAN or fixture strings), direction gate still 0. sample-import now lives in large-datasets/skills/ beside its process; todo-review names copy-out-materialized instead of linking up a layer. Merged without full green CI by owner's instruction — see PR body for fix-up.
