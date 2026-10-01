@@ -36,8 +36,8 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>112</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>67</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>113</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>68</b><span>skills satisfied</span></div>
 <div class="tg-stat"><b>91</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
@@ -51,16 +51,16 @@ A tool may declare more than one invocation, so these do not sum to the total.
 | <span class="tg-tag tg-shell">shell</span> | 91 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 24 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
-| <span class="tg-tag tg-manual">manual</span> | 7 |
+| <span class="tg-tag tg-manual">manual</span> | 8 |
 
 | installation | tools |
 |---|---|
-| `none` | 103 |
+| `none` | 104 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **67** skills named across **112** tools resolve to a
+Yes — all **68** skills named across **113** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -126,6 +126,7 @@ tool advertising a capability the graph cannot locate.
 | `paper-preferences`<br>Rendering preferences | Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`build-docs`](../reference/skill-instructions/build-docs.html)<br>[`build-pdf`](../reference/skill-instructions/build-pdf.html) | 10 in / 1 out |
 | `paper-preview`<br>Open a render | Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`rendering-auditor`](../reference/skill-instructions/rendering-auditor.html)<br>[`staging-review`](../reference/skill-instructions/staging-review.html) | 3 in / 1 out |
 | `pdf-cover`<br>PDF page raster | Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer. | <span class="tg-tag tg-shell">shell</span> | [`asset-extraction`](../reference/skill-instructions/asset-extraction.html) | 5 in / 1 out |
+| `pr-ready-for-merge`<br>Hand a green PR to the Merge Manager | DRAFT (issue #1800). The PR author's half of the merge hand-over. It carries the owner's tagging policy VERBATIM — owner, 2026-10-01: "MERGE POLICY: Do NOT merge to main yourself. When your PR is green on every CI job, mark it "Ready for review", add the label `ready-to-merge`, and comment "ready: <head sha>". The Merge Steward session (named "Separation") merges it after bringing main in and regenerating. If it comments that your PR went red, fix and re-label. Push your own work freely." Steps: (1) re-read the PR's CURRENT head sha, then verify every CI job on THAT head is green, reading check runs rather than the legacy commit-status API, which is always empty here; (2) mark the PR Ready for review; (3) add the label `ready-to-merge`, keeping every existing label; (4) comment exactly `ready: <full 40-character head sha>`; (5) on a red bounce-back from the Merge Manager (a comment and the label removed): fix, push, wait for green on the new head, and run steps 1–4 again. It never merges. | <span class="tg-tag tg-manual">manual</span> | [`merge-manager`](../reference/skill-instructions/merge-manager.html)<br>[`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | 2 in / 1 out |
 | `processes-viewer`<br>Processes viewer | Render the declared BPMN processes as an index page and one page per diagram. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `proof-dependency-graph`<br>Proof dependency graph | Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html)<br>[`proof-status-tracking`](../reference/skill-instructions/proof-status-tracking.html) | 4 in / 1 out |
 | `proof-objects-extract`<br>Proof-object extraction | Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read. | <span class="tg-tag tg-shell">shell</span> | [`proof-status-tracking`](../reference/skill-instructions/proof-status-tracking.html) | 1 in / 1 out |
