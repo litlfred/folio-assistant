@@ -11,7 +11,7 @@
   "families": {
     "covered": {
       "summary": "A declared visualiser with a wireframe whose checks pass at both viewports.",
-      "count": 42,
+      "count": 39,
       "entries": [
         {
           "ref": "cat-harness/docs/beans/index.html",
@@ -46,23 +46,11 @@
           "wireframe": "docs-index"
         },
         {
-          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/core-skills/index.html",
-          "wireframe": "skills-index"
-        },
-        {
-          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/data-skills/index.html",
-          "wireframe": "skills-index"
-        },
-        {
           "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/fhir-ig-skills/index.html",
           "wireframe": "skills-index"
         },
         {
           "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/large-datasets-skills/index.html",
-          "wireframe": "skills-index"
-        },
-        {
-          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/lean-skills/index.html",
           "wireframe": "skills-index"
         },
         {
@@ -200,14 +188,37 @@
     },
     "uncovered": {
       "summary": "A declared visualiser that no wireframe covers.",
-      "count": 0,
-      "entries": []
+      "count": 3,
+      "entries": [
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-sci-data-skills/index.html"
+        },
+        {
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-sci-lean-skills/index.html"
+        }
+      ]
     },
     "unknown-ref": {
       "summary": "index.json names a ref that no declaration declares: a stale or mistyped mapping.",
-      "count": 0,
-      "entries": []
+      "count": 3,
+      "entries": [
+        {
+          "wireframe": "skills-index",
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/core-skills/index.html"
+        },
+        {
+          "wireframe": "skills-index",
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/data-skills/index.html"
+        },
+        {
+          "wireframe": "skills-index",
+          "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/lean-skills/index.html"
+        }
+      ]
     }
   },
-  "total": 42
+  "total": 45
 }

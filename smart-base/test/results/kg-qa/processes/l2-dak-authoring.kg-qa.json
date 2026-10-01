@@ -24,25 +24,25 @@
       "findings": []
     },
     "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
       "result": "fail",
       "findings": [
         {
           "where": "Task_Personas",
-          "detail": "names skill \"l2-dak-authoring\", which resolves to no skill in this instance or anything it `needs`."
+          "detail": "names skill \"l2-dak-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
         },
         {
           "where": "Task_DataDict",
-          "detail": "names skill \"l2-dak-authoring\", which resolves to no skill in this instance or anything it `needs`."
+          "detail": "names skill \"l2-dak-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
         },
         {
           "where": "Task_Indicators",
-          "detail": "names skill \"l2-dak-authoring\", which resolves to no skill in this instance or anything it `needs`."
+          "detail": "names skill \"l2-dak-authoring\", which exists but no local package serves — skill_fetch would answer \"package not found\"."
         }
       ]
-    },
-    "skill-servable": {
-      "result": "pass",
-      "findings": []
     },
     "activity-skill-has-tool": {
       "result": "fail",
@@ -52,12 +52,24 @@
           "detail": "names skill \"content-plan\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
+          "where": "Task_Personas",
+          "detail": "names skill \"l2-dak-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
           "where": "Task_Bpmn",
           "detail": "names skill \"bpmn-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
           "where": "Task_Dmn",
           "detail": "names skill \"dmn-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_DataDict",
+          "detail": "names skill \"l2-dak-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Indicators",
+          "detail": "names skill \"l2-dak-authoring\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
           "where": "Task_Terminology",
@@ -90,20 +102,15 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Terminology",
-          "detail": "needs skill \"terminology-management\", but its lane's role \"terminologist\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
       "findings": []
     },
     "activity-fulfilment-kind": {
-      "result": "pass",
+      "result": "n/a",
       "findings": []
     },
     "call-activity-resolves": {
@@ -149,8 +156,8 @@
   },
   "totals": {
     "pass": 13,
-    "fail": 3,
-    "n/a": 9,
+    "fail": 2,
+    "n/a": 10,
     "unknown": 0
   }
 }

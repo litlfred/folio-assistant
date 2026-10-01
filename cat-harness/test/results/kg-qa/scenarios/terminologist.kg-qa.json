@@ -16,8 +16,13 @@
       "findings": []
     },
     "role-binds-a-lane": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "terminologist",
+          "detail": "role \"terminologist\" is bound by no lane's <bootstrap.processes:role ref> in any diagram — nothing can enter it. Either a lane lost its ref, or the role is dead."
+        }
+      ]
     },
     "role-has-persona": {
       "result": "pass",
@@ -37,8 +42,8 @@
     }
   },
   "totals": {
-    "pass": 6,
-    "fail": 0,
+    "pass": 5,
+    "fail": 1,
     "n/a": 1,
     "unknown": 0
   }

@@ -184,6 +184,10 @@
           "detail": "no role carries \"swimlane-glossary\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-sci-lean-skills` at `folio-assistant-sci/skills/lean/`, `folio-assistant-sci-data-skills` at `folio-assistant-sci/skills/data/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `fhir-ig-skills` at `fhir-harness/skills/`, `large-datasets-processes` at `large-datasets/processes/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`, `scenarios` at `scenarios/`, `skills` at `skills/`, `scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
         },
         {
+          "where": "terminology-management",
+          "detail": "no role carries \"terminology-management\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-sci-lean-skills` at `folio-assistant-sci/skills/lean/`, `folio-assistant-sci-data-skills` at `folio-assistant-sci/skills/data/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `fhir-ig-skills` at `fhir-harness/skills/`, `large-datasets-processes` at `large-datasets/processes/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`, `scenarios` at `scenarios/`, `skills` at `skills/`, `scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
+        },
+        {
           "where": "theme-artefacts",
           "detail": "no role carries \"theme-artefacts\" and no activity names it — reached, if at all, by direct invocation. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `processes/`, `folio-assistant-sci-lean-skills` at `folio-assistant-sci/skills/lean/`, `folio-assistant-sci-data-skills` at `folio-assistant-sci/skills/data/`, `folio-assistant-core-skills` at `folio-assistant-core/skills/`, `smart-base-processes` at `smart-base/methodologies/processes/`, `large-datasets-skills` at `large-datasets/skills/`, `who-iris-skills` at `who-iris/skills/`, `fhir-ig-skills` at `fhir-harness/skills/`, `large-datasets-processes` at `large-datasets/processes/`, `folio-assistant-core-processes` at `folio-assistant-core/processes/`, `scenarios` at `scenarios/`, `skills` at `skills/`, `scenarios` at `scenarios/`) — a nested instance may name it, and this audit does not read one."
         },
@@ -350,7 +354,7 @@
         },
         {
           "where": "smart-base/smart-base.json",
-          "detail": "nested instance \"smart-base\" declares its own graph, and this audit does not read it — 1 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
+          "detail": "nested instance \"smart-base\" declares its own graph, and this audit does not read it — 2 diagram(s) there are unaudited by this run. That is correct: one instance's graph must not carry another's nodes. Audit it from its OWN root, and do NOT declare its directories here — that re-introduces the leak instance-graph-isolation.test.ts guards."
         },
         {
           "where": "smart-dak/smart-dak.json",
