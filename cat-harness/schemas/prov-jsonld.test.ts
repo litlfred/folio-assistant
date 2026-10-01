@@ -30,7 +30,7 @@ const activity = (agent: string, role: string, plan: string): ProvActivity =>
   }) as ProvActivity;
 
 async function expanded(doc: object): Promise<Record<string, unknown>[]> {
-  const top = (await jsonld.expand(doc, { documentLoader: localLoader(REPO) } as never)) as Record<string, unknown>[];
+  const top = (await jsonld.expand(doc, { documentLoader: localLoader(REPO) } as never)) as unknown as Record<string, unknown>[];
   return top.flatMap((n) => (n["@graph"] as Record<string, unknown>[] | undefined) ?? [n]);
 }
 

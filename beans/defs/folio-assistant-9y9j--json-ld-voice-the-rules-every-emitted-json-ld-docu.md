@@ -3,8 +3,9 @@
 title: 'JSON-LD VOICE: the rules every emitted JSON-LD document is written and reviewed against, cited to the held W3C texts'
 status: in-progress
 type: task
+priority: normal
 created_at: 2026-10-01T16:24:38Z
-updated_at: 2026-10-01T16:24:38Z
+updated_at: 2026-10-01T17:29:04Z
 parent: folio-assistant-scfh
 ---
 
@@ -23,3 +24,6 @@ Rules (from jcet and the PROV measurement, each to be cited verbatim to a held s
 - [x] folio-assistant-core/skills/voices/linked-data/voice.json, 7 rules, in force for authoring-agent and code-reviewer in Process_CodeChangeReview / Process_CodeReview; check:voices green; every quote verified verbatim (owner 2026-09-21: the platform holds no voice content, so NOT cat-harness)
 - [x] json-ld-serialisation and prov-o-provenance methodology nodes point at the voice; prov-o cites library/w3c-2024-prov-jsonld
 - [ ] regen fixed point; CI
+
+
+Measured 2026-10-01 on #1791: editing cat-harness/scripts/check-l1-complete.ts changes its script_hash, so all 61 library-qa verdicts went stale. `bun run regen` does not run `check:l1-complete -- --write`, so CI caught it (Repository gates, step 'gates that were registered and never run'). This is one more writer in regen's coverage gap.
