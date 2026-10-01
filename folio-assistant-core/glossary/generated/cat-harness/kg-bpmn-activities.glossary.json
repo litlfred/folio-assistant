@@ -777,7 +777,7 @@
     {
       "id": "process_contentchangereview.task_iterate",
       "prefLabel": "Iterate on author feedback",
-      "definition": "Agent receives revision requests from the author and applies changes. Each push triggers a new staging deployment with updated SHA stamp.",
+      "definition": "Agent receives revision requests from the author and applies changes. Each push triggers a new staging deployment with updated SHA stamp. A revision push does not pass through Task_CommitPush, so for a rendered change the agent refreshes the before/after preview here (skill before-after-preview), and the next review round never reads a stale one.",
       "notation": "Task_Iterate",
       "source": "cat-harness/processes/content-change-review.bpmn#Task_Iterate",
       "status": "candidate"
@@ -1513,7 +1513,7 @@
     {
       "id": "process_editing.task_draftedit",
       "prefLabel": "Draft the block edit [content-author]",
-      "definition": "The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet.",
+      "definition": "The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet. For a rendered change it also produces the before/after preview (skill before-after-preview) here, before Gateway_ValidationFork, so the preview exists when the parallel review starts.",
       "notation": "Task_DraftEdit",
       "source": "cat-harness/processes/editing-hci-validation.bpmn#Task_DraftEdit",
       "status": "candidate"
@@ -1553,7 +1553,7 @@
     {
       "id": "process_editing.task_reviseedit",
       "prefLabel": "Revise the proposed change [content-author]",
-      "definition": "The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal.",
+      "definition": "The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal. The before/after preview is refreshed with it (skill before-after-preview).",
       "notation": "Task_ReviseEdit",
       "source": "cat-harness/processes/editing-hci-validation.bpmn#Task_ReviseEdit",
       "status": "candidate"

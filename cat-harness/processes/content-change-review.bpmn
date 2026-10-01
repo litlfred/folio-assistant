@@ -105,7 +105,6 @@ Two things this is not. It is not the feedback workflow: `todo-review` triages w
     <bpmn:task id="Task_ReviewStaging" name="Review staged rendering">
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="staging-review"/>
-        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
@@ -267,11 +266,16 @@ On the trigger: reaching this call is not the same as running the whole of it. `
     <bpmn:task id="Task_Iterate" name="Iterate on author feedback">
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="content-author"/>
+        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>
         Agent receives revision requests from the author and applies changes.
         Each push triggers a new staging deployment with updated SHA stamp.
+        A revision push does not pass through Task_CommitPush, so for a
+        rendered change the agent refreshes the before/after preview here
+        (skill before-after-preview), and the next review round never reads
+        a stale one.
       </bpmn:documentation>
       <bpmn:incoming>f5</bpmn:incoming>
       <bpmn:incoming>r5</bpmn:incoming>
@@ -293,7 +297,6 @@ On the trigger: reaching this call is not the same as running the whole of it. `
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="staging-review"/>
         <bootstrap.processes:skill ref="visual-diff"/>
-        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
 
       <bpmn:documentation>

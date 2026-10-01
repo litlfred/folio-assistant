@@ -5,7 +5,7 @@
     "id": "Process_ContentChangeReview",
     "path": "processes/content-change-review.bpmn"
   },
-  "source_hash": "sha256:02ef94a7c2a36e789b0ae7f8bd7b7b0388396afae270eda803c8412ffd7ac340",
+  "source_hash": "sha256:2e1497d1fd769029d9a52383d2c626500737d57751df63115098e816f5ae143a",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -35,10 +35,6 @@
       "result": "fail",
       "findings": [
         {
-          "where": "Task_ReviewStaging",
-          "detail": "names skill \"before-after-preview\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
-        },
-        {
           "where": "Task_DetectScope",
           "detail": "names skill \"semantic-review-scoping\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
@@ -59,7 +55,7 @@
           "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
-          "where": "Task_CompareBeforeAfter",
+          "where": "Task_Iterate",
           "detail": "names skill \"before-after-preview\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
@@ -111,18 +107,6 @@
     "role-carries-activity-skill": {
       "result": "fail",
       "findings": [
-        {
-          "where": "Task_ReviewStaging",
-          "detail": "needs skill \"before-after-preview\", but its lane's role \"author\" does not carry it."
-        },
-        {
-          "where": "Task_CommitPush",
-          "detail": "needs skill \"before-after-preview\", but its lane's role \"authoring-agent\" does not carry it."
-        },
-        {
-          "where": "Task_CompareBeforeAfter",
-          "detail": "needs skill \"before-after-preview\", but its lane's role \"reviewer\" does not carry it."
-        },
         {
           "where": "Call_ReviewSlices",
           "detail": "needs skill \"review-comments\", but its lane's role \"reviewer\" does not carry it."

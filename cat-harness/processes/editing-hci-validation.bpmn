@@ -124,9 +124,10 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmn:outgoing>Flow_Evidence</bpmn:outgoing>
     </bpmn:callActivity>
     <bpmn:serviceTask id="Task_DraftEdit" name="Draft the block edit&#10;[content-author]">
-      <bpmn:documentation>The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet.</bpmn:documentation>
+      <bpmn:documentation>The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet. For a rendered change it also produces the before/after preview (skill before-after-preview) here, before Gateway_ValidationFork, so the preview exists when the parallel review starts.</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="content-author" />
+        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_Evidence</bpmn:incoming>
       <bpmn:outgoing>Flow_04</bpmn:outgoing>
@@ -185,7 +186,6 @@ This step has nothing to do for content that carries no recommendations -- a mat
       <bpmn:documentation>Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement. A rendered change reaches the reviewer with its before/after preview (skill before-after-preview).</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="content-review" />
-        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_11</bpmn:incoming>
       <bpmn:outgoing>Flow_13</bpmn:outgoing>
@@ -263,9 +263,10 @@ On the trigger: `A_Frame` opens the subprocess on `opening-brief`'s trigger — 
       <bpmn:outgoing>Flow_25</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:serviceTask id="Task_ReviseEdit" name="Revise the proposed change&#10;[content-author]">
-      <bpmn:documentation>The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal.</bpmn:documentation>
+      <bpmn:documentation>The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal. The before/after preview is refreshed with it (skill before-after-preview).</bpmn:documentation>
       <bpmn:extensionElements>
         <bootstrap.processes:skill ref="content-author" />
+        <bootstrap.processes:skill ref="before-after-preview"/>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_22</bpmn:incoming>
       <bpmn:outgoing>Flow_23</bpmn:outgoing>

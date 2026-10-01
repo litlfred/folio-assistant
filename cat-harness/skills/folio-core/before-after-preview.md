@@ -12,7 +12,6 @@ description: >-
   rendered change, at the HCI validation gate, and whenever a reviewer asks
   "what did it look like before".
 user_invocable: true
-allowed-tools: Read Grep Glob Bash
 ---
 
 # /before-after-preview — show the reviewer the change, not a description of it
@@ -315,13 +314,20 @@ an empty preview.
 reviewer's lane **reads** the preview and does not build it. A reviewer who
 must build their own before/after has been handed a chore, not a review.
 
+Only the producing activities carry the skill ref, because a skill ref says
+the lane PERFORMS the skill and the lane's role must carry it
+(`role-carries-activity-skill`). The reading activities name the preview in
+their documentation and carry no ref.
+
 | process (`cat-harness/processes/`) | activity | role |
 |---|---|---|
-| `content-change-review.bpmn` | `Task_CommitPush` | agent **produces** it with each push |
+| `content-change-review.bpmn` | `Task_CommitPush` | agent **produces** it with the first push (skill ref) |
+| `content-change-review.bpmn` | `Task_Iterate` | agent **refreshes** it with each revision push, which bypasses `Task_CommitPush` (skill ref) |
 | `content-change-review.bpmn` | `Task_ReviewStaging` | author **reads** it beside the staging URLs |
 | `content-change-review.bpmn` | `Task_CompareBeforeAfter` | review committee **reads** it beside `visual-diff` |
-| `code-change-review.bpmn` | `Task_CommitAndOpenPR` | agent **produces** it for a change to a rendered surface |
+| `code-change-review.bpmn` | `Task_CommitAndOpenPR` | agent **produces** it for a change to a rendered surface (skill ref) |
 | `code-change-review.bpmn` | `Task_Review` | reviewer **reads** it |
+| `editing-hci-validation.bpmn` | `Task_DraftEdit`, `Task_ReviseEdit` | agent **produces** it with the proposal, before `Gateway_ValidationFork`, so it exists when review starts (skill ref) |
 | `editing-hci-validation.bpmn` | `Task_SmeReview` | human or SME **reads** it as an input to judgement |
 
 **Where it is linked.**

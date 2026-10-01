@@ -1946,7 +1946,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Agent receives revision requests from the author and applies changes. Each push triggers a new staging deployment with updated SHA stamp."
+          "@value": "Agent receives revision requests from the author and applies changes. Each push triggers a new staging deployment with updated SHA stamp. A revision push does not pass through Task_CommitPush, so for a rendered change the agent refreshes the before/after preview here (skill before-after-preview), and the next review round never reads a stale one."
         }
       ],
       "skos:notation": "Task_Iterate",
@@ -3786,7 +3786,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet."
+          "@value": "The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet. For a rendered change it also produces the before/after preview (skill before-after-preview) here, before Gateway_ValidationFork, so the preview exists when the parallel review starts."
         }
       ],
       "skos:notation": "Task_DraftEdit",
@@ -3886,7 +3886,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal."
+          "@value": "The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal. The before/after preview is refreshed with it (skill before-after-preview)."
         }
       ],
       "skos:notation": "Task_ReviseEdit",
