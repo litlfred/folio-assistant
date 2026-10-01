@@ -163,3 +163,27 @@ answers, or on **2026-10-25**, whichever is first. If the six have been
 answered or withdrawn by then, the box resolves and this closes on the next
 sweep.
 
+
+## Re-verified 2026-10-01 — session_01Cw8JgZEDT5VqQ5ergjdMjB (took over from the 2026-09-30 handover, #1260)
+
+Every id below re-read from the store on `main` d1a5d6ea, not carried forward (`k59d`).
+
+**Under p5wm:** 116 completed, 37 todo, 12 in-progress, 8 scrapped.
+
+**#955 is no longer a decision** — merged 2026-09-23 (round 1 shipped alone); `624f` completed.
+
+**The critical path, `b5f0 → 603s → 6lb8 → supn`, today:**
+
+| bean | status | where it actually is |
+|---|---|---|
+| `b5f0` | todo | Done-when 1 (REPLACE vs pair) ticked on evidence today. 7u3g is SCRAPPED, not fixed — left for the owner. Owner questions 2 and 5 still open. |
+| `603s` | in-progress | Its last box — the local/remote subgraph tab — is built in draft PR #1775 (owner's `owt6` ruling: on the page a tab opens). Closes when #1775 merges. |
+| `6lb8` | in-progress | Waits only on `q2wm`. |
+| `q2wm` | in-progress | XSS render hint built in draft PR #1777 on the owner's instruction. Lazy window fetch still has NO subject — no window fetches per card. So `q2wm` cannot honestly close, and with it `6lb8`. |
+| `supn` | todo | Not started; behind `6lb8`. |
+
+**Also from this session, in draft PRs:** `ob3m` findings 2, 4/5 (owner chose summary + 'also written' list), 8 and 9 fixed, 12 already on main (#1762); the viewer-rail header, per-visualiser sections and QA flags (#1757 → #1762). Still open on `ob3m`: 1, 3 (sticky half, left as authored), 6, 7, 11.
+
+**Every one of these PRs is red only where `main` is** — placement-PR1 fallout (#1772): fix-up #1773 and the `Process_L2Dak` move. Nothing on this stream can go green before those land.
+
+**Close this bean last**, as the handover said: when `603s`, `6lb8` (via `q2wm`) and `ob3m` close.
