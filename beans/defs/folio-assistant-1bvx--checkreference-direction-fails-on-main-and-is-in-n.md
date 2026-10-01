@@ -1,11 +1,11 @@
 ---
 # folio-assistant-1bvx
 title: check:reference-direction fails on main and is in NO workflow — nothing catches it
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T22:13:49Z
-updated_at: 2026-09-30T22:14:14Z
+updated_at: 2026-10-01T17:45:55Z
 parent: folio-assistant-1xhc
 ---
 
@@ -80,3 +80,5 @@ is a decision about what the repository asserts, not a gap to close quietly.
       it, so this bean is not re-filed in a month
 - [ ] if it does belong in CI, it goes in GREEN — findings resolved first, not
       wired red
+
+_2026-10-01T17:45:55Z_ — Claimed by claude/rulings-2026-10-01-late — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

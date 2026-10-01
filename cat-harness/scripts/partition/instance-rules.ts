@@ -406,6 +406,12 @@ export const RULES: Rule[] = [
       // matter — a folio could not make it repair differently, only give it
       // more gates.
       "scripts/regen-after-merge.ts",        // artefacts a merge left wrong, repaired by asking the gates
+      // The merge step that calls it, and harness-level for the same reason:
+      // it classifies conflicted PATHS against declared patterns and proves
+      // the result through `regen`. A folio could not make it resolve
+      // differently, only give it more generated files (bean `d33q`).
+      "scripts/merge-base.ts",               // merge the base in, resolve only declared patterns, prove
+      "scripts/merge-conflict-patterns.ts",  // the declared patterns that merge reads
       "scripts/sync-docs-harness.ts",        // the declaration's title/mark → the docs data file
       // Its tile half, and harness-level for the same reason: it reads every
       // INSTANCE's declaration and the published viewer tree, and asks which
