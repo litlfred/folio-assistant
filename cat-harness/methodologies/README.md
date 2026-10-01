@@ -12,11 +12,14 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `methodologies`, holding 
 | [`correspondence-analysis.md`](correspondence-analysis.md) | Correspondence analysis: the SVD of the standardised residuals |  |
 | [`dmn.md`](dmn.md) | DMN — the computable case |  |
 | [`hybrid-llm-deterministic.md`](hybrid-llm-deterministic.md) | Hybrid LLM/deterministic — generate the rule, then execute it |  |
+| [`json-ld-serialisation.md`](json-ld-serialisation.md) | JSON-LD 1.1 — how this graph is written down |  |
 | [`kepner-tregoe.md`](kepner-tregoe.md) | Kepner-Tregoe Decision Analysis |  |
 | [`lsi.md`](lsi.md) | Latent Semantic Indexing: the vocabulary problem, answered with a truncated SVD |  |
 | [`madr.md`](madr.md) | MADR — the record, not the method |  |
 | [`mcdm-aggregation.md`](mcdm-aggregation.md) | Aggregation-type MCDM |  |
+| [`odrl-policies.md`](odrl-policies.md) | ODRL 2.2: permissions as rules over a declared action graph |  |
 | [`probabilistic-decision-analysis.md`](probabilistic-decision-analysis.md) | Probabilistic decision-making algorithms |  |
+| [`prov-o-provenance.md`](prov-o-provenance.md) | PROV-O: provenance as a shared record, not a house log format |  |
 | [`raci.md`](raci.md) | RACI — involvement, in four kinds |  |
 | [`rasci.md`](rasci.md) | RASCI — the fifth letter, and when it earns its place |  |
 | [`skill-pipeline-subject-indexing.md`](skill-pipeline-subject-indexing.md) | [Skill](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#skill)-pipeline subject indexing: decompose the cataloguer's stages and validate each |  |
