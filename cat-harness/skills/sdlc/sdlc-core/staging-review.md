@@ -14,7 +14,7 @@ allowed-tools: Bash(git*) Read Grep Glob mcp__github__pull_request_read mcp__git
 
 # Staging review — before/after comparison
 
-> Skill id: `staging-review` · Package: `folio-core`
+> Skill id: `staging-review` · Package: `sdlc-core`
 
 Provide before/after URL pairs whenever rendered content has changed in a
 feature branch. This is part of every review or feedback session involving

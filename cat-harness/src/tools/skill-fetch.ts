@@ -170,11 +170,12 @@ export function registerSkillFetchTools(server: McpServer): void {
         "'l3-fhir-authoring' (package_name 'authoring-who-smart-guidelines'), " +
         "'academic-paper-reviewer' (package_name 'academic-research-skills')"
       ),
+      // Listed from discovery rather than by hand: the hand-written list named
+      // seven packages and missed every one a topic holds (bean 9umr), so an
+      // agent reading the schema could not learn that `sdlc-core` exists.
       package_name: z.string().default("folio-core").describe(
-        "Package name. Local: 'folio-assistant' | 'content-lifecycle' | 'folio-core' | " +
-        "'folio-document-adapter' | 'folio-paper-adapter' | " +
-        "'authoring-who-smart-guidelines' | 'authoring-math'. " +
-        "Reference: 'academic-research-skills'."
+        `Package name. Local: ${Object.keys(LOCAL_PACKAGES).sort().map((p) => `'${p}'`).join(" | ")}. ` +
+        `Reference: ${Object.keys(REFERENCE_PACKAGES).sort().map((p) => `'${p}'`).join(" | ")}.`
       ),
     },
     async ({ skill, package_name }) => {

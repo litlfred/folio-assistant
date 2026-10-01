@@ -1,10 +1,10 @@
-# todo-manager — see `skills/folio-core/`
+# todo-manager — see `skills/sdlc/sdlc-core/`
 
 **This is a stub. The skill lives in the `kg` graph, not here.**
 
 `skill_fetch("todo-manager")` serves
 [`skills/sdlc/sdlc-core/todo-manager.md`](../../../skills/sdlc/sdlc-core/todo-manager.md)
-— `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` holds `skills/folio-core` and
+— `LOCAL_PACKAGES` in `src/tools/skill-fetch.ts` holds `skills/sdlc/sdlc-core` and
 no `.claude/skills/local` entry — so that file is what an agent asking for this
 skill by name has always received.
 

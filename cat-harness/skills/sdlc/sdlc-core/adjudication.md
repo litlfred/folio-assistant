@@ -10,7 +10,7 @@ description: >-
 
 # Adjudication — judgement, when the mechanism ran out of facts
 
-> Skill id: `adjudication` · Package: `folio-core`
+> Skill id: `adjudication` · Package: `sdlc-core`
 
 ## Why this exists
 
