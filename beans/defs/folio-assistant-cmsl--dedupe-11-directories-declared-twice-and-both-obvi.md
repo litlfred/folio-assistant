@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-10-01T01:54:43Z
+updated_at: 2026-10-01T09:20:34Z
 parent: folio-assistant-zzmr
 ---
 
@@ -123,3 +123,14 @@ Step 3, tried and measured, not committed: there are **19** mirrors, not 16. Rem
 - **The blocker:** those consumers key pages and categories by DIRECTORY ID, and the mirror ids differ from the owners' own: core `core-skills`/`core-library`/`core-schemas`/`core-processes`/`core-methodologies`, sci `sci-methodologies`/`lean-skills`/`data-skills` vs `folio-assistant-core-skills`, `folio-assist-core-schemas`, `folio-assistant-sci-lean-skills`, … Whichever ids win decides published URLs (e.g. `/docs-auto/index/skills/folio-assistant-core-skills/`). Asked of the owner.
 - Second decision: the 6 kg-qa sidecars cat-harness wrote for other instances' subjects become orphans (each owner audits its own) — deleting them is the owner's call.
 The authored diff (3 files) is preserved; regen also measured ~2x slower `resolveSkillDirs` (41 → 89 ms/call, measured under load).
+
+
+## 2026-10-01 — consolidation (session session_01CVVoavPoCHMLA7AASxG8cH, PR #1769)
+- Step 3's DATA is placement PR0's 0a (ejye). It merged, then was undone by two merge resolutions (aab80f35 from #1744; 16c02d33 from this bean's #1747 branch). #1769 restores it: 20 mirrors out of cat-harness.json, root needs all 17 staged instances; check:instance-graph green.
+- 15 files on main held cmsl step 2's parallel reader while PR0's tests stayed; #1769 restores PR0's version of each (all were touched after PR0 ONLY by cmsl commits).
+- Owner, 2026-10-01: close #1747 once #1769 merges.
+## Remaining here
+- [ ] Owner's design question: overlay-and-warn along the dependency chain vs the <stub>/<dir> -> <dir>/<stub> rule (belongs with iirv)
+- [ ] Delete the 6 cross-instance kg-qa sidecars (approved)
+- [ ] Skill docs keyed by owner directory id
+- [ ] Remove the duplicate checkoutDirectories in schemas/cat-harness.ts (cmsl's), keeping harness-config.ts's (PR0's)

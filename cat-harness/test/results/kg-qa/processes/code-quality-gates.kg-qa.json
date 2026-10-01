@@ -5,7 +5,7 @@
     "id": "Process_CodeQualityGates",
     "path": "processes/code-quality-gates.bpmn"
   },
-  "source_hash": "sha256:29b54058a97674e8ccdbef0629085da654852bad57cad3cc92f823ea7b72a9af",
+  "source_hash": "sha256:f5b2928447652cf2b1a6037d5868f495b4f23a3521fa37d10dbd59ed469f4ae2",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -89,6 +89,10 @@
         {
           "where": "Task_SkillChain",
           "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_QaPublish",
+          "detail": "needs skill \"platform-gates\", but its lane's role \"build-pipeline\" does not carry it."
         }
       ]
     },
@@ -133,13 +137,8 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": ".github/workflows/code-quality-gates.yml",
-          "detail": ".github/workflows/code-quality-gates.yml changed since cat-harness/processes/code-quality-gates.bpmn was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "prose-claims-resolve": {
       "result": "pass",
@@ -147,8 +146,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 2,
+    "pass": 16,
+    "fail": 1,
     "n/a": 8,
     "unknown": 0
   },
@@ -157,8 +156,8 @@
       "kind": "implements",
       "prose": "cat-harness/processes/code-quality-gates.bpmn",
       "code": ".github/workflows/code-quality-gates.yml",
-      "prose_hash": "29b54058a976",
-      "code_hash": "a54ce7cde7d4",
+      "prose_hash": "f5b292844765",
+      "code_hash": "a31538a437a1",
       "by": "baseline"
     }
   ]

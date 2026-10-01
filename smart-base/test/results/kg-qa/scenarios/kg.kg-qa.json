@@ -8,33 +8,8 @@
   "source_hash": null,
   "criteria": {
     "skill-has-entry-point": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "dak-postprocessing",
-          "detail": "skill \"dak-postprocessing\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "dak-preprocessing",
-          "detail": "skill \"dak-preprocessing\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "grade",
-          "detail": "skill \"grade\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "ig-artifact-ingestion",
-          "detail": "skill \"ig-artifact-ingestion\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "smart-stack-layering",
-          "detail": "skill \"smart-stack-layering\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
-        },
-        {
-          "where": "toolchain-ownership",
-          "detail": "skill \"toolchain-ownership\" is listed by no package manifest, carried by no role and named by no activity. In this instance's graph only (read: `skills` at `skills/`, `scenarios` at `scenarios/`, `processes` at `methodologies/processes/`) — a nested instance may name it, and this audit does not read one."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "consulted-skill-not-performed": {
       "result": "n/a",
@@ -178,12 +153,16 @@
           "detail": "not evaluated: `nested-instance-audited` is `repo`-scoped and this run is scoped to smart-base. `unreadNestedInstances()` walks from `repoRootFor(root)` to find declarations, so it asks a question ABOUT the repository's set of instances. MEASURED 2026-09-26: it fired 15 inside the bootstrap run, reporting bootstrap's siblings as unread from inside bootstrap — which is the root's question being asked in a place that cannot act on it."
         }
       ]
+    },
+    "content-instance-holds-code": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
-    "pass": 8,
-    "fail": 2,
-    "n/a": 11,
+    "pass": 9,
+    "fail": 1,
+    "n/a": 12,
     "unknown": 0
   }
 }
