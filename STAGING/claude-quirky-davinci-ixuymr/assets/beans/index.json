@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 600,
+      "count": 602,
       "unit": "beans"
     }
   },
@@ -298,7 +298,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:46Z",
-      "updatedAt": "2026-10-01T09:41:06Z",
+      "updatedAt": "2026-10-01T11:37:04Z",
       "preview": "Arc `3fva`, proposal §2.2–2.4 and §4 Phase 2. Blocked on the SPIKE bean. Serial, one agent: everything else depends on this.\n\n- `qa-store` module:\n  - `readQa(ref, path)` returns hit / miss / corrupt / unknown, and a miss is never read as clean;\n  - `publishQa(ref)` follows the lake-cache write path, with fetch → rebuild-on-tip → push, 3 attempts and `backoff-sleep.ts`, and never `-f`.\n- `bun run ",
       "file": "beans/defs/folio-assistant-16ei--qa-store-one-readwrite-api-for-qa-results-qafetch.md"
     },
@@ -1434,7 +1434,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T18:53:17Z",
-      "updatedAt": "2026-09-30T18:53:36Z",
+      "updatedAt": "2026-10-01T10:21:25Z",
       "preview": "Found 2026-09-30 on PR #1633, by CI rather than by `regen`.\n\n`End-to-end + accessibility (hard)` failed on `render:bpmn:check` with three\nstale drawings — `bootstrap/processes/{discussion,initialize-harness,log-message}.svg`\n— on a tree where `bun run regen` had just reported a fixed point.\n\n## This is NOT the same defect as `check:X` (the prefix-convention false clean)\n\nWorth separating, because ",
       "file": "beans/defs/folio-assistant-5qq3--regen-scope-the-browser-jobs-artefacts-are-outside.md"
     },
@@ -1563,6 +1563,20 @@
       "updatedAt": "2026-09-19T09:01:53Z",
       "preview": "**Strawperson.** From [#363](https://github.com/litlfred/folio-assistant/issues/363):\n\"self-soveringn mode: like soveregion cloud but hosted on own infrastructure, in\nL4-L5 context may have data stores like hapi. not designed for external facing\nservices. more for managing wallets. have incoming DAK content. bean up to may\nstrwperson and create issue to review these.\"\n\n## Strawperson position, to ",
       "file": "beans/defs/folio-assistant-61tg--topology-self-sovereign-own-infrastructure-inward.md"
+    },
+    {
+      "id": "folio-assistant-6306",
+      "title": "METHODOLOGY NODES for the three W3C sources: PROV-O (QA provenance), ODRL (permissions), JSON-LD (KG serialisation)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-scfh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T08:12:46Z",
+      "updatedAt": "2026-10-01T09:20:34Z",
+      "preview": "#1744 merged red: library-ref.test.ts 'the PLATFORM's library holds ONLY sources its methodologies cite' fails on w3c-2013-prov-o, w3c-2018-odrl-model-2-2, w3c-2020-json-ld-1-1. Owner chose option C (#1614): write three real methodology nodes in cat-harness/methodologies/, each grounded in the held source and in how the platform actually uses the standard.\n\n## Done when\n- [x] prov-o node, evidence",
+      "file": "beans/defs/folio-assistant-6306--methodology-nodes-for-the-three-w3c-sources-prov-o.md"
     },
     {
       "id": "folio-assistant-63es",
@@ -3228,7 +3242,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T19:18:36Z",
-      "updatedAt": "2026-10-01T01:54:43Z",
+      "updatedAt": "2026-10-01T09:20:34Z",
       "preview": "Owner asked 2026-09-21: *\"we need to dediplicate. options? auto stub prefix?\"*\nBoth options were put to them, both were chosen, and **both turned out to be\nmeasurably wrong**. Recorded here so the next agent does not re-derive it.\n\n## The measurement\n\n**63 declared entries across 52 distinct directories; 11 declared twice.**\nEvery duplicate has one shape: `cat-harness` declares another instance's\n",
       "file": "beans/defs/folio-assistant-cmsl--dedupe-11-directories-declared-twice-and-both-obvi.md"
     },
@@ -3650,7 +3664,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T00:03:29Z",
-      "updatedAt": "2026-10-01T02:40:26Z",
+      "updatedAt": "2026-10-01T09:20:34Z",
       "preview": "PR0 of the approved placement proposal (owner rulings 2026-09-30, bean 9umr's eight groups). Mechanisms only, NO content moved: (0a) the checkout root instance needs every staged instance and declares the 7 checkout-level state graphs; corpus-wide tools resolve over the checkout overlay; cat-harness's scope:repository mirrors removed; a check refuses a new mirror. (0b) a higher instance extends a ",
       "file": "beans/defs/folio-assistant-ejye--placement-pr0-mechanisms-only-checkout-aggregates.md"
     },
@@ -4805,6 +4819,20 @@
       "file": "beans/defs/folio-assistant-kx0p--catalogue-visualiser-6-wireframe-findings.md"
     },
     {
+      "id": "folio-assistant-kye5",
+      "title": "TWO README GENERATORS claim bootstrap-tools/README.md: folio-assistant's readme:sync:all strips the generated-by notices bootstrap-tools' own writes",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-iirv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T09:30:25Z",
+      "updatedAt": "2026-10-01T11:22:38Z",
+      "preview": "Found 2026-10-01 (PR #1769). At the bootstrap-tools pin c5e5e25, bun run readme:sync:all:check is red: folio-assistant's cat-harness/content/pipeline/readme-sections.ts rewrites the kg:roles row (adds glossary links) in a SUBMODULE this repo cannot commit to. At bootstrap-tools main (9c00c53) its own scripts/readme-sections.ts adds 'generated by bootstrap-tools' notices, which folio-assistant's ge",
+      "file": "beans/defs/folio-assistant-kye5--two-readme-generators-claim-bootstrap-toolsreadmem.md"
+    },
+    {
       "id": "folio-assistant-l9d5",
       "title": "BOOTSTRAP-TOOLS PORT: contract-semver skill + Zod validate step from #1514 onto main's bootstrap-tools",
       "status": "completed",
@@ -5126,7 +5154,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:42:36Z",
-      "updatedAt": "2026-10-01T06:42:44Z",
+      "updatedAt": "2026-10-01T09:20:34Z",
       "preview": "Issue #1614 item 4, slides 2 of the KG/folio-asst deck: signed assets and the trust network; IRIS (DSpace) as the L1 origin.\n\n## Done when\n\n- [ ] WHO SMART Trust IG narrative pages held as an L1 entry under the smart-trust instance, IG version recorded from sushi-config.yaml\n- [ ] C2PA Technical Specification (latest released version) held or referenced per its licence, version recorded\n- [ ] DSpa",
       "file": "beans/defs/folio-assistant-mwzd--ingest-trust-origin-sources-1614-item-4-who-smart.md"
     },
@@ -5793,14 +5821,14 @@
     {
       "id": "folio-assistant-q2wm",
       "title": "RENDER SAFETY: declared XSS hints on tools and skills, lazy loading, and dynamic render from the graph",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-6lb8",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T21:47:28Z",
-      "updatedAt": "2026-09-29T18:14:48Z",
+      "updatedAt": "2026-10-01T09:06:55Z",
       "preview": "Issue: https://github.com/litlfred/folio-assistant/issues/602 — R17. Unit 10 of 10.\n\nThe owner, 2026-09-20: *\"skill tool hints for XSSrsiction., usse laxy load XSS,\nassume assets in KG accessible, dynamic render where can\"*.\n\nFour instructions, and the first is the one with teeth: **a skill or tool that\nrenders anything declares what it may render.** Today nothing in a Tool node says\nwhether its o",
       "file": "beans/defs/folio-assistant-q2wm--render-safety-declared-xss-hints-on-tools-and-skil.md"
     },
@@ -7992,7 +8020,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:38:12Z",
-      "updatedAt": "2026-10-01T08:00:56Z",
+      "updatedAt": "2026-10-01T09:20:34Z",
       "preview": "Issue #1614 item 4: methodology literature the KG/folio-asst deck relies on but no library holds. Sources 7 (FHIR R5 TestPlan, EC ITB docs, CEN CWA 16408 GITB, Cucumber Gherkin reference), 8 (MCP specification, latest dated version) and 11 (hmans/beans README). Each to the library of the instance that owns it, held where the licence permits, referenced otherwise, with exact repo@commit/path proven",
       "file": "beans/defs/folio-assistant-y4uj--ingest-1614-item-4-sources-7-8-11-fhir-testplan-it.md"
     },
