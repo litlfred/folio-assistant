@@ -88,6 +88,17 @@ export interface SectionContext {
    * rather than replacing a correct table with "no Lean found".
    */
   leanCoverage?: LeanCoverageStats;
+  /**
+   * The README being synced, as it stands when this section renders — with
+   * every section registered BEFORE it already injected.
+   *
+   * Only `readme:toc` reads it: a table of the README's own headings is the
+   * one section whose input is the file itself. Supplied by
+   * {@link syncSections}; `undefined` when a caller renders a section on its
+   * own, which the TOC reports as undetermined rather than as a README with
+   * no headings.
+   */
+  readme?: string;
 }
 
 /**
@@ -667,6 +678,193 @@ const coldStartSection: ReadmeSection = {
   },
 };
 
+// ── The README's own table of contents ──────────────────────────────────────
+
+/**
+ * The marker for the heading TOC. NOT `folio:toc`, which is a different
+ * thing that happens to share the word: that one is the folio's CONTENTS —
+ * papers and chapters, with publish-ref-verified PDFs — and says nothing
+ * about the README it sits in. This one is the README's own h2/h3 outline.
+ */
+export const README_TOC_MARKER = "readme:toc";
+
+export interface ReadmeHeading {
+  /** 1–6. */
+  level: number;
+  /** The heading as GitHub renders it: inline markup stripped. */
+  text: string;
+  /** The anchor GitHub assigns, deduplicated across the whole file. */
+  anchor: string;
+  /** 1-based line of the heading (the text line, for a setext heading). */
+  line: number;
+}
+
+/**
+ * The anchor GitHub gives a heading's text — `github-slugger`'s rule, which
+ * is what github.com and the GitHub-flavoured renderers use.
+ *
+ * Lowercase; drop every character that is not a letter, mark, digit,
+ * connector (`_`), space or hyphen; each space becomes `-`. Spaces are NOT
+ * collapsed — `A & B` is `a--b` on GitHub, and a TOC that tidied it to `a-b`
+ * would link to nothing.
+ */
+export function githubSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\p{L}\p{M}\p{N}\p{Pc} -]/gu, "")
+    .replace(/ /g, "-");
+}
+
+/** A heading's source text as it renders: links to their text, markup dropped. */
+function renderedHeadingText(src: string): string {
+  return src
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]*)\]\[[^\]]*\]/g, "$1")
+    .replace(/<[^>]+>/g, "")
+    .replace(/`+([^`]*?)`+/g, "$1")
+    .replace(/(\*\*|__)(?=\S)([\s\S]*?\S)\1/g, "$2")
+    .replace(/(^|[^\w*])\*(?=\S)([^*]*?\S)\*/g, "$1$2")
+    .replace(/(^|\W)_(?=\S)([^_]*?\S)_(?=\W|$)/g, "$1$2")
+    .replace(/~~(?=\S)([\s\S]*?\S)~~/g, "$1")
+    .replace(/\\([\\`*_{}[\]()#+\-.!|<>~])/g, "$1")
+    .trim();
+}
+
+/**
+ * Every heading in a Markdown document, in order, with GitHub's anchors.
+ *
+ * Skips what GitHub does not render as a heading: lines inside a fenced code
+ * block (```` ``` ```` or `~~~`, closed only by a fence of the same character
+ * at least as long), inside an HTML comment, and anything indented four or
+ * more spaces. Handles ATX (`## x`) and setext (`x` over `---`/`===`).
+ *
+ * `excludeRegion` names a marker whose region is skipped — the TOC's own, so
+ * a generated TOC is never an input to itself. The region only ever holds a
+ * list, so skipping it cannot shift another heading's anchor.
+ */
+export function extractHeadings(markdown: string, excludeRegion?: string): ReadmeHeading[] {
+  const lines = markdown.split(/\r?\n/);
+  const headings: ReadmeHeading[] = [];
+  const seen = new Map<string, number>();
+  let fence: { ch: string; len: number } | undefined;
+  let inComment = false;
+  let inExcluded = false;
+  /** The current paragraph's lines, for a setext underline. */
+  let para: { start: number; lines: string[] } | undefined;
+
+  // github-slugger's dedupe, step for step: a repeat becomes `-1`, `-2`, …,
+  // and a suffixed anchor that collides with a LITERAL heading (`a`, `a-1`,
+  // `a`) is bumped past it rather than issued twice.
+  const push = (level: number, raw: string, line: number): void => {
+    const text = renderedHeadingText(raw);
+    const original = githubSlug(text);
+    let anchor = original;
+    while (seen.has(anchor)) {
+      const n = seen.get(original)! + 1;
+      seen.set(original, n);
+      anchor = `${original}-${n}`;
+    }
+    seen.set(anchor, 0);
+    headings.push({ level, text, anchor, line });
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    if (excludeRegion !== undefined) {
+      if (line.includes(`<!-- ${excludeRegion}:begin -->`)) { inExcluded = true; para = undefined; continue; }
+      if (inExcluded) { if (line.includes(`<!-- ${excludeRegion}:end -->`)) inExcluded = false; continue; }
+    }
+
+    if (fence) {
+      const close = line.match(/^ {0,3}(`{3,}|~{3,})\s*$/);
+      if (close && close[1][0] === fence.ch && close[1].length >= fence.len) fence = undefined;
+      continue;
+    }
+    if (inComment) {
+      if (line.includes("-->")) inComment = false;
+      continue;
+    }
+
+    const open = line.match(/^ {0,3}(`{3,}|~{3,})/);
+    if (open) {
+      fence = { ch: open[1][0], len: open[1].length };
+      para = undefined;
+      continue;
+    }
+    const commentStart = line.lastIndexOf("<!--");
+    if (commentStart !== -1 && line.indexOf("-->", commentStart) === -1) {
+      inComment = true;
+      para = undefined;
+      continue;
+    }
+
+    const atx = line.match(/^ {0,3}(#{1,6})(?:[ \t]+(.*?))?(?:[ \t]+#+)?[ \t]*$/);
+    if (atx) {
+      push(atx[1].length, atx[2] ?? "", i + 1);
+      para = undefined;
+      continue;
+    }
+
+    const setext = line.match(/^ {0,3}(=+|-+)[ \t]*$/);
+    if (setext && para) {
+      push(setext[1][0] === "=" ? 1 : 2, para.lines.join(" "), para.start);
+      para = undefined;
+      continue;
+    }
+
+    if (line.trim() === "") { para = undefined; continue; }
+    // Only a plain paragraph line can be the text of a setext heading; a list
+    // item, quote, table row or HTML line followed by `---` is not one.
+    if (/^ {4,}|^\s*([-*+>|<]|\d+[.)])/.test(line)) { para = undefined; continue; }
+    if (para) para.lines.push(line.trim());
+    else para = { start: i + 1, lines: [line.trim()] };
+  }
+  return headings;
+}
+
+/** Link text in a list item: a bracket in the heading must not close the link. */
+function linkText(text: string): string {
+  return text.replace(/([[\]])/g, "\\$1");
+}
+
+/**
+ * The README's h2/h3 outline as a nested list of in-page links.
+ *
+ * h1 is left out because a README's h1 is its title, and a TOC that begins by
+ * linking to the line above it is noise. Anchors are deduplicated over EVERY
+ * heading in the file — h1 and h4+ included — because GitHub counts them all.
+ */
+export function renderReadmeToc(readme: string): SectionOutput {
+  const headings = extractHeadings(readme, README_TOC_MARKER).filter((h) => h.level === 2 || h.level === 3);
+  if (headings.length === 0) {
+    return { markdown: "_This README has no sections yet._\n", notes: ["no h2/h3 headings found"] };
+  }
+  const base = Math.min(...headings.map((h) => h.level));
+  const lines = headings.map(
+    (h) => `${"  ".repeat(h.level - base)}- [${linkText(h.text)}](#${h.anchor})`,
+  );
+  return { markdown: lines.join("\n") + "\n", notes: [] };
+}
+
+const readmeTocSection: ReadmeSection = {
+  marker: README_TOC_MARKER,
+  summary: "The README's own table of contents: its h2/h3 headings, as GitHub anchors.",
+  render({ readme }) {
+    if (readme === undefined) return undetermined("no README text was supplied to render from");
+    return renderReadmeToc(readme);
+  },
+};
+
+/**
+ * `readme:toc` is registered LAST, and the order is load-bearing: it reads the
+ * README as the sections before it have left it, so a heading another section
+ * generates (a `folio:toc` paper title) is in the outline on the same run
+ * rather than one run later — which would make `--check` fail on a README
+ * that was just synced.
+ */
 export const SECTIONS: readonly ReadmeSection[] = [
   tocSection,
   coldStartSection,
@@ -678,6 +876,7 @@ export const SECTIONS: readonly ReadmeSection[] = [
   processesSection,
   filesSection,
   rolesSection,
+  readmeTocSection,
 ];
 
 // ── Sync ────────────────────────────────────────────────────────────────────
@@ -720,7 +919,7 @@ export function syncSections(
       absent.push(section.marker);
       continue;
     }
-    const out = section.render(ctx);
+    const out = section.render({ ...ctx, readme: content });
     if (out.skip) {
       notes.push(...out.notes.map((n) => `${section.marker}: ${n}`));
       skipped.push(section.marker);
@@ -853,6 +1052,38 @@ if (import.meta.main) {
     process.exit(2);
   }
   const only = flag("only")?.split(",").map((s) => s.trim()).filter(Boolean);
+
+  // `--all`: every instance under `--dir` (default: this checkout), each
+  // against its OWN declared README. Added with `readme:toc`, which the owner
+  // asked for on every harness's README: a generated region only the root,
+  // cat-harness and bootstrap were checked for is a hand-kept list in every
+  // other one — correct the day it was synced and silently wrong after.
+  if (argv.includes("--all")) {
+    const repo = resolve(flag("dir") ?? ".");
+    const roots = instanceRootsIn(repo);
+    if (roots.length === 0) {
+      console.error(`no instance declares a <name>.json under ${repo} — nothing was read`);
+      process.exit(2);
+    }
+    let worst = 0;
+    for (const root of roots) {
+      try {
+        const r = await runReadmeSync({
+          root,
+          check: argv.includes("--check"),
+          fetch: argv.includes("--fetch"),
+          only,
+          linkStyle: style as ReadmeTocConfig["linkStyle"] | undefined,
+        });
+        (r.exitCode === 0 ? console.log : console.error)(r.text);
+        worst = Math.max(worst, r.exitCode);
+      } catch (e) {
+        console.error(`${relative(repo, root) || "."}: ${e instanceof Error ? e.message : String(e)}`);
+        worst = 2;
+      }
+    }
+    process.exit(worst);
+  }
 
   try {
     const result = await runReadmeSync({

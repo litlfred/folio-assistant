@@ -59,7 +59,7 @@ of it a month later. They are independent: a decision reached by any method can 
 recorded in this form, and this form constrains no method.
 
 **The gap this closes:** before this,
-[`decision-audit`](../skills/folio-core/decision-audit.md) recorded *why this* —
+[`decision-audit`](../skills/sdlc/sdlc-core/decision-audit.md) recorded *why this* —
 and nothing recorded *what else, and why not*. A rejected option with no record is
 a dead end nobody marked, and the next agent walks into it. That is exactly the
 argument `bean-coordination` makes for `scrapped` over deleted.

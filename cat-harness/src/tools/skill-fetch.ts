@@ -50,7 +50,7 @@ const REFERENCE_PACKAGES: Record<string, { repo: string; ref: string; skills: Re
 //                              route into folio-paper-adapter's depth
 //   - folio-core             : content-agnostic platform bundle (skills/folio-core)
 //   - folio-document-adapter : prose-folio bundle, no Lean and no required TeX
-//   - folio-paper-adapter    : formal-math paper-adapter bundle (skills/folio-paper-adapter)
+//   - folio-paper-adapter    : formal-math paper-adapter bundle (skills/authoring/folio-paper-adapter)
 //
 // `folio-document-adapter` and `folio-paper-adapter` are the two halves of one
 // content model, not alternatives to pick between: a paper folio wants both,
@@ -165,16 +165,17 @@ export function registerSkillFetchTools(server: McpServer): void {
     {
       skill: z.string().describe(
         "Skill identifier. Examples: 'lean-generation' (package_name 'folio-paper-adapter'), " +
-        "'bean-coordination' (package_name 'folio-core'), 'corpus-grep' (package_name 'folio-assistant'), " +
+        "'bean-coordination' (package_name 'sdlc-core'), 'corpus-grep' (package_name 'kg-core'), " +
         "'content-validate' (package_name 'content-lifecycle'), " +
         "'l3-fhir-authoring' (package_name 'authoring-who-smart-guidelines'), " +
         "'academic-paper-reviewer' (package_name 'academic-research-skills')"
       ),
+      // Listed from discovery rather than by hand: the hand-written list named
+      // seven packages and missed every one a topic holds (bean 9umr), so an
+      // agent reading the schema could not learn that `sdlc-core` exists.
       package_name: z.string().default("folio-core").describe(
-        "Package name. Local: 'folio-assistant' | 'content-lifecycle' | 'folio-core' | " +
-        "'folio-document-adapter' | 'folio-paper-adapter' | " +
-        "'authoring-who-smart-guidelines' | 'authoring-math'. " +
-        "Reference: 'academic-research-skills'."
+        `Package name. Local: ${Object.keys(LOCAL_PACKAGES).sort().map((p) => `'${p}'`).join(" | ")}. ` +
+        `Reference: ${Object.keys(REFERENCE_PACKAGES).sort().map((p) => `'${p}'`).join(" | ")}.`
       ),
     },
     async ({ skill, package_name }) => {

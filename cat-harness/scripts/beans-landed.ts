@@ -10,7 +10,7 @@
  * Bean `4d22`. The PR merges, the agent then commits the bean's completion to
  * the branch, then re-branches from the new `main`, and that completion commit
  * is orphaned: the bean still reads open on `main`. The rule that prevents it
- * is in `skills/folio-core/bean-coordination.md` §"Complete it in the PR's own
+ * is in `skills/sdlc/sdlc-core/bean-coordination.md` §"Complete it in the PR's own
  * last commit". This is the report for what slips through.
  *
  * ## The signal, and why it is ranked rather than listed

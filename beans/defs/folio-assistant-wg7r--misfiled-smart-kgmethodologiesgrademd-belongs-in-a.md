@@ -19,7 +19,7 @@ Owner, 2026-09-23: *"misfiled smart-kg/methodologies/grade.md, needs to be part 
 
 ## Proposed shape (confirm with owner before implementing)
 
-1. GRADE's procedure goes into a skill under `cat-harness/skills/authoring-who-smart-guidelines/` (the WHO L1 package), and the skill cites the GRADE Working Group / WHO Handbook as its source.
+1. GRADE's procedure goes into a skill under `cat-harness/skills/authoring/authoring-who-smart-guidelines/` (the WHO L1 package), and the skill cites the GRADE Working Group / WHO Handbook as its source.
 2. Each GRADE enumeration becomes a code list in `cat-harness/code-lists/`, each code with a definition and a source, exported as SKOS.
 3. Remove the `smart-kg-methodologies` declaration and the `smart-kg/` directory, and fix the three references above. Moving and deleting an artefact needs the owner's go-ahead (deletion-requires-confirmation).
 4. Open question: should the content instead go to the separate smart-kg repository now? The owner said "not here **yet**".
@@ -34,7 +34,7 @@ Owner, 2026-09-23: *"misfiled smart-kg/methodologies/grade.md, needs to be part 
 
 **Placement, owner 2026-09-24:** option 2, `cat-harness`, chosen over `smart-l1` and `smart-base`.
 
-- **Skill** `cat-harness/skills/authoring-who-smart-guidelines/grade.md` (`grade`), registered in the package manifest. It is the grading SYSTEM that `evidence-appraisal` applies when a folio declares GRADE. `evidence-appraisal` now points to it as available, not as a default, so its "refuse when no system is declared" rule stands.
+- **Skill** `cat-harness/skills/authoring/authoring-who-smart-guidelines/grade.md` (`grade`), registered in the package manifest. It is the grading SYSTEM that `evidence-appraisal` applies when a folio declares GRADE. `evidence-appraisal` now points to it as available, not as a default, so its "refuse when no system is declared" rule stands.
 - **Six code lists** in `cat-harness/code-lists/`, 28 codes, each with a definition, and each list cites its published source:
   - `grade-certainty` (4): Balshem et al. 2011
   - `grade-rating-down` (5): GRADE Handbook §5.2

@@ -2445,6 +2445,74 @@ export function tools(baseUrl?: string): ToolDefinition[] {
       requires: {},
     }),
 
+    // ── The terminology a mapping check resolves against ─────────────────
+    //
+    // Bean `ejug`, owner 2026-09-29: *"OCL = open concept lab, will be used
+    // for WHO smart guidelines tetrminolgy mgnt as a tool"*, then on
+    // 2026-09-30, asked what the `fhir` half of `check:term-mapping` should
+    // assert: **"published IG at a version"**.
+    //
+    // **So the Tool is the pin refresher, and OCL is not this node.** That is
+    // the owner's second ruling applied rather than the first one softened:
+    // "this code exists in smart-base v1.0.0" and "this code is in a live
+    // curated collection" are different claims that can disagree, and the
+    // node has to declare which one it produces. A node wrapping
+    // `api.openconceptlab.org` would also be unexercisable here — this
+    // environment's network policy refuses it and `smart.who.int` alike (403
+    // on CONNECT, logged by the proxy) — so it would be a declared mechanism
+    // no run could reach. When OCL becomes reachable it earns its OWN node
+    // beside this one, sharing `check:term-mapping`'s contract; two answers
+    // to "what is this term" are honest when each says which it is.
+    //
+    // `satisfies: ["vocabulary-authority"]` and not `glossary-terms`: that
+    // skill decides WHICH vocabulary owns a fact — SKOS for meaning, FHIR for
+    // a clinical code — and this node supplies the FHIR side's authority in
+    // the form the owner chose. The skill had no Tool at all before this,
+    // which is the `skills-and-tools` migration debt: a skill whose mechanism
+    // is still inlined in its prose.
+    defineTool({
+      id: "pin-smart-base-terminology",
+      title: "Snapshot a published IG's terminology at its pinned version",
+      description:
+        "Read every CodeSystem concept out of a smart-base clone and write `external-schemas/who-smart-base.terminology.json`, the offline snapshot `check:term-mapping` resolves its `fhir` target against. 585 concepts across 12 code systems at v1.0.0.",
+      install: { none: true },
+      invoke: { shell: "bun run cat-harness/scripts/pin-smart-base-terminology.ts --from <clone>" },
+      // `network: false` is the claim that matters and it is exact: the
+      // script reads a clone from disk and never fetches. The clone is made
+      // by hand at the pinned tag, because cloning an external repository is
+      // not something a gate should do, and because neither IG host is
+      // reachable from here anyway.
+      requires: { runtime: ["bun", "git"], network: false },
+      io: {
+        inputs: [
+          // NO `arg` binding, and that is the type speaking rather than an
+          // omission. `FilesystemPath` exists precisely for a path that may
+          // point OUTSIDE the repository — the clone is made in a scratch
+          // directory — and its own docblock says it is "refused as a
+          // command-line word": `..` is what `RepoPath` forbids, and
+          // weakening `RepoPath` to admit this would remove traversal
+          // protection from every port that uses it. `check:tools` refuses
+          // the pairing (measured 2026-09-30), so declaring `--from` here
+          // would be asserting a safety property the type withholds. The
+          // flag is in `invoke.shell`, where it is a person's command line
+          // rather than a contract a caller may fill from untrusted input.
+          { name: "from", schema: t("FilesystemPath"), required: true, description: "A clone of WorldHealthOrganization/smart-base checked out at the PINNED tag, passed as `--from`. The script refuses unless that clone's `sushi-config.yaml` version equals the pin's, so a newer clone cannot silently become the snapshot." },
+        ],
+        outputs: [
+          { name: "snapshot", schema: t("RepoPath"), description: "`cat-harness/external-schemas/who-smart-base.terminology.json`, `folio-pinned-terminology/v1`: the version, the source, and every `system#code` with its display, sorted." },
+        ],
+      },
+      satisfies: ["vocabulary-authority"],
+      selection: {
+        when:
+          "The authority a term is checked against must be a fixed artefact a reader can name and re-fetch — a published IG at a version. Also the only option where the vocabulary's host is unreachable, which is the case in this container.",
+        limits:
+          "The version comes from `external-schemas/who-smart-base.json` and NEVER from this script, so refreshing means moving the pin first and re-running; re-running against a newer clone is refused rather than silently accepted. It answers only for what the IG publishes at that version — a code added after it, or curated in a collection rather than published, is absent, and `check:term-mapping` reports that as `unmapped` (a checked miss) and not as `undetermined`. Nothing here dereferences a code system IRI.",
+        cost:
+          "One shallow clone at the tag (~120 KB of FSH at v1.0.0) and a few seconds. The snapshot is committed, so no run at check time.",
+      },
+    }),
+
     defineTool({
       id: "transcribe-whisper-cpp",
       title: "Transcribe audio — whisper.cpp (option, not installed)",

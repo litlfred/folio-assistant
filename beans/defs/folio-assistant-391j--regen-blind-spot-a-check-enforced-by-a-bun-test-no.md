@@ -5,7 +5,7 @@ status: completed
 type: bug
 priority: normal
 created_at: 2026-09-24T06:06:37Z
-updated_at: 2026-09-30T10:58:02Z
+updated_at: 2026-09-30T22:33:44Z
 parent: folio-assistant-1xhc
 ---
 
@@ -127,3 +127,29 @@ ruleset tool, checked 2026-09-30. It is the owner's click.
 and fixing a red `main` in a small PR of its own. A queue makes that rarer; it
 does not make it unnecessary, and the parent-before-blame rule this bean added
 is unaffected.
+
+
+## CORRECTION, 2026-09-30 — the chosen remedy is not available on this repository
+
+The section above closes *"What remains is a repository-settings change (branch
+protection on `main` → require merge queue) … It is the owner's click."* **There
+is no such click here.** Bean `1hjm` has the measurement: this repository's
+ruleset form offers thirteen rules and `Require merge queue` is not one of them.
+GitHub renders only the rules a repository is eligible for, so the absence is
+the measurement rather than an inference; personal-account ownership is the
+*likely* cause and stays labelled as inference, because `docs.github.com` is
+egress-blocked from the agent container and the eligibility rule could not be
+quoted.
+
+**What this does and does not overturn.** The diagnosis in this bean is
+untouched: merge skew is real, it was measured nine times in a day, and
+`ymsu` still explains why fix-forward cannot catch the class *before* the merge.
+What is overturned is only the availability of the remedy. So the 2026-09-30
+reversal — "merge queue, not fix-forward" — **cannot be carried out**, and the
+operating procedure reverts by necessity rather than by argument to the
+2026-09-24 one: fix forward, watch `main` after every merge you make, check the
+parent before blaming the last merge.
+
+Asked which of the two features that ARE available to turn on instead
+(`allow_auto_merge`, `allow_update_branch`, both `false`), the owner chose
+**neither — leave settings alone**. Recorded so it is not re-proposed.

@@ -30,11 +30,11 @@ package "cat-harness/tools" as pkg_cat_harness_tools <<tools>> {
   }
 }
 package "cat-harness/external-schemas" as pkg_cat_harness_external_schemas <<external-schema>> {
-  class "Term" as cat_harness_external_schemas_Term <<json: ExternalSchemaSchema>> #e9edf3 {
+  class "Term" as cat_harness_external_schemas_folio_external_schema_v1_Term <<json: ExternalSchemaSchema>> #e9edf3 {
     term [1] : string
     operative [1] : string
   }
-  class "ExternalSchema" as cat_harness_external_schemas_ExternalSchema <<json: ExternalSchemaSchema>> #e9edf3 {
+  class "folio-external-schema/v1" as cat_harness_external_schemas_folio_external_schema_v1_folio_external_schema_v1 <<json: ExternalSchemaSchema>> #e9edf3 {
     $schema [1] : 'folio-external-schema/v1'
     id [1] : string
     authority [1] : enum(7)
@@ -45,6 +45,19 @@ package "cat-harness/external-schemas" as pkg_cat_harness_external_schemas <<ext
     use [1] : conforms | reads | cites
     terms [0..*] : Term[]
     note [0..1] : string
+  }
+  class "Concept" as cat_harness_external_schemas_folio_pinned_terminology_v1_Concept <<json: PinnedTerminologySchema>> #e9edf3 {
+    system [1] : string
+    code [1] : string
+    display [1] : string
+  }
+  class "folio-pinned-terminology/v1" as cat_harness_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1 <<json: PinnedTerminologySchema>> #e9edf3 {
+    $schema [1] : 'folio-pinned-terminology/v1'
+    _comment [0..1] : string
+    pin [1] : string
+    version [1] : string
+    source [1] : string
+    concepts [0..*] : Concept[]
   }
 }
 package "cat-harness/code-lists" as pkg_cat_harness_code_lists <<code-list>> {
@@ -495,7 +508,7 @@ package "cat-harness/skills" as pkg_cat_harness_skills <<skills>> {
   class "Directory" as cat_harness_skills_skill_topics_v1_Directory <<json: SkillTopicsSchema>> #e8f0ee {
     id [1] : string
     path [1] : string
-    dependents [1] : string
+    subgraph [1] : true
     graphKinds [1..*] : string[]
   }
   class "skill-topics/v1" as cat_harness_skills_skill_topics_v1_skill_topics_v1 <<json: SkillTopicsSchema>> #e8f0ee {
@@ -678,7 +691,6 @@ package "cat-harness/qa" as pkg_cat_harness_qa <<qa>> {
     $schema [1] : 'qa-results/v1'
     producer [1] : { /** Repo-relative path to the script. */ script: string; /** 12-char SHA-256 prefix of that script's source, as `script-qa` writes. */ script_hash: string; }
     subject [1] : { kind: string; id: string }
-    updated_at [1] : string
     families [1] : Record<string, QaResultFamily>
     total [1] : number
   }
@@ -858,6 +870,7 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
   class "folio-image-verdicts/v1" as cat_harness_library_folio_image_verdicts_v1 <<ts: VerdictFile>> #f4f4f1 {
     inspected_by [1] : unknown
     inspected_at [1] : string
+    attribution [0..1] : Record<string, { inspected_by: unknown; inspected_at: string }>
     verdicts [1] : Record<string, Record<string, Verdict>>
   }
   class "folio-vector-labels/v1" as cat_harness_library_folio_vector_labels_v1_folio_vector_labels_v1 <<json: VectorLabelsSidecarSchema>> #f4f4f1 {
@@ -865,6 +878,11 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     doc_id [1] : string
     pages [1] : object[] | null
     undetermined_reason [0..1] : string
+  }
+  class "folio-figure-descriptions/v1" as cat_harness_library_folio_figure_descriptions_v1_folio_figure_descriptions_v1 <<json: FigureDescriptionsFileSchema>> #f4f4f1 {
+    $schema [1] : 'folio-figure-descriptions/v1'
+    _comment [0..1] : string
+    descriptions [1] : map<object[]>
   }
   class "Superseded" as cat_harness_library_folio_block_summaries_v1_Superseded <<json: BlockSummariesSidecarSchema>> #f4f4f1 {
     text [1] : string | null
@@ -889,21 +907,42 @@ package "cat-harness/library" as pkg_cat_harness_library <<library>> {
     entry [1] : string
     summaries [0..*] : Summary[]
   }
+  class "folio-slides-accessibility/v1" as cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1 <<json: SlidesAccessibilitySchema>> #f4f4f1 {
+    $schema [1] : 'folio-slides-accessibility/v1'
+    source [1] : object
+    format [1] : pptx | odp
+    slides [1] : integer
+    checks [1] : object
+  }
+  class "Outline" as cat_harness_library_folio_referenced_source_v1_Outline <<json: ReferencedSourceSchema>> #f4f4f1 {
+    level [1] : integer
+    title [1] : string
+    page [1] : integer | null
+  }
+  class "folio-referenced-source/v1" as cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1 <<json: ReferencedSourceSchema>> #f4f4f1 {
+    $schema [1] : 'folio-referenced-source/v1'
+    identity [1] : object
+    source [1] : object
+    outline [0..*] : Outline[]
+    outline_source [1] : embedded | none
+    materialization [1] : object
+    withheld [1] : object
+  }
 }
 package "cat-harness/who-iris-library" as pkg_cat_harness_who_iris_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (6 named): could not determine)" as n_cat_harness_who_iris_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (9 named): could not determine)" as n_cat_harness_who_iris_library_library
 }
 package "cat-harness/agent-skills-library" as pkg_cat_harness_agent_skills_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (6 named): could not determine)" as n_cat_harness_agent_skills_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (9 named): could not determine)" as n_cat_harness_agent_skills_library_library
 }
 package "cat-harness/folio-assistant-sci-library" as pkg_cat_harness_folio_assistant_sci_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (6 named): could not determine)" as n_cat_harness_folio_assistant_sci_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (9 named): could not determine)" as n_cat_harness_folio_assistant_sci_library_library
 }
 package "cat-harness/folio-assistant-core-library" as pkg_cat_harness_folio_assistant_core_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (6 named): could not determine)" as n_cat_harness_folio_assistant_core_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (9 named): could not determine)" as n_cat_harness_folio_assistant_core_library_library
 }
 package "cat-harness/smart-base-library" as pkg_cat_harness_smart_base_library <<library>> {
-  note "library: no node schema declared\n(no node here carries a $schema family library names (6 named): could not determine)" as n_cat_harness_smart_base_library_library
+  note "library: no node schema declared\n(no node here carries a $schema family library names (9 named): could not determine)" as n_cat_harness_smart_base_library_library
 }
 package "cat-harness/translation-sources" as pkg_cat_harness_translation_sources <<translation-sources>> {
   class "TranslationConfig" as cat_harness_translation_sources_TranslationConfig <<json: TranslationConfigSchema>> #f4f4f1 {
@@ -1112,7 +1151,7 @@ package "cat-harness/docs" as pkg_cat_harness_docs <<docs>> {
     dir [1] : string
     title [1] : string
     provenance [1] : string
-    rung [1] : paged | tabular | none
+    rung [1] : paged | tabular | referenced | none
     docId [1] : string
     sourceFile [1] : string
     sourceSha256 [1] : string
@@ -1417,7 +1456,7 @@ package "cat-harness/root-docs" as pkg_cat_harness_root_docs <<docs>> {
     dir [1] : string
     title [1] : string
     provenance [1] : string
-    rung [1] : paged | tabular | none
+    rung [1] : paged | tabular | referenced | none
     docId [1] : string
     sourceFile [1] : string
     sourceSha256 [1] : string
@@ -1665,7 +1704,8 @@ package "cat-harness/cat-harness-deploy" as pkg_cat_harness_cat_harness_deploy <
 }
 
 cat_harness_tools_ToolDefinition *-- "0..*" cat_harness_tools_Maintain : maintains
-cat_harness_external_schemas_ExternalSchema *-- "0..*" cat_harness_external_schemas_Term : terms
+cat_harness_external_schemas_folio_external_schema_v1_folio_external_schema_v1 *-- "0..*" cat_harness_external_schemas_folio_external_schema_v1_Term : terms
+cat_harness_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1 *-- "0..*" cat_harness_external_schemas_folio_pinned_terminology_v1_Concept : concepts
 cat_harness_code_lists_CodeList *-- "1..*" cat_harness_code_lists_Code : codes
 cat_harness_schemas_skills_content_author_output_schema_json_Content_Author_Output *-- "0..*" cat_harness_schemas_skills_content_author_output_schema_json_Artifact : artifacts
 cat_harness_schemas_skills_content_feedback_input_schema_json_Content_Feedback_Input *-- "0..*" cat_harness_schemas_skills_content_feedback_input_schema_json_FeedbackItem : feedbackItems
@@ -1709,6 +1749,7 @@ cat_harness_health_HealthReport *-- "1..*" cat_harness_health_Check : checks
 cat_harness_memory_MemoryNode *-- "0..*" cat_harness_memory_AlsoAbout : alsoAbout
 cat_harness_library_folio_block_summaries_v1_Summary *-- "0..*" cat_harness_library_folio_block_summaries_v1_Superseded : superseded
 cat_harness_library_folio_block_summaries_v1_folio_block_summaries_v1 *-- "0..*" cat_harness_library_folio_block_summaries_v1_Summary : summaries
+cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1 *-- "0..*" cat_harness_library_folio_referenced_source_v1_Outline : outline
 cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
 cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
 cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Item : items

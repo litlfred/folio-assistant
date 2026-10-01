@@ -74,12 +74,21 @@ describe("the declaration matches what the scripts actually import", () => {
 });
 
 describe("a transitive dependency is declared, not inferred", () => {
-  test("Pillow is declared transitive and says what needs it", () => {
+  test("cffi is declared transitive and says what needs it", () => {
+    // This pinned Pillow until bean `scfh`, when `image-reuse.py` started
+    // importing PIL directly, so Pillow stopped being transitive and is now an
+    // ordinary declared import. `cffi` is the example that is still true.
+    const cffi = PYTHON_DEPS.find((d) => d.distribution === "cffi");
+    expect(cffi?.transitive).toBe(true);
+    // No `import cffi` exists anywhere, so without the flag this reads as dead
+    // weight and gets removed — and `cryptography` then panics at import time.
+    expect(scanImports(INSTANCE).map((f) => f.module)).not.toContain("cffi");
+  });
+
+  test("Pillow is a direct import now, and declared as one", () => {
     const pillow = PYTHON_DEPS.find((d) => d.distribution === "pillow");
-    expect(pillow?.transitive).toBe(true);
-    // No `import PIL` exists anywhere, so without the flag this reads as dead
-    // weight and gets removed — and `pypdf` then raises at the point of use.
-    expect(scanImports(INSTANCE).map((f) => f.module)).not.toContain("PIL");
+    expect(pillow?.transitive).toBeUndefined();
+    expect(scanImports(INSTANCE).map((f) => f.module)).toContain("PIL");
   });
 
   test("the schema refuses a transitive entry whose `why` does not say what requires it", () => {

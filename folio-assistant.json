@@ -10,7 +10,6 @@
     {
       "id": "uploads",
       "path": "uploads/",
-      "dependents": "reproduce",
       "description": "The incoming queue of the document-ingestion pipeline for THIS checkout — raw files as dropped, before ingestion. Distinct from `cat-harness/uploads/`, which is the harness layer's own queue: the two are different instances' directories that happen to share an id, not one directory declared twice. NOT L1 and NOT greppable as corpus; a source sitting here reads as absent to every consumer while the file is on disk.",
       "graphKinds": [
         "uploads"
@@ -24,7 +23,6 @@
     {
       "id": "root-tools",
       "path": "tools/",
-      "dependents": "skip",
       "description": "The Tool-node barrel. `index.ts` merges every instance's `<stub>/tools/*.ts` into the one import five consumers use -- `check-tools`, `kg-export`, `harness-schema-export`, `tool-coverage` and the MCP projection -- so adding an instance is one line here rather than a path baked into five call sites. Declared by the ROOT rather than by `cat-harness` with repository scope: it is the checkout's own barrel over every instance, and repository-scoped entries from `cat-harness` are what put 15 paths under two declarations each.",
       "graphKinds": [
         "code"

@@ -28,7 +28,7 @@ function instance(name: string, kgPath: string): string {
   mkdirSync(join(root, kgPath), { recursive: true });
   writeDeclaration(root, JSON.stringify({
       name,
-      directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphKinds: ["cat-harness"] }],
+      directories: [{ id: "cat-harness", path: kgPath, graphKinds: ["cat-harness"] }],
     }));
   return root;
 }
@@ -65,19 +65,21 @@ describe("the overlay is read from declarations, not from a literal", () => {
     expect(resolveSkillDirs(root)).toEqual([join(dep, "skills"), join(root, "skills")]);
   });
 
-  test("resolveDirectories WOULD have collapsed them — this is why it is not used", () => {
-    // Pinning the reason, not just the behaviour. If someone later "simplifies"
-    // resolveSkillDirs to use resolveDirectories, the test above goes red and
-    // this one says what they broke.
+  test("resolveDirectories keeps both as MEMBERS, but not in overlay order — why it is not used", () => {
+    // Before option A (2026-09-30) resolveDirectories overrode by id and the
+    // dependency's graph vanished. It now keeps every instance's directory as
+    // a member of the one subgraph — but the declaring (root) member comes
+    // first, while the overlay is deepest-first, and it knows nothing of
+    // `provides`. Pinned so a later "simplification" sees what it would break.
     const dep = instance("dep2", "skills");
     const root = instance("root2", "skills");
-    const collapsed = resolveDirectories([
+    const members = resolveDirectories([
       { name: "dep", root: dep },
       { name: "(root)", root, own: true },
     ]).filter(isKgOnlyDirectory);
 
-    expect(collapsed).toHaveLength(1);
-    expect(collapsed[0]!.absPath).toBe(join(root, "skills"));
+    expect(members.map((d) => d.absPath)).toEqual([join(root, "skills"), join(dep, "skills")]);
+    expect(resolveSkillDirs(root)).not.toEqual(members.map((d) => d.absPath));
   });
 
   test("`provides` without 'skills' opts a dependency out", () => {
@@ -97,7 +99,7 @@ describe("the overlay is read from declarations, not from a literal", () => {
     roots.push(root);
     writeDeclaration(root, JSON.stringify({
         name: "absent",
-        directories: [{ id: "cat-harness", path: "nope", dependents: "reproduce", graphKinds: ["cat-harness"] }],
+        directories: [{ id: "cat-harness", path: "nope", graphKinds: ["cat-harness"] }],
       }));
     expect(resolveSkillDirs(root)).toEqual([]);
   });
@@ -134,7 +136,7 @@ describe("the overlay is read from declarations, not from a literal", () => {
     mkdirSync(join(root, "schemas"), { recursive: true });
     writeDeclaration(root, JSON.stringify({
         name: "mixed",
-        directories: [{ id: "schemas", path: "schemas", dependents: "reproduce", graphKinds: ["schemas", "cat-harness"] }],
+        directories: [{ id: "schemas", path: "schemas", graphKinds: ["schemas", "cat-harness"] }],
       }));
     expect(resolveSkillDirs(root)).toEqual([]);
   });
@@ -156,7 +158,7 @@ describe("a REPOSITORY-scoped directory resolves against the repository", () => 
     mkdirSync(inst, { recursive: true });
     writeDeclaration(inst, JSON.stringify({
         name: "inst",
-        directories: [{ id: "cat-harness", path: kgPath, dependents: "reproduce", graphKinds: ["cat-harness"], ...(scope ? { scope } : {}) }],
+        directories: [{ id: "cat-harness", path: kgPath, graphKinds: ["cat-harness"], ...(scope ? { scope } : {}) }],
       }));
     return { repo, inst };
   }

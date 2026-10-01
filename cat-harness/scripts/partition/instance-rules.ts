@@ -441,6 +441,7 @@ export const RULES: Rule[] = [
       "schemas/tool-types.ts",               // the Tool I/O type vocabulary
       "schemas/repo-full-name.ts",           // `owner/name` — a Tool type AND the declaration's repository (bean `6rmv`)
       "schemas/instance-repositories.ts",    // the derived owner/repo ↔ instance map (bean `6rmv`)
+      "schemas/skill-definitions-dir.ts",    // where the JSON skill definitions and conventions live (bean `rqao`)
       "schemas/kg-node.ts",                  // the labels every KG node carries
       "schemas/harness-config.ts",           // cross-instance dependency resolution
       "schemas/property-skills.ts",          // declaration key → its edit skills (issue #1146)
@@ -1411,6 +1412,25 @@ export const RULES: Rule[] = [
       "scripts/check-fallback-roles.ts",    // reads role-graph
       "scripts/check-instance-render.ts",   // can an instance render its own graph
       "scripts/check-kind-validators.ts",   // graph kinds and their validators
+      // HARNESS, although what it reads is core's glossary — the test is the
+      // module's imports, not the data's home. It reaches only
+      // `schemas/term-mapping.ts` and `scripts/qa-results.ts`, both harness,
+      // so classifying it core would buy two wrong-direction edges for the
+      // tidiness of filing it beside the glossary it inspects. Same reasoning
+      // the content-side block below states in the other direction.
+      "scripts/check-term-mapping.ts",      // is a minted candidate already somebody's concept (bean `7wou`)
+      // HARNESS on the same test, and it is worth stating because the
+      // instinct pulls the other way: what this reads is `uploads/` and
+      // `library/`, a folio's own material, and its three nearest
+      // neighbours by SUBJECT — `check-l1-complete`, `ingest-document`,
+      // `l1-blocks` — are all in the content-side block below. It imports
+      // `schemas/cat-harness.ts` and nothing else. The declaration resolver
+      // is harness, so filing this core would buy a wrong-direction edge for
+      // the tidiness of sitting beside the pipeline it audits. The three
+      // below are core because THEY reach `schemas/narrative.ts` and its
+      // siblings; this one reaches no core schema at all, which is what
+      // makes it a different answer rather than an inconsistent one.
+      "scripts/check-uploads-retired.ts",   // an ingested upload is not still in the queue (bean `q7ey`)
       "scripts/check-subgraph-coverage.ts", // is a declared subgraph reachable at all (bean `2krx`)
       "scripts/check-quiet-claim-liveness.ts", // the work plan's own state against the remote (bean `omki`)
       "scripts/skill-governance.ts",        // which skill governs a directory, read from the skills (#1168 B7b)
@@ -1637,7 +1657,7 @@ export const RULES: Rule[] = [
     // fires on nothing while reading as a live adjudication is worse than no
     // rule, because the next reader takes it as evidence the file is still
     // here. The reasoning is kept; the dead prefix is not.
-    prefixes: ["skills/authoring-math/", "skills/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
+    prefixes: ["skills/authoring/authoring-math/", "skills/authoring/folio-paper-adapter/", "computations/", "latex/", "scripts/render-tex/", "scripts/docker-latex-build/", "scripts/knot-plots/"],
     exact: ["schemas/formalization-types.ts", "schemas/precision-scalar.ts", "schemas/refactor-strategy.ts"],
   },
   {
@@ -1650,7 +1670,7 @@ export const RULES: Rule[] = [
     repo: "base",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["skills/authoring-who-smart-guidelines/"],
+    prefixes: ["skills/authoring/authoring-who-smart-guidelines/"],
     // `schemas/dak-blocks.ts` was here and is CORE. Measured: core's own
     // `schemas/block-kinds.ts` already declares `CONTENT_ADAPTERS =
     // ["paper", "dak"]` and `DAK_BLOCK_KINDS`, so the DAK block kinds are
@@ -1711,7 +1731,7 @@ export const RULES: Rule[] = [
     repo: "core",
     // declared-path-literal: the TARGET layout of the five-repo split, which no
     // declaration in THIS repo describes — that is the whole point of the plan.
-    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/folio-document-adapter/", "skills/authoring-document/", "skills/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
+    prefixes: ["adapters/mcp-server/", "adapters/document/", "src/blocks/", "scripts/translation/", "skills/folio-core/", "skills/authoring/folio-document-adapter/", "skills/authoring-document/", "skills/authoring/content-lifecycle/", "content/pipeline/", "schemas/", "ui/", "viewer/", "translations/"],
     // `blueprint/` STOOD in the prefixes above until 2026-09-30 (bean `vov0`):
     // it held a hand-written QOU blueprint, folio content in the platform, and
     // is removed now that `blueprint-layout.ts` generates a paper's

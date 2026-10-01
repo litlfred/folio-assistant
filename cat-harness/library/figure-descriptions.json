@@ -1,0 +1,30 @@
+{
+  "$schema": "folio-figure-descriptions/v1",
+  "_comment": "Bean a8wy. What somebody concluded a DRAWN figure shows, as data, so the judgement can be reviewed line by line — the same split image-verdicts.json keeps for raster images, one layer over. `basis` is the field to read first: `labels-only` means the description came from vector-labels.json and nothing else, so its nouns are reliable and its relations are not; `labels-and-render` means the page was rendered and looked at. The first entry here is the worked case that established the difference, and it is deliberately recorded at `labels-and-render` WITH its labels-only reading preserved in `unread`, because the gap between the two is the finding. Every narrative is `draft`: only a human confirms one (schemas/narrative.ts).",
+  "descriptions": {
+    "arxiv-2504.19675v2": [
+      {
+        "page": 3,
+        "figure": "Figure 2",
+        "basis": "labels-and-render",
+        "described_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5"
+        },
+        "described_at": "2026-09-30",
+        "narrative": {
+          "state": "draft",
+          "text": "Figure 2, \"Overview of Annif projects and how they were combined into ensembles.\" A four-column diagram. The column headings read `runs`, `ensemble/fusion projects`, `regular projects` and `trained on`. Three boxed ensembles run down the second column — BM simple ensemble (runs 1,2,3), BM neural ensemble (runs 4,5,6) and BMX simple ensemble (runs 7,8,9) — and three boxed base projects down the third: Bonsai, MLLM and XTransformer. Dashed arrows run from each ensemble to the base projects it combines, and they CROSS rather than pairing row to row: BM simple and BM neural each reach Bonsai and MLLM, while BMX simple reaches all three. That matches the paper's own text — two BM ensembles combining Bonsai and MLLM, and a BMX simple ensemble combining all three. The fourth column is cylinder glyphs standing for training data, four beside Bonsai and one each beside MLLM and XTransformer, with a further cylinder drawn inside the BM neural ensemble box.",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5"
+          },
+          "drafted_at": "2026-09-30"
+        },
+        "unread": "Recorded although this is a rendered basis, because the gap IS the finding. Read from vector-labels.json alone, 13 of the page's 110 labels intersect a drawing and they line up as three tidy rows — runs 1,2,3 / BM simple / Bonsai, then 4,5,6 / BM neural / MLLM, then 7,8,9 / BMX simple / XTransformer. That reading is wrong on all three rows: the row alignment is layout, the arrows cross, and it contradicts the paper's prose. The `trained on` column is glyphs with no text, so at labels-only basis it shows a heading and nothing under it."
+      }
+    ]
+  }
+}

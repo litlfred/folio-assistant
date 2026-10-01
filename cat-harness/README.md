@@ -9,6 +9,16 @@ It is a *layer*, not the repository. The repository is
 [`folio-assistant`](../README.md), which holds this layer beside several
 others; [its instance table](../README.md#harness-instances) is the index.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [What is in here](#what-is-in-here)
+- [Reading it as a person, or as an agent](#reading-it-as-a-person-or-as-an-agent)
+- [Running it](#running-it)
+
+<!-- readme:toc:end -->
+
 ## What is in here
 
 The authoritative list is [`cat-harness.json`](cat-harness.json) — every directory this
