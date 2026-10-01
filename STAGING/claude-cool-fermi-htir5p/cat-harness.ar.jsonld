@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T07:14:00.210Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/62ddc420fb9af20a095b43fd457c8ffba754809d",
-  "sourceCommitSha": "62ddc420fb9af20a095b43fd457c8ffba754809d",
-  "sourceCommitAt": "2026-10-01T07:09:58Z",
+  "generatedAt": "2026-10-01T07:21:53.452Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/02506075f3dff189857b2be6838c4659fc3f0cbf",
+  "sourceCommitSha": "02506075f3dff189857b2be6838c4659fc3f0cbf",
+  "sourceCommitAt": "2026-10-01T07:17:21Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -1181,23 +1181,6 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/content-publish"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/sample-import",
-      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
-      "name": "sample-import",
-      "title": "Sample import",
-      "description": "Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied.",
-      "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#package/content-lifecycle"
-      ],
-      "instructionsPath": "skills/authoring/content-lifecycle/sample-import.md",
-      "instructionLines": 87,
-      "hasInstructions": true,
-      "hasIOContract": false,
-      "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#directory/skills",
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/content-author",
@@ -5102,6 +5085,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/materialize-on-demand"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/sample-import",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "sample-import",
+      "title": "Sample import",
+      "description": "Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the library (permanent) or the kept, unpublished trashcan (trial), import it, and test the import. The gates are called, never copied.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#package/large-datasets"
+      ],
+      "instructionsPath": "../large-datasets/skills/sample-import.md",
+      "instructionLines": 87,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#directory/large-datasets-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/sample-import"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/copy-out-materialized",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "copy-out-materialized",
@@ -6559,8 +6559,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/content-review",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/content-test",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/content-validate",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/evidence-appraisal",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/sample-import"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#skill/evidence-appraisal"
       ],
       "providesCapability": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#capability/git-push",
@@ -34440,7 +34439,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#process/Process_CiHealth/node/Start_Sweep",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Weekly (Mon 09:17 UTC), or on dispatch",
+      "name": "Weekly (Mon 09:17 UTC), a FAILING gating run on main, or on dispatch",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cool-fermi-htir5p/cat-harness.jsonld#process/Process_CiHealth",
