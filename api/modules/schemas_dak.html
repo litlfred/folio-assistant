@@ -17,7 +17,8 @@ Digital Adaptation Kit.</p>
 itself a DAK by carrying <a href="../variables/schemas_dak.DAK_MARKER_FILENAME.html" class="tsd-kind-variable">DAK_MARKER_FILENAME</a> at its root, exactly as
 it declares itself a harness instance by carrying <code>harness.json</code>. That
 much is settled and is modelled here. What is <em>not</em> settled is the shape of
-the nine components inside it: WHO's <code>DAK</code> Logical Model is still being
+the ten components inside it (nine in WHO's model, plus scheduling logic —
+see <code>DAK_UNFORMALIZED_COMPONENTS</code>): WHO's <code>DAK</code> Logical Model is still being
 finalised in FHIR upstream, so this module <strong>records the components without
 inventing their contents</strong>.</p>
 <h2 id="why-a-placeholder-rather-than-waiting" class="tsd-anchor-link">Why a placeholder rather than waiting<a href="#why-a-placeholder-rather-than-waiting" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
@@ -27,7 +28,7 @@ answerable today; &quot;what is inside <code>healthInterventions[0]</code>?&quot
 the first on the second would leave the type unrepresented for however long
 the LM takes, and a type nothing can name is a type nothing can scan for.</p>
 <h2 id="what-this-deliberately-does-not-model" class="tsd-anchor-link">What this deliberately does NOT model<a href="#what-this-deliberately-does-not-model" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<p><strong>The element shape of a component.</strong> Each of the nine is declared
+<p><strong>The element shape of a component.</strong> Each of WHO's nine is declared
 <code>0..* &lt;Name&gt;Source</code> in <code>smart-base</code>'s <code>input/fsh/models/DAK.fsh</code>. The
 <strong>cardinality is final</strong> — an array, possibly empty — so that much is
 enforced. The <strong>element</strong> is not, so it is <code>unknown</code> and is carried through
@@ -40,7 +41,7 @@ parse-and-write round trip. A placeholder that silently dropped the fields it
 had not learned about yet would be worse than no placeholder — it would
 destroy data from a real DAK on the first tool that read and rewrote one.</p>
 <h2 id="where-the-component-vocabulary-lives" class="tsd-anchor-link">Where the component vocabulary lives<a href="#where-the-component-vocabulary-lives" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<p><code>schemas/block-kinds.ts</code>, not here: <a href="../variables/schemas_block-kinds.DAK_COMPONENTS.html" class="tsd-kind-variable">DAK_COMPONENTS</a> names the nine,
+<p><code>schemas/block-kinds.ts</code>, not here: <a href="../variables/schemas_block-kinds.DAK_COMPONENTS.html" class="tsd-kind-variable">DAK_COMPONENTS</a> names the ten,
 <a href="../variables/schemas_block-kinds.DAK_COMPONENT_FIELDS.html" class="tsd-kind-variable">DAK_COMPONENT_FIELDS</a> maps each to its field in WHO's own model, and
 <code>scripts/tests/dak-blocks.test.ts</code> checks those names against a real
 <code>DAK.fsh</code> when a <code>smart-base</code> checkout is present — reporting <code>n/a</code>, never a

@@ -26,7 +26,7 @@
   "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsGraph",
   "name": "cat-harness — fsh-guts",
   "description": "The trashcan that is kept: deprecated and throwaway structured content, addressable and exported and deliberately absent from the rendered site. Reachable BY NAME only — every other published graph has its references stripped, so nothing links here. Activity logs live under this tree and are excluded: a file is included only if it declares itself folio-fsh-guts/v1.",
-  "nodeCount": 24,
+  "nodeCount": 72,
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/bootstrap-split.md",
@@ -63,6 +63,18 @@
       "bean": "folio-assistant-4sim",
       "description": "Added on the owner's 4sim ruling, \"Reference only\", to pin the DCAT 3 edition ahead of any use. Main's #1168 B6a then made each file that uses a spec declare it (conformsTo), and added a test that every record has such a user. Nothing conforms to DCAT, so no file can honestly declare it, and the record would read as a spec nothing depends on, which it is. The chosen edition is kept on bean 4sim. Re-add this record when something emits a DCAT term.",
       "body": "# The record, as it was\n\n```json\n{\n  \"$schema\": \"folio-external-schema/v1\",\n  \"id\": \"w3c-dcat-3\",\n  \"authority\": \"W3C\",\n  \"title\": \"Data Catalog Vocabulary (DCAT) - Version 3\",\n  \"version\": \"2024-08-22\",\n  \"specUrl\": \"https://www.w3.org/TR/2024/REC-vocab-dcat-3-20240822/\",\n  \"namespaces\": [\n    \"http://www.w3.org/ns/dcat#\"\n  ],\n  \"use\": \"cites\",\n  \"terms\": [],\n  \"note\": \"REFERENCE ONLY — owner, 2026-09-23, on bean 4sim: 'Reference only'. Pinned so that the day a glossary or terminology RELEASE is described (a dcat:Dataset per published graph document, a dcat:Distribution per serialisation), the edition is already chosen and named, not guessed. Nothing in this repository emits a DCAT term today, so there are no operative terms. DCAT is also one more TARGET vocabulary for the ETL Tools of bean k74z.\"\n}\n```"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/kg-export-folio-assistant-orphan-sidecar.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "kg-export sidecar for @litlfred/folio-assistant — an orphan no producer writes",
+      "nodeKind": "orphaned-sidecar",
+      "sourcePath": "fsh-guts/retired/kg-export-folio-assistant-orphan-sidecar.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/test/results/kg-export.@litlfred/folio-assistant.qa-results.json",
+      "bean": "folio-assistant-y7b3",
+      "description": "A qa-results/v1 sidecar last written at commit 9b6e540d9 (2026-09-23), by the pre-split producer path scripts/kg-export.ts. The exporter now names the host instance's sidecar plain \"kg-export\" (kg-export.ts, qaStem), so nothing has written this file since and nothing reads it. Found while removing updated_at from every produced sidecar (#1714, #1707): it was the only one left carrying a stamp. Owner, 2026-09-30: \"ok move to fsh-guts\". Kept inside this manifest rather than as a loose .json so no scanner mistakes it for a live sidecar.",
+      "body": "# The orphaned `kg-export.@litlfred/folio-assistant` sidecar\n\nThe file as it stood at `9b6e540d9`. Do not restore it: the live sidecar for\nthe host instance is `cat-harness/test/results/kg-export.qa-results.json`.\n\n```json\n{\n  \"$schema\": \"qa-results/v1\",\n  \"producer\": {\n    \"script\": \"scripts/kg-export.ts\",\n    \"script_hash\": \"c88d684ce169\"\n  },\n  \"subject\": {\n    \"kind\": \"graph\",\n    \"id\": \"@litlfred/folio-assistant.jsonld\"\n  },\n  \"updated_at\": \"2026-09-21T18:21:29.282Z\",\n  \"families\": {\n    \"danglingLinks\": {\n      \"summary\": \"Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.\",\n      \"count\": 0,\n      \"entries\": []\n    },\n    \"problems\": {\n      \"summary\": \"Sources that could not be read. Never empty-by-omission.\",\n      \"count\": 0,\n      \"entries\": []\n    },\n    \"undeclaredSchemaModules\": {\n      \"summary\": \"Modules in the declared schemas/ directory that do not say what they are, so they are absent from the graph.\",\n      \"count\": 0,\n      \"entries\": []\n    },\n    \"undeclaredTerms\": {\n      \"summary\": \"Property names used in `@graph` that the `@context` does not declare. Dropped outright by a JSON-LD processor.\",\n      \"count\": 0,\n      \"entries\": []\n    }\n  },\n  \"total\": 0\n}\n```"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/retired/remote-stubs-package.md",
@@ -316,6 +328,570 @@
       "bean": "folio-assistant-nfgo",
       "description": "A one-shot helper that split a hand-written docs page into a content/docs/<slug>/ node tree, deriving node ids with kramdown's OWN slug rule so that every anchor the page already published kept working. Retired — `content/` does not exist in this repository — but the anchor-preservation argument is worth keeping, because it is the part a reimplementation would get wrong.",
       "body": "# `split-docs-page.py`\n\nSelf-described as a *\"One-shot migration helper\"*, and its sole remaining value is\none design decision.\n\n## The decision worth keeping\n\nWhen a published page is split into a node tree, the node ids become the anchors.\nDerive them with your own slug function and **every inbound link and every\ntable-of-contents entry that already exists breaks** — silently, because a\nmissing anchor scrolls to the top of the page rather than erroring.\n\nSo it derived ids with **kramdown's own slug rule**, matching what the page was\nalready publishing, and then **pinned them in the manifest** so they stop tracking\nthe heading text. Two properties, and the second matters as much as the first:\n\n| | |\n|---|---|\n| derive with the *renderer's* rule | today's anchors keep resolving |\n| then **pin** the result | tomorrow's heading edit does not move them |\n\nAn id that keeps tracking its heading is a URL that changes when someone fixes a\ntypo.\n\n## Why it is here\n\n`content/` does not exist in this repository — the platform carries no folio — and\nthe directory it lived in (`scripts/migrations/`) held only this file and is now\ngone. Moved rather than deleted, per\n[`fsh-guts`](../../cat-harness/skills/kg/kg-core/fsh-guts.md)."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.07199v3.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2504.07199v3.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2504.07199v3.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2504.07199v3.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2504.07199v3` (sha256 a6c42fa7f3f5183f…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `2504.07199v3.pdf`\n\nIngested to [`cat-harness/library/arxiv-2504.07199v3`](../../cat-harness/library/arxiv-2504.07199v3/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`cat-harness/library/arxiv-2504.07199v3/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.19675v2.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2504.19675v2.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2504.19675v2.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2504.19675v2.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2504.19675v2` (sha256 5e8e75c26a95847b…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `2504.19675v2.pdf`\n\nIngested to [`cat-harness/library/arxiv-2504.19675v2`](../../cat-harness/library/arxiv-2504.19675v2/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`cat-harness/library/arxiv-2504.19675v2/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2504.21474v1.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2504.21474v1.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2504.21474v1.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2504.21474v1.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2504.21474v1` (sha256 68a09fcd43927e7a…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `2504.21474v1.pdf`\n\nIngested to [`cat-harness/library/arxiv-2504.21474v1`](../../cat-harness/library/arxiv-2504.21474v1/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`cat-harness/library/arxiv-2504.21474v1/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2508.21620v2.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2508.21620v2.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2508.21620v2.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2508.21620v2.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2508.21620v2` (sha256 df2697ddad318501…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `2508.21620v2.pdf`\n\nIngested to [`cat-harness/library/arxiv-2508.21620v2`](../../cat-harness/library/arxiv-2508.21620v2/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`cat-harness/library/arxiv-2508.21620v2/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2602.12670v4.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2602.12670v4.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2602.12670v4.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2602.12670v4.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/arxiv-2602.12670v4` (sha256 e987ebc3f0084a1f…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted. Its `2602.12670v4.pdf.extraction.json` companion moved with it — a derived artefact of the same ingest, kept beside the source it was derived from rather than stranded in the queue.",
+      "body": "# `2602.12670v4.pdf`\n\nIngested to [`agent-skills/library/arxiv-2602.12670v4`](../../agent-skills/library/arxiv-2602.12670v4/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/arxiv-2602.12670v4/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2602.12670v4.pdf.extraction.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2602.12670v4.pdf.extraction.json",
+      "nodeKind": "extraction",
+      "sourcePath": "fsh-guts/uploads/2602.12670v4.pdf.extraction.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2602.12670v4.pdf.extraction.json",
+      "bean": "folio-assistant-q7ey",
+      "description": "The extraction record produced alongside `2602.12670v4.pdf` when it was ingested to `agent-skills/library/arxiv-2602.12670v4`. A derived artefact of that ingest, not a queue item — archived beside the source it was derived from rather than left in `uploads/` once the source moved.",
+      "body": "# `2602.12670v4.pdf.extraction.json`\n\nMoved with [`2602.12670v4.pdf`](./2602.12670v4.pdf) under the owner's ruling 2026-09-29 that an\ningested upload is archival. It is derived rather than original: the source is\nthe PDF beside it, and what the ingest made of that source is in\n[`agent-skills/library/arxiv-2602.12670v4`](../../agent-skills/library/arxiv-2602.12670v4/).\n\nKept rather than dropped because it records how *this* extraction ran, which\na re-derivation can be compared against. See\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2605.03537v1.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2605.03537v1.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2605.03537v1.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2605.03537v1.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2605.03537v1` (sha256 62231fab250d00d0…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `2605.03537v1.pdf`\n\nIngested to [`cat-harness/library/arxiv-2605.03537v1`](../../cat-harness/library/arxiv-2605.03537v1/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`cat-harness/library/arxiv-2605.03537v1/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2606.04382v1.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2606.04382v1.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2606.04382v1.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2606.04382v1.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2606.04382v1` (sha256 da73a6e55e0d9c9c…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `2606.04382v1.pdf`\n\nIngested to [`cat-harness/library/arxiv-2606.04382v1`](../../cat-harness/library/arxiv-2606.04382v1/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`cat-harness/library/arxiv-2606.04382v1/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.14456v1.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2607.14456v1.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2607.14456v1.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2607.14456v1.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2607.14456v1` (sha256 f3f81db565e60f7f…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `2607.14456v1.pdf`\n\nIngested to [`cat-harness/library/arxiv-2607.14456v1`](../../cat-harness/library/arxiv-2607.14456v1/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`cat-harness/library/arxiv-2607.14456v1/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.20636v1.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2607.20636v1.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2607.20636v1.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2607.20636v1.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2607.20636v1` (sha256 0ae6a9f230342c50…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `2607.20636v1.pdf`\n\nIngested to [`cat-harness/library/arxiv-2607.20636v1`](../../cat-harness/library/arxiv-2607.20636v1/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`cat-harness/library/arxiv-2607.20636v1/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.25032v1.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2607.25032v1.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2607.25032v1.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2607.25032v1.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/arxiv-2607.25032v1` (sha256 449a2e29e68b0916…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted. Its `2607.25032v1.pdf.extraction.json` companion moved with it — a derived artefact of the same ingest, kept beside the source it was derived from rather than stranded in the queue.",
+      "body": "# `2607.25032v1.pdf`\n\nIngested to [`agent-skills/library/arxiv-2607.25032v1`](../../agent-skills/library/arxiv-2607.25032v1/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/arxiv-2607.25032v1/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2607.25032v1.pdf.extraction.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2607.25032v1.pdf.extraction.json",
+      "nodeKind": "extraction",
+      "sourcePath": "fsh-guts/uploads/2607.25032v1.pdf.extraction.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2607.25032v1.pdf.extraction.json",
+      "bean": "folio-assistant-q7ey",
+      "description": "The extraction record produced alongside `2607.25032v1.pdf` when it was ingested to `agent-skills/library/arxiv-2607.25032v1`. A derived artefact of that ingest, not a queue item — archived beside the source it was derived from rather than left in `uploads/` once the source moved.",
+      "body": "# `2607.25032v1.pdf.extraction.json`\n\nMoved with [`2607.25032v1.pdf`](./2607.25032v1.pdf) under the owner's ruling 2026-09-29 that an\ningested upload is archival. It is derived rather than original: the source is\nthe PDF beside it, and what the ingest made of that source is in\n[`agent-skills/library/arxiv-2607.25032v1`](../../agent-skills/library/arxiv-2607.25032v1/).\n\nKept rather than dropped because it records how *this* extraction ran, which\na re-derivation can be compared against. See\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2608.08453v1.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2608.08453v1.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/2608.08453v1.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2608.08453v1.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/arxiv-2608.08453v1` (sha256 dd50ffb3d44d7a3c…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted. Its `2608.08453v1.pdf.extraction.json` companion moved with it — a derived artefact of the same ingest, kept beside the source it was derived from rather than stranded in the queue.",
+      "body": "# `2608.08453v1.pdf`\n\nIngested to [`agent-skills/library/arxiv-2608.08453v1`](../../agent-skills/library/arxiv-2608.08453v1/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/arxiv-2608.08453v1/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/2608.08453v1.pdf.extraction.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "2608.08453v1.pdf.extraction.json",
+      "nodeKind": "extraction",
+      "sourcePath": "fsh-guts/uploads/2608.08453v1.pdf.extraction.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/2608.08453v1.pdf.extraction.json",
+      "bean": "folio-assistant-q7ey",
+      "description": "The extraction record produced alongside `2608.08453v1.pdf` when it was ingested to `agent-skills/library/arxiv-2608.08453v1`. A derived artefact of that ingest, not a queue item — archived beside the source it was derived from rather than left in `uploads/` once the source moved.",
+      "body": "# `2608.08453v1.pdf.extraction.json`\n\nMoved with [`2608.08453v1.pdf`](./2608.08453v1.pdf) under the owner's ruling 2026-09-29 that an\ningested upload is archival. It is derived rather than original: the source is\nthe PDF beside it, and what the ingest made of that source is in\n[`agent-skills/library/arxiv-2608.08453v1`](../../agent-skills/library/arxiv-2608.08453v1/).\n\nKept rather than dropped because it records how *this* extraction ran, which\na re-derivation can be compared against. See\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240010567-eng.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "9789240010567-eng.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/9789240010567-eng.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/9789240010567-eng.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `smart-base/library/9789240010567-eng` (sha256 a4804f85ebb5c223…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `9789240010567-eng.pdf`\n\nIngested to [`smart-base/library/9789240010567-eng`](../../smart-base/library/9789240010567-eng/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`smart-base/library/9789240010567-eng/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240081949-eng.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "9789240081949-eng.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/9789240081949-eng.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/9789240081949-eng.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `smart-base/library/9789240081949-eng` (sha256 af6fd10ed03d5ee3…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `9789240081949-eng.pdf`\n\nIngested to [`smart-base/library/9789240081949-eng`](../../smart-base/library/9789240081949-eng/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`smart-base/library/9789240081949-eng/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240093362-eng.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "9789240093362-eng.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/9789240093362-eng.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/9789240093362-eng.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `smart-base/library/9789240093362-eng` (sha256 0d47d98390b1451d…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `9789240093362-eng.pdf`\n\nIngested to [`smart-base/library/9789240093362-eng`](../../smart-base/library/9789240093362-eng/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`smart-base/library/9789240093362-eng/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789240120747-eng.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "9789240120747-eng.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/9789240120747-eng.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/9789240120747-eng.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `smart-base/library/9789240120747-eng` (sha256 c710f7cf4a432221…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `9789240120747-eng.pdf`\n\nIngested to [`smart-base/library/9789240120747-eng`](../../smart-base/library/9789240120747-eng/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`smart-base/library/9789240120747-eng/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789241509510_eng.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "9789241509510_eng.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/9789241509510_eng.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/9789241509510_eng.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `smart-base/library/9789241509510-eng` (sha256 26aa12fbae4eafb2…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `9789241509510_eng.pdf`\n\nIngested to [`smart-base/library/9789241509510-eng`](../../smart-base/library/9789241509510-eng/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`smart-base/library/9789241509510-eng/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/9789241511766-eng.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "9789241511766-eng.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/9789241511766-eng.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/9789241511766-eng.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `smart-base/library/9789241511766-eng` (sha256 934bdf1193c16ee5…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `9789241511766-eng.pdf`\n\nIngested to [`smart-base/library/9789241511766-eng`](../../smart-base/library/9789241511766-eng/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`smart-base/library/9789241511766-eng/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Agent Skill best practices - Gemini CLI.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/Agent Skill best practices - Gemini CLI.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/agent-skill-best-practices---gemini-cli` (sha256 5e69cc80f81e07b8…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted. Its `Agent Skill best practices - Gemini CLI.pdf.extraction.json` companion moved with it — a derived artefact of the same ingest, kept beside the source it was derived from rather than stranded in the queue.",
+      "body": "# `Agent Skill best practices - Gemini CLI.pdf`\n\nIngested to [`agent-skills/library/agent-skill-best-practices---gemini-cli`](../../agent-skills/library/agent-skill-best-practices---gemini-cli/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/agent-skill-best-practices---gemini-cli/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.pdf.extraction.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Agent Skill best practices - Gemini CLI.pdf.extraction.json",
+      "nodeKind": "extraction",
+      "sourcePath": "fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.pdf.extraction.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/Agent Skill best practices - Gemini CLI.pdf.extraction.json",
+      "bean": "folio-assistant-q7ey",
+      "description": "The extraction record produced alongside `Agent Skill best practices - Gemini CLI.pdf` when it was ingested to `agent-skills/library/agent-skill-best-practices---gemini-cli`. A derived artefact of that ingest, not a queue item — archived beside the source it was derived from rather than left in `uploads/` once the source moved.",
+      "body": "# `Agent Skill best practices - Gemini CLI.pdf.extraction.json`\n\nMoved with [`Agent Skill best practices - Gemini CLI.pdf`](./Agent Skill best practices - Gemini CLI.pdf) under the owner's ruling 2026-09-29 that an\ningested upload is archival. It is derived rather than original: the source is\nthe PDF beside it, and what the ingest made of that source is in\n[`agent-skills/library/agent-skill-best-practices---gemini-cli`](../../agent-skills/library/agent-skill-best-practices---gemini-cli/).\n\nKept rather than dropped because it records how *this* extraction ran, which\na re-derivation can be compared against. See\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Agent-Skills-Google-Antigravity-Docs.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Agent Skills - Google Antigravity Docs.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/Agent-Skills-Google-Antigravity-Docs.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/Agent Skills - Google Antigravity Docs.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/agent-skills---google-antigravity-docs` (sha256 c18bd906b75dbc75…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `Agent Skills - Google Antigravity Docs.pdf`\n\nIngested to [`agent-skills/library/agent-skills---google-antigravity-docs`](../../agent-skills/library/agent-skills---google-antigravity-docs/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/agent-skills---google-antigravity-docs/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/arxiv-0909.4061v2.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "arxiv-0909.4061v2.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/arxiv-0909.4061v2.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/arxiv-0909.4061v2.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-0909.4061v2` (sha256 d5d99d95b3d9657d…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `arxiv-0909.4061v2.pdf`\n\nIngested to [`cat-harness/library/arxiv-0909.4061v2`](../../cat-harness/library/arxiv-0909.4061v2/), which holds what\nwas derived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/arxiv-0909.4061v2/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\nRetired by the rule rather than by a sweep: this source arrived on `main`\nwhile `check:uploads-retired` was being written, and the gate reported it on\nits first contact with data it had not been built against. That is the\ndifference between a rule and a habit, and it is the reason the check exists\n(bean `q7ey`).\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/arxiv-2202.02427v1.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "arxiv-2202.02427v1.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/arxiv-2202.02427v1.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/arxiv-2202.02427v1.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2202.02427v1` (sha256 f55daf70e8b4d5ac…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `arxiv-2202.02427v1.pdf`\n\nIngested to [`cat-harness/library/arxiv-2202.02427v1`](../../cat-harness/library/arxiv-2202.02427v1/), which holds what\nwas derived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/arxiv-2202.02427v1/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\nRetired by the rule rather than by a sweep: this source arrived on `main`\nwhile `check:uploads-retired` was being written, and the gate reported it on\nits first contact with data it had not been built against. That is the\ndifference between a rule and a habit, and it is the reason the check exists\n(bean `q7ey`).\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Best-Practices-Google-Antigravity-Docs.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Best Practices - Google Antigravity Docs.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/Best-Practices-Google-Antigravity-Docs.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/Best Practices - Google Antigravity Docs.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/best-practices---google-antigravity-docs` (sha256 3c51afd3372420b8…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `Best Practices - Google Antigravity Docs.pdf`\n\nIngested to [`agent-skills/library/best-practices---google-antigravity-docs`](../../agent-skills/library/best-practices---google-antigravity-docs/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/best-practices---google-antigravity-docs/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/deerwester-1990-indexing-by-lsa.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "deerwester-1990-indexing-by-lsa.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/deerwester-1990-indexing-by-lsa.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/deerwester-1990-indexing-by-lsa.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/deerwester-1990-indexing-by-lsa` (sha256 481bc284ba24c9a6…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `deerwester-1990-indexing-by-lsa.pdf`\n\nIngested to [`cat-harness/library/deerwester-1990-indexing-by-lsa`](../../cat-harness/library/deerwester-1990-indexing-by-lsa/), which holds what\nwas derived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/deerwester-1990-indexing-by-lsa/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\nRetired by the rule rather than by a sweep: this source arrived on `main`\nwhile `check:uploads-retired` was being written, and the gate reported it on\nits first contact with data it had not been built against. That is the\ndifference between a rule and a habit, and it is the reason the check exists\n(bean `q7ey`).\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/dong-2025-doc-researcher.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "dong-2025-doc-researcher.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/dong-2025-doc-researcher.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/dong-2025-doc-researcher.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `folio-assistant-core/library/arxiv-2510.21603v1` (sha256 edc03be2ad64077b…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `dong-2025-doc-researcher.pdf`\n\nIngested to [`folio-assistant-core/library/arxiv-2510.21603v1`](../../folio-assistant-core/library/arxiv-2510.21603v1/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`folio-assistant-core/library/arxiv-2510.21603v1/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/dusengumuremyi-2026-ai-mediated-raci.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "dusengumuremyi-2026-ai-mediated-raci.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/dusengumuremyi-2026-ai-mediated-raci.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/dusengumuremyi-2026-ai-mediated-raci.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/dusengumuremyi-2026-ai-mediated-raci`. Retired from `cat-harness/uploads/` per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`. Its bytes were checked against the `source_sha256` that entry's manifest records — matches.",
+      "body": "# `dusengumuremyi-2026-ai-mediated-raci.pdf`\n\nIngested to [`cat-harness/library/dusengumuremyi-2026-ai-mediated-raci`](../../cat-harness/library/dusengumuremyi-2026-ai-mediated-raci/), which holds what was\nderived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/dusengumuremyi-2026-ai-mediated-raci/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\n## Correction, 2026-09-30 — this file was never deleted\n\n**The first version of this sidecar said it was, and that was wrong.** It read\n*\"RESTORED from git history, not relocated from the queue … deleted by an\nearlier session under no rule\"*, and the sweep that wrote it reported five such\nrecoveries.\n\nRe-derived from git rather than from that claim:\n\n```\ngit log --diff-filter=D -- cat-harness/uploads/dusengumuremyi-2026-ai-mediated-raci.pdf\n  (empty — never deleted)\ngit cat-file -e 4b10661cdde:cat-harness/uploads/dusengumuremyi-2026-ai-mediated-raci.pdf\n  (present, and present at HEAD too)\n```\n\nSo the file sat at `cat-harness/uploads/` the whole time. The sweep\n`git show`-ed a copy out of `4b10661cdde` into here while the live one was\nuntouched at the same path — producing **two copies of identical bytes** and a\nrecovery claim with nothing recovered.\n\n**The cause is the same one-directory error twice in one commit.** That sweep\nhad already corrected its own count from nine to 28 after walking only\n`cat-harness/library/`; the *deleted-or-not* determination still looked in\n`uploads/` alone, where these five genuinely were absent — because they had\nbeen renamed INTO `cat-harness/uploads/`, not removed. A sweep that resolves\none declared directory and reports over the ones it never opened is `dh4f`,\nand correcting the number it produced did not correct the method that produced\nit.\n\nThe duplicate in `cat-harness/uploads/` is removed as of this commit, and\n`check:uploads-retired` now fails on an ingested upload left in any queue.\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Equipping agents for the real world with Agent Skills _ Anthropic.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/Equipping agents for the real world with Agent Skills _ Anthropic.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/equipping-agents-for-the-real-world-with-agent-skills-anthro` (sha256 521af377ed650774…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted. Its `Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json` companion moved with it — a derived artefact of the same ingest, kept beside the source it was derived from rather than stranded in the queue.",
+      "body": "# `Equipping agents for the real world with Agent Skills _ Anthropic.pdf`\n\nIngested to [`agent-skills/library/equipping-agents-for-the-real-world-with-agent-skills-anthro`](../../agent-skills/library/equipping-agents-for-the-real-world-with-agent-skills-anthro/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/equipping-agents-for-the-real-world-with-agent-skills-anthro/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json",
+      "nodeKind": "extraction",
+      "sourcePath": "fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json",
+      "bean": "folio-assistant-q7ey",
+      "description": "The extraction record produced alongside `Equipping agents for the real world with Agent Skills _ Anthropic.pdf` when it was ingested to `agent-skills/library/equipping-agents-for-the-real-world-with-agent-skills-anthro`. A derived artefact of that ingest, not a queue item — archived beside the source it was derived from rather than left in `uploads/` once the source moved.",
+      "body": "# `Equipping agents for the real world with Agent Skills _ Anthropic.pdf.extraction.json`\n\nMoved with [`Equipping agents for the real world with Agent Skills _ Anthropic.pdf`](./Equipping agents for the real world with Agent Skills _ Anthropic.pdf) under the owner's ruling 2026-09-29 that an\ningested upload is archival. It is derived rather than original: the source is\nthe PDF beside it, and what the ingest made of that source is in\n[`agent-skills/library/equipping-agents-for-the-real-world-with-agent-skills-anthro`](../../agent-skills/library/equipping-agents-for-the-real-world-with-agent-skills-anthro/).\n\nKept rather than dropped because it records how *this* extraction ran, which\na re-derivation can be compared against. See\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/feng-2023-designing-with-language.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "feng-2023-designing-with-language.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/feng-2023-designing-with-language.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/feng-2023-designing-with-language.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2312.07755v1`. Retired from `cat-harness/uploads/` per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`. Its bytes were checked against the `source_sha256` that entry's manifest records — matches.",
+      "body": "# `feng-2023-designing-with-language.pdf`\n\nIngested to [`cat-harness/library/arxiv-2312.07755v1`](../../cat-harness/library/arxiv-2312.07755v1/), which holds what was\nderived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/arxiv-2312.07755v1/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\n## Correction, 2026-09-30 — this file was never deleted\n\n**The first version of this sidecar said it was, and that was wrong.** It read\n*\"RESTORED from git history, not relocated from the queue … deleted by an\nearlier session under no rule\"*, and the sweep that wrote it reported five such\nrecoveries.\n\nRe-derived from git rather than from that claim:\n\n```\ngit log --diff-filter=D -- cat-harness/uploads/feng-2023-designing-with-language.pdf\n  (empty — never deleted)\ngit cat-file -e 4b10661cdde:cat-harness/uploads/feng-2023-designing-with-language.pdf\n  (present, and present at HEAD too)\n```\n\nSo the file sat at `cat-harness/uploads/` the whole time. The sweep\n`git show`-ed a copy out of `4b10661cdde` into here while the live one was\nuntouched at the same path — producing **two copies of identical bytes** and a\nrecovery claim with nothing recovered.\n\n**The cause is the same one-directory error twice in one commit.** That sweep\nhad already corrected its own count from nine to 28 after walking only\n`cat-harness/library/`; the *deleted-or-not* determination still looked in\n`uploads/` alone, where these five genuinely were absent — because they had\nbeen renamed INTO `cat-harness/uploads/`, not removed. A sweep that resolves\none declared directory and reports over the ones it never opened is `dh4f`,\nand correcting the number it produced did not correct the method that produced\nit.\n\nThe duplicate in `cat-harness/uploads/` is removed as of this commit, and\n`check:uploads-retired` now fails on an ingested upload left in any queue.\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/gurel-tat-2017-swot-analysis.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "gurel-tat-2017-swot-analysis.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/gurel-tat-2017-swot-analysis.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/gurel-tat-2017-swot-analysis.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/gurel-tat-2017-swot-analysis`. Retired from `cat-harness/uploads/` per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`. Its bytes were checked against the `source_sha256` that entry's manifest records — matches.",
+      "body": "# `gurel-tat-2017-swot-analysis.pdf`\n\nIngested to [`cat-harness/library/gurel-tat-2017-swot-analysis`](../../cat-harness/library/gurel-tat-2017-swot-analysis/), which holds what was\nderived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/gurel-tat-2017-swot-analysis/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\n## Correction, 2026-09-30 — this file was never deleted\n\n**The first version of this sidecar said it was, and that was wrong.** It read\n*\"RESTORED from git history, not relocated from the queue … deleted by an\nearlier session under no rule\"*, and the sweep that wrote it reported five such\nrecoveries.\n\nRe-derived from git rather than from that claim:\n\n```\ngit log --diff-filter=D -- cat-harness/uploads/gurel-tat-2017-swot-analysis.pdf\n  (empty — never deleted)\ngit cat-file -e 4b10661cdde:cat-harness/uploads/gurel-tat-2017-swot-analysis.pdf\n  (present, and present at HEAD too)\n```\n\nSo the file sat at `cat-harness/uploads/` the whole time. The sweep\n`git show`-ed a copy out of `4b10661cdde` into here while the live one was\nuntouched at the same path — producing **two copies of identical bytes** and a\nrecovery claim with nothing recovered.\n\n**The cause is the same one-directory error twice in one commit.** That sweep\nhad already corrected its own count from nine to 28 after walking only\n`cat-harness/library/`; the *deleted-or-not* determination still looked in\n`uploads/` alone, where these five genuinely were absent — because they had\nbeen renamed INTO `cat-harness/uploads/`, not removed. A sweep that resolves\none declared directory and reports over the ones it never opened is `dh4f`,\nand correcting the number it produced did not correct the method that produced\nit.\n\nThe duplicate in `cat-harness/uploads/` is removed as of this commit, and\n`check:uploads-retired` now fails on an ingested upload left in any queue.\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "landauer-foltz-laham-1998-intro-lsa.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/landauer-foltz-laham-1998-intro-lsa.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/landauer-foltz-laham-1998-intro-lsa` (sha256 e1f7573855ca5836…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `landauer-foltz-laham-1998-intro-lsa.pdf`\n\nIngested to [`cat-harness/library/landauer-foltz-laham-1998-intro-lsa`](../../cat-harness/library/landauer-foltz-laham-1998-intro-lsa/), which holds what\nwas derived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/landauer-foltz-laham-1998-intro-lsa/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\nRetired by the rule rather than by a sweep: this source arrived on `main`\nwhile `check:uploads-retired` was being written, and the gate reported it on\nits first contact with data it had not been built against. That is the\ndifference between a rule and a habit, and it is the reason the check exists\n(bean `q7ey`).\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/milnorlink.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "milnorlink.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/milnorlink.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/milnorlink.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `folio-assistant-sci/library/milnorlink` (sha256 7644abb4d24b46d8…). Retired here per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted. Missed by the 2026-09-30 sweep, which resolved cat-harness's library only and so never asked what `folio-assistant-sci` had ingested.",
+      "body": "# `milnorlink.pdf`\n\nIngested to [`folio-assistant-sci/library/milnorlink`](../../folio-assistant-sci/library/milnorlink/), which holds what was\nderived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`folio-assistant-sci/library/milnorlink/manifest.jsonld` records `source_sha256`, which is\nwhat lets a re-derivation be checked against this file.\n\n**Why it was missed.** The sweep matched each queue file against\n`cat-harness/library/`. This one was ingested to `folio-assistant-sci`, so it\nmatched nothing and read as still-queued — the one-declared-directory error\nthe same sweep had already corrected once, in its count. Correcting a number a\nmethod produced is not correcting the method, which is why the replacement is\n`check:uploads-retired` rather than another sweep.\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "neubauer-2025-ai-assisted-schema-creation.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/neubauer-2025-ai-assisted-schema-creation.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/arxiv-2508.05192v2`. Retired from `cat-harness/uploads/` per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`. Its bytes were checked against the `source_sha256` that entry's manifest records — matches.",
+      "body": "# `neubauer-2025-ai-assisted-schema-creation.pdf`\n\nIngested to [`cat-harness/library/arxiv-2508.05192v2`](../../cat-harness/library/arxiv-2508.05192v2/), which holds what was\nderived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/arxiv-2508.05192v2/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\n## Correction, 2026-09-30 — this file was never deleted\n\n**The first version of this sidecar said it was, and that was wrong.** It read\n*\"RESTORED from git history, not relocated from the queue … deleted by an\nearlier session under no rule\"*, and the sweep that wrote it reported five such\nrecoveries.\n\nRe-derived from git rather than from that claim:\n\n```\ngit log --diff-filter=D -- cat-harness/uploads/neubauer-2025-ai-assisted-schema-creation.pdf\n  (empty — never deleted)\ngit cat-file -e 4b10661cdde:cat-harness/uploads/neubauer-2025-ai-assisted-schema-creation.pdf\n  (present, and present at HEAD too)\n```\n\nSo the file sat at `cat-harness/uploads/` the whole time. The sweep\n`git show`-ed a copy out of `4b10661cdde` into here while the live one was\nuntouched at the same path — producing **two copies of identical bytes** and a\nrecovery claim with nothing recovered.\n\n**The cause is the same one-directory error twice in one commit.** That sweep\nhad already corrected its own count from nine to 28 after walking only\n`cat-harness/library/`; the *deleted-or-not* determination still looked in\n`uploads/` alone, where these five genuinely were absent — because they had\nbeen renamed INTO `cat-harness/uploads/`, not removed. A sweep that resolves\none declared directory and reports over the ones it never opened is `dh4f`,\nand correcting the number it produced did not correct the method that produced\nit.\n\nThe duplicate in `cat-harness/uploads/` is removed as of this commit, and\n`check:uploads-retired` now fails on an ingested upload left in any queue.\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/PIIS2589750021000388-2.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "PIIS2589750021000388-2.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/PIIS2589750021000388-2.md",
+      "movedOn": "2026-10-01",
+      "movedFrom": "uploads/PIIS2589750021000388-2.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `smart-base/library/mehl-2021-who-smart-guidelines` (sha256 042a78e86f3dce26de…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `PIIS2589750021000388-2.pdf`\n\nIngested to [`smart-base/library/mehl-2021-who-smart-guidelines`](../../smart-base/library/mehl-2021-who-smart-guidelines/),\nwhich holds what was derived from it — `sections/`, `blocks/`,\n`structure.json`, `images.json`, `licence.json` and the manifest. A library\nentry may not hold the source bytes: `check:l1-complete`'s `contents` check\nrefuses an unexpected child, so this is where the original lives.\n\n`smart-base/library/mehl-2021-who-smart-guidelines/manifest.jsonld` records\n`source_sha256`, which is what lets a re-derivation be checked against this\nfile. That hash is\n`042a78e86f3dce26dea4de062c2910689c4d04c03604cbb352d01a9cbbf975a7`, and it is\nhow this retirement was identified at all: `check:uploads-retired` matches a\nqueued file against every declared library's `source_sha256` by CONTENT, never\nby name. Nothing about `PIIS2589750021000388-2.pdf` resembles\n`mehl-2021-who-smart-guidelines`, so a filename sweep would have missed it —\nwhich is the case the check was built for.\n\nFound by CI on PR #1633, 2026-10-01: a sibling session ingested this source on\n`main` and left the queue copy in place. The rule and its reasoning are in\n`skills/library/library-core/library-ingestion.md`, §\"What happens to the\nupload after it is ingested\". Bean `q7ey`."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa` (sha256 c1816a290472bb83…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf`\n\nIngested to [`cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa`](../../cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/), which holds what\nwas derived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/qi-hessen-vanderheijden-2023-ca-vs-lsa/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\nRetired by the rule rather than by a sweep: this source arrived on `main`\nwhile `check:uploads-retired` was being written, and the gate reported it on\nits first contact with data it had not been built against. That is the\ndifference between a rule and a habit, and it is the reason the check exists\n(bean `q7ey`).\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/rfc2119-key-words-requirement-levels.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "rfc2119-key-words-requirement-levels.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/rfc2119-key-words-requirement-levels.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/rfc2119-key-words-requirement-levels.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/rfc2119-key-words-requirement-levels` (sha256 3c11b6002f839b8f…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `rfc2119-key-words-requirement-levels.pdf`\n\nIngested to [`agent-skills/library/rfc2119-key-words-requirement-levels`](../../agent-skills/library/rfc2119-key-words-requirement-levels/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/rfc2119-key-words-requirement-levels/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words` (sha256 ce9339e636af66e5…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `rfc8174-uppercase-vs-lowercase-2119-key-words.pdf`\n\nIngested to [`agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words`](../../agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/rfc8174-uppercase-vs-lowercase-2119-key-words/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "sammut-bonnici-galea-2015-swot-analysis.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "cat-harness/uploads/sammut-bonnici-galea-2015-swot-analysis.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/sammut-bonnici-galea-2015-swot-analysis`. Retired from `cat-harness/uploads/` per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`. Its bytes were checked against the `source_sha256` that entry's manifest records — matches.",
+      "body": "# `sammut-bonnici-galea-2015-swot-analysis.pdf`\n\nIngested to [`cat-harness/library/sammut-bonnici-galea-2015-swot-analysis`](../../cat-harness/library/sammut-bonnici-galea-2015-swot-analysis/), which holds what was\nderived from it. A library entry may not hold the source bytes:\n`check:l1-complete`'s `contents` check refuses an unexpected child, so this is\nwhere the original lives.\n\n`cat-harness/library/sammut-bonnici-galea-2015-swot-analysis/manifest.jsonld` records `source_sha256`,\nwhich is what lets a re-derivation be checked against this file.\n\n## Correction, 2026-09-30 — this file was never deleted\n\n**The first version of this sidecar said it was, and that was wrong.** It read\n*\"RESTORED from git history, not relocated from the queue … deleted by an\nearlier session under no rule\"*, and the sweep that wrote it reported five such\nrecoveries.\n\nRe-derived from git rather than from that claim:\n\n```\ngit log --diff-filter=D -- cat-harness/uploads/sammut-bonnici-galea-2015-swot-analysis.pdf\n  (empty — never deleted)\ngit cat-file -e 4b10661cdde:cat-harness/uploads/sammut-bonnici-galea-2015-swot-analysis.pdf\n  (present, and present at HEAD too)\n```\n\nSo the file sat at `cat-harness/uploads/` the whole time. The sweep\n`git show`-ed a copy out of `4b10661cdde` into here while the live one was\nuntouched at the same path — producing **two copies of identical bytes** and a\nrecovery claim with nothing recovered.\n\n**The cause is the same one-directory error twice in one commit.** That sweep\nhad already corrected its own count from nine to 28 after walking only\n`cat-harness/library/`; the *deleted-or-not* determination still looked in\n`uploads/` alone, where these five genuinely were absent — because they had\nbeen renamed INTO `cat-harness/uploads/`, not removed. A sweep that resolves\none declared directory and reports over the ones it never opened is `dh4f`,\nand correcting the number it produced did not correct the method that produced\nit.\n\nThe duplicate in `cat-harness/uploads/` is removed as of this commit, and\n`check:uploads-retired` now fails on an ingested upload left in any queue.\n\nThe rule is in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Skill authoring best practices - Claude Platform Docs.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/Skill authoring best practices - Claude Platform Docs.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/skill-authoring-best-practices---claude-platform-docs` (sha256 b91e7aa4b3483fca…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted. Its `Skill authoring best practices - Claude Platform Docs.pdf.extraction.json` companion moved with it — a derived artefact of the same ingest, kept beside the source it was derived from rather than stranded in the queue.",
+      "body": "# `Skill authoring best practices - Claude Platform Docs.pdf`\n\nIngested to [`agent-skills/library/skill-authoring-best-practices---claude-platform-docs`](../../agent-skills/library/skill-authoring-best-practices---claude-platform-docs/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/skill-authoring-best-practices---claude-platform-docs/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.pdf.extraction.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Skill authoring best practices - Claude Platform Docs.pdf.extraction.json",
+      "nodeKind": "extraction",
+      "sourcePath": "fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.pdf.extraction.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/Skill authoring best practices - Claude Platform Docs.pdf.extraction.json",
+      "bean": "folio-assistant-q7ey",
+      "description": "The extraction record produced alongside `Skill authoring best practices - Claude Platform Docs.pdf` when it was ingested to `agent-skills/library/skill-authoring-best-practices---claude-platform-docs`. A derived artefact of that ingest, not a queue item — archived beside the source it was derived from rather than left in `uploads/` once the source moved.",
+      "body": "# `Skill authoring best practices - Claude Platform Docs.pdf.extraction.json`\n\nMoved with [`Skill authoring best practices - Claude Platform Docs.pdf`](./Skill authoring best practices - Claude Platform Docs.pdf) under the owner's ruling 2026-09-29 that an\ningested upload is archival. It is derived rather than original: the source is\nthe PDF beside it, and what the ingest made of that source is in\n[`agent-skills/library/skill-authoring-best-practices---claude-platform-docs`](../../agent-skills/library/skill-authoring-best-practices---claude-platform-docs/).\n\nKept rather than dropped because it records how *this* extraction ran, which\na re-derivation can be compared against. See\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skills-in-OpenAI-API.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Skills in OpenAI API.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/Skills-in-OpenAI-API.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/Skills in OpenAI API.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `agent-skills/library/skills-in-openai-api` (sha256 2d261aeb7a6af6ab…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted. Its `Skills in OpenAI API.pdf.extraction.json` companion moved with it — a derived artefact of the same ingest, kept beside the source it was derived from rather than stranded in the queue.",
+      "body": "# `Skills in OpenAI API.pdf`\n\nIngested to [`agent-skills/library/skills-in-openai-api`](../../agent-skills/library/skills-in-openai-api/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`agent-skills/library/skills-in-openai-api/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/Skills-in-OpenAI-API.pdf.extraction.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "Skills in OpenAI API.pdf.extraction.json",
+      "nodeKind": "extraction",
+      "sourcePath": "fsh-guts/uploads/Skills-in-OpenAI-API.pdf.extraction.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/Skills in OpenAI API.pdf.extraction.json",
+      "bean": "folio-assistant-q7ey",
+      "description": "The extraction record produced alongside `Skills in OpenAI API.pdf` when it was ingested to `agent-skills/library/skills-in-openai-api`. A derived artefact of that ingest, not a queue item — archived beside the source it was derived from rather than left in `uploads/` once the source moved.",
+      "body": "# `Skills in OpenAI API.pdf.extraction.json`\n\nMoved with [`Skills in OpenAI API.pdf`](./Skills in OpenAI API.pdf) under the owner's ruling 2026-09-29 that an\ningested upload is archival. It is derived rather than original: the source is\nthe PDF beside it, and what the ingest made of that source is in\n[`agent-skills/library/skills-in-openai-api`](../../agent-skills/library/skills-in-openai-api/).\n\nKept rather than dropped because it records how *this* extraction ran, which\na re-derivation can be compared against. See\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "wang-rangaiah-2026-mcdm-aggregation.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/wang-rangaiah-2026-mcdm-aggregation.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `cat-harness/library/wang-rangaiah-2026-mcdm-aggregation` (sha256 48123c8812890b17…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `wang-rangaiah-2026-mcdm-aggregation.pdf`\n\nIngested to [`cat-harness/library/wang-rangaiah-2026-mcdm-aggregation`](../../cat-harness/library/wang-rangaiah-2026-mcdm-aggregation/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`cat-harness/library/wang-rangaiah-2026-mcdm-aggregation/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fsh-guts.jsonld#fsh-guts/uploads/WHO-RHR-18.06-eng.md",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#FshGutsNode",
+      "name": "WHO-RHR-18.06-eng.pdf",
+      "nodeKind": "source",
+      "sourcePath": "fsh-guts/uploads/WHO-RHR-18.06-eng.md",
+      "movedOn": "2026-09-30",
+      "movedFrom": "uploads/WHO-RHR-18.06-eng.pdf",
+      "bean": "folio-assistant-q7ey",
+      "description": "The archival copy of the source ingested to `smart-base/library/who-rhr-1806-eng` (sha256 44be3640bb1730da…). Retired here after promotion, per the owner's ruling 2026-09-29 that an ingested upload is archival and belongs in `fsh-guts`, not in the queue and not deleted.",
+      "body": "# `WHO-RHR-18.06-eng.pdf`\n\nIngested to [`smart-base/library/who-rhr-1806-eng`](../../smart-base/library/who-rhr-1806-eng/), which holds what was derived\nfrom it — `sections/`, `blocks/`, `images/`, `structure.json` and the manifest.\nA library entry may not hold the source bytes: `check:l1-complete`'s `contents`\ncheck refuses an unexpected child, so this is where the original lives.\n\n`smart-base/library/who-rhr-1806-eng/manifest.jsonld` records `source_sha256`, which is what lets a\nre-derivation be checked against this file.\n\nThe rule and its reasoning are in\n[`library-ingestion`](../../cat-harness/skills/library/library-core/library-ingestion.md)\n§\"What happens to the upload after it is ingested\"."
     }
   ],
   "skipped": [
@@ -369,6 +945,194 @@
     },
     {
       "path": "fsh-guts/scripts/wire_stale_claims.py",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2504.07199v3.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2504.19675v2.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2504.21474v1.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2508.21620v2.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2602.12670v4.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2602.12670v4.pdf.extraction.json",
+      "reason": "declares itself `folio-extraction/v1`, which is not folio-fsh-guts/v1"
+    },
+    {
+      "path": "fsh-guts/uploads/2605.03537v1.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2606.04382v1.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2607.14456v1.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2607.20636v1.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2607.25032v1.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2607.25032v1.pdf.extraction.json",
+      "reason": "declares itself `folio-extraction/v1`, which is not folio-fsh-guts/v1"
+    },
+    {
+      "path": "fsh-guts/uploads/2608.08453v1.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/2608.08453v1.pdf.extraction.json",
+      "reason": "declares itself `folio-extraction/v1`, which is not folio-fsh-guts/v1"
+    },
+    {
+      "path": "fsh-guts/uploads/9789240010567-eng.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/9789240081949-eng.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/9789240093362-eng.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/9789240120747-eng.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/9789241509510_eng.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/9789241511766-eng.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/Agent-Skill-best-practices-Gemini-CLI.pdf.extraction.json",
+      "reason": "declares itself `folio-extraction/v1`, which is not folio-fsh-guts/v1"
+    },
+    {
+      "path": "fsh-guts/uploads/Agent-Skills-Google-Antigravity-Docs.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/arxiv-0909.4061v2.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/arxiv-2202.02427v1.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/Best-Practices-Google-Antigravity-Docs.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/deerwester-1990-indexing-by-lsa.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/dong-2025-doc-researcher.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/dusengumuremyi-2026-ai-mediated-raci.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/Equipping-agents-for-the-real-world-with-Agent-Skills-_-Anthropic.pdf.extraction.json",
+      "reason": "declares itself `folio-extraction/v1`, which is not folio-fsh-guts/v1"
+    },
+    {
+      "path": "fsh-guts/uploads/feng-2023-designing-with-language.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/gurel-tat-2017-swot-analysis.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/landauer-foltz-laham-1998-intro-lsa.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/milnorlink.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/neubauer-2025-ai-assisted-schema-creation.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/PIIS2589750021000388-2.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/qi-hessen-vanderheijden-2023-ca-vs-lsa.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/rfc2119-key-words-requirement-levels.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/Skill-authoring-best-practices-Claude-Platform-Docs.pdf.extraction.json",
+      "reason": "declares itself `folio-extraction/v1`, which is not folio-fsh-guts/v1"
+    },
+    {
+      "path": "fsh-guts/uploads/Skills-in-OpenAI-API.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/Skills-in-OpenAI-API.pdf.extraction.json",
+      "reason": "declares itself `folio-extraction/v1`, which is not folio-fsh-guts/v1"
+    },
+    {
+      "path": "fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.pdf",
+      "reason": "declares no $schema, so it is not a node of this graph"
+    },
+    {
+      "path": "fsh-guts/uploads/WHO-RHR-18.06-eng.pdf",
       "reason": "declares no $schema, so it is not a node of this graph"
     }
   ],

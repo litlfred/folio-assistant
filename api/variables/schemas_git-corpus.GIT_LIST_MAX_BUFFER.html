@@ -12,10 +12,39 @@
 <li><a href="" aria-current="page">GIT_LIST_MAX_BUFFER</a></li></ul>
 <h1>Variable GIT_LIST_MAX_BUFFER<code class="tsd-tag">Const</code></h1></div>
 <div class="tsd-signature"><span class="tsd-kind-variable">GIT_LIST_MAX_BUFFER</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = ...</span></div>
-<div class="tsd-comment tsd-typography"><p>Room for a whole-checkout <code>ls-files -z</code>; the 1 MiB default is not.</p>
+<div class="tsd-comment tsd-typography"><p>Room for a whole-checkout <code>ls-files -z</code>; node's 1 MiB default is not.</p>
+<p>Measured 2026-09-30, the day it started mattering:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:right">bytes of PATH NAMES</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>origin/main</code> at <code>874d4c9bfb8</code></td>
+<td style="text-align:right">1,005,252</td>
+</tr>
+<tr>
+<td>the next branch to merge, +740 ingested library files</td>
+<td style="text-align:right">1,058,420</td>
+</tr>
+<tr>
+<td>node's default</td>
+<td style="text-align:right">1,048,576</td>
+</tr>
+</tbody>
+</table>
+<p>So <code>main</code> was 43 KB from the cliff and one ordinary ingest went over it.
+The size of a repository's file list is not something a caller can reason
+about, which is why this is a constant rather than a judgement per call
+site. <code>trackedPaths</code> in <code>scripts/check-portable-paths.ts</code> had already been
+given the same 64 MiB in isolation — that is the evidence this is a class,
+and the reason the fix is a shared constant rather than a third literal.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3dcf11e10777d52ec6a0002a5d4492041e27d95/cat-harness/schemas/git-corpus.ts#L88">work/folio-assistant/folio-assistant/cat-harness/schemas/git-corpus.ts:88</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0e8d5294fcbe9d3d402c124106b19ed40b267a1e/cat-harness/schemas/git-corpus.ts#L98">work/folio-assistant/folio-assistant/cat-harness/schemas/git-corpus.ts:98</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

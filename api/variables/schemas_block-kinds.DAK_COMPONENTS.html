@@ -11,7 +11,7 @@
 <li><a href="../modules/schemas_block-kinds.html">schemas/block-kinds</a></li>
 <li><a href="" aria-current="page">DAK_COMPONENTS</a></li></ul>
 <h1>Variable DAK_COMPONENTS<code class="tsd-tag">Const</code></h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">DAK_COMPONENTS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><br/>    <span class="tsd-signature-type">&quot;health-interventions-and-recommendations&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;generic-personas&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;user-scenarios&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;generic-business-processes-and-workflows&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;core-data-elements&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;decision-support-logic&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;programme-indicators&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;functional-and-non-functional-requirements&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;test-scenarios&quot;</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
+<div class="tsd-signature"><span class="tsd-kind-variable">DAK_COMPONENTS</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-keyword">readonly</span> <span class="tsd-signature-symbol">[</span><br/>    <span class="tsd-signature-type">&quot;health-interventions-and-recommendations&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;generic-personas&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;user-scenarios&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;generic-business-processes-and-workflows&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;core-data-elements&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;decision-support-logic&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;scheduling-logic&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;programme-indicators&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;functional-and-non-functional-requirements&quot;</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-type">&quot;test-scenarios&quot;</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> = ...</span></div>
 <div class="tsd-comment tsd-typography"><p>The WHO SMART Guidelines DAK components, in WHO's own order.</p>
 <p>The canonical list is eight components as published, plus <strong>test scenarios</strong>,
 added later. Four WHO-side sources state it and they do not all agree, so the
@@ -42,8 +42,13 @@ list is pinned here rather than recited:</p>
 </tr>
 </tbody>
 </table>
-<p>Three of the four agree, including both machine-readable ones, so that is
-what this encodes. Anything counting components against an older source is
+<p>Three of the four agree, including both machine-readable ones — but the
+owner ruled, 2026-09-30, that the DAK has <strong>ten</strong>: the original eight, plus
+scheduling logic and test scenarios (issue #1614). Scheduling logic is
+authored as DMN decision tables but is not yet formalized as its own L2
+logical-model field or L3 artefact, so it is listed here AND named in
+<a href="schemas_block-kinds.DAK_UNFORMALIZED_COMPONENTS.html" class="tsd-kind-variable">DAK_UNFORMALIZED_COMPONENTS</a>; the other nine match <code>DAK.fsh</code>
+field for field. Anything counting components against one source alone is
 off by one, silently.</p>
 <p>Published guidance:</p>
 <ul>
@@ -57,7 +62,7 @@ represent it, and a component mapping to none is a documented gap, not an
 oversight nobody noticed.</p>
 </div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/d3dcf11e10777d52ec6a0002a5d4492041e27d95/cat-harness/schemas/block-kinds.ts#L508">work/folio-assistant/folio-assistant/cat-harness/schemas/block-kinds.ts:508</a></li></ul></aside></div>
+<li>Defined in <a href="https://github.com/litlfred/folio-assistant/blob/0e8d5294fcbe9d3d402c124106b19ed40b267a1e/cat-harness/schemas/block-kinds.ts#L513">work/folio-assistant/folio-assistant/cat-harness/schemas/block-kinds.ts:513</a></li></ul></aside></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
