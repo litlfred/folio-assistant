@@ -96,7 +96,7 @@ cat-harness\scripts\upload-to-uploads.bat https://example.org/guideline.pdf
 
 `cat-harness/scripts/start-folio-assistant.sh` устанавливает Bun, если он отсутствует, а
 затем запускает сервер, а
-`cat-harness/adapters/mcp-server/install.sh` представляет собой более полный установщик, охватывающий
+`cat-harness-tools/adapters/mcp-server/install.sh` представляет собой более полный установщик, охватывающий
 также и TeX Live. Оба оставались недокументированными до 2026-09-21
 ([#740](https://github.com/litlfred/folio-assistant/issues/740)) — вот почему
 существует этот раздел.
