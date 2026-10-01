@@ -137,14 +137,35 @@
       ]
     },
     "content-instance-holds-code": {
-      "result": "n/a",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "scripts/gen-iris-pages.ts",
+          "detail": "scripts/gen-iris-pages.ts is code in a CONTENT instance (`who-iris` declares `separation: \"content\"`). A content repository holds no code (kg-separation, bootstrap FR-7): move it to the platform if it is generic, or to a `<name>-tools` repository once one is authorised. Tolerated for now is still a finding."
+        },
+        {
+          "where": "scripts/tests/catalogue-links.test.ts",
+          "detail": "scripts/tests/catalogue-links.test.ts is code in a CONTENT instance (`who-iris` declares `separation: \"content\"`). A content repository holds no code (kg-separation, bootstrap FR-7): move it to the platform if it is generic, or to a `<name>-tools` repository once one is authorised. Tolerated for now is still a finding."
+        },
+        {
+          "where": "scripts/tests/gen-iris-pages.test.ts",
+          "detail": "scripts/tests/gen-iris-pages.test.ts is code in a CONTENT instance (`who-iris` declares `separation: \"content\"`). A content repository holds no code (kg-separation, bootstrap FR-7): move it to the platform if it is generic, or to a `<name>-tools` repository once one is authorised. Tolerated for now is still a finding."
+        },
+        {
+          "where": "themes/themes.test.ts",
+          "detail": "themes/themes.test.ts is code in a CONTENT instance (`who-iris` declares `separation: \"content\"`). A content repository holds no code (kg-separation, bootstrap FR-7): move it to the platform if it is generic, or to a `<name>-tools` repository once one is authorised. Tolerated for now is still a finding."
+        },
+        {
+          "where": "themes/themes.ts",
+          "detail": "themes/themes.ts is code in a CONTENT instance (`who-iris` declares `separation: \"content\"`). A content repository holds no code (kg-separation, bootstrap FR-7): move it to the platform if it is generic, or to a `<name>-tools` repository once one is authorised. Tolerated for now is still a finding."
+        }
+      ]
     }
   },
   "totals": {
     "pass": 7,
-    "fail": 0,
-    "n/a": 12,
+    "fail": 1,
+    "n/a": 11,
     "unknown": 3
   }
 }

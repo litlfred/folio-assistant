@@ -4,7 +4,7 @@ nav_exclude: true
 ---
 
 {: .note }
-> Generated from `cat-harness/processes/l2-dak-authoring.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
+> Generated from `smart-base/processes/l2-dak-authoring.bpmn` by `gen-processes-viz.ts` — do not edit here. [All processes](index.html)
 
 {% raw %}
 # L2 DAK authoring

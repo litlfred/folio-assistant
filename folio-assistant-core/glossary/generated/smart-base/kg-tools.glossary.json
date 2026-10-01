@@ -47,35 +47,11 @@
       "status": "candidate"
     },
     {
-      "id": "jsonld-vocabularies",
-      "prefLabel": "ValueSet expansions → JSON-LD",
-      "definition": "JSON-LD vocabularies built from the ValueSet expansions in the published output.",
-      "notation": "jsonld-vocabularies",
-      "source": "smart-base/tools/index.ts#jsonld-vocabularies",
-      "status": "candidate"
-    },
-    {
-      "id": "logical-model-schemas",
-      "prefLabel": "Logical models → JSON Schema",
-      "definition": "A JSON Schema per logical model, from the published FHIR resources.",
-      "notation": "logical-model-schemas",
-      "source": "smart-base/tools/index.ts#logical-model-schemas",
-      "status": "candidate"
-    },
-    {
       "id": "smart-liquid-variables",
       "prefLabel": "IG metadata → Liquid variables",
       "definition": "Scan the Publisher's `output/` for `{ResourceType}-{id}.json` and emit a Liquid include assigning `smart__<ResourceType>__<id>__<category>__<key>` for each published resource.",
       "notation": "smart-liquid-variables",
       "source": "smart-base/tools/index.ts#smart-liquid-variables",
-      "status": "candidate"
-    },
-    {
-      "id": "valueset-schemas",
-      "prefLabel": "ValueSets → JSON Schema",
-      "definition": "A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root.",
-      "notation": "valueset-schemas",
-      "source": "smart-base/tools/index.ts#valueset-schemas",
       "status": "candidate"
     }
   ]

@@ -5,7 +5,7 @@
     "id": "Process_L3Fhir",
     "path": "processes/l3-fhir-pipeline.bpmn"
   },
-  "source_hash": "sha256:0f8cdebd6243b1b2e391f7e8ae539539404b03acb9f0bc7286e168bc0725161a",
+  "source_hash": "sha256:6f3133315534f3d10d2233156b1751740d932509060cc4e01ad0c848e6fc51e2",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -85,33 +85,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_MapL2",
-          "detail": "needs skill \"l3-fhir-authoring\", but its lane's role \"fhir-modeller\" does not carry it."
-        },
-        {
-          "where": "Task_AuthorFsh",
-          "detail": "needs skill \"l3-fhir-authoring\", but its lane's role \"fhir-modeller\" does not carry it."
-        },
-        {
-          "where": "Task_Sushi",
-          "detail": "needs skill \"l3-fhir-authoring\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Validate",
-          "detail": "needs skill \"fhir-validation\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_IgPublisher",
-          "detail": "needs skill \"ig-publication\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_PublishIg",
-          "detail": "needs skill \"ig-publication\", but its lane's role \"publication-manager\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -163,8 +138,8 @@
     }
   },
   "totals": {
-    "pass": 14,
-    "fail": 2,
+    "pass": 15,
+    "fail": 1,
     "n/a": 9,
     "unknown": 0
   }

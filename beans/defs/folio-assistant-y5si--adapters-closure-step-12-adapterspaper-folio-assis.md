@@ -1,11 +1,11 @@
 ---
 # folio-assistant-y5si
 title: 'ADAPTERS CLOSURE step 1/2: adapters/paper/ -> folio-assistant-sci/, escape axis unchanged at 2'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T13:48:40Z
-updated_at: 2026-09-30T14:33:08Z
+updated_at: 2026-10-01T08:15:14Z
 parent: folio-assistant-vke6
 ---
 
@@ -112,3 +112,7 @@ uses. Flagged on issue #1558 as my judgement rather than the plan's, since
 `adapters/document/` untouched, as the plan asked. The two dead TypeDoc steps
 naming `adapters/paper/schemas/` were already dead before this PR; bean `u9r9`
 covers them.
+
+
+## Summary of Changes
+Closed 2026-10-01 by the separation arc (7x5n, S1 a4of) on evidence: every box ticked, carried out in PR #1599, merged.

@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5qq3
 title: 'REGEN SCOPE: the browser jobs'' artefacts are outside regen''s fast set, and a stale one only surfaces in CI'
-status: todo
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-30T18:53:17Z
-updated_at: 2026-09-30T18:53:36Z
+updated_at: 2026-10-01T12:50:27Z
 parent: folio-assistant-2upx
 ---
 
@@ -51,5 +51,18 @@ owner's.
 
 ## Done when
 
-- [ ] a reader of regen's last line can tell how much of the gate set it
+- [x] a reader of regen's last line can tell how much of the gate set it
       covered, without reading the first line back
+
+
+## 2026-10-01 — two more measured instances (PR #1769)
+- render:bpmn: five bootstrap(-tools) SVGs stale after a submodule pin change; regen reported a clean fixed point; CI's E2E job failed at 'rendered BPMN SVGs are current'.
+- library:viz: 18 artefacts stale since #1744 added library entries; regen reported clean; the only signal was library-viewer-scope.e2e.ts failing in CI ('fhir-harness declares 3 library entries on disk and the viewer data holds none').
+
+_2026-10-01T12:36:11Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+## Summary of Changes (2026-10-01, owner chose option 1, PR #1784)
+- regen-after-merge.ts: UNGATED_INPUTS — library:viz and schema:viz are run as writers (asked first, so a fast-set check reading their output settles in the same pass) WITHOUT becoming gates; the owner's 2026-09-20 ungating ruling stands.
+- The last lines now carry the denominator: 'NOT covered: N verify/write pair(s) outside this run … bun run regen --all asks them too: <names>' (today: render:bpmn:check, bat:sync:check).
+- Tests: every UNGATED_INPUTS pair names real scripts; none is a gate (fails the day one becomes one); asked-first settles a dependent in one pass. regen-after-merge.test.ts 23 pass.
+- First real run: 80 current, 3 regenerated (schema:viz stale on main, and two checks that read it).
