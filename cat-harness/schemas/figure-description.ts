@@ -131,12 +131,34 @@ export const FigureDescriptionsFileSchema = z
         // One description per (page, figure). A page may draw two figures, so
         // the page alone is not the key — `9789240010567-eng` page 92 is the
         // case that makes this concrete.
-        const key = `${d.page}\u0000${d.figure ?? ""}`;
+        //
+        // UNLABELLED figures are keyed differently, and the reason is that
+        // `figure` is optional for a real reason. `${page}\0""` made every
+        // unlabelled drawing on a page the same object, so a page bearing TWO
+        // of them could not be described at all: the second was rejected as a
+        // duplicate of the first. That turns an unrepresentable state into a
+        // schema error about a file that is correct. A review bot found it on
+        // #1633.
+        //
+        // The discriminator is the narrative text, because it is the only
+        // thing that already distinguishes two unlabelled figures without
+        // inventing anything. Two different drawings get two different
+        // descriptions; a record pasted twice keeps the same text and is
+        // still caught. A positional field or a required description id would
+        // discriminate more sharply, and both mean every existing record
+        // gains a field — that is the owner's call, not this branch's.
+        const key =
+          d.figure === undefined
+            ? `${d.page}\u0000\u0000${d.narrative.text ?? ""}`
+            : `${d.page}\u0000${d.figure}`;
         if (seen.has(key)) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["descriptions", doc, i],
-            message: `page ${d.page}${d.figure ? ` / ${d.figure}` : ""} described twice`,
+            message:
+              d.figure === undefined
+                ? `page ${d.page} carries two unlabelled descriptions with identical narrative text`
+                : `page ${d.page} / ${d.figure} described twice`,
           });
         }
         seen.add(key);

@@ -46,7 +46,14 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
-import { findings, ingestedSources, queueState } from "../check-uploads-retired.ts";
+import {
+  companionSource,
+  findings,
+  ingestedSources,
+  queueState,
+  resolvedQueues,
+  withCompanions,
+} from "../check-uploads-retired.ts";
 
 const made: string[] = [];
 afterAll(() => {
@@ -205,5 +212,83 @@ describe("the denominator, because a clean zero is the failure mode", () => {
     expect(m.size).toBe(2);
     expect(m.get(sha("AAA"))).toBe(join("library", "entry-a"));
     expect(m.get(sha("BBB"))).toBe(join("library", "entry-b"));
+  });
+
+  // A review bot on #1633: the first vacuity guard failed on ANY empty file
+  // list, so a repository that had retired every source would be red for
+  // ever. Both halves matter and they are different answers, which is this
+  // repository's own rule — "an empty directory is still a determined empty".
+  // `library-ingestion.md` requires an ingested source's `*.extraction.json`
+  // companion to move WITH it. Nothing enforced that: every other judgement
+  // here is a file's own sha256 against the ingested set, and a companion's
+  // bytes match no `source_sha256`, so it could never be a finding. Found by
+  // a review bot on #1633, against the rule this branch itself wrote.
+  describe("a companion follows its source", () => {
+    const q = (rel: string): QueueFileLike => ({ rel, sha256: "x", state: "queued", shape: "flat" });
+    type QueueFileLike = Parameters<typeof withCompanions>[0][number];
+
+    test("companionSource reads the relation off the name, and only that shape", () => {
+      expect(companionSource("uploads/a.pdf.extraction.json")).toBe("a.pdf");
+      expect(companionSource("uploads/a.pdf.extraction.md")).toBe("a.pdf");
+      expect(companionSource("uploads/a.pdf")).toBeUndefined();
+      expect(companionSource("uploads/extraction.json")).toBeUndefined();
+    });
+
+    test("beside a source still in the queue it is queued too — the live who-iris case", () => {
+      const out = withCompanions(
+        [q("uploads/a.pdf"), q("uploads/a.pdf.extraction.json")],
+        new Set(["a.pdf"]),
+      );
+      // Archived name present AND source present: the source has not retired,
+      // so the pair is queued together. Getting this wrong would flag the
+      // three companions in who-iris/.../iris-capture/, whose sources sit
+      // beside them.
+      expect(findings(out)).toHaveLength(0);
+    });
+
+    test("left behind by a source that DID retire, it is a finding", () => {
+      const out = withCompanions([q("uploads/a.pdf.extraction.json")], new Set(["a.pdf"]));
+      expect(findings(out)).toHaveLength(1);
+      expect(out[0]?.state).toBe("orphaned-companion");
+      expect(out[0]?.archived).toBe("a.pdf");
+    });
+
+    test("source absent from BOTH queue and archive is not guessed about", () => {
+      // No evidence the source was ever ingested, so this is an ordinary
+      // queued file. Reporting it would be the check inventing a retirement.
+      const out = withCompanions([q("uploads/a.pdf.extraction.json")], new Set());
+      expect(findings(out)).toHaveLength(0);
+    });
+
+    test("a companion in another directory is not matched to a same-named source", () => {
+      const out = withCompanions(
+        [q("uploads/one/a.pdf"), q("uploads/two/a.pdf.extraction.json")],
+        new Set(["a.pdf"]),
+      );
+      // The relation is `dirname`-scoped: `two/`'s companion has no source
+      // beside it, so it IS the orphan, and `one/a.pdf` does not shield it.
+      expect(findings(out)).toHaveLength(1);
+      expect(findings(out)[0]?.rel).toBe("uploads/two/a.pdf.extraction.json");
+    });
+  });
+
+  describe("resolved-and-empty is not the same answer as nothing-resolved", () => {
+    test("a declared queue holding no files RESOLVES — determined empty, and a pass", () => {
+      const root = instance({ entries: { "entry-a": "AAA" } });
+      // The declaration is present and resolves; the directory simply holds
+      // nothing, which is the end state the retirement rule drives towards.
+      expect(resolvedQueues([root]).length).toBeGreaterThan(0);
+      expect(queueState([root])).toHaveLength(0);
+    });
+
+    test("the two states are distinguishable at all — the premise the fix rests on", () => {
+      // Same empty `queueState()`, different `resolvedQueues()`. If these ever
+      // agreed, the entry point could not tell a swept repository from one
+      // whose declarations it failed to read, and `dh4f` would be unavoidable.
+      const declared = instance({ entries: { "entry-a": "AAA" } });
+      expect(queueState([declared])).toHaveLength(0);
+      expect(resolvedQueues([declared]).length).toBeGreaterThan(0);
+      expect(resolvedQueues([mkdtempSync(join(tmpdir(), "undeclared-"))])).toHaveLength(0);
+    });
   });
 });

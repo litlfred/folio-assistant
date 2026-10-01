@@ -43,6 +43,7 @@ import {
   TermMappingsFileSchema,
   normaliseLabel,
 } from "../schemas/term-mapping.ts";
+import { PinnedTerminologySchema } from "../schemas/pinned-terminology.ts";
 import { QA_RESULTS_DIR, buildQaResult, writeQaResult } from "./qa-results.ts";
 
 const ROOT = resolve(import.meta.dir, "../..");
@@ -251,17 +252,40 @@ export function pinnedTerminology(root: string): PinnedTerminology | string {
   if (!existsSync(snap)) {
     return `${FHIR_PIN} pins ${version} but ${FHIR_SNAPSHOT} is absent — run scripts/pin-smart-base-terminology.ts`;
   }
+  let raw: unknown;
   try {
-    const d = JSON.parse(readFileSync(snap, "utf-8")) as PinnedTerminology;
-    if (d.version !== version) {
-      // The one way this could assert something false: a snapshot of a
-      // different version than the record names.
-      return `${FHIR_SNAPSHOT} holds ${d.version} while ${FHIR_PIN} pins ${version} — re-snapshot at the pinned tag`;
-    }
-    return d;
+    raw = JSON.parse(readFileSync(snap, "utf-8"));
   } catch {
     return `${FHIR_SNAPSHOT} will not parse`;
   }
+  // VALIDATE, never cast. A bare `as PinnedTerminology` checked only
+  // `version`, so a snapshot whose `concepts` were empty, absent or
+  // malformed was returned as a CONSULTED terminology — every candidate then
+  // came back `unmapped`, determined and with no reason. That is the false
+  // measured-zero this whole check exists to refuse, reached from inside it.
+  // Found by a review bot on #1633; the schema was already written and simply
+  // not called.
+  const parsed = PinnedTerminologySchema.safeParse(raw);
+  if (!parsed.success) {
+    const first = parsed.error.issues[0];
+    const where = first?.path.length ? ` at \`${first.path.join(".")}\`` : "";
+    return `${FHIR_SNAPSHOT} does not satisfy PinnedTerminologySchema${where}: ${first?.message ?? "invalid"} — re-snapshot with scripts/pin-smart-base-terminology.ts`;
+  }
+  const d = parsed.data;
+  if (d.version !== version) {
+    // The one way this could assert something false: a snapshot of a
+    // different version than the record names.
+    return `${FHIR_SNAPSHOT} holds ${d.version} while ${FHIR_PIN} pins ${version} — re-snapshot at the pinned tag`;
+  }
+  // A snapshot of NO concepts cannot support a determined miss. The schema
+  // permits an empty array because an empty terminology is a representable
+  // thing; what is not representable is consulting one and calling the result
+  // a measurement. So the emptiness is refused HERE, where the consequence
+  // lives, rather than by tightening the schema for every other reader.
+  if (d.concepts.length === 0) {
+    return `${FHIR_SNAPSHOT} pins ${version} but holds NO concepts — nothing was consulted, so a miss is undetermined rather than unmapped`;
+  }
+  return d;
 }
 
 export function run(root: string): { mappings: TermMapping[]; scope: MappingScope[] } {

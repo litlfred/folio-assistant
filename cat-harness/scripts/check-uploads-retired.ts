@@ -112,7 +112,7 @@ export const DEFAULT_ROOTS: readonly string[] = [ROOT, resolve(import.meta.dir, 
 /** Where an archived upload lives. One place, named by the owner's ruling. */
 const ARCHIVE = "fsh-guts/uploads";
 
-export type QueueState = "queued" | "retired" | "duplicated";
+export type QueueState = "queued" | "retired" | "duplicated" | "orphaned-companion";
 
 /**
  * Whether the file is a bare drop in the queue or part of a structured intake.
@@ -228,11 +228,22 @@ function queueFiles(dir: string, prefix = ""): string[] {
 }
 
 /** Every file sitting in a declared `uploads/`, with its state. */
-export function queueState(roots: readonly string[] = DEFAULT_ROOTS): QueueFile[] {
-  const base = roots[0] ?? ROOT;
-  const ingested = ingestedSources(roots);
-  const archived = archivedSources(roots);
-
+/**
+ * The `uploads/` directories the declarations actually RESOLVE TO, existing or
+ * not. Separated from {@link queueState} so a caller can tell apart the two
+ * states that an empty file list conflates:
+ *
+ *   · **none resolved** — the declarations could not be read, so nothing was
+ *     looked at. `dh4f`: never a pass.
+ *   · **resolved, and empty** — every queue was read and held nothing. That is
+ *     a DETERMINED empty, and the end state this rule is driving towards once
+ *     every source has been ingested and retired.
+ *
+ * Collapsing those made a fully-retired repository fail permanently, which a
+ * review bot caught on #1633. The distinction is this repository's own, stated
+ * for README sections as "an empty directory is still a determined empty".
+ */
+export function resolvedQueues(roots: readonly string[] = DEFAULT_ROOTS): string[] {
   const queues = new Set<string>();
   for (const r of roots) {
     for (const d of directoriesForGraph(r, "uploads")) queues.add(d);
@@ -244,6 +255,15 @@ export function queueState(roots: readonly string[] = DEFAULT_ROOTS): QueueFile[
   for (const lib of declaredLibraries(roots)) {
     for (const d of directoriesForGraph(resolve(lib, ".."), "uploads")) queues.add(d);
   }
+  return [...queues].sort();
+}
+
+export function queueState(roots: readonly string[] = DEFAULT_ROOTS): QueueFile[] {
+  const base = roots[0] ?? ROOT;
+  const ingested = ingestedSources(roots);
+  const archived = archivedSources(roots);
+
+  const queues = new Set(resolvedQueues(roots));
 
   const out: QueueFile[] = [];
   for (const q of [...queues].sort()) {
@@ -274,6 +294,63 @@ export function queueState(roots: readonly string[] = DEFAULT_ROOTS): QueueFile[
         shape,
       });
     }
+  }
+  return withCompanions(out, archivedBasenames(roots));
+}
+
+/** `X.pdf` from `X.pdf.extraction.json`; undefined when the name is not one. */
+export function companionSource(rel: string): string | undefined {
+  const m = /^(.+)\.extraction\.(?:json|md)$/.exec(basename(rel));
+  return m?.[1];
+}
+
+/**
+ * Mark the companions whose source has already retired.
+ *
+ * `library-ingestion.md` §"Swept 2026-09-30" requires that an ingested
+ * source's `*.pdf.extraction.json` companion move WITH it, being a derived
+ * artefact of the same ingest rather than a queue item. Nothing enforced that:
+ * every other judgement here is made on a file's own sha256 against the
+ * ingested set, and a companion's bytes match no `source_sha256`, so it could
+ * never become a finding and sat in the queue for ever. A review bot found it
+ * on #1633 — against the rule THIS BRANCH wrote.
+ *
+ * **Matched by name, and that is not a lapse from the hash rule — it is the
+ * only relation a companion has.** A companion is *defined* as `<source>` plus
+ * a suffix; there is no hash tying it to its source, because its bytes are the
+ * extraction, not the source. So the name is the evidence here, while the
+ * source's own retirement is still decided by hash. Keeping the two rules
+ * straight is why this is a separate pass rather than a clause inside the
+ * loop.
+ *
+ * A companion is a finding ONLY when its source is gone from the queue and
+ * present in the archive — that is, the source retired and left it behind.
+ * A companion sitting beside a source still in the queue is as queued as the
+ * source is, which is the live case in
+ * `who-iris/uploads/wpr-rdo-2020-003-eng/iris-capture/`.
+ */
+export function withCompanions(files: QueueFile[], archivedNames: ReadonlySet<string>): QueueFile[] {
+  const present = new Set(files.map((f) => f.rel));
+  return files.map((f) => {
+    if (f.state !== "queued") return f;
+    const src = companionSource(f.rel);
+    if (src === undefined) return f;
+    const beside = join(dirname(f.rel), src);
+    // Source still queued beside it → the pair is queued together.
+    if (present.has(beside)) return f;
+    // Source gone and archived → it retired without its companion.
+    if (!archivedNames.has(src)) return f;
+    return { ...f, state: "orphaned-companion" as const, archived: src };
+  });
+}
+
+/** Basenames present in the archive, for the companion relation only. */
+export function archivedBasenames(roots: readonly string[] = DEFAULT_ROOTS): Set<string> {
+  const out = new Set<string>();
+  for (const r of roots) {
+    const dir = join(r, ARCHIVE);
+    if (!existsSync(dir)) continue;
+    for (const e of readdirSync(dir)) out.add(e);
   }
   return out;
 }
@@ -306,12 +383,22 @@ if (import.meta.main) {
   }
 
   const files = queueState();
-  if (files.length === 0) {
-    // `dh4f`: no declared queue, or an empty one, is not a clean sweep.
-    console.error("✗ no file found in any declared `uploads/` directory.");
-    console.error("  That is not a pass: either nothing is queued, or the declarations");
-    console.error("  could not be resolved, and those two need telling apart.");
+  const queues = resolvedQueues();
+  if (queues.length === 0) {
+    // `dh4f`, and the ONLY vacuity that is still a failure: nothing resolved,
+    // so nothing was looked at. The first version of this guard also failed on
+    // a resolved-but-empty queue, which made a fully-retired repository red
+    // for ever — the opposite error, caught by a review bot on #1633.
+    console.error("✗ no `uploads/` directory could be resolved from any declaration.");
+    console.error("  That is not a pass: nothing was read, so nothing was checked.");
+    console.error("  An empty queue that RESOLVED is a different answer, and passes.");
     process.exit(1);
+  }
+  if (files.length === 0) {
+    // Determined empty: every declared queue was read and held nothing. That
+    // is the end state the retirement rule drives towards, not a defect.
+    console.log(`✓ ${queues.length} declared queue(s) resolved and all are empty — every source retired.`);
+    process.exit(0);
   }
 
   const bad = findings(files);
@@ -322,7 +409,9 @@ if (import.meta.main) {
   const remedy = (f: QueueFile): string =>
     f.state === "duplicated"
       ? `git rm "${f.rel}"  (identical bytes already at ${String(f.archived)})`
-      : `git mv "${f.rel}" "${ARCHIVE}/${basename(f.rel)}"  + a same-basename .md sidecar`;
+      : f.state === "orphaned-companion"
+        ? `git mv "${f.rel}" "${ARCHIVE}/${basename(f.rel)}"  (its source ${String(f.archived)} already retired; no sidecar — the source's covers it)`
+        : `git mv "${f.rel}" "${ARCHIVE}/${basename(f.rel)}"  + a same-basename .md sidecar`;
 
   console.log(
     `Queue retirement — ${String(files.length)} file(s) across ${String(new Set(files.map((f) => dirname(f.rel))).size)} director(y/ies),` +

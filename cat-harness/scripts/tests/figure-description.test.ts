@@ -94,6 +94,35 @@ describe("one description per (page, figure)", () => {
     expect(JSON.stringify(r)).toContain("described twice");
   });
 
+  // `figure` is optional because a page may draw something the text never
+  // labels. Keying those as `${page}\0""` made every unlabelled drawing on a
+  // page the same object, so a page bearing TWO of them could not be
+  // described: the second was refused as a duplicate of the first. A review
+  // bot found it on #1633.
+  test("TWO UNLABELLED figures on one page are both describable", () => {
+    const a = base({ figure: undefined, narrative: { state: "draft", text: "A flow chart.", drafted_by: agent, drafted_at: "2026-09-30" } });
+    const b = base({ figure: undefined, narrative: { state: "draft", text: "A bar chart.", drafted_by: agent, drafted_at: "2026-09-30" } });
+    const r = FigureDescriptionsFileSchema.safeParse(file([a, b]));
+    expect(r.success).toBe(true);
+  });
+
+  test("...but the SAME unlabelled description twice is still refused", () => {
+    // The relaxation must not lose duplicate detection altogether. Two
+    // different drawings get two different narratives; a record pasted twice
+    // keeps its text, which is what the key uses.
+    const a = base({ figure: undefined });
+    const r = FigureDescriptionsFileSchema.safeParse(file([a, base({ figure: undefined })]));
+    expect(r.success).toBe(false);
+    expect(JSON.stringify(r)).toContain("identical narrative text");
+  });
+
+  test("an unlabelled figure does not collide with a LABELLED one on the same page", () => {
+    const r = FigureDescriptionsFileSchema.safeParse(
+      file([base(), base({ figure: undefined })]),
+    );
+    expect(r.success).toBe(true);
+  });
+
   test("two figures on ONE page are fine — a page may draw more than one", () => {
     expect(
       FigureDescriptionsFileSchema.safeParse(file([base(), base({ figure: "Figure 3" })])).success,

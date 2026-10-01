@@ -20,7 +20,11 @@ import {
   TermMappingsFileSchema,
   normaliseLabel,
 } from "../../schemas/term-mapping.ts";
-import { candidates, resolveFhir, resolveSkos, skosIndex } from "../check-term-mapping.ts";
+import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+import { FHIR_PIN, FHIR_SNAPSHOT, candidates, pinnedTerminology, resolveFhir, resolveSkos, skosIndex } from "../check-term-mapping.ts";
 
 const scheme = (id: string, terms: unknown[]) => ({ id, terms, file: `${id}.glossary.json` }) as never;
 const authored = (prefLabel: string, over: Record<string, unknown> = {}) => ({
@@ -211,5 +215,61 @@ describe("corpus — the real glossary, asserting scope rather than a count", ()
     // A snapshot of one version labelled another is the single way this could
     // assert something false, so it is refused rather than reported.
     if (typeof p !== "string") expect(p.version).toMatch(/^v\d/);
+  });
+
+  // A review bot on #1633 found `pinnedTerminology` casting the snapshot with
+  // `as PinnedTerminology` instead of parsing it, so only `version` was ever
+  // checked. These cover what the cast let through. Each asserts a REASON
+  // STRING rather than a throw, because the three states are the point: an
+  // unusable snapshot makes a miss `undetermined`, never `unmapped`.
+  describe("an unusable snapshot is a reason, not a silent zero", () => {
+    const writePair = (version: string, snapshot: unknown): string => {
+      const root = mkdtempSync(join(tmpdir(), "pinned-"));
+      mkdirSync(join(root, "cat-harness", "external-schemas"), { recursive: true });
+      writeFileSync(join(root, FHIR_PIN), JSON.stringify({ version }));
+      writeFileSync(join(root, FHIR_SNAPSHOT), JSON.stringify(snapshot));
+      return root;
+    };
+    const wellFormed = (over: Record<string, unknown> = {}) => ({
+      $schema: "folio-pinned-terminology/v1",
+      pin: "cat-harness/external-schemas/who-smart-base.json",
+      version: "v1.0.0",
+      source: "https://example.invalid/ig",
+      concepts: [{ system: "http://example.invalid/cs", code: "a", display: "Alpha" }],
+      ...over,
+    });
+
+    test("a well-formed snapshot still loads — the control", () => {
+      const p = pinnedTerminology(writePair("v1.0.0", wellFormed()));
+      expect(typeof p).not.toBe("string");
+    });
+
+    test("ZERO concepts is undetermined, not a terminology that matched nothing", () => {
+      const p = pinnedTerminology(writePair("v1.0.0", wellFormed({ concepts: [] })));
+      expect(typeof p).toBe("string");
+      expect(p as string).toContain("NO concepts");
+    });
+
+    test("a snapshot missing `concepts` entirely is refused by the schema", () => {
+      const bad = wellFormed();
+      delete (bad as Record<string, unknown>).concepts;
+      const p = pinnedTerminology(writePair("v1.0.0", bad));
+      expect(typeof p).toBe("string");
+      expect(p as string).toContain("PinnedTerminologySchema");
+    });
+
+    test("a concept missing its code is refused — the cast accepted any shape", () => {
+      const p = pinnedTerminology(
+        writePair("v1.0.0", wellFormed({ concepts: [{ system: "http://x.invalid", display: "Alpha" }] })),
+      );
+      expect(typeof p).toBe("string");
+      expect(p as string).toContain("PinnedTerminologySchema");
+    });
+
+    test("the version disagreement is still caught, and reported as itself", () => {
+      const p = pinnedTerminology(writePair("v2.0.0", wellFormed()));
+      expect(typeof p).toBe("string");
+      expect(p as string).toContain("re-snapshot at the pinned tag");
+    });
   });
 });
