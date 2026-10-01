@@ -36,8 +36,8 @@ the source that origin names is a separate question, and the one the third
 column answers.
 
 <div class="mv-grid">
-<div class="mv-stat"><b>21</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>18</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>24</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>21</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>3</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -59,12 +59,15 @@ agent picks by resemblance, which is why the schema requires the field.
 | **[DMN — Decision Model and Notation](#dmn)**<br>`dmn` | The criteria RECUR and the inputs are data. A gateway that must branch the same way on the same facts every time. Not for a one-off judgement — that… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Doc-Researcher — parse for multiple granularities, then research iteratively against a sufficiency threshold](#doc-researcher)**<br>`doc-researcher` | **A question must be answered from documents this folio has ingested, and one retrieval pass will not do it.** Use it when the answer is spread acros… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-core` |
 | **[Hybrid LLM/deterministic — the model proposes a RULE, machinery validates and runs it](#hybrid-llm-deterministic)**<br>`hybrid-llm-deterministic` | **An agent must produce an artefact that something downstream will act on.** Use it when a language model is in the loop and a wrong output would be… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[JSON-LD 1.1 — the knowledge graph serialised as Linked Data in plain JSON](#json-ld-serialisation)**<br>`json-ld-serialisation` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Kepner-Tregoe Decision Analysis](#kepner-tregoe)**<br>`kepner-tregoe` | A decision with several candidate options and no recurring rule — a platform choice, an architecture question, which of three fixes to take. Contextu… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Latent Semantic Indexing — retrieve and relate by co-occurrence structure, not by shared words](#lsi)**<br>`lsi` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[MADR — Markdown Architectural Decision Records](#madr)**<br>`madr` | **Bean context** — the owner's binding, 2026-09-20. When a bean records a decision, this is the form. Not for the decision METHOD (see… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Aggregation-type MCDM — an alternatives-criteria matrix collapsed to one score per alternative](#mcdm-aggregation)**<br>`mcdm-aggregation` | **A FIXED, FINITE set of alternatives is to be ranked against several explicit criteria, all known up front.** The input is an alternatives-criteria… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
+| **[ODRL 2.2 — what a party may do, as permission and prohibition rules over actions](#odrl-policies)**<br>`odrl-policies` | **What an actor may DO — may this party perform this action, here?** Use it when a grant or a refusal has to be written down so a machine can evaluat… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Probabilistic decision-making algorithms — and what their regret bounds are claims ABOUT](#probabilistic-decision-analysis)**<br>`probabilistic-decision-analysis` | **The alternatives can be TRIED, repeatedly, and what you learn from one try changes what you should try next.** Bandits, Bayesian optimisation and t… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[Process-driven autoformalization — judge a formalised statement by compiling it WITH a proof, and read the first error as the step signal](#process-driven-autoformalization)**<br>`process-driven-autoformalization` | **A natural-language statement is being turned into a Lean statement and the question is how to test the candidate**, or… | <span class="mv-tag mv-ingested">source held</span> | `folio-assistant-sci` |
+| **[PROV-O — the record of who did what, in which role, under which plan](#prov-o-provenance)**<br>`prov-o-provenance` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[RACI — who is involved in an activity, and in which of four ways](#raci)**<br>`raci` | **Who is involved in an activity, and how.** Use it when a process or a breakdown exists and the question is participation — who answers for this, wh… | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
 | **[RASCI — RACI plus Supportive, for when doing the work and owning it come apart](#rasci)**<br>`rasci` | **Who is involved, when a role does the work without owning the deliverable.** Use it where a separate *Supportive* party is real — someone who contr… | <span class="mv-tag mv-cited">cited, not ingested</span> | `cat-harness` |
 | **[Skill-pipeline subject indexing — one policy-grounded stage per cognitive step, each output inspectable](#skill-pipeline-subject-indexing)**<br>`skill-pipeline-subject-indexing` | … | <span class="mv-tag mv-ingested">source held</span> | `cat-harness` |
@@ -210,6 +213,20 @@ strictly worse than declaring none.
 
 - [`library/arxiv-2508.05192v2`](../cat-harness/library/cat-harness/#cat-harness%2Farxiv-2508.05192v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/arxiv-2508.05192v2/README.md) · [source](https://arxiv.org/abs/2508.05192v2)
 
+### JSON-LD 1.1 — the knowledge graph serialised as Linked Data in plain JSON
+
+<a id="json-ld-serialisation"></a>
+
+`json-ld-serialisation` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **Choosing how a node of the knowledge graph is written to disk or published, so that it is ordinary JSON to a reader with no RDF tooling and RDF to one with it.** Use it when adding a generated `.jsonld` sibling, a term to a published `@context`, a prefix, or a new exported document. It answers *how a node is identified, typed and linked in the serialisation*. It does NOT answer what a node means (that is the vocabulary and the schemas), whether a relation is true (`uses-editorial-review`), or how a table is modelled (CSVW, bound as a vocabulary, not a serialisation).
+
+**Origin.** W3C, "JSON-LD 1.1 — A JSON-based Serialization for Linked Data", W3C Recommendation 16 July 2020 (https://www.w3.org/TR/2020/REC-json-ld11-20200716/), editors Gregg Kellogg, Pierre-Antoine Champin and Dave Longley; produced by the JSON-LD Working Group. Held as the Working Group's own publication snapshot of the REC (github.com/w3c/json-ld-syntax, commit 029777cf), under the W3C Software and Document License. The companion Recommendations — JSON-LD 1.1 Processing Algorithms and API, and JSON-LD 1.1 Framing — are NOT held.
+
+**Ingested sources:**
+
+- [`library/w3c-2020-json-ld-1-1`](../cat-harness/library/cat-harness/#cat-harness%2Fw3c-2020-json-ld-1-1) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2020-json-ld-1-1/README.md)
+
 ### Kepner-Tregoe Decision Analysis
 
 <a id="kepner-tregoe"></a>
@@ -270,6 +287,20 @@ these.
 
 - [`library/wang-rangaiah-2026-mcdm-aggregation`](../cat-harness/library/cat-harness/#cat-harness%2Fwang-rangaiah-2026-mcdm-aggregation) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/wang-rangaiah-2026-mcdm-aggregation/README.md)
 
+### ODRL 2.2 — what a party may do, as permission and prohibition rules over actions
+
+<a id="odrl-policies"></a>
+
+`odrl-policies` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **What an actor may DO — may this party perform this action, here?** Use it when a grant or a refusal has to be written down so a machine can evaluate it: who holds an action, scoped to a process, a task or a role, and which broader action it falls under. It answers *permit*, *deny* or *nobody has said*. It does NOT answer who is involved in an activity (`raci`), which lane an actor may act in (`role-model`), or how a decision is reached (`kepner-tregoe`, `dmn`). It is not used here for source licences, which are recorded as SPDX ids in each library entry's `licence.json`.
+
+**Origin.** W3C, "ODRL Information Model 2.2", W3C Recommendation 15 February 2018, edited by Renato Iannella and Serena Villata, produced by the W3C Permissions and Obligations Expression Working Group. The held copy is the Working Group's own staged REC snapshot (github.com/w3c/poe), not compared byte for byte with the w3.org copy and without later errata — see the entry's `licence.json`. The companion "ODRL Vocabulary & Expression 2.2", which the model defers to for normative serialisation and the Common Vocabulary, is NOT held.
+
+**Ingested sources:**
+
+- [`library/w3c-2018-odrl-model-2-2`](../cat-harness/library/cat-harness/#cat-harness%2Fw3c-2018-odrl-model-2-2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2018-odrl-model-2-2/README.md)
+
 ### Probabilistic decision-making algorithms — and what their regret bounds are claims ABOUT
 
 <a id="probabilistic-decision-analysis"></a>
@@ -297,6 +328,20 @@ these.
 **Ingested sources:**
 
 - [`library/arxiv-2406.01940v2`](../cat-harness/library/folio-assistant-sci/#folio-assistant-sci%2Farxiv-2406.01940v2) · [item page](https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-sci/library/arxiv-2406.01940v2/README.md) · [source](https://arxiv.org/abs/2406.01940v2)
+
+### PROV-O — the record of who did what, in which role, under which plan
+
+<a id="prov-o-provenance"></a>
+
+`prov-o-provenance` — declared by `cat-harness` — <span class="mv-tag mv-ingested">source held</span>
+
+**Applies when.** **Recording, after or as it happens, what was done — which activity ran, which agent was responsible for it, in which role, following which plan, and what it read and wrote — in a form another system can read without knowing this one.** Here that is the log of every BPMN task run, which the QA/QC after-check grades against policy, and the derivation and alternate-of links on the published knowledge graph. It answers *what happened and who answers for it*. It does NOT answer whether the action was permitted (that is the ODRL policy the record points at), how to decide anything (`kepner-tregoe`, `dmn`), or who should be involved in a task before it runs (`raci`).
+
+**Origin.** W3C, "PROV-O: The PROV Ontology", W3C Recommendation 30 April 2013 (http://www.w3.org/TR/2013/REC-prov-o-20130430/), editors Timothy Lebo, Satya Sahoo and Deborah McGuinness, for the Provenance Working Group. It is the OWL2 encoding of the PROV Data Model (PROV-DM), which is cited by it and not held here.
+
+**Ingested sources:**
+
+- [`library/w3c-2013-prov-o`](../cat-harness/library/cat-harness/#cat-harness%2Fw3c-2013-prov-o) · [item page](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2013-prov-o/README.md)
 
 ### RACI — who is involved in an activity, and in which of four ways
 

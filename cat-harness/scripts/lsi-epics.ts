@@ -39,7 +39,7 @@ import { execFileSync } from "node:child_process";
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { buildLsi, centroid, cosineVectors, foldIn, unitVector, type LsiIndex } from "../content/pipeline/lsi";
-import { checkoutDirectoriesForGraph } from "../schemas/cat-harness";
+import { declaredGraphs } from "../schemas/cat-harness";
 import { buildCa } from "../content/pipeline/ca";
 import { BEAN_GRAPH_FILE } from "../schemas/bean-graph";
 
@@ -48,7 +48,7 @@ const REPO = resolve(import.meta.dir, "../..");
 /** Every directory the bean graph declares as holding `bean-defs` — `defs` and
  *  its `archive` view — read from the declarations rather than spelled here. */
 function beanDefDirs(): string[] {
-  const store = checkoutDirectoriesForGraph(join(REPO, "cat-harness"), "beans")[0];
+  const store = [REPO, join(REPO, "cat-harness")].flatMap((r) => declaredGraphs(r)).find((g) => g.graphKinds.includes("beans"))?.absPath;
   if (!store) throw new Error("no declared `beans` graph — nothing to file (this is not an empty work plan)");
   const graph = JSON.parse(readFileSync(join(store, BEAN_GRAPH_FILE), "utf8")) as { directories: Array<{ path: string; graphKinds: string[] }> };
   return graph.directories.filter((d) => d.graphKinds.includes("bean-defs")).map((d) => join(store, d.path));

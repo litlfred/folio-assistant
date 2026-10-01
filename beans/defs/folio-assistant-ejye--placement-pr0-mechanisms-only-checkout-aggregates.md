@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-10-01T00:03:29Z
-updated_at: 2026-10-01T08:15:15Z
+updated_at: 2026-10-01T09:20:34Z
 parent: folio-assistant-9umr
 blocked_by:
     - folio-assistant-hx65
@@ -31,3 +31,6 @@ PR0 of the approved placement proposal (owner rulings 2026-09-30, bean 9umr's ei
 
 ## 2026-10-01 — separation arc (7x5n)
 Merged (#1758 / #1760). Remaining boxes need green gates ON MAIN, which is red at cdb0a018, so this waits on S0 (hx65) and closes in S1 (a4of).
+
+## 2026-10-01 — regression found and restored (session session_01CVVoavPoCHMLA7AASxG8cH, PR #1769)
+0a was merged in 9962556c and then undone on main by merge resolutions (aab80f35, 16c02d33), along with 15 reader files reverting to cmsl step 2's parallel version. #1769 restores both. CI never showed it: Repository gates stops at its first red step, so check:instance-graph (which refuses the state) was skipped.
