@@ -16,6 +16,18 @@
           "type": "string",
           "minLength": 1
         },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "alsoWritten": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "images": {
           "type": "array",
           "items": {
@@ -1010,8 +1022,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "staging": {
     "branch": "main",
-    "sha": "c172a9ae90a671ad553ef3302b8d7d004da5ca87",
+    "sha": "87431534f530076b057cc3a4b97566508bd7a681",
     "pr": "main",
-    "run": "36899208852"
+    "run": "36920188662"
   }
 }
