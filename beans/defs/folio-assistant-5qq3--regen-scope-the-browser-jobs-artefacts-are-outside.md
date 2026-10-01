@@ -59,6 +59,7 @@ owner's.
 - render:bpmn: five bootstrap(-tools) SVGs stale after a submodule pin change; regen reported a clean fixed point; CI's E2E job failed at 'rendered BPMN SVGs are current'.
 - library:viz: 18 artefacts stale since #1744 added library entries; regen reported clean; the only signal was library-viewer-scope.e2e.ts failing in CI ('fhir-harness declares 3 library entries on disk and the viewer data holds none').
 
+_2026-10-01T12:36:11Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
 
 ## Summary of Changes (2026-10-01, owner chose option 1, PR #1784)
 - regen-after-merge.ts: UNGATED_INPUTS — library:viz and schema:viz are run as writers (asked first, so a fast-set check reading their output settles in the same pass) WITHOUT becoming gates; the owner's 2026-09-20 ungating ruling stands.
