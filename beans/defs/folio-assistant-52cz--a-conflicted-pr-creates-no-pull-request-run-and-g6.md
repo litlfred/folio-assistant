@@ -136,6 +136,6 @@ Live, 2026-09-30:
 
 ## Box 4 — OWNER RULING 2026-09-30: write it. Done; the bean is complete
 
-Asked in session https://claude.ai/code/session_01SiFEMuTciyB681XP5WfcbB: should the reading that "no suite failed" over zero suites is not a pass become guidance where agents learn to read PR events? **The owner chose to write it.** It is now in `skills/folio-core/ci-health.md`, §"For ONE commit, zero checks is not a pass". That covers the conflicted PR that gets no `pull_request` run, the partial check set, and the merge ref built for an earlier head. The tools enforce it (`verdictForCommit` in #1664, `ci:watch --pr` in #1659, the stale-ref probe in #1675); the skill paragraph is for an agent reading events without them.
+Asked in session https://claude.ai/code/session_01SiFEMuTciyB681XP5WfcbB: should the reading that "no suite failed" over zero suites is not a pass become guidance where agents learn to read PR events? **The owner chose to write it.** It is now in `skills/sdlc/sdlc-core/ci-health.md`, §"For ONE commit, zero checks is not a pass". That covers the conflicted PR that gets no `pull_request` run, the partial check set, and the merge ref built for an earlier head. The tools enforce it (`verdictForCommit` in #1664, `ci:watch --pr` in #1659, the stale-ref probe in #1675); the skill paragraph is for an agent reading events without them.
 
 All four boxes are done: 1 to 3 via #1664, #1659 and #1675, and 4 here.

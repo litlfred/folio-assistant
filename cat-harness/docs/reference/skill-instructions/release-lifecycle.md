@@ -15,7 +15,7 @@ parent: Skill instructions
 
 This skill governs **when and why** to create releases. For the **how**
 (tagging, notes, `gh release create`), see
-[`../folio-core/package-release.md`](package-release.md).
+[`../../sdlc/sdlc-core/package-release.md`](package-release.md).
 
 ## Semver policy
 
@@ -109,9 +109,9 @@ The process is identical; the artefacts differ.
 
 ## Cross-references
 
-- [`../folio-core/package-release.md`](package-release.md) — release mechanics
+- [`../../sdlc/sdlc-core/package-release.md`](package-release.md) — release mechanics
 - [`code-review-process.md`](code-review-process.md) — review in release context
-- [`../../skills/crdm/crdm-requirements-workflow.md`](crdm-requirements-workflow.md) — Phase 6 feeds into release
-- [`../folio-core/staging-review.md`](staging-review.md) — staging previews for RCs
-- [`../folio-core/todo-manager.md`](todo-manager.md) — bean management within epics
+- [`../../skills/sdlc/crdm/crdm-requirements-workflow.md`](crdm-requirements-workflow.md) — Phase 6 feeds into release
+- [`../../sdlc/sdlc-core/staging-review.md`](staging-review.md) — staging previews for RCs
+- [`../../sdlc/sdlc-core/todo-manager.md`](todo-manager.md) — bean management within epics
 {% endraw %}

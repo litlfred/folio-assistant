@@ -26,7 +26,7 @@ audit note with an empty `cites[]` is a reported problem. `resolveCitations`
 returns `resolved | dangling | not-checked`, and `not-checked` is never rendered
 as `resolved`. 19 tests, each perturbing a clean baseline by exactly one thing.
 
-**`skills/folio-core/decision-audit.md`** — new skill. Carried by `author`,
+**`skills/sdlc/sdlc-core/decision-audit.md`** — new skill. Carried by `author`,
 `reviewer`, `programme-manager`, `publication-manager`, `authoring-agent`; NOT
 by `editor` / `qc-reviewer` / `translation-adjudicator`, which inherit it.
 

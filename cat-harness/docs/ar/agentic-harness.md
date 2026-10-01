@@ -121,7 +121,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 | **تأليف المحتوى** | كتابة محتوى folio أو تعديله أو توسيعه (فصول، كتل، أقسام) | سير عمل التأليف (paper أو document) |
 | **مراجعة المحتوى** | مراجعة المحتوى الحالي والتحقق منه وتقديم ملاحظات بشأنه | سير عمل دورة حياة المحتوى / تحرير تفاعل الإنسان والحاسوب (HCI) |
 | **استيعاب المحتوى** | استيعاب مستند مصدر في الـ folio | سير عمل استيعاب المستندات |
-| **طلب ميزة** | طلب قدرة جديدة للمنصة (انظر [crdm-detect](../../skills/crdm/crdm-detect.md)) | سير عمل متطلبات CRDM |
+| **طلب ميزة** | طلب قدرة جديدة للمنصة (انظر [crdm-detect](../../skills/sdlc/crdm/crdm-detect.md)) | سير عمل متطلبات CRDM |
 | **طلب معلومات** | الاستفسار عن المنصة أو المحتوى أو العملية | لا يوجد سير عمل — الإجابة مباشرة |
 | **استدعاء أداة** | تشغيل أداة محددة (`content_validate`، و`qa_sweep`، إلخ) | لا يوجد سير عمل — التنفيذ والإبلاغ |
 | **إدارة خطة العمل** | إنشاء الـ beans أو تحديثها أو الاستعلام عنها | لا يوجد سير عمل — التنفيذ والإبلاغ |
@@ -131,7 +131,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 
 يقع الحد الفاصل الحرج للتصنيف بين **تأليف المحتوى** و**طلب ميزة**.
 وتوفر مهارة `crdm-detect`
-([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
+([`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md))
 إشارات الاكتشاف التفصيلية. والقاعدة التلخيصية هي:
 
 > إذا كان تنفيذ الطلب يتطلب تغييرات في **folio-assistant**
@@ -272,7 +272,7 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 
 ### كيف يدخل الوكيل في CRDM
 
-يوجد منطق الاكتشاف في [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
+يوجد منطق الاكتشاف في [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md).
 ثلاثة سيناريوهات:
 
 **جلسة جديدة، والطلب الأول هو ميزة:**
@@ -398,11 +398,11 @@ _تم توليد هذه الصفحة من [`content/docs/agentic-harness/`](http
 | مسح بدء الجلسة | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | بروتوكول Bean | `todo-manager.md`، و`bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | انضباط التثبيت وطلبات السحب | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| اكتشاف طلبات الميزات | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
-| سير عمل متطلبات CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
-| تأليف المحتوى (paper) | مهارات authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
-| تأليف المحتوى (document) | مهارات folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
-| دورة حياة المحتوى | مهارات content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
+| اكتشاف طلبات الميزات | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
+| سير عمل متطلبات CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
+| تأليف المحتوى (paper) | مهارات authoring-math | [`skills/authoring/authoring-math/`](../../skills/authoring/authoring-math/) |
+| تأليف المحتوى (document) | مهارات folio-document-adapter | [`skills/authoring/folio-document-adapter/`](../../skills/authoring/folio-document-adapter/) |
+| دورة حياة المحتوى | مهارات content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | استيعاب المستندات | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | الإرسال والتنسيق | `dispatch-agent.md`، و`coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | أنواع المحتوى والمحولات | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |

@@ -7,30 +7,30 @@ import { siteDirFor } from "../schemas/cat-harness.ts";
 import { FRAGMENT } from "../scripts/staging-banner.ts";
 
 /**
- * HIDDEN SEARCH COMES BACK — owner, 2026-09-24, verbatim:
+ * SEARCH IS A MAGNIFIER THAT OPENS TO FULL WIDTH — owner, 2026-09-30,
+ * verbatim (issue #1715):
  *
- * > hiding search makes it go away compleletey, cant restore.
+ * > search that should be a collsaible icon/avatar on top of display
+ * > window... that when open is full span width of all avaioblae
  *
- * ## What was actually wrong, measured on the real preview
+ * This spec used to hold the navbar/corner design's way back: "hiding search
+ * makes it go away compleletey, cant restore" (2026-09-24), where the corner
+ * card was drawn UNDER the staging banner. That lesson is kept — the page
+ * here mounts the banner the staging injector actually ships (`FRAGMENT`,
+ * imported rather than retyped), and reachability is asserted by HIT TEST,
+ * not by visibility, because a control under another element is "visible" to
+ * every locator assertion and still cannot be pressed.
  *
- * Hiding search is the slide control: it sends the field to the upper-right
- * corner, collapsed behind a magnifier, with a chevron beside it that docks it
- * back (`l4zi` — the inverse has to be reachable). On a bare replica both are
- * there and both answer, which is why `action-tiles.e2e.ts` is green.
+ * What it now asserts, measured on a local build before the change:
  *
- * On the REAL page they were not reachable. Taken off `gh-pages` (the
- * `rendered-verification` method) and hit-tested at 1280px and 390px: the
- * point under the magnifier AND the point under the chevron were both the
- * STAGING BANNER — `position: sticky; top: 0; z-index: 9999`, 36px tall —
- * and the corner card sat at `top: 0.75rem`, entirely beneath it. Every
- * preview is where the owner reviews, so on every page they looked at, the
- * only two controls that could bring search back were drawn under a banner:
- * gone completely, cannot restore.
- *
- * So this spec mounts the banner the staging injector actually ships
- * (`FRAGMENT`, imported rather than retyped) and asserts the way back by
- * HIT TEST, not by visibility — a control under another element is
- * "visible" to every locator assertion and still cannot be pressed.
+ *   - CLOSED costs no vertical space. The open row cost 48px at 1280 and
+ *     42px at 390 on every page before the first line of content.
+ *   - OPEN spans the display panel, and so do the results. They were capped
+ *     at the theme's 536px under a 992px field.
+ *   - The keyboard round trip: Enter opens and puts the cursor in the field,
+ *     Escape closes and hands focus back. Escape used to do nothing.
+ *   - It never shares a box with the Folio handle, which is fixed at the top
+ *     centre (and, with PR #1709, has a fixed strip behind it while scrolled).
  */
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -44,15 +44,18 @@ const SEARCH =
   '<label for="search-input" class="search-label"><span class="sr-only">Search folio-assistant</span></label>' +
   '</div><div id="search-results" class="search-results"></div></div>';
 
+const PARA = "<p>Text of a page that is long enough to wrap onto a second line at a phone width, so the float has something to flow beside.</p>";
+
 /** A preview page: the banner first in the body, as the injector places it,
  *  and the search-index stamp a preview build writes — so the notice under
  *  the field is rendered here, as it is on every page the owner reviews. */
 const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>p</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="fa-search-index" content="published">
-<style>body { margin: 0; } ${CSS}</style></head><body>${FRAGMENT}
+<style>body { margin: 0; } .main-content-wrap { padding: 0 2rem; } ${CSS}</style></head><body>${FRAGMENT}
 <div class="side-bar"><div class="site-header"><a class="site-title">folio-assistant</a></div><nav class="site-nav"></nav></div>
-<div class="main"><div class="main-content-wrap"><div class="main-header">${SEARCH}</div>
-<div class="main-content"><h1>Getting started</h1><p>Text.</p></div></div></div>
+<div class="main"><div class="main-header">${SEARCH}</div><div class="main-content-wrap">
+<div class="main-content"><h1>Getting started</h1>${PARA.repeat(40)}</div></div></div>
 <script>${JS}<\/script></body></html>`;
 
 const URL_ = "http://replica.test/folio-assistant/STAGING/some-branch/page.html";
@@ -77,79 +80,140 @@ const pressable = (page: Page, sel: string) =>
     return hit ? `covered by ${hit.tagName}${(hit as HTMLElement).hasAttribute("data-fa-staging-banner") ? " [staging banner]" : ""}` : "nothing";
   });
 
+/** Do two elements' boxes intersect? */
+const overlaps = (page: Page, a: string, b: string) =>
+  page.evaluate(([a, b]) => {
+    const p = document.querySelector(a)?.getBoundingClientRect();
+    const q = document.querySelector(b)?.getBoundingClientRect();
+    if (!p || !q || !p.width || !q.width) return false;
+    return p.left < q.right && q.left < p.right && p.top < q.bottom && q.top < p.bottom;
+  }, [a, b] as const);
+
+const home = ".fa-search-home";
+const peek = ".fa-search-peek";
+const input = "#search-input";
+
 for (const width of [1280, 390]) {
-  test.describe(`hidden search can always be restored — ${width}px`, () => {
+  test.describe(`search collapses to a magnifier and opens full width — ${width}px`, () => {
     test.beforeEach(async ({ page }) => {
-      await page.setViewportSize({ width, height: 800 });
+      await page.setViewportSize({ width, height: 844 });
       await load(page);
       await expect(page.locator("[data-fa-staging-banner]")).toBeVisible();
     });
 
-    test("after hiding, a visible SHOW SEARCH control is on screen and takes the press", async ({ page }) => {
-      await page.locator(".fa-search-slide").click();
-      await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "corner");
-      await expect(page.locator("#search-input")).toBeHidden();
-      const restore = page.locator(".fa-search-slide");
-      // Reachable FIRST — the measured defect. Under the banner, nothing else
-      // about the control matters.
-      expect(await pressable(page, ".fa-search-slide")).toBe("yes");
-      expect(await pressable(page, ".fa-search-peek")).toBe("yes");
-      // Said in WORDS on screen, not only in a tooltip or an aria-label: a
-      // glyph alone is what the owner could not find.
-      await expect(restore).toContainText("Show search");
-      const b = (await restore.boundingBox())!;
+    test("closed on load: a named magnifier, reachable, costing no vertical space", async ({ page }) => {
+      await expect(page.locator(home)).toHaveAttribute("data-open", "false");
+      await expect(page.locator(input)).toBeHidden();
+      // Still IN the document: the theme finds its input by id.
+      await expect(page.locator(input)).toHaveCount(1);
+      const p = page.locator(peek);
+      await expect(p).toHaveAccessibleName("Search");
+      await expect(p).toHaveAttribute("aria-expanded", "false");
+      expect(await pressable(page, peek)).toBe("yes");
+      const b = (await p.boundingBox())!;
       expect(b.height).toBeGreaterThanOrEqual(24);
-      expect(b.y).toBeGreaterThanOrEqual(0);
-      expect(b.x + b.width).toBeLessThanOrEqual(width);
-      await restore.click();
-      await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "navbar");
-      await expect(page.locator("#search-input")).toBeVisible();
+      expect(b.width).toBeGreaterThanOrEqual(24);
+      // At the TOP of the display panel, at its inline end.
+      const wrap = (await page.locator(".main-content-wrap").boundingBox())!;
+      expect(Math.abs(b.y - wrap.y)).toBeLessThanOrEqual(1);
+      expect(b.x + b.width).toBeGreaterThan(wrap.x + wrap.width * 0.75);
+      // No vertical cost: the heading starts where it would with no search.
+      const cost = await page.evaluate(() => {
+        const h = document.querySelector(".main-content h1")!;
+        const withIt = h.getBoundingClientRect().top;
+        (document.querySelector(".fa-search-home") as HTMLElement).style.display = "none";
+        const without = h.getBoundingClientRect().top;
+        (document.querySelector(".fa-search-home") as HTMLElement).style.display = "";
+        return withIt - without;
+      });
+      expect(cost).toBe(0);
     });
 
-    test("the navbar search is ONE row — icon attached, every control the field's height (owner, 2026-09-27)", async ({ page }) => {
-      // Owner: *"search is wonky"* — magnifier, field and Hide search sat at
-      // three heights, and on a preview (this page is one) the notice pulled
-      // both buttons down level with itself rather than with the field.
-      await expect(page.locator(".fa-search-notice")).toBeVisible();
-      const peek = (await page.locator(".fa-search-peek").boundingBox())!;
-      const input = (await page.locator("#search-input").boundingBox())!;
-      const slide = (await page.locator(".fa-search-slide").boundingBox())!;
-      for (const b of [peek, slide]) {
-        expect(Math.abs(b.y - input.y)).toBeLessThanOrEqual(1);
-        expect(Math.abs(b.height - input.height)).toBeLessThanOrEqual(1);
+    test("open spans the display panel — field AND results", async ({ page }) => {
+      await page.locator(peek).click();
+      await expect(page.locator(home)).toHaveAttribute("data-open", "true");
+      await expect(page.locator(peek)).toHaveAttribute("aria-expanded", "true");
+      await expect(page.locator(input)).toBeFocused();
+      const wrap = await page.locator(".main-content-wrap").evaluate((w) => {
+        const r = w.getBoundingClientRect();
+        const cs = getComputedStyle(w);
+        return { left: r.left + parseFloat(cs.paddingLeft), right: r.right - parseFloat(cs.paddingRight) };
+      });
+      const row = (await page.locator(home).boundingBox())!;
+      expect(Math.abs(row.x - wrap.left)).toBeLessThanOrEqual(1);
+      expect(Math.abs(row.x + row.width - wrap.right)).toBeLessThanOrEqual(1);
+      // One row: the magnifier attached to the field, the same height.
+      const pb = (await page.locator(peek).boundingBox())!;
+      const ib = (await page.locator(input).boundingBox())!;
+      expect(Math.abs(pb.y - ib.y)).toBeLessThanOrEqual(1);
+      expect(Math.abs(pb.height - ib.height)).toBeLessThanOrEqual(1);
+      expect(Math.abs(pb.x + pb.width - ib.x)).toBeLessThanOrEqual(1);
+      expect(Math.abs(ib.x + ib.width - wrap.right)).toBeLessThanOrEqual(1);
+      // Results take the row's full width. Shown here the way the theme shows
+      // them (`search-active` on <html>) with one hit, since this page loads
+      // no index.
+      await page.evaluate(() => {
+        document.documentElement.classList.add("search-active");
+        document.getElementById("search-results")!.innerHTML =
+          '<ul class="search-results-list"><li class="search-results-list-item"><a class="search-result" href="#">A hit</a></li></ul>';
+      });
+      const rb = (await page.locator("#search-results").boundingBox())!;
+      expect(Math.abs(rb.x - row.x)).toBeLessThanOrEqual(1);
+      expect(Math.abs(rb.width - row.width)).toBeLessThanOrEqual(2);
+      expect(rb.y).toBeGreaterThanOrEqual(ib.y + ib.height - 1);
+    });
+
+    test("keyboard: Enter or Space opens into the field, Escape closes back onto the magnifier", async ({ page }) => {
+      const p = page.locator(peek);
+      await p.focus();
+      await page.keyboard.press("Enter");
+      await expect(page.locator(input)).toBeFocused();
+      await expect(p).toHaveAttribute("aria-expanded", "true");
+      await page.keyboard.type("bean");
+      await page.keyboard.press("Escape");
+      await expect(page.locator(home)).toHaveAttribute("data-open", "false");
+      await expect(p).toHaveAttribute("aria-expanded", "false");
+      await expect(p).toBeFocused();
+      await expect(page.locator(input)).toBeHidden();
+      // Closing is not clearing: the same node, with what was typed.
+      await expect(page.locator(input)).toHaveValue("bean");
+      await page.keyboard.press(" ");
+      await expect(page.locator(input)).toBeFocused();
+      await expect(page.locator(input)).toHaveValue("bean");
+      // The magnifier is the toggle both ways.
+      await p.click();
+      await expect(page.locator(home)).toHaveAttribute("data-open", "false");
+      await expect(p).toBeFocused();
+    });
+
+    test("the open/closed choice persists per viewer, and the way back is always the magnifier", async ({ page }) => {
+      await page.locator(peek).click();
+      await page.reload();
+      await page.waitForSelector(home);
+      await expect(page.locator(home)).toHaveAttribute("data-open", "true");
+      await expect(page.locator(input)).toBeVisible();
+      // Restored open is not a focus grab: nothing typed into by surprise.
+      await expect(page.locator(input)).not.toBeFocused();
+      expect(await pressable(page, peek)).toBe("yes");
+      await page.locator(peek).click();
+      await page.reload();
+      await page.waitForSelector(home);
+      await expect(page.locator(home)).toHaveAttribute("data-open", "false");
+    });
+
+    test("never overlaps the Folio handle, closed or open, at rest or scrolled", async ({ page }) => {
+      await page.waitForSelector(".fa-glass-handle", { state: "attached" });
+      expect(await overlaps(page, peek, ".fa-glass-handle")).toBe(false);
+      await page.locator(peek).click();
+      expect(await overlaps(page, home, ".fa-glass-handle")).toBe(false);
+      await page.locator(peek).click();
+      // Scrolled, the magnifier goes with the content; the handle stays fixed
+      // at the top centre, and the one never lands on the other's box while
+      // the other is still pressable.
+      for (const y of [20, 60, 120]) {
+        await page.evaluate((y) => window.scrollTo(0, y), y);
+        expect(await pressable(page, ".fa-glass-handle")).toBe("yes");
       }
-      expect(input.height).toBeGreaterThanOrEqual(24);
-      // Attached: the magnifier's right edge IS the field's left edge.
-      expect(Math.abs(peek.x + peek.width - input.x)).toBeLessThanOrEqual(1);
-      // And the notice is under the field, not beside it.
-      const notice = (await page.locator(".fa-search-notice").boundingBox())!;
-      expect(notice.y).toBeGreaterThanOrEqual(input.y + input.height - 1);
-    });
-
-    test("the hide control says so in words too, and both directions work from the keyboard", async ({ page }) => {
-      const slide = page.locator(".fa-search-slide");
-      await expect(slide).toContainText("Hide search");
-      await slide.focus();
-      await page.keyboard.press("Enter");
-      await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "corner");
-      await page.locator(".fa-search-slide").focus();
-      await page.keyboard.press("Enter");
-      await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "navbar");
-      await expect(page.locator("#search-input")).toBeFocused();
-    });
-
-    test("the choice persists like the other preferences — and so does the way back", async ({ page }) => {
-      await page.locator(".fa-search-slide").click();
-      await page.reload();
-      await page.waitForSelector(".fa-search-home");
-      await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "corner");
-      await expect(page.locator(".fa-search-slide")).toContainText("Show search");
-      expect(await pressable(page, ".fa-search-slide")).toBe("yes");
-      await page.locator(".fa-search-slide").click();
-      await page.reload();
-      await page.waitForSelector(".fa-search-home");
-      await expect(page.locator(".fa-search-home")).toHaveAttribute("data-place", "navbar");
-      await expect(page.locator("#search-input")).toBeVisible();
     });
   });
 }

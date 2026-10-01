@@ -32,13 +32,13 @@
 
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 
-import { DocumentContentAdapter } from "../../../cat-harness/adapters/document/index.js";
+import { DocumentContentAdapter } from "../../../folio-assistant-core/adapters/document/index.js";
 import { registerLeanTools } from "./tools/lean.js";
-import { registerLatexRenderTools } from "../../../cat-harness/adapters/document/tools/render.js";
-import { registerPaperAuditTools } from "../../../cat-harness/adapters/document/tools/audit.js";
-import { registerPaperQaTools } from "../../../cat-harness/adapters/document/tools/qa.js";
-import { registerPaperBuildTools } from "../../../cat-harness/adapters/document/tools/validate.js";
-import { registerPaperTransformTools } from "../../../cat-harness/adapters/document/tools/transform.js";
+import { registerLatexRenderTools } from "../../../folio-assistant-core/adapters/document/tools/render.js";
+import { registerPaperAuditTools } from "../../../folio-assistant-core/adapters/document/tools/audit.js";
+import { registerPaperQaTools } from "../../../folio-assistant-core/adapters/document/tools/qa.js";
+import { registerPaperBuildTools } from "../../../folio-assistant-core/adapters/document/tools/validate.js";
+import { registerPaperTransformTools } from "../../../folio-assistant-core/adapters/document/tools/transform.js";
 
 export class PaperContentAdapter extends DocumentContentAdapter {
   readonly type: string = "paper";

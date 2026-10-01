@@ -60,6 +60,7 @@ export const PROPERTY_SKILLS = {
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },
+  contentAdapters: { skills: ["content-profiles"] },
   liquid: { skills: ["witnessed-values"] },
   // `publishable` was here until 2026-09-24 and the field is gone — replaced
   // by `publication.state`, which is a STATE rather than a boolean. The three

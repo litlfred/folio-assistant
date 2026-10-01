@@ -339,6 +339,25 @@ export const DocumentImageSchema = z
      * see {@link PlacementSchema} for why it exists at all.
      */
     placements: z.array(PlacementSchema).min(1).optional(),
+    /**
+     * The SAME PICTURE is already held elsewhere in the repository, and `file`
+     * points there instead of at a copy (bean `scfh`, `scripts/image-reuse.py`).
+     *
+     * A perceptual match, not a byte match: the #1614 deck's two largest
+     * pictures are the landing-page theme art re-encoded as WebP, so no byte
+     * agrees. The distance is recorded because the threshold is a claim about a
+     * corpus, and a reader should be able to re-judge it.
+     */
+    same_as: z
+      .object({
+        /** Repository-relative path of the asset `file` now points at. */
+        path: z.string().min(1),
+        method: z.literal("dhash-256"),
+        distance: z.number().int().min(0),
+        bits: z.number().int().positive(),
+      })
+      .strict()
+      .optional(),
   })
   // `basis` DESCRIBES THE FIRST PLACEMENT, and the two must not drift. Without
   // this, a migration could collapse duplicates while leaving `basis` pointing

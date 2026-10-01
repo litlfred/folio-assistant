@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/decision-audit.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/decision-audit.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/decision-audit.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/decision-audit.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/decision-audit.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/decision-audit.md){: .fa-edit-source }
 
 {% raw %}
 # A decision is not a finding, and neither is a substitute for the other

@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /integration-backlog
 
-Run the `integration-backlog` skill. Read [`cat-harness/skills/folio-core/integration-backlog.md`](../../cat-harness/skills/folio-core/integration-backlog.md) and follow it.
+Run the `integration-backlog` skill. Read [`cat-harness/skills/sdlc/sdlc-core/integration-backlog.md`](../../cat-harness/skills/sdlc/sdlc-core/integration-backlog.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

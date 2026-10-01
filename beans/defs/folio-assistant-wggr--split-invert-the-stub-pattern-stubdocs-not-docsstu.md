@@ -231,7 +231,7 @@ generates 251**, and I could not explain the 8. Measured both ways rather than
 assumed — main regenerated from scratch keeps all 251 and its own
 `kg:audit:check` exits 0, so those 8 are audited there and my tree lost them.
 The 8 are all one level deeper than a package (`folio-core/bib-qa/qa-tags`,
-`folio-core/coordinate/protocol`, `folio-paper-adapter/formalizer/*`,
+`sdlc-core/coordinate/protocol`, `folio-paper-adapter/formalizer/*`,
 `folio-paper-adapter/lean-environment-setup/mathlib-cache-fallback`), which
 points at `isPartOfASkill()` in `scripts/kg-audit.ts` classifying them
 differently under the new path. Not chased further.

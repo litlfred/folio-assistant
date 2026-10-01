@@ -36,9 +36,9 @@ is `satisfies`, and it runs **from a tool to a skill** — *this tool is one way
 to do that*, never *this skill is a tool*.
 
 <div class="tg-grid">
-<div class="tg-stat"><b>111</b><span>Tool nodes</span></div>
-<div class="tg-stat"><b>66</b><span>skills satisfied</span></div>
-<div class="tg-stat"><b>91</b><span>invoked as a shell command</span></div>
+<div class="tg-stat"><b>112</b><span>Tool nodes</span></div>
+<div class="tg-stat"><b>67</b><span>skills satisfied</span></div>
+<div class="tg-stat"><b>92</b><span>invoked as a shell command</span></div>
 <div class="tg-stat"><b>24</b><span>reachable over MCP</span></div>
 </div>
 
@@ -48,19 +48,19 @@ A tool may declare more than one invocation, so these do not sum to the total.
 
 | invocation | tools |
 |---|---|
-| <span class="tg-tag tg-shell">shell</span> | 91 |
+| <span class="tg-tag tg-shell">shell</span> | 92 |
 | <span class="tg-tag tg-inproc">inProcess</span> | 24 |
 | <span class="tg-tag tg-mcp">mcp</span> | 24 |
 | <span class="tg-tag tg-manual">manual</span> | 6 |
 
 | installation | tools |
 |---|---|
-| `none` | 102 |
+| `none` | 103 |
 | `cli` | 9 |
 
 ## Does every `satisfies` name a skill that exists?
 
-Yes — all **66** skills named across **111** tools resolve to a
+Yes — all **67** skills named across **112** tools resolve to a
 skill document in this checkout. A `satisfies` pointing at nothing would be a
 tool advertising a capability the graph cannot locate.
 
@@ -90,7 +90,7 @@ tool advertising a capability the graph cannot locate.
 | `folio-block-screenshots`<br>Folio block screenshots | Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Adds no dependency: Playwright is already the platform's browser driver. | <span class="tg-tag tg-shell">shell</span> | [`visual-diff`](../reference/skill-instructions/visual-diff.html) | 5 in / 1 out |
 | `folio-init`<br>Scaffold a folio | Create a new folio repository that uses this platform — folio/, uploads/, library/, the first manifests, the builder shim, agent files, and the link back to the platform. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`getting-started`](../reference/skill-instructions/getting-started.html)<br>[`repo-conversion`](../reference/skill-instructions/repo-conversion.html) | 9 in / 1 out |
 | `folio-viewer`<br>Folio viewer | Render each declared folio directory as a browsable page over its published index. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
-| `fsh-cone`<br>FSH dependency cone | Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything. | <span class="tg-tag tg-shell">shell</span> | [`fhir-validation`](../reference/skill-instructions/fhir-validation.html) | 4 in / 1 out |
+| `fsh-cone`<br>FSH dependency cone | Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything. | <span class="tg-tag tg-shell">shell</span> | [`fhir-validation`](../reference/skill-instructions/fhir-validation.html) | 5 in / 1 out |
 | `gates`<br>The platform's quality gates | Run the checks CI runs, derived from the workflow rather than listed here. One Tool for all of them, not one per gate: the list is computed from `.github/workflows/code-quality-gates.yml` at call time, so it cannot drift from what CI actually enforces. | <span class="tg-tag tg-shell">shell</span> | [`continual-progress`](../reference/skill-instructions/continual-progress.html)<br>[`platform-gates`](../reference/skill-instructions/platform-gates.html)<br>[`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | 2 in / 1 out |
 | `gates-merged`<br>Gates on the merged tree | Build this branch merged with the current base in a throwaway worktree and run the full `bun run gates` there — the state a merge will actually produce, which neither the branch's CI nor the base's CI evaluates. Exit 0 passes, 1 conflicts or fails, 2 could not determine (never read as clean). The working copy is never touched. | <span class="tg-tag tg-shell">shell</span> | [`prepare-merge`](../reference/skill-instructions/prepare-merge.html) | 1 in / 1 out |
 | `github`<br>GitHub | Open and drive change proposals on GitHub — branches, pull requests, reviews, checks. One forge among possible others; the skills it satisfies name none. | <span class="tg-tag tg-mcp">mcp</span> <span class="tg-tag tg-shell">shell</span> | [`coordinate`](../reference/skill-instructions/coordinate.html)<br>[`pickup`](../reference/skill-instructions/pickup.html)<br>[`prepare-merge-auto`](../reference/skill-instructions/prepare-merge-auto.html)<br>[`watch`](../reference/skill-instructions/watch.html) | 3 in / 1 out |
@@ -125,6 +125,7 @@ tool advertising a capability the graph cannot locate.
 | `paper-preferences`<br>Rendering preferences | Read, write or clear the stored rendering preferences — engine, format, scope, math renderer, print mode. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`build-docs`](../reference/skill-instructions/build-docs.html)<br>[`build-pdf`](../reference/skill-instructions/build-pdf.html) | 10 in / 1 out |
 | `paper-preview`<br>Open a render | Open a rendered PDF, HTML page or image in the system browser, or list the renders available to open. | <span class="tg-tag tg-inproc">inProcess</span> <span class="tg-tag tg-mcp">mcp</span> | [`rendering-auditor`](../reference/skill-instructions/rendering-auditor.html)<br>[`staging-review`](../reference/skill-instructions/staging-review.html) | 3 in / 1 out |
 | `pdf-cover`<br>PDF page raster | Render one page of a PDF to a PNG — the thumbnail a repository listing shows — and print the provenance a catalogue needs to record it as DERIVED: source, digest, page, geometry, renderer. | <span class="tg-tag tg-shell">shell</span> | [`asset-extraction`](../reference/skill-instructions/asset-extraction.html) | 5 in / 1 out |
+| `pin-smart-base-terminology`<br>Snapshot a published IG's terminology at its pinned version | Read every CodeSystem concept out of a smart-base clone and write `external-schemas/who-smart-base.terminology.json`, the offline snapshot `check:term-mapping` resolves its `fhir` target against. 585 concepts across 12 code systems at v1.0.0. | <span class="tg-tag tg-shell">shell</span> | [`vocabulary-authority`](../reference/skill-instructions/vocabulary-authority.html) | 1 in / 1 out |
 | `processes-viewer`<br>Processes viewer | Render the declared BPMN processes as an index page and one page per diagram. | <span class="tg-tag tg-shell">shell</span> | [`graph-rendering`](../reference/skill-instructions/graph-rendering.html) | 1 in / 1 out |
 | `proof-dependency-graph`<br>Proof dependency graph | Render the dependency graph of a paper's proof objects from `proof-objects.json` as SVG (or DOT), each node linking to its anchor in the published PDF. | <span class="tg-tag tg-shell">shell</span> | [`docs-generation`](../reference/skill-instructions/docs-generation.html)<br>[`proof-status-tracking`](../reference/skill-instructions/proof-status-tracking.html) | 4 in / 1 out |
 | `proof-objects-extract`<br>Proof-object extraction | Extract the theorem, lemma and definition environments of a paper's LaTeX chapters into `proof-objects.json` — the manifest the dependency graph and the proof-status update read. | <span class="tg-tag tg-shell">shell</span> | [`proof-status-tracking`](../reference/skill-instructions/proof-status-tracking.html) | 1 in / 1 out |

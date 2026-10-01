@@ -121,7 +121,7 @@ clasificación determina a qué flujo de trabajo ingresa el agente.
 | **Autoría de contenido** | Escribir, editar, ampliar contenido del folio (capítulos, bloques, secciones) | Flujo de trabajo de autoría (paper o document) |
 | **Revisión de contenido** | Revisar, validar, proporcionar comentarios sobre contenido existente | Ciclo de vida de contenido / flujo de trabajo de HCI de edición |
 | **Ingesta de contenido** | Ingerir un documento fuente en el folio | Flujo de trabajo de ingesta de documentos |
-| **Solicitud de funcionalidad (*feature request*)** | Solicitar una nueva capacidad de la plataforma (ver [crdm-detect](../../skills/crdm/crdm-detect.md)) | Flujo de trabajo de requisitos CRDM |
+| **Solicitud de funcionalidad (*feature request*)** | Solicitar una nueva capacidad de la plataforma (ver [crdm-detect](../../skills/sdlc/crdm/crdm-detect.md)) | Flujo de trabajo de requisitos CRDM |
 | **Solicitud de información** | Preguntar sobre la plataforma, el contenido o el proceso | Sin flujo de trabajo — responder directamente |
 | **Invocación de herramientas** | Ejecutar una herramienta específica (`content_validate`, `qa_sweep`, etc.) | Sin flujo de trabajo — ejecutar e informar |
 | **Gestión del plan de trabajo** | Crear, actualizar o consultar beans | Sin flujo de trabajo — ejecutar e informar |
@@ -131,7 +131,7 @@ clasificación determina a qué flujo de trabajo ingresa el agente.
 
 El límite de clasificación crítico se sitúa entre la **autoría de contenido** y
 la **solicitud de funcionalidad** (*feature request*). La habilidad `crdm-detect`
-([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
+([`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md))
 proporciona las señales detalladas de detección. La regla resumida:
 
 > Si implementar la solicitud requeriría cambios en **folio-assistant**
@@ -270,7 +270,7 @@ flujo de trabajo de requisitos existía únicamente como conversación ad-hoc.
 
 ### Cómo ingresa el agente a CRDM
 
-La lógica de detección se encuentra en [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
+La lógica de detección se encuentra en [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md).
 Tres escenarios:
 
 **Nueva sesión, la primera solicitud es una funcionalidad:**
@@ -396,11 +396,11 @@ con sus fuentes autorizadas.
 | Barrido de inicio de sesión | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | Protocolo de beans | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Disciplina de commits y PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Detección de solicitudes de funcionalidad | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
-| Flujo de trabajo de requisitos CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
-| Autoría de contenido (paper) | habilidades authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
-| Autoría de contenido (document) | habilidades folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
-| Ciclo de vida de contenido | habilidades content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
+| Detección de solicitudes de funcionalidad | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
+| Flujo de trabajo de requisitos CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
+| Autoría de contenido (paper) | habilidades authoring-math | [`skills/authoring/authoring-math/`](../../skills/authoring/authoring-math/) |
+| Autoría de contenido (document) | habilidades folio-document-adapter | [`skills/authoring/folio-document-adapter/`](../../skills/authoring/folio-document-adapter/) |
+| Ciclo de vida de contenido | habilidades content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | Ingesta de documentos | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Despacho y coordinación | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Tipos de contenido y adaptadores | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |

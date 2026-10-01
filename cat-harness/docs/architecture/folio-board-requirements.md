@@ -448,7 +448,7 @@ declared parts:
 { id: "library", path: "library/", dependents: "reproduce", graphKinds: ["library"] },
 ```
 
-`dependents: "reproduce"` is the schema saying **this is the reader's own
+`dependents: "reproduce"` (retired 2026-09-30; now the `perInstance` flag on the kind) was the schema saying **this is the reader's own
 copy** — the exact fact R27 reaches for, and it predates R27.
 
 **The literal reading would have broken a consumer, and that was found AFTER

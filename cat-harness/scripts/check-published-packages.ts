@@ -88,10 +88,44 @@ export interface PublishablePackage {
   test: string | undefined;
 }
 
+/**
+ * git could not be asked what the corpus is. Bean `bnuy`.
+ *
+ * This existed as `return []` until 2026-09-30, which is the `dh4f` shape in
+ * the gate whose whole subject is the packages this repository ships: an
+ * unanswerable git and a repository that publishes nothing produced the same
+ * value, so the check reported clean over a corpus it never read.
+ *
+ * Every neighbour already drew the line the other way — `gitCorpus` and
+ * bootstrap's `gitFiles` return `undefined` and say in their docblocks why
+ * `[]` would be wrong, `check-portable-paths` refuses, `kg-audit` reports
+ * `result: "unknown"`. This one was the outlier.
+ *
+ * It throws rather than returning a third value because `publishablePackages`
+ * calls {@link manifests} once per ecosystem and composes the results: an
+ * `undefined` would have to be threaded through each call site, and a call
+ * site that forgets is back to the silent empty. A throw cannot be forgotten.
+ */
+export class GitUnanswerable extends Error {
+  constructor(
+    readonly pathspec: string,
+    readonly why: string,
+  ) {
+    super(`git could not list \`${pathspec}\` — ${why}. That is not "no packages"; nothing was checked.`);
+    this.name = "GitUnanswerable";
+  }
+}
+
 /** The manifests git accounts for, for one filename. */
 function manifests(root: string, glob: string): string[] {
-  const r = spawnSync("git", ["ls-files", "-z", "--", glob], { cwd: root, encoding: "utf-8" });
-  if (r.error !== undefined || r.status !== 0) return [];
+  // 64 MiB for the same reason `gitCorpus` carries it: node caps a child's
+  // stdout at 1 MiB and sets ENOBUFS rather than truncating. This call is
+  // pathspec-scoped so it is far from that limit, but it is the same class,
+  // and this is the call site where the consequence was worst.
+  const r = spawnSync("git", ["ls-files", "-z", "--", glob], { cwd: root, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
+  if (r.error !== undefined || r.status !== 0) {
+    throw new GitUnanswerable(glob, r.error?.message ?? ((r.stderr || "").trim() || `git exited ${String(r.status)}`));
+  }
   return r.stdout.split("\0").filter((p) => p.length > 0);
 }
 
@@ -190,7 +224,21 @@ function preparePython(abs: string): { ok: true } | { ok: false; why: string } {
 }
 
 if (import.meta.main) {
-  const pkgs = publishablePackages();
+  // `publishablePackages` asks git once per ecosystem and concatenates, so a
+  // git that fails on ONE pathspec used to delete that ecosystem from the
+  // corpus while the others still answered — and the vacuity guard below
+  // cannot see that, because `pkgs.length` is not 0. A partial corpus wearing
+  // a total's clothes is the failure this whole file was written about.
+  let pkgs: PublishablePackage[];
+  try {
+    pkgs = publishablePackages();
+  } catch (e) {
+    if (!(e instanceof GitUnanswerable)) throw e;
+    console.error(`\n✗ ${e.message}`);
+    console.error("  The corpus is the git index, so an unanswerable git is not an empty");
+    console.error("  repository. Nothing was examined and nothing is claimed.");
+    process.exit(2);
+  }
 
   // Vacuity before the verdict, for the same reason every sweep here does it.
   if (pkgs.length === 0) {

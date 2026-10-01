@@ -1,0 +1,20 @@
+<!-- kg:subgraph:begin -->
+# PROV-O: The PROV Ontology W3C Recommendation 30 April 2013 This version: Latest published version: Implementation report: Previous version: Editors:
+
+ingested source material — attributed to its document, not folio content
+
+Held in the library [`cat-harness/library/`](../README.md) as `w3c-2013-prov-o`.
+
+| | |
+|---|---|
+| document id | `w3c-2013-prov-o` |
+| source file | `w3c-2013-prov-o.pdf` (sha256 `9238233b5b20…`) |
+| pages | 69 |
+| provenance | ingested |
+
+| holds | count |
+|---|---|
+| [sections](sections/) | 66 |
+| [blocks](blocks/) | 33 |
+| images | 0 |
+<!-- kg:subgraph:end -->

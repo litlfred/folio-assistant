@@ -127,6 +127,6 @@ takes a few minutes; `api/` is most of it. A family-only check is seconds.
   standalone page. `api/` was decided by rendering (PR #1236).
 - Verified on the published site: 3429/3429 (see above).
 - The lesson about validating a measurement is in
-  `skills/folio-core/rendered-verification.md`, where the owner chose to put
+  `skills/sdlc/sdlc-core/rendered-verification.md`, where the owner chose to put
   it: known positive AND known negative, one positive per way the thing can
   appear, and the sparse `gh-pages` clone for site-wide counts.

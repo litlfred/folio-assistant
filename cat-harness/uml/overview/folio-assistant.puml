@@ -9,30 +9,6 @@ skinparam packageStyle rectangle
 hide empty methods
 
 package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
-  class "Asset" as folio_assistant_uploads_folio_extraction_v1_Asset <<json: ExtractionSchema>> #f4f4f1 {
-    path [1] : string
-    bytes [1] : integer
-    mediaType [0..1] : string
-    modifiedAt [0..1] : string
-    sha256 [0..1] : string
-    localPath [0..1] : string
-    extractedBecause [0..1] : string
-  }
-  class "Omitted" as folio_assistant_uploads_folio_extraction_v1_Omitted <<json: ExtractionSchema>> #f4f4f1 {
-    pattern [1] : string
-    reason [1] : string
-    count [1] : integer
-  }
-  class "folio-extraction/v1" as folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 <<json: ExtractionSchema>> #f4f4f1 {
-    $schema [1] : 'folio-extraction/v1'
-    container [1] : string
-    method [1] : zip | pdf | saved-webpage | tarball
-    capturedAt [0..1] : string
-    producer [0..1] : string
-    readAt [1] : string
-    assets [0..*] : Asset[]
-    omitted [0..*] : Omitted[]
-  }
   class "File" as folio_assistant_uploads_folio_intake_v1_File <<json: IntakeSchema>> #f4f4f1 {
     path [1] : string
     bytes [0..1] : integer
@@ -57,10 +33,121 @@ package "folio-assistant/uploads" as pkg_folio_assistant_uploads <<uploads>> {
 package "folio-assistant/root-tools" as pkg_folio_assistant_root_tools <<code>> {
   note "code: no node schema declared\n(no validator registered: could not determine)" as n_folio_assistant_root_tools_code
 }
+package "folio-assistant/fsh-guts" as pkg_folio_assistant_fsh_guts <<fsh-guts>> {
+  class "FshGutsNode" as folio_assistant_fsh_guts_FshGutsNode <<json: FshGutsNodeSchema>> #f4f4f1 {
+    $schema [1] : 'folio-fsh-guts/v1'
+    title [1] : string
+    kind [1] : string
+    movedOn [0..1] : string
+    movedFrom [0..1] : string
+    issue [0..1] : string | number
+    bean [0..1] : string
+    summary [0..1] : string
+  }
+}
+package "folio-assistant/beans" as pkg_folio_assistant_beans <<beans>> {
+  class "folio-workflow-instance/v1" as folio_assistant_beans_folio_workflow_instance_v1 <<ts: InstanceState>> #f6eedf {
+    $schema [0..1] : string
+    id [1] : string
+    processId [1] : string
+    source [1] : string
+    subject [1] : string
+    bean [0..1] : string
+    tokens [1] : string[]
+    arrivals [1] : Record<string, string[]>
+    history [1] : HistoryEntry[]
+    status [1] : 'running' | 'completed'
+    startedAt [1] : string
+    updatedAt [1] : string
+    children [0..1] : Record<string, InstanceState>
+  }
+  class "Axe" as folio_assistant_beans_folio_session_survey_v1_Axe <<json: SessionSurveySchema>> #f6eedf {
+    axis [1] : string
+    covered [1] : boolean
+    finding [1] : string
+  }
+  class "folio-session-survey/v1" as folio_assistant_beans_folio_session_survey_v1_folio_session_survey_v1 <<json: SessionSurveySchema>> #f6eedf {
+    $schema [1] : 'folio-session-survey/v1'
+    from [1] : string
+    to [1] : string
+    branch [1] : string
+    takenAt [1] : string
+    by [1] : string
+    commits [1] : integer
+    axes [1..*] : Axe[]
+  }
+}
+package "folio-assistant/todos" as pkg_folio_assistant_todos <<todos>> {
+  class "folio-board/v1" as folio_assistant_todos_folio_board_v1_folio_board_v1 <<json: BoardSchema>> #f6eedf {
+    $schema [1] : 'folio-board/v1'
+    id [1] : string
+    title [1] : string
+    filter [0..1] : object
+  }
+}
+package "folio-assistant/memory" as pkg_folio_assistant_memory <<memory, waiver>> {
+  class "AlsoAbout" as folio_assistant_memory_AlsoAbout <<json: MemoryNodeSchema>> #f6eedf {
+    kind [1] : 'block'
+    label [1] : string
+  }
+  class "MemoryNode" as folio_assistant_memory_MemoryNode <<json: MemoryNodeSchema>> #f6eedf {
+    id [1] : string
+    summary [1] : string
+    comment [0..1] : string
+    createdAt [1] : string
+    updatedAt [0..1] : string
+    targetLabel [0..1] : string
+    anchor [0..1] : object
+    alsoAbout [0..*] : AlsoAbout[]
+    tags [0..1] : object
+    label [1] : stable | trap | baseline
+    measured [0..1] : object
+    archived [0..1] : boolean
+    detail [0..1] : string
+    $schema [1] : 'folio-memory/v1'
+  }
+  class "WaiverNode" as folio_assistant_memory_WaiverNode <<json: WaiverNodeSchema>> #f6eedf {
+    $schema [1] : 'folio-waiver/v1'
+    id [1] : string
+    grantedBy [1] : string
+    quote [1] : string
+    gate [1] : merge-to-main | bean-close | deletion | swarm-spawn | process-reentry | issue-close
+    scope [1] : string
+    grantedAt [1] : string
+    expires [1] : string
+    bounds [1] : string
+  }
+}
+package "folio-assistant/interaction" as pkg_folio_assistant_interaction <<interaction>> {
+  class "folio-interaction/v1" as folio_assistant_interaction_folio_interaction_v1_folio_interaction_v1 <<json: InteractionNodeSchema>> #f6eedf {
+    $schema [1] : 'folio-interaction/v1'
+    $comment [0..1] : string
+    users [1] : map<object>
+    default [0..1] : object
+  }
+}
+package "folio-assistant/issue-marks" as pkg_folio_assistant_issue_marks <<issue-marks>> {
+  class "folio-issue-mark/v1" as folio_assistant_issue_marks_folio_issue_mark_v1_folio_issue_mark_v1 <<json: IssueMarkSchema>> #f6eedf {
+    $schema [1] : 'folio-issue-mark/v1'
+    issue [1] : string
+    lastCommentId [1] : number
+    lastUpdatedAt [0..1] : string
+    checkedAt [1] : string
+    note [0..1] : string
+  }
+}
+package "folio-assistant/root-docs" as pkg_folio_assistant_root_docs <<docs>> {
+  note "docs: no node schema declared\n(no node here carries a $schema family docs names (11 named): could not determine)" as n_folio_assistant_root_docs_docs
+}
 
-folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Asset : assets
-folio_assistant_uploads_folio_extraction_v1_folio_extraction_v1 *-- "0..*" folio_assistant_uploads_folio_extraction_v1_Omitted : omitted
 folio_assistant_uploads_folio_intake_v1_folio_intake_v1 *-- "0..*" folio_assistant_uploads_folio_intake_v1_File : files
-' grid: portrait, 1 column(s) — pkg_folio_assistant_uploads pkg_folio_assistant_root_tools
-pkg_folio_assistant_uploads -[hidden]down- pkg_folio_assistant_root_tools
+folio_assistant_beans_folio_session_survey_v1_folio_session_survey_v1 *-- "1..*" folio_assistant_beans_folio_session_survey_v1_Axe : axes
+folio_assistant_memory_MemoryNode *-- "0..*" folio_assistant_memory_AlsoAbout : alsoAbout
+' grid: portrait, 3 column(s) — pkg_folio_assistant_uploads pkg_folio_assistant_root_tools pkg_folio_assistant_fsh_guts pkg_folio_assistant_beans pkg_folio_assistant_todos pkg_folio_assistant_memory pkg_folio_assistant_interaction pkg_folio_assistant_issue_marks pkg_folio_assistant_root_docs
+pkg_folio_assistant_uploads -[hidden]down- pkg_folio_assistant_beans
+pkg_folio_assistant_root_tools -[hidden]down- pkg_folio_assistant_todos
+pkg_folio_assistant_fsh_guts -[hidden]down- pkg_folio_assistant_memory
+pkg_folio_assistant_beans -[hidden]down- pkg_folio_assistant_interaction
+pkg_folio_assistant_todos -[hidden]down- pkg_folio_assistant_issue_marks
+pkg_folio_assistant_memory -[hidden]down- pkg_folio_assistant_root_docs
 @enduml

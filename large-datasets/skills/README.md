@@ -11,4 +11,5 @@ Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `large-dat
 | [`materialize-on-demand.md`](materialize-on-demand.md) | After bootstrap, a person asks for part of a remote subgraph to be held locally. |  |
 | [`materialize-remote.md`](materialize-remote.md) | Landing remote content locally — the five gates, the three states, and the two purposes. |  |
 | [`package-manifest.json`](package-manifest.json) | Taking a usable subset of a corpus this instance will never hold, and refreshing it. |  |
+| [`sample-import.md`](sample-import.md) | Testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store: scope it, let materialize-remote gate it, land it in the l… |  |
 <!-- kg:subgraph:end -->

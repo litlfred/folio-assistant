@@ -9,6 +9,14 @@ derived from it.
 | the evidence behind a recommendation | FHIR profiles and terminology → `smart-ig` |
 | figures and tables a DTH cites | the SMART rules and data models → `smart-base` |
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Why it declares nothing yet](#why-it-declares-nothing-yet)
+
+<!-- readme:toc:end -->
+
 ## Why it declares nothing yet
 
 Because nothing is here yet, and saying otherwise would be worse than saying

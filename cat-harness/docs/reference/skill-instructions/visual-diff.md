@@ -6,19 +6,24 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/visual-diff.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/visual-diff.md) — do not edit here.
+> Generated from [`cat-harness/skills/sdlc/sdlc-core/visual-diff.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/visual-diff.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/visual-diff.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/sdlc/sdlc-core/visual-diff.md){: .fa-edit-source }
 
 {% raw %}
 # Visual diff — see a figure change
 
-> Skill id: `visual-diff` · Package: `folio-core` · Bean: `0rxe` · Epic: `q4jm`
+> Skill id: `visual-diff` · Package: `sdlc-core` · Bean: `0rxe` · Epic: `q4jm`
 
 For a figure, a diagram, a table, an equation or a simulator, the change a
 reviewer must judge is how the block LOOKS. The Markdown or SVG diff of a
 recoloured bar chart is noise. So the staging job pictures each such block on
 both sides, and the review page shows the pictures.
+
+For a before/after of anything the staging job does not picture (page
+chrome, scroll behaviour, a PDF page, an IG page, a slide), and for the rules
+every reviewer-facing pair follows, see
+[`before-after-preview`](before-after-preview.md).
 
 ## The owner's rulings this follows
 

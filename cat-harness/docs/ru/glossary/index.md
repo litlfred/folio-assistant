@@ -16,6 +16,22 @@ description: "ru: 30/38 — авторских терминов переведе
 
 **30 / 38** авторских терминов переведены полностью. Эти переводы неофициальны: они подготовлены агентом и ещё не утверждены человеком (issue #206). Текст с пометкой «не переведено» — исходный; он показан, а не скрыт.
 
+## Already somebody else's concept? _(не переведено)_
+
+Extracted candidates are minted from this repository's own assets and are not, by themselves, checked against any vocabulary. `check:term-mapping` asks whether each already exists as a concept somebody is authoritative for — SKOS for what a term MEANS, FHIR for a clinical code's operational semantics — and the two are separate questions with separate answers. _(не переведено)_
+
+The table's labels are in the source language: it reports counts per scheme, computed by the gate rather than authored here. _(не переведено)_
+
+<table class="fa-gloss-mapping">
+<caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
+<thead><tr><th>target</th><th>mapped</th><th>unmapped</th><th>undetermined</th><th>why undetermined</th></tr></thead>
+<tbody><tr><td><code>fhir</code></td><td>0</td><td>2746</td><td>0</td><td>—</td></tr><tr><td><code>skos</code></td><td>0</td><td>2746</td><td>0</td><td>—</td></tr></tbody>
+</table>
+<p class="fa-gloss-mapping-note"><strong>Undetermined is never “no match”.</strong> 
+A vocabulary that could not be reached has said nothing, and the column above keeps that 
+apart from a checked miss. The counts are reported and not graded: an unmapped candidate may 
+be a term this corpus is right to coin.</p>
+
 ## Страницы
 
 Извлечённые кандидаты не переводятся: они взяты дословно из ресурсов графа знаний и не отредактированы. Их страницы — на исходном языке. [Глоссарий на исходном языке со всеми извлечёнными терминами]({{ '/glossary/' | relative_url }}).
