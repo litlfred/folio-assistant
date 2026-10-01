@@ -28,7 +28,7 @@ it can be wrong are not symmetric:
 
 The second is the expensive one precisely because it looks like the system
 working. Same asymmetry as rendering "could not check" as green
-([`ci-health`](../../folio-core/ci-health.md)): a confident wrong answer costs more than a
+([`ci-health`](../../sdlc/sdlc-core/ci-health.md)): a confident wrong answer costs more than a
 visible absence.
 
 So an **asserted but unverified** constraint is left OUT of the gate and
@@ -71,6 +71,6 @@ answer.
 
 | | |
 |---|---|
-| the three states, and never rendering the third as clean | [`ci-health`](../../folio-core/ci-health.md) |
+| the three states, and never rendering the third as clean | [`ci-health`](../../sdlc/sdlc-core/ci-health.md) |
 | where a new rule belongs before you write it | [`placement`](../../kg/kg-core/placement.md) |
 | re-measure rather than quoting a number | [`uses-editorial-review`](../../authoring/authoring-core/uses-editorial-review.md) |

@@ -46,7 +46,7 @@ lists** that answer three questions:
 `permissions` draws on 14 flat ids in `skills/permissions/permissions.json`.
 They have no hierarchy, no scope and no standard behind them, and nothing
 enforces them (bean `bkje`). Identity exists only as prose in
-`skills/folio-core/deployment-auth.md`, as a gateway role (viewer,
+`skills/sdlc/sdlc-core/deployment-auth.md`, as a gateway role (viewer,
 collaborator, owner) that joins to nothing here.
 
 ## 2. The simplified model

@@ -129,9 +129,9 @@ convention.
 - **Built on**: `integration-watcher` (the audit pipeline this skill
   maintains)
 - **Sibling commands**:
-  - [`/integration-watch`](../../folio-core/integration-watch.md) — read-only monitor
+  - [`/integration-watch`](../../sdlc/sdlc-core/integration-watch.md) — read-only monitor
     over the sidecars
-  - [`/integration-backlog`](../../folio-core/integration-backlog.md) — write-side drain
+  - [`/integration-backlog`](../../sdlc/sdlc-core/integration-backlog.md) — write-side drain
     of the open findings
 - **CLI**: `content/pipeline/integration-audit.ts`
 

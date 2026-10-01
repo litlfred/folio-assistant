@@ -121,7 +121,7 @@ classification détermine le flux de travail que l'agent intègre.
 | **Rédaction de contenu** | Écrire, modifier, enrichir le contenu du folio (chapitres, blocs, sections) | Flux de travail de rédaction (article ou document) |
 | **Relecture de contenu** | Examiner, valider, fournir des retours sur le contenu existant | Flux de travail du cycle de vie du contenu / édition-IHM (editing-HCI) |
 | **Ingestion de contenu** | Ingérer un document source dans le folio | Flux de travail d'ingestion de documents |
-| **Demande de fonctionnalité** | Demander une nouvelle capacité pour la plateforme (voir [crdm-detect](../../skills/crdm/crdm-detect.md)) | Flux de travail des exigences CRDM |
+| **Demande de fonctionnalité** | Demander une nouvelle capacité pour la plateforme (voir [crdm-detect](../../skills/sdlc/crdm/crdm-detect.md)) | Flux de travail des exigences CRDM |
 | **Demande d'information** | Poser des questions sur la plateforme, le contenu ou le processus | Aucun flux de travail — réponse directe |
 | **Invocation d'outil** | Exécuter un outil spécifique (`content_validate`, `qa_sweep`, etc.) | Aucun flux de travail — exécuter et rendre compte |
 | **Gestion du plan de travail** | Créer, mettre à jour ou interroger des beans | Aucun flux de travail — exécuter et rendre compte |
@@ -131,7 +131,7 @@ classification détermine le flux de travail que l'agent intègre.
 
 La frontière critique de classification se situe entre la **rédaction de contenu** et
 la **demande de fonctionnalité**. La compétence `crdm-detect`
-([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
+([`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md))
 fournit les signaux de détection détaillés. La règle générale de synthèse :
 
 > Si la mise en œuvre de la requête nécessite des modifications de **folio-assistant**
@@ -273,7 +273,7 @@ flux de travail des exigences n'existait que sous la forme de discussions ponctu
 
 ### Comment l'agent entre dans CRDM
 
-La logique de détection se trouve dans [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
+La logique de détection se trouve dans [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md).
 Trois scénarios :
 
 **Nouvelle session, la première requête est une fonctionnalité :**
@@ -399,8 +399,8 @@ dispersés à travers le dépôt. Cette section rattache le comportement consoli
 | Balayage au début de session | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | Protocole des beans | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Discipline des commits et PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Détection des demandes de fonctionnalités | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
-| Flux de travail des exigences CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
+| Détection des demandes de fonctionnalités | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
+| Flux de travail des exigences CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
 | Rédaction de contenu (article) | compétences authoring-math | [`skills/authoring/authoring-math/`](../../skills/authoring/authoring-math/) |
 | Rédaction de contenu (document) | compétences folio-document-adapter | [`skills/authoring/folio-document-adapter/`](../../skills/authoring/folio-document-adapter/) |
 | Cycle de vie du contenu | compétences content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |

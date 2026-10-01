@@ -1,7 +1,7 @@
 ---
 name: devils-advocate-watcher
 user_invocable: true
-inherits: folio-core/integration-watcher
+inherits: sdlc-core/integration-watcher
 watch_arg: devils-advocate
 description: >
   Logical devil's-advocate integration watcher — for every content
@@ -24,7 +24,7 @@ allowed-tools: Read Edit Write Bash Grep Glob Agent Monitor Skill
 
 # /devils-advocate-watcher
 
-A concrete instance of [`integration-watcher`](../../folio-core/integration-watcher.md).
+A concrete instance of [`integration-watcher`](../../sdlc/sdlc-core/integration-watcher.md).
 The parent encodes the shared mechanics; this file fills the nine
 domain-specific slots A–I. This watcher's job is **adversarial**: it
 does not check style or wiring, it tries to *break* each block — to

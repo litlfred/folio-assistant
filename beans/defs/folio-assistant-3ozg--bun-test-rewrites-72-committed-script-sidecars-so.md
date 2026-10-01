@@ -480,7 +480,7 @@ upper bound (`3srh`). Corrected in #1450; the row now reads three.
 **The `skills` half: yes, and this is the resolution.** What survived the pin was
 never code, it was a *reading rule* — and it was living in my check-in prompts and
 commit messages, which is to say nowhere a next session looks. New skill
-[`gate-tree-mutation`](../../cat-harness/skills/folio-core/gate-tree-mutation.md),
+[`gate-tree-mutation`](../../cat-harness/skills/sdlc/sdlc-core/gate-tree-mutation.md),
 carried by the `authoring-agent` role, `platform-gates` pointing at it:
 
 - `NOT clean` is a verdict about the **run**, not the diff — the gates after a

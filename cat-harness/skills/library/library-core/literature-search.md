@@ -151,5 +151,5 @@ repeating the usual story as fact.
 - [`evidence-appraisal`](../../authoring/content-lifecycle/evidence-appraisal.md) — appraising
   what was found
 - [`evidence-review`](../../authoring/authoring-core/evidence-review.md) — separation of appraiser from drafter
-- [`bean-blocking`](../../folio-core/bean-blocking.md) — recording outcome 2 so it does not read
+- [`bean-blocking`](../../sdlc/sdlc-core/bean-blocking.md) — recording outcome 2 so it does not read
   as abandoned

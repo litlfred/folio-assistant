@@ -17,7 +17,7 @@
  * ## Why prose, when front-matter links are already checked
  *
  * Because that is where blockers are actually written. `beans` has no blocker
- * field, so [`bean-blocking.md`](../skills/folio-core/bean-blocking.md) puts
+ * field, so [`bean-blocking.md`](../skills/sdlc/sdlc-core/bean-blocking.md) puts
  * them in the body — and the CLI's link check covers front matter. The one
  * place the convention puts the fact is the one place nothing read.
  *
@@ -460,7 +460,7 @@ function formatReport(r: BeanBodyReport): string {
   for (const k of r.stale) out.push(`  · baseline entry ${k} no longer matches — repaired; remove it from ${BASELINE_FILE}`);
   out.push("");
   out.push("  Outstanding defects are repaired by the bean's OWNER, not by this check and not by whoever ran it.");
-  out.push("  A blocker that can never lift is withdrawn with its reason — see skills/folio-core/bean-blocking.md.");
+  out.push("  A blocker that can never lift is withdrawn with its reason — see skills/sdlc/sdlc-core/bean-blocking.md.");
   return out.join("\n");
 }
 

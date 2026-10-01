@@ -83,6 +83,6 @@ bundle exec jekyll serve
 ## Shipping a change
 
 Verify → confirm mergeable → push → (only if asked) open a PR. See
-`skills/folio-core/prepare-merge.md`. Keep the **formalism of the framework
+`skills/sdlc/sdlc-core/prepare-merge.md`. Keep the **formalism of the framework
 separate from content** — content belongs in its own repository, and any content
 in these docs is illustrative only.

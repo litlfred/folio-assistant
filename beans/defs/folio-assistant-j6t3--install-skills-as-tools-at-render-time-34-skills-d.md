@@ -30,7 +30,7 @@ parent: folio-assistant-vuip
 So **30 skills say a human may invoke them by name, and no host can.**
 `coordinate` is one of them — and this bean exists because the owner typed
 `/coordinate` in this session and it did not run, while
-`cat-harness/skills/folio-core/coordinate.md` sat in the repo declaring itself
+`cat-harness/skills/sdlc/sdlc-core/coordinate.md` sat in the repo declaring itself
 invocable.
 
 `.claude/commands/` is a HAND-MAINTAINED LIST of four against thirty-four
@@ -222,7 +222,7 @@ gap is **32**, not 30.
 ### The fourth command is the inverse of this bean's defect
 
 `.claude/commands/prepare-merge.md` exists and works — `AGENTS.md` documents
-`/prepare-merge`. But `cat-harness/skills/folio-core/prepare-merge.md` has **no
+`/prepare-merge`. But `cat-harness/skills/sdlc/sdlc-core/prepare-merge.md` has **no
 YAML front matter at all**: it opens `# Prepare-merge`, declaring neither
 `name:` nor `user_invocable: true`.
 

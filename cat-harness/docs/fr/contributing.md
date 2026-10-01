@@ -85,6 +85,6 @@ bundle exec jekyll serve
 ## Livrer une modification
 
 Vérifier → confirmer l'aptitude à la fusion → pousser (push) → (uniquement sur demande) ouvrir une PR. Voir
-`skills/folio-core/prepare-merge.md`. Maintenez le **formalisme du framework
+`skills/sdlc/sdlc-core/prepare-merge.md`. Maintenez le **formalisme du framework
 séparé du contenu** — le contenu a sa place dans son propre dépôt, et tout contenu
 dans cette documentation n'est fourni qu'à titre d'illustration.

@@ -267,7 +267,7 @@ bean
 </dt>
 <dd>
 <p>One item of the agent work plan, held by the beans CLI in the committed beans/ store, with a status, a parent and the beans it blocks.</p>
-<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/bean</code> · defined by <a href="https://github.com/hmans/beans">github.com/hmans/beans</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/todo-manager.md"><code>cat-harness/skills/folio-core/todo-manager.md</code></a></p>
+<p class="fa-gloss-meta">Folio Assistant platform terms (cat-harness) · <code>https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/platform/bean</code> · defined by <a href="https://github.com/hmans/beans">github.com/hmans/beans</a> · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/sdlc/sdlc-core/todo-manager.md"><code>cat-harness/skills/sdlc/sdlc-core/todo-manager.md</code></a></p>
 </dd>
 </dl>
 

@@ -106,7 +106,7 @@
  *
  * **It does not read `## Done when`.** 607 of 888 beans carry one (180 of 254
  * open): it is the house shape for a work plan and the skill
- * [`opening-brief.md`](../skills/folio-core/opening-brief.md) asks for it. The
+ * [`opening-brief.md`](../skills/sdlc/sdlc-core/opening-brief.md) asks for it. The
  * brief suggested flagging a Done-when that "restates the skill's criteria
  * rather than naming the work outstanding" — that is a judgement about
  * MEANING, which is the dead end above wearing a different hat. Left to the

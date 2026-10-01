@@ -109,7 +109,7 @@ export interface Finding {
  * `state: "unknown"` is a THIRD state and never collapses to "nothing found".
  * The input comes from an external service, so a failed or absent listing is
  * the one outcome this must not render as clean — the rule
- * [`ci-health`](../../skills/folio-core/ci-health.md) states as *"could not
+ * [`ci-health`](../../skills/sdlc/sdlc-core/ci-health.md) states as *"could not
  * check is never green"*.
  */
 export type Report =
