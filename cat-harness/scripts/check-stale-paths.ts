@@ -374,7 +374,7 @@ function formatReport(r: StalePathReport): string {
   if (r.findings.length === 0) return out.join("\n");
   out.push("");
   out.push("  A path through finished work reads to the next agent as work still to do.");
-  out.push("  Repaired by the bean's OWNER — see skills/folio-core/bean-blocking.md.");
+  out.push("  Repaired by the bean's OWNER — see skills/sdlc/sdlc-core/bean-blocking.md.");
   out.push("  Prose that merely MENTIONS a closed bean is not examined and is not a pass;");
   out.push("  only an arrow chain, a numbered step under a path heading, and an UNCHECKED");
   out.push("  Done-when clause that names one as a PRECONDITION are read.");

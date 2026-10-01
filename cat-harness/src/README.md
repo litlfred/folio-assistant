@@ -8,6 +8,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holdin
 | file | what it is | used by |
 |---|---|---|
 | [`builtin-adapters.ts`](builtin-adapters.ts) | a file |  |
+| [`content-types.ts`](content-types.ts) | a file |  |
 | [`google-drive-mcp.py`](google-drive-mcp.py) | a file |  |
 | [`index.ts`](index.ts) | a file |  |
 | [`qa-agent-write.ts`](qa-agent-write.ts) | a file |  |
@@ -18,7 +19,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `cat-harness-src`, holdin
 | [`types.ts`](types.ts) | a file |  |
 | [`auth/`](auth/) | 1 file | |
 | [`blocks/`](blocks/) | 3 files | |
-| [`core/`](core/) | 13 files | |
+| [`core/`](core/) | 14 files | |
 | [`crdm/`](crdm/) | 1 file | |
 | [`docs/`](docs/) | 1 file | |
 | [`impact/`](impact/) | 1 file | |

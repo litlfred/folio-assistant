@@ -212,7 +212,7 @@ is on the publish branch belongs where its subject's absence can be seen.
 | | |
 |---|---|
 | the process | [`staging-render-log.bpmn`](../../processes/staging-render-log.html) |
-| the entry shape it specialises | `schemas/log-entry.ts`, `skills/folio-core/activity-log.md` |
+| the entry shape it specialises | `schemas/log-entry.ts`, `skills/sdlc/sdlc-core/activity-log.md` |
 | why the publish branch loses things | bean `plj1`, `scripts/restore-staging.ts` |
 | why a closed PR is not an abandoned branch | bean `w2g5` |
 | the path hazard | bean `fuzm` |

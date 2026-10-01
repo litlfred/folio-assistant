@@ -3,6 +3,19 @@
 **Taking a subset of a corpus you will never hold** — and publishing artifacts
 too big for the site that describes them.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Why this is its own subgraph](#why-this-is-its-own-subgraph)
+- [Two worked descriptors, and the second is the point](#two-worked-descriptors-and-the-second-is-the-point)
+- [Artifact stores: the host is a declaration](#artifact-stores-the-host-is-a-declaration)
+  - [Why a large artifact needs somewhere else to go](#why-a-large-artifact-needs-somewhere-else-to-go)
+  - [Staging builds no index, and that is correctness](#staging-builds-no-index-and-that-is-correctness)
+- [Why lunr cannot be the answer at scale](#why-lunr-cannot-be-the-answer-at-scale)
+
+<!-- readme:toc:end -->
+
 ## Why this is its own subgraph
 
 [`materialize-remote`](../folio-assistant-core/schemas/materialization.ts)

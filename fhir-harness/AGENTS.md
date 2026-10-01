@@ -30,11 +30,15 @@ as an **overlay**. This layer must not gain a `do_dak` flag: that would be this
 layer knowing about DAKs.
 
 Placement:
-[`smart-stack-layering`](../cat-harness/skills/authoring-who-smart-guidelines/smart-stack-layering.md).
+[`smart-stack-layering`](../cat-harness/skills/authoring/authoring-who-smart-guidelines/smart-stack-layering.md).
 
 ## What is here
 
-`skills/fhir-ig-base/` — `ig-build-pipeline` and `ig-render-jekyll`;
+`skills/fhir-ig-base/`: `ig-build-pipeline`, `ig-render-jekyll`,
+`ig-publisher-reduction` (the five phases), `ig-publisher-fork` (the AST
+work, built as a library on top of the Publisher) and `ig-ast-delta` (list,
+check, diff and render IG ASTs; `scripts/ig-ast.ts`). The package manifest is
+the list, not this sentence.
 `skills/fhir-client/` — `smart-launch` and `fhir-client-operations`, which use
 the SMARTerFHIR library. Nothing else, and the declaration says so: a declared-but-absent directory is the
 `dh4f` defect, where a consumer scans nothing and reports a clean run over it.

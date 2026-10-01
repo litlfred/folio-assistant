@@ -5,7 +5,7 @@
  * index.
  *
  * Sources (the actual skill bodies — single source of truth):
- *   skills/content-lifecycle/*.md   → "Lifecycle skills"
+ *   skills/authoring/content-lifecycle/*.md   → "Lifecycle skills"
  *   src/skills/*.md                  → "Agent skills"
  *
  * Output (consumed by Jekyll → HTML on GitHub Pages):
@@ -296,7 +296,7 @@ interface Group {
    *
    * The output directory is flat, so two groups' identical basenames would have
    * one silently overwrite the other. `.claude/skills/local/todo-manager.md`
-   * and `skills/folio-core/todo-manager.md` collide that way.
+   * and `skills/sdlc/sdlc-core/todo-manager.md` collide that way.
    *
    * **The divergence that made this urgent is RESOLVED (bean `tdmg`,
    * 2026-09-19); the prefix is still required.** They were 369 and 396 lines
@@ -398,6 +398,8 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   "ui-core": "Rendering, UI and publication surfaces (ui-core)",
   "conduct-core": "Agent conduct (conduct-core)",
   "process-core": "Process model — roles, authorization, methodology (process-core)",
+  "authoring-core": "Content authoring and editorial review (authoring-core)",
+  "sdlc-core": "Software delivery practice — work plan, review, merge, CI, coordination (sdlc-core)",
   theming: "Theming (theming)",
   // Keyed by basename: a package subdirectory of the declared `skills/`,
   // like `theming` above. Bean `6bhf`, owner 2026-09-25 — "bean as
@@ -441,9 +443,9 @@ const SKILLS_CATEGORIES: Record<string, string> = {
   // instead. The old keys would not have failed loudly — they would simply
   // never match, and the generator throws naming the id it wanted, which is
   // how this was caught rather than shipped as two uncategorised packages.
-  crdm: "CRDM requirements methodology (skills/crdm)",
+  crdm: "CRDM requirements methodology (skills/sdlc/crdm)",
   raci: "RACI involvement model (skills/process/raci)",
-  "spec-kit": "Spec Kit spec-driven development (skills/spec-kit)",
+  "spec-kit": "Spec Kit spec-driven development (skills/sdlc/spec-kit)",
   // Synced from claude-scientific-skills at a pinned commit (issue #556):
   // somebody else's bytes, one package per skill so upstream's relative links
   // resolve. `remote-stubs` was retired when these arrived.

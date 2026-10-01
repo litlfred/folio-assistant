@@ -6,7 +6,7 @@ allowed-tools: Bash(git*), Bash(bun*), Bash(beans*), Bash(cat-harness/scripts/*)
 
 # /goal-review — what happened, what is stalled, what next for each goal
 
-Runs the [`goal-review`](../../cat-harness/skills/folio-core/goal-review.md)
+Runs the [`goal-review`](../../cat-harness/skills/sdlc/sdlc-core/goal-review.md)
 skill. Read it first; this file only parses the arguments and names the order.
 
 ## Arguments

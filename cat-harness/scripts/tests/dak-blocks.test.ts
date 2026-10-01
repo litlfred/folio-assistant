@@ -23,6 +23,7 @@ import {
   DAK_COMPONENT_FIELDS,
   DAK_COMPONENT_KINDS,
   DAK_KIND_BUILDERS,
+  DAK_UNFORMALIZED_COMPONENTS,
   DAK_LABEL_PREFIXES,
   BLOCK_KINDS,
   ALL_BLOCK_KINDS,
@@ -238,9 +239,9 @@ describe("WHO DAK component coverage", () => {
   // DAK components". Anything counting against an older source is off by one,
   // so the list is pinned here rather than recited from memory at each use.
   test("there are nine components, ending with the one added later", () => {
-    expect(DAK_COMPONENTS.length).toBe(9);
+    expect(DAK_COMPONENTS.length).toBe(10);
     expect(DAK_COMPONENTS[0]).toBe("health-interventions-and-recommendations");
-    expect(DAK_COMPONENTS[8]).toBe("test-scenarios");
+    expect(DAK_COMPONENTS[9]).toBe("test-scenarios");
   });
 
   test("every component is described", () => {
@@ -315,7 +316,9 @@ describe("the component list against WHO's own logical model", () => {
       [...fsh.matchAll(/^\* (\w+) 0\.\.\* (\w+Source)\b/gm)].map((m) => m[1]!),
     );
     expect(declared.size).toBe(9);
-    for (const c of DAK_COMPONENTS) {
+    // The owner's tenth, scheduling logic, is not in WHO's model yet — it is
+    // named as unformalized rather than checked against a field it lacks.
+    for (const c of DAK_COMPONENTS.filter((c) => !DAK_UNFORMALIZED_COMPONENTS.includes(c))) {
       expect(declared.has(DAK_COMPONENT_FIELDS[c])).toBe(true);
     }
   });
@@ -327,11 +330,24 @@ describe("the component list against WHO's own logical model", () => {
     expect(declared.filter((d) => !known.has(d))).toEqual([]);
   });
 
-  test.skipIf(!available)("scheduling logic is not a component in WHO's model", () => {
-    // The starter kit's stale intro prose promotes it to #7. Its own table and
-    // this model both keep it inside decision-support logic.
+  test.skipIf(!available)("scheduling logic is not YET a field of WHO's model", () => {
+    // WHO's model and the starter kit's table keep it inside decision support.
+    // The owner counts it as its own component (2026-09-30), so it is listed and
+    // marked unformalized; when DAK.fsh gains the field, this test fails and
+    // the unformalized list should shrink.
     expect(readFileSync(DAK_FSH, "utf-8")).not.toMatch(/^\* schedul/im);
-    expect(DAK_COMPONENT_KINDS["decision-support-logic"]).toContain("scheduling-logic");
+  });
+});
+
+describe("scheduling logic is its own component, and says it is unformalized", () => {
+  test("it owns the scheduling-logic kind, and decision support no longer does", () => {
+    expect(DAK_COMPONENT_KINDS["scheduling-logic"]).toEqual(["scheduling-logic"]);
+    expect(DAK_COMPONENT_KINDS["decision-support-logic"]).not.toContain("scheduling-logic");
+  });
+
+  test("it is the one component named unformalized, and it sits seventh", () => {
+    expect(DAK_UNFORMALIZED_COMPONENTS).toEqual(["scheduling-logic"]);
+    expect(DAK_COMPONENTS.indexOf("scheduling-logic")).toBe(6);
   });
 });
 

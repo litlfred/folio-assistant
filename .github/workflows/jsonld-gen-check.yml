@@ -47,6 +47,9 @@ on:
       # forgetting is invisible. `tyyc` measured 4 of the 11 scripts this
       # workflow runs uncovered — all of them test files it executes.
       - 'cat-harness/scripts/**'
+      # `mcp-graph-tools.test.ts` moved with the MCP server to cat-harness-tools
+      # (bean `w2gr`, step 3a); the directory, not the file, for the reason above.
+      - 'cat-harness-tools/test/**'
       - 'cat-harness/scripts/gen-jsonld-context.ts'
       - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
@@ -79,6 +82,9 @@ on:
       # forgetting is invisible. `tyyc` measured 4 of the 11 scripts this
       # workflow runs uncovered — all of them test files it executes.
       - 'cat-harness/scripts/**'
+      # `mcp-graph-tools.test.ts` moved with the MCP server to cat-harness-tools
+      # (bean `w2gr`, step 3a); the directory, not the file, for the reason above.
+      - 'cat-harness-tools/test/**'
       - 'cat-harness/scripts/gen-jsonld-context.ts'
       - 'cat-harness/ns/content/v1.jsonld'
       - '.github/workflows/jsonld-gen-check.yml'
@@ -86,6 +92,7 @@ on:
   # merge_group event takes NO `paths:` filter, so in the queue this runs on
   # every entry: about fifteen seconds, and a required check that did not
   # report would stall the queue rather than skip.
+  # Unreachable on this repository — bean `1hjm`; kept, not removed.
   merge_group:
   workflow_dispatch:
 
@@ -140,4 +147,4 @@ jobs:
           bun test cat-harness/scripts/tests/jsonld-label-resolution.test.ts \
                    cat-harness/scripts/tests/gen-block-jsonld.test.ts \
                    cat-harness/scripts/tests/gen-library-jsonld.test.ts \
-                   cat-harness/scripts/tests/mcp-graph-tools.test.ts
+                   cat-harness-tools/test/mcp-graph-tools.test.ts

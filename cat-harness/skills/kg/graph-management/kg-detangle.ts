@@ -299,6 +299,21 @@ function link(from: string, toId: string | undefined, ref: string, via: string) 
 }
 
 /**
+ * The node a relative TS import names, as Bun resolves it (bean `cjvs`).
+ *
+ * The first cut rewrote `.js` to `.ts` and stopped, so every EXTENSIONLESS
+ * specifier — `./cat-harness` with no suffix, the house style in `schemas/` — became a
+ * dangling ref: 156 edges the blocking `direction` gate never saw. A specifier
+ * that is not itself a file is tried as `<spec>.ts`, then `<spec>/index.ts`.
+ */
+function tsImportTarget(fromDir: string, spec: string): string {
+  const p = resolve(fromDir, spec.replace(/\.js$/, ".ts"));
+  const candidates = [p, `${p}.ts`, join(p, "index.ts")];
+  const hit = candidates.find((c) => existsSync(c) && statSync(c).isFile()) ?? p;
+  return relative(ROOT, hit);
+}
+
+/**
  * Resolve a name to a node.
  *
  * `kinds` is NOT optional and that is the fix for a measured defect. A first
@@ -379,8 +394,7 @@ for (const n of nodes) {
   }
   if (n.id.endsWith(".ts")) {
     for (const m of text.matchAll(/from\s+"(\.\.?\/[^"]+)"/g)) {
-      const p = resolve(dirname(abs), m[1].replace(/\.js$/, ".ts"));
-      link(n.id, relative(ROOT, p), m[1], "ts-import");
+      link(n.id, tsImportTarget(dirname(abs), m[1]), m[1], "ts-import");
     }
   }
 }

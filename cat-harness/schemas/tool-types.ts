@@ -138,7 +138,7 @@ export const SkillRefSchema = z
     /^(?:[a-z][a-z0-9-]*\/)?[a-z][a-z0-9-]*$/,
     "a skill reference is a skill name, optionally qualified by its package: `name` or `package/name`",
   )
-  .describe("A skill reference, e.g. todo-manager or folio-core/todo-manager");
+  .describe("A skill reference, e.g. todo-manager or sdlc-core/todo-manager");
 
 /** A skill package — the directory under `skills/`, e.g. `folio-core`. */
 export const PackageNameSchema = z

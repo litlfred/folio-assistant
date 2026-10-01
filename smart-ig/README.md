@@ -8,6 +8,15 @@ The **L3** layer — a WHO SMART Guideline's FHIR Implementation Guide.
 | `smart.who.int` canonicals and WHO publication conventions | the DAK components → `smart-dak` |
 | what a SMART Guideline's L3 owes beyond a plain IG | the guideline narrative → `smart-l1` |
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Instances of this layer](#instances-of-this-layer)
+- [Why it declares nothing yet](#why-it-declares-nothing-yet)
+
+<!-- readme:toc:end -->
+
 ## Instances of this layer
 
 `smart-trust` and `smart-immunizations`. Both were declared *harness instances*

@@ -5,7 +5,7 @@
     "id": "kg-separation",
     "path": "skills/kg/graph-management/kg-separation.md"
   },
-  "source_hash": "509b6dfc21c0",
+  "source_hash": "7083d099d619",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -32,14 +32,19 @@
       "findings": []
     },
     "skill-voice-review-current": {
-      "result": "n/a",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "agent-skill-authoring",
+          "detail": "never reviewed against the agent-skill-authoring voice (12 skill rule(s)) — `bun run voice:review`"
+        }
+      ]
     }
   },
   "totals": {
     "pass": 4,
-    "fail": 0,
-    "n/a": 3,
+    "fail": 1,
+    "n/a": 2,
     "unknown": 0
   }
 }

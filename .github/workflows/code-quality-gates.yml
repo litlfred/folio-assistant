@@ -62,9 +62,28 @@ on:
   # measurement (`kg:detangle`, `kg:audit`) was green on the branch and green
   # on main and stale on the two merged — "the state that breaks is the one
   # neither party evaluates". A merge_group run tests EXACTLY the commit that
-  # will land. Inert until the owner turns the merge queue on for `main`;
-  # harmless before. No job here reads event_name or head_ref, which a
-  # merge_group run leaves empty — checked, and kept that way.
+  # will land. No job here reads event_name or head_ref, which a merge_group
+  # run leaves empty — checked, and kept that way.
+  #
+  # THIS TRIGGER HAS NEVER FIRED AND CANNOT — bean `1hjm`, measured 2026-09-30.
+  # It read "inert until the owner turns the merge queue on for `main`" until
+  # then, which promised a pending state that cannot arrive: the repository's
+  # ruleset form offers thirteen rules and `Require merge queue` is not among
+  # them. GitHub renders only the rules a repository is ELIGIBLE for, so the
+  # absence is the measurement, and the rule behind it is organization
+  # ownership: merge queues are available in a public repository owned by an
+  # ORGANIZATION, or a private one owned by an organization on Enterprise
+  # Cloud. `folio-assistant` is public and owned by the user `litlfred`, so it
+  # is outside both arms. Sourced with one caveat recorded in `1hjm`: the page
+  # itself is egress-blocked from the agent container, so that wording comes
+  # from web search OVER the page rather than from the page.
+  #
+  # The trigger is KEPT anyway, deliberately: it becomes correct with no work
+  # if the repository ever moves under an organization, and removing it would
+  # only have to be undone. What was wrong was the claim about WHY it is inert
+  # — an agent reading the old sentence concludes the queue is one owner click
+  # away, which is what happened repeatedly across one session before anybody
+  # looked at the form.
   merge_group:
   push:
     branches: [main]
@@ -506,6 +525,13 @@ jobs:
           # authored term's labels and definition have a current .pot in
           # every locale, beside the BPMN templates.
           bun run glossary:pot:check
+          # Bean `7wou` (owner, 2026-09-29: "extracting exsiting glossary
+          # needs compaision to existing termonology/coding"). Reports and
+          # never grades: an unmapped candidate may be a term this corpus is
+          # right to coin. It fails only on a result that breaks its own
+          # schema — notably an `undetermined` row with no reason, which is
+          # the one way silence could read as "no match" (bean `dh4f`).
+          bun run check:term-mapping
 
       # The agentic engine's after-check (#1180 step 5): every workflow
       # instance's history as W3C PROV-O, with authorizeTask re-run on each
@@ -921,6 +947,27 @@ jobs:
       - name: no wrong-direction edges across declared instances
         run: bun run kg:detangle:direction
 
+      # The same direction rule, over MODULE LOADS in every code file of every
+      # declared instance — no scan list. The step above reaches only the
+      # directories in `kg-detangle.ts`'s `SCAN`, and states that an import
+      # from an unlisted directory is "real and invisible to it": with `bf5l`'s
+      # sabotage planted in `cat-harness/adapters/` (not in `SCAN`), measured
+      # 2026-09-30, the step above printed 0 and exited 0, this one printed 1
+      # and exited 1. This does NOT widen `SCAN` or touch that step's pinned
+      # adjudications (the owner's Option 2 ruling on `p11x` stands); it is a
+      # second subject — a module an instance cannot be lifted out without —
+      # judged by the same `allowedFromNeeds`, so the two cannot disagree about
+      # an edge both see.
+      #
+      # `--all` because every instance's count was 0 once `builtin-adapters.ts`
+      # stopped holding `../<instance>/` paths (the adapters are now declared by
+      # the instances that ship them), and a check becomes an error once its
+      # count is zero. It also catches a module-path literal handed to a
+      # variable `import()` — the shape that table had — and PRINTS the
+      # `import(expr)` calls it cannot read as could-not-determine, never as 0.
+      - name: no module imports from an instance built on top of its own
+        run: bun run check:import-direction --all
+
       # Every term the code can MINT has a definition in the published
       # vocabulary. 93 classes and properties hang off `FOLIO_NS`, and until
       # 2026-09-19 nothing served that stem at all — the dead-link walk in
@@ -1034,6 +1081,14 @@ jobs:
 
       - name: The root README's generated sections are current
         run: bun run readme:sync:root:check
+
+      # EVERY instance's README, each against its own declaration. The two
+      # steps above and below name one README apiece; `readme:toc` (the
+      # README's own table of contents) is carried by every harness README,
+      # and a generated region nothing checks is a hand-kept list that is
+      # wrong the first time somebody adds a heading.
+      - name: Every instance README's generated sections are current
+        run: bun run readme:sync:all:check
 
       # bootstrap's README carries `kg:processes` (its diagrams, drawn) and
       # `kg:files` (every file it holds), both generated from its declaration
@@ -1239,10 +1294,42 @@ jobs:
           # names the range it used either way.
           if [ -n "$CATALOGUE_BASE_SHA" ]; then
             git fetch --no-tags --depth=1 origin "$CATALOGUE_BASE_SHA"
+            bun run translation:catalogue:check
           else
+            # NO pull-request context: a `workflow_dispatch` or `merge_group`
+            # run. `CATALOGUE_BASE_SHA` is empty, and the old fallback then ran
+            # the three-dot path against an `origin/main` this very fetch had
+            # just CREATED as a shallow graft — which has no merge base, so the
+            # script exited 2, "could not determine", every time.
+            #
+            # That made a dispatched run of this workflow UNPASSABLE, which is
+            # not a nuisance but a trap: `check-head-has-run.ts` tells an
+            # operator to dispatch when a head has no run, so following the
+            # repository's own advice attached a red hard gate to a PR that had
+            # not earned it. Measured on #1633, 2026-10-01, run 36789391040 —
+            # the only red among twelve checks, and it was the advice, not the
+            # branch. Issue #823, bean `sddf`.
+            #
+            # Deepen until a merge base EXISTS, then name it. `--base` is the
+            # script's two-dot path and needs no merge base of its own, but a
+            # base still has to be supplied.
             git fetch --no-tags --prune --depth=200 origin main || true
+            base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
+            if [ -z "$base" ]; then
+              git fetch --no-tags --unshallow origin main 2>/dev/null \
+                || git fetch --no-tags --deepen=2000 origin main 2>/dev/null || true
+              base="$(git merge-base origin/main HEAD 2>/dev/null || true)"
+            fi
+            if [ -n "$base" ]; then
+              bun run translation:catalogue:check -- --base "$base"
+            else
+              # Still could-not-determine, and it stays exit 2 rather than
+              # becoming a pass. `dh4f`: the one thing this must never do is
+              # render "I could not look" as "nothing is wrong".
+              echo "::error::no merge base against origin/main after deepening — the catalogue check cannot run on this event"
+              exit 2
+            fi
           fi
-          bun run translation:catalogue:check
 
       - name: gates that were registered and never run
         run: |
@@ -1415,6 +1502,27 @@ jobs:
           # at the eight the store had, so a NEW one fails and the backlog is
           # listed rather than demanded.
           bun run check:bean-bodies
+          # Bean `7pp6`: a markdown line whose FIRST character is `<` makes
+          # kramdown open a raw HTML block, and with no close tag the REST OF THE
+          # PAGE stays raw -- tables print as rows of pipes. The usual cause is an
+          # inline code span wrapped across a line break.
+          #
+          # `check:escaped-markup` already catches this, but only on a BUILT tree,
+          # and that runs in docs-site.yml AFTER merge. So five of these shipped
+          # green and reddened `main`: four closed at once by `7w1a` (`<agentId>`,
+          # `<branch>`, `<file.json>`, `<name>.config.json`) and `<slide>` by
+          # #1730, which cost NINE consecutive `Docs site` failures. Each was
+          # repaired by reflowing the one source that had it; a fix repeated five
+          # times is a missing gate, not five accidents.
+          #
+          # Column 0 only, outside fences and front matter, with autolinks and
+          # real html elements excused BY NAME -- including the
+          # `<details markdown="1">` that `7w1a` deliberately introduced. Of 6
+          # column-0 matches across 2314 files, four were not this defect, so a
+          # check designed from the one example would fire on valid documentation.
+          # Lands green over 706 sources: it locks the class, it does not open a
+          # backlog.
+          bun run check:escaped-markup:source
           # Bean `t7ao`: check:bean-bodies reads front matter by REGEX, and a
           # regex over a broken document does not notice the document is
           # broken. A bean committed with a literal `\1` where `updated_at:`
@@ -1462,6 +1570,15 @@ jobs:
           bun run deps:python:check
           bun run check:l1-complete
           bun run check:l1-complete -- --check
+          # Bean `q7ey`: an ingested upload retires to `fsh-guts/uploads/`.
+          # The rule was written and hand-swept on 2026-09-30, and that one
+          # sweep left eight files in two places and a whole harness
+          # unswept -- so the rule needed enforcement, not a better sweep.
+          # Blocking on a bare queue drop; who-iris's per-source intake
+          # directories are reported and advisory, because moving the PDF
+          # out of one would orphan its `intake.json` and that layout is
+          # being reworked in #1612.
+          bun run check:uploads-retired
           bun run check:catalogue
           # Bean `06e3` §4(b): every harness declaring a `docs` graph owes at
           # least one MEANINGFULLY POPULATED page. Exit 2 — could not

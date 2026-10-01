@@ -33,13 +33,45 @@ not, do not.
 > The **formalism of authoring is kept separate from any content** — examples in
 > the docs are illustrative only.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Cold start — what an arriving agent does first](#cold-start--what-an-arriving-agent-does-first)
+- [Harness instances](#harness-instances)
+- [Bootstrapping — setting up a repository to write in](#bootstrapping--setting-up-a-repository-to-write-in)
+- [What it does](#what-it-does)
+- [How a change gets published](#how-a-change-gets-published)
+  - [One proposed change to one content block — the HCI validation gate](#one-proposed-change-to-one-content-block--the-hci-validation-gate)
+  - [Corpus → draft → review team → published](#corpus--draft--review-team--published)
+  - [One cycle of a folio, plan → retire](#one-cycle-of-a-folio-plan--retire)
+  - [Per content type](#per-content-type)
+- [Start a new folio](#start-a-new-folio)
+  - [1. Create the repo and scaffold it](#1-create-the-repo-and-scaffold-it)
+  - [2. Open your agent in the folio, not here](#2-open-your-agent-in-the-folio-not-here)
+  - [3. Or let the agent do step 1 too](#3-or-let-the-agent-do-step-1-too)
+  - [Which content type?](#which-content-type)
+- [Working on the platform itself](#working-on-the-platform-itself)
+  - [Common commands](#common-commands)
+- [Use it with your LLM harness](#use-it-with-your-llm-harness)
+  - [Claude Code](#claude-code)
+  - [Antigravity / Gemini CLI](#antigravity--gemini-cli)
+  - [Any MCP client](#any-mcp-client)
+- [The tools the agent gets](#the-tools-the-agent-gets)
+- [Documentation](#documentation)
+- [Work-plan with beans](#work-plan-with-beans)
+- [Contributing](#contributing)
+- [License](#license)
+
+<!-- readme:toc:end -->
+
 ## Cold start — what an arriving agent does first
 
 <!-- cat-harness:cold-start:begin -->
 
 **Read this before you do anything else.**
 
-**This repository is an ACTIVE knowledge graph.** `cat-harness` declares `beans` and `todos` — work somebody is partway through, which you can pick up.
+**This repository is an ACTIVE knowledge graph.** `folio-assistant` declares `beans` and `todos` — work somebody is partway through, which you can pick up.
 
 | | |
 |---|---|
@@ -67,11 +99,12 @@ rename a directory and the links follow.
 
 | Instance | Path | For an agent | For a person |
 |----------|------|--------------|--------------|
-| `folio-assistant` | . | [AGENTS.md](AGENTS.md) | [README](README.md) |
+| `folio-assistant` | . | [AGENTS.md](AGENTS.md) · [memory](memory/) | [README](README.md) · [docs](docs/) |
 | `agent-skills` | agent-skills | [AGENTS.md](./agent-skills/AGENTS.md) | [README](./agent-skills/README.md) |
 | `bootstrap` | bootstrap | [AGENTS.md](./bootstrap/AGENTS.md) | [README](./bootstrap/README.md) |
 | `bootstrap-tools` | bootstrap-tools | [AGENTS.md](./bootstrap-tools/AGENTS.md) | [README](./bootstrap-tools/README.md) |
-| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) · [memory](memory/) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) · [docs](docs/) |
+| `cat-harness` | cat-harness | [AGENTS.md](./cat-harness/AGENTS.md) | [README](./cat-harness/README.md) · [docs](./cat-harness/docs/) |
+| `cat-harness-tools` | cat-harness-tools | [AGENTS.md](./cat-harness-tools/AGENTS.md) | [README](./cat-harness-tools/README.md) |
 | `fhir-harness` | fhir-harness | [AGENTS.md](./fhir-harness/AGENTS.md) | [README](./fhir-harness/README.md) |
 | `folio-assistant-core` | folio-assistant-core | [AGENTS.md](./folio-assistant-core/AGENTS.md) | [README](./folio-assistant-core/README.md) |
 | `folio-assistant-sci` | folio-assistant-sci | [AGENTS.md](./folio-assistant-sci/AGENTS.md) | [README](./folio-assistant-sci/README.md) |
@@ -85,7 +118,7 @@ rename a directory and the links follow.
 | `who-iris` | who-iris | [AGENTS.md](./who-iris/AGENTS.md) | [README](./who-iris/README.md) · [docs](./who-iris/site/) · [docs](./who-iris/docs/) |
 | `who-style-guide` | who-style-guide | [AGENTS.md](./who-style-guide/AGENTS.md) | [README](./who-style-guide/README.md) |
 
-> **14 of 17** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
+> **14 of 18** declare no `docs` graph of their own; their reader-facing documentation is the harness layer's site.
 
 *`AGENTS.md` — What a cold agent DOES here, in order — augmenting the README rather than restating it, and read as a file so no injection budget truncates it.*  
 *`README` — What this instance IS, for a reader — its entry point, and the human half of the pair.*

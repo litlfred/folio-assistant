@@ -134,6 +134,28 @@ It is recorded here so the next agent meets it as a known fact instead of
 rediscovering it and proposing a rename. **Do not re-litigate it.** If you are
 grepping for FHIR Shorthand, exclude this directory.
 
+## An INGESTED SOURCE comes here — owner, 2026-09-29
+
+> archival (once ingested into KG and put into a proper `library/` under a
+> harness repo) then it should be moved to `fsh-guts`.
+
+The third thing this directory is for, after a superseded page and a spent
+script: **the source bytes of a document whose derivation has landed.** A
+`library/<slug>/` entry holds `sections/`, `blocks/`, `images/` and the
+manifest, and `check:l1-complete`'s `contents` check refuses anything else —
+so the PDF cannot stay with what was derived from it, and deleting it would
+remove the only copy in the working tree.
+
+It arrives the way every other non-markdown node does: the bytes, plus a
+same-basename `.md` sidecar with `kind: source`, whose `movedFrom` is the
+`uploads/` path and whose `summary` names the library entry it was ingested
+into. The full lifecycle is in
+[`library-ingestion`](library-ingestion.md) §"What happens to the upload after
+it is ingested", and that skill is the one to change if the rule moves.
+
+**`fsh-guts/uploads/` is the proposed sub-directory**, beside `retired/` and
+`scripts/`, and is not yet ruled on.
+
 ## What does NOT go here
 
 - **Anything a reader of the folio needs.** That is `docs/`, and moving it

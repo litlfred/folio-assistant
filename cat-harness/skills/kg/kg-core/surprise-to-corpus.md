@@ -155,7 +155,7 @@ if so what is the prompt. Most turns produce nothing and should say nothing —
 a loop that reports "no surprises" every turn is a loop people stop reading,
 which is the same disease as a report with a standing false entry.
 
-It pairs with [`turn-reporting`](../../folio-core/turn-reporting.md), which governs the shape
+It pairs with [`turn-reporting`](../../sdlc/sdlc-core/turn-reporting.md), which governs the shape
 of the report you were already writing. This governs one question the report
 should have asked itself and usually does not.
 

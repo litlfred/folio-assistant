@@ -118,10 +118,6 @@ export function stickyFile(id: string): string {
 export const FOLIO_DIRECTORY_ENTRY: ContentDirectory = {
   id: FOLIO_DIR_ID,
   path: FOLIO_DIR_PATH,
-  // `reproduce`, and it is the least arguable classification in the set: a
-  // folio's authored content is the whole point of a folio, so a dependent
-  // gets its own rather than inheriting somebody else's chapters.
-  dependents: "reproduce",
   graphKinds: [FOLIO_GRAPH_KIND],
   description:
     "Authored content of this instance itself, rendered to a website. Holds the landing sticky — the instance's own description and its onboarding links, as a page-global note rather than text composited into the backdrop.",
@@ -388,6 +384,13 @@ export function contributingRoots(root: string): string[] {
   // repository has one; a temp directory does not.
   const repoRoot = repoRootFor(own);
   if (repoRoot !== own && existsSync(join(repoRoot, ".git"))) {
+    // THE CHECKOUT ROOT ITSELF, by the same rule: it is an instance the moment
+    // it declares itself. It used to be reached only by accident — cat-harness
+    // declared `beans/` with `scope: "repository"`, and walking up from it found
+    // the root's declaration. cmsl step 2 (issue #1694) moved those entries to
+    // the root, and the root's card silently left the board (measured
+    // 2026-09-30: `cat-harness/folio/folio-assistant.json` pruned).
+    if (findDeclarationFile(resolve(repoRoot)) !== undefined) nested.push(resolve(repoRoot));
     for (const entry of readdirSync(repoRoot, { withFileTypes: true })) {
       if (!entry.isDirectory() || entry.name.startsWith(".")) continue;
       const abs = resolve(repoRoot, entry.name);

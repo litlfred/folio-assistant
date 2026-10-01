@@ -1063,7 +1063,7 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
     severity: "minor",
     basis:
       "NO EXTERNAL STANDARD; calibrated here. A claimed bean is a claim a sibling session is expected " +
-      "to respect, and `skills/folio-core/bean-blocking.md` says a block with no expiry cannot be told " +
+      "to respect, and `skills/sdlc/sdlc-core/bean-blocking.md` says a block with no expiry cannot be told " +
       "from abandoned work. Sessions are container-scoped and reclaimed, so a claim that has outlived " +
       "two weeks of containers is not one anybody is honouring. Measured 2026-09-19: 29 in-progress, " +
       "0 of them older than 14 days.",
@@ -1076,7 +1076,7 @@ const BEAN_THRESHOLDS: HealthThreshold[] = [
     basis:
       "NO EXTERNAL STANDARD; calibrated here, and the number is the weaker half of the rule. What " +
       "actually settles whether a claim is live is a LIVENESS SIGNAL — an open PR naming the bean, an " +
-      "unmerged branch touching it, a note since. `skills/folio-core/bean-coordination.md` " +
+      "unmerged branch touching it, a note since. `skills/sdlc/sdlc-core/bean-coordination.md` " +
       "§\"A claim is branch-local\" is why: a claim becomes visible to a sibling when the PR opens, so " +
       "a claim with no PR and no branch has announced nothing to anybody. **This check computes only " +
       "the offline half** — time since `updated_at` — so its count is an UPPER BOUND on quiet claims " +
@@ -1491,7 +1491,7 @@ export function beanStoreCheck(ctx: HealthContext): HealthCheckResult {
         "none, the claim has announced nothing to anybody and the item is fair game — take it, and say " +
         "in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: " +
         "this check reports, and a person or the session taking the work acts. " +
-        "See `skills/folio-core/bean-coordination.md` §\"A quiet claim\".",
+        "See `skills/sdlc/sdlc-core/bean-coordination.md` §\"A quiet claim\".",
     });
   }
   if (resolved.length > BEAN_RESOLVED_INLINE_LIMIT) {

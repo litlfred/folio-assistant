@@ -104,17 +104,136 @@ export const NotebookStructureSchema = z
 
 export type NotebookStructure = z.infer<typeof NotebookStructureSchema>;
 
+// ── The text variant — bean `y4uj`, issue #1614 ─────────────────────────────
+//
+// A source that is TEXT FILES rather than a paged document: a Markdown README,
+// a specification kept as `.md`/`.mdx` pages in a git repository, a FHIR
+// resource's XML source. None of these has pages or cells, so neither variant
+// above can locate a section in it, and printing one to PDF first would make
+// the recorded sha256 identify a rendering nobody published.
+//
+// A section is located by FILE and LINE RANGE. A Markdown file is divided by
+// its own ATX headings (outside fenced code), which are its author's
+// structure, so nothing is inferred; any other text file is ONE section, kept
+// verbatim, because a division nobody wrote would be `6xaz` again.
+
+export const TEXT_STRUCTURE_SCHEMA_ID = "text-structure/v1" as const;
+
+/** One section of a text source: a heading and the lines under it, or a whole file. */
+export const TextSectionSchema = z
+  .object({
+    id: z.string().min(1),
+    number: z.string().nullable(),
+    title: z.string(),
+    level: z.number().int().min(1),
+    /** The file the section is in, as recorded in `source.files[].path`. */
+    file: z.string().min(1),
+    /** One-based first line, inclusive. */
+    line_start: z.number().int().min(1),
+    /** One-based last line, inclusive. */
+    line_end: z.number().int().min(1),
+    /** `heading`: divided by the file's own heading. `file`: the whole file, which carries none the rung reads. */
+    unit: z.enum(["heading", "file"]),
+    n_chars: z.number().int().min(0),
+    n_words: z.number().int().min(0),
+  })
+  .strict()
+  .refine((s) => s.line_end >= s.line_start, { message: "line_end is before line_start" });
+
+/** One file of a text source, with its own digest so each can be re-fetched and compared alone. */
+export const TextFileSchema = z
+  .object({
+    path: z.string().min(1),
+    sha256: Sha256,
+    bytes: z.number().int().min(0),
+    /** Line count, or null for a file not read as text (an image the source carries). */
+    lines: z.number().int().min(0).nullable(),
+    /**
+     * How the rung read it, decided by CONTENT: `markdown` when it has an ATX
+     * heading outside fenced code and does not open with `<`; `verbatim` for
+     * any other text; `image` for a member the caller declared as an image,
+     * which is recorded and never sectioned.
+     */
+    format: z.enum(["markdown", "verbatim", "image"]),
+  })
+  .strict();
+
+/**
+ * Where the files came from, when they came from a repository rather than an
+ * upload. `commit` is the exact revision; `published` says in words whether
+ * that revision is the publisher's released text or a working copy, because a
+ * repository's default branch is often neither.
+ */
+export const TextUpstreamSchema = z
+  .object({
+    repository: z.string().url(),
+    commit: z.string().regex(/^[0-9a-f]{40}$/),
+    /** The ref the commit was taken from (a branch or tag name). */
+    ref: z.string().min(1),
+    /** Commit time, ISO 8601, as git reports it. */
+    committed: z.string().min(1),
+    /** Path of the files within the repository. */
+    path: z.string().min(1),
+    published: z.string().min(1),
+    /** When it was retrieved, ISO date. */
+    retrieved: z.string().min(1),
+  })
+  .strict();
+
+export const TextSourceSchema = z
+  .object({
+    /** A display name for the whole source: the file's name, or the bundle's. */
+    file: z.string().min(1),
+    /**
+     * With one file, that file's sha256. With several, the sha256 of their
+     * `sha256sum`-format listing (`<hex>  <path>\n`, in `files` order), which
+     * anyone can recompute from a checkout with `sha256sum` alone.
+     */
+    sha256: Sha256,
+    digest: z.enum(["file", "listing"]),
+    /** Total bytes over every file. */
+    bytes: z.number().int().min(0),
+    /**
+     * The source's own time. For a repository checkout a file's mtime is the
+     * checkout's, which says nothing, so this is the commit time instead.
+     */
+    mtime: z.string().nullable(),
+    /** Text has no magic bytes; what it is was decided by reading it. */
+    mimetype_sniffed: z.literal("text/plain"),
+    mimetype_source: z.literal("content"),
+    files: z.array(TextFileSchema).min(1),
+    upstream: TextUpstreamSchema.nullable(),
+  })
+  .strict();
+
+export const TextStructureSchema = z
+  .object({
+    _schema: z.literal(TEXT_STRUCTURE_SCHEMA_ID),
+    doc_id: z.string().min(1),
+    source: TextSourceSchema,
+    metadata: z.object({ title: z.string().nullable() }).passthrough(),
+    /** `headings`: at least one file was divided by its own headings. `files`: none was, so each file is one section. */
+    toc_source: z.enum(["headings", "files"]),
+    sections: z.array(TextSectionSchema),
+    /** What the rung did NOT claim. Always required: a text source always omits something (rendering, shortcodes, images). */
+    structure_note: z.string().min(1),
+  })
+  .strict();
+
+export type TextStructure = z.infer<typeof TextStructureSchema>;
+
 /** Every variant `structure.json` may be. Discriminated by its `_schema` tag. */
-export const DocumentStructureSchema = z.union([PdfStructureSchema, NotebookStructureSchema]);
-export type DocumentStructure = PdfStructure | NotebookStructure;
+export const DocumentStructureSchema = z.union([PdfStructureSchema, NotebookStructureSchema, TextStructureSchema]);
+export type DocumentStructure = PdfStructure | NotebookStructure | TextStructure;
 
 /** The `_schema` tags a `structure.json` may carry. */
-export const DOCUMENT_STRUCTURE_SCHEMA_IDS = [PDF_STRUCTURE_SCHEMA_ID, NOTEBOOK_STRUCTURE_SCHEMA_ID] as const;
+export const DOCUMENT_STRUCTURE_SCHEMA_IDS = [PDF_STRUCTURE_SCHEMA_ID, NOTEBOOK_STRUCTURE_SCHEMA_ID, TEXT_STRUCTURE_SCHEMA_ID] as const;
 
 /** Where a section is, in the unit its format has. */
 export type SectionLocator =
   | { kind: "pages"; start: number; end: number }
-  | { kind: "cells"; start: number; end: number };
+  | { kind: "cells"; start: number; end: number }
+  | { kind: "lines"; file: string; start: number; end: number };
 
 /** The fields every variant's sections share, plus where the section is. */
 export interface BaseSection {
@@ -129,7 +248,7 @@ export interface BaseSection {
 
 /** A `structure.json` of any variant, read as the base. */
 export interface BaseStructure {
-  variant: "pdf" | "notebook";
+  variant: "pdf" | "notebook" | "text";
   doc_id: string;
   title: string | null;
   sections: BaseSection[];
@@ -183,6 +302,25 @@ export function structureOf(json: unknown): BaseStructure | { reason: string } {
         locator: { kind: "cells", start: s.cell_start, end: s.cell_end },
       })),
       raw: n.data,
+    };
+  }
+  if (tag === TEXT_STRUCTURE_SCHEMA_ID) {
+    const t = TextStructureSchema.safeParse(json);
+    if (!t.success) return { reason: `does not conform to ${TEXT_STRUCTURE_SCHEMA_ID}: ${t.error.issues[0]?.message ?? "invalid"}` };
+    return {
+      variant: "text",
+      doc_id: t.data.doc_id,
+      title: t.data.metadata.title,
+      sections: t.data.sections.map((s) => ({
+        id: s.id,
+        number: s.number,
+        title: s.title,
+        level: s.level,
+        n_chars: s.n_chars,
+        n_words: s.n_words,
+        locator: { kind: "lines", file: s.file, start: s.line_start, end: s.line_end },
+      })),
+      raw: t.data,
     };
   }
   return {

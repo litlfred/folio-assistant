@@ -1,0 +1,13 @@
+<!-- kg:subgraph:begin -->
+# fhir-harness-library
+
+The bare FHIR layer's library -- the test-side literature a FHIR implementation guide relies on: the R5 TestPlan resource's source, the Gherkin reference and the Interoperability Test Bed README (bean `y4uj`, issue #1614 item 4). Same staging arrangement and the same reason as `smart-base-library` and `folio-assistant-core-library`: the consumers that scan libraries run from THIS root, and a library they cannot see is a corpus they report a clean pass over (the `dh4f` defect). A distinct id, because the conventional `library` would override the harness's own library rather than join it.
+
+Part of [C@T Harness](../../cat-harness/README.md) 0.1.0, declared as `fhir-harness-library`, holding `library`.
+
+| file | what it is | used by |
+|---|---|---|
+| [`cucumber-2024-gherkin-reference/`](cucumber-2024-gherkin-reference/README.md) | 68 files | |
+| [`hl7-2023-fhir-r5-testplan/`](hl7-2023-fhir-r5-testplan/README.md) | 50 files | |
+| [`isaitb-2026-interoperability-test-bed-readme/`](isaitb-2026-interoperability-test-bed-readme/README.md) | 83 files | |
+<!-- kg:subgraph:end -->

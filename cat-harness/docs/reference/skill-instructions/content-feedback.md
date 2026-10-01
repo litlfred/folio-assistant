@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/content-lifecycle/content-feedback.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/content-lifecycle/content-feedback.md) — do not edit here. Typed contract: [schema reference](../skills/content-feedback.html).
+> Generated from [`cat-harness/skills/authoring/content-lifecycle/content-feedback.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/content-lifecycle/content-feedback.md) — do not edit here. Typed contract: [schema reference](../skills/content-feedback.html).
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/content-lifecycle/content-feedback.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/content-lifecycle/content-feedback.md){: .fa-edit-source }
 
 {% raw %}
 # Content Feedback Collection

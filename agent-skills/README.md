@@ -7,6 +7,18 @@ This instance is staged as a top-level directory ahead of becoming its own
 repository — the same arrangement as `who-iris/`, `who-style-guide/`,
 `folio-assistant-sci/` and `folio-assistant-core/`.
 
+**Contents**
+
+<!-- readme:toc:begin -->
+
+- [Why it is not in cat-harness/](#why-it-is-not-in-cat-harness)
+- [Two kinds, and the difference is load-bearing](#two-kinds-and-the-difference-is-load-bearing)
+- [The corpus](#the-corpus)
+- [Ingestion state](#ingestion-state)
+- [The voices](#the-voices)
+
+<!-- readme:toc:end -->
+
 ## Why it is not in `cat-harness/`
 
 `AGENTS.md` opens by saying folio-assistant is the platform and not the

@@ -5,7 +5,7 @@
  * Bean `xfoh`. These lived as literals inside `scripts/eval-crdm-detect.ts`
  * under the comment *"The skill's explicit exclusions"* — a **hand
  * transcription** of a prose list in
- * `skills/crdm/crdm-detect.md`. It had already drifted: the skill
+ * `skills/sdlc/crdm/crdm-detect.md`. It had already drifted: the skill
  * listed seven exclusions, the runner implemented five, and the runner's own
  * output reported a false alarm on an issue the skill excludes by name.
  *
