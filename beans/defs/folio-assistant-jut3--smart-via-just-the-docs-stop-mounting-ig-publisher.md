@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-09-29T20:52:42Z
+updated_at: 2026-10-01T08:03:18Z
 parent: folio-assistant-uhkv
 ---
 
@@ -392,3 +392,27 @@ Released `in-progress` → `todo` on the owner's instruction (review session htt
 
 
 _2026-09-29_ — **Re-parented `yj32` → `uhkv`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). Rendering the smart-* IGs through Jekyll is SMART-stack work; yj32 stays the interface epic.
+
+## M2 re-measured 2026-10-01: upstream `input/pages` is now DETERMINED
+
+Provenance: `WorldHealthOrganization/smart-trust` at `30d55b3630ac8a8937e1d98f7c060a4ae5a78ef0` (2026-09-29), shallow anonymous clone. Session https://claude.ai/code/session_01DnFZtVpff4o7puqWazGvKN. The 2026-09-22 entry said *could not determine*; this replaces that with a number, and does not mean it was zero.
+
+| | |
+|---|---|
+| narrative pages (`input/pagecontent/*.md`) | **42**, 4 506 lines |
+| page tree | `sushi-config.yaml` `pages:`, nested 3 deep (Home / Business Requirements / Data Models and Exchange / …) |
+| pages with **no** Liquid at all | **22** of 42 |
+| Liquid tags used | `include` 54, `assign` 6, `unless` 6, `for` 1; **no** `sql`, **no** `[[[ ]]]` links |
+| `include` targets | other pagecontent pages (~20, transclusion), `img.html` ×10, two PlantUML-generated SVGs (`input/images-source/*.plantuml`), and `list-structuremaps.xhtml` (×1, **Publisher-generated**, not in source) |
+| `site.data` reads | `site.data.fhir.packageId` ×2, `site.data.info.exclude{xml,json,ttl}` (`downloads.md` only) |
+| images | 45 png, 5 svg, plus docx/pdf/pptx downloads under `input/images/` |
+| licence | `CC-BY-SA-3.0-IGO` (`sushi-config.yaml`) |
+
+**What this says about feasibility.** The Liquid surface is small and almost entirely `include`. Of the Publisher-only inputs, only three need supplying from Publisher metadata:
+- `site.data.fhir.*`, which the artefact index can provide;
+- `site.data.info.*`;
+- one generated fragment, `list-structuremaps.xhtml`.
+
+Rendering 42 pages through just-the-docs is therefore a bounded job. The falsifier would have been heavy use of `sql` or `[[[ ]]]`, and it does not fire.
+
+**The decision this exposes, which is the owner's:** where the 42 pages come from. The options are a committed snapshot (licence CC-BY-SA, attribution required), a submodule, or a fetch at build time. The repository boundary rule (*platform, not content*) applies to `smart-trust/` as a mock-up instance. Nothing is vendored until that is decided.
