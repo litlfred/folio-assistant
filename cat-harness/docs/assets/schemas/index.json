@@ -1651,6 +1651,22 @@
       "isTest": false
     },
     {
+      "module": "fhir-harness/schemas/ig-identity.test.ts",
+      "instance": "fhir-harness",
+      "name": "ig-identity.test",
+      "graphNode": "undeclared",
+      "summary": "`ig-identity.json` — an IG's own identity and status, refused when it names",
+      "isTest": true
+    },
+    {
+      "module": "fhir-harness/schemas/ig-identity.ts",
+      "instance": "fhir-harness",
+      "name": "ig-identity",
+      "graphNode": "undeclared",
+      "summary": "An IG's identity, as its own `sushi-config.yaml` states it — id, canonical,",
+      "isTest": false
+    },
+    {
       "module": "fhir-harness/schemas/ig-menu.test.ts",
       "instance": "fhir-harness",
       "name": "ig-menu.test",
@@ -39648,27 +39664,14 @@
           "type": "z.string().min(1)",
           "optional": false,
           "array": false,
-          "doc": "The IG's `id` from `sushi-config.yaml`, e.g. `smart.who.int.trust`."
-        },
-        {
-          "name": "canonical",
-          "type": "z.string().url()",
-          "optional": false,
-          "array": false,
-          "doc": "Its `canonical`."
-        },
-        {
-          "name": "status",
-          "type": "z.string().min(1)",
-          "optional": false,
-          "array": false,
-          "doc": "Its `status` — what selects the watermark. `draft` here."
+          "doc": "The chain's TOP layer — the template package an IG names — e.g."
         },
         {
           "name": "version",
-          "type": "z.string().min(1).optional()",
-          "optional": true,
-          "array": false
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The top layer's version, e.g. `0.5.0`."
         },
         {
           "name": "layers",
@@ -39765,6 +39768,82 @@
       "refs": [],
       "unresolved": [],
       "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-identity.ts#IgIdentity",
+      "name": "IgIdentity",
+      "module": "fhir-harness/schemas/ig-identity.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "fhir-harness/schemas/ig-identity.ts#IgIdentitySchema",
+      "name": "IgIdentitySchema",
+      "module": "fhir-harness/schemas/ig-identity.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(IG_IDENTITY_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The IG's `id` from `sushi-config.yaml`; SUSHI's `packageId` defaults to it."
+        },
+        {
+          "name": "canonical",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "`draft`, `active`, `retired` … — what selects the template's watermark."
+        },
+        {
+          "name": "version",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "readFrom",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Where it was read: a repository and file, so the claim can be re-checked."
+        },
+        {
+          "name": "readAt",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "When it was read. A status is a fact at a moment, not forever."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "IG_IDENTITY_SCHEMA_TAG",
         "z"
       ],
       "exported": true

@@ -1,13 +1,13 @@
 classDiagram
   direction TB
-  namespace smart_trust__smart_trust_themes {
-    class smart_trust_smart_trust_themes_Override["Override"] {
+  namespace smart_base__smart_base_themes {
+    class smart_base_smart_base_themes_Override["Override"] {
       <<json: ThemeSchema>>
       field [1] string
       source [1] string
       reason [1] string
     }
-    class smart_trust_smart_trust_themes_Theme["Theme"] {
+    class smart_base_smart_base_themes_Theme["Theme"] {
       <<json: ThemeSchema>>
       $schema [1] 'folio-theme/v1'
       id [1] string
@@ -21,6 +21,6 @@ classDiagram
       overrides [0..*] Override[]
     }
   }
-  smart_trust_smart_trust_themes_Theme *-- "0..*" smart_trust_smart_trust_themes_Override : overrides
-  cssClass "smart_trust_smart_trust_themes_Override" fa_uml_kind_themes
-  cssClass "smart_trust_smart_trust_themes_Theme" fa_uml_kind_themes
+  smart_base_smart_base_themes_Theme *-- "0..*" smart_base_smart_base_themes_Override : overrides
+  cssClass "smart_base_smart_base_themes_Override" fa_uml_kind_themes
+  cssClass "smart_base_smart_base_themes_Theme" fa_uml_kind_themes

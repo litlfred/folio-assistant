@@ -297,7 +297,7 @@ nothing renders yet. It is shown rather than omitted: "nothing renders this" and
 0 of 2 published.
 {: .fa-hx-dim }
 
-- smart-trust — *declared, not published*
+- SMART Base — *declared, not published*
 - WHO IRIS — *declared, not published*
 
 ### `todos`

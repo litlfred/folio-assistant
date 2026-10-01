@@ -554,12 +554,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 5
+          "value": 4
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 5
+          "value": 4
         },
         {
           "id": "views",
@@ -584,14 +584,10 @@
         {
           "kind": "qa",
           "note": "no viewer yet"
-        },
-        {
-          "kind": "themes",
-          "note": "no viewer yet"
         }
       ],
       "findings": [
-        "smart-trust: declares 3 graph(s) with no published viewer — code, qa, themes. Declared and not rendered is a gap, not a dead link.",
+        "smart-trust: declares 2 graph(s) with no published viewer — code, qa. Declared and not rendered is a gap, not a dead link.",
         "smart-trust: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published.",
         "smart-trust: no avatar declared for this instance — showing the generic mark."
       ],
@@ -903,12 +899,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 9
+          "value": 10
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 8
+          "value": 9
         },
         {
           "id": "views",
@@ -943,6 +939,10 @@
           "note": "no viewer yet"
         },
         {
+          "kind": "themes",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "tools",
           "note": "no viewer yet"
         },
@@ -952,7 +952,7 @@
         }
       ],
       "findings": [
-        "smart-base: declares 2 graph(s) with no published viewer — qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "smart-base: declares 3 graph(s) with no published viewer — qa, themes, tools. Declared and not rendered is a gap, not a dead link.",
         "smart-base: 1 graph(s) hold materialized content and are READ-ONLY — fhir-artifact-index. Readable, not editable here: copy one out to your own folio/ to work on it. Separate from whether a viewer is published."
       ],
       "navbarIcons": [
@@ -2462,7 +2462,7 @@
           },
           {
             "key": "directories",
-            "summary": "5: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa, smart-trust-themes"
+            "summary": "4: smart-trust-artifact-index, smart-trust-docs, smart-trust-scripts, qa"
           },
           {
             "key": "stickies",
@@ -2738,7 +2738,7 @@
           },
           {
             "key": "directories",
-            "summary": "8: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
+            "summary": "9: smart-base-docs, library, methodologies, processes, smart-base-house-processes, smart-bas…"
           },
           {
             "key": "needs",
