@@ -193,14 +193,14 @@
     {
       "id": "folio-assistant-0utt",
       "title": "PRODUCER: kg-export.bootstrap.qa-results.json is read by check:published-instance-exports but produced by no workflow",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T09:30:19Z",
-      "updatedAt": "2026-10-01T09:30:19Z",
+      "updatedAt": "2026-10-01T18:34:24Z",
       "preview": "Found by the r7v6 agent (C2 fix, 2026-10-01). The C2 gate now actually compares the committed `cat-harness/test/results/kg-export.bootstrap.qa-results.json` with a fresh re-export. On its first run it found the file stale (different producer hash, untagged modules 0→3), and the file was refreshed by hand in `ba1908fa`.\n\n**Owner ruling 2026-10-01:** keep the file and add a producer. Do not delete i",
       "file": "beans/defs/folio-assistant-0utt--producer-kg-exportbootstrapqa-resultsjson-is-read.md"
     },
@@ -4385,14 +4385,14 @@
     {
       "id": "folio-assistant-i1q7",
       "title": "REGEN BLIND SPOT: regen-after-merge 'repairs' translate-bpmn:bootstrap:check with a writer that does nothing without --extract",
-      "status": "todo",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T12:46:50Z",
-      "updatedAt": "2026-10-01T12:46:50Z",
+      "updatedAt": "2026-10-01T18:34:23Z",
       "preview": "Found 2026-10-01 while merging `yhjr` into PR #1764.\n\n`bun run regen` reported `translate-bpmn:bootstrap:check STILL fails after bun run translate-bpmn:bootstrap — a real defect, not staleness`. It was staleness: `translate-bpmn:bootstrap` (`translate-bpmn.ts --instance ./bootstrap`) prints *\"Nothing to do. Pass --extract, --check, or --inject\"* and writes nothing. Running `translate-bpmn.ts --ins",
       "file": "beans/defs/folio-assistant-i1q7--regen-blind-spot-regen-after-merge-repairs-transla.md"
     },
