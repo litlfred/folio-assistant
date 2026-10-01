@@ -41,6 +41,9 @@ package "fhir-harness/fhir-ig-tools" as pkg_fhir_harness_fhir_ig_tools <<tools>>
     subprocesses [0..*] : string[]
   }
 }
+package "fhir-harness/fhir-ig-scripts" as pkg_fhir_harness_fhir_ig_scripts <<code>> {
+  note "code: no node schema declared\n(no validator registered: could not determine)" as n_fhir_harness_fhir_ig_scripts_code
+}
 package "fhir-harness/qa" as pkg_fhir_harness_qa <<qa>> {
   class "Pair_attestation" as fhir_harness_qa_kg_qa_v1_Pair_attestation <<json: KgQaReportSchema>> #f4e6e6 {
     kind [1] : implements | co-located
@@ -84,7 +87,8 @@ fhir_harness_fhir_ig_tools_ToolDefinition *-- "0..*" fhir_harness_fhir_ig_tools_
 fhir_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" fhir_harness_qa_kg_qa_v1_Pair_attestation : pair_attestations
 fhir_harness_qa_kg_qa_v1_Voice_review *-- "0..*" fhir_harness_qa_kg_qa_v1_Verdict : verdicts
 fhir_harness_qa_kg_qa_v1_kg_qa_v1 *-- "0..*" fhir_harness_qa_kg_qa_v1_Voice_review : voice_reviews
-' grid: portrait, 2 column(s) — pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_qa
+' grid: portrait, 2 column(s) — pkg_fhir_harness_library pkg_fhir_harness_fhir_ig_skills pkg_fhir_harness_fhir_ig_tools pkg_fhir_harness_fhir_ig_scripts pkg_fhir_harness_qa
 pkg_fhir_harness_library -[hidden]down- pkg_fhir_harness_fhir_ig_tools
-pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_qa
+pkg_fhir_harness_fhir_ig_skills -[hidden]down- pkg_fhir_harness_fhir_ig_scripts
+pkg_fhir_harness_fhir_ig_tools -[hidden]down- pkg_fhir_harness_qa
 @enduml
