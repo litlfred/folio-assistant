@@ -3254,6 +3254,45 @@
   }
 
   /**
+   * WHAT A TEXT CARD SHOWS ONCE IT IS ITS AVATAR — the first words of it,
+   * condensed. Owner, 2026-10-01: *"if todo is small zoomed, it shows no
+   * content at all. instead it should cleanup whitespace and show condended
+   * first part of todo that is dsplay."*
+   *
+   * A book's avatar is its cover, so zooming it out leaves a picture. A
+   * todo's words ARE its face: hiding the title and the body below the
+   * declared width left a blank square (or an empty button on the board),
+   * with nothing to tell one note from another. So semantic zoom keeps the
+   * mechanism and changes only what the small state draws for a text kind:
+   * this gist, which the CSS clamps to what fits.
+   *
+   * Markdown noise is dropped rather than rendered — at this size a heading
+   * or a bullet is a mark that costs a word — and every run of whitespace,
+   * newlines included, becomes one space. `max` is a ceiling on what is
+   * carried, not what is shown; the clamp decides that.
+   */
+  function plainGist(text) {
+    return String(text || "")
+      .replace(/```[^\n]*\n?/g, " ")
+      .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+      .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/^[ \t]*(?:#{1,6}|>|[-*+]|\d+[.)])[ \t]+/gm, "")
+      .replace(/\*\*|__|~~|[*`]/g, "")
+      .replace(/(^|[^\w])_+|_+(?=[^\w]|$)/g, "$1")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+  function gistOf(parts, max) {
+    var s = parts.map(plainGist).filter(function (p) { return p !== ""; }).join(" — ");
+    max = max || 280;
+    if (s.length <= max) return s;
+    var cut = s.slice(0, max);
+    var sp = cut.lastIndexOf(" ");
+    return (sp > max * 0.6 ? cut.slice(0, sp) : cut) + "…";
+  }
+
+  /**
    * THE SITE'S BASEURL, derived from a path the server already resolved —
    * the FALLBACK arm of `siteBaseurl`, never called directly.
    *
@@ -4855,7 +4894,25 @@
     function zoomGlassCard(card) {
       var kind = card.getAttribute("data-fa-zoom-kind");
       var w = card.getBoundingClientRect().width || parseFloat(card.style.width) || 0;
-      card.setAttribute("data-fa-zoom", rendersAvatar(kind, w) ? "avatar" : "card");
+      var avatar = rendersAvatar(kind, w);
+      card.setAttribute("data-fa-zoom", avatar ? "avatar" : "card");
+      // The gist is clamped to the WHOLE lines its box holds, so the last
+      // one shown ends in an ellipsis rather than being sliced through.
+      // Both numbers are in the card's own (unscaled) pixels, so the ratio
+      // is right at every view scale. Measured with the box GROWN to the room
+      // it has, then let shrink to the clamped lines: a box left taller than
+      // its clamp paints the lines after the ellipsis.
+      var gist = card.querySelector(".fa-glass-asset-gist");
+      if (gist && avatar) {
+        gist.style.flex = "";
+        var gcs = getComputedStyle(gist);
+        var lh = parseFloat(gcs.lineHeight) || 0;
+        var room = gist.clientHeight - (parseFloat(gcs.paddingTop) || 0) - (parseFloat(gcs.paddingBottom) || 0);
+        var lines = lh ? Math.max(1, Math.floor((room + 1) / lh)) : 3;
+        gist.style.webkitLineClamp = String(lines);
+        gist.style.lineClamp = String(lines);
+        gist.style.flex = "0 1 auto";
+      }
     }
 
     /* ── ZOOM AND PAN THE GLASS, AND SNAP BACK HOME ───────────────────────
@@ -4950,6 +5007,9 @@
       shelf.style.transform = atOrigin() ? "" :
         "translate(" + view.x + "px, " + view.y + "px) scale(" + view.s + ")";
       shelf.setAttribute("data-fa-scale", String(view.s));
+      // Read by the avatar-state gist, which is drawn at a constant size ON
+      // SCREEN: words scaled to 25% with the card would be there and unreadable.
+      shelf.style.setProperty("--fa-glass-scale", String(view.s));
       var pct = Math.round(view.s * 100);
       zoomSlider.value = String(pct);
       zoomValue.textContent = pct + "%";
@@ -5240,6 +5300,10 @@
         ? el("a", { class: "fa-glass-asset-name", href: href }, a.title)
         : el("span", { class: "fa-glass-asset-name" }, a.title));
       card.appendChild(face);
+      // What the card shows once it is its avatar (`gistOf`). Drawn only in
+      // that state — the CSS hides it at full size, where the title and the
+      // body already say it — and a <p>, so it is read as text when shown.
+      card.appendChild(el("p", { class: "fa-glass-asset-gist" }, gistOf([a.title])));
 
       var tools = el("div", { class: "fa-glass-asset-tools" });
       var moveBtn = el("button", {
@@ -5269,12 +5333,31 @@
         hideMoveBar(card);
         moveBtn.focus();
       });
-      function resizeBy(d) {
+      /* THE PRESSED BUTTON STAYS UNDER THE POINTER. Owner, 2026-10-01:
+       * *"when zoom in/out, the buttons dont stay same place so have to move
+       * cursor"* — and this instance's profile is low-dexterity, so a target
+       * that moves after each press is a re-aim per press. The card grew from
+       * its top-left corner, and these buttons sit at its bottom-right, so
+       * every press carried them a step down and right. Now the card is
+       * shifted by however far the pressed button drifted, measured rather
+       * than assumed (the tool row wraps, and the avatar state lays it out
+       * differently), in the shelf's own pixels — the view's scale divided
+       * out. */
+      function resizeBy(d, anchor) {
         var g = geometryOf(card);
+        var before = anchor ? anchor.getBoundingClientRect() : null;
         var ratio = g.height / g.width;
         g.width = Math.max(MIN_WINDOW, g.width + d);
         g.height = Math.max(Math.round(MIN_WINDOW * 0.5), Math.round(g.width * ratio));
         applyGeometry(card, g);
+        if (before) {
+          zoomGlassCard(card);
+          var after = anchor.getBoundingClientRect();
+          var sc = view.s || 1;
+          g.left = Math.round(g.left + (before.left - after.left) / sc);
+          g.top = Math.round(g.top + (before.top - after.top) / sc);
+          applyGeometry(card, g);
+        }
         placeOnGlass(key, g);
         fitShelf();
         zoomGlassCard(card);
@@ -5289,8 +5372,8 @@
         type: "button", class: "fa-glass-asset-tool", "aria-label": "Make " + a.title + " larger",
         title: "Larger",
       }, "+");
-      smaller.addEventListener("click", function () { resizeBy(-2 * RESIZE_STEP); });
-      larger.addEventListener("click", function () { resizeBy(2 * RESIZE_STEP); });
+      smaller.addEventListener("click", function () { resizeBy(-2 * RESIZE_STEP, smaller); });
+      larger.addEventListener("click", function () { resizeBy(2 * RESIZE_STEP, larger); });
 
       // CLOSE, and the word matters. "Remove" and "delete" both say the
       // asset stops being the reader's, which is exactly what does NOT
@@ -5402,6 +5485,10 @@
       body.classList.add("fa-glass-sticky-body");
       var tools = card.querySelector(".fa-glass-asset-tools");
       card.insertBefore(body, tools);
+      // The small state's gist now has the note's words, not only its title.
+      var gist = card.querySelector(".fa-glass-asset-gist");
+      if (gist) gist.textContent = gistOf([todo.summary, todo.comment]);
+      zoomGlassCard(card);
     }
 
     function renderShelf() {
@@ -5459,12 +5546,14 @@
         // Words only: the generic note picture sat behind the sentence.
         var noteAva = noteCard.querySelector(".fa-glass-asset-face > .fa-glass-avatar");
         if (noteAva) noteAva.parentNode.removeChild(noteAva);
-        noteCard.insertBefore(el("p", { class: "fa-glass-shelved-note fa-glass-sticky-body" },
-          (shelved.length === 1
+        var noteWords = (shelved.length === 1
             ? "1 item is in your folio but not displayed. "
             : shelved.length + " items are in your folio but not displayed. ") +
           "Put your folio away, then open the library view to put it back on the glass " +
-          "(for a todo, use the Todos tile below)."), noteCard.querySelector(".fa-glass-asset-tools"));
+          "(for a todo, use the Todos tile below).";
+        noteCard.insertBefore(el("p", { class: "fa-glass-shelved-note fa-glass-sticky-body" }, noteWords),
+          noteCard.querySelector(".fa-glass-asset-tools"));
+        noteCard.querySelector(".fa-glass-asset-gist").textContent = gistOf([noteTitle, noteWords]);
         // The shared close SHELVES an asset; this card is not one, so its ×
         // dismisses instead, and says so.
         var oldClose = noteCard.querySelector(".fa-glass-asset-close");
@@ -7724,6 +7813,20 @@
         var avatar = rendersAvatar("todo", width);
         slot.classList.toggle("fa-sticky-slot--avatar", avatar);
         slot.setAttribute("data-fa-avatar", avatar ? "true" : "false");
+        // THE NOTE'S FIRST WORDS beside its avatar (`gistOf`; owner,
+        // 2026-10-01: *"if todo is small zoomed, it shows no content at
+        // all"*). Beside rather than in: the avatar is a glyph painted through
+        // a MASK, so words inside it would be cut to the glyph's shape. In the
+        // DOM only while the slot IS its avatar, so at full size the note's
+        // words exist once — the card's — and nothing finds them twice.
+        var gistEl = slot.querySelector(":scope > .fa-sticky-avatar-gist");
+        if (avatar && !gistEl && slot.__faGist) {
+          var opener = slot.querySelector(":scope > .fa-sticky-avatar");
+          slot.insertBefore(el("p", { class: "fa-sticky-avatar-gist" }, slot.__faGist),
+            opener ? opener.nextSibling : slot.firstChild);
+        } else if (!avatar && gistEl) {
+          gistEl.parentNode.removeChild(gistEl);
+        }
       }
     }
 
@@ -7783,8 +7886,11 @@
         // render its answer, so there is no second count to disagree.
         var ab = nodeBadge(todo);
         if (ab) open.appendChild(badgeChip(ab, "avatar"));
+
         open.addEventListener("click", function () { openCard(todo); });
         slot.insertBefore(open, slot.firstChild);
+        // What `applyZoom` shows beside the avatar while the slot is one.
+        slot.__faGist = gistOf([todo.summary, todo.comment], 160);
       })(rows[si].todo);
     }
     applyZoom();
