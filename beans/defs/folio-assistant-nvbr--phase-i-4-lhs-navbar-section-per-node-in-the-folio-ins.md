@@ -80,3 +80,5 @@ include; `navbar:include:check` is unchanged.
 
 #223's framing and the `x0hj` URL-prefix half stay recorded above for whoever
 reads the issue; nothing in them is open here.
+
+_2026-10-01T06:20:28Z_ — Claimed by claude/tbdl-jekyll-doc-index — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

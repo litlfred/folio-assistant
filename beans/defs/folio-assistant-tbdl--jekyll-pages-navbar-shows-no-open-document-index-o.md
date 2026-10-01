@@ -68,3 +68,5 @@ Nothing remains here. If the two implementations of the selection rule
 (`documentIndexOf` server-side, `mountDocumentIndex` client-side) are ever
 seen to disagree, that is a new, narrower bean about a shared fixture, not
 this one.
+
+_2026-10-01T05:31:21Z_ — Claimed by claude/tbdl-jekyll-doc-index — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

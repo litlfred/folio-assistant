@@ -14,7 +14,7 @@ Candidate terms extracted from every BPMN task and call activity: `name` as the 
 
 From: bootstrap 16 (<a href="{{ '/assets/glossary/bootstrap--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 492 (<a href="{{ '/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 4 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 30 (<a href="{{ '/assets/glossary/large-datasets--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>) · smart-base 9 (<a href="{{ '/assets/glossary/smart-base--kg-bpmn-activities.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 551 terms and is 427 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 551 terms and is 428 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -974,21 +974,21 @@ Commit into the corpus <span class="fa-gloss-status">candidate, extracted</span>
 Commit, push, open the PR <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The PR opens at the FIRST commit, even on a stub, and permission is never asked for it. Holding a green PR back for someone to look at is not caution — it is a blocked reviewer.</p>
+<p>The PR opens at the FIRST commit, even on a stub, and permission is never asked for it. Holding a green PR back for someone to look at is not caution — it is a blocked reviewer. A change to a rendered surface carries a before/after preview in the PR body (skill before-after-preview).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-change-review.bpmn"><code>cat-harness/processes/code-change-review.bpmn#Task_CommitAndOpenPR</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_commitpush" data-fa-state="extracted" data-fa-gloss="">
 Commit, push, update PR <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Agent commits all changes to the feature branch and pushes. The feature-staging.yml workflow automatically deploys to STAGING/&lt;branch-slug&gt;/ and comments the URL on the PR.</p>
+<p>Agent commits all changes to the feature branch and pushes. The feature-staging.yml workflow automatically deploys to STAGING/&lt;branch-slug&gt;/ and comments the URL on the PR. For a rendered change the agent also produces the before/after preview (skill before-after-preview) and links it in the PR body.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Task_CommitPush</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_contentchangereview.task_comparebeforeafter" data-fa-state="extracted" data-fa-gloss="">
 Compare main vs staging <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Review committee opens both URLs side by side: - Main site: &lt;pages-url&gt;/ (current published state) - Staging: &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/ The staging banner shows the commit SHA so they can verify what they are reviewing matches the PR. A changed figure, diagram or table is also pictured before and after on the review page, with the share of changed pixels in words (skill visual-diff, Tool folio-block-screenshots).</p>
+<p>Review committee opens both URLs side by side: - Main site: &lt;pages-url&gt;/ (current published state) - Staging: &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/ The staging banner shows the commit SHA so they can verify what they are reviewing matches the PR. A changed figure, diagram or table is also pictured before and after on the review page, with the share of changed pixels in words (skill visual-diff, Tool folio-block-screenshots). Anything the staging job cannot picture (page chrome, scroll behaviour, a PDF page, an IG page) is in the agent's before/after preview (skill before-after-preview).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Task_CompareBeforeAfter</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_beanlifecycle.task_complete" data-fa-state="extracted" data-fa-gloss="">
@@ -1314,7 +1314,7 @@ Do the work <span class="fa-gloss-status">candidate, extracted</span>
 Draft the block edit [content-author] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet.</p>
+<p>The authoring agent produces a PROPOSED change. Nothing is written to the corpus yet. For a rendered change it also produces the before/after preview (skill before-after-preview) here, before Gateway_ValidationFork, so the preview exists when the parallel review starts.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/editing-hci-validation.bpmn"><code>cat-harness/processes/editing-hci-validation.bpmn#Task_DraftEdit</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_lifecycle.callactivity_publication" data-fa-state="extracted" data-fa-gloss="">
@@ -1645,7 +1645,7 @@ Hand the candidates to a decision methodology <span class="fa-gloss-status">cand
 Human / SME review [content-review] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement.</p>
+<p>Escalated to a human reviewer or subject-matter expert when the change turns on clinical or scientific judgement. A rendered change reaches the reviewer with its before/after preview (skill before-after-preview).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/editing-hci-validation.bpmn"><code>cat-harness/processes/editing-hci-validation.bpmn#Task_SmeReview</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_kgtoportal.e_humaneyes" data-fa-state="extracted" data-fa-gloss="">
@@ -1775,7 +1775,7 @@ Is every derived artefact present? <span class="fa-gloss-status">candidate, extr
 Iterate on author feedback <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Agent receives revision requests from the author and applies changes. Each push triggers a new staging deployment with updated SHA stamp.</p>
+<p>Agent receives revision requests from the author and applies changes. Each push triggers a new staging deployment with updated SHA stamp. A revision push does not pass through Task_CommitPush, so for a rendered change the agent refreshes the before/after preview here (skill before-after-preview), and the next review round never reads a stale one.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Task_Iterate</code></a></p>
 </dd>
 </dl>
@@ -3169,7 +3169,7 @@ Review requirements and impact analysis <span class="fa-gloss-status">candidate,
 Review staged rendering <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>Author reviews the rendered feature branch at &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/ and compares against the main site. The staging banner shows the commit SHA.</p>
+<p>Author reviews the rendered feature branch at &lt;pages-url&gt;/STAGING/&lt;branch-slug&gt;/ and compares against the main site. The staging banner shows the commit SHA. The agent's before/after preview (skill before-after-preview) sits beside the URLs, with its counts and status line.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/content-change-review.bpmn"><code>cat-harness/processes/content-change-review.bpmn#Task_ReviewStaging</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_crdm_needs.ba_reviewneeds" data-fa-state="extracted" data-fa-gloss="">
@@ -3190,7 +3190,7 @@ Review the adoption <span class="fa-gloss-status">candidate, extracted</span>
 Review the change <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane.</p>
+<p>A human or an agent acting AS reviewer. Nothing is a reviewer; somebody acts as one for the duration of this lane. For a rendered change the reviewer reads the agent's before/after preview rather than building one.</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/code-change-review.bpmn"><code>cat-harness/processes/code-change-review.bpmn#Task_Review</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_publication.task_reviewdraft" data-fa-state="extracted" data-fa-gloss="">
@@ -3260,7 +3260,7 @@ Review translation for accuracy <span class="fa-gloss-status">candidate, extract
 Revise the proposed change [content-author] <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
 <dd>
-<p>The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal.</p>
+<p>The editor chose revise: rework the proposed change against the findings the editor reviewed, then send it back through validation as a new proposal. The before/after preview is refreshed with it (skill before-after-preview).</p>
 <p class="fa-gloss-meta">BPMN activities of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/editing-hci-validation.bpmn"><code>cat-harness/processes/editing-hci-validation.bpmn#Task_ReviseEdit</code></a></p>
 </dd>
 <dt id="cat-harness--kg-bpmn-activities--process_codechangereview.task_diagnose" data-fa-state="extracted" data-fa-gloss="">

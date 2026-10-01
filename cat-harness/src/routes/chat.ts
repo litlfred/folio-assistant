@@ -15,16 +15,10 @@ import type { MountedRoute, RouteDeps } from "../route-groups.js";
 
 const CORS = { "Access-Control-Allow-Origin": "*" };
 
-let anthropic: Anthropic | null = null;
-
-function getAnthropic(): Anthropic | null {
-  if (anthropic) return anthropic;
-  const key = process.env.ANTHROPIC_API_KEY;
-  if (!key) return null;
-  anthropic = new Anthropic({ apiKey: key });
-  return anthropic;
-}
-
+// Lives in `core/anthropic.ts` (bean `w2gr`, step 2) so the content half of an
+// adapter can reach it without importing this route; re-exported for the
+// importers this module already had.
+import { getAnthropic } from "../core/anthropic.js";
 export { getAnthropic };
 
 export async function handleChatPost(

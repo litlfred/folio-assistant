@@ -296,8 +296,9 @@ index mistaken for a page number.
 A deck is a zip that **declares** its type (`[Content_Types].xml`, or ODF's
 `mimetype` member), so it routes on the sniff, before the archive rung, exactly
 as a workbook does. `slides-structure.py` writes the same `pdf-structure/v1`
-shape a paged PDF gets — one section per slide, `page_start == page_end ==
-<slide>`, `granularity: "slide"` — so `l1-blocks.ts`, the manifest and
+shape a paged PDF gets — one section per slide,
+`page_start == page_end == <slide>`, `granularity: "slide"` — so
+`l1-blocks.ts`, the manifest and
 `check:l1-complete` read it unchanged. Two differences from the PDF rungs, both
 measured on the #1614 deck:
 
