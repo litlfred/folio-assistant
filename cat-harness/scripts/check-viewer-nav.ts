@@ -134,7 +134,11 @@ export function layoutFlags(html: string): ViewerNavFlag[] {
   if (!summaries.some((m) => own(m[2]!))) flags.push("visualiser-nav");
   if (open.length !== 1 || !own(open[0]![2]!)) flags.push("single-open");
 
-  if (nav.includes('class="fa-nav-close"') || nav.includes("&#9776;") || nav.includes("☰")) {
+  // A hamburger-SHAPED glyph is the same defect as the `☰` itself: the owner
+  // saw `≡` under the avatar and read it as the toggle that was removed.
+  const glyphs = [...nav.matchAll(/<span class="fa-nav-glyph[^"]*"[^>]*>([^<]*)<\/span>/g)].map((m) => m[1]!.trim());
+  const burger = glyphs.some((g) => /^(?:☰|≡|&#9776;|&#8801;|&equiv;)$/.test(g));
+  if (nav.includes('class="fa-nav-close"') || nav.includes("&#9776;") || nav.includes("☰") || burger) {
     flags.push("no-redundant-toggle");
   }
   return flags;

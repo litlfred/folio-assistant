@@ -37,6 +37,14 @@ describe("layoutFlags", () => {
     expect(f).toContain("no-redundant-toggle");
   });
 
+  it("flags a hamburger-SHAPED group glyph, which reads as the toggle that was removed", () => {
+    const real = rail(`<h2 id="a">A</h2><h2 id="b">B</h2>`, "todos");
+    expect(real).not.toMatch(/fa-nav-glyph[^>]*>≡</);
+    const burger = real.replace(/(<details class="fa-nav-group" open><summary><span class="fa-nav-glyph"[^>]*>)[^<]*/, "$1≡");
+    expect(burger).not.toBe(real);
+    expect(layoutFlags(burger)).toEqual(["no-redundant-toggle"]);
+  });
+
   it("flags a rail with no header at all", () => {
     expect(layoutFlags(page(`<nav class="fa-nav"></nav>`))).toContain("header");
   });

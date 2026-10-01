@@ -737,7 +737,9 @@ export function documentIndexOf(html: string, label = "Contents"): NavGroup | un
   // single section the reader is looking at is the same defect with a row in
   // it.
   if (items.length < 2) return undefined;
-  return { label, icon: "≡", items, collapsible: true };
+  // `§`, not `≡`: at rest the rail shows only this glyph, directly under the
+  // avatar, and `≡` there reads as the hamburger #1757 excised.
+  return { label, icon: "§", items, collapsible: true };
 }
 
 /** The marker a visualiser puts its own navigation under. */
@@ -823,5 +825,5 @@ export function visualiserNavOf(html: string, label: string): NavGroup | undefin
     }
   }
   if (items.length === 0) return undefined;
-  return { label, icon: "≡", items, collapsible: true, open: true };
+  return { label, icon: "§", items, collapsible: true, open: true };
 }
