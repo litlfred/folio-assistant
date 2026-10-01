@@ -234,6 +234,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-pages",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Generate an IG instance's reader-facing pages from its artefact index"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write `<instance>/docs/` — an index page, one page per artefact, a page per over-large category and per menu group — from `fhir-artifact-index/index.json` (and `menu.json` when ingested), styled by the template chrome an owning instance ingested. Moved here from smart-trust because nothing in it was smart-trust's (#1767); smart-base reuses it for its `/smart-base/` landing page with `--summary`. For an IG whose SOURCE is at hand, `build-ig-site` renders the IG's own pages instead; this is for an IG known only by what it published."
+        }
+      ],
+      "skos:notation": "ig-pages",
+      "dcterms:source": "fhir-harness/tools/index.ts#ig-pages",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-site-data",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -251,6 +271,66 @@
       ],
       "skos:notation": "ig-site-data",
       "dcterms:source": "fhir-harness/tools/index.ts#ig-site-data",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/jsonld-vocabularies",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ValueSet expansions → JSON-LD"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "JSON-LD vocabularies built from the ValueSet expansions in the published output."
+        }
+      ],
+      "skos:notation": "jsonld-vocabularies",
+      "dcterms:source": "fhir-harness/tools/index.ts#jsonld-vocabularies",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/logical-model-schemas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Logical models → JSON Schema"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A JSON Schema per logical model, from the published FHIR resources."
+        }
+      ],
+      "skos:notation": "logical-model-schemas",
+      "dcterms:source": "fhir-harness/tools/index.ts#logical-model-schemas",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/pin-ig-terminology",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Snapshot a published IG's terminology at its pinned version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read every CodeSystem concept out of a FHIR IG clone checked out at its pinned tag and write a `folio-pinned-terminology/v1` snapshot: the offline, version-fixed answer `check:term-mapping` resolves its `fhir` target against. Which IG, which pin record and which snapshot path are the caller's (`--pin`, `--out`, `--source`); this layer names none (#1767, stage B′)."
+        }
+      ],
+      "skos:notation": "pin-ig-terminology",
+      "dcterms:source": "fhir-harness/tools/index.ts#pin-ig-terminology",
       "skos:note": "candidate"
     },
     {
@@ -291,6 +371,26 @@
       ],
       "skos:notation": "strip-library-content",
       "dcterms:source": "fhir-harness/tools/index.ts#strip-library-content",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/valueset-schemas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ValueSets → JSON Schema"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root."
+        }
+      ],
+      "skos:notation": "valueset-schemas",
+      "dcterms:source": "fhir-harness/tools/index.ts#valueset-schemas",
       "skos:note": "candidate"
     }
   ]
