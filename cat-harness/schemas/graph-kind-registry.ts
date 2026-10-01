@@ -1858,7 +1858,7 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
   // rule could not apply to them. Now delete means relocate, and relocate is
   // reversible.
   //
-  // On the name: `.fsh` is FHIR Shorthand in this codebase (`schemas/dak.ts`,
+  // On the name: `.fsh` is FHIR Shorthand in this codebase (`smart-base/schemas/dak.ts`,
   // `jsonld.ts`, `translation-tools.ts`, `block-qa.ts`) and throughout the
   // WHO SMART folios this platform targets. The collision was raised and the
   // owner confirmed the spelling; it is recorded here so the overlap is met

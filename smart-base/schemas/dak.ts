@@ -52,9 +52,9 @@ import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { z } from "zod";
 
-import { DAK_COMPONENTS, DAK_COMPONENT_FIELDS, type DakComponent } from "./block-kinds";
-import { kgNodeLabelShape, type KgNodeLabels } from "./kg-node";
-import { SMART_BASE_NS } from "./jsonld";
+import { DAK_COMPONENTS, DAK_COMPONENT_FIELDS, type DakComponent } from "../../cat-harness/schemas/block-kinds";
+import { kgNodeLabelShape, type KgNodeLabels } from "../../cat-harness/schemas/kg-node";
+import { SMART_BASE_NS } from "../../cat-harness/schemas/jsonld";
 
 /**
  * The file whose presence at a repository root declares it a DAK.
