@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 540,
+      "count": 543,
       "unit": "beans"
     }
   },
@@ -1411,6 +1411,20 @@
       "file": "beans/defs/folio-assistant-61tg--topology-self-sovereign-own-infrastructure-inward.md"
     },
     {
+      "id": "folio-assistant-63es",
+      "title": "DEPLOY-ONLY CHECKS: a built-site check that runs only on main lets a PR stay green and break every publish",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T06:31:51Z",
+      "updatedAt": "2026-10-01T06:31:51Z",
+      "preview": "Follow-on to #1726 / #1730. Owner 2026-10-01: build the early catch.\n\ncheck:escaped-markup and check:maintained-artefacts ran only in docs-site.yml (the main deploy). A code span wrapped so a line began '<slide>' (introduced in #1615) broke every publish for ~6h while each PR's 'stage' stayed green.\n\n## Measured\n- Ran both checks on real staging trees from gh-pages: pass on this branch, #1615 and ",
+      "file": "beans/defs/folio-assistant-63es--deploy-only-checks-a-built-site-check-that-runs-on.md"
+    },
+    {
       "id": "folio-assistant-676g",
       "title": "kg:validate cannot own a NESTED instance's path, so 15 instances' committed QA sidecars are consumer-validated by nothing",
       "status": "todo",
@@ -2374,7 +2388,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-09-30T17:45:00Z",
+      "updatedAt": "2026-10-01T02:00:00Z",
       "preview": "Requirements for an agent working a **local experimental fork** of the IG\nPublisher, and what the AST it emits must carry.\n\nScope this round: **requirements only, no Java.**\n\n## Why a fork rather than an upstream ask alone\n\nMeasured, from `nsbb`, using the Publisher's current metadata exports as an AST\nproxy across two real IGs:\n\n| export | smart-trust | smart-immunizations |\n|---|---|---|\n| `valu",
       "file": "beans/defs/folio-assistant-a9tx--ig-publisher-fork-requirements-for-an-agent-workin.md"
     },
@@ -2391,6 +2405,20 @@
       "updatedAt": "2026-09-20T17:11:46Z",
       "preview": "Owner, 2026-09-20, verbatim:\n\n> if a harness is working/active KG repo (not static read only)repo root READM\n> should show at top a  current status of all intiated/partially iniated/etc.\n> quick dashboard (#todos, #beans) for each initiated harness.  todo on render\n> of active KG, beans and todos mapped to thier bpamns rendered nicely as well\n> for project managemtn / visualizaitons.   available a",
       "file": "beans/defs/folio-assistant-aazi--workflow-statemgmt-rendering-a-status-dashboard-at.md"
+    },
+    {
+      "id": "folio-assistant-afu3",
+      "title": "SEARCH PINNED: the magnifier stays on screen at every scroll position (#1732)",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "high",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T00:56:04Z",
+      "updatedAt": "2026-10-01T00:56:04Z",
+      "preview": "Owner, 2026-10-01: the search magnifier should ALWAYS be on screen, mid-page included. Issue #1732, follow-up to #1715/#1720. Branch claude/search-pinned.",
+      "file": "beans/defs/folio-assistant-afu3--search-pinned-the-magnifier-stays-on-screen-at-eve.md"
     },
     {
       "id": "folio-assistant-ahab",
@@ -2857,14 +2885,14 @@
     {
       "id": "folio-assistant-cjvs",
       "title": "190 dangling refs in the KG: 137 ts-import, 28 md-link, 25 bpmn-skill",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T06:33:48Z",
-      "updatedAt": "2026-09-30T20:23:23Z",
+      "updatedAt": "2026-10-01T05:32:19Z",
       "preview": "`bun run kg:detangle`, measured 2026-09-26 on `main`:\n\n```\nDetangle — 697 nodes, 2828 edges, 190 dangling\n```\n\nBreakdown, from the tool's own JSON rather than from prose:\n\n| via | count |\n|---|---|\n| `ts-import` | 137 |\n| `md-link` | 28 |\n| `bpmn-skill` | 25 |\n\nA dangling ref is a link-shaped value that does not dereference — bean `blv9`\n— at scale, in the graph the whole separation effort is comp",
       "file": "beans/defs/folio-assistant-cjvs--190-dangling-refs-in-the-kg-137-ts-import-28-md-li.md"
     },
@@ -3412,7 +3440,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:54:31Z",
-      "updatedAt": "2026-09-30T23:04:05Z",
+      "updatedAt": "2026-10-01T06:28:25Z",
       "preview": "Issue #1719. Proposal: `cat-harness/docs/proposals/kg-subscriptions.md`.\n\nOwner, 2026-09-30: subscribe to external KGs (bootstrap-conformant, with at least one harness); materialise some or all subgraphs and assets; instantiate harnesses so they reach the navbar; list known substrates in cat-harness; a visualizer; an MVP inside the folio separation.\n\n## Done when\n- [ ] 1 schema: `subscriptions` on",
       "file": "beans/defs/folio-assistant-fnx4--kg-subscriptions-subscribe-to-an-external-kg-mater.md"
     },
@@ -4727,14 +4755,14 @@
     {
       "id": "folio-assistant-nvbr",
       "title": "Phase I.4 — LHS navbar section per node in the folio instance (#223)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T15:00:27Z",
-      "updatedAt": "2026-09-29T20:52:42Z",
+      "updatedAt": "2026-10-01T06:20:28Z",
       "preview": "From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):\n\"the lhs navbar should have sections for each node in the folio instance\".\n\n**A block was recorded here against bean `fsch`** — without a folio holding\n0..n content instances there is only ever one node to render. **NOT blocked\non `fsch`:**\nit was scrapped 2026-09-20 and the block is void — s",
       "file": "beans/defs/folio-assistant-nvbr--phase-i-4-lhs-navbar-section-per-node-in-the-folio-ins.md"
     },
@@ -5937,14 +5965,14 @@
     {
       "id": "folio-assistant-tbdl",
       "title": "Jekyll pages' navbar shows no open-document index — only the injected rail supplies documentIndex",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T11:23:09Z",
-      "updatedAt": "2026-09-30T11:23:09Z",
+      "updatedAt": "2026-10-01T05:31:21Z",
       "preview": "Found closing `sjic`, 2026-09-29/30, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq.\n\nThe owner's spec (in `sjic`): *\"when a document or other indexed object is opened, the document index/idices are shown in a navbar tab/menu.\"*\n\n## Measured\n\n- `NavbarModel.documentIndex` has ONE supplier: `harness-rail.ts:118`, which calls `documentIndexOf(html)` on a finished page. So mounted an",
       "file": "beans/defs/folio-assistant-tbdl--jekyll-pages-navbar-shows-no-open-document-index-o.md"
     },
@@ -6620,7 +6648,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:12:08Z",
-      "updatedAt": "2026-09-30T17:03:14Z",
+      "updatedAt": "2026-10-01T05:14:21Z",
       "preview": "Owner 2026-09-29/30: 'i want to split out cat-harness-tools too https://github.com/litlfred/cat-harness-tools' — 'see sibling work' (#1514, bootstrap-tools, bean 81tw). Direction ruled 2026-09-30: **tools depend on the harness** — cat-harness never imports the new instance.\n\nMeasured 2026-09-30: litlfred/cat-harness-tools is EMPTY (no commits). In scope: cat-harness/tools/ (8 files: discover, inde",
       "file": "beans/defs/folio-assistant-w2gr--cat-harness-tools-split-the-mcp-server-and-tool-im.md"
     },
@@ -7211,6 +7239,20 @@
       "updatedAt": "2026-09-29T21:43:12Z",
       "preview": "**Found by paying the cost, 2026-09-19.** Not a survey finding — a measured\nloss in one session, twice.\n\n## What happened\n\nWhile working `folio-assistant-n60j` I \"discovered\" that the gate list must\nbe derived from the CI workflow rather than from `package.json`, wrote a\nrunner and a skill around it, and reported it as a finding. It was already\nrecorded, that same day, in\n`skills/memory/derive-the",
       "file": "beans/defs/folio-assistant-y1w9--memory-reach-113-skills-are-bound-to-no-role-or-pr.md"
+    },
+    {
+      "id": "folio-assistant-y2jh",
+      "title": "BEFORE/AFTER PREVIEW: one reviewer-facing skill across docs site, paper, FHIR IG, slides, websites; wired into review BPMN (#1710)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-q4jm",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T22:34:51Z",
+      "updatedAt": "2026-09-30T22:53:46Z",
+      "preview": "Owner request (issue #1710). Author skills/sdlc/sdlc-core/before-after-preview.md (moved from folio-core with the sdlc topic split, bean 9umr), point rendered-verification/visual-diff/staging-review at it, reference it from the review BPMN. Worked example: Folio tab overlap #1693 / PR #1709.\n\n## Done when\n- skill registered, BPMN references it, gates green, PR open.",
+      "file": "beans/defs/folio-assistant-y2jh--beforeafter-preview-one-reviewer-facing-skill-acro.md"
     },
     {
       "id": "folio-assistant-y5si",
