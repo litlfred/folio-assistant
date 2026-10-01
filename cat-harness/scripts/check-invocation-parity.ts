@@ -58,6 +58,18 @@ const WORKFLOW_DIR = join(REPO_ROOT, ".github", "workflows");
 const INVOCATION = /(?:cat-harness\/|(bootstrap-tools\/))scripts\/([a-z0-9-]+)\.ts([^\n]*)/g;
 
 /**
+ * A `bun run check:<name>` call: a CHECK the deploy runs over its built tree.
+ *
+ * Counted as an obligation like a generator (bean `63es`). `check:escaped-markup`
+ * and `check:maintained-artefacts` ran only in the deploy, so the matcher above
+ * (which reads script PATHS) never saw them, and a `<slide>` line that broke
+ * every publish from #1615 on stayed green on each pull request's preview
+ * (#1726). They are invoked by declared script name on purpose (`unrunScripts`
+ * reads names), so the name is the thing to match.
+ */
+const NAMED_CHECK = /\bbun run (check:[a-z0-9:-]+)/g;
+
+/**
  * Generators the deploy runs that a preview is not expected to.
  *
  * A LIST, and a short one — two entries, each with the reason it is not a
@@ -128,6 +140,11 @@ export function invocations(workflowText: string): Invocation[] {
     // hid — staging ran the exporter, just not for the foreign instance.
     const key = `${script}\u0000${instance ?? ""}`;
     if (!out.has(key)) out.set(key, instance === undefined ? { script } : { script, instance });
+  }
+  NAMED_CHECK.lastIndex = 0;
+  for (const m of code.matchAll(NAMED_CHECK)) {
+    const key = `${m[1]!}\u0000`;
+    if (!out.has(key)) out.set(key, { script: m[1]! });
   }
   return [...out.values()].sort((a, b) =>
     `${a.script}${a.instance ?? ""}`.localeCompare(`${b.script}${b.instance ?? ""}`),
