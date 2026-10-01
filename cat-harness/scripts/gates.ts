@@ -883,6 +883,12 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
       "SUBSUMED by `check:harness-state:check`, which CI runs: the same script with `--check`, so it examines exactly the same four families and fails on a finding instead of reporting it. Kept as a script because the writer is what refreshes the committed sidecar, and a contributor wants the report without the non-zero exit while they are still fixing things. Bean `h1wq`",
   },
   {
+    script: "check:library-qa",
+    kind: "covered-by",
+    reason:
+      "SUBSUMED by `check:library-qa:check`, which CI runs: the same script with `--check`, so it judges exactly the same library entries and fails on a stale sidecar or a could-not-determine entry instead of rewriting the sidecar. Kept as a script because the writer is what refreshes `library-entry-qa.qa-results.json` after an ingest. Issue #1794, bean `8iqc`",
+  },
+  {
     script: "audit:coverage:check",
     kind: "covered-by",
     reason:
