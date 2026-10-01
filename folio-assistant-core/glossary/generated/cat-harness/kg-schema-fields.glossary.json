@@ -3969,6 +3969,125 @@
       "status": "candidate"
     },
     {
+      "id": "document-structure.textfileschema.format",
+      "prefLabel": "TextFileSchema.format",
+      "definition": "How the rung read it, decided by CONTENT: `markdown` when it has an ATX heading outside fenced code and does not open with `<`; `verbatim` for any other text; `image` for a member the caller declared as an image, which is recorded and never sectioned.",
+      "source": "cat-harness/schemas/document-structure.ts#TextFileSchema.format",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textfileschema.lines",
+      "prefLabel": "TextFileSchema.lines",
+      "definition": "Line count, or null for a file not read as text (an image the source carries).",
+      "source": "cat-harness/schemas/document-structure.ts#TextFileSchema.lines",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsectionschema.file",
+      "prefLabel": "TextSectionSchema.file",
+      "definition": "The file the section is in, as recorded in `source.files[].path`.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSectionSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsectionschema.line_end",
+      "prefLabel": "TextSectionSchema.line_end",
+      "definition": "One-based last line, inclusive.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSectionSchema.line_end",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsectionschema.line_start",
+      "prefLabel": "TextSectionSchema.line_start",
+      "definition": "One-based first line, inclusive.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSectionSchema.line_start",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsectionschema.unit",
+      "prefLabel": "TextSectionSchema.unit",
+      "definition": "`heading`: divided by the file's own heading. `file`: the whole file, which carries none the rung reads.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSectionSchema.unit",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsourceschema.bytes",
+      "prefLabel": "TextSourceSchema.bytes",
+      "definition": "Total bytes over every file.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSourceSchema.bytes",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsourceschema.file",
+      "prefLabel": "TextSourceSchema.file",
+      "definition": "A display name for the whole source: the file's name, or the bundle's.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSourceSchema.file",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsourceschema.mimetype_sniffed",
+      "prefLabel": "TextSourceSchema.mimetype_sniffed",
+      "definition": "Text has no magic bytes; what it is was decided by reading it.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSourceSchema.mimetype_sniffed",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsourceschema.mtime",
+      "prefLabel": "TextSourceSchema.mtime",
+      "definition": "The source's own time. For a repository checkout a file's mtime is the checkout's, which says nothing, so this is the commit time instead.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSourceSchema.mtime",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textsourceschema.sha256",
+      "prefLabel": "TextSourceSchema.sha256",
+      "definition": "With one file, that file's sha256. With several, the sha256 of their `sha256sum`-format listing (`<hex> <path>\\n`, in `files` order), which anyone can recompute from a checkout with `sha256sum` alone.",
+      "source": "cat-harness/schemas/document-structure.ts#TextSourceSchema.sha256",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textstructureschema.structure_note",
+      "prefLabel": "TextStructureSchema.structure_note",
+      "definition": "What the rung did NOT claim. Always required: a text source always omits something (rendering, shortcodes, images).",
+      "source": "cat-harness/schemas/document-structure.ts#TextStructureSchema.structure_note",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textstructureschema.toc_source",
+      "prefLabel": "TextStructureSchema.toc_source",
+      "definition": "`headings`: at least one file was divided by its own headings. `files`: none was, so each file is one section.",
+      "source": "cat-harness/schemas/document-structure.ts#TextStructureSchema.toc_source",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textupstreamschema.committed",
+      "prefLabel": "TextUpstreamSchema.committed",
+      "definition": "Commit time, ISO 8601, as git reports it.",
+      "source": "cat-harness/schemas/document-structure.ts#TextUpstreamSchema.committed",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textupstreamschema.path",
+      "prefLabel": "TextUpstreamSchema.path",
+      "definition": "Path of the files within the repository.",
+      "source": "cat-harness/schemas/document-structure.ts#TextUpstreamSchema.path",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textupstreamschema.ref",
+      "prefLabel": "TextUpstreamSchema.ref",
+      "definition": "The ref the commit was taken from (a branch or tag name).",
+      "source": "cat-harness/schemas/document-structure.ts#TextUpstreamSchema.ref",
+      "status": "candidate"
+    },
+    {
+      "id": "document-structure.textupstreamschema.retrieved",
+      "prefLabel": "TextUpstreamSchema.retrieved",
+      "definition": "When it was retrieved, ISO date.",
+      "source": "cat-harness/schemas/document-structure.ts#TextUpstreamSchema.retrieved",
+      "status": "candidate"
+    },
+    {
       "id": "external-schema.externalschemaschema.id",
       "prefLabel": "ExternalSchemaSchema.id",
       "definition": "Stable local id, e.g. `omg-bpmn-2.0`.",

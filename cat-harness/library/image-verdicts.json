@@ -451,6 +451,28 @@
         "saw": "full-bleed: grumpy cat in a C@T-branded sleigh pulled by four robot cats in the rain, empty thought bubble",
         "draft": "Full-slide illustration: the grumpy cat in a green C@T hoodie rides a C@T-branded sleigh through rain, pulled by four robotic cats with glowing C@T badges, under a large empty thought bubble carrying the C@T logo. The slide overlays the folio-assistant site and repository links."
       }
+    },
+    "w3c-2018-odrl-model-2-2": {
+      "img-p004-1": {
+        "role": "figure",
+        "saw": "captioned 'Figure 1 ODRL Information Model' in the text layer of page 4; a UML-style class diagram of every ODRL class and property, not decoration",
+        "draft": "Figure 1, the ODRL Information Model: a class diagram centred on Policy (uid, profile; subclasses Set, Offer and Agreement; inheritFrom pointing to itself; conflict pointing to ConflictTerm), whose permission, obligation and prohibition properties point to Rule (uid). Rule has the subclasses Permission, Duty and Prohibition, with duty from Permission to Duty, remedy from Prohibition to Duty, consequence from Duty to Duty, and failure from Rule to itself. Rule links by action to Action (includedIn, implies); by the relation sub-property target to Asset (uid; hasPolicy to Policy; subclass AssetCollection with source, and partOf); by the function sub-properties assigner and assignee to Party (uid; subclass PartyCollection with source, and partOf); and by constraint to Constraint (uid, rightOperandReference, dataType, unit, status; leftOperand to LeftOperand, operator to Operator, rightOperand to RightOperand) or LogicalConstraint (uid; operand, a list of Constraints). A refinement property links Action, AssetCollection and PartyCollection to Constraint and LogicalConstraint."
+      },
+      "img-p014-1": {
+        "role": "figure",
+        "saw": "captioned 'Figure 2 ODRL Constraint Relationships' on page 14; four rows of boxes and labelled arrows",
+        "draft": "Figure 2, ODRL Constraint Relationships: a Rule reaches constraints in four ways. Its assignee is a PartyCollection, its target an AssetCollection and its action an Action, and each of these has a refinement to one or more Constraints or LogicalConstraints. The Rule's own constraint property points to Constraints or LogicalConstraints directly. In every row a LogicalConstraint points back to the Constraints it combines. Stacked boxes mean one or more."
+      },
+      "img-p019-1": {
+        "role": "figure",
+        "saw": "captioned 'Figure 3 ODRL Rule Relationships' on page 19; Policy on the left fanning out to three rows of rule boxes",
+        "draft": "Figure 3, ODRL Rule Relationships: a Policy holds one or more Permissions, one or more Prohibitions and one or more obligations. A Permission has a duty to one or more Duties, which may have a consequence to further Duties. A Prohibition has a remedy to one or more Duties. An obligation is a Duty, with its own consequence Duties."
+      },
+      "img-p026-1": {
+        "role": "figure",
+        "saw": "captioned 'Figure 4 ODRL Shared Properties' on page 26; Policy with dashed arrows to Party, Asset and Action and solid arrows to Rule 1..n",
+        "draft": "Figure 4, ODRL Shared Properties: a Policy linked to Rule 1, Rule 2 and so on to Rule n. Dashed arrows show properties declared once on the Policy and shared by all its Rules: the function properties assigner and assignee to a Party (uid), the relation property target to an Asset, and action to an Action."
+      }
     }
   },
   "attribution": {
@@ -462,6 +484,15 @@
         "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
       },
       "inspected_at": "2026-09-30"
+    },
+    "w3c-2018-odrl-model-2-2": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_019rLS387FZZzjPJsNQhfALA"
+      },
+      "inspected_at": "2026-10-01"
     }
   }
 }
