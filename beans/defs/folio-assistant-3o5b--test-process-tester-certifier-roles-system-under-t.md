@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3o5b
 title: 'TEST PROCESS: tester + certifier roles, system-under-test actor facet, test-plan-execution.bpmn, certification DMN, kg-audit criteria'
-status: todo
+status: in-progress
 type: feature
 priority: normal
 created_at: 2026-10-01T08:00:47Z
-updated_at: 2026-10-01T08:00:55Z
+updated_at: 2026-10-01T18:06:08Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-ygzh
@@ -31,3 +31,5 @@ Roles: `tester` and `certifier` (a specialisation of `stakeholder` / `programme-
 ## Done when
 - [ ] `kg:audit` is clean on the new process, roles and criteria
 - [ ] the process runs end to end through `workflow_start` / `workflow_complete`
+
+Claim: worktree agent-aeed952a1045a7b02 (branch worktree-agent-aeed952a1045a7b02), session https://claude.ai/code/session_01LKpuPotV3Ve5Za75DQ3AQR, 2026-10-01. Not pushed; the parent session integrates.
