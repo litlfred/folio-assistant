@@ -6,7 +6,7 @@
       "unit": "waiting"
     },
     "library": {
-      "count": 25,
+      "count": 26,
       "unit": "entries"
     }
   },
@@ -1589,7 +1589,14 @@
       "upload": "absent",
       "uploadInstance": "",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2013-prov-o/README.md",
-      "referencedBy": [],
+      "referencedBy": [
+        {
+          "kind": "skills",
+          "instance": "folio-assistant-core",
+          "from": "folio-assistant-core/skills/voices/linked-data/voice.json",
+          "count": 2
+        }
+      ],
       "summaries": {
         "prose": 26,
         "summarised": 0,
@@ -1675,7 +1682,14 @@
       "upload": "absent",
       "uploadInstance": "",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2020-json-ld-1-1/README.md",
-      "referencedBy": [],
+      "referencedBy": [
+        {
+          "kind": "skills",
+          "instance": "folio-assistant-core",
+          "from": "folio-assistant-core/skills/voices/linked-data/voice.json",
+          "count": 6
+        }
+      ],
       "summaries": {
         "prose": 139,
         "summarised": 0,
@@ -1687,6 +1701,56 @@
         "notSummarised": 139,
         "unreadable": 0,
         "empty": 26
+      }
+    },
+    {
+      "id": "w3c-2024-prov-jsonld",
+      "instance": "cat-harness",
+      "dir": "cat-harness/library/w3c-2024-prov-jsonld",
+      "title": "w3c-2024-prov-jsonld",
+      "provenance": "ingested",
+      "rung": "paged",
+      "docId": "w3c-2024-prov-jsonld",
+      "sourceFile": "w3c-2024-prov-jsonld.pdf",
+      "sourceSha256": "ab826cd4a4cfe750c6b7eac6a8439b21c1114af747e3a1a05f48de7b4472c230",
+      "arxiv": "",
+      "doi": "",
+      "documentClass": "",
+      "sections": 71,
+      "blocks": 71,
+      "images": 1,
+      "ocrPages": 0,
+      "hasOcr": false,
+      "hasManifest": true,
+      "hasStructure": true,
+      "hasImagesJson": true,
+      "pageStart": 1,
+      "pageEnd": 71,
+      "words": 10025,
+      "chars": 83942,
+      "bytes": 236859,
+      "upload": "absent",
+      "uploadInstance": "",
+      "readme": "https://github.com/litlfred/folio-assistant/blob/main/cat-harness/library/w3c-2024-prov-jsonld/README.md",
+      "referencedBy": [
+        {
+          "kind": "skills",
+          "instance": "folio-assistant-core",
+          "from": "folio-assistant-core/skills/voices/linked-data/voice.json",
+          "count": 2
+        }
+      ],
+      "summaries": {
+        "prose": 71,
+        "summarised": 0,
+        "backlog": 71,
+        "draft": 0,
+        "confirmed": 0,
+        "stale": 0,
+        "rejected": 0,
+        "notSummarised": 71,
+        "unreadable": 0,
+        "empty": 0
       }
     },
     {
@@ -2953,7 +3017,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 2551,
+    "filesRead": 2557,
     "unreadable": []
   }
 }
