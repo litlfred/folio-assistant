@@ -2,7 +2,7 @@
   "$schema": "folio-library-index/v1",
   "tile": {
     "uploads": {
-      "count": 16,
+      "count": 19,
       "unit": "waiting"
     },
     "library": {
@@ -2251,8 +2251,8 @@
       "words": 46772,
       "chars": 315129,
       "bytes": 2064369,
-      "upload": "absent",
-      "uploadInstance": "",
+      "upload": "match",
+      "uploadInstance": "folio-assistant",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/smart-base/library/9789240093362-eng/README.md",
       "avatar": {
         "href": "/assets/library/avatars/smart-base/9789240093362-eng.png",
@@ -2523,6 +2523,23 @@
       "uploadInstance": "who-iris",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/9789241548960-eng/README.md",
       "withheld": "item/63e14c27-7448-41ec-be08-a96a25a47db6 ORIGINAL \"9789241548960_eng.pdf\": copyright refused, restrictions refused",
+      "withheldBy": {
+        "gates": [
+          {
+            "gate": "copyright",
+            "verdict": "refused"
+          },
+          {
+            "gate": "restrictions",
+            "verdict": "refused"
+          }
+        ],
+        "record": {
+          "id": "item/63e14c27-7448-41ec-be08-a96a25a47db6",
+          "page": "/who-iris/item-item-63e14c27-7448-41ec-be08-a96a25a47db6.html",
+          "uri": "https://hdl.handle.net/10665/145714"
+        }
+      },
       "referencedBy": [
         {
           "kind": "catalogue",
@@ -2574,6 +2591,23 @@
       "uploadInstance": "who-iris",
       "readme": "https://github.com/litlfred/folio-assistant/blob/main/who-iris/library/who-pub-tps-931/README.md",
       "withheld": "item/b08c6c19-315a-41a4-a9cb-8edabdbc6791 ORIGINAL \"WHO_PUB_TPS_93.1.pdf\": copyright refused, restrictions refused",
+      "withheldBy": {
+        "gates": [
+          {
+            "gate": "copyright",
+            "verdict": "refused"
+          },
+          {
+            "gate": "restrictions",
+            "verdict": "refused"
+          }
+        ],
+        "record": {
+          "id": "item/b08c6c19-315a-41a4-a9cb-8edabdbc6791",
+          "page": "/who-iris/item-item-b08c6c19-315a-41a4-a9cb-8edabdbc6791.html",
+          "uri": "https://hdl.handle.net/10665/36842"
+        }
+      },
       "referencedBy": [
         {
           "kind": "catalogue",
@@ -2672,6 +2706,42 @@
       "bytes": 639,
       "ext": "md",
       "ingestedBy": "isaitb-2026-interoperability-test-bed-readme",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
+      "file": "9789240093362-eng.pdf",
+      "kind": "file",
+      "instance": "folio-assistant",
+      "path": "uploads/9789240093362-eng.pdf",
+      "bytes": 2787054,
+      "ext": "pdf",
+      "ingestedBy": "9789240093362-eng",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
+      "file": "9789240101197-eng.pdf",
+      "kind": "file",
+      "instance": "folio-assistant",
+      "path": "uploads/9789240101197-eng.pdf",
+      "bytes": 2111579,
+      "ext": "pdf",
+      "ingestedBy": "",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
+      "file": "9789240116191-eng.pdf",
+      "kind": "file",
+      "instance": "folio-assistant",
+      "path": "uploads/9789240116191-eng.pdf",
+      "bytes": 1365113,
+      "ext": "pdf",
+      "ingestedBy": "",
       "docId": "",
       "title": "",
       "declaredFiles": 0
@@ -2821,6 +2891,18 @@
       "declaredFiles": 0
     },
     {
+      "file": "draft-for-public-comments_-reference-architecture-for-digital-public-infrastructure-for-health-guidance.pdf",
+      "kind": "file",
+      "instance": "folio-assistant",
+      "path": "uploads/draft-for-public-comments_-reference-architecture-for-digital-public-infrastructure-for-health-guidance.pdf",
+      "bytes": 5223782,
+      "ext": "pdf",
+      "ingestedBy": "",
+      "docId": "",
+      "title": "",
+      "declaredFiles": 0
+    },
+    {
       "file": "Home-_-folio-assistant.pdf",
       "kind": "file",
       "instance": "folio-assistant",
@@ -2849,7 +2931,7 @@
       "kind": "file",
       "instance": "folio-assistant",
       "path": "uploads/README.md",
-      "bytes": 4864,
+      "bytes": 5296,
       "ext": "md",
       "ingestedBy": "isaitb-2026-interoperability-test-bed-readme",
       "docId": "",
@@ -2940,9 +3022,9 @@
     {
       "instance": "folio-assistant",
       "dir": "uploads",
-      "total": 16,
-      "ingested": 2,
-      "uningested": 14
+      "total": 20,
+      "ingested": 3,
+      "uningested": 17
     },
     {
       "instance": "who-iris",
@@ -2953,7 +3035,7 @@
     }
   ],
   "refScan": {
-    "filesRead": 2557,
+    "filesRead": 2450,
     "unreadable": []
   }
 }

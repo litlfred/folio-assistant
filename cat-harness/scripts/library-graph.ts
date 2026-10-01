@@ -91,7 +91,7 @@ const REPO_URL = (root: string): string | undefined => {
   return repoUrls.get(root);
 };
 import { proseBody, type SummaryStatus } from "../schemas/block-summary.ts";
-import { withheldReason } from "./lib/withheld.ts";
+import { withheldEntryFor } from "./lib/withheld.ts";
 import { entryItems, type SummaryTally } from "./summaries.ts";
 import { ingestRungOf, type IngestRung } from "../content/pipeline/gen-library-jsonld.ts";
 import { pagesOf, readStructure, STRUCTURE_FILENAME } from "../schemas/document-structure.ts";
@@ -191,6 +191,16 @@ export interface LibraryEntry {
    * "Fix, keep summaries").
    */
   withheld?: string;
+  /**
+   * The structured half of {@link withheld}, when the list records it — issue
+   * #1794. `gates` names which publication gate refused and how; `record` is
+   * the catalogue record a reader is sent to instead of the text. Absent when
+   * the list carries only a sentence, and the viewer then says the sentence.
+   */
+  withheldBy?: {
+    gates?: { gate: string; verdict: string }[];
+    record?: { id?: string; page?: string; uri?: string };
+  };
   /**
    * The block-summary drain's counts for this entry — owner, 2026-09-24.
    *
@@ -783,8 +793,11 @@ export function readLibraryGraph(roots: string[], repoRoot: string = repoRootFor
           ? { readme: sourceLinks(REPO_URL(repoRoot), `${relative(repoRoot, dir).split("\\").join("/")}/README.md`, "main")?.viewHref }
           : {}),
         ...(() => {
-          const withheld = withheldReason(dir);
-          if (withheld) return { withheld };
+          const w = withheldEntryFor(dir);
+          if (w) {
+            const by = { ...(w.gates ? { gates: w.gates } : {}), ...(w.record ? { record: w.record } : {}) };
+            return { withheld: w.reason, ...(Object.keys(by).length ? { withheldBy: by } : {}) };
+          }
           const avatar = avatarOf(libDir, instance, slug, images, repoRoot);
           return avatar ? { avatar } : {};
         })(),
