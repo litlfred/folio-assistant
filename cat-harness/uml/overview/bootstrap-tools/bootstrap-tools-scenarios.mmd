@@ -1,0 +1,52 @@
+classDiagram
+  direction TB
+  namespace bootstrap_tools__bootstrap_tools_scenarios {
+    class bootstrap_tools_bootstrap_tools_scenarios_FormerName["FormerName"] {
+      <<json: RoleGraphSchema>>
+      name [1] string
+      retiredOn [1] string
+    }
+    class bootstrap_tools_bootstrap_tools_scenarios_Role["Role"] {
+      <<json: RoleGraphSchema>>
+      persona [0..1] string
+      id [1] string
+      title [1] string
+      description [1] string
+      actorKinds [1..*] list~person | agent | system | external~
+      otherNames [0..*] string[]
+      formerNames [0..*] FormerName[]
+      skills [0..*] string[]
+      inherits [0..*] string[]
+      actedUpon [0..1] boolean
+      judgementOnly [0..1] boolean
+    }
+    class bootstrap_tools_bootstrap_tools_scenarios_Actor["Actor"] {
+      <<json: RoleGraphSchema>>
+      id [1] string
+      title [1] string
+      kind [1] person | agent | system | external
+      description [0..1] string
+      roles [0..*] string[]
+    }
+    class bootstrap_tools_bootstrap_tools_scenarios_Extension["Extension"] {
+      <<json: RoleGraphSchema>>
+      role [1] string
+      skills [1..*] string[]
+    }
+    class bootstrap_tools_bootstrap_tools_scenarios_RoleGraph["RoleGraph"] {
+      <<json: RoleGraphSchema>>
+      name [1] string
+      roles [0..*] Role[]
+      actors [0..*] Actor[]
+      extensions [0..*] Extension[]
+    }
+  }
+  bootstrap_tools_bootstrap_tools_scenarios_Role *-- "0..*" bootstrap_tools_bootstrap_tools_scenarios_FormerName : formerNames
+  bootstrap_tools_bootstrap_tools_scenarios_RoleGraph *-- "0..*" bootstrap_tools_bootstrap_tools_scenarios_Role : roles
+  bootstrap_tools_bootstrap_tools_scenarios_RoleGraph *-- "0..*" bootstrap_tools_bootstrap_tools_scenarios_Actor : actors
+  bootstrap_tools_bootstrap_tools_scenarios_RoleGraph *-- "0..*" bootstrap_tools_bootstrap_tools_scenarios_Extension : extensions
+  cssClass "bootstrap_tools_bootstrap_tools_scenarios_FormerName" fa_uml_kind_scenarios
+  cssClass "bootstrap_tools_bootstrap_tools_scenarios_Role" fa_uml_kind_scenarios
+  cssClass "bootstrap_tools_bootstrap_tools_scenarios_Actor" fa_uml_kind_scenarios
+  cssClass "bootstrap_tools_bootstrap_tools_scenarios_Extension" fa_uml_kind_scenarios
+  cssClass "bootstrap_tools_bootstrap_tools_scenarios_RoleGraph" fa_uml_kind_scenarios

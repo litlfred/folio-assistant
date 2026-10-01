@@ -41,12 +41,12 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { dirname, join, relative, resolve } from "node:path";
 
 import {
-  checkoutResolvedDirectories,
   artefactStub,
   readDeclaration,
-  repoRootFor } from "../schemas/cat-harness.js";
+  resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
 import { readFshGutsNode } from "../schemas/fsh-guts.js";
+import { checkoutDirectories } from "../schemas/harness-config.js";
 
 const ROOT = resolve(import.meta.dir, "..");
 
@@ -126,8 +126,10 @@ export interface FshGutsDir {
 /** Every declared `fsh-guts` directory — not the literal path. */
 export function fshGutsDirs(root: string): FshGutsDir[] {
   try {
-    // Own, else the checkout's (cmsl step 2, issue #1694).
-    return checkoutResolvedDirectories(root, "fsh-guts")
+    // Own declaration first; then the checkout's (placement PR0a: the
+    // repository's `fsh-guts/` is declared by the ROOT instance).
+    const own = resolveDirectories([{ name: "(local)", root, own: true }]).filter((d) => d.graphKinds.includes("fsh-guts"));
+    return (own.length > 0 ? own : checkoutDirectories(root, { stackedOn: root }).filter((d) => d.graphKinds.includes("fsh-guts")))
       .map((d) => ({ absPath: d.absPath, path: d.path.replace(/\/+$/, "") }))
       .filter((d) => existsSync(d.absPath));
   } catch {

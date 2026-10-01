@@ -12,6 +12,7 @@ import { join } from "node:path";
 
 import {
   NO_WRITER,
+  UNGATED_INPUTS,
   WRITER_OVERRIDES,
   regenToFixpoint,
   repairableGates,
@@ -215,5 +216,38 @@ describe("regen runs to a FIXPOINT, not one pass — bean `14ve`", () => {
     expect(r.passes).toBe(3);
     expect(r.settled).toBe(false);
     expect(x === 0 || x === 1).toBe(true);
+  });
+});
+
+describe("UNGATED_INPUTS — writers regen runs without making them gates (bean 5qq3)", () => {
+  const pkg = JSON.parse(readFileSync(join(REPO, "package.json"), "utf-8")) as { scripts: Record<string, string> };
+
+  test("every pair names two scripts that exist", () => {
+    for (const { check, writer } of UNGATED_INPUTS) {
+      expect(pkg.scripts[check], `${check} is not a script`).toBeDefined();
+      expect(pkg.scripts[writer], `${writer} is not a script`).toBeDefined();
+    }
+  });
+
+  test("none of them is a gate — the owner's 2026-09-20 ruling keeps them ungated", () => {
+    // If one of these BECOMES a gate, it belongs in the gated set and this list
+    // must drop it, or regen asks it twice under two different reasons.
+    const gated = new Set(repairableGates(loadGates(REPO, { all: true }), pkg.scripts).map((p) => p.check));
+    for (const { check } of UNGATED_INPUTS) expect(gated.has(check), `${check} is gated now`).toBe(false);
+  });
+
+  test("an ungated input asked FIRST lets a dependent check settle in one pass", () => {
+    // library:viz writes what methodologies:viz reads. Asked first, the
+    // dependent sees the fresh input in the same pass: no second pass needed.
+    let libraryFresh = false;
+    const runner: Runner = (s) => {
+      if (s === "library:viz") { libraryFresh = true; return true; }
+      if (s === "library:viz:check") return libraryFresh;
+      if (s === "methodologies:viz:check") return libraryFresh;
+      return true;
+    };
+    const pairs = [{ check: "library:viz:check", writer: "library:viz" }, { check: "methodologies:viz:check", writer: "methodologies:viz" }];
+    const fx = regenToFixpoint(pairs, runner);
+    expect(fx.results.map((r) => r.outcome)).toEqual(["regenerated", "current"]);
   });
 });
