@@ -20,7 +20,7 @@ Head start: cat-harness/schemas/dak.ts, dak-blocks.ts, dak-content-type.ts alrea
 ## Done when
 - [ ] L1 kind: semi-fixed structure declared; computed from smart-base library/ plus external evidence (PICO, Cochrane) — sources named, not assumed
 - [x] DAK kind: the ten components as a fixed structure, GENERATED from DAK_COMPONENTS + DAK_CARDS (no second list); smart-base/document-kinds/dak.json, gated (#1811)
-- [ ] a visualizer for each kind
+- [x] a visualizer for each kind: the generic document-kinds viewer (/cat-harness/document-kinds/<instance>/), with the DAK view of every ingested IG computed from resource type (#1811)
 - [x] smart-l1/ and smart-dak/ retired with the owner's OK (stage D3, #1795); smart-ig kept, so needs: smart-ig stays
 - [x] smart-ig's fate: owner kept it (2026-10-01) as the IG-publication layer
 

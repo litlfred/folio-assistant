@@ -13348,6 +13348,34 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
+      "name": "CoverageMemberSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "key",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
       "id": "cat-harness/schemas/document-kind.ts#DocumentKind",
       "name": "DocumentKind",
       "module": "cat-harness/schemas/document-kind.ts",
@@ -13358,6 +13386,97 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverage",
+      "name": "DocumentKindCoverage",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
+      "name": "DocumentKindCoverageSchema",
+      "module": "cat-harness/schemas/document-kind.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(DOCUMENT_KIND_COVERAGE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The kind's id."
+        },
+        {
+          "name": "subject",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The instance whose content was classified."
+        },
+        {
+          "name": "from",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Repo-relative path of what was classified."
+        },
+        {
+          "name": "method",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The rule, in a sentence a reader can check."
+        },
+        {
+          "name": "total",
+          "type": "z.number().int().nonnegative()",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sections",
+          "type": "z.array(z.object({ id: z.string().min(1), members: z.array(CoverageMemberSchema) }))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "unplaced",
+          "type": "z.array(z.object({ group: z.string().min(1), count: z.number().int().positive() }))",
+          "optional": false,
+          "array": true,
+          "doc": "What no rule placed, grouped so the remainder is legible."
+        },
+        {
+          "name": "generatedBy",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/document-kind.ts#CoverageMemberSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "DOCUMENT_KIND_COVERAGE_SCHEMA_TAG",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -46333,6 +46452,14 @@
       "kind": "field",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "cat-harness/schemas/document-kind.ts#DocumentKindCoverageSchema",
+      "to": "cat-harness/schemas/document-kind.ts#CoverageMemberSchema",
+      "via": "sections",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness/schemas/document-kind.ts#DocumentKindSchema",

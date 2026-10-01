@@ -23,7 +23,15 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 
 import { DAK_COMPONENTS, DAK_UNFORMALIZED_COMPONENTS } from "../../cat-harness/schemas/block-kinds.ts";
-import { DOCUMENT_KIND_SCHEMA_TAG, DocumentKindSchema, type DocumentKind } from "../../cat-harness/schemas/document-kind.ts";
+import {
+  DOCUMENT_KIND_COVERAGE_SCHEMA_TAG,
+  DOCUMENT_KIND_SCHEMA_TAG,
+  DocumentKindCoverageSchema,
+  DocumentKindSchema,
+  type DocumentKind,
+  type DocumentKindCoverage,
+} from "../../cat-harness/schemas/document-kind.ts";
+import { directoriesForGraph, instanceRootsIn, readDeclaration, repoRootFor } from "../../cat-harness/schemas/cat-harness.ts";
 import { DAK_CARDS } from "../../cat-harness/scripts/gen-dak-components-figure.ts";
 
 const OUT = resolve(import.meta.dir, "..", "document-kinds");
@@ -60,16 +68,95 @@ export function dakKind(): DocumentKind {
   return DocumentKindSchema.parse(kind);
 }
 
+/**
+ * Which DAK component an ingested IG artefact realises — the owner's answer to
+ * Q2 (2026-10-01): computed from its FHIR resource type, and, for a
+ * StructureDefinition, from the category the IG's OWN `artifacts.html` files it
+ * under. WHO knowledge, so it lives here rather than in fhir-harness.
+ *
+ * Five rules and no more: each is a placement the WHO SMART L3 conventions make
+ * unambiguous. Everything else — value sets, profiles, examples, a trust
+ * network's endpoints — is reported as unplaced rather than forced into a
+ * component it only arguably belongs to.
+ */
+export const DAK_RULES: readonly { component: string; resourceType: string; category?: string }[] = [
+  { component: "generic-personas", resourceType: "ActorDefinition" },
+  { component: "functional-and-non-functional-requirements", resourceType: "Requirements" },
+  { component: "core-data-elements", resourceType: "StructureDefinition", category: "Structures: Logical Models" },
+  { component: "decision-support-logic", resourceType: "PlanDefinition" },
+  { component: "decision-support-logic", resourceType: "Library" },
+  { component: "programme-indicators", resourceType: "Measure" },
+];
+
+const METHOD =
+  "Computed from each artefact's FHIR resource type (owner, 2026-10-01): ActorDefinition → personas; " +
+  "Requirements → requirements; a StructureDefinition the IG files under 'Structures: Logical Models' → " +
+  "core data elements; PlanDefinition and Library → decision-support logic; Measure → indicators. " +
+  "Anything else is listed as unplaced.";
+
+interface IndexArtifact { key: string; resourceType: string; id: string; title?: string; name?: string; category?: string }
+
+/** The DAK view of one ingested IG's artefact index. */
+export function dakCoverage(subject: string, from: string, artifacts: readonly IndexArtifact[]): DocumentKindCoverage {
+  const sections = DAK_COMPONENTS.map((c) => ({ id: c as string, members: [] as { key: string; label: string }[] }));
+  const unplaced = new Map<string, number>();
+  for (const a of artifacts) {
+    const rule = DAK_RULES.find((r) => r.resourceType === a.resourceType && (r.category === undefined || r.category === a.category));
+    if (rule === undefined) {
+      unplaced.set(a.resourceType, (unplaced.get(a.resourceType) ?? 0) + 1);
+      continue;
+    }
+    sections.find((s) => s.id === rule.component)!.members.push({ key: a.key, label: a.title ?? a.name ?? a.id });
+  }
+  for (const s of sections) s.members.sort((x, y) => x.key.localeCompare(y.key));
+  return DocumentKindCoverageSchema.parse({
+    $schema: DOCUMENT_KIND_COVERAGE_SCHEMA_TAG,
+    kind: "dak",
+    subject,
+    from,
+    method: METHOD,
+    total: artifacts.length,
+    sections,
+    unplaced: [...unplaced].map(([group, count]) => ({ group, count })).sort((x, y) => y.count - x.count || x.group.localeCompare(y.group)),
+    generatedBy: GENERATOR,
+  });
+}
+
+/** Every instance holding a fhir-artifact-index, as [subject, repo-relative index path, artefacts]. */
+function ingestedIgs(repoRoot: string): [string, string, IndexArtifact[]][] {
+  const out: [string, string, IndexArtifact[]][] = [];
+  for (const root of instanceRootsIn(repoRoot)) {
+    const subject = readDeclaration(root)?.name;
+    if (!subject) continue;
+    for (const dir of directoriesForGraph(root, "fhir-artifact-index")) {
+      const path = join(dir, "index.json");
+      if (!existsSync(path)) continue;
+      const ix = JSON.parse(readFileSync(path, "utf-8")) as { artifacts?: IndexArtifact[] };
+      out.push([subject, relative(repoRoot, path).split("\\").join("/"), ix.artifacts ?? []]);
+    }
+  }
+  return out.sort((a, b) => a[0].localeCompare(b[0]));
+}
+
 if (import.meta.main) {
   const check = process.argv.includes("--check");
-  const target = join(OUT, "dak.json");
-  const body = `${JSON.stringify(dakKind(), null, 2)}\n`;
+  const repoRoot = repoRootFor(resolve(import.meta.dir, ".."));
+  const files = new Map<string, string>([[join(OUT, "dak.json"), `${JSON.stringify(dakKind(), null, 2)}\n`]]);
+  for (const [subject, from, artifacts] of ingestedIgs(repoRoot)) {
+    files.set(join(OUT, `dak.coverage.${subject}.json`), `${JSON.stringify(dakCoverage(subject, from, artifacts), null, 2)}\n`);
+  }
   if (check) {
-    const ok = existsSync(target) && readFileSync(target, "utf-8") === body;
-    console.log(ok ? `✓ ${relative(process.cwd(), target)} current` : `✗ ${relative(process.cwd(), target)} is stale — run without --check`);
-    process.exit(ok ? 0 : 1);
+    let bad = 0;
+    for (const [target, body] of files) {
+      const ok = existsSync(target) && readFileSync(target, "utf-8") === body;
+      if (!ok) { console.log(`✗ ${relative(process.cwd(), target)} is stale — run without --check`); bad++; }
+    }
+    if (bad === 0) console.log(`✓ ${files.size} document-kind file(s) current`);
+    process.exit(bad === 0 ? 0 : 1);
   }
   mkdirSync(OUT, { recursive: true });
-  writeFileSync(target, body);
-  console.log(`${relative(process.cwd(), target)}: ${dakKind().sections.length} sections`);
+  for (const [target, body] of files) {
+    writeFileSync(target, body);
+    console.log(`${relative(process.cwd(), target)} written`);
+  }
 }

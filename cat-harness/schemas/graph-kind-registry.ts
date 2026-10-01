@@ -1818,10 +1818,17 @@ export const BASE_GRAPH_KINDS: Readonly<Record<string, GraphKindDef>> = {
     // D5 of the smart-* separation, #1767, bean `qvxh`).
     holds: "content",
     // declared-path-literal: this table IS the declaration, as on `health`.
-    validator: "schemas/document-kind.ts#DocumentKindSchema",
+    nodeSchemas: {
+      "folio-document-kind/v1": { validator: "schemas/document-kind.ts#DocumentKindSchema" },
+      // How one subject realises a kind, computed by the kind's owner — a
+      // second family in this directory because it is DERIVED from another
+      // graph (an IG's artefact index), where the kind is authored.
+      "folio-document-kind-coverage/v1": { validator: "schemas/document-kind.ts#DocumentKindCoverageSchema" },
+    },
     summary:
       "Document kinds — named structures of sections (fixed or semi-fixed) that a document " +
-      "authored with a harness follows, one `folio-document-kind/v1` JSON each. Every kind and " +
+      "authored with a harness follows, one `folio-document-kind/v1` JSON each, plus computed " +
+      "`folio-document-kind-coverage/v1` reports of how a subject realises one. Every kind and " +
       "section names its sources; `computedFrom` names the declared graphs a section derives from.",
   },
   "todo-feedback": {

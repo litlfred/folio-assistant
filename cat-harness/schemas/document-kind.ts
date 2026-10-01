@@ -89,3 +89,41 @@ export const DocumentKindSchema = z
 
 export type DocumentKind = z.infer<typeof DocumentKindSchema>;
 export type DocumentKindSection = z.infer<typeof DocumentKindSectionSchema>;
+
+// ── Coverage: how one subject realises a kind ───────────────────────────
+
+/**
+ * How one SUBJECT (an instance, a document) realises a kind, section by
+ * section, as computed by whoever owns the kind.
+ *
+ * Generic like the kind itself: the rule that assigns a member to a section is
+ * the harness's (smart-base computes the DAK view of an IG from FHIR resource
+ * types), and `method` says what that rule was so the page can state it. What
+ * no rule placed is listed in `unplaced`, never dropped — a coverage report
+ * that hid its remainder would read as complete.
+ */
+export const DOCUMENT_KIND_COVERAGE_SCHEMA_TAG = "folio-document-kind-coverage/v1";
+
+const CoverageMemberSchema = z.object({
+  key: z.string().min(1),
+  label: z.string().min(1),
+});
+
+export const DocumentKindCoverageSchema = z.object({
+  $schema: z.literal(DOCUMENT_KIND_COVERAGE_SCHEMA_TAG),
+  /** The kind's id. */
+  kind: z.string().min(1),
+  /** The instance whose content was classified. */
+  subject: z.string().min(1),
+  /** Repo-relative path of what was classified. */
+  from: z.string().min(1),
+  /** The rule, in a sentence a reader can check. */
+  method: z.string().min(1),
+  total: z.number().int().nonnegative(),
+  sections: z.array(z.object({ id: z.string().min(1), members: z.array(CoverageMemberSchema) })),
+  /** What no rule placed, grouped so the remainder is legible. */
+  unplaced: z.array(z.object({ group: z.string().min(1), count: z.number().int().positive() })),
+  generatedBy: z.string().min(1),
+});
+
+export type DocumentKindCoverage = z.infer<typeof DocumentKindCoverageSchema>;
