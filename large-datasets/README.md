@@ -18,7 +18,7 @@ too big for the site that describes them.
 
 ## Why this is its own subgraph
 
-[`materialize-remote`](../folio-assistant-core/schemas/materialization.ts)
+[`materialize-remote`](skills/materialize-remote.md)
 answers *"may we take this, and what does holding it cost"* — five gates, three
 states. It does **not** answer the question before it:
 
@@ -28,9 +28,13 @@ Every source answers differently and none of it is guessable. Without a declared
 descriptor, an agent asked for "the WPRO style guides" has to be told the API by
 a human every single time, and that answer is written down nowhere.
 
-It belongs to neither neighbour: `folio-assist-core` is the **content** layer
-and this is about sources the instance will never hold; `cat-harness` is about
-the harness. It is the third thing.
+It is not content: it is about sources the instance will **never hold**, so it
+sits below the content layer and depends on nothing above `cat-harness`. Owner
+ruling 2026-10-01 makes it a subgraph of `cat-harness` (bean `rfuq`); its one
+import that reached up into the content layer — the catalogue-node schema
+`scripts/gen-id-lookup.ts` parsed with — is gone, replaced by
+`CatalogueNodeReadSchema` in [`schemas/id-lookup.ts`](schemas/id-lookup.ts),
+the three fields the lookup actually reads.
 
 ## Two worked descriptors, and the second is the point
 
