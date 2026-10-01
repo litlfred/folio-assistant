@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>1669</b><span>units indexed</span></div>
+<div class="lv-stat"><b>1668</b><span>units indexed</span></div>
 <div class="lv-stat"><b>6</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -122,7 +122,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**214** units · **5847** terms · k = **100** · retains **79.5 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**213** units · **5842** terms · k = **100** · retains **79.6 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -130,16 +130,20 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.65 | instance, harness, kind, session, directory, graph, block, page | *(none)* |
+| 1 | 43.63 | instance, harness, kind, session, directory, graph, block, page | *(none)* |
 | 2 | 21.42 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
-| 3 | 17.78 | session, beans, branch, goals, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
+| 3 | 17.77 | session, beans, goals, branch, store, window, epic, push | slot, chapter, block, edges, formal, glossary, project, proof |
 | 4 | 16.41 | page, block, section, sections, blocks, chapter, manifest, text | ledger, sibling, subdirectory, items, sessions, window, queue, renderable |
-| 5 | 14.81 | locale, navbar, translated, page, translation, staging, french, theme | edges, forward, edge, logical, backward, cross-chapter, energy, sections |
-| 6 | 14.77 | lane, actor, requirements, role, feature, task, phase, impact | rung, queue, slide, arm, bytes, zip, archive, images |
-| 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, criterion, rung, login, roles |
-| 8 | 14.13 | locale, translated, translation, french, back-translation, badge, translations, trip | preview, feature, phase, option, sha, impact, user, merge |
+| 5 | 14.81 | locale, translated, navbar, page, translation, french, staging, theme | edges, forward, edge, logical, backward, cross-chapter, energy, ordering |
+| 6 | 14.77 | requirements, lane, role, actor, feature, phase, task, sign-off | rung, queue, arm, slide, archive, zip, bytes, sniff |
+| 7 | 14.38 | edges, forward, preview, backward, edge, cross-chapter, energy, logical | actor, lane, role, backlog, rung, criterion, login, roles |
+| 8 | 14.12 | locale, translation, translated, french, back-translation, badge, translations, trip | preview, feature, phase, option, sha, impact, user, staging |
 
-**Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
+**Findings** — 0 narrow dimension(s), 1 near-duplicate pair(s).
+
+*Near-duplicates* (cosine ≥ 0.95) — similar is not duplicate; read both:
+
+- 0.953 — `cat-harness/skills/sdlc/sdlc-core/delivery-summary.md` ~ `cat-harness/skills/sdlc/sdlc-core/diff.md`
 
 ## smart-base / library
 
