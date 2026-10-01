@@ -3426,7 +3426,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T22:52:49Z",
-      "updatedAt": "2026-10-01T00:25:25Z",
+      "updatedAt": "2026-10-01T08:56:29Z",
       "preview": "## Why\nOwner ruling 2026-09-30, verbatim: \"dspace scripts generic in folio-assistant. iris specific tools for now ok in who-iris/ but make sure fails QA finding\".\n\nwho-iris/ is a staged instance that will move to its own CONTENT repository (litlfred/who-iris). kg-separation / bootstrap FR-7: a content repository holds no code. who-iris-tools is NOT authorised.\n\n## Done when\n- every code file under",
       "file": "beans/defs/folio-assistant-eayu--who-iris-separation-generic-dspace-code-to-the-pla.md"
     },
@@ -3566,7 +3566,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T06:40:55Z",
-      "updatedAt": "2026-10-01T06:46:40Z",
+      "updatedAt": "2026-10-01T11:29:42Z",
       "preview": "Issue #1614 item 4: methodology literature the KG / folio-asst deck relies on and no library holds. ODRL Information Model 2.2 (REC 2018-02-15; actor permissions, before/after check), PROV-O (REC 2013-04-30; QA/QC reports as provenance, bun run prov:qaqc), JSON-LD 1.1 (REC 2020-07-16; every manifest is JSON-LD). w3.org is blocked from the container; the REC publication snapshots are in each WG's G",
       "file": "beans/defs/folio-assistant-f1qz--ingest-w3c-odrl-22-prov-o-json-ld-11-into-cat-harn.md"
     },
@@ -4077,15 +4077,15 @@
     {
       "id": "folio-assistant-hx65",
       "title": "S0 main green: five red jobs on cdb0a018, submodule pins, orphan-sidecar ruling",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "critical",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:14:33Z",
-      "updatedAt": "2026-10-01T12:16:23Z",
-      "preview": "Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill refs'; TypeScript #7 'bun test'; E2E #7 'playwright test'; Skill-registration chain #5 'registration chain is current'; Docs site #7 'Regenerate skill instruction pages'. Four merges landed before CI finished.\n\n## Done when\n- [ ] each failing job named with step and cause\n- [ ] fix PR merged on per-job verified green\n- [ ",
+      "updatedAt": "2026-10-01T11:29:42Z",
+      "preview": "Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill refs'; TypeScript #7 'bun test'; E2E #7 'playwright test'; Skill-registration chain #5 'registration chain is current'; Docs site #7 'Regenerate skill instruction pages'. Four merges landed before CI finished.\n\n## Done when\n- [x] each failing job named with step and cause (PR #1774 body; root cause: take-main merges 198a9",
       "file": "beans/defs/folio-assistant-hx65--s0-main-green-five-red-jobs-on-cdb0a018-submodule.md"
     },
     {
@@ -4308,7 +4308,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T12:16:24Z",
-      "updatedAt": "2026-10-01T13:47:16Z",
+      "updatedAt": "2026-10-01T13:47:13Z",
       "preview": "Story S4 (rfuq). Rows: cat-harness/docs/proposals/placement-audit-2026-10-01.json (PR #1778) — pr '(7x5n S4 subgraph ruling)': agent-skills MOVE 21; large-datasets MOVE 11 + CODE 4 (-> cat-harness-tools) + 2 (-> sci / who-iris). Owner: both become cat-harness subgraphs, DISSOLVED into the eight concern groups (Q5). Done in #1776: large-datasets core import 1->0. Remaining: drop needs: folio-assist",
       "file": "beans/defs/folio-assistant-j7ql--s4-b-fold-agent-skills-and-large-datasets-into-cat.md"
     },
@@ -6005,15 +6005,15 @@
     {
       "id": "folio-assistant-rmi6",
       "title": "C1: flip cat-harness-tools needs to [cat-harness, bootstrap-tools]; core adds cat-harness-tools",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-7x5n",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T12:16:24Z",
-      "updatedAt": "2026-10-01T13:19:50Z",
-      "preview": "Owner ruling C1 (2026-10-01): tools sit below core. Placement audit: 0 of cat-harness-tools' 27 files import core, so only declarations change (cat-harness-tools.json needs; folio-assistant-core.json needs += cat-harness-tools) plus artefacts that read needs.\n## Done when\n- [ ] declarations changed; import-direction / reference-direction green; gates green; merged\n\n_2026-10-01T13:19:50Z_ — Claimed",
+      "updatedAt": "2026-10-01T13:19:53Z",
+      "preview": "Owner ruling C1 (2026-10-01): tools sit below core. Placement audit: 0 of cat-harness-tools' 27 files import core, so only declarations change (cat-harness-tools.json needs; folio-assistant-core.json needs += cat-harness-tools) plus artefacts that read needs.\n## Done when\n- [x] declarations changed; import-direction / reference-direction green; gates green; merged\n\n## Evidence (PR #1786, branch cl",
       "file": "beans/defs/folio-assistant-rmi6--c1-flip-cat-harness-tools-needs-to-cat-harness-boo.md"
     },
     {

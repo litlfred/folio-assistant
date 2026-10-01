@@ -29,18 +29,18 @@ GOAL 1  vuip  repo separation          ██████████░░░�
   fnx4  KG subscriptions               ████████████░░░░░░░░  slices 1–4,7,8 merged; 5+6 in #1756
   uhkv  SMART stack (sibling: n3ni)    ████████░░░░░░░░░░░░   5/13
 
-ARC 7x5n stories (11:30 UTC)
-  S0 main green          ██████░░░░  #1774 b4b9e0eb8: repo gates now reach step 17 (13→16→17); reg-chain, bun test, e2e still red
-  S1 bookkeeping         ███████░░░  3 beans wait on S0
-  S2 merge treadmill     ███░░░░░░░  2 commits parked on claude/awesome-feynman-0rt8ra-s2-wip; waits on S0
-  S3 drain PRs           ▒░░░░░░░░░  #1747 agent running (R1)
-  S4 direction/placement █████░░░░░  #1776 ready (R5 26→0, R6 →0, large-datasets import 1→0); audit #1778: 7/7 questions ruled
-  S5 code → tools        ░░░░░░░░░░  790 CODE + 127 TO-JSON rows mapped to 70lx/8lcl/y9r6
+ARC 7x5n stories (15:15 UTC)
+  S0 main green          ██████████  DONE: #1774 → a249bd3 (+ #1769 restored PR0a and pins)
+  S1 bookkeeping         █████████░  hx65 closed; 7dek / ejye / ybwt waiting on stated evidence (ybwt → 63wl)
+  S2 merge treadmill     ▒▒▒▒░░░░░░  #1754 in progress
+  S3 drain PRs           ██████░░░░  R1 done (#1769 + guard #1785); #1756, #1735, #1753 remain
+  S4 direction/placement ███████░░░  #1776 merged (R5 26→0, R6 →0); audit #1778 merged; S4-b #1787 in progress; syiq, lthi queued
+  S5 code → tools        ██░░░░░░░░  C1 #1786 merged; 70lx, 8lcl, y9r6, vj2p, saqd, bbza queued
   S6 standalone          ░░░░░░░░░░
   S7 seed repos          █████░░░░░  all 5 target repos exist and are empty
   S8 cut over            ░░░░░░░░░░
-  UPSTREAM               ▒░░░░░░░░░  bootstrap + bootstrap-tools: README via published IRIs, README CI check, live render
-main CI                                RED at d1a5d6e (S0 is the critical path)
+  UPSTREAM               ██████████  bootstrap#1 f75a216, bootstrap-tools#4 3046412; pin bump = bean pw9j
+main CI                                GREEN
 ```
 
 **Legend for the story row:** `░░` todo, `▒▒` in progress, `██` done, `!!` blocked on the owner.
@@ -277,6 +277,18 @@ Other audit findings, now on the checklist:
 - **Submodule pins:** restore PR0's bootstrap `7a91356` / bootstrap-tools `c5e5e25`. All of main's artefacts were generated at those pins; a later merge had regressed the gitlinks.
 - **READMEs: each repo owns its own.** folio-assistant stops regenerating and checking submodule READMEs. Each repo's own CI keeps its README current (D3). Nothing is pushed upstream.
 - **W3C library sources** (PROV-O, ODRL 2.2, JSON-LD 1.1): **methodologies cite them** via `evidence:`, reusing sibling PR #1769's methodology nodes. The test rule stays as it is.
+
+## Rulings 2026-10-01 late
+
+Owner, about 17:30. Each ruling is recorded in full on the bean it settles.
+
+| question | ruling | bean |
+|---|---|---|
+| **Q-A** generator retargeting | Split bootstrap outputs by kind. kg-qa verdicts, glossary ledgers and detangle stay in cat-harness as the auditor's output ("a harness may discuss its dependencies"). bootstrap-tools renders the UML of bootstrap and bootstrap-tools at build time. bootstrap's process translations move into bootstrap. Committed renderings become deploy-time output and keep their URLs. Delete the 37 duplicate sidecars. A `tools/index.ts` name collision throws. SKOS URLs (X2) are not ruled yet. | `cmsl`, `wggr` |
+| **Q-B** reference direction | Q1 is **reword**: files stay put and their prose stops naming higher layers. X3 exempts the 3 layering specifications. The ratchet also covers single-name files (A.10). Translation mirrors are exempt (X1). | `zhg2` (implementation: `1bvx`, `vzo5`) |
+| #1735 who-iris prose | Reword the outdated `dependents` prose in the who-iris files now, as the earlier ruling on #1735 said. | `ga6u` (`qsx4` exists only on #1735's branch) |
+| S5 1a, trap 1 | `inProcess("src/tools/...")` resolves against the implementing instance (cat-harness-tools), found through `needs`. No cat-harness-tools path is written into cat-harness. Two points are still open: how a sidecar's `source_file` resolves, and whether sci-bound files move in 1a. | `70lx` |
+| merge-treadmill speed-ups | Four approved: input-hash skip (`f017`), parallel checks (`v3nf`), CI `merge:main` (`d33q` part B), and CI sharding with a BPMN cache and shallow checkout (`dlqu`). | `0mf0` |
 
 ## S4 evidence (#1776, the upward-links PR)
 

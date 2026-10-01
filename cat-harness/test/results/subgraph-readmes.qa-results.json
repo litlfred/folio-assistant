@@ -16,7 +16,7 @@
     },
     "long-description": {
       "summary": "Declared directories whose description runs over 60 words: shown to readers under the README heading, so history and argument belong in a `_comment` instead.",
-      "count": 79,
+      "count": 82,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -57,6 +57,16 @@
           "instance": "folio-assistant",
           "directory": "root-docs",
           "path": "docs"
+        },
+        {
+          "instance": "agent-skills",
+          "directory": "library",
+          "path": "agent-skills/library"
+        },
+        {
+          "instance": "agent-skills",
+          "directory": "qa",
+          "path": "agent-skills/test/results"
         },
         {
           "instance": "agent-skills",
@@ -164,16 +174,6 @@
           "path": "cat-harness/templates"
         },
         {
-          "instance": "cat-harness",
-          "directory": "voices",
-          "path": "cat-harness/skills/voices"
-        },
-        {
-          "instance": "cat-harness-tools",
-          "directory": "cat-harness-tools-scripts",
-          "path": "cat-harness-tools/scripts"
-        },
-        {
           "instance": "fhir-harness",
           "directory": "library",
           "path": "fhir-harness/library"
@@ -255,11 +255,6 @@
         },
         {
           "instance": "folio-assistant-sci",
-          "directory": "sci-sources",
-          "path": "folio-assistant-sci/sources"
-        },
-        {
-          "instance": "folio-assistant-sci",
           "directory": "qa",
           "path": "folio-assistant-sci/test/results"
         },
@@ -272,6 +267,31 @@
           "instance": "folio-assistant-sci",
           "directory": "data-skills",
           "path": "folio-assistant-sci/skills/data"
+        },
+        {
+          "instance": "large-datasets",
+          "directory": "large-datasets-sources",
+          "path": "large-datasets/sources"
+        },
+        {
+          "instance": "large-datasets",
+          "directory": "large-datasets-processes",
+          "path": "large-datasets/processes"
+        },
+        {
+          "instance": "large-datasets",
+          "directory": "large-datasets-id-lookup",
+          "path": "large-datasets/id-lookup"
+        },
+        {
+          "instance": "large-datasets",
+          "directory": "qa",
+          "path": "large-datasets/test/results"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-docs",
+          "path": "smart-base/docs"
         },
         {
           "instance": "smart-base",
@@ -287,6 +307,11 @@
           "instance": "smart-base",
           "directory": "processes",
           "path": "smart-base/methodologies/processes"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-house-processes",
+          "path": "smart-base/processes"
         },
         {
           "instance": "smart-base",
@@ -385,16 +410,6 @@
         },
         {
           "instance": "who-iris",
-          "directory": "who-iris-sources",
-          "path": "who-iris/sources"
-        },
-        {
-          "instance": "who-iris",
-          "directory": "id-lookup",
-          "path": "who-iris/id-lookup"
-        },
-        {
-          "instance": "who-iris",
           "directory": "qa",
           "path": "who-iris/test/results"
         },
@@ -433,7 +448,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 99,
+      "count": 104,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -479,6 +494,16 @@
           "instance": "folio-assistant",
           "directory": "root-docs",
           "path": "docs"
+        },
+        {
+          "instance": "agent-skills",
+          "directory": "library",
+          "path": "agent-skills/library"
+        },
+        {
+          "instance": "agent-skills",
+          "directory": "qa",
+          "path": "agent-skills/test/results"
         },
         {
           "instance": "agent-skills",
@@ -631,24 +656,9 @@
           "path": "cat-harness/deploy"
         },
         {
-          "instance": "cat-harness",
-          "directory": "voices",
-          "path": "cat-harness/skills/voices"
-        },
-        {
           "instance": "cat-harness-tools",
           "directory": "cat-harness-tools-adapters",
           "path": "cat-harness-tools/adapters"
-        },
-        {
-          "instance": "cat-harness-tools",
-          "directory": "cat-harness-tools-scripts",
-          "path": "cat-harness-tools/scripts"
-        },
-        {
-          "instance": "cat-harness-tools",
-          "directory": "cat-harness-tools-id-lookup",
-          "path": "cat-harness-tools/id-lookup"
         },
         {
           "instance": "cat-harness-tools",
@@ -752,11 +762,6 @@
         },
         {
           "instance": "folio-assistant-sci",
-          "directory": "sci-sources",
-          "path": "folio-assistant-sci/sources"
-        },
-        {
-          "instance": "folio-assistant-sci",
           "directory": "qa",
           "path": "folio-assistant-sci/test/results"
         },
@@ -776,6 +781,46 @@
           "path": "folio-assistant-sci/skills/data"
         },
         {
+          "instance": "large-datasets",
+          "directory": "large-datasets-schemas",
+          "path": "large-datasets/schemas"
+        },
+        {
+          "instance": "large-datasets",
+          "directory": "large-datasets-sources",
+          "path": "large-datasets/sources"
+        },
+        {
+          "instance": "large-datasets",
+          "directory": "large-datasets-skills",
+          "path": "large-datasets/skills"
+        },
+        {
+          "instance": "large-datasets",
+          "directory": "large-datasets-processes",
+          "path": "large-datasets/processes"
+        },
+        {
+          "instance": "large-datasets",
+          "directory": "large-datasets-scripts",
+          "path": "large-datasets/scripts"
+        },
+        {
+          "instance": "large-datasets",
+          "directory": "large-datasets-id-lookup",
+          "path": "large-datasets/id-lookup"
+        },
+        {
+          "instance": "large-datasets",
+          "directory": "qa",
+          "path": "large-datasets/test/results"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-docs",
+          "path": "smart-base/docs"
+        },
+        {
           "instance": "smart-base",
           "directory": "library",
           "path": "smart-base/library"
@@ -789,6 +834,11 @@
           "instance": "smart-base",
           "directory": "processes",
           "path": "smart-base/methodologies/processes"
+        },
+        {
+          "instance": "smart-base",
+          "directory": "smart-base-house-processes",
+          "path": "smart-base/processes"
         },
         {
           "instance": "smart-base",
@@ -902,16 +952,6 @@
         },
         {
           "instance": "who-iris",
-          "directory": "who-iris-sources",
-          "path": "who-iris/sources"
-        },
-        {
-          "instance": "who-iris",
-          "directory": "id-lookup",
-          "path": "who-iris/id-lookup"
-        },
-        {
-          "instance": "who-iris",
           "directory": "qa",
           "path": "who-iris/test/results"
         },
@@ -954,5 +994,5 @@
       "entries": []
     }
   },
-  "total": 182
+  "total": 190
 }
