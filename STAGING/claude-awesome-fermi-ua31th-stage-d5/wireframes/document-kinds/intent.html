@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/docs-ui.css?v=1790883292">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/docs-ui.css?v=1790884919">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/narrow-viewport.css?v=1790883292">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/narrow-viewport.css?v=1790884919">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/work-plan.css?v=1790883292">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/work-plan.css?v=1790884919">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/themes.css?v=1790883292">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/themes.css?v=1790884919">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/uml.css?v=1790883292">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/uml.css?v=1790884919">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/avatars.css?v=1790883292">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/css/avatars.css?v=1790884919">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/js/docs-ui.js?v=1790883292" defer></script>
+<script src="/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-d5/assets/js/docs-ui.js?v=1790884919" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -874,6 +874,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   <li>Per kind: title, id, description, structure, section count, declaring instance and file, and the generator when the file is generated.</li>
   <li>Per section: order, title, id, required/optional, what it holds, what it is <code class="language-plaintext highlighter-rouge">computedFrom</code>, and its own sources or “the kind’s sources”.</li>
   <li>The kind’s sources.</li>
+  <li>When the kind’s owner computes coverage: per subject, how many members each section has (expandable to the list), what no rule placed, and how many were classified — with the rule stated above the table.</li>
 </ol>
 <h2 id="findings">
   
@@ -887,6 +888,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <ol>
   <li><strong>Every DAK section says “the kind’s sources”.</strong> True — the ten components are sourced as a list, not one by one — but a reader cannot tell which WHO publication defines, say, scheduling logic. Per-section locators would answer it.</li>
   <li><strong>On a phone the table becomes stacked cards</strong> (≤ 640 px), so nothing scrolls sideways; the column headers are hidden there, and “required” reads as a bare word under the title.</li>
+  <li><strong>On a phone the coverage table scrolls sideways inside its own box</strong> (the page itself does not): three subjects do not fit beside the section names at 390 px. The section column keeps whole words.</li>
+  <li><strong>Most DAK components show no members for any IG.</strong> That is the rule being conservative (five placements, everything else unplaced), not the IGs being empty — the “Unplaced” row says what was left.</li>
   <li><strong>The index page and the smart-base page are identical while one instance declares kinds.</strong> Expected; they diverge when a second harness contributes a kind.</li>
 </ol>
 

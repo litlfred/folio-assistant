@@ -21,9 +21,12 @@ From the generated page, rendered in Chromium at 1280×900 and 390×844 (the sit
 1. Per kind: title, id, description, structure, section count, declaring instance and file, and the generator when the file is generated.
 2. Per section: order, title, id, required/optional, what it holds, what it is `computedFrom`, and its own sources or "the kind's sources".
 3. The kind's sources.
+4. When the kind's owner computes coverage: per subject, how many members each section has (expandable to the list), what no rule placed, and how many were classified — with the rule stated above the table.
 
 ## Findings
 
 1. **Every DAK section says "the kind's sources".** True — the ten components are sourced as a list, not one by one — but a reader cannot tell which WHO publication defines, say, scheduling logic. Per-section locators would answer it.
 2. **On a phone the table becomes stacked cards** (≤ 640 px), so nothing scrolls sideways; the column headers are hidden there, and "required" reads as a bare word under the title.
-3. **The index page and the smart-base page are identical while one instance declares kinds.** Expected; they diverge when a second harness contributes a kind.
+3. **On a phone the coverage table scrolls sideways inside its own box** (the page itself does not): three subjects do not fit beside the section names at 390 px. The section column keeps whole words.
+4. **Most DAK components show no members for any IG.** That is the rule being conservative (five placements, everything else unplaced), not the IGs being empty — the "Unplaced" row says what was left.
+5. **The index page and the smart-base page are identical while one instance declares kinds.** Expected; they diverge when a second harness contributes a kind.
