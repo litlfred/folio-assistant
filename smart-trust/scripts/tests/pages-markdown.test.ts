@@ -40,11 +40,20 @@ const categoryFiles = existsSync(CATEGORIES)
       .sort()
   : [];
 
+/**
+ * A DAK sidecar's view page (`<Name>.schema.json.md`, `<Name>.jsonld.md`) sits
+ * beside its artefact page, as the Publisher's does, but is a different page
+ * KIND: one per held sidecar, not one per artefact (bean `jut3`).
+ */
+const isDakView = (f: string) => /\.(schema\.json|jsonld)\.md$/.test(f);
+
 const artifactFiles = existsSync(ARTIFACTS)
   ? readdirSync(ARTIFACTS)
-      .filter((f) => f.endsWith(".md"))
+      .filter((f) => f.endsWith(".md") && !isDakView(f))
       .sort()
   : [];
+
+const dakViewFiles = existsSync(ARTIFACTS) ? readdirSync(ARTIFACTS).filter(isDakView).sort() : [];
 
 /**
  * The artefact index the generator reads. Loaded here so a test can assert
@@ -63,6 +72,9 @@ const indexSrc = existsSync(join(DOCS, "index.md"))
 const pages: [string, string][] = [
   ["index.md", indexSrc],
   ...artifactFiles.map(
+    (f) => [`artifact/${f}`, readFileSync(join(ARTIFACTS, f), "utf-8")] as [string, string],
+  ),
+  ...dakViewFiles.map(
     (f) => [`artifact/${f}`, readFileSync(join(ARTIFACTS, f), "utf-8")] as [string, string],
   ),
 ];
@@ -202,7 +214,9 @@ describe("the pages are markdown, not HTML wearing front matter", () => {
     });
 
     it(`${label} uses markdown tables`, () => {
-      expect(b).toMatch(/^\|---/m);
+      // A DAK view page holds no tabular data — a file and its links — so it
+      // is held only to the half of this rule that forbids HTML tables.
+      if (!isDakView(label)) expect(b).toMatch(/^\|---/m);
       expect(b).not.toMatch(/<table\b/);
       expect(b).not.toMatch(/<tr\b/);
       expect(b).not.toMatch(/<td\b/);
@@ -218,7 +232,9 @@ describe("representation links are separated", () => {
    */
   for (const [label, src] of pages) {
     const b = body(src);
-    if (!b.includes("</a>")) continue;
+    // A DAK view page carries no `repLinks` row; its only `</a>` is the
+    // banner's, so this defect cannot occur on it.
+    if (!b.includes("</a>") || isDakView(label)) continue;
 
     it(`${label} puts a separator between adjacent links`, () => {
       expect(b).not.toContain("</a><a ");

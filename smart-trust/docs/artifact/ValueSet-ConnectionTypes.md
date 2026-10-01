@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-ConnectionTypes.schema.json> | `fhir-artifact-index/dak/ValueSet-ConnectionTypes.schema.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-ConnectionTypes.schema.json> | `fhir-artifact-index/dak/ValueSet-ConnectionTypes.schema.json` · [view](ValueSet-ConnectionTypes.schema.json.html) |
 | Displays | <https://litlfred.github.io/smart-trust/schemas/ValueSet-ConnectionTypes.displays.json> | `fhir-artifact-index/dak/ValueSet-ConnectionTypes.displays.json` |
 | OpenAPI | <https://litlfred.github.io/smart-trust/schemas/ValueSet-ConnectionTypes.openapi.json> | `fhir-artifact-index/dak/ValueSet-ConnectionTypes.openapi.json` |
-| JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-ConnectionTypes.jsonld> | `fhir-artifact-index/dak/ValueSet-ConnectionTypes.jsonld` |
+| JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-ConnectionTypes.jsonld> | `fhir-artifact-index/dak/ValueSet-ConnectionTypes.jsonld` · [view](ValueSet-ConnectionTypes.jsonld.html) |

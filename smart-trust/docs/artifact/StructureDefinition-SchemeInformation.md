@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.schema.json> | `fhir-artifact-index/dak/StructureDefinition-SchemeInformation.schema.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.schema.json> | `fhir-artifact-index/dak/StructureDefinition-SchemeInformation.schema.json` · [view](StructureDefinition-SchemeInformation.schema.json.html) |
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://litlfred.github.io/smart-trust/schemas/StructureDefinition-SchemeInformation.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-SchemeInformation.openapi.json` |
 | JSON-LD | *not published for this artefact* | |

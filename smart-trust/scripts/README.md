@@ -7,6 +7,8 @@ Part of [smart-trust](../README.md) 0.1.0, declared as `smart-trust-scripts`, ho
 
 | file | what it is | used by |
 |---|---|---|
+| [`dak-views.ts`](dak-views.ts) | a file |  |
 | [`gen-smart-trust-pages.ts`](gen-smart-trust-pages.ts) | a file |  |
-| [`tests/`](tests/) | 1 file | |
+| [`templates/`](templates/) | 1 file | |
+| [`tests/`](tests/) | 2 files | |
 <!-- kg:subgraph:end -->

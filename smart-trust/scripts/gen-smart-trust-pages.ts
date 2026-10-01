@@ -58,6 +58,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
+import { dakViewData, dakViews } from "./dak-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
 import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
@@ -99,6 +100,8 @@ const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
  */
 const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
+/** The DAK view pages' Liquid template (`liquid-templates`: a file of this directory, beside its writer). */
+const DAK_VIEW_TEMPLATE = join(import.meta.dir, "templates", "dak-view.liquid");
 
 /**
  * The instance that OWNS the WHO chrome.
@@ -392,12 +395,16 @@ function shell(
   body: string,
   nav: NavRole = { kind: "index" },
   chrome: ChromeChoice = "fixture",
+  data: Record<string, unknown> = {},
 ): string {
   const fm = [
     "---",
     `title: ${yamlScalar(title)}`,
     `description: ${yamlScalar(description)}`,
     ...navFrontMatter(nav),
+    // Page variables for a Liquid template, as JSON flow mappings — YAML is a
+    // superset of JSON, so one line per key needs no YAML emitter.
+    ...Object.entries(data).map(([k, v]) => `${k}: ${JSON.stringify(v)}`),
     "---",
     "",
   ].join("\n");
@@ -648,7 +655,8 @@ function artifactPage(ix: FhirArtifactIndex, a: FhirArtifact): string {
     const r = a.dak?.[k];
     const label = { schema: "JSON Schema", displays: "Displays", openapi: "OpenAPI", jsonld: "JSON-LD" }[k];
     if (!r) return `| ${label} | *not published for this artefact* | |`;
-    const held = r.localPath ? `\`${mdCell(r.localPath)}\`` : "*by reference*";
+    const view = (k === "schema" || k === "jsonld") && r.localPath ? ` · [view](${mdCell(r.localPath.split("/").pop()!)}.html)` : "";
+    const held = r.localPath ? `\`${mdCell(r.localPath)}\`${view}` : "*by reference*";
     return `| ${label} | <${mdCell(r.url)}> | ${held} |`;
   });
 
@@ -804,6 +812,30 @@ pages.set("index.md", indexPage(ix));
 // upstream links.
 for (const a of ix.artifacts) {
   pages.set(join("artifact", `${pageName(a)}.md`), artifactPage(ix, a));
+}
+
+// THE DAK VIEW PAGES — the Publisher's `<Name>.schema.json.html` and
+// `<Name>.jsonld.html` (bean `jut3`'s parity table: 33 on smart-trust). Each is
+// the raw file, published beside its page so Raw and Download resolve, plus a
+// page that is the Liquid template over data `dak-views.ts` computed.
+const dakTemplate = readFileSync(DAK_VIEW_TEMPLATE, "utf8");
+for (const a of ix.artifacts) {
+  for (const v of dakViews(a)) {
+    const raw = readFileSync(join(INSTANCE, v.localPath), "utf8");
+    const data = dakViewData(a, v, raw);
+    pages.set(join("artifact", v.file), raw);
+    pages.set(
+      join("artifact", `${v.file}.md`),
+      shell(
+        `${data.artifact.title} — ${v.label}`,
+        `The ${v.label} sidecar of ${a.key}, from the IG's DAK API.`,
+        dakTemplate,
+        { kind: "leaf" },
+        "fixture",
+        { dak: data },
+      ),
+    );
+  }
 }
 
 // A page for each category too large to inline, so "too many to list here"

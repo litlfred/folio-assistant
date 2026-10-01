@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/StructureDefinition-COSEHeader.schema.json> | `fhir-artifact-index/dak/StructureDefinition-COSEHeader.schema.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/StructureDefinition-COSEHeader.schema.json> | `fhir-artifact-index/dak/StructureDefinition-COSEHeader.schema.json` · [view](StructureDefinition-COSEHeader.schema.json.html) |
 | Displays | *not published for this artefact* | |
 | OpenAPI | <https://litlfred.github.io/smart-trust/schemas/StructureDefinition-COSEHeader.openapi.json> | `fhir-artifact-index/dak/StructureDefinition-COSEHeader.openapi.json` |
 | JSON-LD | *not published for this artefact* | |

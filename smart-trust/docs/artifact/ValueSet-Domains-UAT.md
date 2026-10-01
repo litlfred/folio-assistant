@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Domains-UAT.schema.json> | `fhir-artifact-index/dak/ValueSet-Domains-UAT.schema.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Domains-UAT.schema.json> | `fhir-artifact-index/dak/ValueSet-Domains-UAT.schema.json` · [view](ValueSet-Domains-UAT.schema.json.html) |
 | Displays | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Domains-UAT.displays.json> | `fhir-artifact-index/dak/ValueSet-Domains-UAT.displays.json` |
 | OpenAPI | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Domains-UAT.openapi.json> | `fhir-artifact-index/dak/ValueSet-Domains-UAT.openapi.json` |
-| JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.jsonld> | `fhir-artifact-index/dak/ValueSet-Domains-UAT.jsonld` |
+| JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-Domains-UAT.jsonld> | `fhir-artifact-index/dak/ValueSet-Domains-UAT.jsonld` · [view](ValueSet-Domains-UAT.jsonld.html) |

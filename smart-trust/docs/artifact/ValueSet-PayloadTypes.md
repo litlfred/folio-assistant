@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-PayloadTypes.schema.json> | `fhir-artifact-index/dak/ValueSet-PayloadTypes.schema.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-PayloadTypes.schema.json> | `fhir-artifact-index/dak/ValueSet-PayloadTypes.schema.json` · [view](ValueSet-PayloadTypes.schema.json.html) |
 | Displays | <https://litlfred.github.io/smart-trust/schemas/ValueSet-PayloadTypes.displays.json> | `fhir-artifact-index/dak/ValueSet-PayloadTypes.displays.json` |
 | OpenAPI | <https://litlfred.github.io/smart-trust/schemas/ValueSet-PayloadTypes.openapi.json> | `fhir-artifact-index/dak/ValueSet-PayloadTypes.openapi.json` |
-| JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-PayloadTypes.jsonld> | `fhir-artifact-index/dak/ValueSet-PayloadTypes.jsonld` |
+| JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-PayloadTypes.jsonld> | `fhir-artifact-index/dak/ValueSet-PayloadTypes.jsonld` · [view](ValueSet-PayloadTypes.jsonld.html) |

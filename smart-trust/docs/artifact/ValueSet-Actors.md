@@ -116,7 +116,7 @@ IG rather than a gap in this index.
 
 | Sidecar | Published at | Held locally |
 |---|---|---|
-| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Actors.schema.json> | `fhir-artifact-index/dak/ValueSet-Actors.schema.json` |
+| JSON Schema | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Actors.schema.json> | `fhir-artifact-index/dak/ValueSet-Actors.schema.json` · [view](ValueSet-Actors.schema.json.html) |
 | Displays | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Actors.displays.json> | `fhir-artifact-index/dak/ValueSet-Actors.displays.json` |
 | OpenAPI | <https://litlfred.github.io/smart-trust/schemas/ValueSet-Actors.openapi.json> | `fhir-artifact-index/dak/ValueSet-Actors.openapi.json` |
-| JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-Actors.jsonld> | `fhir-artifact-index/dak/ValueSet-Actors.jsonld` |
+| JSON-LD | <https://litlfred.github.io/smart-trust/ValueSet-Actors.jsonld> | `fhir-artifact-index/dak/ValueSet-Actors.jsonld` · [view](ValueSet-Actors.jsonld.html) |

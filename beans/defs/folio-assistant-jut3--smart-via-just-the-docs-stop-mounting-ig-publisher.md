@@ -549,3 +549,36 @@ matched, and `toc` and `artifacts` are matched as of PR #1766. XML/TTL views
 (1,331) are P2 refusals once `ntyj` records them. Change history (668) goes on
 the fork's ask. Still to place: JSON views (673), DAK views (33), profile tabs
 (35), `-testing` (69), and the other IG-level pages (9).
+
+## 2026-10-01: DAK view pages — 33 rendered, 8 equivalent, two upstream divergences found
+
+`gen-smart-trust-pages` now writes the Publisher's `<Name>.schema.json.html`
+(19) and `<Name>.jsonld.html` (14). Each is the raw file, published beside
+the page, plus a page that is `smart-trust/scripts/templates/dak-view.liquid`
+over `page.dak`, computed by `smart-trust/scripts/dak-views.ts`. The work is in
+smart-trust, not fhir-harness, because a DAK is WHO's. The displayed text is
+`JSON.stringify(parsed, null, 2)`, as the Publisher's page fetches and shows
+it. That is not always the file's own bytes: JavaScript puts integer-like keys
+first, which affects 3 of the 33 files.
+
+**Checked against the Publisher** (Jekyll build vs the fork's `gh-pages` at
+`9bd9643`): **8 of 33 equivalent.** The other 25 differ for reasons outside
+this renderer:
+
+1. **Two different schemas per ValueSet or model upstream.** The view page
+   fetches the ROOT `<Name>.schema.json`, written by `smart-base`'s current
+   `generate_valueset_schemas.py` (`e151a4d`): values are Coding objects with
+   `system` and `code`. `schemas/<Name>.schema.json`, which `dak-api.html`
+   links and this index holds, is the older format, where values are IRI
+   strings. Both come from the same deploy and carry the same `$id`. All 19
+   schema pages show different text for this reason.
+2. **The Publisher's tab bars are inconsistent**, which comes from the DAK
+   post-processing that injects the tabs:
+   - 12 pages list JSON Schema / JSON-LD twice;
+   - 8 schema pages have no JSON-LD tab, though their JSON-LD page links back
+     to them;
+   - the 5 StructureDefinition pages carry SD tabs (`Content`,
+     `Detailed Descriptions`, `Mappings`) instead of `Narrative Content`.
+
+Ours renders one consistent tab bar. Which schema copy to show, and whether
+to reproduce the tab defects, are the owner's calls.

@@ -1,0 +1,19 @@
+{%- comment -%}
+A DAK sidecar's view page, the Publisher's `<Name>.schema.json.html` or `<Name>.jsonld.html`, rendered by Jekyll.
+Reads `page.dak`, every field written by `gen-smart-trust-pages.ts`:
+`label` (JSON Schema | JSON-LD), `file` (the raw file, published beside this page),
+`artifact.title` and `artifact.page`, `tabs[]` (`label`, `href`, `active`) in the Publisher's order,
+`text` (the file as the Publisher's page displays it: `JSON.stringify(parsed, null, 2)`)
+and `fence` (a backtick run longer than any inside `text`). This file only arranges them.
+{%- endcomment -%}
+[← {{ page.dak.artifact.title }}]({{ page.dak.artifact.page }})
+
+{% for t in page.dak.tabs %}{% if t.active %}**{{ t.label }}**{% else %}[{{ t.label }}]({{ t.href }}){% endif %}{% unless forloop.last %} · {% endunless %}{% endfor %}
+
+## {{ page.dak.label }}
+
+[Raw {{ page.dak.label }}]({{ page.dak.file }}) · [Download]({{ page.dak.file }}){: download=""}
+
+{{ page.dak.fence }}json
+{{ page.dak.text }}
+{{ page.dak.fence }}
