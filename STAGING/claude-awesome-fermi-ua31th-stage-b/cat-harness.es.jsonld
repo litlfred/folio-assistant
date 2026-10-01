@@ -301,10 +301,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T09:45:29.415Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/55e25d5a48a27c561e8b5a2b76fe50b5727f7160",
-  "sourceCommitSha": "55e25d5a48a27c561e8b5a2b76fe50b5727f7160",
-  "sourceCommitAt": "2026-10-01T09:39:50Z",
+  "generatedAt": "2026-10-01T11:39:11.532Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/0d31104332bca59cb42a3756e7a443866edbbfb5",
+  "sourceCommitSha": "0d31104332bca59cb42a3756e7a443866edbbfb5",
+  "sourceCommitAt": "2026-10-01T11:33:51Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -317,7 +317,7 @@
     "SequenceFlow": 982,
     "Lane": 199,
     "ProcessNode": 927,
-    "Tool": 113,
+    "Tool": 112,
     "Schema": 140,
     "ExternalSchema": 17,
     "GraphKind": 24,
@@ -46111,47 +46111,6 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/cat-harness.jsonld#skill/package-release"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/package-release-manual"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/cat-harness.jsonld#tool/pin-smart-base-terminology",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Tool",
-      "name": "pin-smart-base-terminology",
-      "title": "Snapshot a published IG's terminology at its pinned version",
-      "description": "Read every CodeSystem concept out of a smart-base clone and write `external-schemas/who-smart-base.terminology.json`, the offline snapshot `check:term-mapping` resolves its `fhir` target against. 585 concepts across 12 code systems at v1.0.0.",
-      "install": {
-        "none": true
-      },
-      "invoke": {
-        "shell": "bun run cat-harness/scripts/pin-smart-base-terminology.ts --from <clone>"
-      },
-      "io": {
-        "inputs": [
-          {
-            "name": "from",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/tool-types.schema.json#/$defs/FilesystemPath",
-            "description": "A clone of WorldHealthOrganization/smart-base checked out at the PINNED tag, passed as `--from`. The script refuses unless that clone's `sushi-config.yaml` version equals the pin's, so a newer clone cannot silently become the snapshot.",
-            "required": true
-          }
-        ],
-        "outputs": [
-          {
-            "name": "snapshot",
-            "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/tool-types.schema.json#/$defs/RepoPath",
-            "description": "`cat-harness/external-schemas/who-smart-base.terminology.json`, `folio-pinned-terminology/v1`: the version, the source, and every `system#code` with its display, sorted."
-          }
-        ]
-      },
-      "requirements": {
-        "runtime": [
-          "bun",
-          "git"
-        ],
-        "network": false
-      },
-      "satisfies": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/cat-harness.jsonld#skill/vocabulary-authority"
-      ],
-      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#tool/pin-smart-base-terminology"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-fermi-ua31th-stage-b/cat-harness.jsonld#tool/transcribe-whisper-cpp",
