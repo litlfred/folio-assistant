@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-01T07:59:35Z
-updated_at: 2026-10-01T08:15:46Z
+updated_at: 2026-10-01T08:52:12Z
 ---
 
 Issue #1763. Proposal, workplan, dispatch map and decisions D1–D5: `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`.
@@ -44,3 +44,7 @@ beans:claim, because this session pushes only to its own branch.
 - D3 and D5: not asked, so they use their defaults.
 
 The owner also asked for an audit of every QA READER, with fixes queued. That is dispatched; see the reader-audit bean.
+
+
+## Owner ruling 2026-10-01 — the 26 baseline pair attestations count as JUDGEMENTS
+Asked with three options, recommended first. The owner chose "count as judgements". The 26 `baseline` pair attestations stay on main beside the 6 agent ones, under D2 (a). The kg-qa split therefore keeps all 32 `pair_attestations` files' attestation halves on main. Live-defect fixes `de9k` and `r7v6` start after `gurh` reports, so the two agents don't rewrite the same kg-qa files.

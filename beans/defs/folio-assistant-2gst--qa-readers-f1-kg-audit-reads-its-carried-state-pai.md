@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: critical
 created_at: 2026-10-01T08:47:12Z
-updated_at: 2026-10-01T08:47:12Z
+updated_at: 2026-10-01T08:52:11Z
 parent: folio-assistant-3fva
 blocked_by:
     - folio-assistant-16ei
@@ -35,3 +35,7 @@ Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-aud
 - [ ] with `test/results/` absent and no fetch, the test-run criteria read `unknown`, not `n/a`
 - [ ] `kg:audit:check` and `kg:audit:all:check` pass on `main` with `test/results/` absent from the checkout
 - [ ] a seeded new finding fails a PR, and an inherited one is reported but does not fail
+
+
+## Owner ruling 2026-10-01 — the 26 baseline pair attestations count as JUDGEMENTS
+Asked with three options, recommended first. The owner chose "count as judgements". The 26 `baseline` pair attestations stay on main beside the 6 agent ones, under D2 (a). The kg-qa split therefore keeps all 32 `pair_attestations` files' attestation halves on main. Live-defect fixes `de9k` and `r7v6` start after `gurh` reports, so the two agents don't rewrite the same kg-qa files.
