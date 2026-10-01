@@ -46,6 +46,14 @@ import { checkMethodologyEvidence, judgeMethodologyEvidence } from "../check-met
 import { checkLanes, judgeLaneDocumentation } from "../check-lane-documentation.ts";
 import { judgeKgExport } from "../kg-export.ts";
 import { coverage, judgeAvatarCoverage, trashDerivationPresent } from "../check-avatar-coverage.ts";
+import {
+  healthProducerCurrent,
+  interactionProfilesRead,
+  issueMarkEdits,
+  judgeHarnessState,
+  todoProcessRefs,
+  type Family,
+} from "../check-harness-state.ts";
 
 const INSTANCE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
 const REPO_ROOT = resolve(INSTANCE_ROOT, "..");
@@ -506,5 +514,33 @@ describe("check:avatar-coverage", () => {
     const run = judgeRun("check-avatar-coverage.ts", "avatar-coverage");
     expect(run.wrote).toBe(false);
     expect(run.exit).toBe(0);
+  }, 120_000);
+});
+
+// The tenth, found by the sweep's second pass rather than from the bean's list:
+// `check:harness-state:check` is a WIRED gate and still rewrote its sidecar.
+describe("check:harness-state", () => {
+  const family = (over: Partial<Family>): Family => ({ id: "f", summary: "s", examined: 1, findings: [], ...over });
+
+  test("CORRUPTED: a family with a finding → exit 1", () => {
+    expect(exitOf(judgeHarnessState([family({ findings: [{ where: "x", detail: "planted" }] })]))).toBe(1);
+  });
+
+  test("clean → 0; an unreadable family → 2, outranking a finding beside it", () => {
+    expect(exitOf(judgeHarnessState([family({})]))).toBe(0);
+    expect(
+      exitOf(
+        judgeHarnessState([family({ unreadable: "gone" }), family({ findings: [{ where: "x", detail: "planted" }] })]),
+      ),
+    ).toBe(2);
+  });
+
+  // This checkout carries a real finding today (the committed health report is
+  // from an older producer), so the CLI half asserts agreement and no write.
+  test("CLI judge mode writes nothing and agrees with the in-process judgement", () => {
+    const run = judgeRun("check-harness-state.ts", "harness-state");
+    expect(run.wrote).toBe(false);
+    const families = [healthProducerCurrent(), todoProcessRefs(), issueMarkEdits(), interactionProfilesRead()];
+    expect(run.exit).toBe(exitOf(judgeHarnessState(families)));
   }, 120_000);
 });
