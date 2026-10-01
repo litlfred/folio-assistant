@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-09-30T22:54:31Z
-updated_at: 2026-09-30T23:04:05Z
+updated_at: 2026-10-01T06:28:25Z
 parent: folio-assistant-vuip
 ---
 
@@ -20,6 +20,8 @@ Owner, 2026-09-30: subscribe to external KGs (bootstrap-conformant, with at leas
 - [ ] 4 subscribe tool: validate a substrate's declaration at a pin
 - [ ] 5 materialise a subgraph through `Process_MaterializeRemote`
 - [ ] 6 materialise an asset on demand
-- [ ] 7 instantiate a harness from a subscription, so it appears in the navbar
+- [x] 7 instantiate a harness from a subscription, so it appears in the navbar
 - [ ] 8 process, skill and scenarios registered
 - [ ] first real subscription: `litlfred/ihris`
+
+Slice 7 (branch claude/magical-archimedes-4qkfxp-kg-instantiate): `bun run kg:instantiate <subscription> <harness>` writes `<harness>.config.json` and the harness's state directories (under `<harness>/`) from the cached snapshot; refuses unchosen, undeclared, unmet-needs and name-taken cases; could-not-determine for a missing snapshot or unregistered kinds. harness-tiles draws the tile from the snapshot (scripts/subscribed-harnesses.ts), check-instance-config counts the config as claimed, subscriptions-viz marks it instantiated. Proven on fixtures only; check:instance-render does not cover a subscribed harness until its subgraphs are materialised. No real config committed: the first real subscription is the owner's step.
