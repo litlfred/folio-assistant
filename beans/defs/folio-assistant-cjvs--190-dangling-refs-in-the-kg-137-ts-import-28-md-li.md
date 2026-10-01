@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cjvs
 title: '190 dangling refs in the KG: 137 ts-import, 28 md-link, 25 bpmn-skill'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 created_at: 2026-09-26T06:33:48Z
-updated_at: 2026-09-30T20:23:23Z
+updated_at: 2026-10-01T05:32:19Z
 parent: folio-assistant-vke6
 ---
 
@@ -426,3 +426,5 @@ These links still run from cat-harness up to a dependent. So does the
 `sample-import` SKILL itself: it stays in cat-harness while its process now
 lives in large-datasets. Moving the skill would be a second ruling, and this
 change does not presume it. The two fhir-harness md-links are untouched.
+
+_2026-10-01T05:32:19Z_ — Claimed by claude/sharp-einstein-970n6g — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
