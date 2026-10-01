@@ -5089,6 +5089,27 @@
       "status": "candidate"
     },
     {
+      "id": "harness-config.checkoutgraph.deps",
+      "prefLabel": "CheckoutGraph.deps",
+      "definition": "Each instance's transitive dependencies.",
+      "source": "cat-harness/schemas/harness-config.ts#CheckoutGraph.deps",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.checkoutgraph.names",
+      "prefLabel": "CheckoutGraph.names",
+      "definition": "Each instance's declared name, as `declarationChain` spells a link.",
+      "source": "cat-harness/schemas/harness-config.ts#CheckoutGraph.names",
+      "status": "candidate"
+    },
+    {
+      "id": "harness-config.checkoutgraph.order",
+      "prefLabel": "CheckoutGraph.order",
+      "definition": "Every instance the root reaches, deepest first, the root last.",
+      "source": "cat-harness/schemas/harness-config.ts#CheckoutGraph.order",
+      "status": "candidate"
+    },
+    {
       "id": "harness-config.closedcontenttype.own",
       "prefLabel": "ClosedContentType.own",
       "definition": "`true` when the marker is on the root itself rather than a dependency.",
