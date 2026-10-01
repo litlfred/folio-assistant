@@ -1566,6 +1566,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#glossary-usage/Process_PrChecksPresent/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#glossary-usage/Process_PublishAlert/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#glossary-usage/Process_PublishVerification/Lane_Ci",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#glossary-usage/Process_RepoHealth/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline",
@@ -1761,6 +1762,15 @@
       "label": "CI/CD Pipeline",
       "scopeNote": "Runs every verifier over the exported documents before anything is deployed, and reports pass, fail or could-not-tell. It decides nothing about the release: the caller blocks on anything but a pass.",
       "source": "cat-harness/processes/publish-verification.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#glossary-usage/Process_QaPublish/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "label": "CI/CD Pipeline",
+      "scopeNote": "Runs both paths as fixed programs. It decides nothing that needs judgement: whether a token can write is read from the event, whether a push was accepted is the push's exit code (never its stderr — spike `3ds9` measured a harmless \"push negotiation failed; proceeding anyway\"), and what retention removes is `planPrune`'s rule. A PR whose state cannot be read is KEPT: could-not-determine never deletes.",
+      "source": "cat-harness/processes/qa-publish.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#glossary-usage/Process_RenderKgToCdn/Lane_Ci",

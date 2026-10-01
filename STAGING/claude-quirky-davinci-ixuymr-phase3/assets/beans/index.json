@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 621,
+      "count": 622,
       "unit": "beans"
     }
   },
@@ -1434,7 +1434,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:47Z",
-      "updatedAt": "2026-10-01T08:48:11Z",
+      "updatedAt": "2026-10-01T19:22:21Z",
       "preview": "Arc `3fva`, proposal §4 item 3.7 and decision D4. **Never on an agent's own initiative** (`deletion-requires-confirmation`).\n\nPreconditions:\n- every reader is migrated;\n- the gates have been green on the branch for 7 days (D4 default);\n- the `qa-reports:main/<head>` tree is byte-identical to main's `test/results` for every moved path, checked by blob hash;\n- attestations stay in place (D2 default)",
       "file": "beans/defs/folio-assistant-5hox--remove-moved-qa-files-from-main-only-on-the-owners.md"
     },
@@ -2293,6 +2293,20 @@
       "updatedAt": "2026-09-24T18:01:26Z",
       "preview": "## Why\n`document-ingestion.bpmn` calls `Process_IngestTheme` (`ingest-theme.bpmn`) behind `Gateway_ThemeSource`, and its links pointed at `#ingest-the-theme` and `#a-theme-source` — neither anchor exists. `content/docs/document-ingestion/document-ingestion.ts` has sections for extract / derive / build-KG / gate but none for the theme. Once links are derived from `asset.source` (B5-fix), the theme ",
       "file": "beans/defs/folio-assistant-8i57--document-ingestion-page-has-no-theme-section-proce.md"
+    },
+    {
+      "id": "folio-assistant-8iqt",
+      "title": "recordUntainted writes agent verdicts into the DERIVED block-qa file, not the attestation store",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-3fva",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T19:22:21Z",
+      "updatedAt": "2026-10-01T19:22:21Z",
+      "preview": "Found by the d6bw agent, 2026-10-01.\n\n`recordUntainted` (the untainted-verification writer) still writes an agent verdict into the derived block-qa report. Since 8wj1/2gst, judgements live in the declared `attestations` graph (`test/attestations/`, `qa-attestations/v1`). The verdict reaches the store only when a later writer runs and auto-moves it (owner ruling 2). So nothing is lost today. But on",
+      "file": "beans/defs/folio-assistant-8iqt--recorduntainted-writes-agent-verdicts-into-the-der.md"
     },
     {
       "id": "folio-assistant-8jt6",
@@ -3193,14 +3207,14 @@
     {
       "id": "folio-assistant-c8uq",
       "title": "QA READERS F5: corpus walkers that pass on an empty corpus (orphan-verdict sweep, validate orphan check, reviewer permission)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:14Z",
-      "updatedAt": "2026-10-01T08:47:14Z",
+      "updatedAt": "2026-10-01T16:44:05Z",
       "preview": "Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, family F5). Blocked on `16ei`. **CRITICAL: two silent passes.**\n\nThese gates walk the QA corpus and judge what they find. Once the corpus is gone, they find nothing and call it clean.\n\n## Readers\n- **C6** `cat-harness/content/pipeline/orphan-verdict-sweep.ts:76,98` (`check:orphan-verdicts`, CI `code-",
       "file": "beans/defs/folio-assistant-c8uq--qa-readers-f5-corpus-walkers-that-pass-on-an-empty.md"
     },
@@ -3489,14 +3503,14 @@
     {
       "id": "folio-assistant-d6bw",
       "title": "Skills, processes and docs: QA lives on qa-reports — update every skill, BPMN and page that says test/results is committed",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:47Z",
-      "updatedAt": "2026-10-01T08:48:11Z",
+      "updatedAt": "2026-10-01T18:03:20Z",
       "preview": "Arc `3fva`, proposal §4 Phase 4. Can be dispatched once qa-store lands. Edit the SKILL, not AGENTS.md. AGENTS.md gets a pointer only.\n\n- Skills:\n  - `qa-witness`\n  - `prepare-merge` §\"Conflicts in test/results/\"\n  - `audit-coverage`\n  - `directory-conventions`\n  - `content-context-and-state-graphs`\n  - `skill-registration`\n  - `ci-health`\n  - `untainted-verification`\n  - `qa-report-signing`\n  - `t",
       "file": "beans/defs/folio-assistant-d6bw--skills-processes-and-docs-qa-lives-on-qa-reports-u.md"
     },
@@ -6919,14 +6933,14 @@
     {
       "id": "folio-assistant-tfqf",
       "title": "QA READERS F6: docs site, staging and preview publish QA from qa-reports — silent shrink of /assets/qa and a false 965 to 2 count",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:47:14Z",
-      "updatedAt": "2026-10-01T08:47:14Z",
+      "updatedAt": "2026-10-01T16:44:05Z",
       "preview": "Arc `3fva`, from reader audit `gxvk` (`cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, §5.3 family F6). **Refines and supersedes the docs-site and staging half of `2ae2`.** The audit found that `2ae2`'s three MCP sites are not readers (§5.4). Blocked on `16ei`. **CRITICAL: two false-cleans.**\n\n## Readers\n- `.github/workflows/docs-site.yml:149` `gen-docs-pages.ts` (write) → page badges ",
       "file": "beans/defs/folio-assistant-tfqf--qa-readers-f6-docs-site-staging-and-preview-publis.md"
     },

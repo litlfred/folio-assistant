@@ -301,22 +301,22 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T18:42:04.398Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b5a1a4eef3ddd6a3e394927c96974d05636ba9f2",
-  "sourceCommitSha": "b5a1a4eef3ddd6a3e394927c96974d05636ba9f2",
-  "sourceCommitAt": "2026-10-01T18:34:24Z",
+  "generatedAt": "2026-10-01T19:49:17.147Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/d85bc0cd4f79164054f9439d0cb3f1b6e033762a",
+  "sourceCommitSha": "d85bc0cd4f79164054f9439d0cb3f1b6e033762a",
+  "sourceCommitAt": "2026-10-01T19:40:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 292,
+    "Skill": 293,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 34,
     "Decision": 9,
-    "Process": 75,
-    "SequenceFlow": 984,
-    "Lane": 199,
-    "ProcessNode": 929,
+    "Process": 76,
+    "SequenceFlow": 1001,
+    "Lane": 200,
+    "ProcessNode": 947,
     "Tool": 113,
     "Schema": 146,
     "ExternalSchema": 17,
@@ -806,7 +806,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/content-lifecycle"
       ],
       "instructionsPath": "skills/authoring/content-lifecycle/content-test.md",
-      "instructionLines": 84,
+      "instructionLines": 110,
       "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/skills/content-test/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/skills/content-test/output.schema.json",
       "hasInstructions": true,
@@ -1152,7 +1152,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/conduct-core"
       ],
       "instructionsPath": "skills/conduct/conduct-core/deletion-requires-confirmation.md",
-      "instructionLines": 288,
+      "instructionLines": 289,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1407,7 +1407,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/graph-management"
       ],
       "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
-      "instructionLines": 216,
+      "instructionLines": 225,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1441,7 +1441,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/content-context-and-state-graphs.md",
-      "instructionLines": 257,
+      "instructionLines": 271,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1526,7 +1526,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/skill-registration.md",
-      "instructionLines": 129,
+      "instructionLines": 138,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1577,7 +1577,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/skill-voice-review.md",
-      "instructionLines": 93,
+      "instructionLines": 102,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1691,12 +1691,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "audit-coverage",
       "title": "Audit coverage — measured, with denominators",
-      "description": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the committed record holds the relation rather than the census.",
+      "description": "Which audits reach which KIND of node, measured rather than inferred. Read before concluding that a corpus is unaudited, before writing a criterion for one, and before building any coverage report — the gate half must be declared, an undeclared declarer is counted, and the stored record holds the relation rather than the census.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/audit-coverage.md",
-      "instructionLines": 255,
+      "instructionLines": 277,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1729,7 +1729,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/kg-core"
       ],
       "instructionsPath": "skills/kg/kg-core/directory-conventions.md",
-      "instructionLines": 1306,
+      "instructionLines": 1338,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2203,7 +2203,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/process-core"
       ],
       "instructionsPath": "skills/process/process-core/role-model.md",
-      "instructionLines": 701,
+      "instructionLines": 705,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2664,7 +2664,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/test-engineer.md",
-      "instructionLines": 149,
+      "instructionLines": 172,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2732,7 +2732,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/platform-gates.md",
-      "instructionLines": 356,
+      "instructionLines": 375,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2766,7 +2766,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/coordinate.md",
-      "instructionLines": 393,
+      "instructionLines": 394,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2815,7 +2815,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/qa-report-signing.md",
-      "instructionLines": 111,
+      "instructionLines": 133,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2832,7 +2832,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/untainted-verification.md",
-      "instructionLines": 158,
+      "instructionLines": 176,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2855,6 +2855,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/narrative-asserts-code"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "qa-reports",
+      "title": "QA reports — derived results on a branch, judgements on `main`",
+      "description": "Where a QA result lives now. Derived verdicts go to the orphan `qa-reports` branch, keyed by commit, written by the CI job `qa-publish`. Judgements stay on main in the `attestations` graph. Gates compute and judge against a stored baseline, and a missing one is unknown. Read before you regenerate, commit, resolve, cite or delete anything under `test/results/` or `test/attestations/`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/qa-reports.md",
+      "instructionLines": 132,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/qa-reports"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/related-work-coordination",
@@ -2980,12 +2997,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "qa-witness",
       "title": "QA witnesses — the published projection of every verdict",
-      "description": "The QA projections under `test/results/witnesses/` — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
+      "description": "The QA projections written to `test/results/witnesses/` and stored on the `qa-reports` branch — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/qa-witness.md",
-      "instructionLines": 127,
+      "instructionLines": 135,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3086,7 +3103,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/ci-health.md",
-      "instructionLines": 162,
+      "instructionLines": 184,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3103,7 +3120,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/adjudication.md",
-      "instructionLines": 266,
+      "instructionLines": 267,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3137,7 +3154,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/prepare-merge.md",
-      "instructionLines": 463,
+      "instructionLines": 500,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3306,7 +3323,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/decision-audit.md",
-      "instructionLines": 85,
+      "instructionLines": 93,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3374,7 +3391,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/continual-progress.md",
-      "instructionLines": 262,
+      "instructionLines": 287,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3745,7 +3762,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/liquid-templates.md",
-      "instructionLines": 160,
+      "instructionLines": 161,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3796,7 +3813,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/readme-sections.md",
-      "instructionLines": 292,
+      "instructionLines": 299,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6805,6 +6822,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/prepare-merge-auto",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/publish-verification",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-report-signing",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-witness",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/related-work-coordination",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/rendered-verification",
@@ -11106,8 +11124,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/node/Start_ReportReady"
       ],
-      "nodeCount": 9,
-      "flowCount": 9,
+      "nodeCount": 10,
+      "flowCount": 10,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#externalSchema/omg-dd-1.0"
@@ -11194,9 +11212,18 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation",
-      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/node/End_Signed",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_StoreSigned",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/flow/S09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/flow/S10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_StoreSigned",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/node/End_Signed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/flow/S10"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/lane/Lane_Qa",
@@ -11408,9 +11435,32 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_RecordAttestation"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_StoreSigned",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Store the signed report on qa-reports",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/validation-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/lane/Lane_Qa",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/flow/S09"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/flow/S10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaReportSigning/node/Task_StoreSigned"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/node/End_Signed",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
-      "name": "Report attested",
+      "name": "Report attested and stored",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning",
@@ -11420,7 +11470,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/flow/S09"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaReportSigning/flow/S10"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
@@ -14475,6 +14525,553 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_BoardRelocate/node/End_Moved"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Process",
+      "name": "Publish and keep QA results on qa-reports",
+      "enforcement": "strict",
+      "sourcePath": "processes/qa-publish.bpmn",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Start_GatesDone",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Start_Daily"
+      ],
+      "nodeCount": 17,
+      "flowCount": 16,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P01",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Start_GatesDone",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_DeriveKey",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P02",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_DeriveKey",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P03",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "نعم",
+        "@language": "ar"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_BuildEntry",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P04",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no: fork PR",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/End_SkippedFork",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P05",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_BuildEntry",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P06",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P07",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "accepted",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/End_Published",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P08",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "rejected,\nattempts left",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_Backoff",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P08"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P09",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_Backoff",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P09"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P10",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "third rejection,\nor git failed",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/End_PublishFailed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/P10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R01",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Start_Daily",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_ReadPrStates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R02",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_ReadPrStates",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_PlanPrune",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R03",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_PlanPrune",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R04",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": "no: dry run",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/End_DryRun",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R05",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "name": {
+        "@value": "نعم",
+        "@language": "ar"
+      },
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_ApplyPrune",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R06",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_ApplyPrune",
+      "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/End_Pruned",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/flow/R06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#Lane",
+      "name": "CI/CD Pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Start_GatesDone",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Gates finished (any conclusion)",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P01"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Start_GatesDone"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_DeriveKey",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Derive the key [main/<sha> or pr/<n>/<sha>]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_DeriveKey"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Can this token write?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P03",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P04"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_CanWrite"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/End_SkippedFork",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Skipped: fork PR (::notice says why)",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P04"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_SkippedFork"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_BuildEntry",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Build the entry [tree + manifest]",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P05"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_BuildEntry"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Splice onto the tip and push (never -f)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P05",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P09"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P06"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_SpliceAndPush"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Push accepted?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P06"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P07",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P08",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Accepted"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_Backoff",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Back off",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P08"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P09"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_Backoff"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/End_Published",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Results stored under their key",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P07"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_Published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/End_PublishFailed",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Not stored (job red, gates untouched)",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/P10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_PublishFailed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Start_Daily",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Daily schedule, or dispatched",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R01"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Start_Daily"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_ReadPrStates",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Read every PR's state",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_ReadPrStates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_PlanPrune",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Plan the prune",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R03"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_PlanPrune"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Apply?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R04",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R05"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Gateway_Apply"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/End_DryRun",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Plan printed, nothing removed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R04"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_DryRun"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/Task_ApplyPrune",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Commit a tip without the pruned entries",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R06"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/Task_ApplyPrune"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/node/End_Pruned",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
+      "name": "Retention applied",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/lane/Lane_Ci",
+      "implementedBy": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_QaPublish/flow/R06"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#process/Process_QaPublish/node/End_Pruned"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_UpstreamAdoption",
@@ -23925,12 +24522,12 @@
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#ProcessNode",
       "name": "Publish QA results to qa-reports (NOT A GATE)",
       "nodeKind": "activity",
-      "bpmnType": "bpmn:Task",
+      "bpmnType": "bpmn:CallActivity",
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_CodeQualityGates",
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#role/build-pipeline",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#process/Process_CodeQualityGates/lane/Lane_Ci",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/platform-gates"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -48539,6 +49136,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/kg-separation",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/render-kg-to-cdn",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/ig-ast-delta",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/document-publishing",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/quality-control",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/fhir-validation",
@@ -48583,7 +49181,8 @@
       ],
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/content-test",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/content-validate"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr-phase3/cat-harness.jsonld#skill/qa-reports"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#role/validation-pipeline"
     },

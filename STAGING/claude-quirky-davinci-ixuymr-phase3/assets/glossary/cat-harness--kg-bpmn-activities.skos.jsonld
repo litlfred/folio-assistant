@@ -1326,7 +1326,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally."
+          "@value": "Bean `16ei`, arc `3fva`. After Task_RepositoryGates, WHATEVER it concluded (`needs: gates` with `always()`), `qa:publish --github` writes this run's `test/results` trees to the orphan `qa-reports` branch: `main/<sha>/` on a push to main, `pr/<n>/<head-sha>/` on a same-repository PR (owner rulings D1, D3). A fork PR's token is read-only, so it is skipped with a `::notice` naming why. It does NOT reach GW_Join: a red publish is its own red and never decides mergeability, and the hard gates never wait on it. The only job here holding `contents: write`, which is also how `bun run gates` knows not to run it locally. A CALL ACTIVITY: the key derivation, the fork skip and the never-`-f` retry loop are `qa-publish.bpmn`, which also draws the retention run that takes entries off the branch again."
         }
       ],
       "skos:notation": "Task_QaPublish",
@@ -8069,6 +8069,146 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_applyprune",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Commit a tip without the pruned entries"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One new commit whose tree lacks the pruned entries, parented on the current tip, through the same fetch → rebuild → push loop as a publish: no `-f`, three attempts. History is not rewritten — truncating it is a deletion of a different order and the owner's call (`deletion-requires-confirmation`), not a scheduled job's."
+        }
+      ],
+      "skos:notation": "Task_ApplyPrune",
+      "dcterms:source": "cat-harness/processes/qa-publish.bpmn#Task_ApplyPrune",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_backoff",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Back off [backoff-sleep]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Wait the same intervals `backoff-sleep.ts` uses, then go round again: fetch the new tip and splice onto it. Three attempts in all."
+        }
+      ],
+      "skos:notation": "Task_Backoff",
+      "dcterms:source": "cat-harness/processes/qa-publish.bpmn#Task_Backoff",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_buildentry",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build the entry [tree + manifest]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Hashes the working copy of every declared `qa` directory (`<instance>/test/results/**`, byte-identical to the checkout's layout) into a tree through a private index, and writes `manifest.json` (`qa-reports-manifest/v1`): inputs, producers, verdict counts and the gates' result. Identical JSON is the same blob, so an unchanged family costs nothing to store again. Its git objects live in a private bare repository, never in the checkout's own store."
+        }
+      ],
+      "skos:notation": "Task_BuildEntry",
+      "dcterms:source": "cat-harness/processes/qa-publish.bpmn#Task_BuildEntry",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_derivekey",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Derive the key [main/<sha> or pr/<n>/<sha>]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`qa:publish --github` reads the event: a push to main publishes under `main/<sha>/`, a pull request under `pr/<n>/<head-sha>/` — the head that was tested, not the merge ref. It also reads whether the token can write, which the gateway after it routes on."
+        }
+      ],
+      "skos:notation": "Task_DeriveKey",
+      "dcterms:source": "cat-harness/processes/qa-publish.bpmn#Task_DeriveKey",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_planprune",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Plan the prune [planPrune]"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Keep every `main/<sha>` for 90 days and one per day after that; drop `pr/<n>` 7 days after the PR closed. The rule is `planPrune` in `scripts/qa-store.ts`, pinned by its tests, and the plan is printed whether or not it is applied."
+        }
+      ],
+      "skos:notation": "Task_PlanPrune",
+      "dcterms:source": "cat-harness/processes/qa-publish.bpmn#Task_PlanPrune",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_readprstates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read every PR's state"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`gh pr list --state all`: number, state and when it closed, so each `pr/<n>/` entry can be judged against its close date. A PR missing from the list is `unknown`, and an unknown is kept."
+        }
+      ],
+      "skos:notation": "Task_ReadPrStates",
+      "dcterms:source": "cat-harness/processes/qa-publish.bpmn#Task_ReadPrStates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qapublish.task_spliceandpush",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Splice onto the tip and push (never -f)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Fetch the branch tip, splice this entry into its tree, `commit-tree -p <tip>`, and push without `-f`, with `pack.useSparse=false` so blobs already on the remote under another key are not resent. Writers own disjoint keys, so splicing onto whatever tip is current loses nobody's entry."
+        }
+      ],
+      "skos:notation": "Task_SpliceAndPush",
+      "dcterms:source": "cat-harness/processes/qa-publish.bpmn#Task_SpliceAndPush",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qareportsigning.task_apisign",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -8166,6 +8306,26 @@
       ],
       "skos:notation": "Task_ResolveReach",
       "dcterms:source": "cat-harness/processes/qa-report-signing.bpmn#Task_ResolveReach",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities/process_qareportsigning.task_storesigned",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Store the signed report on qa-reports"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The signed report, its signature and the route that produced it are written TOGETHER into the `qa-reports` entry keyed by the commit the report judged (`main/<sha>/` or `pr/<n>/<sha>/`), through `scripts/qa-store.ts` — never committed to main and never pushed by hand (arc `3fva`, owner ruling D1). A signature kept apart from the bytes it covers attests nothing a reader can check. A certification DECISION taken on the report is a separate node that stays on main beside `test/attestations/` (ruling D5, default (a)); it is not written here."
+        }
+      ],
+      "skos:notation": "Task_StoreSigned",
+      "dcterms:source": "cat-harness/processes/qa-report-signing.bpmn#Task_StoreSigned",
       "skos:note": "candidate"
     },
     {
