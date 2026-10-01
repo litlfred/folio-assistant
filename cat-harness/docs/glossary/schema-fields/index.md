@@ -12,9 +12,9 @@ permalink: /glossary/schema-fields/
 
 Candidate terms extracted from every schema field with a doc comment: `<Declaration>.<field>` as the label, the comment's first paragraph as the definition. Each is the asset's own text, verbatim and not curated, and carries the badge "candidate, extracted". A person promotes one by authoring it. Authored terms, the counts and the sources are on the <a href="{{ '/glossary/' | relative_url }}">glossary index</a>.
 
-From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1544 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
+From: bootstrap-tools 28 (<a href="{{ '/assets/glossary/bootstrap-tools--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · cat-harness 1566 (<a href="{{ '/assets/glossary/cat-harness--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · folio-assistant-core 155 (<a href="{{ '/assets/glossary/folio-assistant-core--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>) · large-datasets 18 (<a href="{{ '/assets/glossary/large-datasets--kg-schema-fields.skos.jsonld' | relative_url }}">SKOS</a>).
 
-**Size:** this page holds 1745 terms and is 962 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
+**Size:** this page holds 1767 terms and is 974 KB before compression, fetched in one request, within its budget of 1.0 MB. There is no search index: the filter below runs over this page, and the A–Z bar jumps within it.
 
 <table class="fa-gloss-mapping">
 <caption>Already somebody else's concept? — <code>check:term-mapping</code>, bean <code>7wou</code></caption>
@@ -28,7 +28,7 @@ be a term this corpus is right to coin.</p>
 
 <label for="fa-gloss-q">Filter terms</label>
 <input id="fa-gloss-q" type="search" autocomplete="off" style="min-height:44px;width:100%;max-width:32rem">
-<p aria-live="polite"><span id="fa-gloss-n">1745</span> shown</p>
+<p aria-live="polite"><span id="fa-gloss-n">1767</span> shown</p>
 
 <nav aria-label="Letters"><a href="#letter-A">A</a> <a href="#letter-B">B</a> <a href="#letter-C">C</a> <a href="#letter-D">D</a> <a href="#letter-E">E</a> <a href="#letter-F">F</a> <a href="#letter-G">G</a> <a href="#letter-H">H</a> <a href="#letter-I">I</a> <a href="#letter-J">J</a> <a href="#letter-K">K</a> <a href="#letter-L">L</a> <a href="#letter-M">M</a> <a href="#letter-N">N</a> <a href="#letter-O">O</a> <a href="#letter-P">P</a> <a href="#letter-Q">Q</a> <a href="#letter-R">R</a> <a href="#letter-S">S</a> <a href="#letter-T">T</a> <a href="#letter-U">U</a> <a href="#letter-V">V</a> <a href="#letter-W">W</a></nav>
 
@@ -1372,6 +1372,13 @@ CatHarnessDeclaration.images <span class="fa-gloss-status">candidate, extracted<
 <p>Images this instance names — its marks, in the graph rather than beside it.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.images</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.knownsubstrates" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.knownSubstrates <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Substrates known to exist or planned that NO declaration here names — &#123;@link KnownSubstrate}. Issue #1719.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.knownSubstrates</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.liquid" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.liquid <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1449,6 +1456,13 @@ CatHarnessDeclaration.stickies <span class="fa-gloss-status">candidate, extracte
 <p>Sticky notes this layer contributes to the landing board.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.stickies</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.subscriptions" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclaration.subscriptions <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>External Knowledge Graphs this one CONSUMES, and which of their parts it chose to hold — &#123;@link Subscription}. Issue #1719.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclaration.subscriptions</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclaration.topology" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclaration.topology <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1498,6 +1512,13 @@ CatHarnessDeclarationSchema.iriBase <span class="fa-gloss-status">candidate, ext
 <p>The address this instance's IRIs are minted under, BEFORE the version — bootstrap's <code>iriBase</code> (see <code>graph.ts</code>), and the one place a fork edits.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.iriBase</code></a></p>
 </dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.knownsubstrates" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.knownSubstrates <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>See &#123;@link KnownSubstrate}. Names are unique.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.knownSubstrates</code></a></p>
+</dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.liquid" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.liquid <span class="fa-gloss-status">candidate, extracted</span>
 </dt>
@@ -1532,6 +1553,13 @@ CatHarnessDeclarationSchema.remoteGraphs <span class="fa-gloss-status">candidate
 <dd>
 <p>Graphs this instance knows about and does not hold — see &#123;@link RemoteGraph}. A SEPARATE array from <code>directories</code>, not a variant of one, because a remote graph has no directory.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.remoteGraphs</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.subscriptions" data-fa-state="extracted" data-fa-gloss="">
+CatHarnessDeclarationSchema.subscriptions <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>External Knowledge Graphs this one subscribes to — see &#123;@link Subscription}. <code>.optional()</code> for the reason <code>associatedHarnesses</code> is. Ids are unique, and never also in <code>needs</code> or <code>associatedHarnesses</code> — refined below.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#CatHarnessDeclarationSchema.subscriptions</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--cat-harness.catharnessdeclarationschema.version" data-fa-state="extracted" data-fa-gloss="">
 CatHarnessDeclarationSchema.version <span class="fa-gloss-status">candidate, extracted</span>
@@ -5260,6 +5288,48 @@ KindZoomSchema.belowPx <span class="fa-gloss-status">candidate, extracted</span>
 <dd>
 <p>Rendered card width, in CSS pixels, below which this kind shows its avatar.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/semantic-zoom.ts"><code>cat-harness/schemas/semantic-zoom.ts#KindZoomSchema.belowPx</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.knownsubstrate.name" data-fa-state="extracted" data-fa-gloss="">
+KnownSubstrate.name <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The substrate's instance name, as its declaration gives it or will.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#KnownSubstrate.name</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.knownsubstrate.note" data-fa-state="extracted" data-fa-gloss="">
+KnownSubstrate.note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One sentence a reader of the visualizer sees.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#KnownSubstrate.note</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.knownsubstrate.repository" data-fa-state="extracted" data-fa-gloss="">
+KnownSubstrate.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p><code>owner/repo</code>, when one exists or is planned.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#KnownSubstrate.repository</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.knownsubstrate.status" data-fa-state="extracted" data-fa-gloss="">
+KnownSubstrate.status <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where it stands: proposed (an idea), planned (a staged instance), exists (a repository), published (a release).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#KnownSubstrate.status</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.knownsubstrate.title" data-fa-state="extracted" data-fa-gloss="">
+KnownSubstrate.title <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Human title.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#KnownSubstrate.title</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.knownsubstrate.toolsrepository" data-fa-state="extracted" data-fa-gloss="">
+KnownSubstrate.toolsRepository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Its paired tools repository, when the <code>kg-separation</code> pattern gives it one.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#KnownSubstrate.toolsRepository</code></a></p>
 </dd>
 </dl>
 
@@ -10031,6 +10101,90 @@ SubgraphRelation.parent <span class="fa-gloss-status">candidate, extracted</span
 <dd>
 <p>The containing directory's <code>id</code>.</p>
 <p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#SubgraphRelation.parent</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.subscription.assets" data-fa-state="extracted" data-fa-gloss="">
+Subscription.assets <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>How referenced binary assets are materialised. Each copy still passes <code>Process_MaterializeRemote</code>'s gates.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.assets</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.subscription.harnesses" data-fa-state="extracted" data-fa-gloss="">
+Subscription.harnesses <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Harness names from the substrate CHOSEN for instantiation. Instantiating writes <code>&lt;name&gt;.config.json</code>, which is what puts it in the navbar.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.harnesses</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.subscription.id" data-fa-state="extracted" data-fa-gloss="">
+Subscription.id <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Local name for the subscription; unique within this list. The substrate's own name, unless two pins of one substrate are ever needed.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.id</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.subscription.note" data-fa-state="extracted" data-fa-gloss="">
+Subscription.note <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>One sentence a reader of the visualizer sees.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.note</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.subscription.ref" data-fa-state="extracted" data-fa-gloss="">
+Subscription.ref <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The pinned commit, a full 40-character SHA. A tag replaces it once the substrate publishes releases.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.ref</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.subscription.repository" data-fa-state="extracted" data-fa-gloss="">
+Subscription.repository <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Where the substrate lives, <code>owner/repo</code> (#1652).</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.repository</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--cat-harness.subscription.subgraphs" data-fa-state="extracted" data-fa-gloss="">
+Subscription.subgraphs <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>Subgraph ids (the substrate's <code>directories[].id</code>) CHOSEN for materialisation. Everything else stays referenced.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/cat-harness.ts"><code>cat-harness/schemas/cat-harness.ts#Subscription.subgraphs</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--substrate-snapshot.substratesnapshotschema.file" data-fa-state="extracted" data-fa-gloss="">
+SubstrateSnapshotSchema.file <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The upstream file, relative to the substrate's repository root: <code>&lt;name&gt;.json</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/substrate-snapshot.ts"><code>cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.file</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--substrate-snapshot.substratesnapshotschema.raw" data-fa-state="extracted" data-fa-gloss="">
+SubstrateSnapshotSchema.raw <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The upstream bytes, exactly as fetched.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/substrate-snapshot.ts"><code>cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.raw</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--substrate-snapshot.substratesnapshotschema.ref" data-fa-state="extracted" data-fa-gloss="">
+SubstrateSnapshotSchema.ref <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The pinned commit the bytes were read at — a full SHA, never a branch.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/substrate-snapshot.ts"><code>cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.ref</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--substrate-snapshot.substratesnapshotschema.subscription" data-fa-state="extracted" data-fa-gloss="">
+SubstrateSnapshotSchema.subscription <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>The <code>subscriptions[].id</code> this snapshot belongs to.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/substrate-snapshot.ts"><code>cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.subscription</code></a></p>
+</dd>
+<dt id="cat-harness--kg-schema-fields--substrate-snapshot.substratesnapshotschema.summary" data-fa-state="extracted" data-fa-gloss="">
+SubstrateSnapshotSchema.summary <span class="fa-gloss-status">candidate, extracted</span>
+</dt>
+<dd>
+<p>What the judgement found, derived from <code>raw</code>.</p>
+<p class="fa-gloss-meta">Schema fields of cat-harness · source <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/substrate-snapshot.ts"><code>cat-harness/schemas/substrate-snapshot.ts#SubstrateSnapshotSchema.summary</code></a></p>
 </dd>
 <dt id="cat-harness--kg-schema-fields--session-survey.surveyaxisschema.axis" data-fa-state="extracted" data-fa-gloss="">
 SurveyAxisSchema.axis <span class="fa-gloss-status">candidate, extracted</span>
