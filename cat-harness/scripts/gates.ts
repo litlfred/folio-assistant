@@ -981,6 +981,27 @@ export const SCRIPT_EXEMPTIONS: ScriptExemption[] = [
     reason:
       "prints every backdrop role and what intake found; `check:theme-art:check` is the gating form",
   },
+  // Bean `bo44`: seven producers whose bare form WRITES its QA sidecar. Each
+  // used to be the gate, so the gate CI ran was also the writer of the record
+  // it reported into. The bare form is now the author's command and the
+  // `:check` form — compute, judge, write nothing — is what is wired.
+  ...(
+    [
+      "check:avatar-coverage",
+      "check:lane-documentation",
+      "check:layout-norms",
+      "check:methodology-evidence",
+      "check:rendered-labels",
+      "check:source-licence",
+      "check:wireframes",
+    ] as const
+  ).map(
+    (script): ScriptExemption => ({
+      script,
+      kind: "report",
+      reason: `WRITES its QA sidecar (bean \`bo44\`), so it is the author's command and not a gate; \`${script}:check\` is the judge form — compute, judge, write nothing — and is wired`,
+    }),
+  ),
   {
     script: "check:upload-names",
     kind: "report",
