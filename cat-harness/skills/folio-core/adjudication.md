@@ -179,7 +179,7 @@ record the disagreement, lead with the judgement, keep the other entry.
 
 The outcome carries its reason. That mechanism already exists and is
 schema-backed — `block-qa/v1`'s multi-reviewer primitive, documented at length
-in [`q-usage-watcher`](../folio-paper-adapter/q-usage-watcher.md):
+in [`q-usage-watcher`](../authoring/folio-paper-adapter/q-usage-watcher.md):
 
 - a `kind: "human"` entry with `result: "pass"` overrides the script's `fail`
   for the same criterion;
@@ -234,7 +234,7 @@ adjudicator role before this skill existed.
 
 | store | holds | skill |
 |---|---|---|
-| `todos/feedback/` | a person's feedback ON content — the **intake** | [`todo-review`](todo-review.md) |
+| `todos/feedback/` | a person's feedback ON content — the **intake** | [`todo-review`](../authoring/authoring-core/todo-review.md) |
 | `test/results/block-qa/` | reviewer entries per criterion — the **record** | the `qa-*` family |
 | `beans/` | the work plan | [`todo-manager`](todo-manager.md) |
 
@@ -256,10 +256,10 @@ deliberately stops short of it.
 
 - [`untainted-verification`](untainted-verification.md) — the parties and what
   each is given. Adjudication is what happens when they disagree.
-- [`q-usage-watcher`](../folio-paper-adapter/q-usage-watcher.md) — the
+- [`q-usage-watcher`](../authoring/folio-paper-adapter/q-usage-watcher.md) — the
   dispensation mechanism, documented where it was first applied.
-- [`code-node-review`](../kg/kg-core/code-node-review.md), [`voice-editorial-review`](voice-editorial-review.md),
-  [`voice-overlay-review`](voice-overlay-review.md) — the reviews that produce
+- [`code-node-review`](../kg/kg-core/code-node-review.md), [`voice-editorial-review`](../authoring/authoring-core/voice-editorial-review.md),
+  [`voice-overlay-review`](../authoring/authoring-core/voice-overlay-review.md) — the reviews that produce
   the findings this settles.
 - `schemas/block-qa.ts` — the reviewer kinds, and why a model's own claim is
   not the same kind of evidence as a person's.

@@ -61,7 +61,7 @@ beans <id> --status in-progress   # احجزه قبل أن تبدأ العمل
 
 - **تعليمات المهارات** (`docs/reference/skill-instructions/*.md`) مُولَّدة
   آليًا أيضًا — إياك وتعديلها يدويًا. عدّل نصوص المهارات تحت
-  `skills/content-lifecycle/*.md` أو `src/skills/*.md` ثم أعد التوليد:
+  `skills/authoring/content-lifecycle/*.md` أو `src/skills/*.md` ثم أعد التوليد:
 
   ```sh
   bun run scripts/gen-skill-docs.ts

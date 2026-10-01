@@ -49,8 +49,8 @@ Platform docs themselves carry no voice, meaning their `voices.active[]` array i
 
 Voices are designed to be part of the entire document lifecycle:
 
-- **Before writing:** Follow the [voice-authoring-guidance](../../skills/folio-core/voice-authoring-guidance.md) skill. It is much cheaper to honor terminology and stylistic rules as you type than to retrofit them later.
-- **After writing:** Use the [voice-overlay-review](../../skills/folio-core/voice-overlay-review.md) skill. This reviews your blocks against the rules of your active voices and places findings on the QA sidecar.
+- **Before writing:** Follow the [voice-authoring-guidance](../../skills/authoring/authoring-core/voice-authoring-guidance.md) skill. It is much cheaper to honor terminology and stylistic rules as you type than to retrofit them later.
+- **After writing:** Use the [voice-overlay-review](../../skills/authoring/authoring-core/voice-overlay-review.md) skill. This reviews your blocks against the rules of your active voices and places findings on the QA sidecar.
 
 ## How voice review works
 
