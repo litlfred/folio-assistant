@@ -9,7 +9,7 @@ tags:
     - ui
     - visualiser-navbar
 created_at: 2026-09-23T10:36:15Z
-updated_at: 2026-09-30T23:17:23Z
+updated_at: 2026-10-01T06:51:19Z
 parent: folio-assistant-4ccr
 ---
 
@@ -238,3 +238,31 @@ All 23 tests in the spec pass; `docs-ui.js` has no diff after the falsifications
   repair is editorial (rename, or cross-link), not a check's.
 - The remaining ten findings, 11 of which were still present at the last
   re-measure on `main` 3779d5d27.
+
+
+## RULED 2026-10-01 — finding 12: rename the GLASS one
+
+The owner chose, from three options: **rename the glass/board control, leave the
+launcher's `Settings` alone.**
+
+Located both, so the repair names lines rather than descriptions:
+
+| site | call | scope |
+|---|---|---|
+| `docs-ui.js:2060` | `tileButton(GEAR_GLYPH, "Settings", "settings")` | the LAUNCHER — site chrome: theme, language, QR |
+| `docs-ui.js:6053` | `chromeTile("glass-settings", "Settings", "⚙", "Folio settings — theme, avatars, opacity", buildSettings)` | the GLASS BOARD — folio state |
+
+Two different things, both named `Settings`, one drawing `GEAR_GLYPH` and the
+other the `⚙` character, neither pointing at the other — exactly as the finding
+recorded it.
+
+**The glass one is renamed because its own description already says what it is**
+— *"Folio settings — theme, avatars, opacity"*. So the rename RECOVERS
+information the code already holds rather than inventing a distinction, which is
+the cheapest kind of editorial fix and the hardest to get wrong.
+
+**Cross-linking was rejected** and is worth recording as rejected: it would
+imply a relationship between site chrome and board state that does not exist.
+Giving them different glyphs was also rejected — two controls called the same
+thing is the defect, and a different gear does not fix a duplicate name for a
+screen reader.
