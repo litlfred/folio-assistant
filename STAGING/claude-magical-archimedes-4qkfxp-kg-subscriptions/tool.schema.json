@@ -296,6 +296,15 @@
             "type": "string",
             "minLength": 1
           }
+        },
+        "subprocesses": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "A BPMN process id, e.g. crdm-requirements"
+          }
         }
       },
       "required": [
@@ -314,8 +323,8 @@
   "description": "One concrete way to exercise a skill. A skill states a capability generically; a Tool names the skills it satisfies and how to install and invoke it. Generated from schemas/tool.ts, which is authoritative.",
   "staging": {
     "branch": "claude/magical-archimedes-4qkfxp-kg-subscriptions",
-    "sha": "3b89d9a05732e916db75d65fed647bd4bc576aba",
+    "sha": "223fc6a4c1d4ef27d16ce8aa16a77d6d6fa9af89",
     "pr": "1721/merge",
-    "run": "36826898621"
+    "run": "36831291359"
   }
 }

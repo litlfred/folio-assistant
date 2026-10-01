@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "scripts/kg-export.ts",
-    "script_hash": "7700749327dd"
+    "script_hash": "e95fab417728"
   },
   "subject": {
     "kind": "graph",
@@ -11,8 +11,24 @@
   "families": {
     "danglingLinks": {
       "summary": "Internal links whose target node is not in `@graph`. A DATA defect, not an export failure.",
-      "count": 0,
-      "entries": []
+      "count": 3,
+      "entries": [
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-kg-subscriptions/cat-harness.jsonld#process/Process_L2Dak/node/Task_Personas",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-kg-subscriptions/cat-harness.jsonld#skill/l2-dak-authoring"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-kg-subscriptions/cat-harness.jsonld#process/Process_L2Dak/node/Task_DataDict",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-kg-subscriptions/cat-harness.jsonld#skill/l2-dak-authoring"
+        },
+        {
+          "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-kg-subscriptions/cat-harness.jsonld#process/Process_L2Dak/node/Task_Indicators",
+          "edge": "implementedBy",
+          "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-magical-archimedes-4qkfxp-kg-subscriptions/cat-harness.jsonld#skill/l2-dak-authoring"
+        }
+      ]
     },
     "problems": {
       "summary": "Sources that could not be read. Never empty-by-omission.",
@@ -30,5 +46,5 @@
       "entries": []
     }
   },
-  "total": 0
+  "total": 3
 }
