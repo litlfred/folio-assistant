@@ -179,7 +179,7 @@ twice without a word for it: `who-iris` taking three items out of a 361.55 GB
 catalogue, and `bootstrap` fetching a harness and landing it locally, with
 `upstream-pins.json` as half of that second one's refresh.
 
-All four diagrams below live in `large-datasets/processes/`, not in
+All five diagrams below live in `large-datasets/processes/`, not in
 `cat-harness/processes/`: 25 of their steps name a skill only `large-datasets` holds,
 and cat-harness depends only on `bootstrap` (bean `cjvs`, 2026-09-30).
 
@@ -189,6 +189,7 @@ and cat-harness depends only on `bootstrap` (bean `cjvs`, 2026-09-30).
 | `refresh-materialized.bpmn` | What changed upstream, what changed locally, and what to do when both. An **archival** copy is never refreshed — re-fetching discards the state it exists to keep — so it gets a fixity check instead |
 | `copy-out-materialized.bpmn` | Somebody wants to change content this repository holds a copy of. Materialized content is read-only, so the answer is a copy into their own `folio/` that records, in `provenance.local`, which original it came out of — the edge nothing downstream can reconstruct once it is missing |
 | `sample-import.bpmn` | Try a sample of a remote source before committing to it: scope it (which items, which store, **permanent or trial?**), let `materialize-remote` gate it — called, never copied — land it in the library or, for a trial, the kept unpublished trashcan, then import it and test the import. A check that could not run is a failure. Its second entry calls `refresh-materialized` for permanent samples only |
+| `subscribe-kg.bpmn` | Subscribe a folio or harness to an external knowledge graph — a **substrate**, whose declaration conforms to bootstrap and declares at least one harness — pinned to a full commit SHA, then walk each chosen part from referenced to materialised: every subgraph or asset through `materialize-remote`, called once per part and never copied, continuing past a part a gate refuses; each chosen harness instantiated by writing its config, once its `needs` are held. Moving the pin runs every held part through `refresh-materialized` first. Drawn here, not in cat-harness, because it calls this layer's subprocesses (epic `fnx4`, #1719) |
 
 **Theme and UI review — at ingestion only** — what the arriving graphical
 assets will look like in the website or app design they are for, decided while

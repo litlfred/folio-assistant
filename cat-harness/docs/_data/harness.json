@@ -93,6 +93,7 @@
     "scenarios",
     "schemas",
     "skills",
+    "substrate-snapshot",
     "swimlane-glossary",
     "todos",
     "tools",
@@ -119,22 +120,6 @@
   ],
   "tiles": [
     {
-      "id": "agent-skills-library",
-      "directory": "agent-skills-library",
-      "title": "agent-skills-library",
-      "ref": "cat-harness/docs/cat-harness/library/agent-skills/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/library/agent-skills/",
-      "hidden": false,
-      "icon": "library",
-      "count": 14,
-      "unit": "entries"
-    },
-    {
       "id": "beans",
       "directory": "beans",
       "title": "beans",
@@ -147,7 +132,7 @@
       "href": "/beans/",
       "hidden": false,
       "icon": "beans",
-      "count": 541,
+      "count": 576,
       "unit": "beans"
     },
     {
@@ -179,36 +164,6 @@
       "icon": "schemas"
     },
     {
-      "id": "fhir-harness-library",
-      "directory": "fhir-harness-library",
-      "title": "fhir-harness-library",
-      "ref": "cat-harness/docs/cat-harness/library/fhir-harness/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/library/fhir-harness/",
-      "hidden": false,
-      "icon": "library",
-      "count": 3,
-      "unit": "entries"
-    },
-    {
-      "id": "fhir-ig-skills",
-      "directory": "fhir-ig-skills",
-      "title": "fhir-ig-skills",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/fhir-ig-skills/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/fhir-ig-skills/",
-      "hidden": false,
-      "icon": "skills"
-    },
-    {
       "id": "folio",
       "directory": "folio",
       "title": "folio",
@@ -224,96 +179,6 @@
       "unit": "stickies"
     },
     {
-      "id": "folio-assist-core-schemas",
-      "directory": "folio-assist-core-schemas",
-      "title": "folio-assist-core-schemas",
-      "ref": "cat-harness/docs/cat-harness/schemas/folio-assistant-core/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/schemas/folio-assistant-core/",
-      "hidden": false,
-      "icon": "schemas",
-      "count": 21,
-      "unit": "modules"
-    },
-    {
-      "id": "folio-assistant-core-library",
-      "directory": "folio-assistant-core-library",
-      "title": "folio-assistant-core-library",
-      "ref": "cat-harness/docs/cat-harness/library/folio-assistant-core/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/library/folio-assistant-core/",
-      "hidden": false,
-      "icon": "library",
-      "count": 1,
-      "unit": "entry"
-    },
-    {
-      "id": "folio-assistant-core-skills",
-      "directory": "folio-assistant-core-skills",
-      "title": "folio-assistant-core-skills",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/",
-      "hidden": false,
-      "icon": "skills"
-    },
-    {
-      "id": "folio-assistant-sci-data-skills",
-      "directory": "folio-assistant-sci-data-skills",
-      "title": "folio-assistant-sci-data-skills",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-sci-data-skills/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/folio-assistant-sci-data-skills/",
-      "hidden": false,
-      "icon": "skills"
-    },
-    {
-      "id": "folio-assistant-sci-lean-skills",
-      "directory": "folio-assistant-sci-lean-skills",
-      "title": "folio-assistant-sci-lean-skills",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/folio-assistant-sci-lean-skills/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/folio-assistant-sci-lean-skills/",
-      "hidden": false,
-      "icon": "skills"
-    },
-    {
-      "id": "folio-assistant-sci-library",
-      "directory": "folio-assistant-sci-library",
-      "title": "folio-assistant-sci-library",
-      "ref": "cat-harness/docs/cat-harness/library/folio-assistant-sci/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/library/folio-assistant-sci/",
-      "hidden": false,
-      "icon": "library",
-      "count": 5,
-      "unit": "entries"
-    },
-    {
       "id": "fsh-guts",
       "directory": "fsh-guts",
       "title": "fsh-guts",
@@ -326,36 +191,6 @@
       "href": "/fsh-guts/",
       "hidden": false,
       "publish": "staging-only"
-    },
-    {
-      "id": "large-datasets-schemas",
-      "directory": "large-datasets-schemas",
-      "title": "large-datasets-schemas",
-      "ref": "cat-harness/docs/cat-harness/schemas/large-datasets/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/schemas/large-datasets/",
-      "hidden": false,
-      "icon": "schemas",
-      "count": 5,
-      "unit": "modules"
-    },
-    {
-      "id": "large-datasets-skills",
-      "directory": "large-datasets-skills",
-      "title": "Skills — large-datasets",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/large-datasets-skills/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/large-datasets-skills/",
-      "hidden": false,
-      "icon": "skills"
     },
     {
       "id": "library",
@@ -415,7 +250,7 @@
       "href": "/lsi/",
       "hidden": false,
       "icon": "index",
-      "count": 943,
+      "count": 957,
       "unit": "documents"
     },
     {
@@ -444,7 +279,7 @@
       "href": "/cat-harness/schemas/cat-harness/",
       "hidden": false,
       "icon": "schemas",
-      "count": 205,
+      "count": 206,
       "unit": "modules"
     },
     {
@@ -461,22 +296,6 @@
       "hidden": false,
       "readOnly": false,
       "icon": "skills"
-    },
-    {
-      "id": "smart-base-library",
-      "directory": "smart-base-library",
-      "title": "smart-base-library",
-      "ref": "cat-harness/docs/cat-harness/library/smart-base/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/library/smart-base/",
-      "hidden": false,
-      "icon": "library",
-      "count": 8,
-      "unit": "entries"
     },
     {
       "id": "swimlane-glossary",
@@ -550,39 +369,148 @@
       "icon": "uploads",
       "count": 16,
       "unit": "waiting"
-    },
-    {
-      "id": "who-iris-library",
-      "directory": "who-iris-library",
-      "title": "who-iris-library",
-      "ref": "cat-harness/docs/cat-harness/library/who-iris/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/library/who-iris/",
-      "hidden": false,
-      "icon": "library",
-      "count": 3,
-      "unit": "entries"
-    },
-    {
-      "id": "who-iris-skills",
-      "directory": "who-iris-skills",
-      "title": "Skills — who-iris",
-      "ref": "cat-harness/docs/cat-harness/docs-auto/index/skills/who-iris-skills/index.html",
-      "surfaces": [
-        "navbar",
-        "board",
-        "glass"
-      ],
-      "href": "/cat-harness/docs-auto/index/skills/who-iris-skills/",
-      "hidden": false,
-      "icon": "skills"
     }
   ],
   "harnesses": [
+    {
+      "name": "folio-assistant",
+      "title": "Folio Assistant",
+      "label": "Folio Assistant",
+      "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
+      "summary": "This repository as a working instance: the platform and the folios it hosts.",
+      "footer": false,
+      "needs": [
+        "agent-skills",
+        "bootstrap",
+        "bootstrap-tools",
+        "cat-harness",
+        "cat-harness-tools",
+        "fhir-harness",
+        "folio-assistant-core",
+        "folio-assistant-sci",
+        "large-datasets",
+        "smart-base",
+        "smart-dak",
+        "smart-ig",
+        "smart-immunizations",
+        "smart-l1",
+        "smart-trust",
+        "who-iris",
+        "who-style-guide"
+      ],
+      "icon": null,
+      "avatar": {
+        "src": "/assets/img/harness/landing-engineer-card.webp",
+        "title": "Grumpy cat, engineering",
+        "region": {
+          "x": 0,
+          "y": 0.4,
+          "w": 0.46,
+          "h": 0.46
+        },
+        "crop": {
+          "width": 217.3913,
+          "height": 217.3913,
+          "left": 0,
+          "top": -86.9565
+        }
+      },
+      "mark": {
+        "src": "/assets/img/harness/landing-engineer-card.webp",
+        "title": "Grumpy cat, engineering",
+        "region": {
+          "x": 0,
+          "y": 0.4,
+          "w": 0.46,
+          "h": 0.46
+        },
+        "crop": {
+          "width": 217.3913,
+          "height": 217.3913,
+          "left": 0,
+          "top": -86.9565
+        }
+      },
+      "tone": 236,
+      "toneFrom": "avatar",
+      "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it",
+      "genericAvatar": false,
+      "instantiated": true,
+      "href": "/#harness-folio-assistant",
+      "hrefKind": "folio",
+      "stats": [
+        {
+          "id": "directories",
+          "label": "declared directories",
+          "value": 9
+        },
+        {
+          "id": "kinds",
+          "label": "declared graph kinds",
+          "value": 10
+        },
+        {
+          "id": "views",
+          "label": "visualisations you can open",
+          "value": 6
+        }
+      ],
+      "visualisations": [
+        {
+          "kind": "beans",
+          "path": "/beans/"
+        },
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "docs",
+          "path": "/cat-harness/docs-auto/index/docs/root-docs/"
+        },
+        {
+          "kind": "fsh-guts",
+          "path": "/fsh-guts/",
+          "stagingOnly": true
+        },
+        {
+          "kind": "interaction",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "issue-marks",
+          "path": "/issue-marks/"
+        },
+        {
+          "kind": "memory",
+          "note": "no viewer yet"
+        },
+        {
+          "kind": "todos",
+          "path": "/todos/"
+        },
+        {
+          "kind": "uploads",
+          "path": "/cat-harness/uploads/folio-assistant/"
+        },
+        {
+          "kind": "waiver",
+          "note": "no viewer yet"
+        }
+      ],
+      "findings": [
+        "folio-assistant: declares 4 graph(s) with no published viewer — code, interaction, memory, waiver. Declared and not rendered is a gap, not a dead link.",
+        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
+      ],
+      "navbarIcons": [
+        "close",
+        "todos",
+        "beans",
+        "processes",
+        "kg",
+        "launcher"
+      ]
+    },
     {
       "name": "smart-trust",
       "title": "smart-trust",
@@ -1269,129 +1197,6 @@
       ]
     },
     {
-      "name": "folio-assistant",
-      "title": "Folio Assistant",
-      "label": "Folio Assistant",
-      "description": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout` rather than `folio-assistant`, which `cat-harness/harness.json` already uses: two declarations sharing a name makes `declaredBy` and a sticky's `contributedBy` ambiguous, so a directory can be attributed to the wrong instance while reading correctly. It declares the directories a person drops things into, which belong to the checkout rather than to any one layer inside it.",
-      "summary": "This repository as a working instance: the platform and the folios it hosts.",
-      "footer": false,
-      "needs": [
-        "folio-assistant-core"
-      ],
-      "icon": null,
-      "avatar": {
-        "src": "/assets/img/harness/landing-engineer-card.webp",
-        "title": "Grumpy cat, engineering",
-        "region": {
-          "x": 0,
-          "y": 0.4,
-          "w": 0.46,
-          "h": 0.46
-        },
-        "crop": {
-          "width": 217.3913,
-          "height": 217.3913,
-          "left": 0,
-          "top": -86.9565
-        }
-      },
-      "mark": {
-        "src": "/assets/img/harness/landing-engineer-card.webp",
-        "title": "Grumpy cat, engineering",
-        "region": {
-          "x": 0,
-          "y": 0.4,
-          "w": 0.46,
-          "h": 0.46
-        },
-        "crop": {
-          "width": 217.3913,
-          "height": 217.3913,
-          "left": 0,
-          "top": -86.9565
-        }
-      },
-      "tone": 236,
-      "toneFrom": "avatar",
-      "reads": "a leaf of paper held in a frame — the folio, and the instance that holds it",
-      "genericAvatar": false,
-      "instantiated": true,
-      "href": "/#harness-folio-assistant",
-      "hrefKind": "folio",
-      "stats": [
-        {
-          "id": "directories",
-          "label": "declared directories",
-          "value": 9
-        },
-        {
-          "id": "kinds",
-          "label": "declared graph kinds",
-          "value": 10
-        },
-        {
-          "id": "views",
-          "label": "visualisations you can open",
-          "value": 6
-        }
-      ],
-      "visualisations": [
-        {
-          "kind": "beans",
-          "path": "/beans/"
-        },
-        {
-          "kind": "code",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "docs",
-          "path": "/cat-harness/docs-auto/index/docs/root-docs/"
-        },
-        {
-          "kind": "fsh-guts",
-          "path": "/fsh-guts/",
-          "stagingOnly": true
-        },
-        {
-          "kind": "interaction",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "issue-marks",
-          "path": "/issue-marks/"
-        },
-        {
-          "kind": "memory",
-          "note": "no viewer yet"
-        },
-        {
-          "kind": "todos",
-          "path": "/todos/"
-        },
-        {
-          "kind": "uploads",
-          "path": "/cat-harness/uploads/folio-assistant/"
-        },
-        {
-          "kind": "waiver",
-          "note": "no viewer yet"
-        }
-      ],
-      "findings": [
-        "folio-assistant: declares 4 graph(s) with no published viewer — code, interaction, memory, waiver. Declared and not rendered is a gap, not a dead link.",
-        "folio-assistant: a viewer is published at /cat-harness/library/folio-assistant/ for a \"library\" graph this instance does not declare. Declare it and the tile links it."
-      ],
-      "navbarIcons": [
-        "close",
-        "todos",
-        "beans",
-        "processes",
-        "kg",
-        "launcher"
-      ]
-    },
-    {
       "name": "fhir-harness",
       "title": "FHIR IG Harness",
       "label": "FHIR IG Harness",
@@ -1675,7 +1480,7 @@
         },
         {
           "kind": "skills",
-          "path": "/cat-harness/docs-auto/index/skills/folio-assistant-core-skills/"
+          "path": "/cat-harness/docs-auto/index/skills/core-skills/"
         },
         {
           "kind": "tools",
@@ -1763,12 +1568,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 46
+          "value": 27
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 22
+          "value": 23
         },
         {
           "id": "views",
@@ -1849,6 +1654,10 @@
           "readOnly": false
         },
         {
+          "kind": "substrate-snapshot",
+          "note": "no viewer yet"
+        },
+        {
           "kind": "swimlane-glossary",
           "path": "/swimlane-glossary/"
         },
@@ -1870,7 +1679,7 @@
         }
       ],
       "findings": [
-        "cat-harness: declares 5 graph(s) with no published viewer — code, code-list, policies, scenarios, uml. Declared and not rendered is a gap, not a dead link."
+        "cat-harness: declares 6 graph(s) with no published viewer — code, code-list, policies, scenarios, substrate-snapshot, uml. Declared and not rendered is a gap, not a dead link."
       ],
       "navbarIcons": [
         "close",
@@ -2128,6 +1937,10 @@
         "path": "/cat-harness/docs-auto/index/skills/skills/"
       },
       {
+        "kind": "substrate-snapshot",
+        "note": "no viewer yet"
+      },
+      {
         "kind": "swimlane-glossary",
         "path": "/swimlane-glossary/"
       },
@@ -2285,6 +2098,24 @@
       },
       {
         "key": "description",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "summary",
+        "skills": [
+          {
+            "name": "harness-tiles",
+            "path": "/reference/skill-instructions/harness-tiles.html"
+          }
+        ]
+      },
+      {
+        "key": "alsoWritten",
         "skills": [
           {
             "name": "harness-tiles",
@@ -2470,6 +2301,28 @@
         ]
       },
       {
+        "key": "subscriptions",
+        "skills": [
+          {
+            "name": "kg-subscription",
+            "path": "/reference/skill-instructions/kg-subscription.html"
+          },
+          {
+            "name": "materialize-remote",
+            "path": "/reference/skill-instructions/materialize-remote.html"
+          }
+        ]
+      },
+      {
+        "key": "knownSubstrates",
+        "skills": [
+          {
+            "name": "kg-subscription",
+            "path": "/reference/skill-instructions/kg-subscription.html"
+          }
+        ]
+      },
+      {
         "key": "stickies",
         "skills": [
           {
@@ -2545,6 +2398,56 @@
       }
     ],
     "harnesses": [
+      {
+        "name": "folio-assistant",
+        "title": "Folio Assistant",
+        "group": "instantiated",
+        "declaredIn": "folio-assistant.json",
+        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant.json",
+        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/folio-assistant.json",
+        "declared": [
+          {
+            "key": "name",
+            "summary": "folio-assistant"
+          },
+          {
+            "key": "title",
+            "summary": "Folio Assistant"
+          },
+          {
+            "key": "description",
+            "summary": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout…"
+          },
+          {
+            "key": "summary",
+            "summary": "This repository as a working instance: the platform and the folios it hosts."
+          },
+          {
+            "key": "assets",
+            "summary": "2: agent-instructions, instance-readme"
+          },
+          {
+            "key": "repository",
+            "summary": "litlfred/folio-assistant"
+          },
+          {
+            "key": "directories",
+            "summary": "9: uploads, root-tools, fsh-guts, beans, todos, memory, interaction, issue-marks, root-docs"
+          },
+          {
+            "key": "stickies",
+            "summary": "1: folio-assistant"
+          },
+          {
+            "key": "needs",
+            "summary": "agent-skills, bootstrap, bootstrap-tools, cat-harness, cat-harness-tools, fhir-harness, f…"
+          },
+          {
+            "key": "version",
+            "summary": "0.1.0"
+          }
+        ]
+      },
       {
         "name": "smart-trust",
         "title": "smart-trust",
@@ -2900,6 +2803,10 @@
             "summary": "{ repository, path }"
           },
           {
+            "key": "separation",
+            "summary": "content"
+          },
+          {
             "key": "directories",
             "summary": "9: library, who-iris-site, who-iris-catalogue, who-iris-uploads, who-iris-skills, who-iris-t…"
           },
@@ -2998,52 +2905,6 @@
           {
             "key": "contentAdapters",
             "summary": "1 entry"
-          },
-          {
-            "key": "version",
-            "summary": "0.1.0"
-          }
-        ]
-      },
-      {
-        "name": "folio-assistant",
-        "title": "Folio Assistant",
-        "group": "instantiated",
-        "declaredIn": "folio-assistant.json",
-        "viewHref": "https://github.com/litlfred/folio-assistant/blob/main/folio-assistant.json",
-        "editHref": "https://github.com/litlfred/folio-assistant/edit/main/folio-assistant.json",
-        "declared": [
-          {
-            "key": "name",
-            "summary": "folio-assistant"
-          },
-          {
-            "key": "title",
-            "summary": "Folio Assistant"
-          },
-          {
-            "key": "description",
-            "summary": "The repository itself, acting as an initialized instance. NAMED `folio-assistant-checkout…"
-          },
-          {
-            "key": "assets",
-            "summary": "2: agent-instructions, instance-readme"
-          },
-          {
-            "key": "repository",
-            "summary": "litlfred/folio-assistant"
-          },
-          {
-            "key": "directories",
-            "summary": "9: uploads, root-tools, fsh-guts, beans, todos, memory, interaction, issue-marks, root-docs"
-          },
-          {
-            "key": "stickies",
-            "summary": "1: folio-assistant"
-          },
-          {
-            "key": "needs",
-            "summary": "folio-assistant-core"
           },
           {
             "key": "version",
@@ -3276,6 +3137,14 @@
             "summary": "computable adjudication and agentic test harness\n\ncaaat-harness\n\nca&at-harness\n\n.c&at-har…"
           },
           {
+            "key": "summary",
+            "summary": "Computable adjudication and agentic test harness."
+          },
+          {
+            "key": "alsoWritten",
+            "summary": "caaat-harness, ca&at-harness, .c&at-harness, c@t-harness"
+          },
+          {
             "key": "images",
             "summary": "28: mark-small, mark, mark-mask, mark-dark, landing-laptop, landing-mobile, landing-card, lan…"
           },
@@ -3317,11 +3186,15 @@
           },
           {
             "key": "directories",
-            "summary": "44: tools, external-schemas, code-lists, schemas, uml, skills, scenarios, policies, processes…"
+            "summary": "25: tools, external-schemas, subscriptions, code-lists, schemas, uml, skills, scenarios, poli…"
           },
           {
             "key": "associatedHarnesses",
             "summary": "1: ihris"
+          },
+          {
+            "key": "knownSubstrates",
+            "summary": "2: who-iris, who-world-health-data-hub"
           },
           {
             "key": "stickies",
@@ -3451,9 +3324,6 @@
     "findings": [
       "`topology`: no skill edits `topology` yet: its axes are documented only in the schema (cat-harness.ts, TopologySchema)",
       "who-iris: declares `folioMount`, which the declaration schema does not have and silently drops.",
-      "folio-assistant: declares `summary`, which the declaration schema does not have and silently drops.",
-      "cat-harness: declares `summary`, which the declaration schema does not have and silently drops.",
-      "cat-harness: declares `alsoWritten`, which the declaration schema does not have and silently drops.",
       "cat-harness: declares `folioMount`, which the declaration schema does not have and silently drops.",
       "bootstrap-tools: declares `supports`, which the declaration schema does not have and silently drops."
     ]

@@ -59,6 +59,20 @@ classDiagram
       concepts [0..*] Concept[]
     }
   }
+  namespace cat_harness__subscriptions {
+    class cat_harness_subscriptions_SubstrateSnapshot["SubstrateSnapshot"] {
+      <<json: SubstrateSnapshotSchema>>
+      $schema [1] 'folio-substrate-snapshot/v1'
+      subscription [1] string
+      repository [1] string
+      ref [1] string
+      file [1] string
+      raw [1] string
+      fixity [1] object
+      summary [1] object
+      note [0..1] string
+    }
+  }
   namespace cat_harness__code_lists {
     class cat_harness_code_lists_Code["Code"] {
       <<json: CodeListSchema>>
@@ -721,36 +735,6 @@ classDiagram
       withheld [1] object
     }
   }
-  namespace cat_harness__who_iris_library {
-    class n_cat_harness_who_iris_library_library["library: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__agent_skills_library {
-    class n_cat_harness_agent_skills_library_library["library: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__folio_assistant_sci_library {
-    class n_cat_harness_folio_assistant_sci_library_library["library: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__folio_assistant_core_library {
-    class n_cat_harness_folio_assistant_core_library_library["library: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__smart_base_library {
-    class n_cat_harness_smart_base_library_library["library: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__fhir_harness_library {
-    class n_cat_harness_fhir_harness_library_library["library: no node schema"] {
-      <<could not determine>>
-    }
-  }
   namespace cat_harness__translation_sources {
     class cat_harness_translation_sources_TranslationConfig["TranslationConfig"] {
       <<json: TranslationConfigSchema>>
@@ -764,63 +748,6 @@ classDiagram
   namespace cat_harness__folio {
     class n_cat_harness_folio_folio["folio: no node schema"] {
       <<could not determine>>
-    }
-  }
-  namespace cat_harness__smart_base_methodologies {
-    class n_cat_harness_smart_base_methodologies_methodology["methodology: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__folio_assistant_core_methodologies {
-    class n_cat_harness_folio_assistant_core_methodologies_methodology["methodology: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__folio_assistant_sci_methodologies {
-    class n_cat_harness_folio_assistant_sci_methodologies_methodology["methodology: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__folio_assistant_sci_lean_skills {
-    class n_cat_harness_folio_assistant_sci_lean_skills_skills["skills: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__folio_assistant_sci_data_skills {
-    class n_cat_harness_folio_assistant_sci_data_skills_skills["skills: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__folio_assistant_core_skills {
-    class n_cat_harness_folio_assistant_core_skills_skills["skills: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__smart_base_processes {
-    class cat_harness_smart_base_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
-      <<ext: omg-bpmn-2.0>>
-      bpmn:callActivity [0..*] element
-      bpmn:collaboration [0..*] element
-      bpmn:definitions [0..*] element
-      bpmn:documentation [0..*] element
-      bpmn:endEvent [0..*] element
-      bpmn:exclusiveGateway [0..*] element
-      bpmn:extensionElements [0..*] element
-      bpmn:flowNodeRef [0..*] element
-      bpmn:import [0..*] element
-      bpmn:incoming [0..*] element
-      bpmn:lane [0..*] element
-      bpmn:laneSet [0..*] element
-      bpmn:outgoing [0..*] element
-      bpmn:parallelGateway [0..*] element
-      bpmn:participant [0..*] element
-      bpmn:process [0..*] element
-      bpmn:sequenceFlow [0..*] element
-      bpmn:serviceTask [0..*] element
-      bpmn:startEvent [0..*] element
-      bpmn:task [0..*] element
-      bpmn:timerEventDefinition [0..*] element
-      bpmn:userTask [0..*] element
     }
   }
   namespace cat_harness__docs {
@@ -1161,58 +1088,6 @@ classDiagram
       nodes [0..*] Node[]
     }
   }
-  namespace cat_harness__folio_assist_core_schemas {
-    class n_cat_harness_folio_assist_core_schemas_schemas["schemas: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__large_datasets_skills {
-    class n_cat_harness_large_datasets_skills_skills["skills: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__who_iris_skills {
-    class n_cat_harness_who_iris_skills_skills["skills: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__fhir_ig_skills {
-    class n_cat_harness_fhir_ig_skills_skills["skills: no node schema"] {
-      <<could not determine>>
-    }
-  }
-  namespace cat_harness__large_datasets_processes {
-    class cat_harness_large_datasets_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
-      <<ext: omg-bpmn-2.0>>
-      bpmn:callActivity [0..*] element
-      bpmn:collaboration [0..*] element
-      bpmn:definitions [0..*] element
-      bpmn:documentation [0..*] element
-      bpmn:endEvent [0..*] element
-      bpmn:exclusiveGateway [0..*] element
-      bpmn:extensionElements [0..*] element
-      bpmn:flowNodeRef [0..*] element
-      bpmn:import [0..*] element
-      bpmn:incoming [0..*] element
-      bpmn:lane [0..*] element
-      bpmn:laneSet [0..*] element
-      bpmn:outgoing [0..*] element
-      bpmn:parallelGateway [0..*] element
-      bpmn:participant [0..*] element
-      bpmn:process [0..*] element
-      bpmn:sequenceFlow [0..*] element
-      bpmn:serviceTask [0..*] element
-      bpmn:startEvent [0..*] element
-      bpmn:task [0..*] element
-      bpmn:timerEventDefinition [0..*] element
-      bpmn:userTask [0..*] element
-    }
-  }
-  namespace cat_harness__large_datasets_schemas {
-    class n_cat_harness_large_datasets_schemas_schemas["schemas: no node schema"] {
-      <<could not determine>>
-    }
-  }
   namespace cat_harness__swimlane_glossary {
     class cat_harness_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0["glossary-ledger/1.0.0"] {
       <<json: LedgerSchema>>
@@ -1246,33 +1121,6 @@ classDiagram
       <<could not determine>>
     }
   }
-  namespace cat_harness__folio_assistant_core_processes {
-    class cat_harness_folio_assistant_core_processes_omg_bpmn_2_0["Business Process Model and Notation (BPMN)"] {
-      <<ext: omg-bpmn-2.0>>
-      bpmn:callActivity [0..*] element
-      bpmn:collaboration [0..*] element
-      bpmn:definitions [0..*] element
-      bpmn:documentation [0..*] element
-      bpmn:endEvent [0..*] element
-      bpmn:exclusiveGateway [0..*] element
-      bpmn:extensionElements [0..*] element
-      bpmn:flowNodeRef [0..*] element
-      bpmn:import [0..*] element
-      bpmn:incoming [0..*] element
-      bpmn:lane [0..*] element
-      bpmn:laneSet [0..*] element
-      bpmn:outgoing [0..*] element
-      bpmn:parallelGateway [0..*] element
-      bpmn:participant [0..*] element
-      bpmn:process [0..*] element
-      bpmn:sequenceFlow [0..*] element
-      bpmn:serviceTask [0..*] element
-      bpmn:startEvent [0..*] element
-      bpmn:task [0..*] element
-      bpmn:timerEventDefinition [0..*] element
-      bpmn:userTask [0..*] element
-    }
-  }
   namespace cat_harness__cat_harness_deploy {
     class n_cat_harness_cat_harness_deploy_code["code: no node schema"] {
       <<could not determine>>
@@ -1287,6 +1135,7 @@ classDiagram
   cssClass "cat_harness_external_schemas_folio_external_schema_v1_folio_external_schema_v1" fa_uml_kind_external_schema
   cssClass "cat_harness_external_schemas_folio_pinned_terminology_v1_Concept" fa_uml_kind_external_schema
   cssClass "cat_harness_external_schemas_folio_pinned_terminology_v1_folio_pinned_terminology_v1" fa_uml_kind_external_schema
+  cssClass "cat_harness_subscriptions_SubstrateSnapshot" fa_uml_kind_substrate_snapshot
   cat_harness_code_lists_CodeList *-- "1..*" cat_harness_code_lists_Code : codes
   cssClass "cat_harness_code_lists_Code" fa_uml_kind_code_list
   cssClass "cat_harness_code_lists_CodeList" fa_uml_kind_code_list
@@ -1400,34 +1249,9 @@ classDiagram
   cssClass "cat_harness_library_folio_slides_accessibility_v1_folio_slides_accessibility_v1" fa_uml_kind_library
   cssClass "cat_harness_library_folio_referenced_source_v1_Outline" fa_uml_kind_library
   cssClass "cat_harness_library_folio_referenced_source_v1_folio_referenced_source_v1" fa_uml_kind_library
-  cssClass "n_cat_harness_who_iris_library_library" fa_uml_kind_library
-  cssClass "n_cat_harness_who_iris_library_library" fa_uml_undetermined
-  cssClass "n_cat_harness_agent_skills_library_library" fa_uml_kind_library
-  cssClass "n_cat_harness_agent_skills_library_library" fa_uml_undetermined
-  cssClass "n_cat_harness_folio_assistant_sci_library_library" fa_uml_kind_library
-  cssClass "n_cat_harness_folio_assistant_sci_library_library" fa_uml_undetermined
-  cssClass "n_cat_harness_folio_assistant_core_library_library" fa_uml_kind_library
-  cssClass "n_cat_harness_folio_assistant_core_library_library" fa_uml_undetermined
-  cssClass "n_cat_harness_smart_base_library_library" fa_uml_kind_library
-  cssClass "n_cat_harness_smart_base_library_library" fa_uml_undetermined
-  cssClass "n_cat_harness_fhir_harness_library_library" fa_uml_kind_library
-  cssClass "n_cat_harness_fhir_harness_library_library" fa_uml_undetermined
   cssClass "cat_harness_translation_sources_TranslationConfig" fa_uml_kind_translation_sources
   cssClass "n_cat_harness_folio_folio" fa_uml_kind_folio
   cssClass "n_cat_harness_folio_folio" fa_uml_undetermined
-  cssClass "n_cat_harness_smart_base_methodologies_methodology" fa_uml_kind_methodology
-  cssClass "n_cat_harness_smart_base_methodologies_methodology" fa_uml_undetermined
-  cssClass "n_cat_harness_folio_assistant_core_methodologies_methodology" fa_uml_kind_methodology
-  cssClass "n_cat_harness_folio_assistant_core_methodologies_methodology" fa_uml_undetermined
-  cssClass "n_cat_harness_folio_assistant_sci_methodologies_methodology" fa_uml_kind_methodology
-  cssClass "n_cat_harness_folio_assistant_sci_methodologies_methodology" fa_uml_undetermined
-  cssClass "n_cat_harness_folio_assistant_sci_lean_skills_skills" fa_uml_kind_skills
-  cssClass "n_cat_harness_folio_assistant_sci_lean_skills_skills" fa_uml_undetermined
-  cssClass "n_cat_harness_folio_assistant_sci_data_skills_skills" fa_uml_kind_skills
-  cssClass "n_cat_harness_folio_assistant_sci_data_skills_skills" fa_uml_undetermined
-  cssClass "n_cat_harness_folio_assistant_core_skills_skills" fa_uml_kind_skills
-  cssClass "n_cat_harness_folio_assistant_core_skills_skills" fa_uml_undetermined
-  cssClass "cat_harness_smart_base_processes_omg_bpmn_2_0" fa_uml_kind_processes
   cat_harness_docs_folio_todo_index_v1_Item *-- "0..*" cat_harness_docs_folio_todo_index_v1_Relation : relations
   cat_harness_docs_folio_todo_index_v1_folio_todo_index_v1 *-- "0..*" cat_harness_docs_folio_todo_index_v1_Item : items
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Item : items
@@ -1483,17 +1307,6 @@ classDiagram
   cssClass "cat_harness_docs_folio_graph_projection_v1_Link" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_Node" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1" fa_uml_kind_docs
-  cssClass "n_cat_harness_folio_assist_core_schemas_schemas" fa_uml_kind_schemas
-  cssClass "n_cat_harness_folio_assist_core_schemas_schemas" fa_uml_undetermined
-  cssClass "n_cat_harness_large_datasets_skills_skills" fa_uml_kind_skills
-  cssClass "n_cat_harness_large_datasets_skills_skills" fa_uml_undetermined
-  cssClass "n_cat_harness_who_iris_skills_skills" fa_uml_kind_skills
-  cssClass "n_cat_harness_who_iris_skills_skills" fa_uml_undetermined
-  cssClass "n_cat_harness_fhir_ig_skills_skills" fa_uml_kind_skills
-  cssClass "n_cat_harness_fhir_ig_skills_skills" fa_uml_undetermined
-  cssClass "cat_harness_large_datasets_processes_omg_bpmn_2_0" fa_uml_kind_processes
-  cssClass "n_cat_harness_large_datasets_schemas_schemas" fa_uml_kind_schemas
-  cssClass "n_cat_harness_large_datasets_schemas_schemas" fa_uml_undetermined
   cssClass "cat_harness_swimlane_glossary_glossary_ledger_1_0_0_glossary_ledger_1_0_0" fa_uml_kind_swimlane_glossary
   cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_kind_code
   cssClass "n_cat_harness_cat_harness_scripts_code" fa_uml_undetermined
@@ -1505,6 +1318,5 @@ classDiagram
   cssClass "n_cat_harness_cat_harness_tests_code" fa_uml_undetermined
   cssClass "n_cat_harness_folio_templates_code" fa_uml_kind_code
   cssClass "n_cat_harness_folio_templates_code" fa_uml_undetermined
-  cssClass "cat_harness_folio_assistant_core_processes_omg_bpmn_2_0" fa_uml_kind_processes
   cssClass "n_cat_harness_cat_harness_deploy_code" fa_uml_kind_code
   cssClass "n_cat_harness_cat_harness_deploy_code" fa_uml_undetermined

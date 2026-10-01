@@ -21,7 +21,7 @@ An ARCHIVAL copy is not refreshed. Re-fetching it would defeat it: the copy exis
 
 ## How it connects
 
-- **Called by:** [Sample import into a structured data store](sample-import.html)
+- **Called by:** [Sample import into a structured data store](sample-import.html), [Subscribe to an external knowledge graph](subscribe-kg.html)
 - **Calls:** [Adjudication](adjudication.html)
 - **Presented on:** no docs page section shows this diagram
 

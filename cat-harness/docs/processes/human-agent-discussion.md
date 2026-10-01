@@ -21,7 +21,7 @@ SYMMETRIC IN ITS PARTICIPANTS. The answering lane is a person or a sibling agent
 
 NO work-plan element, and isExecutable is false, for the reasons initialize-harness gives.
 
-_No rendered diagram — run `bun run render:bpmn`._
+<img src="../assets/img/workflows/human-agent-discussion.svg" alt="BPMN diagram: Human–agent discussion" style="max-width:100%">
 
 ## How it connects
 

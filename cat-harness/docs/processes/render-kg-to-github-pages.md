@@ -21,7 +21,7 @@ THREE STATES, NOT TWO. A check that could not look (a 403 from a proxy, no netwo
 
 NO work-plan element on any activity, and isExecutable is false: this is bootstrap-tools' own diagram, in bootstrap's diagram vocabulary, and bootstrap's diagrams carry no work plan.
 
-_No rendered diagram — run `bun run render:bpmn`._
+<img src="../assets/img/workflows/render-kg-to-github-pages.svg" alt="BPMN diagram: Render a Knowledge Graph to GitHub Pages" style="max-width:100%">
 
 ## How it connects
 

@@ -27,6 +27,10 @@ export const PROPERTY_SKILLS = {
   name: { skills: ["instance-kinds", "directory-conventions"] },
   title: { skills: ["harness-tiles"] },
   description: { skills: ["harness-tiles"] },
+  // The one-line gloss and the other spellings shown under a harness's
+  // section on the landing page (bean `ob3m` findings 4–5).
+  summary: { skills: ["harness-tiles"] },
+  alsoWritten: { skills: ["harness-tiles"] },
   images: { skills: ["theme-declaration", "harness-tiles"] },
   assets: { skills: ["directory-conventions"] },
   icon: { skills: ["theme-declaration", "harness-tiles"] },
@@ -57,6 +61,11 @@ export const PROPERTY_SKILLS = {
   directories: { skills: ["directory-conventions", "schema-management"] },
   remoteGraphs: { skills: ["library-ingestion", "materialize-remote"] },
   associatedHarnesses: { skills: ["associate-harness"] },
+  // Issue #1719. Both name a large-datasets skill, as `remoteGraphs` already
+  // does with `materialize-remote`: the process that walks a subscription
+  // calls that layer's subprocesses, so its skill lives beside them.
+  subscriptions: { skills: ["kg-subscription", "materialize-remote"] },
+  knownSubstrates: { skills: ["kg-subscription"] },
   stickies: { skills: ["create-sticky-note"] },
   renderExemption: { skills: ["harness-tiles"] },
   needs: { skills: ["instance-kinds", "confirm-harness"] },
