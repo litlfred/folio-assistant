@@ -110,11 +110,14 @@ changed or version-changed resource (the view: path, op, base, head).
 - **Every page opens with the provisional mark.** Do not remove it to make a
   page look finished.
 - **Liquid in values is neutralised, not merely wrapped.** FHIR narratives
-  carry `{{` and `{%`. A single `{% raw %}` around the page is not enough,
-  because a value containing `{% endraw %}` would close it and run whatever
-  follows (review on #1708). Every value has a word joiner (U+2060) inserted
-  inside `{{`, `{%`, `%}` and `}}`. The text reads the same; Jekyll parses
-  nothing.
+  carry Liquid output and tag delimiters (double braces, brace-percent). A
+  single raw block around the page is not enough: a value containing the raw
+  block's own closing tag would end it and run whatever followed (review on
+  #1708). So every value gets a word joiner (U+2060) inside each opening and
+  closing delimiter. The text reads the same, and Jekyll parses nothing.
+  **This skill names those delimiters in words on purpose**: its own reference
+  page is rendered inside a raw block by `gen-skill-docs`, and writing the
+  closing tag literally here broke the staging build once.
 - **One page per key, not per Type/id.** Page names carry a hash of the key,
   as the AST's own files do, so two versions of one resource are two pages.
 - Table cells escape `|`, and a key contains one (`canonical|version`).
