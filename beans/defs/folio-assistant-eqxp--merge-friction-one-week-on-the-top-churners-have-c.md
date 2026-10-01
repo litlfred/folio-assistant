@@ -139,3 +139,47 @@ writers, or drop `script_hash` in favour of what `y7b3` did for `updated_at`
 (#1714 removed the timestamp from qa-results for precisely this
 collision reason). The second is not obviously right — the hash carries
 information the timestamp did not.
+
+## A candidate the churn table recommends and the TEST refuses
+
+`beans/README.md` is the third-most-churned path (21 of 200 commits), and it
+conflicted in merge cycles 20, 21, 22, 23 and 27 of PR #1633 — more often than
+any other single file. On 2026-10-01 it closed a merge window **by itself**:
+CI was 13 checks green with nothing red, and `git merge-tree` reported exactly
+one conflicting path, this one.
+
+So it looks like the strongest candidate in the table. **It fails.**
+
+It is written by `scripts/subgraph-readmes.ts` BETWEEN
+`<!-- kg:subgraph:begin -->` and `<!-- kg:subgraph:end -->`. A marker-scoped
+generator carries forward everything outside its markers by construction —
+that is what the markers are FOR. `-merge` on such a file discards one side
+whole, so any prose a person had written below the marker would go with no
+diff to notice and no gate to catch it, since the gate
+(`readme:subgraphs:check`) only ever looks between the markers.
+
+Today `beans/README.md` happens to hold nothing outside them: 14 lines,
+markers at 1 and 14. That is not a reason to mark it. **`.gitattributes` is a
+standing declaration and the test is about the PRODUCER's contract, not the
+file's current contents** — the entry would be a trap armed for whoever first
+adds a paragraph.
+
+The same disqualifies every other marker-scoped README, which is most of the
+"authored-looking" rows in the table above: `cat-harness/test/README.md`,
+`scripts/README.md`, `skills/README.md`, `uml/README.md`,
+`test/results/README.md`.
+
+This is also, in retrospect, why `oxka` chose the three it did. All three are
+WHOLE-FILE generators — `docs-auto/**`, `glossary/index.md`, and
+`audit-coverage.qa-results.json`, whose producer reads the committed copy only
+to compare. The distinction `1swy` drew is not "generated vs authored" and not
+even "does the producer read its output", but **does the producer carry
+anything forward** — and a marker is a carry-forward mechanism wearing the
+costume of a generated file.
+
+**Consequence for this bean's own proposal:** of the candidates listed above,
+the marker-scoped ones are struck. What survives is the whole-file set —
+`skill-register.qa-results.json`, `skills.lsi.json`,
+`skills.tool-run.json` — each already cleared by reading its producer. The
+remaining churn from marker-scoped READMEs needs a different answer, and this
+bean does not have one.
