@@ -2,6 +2,7 @@
  * An IG's identity, as its own `sushi-config.yaml` states it — id, canonical,
  * version and publication status — kept beside that IG's artefact index.
  *
+ * @graphNode schema
  * @module fhir-harness/schemas/ig-identity
  *
  * ## Why this is not a field of the chrome
