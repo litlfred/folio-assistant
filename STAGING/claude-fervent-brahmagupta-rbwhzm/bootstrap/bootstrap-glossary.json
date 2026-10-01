@@ -58,9 +58,19 @@
       "notation": "bootstrapping-agent",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap-glossary.jsonld",
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_CompleteInitialization/Lane_BootstrappingAgent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_Discussion/Lane_BootstrappingAgent",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_BootstrappingAgent"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_CompleteInitialization/Lane_BootstrappingAgent",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "label": "Bootstrapping Agent",
+      "scopeNote": "Still acting on bootstrap's instructions, because this process is bootstrap's. Checks, performs what it can, asks a person for what only they can do, and records every step in its state. It never marks a step done that it did not check.",
+      "source": "bootstrap/processes/complete-initialization.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_Discussion/Lane_BootstrappingAgent",
@@ -68,7 +78,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_Discussion",
       "label": "Bootstrapping Agent",
-      "scopeNote": "Holds the one judgement this process refuses to compute: whether an answer actually settles the question, which is why G_Settled carries no computed decision unlike the DMN-backed gateways elsewhere in this corpus. It narrows candidates before spending the one question a reader is entitled to, and closes either with a determination or, on a decline, with what is still open — never a guess standing in for either.",
+      "scopeNote": "Narrows the candidates before spending the one question a reader is entitled to, and closes either with a determination or with what is still open — never a guess standing in for either. The Requestor takes part inside the called discussion, which is why this diagram has no lane for them.",
       "source": "bootstrap/processes/discussion.bpmn"
     },
     {
@@ -77,7 +87,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#role/bootstrapping-agent",
       "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
       "label": "Bootstrapping Agent",
-      "scopeNote": "Everything this process performs other than confirming which harness and reading the target location belongs here. It narrows candidates without choosing among them (A_ListHarnesses's own documentation says narrows, not decides), follows the CHOSEN harness's own instructions rather than any bootstrap holds, and logs failure on all three refusal paths rather than retrying — a guessed harness produces a repository set up as the wrong thing, which this process treats as worse than stopping.",
+      "scopeNote": "Everything this process performs other than reading the target location. The one judgement — WHICH harness — is not made here: it is the Requestor's, obtained inside `discussion` through `human-agent-discussion`, which is why this diagram has no Requestor lane. It follows the CHOSEN harness's own instructions rather than any bootstrap holds, and logs failure on all three refusal paths rather than retrying — a guessed harness produces a repository set up as the wrong thing, which this process treats as worse than stopping.",
       "source": "bootstrap/processes/initialize-harness.bpmn"
     },
     {
@@ -89,8 +99,18 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap-glossary.jsonld",
       "actedUpon": true,
       "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_CompleteInitialization/Lane_DataStore",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_DataStore"
       ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_CompleteInitialization/Lane_DataStore",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#role/knowledge-graph-data-store",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_CompleteInitialization",
+      "label": "Knowledge Graph Data Store",
+      "scopeNote": "Not an actor: the repository and its siblings, read. The declarations are read here once, at the start, and the steps come from what they say rather than from anybody's memory of what a harness needs.",
+      "source": "bootstrap/processes/complete-initialization.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_DataStore",
@@ -109,27 +129,17 @@
       "notation": "requestor",
       "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap-glossary.jsonld",
       "usage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_Discussion/Lane_Requestor",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_Requestor"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_HumanAgentDiscussion/Lane_Requestor"
       ]
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_Discussion/Lane_Requestor",
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_HumanAgentDiscussion/Lane_Requestor",
       "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#role/requestor",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_Discussion",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
       "label": "Requestor",
-      "scopeNote": "Filled interchangeably by a person or a sibling agent that already holds the answer — the output records which, since the two are evidence of different weight, but this lane's standing to answer is the same either way. Declining is a legitimate exit here, not a failure: it is what turns the outcome into \"unsettled\" rather than forcing a guess.",
-      "source": "bootstrap/processes/discussion.bpmn"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_InitializeHarness/Lane_Requestor",
-      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
-      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#role/requestor",
-      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_InitializeHarness",
-      "label": "Requestor",
-      "scopeNote": "The only judgement in the whole process, per A_ConfirmHarness's own documentation: takes the Bootstrapping Agent's list of zero or more harnesses and locations and returns zero or exactly ONE harness — never two, since a list of two is not an answer and the Bootstrapping Agent may not break that tie itself.",
-      "source": "bootstrap/processes/initialize-harness.bpmn"
+      "scopeNote": "The person who asked — or a sibling agent that already holds the answer. Answering, declining and saying nothing are all legitimate moves here, and each has its own end.",
+      "source": "bootstrap/processes/human-agent-discussion.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#role/logger",
@@ -151,6 +161,26 @@
       "label": "Logger",
       "scopeNote": "Records and decides nothing — the composing and the completeness judgement both happen in the Actor's lane before anything reaches here. In bootstrap the one destination available to it is the discussion the human actor is already in.",
       "source": "bootstrap/processes/log-message.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/lane/Lane_Agent",
+      "@type": "skos:Concept",
+      "prefLabel": "Agent",
+      "performerVaries": true,
+      "notation": "Agent",
+      "inScheme": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_HumanAgentDiscussion/Lane_Agent"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#glossary-usage/Process_HumanAgentDiscussion/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/0.1.0/ns#LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion/lane/Lane_Agent",
+      "inProcess": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_HumanAgentDiscussion",
+      "label": "Agent",
+      "scopeNote": "Whichever agent called this sub-process. It prepares the question, rules on whether an answer settles it, and records the outcome in the form its caller asked for. It never supplies the answer itself.",
+      "source": "bootstrap/processes/human-agent-discussion.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-fervent-brahmagupta-rbwhzm/bootstrap/bootstrap.jsonld#process/Process_LogMessage/lane/Lane_Actor",
