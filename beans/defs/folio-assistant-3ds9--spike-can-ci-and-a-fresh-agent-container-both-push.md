@@ -1,11 +1,11 @@
 ---
 # folio-assistant-3ds9
 title: 'SPIKE: can CI and a fresh agent container both push to and read an orphan qa-reports branch through the proxy?'
-status: todo
+status: completed
 type: task
 priority: high
 created_at: 2026-10-01T08:00:46Z
-updated_at: 2026-10-01T09:05:00Z
+updated_at: 2026-10-01T08:53:39Z
 parent: folio-assistant-3fva
 ---
 
@@ -23,8 +23,8 @@ Measure:
 Delete the spike branch only on the owner's go (`deletion-requires-confirmation`).
 
 ## Done when
-- [ ] (1)–(4) are measured, with the commands recorded — three of four; (1) is drafted, not run:
-  - [ ] (1) push from a code-quality-gates job (`contents: write`) — workflow drafted and gate-checked, **not run**; see §"Spike results" step 5
+- [x] (1)–(4) are measured, with the commands recorded:
+  - [x] (1) push from CI (`contents: write`, `pull_request`): **RAN and succeeded**, run 36839049862 on PR #1764
   - [x] (2) push from a fresh claude.ai/code container
   - [x] (3) cold read latency: one file, all of `kg-qa/`, and the whole results tree
   - [x] (4) two concurrent writers to disjoint paths, both survive
@@ -228,3 +228,10 @@ for attempt in 1 2 3; do
 done
 echo "gave up after 3 attempts" >&2; exit 1
 ```
+
+
+## CI result, 2026-10-01 08:52Z — D1 CONFIRMED in both environments
+Workflow run 36839049862 (`qa-reports spike (3ds9)`, `pull_request` on #1764, head `95bcbbe9`) concluded **success**. It pushed `43c8b09a` (author `folio-qa-bot`) to `qa-reports-spike-b`: `pr/1764/95bcbbe9c574…/`, 966 files, 7,898,557 bytes. That was verified with `git ls-remote` and a blob:none fetch from this container. The default `GITHUB_TOKEN` with `contents: write` is enough for a same-repo PR. Fork PRs get a read-only token; that is a D3 note for `16ei`.
+
+## Summary of Changes
+Measured the orphan-branch medium in an agent container and in CI: cold push 3.2 s, worst cold read 1.8 s (budget 20 s), concurrent disjoint writers both survive without `-f`, a duplicate entry adds +307 B. **Verdict: D1 (a) confirmed; no fallback needed.** Design inputs for `16ei`: batch reads, `pack.useSparse=false`, a private index for hashing, and tolerating the `push negotiation failed` stderr. The spike workflow is reverted. Both remote spike branches are left in place until the owner rules on deleting them.
