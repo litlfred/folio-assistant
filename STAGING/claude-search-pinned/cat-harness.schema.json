@@ -834,6 +834,36 @@
             "minLength": 1
           }
         },
+        "contentAdapters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "contentType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "className": {
+                "type": "string",
+                "minLength": 1
+              },
+              "extends": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "contentType",
+              "module",
+              "className"
+            ],
+            "additionalProperties": false
+          }
+        },
         "liquid": {
           "type": "object",
           "properties": {
@@ -867,8 +897,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-search-pinned/cat-harness.jsonld",
   "staging": {
     "branch": "claude/search-pinned",
-    "sha": "ae3780e5e370f812d6b979ac1d9b27e24c1e3daa",
+    "sha": "33d6d9ba97cf3de88cab935d35808eba8bdaa3ff",
     "pr": "1733/merge",
-    "run": "36799692292"
+    "run": "36820800684"
   }
 }

@@ -505,32 +505,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/docs-ui.css?v=1790817023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/docs-ui.css?v=1790833209">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/narrow-viewport.css?v=1790817023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/narrow-viewport.css?v=1790833209">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/work-plan.css?v=1790817023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/work-plan.css?v=1790833209">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/themes.css?v=1790817023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/themes.css?v=1790833209">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/uml.css?v=1790817023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/uml.css?v=1790833209">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/avatars.css?v=1790817023">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-search-pinned/assets/css/avatars.css?v=1790833209">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -547,7 +547,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-search-pinned/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-search-pinned/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-search-pinned/assets/js/docs-ui.js?v=1790817023" defer></script>
+<script src="/folio-assistant/STAGING/claude-search-pinned/assets/js/docs-ui.js?v=1790833209" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -838,8 +838,8 @@ the source that origin names is a separate question, and the one the third
 column answers.</p>
 
 <div class="mv-grid">
-<div class="mv-stat"><b>18</b><span>adopted methodologies</span></div>
-<div class="mv-stat"><b>14</b><span>with the source held here</span></div>
+<div class="mv-stat"><b>21</b><span>adopted methodologies</span></div>
+<div class="mv-stat"><b>17</b><span>with the source held here</span></div>
 <div class="mv-stat"><b>4</b><span>cited, not ingested</span></div>
 <div class="mv-stat"><b>4</b><span>instance(s) declaring the graph</span></div>
 </div>
@@ -866,6 +866,12 @@ agent picks by resemblance, which is why the schema requires the field.</p>
     </tr>
   </thead>
   <tbody>
+    <tr>
+      <td><strong><a href="#adequacy-for-purpose-modelling">Adequacy-for-purpose modelling — a model is judged against what it is FOR, not against reality</a></strong><br /><code class="language-plaintext highlighter-rouge">adequacy-for-purpose-modelling</code></td>
+      <td><strong>A formal model is being built, and somebody will later ask whether it is right.</strong> Use it when the artefact is a mathematical model of a process — a…</td>
+      <td><span class="mv-tag mv-ingested">source held</span></td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
+    </tr>
     <tr>
       <td><strong><a href="#bidirectional-agentic-autoformalization">Bidirectional agentic autoformalization — extract, compile-fix, check faithfulness, then informalize back without the source</a></strong><br /><code class="language-plaintext highlighter-rouge">bidirectional-agentic-autoformalization</code></td>
       <td><strong>A whole paper, not a single theorem, is being formalised with an agent doing the Lean</strong>, and the question is how to organise the run: what to extra…</td>
@@ -933,6 +939,18 @@ agent picks by resemblance, which is why the schema requires the field.</p>
       <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
     </tr>
     <tr>
+      <td><strong><a href="#mcdm-aggregation">Aggregation-type MCDM — an alternatives-criteria matrix collapsed to one score per alternative</a></strong><br /><code class="language-plaintext highlighter-rouge">mcdm-aggregation</code></td>
+      <td><strong>A FIXED, FINITE set of alternatives is to be ranked against several explicit criteria, all known up front.</strong> The input is an alternatives-criteria…</td>
+      <td><span class="mv-tag mv-ingested">source held</span></td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
+    </tr>
+    <tr>
+      <td><strong><a href="#probabilistic-decision-analysis">Probabilistic decision-making algorithms — and what their regret bounds are claims ABOUT</a></strong><br /><code class="language-plaintext highlighter-rouge">probabilistic-decision-analysis</code></td>
+      <td><strong>The alternatives can be TRIED, repeatedly, and what you learn from one try changes what you should try next.</strong> Bandits, Bayesian optimisation and t…</td>
+      <td><span class="mv-tag mv-ingested">source held</span></td>
+      <td><code class="language-plaintext highlighter-rouge">cat-harness</code></td>
+    </tr>
+    <tr>
       <td><strong><a href="#process-driven-autoformalization">Process-driven autoformalization — judge a formalised statement by compiling it WITH a proof, and read the first error as the step signal</a></strong><br /><code class="language-plaintext highlighter-rouge">process-driven-autoformalization</code></td>
       <td><strong>A natural-language statement is being turned into a Lean statement and the question is how to test the candidate</strong>, or…</td>
       <td><span class="mv-tag mv-ingested">source held</span></td>
@@ -993,6 +1011,28 @@ an open question, reported by <code class="language-plaintext highlighter-rouge"
 nothing. <strong>Citation does not resolve</strong> is neither: the node claims a source
 and the slug names nothing, which reads as evidence in every listing and is
 strictly worse than declaring none.</p>
+<h3 id="adequacy-for-purpose-modelling--a-model-is-judged-against-what-it-is-for-not-against-reality">
+  
+  
+    <a href="#adequacy-for-purpose-modelling--a-model-is-judged-against-what-it-is-for-not-against-reality" class="anchor-heading" aria-labelledby="adequacy-for-purpose-modelling--a-model-is-judged-against-what-it-is-for-not-against-reality"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adequacy-for-purpose modelling — a model is judged against what it is FOR, not against reality
+  
+  
+</h3>
+    
+
+<p><a id="adequacy-for-purpose-modelling"></a></p>
+
+<p><code class="language-plaintext highlighter-rouge">adequacy-for-purpose-modelling</code> — declared by <code class="language-plaintext highlighter-rouge">cat-harness</code> — <span class="mv-tag mv-ingested">source held</span></p>
+
+<p><strong>Applies when.</strong> <strong>A formal model is being built, and somebody will later ask whether it is right.</strong> Use it when the artefact is a mathematical model of a process — agents, action and reward spaces, update rules — and the question is what the model is allowed to claim. It answers <em>what would count as this model succeeding</em>, and nothing else. Reach for it BEFORE the model is written, because its whole force is that the purpose is declared first and the evaluation follows from it. Reaching for it afterwards turns it into a defence of whatever the model happens to do. Do NOT reach for it to choose between options (<code class="language-plaintext highlighter-rouge">kepner-tregoe</code>), to grade evidence, to settle a recurring rule (<code class="language-plaintext highlighter-rouge">dmn</code>), or to pick an algorithm (<code class="language-plaintext highlighter-rouge">probabilistic-decision-analysis</code>, <code class="language-plaintext highlighter-rouge">mcdm-aggregation</code>). It is not a decision method at all: it is a rule for judging a model, and it is filed here because <code class="language-plaintext highlighter-rouge">methodology-adoption</code> routes “how do we evaluate X” to a methodology node.</p>
+
+<p><strong>Origin.</strong> Kavya Ravichandran, “Algorithmic Approaches to Sequential Decision-Making and Social Epistemology”, PhD thesis, Toyota Technological Institute at Chicago, August 2026; arXiv:2607.20636v1 [cs.DS], 22 July 2026. Chapter 5, “Why Algorithmic Approaches” — an essay inside the thesis rather than a result of it. Open access, ingested whole. The view it builds on is Wendy Parker’s (2020) “adequacy-for-purpose”, quoted directly in that chapter; the how-possibly / how-actually distinction is from the philosophy-of-explanation literature the chapter cites, and the confirmatory / applied prediction split is Elliott-Graves’. Ravichandran’s contribution adopted here is the ORDERED three-purpose taxonomy and the evaluation rule that follows from it.</p>
+
+<p><strong>Ingested sources:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">library/arxiv-2607.20636v1</code></li>
+</ul>
 <h3 id="bidirectional-agentic-autoformalization--extract-compile-fix-check-faithfulness-then-informalize-back-without-the-source">
   
   
@@ -1234,6 +1274,50 @@ these.</p>
 <p><strong>No ingested source.</strong> The origin above names one; nothing in this
 checkout holds it. <code class="language-plaintext highlighter-rouge">literature-search</code> is the skill that closes one of
 these.</p>
+<h3 id="aggregation-type-mcdm--an-alternatives-criteria-matrix-collapsed-to-one-score-per-alternative">
+  
+  
+    <a href="#aggregation-type-mcdm--an-alternatives-criteria-matrix-collapsed-to-one-score-per-alternative" class="anchor-heading" aria-labelledby="aggregation-type-mcdm--an-alternatives-criteria-matrix-collapsed-to-one-score-per-alternative"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Aggregation-type MCDM — an alternatives-criteria matrix collapsed to one score per alternative
+  
+  
+</h3>
+    
+
+<p><a id="mcdm-aggregation"></a></p>
+
+<p><code class="language-plaintext highlighter-rouge">mcdm-aggregation</code> — declared by <code class="language-plaintext highlighter-rouge">cat-harness</code> — <span class="mv-tag mv-ingested">source held</span></p>
+
+<p><strong>Applies when.</strong> <strong>A FIXED, FINITE set of alternatives is to be ranked against several explicit criteria, all known up front.</strong> The input is an alternatives-criteria matrix: every alternative scored on every criterion, with weights obtainable. The output is a ranking. Use it when the decision is made ONCE, from data already in hand. Choose within the family by what you can supply. SAW and MEW need only weights and normalised scores. AHP needs pairwise comparisons, which grow as the square of the criteria count, and gives a consistency ratio in return. ANP needs those plus the interdependence structure, and is the only member that admits feedback between criteria. COPRAS, MOORA, FUCA and WASPAS sit between SAW and AHP in what they ask for. Do NOT reach for it when the alternatives are explored REPEATEDLY and information accrues as you go — that is <code class="language-plaintext highlighter-rouge">probabilistic-decision-analysis</code>. Do not use it for a recurring rule (<code class="language-plaintext highlighter-rouge">dmn</code>), for a decision whose criteria are MUSTs and WANTs rather than weighted scores (<code class="language-plaintext highlighter-rouge">kepner-tregoe</code>), or for grading evidence. It also assumes the criteria set is complete: a criterion nobody wrote down is weighted zero, silently.</p>
+
+<p><strong>Origin.</strong> Zhiyuan Wang (Singapore University of Social Sciences) and Gade Pandu Rangaiah (National University of Singapore; Vellore Institute of Technology), “Multi-Criteria Decision-Making: Aggregation-Type Methods”, Chapter 8 of a forthcoming volume; arXiv:2509.06388v1, 2026. <strong>The copy ingested is the authors’ preliminary draft manuscript</strong>, produced in Word and carrying no arXiv stamp, headed “Preliminary Draft Manuscript” and paginated 8-1 onward. <code class="language-plaintext highlighter-rouge">_pdf_doc_id.py</code> reads the arXiv id off page one’s text layer, so this copy derived no <code class="language-plaintext highlighter-rouge">arxiv-</code> slug and fell back to the basename. Filed instead under the author-year convention the repository’s other non-arXiv entries use (owner, 2026-09-29), which is why the bib-slug and the citation differ: <strong>cite arXiv:2509.06388v1</strong>; the slug is a filing key and nothing more.</p>
+
+<p><strong>Ingested sources:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">library/wang-rangaiah-2026-mcdm-aggregation</code></li>
+</ul>
+<h3 id="probabilistic-decision-making-algorithms--and-what-their-regret-bounds-are-claims-about">
+  
+  
+    <a href="#probabilistic-decision-making-algorithms--and-what-their-regret-bounds-are-claims-about" class="anchor-heading" aria-labelledby="probabilistic-decision-making-algorithms--and-what-their-regret-bounds-are-claims-about"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Probabilistic decision-making algorithms — and what their regret bounds are claims ABOUT
+  
+  
+</h3>
+    
+
+<p><a id="probabilistic-decision-analysis"></a></p>
+
+<p><code class="language-plaintext highlighter-rouge">probabilistic-decision-analysis</code> — declared by <code class="language-plaintext highlighter-rouge">cat-harness</code> — <span class="mv-tag mv-ingested">source held</span></p>
+
+<p><strong>Applies when.</strong> <strong>The alternatives can be TRIED, repeatedly, and what you learn from one try changes what you should try next.</strong> Bandits, Bayesian optimisation and tree search all live here. The defining features are that the alternative set is sampled rather than scored, that information is gathered adaptively, and that each trial costs something — the monograph’s motivating setting is scientific discovery, <em>“where experiments are costly”</em>. Reach for it also when the question is not which algorithm to run but <strong>what an existing bound entitles anyone to say</strong>: the monograph is an analysis text first, so it is the right source for reading a regret guarantee rather than quoting one. Do NOT reach for it for a one-shot choice from a fixed matrix — that is <code class="language-plaintext highlighter-rouge">mcdm-aggregation</code> — nor for a recurring rule (<code class="language-plaintext highlighter-rouge">dmn</code>), a MUST/WANT decision (<code class="language-plaintext highlighter-rouge">kepner-tregoe</code>), or grading evidence. And do not reach for it when you cannot actually run the alternatives: adaptivity is the whole premise, and without it every guarantee in the book is vacuous.</p>
+
+<p><strong>Origin.</strong> Agustinus Kristiadi (Western University and Vector Institute, Canada), “Introduction to the Analysis of Probabilistic Decision-Making Algorithms”; arXiv:2508.21620v2 [cs.LG], 23 May 2026. A monograph, open access, ingested whole. Its stated aim is accessibility: <em>“theoretical analyses in the literature are often inaccessible to non-experts”</em>, and it assumes only basic probability and statistics plus some Gaussian processes.</p>
+
+<p><strong>Ingested sources:</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">library/arxiv-2508.21620v2</code></li>
+</ul>
 <h3 id="process-driven-autoformalization--judge-a-formalised-statement-by-compiling-it-with-a-proof-and-read-the-first-error-as-the-step-signal">
   
   
