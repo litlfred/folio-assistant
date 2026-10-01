@@ -168,7 +168,6 @@ import {
   judgeUsage,
   qaResultPath,
   writeQaResult,
-  type QaResult,
 } from "./qa-results.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */

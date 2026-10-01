@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness/scripts/audit-coverage.ts",
-    "script_hash": "25f2a2d567d7"
+    "script_hash": "aa3097bc587c"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -1218,6 +1218,11 @@
     },
     "kinds-unaudited": {
       "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 203 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "count": 0,
+      "entries": []
+    },
+    "kinds-unknown": {
+      "summary": "A declared directory of this kind is not in the checkout and declares no `storage`, and nothing else of the kind was counted — the census was not taken (bean `0dav`, readers-audit C8). Never `empty`: that would print an absent answer as a determined zero. Not gated: proposal §2.3.",
       "count": 0,
       "entries": []
     }
