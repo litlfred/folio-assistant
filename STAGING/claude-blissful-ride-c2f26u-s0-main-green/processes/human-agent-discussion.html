@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/docs-ui.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/docs-ui.css?v=1790851774">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/narrow-viewport.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/narrow-viewport.css?v=1790851774">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/work-plan.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/work-plan.css?v=1790851774">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/themes.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/themes.css?v=1790851774">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/uml.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/uml.css?v=1790851774">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/avatars.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/avatars.css?v=1790851774">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/docs-ui.js?v=1790848057" defer></script>
+<script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/docs-ui.js?v=1790851774" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -806,13 +806,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h1>
     
 
-<p><code class="language-plaintext highlighter-rouge">Process_HumanAgentDiscussion</code> · strict (defaulted) · 13 step(s)</p>
+<p><code class="language-plaintext highlighter-rouge">Process_HumanAgentDiscussion</code> · strict (defaulted) · 9 step(s)</p>
 
 <p>A REUSABLE SUB-PROCESS, never an entry point. Every diagram in bootstrap that needs something only a person can supply — a choice, a judgement, a step only they have the rights to perform — reaches it through a call activity with calledElement=”Process_HumanAgentDiscussion”, rather than drawing its own asking. One way of asking, drawn once: a caller that draws its own has a second answer to “how do I ask”, free to drift from this one.</p>
-
-<p>BEFORE ANY QUESTION, THE ASKER DETERMINES WHERE IT IS (owner, 2026-10-01: “i wanted to see more about determining context / role / process as part of precondition.. and that needs to be clarified as part of discussion/interaction”). Three things, each drawn as a task and declared below as a precondition of the first question: (1) the CONTEXT — what is already known, which declaration governs it, and what has already been decided, so a settled question is not reopened; (2) the ROLES — which Role the asker is acting as, and which Role the person answering holds, because an Actor performs a task in a Process AS a Role and the same Actor is a different Role in another diagram; (3) the PROCESS and TASK the question belongs to — or that there is none, and the agent is idle, classifying a request. A question asked without these is asked on behalf of nobody in particular: its context step has nothing to say, and its answer cannot be recorded against a step.</p>
-
-<p>WHAT CANNOT BE DETERMINED IS ASKED FIRST. When any of the three cannot be determined from what the agent can read, that becomes the first question of this same discussion, in the same order (context, options, recommendation, one question), and the caller’s own question waits, counted. Its answer is recorded and the three are determined again before the caller’s question is put. No default is allowed for it: an agent that assumes which process or role it is in is asserting an authority nobody gave it.</p>
 
 <p>THE ORDER IS THE PROCESS: context, then options, then a recommendation, then the question. Never the question first with the explanation available on request. The test a question must pass before it is put: can the reader answer it without opening anything? If answering needs them to open a file, an issue or the scrollback, the question is not ready.</p>
 
@@ -835,7 +831,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <ul>
   <li><strong>Called by:</strong> <a href="complete-initialization.html">Complete initialization</a>, <a href="discussion.html">Determine the harness and repositories</a></li>
   <li><strong>Calls:</strong> none</li>
-  <li><strong>Names the <code class="language-plaintext highlighter-rouge">human-agent-discussion</code> skill without calling this process:</strong> <a href="discussion.html">Determine the harness and repositories</a> — <code class="language-plaintext highlighter-rouge">activity-calls-skill-process</code> asks whether each should be a call activity.</li>
   <li><strong>Presented on:</strong> no docs page section shows this diagram</li>
 </ul>
 <h2 id="lanes--who-acts">
@@ -859,7 +854,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     <tr>
       <td>Agent</td>
       <td>—</td>
-      <td>Whichever agent called this sub-process. It determines where it is, prepares the question, rules on whether an answer settles it, and records the outcome in the form its caller asked for. It never supplies the answer itself.</td>
+      <td>Whichever agent called this sub-process. It prepares the question, rules on whether an answer settles it, and records the outcome in the form its caller asked for. It never supplies the answer itself.</td>
     </tr>
     <tr>
       <td>Requestor</td>
@@ -877,7 +872,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p>Every one of the 13 step(s) is documented.</p>
+<p>Every one of the 9 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -890,34 +885,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   </thead>
   <tbody>
     <tr>
-      <td><strong>Determine the context: what is known, and already decided</strong><br /><code class="language-plaintext highlighter-rouge">A_DetermineContext</code></td>
-      <td>Agent</td>
-      <td><code class="language-plaintext highlighter-rouge">human-agent-discussion</code></td>
-      <td>Before composing anything: what is already known, each fact with where it came from; which declaration governs the matter (the instance’s <code class="language-plaintext highlighter-rouge">&lt;name&gt;.json</code>, the diagram the caller is in, the Skill its task names); what state is recorded; and whether the question has ALREADY been decided — by the person earlier in the conversation, or in a declaration that quotes their ruling. A settled question is not asked again: asking it reopens a decision and spends the person’s attention twice. Read it, do not remember it: cite what you read. What the caller handed in is checked here, not re-derived.</td>
-    </tr>
-    <tr>
-      <td><strong>Determine the roles: which you act as, and the person’s</strong><br /><code class="language-plaintext highlighter-rouge">A_DetermineRoles</code></td>
-      <td>Agent</td>
-      <td><code class="language-plaintext highlighter-rouge">human-agent-discussion</code></td>
-      <td>An Actor performs a task in a Process AS a Role. Nothing is a Role by nature: the same agent is the Bootstrapping Agent in one diagram and another Role in the next, and which one it is depends on the lane of the task it is performing now. So say which Role you are acting as — the lane of the CALLING task, since this lane is variable — and which Role the person you ask holds (the Requestor, or whoever the calling lane names). It decides what you may ask them for: only the Requestor chooses a harness, and a question put to somebody who does not hold the decision gets an answer that settles nothing.</td>
-    </tr>
-    <tr>
-      <td><strong>Determine the process and task, or that you are idle</strong><br /><code class="language-plaintext highlighter-rouge">A_DetermineProcess</code></td>
-      <td>Agent</td>
-      <td><code class="language-plaintext highlighter-rouge">human-agent-discussion</code></td>
-      <td>Name the Process, the lane and the task the question belongs to, and say so in the message: “Process: Initialize a harness, at Determine the harness and repositories, as the Bootstrapping Agent”. A reader who does not know which process you are in will assume the last one’s rules still hold. If you are in no Process, that is an answer too: you are IDLE, and what you are doing is classifying a request to find the Process it belongs to — say that, rather than presenting a question as though a step had asked for it. You are OUT of process, and it is undetermined, when you cannot name the instance, when two candidates fit, when the step you believed was next is not the one the diagram enables, or when the work in hand was not what you said you would do. Do not infer your way back in.</td>
-    </tr>
-    <tr>
-      <td><strong>Ask first about what could not be determined</strong><br /><code class="language-plaintext highlighter-rouge">A_AskUndeterminedFirst</code></td>
-      <td>Agent</td>
-      <td><code class="language-plaintext highlighter-rouge">human-agent-discussion</code></td>
-      <td>The caller’s question waits, and is counted (“one more question after this”). What is put first is the undetermined one: the context you could not establish, the Role you are not sure you hold, or the Process you cannot place this in. It goes through the same order as any question — say what you determined and what you could not, the candidates you see, the one you would pick and why — and it allows NO default: a Process or Role assumed rather than confirmed is an authority nobody gave. With more than one undetermined, ask about the outermost first (the Process before the Role before the context), since the outer answer usually settles the inner.</td>
-    </tr>
-    <tr>
       <td><strong>Say what is being decided, and why it matters now</strong><br /><code class="language-plaintext highlighter-rouge">A_GiveContext</code></td>
       <td>Agent</td>
       <td><code class="language-plaintext highlighter-rouge">human-agent-discussion</code></td>
-      <td>First, and in the message itself: where you are (the Process and task, as which Role, asking whom — from the three determinations), what the decision is, what depends on it, and what is already known — each fact with where it came from. A link is where somebody goes for more; it is never where the terms are defined.</td>
+      <td>First, and in the message itself: what the decision is, what depends on it, and what is already known — each fact with where it came from. A link is where somebody goes for more; it is never where the terms are defined.</td>
     </tr>
     <tr>
       <td><strong>Lay out the options, with what each costs</strong><br /><code class="language-plaintext highlighter-rouge">A_LayOutOptions</code></td>
@@ -953,7 +924,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Record the answer, and who gave it</strong><br /><code class="language-plaintext highlighter-rouge">A_RecordAnswer</code></td>
       <td>Agent</td>
       <td><code class="language-plaintext highlighter-rouge">human-agent-discussion</code></td>
-      <td>In the form the caller asked for — for bootstrap’s harness question, a document conforming to discussion.output.schema.json with determinedBy asked. Who answered (a person or an agent) is part of the record. An answer about the context, the Role or the Process is recorded the same way, as the person’s word.</td>
+      <td>In the form the caller asked for — for bootstrap’s harness question, a document conforming to discussion.output.schema.json with determinedBy asked. Who answered (a person or an agent) is part of the record.</td>
     </tr>
     <tr>
       <td><strong>Apply the stated default, and say so</strong><br /><code class="language-plaintext highlighter-rouge">A_ApplyDefault</code></td>
@@ -965,7 +936,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Record what is still open</strong><br /><code class="language-plaintext highlighter-rouge">A_RecordUnsettled</code></td>
       <td>Agent</td>
       <td><code class="language-plaintext highlighter-rouge">human-agent-discussion</code></td>
-      <td>Declined, or silent where no default is allowed. The record says what was asked and what is still open, so the next actor resumes rather than restarts. Never a guess. When it is the context, the Role or the Process that is still open, say so and stop: a step completed in the wrong Process records an authority that was never given.</td>
+      <td>Declined, or silent where no default is allowed. The record says what was asked and what is still open, so the next actor resumes rather than restarts. Never a guess.</td>
     </tr>
   </tbody>
 </table></div>
@@ -978,7 +949,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p>Every one of the 4 decision(s) is documented.</p>
+<p><strong>1</strong> of 2 decision(s) carry no documentation — <code class="language-plaintext highlighter-rouge">gateway-documented</code> lists them.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -990,24 +961,14 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   </thead>
   <tbody>
     <tr>
-      <td><strong>Context, roles and process all determined?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Determined</code></td>
-      <td>Judgement. “Determined” means the agent can state each in its message with where it came from; “I think so” about a Process or a Role is not determined.</td>
-      <td><strong>yes</strong> → Say what is being decided, and why it matters now<br /><strong>no</strong> → Ask first about what could not be determined</td>
-    </tr>
-    <tr>
       <td><strong>What came back?</strong><br /><code class="language-plaintext highlighter-rouge">GW_WhatCameBack</code></td>
       <td>Judgement, exercised by the agent — which is why this gateway carries no computed decision. Whether an answer settles the matter is not computable from its text.</td>
       <td><strong>settles it</strong> → Record the answer, and who gave it<br /><strong>unclear</strong> → Follow up, narrower<br /><strong>no answer</strong> → Did the caller allow a default?<br /><strong>declined</strong> → Record what is still open</td>
     </tr>
     <tr>
       <td><strong>Did the caller allow a default?</strong><br /><code class="language-plaintext highlighter-rouge">GW_DefaultAllowed</code></td>
-      <td>Never for a question about the context, the Role or the Process (A_AskUndeterminedFirst): those allow none.</td>
+      <td>—</td>
       <td><strong>yes</strong> → Apply the stated default, and say so<br /><strong>no</strong> → Record what is still open</td>
-    </tr>
-    <tr>
-      <td><strong>Was that the caller’s question, or a precondition?</strong><br /><code class="language-plaintext highlighter-rouge">GW_WhichQuestion</code></td>
-      <td>An answer to A_AskUndeterminedFirst settles where the agent is, not what the caller needed: determine the three again with it, then put the caller’s question. An answer to the caller’s question ends the discussion.</td>
-      <td><strong>the caller’s</strong> → Answered<br /><strong>a precondition: determine again</strong> → Determine the context: what is known, and already decided</td>
     </tr>
   </tbody>
 </table></div>

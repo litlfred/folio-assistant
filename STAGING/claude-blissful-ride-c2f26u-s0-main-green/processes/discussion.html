@@ -489,32 +489,32 @@
   NOT a cache-busting strategy for third-party assets, and not applied to
   them: those are versioned in their own URLs already.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/docs-ui.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/docs-ui.css?v=1790851774">
 <!-- Narrow viewports: wide content scrolls in its own box, never the page
      (bean `2r2n`). The standalone viewers inline the same file through
      `withViewerNav`, so both kinds of page read one set of rules. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/narrow-viewport.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/narrow-viewport.css?v=1790851774">
 
 <!--
   The work-plan dashboard's styles, split from docs-ui.css so that
   `state-visualizer.ts` can inline exactly these bytes into the generated
   `<base>/<stub>/state-visualizer/` pages. One rule, two surfaces.
 -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/work-plan.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/work-plan.css?v=1790851774">
 <!-- Sticky themes. GENERATED from the theme nodes in `schemas/themes.ts` by
      `bun run themes:css`; `themes:css:check` fails the build when it is stale.
      Loaded AFTER docs-ui.css deliberately: it supplies the `--fa-sticky-*`
      roles that docs-ui.css consumes, and a custom property has to be set on a
      matching element before the rule reading it takes effect. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/themes.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/themes.css?v=1790851774">
 <!-- UML overview colours: one class per graph kind, set on the Mermaid nodes
      that `scripts/gen-uml-overview.ts` writes into docs/uml/overview/. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/uml.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/uml.css?v=1790851774">
 <!-- Kind avatars. GENERATED from `schemas/avatars.ts` by `bun run avatars:css`;
      `avatars:css:check` fails the build when it is stale. One stylesheet
      rather than 68 assets: the glyph is a mask and the colour is a property,
      so a scheme swap is a custom property and the trash state is a selector. -->
-<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/avatars.css?v=1790848057">
+<link rel="stylesheet" href="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/css/avatars.css?v=1790851774">
 
 <!--
   The kinds THIS INSTANCE DECLARES, for the avatar fan.
@@ -531,7 +531,7 @@
 <script type="application/json" id="fa-declared-kinds">["beans","cat-harness","code","code-list","docs","external-schema","folio","fsh-guts","health","interaction","issue-marks","library","memory","methodology","policies","processes","qa","scenarios","schemas","skills","substrate-snapshot","swimlane-glossary","todos","tools","translation-sources","uml","uploads","waiver"]</script>
 <script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/vendor/qrcode.js" defer></script>
 <script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/vendor/qrcode_UTF8.js" defer></script>
-<script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/docs-ui.js?v=1790848057" defer></script>
+<script src="/folio-assistant/STAGING/claude-blissful-ride-c2f26u-s0-main-green/assets/js/docs-ui.js?v=1790851774" defer></script>
 
 <!--
   The work-plan dashboard. SELF-MOUNTING on any page carrying
@@ -806,11 +806,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h1>
     
 
-<p><code class="language-plaintext highlighter-rouge">Process_Discussion</code> · strict (defaulted) · 6 step(s)</p>
+<p><code class="language-plaintext highlighter-rouge">Process_Discussion</code> · strict (defaulted) · 5 step(s)</p>
 
 <p>A SUB-PROCESS of initialize-harness, never an entry point. Two facts have no answer in any file a Bootstrapping Agent can reach: WHICH harness this repository should become, and WHICH repositories are read from and written to. No instruction body produces them — they are judgements held by whoever asked for the harness. An agent that cannot obtain them cannot take the first step of <code class="language-plaintext highlighter-rouge">initialize-harness</code>, which is why that process’s first step calls this one.</p>
-
-<p>WHERE THIS IS, DETERMINED FIRST (owner, 2026-10-01: “i wanted to see more about determining context / role / process as part of precondition.. and that needs to be clarified as part of discussion/interaction”). Before narrowing anything, the Bootstrapping Agent says where it is: the Process (Initialize a harness, at its first step, inside this one), the Roles (itself as the Bootstrapping Agent; the person it will ask as the Requestor), and the context (what the request said, what the checkout holds). These are declared below as preconditions of the listing, established by A_DetermineWhere; one that cannot be established is not guessed — it becomes the FIRST question of the called discussion, which asks about it before the harness question.</p>
 
 <p>THE ASKING IS NOT DRAWN HERE. This process narrows and records; the question itself is put through <code class="language-plaintext highlighter-rouge">human-agent-discussion</code>, the one reusable way bootstrap asks a person anything — context, options, a recommendation, one question, and what happens with no answer. What is particular to THIS question is carried in: the candidates, and that NO default is allowed. Which harness a repository becomes is not reversible by running anything again, so silence ends as unsettled, never as “bootstrap, by default”.</p>
 
@@ -867,7 +865,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 </h2>
     
 
-<p>Every one of the 6 step(s) is documented.</p>
+<p>Every one of the 5 step(s) is documented.</p>
 
 <div class="table-wrapper"><table>
   <thead>
@@ -879,12 +877,6 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><strong>Determine where you are: process, roles, context</strong><br /><code class="language-plaintext highlighter-rouge">A_DetermineWhere</code></td>
-      <td>Bootstrapping Agent</td>
-      <td><code class="language-plaintext highlighter-rouge">discussion</code><br /><code class="language-plaintext highlighter-rouge">human-agent-discussion</code></td>
-      <td>Before narrowing, say where this is happening, in the words you will use in the question. PROCESS: Initialize a harness, at its first step, inside Determine the harness and repositories — the only place a Bootstrapping Agent can be (FR-2). If you cannot say that (you were started some other way, or a step you believed done is not), you are out of process: do not infer your way back in. ROLES: you act as the Bootstrapping Agent because you were told so; the person you will ask is the Requestor — the one who asked for the harness, and the only one who may choose it. A request relayed by somebody else leaves the Requestor undetermined. CONTEXT: what the request said, and what the checkout holds — a declaration at its root, a harness named in the request. Whatever cannot be determined is handed to the called discussion as undetermined, and asked about first; it is never filled with a default.</td>
-    </tr>
     <tr>
       <td><strong>List the harnesses this could be</strong><br /><code class="language-plaintext highlighter-rouge">A_ListHarnesses</code></td>
       <td>Bootstrapping Agent</td>
@@ -901,7 +893,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       <td><strong>Ask the Requestor: which harness, and where?</strong><br /><code class="language-plaintext highlighter-rouge">A_AskRequestor</code></td>
       <td>Bootstrapping Agent</td>
       <td>calls <a href="human-agent-discussion.html">Human–agent discussion</a><br /><code class="language-plaintext highlighter-rouge">confirm-harness</code><br /><code class="language-plaintext highlighter-rouge">human-agent-discussion</code></td>
-      <td>The candidates go in as the options; the recommendation may name one; the default is NONE. What A_DetermineWhere established goes in too — the process, the two roles, the context — so the called discussion checks it rather than re-deriving it; and anything it could not establish goes in as undetermined, to be asked first. The Requestor’s answer comes back as answered, or the question as still open.</td>
+      <td>The candidates go in as the options; the recommendation may name one; the default is NONE. The Requestor’s answer comes back as answered, or the question as still open.</td>
     </tr>
     <tr>
       <td><strong>Record the determination</strong><br /><code class="language-plaintext highlighter-rouge">A_RecordDetermination</code></td>
