@@ -7262,239 +7262,154 @@ a.fa-harness-tab__body:focus-visible {
   background: rgba(128, 128, 128, 0.22);
 }
 
-/* ── Search: in the top display navbar, slidable to the corner ────────────
+/* ── Search: a magnifier at the top of the display window ─────────────────
  *
- * Owner, 2026-09-21: *"also i want the search restored back to the top
- * display navbar, with option to slide out to the UR corner as an icon."*
+ * Owner, 2026-09-30: *"search that should be a collsaible icon/avatar on top
+ * of display window... that when open is full span width of all avaioblae"*
+ * (issue #1715). Replaces the navbar/corner pair of 2026-09-21 (`rx6k`);
+ * `docs-ui.js` records what that design measured and why it went.
  *
- * TWO STATES ON ONE NODE, switched by `data-place`, because the field must
- * never leave the document — just-the-docs finds its input by id and
- * `getElementById` does not see a detached node. So "sliding out" is a class
- * change on the wrapper, never a move of the input. `docs-ui.js` carries the
- * long form of why.
+ * ONE NODE, TWO STATES, switched by `data-open`, because the field must never
+ * leave the document — just-the-docs finds its input by id and
+ * `getElementById` does not see a detached node. Closing is `display: none`
+ * on the holder, never a move of the input.
  *
- *   data-place="navbar"  in flow at the top of the main header (the default,
- *                        and where the theme itself renders search)
- *   data-place="corner"  fixed to the upper right, collapsed behind an icon
- *                        until `data-open="true"`
+ *   data-open="false"  the magnifier alone, FLOATED to the inline-end of the
+ *                      display panel's first line. Content flows beside it,
+ *                      so it costs no vertical space of its own. Floated to
+ *                      the logical end, so on an RTL page it sits top-left.
+ *   data-open="true"   the magnifier, then the field across the full width of
+ *                      the panel, and results the same full width beneath.
  *
- * The choice is remembered per reader in `localStorage`, so it is a setting
- * rather than a gesture repeated every page.
+ * IN FLOW, NOT FIXED. The Folio handle and PR #1709's `.fa-glass-band` (z 89)
+ * are `position: fixed` at the top CENTRE of the window. This control is in
+ * the display panel's own column, below the header band the handle sits in,
+ * at the far end from it — so the two never share a box at rest, and while
+ * the page scrolls this one passes under the strip like any other content.
  */
-/* ## The navbar state INHERITS the page's ink; only the corner names its own
+/* ## The page's ink; only opaque surfaces name their own
  *
- * The first version of this block gave `.fa-search-home` a per-scheme
+ * The first version of the navbar search gave `.fa-search-home` a per-scheme
  * foreground the way `.fa-tiles` has one, and axe caught it immediately:
- * `#e6e9ee on #ffffff, 1.21:1`. The mistake is worth naming because it looks
- * like the FIX for `23bc` rather than a new instance of it.
- *
- * `.fa-tiles` paints its own opaque panel, so it knows what its text sits on
- * and must state a matching colour. The navbar search does NOT paint a
- * background — it sits in page content — so whatever colour it names is a
- * guess about a surface it does not own, and the guess is wrong in one
- * scheme by construction. Inheriting is not laziness here; it is the only
- * answer that cannot be wrong, because the page's own text colour is already
- * correct against the page's own background.
- *
- * The BORDER cannot inherit — it needs a value — so it takes one that clears
- * 3:1 on every background it can land on rather than one per scheme:
+ * `#e6e9ee on #ffffff, 1.21:1`. The search paints no background — it sits in
+ * page content — so any colour it named would be a guess about a surface it
+ * does not own. It inherits. The BORDER cannot inherit, so it takes one that
+ * clears 3:1 on every background it can land on:
  *
  *   #737d8c   on #ffffff 4.17:1   on #27262b 3.60:1   on #f5f6fa 3.86:1
  *
- * The corner card is the opposite case and keeps the per-scheme pair below:
- * it IS opaque, it does own its background, and it must.
- */
+ * The results list IS opaque (it drops over body text), so it keeps its own
+ * per-scheme pair below. */
 .fa-search-home {
   --fa-search-border: #737d8c;
 
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+  position: relative;
   color: inherit;
 }
 
-/* NAVBAR — the default. The field takes the width it is given and the slide
-   control sits after it, so the control does not move as the page resizes. */
-.fa-search-home[data-place="navbar"] {
+/* CLOSED — the magnifier, floated. `z-index` so a heading's own box, which
+   runs under a float, never takes the click meant for it. */
+.fa-search-home[data-open="false"] {
+  float: inline-end;
+  z-index: 2;
+  margin-block: 0 0.25rem;
+  margin-inline: 0.75rem 0;
+}
+.fa-search-home[data-open="false"] .fa-search-holder { display: none; }
+
+/* OPEN — a full-width row: magnifier attached to the field, everything the
+   field's height, top-aligned so a preview's notice under the field grows the
+   row downwards and never pulls the magnifier off the field's line. */
+.fa-search-home[data-open="true"] {
+  display: flex;
+  align-items: flex-start;
   width: 100%;
+  clear: both;
   margin: 0 0 0.75rem;
 }
+.fa-search-home[data-open="true"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
 
-.fa-search-home[data-place="navbar"] .fa-search-holder { flex: 1 1 auto; min-width: 0; }
-
-/* THE FIELD FILLS THE DISPLAY PANEL. Owner, 2026-09-23: *"it should start open
-   full top of display panel"*.
-
-   `width: 100%` on `.fa-search-home` was never the constraint. MEASURED at
-   1280px, walking the box chain up from the input: `.fa-search-home` 1224,
-   `.fa-search-holder` 1190, `.search` 1190 -- and then the theme's own
-   `.search-input-wrap` at **536px with `max-width: 536px`**, sized for the
-   header just-the-docs renders it in rather than for a panel this wide. So the
-   field was 44% of the space it was given, and every declaration above it was
-   already correct. */
-.fa-search-home[data-place="navbar"] .search-input-wrap {
-  max-width: none;
-  width: 100%;
-}
-
-/* THE GLYPH IS ALWAYS THERE. Owner, same message: *"maginfyingglass
-   avatar/braadning should be visibile always."*
-
-   It used to be `display: none` in this state, on the reasoning that the field
-   is present so the control that reveals it is redundant. That is true of it
-   AS A REVEAL and misses what the owner is asking for: a fixed mark that says
-   "search is here", in the same place in both states, so the eye has one
-   target rather than two.
-
-   It keeps a real job rather than becoming decoration -- clicking it focuses
-   the field. A visible glyph that did nothing would be `gjli`: an inert thing
-   that reads as a control. */
-.fa-search-home[data-place="navbar"] .fa-search-peek { display: inline-flex; }
-
-/* CORNER — fixed, upper right.
- *
- * `z-index: 95` puts it over page content and over the pinned-sticky layer
- * (`.fa-sticky-layer`, 90), which is deliberate: a reader who pressed the
- * search icon wants the field, not a note that happens to overlap it. It
- * stays BELOW anything modal, of which there is currently nothing. */
-.fa-search-home[data-place="corner"] {
-  position: fixed;
-  /* BELOW THE STAGING BANNER — owner, 2026-09-24: *"hiding search makes it go
-     away compleletey, cant restore."* On every preview the banner is
-     `position: sticky; top: 0; z-index: 9999`, about 36px tall, and at
-     `top: 0.75rem` this whole card -- the magnifier AND the dock-back control,
-     the only two ways back -- sat underneath it. Hit-tested on the real
-     preview off `gh-pages`, at 1280px and 390px: the point under each control
-     was the banner. The banner already publishes its measured height as
-     `--fa-staging-offset` (it moves the fixed sidebar down the same way), so
-     the corner reads that rather than guessing a number; 0 off a preview. */
-  top: calc(0.75rem + var(--fa-staging-offset, 0px));
-  right: 0.75rem;
-  z-index: 95;
-  gap: 0.25rem;
-  padding: 0.25rem;
-  border: 1px solid var(--fa-search-border);
-  border-radius: 6px;
-  /* Opaque: it sits over body text, so unlike the navbar state it DOES own
-     its background and therefore must name a foreground to match it. Dark by
-     default, re-measured light below — #e6e9ee on #27262b is 12.34:1 and
-     #1f2933 on #ffffff is 14.76:1. */
-  background: #27262b;
-  color: #e6e9ee;
-}
-
-:root[data-fa-scheme="light"] .fa-search-home[data-place="corner"] {
-  background: #ffffff;
-  color: #1f2933;
-}
-
-/* Collapsed is the corner's ARRIVAL state — sending search to the corner and
-   leaving the field open would not have freed the space that was the point. */
-.fa-search-home[data-place="corner"][data-open="false"] .fa-search-holder { display: none; }
-.fa-search-home[data-place="corner"][data-open="true"] .fa-search-holder { width: min(18rem, 60vw); }
-
-/* The two controls. Sized like the header mini-icons (1.75rem) rather than
-   to the text, because this instance's interaction profile is low-dexterity
-   and both are targets a reader hits with a pointer. */
-.fa-search-peek,
-.fa-search-slide {
+/* The magnifier. 2.25rem — the field's own height — rather than to the glyph,
+   because this instance's interaction profile is low-dexterity; the owner's
+   *"maginfyingglass avatar/braadning should be visibile always"* (2026-09-23)
+   holds, it is on screen in both states. */
+.fa-search-peek {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: 2.25rem;
+  height: 2.25rem;
   padding: 0;
   border: 1px solid var(--fa-search-border);
-  border-radius: 4px;
+  border-radius: 50%;
   background: transparent;
   color: inherit;
   cursor: pointer;
   line-height: 1;
-  font-size: 0.85rem;
 }
+.fa-search-peek svg { width: 1.1rem; height: 1.1rem; fill: currentColor; }
 
-.fa-search-peek svg { width: 1rem; height: 1rem; fill: currentColor; }
-
-/* The slide control carries WORDS now ("Hide search" / "Show search"), so it
-   sizes to them rather than to a 1.75rem square — and is a little taller,
-   because it is the way back and the declared profile is low-dexterity. */
-.fa-search-slide {
-  width: auto;
-  min-height: 1.75rem;
-  height: auto;
-  gap: 0.3rem;
-  padding: 0.15rem 0.5rem;
-  font-weight: 600;
-  white-space: nowrap;
+/* Open, it becomes the field's own leading edge: shared border, outer
+   corners rounded, inner ones square, so it reads as the field's icon. */
+.fa-search-home[data-open="true"] .fa-search-peek {
+  border-inline-end: 0;
+  border-radius: 4px;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
 }
-.fa-search-slide-glyph { font-size: 0.9rem; }
+.fa-search-home[data-open="true"] .search-input {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
 
 .fa-search-peek:hover,
-.fa-search-peek:focus-visible,
-.fa-search-slide:hover,
-.fa-search-slide:focus-visible {
+.fa-search-peek:focus-visible {
   border-color: var(--link-color, #7253ed);
-  outline: none;
 }
-
-/* Never left to the user agent: the corner card's fill differs per scheme and
-   the default ring is invisible on one of them. */
-.fa-search-peek:focus-visible,
-.fa-search-slide:focus-visible {
+.fa-search-peek[aria-expanded="true"] {
+  background: rgba(128, 128, 128, 0.18);
+}
+/* Never left to the user agent: the default ring is invisible on one scheme. */
+.fa-search-peek:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: 2px;
 }
 
-/* On a phone the corner card would cover most of the header, so the corner
-   state collapses to just its icon and the field opens full-width beneath.
-   The state is still honoured — it is not silently forced back to the navbar,
-   which would lose a choice the reader made on another device. */
-@media (max-width: 50rem) {
-  .fa-search-home[data-place="corner"][data-open="true"] {
-    left: 0.75rem;
-    right: 0.75rem;
-  }
-  .fa-search-home[data-place="corner"][data-open="true"] .fa-search-holder {
-    width: auto;
-    flex: 1 1 auto;
-    min-width: 0;
-  }
+/* THE FIELD'S OWN BOX, because the theme does not give it one — bean `tcq2`.
+ *
+ * The theme makes `.search-input-wrap` `position: absolute` at desktop inside
+ * a `.search` of height 0, so anything following the field was painted UNDER
+ * it (a hit test at the field's centre once returned the preview notice).
+ * Here the wrap is in flow, so `.search` has the field's height by itself.
+ *
+ * `.search` is `position: static` so the results list positions against
+ * `.fa-search-home` — the WHOLE row, magnifier included — which is what makes
+ * the results as wide as the panel rather than as wide as the field. Static,
+ * with this specificity, also beats the theme's below-50rem
+ * `.search-active .search { position: fixed }` full-screen takeover; the
+ * padding, heights and shadow of the theme's mobile box are undone here too.
+ *
+ * The theme also caps the wrap at `max-width: 33.5rem` (and `width: 33.5rem`
+ * while `.search-active`), sized for the header it renders search in. That
+ * cap was 44% of the panel at 1280px; it is lifted. */
+.fa-search-home .search {
+  position: static;
+  height: auto;
+  min-height: 2.25rem;
+  padding: 0;
 }
-
-/* The field's own size in the navbar.
- *
- * The theme's input is 21px tall unstyled, and the tiles panel used to give
- * it a height that the navbar does not. 21px is UNDER the 24px SC 2.5.8
- * target floor, and this instance's declared interaction profile is
- * low-dexterity, where "technically under the bar" is a reader who misses.
- * Caught by the e2e box assertion after the field moved — the check existed,
- * it was the styling that did not follow.
- *
- * 2.25rem (36px) rather than 24: that is what the panel already gave it, so
- * the field is not quietly smaller in its new home than in its old one. The
- * test holds the legal 24 so this comfort can be spent deliberately rather
- * than by accident. */
-/* THE FIELD'S OWN BOX, because the theme does not give it one — bean `tcq2`,
-   found by driving the REAL CI build rather than the local one.
-
-   `.search` is `position: relative` and its only child `.search-input-wrap` is
-   `position: absolute`, so `.search` computes to **height 0** while the input
-   inside it is 36px. Anything that follows the field in normal flow is
-   therefore painted UNDER it. Measured on the staging preview at 1280px:
-   `.search` h=0, `.fa-search-home` h=34 — the whole control's height was the
-   NOTICE, and a hit test at the field's centre returned `P.fa-search-notice`,
-   not the input. The field was not clickable where a reader would click it.
-
-   Reserving the field's own height puts the notice below it: `.search` h=36,
-   the control h=70, and the hit test reaches the input.
-
-   ONLY EVER VISIBLE ON A PREVIEW, since `.fa-search-notice` is rendered only
-   when the build stamped a non-canonical index — but a preview is what a
-   reviewer looks at, and a zero-height box around a 36px control is wrong
-   whether or not anything currently sits under it. 2.25rem is the field's own
-   height, one declaration below. */
-.fa-search-home .search { min-height: 2.25rem; }
+.fa-search-home .search-input-wrap {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  height: 2.25rem;
+  box-shadow: none;
+  border-radius: 0;
+  /* `hidden` in the theme clipped the input's own focus ring. The theme's
+     magnifier label that the clip was for is already a 1px sr-only box. */
+  overflow: visible;
+}
 
 .fa-search-home .search-input {
   box-sizing: border-box;
@@ -7504,127 +7419,45 @@ a.fa-harness-tab__body:focus-visible {
   border: 1px solid var(--fa-search-border);
   border-radius: 4px;
   background: transparent;
-  /* Inherits — the page's in the navbar, the card's in the corner. One
-     declaration, correct in both, for the reason at the top of this block. */
+  /* Inherits the page's ink, for the reason at the top of this block. */
   color: inherit;
   font-size: 0.85rem;
 }
-
 .fa-search-home .search-input:focus-visible {
   outline: 2px solid var(--link-color, #7253ed);
   outline-offset: 1px;
 }
 
-/* Results drop below the field rather than floating, same rule the panel
-   already follows, and the corner card needs it more: fixed-positioned, it
-   would otherwise render its hits off the bottom of the viewport. */
+/* RESULTS: THE FULL WIDTH OF THE ROW, dropped below it.
+ *
+ * Opaque, because hits render over body text. `Canvas` was rejected for the
+ * reason the pinned-sticky rule records — a SYSTEM colour follows the OS
+ * scheme while the text follows the page's. Taller than the old 16rem: at
+ * full width each hit is two short lines rather than five narrow ones, and
+ * the list is what the reader came for. */
 .fa-search-home .search-results {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  max-height: 16rem;
+  z-index: 3;
+  width: auto;
+  max-width: none;
+  max-height: min(70vh, 32rem);
   margin-top: 0.25rem;
   overflow-y: auto;
   border: 1px solid var(--fa-search-border);
   border-radius: 4px;
-  /* Opaque like the corner card, and for the same reason: hits render over
-     body text. `Canvas` was rejected here for the reason the pinned-sticky
-     rule records — it is a SYSTEM colour that follows the OS scheme while the
-     text follows the page's, so the two disagree the moment a reader sets the
-     page against their system. */
   background: #27262b;
   color: #e6e9ee;
 }
-
 :root[data-fa-scheme="light"] .fa-search-home .search-results {
   background: #ffffff;
   color: #1f2933;
 }
 
-.fa-search-home .search { position: relative; }
-
-/* ── ONE SEARCH ROW, not three controls ─────────────────────────────────
- *
- * Owner, 2026-09-27: *"search is wonky"* -- a small square magnifier on the
- * left, a full-width field, a "Hide search" button on the right, and on a
- * preview a note under them, all at DIFFERENT HEIGHTS, reading as three
- * unrelated controls.
- *
- * Measured on a local build before this block (getting-started.html):
- *
- *   1280px   magnifier 28px, field 36px, Hide search 28px -- three heights.
- *            On a preview `align-items: center` centred both buttons against
- *            the field PLUS the notice, so they dropped 21px below the field
- *            and sat level with the notice instead.
- *   390px    the theme's below-50rem rules were still live: `.search` is
- *            `height: 4rem; padding: 0.5rem` and `.search-input-wrap` is
- *            `height: 3rem` with a drop shadow, so the field floated 7px down
- *            inside a 56px box, shadowed, beside two 25px buttons.
- *
- * The fix is geometry, not new controls:
- *
- *   - Everything is 2.25rem tall -- the field's own height, already chosen
- *     above for the low-dexterity profile -- so no control is smaller than
- *     the field it sits beside.
- *   - Top-aligned, so a notice under the field grows the row DOWNWARDS and
- *     never pulls the buttons off the field's line.
- *   - The magnifier is ATTACHED to the field: no gap, shared edge, the outer
- *     corners rounded and the inner ones square, so it reads as the field's
- *     own icon. It keeps its job (focuses the field; in the corner, opens it)
- *     and its name, so nothing about keyboard access changes.
- *   - The theme's mobile box (padding, 4rem/3rem heights, shadow) is undone
- *     here, where search is ours. That the same `.search` rule used to go
- *     full-screen on focus below 50rem was ALREADY overridden by
- *     `position: relative` above; this only removes the leftovers.
- *
- * NAVBAR ONLY for the attached look. The corner card is its own bordered
- * box with the field collapsed behind the magnifier; fusing them there would
- * fuse the icon to nothing. */
-.fa-search-home .search {
-  height: auto;
-  padding: 0;
-}
-.fa-search-home .search-input-wrap {
-  height: 2.25rem;
-  box-shadow: none;
-  border-radius: 0;
-  /* `hidden` in the theme clipped the input's own focus ring. The theme's
-     magnifier label that the clip was for is already a 1px sr-only box. */
-  overflow: visible;
-}
-
-.fa-search-home[data-place="navbar"] {
-  align-items: flex-start;
-  gap: 0;
-}
-.fa-search-home[data-place="navbar"] .fa-search-peek {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-right: 0;
-  border-radius: 4px 0 0 4px;
-}
-.fa-search-home[data-place="navbar"] .fa-search-peek svg { width: 1.1rem; height: 1.1rem; }
-.fa-search-home[data-place="navbar"] .search-input { border-radius: 0 4px 4px 0; }
-.fa-search-home[data-place="navbar"] .fa-search-slide {
-  height: 2.25rem;
-  margin-left: 0.4rem;
-}
-/* The notice belongs to the field, so it starts under the field's own left
-   edge, and a little closer: 0.4rem read as a gap between two things. */
-.fa-search-home[data-place="navbar"] .fa-search-notice { margin-top: 0.25rem; }
-
-/* THE PREVIEW NOTE UNDER THE WHOLE ROW on a phone, not under the field alone
- * (owner, 2026-09-27). It sits inside the field's holder, so at 390px it was
- * as narrow as the field and wrapped to five lines. `display: contents` lifts
- * the holder's children into the row, and the notice takes a line of its own
- * after the "Hide search" button. */
-@media not all and (min-width: 50rem) {
-  .fa-search-home[data-place="navbar"] { flex-wrap: wrap; }
-  .fa-search-home[data-place="navbar"] .fa-search-holder { display: contents; }
-  .fa-search-home[data-place="navbar"] .search { flex: 1 1 0; min-width: 0; }
-  .fa-search-home[data-place="navbar"] .fa-search-notice { order: 99; flex: 1 0 100%; }
-}
+/* The notice belongs to the field, so it starts under the field's own edge. */
+.fa-search-home .fa-search-notice { margin-top: 0.25rem; }
 
 /* ── A board nested in the sticky panel has no chrome of its own ──────────
  *
