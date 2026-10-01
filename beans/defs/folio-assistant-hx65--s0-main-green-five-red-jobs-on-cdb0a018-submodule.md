@@ -5,10 +5,8 @@ status: todo
 type: task
 priority: critical
 created_at: 2026-10-01T08:14:33Z
-updated_at: 2026-10-01T12:15:57Z
+updated_at: 2026-10-01T12:16:23Z
 parent: folio-assistant-7x5n
-blocked_by:
-    - folio-assistant-70lx
 ---
 
 Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill refs'; TypeScript #7 'bun test'; E2E #7 'playwright test'; Skill-registration chain #5 'registration chain is current'; Docs site #7 'Regenerate skill instruction pages'. Four merges landed before CI finished.
