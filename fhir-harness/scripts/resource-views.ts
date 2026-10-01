@@ -154,7 +154,7 @@ export function resourceTabs(a: FhirArtifact, extraTabs: Tab[], jsonLocal: boole
     return [
       { label: "Content", href: `${stem}.html`, active: active === "Content" },
       { label: "Detailed Descriptions", href: `${site}${stem}-definitions.html`, active: false },
-      { label: "Mappings", href: `${site}${stem}-mappings.html`, active: false },
+      { label: "Mappings", href: jsonLocal ? `${stem}-mappings.html` : `${site}${stem}-mappings.html`, active: active === "Mappings" },
       ...(pub("xml") ? [{ label: "XML", href: pub("xml")!, active: false }] : []),
       ...(pub("json") ? [{ label: "JSON", href: jsonLocal ? `${stem}.profile.json.html` : pub("json")!, active: active === "JSON" }] : []),
       ...(pub("ttl") ? [{ label: "TTL", href: pub("ttl")!, active: false }] : []),
@@ -235,4 +235,77 @@ export function mdText(s: string): string {
  * A VIEW page beside an artefact's own page — one per representation, sidecar
  * or tab, never one per artefact. The one rule every count and test reads.
  */
-export const VIEW_PAGE = /\.(schema\.json|jsonld|json|change\.history|profile\.history|profile\.json)\.md$|-(testing|examples)\.md$/;
+export const VIEW_PAGE = /\.(schema\.json|jsonld|json|change\.history|profile\.history|profile\.json)\.md$|-(testing|examples|mappings)\.md$/;
+
+// ── A logical model's `-mappings.html` ──────────────────────────────────────
+
+export interface MappingsPageData {
+  tabs: Tab[];
+  heading: string;
+  status?: string;
+  intro: string;
+  /** "Mappings to Structures in this Implementation Guide", then "…to other Structures": each a list of tables, empty → "No Mappings Found". */
+  inIg: MappingTable[];
+  toOther: MappingTable[];
+  /** "Other Mappings": one table per remaining identity. */
+  other: MappingTable[];
+  legend: string;
+}
+
+export interface MappingTable {
+  name: string;
+  uri?: string;
+  rows: Array<{ label: string; depth: number; href: string; title?: string; value: string }>;
+}
+
+/**
+ * The mappings page from the StructureDefinition alone — its `mapping`
+ * identities and each snapshot element's `mapping` (no core package needed,
+ * unlike `-definitions`, whose base-type text is `hl7.fhir.r5.core`'s).
+ *
+ * Rows as the Publisher writes them, measured on smart-trust's 5 logical
+ * models: every snapshot element; the root by its full name, others by their
+ * last path segment, an element's `id` child as `@id`, a slice as
+ * `name:slice`; the value is that element's maps for the identity, joined.
+ *
+ * @param igStructures canonical URLs of the IG's own StructureDefinitions —
+ *   an identity whose URI is one of them maps to "this IG".
+ * @param definitionsHref where an element's definition is, by its path.
+ */
+export function mappingsPage(
+  sd: Record<string, unknown>,
+  f: ResourceFacts,
+  tabs: Tab[],
+  igStructures: ReadonlySet<string>,
+  definitionsHref: (path: string) => string,
+): MappingsPageData | undefined {
+  if (f.kind !== "logical") return undefined;
+  const identities = (sd.mapping as Array<{ identity: string; uri?: string; name?: string }> | undefined) ?? [];
+  const elements = ((sd.snapshot as { element?: Array<Record<string, unknown>> } | undefined)?.element ?? []);
+  const table = (m: { identity: string; uri?: string; name?: string }): MappingTable => ({
+    name: m.name ?? m.identity,
+    uri: m.uri,
+    rows: elements.map((e) => {
+      const path = String(e.path);
+      const segs = path.split(".");
+      const last = segs[segs.length - 1]!;
+      const label = segs.length === 1 ? path : last === "id" && segs.length > 2 ? "@id" : e.sliceName ? `${last}:${e.sliceName}` : last;
+      const maps = ((e.mapping as Array<{ identity: string; map: string }> | undefined) ?? []).filter((x) => x.identity === m.identity).map((x) => x.map);
+      return { label, depth: segs.length - 1, href: definitionsHref(path), title: typeof e.short === "string" ? e.short : undefined, value: maps.join(", ") };
+    }),
+  });
+  const inIg = identities.filter((m) => m.uri && igStructures.has(m.uri));
+  const toOther = identities.filter((m) => !inIg.includes(m) && m.uri?.startsWith("http://hl7.org/fhir/StructureDefinition/"));
+  const other = identities.filter((m) => !inIg.includes(m) && !toOther.includes(m));
+  const name = f.name ?? f.id;
+  return {
+    tabs,
+    heading: `Logical Model: ${name} - Mappings`,
+    status: statusLine(f),
+    intro: `Mappings for the ${name} logical model.`,
+    inIg: inIg.map(table),
+    toOther: toOther.map(table),
+    other: other.map(table),
+    legend: "https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views",
+  };
+}

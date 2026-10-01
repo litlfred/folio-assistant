@@ -1,8 +1,8 @@
 ---
-title: "COSE Headers (DRAFT) — JSON profile"
-description: "The JSON representation of StructureDefinition/COSEHeader."
+title: "CBOR Web Token (CWT) Claim — mappings"
+description: "Logical Model: CWT - Mappings."
 nav_exclude: true
-json_view: {"heading":"Logical Model: COSEHeader - JSON Profile","package":"../fhir-artifact-index/package.tgz","entry":"package/StructureDefinition-COSEHeader.json","raw":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.json","rawName":"StructureDefinition-COSEHeader.json","tabs":[{"label":"Content","href":"StructureDefinition-COSEHeader.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-COSEHeader-mappings.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.xml","active":false},{"label":"JSON","href":"StructureDefinition-COSEHeader.profile.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-COSEHeader.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-COSEHeader.schema.json.html","active":false}],"script":"../assets/resource-json.js","intro":"JSON representation of the COSEHeader logical model."}
+mappings: {"tabs":[{"label":"Content","href":"StructureDefinition-CWT.html","active":false},{"label":"Detailed Descriptions","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT-definitions.html","active":false},{"label":"Mappings","href":"StructureDefinition-CWT-mappings.html","active":true},{"label":"XML","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT.xml","active":false},{"label":"JSON","href":"StructureDefinition-CWT.profile.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT.ttl","active":false},{"label":"JSON Schema","href":"StructureDefinition-CWT.schema.json.html","active":false}],"heading":"Logical Model: CWT - Mappings","status":"Active as of 2026-10-01","intro":"Mappings for the CWT logical model.","inIg":[],"toOther":[],"other":[{"name":"RIM Mapping","uri":"http://hl7.org/v3","rows":[{"label":"CWT","depth":0,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT-definitions.html#CWT","title":"CBOR Web Token (CWT) Claim","value":"n/a"},{"label":"header","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT-definitions.html#CWT.header","title":"COSE Header","value":""},{"label":"payload","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT-definitions.html#CWT.payload","title":"CWT Payload","value":""},{"label":"signature","depth":1,"href":"https://litlfred.github.io/smart-trust/StructureDefinition-CWT-definitions.html#CWT.signature","title":"Signature","value":""}]}],"legend":"https://build.fhir.org/ig/FHIR/ig-guidance/readingIgs.html#table-views"}
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
@@ -93,24 +93,32 @@ json_view: {"heading":"Logical Model: COSEHeader - JSON Profile","package":"../f
 </div>
 
 {%- comment -%}
-A resource's JSON view page, the Publisher's `<Name>.json.html`, rendered by Jekyll.
-Reads `page.json_view`, every field written by `gen-ig-pages.ts` (`resource-views.ts`): `heading`,
-`tabs[]` (`label`, `href`, `active`) in the Publisher's order, `package` and `entry` (the IG's
-package.tgz in the served artefact-index graph, and the resource's file inside it), `raw` and
-`rawName` (the Publisher's published .json), `intro` (optional: a logical model's one-line description) and `script`. The resource is NOT in the
-page: `resource-json.js` reads it out of the package in the browser (`visualizer-loading`).
+A logical model's mappings page, the Publisher's `<Name>-mappings.html`, rendered by Jekyll.
+Reads `page.mappings`, every field written by `gen-ig-pages.ts` (`resource-views.ts` `mappingsPage`):
+`tabs[]`, `heading`, `status`, `intro`, then `inIg[]`, `toOther[]` and `other[]` — each a table
+(`name`, `uri`, `rows[]` of `label`, `depth`, `href`, `title`, `value`) — and `legend`. Labels and
+values are markdown-escaped by the generator; an empty section prints the Publisher's "No Mappings Found".
 {%- endcomment -%}
-{% for t in page.json_view.tabs %}{% if t.active %}**{{ t.label }}**{% else %}[{{ t.label }}]({{ t.href }}){% endif %}{% unless forloop.last %} · {% endunless %}{% endfor %}
+{% for t in page.mappings.tabs %}{% if t.active %}**{{ t.label }}**{% else %}[{{ t.label }}]({{ t.href }}){% endif %}{% unless forloop.last %} · {% endunless %}{% endfor %}
 
-## {{ page.json_view.heading }}
+## {{ page.mappings.heading }}
 
-<p class="json-view-status" hidden></p>
+{% if page.mappings.status %}{{ page.mappings.status }}
 
-{% if page.json_view.intro %}{{ page.json_view.intro }}
+{% endif %}{{ page.mappings.intro }}
 
+### Mappings to Structures in this Implementation Guide
+
+{% if page.mappings.inIg.size == 0 %}No Mappings Found
 {% endif %}
-[Raw json]({{ page.json_view.raw }}) · [Download]({{ page.json_view.raw }}){: download="{{ page.json_view.rawName }}"}
+### Mappings to other Structures
 
-<pre><code class="language-json" data-package="{{ page.json_view.package }}" data-entry="{{ page.json_view.entry }}">Loading JSON source…</code></pre>
-<noscript><p>This view needs JavaScript; the <a href="{{ page.json_view.raw }}">published JSON</a> does not.</p></noscript>
-<script src="{{ page.json_view.script }}" defer></script>
+{% if page.mappings.toOther.size == 0 %}No Mappings Found
+{% endif %}
+### Other Mappings
+{% for m in page.mappings.other %}
+| Name | {% if m.uri %}[{{ m.name }}]({{ m.uri }}){% else %}{{ m.name }}{% endif %} |
+|---|---|
+{% for r in m.rows %}| [{{ r.label }}]({{ r.href }}) | {{ r.value }} |
+{% endfor %}{% endfor %}
+[Documentation for this format]({{ page.mappings.legend }})
