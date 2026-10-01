@@ -3,7 +3,7 @@
   "name": "who-iris",
   "repository": "litlfred/who-iris",
   "livesAt": { "repository": "litlfred/folio-assistant", "path": "who-iris" },
-  "_separation_comment": "CONTENT, per the owner's 2026-09-20 plan ('a new repo ... which is an instance of fa-core, and is for the who-iris cataloge') and kg-separation: a content repository holds no code (bootstrap FR-7). No who-iris-tools is authorised, so the IRIS-specific code that remains here is TOLERATED rather than settled -- owner, 2026-09-30: 'iris specific tools for now ok in who-iris/ but make sure fails QA finding'. kg:audit's content-instance-holds-code reads this field and fails, naming each file, until that code has a home. Bean eayu.",
+  "_separation_comment": "CONTENT, per the owner's 2026-09-20 plan ('a new repo ... which is an instance of fa-core, and is for the who-iris cataloge') and kg-separation: a content repository holds no code (bootstrap FR-7). No who-iris-tools is authorised, so the IRIS-specific code that remains here is TOLERATED rather than settled -- owner, 2026-09-30: 'iris specific tools for now ok in who-iris/ but make sure fails QA finding', and 2026-10-01: 'QA warning. not failure.. ok b/c small # tools'. kg:audit's content-instance-holds-code reads this field and records a minor WARNING naming each file until that code has a home. Bean eayu. (Dropped by a 'take main' merge on the #1728 branch, 473805a37; restored by S0, bean hx65.)",
   "separation": "content",
   "version": "0.1.0",
   "needs": [

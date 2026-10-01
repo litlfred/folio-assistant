@@ -29,18 +29,18 @@ GOAL 1  vuip  repo separation          ██████████░░░�
   fnx4  KG subscriptions               ████████████░░░░░░░░  slices 1–4,7,8 merged; 5+6 in #1756
   uhkv  SMART stack (sibling: n3ni)    ████████░░░░░░░░░░░░   5/13
 
-ARC 7x5n stories (11:30 UTC)
-  S0 main green          ██████░░░░  #1774 b4b9e0eb8: repo gates now reach step 17 (13→16→17); reg-chain, bun test, e2e still red
-  S1 bookkeeping         ███████░░░  3 beans wait on S0
-  S2 merge treadmill     ███░░░░░░░  2 commits parked on claude/awesome-feynman-0rt8ra-s2-wip; waits on S0
-  S3 drain PRs           ▒░░░░░░░░░  #1747 agent running (R1)
-  S4 direction/placement █████░░░░░  #1776 ready (R5 26→0, R6 →0, large-datasets import 1→0); audit #1778: 7/7 questions ruled
-  S5 code → tools        ░░░░░░░░░░  790 CODE + 127 TO-JSON rows mapped to 70lx/8lcl/y9r6
+ARC 7x5n stories (15:15 UTC)
+  S0 main green          ██████████  DONE: #1774 → a249bd3 (+ #1769 restored PR0a and pins)
+  S1 bookkeeping         █████████░  hx65 closed; 7dek / ejye / ybwt waiting on stated evidence (ybwt → 63wl)
+  S2 merge treadmill     ▒▒▒▒░░░░░░  #1754 in progress
+  S3 drain PRs           ██████░░░░  R1 done (#1769 + guard #1785); #1756, #1735, #1753 remain
+  S4 direction/placement ███████░░░  #1776 merged (R5 26→0, R6 →0); audit #1778 merged; S4-b #1787 in progress; syiq, lthi queued
+  S5 code → tools        ██░░░░░░░░  C1 #1786 merged; 70lx, 8lcl, y9r6, vj2p, saqd, bbza queued
   S6 standalone          ░░░░░░░░░░
   S7 seed repos          █████░░░░░  all 5 target repos exist and are empty
   S8 cut over            ░░░░░░░░░░
-  UPSTREAM               ▒░░░░░░░░░  bootstrap + bootstrap-tools: README via published IRIs, README CI check, live render
-main CI                                RED at d1a5d6e (S0 is the critical path)
+  UPSTREAM               ██████████  bootstrap#1 f75a216, bootstrap-tools#4 3046412; pin bump = bean pw9j
+main CI                                GREEN
 ```
 
 **Legend for the story row:** `░░` todo, `▒▒` in progress, `██` done, `!!` blocked on the owner.
