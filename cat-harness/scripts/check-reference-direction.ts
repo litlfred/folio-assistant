@@ -77,18 +77,32 @@
  *
  * A committed sidecar goes stale, and the question every one of them has to
  * answer is what its `--check` fails on. This one fails on the **states**
- * disagreeing — the PENDING set, the entries that no longer qualify, the
- * multi-destination files nobody has listed, the instances that declare no
- * `needs`. Those move when a RULING moves: somebody adds a file with no single
- * destination, or an entry stops qualifying. That is exactly the diff a
- * reviewer has to see, and it is not produced by an unrelated merge.
+ * disagreeing — the baseline's held and baselined sets, the entries the tree
+ * has outgrown, the new offenders, the instances that declare no `needs`.
+ * Those move when a RULING moves: somebody adds a file naming an instance
+ * above it, or fixes one. That is exactly the diff a reviewer has to see.
  *
- * It answers that ONE question and only that: `--check` does not also fail on
- * the backlog. `audit:coverage --check` settled the same trade — staleness is
- * the half that can fail now, the findings are reported, and a gate that
- * refused every push until somebody drained a backlog is a gate switched off
- * within a week. The backlog exit stays on the plain form, and the `✗` lines
- * print on both, so a `--check` that returns 0 cannot be read as a clean axis.
+ * ### The backlog is a BASELINE, and `--check` enforces a one-way ratchet
+ *
+ * Owner, Q-B 2026-10-01: every file holding a wrong-direction reference on the
+ * seed commit is recorded in `reference-direction-baseline.json` beside this
+ * script, with the SET of instances above it that it names. A.10 of the same
+ * ruling: that covers files naming ONE instance as well as several. Then:
+ *
+ *  - a file the baseline does not cover — unlisted, or listed but naming an
+ *    instance its entry does not — is a NEW OFFENDER, and both forms exit 1;
+ *  - an entry the tree has outgrown is TRIMMED (nothing left) or NARROWED
+ *    (fewer targets) by the plain run, which is the writer `bun run regen`
+ *    pairs with `--check`; `--check` fails until that is committed, because a
+ *    stale entry is a hole the file could regress back through;
+ *  - nothing ever ADDS a key. The one way a key changes is a git rename the
+ *    writer detects itself, and only onto a subset of the old targets.
+ *
+ * That changes what `--check` used to promise ("does not fail on the
+ * backlog"): the backlog is now the baseline, so what `--check` fails on is
+ * not backlog but regression, and the drain is done when the store is empty.
+ * The fix is to REWORD in place so the file names nothing above it (Q1), not
+ * to move it. The `✗` lines print on both forms.
  *
  * It does **not** fail on the verdict counts moving, even though it records
  * them. Grading a number that changes whenever anybody writes a paragraph
@@ -107,11 +121,12 @@
  * here. `--check` reads, compares and returns; the plain run is the writer.
  *
  * Usage:
- *   bun run cat-harness/scripts/check-reference-direction.ts            # summary, and WRITE the sidecar
+ *   bun run cat-harness/scripts/check-reference-direction.ts            # summary; trim the baseline and WRITE the sidecar; exit 1 on a new offender
  *   … --findings           # every wrong-direction occurrence
  *   … --undetermined       # what it declined to judge, and why
- *   … --check              # do NOT write; fail ONLY if the committed states disagree
+ *   … --check              # do NOT write; exit 1 on a new offender, a baseline behind the tree, or a stale sidecar (CI)
  *   … --strict             # exit 1 on any wrong-direction occurrence
+ *   … --seed [--held <f>]  # write the baseline ONLY if absent; <f> lists the paths to record as `held`
  *
  * @module scripts/check-reference-direction
  * @covers computed — the set it reads is DERIVED from the declarations on the
@@ -123,7 +138,8 @@
  *   prose.
  */
 
-import { existsSync, readdirSync, readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 
 import {
@@ -335,6 +351,33 @@ function isGeneratorWritten(abs: string): boolean {
 /** Text this axis can read. A binary or an image carries no reference a reader follows. */
 const EXTENSIONS = new Set([".ts", ".tsx", ".md", ".json", ".jsonld", ".bpmn", ".dmn", ".yml", ".yaml"]);
 
+/**
+ * X3 — the LAYERING SPECIFICATIONS (owner, Q-B 2026-10-01: "adopt the X3
+ * exemption for the 3 layering specifications").
+ *
+ * Each of these files has the instance graph as its SUBJECT: it is the
+ * document or the code that DEFINES which instance sits on which layer, so it
+ * cannot do its job without naming the layers above it. Moved to any one
+ * layer it could no longer describe the others — the 2026-09-24 PENDING
+ * rationale, now ruled rather than held. A named list, never a pattern: a
+ * file earns a place here only by an owner ruling, and a regex would admit
+ * the next file that merely resembles one.
+ *
+ * This file is one of the three. Until the ruling it sat in its own PENDING
+ * list, on the argument that a carve made by the checker for the checker is
+ * the one nobody else can audit; the ruling answers that by being the
+ * owner's carve rather than the checker's, and it is counted in the summary
+ * like every other exemption.
+ */
+// declared-path-literal: the three files the owner's X3 ruling names, repo-root-relative because that is how an occurrence's file is reported
+const LAYERING_SPECIFICATIONS = [
+  "cat-harness/scripts/partition/instance-rules.ts",
+  "smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md",
+  "cat-harness/scripts/check-reference-direction.ts",
+] as const;
+
+const escapeRe = (s: string): string => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
 // ── This instance's exemptions ──────────────────────────────────
 //
 // Same contract as `iwtn`'s `ALLOW`: each entry states WHY the text is not a
@@ -363,124 +406,53 @@ const EXEMPTIONS: readonly ReferenceExemption[] = [
     reason:
       "`check:declared-paths`'s own exemption marker, whose reason text necessarily names the directory it is excusing. Scanning it would make satisfying one gate breach another",
   },
+  {
+    file: new RegExp(`^(${LAYERING_SPECIFICATIONS.map(escapeRe).join("|")})$`),
+    reason:
+      "X3, a LAYERING SPECIFICATION (owner, Q-B 2026-10-01): the file's subject IS the instance graph — it defines the layers, so it names them. Moved to any one layer it could no longer describe the others. A named list of three, ruled by the owner, never a pattern",
+  },
 ];
 
 /**
- * Known wrong-direction references awaiting the owner's ruling.
+ * X1 — a TRANSLATION MIRROR (owner, Q-B 2026-10-01: "exempt translation
+ * mirrors").
  *
- * `iwtn`'s `PENDING`, generalised: a leak nobody has ruled on yet is made
- * VISIBLE rather than silent. Every entry is a FILE, with the number of
- * distinct instances it names, and it earns its place by ONE property —
- * **it names more than one instance above it, so "move it up" has no single
- * destination.**
+ * The existing `SKIP_DIRS` rule applied consistently rather than a new carve:
+ * `translations/` is skipped because a name there is the ORIGINAL's reference
+ * counted again, once per locale. The locale copies under `docs/<lang>/` and
+ * `docs/guides/<lang>/` are the same thing in another place, so a reference in
+ * one is fixed in its English source and re-translated, never in the copy.
  *
- * That is the whole membership rule, and it is mechanical: `names > 1`. It
- * is checked, not asserted — an entry whose file has dropped to one target
- * is reported stale, the same as one with no findings left.
- *
- * ## Why these are pending rather than exempt
- *
- * The owner ruled on 2026-09-24 that naming is naming: a lower instance may
- * not name a higher one, and the fix is to move the file up. For the 117
- * files that name exactly one instance that is a well-defined instruction.
- * For these 50 it is not, and the reasons differ by kind:
- *
- *  - **Declarations and registries** — `cat-harness.json` names
- *    `folio-assistant-core/schemas/` BECAUSE IT DECLARES THAT DIRECTORY.
- *    Moving it up does not remove the reference; it removes the
- *    declaration. Same for `avatars.ts`, `ig-chrome.ts`, `graph-kind-
- *    registry.ts`, `namespaces.ts` — registries keyed by instance.
- *  - **Specifications about the layering** — `instance-rules.ts` names the
- *    repos it partitions into; `smart-stack-layering.md` names all eight
- *    layers because it is the document that DEFINES the stack. Move it up
- *    to any one layer and it can no longer describe the other seven.
- *  - **Prose naming two or more** — a genuine choice between destinations
- *    that nobody has made.
- *
- * Grouping them by kind here would be a judgement this list has no standing
- * to make: the owner's ruling settles the single-destination case and
- * explicitly did NOT settle this one, so the honest record is the mechanical
- * fact (`names`) plus the count, not a category somebody could mistake for a
- * decision. Issue #1219.
- *
- * **It compares as a SET.** A new multi-target file fails, and so does a
- * FIXED one — a PENDING that only grows stops meaning anything.
- *
- * That half fired on bean `ws99`, which is the first evidence it works.
- * `cat-harness/docs/ig-publisher.md` and `cat-harness/docs/publication-workflow.md`
- * were held here as prose naming two or three instances with no single
- * destination. They are not prose: `gen-docs-pages.ts` writes both, and once it
- * began saying so in their front matter they stopped being read at all. Their
- * entries were DELETED rather than left, because an entry recording a choice
- * nobody has to make any more is a question the owner would be asked twice.
- * Neither file was edited to earn that — the generator was.
+ * Decided by what the FILE declares, never by its path: front matter carrying
+ * a `lang:` other than `en` AND a `translation_source:`. Both, because `lang:`
+ * alone is on every English source page too, and a page that merely mentions
+ * translation must not be able to exempt itself — the same head-only reading
+ * {@link declaresGenerated} uses. Applied per file in {@link analyse} and
+ * consulted LAST, so any other exemption that matches keeps its own reason.
  */
-const PENDING: readonly { file: string; names: number }[] = [
-  // THIS FILE, and it is listed rather than exempted on purpose.
-  //
-  // A findings list names the files it holds findings about, and the name of
-  // a file under `smart-base/` contains `smart-base` — so this module cannot
-  // record a finding without matching itself, and its rationale above cannot
-  // explain the classes without naming them. A narrow exemption was written
-  // first and then deleted: an exemption carved by the checker, for the
-  // checker, is the one carve nobody else can audit, and the list it would
-  // have kept it off is the list that exists to be audited. It qualifies on
-  // exactly the published rule — it names more than one instance above it
-  // and has no single destination — so it goes where everything else that
-  // qualifies goes.
-  { file: "cat-harness/scripts/check-reference-direction.ts", names: 4 },
-  { file: "smart-base/skills/content/authoring-who-smart-guidelines/smart-stack-layering.md", names: 8 },
-  { file: "smart-base/skills/content/authoring-who-smart-guidelines/toolchain-ownership.md", names: 4 },
-  { file: "cat-harness/docs/cat-harness/published-graphs.md", names: 4 },
-  { file: "cat-harness/cat-harness.json", names: 2 },
-  { file: "cat-harness/schemas/avatars.ts", names: 6 },
-  { file: "cat-harness/scripts/partition/instance-rules.ts", names: 2 },
-  { file: "smart-base/skills/content/authoring-who-smart-guidelines/smart-base-tools.md", names: 2 },
-  { file: "smart-base/skills/content/authoring-who-smart-guidelines/ig-artifact-ingestion.md", names: 2 },
-  { file: "folio-assistant-core/scripts/ingest-ig-artifacts.ts", names: 3 },
-  { file: "fhir-harness/schemas/ig-chrome.ts", names: 5 },
-  { file: "cat-harness/schemas/cat-harness.ts", names: 2 },
-  { file: "smart-base/skills/content/authoring-who-smart-guidelines/dak-postprocessing.md", names: 5 },
-  { file: "cat-harness/skills/kg/kg-core/directory-conventions.md", names: 2 },
-  // declared-path-literal: a FINDING's location, recorded repo-root-relative because that is
-  // what `analyse` reports. No declaration can answer where a finding is, and this one does not
-  // resolve from THIS instance's root because the file is in another instance — which is the
-  // very fact the entry records.
-  { file: "folio-assistant-core/schemas/fhir-artifact-index.ts", names: 2 },
-  { file: "fhir-harness/fhir-harness.json", names: 6 },
-  { file: "cat-harness/schemas/jsonld.ts", names: 2 },
-  { file: "fhir-harness/AGENTS.md", names: 4 },
-  { file: "smart-base/skills/content/authoring-who-smart-guidelines/dak-preprocessing.md", names: 3 },
-  { file: "cat-harness/skills/kg/kg-core/kg-export.md", names: 2 },
-  { file: "cat-harness/schemas/graph-kind-registry.ts", names: 2 },
-  { file: "cat-harness/scripts/dak-pdf.ts", names: 2 },
-  { file: "cat-harness/scripts/external-schemas.ts", names: 3 },
-  { file: "cat-harness/docs/methodologies/index.md", names: 2 },
-  { file: "fhir-harness/skills/fhir-ig-base/ig-publisher-fork.md", names: 2 },
-  { file: "cat-harness/schemas/dak.ts", names: 2 },
-  { file: "cat-harness/schemas/namespaces.ts", names: 2 },
-  { file: "cat-harness/scripts/kg-export.ts", names: 2 },
-  { file: "cat-harness/scripts/layout-norms-baseline.json", names: 2 },
-  { file: "cat-harness/tools/discover.ts", names: 2 },
-  { file: "cat-harness/skills/ui/ui-core/harness-tiles.md", names: 2 },
-  { file: "cat-harness/schemas/harness-config.ts", names: 3 },
-  { file: "cat-harness/content/docs/ig-publisher/what-it-cannot-be-asked-for.md", names: 2 },
-  { file: "cat-harness/scripts/check-context-emission.ts", names: 3 },
-  { file: "cat-harness/scripts/harness-schema-export.ts", names: 2 },
-  { file: "cat-harness/docs/wireframes/voices/intent.md", names: 2 },
-  { file: "smart-ig/README.md", names: 2 },
-  { file: "smart-ig/AGENTS.md", names: 2 },
-  { file: "smart-base/smart-base.json", names: 2 },
-  { file: "smart-base/README.md", names: 2 },
-  { file: "smart-base/AGENTS.md", names: 2 },
-  { file: "smart-base/tools/index.ts", names: 2 },
-  { file: "fhir-harness/skills/fhir-ig-base/ig-publisher-reduction.md", names: 2 },
-  { file: "cat-harness/content/docs/publication-workflow/every-workflow-in-the-repo.md", names: 2 },
-  { file: "fhir-harness/scripts/ingest-ig-chrome.ts", names: 2 },
-  { file: "fhir-harness/scripts/gen-ig-pages.ts", names: 3 },
-  { file: "cat-harness/docs/processes/index.md", names: 2 },
-  { file: "smart-ig/smart-ig.json", names: 2 },
-];
+const TRANSLATION_MIRROR: ReferenceExemption = {
+  file: /(?:)/,
+  reason:
+    "X1, a TRANSLATION MIRROR (owner, Q-B 2026-10-01): the file's front matter declares a non-English `lang:` and a `translation_source:`, so every name in it is its source page's reference counted again — the reason `translations/` is skipped. Fixed in the source and re-translated, never in the copy",
+};
+
+/** How many exemptions this axis declares, each with a stated reason — {@link EXEMPTIONS} plus {@link TRANSLATION_MIRROR}. */
+export const EXEMPTIONS_DECLARED = EXEMPTIONS.length + 1;
+
+/** Does the file declare itself a translation of another page, in its own front matter? */
+export function declaresTranslationMirror(abs: string): boolean {
+  if (!abs.endsWith(".md")) return false;
+  let text: string;
+  try {
+    text = readFileSync(abs, "utf-8");
+  } catch {
+    return false;
+  }
+  const fm = /^---\r?\n([\s\S]*?)\r?\n---/.exec(text.slice(0, 4000));
+  if (fm === null) return false;
+  const lang = /^lang:\s*["']?([A-Za-z-]+)["']?\s*$/m.exec(fm[1]!)?.[1];
+  return lang !== undefined && lang.toLowerCase() !== "en" && /^translation_source:\s*\S/m.test(fm[1]!);
+}
 
 // ── Discovery ───────────────────────────────────────────────────
 
@@ -701,11 +673,14 @@ export function analyse(root = REPO_ROOT): ReferenceReport {
     } catch {
       continue; // unreadable is not clean, but it is also not a finding about direction
     }
-    const file = relative(root, abs);
+    const file = relative(root, abs).split(sep).join("/");
+    // X1 is a property of the FILE, read once, and appended LAST so any other
+    // exemption that also matches keeps its own reason.
+    const exemptions = declaresTranslationMirror(abs) ? [...EXEMPTIONS, TRANSLATION_MIRROR] : EXEMPTIONS;
     for (const to of targets) {
       for (const hit of occurrencesOf(text, to)) {
         const occurrence: Occurrence = { file, line: hit.line, text: hit.text.trim(), from, to };
-        classified.push({ occurrence, verdict: classifyReference(occurrence, rule, collisionOf, EXEMPTIONS) });
+        classified.push({ occurrence, verdict: classifyReference(occurrence, rule, collisionOf, exemptions) });
       }
     }
   }
@@ -716,6 +691,232 @@ export function analyse(root = REPO_ROOT): ReferenceReport {
     skippedGeneratorWritten,
     undeclared: all.filter((i) => i.needs === undefined).map((i) => i.name).sort(),
   };
+}
+
+// ── The baseline: a one-way ratchet ─────────────────────────────
+//
+// Owner, Q-B 2026-10-01: every file holding a wrong-direction reference today
+// is BASELINED, a new one fails, and a fixed one is trimmed. A.10 of the same
+// ruling: the ratchet covers files naming ONE instance above them as well as
+// files naming several, so a new file naming one higher instance fails too.
+// Q1 of the same ruling: the fix is to REWORD in place, so the store is the
+// checklist — the drain is done when it is empty.
+
+/** Where the baseline lives: beside this script, the way the other `*-baseline.json` files do. */
+export const BASELINE_FILE = "reference-direction-baseline.json";
+const BASELINE_PATH = join(import.meta.dir, BASELINE_FILE);
+
+/**
+ * Why an entry is in the store. Provenance only — both are trimmed and
+ * narrowed by the same rule, and both are fixed the same way (reword).
+ *
+ *  - `held` — the 2026-09-24 `PENDING` list (issue #1219): files naming
+ *    several instances above them, held as a question. Folded in at the seed
+ *    so the writer can trim them; a TypeScript literal could not be.
+ *  - `baselined` — everything else that held a wrong-direction reference on
+ *    the seed commit: "baselined 2026-10-01".
+ */
+export type BaselineStatus = "held" | "baselined";
+
+export interface BaselineEntry {
+  status: BaselineStatus;
+  /** The date the entry entered the store. */
+  since: string;
+  note: string;
+  /**
+   * The instances above it that the file names — a SET, never a count. A
+   * count cannot see a file that swaps one instance for another (2 → 2), and
+   * the `names` field of the `PENDING` list this replaces had rotted in 24 of
+   * 43 entries because nothing graded it.
+   */
+  targets: string[];
+}
+
+export interface Baseline {
+  _generated: string;
+  _comment: string;
+  entries: Record<string, BaselineEntry>;
+}
+
+export interface RatchetResult {
+  /** A file holding a wrong-direction reference that the baseline does not list, OR a listed file naming an instance its entry does not. Exit 1. */
+  newOffenders: { file: string; targets: string[]; added: string[] }[];
+  /** Entries with no wrong-direction reference left (or no file left). Removed by the writer. */
+  trimmed: { file: string; why: string }[];
+  /** Entries whose target set shrank but is not empty. Narrowed by the writer. */
+  narrowed: { file: string; from: string[]; to: string[] }[];
+  /** Entries moved along a git rename — the writer only, and only onto a subset of the old targets. */
+  rekeyed: { from: string; to: string }[];
+  /** What the writer writes: `prior` minus `trimmed`, with `narrowed` and `rekeyed` applied. There is no code path that adds a key. */
+  next: Baseline;
+}
+
+/** Each file holding a wrong-direction reference, and the instances above it that it names. */
+export function wrongTargetsByFile(report: ReferenceReport): Map<string, Set<string>> {
+  const byFile = new Map<string, Set<string>>();
+  for (const c of report.classified) {
+    if (c.verdict.verdict !== "wrong-direction") continue;
+    const s = byFile.get(c.occurrence.file) ?? new Set<string>();
+    s.add(c.occurrence.to);
+    byFile.set(c.occurrence.file, s);
+  }
+  return byFile;
+}
+
+const byKey = <T>(rec: Record<string, T>): Record<string, T> =>
+  Object.fromEntries(Object.keys(rec).sort().map((k) => [k, rec[k]!]));
+
+/**
+ * The ratchet. Pure: a scan and the committed baseline in, the verdict and the
+ * next baseline out — no filesystem, no git, no printing.
+ *
+ * `renames` maps a NEW path to the OLD one (`git diff -M`), and only the
+ * writer passes it: a pure `git mv` of a baselined file would otherwise read
+ * as trimmed-at-old plus new-offender-at-new, and S5 moves hundreds. A rename
+ * re-keys only onto a SUBSET of the old entry's targets — a move that also
+ * names a new instance is still a new offender, and its old entry is trimmed.
+ */
+export function applyRatchet(
+  report: ReferenceReport,
+  prior: Baseline,
+  renames: ReadonlyMap<string, string> = new Map(),
+  unseen: ReadonlySet<string> = new Set(),
+): RatchetResult {
+  const byFile = wrongTargetsByFile(report);
+  const entries: Record<string, BaselineEntry> = {};
+  const newOffenders: RatchetResult["newOffenders"] = [];
+  const narrowed: RatchetResult["narrowed"] = [];
+  const rekeyed: RatchetResult["rekeyed"] = [];
+  const consumed = new Set<string>();
+
+  for (const file of [...byFile.keys()].sort()) {
+    const targets = [...byFile.get(file)!].sort();
+    const p = prior.entries[file];
+    if (p !== undefined) {
+      const added = targets.filter((t) => !p.targets.includes(t));
+      if (added.length > 0) {
+        newOffenders.push({ file, targets, added });
+        entries[file] = p; // kept as it was: the ratchet never widens an entry
+      } else if (targets.length < p.targets.length) {
+        narrowed.push({ file, from: [...p.targets], to: targets });
+        entries[file] = { ...p, targets };
+      } else {
+        entries[file] = p;
+      }
+      continue;
+    }
+    const old = renames.get(file);
+    const po =
+      old !== undefined && !byFile.has(old) && !consumed.has(old) ? prior.entries[old] : undefined;
+    if (old !== undefined && po !== undefined && targets.every((t) => po.targets.includes(t))) {
+      consumed.add(old);
+      rekeyed.push({ from: old, to: file });
+      entries[file] = { ...po, targets };
+      continue;
+    }
+    newOffenders.push({ file, targets, added: po === undefined ? targets : targets.filter((t) => !po.targets.includes(t)) });
+  }
+
+  // An entry the scan could not SEE (`unseen`: its file is in a checkout that
+  // is not there, such as a submodule nobody initialised) is carried, never
+  // trimmed: "could not read it" is not "fixed", and trimming it would
+  // re-admit the file the moment that checkout is restored.
+  for (const f of unseen) if (prior.entries[f] !== undefined && !byFile.has(f)) entries[f] = prior.entries[f]!;
+  const trimmed = Object.keys(prior.entries)
+    .filter((f) => !byFile.has(f) && !consumed.has(f) && !unseen.has(f))
+    .sort()
+    .map((file) => ({ file, why: "no wrong-direction reference left" }));
+
+  return {
+    newOffenders,
+    trimmed,
+    narrowed,
+    rekeyed,
+    next: { _generated: prior._generated, _comment: prior._comment, entries: byKey(entries) },
+  };
+}
+
+const BASELINE_COMMENT =
+  "Every file holding a wrong-direction reference — naming one or more instances above it (owner Q-B 2026-10-01, A.10). " +
+  "status 'held' = the 2026-09-24 PENDING list (issue #1219), folded in; status 'baselined' = 'baselined 2026-10-01'. " +
+  "The fix is to REWORD in place (Q1). A new offender fails; a fixed entry is trimmed by `bun run check:reference-direction` (and `bun run regen`). The drain is done when `entries` is empty.";
+
+/**
+ * Seed the store from a scan. Refuses when one exists: a second seed would
+ * re-admit every regression since the first, which is the one thing the
+ * ratchet exists to prevent.
+ */
+export function seedBaseline(
+  report: ReferenceReport,
+  existing: Baseline | undefined,
+  opts: { held: ReadonlySet<string>; sha: string; today: string },
+): { ok: true; baseline: Baseline } | { ok: false; error: string } {
+  if (existing !== undefined) {
+    return {
+      ok: false,
+      error: "a baseline already exists — --seed writes only an ABSENT one; the ratchet only ever shrinks it",
+    };
+  }
+  const byFile = wrongTargetsByFile(report);
+  const entries: Record<string, BaselineEntry> = {};
+  for (const file of [...byFile.keys()].sort()) {
+    const targets = [...byFile.get(file)!].sort();
+    entries[file] =
+      opts.held.has(file) && targets.length > 1
+        ? { status: "held", since: "2026-09-24", note: "PENDING, issue #1219", targets }
+        : { status: "baselined", since: opts.today, note: `baselined ${opts.today} (owner Q-B: reword in place)`, targets };
+  }
+  return {
+    ok: true,
+    baseline: {
+      _generated: `check-reference-direction.ts — seeded once by --seed on ${opts.sha}; every later write only removes, narrows or re-keys along a rename (one-way ratchet). Do not add entries by hand.`,
+      _comment: BASELINE_COMMENT,
+      entries,
+    },
+  };
+}
+
+/** Stable bytes: top-level keys in a fixed order, entries sorted, one trailing newline. */
+export function serialiseBaseline(b: Baseline): string {
+  const entries = byKey(
+    Object.fromEntries(
+      Object.entries(b.entries).map(([f, e]) => [f, { status: e.status, since: e.since, note: e.note, targets: [...e.targets].sort() }]),
+    ),
+  );
+  return JSON.stringify({ _generated: b._generated, _comment: b._comment, entries }, null, 2) + "\n";
+}
+
+function readBaseline(path: string): Baseline | undefined {
+  if (!existsSync(path)) return undefined;
+  return JSON.parse(readFileSync(path, "utf-8")) as Baseline;
+}
+
+/**
+ * Renames on this branch, NEW path → OLD path, or `undefined` when they could
+ * not be determined — never an empty map in that case, because "no renames"
+ * would trim every moved entry and report its new path as an offender.
+ *
+ * Against the merge base with `origin/main` (or `$REFDIR_BASE`), and against
+ * the WORKING TREE, so a staged `git mv` counts before it is committed. The
+ * writer calls this; `--check` never does — CI's shallow checkout may not hold
+ * the merge base, and the check must stay a pure comparison.
+ */
+export function gitRenames(root: string): Map<string, string> | undefined {
+  const git = (...a: string[]) => spawnSync("git", ["-C", root, ...a], { encoding: "utf-8" });
+  let base = process.env.REFDIR_BASE;
+  if (base === undefined || base === "") {
+    const mb = git("merge-base", "HEAD", "origin/main");
+    if (mb.status !== 0) return undefined;
+    base = mb.stdout.trim();
+  }
+  const d = git("diff", "-M", "--name-status", "--diff-filter=R", base);
+  if (d.status !== 0) return undefined;
+  const out = new Map<string, string>();
+  for (const line of d.stdout.split("\n")) {
+    const [kind, from, to] = line.split("\t");
+    if (kind?.startsWith("R") && from && to) out.set(to, from);
+  }
+  return out;
 }
 
 // ── The committed sidecar ───────────────────────────────────────
@@ -732,65 +933,49 @@ export const SIDECAR_STEM = "reference-direction";
  */
 export const CENSUS_FAMILY = "verdict-census";
 
-/** A `PENDING` row: a file with no single destination, and how many it names. */
-export interface PendingEntry {
-  file: string;
-  names: number;
-}
-
 /**
  * The DETERMINATIONS this axis has reached — everything `--check` grades.
  *
  * Every field here moves when a RULING moves, never when somebody writes a
- * paragraph: a file acquires or loses a second destination, an entry stops
- * qualifying, an instance starts or stops declaring `needs`. That is the
+ * paragraph that names nothing above it: a file gains or loses a target, an
+ * entry is trimmed, an instance starts or stops declaring `needs`. That is the
  * property that makes grading them worth doing, and it is the property the
  * verdict counts do not have.
  */
 export interface DirectionStates {
-  /** The `PENDING` list as the source declares it. Membership is the ruling. */
-  pendingHeld: PendingEntry[];
-  /** Entries that no longer qualify — the half that makes `PENDING` honest. */
-  pendingStale: { file: string; why: string }[];
-  /** Files naming several instances above them that nobody has listed. This is what exits 1. */
-  multiDestinationUnlisted: { file: string; names: number }[];
+  /** Entries held from the 2026-09-24 `PENDING` list, with their targets. */
+  held: { file: string; targets: string[] }[];
+  /** Entries baselined 2026-10-01, with their targets. */
+  baselined: { file: string; targets: string[] }[];
+  /** Entries the tree has outgrown — trimmed or narrowed by the writer. Non-empty means the committed baseline is behind the tree. */
+  baselineBehind: { file: string; why: string }[];
+  /** Files the baseline does not cover. This is what exits 1. */
+  newOffenders: { file: string; targets: string[]; added: string[] }[];
   /** Instances that declare no `needs`, so nothing about their layer is known. */
   undeclaredInstances: string[];
 }
 
 /**
- * Reduce a scan to the four determinations, with no filesystem and no printing.
- *
- * Pure and exported so a test can exercise it on a three-file synthetic tree.
- * The real corpus is deliberately out of reach of this suite: a prior session's
- * tests walked it and pushed a sibling past its 5 s budget.
+ * Reduce a scan and a baseline to the determinations, with no filesystem and
+ * no printing. Pure and exported so a test can exercise it on a three-file
+ * synthetic tree. The real corpus is deliberately out of reach of this suite:
+ * a prior session's tests walked it and pushed a sibling past its 5 s budget.
  */
-export function directionStates(
-  report: ReferenceReport,
-  pending: readonly PendingEntry[],
-): DirectionStates {
-  const wrong = report.classified.filter((c) => c.verdict.verdict === "wrong-direction");
-  const byFile = new Map<string, Set<string>>();
-  for (const c of wrong) {
-    byFile.set(c.occurrence.file, new Set([...(byFile.get(c.occurrence.file) ?? []), c.occurrence.to]));
-  }
-  const listed = new Set(pending.map((p) => p.file));
-  const pendingStale = [
-    ...pending
-      .filter((p) => !byFile.has(p.file))
-      .map((p) => ({ file: p.file, why: "no wrong-direction reference left" })),
-    ...pending
-      .filter((p) => (byFile.get(p.file)?.size ?? 0) === 1)
-      .map((p) => ({ file: p.file, why: "now names ONE instance, so it has a destination and is not pending" })),
-  ].sort((a, b) => a.file.localeCompare(b.file));
-  const multiDestinationUnlisted = [...byFile]
-    .filter(([f, to]) => to.size > 1 && !listed.has(f))
-    .map(([file, to]) => ({ file, names: to.size }))
-    .sort((a, b) => a.file.localeCompare(b.file));
+export function directionStates(report: ReferenceReport, baseline: Baseline): DirectionStates {
+  const r = applyRatchet(report, baseline);
+  const of = (s: BaselineStatus) =>
+    Object.entries(baseline.entries)
+      .filter(([, e]) => e.status === s)
+      .map(([file, e]) => ({ file, targets: [...e.targets].sort() }))
+      .sort((a, b) => a.file.localeCompare(b.file));
   return {
-    pendingHeld: [...pending].sort((a, b) => a.file.localeCompare(b.file)),
-    pendingStale,
-    multiDestinationUnlisted,
+    held: of("held"),
+    baselined: of("baselined"),
+    baselineBehind: [
+      ...r.trimmed,
+      ...r.narrowed.map((n) => ({ file: n.file, why: `names fewer instances now: ${n.from.join(", ")} → ${n.to.join(", ")}` })),
+    ].sort((a, b) => a.file.localeCompare(b.file)),
+    newOffenders: r.newOffenders,
     undeclaredInstances: [...report.undeclared].sort(),
   };
 }
@@ -801,20 +986,15 @@ export function directionStates(
  * Only verdicts. `skippedMachineWritten` and `skippedGeneratorWritten` are
  * counts of FILES and stay in the printed report, for the reason the module
  * docblock gives: a file census says nothing about direction and moves on any
- * commit that adds a page.
- *
- * `pendingOccurrences` is a count of OCCURRENCES held by the `PENDING` list,
- * which is a verdict count about a ruling rather than a census of the tree, so
- * it belongs with these. Its membership — the part that is a decision — is in
- * {@link DirectionStates} and IS graded.
+ * commit that adds a page. The held and baselined OCCURRENCE counts are
+ * verdict counts about the store; its membership — the part that is a
+ * decision — is in {@link DirectionStates} and IS graded.
  */
-export function directionCensus(
-  report: ReferenceReport,
-  states: DirectionStates,
-): Record<string, number> {
+export function directionCensus(report: ReferenceReport, states: DirectionStates): Record<string, number> {
   const n = (v: ReferenceVerdict["verdict"]) => report.classified.filter((c) => c.verdict.verdict === v).length;
   const wrong = report.classified.filter((c) => c.verdict.verdict === "wrong-direction");
-  const held = new Set(states.pendingHeld.map((p) => p.file));
+  const held = new Set(states.held.map((p) => p.file));
+  const baselined = new Set(states.baselined.map((p) => p.file));
   return {
     instances: report.instances,
     occurrences: report.classified.length,
@@ -824,8 +1004,10 @@ export function directionCensus(
     exempt: n("exempt"),
     namesRepository: n("names-repository"),
     undetermined: n("undetermined"),
-    pendingFiles: states.pendingHeld.length,
-    pendingOccurrences: wrong.filter((c) => held.has(c.occurrence.file)).length,
+    heldFiles: states.held.length,
+    heldOccurrences: wrong.filter((c) => held.has(c.occurrence.file)).length,
+    baselinedFiles: states.baselined.length,
+    baselinedOccurrences: wrong.filter((c) => baselined.has(c.occurrence.file)).length,
   };
 }
 
@@ -839,13 +1021,13 @@ export function directionCensus(
  */
 export function buildDirectionResult(args: {
   report: ReferenceReport;
-  pending: readonly PendingEntry[];
+  baseline: Baseline;
   exemptionsDeclared: number;
   script?: string;
   scriptAbsPath?: string;
   now?: Date;
 }): QaResult {
-  const states = directionStates(args.report, args.pending);
+  const states = directionStates(args.report, args.baseline);
   const census = directionCensus(args.report, states);
   const script = args.script ?? join("cat-harness", "scripts", "check-reference-direction.ts");
   return buildQaResult({
@@ -853,29 +1035,33 @@ export function buildDirectionResult(args: {
     scriptAbsPath: args.scriptAbsPath ?? join(import.meta.dir, "check-reference-direction.ts"),
     subject: { kind: "reference-direction", id: "instances" },
     families: {
-      "multi-destination-unlisted": {
+      "new-offenders": {
         summary:
-          "A file holding a wrong-direction reference to MORE THAN ONE instance above it, which " +
-          "`PENDING` does not list. `names > 1` is the whole membership rule, so an unlisted one " +
-          "is an unrecorded question rather than a finding somebody can act on: \"move it up\" has " +
-          "no single destination. This is the set the script exits 1 on, and recording it is not " +
-          "resolving it — whether these join `PENDING` or are ruled on is issue #1219's question.",
-        entries: states.multiDestinationUnlisted,
+          "A file holding a wrong-direction reference that the baseline (`cat-harness/scripts/" + BASELINE_FILE + "`) " +
+          "does not cover — unlisted, or listed but now naming an instance its entry does not (`added`). This is " +
+          "the set both the plain run and `--check` exit 1 on: the ratchet only ever shrinks (owner Q-B 2026-10-01). " +
+          "Fix it by rewording so it names nothing above it (Q1); never by adding it to the baseline.",
+        entries: states.newOffenders,
       },
-      "pending-stale": {
+      "baseline-behind": {
         summary:
-          "A `PENDING` entry that no longer qualifies — either no wrong-direction reference is left " +
-          "in the file, or it now names exactly one instance and so HAS a destination. The set is " +
-          "compared both ways on purpose: a list that only grows stops meaning anything.",
-        entries: states.pendingStale,
+          "A baseline entry the tree has outgrown — no wrong-direction reference left, or fewer instances named " +
+          "than the entry lists. A stale entry is a hole (the file could regress and pass), so `--check` fails on " +
+          "it; `bun run check:reference-direction` (or `bun run regen`) trims or narrows it.",
+        entries: states.baselineBehind,
       },
-      "pending-held": {
+      held: {
         summary:
-          "The files held pending a ruling, as the source declares them. Not findings: the RULING, " +
-          "committed, so a reader with only this file can tell a question nobody has answered from " +
-          "an axis nobody has run. Membership moves only when somebody edits the list, which is why " +
-          "it is graded while the occurrence count it holds is not.",
-        entries: states.pendingHeld,
+          "Baseline entries held from the 2026-09-24 `PENDING` list (issue #1219), with the instances each names. " +
+          "Not findings: the committed record, so a reader with only this file can tell a held question from an " +
+          "axis nobody has run. Fixed the same way as any other entry (reword) and trimmed by the same rule.",
+        entries: states.held,
+      },
+      baselined: {
+        summary:
+          "Baseline entries recorded at the seed (\"baselined 2026-10-01\"), with the instances each names — the " +
+          "files naming ONE instance above them as well as several (owner Q-B A.10). Membership only ever shrinks.",
+        entries: states.baselined,
       },
       "instances-undeclared": {
         summary:
@@ -894,7 +1080,7 @@ export function buildDirectionResult(args: {
           "number like that is stale by default. FILE counts are not here at all — how many files " +
           "were skipped as machine-written or self-declared generator output is a census of the " +
           "tree, not a statement about direction, and stays in the printed report. " +
-          `${states.pendingHeld.length} file(s) held pending; ${args.exemptionsDeclared} exemption(s) declared, each with a stated reason.`,
+          `${states.held.length + states.baselined.length} file(s) in the baseline; ${args.exemptionsDeclared} exemption(s) declared, each with a stated reason.`,
         entries: [census],
       },
     },
@@ -947,16 +1133,64 @@ export function directionSidecarState(
 
 // ── Reporting ───────────────────────────────────────────────────
 
-function main(): number {
-  const args = process.argv.slice(2);
+/** Where a run reads and writes. Defaults are this checkout; a test points them at a temp tree. */
+export interface RunOptions {
+  repoRoot?: string;
+  instanceRoot?: string;
+  baselinePath?: string;
+  /** NEW → OLD paths, or `undefined` when they could not be determined. Only the writer asks. */
+  renames?: () => Map<string, string> | undefined;
+  /** The commit the seed records; asked of git when omitted. */
+  seedSha?: () => string;
+}
+
+const list = (xs: readonly string[]) => xs.join(", ");
+
+export function run(args: readonly string[], opts: RunOptions = {}): number {
+  const repoRoot = opts.repoRoot ?? REPO_ROOT;
+  const instanceRoot = opts.instanceRoot ?? INSTANCE_ROOT;
+  const baselinePath = opts.baselinePath ?? BASELINE_PATH;
   // `--check` reads and compares; it never writes. Bean `ymsu` — a gate that
   // repairs the tree the rest of the run is judging makes a later gate's
   // verdict meaningless, and this repository has two of those already.
   const check = args.includes("--check");
-  const report = analyse();
+  const seed = args.includes("--seed");
+  const report = analyse(repoRoot);
+  const baselineWhere = relative(repoRoot, baselinePath).split(sep).join("/");
 
   if (report.instances === 0) {
     console.error("check:reference-direction: found 0 declared instances — wrong root, or the tree moved.");
+    return 2;
+  }
+
+  if (seed) {
+    const heldArg = args.indexOf("--held");
+    const held = new Set<string>(
+      heldArg >= 0 && args[heldArg + 1] !== undefined
+        ? readFileSync(args[heldArg + 1]!, "utf-8").split("\n").map((l) => l.trim()).filter((l) => l !== "")
+        : [],
+    );
+    const sha =
+      opts.seedSha?.() ??
+      (spawnSync("git", ["-C", repoRoot, "rev-parse", "--short=11", "HEAD"], { encoding: "utf-8" }).stdout.trim() || "unknown");
+    const s = seedBaseline(report, readBaseline(baselinePath), { held, sha, today: new Date().toISOString().slice(0, 10) });
+    if (!s.ok) {
+      console.error(`✗ --seed refused: ${s.error} (${baselineWhere})`);
+      return 2;
+    }
+    writeFileSync(baselinePath, serialiseBaseline(s.baseline));
+    const all = Object.values(s.baseline.entries);
+    console.log(
+      `seeded ${baselineWhere} on ${sha}: ${all.length} file(s) — ` +
+        `${all.filter((e) => e.status === "held").length} held, ${all.filter((e) => e.status === "baselined").length} baselined ` +
+        `(${all.filter((e) => e.targets.length > 1).length} naming several instances above them, ${all.filter((e) => e.targets.length === 1).length} naming one)`,
+    );
+    return 0;
+  }
+
+  const prior = readBaseline(baselinePath);
+  if (prior === undefined) {
+    console.error(`✗ no baseline at ${baselineWhere} — run \`bun run check:reference-direction --seed\` once, and commit it.`);
     return 2;
   }
 
@@ -965,11 +1199,10 @@ function main(): number {
   const undet = of("undetermined");
   const exempt = of("exempt");
   const namesRepo = of("names-repository");
-  const states = directionStates(report, PENDING);
 
   console.log(`Reference direction — ${report.instances} instances, ${report.classified.length} name occurrences pointing up the dependency arrow\n`);
   console.log(`  wrong-direction   ${String(wrong.length).padStart(5)}   in ${new Set(wrong.map((c) => c.occurrence.file)).size} files`);
-  console.log(`  exempt            ${String(exempt.length).padStart(5)}   ${EXEMPTIONS.length} exemptions, each with a stated reason`);
+  console.log(`  exempt            ${String(exempt.length).padStart(5)}   ${EXEMPTIONS_DECLARED} exemptions, each with a stated reason`);
   // Its OWN line, never folded into `allowed` and never into the two skipped
   // counts below. It is a different statement from all three: the occurrence
   // was read, it was judged, and what it names owes no direction.
@@ -998,13 +1231,8 @@ function main(): number {
   }
 
   // The three-state discipline, stated in the output rather than left to a
-  // reader's charity — `zlmp`'s tool says the same sentence about its own
-  // unjudged edges, and that sentence is the reason its 43 → 49 is legible.
-  // Still printed, and still in these words, for as long as ANY occurrence is
-  // undetermined. Narrowing the repository-name case from a blanket to the
-  // occurrences that really are ambiguous shrank this bucket; it did not
-  // retire it, and a reader who stops seeing the sentence would reasonably
-  // conclude that it had.
+  // reader's charity. Still printed, and still in these words, for as long as
+  // ANY occurrence is undetermined.
   if (undet.length > 0) {
     console.log("\nUndetermined is not a pass. Two things land there:");
     if (report.undeclared.length > 0) {
@@ -1019,45 +1247,81 @@ function main(): number {
     }
   }
 
-  // PENDING is checked BOTH ways, which is the half that makes it honest.
-  const heldFiles = new Set(states.pendingHeld.map((p) => p.file));
-  const held = wrong.filter((c) => heldFiles.has(c.occurrence.file));
-  console.log(
-    `\n  of the wrong-direction count, ${held.length} occurrence(s) in ${PENDING.length} file(s) are PENDING —` +
-      ` each names more than one instance above it, so there is no single place to move it to (issue #1219)`,
+  // The ratchet. `--check` never asks git (it must stay a pure comparison, and
+  // CI's shallow checkout may not hold the merge base); the writer does, and
+  // says so when it cannot tell rather than reading that as "no renames".
+  let renames = new Map<string, string>();
+  if (!check) {
+    const r = (opts.renames ?? (() => gitRenames(repoRoot)))();
+    if (r === undefined) console.log("\n  could not determine renames — re-keying nothing");
+    else renames = r;
+  }
+  // Entries whose file is absent AND whose top-level directory is absent or
+  // empty: this checkout cannot see them (a submodule nobody initialised).
+  // A third state: never trimmed, and never a pass under `--check`.
+  const unseen = new Set(
+    Object.keys(prior.entries).filter((f) => {
+      if (existsSync(join(repoRoot, f))) return false;
+      const top = join(repoRoot, f.split("/")[0]!);
+      return !existsSync(top) || readdirSync(top).length === 0;
+    }),
   );
-
-  if (states.pendingStale.length > 0) {
-    console.error(`\n✗ ${states.pendingStale.length} PENDING entr(y/ies) no longer qualify — delete them:`);
-    for (const p of states.pendingStale) console.error(`    ${p.file} — ${p.why}`);
+  if (unseen.size > 0) {
+    console.log(
+      `\n  could not determine ${unseen.size} baseline entr(y/ies): their checkout is absent or empty ` +
+        "(submodules not initialised?). Kept, not trimmed.",
+    );
   }
-  if (states.multiDestinationUnlisted.length > 0) {
-    console.error(`\n✗ ${states.multiDestinationUnlisted.length} file(s) name several instances above them and are not in PENDING:`);
-    for (const p of states.multiDestinationUnlisted) console.error(`    ${p.file} — names ${p.names}`);
+  const ratchet = applyRatchet(report, prior, renames, unseen);
+  const baselineNow = check ? prior : ratchet.next;
+
+  const entries = Object.values(baselineNow.entries);
+  console.log(
+    `\n  baseline ${baselineWhere}: ${entries.length} file(s) — ` +
+      `${entries.filter((e) => e.status === "held").length} held, ${entries.filter((e) => e.status === "baselined").length} baselined. ` +
+      `The ratchet only ever shrinks it (owner Q-B 2026-10-01).`,
+  );
+  for (const k of ratchet.rekeyed) console.log(`    re-keyed along a rename: ${k.from} → ${k.to}`);
+  const behind = ratchet.trimmed.length + ratchet.narrowed.length;
+  if (behind > 0) {
+    const verb = check ? "✗ the committed baseline is BEHIND the tree" : "· trimmed/narrowed and written";
+    console.log(`\n${verb} — ${behind} entr(y/ies):`);
+    for (const t of ratchet.trimmed) console.log(`    ${t.file} — ${t.why}`);
+    for (const n of ratchet.narrowed) console.log(`    ${n.file} — ${list(n.from)} → ${list(n.to)}`);
+    if (check) console.log("  run `bun run check:reference-direction` (or `bun run regen`) and commit the baseline.");
+  }
+  if (ratchet.newOffenders.length > 0) {
+    console.error(`\n✗ ${ratchet.newOffenders.length} NEW file(s) name an instance above them that the baseline does not cover:`);
+    for (const o of ratchet.newOffenders) console.error(`    ${o.file} — names ${list(o.targets)} (new: ${list(o.added)})`);
+    console.error("  A lower instance may not name one that depends on it. Reword so it names nothing above it (owner Q-B, Q1); the baseline is never widened.");
   }
 
-  // The sidecar is built from what was just measured, and written — or, under
-  // `--check`, compared and left alone. It happens AFTER the report and BEFORE
-  // the exits, so the states that make this exit 1 are RECORDED rather than
-  // suppressed: a run that refuses still says, in a committed file, what it
-  // refused over.
+  if (!check) {
+    const text = serialiseBaseline(ratchet.next);
+    if (readFileSync(baselinePath, "utf-8") !== text) writeFileSync(baselinePath, text);
+  }
+
+  // The sidecar is built from what was just measured against the baseline
+  // this run leaves behind, and written — or, under `--check`, compared and
+  // left alone. It happens BEFORE the exits, so the states that make this
+  // exit 1 are RECORDED rather than suppressed.
+  const scriptAbs = join(instanceRoot, "scripts", "check-reference-direction.ts");
   const fresh = buildDirectionResult({
     report,
-    pending: PENDING,
-    exemptionsDeclared: EXEMPTIONS.length,
-    script: relative(REPO_ROOT, join(INSTANCE_ROOT, "scripts", "check-reference-direction.ts")),
-    scriptAbsPath: join(INSTANCE_ROOT, "scripts", "check-reference-direction.ts"),
+    baseline: baselineNow,
+    exemptionsDeclared: EXEMPTIONS_DECLARED,
+    script: relative(repoRoot, scriptAbs).split(sep).join("/"),
+    scriptAbsPath: scriptAbs,
   });
-  const where = relative(REPO_ROOT, join(INSTANCE_ROOT, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`));
-  const state = directionSidecarState(INSTANCE_ROOT, fresh);
-  if (!check) writeQaResult(INSTANCE_ROOT, SIDECAR_STEM, fresh);
+  const where = relative(repoRoot, join(instanceRoot, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`)).split(sep).join("/");
+  const state = directionSidecarState(instanceRoot, fresh);
+  if (!check) writeQaResult(instanceRoot, SIDECAR_STEM, fresh);
   // The message names WHAT was compared. A `--check` that passed silently
   // would be read as a guarantee about the counts, which it is not and by
   // design cannot be.
   console.log(
     `\n  sidecar: ${where}` +
-      `\n    graded — the PENDING set, the entries that no longer qualify, the unlisted` +
-      ` multi-destination files, the instances with no \`needs\`` +
+      `\n    graded — the baseline's held and baselined sets, the entries it has outgrown, the new offenders, the instances with no \`needs\`` +
       `\n    recorded, NOT graded — the verdict counts, which move whenever the corpus does`,
   );
   if (state !== "current") {
@@ -1066,26 +1330,8 @@ function main(): number {
     console.log(check ? `\n✗ ${msg} — run \`bun run check:reference-direction\` and commit it.` : `\n· ${msg} — written.`);
   }
 
-  // `--check` answers ONE question — is the committed ruling what this run
-  // computed — and answers only that. It does not also fail on the backlog,
-  // for `audit:coverage --check`'s reason: there, staleness is the half that
-  // can fail now and the findings are reported, because a gate that refused
-  // every push until somebody drained a backlog is a gate switched off within
-  // a week. The backlog exit below is the PLAIN form's, and it is loud on both
-  // forms — the `✗` lines above print either way, so a `--check` that returns
-  // 0 cannot be mistaken for a clean axis.
-  if (check) {
-    if (states.pendingStale.length > 0 || states.multiDestinationUnlisted.length > 0) {
-      console.log(
-        `\n  (the ${states.pendingStale.length + states.multiDestinationUnlisted.length} state(s) above are RECORDED, not graded here —` +
-          ` \`bun run check:reference-direction\` is the form that exits 1 on them)`,
-      );
-    }
-    return state === "current" ? 0 : 1;
-  }
-  // Unchanged, and deliberately so: recording a state is not resolving it.
-  if (states.pendingStale.length > 0 || states.multiDestinationUnlisted.length > 0) return 1;
-
+  if (ratchet.newOffenders.length > 0) return 1;
+  if (check) return behind > 0 || unseen.size > 0 || state !== "current" ? 1 : 0;
   if (args.includes("--strict") && wrong.length > 0) {
     console.error(`\n✗ ${wrong.length} wrong-direction reference(s). A lower instance may not name one that depends on it.`);
     return 1;
@@ -1093,4 +1339,4 @@ function main(): number {
   return 0;
 }
 
-if (import.meta.main) process.exit(main());
+if (import.meta.main) process.exit(run(process.argv.slice(2)));

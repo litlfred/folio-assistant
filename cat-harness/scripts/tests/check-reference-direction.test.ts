@@ -12,7 +12,7 @@
  * which is why it is a separate module.
  */
 import { afterEach, describe, expect, test } from "bun:test";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
@@ -27,13 +27,20 @@ import {
 } from "../../schemas/reference-direction.ts";
 import {
   analyse,
+  applyRatchet,
   buildDirectionResult,
   CENSUS_FAMILY,
   directionCensus,
   directionSidecarState,
   directionStates,
+  declaresGenerated,
+  declaresTranslationMirror,
+  run,
+  seedBaseline,
+  serialiseBaseline,
   SIDECAR_STEM,
-  type PendingEntry,
+  type Baseline,
+  type BaselineEntry,
 } from "../check-reference-direction.ts";
 import { QA_RESULTS_DIR, writeQaResult, type QaResult } from "../qa-results.ts";
 
@@ -507,10 +514,25 @@ function threeTier(files: Record<string, string>): string {
   return root;
 }
 
-const resultFor = (root: string, pending: PendingEntry[], now = new Date("2026-01-01T00:00:00.000Z")) =>
+/** A baseline holding exactly these entries; status defaults to `baselined`. */
+function bl(entries: Record<string, string[] | Partial<BaselineEntry>> = {}): Baseline {
+  return {
+    _generated: "test",
+    _comment: "test",
+    entries: Object.fromEntries(
+      Object.entries(entries).map(([f, e]) => {
+        const x = Array.isArray(e) ? { targets: e } : e;
+        return [f, { status: "baselined", since: "2026-10-01", note: "t", targets: [], ...x } as BaselineEntry];
+      }),
+    ),
+  };
+}
+const EMPTY = bl();
+
+const resultFor = (root: string, baseline: Baseline, now = new Date("2026-01-01T00:00:00.000Z")) =>
   buildDirectionResult({
     report: analyse(root),
-    pending,
+    baseline,
     exemptionsDeclared: 4,
     script: "scripts/producer.ts",
     scriptAbsPath: join(root, "does-not-exist.ts"),
@@ -519,34 +541,35 @@ const resultFor = (root: string, pending: PendingEntry[], now = new Date("2026-0
 
 describe("directionStates records the determinations, and each one separately", () => {
   test("a file naming SEVERAL instances above it, unlisted, is the state that exits 1", () => {
-    const s = directionStates(analyse(threeTier({ "low/a.md": "about mid and high\n" })), []);
-    expect(s.multiDestinationUnlisted).toEqual([{ file: "low/a.md", names: 2 }]);
+    const s = directionStates(analyse(threeTier({ "low/a.md": "about mid and high\n" })), EMPTY);
+    expect(s.newOffenders).toEqual([{ file: "low/a.md", targets: ["high", "mid"], added: ["high", "mid"] }]);
   });
 
   test("the same file LISTED is not in that set — membership is the ruling", () => {
     const r = analyse(threeTier({ "low/a.md": "about mid and high\n" }));
-    expect(directionStates(r, [{ file: "low/a.md", names: 2 }]).multiDestinationUnlisted).toEqual([]);
+    expect(directionStates(r, bl({ "low/a.md": ["high", "mid"] })).newOffenders).toEqual([]);
   });
 
-  test("a file naming ONE instance above it is not multi-destination — it has a destination", () => {
-    const s = directionStates(analyse(threeTier({ "low/a.md": "about high\n" })), []);
-    expect(s.multiDestinationUnlisted).toEqual([]);
+  test("a file naming ONE instance above it, unlisted, exits 1 too — owner Q-B A.10", () => {
+    const s = directionStates(analyse(threeTier({ "low/a.md": "about high\n" })), EMPTY);
+    expect(s.newOffenders).toEqual([{ file: "low/a.md", targets: ["high"], added: ["high"] }]);
   });
 
-  test("a PENDING entry with no wrong-direction reference left is reported stale", () => {
-    const s = directionStates(analyse(threeTier({ "low/a.md": "nothing to see\n" })), [
-      { file: "low/a.md", names: 2 },
-    ]);
-    expect(s.pendingStale).toEqual([{ file: "low/a.md", why: "no wrong-direction reference left" }]);
+  test("an entry with no wrong-direction reference left is the baseline BEHIND the tree", () => {
+    const s = directionStates(analyse(threeTier({ "low/a.md": "nothing to see\n" })), bl({ "low/a.md": ["high", "mid"] }));
+    expect(s.baselineBehind).toEqual([{ file: "low/a.md", why: "no wrong-direction reference left" }]);
   });
 
-  test("a PENDING entry that now names ONE instance is reported stale too — the set is checked BOTH ways", () => {
-    const s = directionStates(analyse(threeTier({ "low/a.md": "about high\n" })), [
-      { file: "low/a.md", names: 2 },
-    ]);
-    expect(s.pendingStale.map((p) => p.why)).toEqual([
-      "now names ONE instance, so it has a destination and is not pending",
-    ]);
+  test("an entry that now names FEWER instances is behind too — the set is checked BOTH ways", () => {
+    const s = directionStates(analyse(threeTier({ "low/a.md": "about high\n" })), bl({ "low/a.md": ["high", "mid"] }));
+    expect(s.baselineBehind.map((p) => p.why)).toEqual(["names fewer instances now: high, mid → high"]);
+  });
+
+  test("held and baselined entries are carried as two separate sets, with their targets", () => {
+    const r = analyse(threeTier({ "low/a.md": "about mid and high\n", "low/b.md": "about high\n" }));
+    const s = directionStates(r, bl({ "low/a.md": { status: "held", targets: ["high", "mid"] }, "low/b.md": ["high"] }));
+    expect(s.held).toEqual([{ file: "low/a.md", targets: ["high", "mid"] }]);
+    expect(s.baselined).toEqual([{ file: "low/b.md", targets: ["high"] }]);
   });
 
   test("an instance declaring no `needs` is carried as its own state, never folded into a count", () => {
@@ -556,14 +579,14 @@ describe("directionStates records the determinations, and each one separately", 
       mkdirSync(join(root, n), { recursive: true });
       writeFileSync(join(root, n, `${n}.json`), JSON.stringify(body));
     }
-    expect(directionStates(analyse(root), []).undeclaredInstances).toEqual(["adrift"]);
+    expect(directionStates(analyse(root), EMPTY).undeclaredInstances).toEqual(["adrift"]);
   });
 });
 
 describe("the census records VERDICT counts and no FILE count", () => {
   test("the four verdicts are all recorded, `undetermined` among them", () => {
     const r = analyse(threeTier({ "low/a.md": "about mid and high\n" }));
-    const c = directionCensus(r, directionStates(r, []));
+    const c = directionCensus(r, directionStates(r, EMPTY));
     for (const k of ["wrongDirection", "exempt", "namesRepository", "undetermined"]) {
       expect(`${k} present: ${k in c}`).toBe(`${k} present: true`);
     }
@@ -574,7 +597,7 @@ describe("the census records VERDICT counts and no FILE count", () => {
     // `audit-coverage`'s rule, applied here rather than rediscovered: a census
     // moves on any commit that adds a page and says nothing about direction.
     const r = analyse(threeTier({ "low/a.md": "about high\n" }));
-    const c = directionCensus(r, directionStates(r, []));
+    const c = directionCensus(r, directionStates(r, EMPTY));
     expect(Object.keys(c).filter((k) => k.startsWith("skipped"))).toEqual([]);
   });
 
@@ -592,7 +615,7 @@ describe("the census records VERDICT counts and no FILE count", () => {
     }
     writeFileSync(join(root, "adrift", "a.md"), "about dep\n");
     const r = analyse(root);
-    const c = directionCensus(r, directionStates(r, []));
+    const c = directionCensus(r, directionStates(r, EMPTY));
     expect(`undet ${c.undetermined} wrong ${c.wrongDirection} allowed ${c.allowed}`).toBe("undet 1 wrong 0 allowed 0");
   });
 });
@@ -608,48 +631,48 @@ describe("the sidecar is idempotent, and `--check` grades the states rather than
   test("re-running the producer over the same tree yields the same bytes", () => {
     const corpus = threeTier({ "low/a.md": "about mid and high\n" });
     const out = instanceRoot();
-    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, []));
+    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, EMPTY));
     const first = readFileSync(join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`), "utf-8");
-    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, [], new Date("2027-05-05T00:00:00.000Z")));
+    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, EMPTY, new Date("2027-05-05T00:00:00.000Z")));
     expect(readFileSync(join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`), "utf-8")).toBe(first);
   });
 
   test("a fresh sidecar is `current`", () => {
     const corpus = threeTier({ "low/a.md": "about mid and high\n" });
     const out = instanceRoot();
-    const fresh = resultFor(corpus, []);
+    const fresh = resultFor(corpus, EMPTY);
     writeQaResult(out, SIDECAR_STEM, fresh);
     expect(directionSidecarState(out, fresh)).toBe("current");
   });
 
   test("no sidecar at all is `absent`, which is NOT `current`", () => {
     // `dh4f`: no record reading identically to a clean one is the whole defect.
-    expect(directionSidecarState(instanceRoot(), resultFor(threeTier({}), []))).toBe("absent");
+    expect(directionSidecarState(instanceRoot(), resultFor(threeTier({}), EMPTY))).toBe("absent");
   });
 
   test("the state check does NOT write — bean `ymsu`, and this is what pins it", () => {
     const out = instanceRoot();
-    directionSidecarState(out, resultFor(threeTier({ "low/a.md": "about mid and high\n" }), []));
+    directionSidecarState(out, resultFor(threeTier({ "low/a.md": "about mid and high\n" }), EMPTY));
     expect(existsSync(join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`))).toBe(false);
   });
 
   test("a hand-edited GRADED family is `stale`", () => {
     const corpus = threeTier({ "low/a.md": "about mid and high\n" });
     const out = instanceRoot();
-    const fresh = resultFor(corpus, []);
+    const fresh = resultFor(corpus, EMPTY);
     writeQaResult(out, SIDECAR_STEM, fresh);
     const p = join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`);
     const doc = JSON.parse(readFileSync(p, "utf-8")) as QaResult;
-    doc.families["multi-destination-unlisted"]!.entries = [];
-    doc.families["multi-destination-unlisted"]!.count = 0;
+    doc.families["new-offenders"]!.entries = [];
+    doc.families["new-offenders"]!.count = 0;
     writeFileSync(p, JSON.stringify(doc, null, 2) + "\n");
     expect(directionSidecarState(out, fresh)).toBe("stale");
   });
 
   test("a corpus whose STATES moved is `stale` — the sidecar cannot outlive its ruling", () => {
     const out = instanceRoot();
-    writeQaResult(out, SIDECAR_STEM, resultFor(threeTier({ "low/a.md": "about mid and high\n" }), []));
-    expect(directionSidecarState(out, resultFor(threeTier({ "low/b.md": "about mid and high\n" }), []))).toBe("stale");
+    writeQaResult(out, SIDECAR_STEM, resultFor(threeTier({ "low/a.md": "about mid and high\n" }), EMPTY));
+    expect(directionSidecarState(out, resultFor(threeTier({ "low/b.md": "about mid and high\n" }), EMPTY))).toBe("stale");
   });
 
   test("a hand-edited CENSUS is still `current`, and that is the deliberate line", () => {
@@ -660,7 +683,7 @@ describe("the sidecar is idempotent, and `--check` grades the states rather than
     // cannot be reversed by accident.
     const corpus = threeTier({ "low/a.md": "about mid and high\n" });
     const out = instanceRoot();
-    const fresh = resultFor(corpus, []);
+    const fresh = resultFor(corpus, EMPTY);
     writeQaResult(out, SIDECAR_STEM, fresh);
     const p = join(out, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`);
     const doc = JSON.parse(readFileSync(p, "utf-8")) as QaResult;
@@ -675,15 +698,220 @@ describe("the sidecar is idempotent, and `--check` grades the states rather than
     // old code's answer.
     const corpus = threeTier({ "low/a.md": "about mid and high\n" });
     const out = instanceRoot();
-    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, []));
-    const moved = { ...resultFor(corpus, []), producer: { script: "scripts/producer.ts", script_hash: "0123456789ab" } };
+    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, EMPTY));
+    const moved = { ...resultFor(corpus, EMPTY), producer: { script: "scripts/producer.ts", script_hash: "0123456789ab" } };
     expect(directionSidecarState(out, moved)).toBe("stale");
   });
 
   test("the timestamp alone never makes it stale", () => {
     const corpus = threeTier({ "low/a.md": "about mid and high\n" });
     const out = instanceRoot();
-    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, []));
-    expect(directionSidecarState(out, resultFor(corpus, [], new Date("2030-12-31T23:59:59.000Z")))).toBe("current");
+    writeQaResult(out, SIDECAR_STEM, resultFor(corpus, EMPTY));
+    expect(directionSidecarState(out, resultFor(corpus, EMPTY, new Date("2030-12-31T23:59:59.000Z")))).toBe("current");
+  });
+});
+
+// ── The baseline: a one-way ratchet (owner Q-B 2026-10-01) ──────
+//
+// Synthetic trees only, as above. `fourTier` gives `low` THREE instances
+// above it, which is what "gains a third" and "shrinks but stays multi" need.
+
+/** `low` <- `mid` <- `high` <- `top`. */
+function fourTier(files: Record<string, string>): string {
+  const root = mkdtempSync(join(tmpdir(), "refdir-"));
+  made.push(root);
+  for (const [name, needs] of [["low", []], ["mid", ["low"]], ["high", ["mid"]], ["top", ["high"]]] as const) {
+    mkdirSync(join(root, name), { recursive: true });
+    writeFileSync(join(root, name, `${name}.json`), JSON.stringify({ name, needs, directories: [] }));
+  }
+  for (const [rel, body] of Object.entries(files)) {
+    const abs = join(root, rel);
+    mkdirSync(join(abs, ".."), { recursive: true });
+    writeFileSync(abs, body);
+  }
+  return root;
+}
+
+describe("the ratchet only ever shrinks", () => {
+  test("1. an unlisted file naming two instances above it is a new offender", () => {
+    const r = applyRatchet(analyse(fourTier({ "low/a.md": "about mid and high\n" })), EMPTY);
+    expect(r.newOffenders).toEqual([{ file: "low/a.md", targets: ["high", "mid"], added: ["high", "mid"] }]);
+    expect(r.next.entries).toEqual({});
+  });
+
+  test("2. the same file listed in the baseline is not", () => {
+    const r = applyRatchet(analyse(fourTier({ "low/a.md": "about mid and high\n" })), bl({ "low/a.md": ["high", "mid"] }));
+    expect(r.newOffenders).toEqual([]);
+    expect(r.trimmed).toEqual([]);
+    expect(r.narrowed).toEqual([]);
+  });
+
+  test("3. a baselined file that gains a THIRD instance is a new offender naming only that one — what a `names` count could not see", () => {
+    const prior = bl({ "low/a.md": ["high", "mid"] });
+    const r = applyRatchet(analyse(fourTier({ "low/a.md": "about mid, high and top\n" })), prior);
+    expect(r.newOffenders).toEqual([{ file: "low/a.md", targets: ["high", "mid", "top"], added: ["top"] }]);
+    // The entry is kept exactly as it was: the ratchet never widens one.
+    expect(r.next.entries["low/a.md"]!.targets).toEqual(["high", "mid"]);
+  });
+
+  test("3b. a SWAP (2 → 2, one instance traded for another) is a new offender too", () => {
+    const r = applyRatchet(analyse(fourTier({ "low/a.md": "about mid and top\n" })), bl({ "low/a.md": ["high", "mid"] }));
+    expect(r.newOffenders.map((o) => o.added)).toEqual([["top"]]);
+  });
+
+  test("4. a multi-instance entry now naming ONE is narrowed, not trimmed — singles stay covered (A.10)", () => {
+    const r = applyRatchet(analyse(fourTier({ "low/a.md": "about high\n" })), bl({ "low/a.md": ["high", "mid"] }));
+    expect(r.trimmed).toEqual([]);
+    expect(r.narrowed).toEqual([{ file: "low/a.md", from: ["high", "mid"], to: ["high"] }]);
+    expect(r.next.entries["low/a.md"]!.targets).toEqual(["high"]);
+  });
+
+  test("5. an entry naming nothing is trimmed, and so is one whose file is gone", () => {
+    const prior = bl({ "low/a.md": ["high"], "low/gone.md": ["high", "mid"] });
+    const r = applyRatchet(analyse(fourTier({ "low/a.md": "nothing above\n" })), prior);
+    expect(r.trimmed).toEqual([
+      { file: "low/a.md", why: "no wrong-direction reference left" },
+      { file: "low/gone.md", why: "no wrong-direction reference left" },
+    ]);
+    expect(r.next.entries).toEqual({});
+  });
+
+  test("6. a shrunk-but-still-multi entry is narrowed, and `next` carries the smaller set", () => {
+    const r = applyRatchet(analyse(fourTier({ "low/a.md": "about mid and top\n" })), bl({ "low/a.md": ["high", "mid", "top"] }));
+    expect(r.narrowed).toEqual([{ file: "low/a.md", from: ["high", "mid", "top"], to: ["mid", "top"] }]);
+    expect(r.next.entries["low/a.md"]!.targets).toEqual(["mid", "top"]);
+  });
+
+  test("7. `next` never holds a key absent from `prior`, over every subset of a small corpus as the prior", () => {
+    const bodies = ["nothing\n", "about mid\n", "about high\n", "about mid and top\n"];
+    const report = analyse(fourTier(Object.fromEntries(bodies.map((b, i) => [`low/f${i}.md`, b]))));
+    const files = bodies.map((_, i) => `low/f${i}.md`);
+    for (let mask = 0; mask < 1 << files.length; mask++) {
+      const prior = bl(Object.fromEntries(files.filter((_, i) => mask & (1 << i)).map((f) => [f, ["mid"]])));
+      const next = Object.keys(applyRatchet(report, prior).next.entries);
+      expect(`${mask}: ${next.filter((k) => !(k in prior.entries)).join(",")}`).toBe(`${mask}: `);
+    }
+  });
+
+  test("8. held and baselined entries are trimmed by the same rule — the 2026-09-24 PENDING stale case", () => {
+    const prior = bl({ "low/a.md": { status: "held", targets: ["high", "mid"] }, "low/b.md": ["high"] });
+    const r = applyRatchet(analyse(fourTier({ "low/a.md": "fixed\n", "low/b.md": "fixed\n" })), prior);
+    expect(r.trimmed.map((t) => t.file)).toEqual(["low/a.md", "low/b.md"]);
+  });
+
+  test("9. a rename re-keys onto a SUBSET of the old targets; onto a superset it is a new offender and the old key is trimmed", () => {
+    const prior = bl({ "low/old.md": { status: "held", targets: ["high", "mid"] } });
+    const renames = new Map([["low/new.md", "low/old.md"]]);
+    const moved = applyRatchet(analyse(fourTier({ "low/new.md": "about mid\n" })), prior, renames);
+    expect(moved.rekeyed).toEqual([{ from: "low/old.md", to: "low/new.md" }]);
+    expect(moved.newOffenders).toEqual([]);
+    expect(moved.trimmed).toEqual([]);
+    expect(moved.next.entries).toEqual({ "low/new.md": { ...prior.entries["low/old.md"]!, targets: ["mid"] } });
+
+    const grew = applyRatchet(analyse(fourTier({ "low/new.md": "about mid and top\n" })), prior, renames);
+    expect(grew.rekeyed).toEqual([]);
+    expect(grew.newOffenders).toEqual([{ file: "low/new.md", targets: ["mid", "top"], added: ["top"] }]);
+    expect(grew.trimmed.map((t) => t.file)).toEqual(["low/old.md"]);
+  });
+
+  test("10. --seed refuses when a baseline exists, and records `held` only for a listed file naming several", () => {
+    const report = analyse(fourTier({ "low/a.md": "about mid and high\n", "low/b.md": "about high\n" }));
+    const opts = { held: new Set(["low/a.md", "low/b.md"]), sha: "abc", today: "2026-10-01" };
+    expect(seedBaseline(report, EMPTY, opts).ok).toBe(false);
+    const s = seedBaseline(report, undefined, opts);
+    if (!s.ok) throw new Error(s.error);
+    expect(Object.fromEntries(Object.entries(s.baseline.entries).map(([f, e]) => [f, `${e.status} ${e.targets.join("+")}`]))).toEqual({
+      "low/a.md": "held high+mid",
+      "low/b.md": "baselined high",
+    });
+  });
+
+  test("11. the written baseline is skipped by the scanner, so the store cannot become its own finding", () => {
+    const report = analyse(fourTier({ "low/a.md": "about mid and high\n" }));
+    const s = seedBaseline(report, undefined, { held: new Set(), sha: "abc", today: "2026-10-01" });
+    if (!s.ok) throw new Error(s.error);
+    const root = fourTier({});
+    const p = join(root, "low", "reference-direction-baseline.json");
+    writeFileSync(p, serialiseBaseline(s.baseline));
+    expect(declaresGenerated(p)).toBe(true);
+    expect(analyse(root).classified).toEqual([]);
+  });
+
+  test("12. directionStates: behind = trimmed ∪ narrowed, and the new offenders are the ratchet's", () => {
+    const report = analyse(fourTier({ "low/a.md": "about mid\n", "low/c.md": "about top\n" }));
+    const prior = bl({ "low/a.md": ["high", "mid"], "low/b.md": ["mid"] });
+    const r = applyRatchet(report, prior);
+    const s = directionStates(report, prior);
+    expect(s.baselineBehind.map((b) => b.file)).toEqual([...r.trimmed, ...r.narrowed].map((x) => x.file).sort());
+    expect(s.newOffenders).toEqual(r.newOffenders);
+    expect(s.newOffenders.map((o) => o.file)).toEqual(["low/c.md"]);
+  });
+
+  test("13. --check writes NOTHING, and exits 1 on a baseline behind the tree", () => {
+    const repo = fourTier({ "low/a.md": "about mid\n" });
+    const inst = mkdtempSync(join(tmpdir(), "refdir-inst-"));
+    made.push(inst);
+    const baselinePath = join(inst, "baseline.json");
+    const stale = serialiseBaseline(bl({ "low/a.md": ["high", "mid"] }));
+    writeFileSync(baselinePath, stale);
+    const before = statSync(baselinePath).mtimeMs;
+    const code = run(["--check"], { repoRoot: repo, instanceRoot: inst, baselinePath, renames: () => new Map() });
+    expect(code).toBe(1);
+    expect(readFileSync(baselinePath, "utf-8")).toBe(stale);
+    expect(statSync(baselinePath).mtimeMs).toBe(before);
+    expect(existsSync(join(inst, QA_RESULTS_DIR, `${SIDECAR_STEM}.qa-results.json`))).toBe(false);
+  });
+});
+
+describe("the writer trims, never adds, and is then current", () => {
+  const setup = (files: Record<string, string>, prior: Baseline) => {
+    const repo = fourTier(files);
+    const inst = mkdtempSync(join(tmpdir(), "refdir-inst-"));
+    made.push(inst);
+    const baselinePath = join(inst, "baseline.json");
+    writeFileSync(baselinePath, serialiseBaseline(prior));
+    const opts = { repoRoot: repo, instanceRoot: inst, baselinePath, renames: () => new Map<string, string>() };
+    return { baselinePath, opts };
+  };
+  const keys = (p: string) => Object.keys((JSON.parse(readFileSync(p, "utf-8")) as Baseline).entries);
+
+  test("the writer narrows a stale entry, and --check is then green", () => {
+    const { baselinePath, opts } = setup({ "low/a.md": "about mid\n" }, bl({ "low/a.md": ["high", "mid"] }));
+    expect(run([], opts)).toBe(0);
+    expect((JSON.parse(readFileSync(baselinePath, "utf-8")) as Baseline).entries["low/a.md"]!.targets).toEqual(["mid"]);
+    expect(run(["--check"], opts)).toBe(0);
+  });
+
+  test("the falsifier: a NEW offender fails both forms, and the writer does not add it", () => {
+    const { baselinePath, opts } = setup({ "low/a.md": "about mid\n", "low/new.md": "about high and top\n" }, bl({ "low/a.md": ["mid"] }));
+    expect(run([], opts)).toBe(1);
+    expect(keys(baselinePath)).toEqual(["low/a.md"]);
+    expect(run(["--check"], opts)).toBe(1);
+  });
+
+  test("an entry whose checkout is ABSENT is kept, never trimmed, and --check refuses to call it clean", () => {
+    const { baselinePath, opts } = setup({ "low/a.md": "about mid\n" }, bl({ "low/a.md": ["mid"], "vendored/x.md": ["high"] }));
+    expect(run([], opts)).toBe(0);
+    expect(keys(baselinePath)).toEqual(["low/a.md", "vendored/x.md"]);
+    expect(run(["--check"], opts)).toBe(1);
+  });
+});
+
+describe("X1: a translation mirror is exempt (owner Q-B 2026-10-01)", () => {
+  const page = (fm: string) => `---\n${fm}\n---\n\nabout high\n`;
+
+  test("a page declaring a non-English `lang:` AND a `translation_source:` is exempt, with the X1 reason", () => {
+    const r = analyse(fourTier({ "low/fr/a.md": page("lang: fr\ntranslation_source: a.md") }));
+    expect(r.classified.map((c) => c.verdict.verdict)).toEqual(["exempt"]);
+    expect(r.classified[0]!.verdict.basis).toContain("TRANSLATION MIRROR");
+  });
+
+  test("the English SOURCE is still read, and so is a page with `lang:` but no `translation_source:`", () => {
+    const r = analyse(fourTier({ "low/a.md": page("lang: en\ntranslation_source: a.md"), "low/b.md": page("lang: fr") }));
+    expect(r.classified.map((c) => c.verdict.verdict)).toEqual(["wrong-direction", "wrong-direction"]);
+  });
+
+  test("it is decided by what the file declares, never by its path", () => {
+    expect(declaresTranslationMirror(join(fourTier({ "low/fr/a.md": "about high\n" }), "low/fr/a.md"))).toBe(false);
   });
 });
