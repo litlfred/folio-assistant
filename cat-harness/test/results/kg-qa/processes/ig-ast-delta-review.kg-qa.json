@@ -56,21 +56,8 @@
       "findings": []
     },
     "role-carries-activity-skill": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "Task_Validity",
-          "detail": "needs skill \"ig-ast-delta\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Diff",
-          "detail": "needs skill \"ig-ast-delta\", but its lane's role \"build-pipeline\" does not carry it."
-        },
-        {
-          "where": "Task_Review",
-          "detail": "needs skill \"ig-ast-delta\", but its lane's role \"qc-reviewer\" does not carry it."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "activity-names-skill": {
       "result": "pass",
@@ -122,8 +109,8 @@
     }
   },
   "totals": {
-    "pass": 15,
-    "fail": 1,
+    "pass": 16,
+    "fail": 0,
     "n/a": 9,
     "unknown": 0
   }

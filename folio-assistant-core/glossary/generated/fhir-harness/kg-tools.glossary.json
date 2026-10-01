@@ -17,7 +17,7 @@
     {
       "id": "fhir-cache-seed-npm",
       "prefLabel": "Seed the FHIR package cache from trusted sources (exact versions)",
-      "definition": "Fill `~/.fhir/packages` (or `--cache`) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account `grahamegrieve` (owner-trusted), the publishers' own site repos (WorldHealthOrganization/smart-html, IHE/publications), template repos found through FHIR/ig-registry's templates.json read live each run, and an owner `--mirror`. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted.",
+      "definition": "Fill `~/.fhir/packages` (or `--cache`) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account `grahamegrieve` (owner-trusted), publishers' own published-site repositories (the seeder's list, each fetch verified against the tarball's own package.json), template repos found through FHIR/ig-registry's templates.json read live each run, and an owner `--mirror`. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted.",
       "notation": "fhir-cache-seed-npm",
       "source": "fhir-harness/tools/index.ts#fhir-cache-seed-npm",
       "status": "candidate"
@@ -55,6 +55,14 @@
       "status": "candidate"
     },
     {
+      "id": "ig-ast-list",
+      "prefLabel": "Summarise one IG AST",
+      "definition": "Counts per resource type, edges in total and resolved inside the IG, edges by origin (upstream's DependencyAnalyser or ast-export's LogicEdges), whether the AST is mixed-provenance and how many resources each revision built, and what the manifest declares provisional.",
+      "notation": "ig-ast-list",
+      "source": "fhir-harness/tools/index.ts#ig-ast-list",
+      "status": "candidate"
+    },
+    {
       "id": "ig-ast-measure-real-igs",
       "prefLabel": "Measure the AST export on real IGs",
       "definition": "Build smart-trust and smart-immunizations through `ig-ast-export` and print the W1/W2 measurements: counts, whether FSH sources sit where the plan expects, and logic-layer edge coverage per resource type against 458 of 458. `--byte-identical` adds a stock build and an `output/` diff.",
@@ -68,6 +76,14 @@
       "definition": "Map a delta (a commit range, a PR's diff, or the staged index) onto a base AST: which resources to rebuild (the forward cone), which to load from cache, which to remove, or a full build and why. Builds nothing.",
       "notation": "ig-ast-plan",
       "source": "fhir-harness/tools/index.ts#ig-ast-plan",
+      "status": "candidate"
+    },
+    {
+      "id": "ig-ast-render",
+      "prefLabel": "Render a computed IG AST delta as just-the-docs pages",
+      "definition": "Write the pages for a delta already computed by `ig-ast-diff --json`: an index that lists, a page per changed resource that shows, every one opening with the provisional mark and with Liquid in values neutralised.",
+      "notation": "ig-ast-render",
+      "source": "fhir-harness/tools/index.ts#ig-ast-render",
       "status": "candidate"
     },
     {

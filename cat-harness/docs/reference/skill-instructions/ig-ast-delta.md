@@ -47,7 +47,10 @@ exists only in a log or a JSON field does not meet it.
 | `delta.json` (`ig-ast-delta/v1`) | `ig-ast.ts diff` (here) | what changed between two ASTs |
 
 A resource's **key** is `canonical|version`, or `Type/id` when it has no
-canonical. Two ASTs are compared by key.
+canonical. Two ASTs are compared by key. **An incomplete AST is refused**: a
+missing `dependencies.json` or a missing or unparsable resource file stops
+the command, because an empty substitute would diff as "no change" (review on
+#1708).
 
 ## Four commands
 
@@ -109,9 +112,14 @@ changed or version-changed resource (the view: path, op, base, head).
 
 - **Every page opens with the provisional mark.** Do not remove it to make a
   page look finished.
-- Pages are wrapped in `{% raw %}`, because FHIR narratives carry `{{`
-  and `{%` that Jekyll would otherwise evaluate. A delta page that
-  executes the IG's own Liquid is a delta page showing the wrong thing.
+- **Liquid in values is neutralised, not merely wrapped.** FHIR narratives
+  carry `{{` and `{%`. A single `{% raw %}` around the page is not enough,
+  because a value containing `{% endraw %}` would close it and run whatever
+  follows (review on #1708). Every value has a word joiner (U+2060) inserted
+  inside `{{`, `{%`, `%}` and `}}`. The text reads the same; Jekyll parses
+  nothing.
+- **One page per key, not per Type/id.** Page names carry a hash of the key,
+  as the AST's own files do, so two versions of one resource are two pages.
 - Table cells escape `|`, and a key contains one (`canonical|version`).
 
 Put the pages under the IG's own just-the-docs site (see
