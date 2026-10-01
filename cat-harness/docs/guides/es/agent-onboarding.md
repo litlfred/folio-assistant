@@ -70,8 +70,8 @@ a mano, compruebe si ya existe uno.
 | Dónde | Qué le proporciona |
 |---|---|
 | `skills/folio-core/` | independiente del contenido: coordinación, observadores (watchers), QA, renderizado, bibliografía |
-| `skills/folio-paper-adapter/` | artículos: Lean, LaTeX, demostraciones, simuladores |
-| `skills/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
+| `skills/authoring/folio-paper-adapter/` | artículos: Lean, LaTeX, demostraciones, simuladores |
+| `skills/authoring/authoring-who-smart-guidelines/` | WHO SMART DAK / IG |
 | [Referencia de esquemas de habilidades](../../reference/skills/) | contrato de entrada/salida generado por habilidad |
 | [Instrucciones de habilidades](../../reference/skill-instructions/) | cuerpos de instrucciones completos generados |
 | [Habilidades y roles](../../skills.html) | cómo se componen las habilidades, los roles y las capacidades |

@@ -450,7 +450,7 @@ export function skillMdDirs(root: string): string[][] {
  * `remote-packages/`, so it was a THIRD definition. Under it,
  * `scientific-visualization`, `hypothesis-generation` and
  * `scientific-critical-thinking` read as dangling, and all three were deleted
- * from `skills/authoring-math/package-manifest.json` two hours after bean
+ * from `skills/authoring/authoring-math/package-manifest.json` two hours after bean
  * `m4zg` recorded that deleting them would be wrong. The evidence offered was a
  * `git log --diff-filter=A` search finding no file ever added for any of them —
  * which is the wrong question, because a remote skill has no file here by

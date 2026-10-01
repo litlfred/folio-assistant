@@ -33,7 +33,6 @@ function fixture(dirs: Array<{ id: string; path: string }>): string {
       description: "fixture",
       directories: dirs.map((d) => ({
         ...d,
-        dependents: "skip",
         graphKinds: ["cat-harness"],
         description: "fixture",
       })),

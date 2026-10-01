@@ -68,7 +68,6 @@ const DECL = `{
     {
       "id": "schemas",
       "path": "schemas/",
-      "dependents": "skip",
       "graphKinds": [
         "schemas",
         "cat-harness"
@@ -267,7 +266,7 @@ describe("a malformed sticky is repaired, not fatal", () => {
   function withFolioAt(path: string, key: "graphKinds" | "graphs"): string {
     return DECL.replace(
       '"directories": [',
-      `"directories": [\n    {\n      "id": "content",\n      "path": "${path}",\n      "dependents": "reproduce",\n      "${key}": [\n        "folio"\n      ]\n    },`,
+      `"directories": [\n    {\n      "id": "content",\n      "path": "${path}",\n      \n      "${key}": [\n        "folio"\n      ]\n    },`,
     );
   }
 
@@ -312,7 +311,7 @@ describe("a nested instance contributes its own stickies", () => {
           // so `harness.json` is not in the directory named here. That is what
           // `bootstrap/skills/` looks like, and a composer that looked for a
           // declaration inside the declared directory would find nothing.
-          directories: [{ id: "inner", path: "inner/skills/", dependents: "reproduce", graphKinds: ["cat-harness"] }],
+          directories: [{ id: "inner", path: "inner/skills/", graphKinds: ["cat-harness"] }],
         },
         null,
         2,
@@ -349,7 +348,7 @@ describe("a nested instance contributes its own stickies", () => {
     // stickies would collide with themselves.
     const root = mkdtempSync(join(tmpdir(), "landing-plain-"));
     writeDeclaration(root, JSON.stringify(
-        { name: "only", directories: [{ id: "s", path: "sub/", dependents: "reproduce", graphKinds: ["cat-harness"] }] },
+        { name: "only", directories: [{ id: "s", path: "sub/", graphKinds: ["cat-harness"] }] },
         null,
         2,
       ));

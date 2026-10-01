@@ -5999,25 +5999,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.dependents",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "ContentDirectory.dependents"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Whether a DEPENDENT instance materialises its own copy of this directory."
-        }
-      ],
-      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.dependents",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.contentdirectory.readonly",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6797,6 +6778,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.resolveddirectory.member",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ResolvedDirectory.member"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance whose directory this is. A declared subgraph is inherited as one MEMBER per instance in the chain whose same-named directory exists (owner, 2026-09-30, bean `3r47`/`xsqm` follow-up, option A: \"if f-a-core … has a docs/ … and depends on cat-harness where docs/ is declared … the viewer should detect f-a-core/docs\", \"a named (sub-)subgraph of docs\"). The declarer's own member comes first; `member` names each."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.member",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/cat-harness.resolveddirectory.own",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -6809,7 +6809,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "True when the declaring instance is the root rather than a dependency."
+          "@value": "True when this entry is the ROOT instance's — its own declaration, or its own member of an inherited subgraph."
         }
       ],
       "dcterms:source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.own",
@@ -13748,6 +13748,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.nodeSchemas",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/graph-kind-registry.graphkinddef.perinstance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphKindDef.perInstance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Does every instance have ITS OWN graph of this kind — so an instance that inherits a directory of this kind gets its own copy created?"
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.perInstance",
       "skos:note": "candidate"
     },
     {
@@ -20854,6 +20873,25 @@
         }
       ],
       "dcterms:source": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema.sync",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields/skill-topics.skillsdirectoryentryschema.subgraph",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "SkillsDirectoryEntrySchema.subgraph"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Marks the entry as a subgraph of the INSTANCE rather than a part of the skills graph. Replaced `dependents` on 2026-09-30 (option A), when inheritance became automatic and the per-entry field was retired."
+        }
+      ],
+      "dcterms:source": "cat-harness/schemas/skill-topics.ts#SkillsDirectoryEntrySchema.subgraph",
       "skos:note": "candidate"
     },
     {

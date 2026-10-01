@@ -46,7 +46,7 @@ function declaring(path: string): Record<string, unknown> {
   return {
     name: "probe",
     description: "a folio that says where its content lives",
-    directories: [{ id: "folio", path, dependents: "reproduce", graphKinds: ["folio"] }],
+    directories: [{ id: "folio", path, graphKinds: ["folio"] }],
   };
 }
 
@@ -81,7 +81,7 @@ describe("folioDir", () => {
     const root = repo({
       name: "probe",
       description: "declares something else entirely",
-      directories: [{ id: "beans", path: "beans/", dependents: "reproduce", graphKinds: ["beans"] }],
+      directories: [{ id: "beans", path: "beans/", graphKinds: ["beans"] }],
     });
     expect(folioDir(root)).toBe(join(root, "folio"));
   });

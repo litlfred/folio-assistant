@@ -2212,13 +2212,6 @@
       "status": "candidate"
     },
     {
-      "id": "cat-harness.contentdirectory.dependents",
-      "prefLabel": "ContentDirectory.dependents",
-      "definition": "Whether a DEPENDENT instance materialises its own copy of this directory.",
-      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.dependents",
-      "status": "candidate"
-    },
-    {
       "id": "cat-harness.contentdirectory.readonly",
       "prefLabel": "ContentDirectory.readOnly",
       "definition": "This directory holds MATERIALIZED content: readable, and not editable here.",
@@ -2506,9 +2499,16 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.resolveddirectory.member",
+      "prefLabel": "ResolvedDirectory.member",
+      "definition": "The instance whose directory this is. A declared subgraph is inherited as one MEMBER per instance in the chain whose same-named directory exists (owner, 2026-09-30, bean `3r47`/`xsqm` follow-up, option A: \"if f-a-core … has a docs/ … and depends on cat-harness where docs/ is declared … the viewer should detect f-a-core/docs\", \"a named (sub-)subgraph of docs\"). The declarer's own member comes first; `member` names each.",
+      "source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.member",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.resolveddirectory.own",
       "prefLabel": "ResolvedDirectory.own",
-      "definition": "True when the declaring instance is the root rather than a dependency.",
+      "definition": "True when this entry is the ROOT instance's — its own declaration, or its own member of an inherited subgraph.",
       "source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.own",
       "status": "candidate"
     },
@@ -5065,6 +5065,13 @@
       "prefLabel": "GraphKindDef.nodeSchemas",
       "definition": "One entry per `$schema` family a node of this kind may carry, keyed by the tag. Bean `rdkm`.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.nodeSchemas",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.perinstance",
+      "prefLabel": "GraphKindDef.perInstance",
+      "definition": "Does every instance have ITS OWN graph of this kind — so an instance that inherits a directory of this kind gets its own copy created?",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.perInstance",
       "status": "candidate"
     },
     {
@@ -7683,6 +7690,13 @@
       "prefLabel": "RemotePackageRefSchema.sync",
       "definition": "OPTIONAL, because a wrapper whose only job is to supply Docker requirements should not have to claim a sync strategy to be valid. Required until 2026-09-19, which is why both wrappers carry one.",
       "source": "cat-harness/schemas/skill-package.ts#RemotePackageRefSchema.sync",
+      "status": "candidate"
+    },
+    {
+      "id": "skill-topics.skillsdirectoryentryschema.subgraph",
+      "prefLabel": "SkillsDirectoryEntrySchema.subgraph",
+      "definition": "Marks the entry as a subgraph of the INSTANCE rather than a part of the skills graph. Replaced `dependents` on 2026-09-30 (option A), when inheritance became automatic and the per-entry field was retired.",
+      "source": "cat-harness/schemas/skill-topics.ts#SkillsDirectoryEntrySchema.subgraph",
       "status": "candidate"
     },
     {
