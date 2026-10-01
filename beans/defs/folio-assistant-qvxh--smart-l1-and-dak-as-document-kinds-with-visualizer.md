@@ -1,0 +1,24 @@
+---
+# folio-assistant-qvxh
+title: SMART L1 and DAK as DOCUMENT KINDS with visualizers inside smart-base, not harnesses
+status: todo
+type: feature
+created_at: 2026-10-01T08:37:53Z
+updated_at: 2026-10-01T08:37:53Z
+parent: folio-assistant-uhkv
+---
+
+Issue #1767; proposal cat-harness/docs/proposals/smart-separation-2026-10-01.md §Decided Q5.
+
+Owner, 2026-10-01: "what they really need to be are sub-document types/kinds/visualizer for them. smart-L1 is like a L1 document that was fully computable from smart-base assets (and maybe some other things like PICO, cochrane, etc), semi fixed structure ... similarly DAK is a publication type w/ the 10 components, fixed structure."
+
+So smart-l1/ and smart-dak/ (today: boilerplate + one kg-qa each, declaring no directories) stop being harnesses and become document kinds inside the smart-base harness.
+
+Head start: cat-harness/schemas/dak.ts, dak-blocks.ts, dak-content-type.ts already exist (S-destined by the split plan).
+
+## Done when
+- [ ] L1 kind: semi-fixed structure declared; computed from smart-base library/ plus external evidence (PICO, Cochrane) — sources named, not assumed
+- [ ] DAK kind: the ten components as a fixed structure, reusing dak.ts / dak-content-type.ts rather than a second schema
+- [ ] a visualizer for each kind
+- [ ] smart-l1/ and smart-dak/ re-homed (nothing deleted without owner OK); needs: smart-ig edges repointed to smart-base
+- [ ] smart-ig's fate stated to the owner (not in the reframe)
