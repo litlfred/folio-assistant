@@ -46,7 +46,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 
-import { directoriesForGraph } from "../schemas/cat-harness.js";
+import { checkoutDirectoriesForGraph } from "../schemas/cat-harness.js";
 import { WaiverNodeSchema, waiverState, type WaiverNode } from "../schemas/waiver.js";
 
 /** The INSTANCE root — this file lives at `<instance>/scripts/`. */
@@ -77,7 +77,7 @@ export interface WaiverReport {
 /** Read every waiver in the declared `waiver` graph. */
 export function checkWaivers(root: string = INSTANCE_ROOT, now: Date = new Date()): WaiverReport {
   const out: WaiverReport = { store: null, inForce: [], inert: [], malformed: [] };
-  const dirs = directoriesForGraph(root, "waiver");
+  const dirs = checkoutDirectoriesForGraph(root, "waiver");
   if (dirs.length === 0) return out;
   out.store = dirs.join(", ");
   const files: { dir: string; name: string }[] = [];

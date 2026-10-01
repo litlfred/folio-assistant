@@ -40,16 +40,13 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `agent-skills/library` | <span class="lv-fail">fail</span> | no successful run recorded — re-run `bun run lsi index --instance agent-skills --graph library` |
 | `bootstrap-tools/bootstrap-tools-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `bootstrap/skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `cat-harness/beans` | <span class="lv-na">n/a</span> | state graph — indexed on demand, never committed |
 | `cat-harness/docs` | <span class="lv-fail">fail</span> | needs an LSI index and has none — run `bun run lsi index --instance cat-harness --graph docs` |
 | `cat-harness/folio` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/folio-assistant-sci-data-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/folio-assistant-sci-lean-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/library` | <span class="lv-fail">fail</span> | stale — re-run `bun run lsi index --instance cat-harness --graph library` |
-| `cat-harness/memory` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/policies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
-| `cat-harness/root-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `cat-harness/skills` | <span class="lv-pass">pass</span> | fresh |
 | `fhir-harness/fhir-ig-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-core/core-library` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
@@ -59,6 +56,9 @@ the same as fine. The same verdict is `kg:audit`'s `tool-downstream-fresh` for t
 | `folio-assistant-core/glossary` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-sci/library` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `folio-assistant-sci/sci-methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
+| `folio-assistant/beans` | <span class="lv-na">n/a</span> | state graph — indexed on demand, never committed |
+| `folio-assistant/memory` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
+| `folio-assistant/root-docs` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `large-datasets/large-datasets-skills` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
 | `smart-base/library` | <span class="lv-fail">fail</span> | no successful run recorded — re-run `bun run lsi index --instance smart-base --graph library` |
 | `smart-base/methodologies` | <span class="lv-na">n/a</span> | below the need-an-index threshold — not judged |
