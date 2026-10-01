@@ -355,13 +355,6 @@
                 "type": "string",
                 "minLength": 1
               },
-              "dependents": {
-                "type": "string",
-                "enum": [
-                  "reproduce",
-                  "skip"
-                ]
-              },
               "coverage": {
                 "type": "object",
                 "properties": {
@@ -566,8 +559,7 @@
             "required": [
               "id",
               "path",
-              "graphKinds",
-              "dependents"
+              "graphKinds"
             ]
           }
         },
@@ -842,6 +834,36 @@
             "minLength": 1
           }
         },
+        "contentAdapters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "contentType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "className": {
+                "type": "string",
+                "minLength": 1
+              },
+              "extends": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "contentType",
+              "module",
+              "className"
+            ],
+            "additionalProperties": false
+          }
+        },
         "liquid": {
           "type": "object",
           "properties": {
@@ -875,8 +897,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-vibrant-franklin-d0ulgh/cat-harness.jsonld",
   "staging": {
     "branch": "claude/vibrant-franklin-d0ulgh",
-    "sha": "f6a423845a4231e790ad0e837c0956cefe130a4b",
+    "sha": "d31498e52c3c2c8c8ce18539e16e3b06f9ce28ed",
     "pr": "1708/merge",
-    "run": "36786973099"
+    "run": "36824046361"
   }
 }

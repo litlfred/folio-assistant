@@ -34,6 +34,46 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/fhir-cache-seed-npm",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Seed the FHIR package cache from trusted sources (exact versions)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Fill `~/.fhir/packages` (or `--cache`) for an environment that cannot reach packages.fhir.org, from trust anchors only: npm account `grahamegrieve` (owner-trusted), publishers' own published-site repositories (the seeder's list, each fetch verified against the tarball's own package.json), template repos found through FHIR/ig-registry's templates.json read live each run, and an owner `--mirror`. Exact versions only (a patch wildcard resolves as the Publisher resolves it, recorded); every tarball verified; nothing computed once and kept; provenance recorded; missing versions listed, never substituted."
+        }
+      ],
+      "skos:notation": "fhir-cache-seed-npm",
+      "dcterms:source": "fhir-harness/tools/index.ts#fhir-cache-seed-npm",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/fhir-package-mirror",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Mirror FHIR packages from packages.fhir.org into a git repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On a machine that reaches packages.fhir.org, fetch exactly a missing list (from `fhir-cache-seed-npm --missing-out`), check each tarball names itself exactly, record SHA512SUMS, and commit and push to a git repository that an environment without packages.fhir.org reads with `--mirror`. The person running it is the trust anchor for what it adds."
+        }
+      ],
+      "skos:notation": "fhir-package-mirror",
+      "dcterms:source": "fhir-harness/tools/index.ts#fhir-package-mirror",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-ast-diff",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -94,6 +134,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-ast-list",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Summarise one IG AST"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Counts per resource type, edges in total and resolved inside the IG, edges by origin (upstream's DependencyAnalyser or ast-export's LogicEdges), whether the AST is mixed-provenance and how many resources each revision built, and what the manifest declares provisional."
+        }
+      ],
+      "skos:notation": "ig-ast-list",
+      "dcterms:source": "fhir-harness/tools/index.ts#ig-ast-list",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-ast-measure-real-igs",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -131,6 +191,26 @@
       ],
       "skos:notation": "ig-ast-plan",
       "dcterms:source": "fhir-harness/tools/index.ts#ig-ast-plan",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/ig-ast-render",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Render a computed IG AST delta as just-the-docs pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write the pages for a delta already computed by `ig-ast-diff --json`: an index that lists, a page per changed resource that shows, every one opening with the provisional mark and with Liquid in values neutralised."
+        }
+      ],
+      "skos:notation": "ig-ast-render",
+      "dcterms:source": "fhir-harness/tools/index.ts#ig-ast-render",
       "skos:note": "candidate"
     },
     {
