@@ -834,6 +834,36 @@
             "minLength": 1
           }
         },
+        "contentAdapters": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "contentType": {
+                "type": "string",
+                "minLength": 1
+              },
+              "module": {
+                "type": "string",
+                "minLength": 1
+              },
+              "className": {
+                "type": "string",
+                "minLength": 1
+              },
+              "extends": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "contentType",
+              "module",
+              "className"
+            ],
+            "additionalProperties": false
+          }
+        },
         "liquid": {
           "type": "object",
           "properties": {
@@ -867,8 +897,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld",
   "staging": {
     "branch": "claude/awesome-feynman-0rt8ra",
-    "sha": "5d107e98717fe31f839a6a3b6c0a6950e623c471",
-    "pr": "1730/merge",
-    "run": "36795553742"
+    "sha": "499cf90ebbc85edf8dc0bd2859e8d5befa70fb5b",
+    "pr": "1741/merge",
+    "run": "36825711265"
   }
 }
