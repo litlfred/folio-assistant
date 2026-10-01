@@ -3569,7 +3569,7 @@ for (const o of await registerMcpToolGroups(server)) {
 // does for contributed QA checkers. `ContributionRegistry.registerTools` had
 // no production caller until this block, so a contributed tool never reached
 // any server (folio-assistant#1492, which contributes `lean_formal_edges` from
-// folio-assistant-sci). A contribution that cannot load is REPORTED and the
+// a content package above this layer). A contribution that cannot load is REPORTED and the
 // server still starts, the same stance as a failed tool group above.
 try {
   // `contributionsRoot()` (#1523): the FOLIO's root, which is what declares

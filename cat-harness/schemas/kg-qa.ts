@@ -1456,15 +1456,16 @@ export const KG_CRITERIA: readonly KgCriterionDefinition[] = [
     id: "content-instance-holds-code",
     applies: ["graph"],
     scope: "instance",
-    // `major`, argued rather than picked (bean `eayu`). Not `critical`: nothing
-    // names a thing that does not exist — every file resolves and runs — and
-    // the owner TOLERATES the case for now ("iris specific tools for now ok in
-    // who-iris/ but make sure fails QA finding"), so it must not fail
-    // `kg:audit --check`, which is what CI runs. Not `minor`: minor is for gaps
-    // with LEGITIMATE instances, and a content repository holding code has
-    // none — FR-7 admits no exception, and a tolerated violation is still a
-    // violation. `major` records `fail`, fails `--strict`, and names each file.
-    severity: "major",
+    // `minor` — a QA WARNING, not a failure — by owner ruling, 2026-10-01:
+    // "QA warning. not failure.. ok b/c small # tools" (bean `eayu`; separation
+    // arc S0, #1770). It was `major` on the argument that FR-7 admits no
+    // exception; the owner overruled that for the tolerated case: the five
+    // IRIS-specific files STAY in who-iris/ and no who-iris-tools repository is
+    // authorised. `minor` still records `fail` and still names every file, so
+    // the detection is kept and the violation stays visible — it simply fails
+    // neither `kg:audit --check` nor `--strict`. The ruling's warrant is that
+    // the tolerated set is SMALL; revisit the severity if it grows.
+    severity: "minor",
     summary:
       "An instance declared as a CONTENT repository (`separation: \"content\"`, or the content half a " +
       "declared tools instance `supports`) holds code. A content repository holds no code (kg-separation, " +

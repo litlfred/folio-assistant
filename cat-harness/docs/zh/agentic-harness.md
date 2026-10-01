@@ -287,8 +287,8 @@ CRDM 工作流在满足以下条件时退出：
 | 提交与 PR 纪律 | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
 | 功能需求检测 | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
 | CRDM 需求工作流 | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
-| 内容撰写（论文） | authoring-math 技能 | [`folio-assistant-sci/skills/content/authoring-math/`](../../../folio-assistant-sci/skills/content/authoring-math/) |
-| 内容撰写（文档） | folio-document-adapter 技能 | [`folio-assistant-core/skills/content/folio-document-adapter/`](../../../folio-assistant-core/skills/content/folio-document-adapter/) |
+| 内容撰写（论文） | authoring-math 技能 | `skill_list` → `authoring-math` |
+| 内容撰写（文档） | folio-document-adapter 技能 | `skill_list` → `folio-document-adapter` |
 | 内容生命周期 | content-lifecycle 技能 | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | 文档摄取 | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | 调度与协调 | `dispatch-agent.md`、`coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |

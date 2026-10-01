@@ -59,11 +59,11 @@ export default webpage({
       title: "WHO SMART Guidelines DAKs (L2)",
       asset: {
         kind: "bpmn",
-        source: "processes/l2-dak-authoring.bpmn",
+        source: "../smart-base/processes/l2-dak-authoring.bpmn",
         rendered: "assets/img/workflows/l2-dak-authoring.svg",
         alt: "BPMN swimlane diagram of L2 DAK authoring: a parallel gateway fans out personas, BPMN processes, DMN decision logic, the data dictionary and indicators across the business-analyst lane alongside the terminologist's bindings, then clinical SME validation gates assembly of the DAK.",
         sourceLinks: [
-          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/processes/l2-dak-authoring.bpmn" },
+          { text: "BPMN 2.0 source", href: "https://github.com/litlfred/folio-assistant/blob/main/smart-base/processes/l2-dak-authoring.bpmn" },
           { text: "full-size SVG", href: "assets/img/workflows/l2-dak-authoring.svg" },
         ],
         linkStyle: "caption",

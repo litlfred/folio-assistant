@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach, afterEach } from "bun:test";
-import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
+import { existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import { join, resolve } from "path";
 import { applyWorkPlanOp, findBean, listBeans } from "../../src/workflow/bean-link";
@@ -112,11 +112,13 @@ describe("an instance with no bean", () => {
 
 describe("the diagrams declare which operation each step performs", () => {
   test("every bean-marked activity in the shipped diagrams names an op", async () => {
-    const dir = resolve(import.meta.dir, "../../processes");
+    // Each owner's processes directory: `l2-dak-authoring` is smart-base's (#1772).
+    const dirs = [resolve(import.meta.dir, "../../processes"), resolve(import.meta.dir, "../../../smart-base/processes")];
     let marked = 0;
     for (const f of ["editing-hci-validation", "draft-to-publication", "content-lifecycle",
                      "authoring-a-paper", "l2-dak-authoring", "l3-fhir-pipeline"]) {
-      const model = await loadProcessModel(join(dir, `${f}.bpmn`));
+      const file = dirs.map((d) => join(d, `${f}.bpmn`)).find((p) => existsSync(p)) ?? join(dirs[0]!, `${f}.bpmn`);
+      const model = await loadProcessModel(file);
       for (const n of model.nodes.values()) {
         if (!n.touchesWorkPlan) continue;
         marked++;

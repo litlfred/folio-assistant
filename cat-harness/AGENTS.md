@@ -3,14 +3,20 @@
 **Cold start, in order.** This file does not restate
 [`README.md`](README.md) — that says what this layer *is*, and a description
 written twice is a description one copy gets wrong. This says what to **do**,
-and it augments rather than replaces the repository's
-[`AGENTS.md`](../AGENTS.md), which binds unchanged: beans, the opening brief,
-process state, continual progress, context-before-the-question.
+and it augments rather than replaces the `AGENTS.md` at the root of whatever
+checkout includes this layer. The rules that bind everywhere are skills of
+this layer, so they are linked here rather than there:
+[beans](skills/sdlc/sdlc-core/todo-manager.md),
+[the opening brief](skills/sdlc/sdlc-core/opening-brief.md),
+[process state](skills/process/workflow/process-state.md),
+[continual progress](skills/sdlc/sdlc-core/continual-progress.md),
+[context before the question](skills/conduct/conduct-core/interaction-modality.md).
 
 1. **Get the work-plan CLI** — `cat-harness/scripts/install-beans.sh &&
    export PATH="$HOME/.local/bin:$PATH" && beans prime`. A fresh container has
    no `beans`, and the hand-parse fallback cannot claim or create anything.
-2. **Claim before you work.** `beans <id> --status in-progress`. A claim
+2. **Claim before you work.** `bun run beans:claim <id>` — not
+   `beans update --status in-progress`, which writes no holder note. A claim
    announces rather than reserves until your PR exists — see
    `bean-coordination`.
 3. **Ask for the skill that governs the task** — `skill_list`, then
@@ -25,7 +31,8 @@ process state, continual progress, context-before-the-question.
 > **cat-harness owns the harness; core owns content vocabulary.**
 > A schema describing skills, workflows, roles or tools belongs here. One
 > describing what a folio HOLDS, where it CAME FROM, or how much of it is
-> present belongs in [`folio-assistant-core/`](../folio-assistant-core/).
+> present belongs in the content layer above this one, which links down to
+> here and states the same split from its side.
 
 Three rules that bind here before your first edit, each with its skill as the
 text:
@@ -48,8 +55,8 @@ text:
 |---|---|
 | what this layer is, as a reader | [`README.md`](README.md) |
 | what to do first, as an agent | this file |
-| what the repository is, and every instance in it | [`../README.md`](../README.md#harness-instances) |
-| the rules that bind everywhere | [`../AGENTS.md`](../AGENTS.md) |
+| what the repository is, and every instance in it | the checkout root's `README.md` — not linked, because more than one repository includes this layer |
+| the rules that bind everywhere | the skills linked at the top of this file; the checkout root's `AGENTS.md` points to them |
 | durable facts a subagent owns | `.claude/agent-memory/<agent>/MEMORY.md` — injected, **first 200 lines only** |
 
 That last row is the one distinction worth holding on to: **this file is read,
