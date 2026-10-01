@@ -146,7 +146,9 @@ describe("the corpus: viewers are read from the pages (#1168 B7a-2b)", () => {
     };
     expect(resolveFor("cat-harness", "tools")).toBe("cat-harness/docs/tools/index.md");
     expect(resolveFor("cat-harness", "processes")).toBe("cat-harness/docs/processes/index.md");
-    expect(resolveFor("cat-harness", "who-iris-library")).toBe("cat-harness/docs/cat-harness/library/who-iris/index.html");
+    // `cat-harness#who-iris-library` was a `scope: "repository"` MIRROR, retired
+    // by placement PR0a (and re-retired by S0, bean `hx65`); the directory is
+    // declared once, by its owner, and resolves to the same page from there.
     expect(resolveFor("who-iris", "library")).toBe("cat-harness/docs/cat-harness/library/who-iris/index.html");
     expect(resolveFor("cat-harness", "skills")).toBe("cat-harness/docs/cat-harness/docs-auto/index/skills/skills/index.html");
     expect(resolveFor("folio-assistant", "beans")).toBe("cat-harness/docs/beans/index.html");
