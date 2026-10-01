@@ -35014,6 +35014,49 @@
       "exported": true
     },
     {
+      "id": "cat-harness/schemas/tool-run.ts#ListedToolRun",
+      "name": "ListedToolRun",
+      "module": "cat-harness/schemas/tool-run.ts",
+      "kind": "interface",
+      "doc": "One record as listed: its path (instance-relative), and the record or `undefined` when it does not parse.",
+      "fields": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "record",
+          "type": "ToolRunRecord | undefined",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness/schemas/tool-run.ts#ToolRunRecord"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness/schemas/tool-run.ts#ToolRunListing",
+      "name": "ToolRunListing",
+      "module": "cat-harness/schemas/tool-run.ts",
+      "kind": "type-alias",
+      "doc": "Every record under an instance, or `unknown` when there is no record",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness/schemas/tool-run.ts#ToolRunRecord",
       "name": "ToolRunRecord",
       "module": "cat-harness/schemas/tool-run.ts",
@@ -50729,6 +50772,14 @@
       "from": "cat-harness/schemas/tool-invocation.ts#ToolInvocationSchema",
       "to": "cat-harness/schemas/tool-types.ts#SkillNameSchema",
       "via": "skill",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness/schemas/tool-run.ts#ListedToolRun",
+      "to": "cat-harness/schemas/tool-run.ts#ToolRunRecord",
+      "via": "record",
       "kind": "field",
       "optional": false,
       "array": false
