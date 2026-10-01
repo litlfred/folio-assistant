@@ -3,7 +3,7 @@
 
 ingested source material — attributed to its document, not folio content
 
-Held in the library [`fhir-harness/library/`](../) as `hl7-2023-fhir-r5-testplan`.
+Held in the library [`fhir-harness/library/`](../README.md) as `hl7-2023-fhir-r5-testplan`.
 
 | | |
 |---|---|

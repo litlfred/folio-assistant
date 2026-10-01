@@ -22,7 +22,7 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`rendered-labels.qa-results.json`](rendered-labels.qa-results.json) | data |  |
 | [`root-scan-census.qa-results.json`](root-scan-census.qa-results.json) | data |  |
 | [`skill-register.qa-results.json`](skill-register.qa-results.json) | data |  |
-| [`source-licence.qa-results.json`](source-licence.qa-results.json) | data |  |
+| [`source-licence.qa-results.json`](source-licence.qa-results.json) | data that does not parse |  |
 | [`subgraph-readmes.qa-results.json`](subgraph-readmes.qa-results.json) | data |  |
 | [`term-mapping.qa-results.json`](term-mapping.qa-results.json) | data |  |
 | [`wireframes.qa-results.json`](wireframes.qa-results.json) | data |  |
@@ -30,8 +30,8 @@ Part of [C@T Harness](../../README.md) 0.1.0, declared as `qa`, holding `qa`.
 | [`bootstrap/`](bootstrap/) | 16 files | |
 | [`bootstrap-tools/`](bootstrap-tools/) | 3 files | |
 | [`detangle/`](detangle/) | 40 files | |
-| [`kg-qa/`](kg-qa/) | 566 files | |
-| [`library-qa/`](library-qa/) | 54 files | |
+| [`kg-qa/`](kg-qa/) | 577 files | |
+| [`library-qa/`](library-qa/) | 59 files | |
 | [`lsi/`](lsi/) | 5 files | |
 | [`tool-runs/`](tool-runs/) | 3 files | |
 | [`translation-qa/`](translation-qa/) | 35 files | |

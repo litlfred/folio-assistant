@@ -3,7 +3,7 @@
 
 ingested source material — attributed to its document, not folio content
 
-Held in the library [`fhir-harness/library/`](../) as `cucumber-2024-gherkin-reference`.
+Held in the library [`fhir-harness/library/`](../README.md) as `cucumber-2024-gherkin-reference`.
 
 | | |
 |---|---|

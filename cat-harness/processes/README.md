@@ -41,6 +41,7 @@ Part of [C@T Harness](../README.md) 0.1.0, declared as `processes`, holding `pro
 | [`getting-started.bpmn`](getting-started.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Getting started |  |
 | [`graph-detanglement.bpmn`](graph-detanglement.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): A sub-graph wants to leave |  |
 | [`human-translation-workflow.bpmn`](human-translation-workflow.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Human Translation Workflow |  |
+| [`ig-ast-delta-review.bpmn`](ig-ast-delta-review.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Is the incremental IG AST what a full build would have produced? |  |
 | [`ig-incremental-build.bpmn`](ig-incremental-build.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Incremental IG build |  |
 | [`ingest-build-l1-kg.bpmn`](ingest-build-l1-kg.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Ingestion subprocess — build the L1 knowledge graph | "Document ingestion — uploads/ to the L1 source knowledge graph" |
 | [`ingest-derive-content.bpmn`](ingest-derive-content.bpmn) | a [Process](https://github.com/litlfred/bootstrap/blob/main/schemas/README.md#process): Ingestion subprocess — derive content from the assets | "Document ingestion — uploads/ to the L1 source knowledge graph" |

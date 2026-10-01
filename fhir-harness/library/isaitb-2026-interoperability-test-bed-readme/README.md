@@ -3,7 +3,7 @@
 
 ingested source material — attributed to its document, not folio content
 
-Held in the library [`fhir-harness/library/`](../) as `isaitb-2026-interoperability-test-bed-readme`.
+Held in the library [`fhir-harness/library/`](../README.md) as `isaitb-2026-interoperability-test-bed-readme`.
 
 | | |
 |---|---|

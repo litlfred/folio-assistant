@@ -151,8 +151,18 @@
     },
     "stated": {
       "summary": "The licence is known, and the record says where it is stated.",
-      "count": 7,
+      "count": 12,
       "entries": [
+        {
+          "entry": "agent-skills/library/hmans-2026-beans-readme",
+          "id": "Apache-2.0",
+          "basis": "https://github.com/hmans/beans/blob/99260bf1a6bec3e395b629406b737f6418653a17/LICENSE — the repository's LICENSE at the ingested commit is the Apache License, Version 2.0, read 2026-10-01; the README's own 'License' section says the same. The repository has no NOTICE file. The text is held in full, unmodified; the Apache-2.0 licence text itself is this repository's root LICENSE, and the attribution is in THIRD-PARTY-NOTICES.md."
+        },
+        {
+          "entry": "agent-skills/library/mcp-2026-specification-2026-07-28",
+          "id": "Apache-2.0 AND MIT",
+          "basis": "https://github.com/modelcontextprotocol/modelcontextprotocol/blob/046fa30efd374370afb87ef830bd788eac5f217e/LICENSE — the repository's LICENSE at the ingested commit, read 2026-10-01: 'The MCP project is undergoing a licensing transition from the MIT License to the Apache License, Version 2.0 (\"Apache-2.0\"). All new code and specification contributions to the project are licensed under Apache-2.0. ... Contributions made by authors who originally licensed their work under the MIT License and who have not yet granted explicit permission to relicense remain licensed under the MIT License.' Both permit copying with the notice kept, so the specification text is held in full; which pages are which cannot be told from the files, so both notices are reproduced in THIRD-PARTY-NOTICES.md. The CC-BY-4.0 clause in the same file applies to documentation EXCLUDING specifications, so it does not apply here."
+        },
         {
           "entry": "agent-skills/library/skills-in-openai-api-notebook",
           "id": "MIT",
@@ -182,6 +192,21 @@
           "entry": "cat-harness/library/w3c-2020-json-ld-1-1",
           "id": "W3C-20150513",
           "basis": "The document's own copyright paragraph, under its header: \"Copyright © 2010-2020 W3C® (MIT, ERCIM, Keio, Beihang). W3C liability, trademark and permissive document license rules apply\", where 'permissive document license' links to https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document (the W3C Software and Document License, SPDX W3C-20150513). That licence permits copying, modifying and distributing the work provided the notice, any pre-existing notices, and a statement of changes go with every copy; the notice is in `note`, so this entry holds the text in full (issue #1614)."
+        },
+        {
+          "entry": "fhir-harness/library/cucumber-2024-gherkin-reference",
+          "id": "MIT",
+          "basis": "https://github.com/cucumber/docs/blob/3c93e6cee4c6164f40ed69dfe84ac440c2983120/LICENSE — the repository's LICENSE at the ingested commit, 'The MIT License (MIT) / Copyright (c) Cucumber Ltd', read 2026-10-01. The text is held in full; the notice MIT requires is reproduced in THIRD-PARTY-NOTICES.md."
+        },
+        {
+          "entry": "fhir-harness/library/hl7-2023-fhir-r5-testplan",
+          "id": "CC0-1.0",
+          "basis": "https://github.com/HL7/fhir/blob/eca054db690594b98b3cf81ff52634f2bbc69822/source/license.html — the specification's own licence page at the v5.0.0 commit, read 2026-10-01: 'We dedicate the FHIR specification to the public domain using CC0 1.0 ... This specification is licensed under Creative Commons \"No Rights Reserved\" (CC0).' The repository's LICENSE file says the same: 'the FHIR specification itself is covered under a different license, as software licenses are not appropriate', pointing to that page. The resource's source files are held in full."
+        },
+        {
+          "entry": "fhir-harness/library/isaitb-2026-interoperability-test-bed-readme",
+          "id": "EUPL-1.2",
+          "basis": "https://github.com/ISAITB/gitb/blob/e3cb6c00ef57792b6464b03cea27c8e84a6565bc/LICENCE.txt and NOTICE.md at the ingested commit, read 2026-10-01: 'Copyright (C) 2026 European Union. Licensed under the EUPL, Version 1.2 or – as soon they will be approved by the European Commission - subsequent versions of the EUPL (the \"Licence\")'. EUPL-1.2 permits reproduction and distribution of the Work provided the copyright notice and licence notice are kept, so the README is held in full, unmodified, and the notice is reproduced in THIRD-PARTY-NOTICES.md."
         },
         {
           "entry": "smart-base/library/mehl-2021-who-smart-guidelines",
@@ -217,5 +242,5 @@
       ]
     }
   },
-  "total": 54
+  "total": 59
 }
