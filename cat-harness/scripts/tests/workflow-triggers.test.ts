@@ -169,6 +169,18 @@ describe("workflow triggers match what their headers claim", () => {
       // the active-stretch one, and they answer different questions — dropping
       // either leaves a blind spot that the other does not cover.
       "ci-health.yml": ["schedule", "workflow_run"],
+      // Added 2026-10-01 after review on #1725: this map named four files while
+      // ELEVEN carry a non-dispatch trigger, measured. `jsonld-gen-check.yml`
+      // was the costly omission — the `ci-health` watchdog names it as one of
+      // its two `workflow_run` sources, so removing its `push` trigger would
+      // have left this suite green while silently disabling half the immediate
+      // detection path. The derived test below now catches that case for any
+      // future reference; these entries pin the rest.
+      "jsonld-gen-check.yml": ["pull_request", "push"],
+      "feature-staging.yml": ["pull_request"],
+      "health-check.yml": ["schedule"],
+      "pr-checks-present.yml": ["schedule"],
+      "upstream-pins.yml": ["schedule"],
     };
     for (const [f, want] of Object.entries(live)) {
       const t = triggers(readFileSync(join(DIR, f), "utf-8"));
@@ -246,6 +258,71 @@ describe("workflow triggers match what their headers claim", () => {
       }
     }
     expect(dangling).toEqual([]);
+  });
+
+  test("a workflow named by `workflow_run` can actually produce runs on the default branch", () => {
+    // The guard the hand-written map above cannot give, and the one review on
+    // #1725 asked for. `workflow_run` fires only when the NAMED workflow runs,
+    // so a referenced workflow with no `push` trigger produces nothing on
+    // `main` and the dependent watchdog never wakes — `1xhc` across two files,
+    // where each one reads correctly on its own.
+    //
+    // Derived from the references themselves, so adding a new `workflow_run`
+    // dependency extends the coverage without anybody remembering to.
+    const byName = new Map<string, string>();
+    for (const f of FILES) {
+      const n = /^name:\s*(.+)$/m.exec(readFileSync(join(DIR, f), "utf-8"))?.[1]?.trim();
+      if (n) byName.set(n.replace(/^["']|["']$/g, ""), f);
+    }
+
+    const unfireable: string[] = [];
+    for (const f of FILES) {
+      const src = readFileSync(join(DIR, f), "utf-8");
+      const m = /^  workflow_run:\s*\n(?:[ \t]+#.*\n|\s*\n)*[ \t]+workflows:\s*\[(.+?)\]/m.exec(src);
+      if (m === null) continue;
+      for (const raw of m[1]!.split(",")) {
+        const name = raw.trim().replace(/^["']|["']$/g, "");
+        const file = byName.get(name);
+        // A name resolving to no file is the OTHER test's finding; not repeated
+        // here, so one defect does not fail two tests and look like two.
+        if (file === undefined) continue;
+        if (!triggers(readFileSync(join(DIR, file), "utf-8")).has("push")) {
+          unfireable.push(`${f} waits on ${JSON.stringify(name)} (${file}), which has no \`push\` trigger`);
+        }
+      }
+    }
+    expect(unfireable).toEqual([]);
+  });
+
+  test("`ci-health.yml`'s red conclusions are exactly the ones this repo calls red", async () => {
+    // The agreement that file's own comment promises, kept by derivation rather
+    // than by two lists being edited together. `check:ci-health` calls a
+    // workflow red when its newest SETTLED run is anything but `success`, and
+    // `NOT_A_VERDICT` names the conclusions that settle without judging. So
+    // red = universe − success − NOT_A_VERDICT, and the workflow's `if:` must
+    // list precisely that.
+    //
+    // Before review on #1725 the condition was `== 'failure'`, which covered
+    // ONE of five — four red conclusions skipped the job and waited for the
+    // weekly cron, in the trigger built to remove that wait.
+    const { NOT_A_VERDICT } = await import("../../src/workflow/ci-health.js");
+
+    // DECLARED, because a test cannot enumerate GitHub's vocabulary for itself.
+    // A conclusion GitHub adds later is invisible here until a person adds it —
+    // stated rather than hidden, since the alternative is a test that looks
+    // exhaustive and is not.
+    const UNIVERSE = [
+      "success", "failure", "neutral", "cancelled",
+      "skipped", "timed_out", "action_required", "stale", "startup_failure",
+    ];
+    const expected = UNIVERSE.filter((c) => c !== "success" && !NOT_A_VERDICT.has(c)).sort();
+
+    const src = readFileSync(join(DIR, "ci-health.yml"), "utf-8");
+    const listed = [...(/fromJSON\('\[(.+?)\]'\)/s.exec(src)?.[1] ?? "").matchAll(/"([a-z_]+)"/g)]
+      .map((m) => m[1]!)
+      .sort();
+
+    expect({ listed, expected }).toEqual({ listed: expected, expected });
   });
 
   test("no workflow references PR context while unable to receive a PR event", () => {

@@ -108,12 +108,28 @@ describe("the walk is bounded, and says so when it hits the bound", () => {
     expect(renderBlame(v)).toContain("it is not the recent merges");
   });
 
-  test("the cap is honoured exactly: a green at the last allowed step still resolves", () => {
-    // Off-by-one guard in the direction that loses a real answer. With the cap
-    // at 3 a green at step 3 must still be found, not reported exhausted.
+  test("the cap IS the budget: it examines exactly `cap` parents, no more", () => {
+    // Rewritten 2026-10-01. The loop was inclusive (`stepsBack <= cap`), so it
+    // examined `cap + 1` parents and returned `stepsBack: cap + 1`, while
+    // `renderBlame` said "still red 10 first-parents back" and the constant's
+    // docblock promised "at most ten extra requests" — three numbers, two
+    // wrong. Review on #1725. The cap is now the request budget exactly.
     const c = chain(["failure", "failure", "failure", "failure", "success"]);
-    expect(blameFailingRun({ ...c, cap: 3 })).toMatchObject({ kind: "suspect", stepsBack: 3 });
-    expect(blameFailingRun({ ...c, cap: 2 })).toMatchObject({ why: "walk-exhausted" });
+    // cap 4 examines parents 1..4; the green is the 4th, so it resolves.
+    expect(blameFailingRun({ ...c, cap: 4 })).toMatchObject({ kind: "suspect", stepsBack: 3 });
+    // cap 3 examines parents 1..3, all red, and stops WITHOUT looking at the
+    // 4th — the green it must not reach.
+    expect(blameFailingRun({ ...c, cap: 3 })).toMatchObject({ why: "walk-exhausted", stepsBack: 3 });
+  });
+
+  test("`walk-exhausted` reports the cap itself, which is what renderBlame prints", () => {
+    // The three numbers that disagreed. Pinned together so they cannot drift
+    // apart again: the verdict's `stepsBack`, the constant, and the sentence.
+    const v = blameFailingRun({
+      ...chain(Array(BLAME_WALK_CAP + 5).fill("failure") as ConclusionOnCommit[]),
+    });
+    expect(v).toMatchObject({ kind: "cannot-determine", why: "walk-exhausted", stepsBack: BLAME_WALK_CAP });
+    expect(renderBlame(v)).toContain(`${BLAME_WALK_CAP} first-parents back`);
   });
 
   test("a root commit ends the walk as no-parent, not as a suspect", () => {

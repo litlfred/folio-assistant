@@ -373,7 +373,19 @@ export interface WorkflowHealth {
 }
 
 /** Conclusions that are not a pass but are also not the workflow's fault. */
-const NOT_A_VERDICT = new Set(["cancelled", "skipped", "neutral"]);
+/**
+ * Conclusions that are NOT a verdict on the commit: the run finished without
+ * judging it. `cancelled` was superseded, `skipped` never ran its body, and
+ * `neutral` is a deliberate abstention.
+ *
+ * EXPORTED since 2026-10-01, because it was re-listed. `conclusionOnCommit` in
+ * `check-ci-health.ts` filtered `cancelled` and `skipped` and forgot `neutral`,
+ * so a neutral-only parent read as a FAILURE there and as a non-verdict here —
+ * and the blame walk then continued past it and could name it as the suspect.
+ * Found by review on #1725. Two spellings of one fact, and the drift only shows
+ * on the conclusion the shorter list forgot.
+ */
+export const NOT_A_VERDICT: ReadonlySet<string> = new Set(["cancelled", "skipped", "neutral"]);
 
 /**
  * Classify one workflow's runs, newest first.
@@ -1416,11 +1428,12 @@ export function renderPages(r: PagesReport): string {
  *
  * Stated rather than left implicit because an unbounded walk turns a long red
  * stretch into an API sweep: one request per step, per failing workflow, on a
- * trigger that fires on every failure. At 10 it costs at most ten extra
- * requests per failing workflow and covers about 77 minutes of this
- * repository's merge cadence (7.7 min median, measured over 186 merges in 24h,
- * bean `kgho`) — long enough that a walk hitting the cap is itself worth
- * reporting rather than a routine outcome.
+ * trigger that fires on every failure. At 10 it examines EXACTLY ten parents —
+ * the loop is exclusive, so the constant is the request budget rather than one
+ * less than it — and covers about 77 minutes of this repository's merge cadence
+ * (7.7 min median, measured over 186 merges in 24h, bean `kgho`), long enough
+ * that a walk hitting the cap is itself worth reporting rather than a routine
+ * outcome.
  */
 export const BLAME_WALK_CAP = 10;
 
@@ -1484,7 +1497,11 @@ export function blameFailingRun(opts: {
   const cap = opts.cap ?? BLAME_WALK_CAP;
   let cur = opts.failingSha;
 
-  for (let stepsBack = 0; stepsBack <= cap; stepsBack++) {
+  // EXCLUSIVE. `<=` examined `cap + 1` parents and returned `stepsBack: cap + 1`,
+  // while `renderBlame` said "still red 10 first-parents back" and the cap's own
+  // docblock promised "at most ten extra requests" — three numbers, two of them
+  // wrong. Found by review on #1725. The budget is now what the constant says.
+  for (let stepsBack = 0; stepsBack < cap; stepsBack++) {
     const parent = opts.firstParent(cur);
     if (parent === undefined) return { kind: "cannot-determine", why: "no-parent", at: cur, stepsBack };
 
@@ -1496,7 +1513,7 @@ export function blameFailingRun(opts: {
     // `failure`: the parent is red too, so `cur` did not cause it. Keep going.
     cur = parent;
   }
-  return { kind: "cannot-determine", why: "walk-exhausted", at: cur, stepsBack: cap + 1 };
+  return { kind: "cannot-determine", why: "walk-exhausted", at: cur, stepsBack: cap };
 }
 
 /**

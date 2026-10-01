@@ -26,6 +26,7 @@ import {
   assess,
   BLAME_WALK_CAP,
   blameFailingRun,
+  NOT_A_VERDICT,
   type BlameVerdict,
   type ConclusionOnCommit,
   type WorkflowHealth,
@@ -713,8 +714,13 @@ async function conclusionOnCommit(file: string, sha: string): Promise<Conclusion
     );
     if (!res.ok) return "unknown";
     const body = (await res.json()) as { workflow_runs?: Array<{ status?: string; conclusion?: string | null }> };
+    // `NOT_A_VERDICT`, not a hand-written list. This read
+    // `!== "cancelled" && !== "skipped"` and forgot `neutral`, so a
+    // neutral-only parent came back `failure` here while `classifyRuns` called
+    // it no verdict at all — and the walk then continued past it and could name
+    // it as the suspect. Found by review on #1725.
     const settled = (body.workflow_runs ?? []).filter(
-      (r) => r.status === "completed" && r.conclusion && r.conclusion !== "cancelled" && r.conclusion !== "skipped",
+      (r) => r.status === "completed" && r.conclusion && !NOT_A_VERDICT.has(r.conclusion),
     );
     if (settled.length === 0) return "none";
     // ANY success on the commit counts as green — a re-run that passed is the
@@ -749,10 +755,22 @@ async function computeBlame(rows: readonly WorkflowHealth[]): Promise<Map<string
     };
     // The walk is synchronous and the lookup is async, so the shas are
     // collected first: walk with a lookup that records what it wants, then
-    // fetch, then walk again for real. Two passes over at most
-    // BLAME_WALK_CAP + 1 commits, and no async inside the pure function.
+    // fetch, then walk again for real. No async inside the pure function.
+    //
+    // The round budget is derived, not guessed: each round resolves the walk,
+    // or fetches ONE missing parent, or fetches ONE conclusion. A walk of
+    // `BLAME_WALK_CAP` steps can therefore need up to two fetches per step, so
+    // `2 * cap` rounds, and the `+ 2` is slack for the final resolving round.
+    //
+    // This read `round <= BLAME_WALK_CAP + 1` with a `round === CAP + 1` case
+    // to record the verdict — a second statement of the walk's own bound, which
+    // went wrong the moment that bound changed. Review on #1725 pointed at it.
+    // Now the verdict is recorded after the loop however it ended, so no
+    // constant appears twice.
+    const ROUND_BUDGET = 2 * BLAME_WALK_CAP + 2;
+    let verdict: BlameVerdict | undefined;
     let pending: string | undefined;
-    for (let round = 0; round <= BLAME_WALK_CAP + 1; round++) {
+    for (let round = 0; round < ROUND_BUDGET; round++) {
       pending = undefined;
       let needParent: string | undefined;
       const v = blameFailingRun({
@@ -773,18 +791,20 @@ async function computeBlame(rows: readonly WorkflowHealth[]): Promise<Map<string
       });
       // A parent the clone lacks is asked for once, from the API, and the walk
       // is retried. Only then is `no-parent` the real answer.
+      verdict = v;
       if (needParent !== undefined && v.kind === "cannot-determine" && v.why === "no-parent") {
         parents.set(needParent, await firstParentFromApi(needParent));
         if (parents.get(needParent) !== undefined) continue;
       }
-      if (pending === undefined || v.kind === "suspect") {
-        out.set(h.workflow, v);
-        break;
-      }
+      if (pending === undefined || v.kind === "suspect") break;
       const got = await conclusionOnCommit(file, pending);
       seen.set(pending, got);
-      if (round === BLAME_WALK_CAP + 1) out.set(h.workflow, v);
     }
+    // However the loop ended — resolved, or out of budget with the last
+    // verdict being a cannot-determine. Recording it unconditionally is what
+    // keeps "no attribution was computed" meaning the caller never asked,
+    // rather than meaning the budget ran out silently.
+    if (verdict !== undefined) out.set(h.workflow, verdict);
   }
   return out;
 }

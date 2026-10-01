@@ -86,14 +86,32 @@ jobs:
   report:
     # bpmn-node: Start_Sweep
     name: Report CI health on the default branch
-    # On a `workflow_run` trigger, only a FAILING triggering run is worth a
-    # sweep; the schedule and a manual dispatch always sweep. Written as
-    # "not workflow_run OR failed" rather than as a list of allowed events, so
-    # adding a future trigger does not silently skip the job — the failure mode
-    # `1xhc` is about.
+    # On a `workflow_run` trigger, only a RED triggering run is worth a sweep;
+    # the schedule and a manual dispatch always sweep. Written as "not
+    # workflow_run OR red" rather than as a list of allowed events, so adding a
+    # future trigger does not silently skip the job — the failure mode `1xhc`
+    # is about.
+    #
+    # RED IS FIVE CONCLUSIONS, NOT ONE. This said `== 'failure'` until review on
+    # #1725 pointed out the gap: `check:ci-health` calls a workflow red when its
+    # newest settled run is anything other than `success`, and its
+    # `NOT_A_VERDICT` set — the only conclusions that are neither red nor green —
+    # is exactly `cancelled`, `skipped`, `neutral`. So `timed_out`,
+    # `action_required`, `stale` and `startup_failure` are all red by this
+    # repository's own definition, and any of them can leave a gating workflow
+    # blocking `main`. Under `== 'failure'` the job skipped and the tracking
+    # issue waited up to a week for the cron — the very latency this trigger
+    # exists to remove, for four conclusions out of five.
+    #
+    # Listed positively rather than as "not success and not NOT_A_VERDICT",
+    # because a GitHub expression cannot read that set and a hand-written
+    # negation would be a second spelling of it. `workflow-triggers.test.ts`
+    # holds the two in agreement — it derives this list from `NOT_A_VERDICT`
+    # and fails if they drift.
     if: >-
       github.event_name != 'workflow_run' ||
-      github.event.workflow_run.conclusion == 'failure'
+      contains(fromJSON('["failure","timed_out","action_required","stale","startup_failure"]'),
+               github.event.workflow_run.conclusion)
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
