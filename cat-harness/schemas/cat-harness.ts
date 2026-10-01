@@ -598,6 +598,10 @@ export const ContentAdapterDeclarationSchema = z
   .strict();
 
 export interface CatHarnessDeclaration extends KgNodeLabels {
+  /** A reader's one line — see {@link CatHarnessDeclarationSchema}'s `summary` (`ob3m` 4/5). */
+  summary?: string;
+  /** Other spellings of the name, listed on the landing (`ob3m` 5). */
+  alsoWritten?: string[];
   /**
    * Images this instance names — its marks, in the graph rather than beside it.
    *
@@ -2536,6 +2540,22 @@ export const ExactVersionSchema = z
 export const CatHarnessDeclarationSchema = z.object({
   name: z.string().min(1),
   ...kgNodeLabelShape,
+  /**
+   * One line for a READER, where `description` is written for an author.
+   *
+   * `ob3m` findings 4 and 5: the landing's harness sections printed the
+   * declaration's `description`, which here is authoring text — a naming
+   * rationale in one instance, a run of alternative spellings in another.
+   * The landing shows this instead when it is present, and the description
+   * when it is not, so an undeclared summary is today's behaviour.
+   */
+  summary: z.string().min(1).optional(),
+  /**
+   * Other ways the instance's name is written, shown on the landing as a small
+   * "also written" list rather than run into the description as one line.
+   * Owner's choice, 2026-10-01: keep the spellings visible, as a list.
+   */
+  alsoWritten: z.array(z.string().min(1)).nonempty().optional(),
   images: z.array(KgImageSchema).optional(),
   /**
    * Declared non-image artefacts — `AGENTS.md` first among them.
