@@ -147,6 +147,28 @@ export const WRITER_OVERRIDES: Readonly<Record<string, string>> = {
 };
 
 /**
+ * Verify/write pairs that are NOT gates but whose artefacts something gated
+ * READS — bean `5qq3`, owner's option 1 (2026-10-01).
+ *
+ * `library:viz` and `schema:viz` are ungated by the owner's 2026-09-20 ruling
+ * (they derive from the whole repository, so a red would mean "somebody else
+ * merged"; see the NOT GATED comment in code-quality-gates.yml). That ruling
+ * stands: they are still not gates. But their OUTPUT is an input to things that
+ * are — `methodologies:viz` reads the library index, and
+ * `library-viewer-scope.e2e.ts` reads it in CI. Measured on PR #1769: regen
+ * reported a clean fixed point, `library:viz` was 18 artefacts stale, and CI
+ * failed twice on what read it. Running the writer here keeps the artefact
+ * fresh without making staleness a gate.
+ *
+ * Asked FIRST, so a fast-set check that reads their output is asked after the
+ * write in the same pass rather than one pass late.
+ */
+export const UNGATED_INPUTS: readonly { check: string; writer: string }[] = [
+  { check: "library:viz:check", writer: "library:viz" },
+  { check: "schema:viz:check", writer: "schema:viz" },
+];
+
+/**
  * `check:`-prefixed gates whose same-named script exists but is NOT a writer —
  * bean `uju6`, each read before being listed. Pairing them by name would run a
  * command that repairs nothing and then report `unrepaired`, a verdict about
@@ -283,10 +305,13 @@ if (import.meta.main) {
   }).scripts ?? {};
 
   const gates = loadGates(repoRoot, { all });
-  const repairable = repairableGates(gates, scripts);
+  const gated = repairableGates(gates, scripts);
+  const extra = UNGATED_INPUTS.filter((p) => !gated.some((g) => g.check === p.check));
+  const repairable = [...extra, ...gated];
   console.log(
-    `regen-after-merge — ${repairable.length} verify/write pair(s) in the ` +
-      `${all ? "whole" : "fast"} gate set (of ${gates.length} gate(s))`,
+    `regen-after-merge — ${gated.length} verify/write pair(s) in the ` +
+      `${all ? "whole" : "fast"} gate set (of ${gates.length} gate(s))` +
+      (extra.length > 0 ? `, plus ${extra.length} ungated input(s): ${extra.map((p) => p.writer).join(", ")}` : ""),
   );
 
   const runner: Runner = (script) => run(repoRoot, script);
@@ -325,6 +350,20 @@ if (import.meta.main) {
       `${dryRun ? "stale" : "regenerated"}, ${by("unrepaired").length} unrepaired, ` +
       `${by("no-writer").length} without a writer`,
   );
+  // THE DENOMINATOR, on the line people read — bean `5qq3`. "0 regenerated"
+  // over the fast set is not "the tree is current", and a qualifier that lives
+  // only on the FIRST line gets read past. Counted against the whole gate set.
+  if (!all) {
+    const everywhere = repairableGates(loadGates(repoRoot, { all: true }), scripts);
+    const asked = new Set(repairable.map((p) => p.check));
+    const outside = everywhere.filter((p) => !asked.has(p.check));
+    if (outside.length > 0) {
+      console.log(
+        `NOT covered: ${outside.length} verify/write pair(s) outside this run (browser jobs, other workflows) — ` +
+          `\`bun run regen --all\` asks them too: ${outside.map((p) => p.check).join(", ")}`,
+      );
+    }
+  }
   if (dryRun) {
     console.log("--dry-run: nothing was changed.");
     process.exit(0);

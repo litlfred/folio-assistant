@@ -38,8 +38,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { CatalogueNodeSchema } from "../../folio-assistant-core/schemas/catalogue.js";
-import { buildIdLookup, type IdEntry } from "../schemas/id-lookup.js";
+import { buildIdLookup, CatalogueNodeReadSchema, type IdEntry } from "../schemas/id-lookup.js";
 
 const INSTANCE = resolve(import.meta.dir, "..");
 const REPO = resolve(INSTANCE, "..");
@@ -68,7 +67,7 @@ export function catalogueNodesDir(source: string): string {
 export function referencedEntries(nodesDir: string): IdEntry[] {
   const out: IdEntry[] = [];
   for (const f of readdirSync(nodesDir).filter((x) => x.endsWith(".json")).sort()) {
-    const n = CatalogueNodeSchema.parse(JSON.parse(readFileSync(join(nodesDir, f), "utf8")));
+    const n = CatalogueNodeReadSchema.parse(JSON.parse(readFileSync(join(nodesDir, f), "utf8")));
     if (n.materialization.state !== "referenced") continue;
     const url = n.materialization.provenance?.upstream;
     if (!url) throw new Error(`${f}: referenced node ${n.id} has no provenance.upstream; a lookup could not say where it is held`);

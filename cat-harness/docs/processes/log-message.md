@@ -23,7 +23,7 @@ NO work-plan element, and isExecutable is false, for the same reasons as initial
 
 ## How it connects
 
-- **Called by:** [Initialize a harness](initialize-harness.html)
+- **Called by:** [Complete initialization](complete-initialization.html), [Initialize a harness](initialize-harness.html)
 - **Calls:** none
 - **Presented on:** no docs page section shows this diagram
 
