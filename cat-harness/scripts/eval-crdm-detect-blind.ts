@@ -36,7 +36,7 @@ const INSTANCE = join(import.meta.dir, "..");
 const CORPUS = join(INSTANCE, "scripts", "eval", "crdm-detect-corpus.json");
 // The skill is found through the DECLARED knowledge graph, not a spelled
 // `skills/` — the declared-path rule, and a relocation-proof lookup.
-const SKILL = join(kgRoots(INSTANCE)[0] ?? INSTANCE, "crdm", "crdm-detect.md");
+const SKILL = join(kgRoots(INSTANCE)[0] ?? INSTANCE, "sdlc", "crdm", "crdm-detect.md");
 
 export interface Item { number: number; title: string; isFeature: boolean; why: string; text: string }
 export interface SecondLabel { id: string; isFeature: boolean; why: string }

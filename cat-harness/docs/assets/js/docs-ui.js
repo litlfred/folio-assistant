@@ -1563,28 +1563,50 @@
     panel.appendChild(view);
     mountPanelInSidebarColumn(host, panel);
 
-    /* ── The search field: in the top navbar, slidable to the corner ─────
+    /* ── The search: a magnifier at the top of the display window ─────────
      *
-     * Owner, 2026-09-21: *"also i want the search restored back to the top
-     * display navbar, with option to slide out to the UR corner as an icon."*
+     * Owner, 2026-09-30: *"search that should be a collsaible icon/avatar on
+     * top of display window... that when open is full span width of all
+     * avaioblae"* (issue #1715).
      *
-     * ## THIS REVERSES THE 2026-09-19 DECISION, and the old one is recorded
+     * ## THIS REPLACES THE NAVBAR/CORNER PAIR, and the old design is recorded
      *
-     * The previous version of this block adopted the theme's search OUT of
-     * the main panel and into a Settings tile, on the owner's *"move the
-     * search to a icon in navbar that expands.... keep main display panel
-     * uncluttered."* The tile comment below went further and REFUSED a
-     * header magnifier outright, citing an answer of "search is two" given on
-     * 2026-09-19 when the trade was put to the owner.
+     * 2026-09-21 (`rx6k`) put the field back in the display panel's top row
+     * with a "Hide search" control that slid it to a FIXED upper-right card;
+     * 2026-09-23 made it *"start open full top of display panel"*. Measured on
+     * a local build before this change: the open row cost 48px of every page
+     * at 1280px and 42px at 390px before the first line of content, results
+     * were capped at the theme's 536px under a 992px field, on a phone the
+     * "Hide search" button left the field 215px of 390, and Escape did
+     * nothing. The fixed corner card was also the one control on the page
+     * drawn over content at the top right, which on a phone is where the
+     * theme's own menu button sits.
      *
-     * That refusal is now void, superseded by the line above. It is rewritten
-     * rather than deleted, because an agent finding a comment that forbids
-     * what the code does concludes the code is the mistake.
+     * So there is ONE place and TWO states, and the place does not move:
      *
-     * What survives is the REASON behind the old answer — the main panel
-     * should not be cluttered — and the slide-out is how both hold at once:
-     * the field is in the navbar where it is reached, and a reader who wants
-     * the space back sends it to the corner as an icon.
+     *   closed  the magnifier alone, floated to the inline-end of the display
+     *           panel's first line, so content flows beside it and it costs
+     *           no vertical space. `aria-expanded="false"`.
+     *   open    the magnifier, then the field across the FULL width of the
+     *           display panel, results the same width beneath it. Focus goes
+     *           into the field. `aria-expanded="true"`.
+     *
+     * The magnifier is the toggle in both states, and Escape anywhere inside
+     * closes and returns focus to it (`l4zi`: the inverse is always the same
+     * control, in the same place). What survives from 2026-09-23 is the
+     * owner's *"maginfyingglass avatar/braadning should be visibile always"*:
+     * the glyph is on screen in both states.
+     *
+     * ## Why in the panel's flow and not fixed to the window
+     *
+     * PR #1709 puts a fixed strip (`.fa-glass-band`, z 89) behind the Folio
+     * handle at the top CENTRE while the page scrolls. A second fixed control
+     * at the top would have to negotiate that strip, the staging banner and
+     * the phone header's menu button; one in flow negotiates none of them.
+     * It sits at the top of the display panel, below the header band the
+     * handle lives in, and scrolls UNDER the strip like any other content.
+     * Mid-page, the Search tile in the launcher reveals it and the focus
+     * scroll lands it below the strip (`scroll-padding-top`, same PR).
      *
      * ## Moved, never rebuilt — UNCHANGED, and still the load-bearing part
      *
@@ -1599,31 +1621,32 @@
      * just-the-docs looks its input up by id when it initialises, and
      * `getElementById` does not find a detached node. So the holder lives
      * inside `searchHome`, which is in the document from mount, and the two
-     * states move `searchHome` between CSS classes rather than moving the
-     * input out of the tree. Sliding to the corner is a class change and a
-     * `hidden` on nothing — the node never leaves.
+     * states are an attribute on `searchHome` — closing is `display: none` on
+     * the holder, never a removal.
      *
      * ## Absent is a real state
      *
      * `search_enabled: false`, or a theme that renamed the container, means
-     * there is nothing to adopt. Nothing is mounted, no corner icon is drawn,
+     * there is nothing to adopt. Nothing is mounted, no magnifier is drawn,
      * and the warning says what was looked for.
      */
-    var SEARCH_PLACE_KEY = "fa-search-place";
+    /* Per-viewer convenience only, as the old "Hide search" choice was: a
+     * reader who keeps search open gets it open on the next page. The old
+     * key (`fa-search-place`) is not read — its default was OPEN, which is
+     * the thing the owner has now asked to change. */
+    var SEARCH_OPEN_KEY = "fa-search-open";
 
-    /** "navbar" (default) or "corner". Anything unrecognised is the default —
-     *  a stored value from an older build must not leave search nowhere. */
-    function storedSearchPlace() {
-      try {
-        return window.localStorage.getItem(SEARCH_PLACE_KEY) === "corner" ? "corner" : "navbar";
-      } catch (_e) { return "navbar"; }
+    function storedSearchOpen() {
+      try { return window.localStorage.getItem(SEARCH_OPEN_KEY) === "true"; }
+      catch (_e) { return false; }
     }
 
     var searchHolder = null;
     var searchHome = null;
+    var searchToggle = null;
     var adopted = firstMatch(SEARCH_SELECTORS);
     if (adopted) {
-      searchHolder = el("div", { class: "fa-search-holder" });
+      searchHolder = el("div", { class: "fa-search-holder", id: "fa-search-holder" });
       searchHolder.appendChild(adopted);
 
       /* The notice goes ON THE SEARCH SURFACE, not only in the staging banner.
@@ -1639,119 +1662,90 @@
         searchHolder.appendChild(noticeEl);
       }
 
-      searchHome = el("div", { class: "fa-search-home", "data-place": "navbar", "data-open": "true" });
+      searchHome = el("div", { class: "fa-search-home", "data-open": "false" });
 
-      /* The corner's collapsed face. Only ever visible in the corner state,
-       * where the field itself is hidden — so it is the ONE control that can
-       * bring search back, which is `l4zi`'s rule: an action whose inverse is
-       * not reachable is not a toggle, it is a delete. */
-      var cornerIcon = el("button", {
+      /* The magnifier: the one control, in both states. Its NAME stays
+       * "Search" — the state is `aria-expanded`, which is what a screen
+       * reader announces for a disclosure; renaming it per state as well
+       * would say the state twice and change the name a voice user speaks. */
+      searchToggle = el("button", {
         type: "button",
         class: "fa-search-peek",
-        "aria-label": "Open search",
+        "aria-label": "Search",
         "aria-expanded": "false",
+        "aria-controls": "fa-search-holder",
+        title: "Search this site",
       });
-      cornerIcon.innerHTML = SEARCH_GLYPH;
+      searchToggle.innerHTML = SEARCH_GLYPH;
 
-      /* The slide control, beside the field. Chevron, not an ✕: closing search
-       * is not dismissing it, and an ✕ promises removal. */
-      var slide = el("button", { type: "button", class: "fa-search-slide" });
-
-      function paintSearchPlace(place) {
-        var corner = place === "corner";
-        searchHome.setAttribute("data-place", place);
-        // In the navbar the field is always shown. In the corner it starts
-        // collapsed behind the icon — that IS the point of sending it there.
-        searchHome.setAttribute("data-open", corner ? "false" : "true");
-        cornerIcon.setAttribute("aria-expanded", "false");
-        /* THE GLYPH IS SHOWN IN BOTH STATES (owner, 2026-09-23: *"maginfyingglass
-         * avatar/braadning should be visibile always"*), so it means two
-         * different things and must SAY so. In the corner it reveals a field
-         * that is not on screen; in the navbar the field is already there and
-         * it moves the cursor into it. One label for both would be wrong in
-         * one of them, and a control whose name does not match what it does is
-         * worse than no control. */
-        cornerIcon.setAttribute("aria-label", corner ? "Open search" : "Search this site");
-        cornerIcon.setAttribute("title", cornerIcon.getAttribute("aria-label"));
-        /* SAID IN WORDS, not a chevron alone — owner, 2026-09-24: *"hiding
-         * search makes it go away compleletey, cant restore."* The way back
-         * was a lone "⌄" beside a magnifier, and a glyph whose meaning lives
-         * only in a tooltip is not a control a low-dexterity reader finds.
-         * The visible words start the accessible name (WCAG 2.5.3), so a
-         * voice user can say what they see. The reachability half of the
-         * same report — the corner was drawn UNDER the staging banner — is
-         * fixed in the stylesheet (`--fa-staging-offset`). */
-        slide.setAttribute("aria-label", corner
-          ? "Show search — dock it back into the navbar"
-          : "Hide search — slide it out to the corner");
-        slide.setAttribute("title", slide.getAttribute("aria-label"));
-        while (slide.firstChild) slide.removeChild(slide.firstChild);
-        slide.appendChild(el("span", { class: "fa-search-slide-glyph", "aria-hidden": "true" }, corner ? "⌄" : "⌃"));
-        slide.appendChild(el("span", { class: "fa-search-slide-word" }, corner ? "Show search" : "Hide search"));
-      }
-
-      slide.addEventListener("click", function () {
-        var next = searchHome.getAttribute("data-place") === "corner" ? "navbar" : "corner";
-        try { window.localStorage.setItem(SEARCH_PLACE_KEY, next); } catch (_e) { /* private mode */ }
-        paintSearchPlace(next);
-        // Focus follows the control that replaced the thing that moved, or a
-        // keyboard reader is left on a node that is now display:none.
-        if (next === "corner") cornerIcon.focus();
-        else { var i = searchHolder.querySelector("input"); if (i) i.focus(); }
+      searchToggle.addEventListener("click", function () {
+        if (searchHome.getAttribute("data-open") === "true") closeSearch(true);
+        else revealSearch();
       });
 
-      cornerIcon.addEventListener("click", function () { revealSearch(); });
+      /* Escape from anywhere inside — the field, a result link, the
+       * magnifier — closes and hands focus back to the magnifier, so a
+       * keyboard reader is never left on a node that is now display:none. */
+      searchHome.addEventListener("keydown", function (e) {
+        if (e.key !== "Escape" || searchHome.getAttribute("data-open") !== "true") return;
+        e.preventDefault();
+        e.stopPropagation();
+        closeSearch(true);
+      });
 
-      searchHome.appendChild(cornerIcon);
+      searchHome.appendChild(searchToggle);
       searchHome.appendChild(searchHolder);
-      searchHome.appendChild(slide);
 
-      /* WHERE THE NAVBAR IS. `.main-header` is where just-the-docs renders
-       * search itself, so putting it back there is putting it back. The
-       * fallbacks exist because a theme that renamed the container may also
-       * have renamed the header, and search in the wrong place beats search
-       * nowhere. */
-      /* NOT `.main-header` ANY MORE, and the reason is measured. The theme
-       * sets `.main-header { display: none }` below its own nav breakpoint, so
-       * at 700px the whole search home -- field, chevron AND the glyph that is
-       * the only way back to it -- computed to 0x0. Search was not merely
-       * awkward to reach on a narrow screen, it was unreachable from the
-       * display panel at all, which is the owner's *"takes way too many
-       * clicks"* at its worst.
-       *
-       * `.main-content-wrap` is the panel's own content column and the theme
-       * never hides it, so homing here is what *"full top of display panel"*
-       * actually means. `.main-header` stays in the fallback list: a theme that
-       * renamed the wrap may still have the header, and search in the wrong
-       * place beats search nowhere. */
-      var navbar = firstMatch([".main-content-wrap", ".main-header", "#main-header"]);
-      if (navbar) navbar.insertBefore(searchHome, navbar.firstChild);
+      /* The display panel's own content column. `.main-header` is NOT used:
+       * the theme hides it below its nav breakpoint, which once made search
+       * compute to 0x0 at 700px. `.main-content-wrap` is never hidden. The
+       * fallbacks exist because a theme that renamed the wrap may still have
+       * the header, and search in the wrong place beats search nowhere. */
+      var panelTop = firstMatch([".main-content-wrap", ".main-header", "#main-header"]);
+      if (panelTop) panelTop.insertBefore(searchHome, panelTop.firstChild);
       else {
         var mainEl = firstMatch(["#main-content", ".main-content", "main"]);
         if (mainEl && mainEl.parentNode) mainEl.parentNode.insertBefore(searchHome, mainEl);
         else document.body.appendChild(searchHome);
       }
 
-      paintSearchPlace(storedSearchPlace());
+      paintSearchOpen(storedSearchOpen());
     } else {
       console.warn("docs-ui: no site search found (tried " + SEARCH_SELECTORS.join(", ") +
-                   "); search was not mounted in the navbar and no corner icon was drawn.");
+                   "); search was not mounted and no magnifier was drawn.");
+    }
+
+    function paintSearchOpen(open) {
+      if (!searchHome) return;
+      searchHome.setAttribute("data-open", open ? "true" : "false");
+      searchToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      searchToggle.setAttribute("title", open ? "Close search (Esc)" : "Search this site");
+    }
+
+    function rememberSearchOpen(open) {
+      try { window.localStorage.setItem(SEARCH_OPEN_KEY, open ? "true" : "false"); }
+      catch (_e) { /* private mode: the state just is not remembered */ }
+    }
+
+    /** Close search and, when asked, put focus back on the magnifier. */
+    function closeSearch(returnFocus) {
+      if (!searchHome) return;
+      paintSearchOpen(false);
+      rememberSearchOpen(false);
+      if (returnFocus) searchToggle.focus();
     }
 
     /**
-     * Show search wherever it currently lives, and put the cursor in it.
+     * Open search where it lives, and put the cursor in it.
      *
-     * The one entry point for "I want to search": the corner icon presses it,
+     * The one entry point for "I want to search": the magnifier presses it,
      * and so does the Search tile. Neither MOVES the field, because two
      * places search can be is two places a reader has to look for it.
      */
     function revealSearch() {
       if (!searchHome) return;
-      searchHome.setAttribute("data-open", "true");
-      if (searchHome.getAttribute("data-place") === "corner") {
-        var peek = searchHome.querySelector(".fa-search-peek");
-        if (peek) peek.setAttribute("aria-expanded", "true");
-      }
+      paintSearchOpen(true);
+      rememberSearchOpen(true);
       var input = searchHolder && searchHolder.querySelector("input");
       if (input) input.focus();
     }
@@ -1769,7 +1763,7 @@
      */
     function parkSearch() {
       if (searchHolder && searchHome && searchHolder.parentNode !== searchHome) {
-        searchHome.insertBefore(searchHolder, searchHome.lastChild);
+        searchHome.appendChild(searchHolder);
       }
     }
 
@@ -4614,6 +4608,85 @@
    */
   function placeHandle(handle) {
     document.body.appendChild(handle);
+    placeHandleBand(handle);
+  }
+
+  /**
+   * THE HANDLE'S BAND, while the page is scrolled — issue #1693.
+   *
+   * At the top of a page the handle sits in space nobody reads: the theme
+   * header's empty middle, or the band a viewer or replica reserves with
+   * padding (`015u`, `g9r2`). Once the page scrolls, that space has gone and
+   * the handle, still fixed, sat over the middle of a body line. Measured on
+   * `platform.html` at 1280x900: the handle crossed a text line at 9 of 21
+   * scroll positions. The line stayed readable either side of it, and a link
+   * centred under it opened the glass instead.
+   *
+   * So while the page is scrolled, an opaque strip the handle's own height
+   * runs across the content column behind it. Text scrolls UNDER the strip,
+   * the way it scrolls under any sticky bar, rather than past the pill with
+   * its middle missing. `scroll-padding-top` in `docs-ui.css` keeps an anchor
+   * jump or a focus scroll from landing a target under the strip.
+   *
+   * Chosen over the issue's other two options on evidence and on the owner's
+   * word. Hiding the handle on scroll-down still overlaps on scroll-up, the
+   * moment it reappears. Docking it in the side bar is the 2026-09-24
+   * placement the owner reversed on 2026-09-27: "not on navbar but at top
+   * middle of display screen".
+   *
+   * The handle itself is untouched: same button, same place, same tab stop
+   * and accessible name. The strip is decoration, `aria-hidden`, and absent
+   * from the tab order. It sits BELOW the glass layer, so an open glass is
+   * unchanged, and it starts at a FIXED side bar's right edge, so it never
+   * covers the side bar's own controls.
+   */
+  function placeHandleBand(handle) {
+    var band = el("div", { class: "fa-glass-band", "aria-hidden": "true", hidden: "" });
+    document.body.insertBefore(band, handle);
+    var queued = false;
+    function update() {
+      queued = false;
+      if (!handle.isConnected) return;
+      var on = (window.scrollY || document.documentElement.scrollTop || 0) > 0;
+      if (!on) { band.hidden = true; return; }
+      var hb = handle.getBoundingClientRect();
+      var left = 0;
+      var side = document.querySelector(".side-bar");
+      if (side && getComputedStyle(side).position === "fixed") {
+        var sb = side.getBoundingClientRect();
+        // Only a side bar docked to the LEFT edge and narrower than the page.
+        // Its RESTING edge, which is where the page content starts: hovered
+        // or focused, `.side-bar` widens to the open nav (264 px) OVER the
+        // content, and above this band (z-index 100 against 89). Taking that
+        // edge left the text between the rail and 264 px readable beside the
+        // handle -- CI's Chrome rests the pointer on the rail (#1693).
+        if (sb.left <= 0 && sb.right < window.innerWidth / 2) {
+          var main = side.nextElementSibling;
+          var content = main && main.classList.contains("main") ? main.getBoundingClientRect().left : sb.right;
+          left = Math.max(0, Math.min(sb.right, content));
+        }
+      }
+      band.style.top = hb.top + "px";
+      band.style.height = hb.height + "px";
+      band.style.left = left + "px";
+      band.hidden = false;
+      // The COLOUR is the stylesheet's (`inline-colour.test.ts`): the band
+      // inherits body's background. A page whose body paints none (a replica
+      // may leave it to `html`) would get a see-through band, so that case is
+      // MARKED here and coloured by a scheme token in `docs-ui.css`.
+      var own = getComputedStyle(band).backgroundColor;
+      var clear = !own || own === "transparent" || /rgba\([^)]*,\s*0\)$/.test(own);
+      if (clear) band.setAttribute("data-fa-band-fallback", "");
+      else band.removeAttribute("data-fa-band-fallback");
+    }
+    function queue() {
+      if (queued) return;
+      queued = true;
+      window.requestAnimationFrame(update);
+    }
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", queue);
+    update();
   }
 
   var glassLayer = null;

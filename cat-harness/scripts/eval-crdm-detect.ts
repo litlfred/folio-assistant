@@ -8,7 +8,7 @@
  *
  * ## What this measures, and what it does not
  *
- * `skills/crdm/crdm-detect.md` is prose for a model to read. It lists
+ * `skills/sdlc/crdm/crdm-detect.md` is prose for a model to read. It lists
  * five categories of phrasing plus an explicit "what is NOT a feature request"
  * list. This script implements the PHRASE SIGNALS mechanically. That makes it
  * a LOWER BOUND on an agent that also applies judgement — an agent can catch a
@@ -51,7 +51,7 @@ const verbose = process.argv.includes("--verbose");
 
 interface Item { number: number; title: string; isFeature: boolean; why: string; text: string }
 
-const SKILL = join(root, "skills/crdm/crdm-detect.md");
+const SKILL = join(root, "skills/sdlc/crdm/crdm-detect.md");
 const skillExclusions = parseSkillExclusions(readFileSync(SKILL, "utf-8"));
 
 const corpus: Item[] = JSON.parse(
@@ -148,7 +148,7 @@ const run = buildTestRun({
   processInputs: [
     "scripts/eval-crdm-detect.ts",
     "src/crdm/detect-signals.ts",
-    "skills/crdm/crdm-detect.md",
+    "skills/sdlc/crdm/crdm-detect.md",
   ],
   outcome: {
     population: corpus.length,

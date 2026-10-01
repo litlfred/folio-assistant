@@ -257,7 +257,7 @@ describe("the report names a disagreement, never a direction — `ekp9` point 4"
     const r = formatReport({
       store: true,
       examined: 1,
-      findings: [{ id: "aaaa", table: "| phase | does | exit criterion |", line: 4, skills: ["cat-harness/skills/folio-core/todo-manager.md"] }],
+      findings: [{ id: "aaaa", table: "| phase | does | exit criterion |", line: 4, skills: ["cat-harness/skills/sdlc/sdlc-core/todo-manager.md"] }],
     });
     // The hand-check measured 5 drifted pairs and found the SKILL wrong in 3.
     // A report that says "delete the copy" sends somebody to edit the correct
@@ -267,7 +267,7 @@ describe("the report names a disagreement, never a direction — `ekp9` point 4"
     expect(r).toContain("read both before editing either");
     // Both sides are named, so the reader can go and look at each.
     expect(r).toContain("aaaa");
-    expect(r).toContain("cat-harness/skills/folio-core/todo-manager.md");
+    expect(r).toContain("cat-harness/skills/sdlc/sdlc-core/todo-manager.md");
   });
 
   test("the clean line claims only what was measured", () => {
@@ -313,13 +313,13 @@ describe("checkBeanRestatesSkill over a synthetic tree", () => {
         {
           id: "bbbb",
           status: "todo",
-          body: `See \`cat-harness/skills/folio-core/todo-manager.md\`.\n${KN0T_BEFORE}`,
+          body: `See \`cat-harness/skills/sdlc/sdlc-core/todo-manager.md\`.\n${KN0T_BEFORE}`,
         },
       ]),
     );
     expect(r.findings.find((f) => f.id === "aaaa")!.skills).toEqual([]);
     expect(r.findings.find((f) => f.id === "bbbb")!.skills).toEqual([
-      "cat-harness/skills/folio-core/todo-manager.md",
+      "cat-harness/skills/sdlc/sdlc-core/todo-manager.md",
     ]);
   });
 

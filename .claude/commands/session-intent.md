@@ -6,7 +6,7 @@ generated: cat-harness/scripts/gen-skill-commands.ts
 
 # /session-intent
 
-Run the `session-intent` skill. Read [`cat-harness/skills/folio-core/session-intent.md`](../../cat-harness/skills/folio-core/session-intent.md) and follow it.
+Run the `session-intent` skill. Read [`cat-harness/skills/sdlc/sdlc-core/session-intent.md`](../../cat-harness/skills/sdlc/sdlc-core/session-intent.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

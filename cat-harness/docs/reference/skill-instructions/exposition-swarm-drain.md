@@ -6,9 +6,9 @@ parent: Skill instructions
 ---
 
 {: .note }
-> Generated from [`cat-harness/skills/folio-core/exposition-swarm-drain.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/folio-core/exposition-swarm-drain.md) — do not edit here.
+> Generated from [`cat-harness/skills/authoring/authoring-core/exposition-swarm-drain.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/skills/authoring/authoring-core/exposition-swarm-drain.md) — do not edit here.
 >
-> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/folio-core/exposition-swarm-drain.md){: .fa-edit-source }
+> [✎ Edit this page's source](https://github.com/litlfred/folio-assistant/edit/main/cat-harness/skills/authoring/authoring-core/exposition-swarm-drain.md){: .fa-edit-source }
 
 {% raw %}
 # /exposition-swarm-drain — Milnor-exposition audit→resolve drain
@@ -211,8 +211,8 @@ of `needs_owner` blocks for the author.
 ## Cross-references
 
 - Rubric spec: `docs/requirements/2026-07-04-folio-assistant-proof-narrative-checkers.md` §5A
-- Author voice: `skills/folio-core/milnor-exposition-standard.md`
-- Merge pipeline: `skills/folio-core/prepare-merge-auto.md`
+- Author voice: `skills/authoring/authoring-core/milnor-exposition-standard.md`
+- Merge pipeline: `skills/sdlc/sdlc-core/prepare-merge-auto.md`
 - Sister drain: `.claude/skills/local/integration-backlog.md`
 - Flag guard: `content/pipeline/qa-flag-preservation-audit.ts`
 {% endraw %}

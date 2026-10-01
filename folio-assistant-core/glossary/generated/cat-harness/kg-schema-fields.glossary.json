@@ -2240,13 +2240,6 @@
       "status": "candidate"
     },
     {
-      "id": "cat-harness.contentdirectory.dependents",
-      "prefLabel": "ContentDirectory.dependents",
-      "definition": "Whether a DEPENDENT instance materialises its own copy of this directory.",
-      "source": "cat-harness/schemas/cat-harness.ts#ContentDirectory.dependents",
-      "status": "candidate"
-    },
-    {
       "id": "cat-harness.contentdirectory.readonly",
       "prefLabel": "ContentDirectory.readOnly",
       "definition": "This directory holds MATERIALIZED content: readable, and not editable here.",
@@ -2576,9 +2569,16 @@
       "status": "candidate"
     },
     {
+      "id": "cat-harness.resolveddirectory.member",
+      "prefLabel": "ResolvedDirectory.member",
+      "definition": "The instance whose directory this is. A declared subgraph is inherited as one MEMBER per instance in the chain whose same-named directory exists (owner, 2026-09-30, bean `3r47`/`xsqm` follow-up, option A: \"if f-a-core … has a docs/ … and depends on cat-harness where docs/ is declared … the viewer should detect f-a-core/docs\", \"a named (sub-)subgraph of docs\"). The declarer's own member comes first; `member` names each.",
+      "source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.member",
+      "status": "candidate"
+    },
+    {
       "id": "cat-harness.resolveddirectory.own",
       "prefLabel": "ResolvedDirectory.own",
-      "definition": "True when the declaring instance is the root rather than a dependency.",
+      "definition": "True when this entry is the ROOT instance's — its own declaration, or its own member of an inherited subgraph.",
       "source": "cat-harness/schemas/cat-harness.ts#ResolvedDirectory.own",
       "status": "candidate"
     },
@@ -3892,6 +3892,13 @@
       "status": "candidate"
     },
     {
+      "id": "document-image.documentimageschema.same_as",
+      "prefLabel": "DocumentImageSchema.same_as",
+      "definition": "The SAME PICTURE is already held elsewhere in the repository, and `file` points there instead of at a copy (bean `scfh`, `scripts/image-reuse.py`).",
+      "source": "cat-harness/schemas/document-image.ts#DocumentImageSchema.same_as",
+      "status": "candidate"
+    },
+    {
       "id": "document-image.geometrybasisschema.coverage",
       "prefLabel": "GeometryBasisSchema.coverage",
       "definition": "Placed area over page area. The number the role was computed from.",
@@ -4085,6 +4092,55 @@
       "prefLabel": "ExternalSchemaSchema.version",
       "definition": "The edition being conformed to.",
       "source": "cat-harness/schemas/external-schema.ts#ExternalSchemaSchema.version",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionschema.described_by",
+      "prefLabel": "FigureDescriptionSchema.described_by",
+      "definition": "Who looked, and when.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.described_by",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionschema.figure",
+      "prefLabel": "FigureDescriptionSchema.figure",
+      "definition": "The figure as the document names it — `\"Figure 2\"`, `\"Fig. 8.4(a)\"`.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.figure",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionschema.narrative",
+      "prefLabel": "FigureDescriptionSchema.narrative",
+      "definition": "The description itself, in the standard narrative state machine.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.narrative",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionschema.page",
+      "prefLabel": "FigureDescriptionSchema.page",
+      "definition": "1-based, matching `VectorFigurePage.page` so the two join.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.page",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionschema.unread",
+      "prefLabel": "FigureDescriptionSchema.unread",
+      "definition": "What the describer could NOT read, in their own words.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionSchema.unread",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionsfileschema._comment",
+      "prefLabel": "FigureDescriptionsFileSchema._comment",
+      "definition": "Free prose about this file as a whole, as `image-verdicts.json` carries.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionsFileSchema._comment",
+      "status": "candidate"
+    },
+    {
+      "id": "figure-description.figuredescriptionsfileschema.descriptions",
+      "prefLabel": "FigureDescriptionsFileSchema.descriptions",
+      "definition": "doc-id → the figures described in that document.",
+      "source": "cat-harness/schemas/figure-description.ts#FigureDescriptionsFileSchema.descriptions",
       "status": "candidate"
     },
     {
@@ -5128,6 +5184,13 @@
       "prefLabel": "GraphKindDef.nodeSchemas",
       "definition": "One entry per `$schema` family a node of this kind may carry, keyed by the tag. Bean `rdkm`.",
       "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.nodeSchemas",
+      "status": "candidate"
+    },
+    {
+      "id": "graph-kind-registry.graphkinddef.perinstance",
+      "prefLabel": "GraphKindDef.perInstance",
+      "definition": "Does every instance have ITS OWN graph of this kind — so an instance that inherits a directory of this kind gets its own copy created?",
+      "source": "cat-harness/schemas/graph-kind-registry.ts#GraphKindDef.perInstance",
       "status": "candidate"
     },
     {
@@ -6589,7 +6652,7 @@
     {
       "id": "pdf-structure.pdfstructureschema.granularity",
       "prefLabel": "PdfStructureSchema.granularity",
-      "definition": "Written by `pdf-pages.py`: the entry was ingested one section per page.",
+      "definition": "`page`: written by `pdf-pages.py`, one section per page. `slide`: written by `slides-structure.py`, one section per slide (bean `scfh`).",
       "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.granularity",
       "status": "candidate"
     },
@@ -6605,6 +6668,34 @@
       "prefLabel": "PdfStructureSchema.toc_undetermined_reason",
       "definition": "Why an inferred TOC was not trusted, in a sentence a person can check.",
       "source": "cat-harness/schemas/pdf-structure.ts#PdfStructureSchema.toc_undetermined_reason",
+      "status": "candidate"
+    },
+    {
+      "id": "pinned-terminology.pinnedconceptschema.display",
+      "prefLabel": "PinnedConceptSchema.display",
+      "definition": "The human label, and the ONLY field a glossary candidate can match on.",
+      "source": "cat-harness/schemas/pinned-terminology.ts#PinnedConceptSchema.display",
+      "status": "candidate"
+    },
+    {
+      "id": "pinned-terminology.pinnedconceptschema.system",
+      "prefLabel": "PinnedConceptSchema.system",
+      "definition": "The code system's id inside the IG — its identity there, not a URL.",
+      "source": "cat-harness/schemas/pinned-terminology.ts#PinnedConceptSchema.system",
+      "status": "candidate"
+    },
+    {
+      "id": "pinned-terminology.pinnedterminologyschema.pin",
+      "prefLabel": "PinnedTerminologySchema.pin",
+      "definition": "The external-schema record this version is read from.",
+      "source": "cat-harness/schemas/pinned-terminology.ts#PinnedTerminologySchema.pin",
+      "status": "candidate"
+    },
+    {
+      "id": "pinned-terminology.pinnedterminologyschema.version",
+      "prefLabel": "PinnedTerminologySchema.version",
+      "definition": "The pinned version, which must equal that record's.",
+      "source": "cat-harness/schemas/pinned-terminology.ts#PinnedTerminologySchema.version",
       "status": "candidate"
     },
     {
@@ -7721,6 +7812,13 @@
       "status": "candidate"
     },
     {
+      "id": "skill-topics.skillsdirectoryentryschema.subgraph",
+      "prefLabel": "SkillsDirectoryEntrySchema.subgraph",
+      "definition": "Marks the entry as a subgraph of the INSTANCE rather than a part of the skills graph. Replaced `dependents` on 2026-09-30 (option A), when inheritance became automatic and the per-entry field was retired.",
+      "source": "cat-harness/schemas/skill-topics.ts#SkillsDirectoryEntrySchema.subgraph",
+      "status": "candidate"
+    },
+    {
       "id": "skill-topics.skilltopicschema.path",
       "prefLabel": "SkillTopicSchema.path",
       "definition": "One plain segment: a topic is a direct subdirectory, never deeper.",
@@ -8194,6 +8292,83 @@
       "prefLabel": "TabularSheetSchema.headers",
       "definition": "Row 1, in column order. Empty when the sheet has no readable header row.",
       "source": "cat-harness/schemas/tabular-records.ts#TabularSheetSchema.headers",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.conceptmatchschema.scheme",
+      "prefLabel": "ConceptMatchSchema.scheme",
+      "definition": "The scheme the concept belongs to.",
+      "source": "cat-harness/schemas/term-mapping.ts#ConceptMatchSchema.scheme",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.conceptmatchschema.uri",
+      "prefLabel": "ConceptMatchSchema.uri",
+      "definition": "The concept's URI, or its in-repo term id where it has no URI yet.",
+      "source": "cat-harness/schemas/term-mapping.ts#ConceptMatchSchema.uri",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.conceptmatchschema.via",
+      "prefLabel": "ConceptMatchSchema.via",
+      "definition": "The label that matched, so a reader can see WHY without re-deriving it.",
+      "source": "cat-harness/schemas/term-mapping.ts#ConceptMatchSchema.via",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.mappingscopeschema.consulted",
+      "prefLabel": "MappingScopeSchema.consulted",
+      "definition": "The schemes or collections consulted. **May be empty**, and an empty list is a determined finding — this instance declares nothing to check against for that target — rather than a missing field.",
+      "source": "cat-harness/schemas/term-mapping.ts#MappingScopeSchema.consulted",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.mappingscopeschema.unreachable_reason",
+      "prefLabel": "MappingScopeSchema.unreachable_reason",
+      "definition": "Present when the target could not be consulted at all.",
+      "source": "cat-harness/schemas/term-mapping.ts#MappingScopeSchema.unreachable_reason",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.mappingscopeschema.via",
+      "prefLabel": "MappingScopeSchema.via",
+      "definition": "How they were reached: `local` for in-repo schemes, a host for a service.",
+      "source": "cat-harness/schemas/term-mapping.ts#MappingScopeSchema.via",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.termmappingschema.matches",
+      "prefLabel": "TermMappingSchema.matches",
+      "definition": "Present when either state is `mapped`; the concepts that matched.",
+      "source": "cat-harness/schemas/term-mapping.ts#TermMappingSchema.matches",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.termmappingschema.scheme",
+      "prefLabel": "TermMappingSchema.scheme",
+      "definition": "The scheme the candidate came from — `kg-skills`, `kg-tools`, …",
+      "source": "cat-harness/schemas/term-mapping.ts#TermMappingSchema.scheme",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.termmappingschema.term",
+      "prefLabel": "TermMappingSchema.term",
+      "definition": "The candidate's id, as its glossary scheme records it.",
+      "source": "cat-harness/schemas/term-mapping.ts#TermMappingSchema.term",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.termmappingschema.undetermined_reason",
+      "prefLabel": "TermMappingSchema.undetermined_reason",
+      "definition": "Required when either state is `undetermined`.",
+      "source": "cat-harness/schemas/term-mapping.ts#TermMappingSchema.undetermined_reason",
+      "status": "candidate"
+    },
+    {
+      "id": "term-mapping.termmappingsfileschema.scope",
+      "prefLabel": "TermMappingsFileSchema.scope",
+      "definition": "One entry per target, always both, so a reader sees what was NOT asked.",
+      "source": "cat-harness/schemas/term-mapping.ts#TermMappingsFileSchema.scope",
       "status": "candidate"
     },
     {

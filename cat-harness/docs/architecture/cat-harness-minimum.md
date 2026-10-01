@@ -508,8 +508,8 @@ and the other 82 are conceptual: "pull request", "PR", "GitHub" as a noun.
 
 ```sh
 # what was actually counted
-grep -ciE 'github|gh pr|pull request|\bPR\b|mcp__github' skills/folio-core/coordinate.md   # 94
-grep -cE  'mcp__github|gh api|gh pr|gh issue'             skills/folio-core/coordinate.md   # 12
+grep -ciE 'github|gh pr|pull request|\bPR\b|mcp__github' skills/sdlc/sdlc-core/coordinate.md   # 94
+grep -cE  'mcp__github|gh api|gh pr|gh issue'             skills/sdlc/sdlc-core/coordinate.md   # 12
 ```
 
 So the split would have moved **1,404 lines of portable prose to isolate on the

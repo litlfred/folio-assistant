@@ -24,6 +24,7 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, relative, resolve } from "node:path";
 import {
+  EXTERNAL_SCHEMA_TAG,
   ExternalSchemaSchema,
   undeclaredNamespaces,
   unusedNamespaces,
@@ -55,10 +56,26 @@ const REGISTRY: string = (() => {
 /** Every declared record, parsed — a malformed one fails here, not at use. */
 export function loadSpecs(dir = REGISTRY): ExternalSchema[] {
   if (!existsSync(dir)) return [];
-  return readdirSync(dir)
-    .filter((f) => f.endsWith(".json"))
-    .sort()
-    .map((f) => ExternalSchemaSchema.parse(JSON.parse(readFileSync(join(dir, f), "utf-8"))));
+  const out: ExternalSchema[] = [];
+  for (const f of readdirSync(dir).filter((n) => n.endsWith(".json")).sort()) {
+    const raw = JSON.parse(readFileSync(join(dir, f), "utf-8")) as { $schema?: unknown };
+    // THE FILE DECLARES WHAT IT IS, and the directory is only a place to
+    // look — `directory-conventions`: "Extension is a coincidence; a
+    // declaration inside the file is the contract." This globbed `*.json`
+    // and parsed every one as an external-schema record until 2026-09-30,
+    // so the directory could never hold anything else: pinning
+    // `who-smart-base` and snapshotting its terminology beside the record
+    // broke the gate on a file that never claimed to be one (bean `7wou`).
+    //
+    // A DIFFERENT declared kind is skipped. Everything else is still parsed
+    // STRICTLY — a record with no `$schema`, or one that says it is an
+    // external schema and is malformed, must still fail here rather than be
+    // filed as "not my kind", which would turn a broken record into a silent
+    // absence.
+    if (typeof raw.$schema === "string" && raw.$schema !== EXTERNAL_SCHEMA_TAG) continue;
+    out.push(ExternalSchemaSchema.parse(raw));
+  }
+  return out;
 }
 
 /** XML namespaces the corpus declares, read from the files that declare them. */

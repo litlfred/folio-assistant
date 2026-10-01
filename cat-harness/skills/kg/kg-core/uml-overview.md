@@ -174,4 +174,4 @@ branch **separately**, and every staging-preview push cancels the deploy before
 it. Before calling a page missing, look for the file on `gh-pages`
 (`git ls-tree -r origin/gh-pages | grep uml/`). If it is there, wait for a
 "pages build and deployment" run that is not cancelled.
-[`ci-health`](../../folio-core/ci-health.md) treats `cancelled` as a third state for this reason.
+[`ci-health`](../../sdlc/sdlc-core/ci-health.md) treats `cancelled` as a third state for this reason.

@@ -206,7 +206,7 @@ printed as a third state rather than counted as green, which is the behaviour
 this bean's second box asked for.
 
 **Closed by a session that did not open it**, under
-[`bean-coordination`](../../cat-harness/skills/folio-core/bean-coordination.md)
+[`bean-coordination`](../../cat-harness/skills/sdlc/sdlc-core/bean-coordination.md)
 §"Closing a bean whose work has already landed": a bean closes on EVIDENCE, not
 on authorship, once the measurement has been re-run rather than quoted. Not
 mid-flight — no claim naming a branch, no note since 2026-09-21, no open PR

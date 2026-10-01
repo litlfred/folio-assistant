@@ -30,8 +30,8 @@ function repo(): string {
       {
         name: "an-instance",
         directories: [
-          { id: "work", path: "work/", dependents: "reproduce", graphKinds: ["beans"], scope: "repository" },
-          { id: "own", path: "own/", dependents: "reproduce", graphKinds: ["schemas"] },
+          { id: "work", path: "work/", graphKinds: ["beans"], scope: "repository" },
+          { id: "own", path: "own/", graphKinds: ["schemas"] },
         ],
       },
       null,
@@ -78,7 +78,7 @@ describe("the ROOT may itself be an instance", () => {
   function repoWithRootInstance(): string {
     const root = repo();
     writeDeclaration(root, JSON.stringify(
-        { name: "the-repo", directories: [{ id: "uploads", path: "uploads/", dependents: "reproduce", graphKinds: ["uploads"] }] },
+        { name: "the-repo", directories: [{ id: "uploads", path: "uploads/", graphKinds: ["uploads"] }] },
         null,
         2,
       ));
@@ -124,7 +124,7 @@ describe("the ROOT may itself be an instance", () => {
     // BY ITSELF, and another declaration claiming its name does not unmake it.
     const root = repo();
     writeDeclaration(root, JSON.stringify(
-        { name: "the-repo", directories: [{ id: "x", path: "an-instance/", dependents: "reproduce", graphKinds: ["uploads"] }] },
+        { name: "the-repo", directories: [{ id: "x", path: "an-instance/", graphKinds: ["uploads"] }] },
         null,
         2,
       ));
@@ -330,7 +330,7 @@ describe("an instance's own declaration outranks another instance naming it", ()
     const root = mkdtempSync(join(tmpdir(), "outrank-"));
     // `outer` declares a repository-scoped directory INSIDE `inner`, which is
     // itself an instance.
-    const outer = { name: "outer", directories: [{ id: "inner-skills", path: `${secondName}/skills/`, dependents: "reproduce", graphKinds: ["cat-harness"], scope: "repository" }] };
+    const outer = { name: "outer", directories: [{ id: "inner-skills", path: `${secondName}/skills/`, graphKinds: ["cat-harness"], scope: "repository" }] };
     const inner = { name: "inner", directories: [] };
     const byName: Record<string, unknown> = { [firstName]: outer, [secondName]: inner };
     for (const [dir, decl] of Object.entries(byName)) {

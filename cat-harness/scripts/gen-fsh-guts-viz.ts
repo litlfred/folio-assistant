@@ -34,9 +34,10 @@
  * not all of it, and the gap decomposes rather than being one number:
  *
  * - a file carrying the tag is **declared**;
- * - a `.py`/`.ts` script cannot carry YAML front matter at all, so when a
- *   tagged `.md` sibling describes it, it is **described by sidecar** — the
- *   contract met by the only mechanism open to it;
+ * - a file whose format cannot carry YAML front matter at all — a script, a
+ *   PDF, a JSON, an HTML page — is **described by sidecar** when a tagged
+ *   `.md` sibling of the same basename describes it: the contract met by the
+ *   only mechanism open to it;
  * - anything else is **undeclared**, and that is a finding.
  *
  * Collapsing those into "tagged / untagged" would file a script that cannot
@@ -140,6 +141,15 @@ function walk(dir: string, prefix = ""): string[] {
 
 /** A file's first markdown heading, where it has one. */
 function titleOf(abs: string): string | undefined {
+  // MARKDOWN ONLY. `readFileSync(..., "utf-8")` does not throw on a PDF — it
+  // returns the bytes with every invalid sequence replaced — so the regex
+  // below happily matched inside binary and the page rendered raw PDF
+  // fragments as a file's title. Seen 2026-09-30, the moment 33 archived
+  // sources arrived: four rows of the table came out as mojibake.
+  //
+  // A non-markdown file's title comes from its `.md` sidecar, which the
+  // caller resolves; there was never a reason to open the file itself.
+  if (!abs.endsWith(".md")) return undefined;
   let text: string;
   try {
     text = readFileSync(abs, "utf-8");
@@ -173,7 +183,16 @@ export function gutsFiles(dir: string): GutsFile[] {
     const group = slash === -1 ? "." : rel.slice(0, rel.indexOf("/"));
     let state: DeclState = "undeclared";
     if (tagged.has(rel)) state = "declared";
-    else if (/\.(py|ts|sh)$/.test(rel) && tagged.has(rel.replace(/\.[^.]+$/, ".md"))) state = "sidecar";
+    // ANY non-markdown file, not a hand-listed set of extensions. The rule is
+    // "this format cannot carry YAML front matter", and that is true of a PDF
+    // and a JSON exactly as it is of a `.py`. Listing extensions made the
+    // check answer a narrower question than its own docblock states, and the
+    // 2026-09-30 upload sweep walked straight into it: 40 archived sources and
+    // their extraction companions each have a tagged `.md` sibling and every
+    // one read as `undeclared` — a false finding, in the direction that looks
+    // like a violation. `detangle-schema-viewer.html` had been reading that
+    // way since it arrived.
+    else if (!rel.endsWith(".md") && tagged.has(rel.replace(/\.[^./]+$/, ".md"))) state = "sidecar";
     const title = titleOf(join(dir, rel));
     return { rel, group, state, ...(title ? { title } : {}) };
   });

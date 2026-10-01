@@ -36,7 +36,7 @@ read a wall of it.
 ## Make the determination before the first substantive turn
 
 Beside the other opening steps — the session-start sweep and
-[`opening-brief`](../../folio-core/opening-brief.md). The sweep prints the interaction
+[`opening-brief`](../../sdlc/sdlc-core/opening-brief.md). The sweep prints the interaction
 preferences **first**, before the work plan, because they change the form of
 every question that follows; this is the same argument one step further.
 

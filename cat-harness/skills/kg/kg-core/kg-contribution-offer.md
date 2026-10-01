@@ -219,7 +219,7 @@ node for it is a graph with a node nobody will ever read.
    The offer produces a decision, not a node: writing the skill or the diagram
    is work, and work here is a bean before it is a file.
 3. Record the answer where the next agent will see it — on the issue, with the
-   round summary [`issue-working`](../../folio-core/issue-working.md) already requires.
+   round summary [`issue-working`](../../sdlc/sdlc-core/issue-working.md) already requires.
 
 On `none`: record that too. *"Asked, answered none, because the requirement is
 carried by the code"* is a fact the next agent needs, and its absence is
@@ -233,5 +233,5 @@ indistinguishable from never having asked.
 | a correction to a rule that already exists — no offer | [`symbiotic-interaction`](../../conduct/conduct-core/symbiotic-interaction.md) §2 |
 | where the answer lands | [`placement`](placement.md) |
 | the process step | [`crdm-signoff.bpmn`](../../../processes/crdm-signoff.bpmn) |
-| the round summary that records it | [`issue-working`](../../folio-core/issue-working.md) |
-| why work becomes a bean first | [`todo-manager`](../../folio-core/todo-manager.md) |
+| the round summary that records it | [`issue-working`](../../sdlc/sdlc-core/issue-working.md) |
+| why work becomes a bean first | [`todo-manager`](../../sdlc/sdlc-core/todo-manager.md) |

@@ -121,7 +121,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 | **Создание контента** | Написание, редактирование, расширение контента фолио (главы, блоки, разделы) | Рабочий процесс создания (paper или document) |
 | **Рецензирование контента** | Проверка, валидация, обратная связь по существующему контенту | Жизненный цикл контента / рабочий процесс editing-HCI |
 | **Импорт контента** | Импорт исходного документа в фолио | Рабочий процесс импорта документов |
-| **Запрос функциональности** | Запрос новой возможности платформы (см. [crdm-detect](../../skills/crdm/crdm-detect.md)) | Рабочий процесс требований CRDM |
+| **Запрос функциональности** | Запрос новой возможности платформы (см. [crdm-detect](../../skills/sdlc/crdm/crdm-detect.md)) | Рабочий процесс требований CRDM |
 | **Информационный запрос** | Вопрос о платформе, контенте или процессе | Вне процессов — прямой ответ |
 | **Вызов инструмента** | Запуск конкретного инструмента (`content_validate`, `qa_sweep` и т. д.) | Вне процессов — выполнить и отчитаться |
 | **Управление планом работы** | Создание, обновление или запрос beans | Вне процессов — выполнить и отчитаться |
@@ -131,7 +131,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 
 Критическая граница классификации пролегает между **созданием контента** и
 **запросом функциональности**. Навык `crdm-detect`
-([`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md))
+([`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md))
 предоставляет подробные критерии обнаружения. Краткое правило:
 
 > Если реализация запроса потребует изменений в **folio-assistant**
@@ -273,7 +273,7 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 
 ### Как агент входит в CRDM
 
-Логика обнаружения описана в [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md).
+Логика обнаружения описана в [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md).
 Три сценария:
 
 **Новая сессия, первый запрос — запрос новой функциональности:**
@@ -399,11 +399,11 @@ _Эта страница сгенерирована из [`content/docs/agentic-
 | Стартовый обзор сессии | `AGENTS.md § At session start` | [`AGENTS.md`](../../AGENTS.md) |
 | Протокол beans | `todo-manager.md`, `bean-coordination.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Дисциплина коммитов и PR | `AGENTS.md § Commit early, commit often` | [`AGENTS.md`](../../AGENTS.md) |
-| Обнаружение запросов функциональности | `crdm-detect.md` | [`skills/crdm/crdm-detect.md`](../../skills/crdm/crdm-detect.md) |
-| Рабочий процесс требований CRDM | `crdm-requirements-workflow.md` | [`skills/crdm/crdm-requirements-workflow.md`](../../skills/crdm/crdm-requirements-workflow.md) |
-| Создание контента (paper) | навыки authoring-math | [`skills/authoring-math/`](../../skills/authoring-math/) |
-| Создание контента (document) | навыки folio-document-adapter | [`skills/folio-document-adapter/`](../../skills/folio-document-adapter/) |
-| Жизненный цикл контента | навыки content-lifecycle | [`skills/content-lifecycle/`](../../skills/content-lifecycle/) |
+| Обнаружение запросов функциональности | `crdm-detect.md` | [`skills/sdlc/crdm/crdm-detect.md`](../../skills/sdlc/crdm/crdm-detect.md) |
+| Рабочий процесс требований CRDM | `crdm-requirements-workflow.md` | [`skills/sdlc/crdm/crdm-requirements-workflow.md`](../../skills/sdlc/crdm/crdm-requirements-workflow.md) |
+| Создание контента (paper) | навыки authoring-math | [`skills/authoring/authoring-math/`](../../skills/authoring/authoring-math/) |
+| Создание контента (document) | навыки folio-document-adapter | [`skills/authoring/folio-document-adapter/`](../../skills/authoring/folio-document-adapter/) |
+| Жизненный цикл контента | навыки content-lifecycle | [`skills/authoring/content-lifecycle/`](../../skills/authoring/content-lifecycle/) |
 | Импорт документов | `docs-generation.md` | [`skills/ui/ui-core/docs-generation.md`](../../skills/ui/ui-core/docs-generation.md) |
 | Диспетчеризация и координация | `dispatch-agent.md`, `coordinate.md` | [`skills/folio-core/`](../../skills/folio-core/) |
 | Типы контента и адаптеры | `AGENTS.md § Content types` | [`AGENTS.md`](../../AGENTS.md) |

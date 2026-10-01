@@ -59,7 +59,7 @@ function instance(declare = true): string {
         ? [
             {
               id: "fsh-guts",
-              path: "fsh-guts/", dependents: "reproduce",
+              path: "fsh-guts/",
               scope: "repository",
               description: "trashcan",
               graphKinds: ["fsh-guts"],
