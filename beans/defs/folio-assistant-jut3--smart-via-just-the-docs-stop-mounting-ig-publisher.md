@@ -1,11 +1,11 @@
 ---
 # folio-assistant-jut3
 title: 'SMART-* VIA JUST-THE-DOCS: stop mounting IG Publisher HTML; render input/pages from post-processed JSON-LD + metadata through the Jekyll pipeline'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T11:39:18Z
+updated_at: 2026-10-01T12:18:07Z
 parent: folio-assistant-uhkv
 ---
 
@@ -450,3 +450,32 @@ SUSHI could not run in that session, because `packages.fhir.org` was unreachable
 ## 2026-10-01: fork fix merged; staging re-pinned
 
 https://github.com/litlfred/smart-trust/pull/2 merged as `25771f6` after both IG builds went green. `menu.json` was re-ingested at `25771f6`, so `/smart-trust/ig/` now builds with both defects fixed.
+
+## Parity checklist, measured (2026-10-01)
+
+The P0 rule from the skill (`ig-publisher-reduction`, owner approval 2026-09-30) is a **strict** page-set match: every page the Publisher renders counts, and one we cannot render is a gap, not an exception.
+
+**Provenance**
+- **Publisher side:** `litlfred/smart-trust` `gh-pages` root, a full IG Publisher build of `main` at `25771f6`: 3,548 root `.html` pages, file tree read without blobs.
+- **Our side:** `folio-assistant` `gh-pages` `STAGING/claude-wonderful-curie-gbfeuy/smart-trust/`: 728 pages. That is 674 artefact pages, 1 index, 1 category page, 5 menu sections, and 47 under `ig/` (`bamf`: 42 narrative pages plus 5 menu sections).
+
+| page kind (Publisher) | Publisher | ours | gap | what it needs |
+|---|---:|---:|---:|---|
+| narrative page (`pages:` tree) | 35 | 35 | **0** | done (`bamf`) |
+| artefact main page | 673 | 673 | **0** | done (`gen-smart-trust-pages`) |
+| artefact not in our index | 4 | 0 | 4 | **index is stale** (read 2026-09-21; the `IRL` participant was added since). Re-ingest, no new rendering. |
+| representation view `.json/.xml/.ttl.html` | 2,004 | 0 | 2,004 | the resource bytes. 655 of 674 are `referenced`, not held, so this needs materialisation, and P2 (which representations survive) decides it first |
+| `.change.history` tab | 668 | 0 | 668 | per-artefact history. Not in any export the index reads, so **data-limited** until the fork or AST exports it |
+| `-testing` tab | 69 | 0 | 69 | test-plan data per artefact; source not yet identified |
+| profile tabs: `-definitions`, `-mappings`, `-examples`, `.profile.json/xml/ttl`, `.profile.history` | 35 | 0 | 35 | StructureDefinition snapshots for the 5 profiles, from the package (materialisation) |
+| DAK `.schema.json` / `.jsonld` views (smart-base post-processing) | 33 | 0 | 33 | the DAK post-processing outputs, already produced by the fork's CI |
+| IG-level generated: `artifacts`, `toc`, `qa`, `qa-dep`, `qa-ipreview`, `qa-tx`, `qa-txservers`, `qa.min`, `searchform`, `history`, `smart.liquid` | 11 | 0 (our index is an `artifacts` equivalent at another URL) | 11 | `artifacts` and `toc` are derivable from the index and the page tree; `qa*` need the Publisher's QA output; `searchform` needs a search index; `history` needs the package history |
+| **total** | **3,548** | **708 matched** | **2,840** | |
+
+**Reading it**
+- The two page kinds a reader reads, narrative pages and artefact main pages, are at **full parity**.
+- 2,004 of the 2,840 gaps (71 %) are representation views. They wait on P2's decision about which representations survive, and are not rendering work.
+- The next biggest gap, 668 change-history tabs, is **data-limited**: no export carries that history. By the skill's own rule it belongs on the fork's ask list rather than here.
+- **Cheap and in reach now:** 4 stale artefacts (re-ingest), `artifacts`/`toc` (derivable), and 33 DAK views (outputs already exist).
+
+**The MVP call against this table is the owner's**, and so is whether representation views wait for P2.
