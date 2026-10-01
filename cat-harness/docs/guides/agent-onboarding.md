@@ -163,6 +163,16 @@ each reviewer found — `script`, `agent`, or `human`. Entries carry the
 source-file hashes at audit time, so an entry goes **stale** when the
 block is edited and must be re-adjudicated.
 
+**Where a QA result is kept depends on whether it can be regenerated.**
+Derived verdicts, meaning `script` entries and everything under
+`<instance>/test/results/`, are a working copy. CI stores the record on the
+orphan `qa-reports` branch, keyed by commit, so there is nothing to
+regenerate and commit. Judgements by an agent or a human stay on `main` in
+`test/attestations/`. Gates over them compute and judge: a finding fails
+only if it is new against a stored baseline, and a missing baseline is
+*unknown*. The skill is
+[`qa-reports`](../reference/skill-instructions/qa-reports.md).
+
 Criteria are grouped into **axes** (`proof`, `voice`, `detangler`,
 `uses`, `canonical`, `compute`, `bibliography`, …). Run one:
 
