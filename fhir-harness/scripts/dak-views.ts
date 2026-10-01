@@ -19,8 +19,10 @@
  * overlay gets none of it; moving the overlay into smart-base as a pluggable
  * renderer is the layering fix (recorded on bean `jut3`).
  */
-import { basename } from "node:path";
-import { artifactPageName, type FhirArtifact } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
+import { readFileSync } from "node:fs";
+import { hasJsonView } from "./resource-views.ts";
+import { basename, join } from "node:path";
+import { artifactPageName, type FhirArtifact, type FhirArtifactIndex } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
 /** The two sidecars the Publisher renders a page for, in its tab order. */
 export const DAK_VIEW_KINDS = [
@@ -69,11 +71,16 @@ export const DAK_VIEW_SCRIPT = "assets/dak-view.js";
  *   from `artifact/`, so a `localPath` of `fhir-artifact-index/dak/X` is fetched
  *   at `../fhir-artifact-index/dak/X`.
  */
-export function dakViewData(a: FhirArtifact, view: DakView, servedFrom = "../"): DakViewData {
+export function dakViewData(a: FhirArtifact, view: DakView, servedFrom = "../", jsonViews = false): DakViewData {
   const page = `${artifactPageName(a)}.html`;
+  // JSON is this site's own view where the Publisher writes one
+  // (`resource-views.ts`); XML and Turtle stay the Publisher's (P2).
   const reps = (["xml", "json", "ttl"] as const).flatMap((k) => {
     const url = a.published?.[k]?.url;
-    return url ? [{ label: k.toUpperCase(), href: url, active: false }] : [];
+    if (!url) return [];
+    // Only when this site WRITES the JSON view (`jsonViews`: the IG's package
+    // is held and served); otherwise the tab would link a page that is not there.
+    return [{ label: k.toUpperCase(), href: k === "json" && jsonViews && hasJsonView(a) ? `${page.replace(/\.html$/, "")}.json.html` : url, active: false }];
   });
   return {
     label: view.label,
@@ -112,4 +119,63 @@ export function dakHubLinks(artifacts: readonly FhirArtifact[], publishedAt: str
     out[h] = pagesByName.has(h) ? `artifact/${h}` : held.has(h) ? held.get(h)! : `${upstream}/${h}`;
   }
   return out;
+}
+
+/**
+ * Whether an instance's DAK files are on the site for a page to fetch: its
+ * artefact-index directory is declared `served`, and its docs directory is
+ * the composed instance root — so a page one level down reaches the served
+ * data as `../<path>` (bean `680p`).
+ */
+export function dakServed(instanceRoot: string): { ok: true } | { ok: false; why: string } {
+  const name = basename(instanceRoot);
+  let d: { directories?: { path?: string; graphKinds?: string[]; served?: boolean; instanceRoot?: boolean; composed?: boolean }[] };
+  try {
+    d = JSON.parse(readFileSync(join(instanceRoot, `${name}.json`), "utf8"));
+  } catch {
+    return { ok: false, why: `${name}.json could not be read` };
+  }
+  const dirs = d.directories ?? [];
+  const index = dirs.find((x) => x.graphKinds?.includes("fhir-artifact-index"));
+  const docs = dirs.find((x) => x.path === "docs/");
+  if (!index?.served) return { ok: false, why: "its fhir-artifact-index directory is not declared `served`" };
+  if (!(docs?.instanceRoot && docs.composed)) return { ok: false, why: "its docs/ is not the composed instance root, so `../` does not reach the served data" };
+  return { ok: true };
+}
+
+/** Where smart-base's post-processing writes the hub into `dak-api.html` (`generate_dak_api_hub.py`, `comment_marker`). */
+export const DAK_API_PLACEHOLDER = "<!-- DAK_API_CONTENT -->";
+/** The hub's loader, published under the instance's docs root by `gen-ig-pages`. */
+export const DAK_HUB_SCRIPT = "assets/dak-hub.js";
+/** The hub's template, shared by the standalone hub page and the IG site's own `dak-api` page. */
+export const DAK_HUB_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "dak-api.liquid");
+
+/**
+ * The hub's page data, for a page at `prefix` from the instance root (`""`
+ * for the docs root, `"../"` one level down — the IG site at `ig/`). Every
+ * relative path is rebased by the same prefix; the Publisher's absolute URLs
+ * are left alone.
+ */
+export function dakHubData(ix: FhirArtifactIndex, fragment: string, prefix: string) {
+  const rebase = (h: string) => (/^[a-z][a-z0-9+.-]*:|^\/|^#/i.test(h) ? h : `${prefix}${h}`);
+  const links = Object.fromEntries(Object.entries(dakHubLinks(ix.artifacts, ix.source.of, fragment)).map(([k, v]) => [k, rebase(v)]));
+  return { src: rebase(ix.dakApiHub!.localPath!), published: ix.dakApiHub!.url, links, script: rebase(DAK_HUB_SCRIPT) };
+}
+
+/**
+ * The fill that makes the IG site's own `dak-api` page what the Publisher
+ * published: its source holds only {@link DAK_API_PLACEHOLDER}, and
+ * smart-base's post-processing writes the hub there. Undefined, with nothing
+ * filled, when the instance holds no hub or does not serve its graph.
+ */
+export function dakHubFill(instanceRoot: string): { marker: string; body: string; data: Record<string, unknown> } | undefined {
+  let ix: FhirArtifactIndex;
+  try {
+    ix = JSON.parse(readFileSync(join(instanceRoot, "fhir-artifact-index", "index.json"), "utf8"));
+  } catch {
+    return undefined;
+  }
+  if (!ix.dakApiHub?.localPath || !dakServed(instanceRoot).ok) return undefined;
+  const fragment = readFileSync(join(instanceRoot, ix.dakApiHub.localPath), "utf8");
+  return { marker: DAK_API_PLACEHOLDER, body: readFileSync(DAK_HUB_TEMPLATE, "utf8"), data: { hub: dakHubData(ix, fragment, "../") } };
 }

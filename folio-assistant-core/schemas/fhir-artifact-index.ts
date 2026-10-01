@@ -337,6 +337,14 @@ export const FhirArtifactIndexSchema = z
      */
     dakApiHub: RepresentationSchema.optional(),
     /**
+     * The IG's own `package.tgz` — every resource's JSON in one file, as the
+     * Publisher packaged it. Held (`--materialize-package`) so a page can
+     * fetch the one archive and read a resource out of it in the browser,
+     * rather than this graph copying hundreds of resource files (bean `680p`,
+     * `visualizer-loading`). Absent means not held.
+     */
+    package: RepresentationSchema.optional(),
+    /**
      * Sidecars an enumeration listed that bound to no artefact. Absent means
      * none; an empty array is not written. See {@link UnboundSidecarSchema}
      * for why these are recorded rather than warned about and forgotten.

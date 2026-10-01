@@ -2,7 +2,7 @@
 title: "WHO GDHCN Actor ValueSet of actor codes — JSON-LD"
 description: "The JSON-LD sidecar of ValueSet/Actors, from the IG's DAK API."
 nav_exclude: true
-dak: {"label":"JSON-LD","file":"ValueSet-Actors.jsonld","src":"../fhir-artifact-index/dak/ValueSet-Actors.jsonld","artifact":{"title":"WHO GDHCN Actor ValueSet of actor codes","page":"ValueSet-Actors.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-Actors.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Actors.xml","active":false},{"label":"JSON","href":"https://litlfred.github.io/smart-trust/ValueSet-Actors.json","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Actors.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Actors.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Actors.jsonld.html","active":true}],"script":"../assets/dak-view.js"}
+dak: {"label":"JSON-LD","file":"ValueSet-Actors.jsonld","src":"../fhir-artifact-index/dak/ValueSet-Actors.jsonld","artifact":{"title":"WHO GDHCN Actor ValueSet of actor codes","page":"ValueSet-Actors.html"},"tabs":[{"label":"Narrative Content","href":"ValueSet-Actors.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/ValueSet-Actors.xml","active":false},{"label":"JSON","href":"ValueSet-Actors.json.html","active":false},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/ValueSet-Actors.ttl","active":false},{"label":"JSON Schema","href":"ValueSet-Actors.schema.json.html","active":false},{"label":"JSON-LD","href":"ValueSet-Actors.jsonld.html","active":true}],"script":"../assets/dak-view.js"}
 ---
 <style>
 .st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;

@@ -75,7 +75,8 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
-import { DAK_VIEW_SCRIPT, dakHubLinks, dakViewData, dakViews } from "./dak-views.ts";
+import { DAK_HUB_SCRIPT, DAK_HUB_TEMPLATE, DAK_VIEW_SCRIPT, dakHubData, dakServed, dakViewData, dakViews } from "./dak-views.ts";
+import { JSON_VIEW_SCRIPT, hasJsonView, jsonViewData } from "./resource-views.ts";
 import { isDirectoryReadme } from "../../cat-harness/schemas/kg-node.js";
 
 import { IgMenuSchema, type IgMenu, type IgMenuGroup, menuHref, menuItemCount } from "../../cat-harness/schemas/ig-menu.js";
@@ -128,34 +129,17 @@ const INDEX = join(INSTANCE, "fhir-artifact-index", "index.json");
  */
 const MENU = join(INSTANCE, "fhir-artifact-index", "menu.json");
 const OUT = join(INSTANCE, "docs");
-/**
- * Whether this instance's DAK files are on the site for a view page to fetch:
- * its artefact-index directory is declared `served`, and its docs directory is
- * the instance's root route, so `artifact/<page>` reaches `<path>…` as `../`.
- */
-function dakViewServing(): { ok: true } | { ok: false; why: string } {
-  let d: { directories?: { path?: string; graphKinds?: string[]; served?: boolean; instanceRoot?: boolean; composed?: boolean }[] };
-  try {
-    d = JSON.parse(readFileSync(join(INSTANCE, `${INSTANCE_NAME}.json`), "utf8"));
-  } catch {
-    return { ok: false, why: `${INSTANCE_NAME}.json could not be read` };
-  }
-  const dirs = d.directories ?? [];
-  const index = dirs.find((x) => x.graphKinds?.includes("fhir-artifact-index"));
-  const docs = dirs.find((x) => x.path === "docs/");
-  if (!index?.served) return { ok: false, why: "its fhir-artifact-index directory is not declared `served`" };
-  if (!(docs?.instanceRoot && docs.composed)) return { ok: false, why: "its docs/ is not the composed instance root, so `../` does not reach the served data" };
-  return { ok: true };
-}
+const dakViewServing = () => dakServed(INSTANCE);
 
 /** The DAK view pages' Liquid template (`liquid-templates`: a file of this directory, beside its writer). */
 const DAK_VIEW_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "dak-view.liquid");
 /** Their one shared loader, copied to `docs/assets/` (bean `680p`, `visualizer-loading`). */
 const DAK_VIEW_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-view.js");
 /** The DAK API hub page's template and loader — the Publisher's `dak-api.html`, replicated. */
-const DAK_HUB_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "dak-api.liquid");
 const DAK_HUB_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-hub.js");
-const DAK_HUB_SCRIPT = "assets/dak-hub.js";
+/** The JSON view pages' template and loader — the Publisher's `<Name>.json.html`. */
+const JSON_VIEW_TEMPLATE = join(import.meta.dir, "templates", "ig-pages", "json-view.liquid");
+const JSON_VIEW_LOADER = join(import.meta.dir, "templates", "ig-pages", "resource-json.js");
 /** An artefact page's DAK API section: its template and the loader that builds it from the OpenAPI sidecar. */
 const DAK_OPENAPI_BODY = readFileSync(join(import.meta.dir, "templates", "ig-pages", "dak-openapi.liquid"), "utf8");
 const DAK_OPENAPI_LOADER = join(import.meta.dir, "templates", "ig-pages", "dak-openapi.js");
@@ -948,7 +932,7 @@ if (dakServing.ok === false && ix.artifacts.some((a) => dakViews(a).length > 0))
 }
 for (const a of dakServing.ok ? ix.artifacts : []) {
   for (const v of dakViews(a)) {
-    const data = dakViewData(a, v);
+    const data = dakViewData(a, v, "../", Boolean(ix.package?.localPath));
     dakViewCount += 1;
     pages.set(
       join("artifact", `${v.file}.md`),
@@ -964,6 +948,29 @@ for (const a of dakServing.ok ? ix.artifacts : []) {
   }
 }
 if (dakViewCount > 0) pages.set(DAK_VIEW_SCRIPT, readFileSync(DAK_VIEW_LOADER, "utf8"));
+
+// THE JSON VIEW PAGES — the Publisher's `<Name>.json.html` (672 on
+// smart-trust). Each reads its resource out of the IG's package.tgz, held in
+// the served graph, in the browser; no resource is copied (bean `680p`).
+// Without a held package, or a served graph, none is written and the run says so.
+let jsonViewCount = 0;
+if (ix.artifacts.some(hasJsonView)) {
+  if (!ix.package?.localPath) console.log("  JSON view pages NOT written: the index holds no package (re-ingest with --materialize-package)");
+  else if (!dakServing.ok) console.log(`  JSON view pages NOT written: ${dakServing.why}`);
+  else {
+    const template = readFileSync(JSON_VIEW_TEMPLATE, "utf8");
+    for (const a of ix.artifacts.filter(hasJsonView)) {
+      const extra = dakViews(a).map((v) => ({ label: v.label, href: `${v.file}.html`, active: false }));
+      const data = jsonViewData(a, ix.package.localPath, extra);
+      pages.set(
+        join("artifact", `${pageName(a)}.json.md`),
+        shell(`${a.title ?? a.name ?? a.id} — JSON`, `The JSON representation of ${a.key}.`, template, { kind: "leaf" }, "fixture", { json_view: data }),
+      );
+      jsonViewCount += 1;
+    }
+    pages.set(JSON_VIEW_SCRIPT, readFileSync(JSON_VIEW_LOADER, "utf8"));
+  }
+}
 if ([...pages.values()].some((p) => p.includes("data-dak-openapi-src"))) pages.set(DAK_OPENAPI_SCRIPT, readFileSync(DAK_OPENAPI_LOADER, "utf8"));
 
 // THE DAK API HUB — the Publisher's `dak-api.html`, as its own page (owner,
@@ -971,8 +978,8 @@ if ([...pages.values()].some((p) => p.includes("data-dak-openapi-src"))) pages.s
 // in the served graph and fetched; what is computed here is where each of its
 // links should go on THIS site, because the Publisher's relative links assume
 // its flat layout.
-const hubLinks = ix.dakApiHub?.localPath && dakServing.ok ? dakHubLinks(ix.artifacts, ix.source.of, readFileSync(join(INSTANCE, ix.dakApiHub.localPath), "utf8")) : undefined;
-if (hubLinks && ix.dakApiHub?.localPath) {
+if (ix.dakApiHub?.localPath && dakServing.ok) {
+  const hub = dakHubData(ix, readFileSync(join(INSTANCE, ix.dakApiHub.localPath), "utf8"), "");
   pages.set(
     "dak-api.md",
     shell(
@@ -981,7 +988,7 @@ if (hubLinks && ix.dakApiHub?.localPath) {
       readFileSync(DAK_HUB_TEMPLATE, "utf8"),
       { kind: "leaf" },
       "fixture",
-      { hub: { src: ix.dakApiHub.localPath, published: ix.dakApiHub.url, links: hubLinks, script: DAK_HUB_SCRIPT } },
+      { hub },
     ),
   );
   pages.set(DAK_HUB_SCRIPT, readFileSync(DAK_HUB_LOADER, "utf8"));
@@ -1071,10 +1078,11 @@ if (CHECK) {
   // pages over a corpus of 674.
   // One per ARTEFACT: the DAK view pages and their raw files share the
   // directory and are counted on their own line.
-  const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/") && k.endsWith(".md") && !/\.(schema\.json|jsonld)\.md$/.test(k)).length;
+  const artefactPages = [...pages.keys()].filter((k) => k.startsWith("artifact/") && k.endsWith(".md") && !/\.(schema\.json|jsonld|json)\.md$/.test(k)).length;
   const categoryPages = [...pages.keys()].filter((k) => k.startsWith("category/")).length;
   console.log(`  ${artefactPages} artefact page(s) — one per artefact; ${dak.schema} carry a DAK schema`);
   console.log(`  ${dakViewCount} DAK view page(s) — one per held JSON Schema or JSON-LD sidecar, file fetched client-side`);
+  console.log(`  ${jsonViewCount} JSON view page(s) — resource read client-side from the held package.tgz`);
   console.log(`  ${categoryPages} category page(s) — categories over ${INLINE_LIMIT}, listed off the index`);
   // THE MENU IS REPORTED EITHER WAY. An unreported page is a page nothing
   // checks, and an absent menu reported as silence is indistinguishable from

@@ -92,13 +92,20 @@ hub: {"src":"fhir-artifact-index/dak/dak-api-hub.html","published":"https://litl
   <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
 </div>
 
-{%- comment -%}
+{% comment %}
 The IG's DAK API hub page, a replica of the Publisher's `dak-api.html`, rendered by Jekyll.
 Reads `page.hub`, every field written by `gen-ig-pages.ts`: `src` (the hub fragment in the served
 artefact-index graph), `published` (the page it was read from), `links` (each of the fragment's
 hrefs mapped to this site's page, the served file, or the Publisher's copy) and `script` (the loader).
 The hub's text is NOT in the page: `dak-hub.js` fetches the fragment, as `visualizer-loading` requires.
-{%- endcomment -%}
+No whitespace control on these tags: the IG site also drops this template into its own `dak-api` page
+at the post-processing marker, mid-page, where a stripping tag would glue the host onto the line before.
+{% endcomment %}
+<style>
+/* just-the-docs sets h4 in uppercase; the Publisher's theme does not, and the hub's card titles are
+   h4 — so "COSE Headers (DRAFT)" read "COSE HEADERS (DRAFT)". Scoped to the hub, so the theme is untouched. */
+.dak-api-hub-host h4 { text-transform: none; }
+</style>
 <div class="dak-api-hub-host" data-dak-hub-src="{{ page.hub.src }}"><p>Loading the DAK API hub…</p></div>
 <script type="application/json" id="dak-hub-links">{{ page.hub.links | jsonify }}</script>
 <noscript><p>This page needs JavaScript; the <a href="{{ page.hub.src }}">hub fragment</a> and the <a href="{{ page.hub.published }}">published page</a> do not.</p></noscript>

@@ -648,3 +648,23 @@ from the ValueSet's OpenAPI sidecar, and it skips logical models.
   page's last table row, and kramdown printed it as text. This template
   therefore opens with an unstripped comment tag; the
   README reader accepts both forms.
+
+## 2026-10-01: the IG site's `dak-api` page, and 672 JSON views — both equivalent
+
+The owner chose `1 2 3`: close the IG site's `dak-api` gap, then build the JSON
+views, then write the P2 refusal record.
+
+**1. The IG site's `dak-api` page.** Its source holds only `<!-- DAK_API_CONTENT -->`.
+- `build-ig-site` gained a **generic** `fills` option: content a post-processing step writes at a marker. A fill puts its body there and adds its data to the page's front matter. It knows a marker and a template, never whose post-processing wrote them, and it reports fills it could not place.
+- `stage-ig-sites` passes the DAK hub fill, built by `dakHubFill` in `dak-views.ts`.
+- The page is now its own source plus the hub, which is what the Publisher published.
+- **Checked in Chromium** on a staged IG site: the source intro is present, the hub text is identical to the Publisher's, and all 53 links resolve.
+- just-the-docs sets `h4` in uppercase and the hub's card titles are `h4`, so a style rule scoped to the hub restores the Publisher's case.
+
+**2. JSON views: 672 of 672 equivalent.**
+- The Publisher writes `<Name>.json.html` for every artefact except the ImplementationGuide and StructureDefinitions, which get `.profile.json.html`.
+- Its page fetches `<Name>.json` and shows `JSON.stringify(parsed, null, 2)`. Ours fetches the IG's **`package.tgz`, held in the served graph** (228 KB; `--materialize-package`, new index field `package`). The browser gunzips it, walks the tar and reads the resource (`resource-views.ts`, `json-view.liquid`, `resource-json.js`), rather than copying 672 resource files. 677 of the 678 package resources are JSON-equal to the published `.json`.
+- **Checked in Chromium:** all 672 show identical JSON, status line and heading.
+- The Publisher's status line uses `colsd` for drafts and `colsi` otherwise, with the same text.
+- **Not reproduced:** all 672 Publisher headings start with `": "`, an empty type label in its template. Ours drop it, by the same rule as the tab bars. Recorded with the other upstream defects in bean `g4oc`.
+- The DAK view pages' JSON tab now points to this site's JSON view, but only where that page is written; smart-base holds no package, so its pages are unchanged.

@@ -130,6 +130,7 @@ function main(): void {
   const out = arg("out");
   const check = process.argv.includes("--check");
   const materializeDak = process.argv.includes("--materialize-dak");
+  const materializePackage = process.argv.includes("--materialize-package");
   const USAGE =
     "usage: ingest-ig-artifacts.ts --source <dir> --out <dir> [--id <id>] " +
     "[--base <url>] [--kind gh-pages|output] [--materialize-dak] [--check]";
@@ -561,6 +562,10 @@ function main(): void {
     dakApi,
     ...(contexts.length ? { contexts } : {}),
     ...(hub ? { dakApiHub: hub.rep } : {}),
+    ...(materializePackage ? (() => {
+      const r = rep(source, base, "package.tgz", join("fhir-artifact-index", "package.tgz"));
+      return r ? { package: r } : {};
+    })() : {}),
     ...(unbound.length ? { dakUnbound: unbound } : {}),
     count: artifacts.length,
     artifacts,
@@ -593,6 +598,7 @@ function main(): void {
     for (const [from, to] of materialized) copyFileSync(join(source, from), join(dakDir, to));
   }
   if (hub) writeFileSync(join(graphDir, "dak", "dak-api-hub.html"), hub.fragment);
+  if (materializePackage && existsSync(join(source, "package.tgz"))) copyFileSync(join(source, "package.tgz"), join(graphDir, "package.tgz"));
 
   const census = materializationCensus(artifacts);
   const dakCensus = dakOverlayCensus(artifacts);

@@ -88,6 +88,7 @@ classDiagram
       dakApi [1] unknown | absent | present
       contexts [0..*] Context[]
       dakApiHub [0..1] object
+      package [0..1] object
       dakUnbound [0..*] DakUnbound[]
       count [1] integer
       artifacts [0..*] Artifact[]

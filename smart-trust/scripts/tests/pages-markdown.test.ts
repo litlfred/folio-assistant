@@ -41,19 +41,19 @@ const categoryFiles = existsSync(CATEGORIES)
   : [];
 
 /**
- * A DAK sidecar's view page (`<Name>.schema.json.md`, `<Name>.jsonld.md`) sits
+ * A VIEW page — a DAK sidecar's (`<Name>.schema.json.md`, `<Name>.jsonld.md`) or a JSON view (`<Name>.json.md`) — sits
  * beside its artefact page, as the Publisher's does, but is a different page
  * KIND: one per held sidecar, not one per artefact (bean `jut3`).
  */
-const isDakView = (f: string) => /\.(schema\.json|jsonld)\.md$/.test(f);
+const isView = (f: string) => /\.(schema\.json|jsonld|json)\.md$/.test(f);
 
 const artifactFiles = existsSync(ARTIFACTS)
   ? readdirSync(ARTIFACTS)
-      .filter((f) => f.endsWith(".md") && !isDakView(f))
+      .filter((f) => f.endsWith(".md") && !isView(f))
       .sort()
   : [];
 
-const dakViewFiles = existsSync(ARTIFACTS) ? readdirSync(ARTIFACTS).filter(isDakView).sort() : [];
+const dakViewFiles = existsSync(ARTIFACTS) ? readdirSync(ARTIFACTS).filter(isView).sort() : [];
 
 /**
  * The artefact index the generator reads. Loaded here so a test can assert
@@ -216,7 +216,7 @@ describe("the pages are markdown, not HTML wearing front matter", () => {
     it(`${label} uses markdown tables`, () => {
       // A DAK view page holds no tabular data — a file and its links — so it
       // is held only to the half of this rule that forbids HTML tables.
-      if (!isDakView(label)) expect(b).toMatch(/^\|---/m);
+      if (!isView(label)) expect(b).toMatch(/^\|---/m);
       expect(b).not.toMatch(/<table\b/);
       expect(b).not.toMatch(/<tr\b/);
       expect(b).not.toMatch(/<td\b/);
@@ -234,7 +234,7 @@ describe("representation links are separated", () => {
     const b = body(src);
     // A DAK view page carries no `repLinks` row; its only `</a>` is the
     // banner's, so this defect cannot occur on it.
-    if (!b.includes("</a>") || isDakView(label)) continue;
+    if (!b.includes("</a>") || isView(label)) continue;
 
     it(`${label} puts a separator between adjacent links`, () => {
       expect(b).not.toContain("</a><a ");

@@ -27,3 +27,6 @@ All 52 pairs differ. The root copy is the current generator's output (Coding obj
 ## Done when
 - [ ] the owner says where these are filed (enable issues on a fork, or the WHO repository)
 - [ ] filed there, with this bean linking the issue
+
+## 4. The JSON view heading's empty type label (IG Publisher template)
+All 672 `<Name>.json.html` headings on smart-trust start with `": "` (for example `: Holder - JSON Representation`): the template's type label renders empty. This comes from the Publisher's own template, not from DAK post-processing. folio-assistant's JSON views drop it.

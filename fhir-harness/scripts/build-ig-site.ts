@@ -128,6 +128,8 @@ export interface StageResult {
   pages: string[];
   /** Pages the Publisher generates, written here from data this build holds (`toc`, `artifacts`). */
   generated: string[];
+  /** Pages a fill was written into, and each fill whose marker no page holds — reported, never dropped. */
+  fills?: { filled: string[]; unused: string[] };
   /** The lifted per-artefact variables: how many artefacts, and which `elements__*` keys no source holds. */
   variables?: { artifacts: number; notSourced: string[] };
   /** Pages the navigation source does not list: titled by file name (and, with a menu, kept out of the nav). */
@@ -177,6 +179,17 @@ export interface StageOptions {
    * Absent, `artifacts.html` stays a menu item this build does not hold.
    */
   artifacts?: { list: ReadonlyArray<IndexedArtifact>; pagesHref: string };
+  /**
+   * Content a POST-PROCESSING step writes into a page after the Publisher has
+   * run, at a marker the page's source holds. The source alone is then not
+   * the page the Publisher published, so a fill puts `body` where `marker`
+   * is and adds `data` to the page's front matter for `body`'s Liquid to read.
+   *
+   * Generic on purpose: this layer knows a marker and a template, never whose
+   * post-processing wrote them. Which fills an IG gets is the caller's
+   * business (`stage-ig-sites.ts`).
+   */
+  fills?: ReadonlyArray<{ marker: string; body: string; data: Record<string, unknown> }>;
 }
 
 /** The fields of a `folio-fhir-artifact/v1` entry this build reads. */
@@ -433,6 +446,8 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   const pagecontent = join(src, "input", "pagecontent");
   const pages: string[] = [];
   const unlisted: string[] = [];
+  const filled: string[] = [];
+  const usedMarkers = new Set<string>();
   for (const f of files(pagecontent).filter((f) => f.endsWith(".md"))) {
     const name = basename(f, ".md");
     let n = nav.get(name);
@@ -442,9 +457,19 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
       // Under a menu it stays reachable but out of the nav, as on the IG.
       n = { title: name, navOrder: 1000 + unlisted.length, ...(fromMenu ? { navExclude: true } : {}) };
     }
-    const body = readFileSync(join(pagecontent, f), "utf-8");
-    // A page that already carries front matter keeps it.
-    writeFileSync(join(out, f), body.startsWith("---\n") ? body : frontMatter(n) + body);
+    let body = readFileSync(join(pagecontent, f), "utf-8");
+    let data: Record<string, unknown> = {};
+    for (const fill of opts.fills ?? []) {
+      if (!body.includes(fill.marker)) continue;
+      body = body.split(fill.marker).join(fill.body);
+      data = { ...data, ...fill.data };
+      filled.push(`${f} (${fill.marker})`);
+      usedMarkers.add(fill.marker);
+    }
+    // Page variables as JSON flow mappings — YAML is a superset of JSON.
+    const dataLines = Object.entries(data).map(([k, v]) => `${k}: ${JSON.stringify(v)}\n`).join("");
+    // A page that already carries front matter keeps it, with the fill's data added.
+    writeFileSync(join(out, f), body.startsWith("---\n") ? `---\n${dataLines}${body.slice(4)}` : frontMatter(n).replace(/---\n$/, `${dataLines}---\n`) + body);
     pages.push(f);
   }
 
@@ -549,7 +574,8 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
       "",
     ].join("\n"),
   );
-  return { pages: pages.sort(), generated, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, scheme, siteData };
+  const fillsResult = opts.fills?.length ? { filled, unused: opts.fills.map((x) => x.marker).filter((m) => !usedMarkers.has(m)) } : undefined;
+  return { pages: pages.sort(), generated, fills: fillsResult, variables: lifted ? { artifacts: Object.keys(lifted.vars.artifacts).length, notSourced: lifted.notSourced } : undefined, unlisted: unlisted.sort(), menuMissing, includes, images, rendered, notRendered, unparseable, scheme, siteData };
 }
 
 /**
@@ -598,6 +624,8 @@ export function describeStage(r: StageResult): string {
   return [
     `pages: ${r.pages.length}; includes: ${r.includes}; images: ${r.images}; diagrams rendered: ${r.rendered.length}`,
     ...(r.generated.length ? [`generated from data this build holds (the Publisher generates these): ${r.generated.join(", ")}`] : []),
+    ...(r.fills?.filled.length ? [`post-processing filled: ${r.fills.filled.join(", ")}`] : []),
+    ...(r.fills?.unused.length ? [`post-processing fill with no marker in any page (NOT applied): ${r.fills.unused.join(", ")}`] : []),
     ...(r.variables ? [`site.data.fhir.artifacts: ${r.variables.artifacts} artefact(s); elements not sourced (not written): ${r.variables.notSourced.join(", ") || "none"}`] : []),
     ...(r.notRendered.length ? [`NOT RENDERED (a visible marker stands in): ${r.notRendered.join(", ")}`] : []),
     ...(r.unparseable.length ? [`NOT PUBLISHED (not valid JSON in the IG source): ${r.unparseable.join("; ")}`] : []),

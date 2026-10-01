@@ -260,7 +260,7 @@
     "ingest:ig-chrome:check": "bun run cat-harness/scripts/ingest-ig-chrome.ts --out smart-base/fhir-artifact-index --check",
     "ingest:ig-menu": "bun run cat-harness/scripts/ingest-ig-menu.ts",
     "ingest:ig-menu:check": "bun run cat-harness/scripts/ingest-ig-menu.ts --out smart-trust/fhir-artifact-index --check",
-    "ingest:ig:check": "bun run folio-assistant-core/scripts/ingest-ig-artifacts.ts --out smart-trust --materialize-dak --check",
+    "ingest:ig:check": "bun run folio-assistant-core/scripts/ingest-ig-artifacts.ts --out smart-trust --materialize-dak --materialize-package --check",
     "ingest:ig:check:smart-base": "bun run folio-assistant-core/scripts/ingest-ig-artifacts.ts --out smart-base --materialize-dak --check",
     "init-folio": "bun run cat-harness/scripts/init-folio.ts",
     "iris:covers": "bun run folio-assistant-core/scripts/gen-covers.ts who-iris",

@@ -1420,6 +1420,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.package",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FhirArtifactIndexSchema.package"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG's own `package.tgz` — every resource's JSON in one file, as the Publisher packaged it. Held (`--materialize-package`) so a page can fetch the one archive and read a resource out of it in the browser, rather than this graph copying hundreds of resource files (bean `680p`, `visualizer-loading`). Absent means not held."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.package",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/0.1.0/ns#glossary/kg-schema-fields/fhir-artifact-index.fhirartifactindexschema.packageid",
       "@type": "skos:Concept",
       "skos:inScheme": {

@@ -229,3 +229,28 @@ describe("pages the Publisher generates, written from data the build holds (bean
     expect(r.generated).not.toContain("artifacts.md");
   });
 });
+
+describe("post-processing fills: content a step writes after the Publisher, at a marker the source holds", () => {
+  test("the marker is replaced, the data reaches the page's front matter, and an unused fill is reported", () => {
+    const d = mkdtempSync(join(tmpdir(), "ig-fill-"));
+    try {
+      const src = join(d, "src");
+      mkdirSync(join(src, "input", "pagecontent"), { recursive: true });
+      writeFileSync(join(src, "sushi-config.yaml"), "id: x\ncanonical: http://x\nname: X\nversion: 0.1.0\nfhirVersion: 4.0.1\npages:\n  hub.md:\n    title: Hub\n");
+      writeFileSync(join(src, "input", "pagecontent", "hub.md"), "# Hub\n\nIntro.\n\n<!-- MARK -->\n");
+      const res = stageIgSite(src, join(d, "site"), {
+        fills: [
+          { marker: "<!-- MARK -->", body: "filled {{ page.k.v }}", data: { k: { v: "y" } } },
+          { marker: "<!-- NOWHERE -->", body: "z", data: {} },
+        ],
+      });
+      const page = readFileSync(join(d, "site", "hub.md"), "utf-8");
+      expect(page).toContain('k: {"v":"y"}\n---\n');
+      expect(page).toContain("Intro.\n\nfilled {{ page.k.v }}");
+      expect(page).not.toContain("<!-- MARK -->");
+      expect(res.fills).toEqual({ filled: ["hub.md (<!-- MARK -->)"], unused: ["<!-- NOWHERE -->"] });
+    } finally {
+      rmSync(d, { recursive: true, force: true });
+    }
+  });
+});

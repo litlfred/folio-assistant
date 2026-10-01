@@ -28,6 +28,7 @@
  * @module fhir-harness/scripts/stage-ig-sites
  */
 
+import { dakHubFill } from "./dak-views.ts";
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import { basename, join, resolve } from "node:path";
@@ -122,6 +123,8 @@ if (import.meta.main) {
       menu: JSON.parse(readFileSync(ig.menuPath, "utf-8")) as IgMenu,
       remoteTheme: opt("--remote-theme"),
       artifacts: artifactsFor(ig.root),
+      // The IG's post-processing output, where its source holds only a marker.
+      fills: [dakHubFill(ig.root)].filter((x) => x !== undefined),
     });
     console.error(`${ig.instance} (${ig.repo}@${ig.ref.slice(0, 7)}):\n${describeStage(r)}`);
     if (r.siteData.refused.length) process.exit(1);

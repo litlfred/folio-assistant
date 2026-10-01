@@ -60,4 +60,11 @@ describe("dak views", () => {
       "openapi/index.html": "https://p/openapi/index.html",
     });
   });
+
+  it("the JSON tab is this site's view only when that page is written", () => {
+    const withJson = { ...a, resourceType: "ValueSet", published: { json: { url: "https://p/ValueSet-Actors.json" } } } as unknown as FhirArtifact;
+    const v = dakViews(withJson)[0]!;
+    expect(dakViewData(withJson, v).tabs.find((t) => t.label === "JSON")!.href).toBe("https://p/ValueSet-Actors.json");
+    expect(dakViewData(withJson, v, "../", true).tabs.find((t) => t.label === "JSON")!.href).toBe("ValueSet-Actors.json.html");
+  });
 });

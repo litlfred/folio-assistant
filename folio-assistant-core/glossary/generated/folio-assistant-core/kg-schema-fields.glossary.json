@@ -525,6 +525,13 @@
       "status": "candidate"
     },
     {
+      "id": "fhir-artifact-index.fhirartifactindexschema.package",
+      "prefLabel": "FhirArtifactIndexSchema.package",
+      "definition": "The IG's own `package.tgz` — every resource's JSON in one file, as the Publisher packaged it. Held (`--materialize-package`) so a page can fetch the one archive and read a resource out of it in the browser, rather than this graph copying hundreds of resource files (bean `680p`, `visualizer-loading`). Absent means not held.",
+      "source": "folio-assistant-core/schemas/fhir-artifact-index.ts#FhirArtifactIndexSchema.package",
+      "status": "candidate"
+    },
+    {
       "id": "fhir-artifact-index.fhirartifactindexschema.packageid",
       "prefLabel": "FhirArtifactIndexSchema.packageId",
       "definition": "NPM-style package id, e.g. `smart.who.int.trust`.",

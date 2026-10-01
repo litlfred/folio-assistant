@@ -1,0 +1,113 @@
+---
+title: "GDHCNParticipantDID-FRA-UAT-SCA — JSON"
+description: "The JSON representation of Endpoint/GDHCNParticipantDID-FRA-UAT-SCA."
+nav_exclude: true
+json_view: {"heading":"GDHCNParticipantDID-FRA-UAT-SCA - JSON Representation","package":"../fhir-artifact-index/package.tgz","entry":"package/Endpoint-GDHCNParticipantDID-FRA-UAT-SCA.json","raw":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-FRA-UAT-SCA.json","rawName":"Endpoint-GDHCNParticipantDID-FRA-UAT-SCA.json","tabs":[{"label":"Narrative Content","href":"Endpoint-GDHCNParticipantDID-FRA-UAT-SCA.html","active":false},{"label":"XML","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-FRA-UAT-SCA.xml","active":false},{"label":"JSON","href":"Endpoint-GDHCNParticipantDID-FRA-UAT-SCA.json.html","active":true},{"label":"TTL","href":"https://litlfred.github.io/smart-trust/Endpoint-GDHCNParticipantDID-FRA-UAT-SCA.ttl","active":false}],"script":"../assets/resource-json.js"}
+---
+<style>
+.st-tag{display:inline-block;padding:.05rem .4rem;border-radius:3px;font-size:.75rem;
+  font-weight:600;white-space:nowrap;border:1px solid currentColor}
+.st-held{color:#0d6e5e}
+.st-ref{color:#6b5b95}
+.st-grid{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0}
+.st-stat{flex:1 1 8rem;border:1px solid rgba(128,128,128,.35);border-radius:6px;padding:.5rem .7rem}
+.st-stat b{display:block;font-size:1.25rem;line-height:1.2}
+.st-stat span{font-size:.75rem;opacity:.75}
+
+.st-ig {
+  --breadcrumb-bg-color: #f5f5f5;
+  --breadcrumb-text-color: ##555555; /* shape conflict — see chrome.json */
+  --btn-active-color: #0078d4;
+  --btn-gradient-end-color: #357ebd;
+  --btn-gradient-end-color-alpha: #ff357ebd;
+  --btn-gradient-start-color: #428bca;
+  --btn-gradient-start-color-alpha: #ff428bca;
+  --btn-hover-color: #0070A1;
+  --btn-text-color: #e6e6e6;
+  --display-todo: none;
+  --dragon-background-color: #fffbf7;
+  --dragon-text-color: #101020;
+  --footer-bg-color: #505050;
+  --footer-container-bg-color: #00477d;
+  --footer-highlight-text-color: #ffff77;
+  --footer-hyperlink-text-color: #81BEF7;
+  --footer-nav-bg-color: #f5f5f5;
+  --footer-text-color: #ffffff;
+  --ig-header-color: #f6f7f9;
+  --ig-header-container-color: #ffffff;
+  --ig-status-text-color: #00376d;
+  --link-color: #428bca;
+  --link-hover-color: #2a6496;
+  --may-color: #00004d;
+  --must-color: #4d0000;
+  --navbar-bg-color: #00477d;
+  --publish-box-bg-color: yellow;
+  --publish-box-border: 1px solid #0A0008;
+  --should-color: #4d4000;
+  --showtodo: "off";
+  --stripe-bg-color: #999999;
+  --stu-note-background-color: #fff2ff;
+  --stu-note-border-left-color: #ffa0ff;
+  --toc-box-bg-color: #f6f7f9;
+  --toc-box-border: navy; /* shape conflict — see chrome.json */
+}
+
+.st-ig #ig-status.ig-status-draft {
+  background-image: url("data:image/svg+xml;
+  http: //www.w3.org/2000/svg' width='150px' height='150px'><rect width='800%' height='100%' fill='transparent' /><text transform='translate(30, 50) rotate(-35)' fill='rgba(245,45,45,0.5)' font-family='Arial' font-weight='bold' font-size='20'>DRAFT</text></svg>");
+  background-size: calc(50% / 5) 100px;
+  background-repeat: repeat-x;
+}
+
+.st-ig #ig-status.ig-status-retired {
+  background-image: url("data:image/svg+xml;
+  http: //www.w3.org/2000/svg' width='150px' height='150px'><rect width='800%' height='100%' fill='transparent' /><text transform='translate(30, 60) rotate(-35)' fill='rgba(245,45,45,0.5)' font-family='Arial' font-weight='bold' font-size='20'>RETIRED</text></svg>");
+  background-size: calc(50% / 5) 100px;
+  background-repeat: repeat-x;
+}
+
+.st-ig #ig-status p {
+  background-color: white;
+  padding: 10px 17px;
+  border-radius: 5px;
+  position: relative;
+  z-index: 2;
+}
+
+.st-ig #publish-box {
+  background-color: var(--publish-box-bg-color);
+  border: var(--publish-box-border);
+  padding: 5px;
+}
+.st-ig .st-ig-bar{background:var(--navbar-bg-color);padding:.5rem .8rem;border-radius:4px 4px 0 0}
+.st-ig .st-ig-bar a{color:#fff;font-weight:600;text-decoration:none}
+.st-ig .st-ig-title{font-size:12pt;font-weight:bold;color:var(--ig-status-text-color)}
+</style>
+
+<div class="st-ig">
+  <div class="st-ig-bar"><a href="http://smart.who.int/trust">smart.who.int.trust</a></div>
+  <div id="ig-status" class="ig-status-draft">
+    <p><span class="st-ig-title">WHO SMART Trust</span><br/><span>1.8.0 — draft</span></p>
+  </div>
+  <p id="publish-box">This page mirrors a published WHO Implementation Guide. The authoritative version is at <a href="http://smart.who.int/trust">http://smart.who.int/trust</a>.</p>
+</div>
+
+{%- comment -%}
+A resource's JSON view page, the Publisher's `<Name>.json.html`, rendered by Jekyll.
+Reads `page.json_view`, every field written by `gen-ig-pages.ts` (`resource-views.ts`): `heading`,
+`tabs[]` (`label`, `href`, `active`) in the Publisher's order, `package` and `entry` (the IG's
+package.tgz in the served artefact-index graph, and the resource's file inside it), `raw` and
+`rawName` (the Publisher's published .json) and `script` (the loader). The resource is NOT in the
+page: `resource-json.js` reads it out of the package in the browser (`visualizer-loading`).
+{%- endcomment -%}
+{% for t in page.json_view.tabs %}{% if t.active %}**{{ t.label }}**{% else %}[{{ t.label }}]({{ t.href }}){% endif %}{% unless forloop.last %} · {% endunless %}{% endfor %}
+
+## {{ page.json_view.heading }}
+
+<p class="json-view-status" hidden></p>
+
+[Raw json]({{ page.json_view.raw }}) · [Download]({{ page.json_view.raw }}){: download="{{ page.json_view.rawName }}"}
+
+<pre><code class="language-json" data-package="{{ page.json_view.package }}" data-entry="{{ page.json_view.entry }}">Loading JSON source…</code></pre>
+<noscript><p>This view needs JavaScript; the <a href="{{ page.json_view.raw }}">published JSON</a> does not.</p></noscript>
+<script src="{{ page.json_view.script }}" defer></script>
