@@ -89,6 +89,7 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
         <bpmn:flowNodeRef>Gateway_SigningRoute</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_Signed</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_RecordAttestation</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_StoreSigned</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>End_Signed</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_Api" name="Attestation service (API)">
@@ -179,8 +180,17 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
       <bpmn:outgoing>S09</bpmn:outgoing>
     </bpmn:serviceTask>
 
-    <bpmn:endEvent id="End_Signed" name="Report attested">
+    <bpmn:serviceTask id="Task_StoreSigned" name="Store the signed report&#10;on qa-reports">
+      <bpmn:documentation>The signed report, its signature and the route that produced it are written TOGETHER into the `qa-reports` entry keyed by the commit the report judged (`main/&lt;sha&gt;/` or `pr/&lt;n&gt;/&lt;sha&gt;/`), through `scripts/qa-store.ts` — never committed to main and never pushed by hand (arc `3fva`, owner ruling D1). A signature kept apart from the bytes it covers attests nothing a reader can check. A certification DECISION taken on the report is a separate node that stays on main beside `test/attestations/` (ruling D5, default (a)); it is not written here.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="qa-reports" />
+      </bpmn:extensionElements>
       <bpmn:incoming>S09</bpmn:incoming>
+      <bpmn:outgoing>S10</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:endEvent id="End_Signed" name="Report attested&#10;and stored">
+      <bpmn:incoming>S10</bpmn:incoming>
     </bpmn:endEvent>
 
     <bpmn:sequenceFlow id="S01" sourceRef="Start_ReportReady" targetRef="Task_BuildRun" />
@@ -191,22 +201,23 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
     <bpmn:sequenceFlow id="S06" sourceRef="Task_ApiSign" targetRef="Gateway_Signed" />
     <bpmn:sequenceFlow id="S07" sourceRef="Task_HumanSign" targetRef="Gateway_Signed" />
     <bpmn:sequenceFlow id="S08" sourceRef="Gateway_Signed" targetRef="Task_RecordAttestation" />
-    <bpmn:sequenceFlow id="S09" sourceRef="Task_RecordAttestation" targetRef="End_Signed" />
+    <bpmn:sequenceFlow id="S09" sourceRef="Task_RecordAttestation" targetRef="Task_StoreSigned" />
+    <bpmn:sequenceFlow id="S10" sourceRef="Task_StoreSigned" targetRef="End_Signed" />
   </bpmn:process>
 
   <bpmndi:BPMNDiagram id="Diagram_QaReportSigning">
     <bpmndi:BPMNPlane id="Plane_QaReportSigning" bpmnElement="Collaboration_QaReportSigning">
       <bpmndi:BPMNShape id="Shape_Participant_QaReportSigning" bpmnElement="Participant_QaReportSigning" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="1410" height="450" />
+        <dc:Bounds x="160" y="80" width="1610" height="450" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Qa" bpmnElement="Lane_Qa" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="1380" height="230" />
+        <dc:Bounds x="190" y="80" width="1580" height="230" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Api" bpmnElement="Lane_Api" isHorizontal="true">
-        <dc:Bounds x="190" y="310" width="1380" height="110" />
+        <dc:Bounds x="190" y="310" width="1580" height="110" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_Lane_Human" bpmnElement="Lane_Human" isHorizontal="true">
-        <dc:Bounds x="190" y="420" width="1380" height="110" />
+        <dc:Bounds x="190" y="420" width="1580" height="110" />
       </bpmndi:BPMNShape>
 
       <bpmndi:BPMNShape id="Shape_Start_ReportReady" bpmnElement="Start_ReportReady">
@@ -236,9 +247,12 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
       <bpmndi:BPMNShape id="Shape_Task_RecordAttestation" bpmnElement="Task_RecordAttestation">
         <dc:Bounds x="1210" y="140" width="150" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_StoreSigned" bpmnElement="Task_StoreSigned">
+        <dc:Bounds x="1410" y="140" width="150" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_End_Signed" bpmnElement="End_Signed">
-        <bpmndi:BPMNLabel><dc:Bounds x="1412" y="206" width="76" height="27" /></bpmndi:BPMNLabel>
-        <dc:Bounds x="1440" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1610" y="206" width="96" height="27" /></bpmndi:BPMNLabel>
+        <dc:Bounds x="1640" y="162" width="36" height="36" />
       </bpmndi:BPMNShape>
 
       <bpmndi:BPMNEdge id="Edge_S01" bpmnElement="S01">
@@ -281,7 +295,11 @@ A signature whose route is unrecorded is a signature whose weight cannot be judg
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Edge_S09" bpmnElement="S09">
         <di:waypoint x="1360" y="180" />
-        <di:waypoint x="1440" y="180" />
+        <di:waypoint x="1410" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_S10" bpmnElement="S10">
+        <di:waypoint x="1560" y="180" />
+        <di:waypoint x="1640" y="180" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -675,7 +675,9 @@ uniquely was had no picture.
    A lane with no ref is unbound, whatever its name.
 3. Give it the skills its lane's activities name. `role-carries-activity-skill`
    fails if an activity demands something its performer was never given.
-4. `bun run kg:audit` and commit the sidecars.
+4. `bun run kg:audit`. The kg-qa sidecars it writes are derived results whose
+   record the CI job `qa-publish` stores on the `qa-reports` branch; they are
+   committed only until bean `5hox` takes them off `main`.
 
 A role that binds no lane in any diagram is reported by `role-binds-a-lane`:
 either a lane name has drifted, or the role is dead.
