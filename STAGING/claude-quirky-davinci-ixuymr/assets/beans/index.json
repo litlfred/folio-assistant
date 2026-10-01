@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 586,
+      "count": 588,
       "unit": "beans"
     }
   },
@@ -846,7 +846,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T07:59:35Z",
-      "updatedAt": "2026-10-01T07:59:35Z",
+      "updatedAt": "2026-10-01T08:15:46Z",
       "preview": "Issue #1763. Proposal, workplan, dispatch map and decisions D1–D5: `cat-harness/docs/proposals/qa-reports-branch-and-test-process-2026-10-01.md`.\nSibling of the QA epic `1swy` (an epic cannot be parented under an epic here).\n\nOwner, 2026-10-01: do not pollute main with the QA subgraph; publish it on a\ndedicated branch, as caching is; tie QA into a strawperson test process (an agent\nor machine is t",
       "file": "beans/defs/folio-assistant-3fva--arc-qa-test-evidence-off-main-a-commit-keyed-qa-re.md"
     },
@@ -1357,14 +1357,14 @@
     {
       "id": "folio-assistant-5hox",
       "title": "REMOVE moved QA files from main — only on the owner's explicit go, after the branch holds a hash-verified copy",
-      "status": "draft",
+      "status": "todo",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-3fva",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-01T08:00:47Z",
-      "updatedAt": "2026-10-01T08:00:55Z",
+      "updatedAt": "2026-10-01T08:15:46Z",
       "preview": "Arc `3fva`, proposal §4 item 3.7 and decision D4. **Never on an agent's own initiative** (`deletion-requires-confirmation`).\n\nPreconditions:\n- every reader is migrated;\n- the gates have been green on the branch for 7 days (D4 default);\n- the `qa-reports:main/<head>` tree is byte-identical to main's `test/results` for every moved path, checked by blob hash;\n- attestations stay in place (D2 default)",
       "file": "beans/defs/folio-assistant-5hox--remove-moved-qa-files-from-main-only-on-the-owners.md"
     },
@@ -3753,6 +3753,20 @@
       "file": "beans/defs/folio-assistant-fnqn--ingest-wpro-style-guide-specimen-pages-lorem-ipsum.md"
     },
     {
+      "id": "folio-assistant-fnx4",
+      "title": "KG SUBSCRIPTIONS: subscribe to an external KG, materialise chosen subgraphs, assets and harnesses; known substrates; visualizer",
+      "status": "in-progress",
+      "type": "epic",
+      "priority": "normal",
+      "parent": "folio-assistant-vuip",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T22:54:31Z",
+      "updatedAt": "2026-10-01T06:28:25Z",
+      "preview": "Issue #1719. Proposal: `cat-harness/docs/proposals/kg-subscriptions.md`.\n\nOwner, 2026-09-30: subscribe to external KGs (bootstrap-conformant, with at least one harness); materialise some or all subgraphs and assets; instantiate harnesses so they reach the navbar; list known substrates in cat-harness; a visualizer; an MVP inside the folio separation.\n\n## Done when\n- [ ] 1 schema: `subscriptions` on",
+      "file": "beans/defs/folio-assistant-fnx4--kg-subscriptions-subscribe-to-an-external-kg-mater.md"
+    },
+    {
       "id": "folio-assistant-fq5u",
       "title": "DOWNSTREAM TOOLS IN QA: a run record per downstream tool, and QA goes stale when its inputs change — LSI first",
       "status": "completed",
@@ -3975,6 +3989,20 @@
       "updatedAt": "2026-09-26T14:33:46Z",
       "preview": "## Two red checks on `main`, in two different jobs, from one edit\n\nMeasured 2026-09-26 in a clean worktree of pristine `origin/main` at\n`f850f721a06`, so neither is any PR's:\n\n| job | check | failure |\n|---|---|---|\n| `TypeScript — tests, lint, types (hard)` | `bun test` | `the entanglement report > the dangling category exists and is computed, not skipped` — 6 dangling links |\n| `Repository gates",
       "file": "beans/defs/folio-assistant-gw8h--a-scripts-cat-harnessscripts-rewrite-doubled-six-h.md"
+    },
+    {
+      "id": "folio-assistant-gxvk",
+      "title": "READER AUDIT: every consumer of committed QA results, classified by how it must change when QA leaves main — with one fix bean per reader family",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-3fva",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T08:15:59Z",
+      "updatedAt": "2026-10-01T08:15:59Z",
+      "preview": "Owner request, 2026-10-01: \"do an audit report/analysis on readers and queue up fix them.\" Arc `3fva`.\n\nScope: every code path, workflow step, MCP tool, skill and test that READS a file under any `*/test/results/**` or `test/health/results/**`. Writers are in scope only where they also read the prior file.\n\nThe output is a report, `cat-harness/docs/proposals/qa-readers-audit-2026-10-01.md`, plus o",
+      "file": "beans/defs/folio-assistant-gxvk--reader-audit-every-consumer-of-committed-qa-result.md"
     },
     {
       "id": "folio-assistant-gyoj",

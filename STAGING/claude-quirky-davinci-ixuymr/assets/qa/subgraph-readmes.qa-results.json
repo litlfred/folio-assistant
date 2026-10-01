@@ -75,11 +75,6 @@
         },
         {
           "instance": "bootstrap",
-          "directory": "processes",
-          "path": "bootstrap/processes"
-        },
-        {
-          "instance": "bootstrap",
           "directory": "models",
           "path": "bootstrap/models"
         },
@@ -150,8 +145,68 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "who-iris-library",
+          "path": "who-iris/library"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-core-library",
+          "path": "folio-assistant-core/library"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "smart-base-library",
+          "path": "smart-base/library"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "fhir-harness-library",
+          "path": "fhir-harness/library"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "translation-sources",
           "path": "cat-harness/translations"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "smart-base-methodologies",
+          "path": "smart-base/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-core-methodologies",
+          "path": "folio-assistant-core/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-sci-methodologies",
+          "path": "folio-assistant-sci/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-sci-lean-skills",
+          "path": "folio-assistant-sci/skills/lean"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "who-iris-skills",
+          "path": "who-iris/skills"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "fhir-ig-skills",
+          "path": "fhir-harness/skills"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "large-datasets-processes",
+          "path": "large-datasets/processes"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "large-datasets-schemas",
+          "path": "large-datasets/schemas"
         },
         {
           "instance": "cat-harness",
@@ -174,9 +229,9 @@
           "path": "cat-harness/templates"
         },
         {
-          "instance": "fhir-harness",
-          "directory": "fhir-ig-skills",
-          "path": "fhir-harness/skills"
+          "instance": "cat-harness",
+          "directory": "folio-assistant-core-processes",
+          "path": "folio-assistant-core/processes"
         },
         {
           "instance": "fhir-harness",
@@ -210,21 +265,6 @@
         },
         {
           "instance": "folio-assistant-core",
-          "directory": "core-library",
-          "path": "folio-assistant-core/library"
-        },
-        {
-          "instance": "folio-assistant-core",
-          "directory": "core-methodologies",
-          "path": "folio-assistant-core/methodologies"
-        },
-        {
-          "instance": "folio-assistant-core",
-          "directory": "core-processes",
-          "path": "folio-assistant-core/processes"
-        },
-        {
-          "instance": "folio-assistant-core",
           "directory": "qa",
           "path": "folio-assistant-core/test/results"
         },
@@ -232,16 +272,6 @@
           "instance": "folio-assistant-core",
           "directory": "voices",
           "path": "folio-assistant-core/skills/voices"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "library",
-          "path": "folio-assistant-sci/library"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "sci-methodologies",
-          "path": "folio-assistant-sci/methodologies"
         },
         {
           "instance": "folio-assistant-sci",
@@ -259,19 +289,9 @@
           "path": "folio-assistant-sci/skills/voices"
         },
         {
-          "instance": "folio-assistant-sci",
-          "directory": "data-skills",
-          "path": "folio-assistant-sci/skills/data"
-        },
-        {
           "instance": "large-datasets",
           "directory": "large-datasets-sources",
           "path": "large-datasets/sources"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-processes",
-          "path": "large-datasets/processes"
         },
         {
           "instance": "large-datasets",
@@ -282,21 +302,6 @@
           "instance": "large-datasets",
           "directory": "qa",
           "path": "large-datasets/test/results"
-        },
-        {
-          "instance": "smart-base",
-          "directory": "library",
-          "path": "smart-base/library"
-        },
-        {
-          "instance": "smart-base",
-          "directory": "methodologies",
-          "path": "smart-base/methodologies"
-        },
-        {
-          "instance": "smart-base",
-          "directory": "processes",
-          "path": "smart-base/methodologies/processes"
         },
         {
           "instance": "smart-base",
@@ -365,11 +370,6 @@
         },
         {
           "instance": "who-iris",
-          "directory": "library",
-          "path": "who-iris/library"
-        },
-        {
-          "instance": "who-iris",
           "directory": "who-iris-site",
           "path": "who-iris/site"
         },
@@ -433,7 +433,7 @@
     },
     "no-title": {
       "summary": "Declared directories with no `title`: their README heading falls back to the id.",
-      "count": 99,
+      "count": 102,
       "entries": [
         {
           "instance": "folio-assistant",
@@ -592,6 +592,31 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "who-iris-library",
+          "path": "who-iris/library"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-sci-library",
+          "path": "folio-assistant-sci/library"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-core-library",
+          "path": "folio-assistant-core/library"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "smart-base-library",
+          "path": "smart-base/library"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "fhir-harness-library",
+          "path": "fhir-harness/library"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "translation-sources",
           "path": "cat-harness/translations"
         },
@@ -602,8 +627,73 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "smart-base-methodologies",
+          "path": "smart-base/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-core-methodologies",
+          "path": "folio-assistant-core/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-sci-methodologies",
+          "path": "folio-assistant-sci/methodologies"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-sci-lean-skills",
+          "path": "folio-assistant-sci/skills/lean"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-sci-data-skills",
+          "path": "folio-assistant-sci/skills/data"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assistant-core-skills",
+          "path": "folio-assistant-core/skills"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "smart-base-processes",
+          "path": "smart-base/methodologies/processes"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "docs",
           "path": "cat-harness/docs"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "folio-assist-core-schemas",
+          "path": "folio-assistant-core/schemas"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "large-datasets-skills",
+          "path": "large-datasets/skills"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "who-iris-skills",
+          "path": "who-iris/skills"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "fhir-ig-skills",
+          "path": "fhir-harness/skills"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "large-datasets-processes",
+          "path": "large-datasets/processes"
+        },
+        {
+          "instance": "cat-harness",
+          "directory": "large-datasets-schemas",
+          "path": "large-datasets/schemas"
         },
         {
           "instance": "cat-harness",
@@ -637,13 +727,23 @@
         },
         {
           "instance": "cat-harness",
+          "directory": "folio-assistant-core-processes",
+          "path": "folio-assistant-core/processes"
+        },
+        {
+          "instance": "cat-harness",
           "directory": "cat-harness-deploy",
           "path": "cat-harness/deploy"
         },
         {
-          "instance": "fhir-harness",
-          "directory": "fhir-ig-skills",
-          "path": "fhir-harness/skills"
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-adapters",
+          "path": "cat-harness-tools/adapters"
+        },
+        {
+          "instance": "cat-harness-tools",
+          "directory": "cat-harness-tools-tests",
+          "path": "cat-harness-tools/test"
         },
         {
           "instance": "fhir-harness",
@@ -654,11 +754,6 @@
           "instance": "fhir-harness",
           "directory": "qa",
           "path": "fhir-harness/test/results"
-        },
-        {
-          "instance": "folio-assistant-core",
-          "directory": "core-schemas",
-          "path": "folio-assistant-core/schemas"
         },
         {
           "instance": "folio-assistant-core",
@@ -687,26 +782,6 @@
         },
         {
           "instance": "folio-assistant-core",
-          "directory": "core-library",
-          "path": "folio-assistant-core/library"
-        },
-        {
-          "instance": "folio-assistant-core",
-          "directory": "core-methodologies",
-          "path": "folio-assistant-core/methodologies"
-        },
-        {
-          "instance": "folio-assistant-core",
-          "directory": "core-skills",
-          "path": "folio-assistant-core/skills"
-        },
-        {
-          "instance": "folio-assistant-core",
-          "directory": "core-processes",
-          "path": "folio-assistant-core/processes"
-        },
-        {
-          "instance": "folio-assistant-core",
           "directory": "qa",
           "path": "folio-assistant-core/test/results"
         },
@@ -714,16 +789,6 @@
           "instance": "folio-assistant-core",
           "directory": "voices",
           "path": "folio-assistant-core/skills/voices"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "library",
-          "path": "folio-assistant-sci/library"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "sci-methodologies",
-          "path": "folio-assistant-sci/methodologies"
         },
         {
           "instance": "folio-assistant-sci",
@@ -741,34 +806,9 @@
           "path": "folio-assistant-sci/skills/voices"
         },
         {
-          "instance": "folio-assistant-sci",
-          "directory": "lean-skills",
-          "path": "folio-assistant-sci/skills/lean"
-        },
-        {
-          "instance": "folio-assistant-sci",
-          "directory": "data-skills",
-          "path": "folio-assistant-sci/skills/data"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-schemas",
-          "path": "large-datasets/schemas"
-        },
-        {
           "instance": "large-datasets",
           "directory": "large-datasets-sources",
           "path": "large-datasets/sources"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-skills",
-          "path": "large-datasets/skills"
-        },
-        {
-          "instance": "large-datasets",
-          "directory": "large-datasets-processes",
-          "path": "large-datasets/processes"
         },
         {
           "instance": "large-datasets",
@@ -784,21 +824,6 @@
           "instance": "large-datasets",
           "directory": "qa",
           "path": "large-datasets/test/results"
-        },
-        {
-          "instance": "smart-base",
-          "directory": "library",
-          "path": "smart-base/library"
-        },
-        {
-          "instance": "smart-base",
-          "directory": "methodologies",
-          "path": "smart-base/methodologies"
-        },
-        {
-          "instance": "smart-base",
-          "directory": "processes",
-          "path": "smart-base/methodologies/processes"
         },
         {
           "instance": "smart-base",
@@ -872,11 +897,6 @@
         },
         {
           "instance": "who-iris",
-          "directory": "library",
-          "path": "who-iris/library"
-        },
-        {
-          "instance": "who-iris",
           "directory": "who-iris-site",
           "path": "who-iris/site"
         },
@@ -889,11 +909,6 @@
           "instance": "who-iris",
           "directory": "who-iris-uploads",
           "path": "who-iris/uploads"
-        },
-        {
-          "instance": "who-iris",
-          "directory": "who-iris-skills",
-          "path": "who-iris/skills"
         },
         {
           "instance": "who-iris",
@@ -954,5 +969,5 @@
       "entries": []
     }
   },
-  "total": 182
+  "total": 185
 }

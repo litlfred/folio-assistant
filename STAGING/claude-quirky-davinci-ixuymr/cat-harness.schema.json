@@ -650,6 +650,112 @@
             "additionalProperties": false
           }
         },
+        "subscriptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                "description": "A forge repository's full name, owner/name"
+              },
+              "ref": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{40}$"
+              },
+              "subgraphs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "assets": {
+                "type": "object",
+                "properties": {
+                  "policy": {
+                    "type": "string",
+                    "enum": [
+                      "none",
+                      "on-demand",
+                      "all"
+                    ]
+                  }
+                },
+                "required": [
+                  "policy"
+                ],
+                "additionalProperties": false
+              },
+              "harnesses": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "repository",
+              "ref"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "knownSubstrates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "repository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                "description": "A forge repository's full name, owner/name"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "proposed",
+                  "planned",
+                  "exists",
+                  "published"
+                ]
+              },
+              "toolsRepository": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*\\/[A-Za-z0-9][A-Za-z0-9._-]*$",
+                "description": "A forge repository's full name, owner/name"
+              },
+              "note": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "status"
+            ],
+            "additionalProperties": false
+          }
+        },
         "stickies": {
           "type": "array",
           "items": {
@@ -904,8 +1010,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-davinci-ixuymr/cat-harness.jsonld",
   "staging": {
     "branch": "claude/quirky-davinci-ixuymr",
-    "sha": "ece16fb22fdbcfc3929128f31287c27c2f22ad08",
+    "sha": "cf2139b78a144ca3bd01959adad3e68ebfe0c12c",
     "pr": "1764/merge",
-    "run": "36833815384"
+    "run": "36835252418"
   }
 }
