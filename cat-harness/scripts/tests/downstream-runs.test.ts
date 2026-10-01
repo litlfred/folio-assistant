@@ -5,13 +5,13 @@
  * each asserted on a case built to break it.
  */
 import { describe, expect, test } from "bun:test";
-import { mkdtempSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { downstreamState, listToolRuns, readToolRun, writeToolRun, UNKNOWN_FINGERPRINT, type ToolRunRecord } from "../../schemas/tool-run";
+import { downstreamState, listToolRuns, readToolRun, writeToolRun, TOOL_RUNS_DIR, UNKNOWN_FINGERPRINT, type ToolRunRecord } from "../../schemas/tool-run";
 import type { ToolDefinition } from "../../schemas/tool";
-import { MEMBERS, toolDownstreamEntry, undeclaredDownstream } from "../downstream-runs";
+import { MEMBERS, toolDownstreamEntry, undeclaredDownstreamEntry } from "../downstream-runs";
 import { tools } from "../../tools/discover";
 import { VERIFIERS } from "../publish-verify";
 
@@ -33,7 +33,8 @@ describe("the three-state read", () => {
     const root = mkdtempSync(join(tmpdir(), "tool-run-"));
     writeToolRun(root, { tool: "x", target: "a/b", outcome: "succeeded", inputFingerprint: "f" });
     expect(readToolRun(root, "x", "a/b")?.inputFingerprint).toBe("f");
-    expect(listToolRuns(root).map((r) => r.path)).toEqual([join("test", "results", "tool-runs", "x", "a", "b.tool-run.json")]);
+    const l = listToolRuns(root);
+    expect(l.state === "hit" ? l.runs.map((r) => r.path) : l).toEqual([join("test", "results", "tool-runs", "x", "a", "b.tool-run.json")]);
   });
 });
 
@@ -57,23 +58,60 @@ describe("the per-Tool verdict", () => {
   });
 });
 
+/** An instance root whose record directory exists and is empty: a determined "no records". */
+const emptyListed = (): string => {
+  const root = mkdtempSync(join(tmpdir(), "tool-run-"));
+  mkdirSync(join(root, TOOL_RUNS_DIR), { recursive: true });
+  return root;
+};
+
 describe("a downstream tool with no declaration is a finding", () => {
   test("a run record naming an undeclared Tool", () => {
     const root = mkdtempSync(join(tmpdir(), "tool-run-"));
     writeToolRun(root, { tool: "ghost", target: "t", outcome: "succeeded", inputFingerprint: "f" });
-    const f = undeclaredDownstream([], root, []);
-    expect(f.some((x) => x.detail.includes('Tool "ghost"'))).toBe(true);
+    const e = undeclaredDownstreamEntry([], root, []);
+    expect(e.result).toBe("fail");
+    expect(e.findings.some((x) => x.detail.includes('Tool "ghost"'))).toBe(true);
   });
   test("a publish verifier naming an undeclared Tool", () => {
-    const root = mkdtempSync(join(tmpdir(), "tool-run-"));
-    expect(undeclaredDownstream([], root, [{ id: "v", tool: "ghost" }]).some((x) => x.where === "v")).toBe(true);
+    expect(undeclaredDownstreamEntry([], emptyListed(), [{ id: "v", tool: "ghost" }]).findings.some((x) => x.where === "v")).toBe(true);
   });
   test("a member reader with no declaring Tool", () => {
-    const root = mkdtempSync(join(tmpdir(), "tool-run-"));
-    expect(undeclaredDownstream([], root, []).map((x) => x.where)).toEqual(Object.keys(MEMBERS));
+    const e = undeclaredDownstreamEntry([], emptyListed(), []);
+    expect(e.result).toBe("fail");
+    expect(e.findings.map((x) => x.where)).toEqual(Object.keys(MEMBERS));
   });
-  test("THIS repository declares every member and every verifier's Tool", () => {
+  test("THIS repository declares every member and every verifier's Tool — or says it could not see the records", () => {
     const root = join(import.meta.dir, "..", "..");
-    expect(undeclaredDownstream(tools(), root, VERIFIERS.map((v) => ({ id: v.id, tool: v.tool })))).toEqual([]);
+    const e = undeclaredDownstreamEntry(tools(), root, VERIFIERS.map((v) => ({ id: v.id, tool: v.tool })));
+    // With the records moved to the qa-reports branch and not fetched, the
+    // record half is not asked: `unknown`, never the pass this asserts below.
+    if (!existsSync(join(root, TOOL_RUNS_DIR))) expect(e.result).toBe("unknown");
+    else expect(e).toEqual({ result: "pass", findings: [] });
+  });
+});
+
+describe("records that are not in the checkout are UNKNOWN, never an empty list (bean oq1j)", () => {
+  test("listToolRuns over an unfetched store reports unknown, not an empty list", () => {
+    const root = mkdtempSync(join(tmpdir(), "tool-run-"));
+    const l = listToolRuns(root);
+    expect(l.state).toBe("unknown");
+    expect("runs" in l).toBe(false);
+    if (l.state === "unknown") expect(l.reason).toContain("qa:fetch");
+  });
+  test("an EXISTING empty directory is a determined empty", () => {
+    expect(listToolRuns(emptyListed())).toEqual({ state: "hit", runs: [] });
+  });
+  test("the criterion is UNKNOWN when the records were not examined, even with nothing else wrong", () => {
+    const root = mkdtempSync(join(tmpdir(), "tool-run-"));
+    const declaring = Object.keys(MEMBERS).map((id) => tool({ output: "o", inputs: ["i"], judgedAt: "checkout" }, id));
+    const e = undeclaredDownstreamEntry(declaring, root, []);
+    expect(e.result).toBe("unknown");
+    expect(e.findings.map((f) => f.detail).join(" ")).toContain("not examined");
+  });
+  test("...and UNKNOWN outranks a finding the other halves made", () => {
+    const e = undeclaredDownstreamEntry([], mkdtempSync(join(tmpdir(), "tool-run-")), []);
+    expect(e.result).toBe("unknown");
+    expect(e.findings.length).toBe(Object.keys(MEMBERS).length + 1);
   });
 });

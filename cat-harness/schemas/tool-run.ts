@@ -112,10 +112,43 @@ export function writeToolRun(instanceRoot: string, record: Omit<ToolRunRecord, "
   return p;
 }
 
-/** Every record under an instance, with the tool id it names. */
-export function listToolRuns(instanceRoot: string): Array<{ path: string; record: ToolRunRecord | undefined }> {
+/** One record as listed: its path (instance-relative), and the record or `undefined` when it does not parse. */
+export interface ListedToolRun {
+  path: string;
+  record: ToolRunRecord | undefined;
+}
+
+/**
+ * Every record under an instance, or `unknown` when there is no record
+ * directory to list.
+ *
+ * ## Why an absent directory is `unknown`, not an empty list
+ *
+ * Bean `oq1j` (arc `3fva`, reader `R26`). Run records are derived QA, and
+ * derived QA leaves `main` for the `qa-reports` branch (owner rulings D1/D4).
+ * After that, a checkout that has not run `bun run qa:fetch` has no
+ * `tool-runs/` directory at all. An empty list would then read as "examined,
+ * and no record names an undeclared Tool". That is the `dh4f` defect: a miss
+ * read as clean. Git stores no empty directory, so an absent one cannot be
+ * told from "never written" either. Both are `unknown`, with the reason, and
+ * the caller decides what that means for its criterion.
+ *
+ * A directory that EXISTS is determined, even when it holds nothing: the
+ * writer creates it, and `qa:fetch` materialises an entry's whole tree.
+ */
+export type ToolRunListing = { state: "hit"; runs: ListedToolRun[] } | { state: "unknown"; reason: string };
+
+export function listToolRuns(instanceRoot: string): ToolRunListing {
   const base = join(instanceRoot, TOOL_RUNS_DIR);
-  const out: Array<{ path: string; record: ToolRunRecord | undefined }> = [];
+  if (!existsSync(base)) {
+    return {
+      state: "unknown",
+      reason:
+        `no ${TOOL_RUNS_DIR.split("\\").join("/")}/ in the checkout: never written here, or not fetched from the qa-reports ` +
+        "branch (`bun run qa:fetch`). An absent directory cannot be told from an empty one, so no record was examined",
+    };
+  }
+  const out: ListedToolRun[] = [];
   const walk = (d: string) => {
     for (const e of readdirSync(d)) {
       const p = join(d, e);
@@ -132,6 +165,6 @@ export function listToolRuns(instanceRoot: string): Array<{ path: string; record
       }
     }
   };
-  if (existsSync(base)) walk(base);
-  return out.sort((a, b) => (a.path < b.path ? -1 : 1));
+  walk(base);
+  return { state: "hit", runs: out.sort((a, b) => (a.path < b.path ? -1 : 1)) };
 }
