@@ -29,7 +29,7 @@ depends on it**, and **which of its terms this repository branches on**.
 <div class="xs-grid">
 <div class="xs-stat"><b>18</b><span>specifications</span></div>
 <div class="xs-stat"><b>105</b><span>operative terms in the graph</span></div>
-<div class="xs-stat"><b>195</b><span>declared uses</span></div>
+<div class="xs-stat"><b>196</b><span>declared uses</span></div>
 <div class="xs-stat"><b>0</b><span>declarations naming no record</span></div>
 </div>
 
@@ -66,10 +66,6 @@ front-matter list, an `xmlns` binding, and a graph kind whose typing module
 declares the spec (bean `u63y`).
 
 Every declaration names a record on this page.
-
-**1 record(s) nothing declares.** A version bump would move nothing that says so:
-
-- [`w3c-prov-jsonld`](#w3c-prov-jsonld)
 
 ## Namespaces the corpus uses against the ones it declares
 
@@ -436,7 +432,11 @@ a subset of the edition rather than a transcription of it.
 
 **Note.** A W3C Member Submission (King's College London; editors Luc Moreau, Dong Huynh) — acknowledged by W3C, NOT endorsed. Adopted by owner decision 2026-10-01 (beans jcet, 9y9j) because W3C publishes no JSON-LD context for PROV-O; PROV itself stays pinned by w3c-prov-o. The text is held at library/w3c-2024-prov-jsonld and its context.jsonld beside it, pinned by sha256 in schemas/prov-jsonld.ts and served offline; provext# is the Submission's own extension namespace, which that context binds.
 
-**What depends on it.** Nothing here declares it.
+**What depends on it.**
+
+| user | declared by |
+|---|---|
+| [`cat-harness/schemas/prov-jsonld.ts`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/schemas/prov-jsonld.ts) | `@conformsTo` tag |
 
 **No operative terms.** This repository conforms to the specification
 without branching on any of its terms, so none is materialised into the
