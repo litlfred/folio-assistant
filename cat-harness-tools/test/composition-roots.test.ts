@@ -24,25 +24,27 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 
-import { TOOL_GROUPS, registerMcpToolGroups } from "../../adapters/mcp-server/tool-groups.ts";
+import { TOOL_GROUPS, registerMcpToolGroups } from "../adapters/mcp-server/tool-groups.ts";
 import {
   registerDeclaredToolGroups,
   type ToolGroupDeclaration,
-} from "../../src/tool-groups.ts";
+} from "../../cat-harness/src/tool-groups.ts";
 
-/** The MCP server's own root, for the ad-hoc declarations below. */
-const MCP_ROOT = new URL("../..", import.meta.url).pathname;
+/** The MCP server's own root, for the ad-hoc declarations below: this
+ * instance, which `adapters/mcp-server/tool-groups.ts` also roots itself in. */
+const MCP_ROOT = new URL("..", import.meta.url).pathname;
 import {
   AdapterDeclarationCollisionError,
   BUILTIN_ADAPTERS,
   discoverBuiltinAdapters,
   resolveBuiltinAdapter,
-} from "../../src/builtin-adapters.ts";
-import { SERVER_ROUTES } from "../../src/server.ts";
-import { dispatchGet, dispatchPost, mountDeclaredRoutes } from "../../src/route-groups.ts";
+} from "../../cat-harness/src/builtin-adapters.ts";
+import { SERVER_ROUTES } from "../../cat-harness/src/server.ts";
+import { dispatchGet, dispatchPost, mountDeclaredRoutes } from "../../cat-harness/src/route-groups.ts";
 
-/** The HTTP server's own root, which its route declarations resolve against. */
-const SERVER_ROOT = new URL("../..", import.meta.url).pathname;
+/** The HTTP server's own root, which its route declarations resolve against.
+ * Still `cat-harness/` until the HTTP server moves here (bean `w2gr`, step 3b). */
+const SERVER_ROOT = new URL("../../cat-harness/", import.meta.url).pathname;
 
 describe("MCP tool groups", () => {
   test("every declared group's module exists and registers here", async () => {

@@ -21,7 +21,7 @@ import {
   registerDeclaredToolGroups,
   type ToolGroupDeclaration,
   type ToolGroupOutcome,
-} from "../../src/tool-groups.js";
+} from "../../../cat-harness/src/tool-groups.js";
 
 export type { ToolGroupDeclaration, ToolGroupOutcome };
 

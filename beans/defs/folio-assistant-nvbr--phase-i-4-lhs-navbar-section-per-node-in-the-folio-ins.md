@@ -1,11 +1,11 @@
 ---
 # folio-assistant-nvbr
 title: Phase I.4 — LHS navbar section per node in the folio instance (#223)
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-09-18T15:00:27Z
-updated_at: 2026-10-01T06:20:28Z
+updated_at: 2026-10-01T06:20:32Z
 parent: folio-assistant-yj32
 ---
 
@@ -56,5 +56,29 @@ scrap or fold it deliberately rather than by accident.
 
 
 _2026-09-29_ — **Re-parented `vke6` → `yj32`** by subject, per todo-manager §"WHICH parent" (owner choice '1 2 3' on the LSI epic-filing proposal, bean ansc). An LHS navbar section per folio node is yj32's rendering subject; #223 is where it was asked, not what it is.
+
+## Summary of Changes — closed 2026-10-01 on evidence
+
+The owner chose to "check & close" this bean (2026-10-01). Re-stated for the
+model that shipped, the gate is **one section per instantiated harness**
+(`603s`, `b5f0`). Both halves now hold and are pinned by tests rather than
+asserted in prose:
+
+- **N instances → N sections.** The committed include
+  (`cat-harness/docs/_includes/generated/navbar-footer.html`) carries one
+  section per instantiated harness: 6 of the 17 declared in
+  `docs/_data/harness.json`, each with its own `data-fa-harness-config`
+  control. New test: two instantiated + one declared-only → exactly two
+  sections, in both deploy variants.
+- **Zero instances renders without error, with no empty group.** New test on
+  `render([])`; mutation-checked: removing the `shown.length > 0` guard fails
+  it.
+
+`gen-navbar-include.ts` now exports `render` and guards `main()` with
+`import.meta.main`, so a test can import it without rewriting the committed
+include; `navbar:include:check` is unchanged.
+
+#223's framing and the `x0hj` URL-prefix half stay recorded above for whoever
+reads the issue; nothing in them is open here.
 
 _2026-10-01T06:20:28Z_ — Claimed by claude/tbdl-jekyll-doc-index — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).

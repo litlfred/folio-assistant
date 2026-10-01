@@ -25,7 +25,7 @@ how to build, query and audit an index is the skill `lsi-indexing`.
 
 <div class="lv-grid">
 <div class="lv-stat"><b>5</b><span>committed indexes</span></div>
-<div class="lv-stat"><b>1764</b><span>units indexed</span></div>
+<div class="lv-stat"><b>1763</b><span>units indexed</span></div>
 <div class="lv-stat"><b>5</b><span>graphs that need an index and lack a fresh one</span></div>
 </div>
 
@@ -123,7 +123,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**309** units · **7638** terms · k = **100** · retains **68.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**308** units · **7635** terms · k = **100** · retains **68.9 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -131,14 +131,14 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 47.73 | bean, instance, session, graph, page, kind, branch, directory | *(none)* |
+| 1 | 47.75 | bean, instance, session, graph, page, kind, branch, directory | *(none)* |
 | 2 | 27.80 | bias, studies, study, statistical, effect, causation, validity, causal | bean, harness, instance, directory, node, graph, kind, declared |
-| 3 | 22.39 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, page, directory, bias, actor |
+| 3 | 22.38 | proof, watcher, lean, slot, blocks, witness, project, sibling | harness, node, instance, bean, page, directory, bias, actor |
 | 4 | 19.58 | dpi, color, lean, grayscale, pdf, text, images, matplotlib | session, branch, queue, prs, beans, commits, coordination, bean |
 | 5 | 18.73 | dpi, color, grayscale, images, contrast, raster, matplotlib, fonts | proof, lean, glossary, declaration, term, theorem, stub, instance |
 | 6 | 16.78 | regulatory, intervention, biosafety, ethics, candidate, rivals, dual-use, safety | fallacy, fallacious, reality, fallacies, description, solutions, consider, ignoring |
 | 7 | 16.34 | lean, mathlib, search, mcp, sorry, proof, page, build | watcher, voice, slot, backlog, queue, nesting, ledger, objection |
-| 8 | 15.39 | mathlib, lean, sorry, lake, session, mcp, goal, sessions | slot, watcher, backlog, criterion, band, forward, major, section |
+| 8 | 15.39 | mathlib, lean, sorry, lake, goal, mcp, session, sessions | slot, watcher, backlog, criterion, band, major, forward, auto-discharge |
 
 **Findings** — 0 narrow dimension(s), 0 near-duplicate pair(s).
 

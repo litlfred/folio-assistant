@@ -1,0 +1,58 @@
+{
+  "_comment": "THE TOOL IMPLEMENTATION LAYER of the harness, created 2026-10-01 for bean w2gr. The owner's rulings: (2026-09-30, option A) tool DEFINITIONS stay in cat-harness (cat-harness/tools/ and its discover.ts reader) and this instance IMPLEMENTS them -- the split bootstrap / bootstrap-tools already uses; (2026-10-01) folio-assistant-core does NOT depend on this instance, so the document adapter was cut into a server-free content class that stays in core and a server wrapper that comes here; (2026-10-01) it carries its OWN package.json, like bootstrap-tools; and sci's server half lives in a named subgraph of folio-assistant-sci rather than here. Step 3a moves the standalone MCP server (adapters/mcp-server/) in and nothing else, so this declaration names only what exists (bean dh4f). The layout MIRRORS cat-harness's (adapters/, src/, test/) so that, as step 3b moves src/ here, the relative imports between modules that move together come out unchanged.",
+  "name": "cat-harness-tools",
+  "repository": "litlfred/cat-harness-tools",
+  "livesAt": {
+    "repository": "litlfred/folio-assistant",
+    "path": "cat-harness-tools"
+  },
+  "version": "0.1.0",
+  "_title_comment": "The HUMAN display name, for the LHS navbar's harness tabs (bean `t3n8`). `name` stays the machine identifier that filenames and `needs` edges resolve against.",
+  "title": "C@T Harness Tools",
+  "description": "What implements the harness's Tool definitions: the MCP servers, their tool registrars and routes. Definitions stay in cat-harness; this layer runs them.",
+  "directories": [
+    {
+      "id": "cat-harness-tools-adapters",
+      "path": "adapters/",
+      "description": "The standalone MCP server (`adapters/mcp-server/`): its tool registrars, the declared tool groups that load them, and the Dockerfile that packages it. Moved from `cat-harness/adapters/mcp-server/` (bean `w2gr`, step 3a) because it is a server, and the owner ruled that tool implementations live here while their definitions stay in cat-harness.",
+      "graphKinds": [
+        "code"
+      ]
+    },
+    {
+      "id": "cat-harness-tools-tests",
+      "path": "test/",
+      "description": "Tests of the code this layer holds, moved with their subjects so the harness keeps no test importing upward into this layer: `composition-roots` (the declared tool groups and route mounting) and `mcp-graph-tools`.",
+      "graphKinds": [
+        "code"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — cat-harness-tools",
+      "description": "Cold start for work in this layer: what belongs here, what does not, and which way the dependencies run."
+    },
+    {
+      "id": "instance-readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "cat-harness-tools",
+      "description": "What the layer is and how it relates to cat-harness's Tool definitions."
+    }
+  ],
+  "_needs_comment": "It sits on folio-assistant-core, which inherits cat-harness. It needs core because the document adapter's server wrapper (step 3b) extends core's server-free DocumentContent. The reverse edge is the one the owner forbade on 2026-10-01: core does not depend on this layer.",
+  "needs": [
+    "folio-assistant-core"
+  ],
+  "liquid": {
+    "prefix": "site.data",
+    "passThrough": true
+  },
+  "_canonicalUrl_comment": "A placeholder base under this repository's own publication root, not a FHIR canonical. It exists because a Tool node's I/O type IRIs are minted against it at load and Zod refuses a relative one.",
+  "canonicalUrl": "https://litlfred.github.io/folio-assistant/cat-harness-tools",
+  "_name_comment": "THE NAME IS NOT AN INSTANTIATION CLAIM. Instantiation is a `<name>.config.json` at the repository root (`harness-tiles`, bean `6n23`), and there is none for this layer. Staged as a sibling directory like fhir-harness; after the split it becomes its own repository and only `livesAt` changes."
+}

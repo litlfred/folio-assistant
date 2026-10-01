@@ -160,6 +160,12 @@ describe("this repository's own instances", () => {
       // which declares `bootstrap-tools.json` and is therefore an instance.
       "bootstrap-tools",
       "cat-harness",
+      // Added 2026-10-01 with bean `w2gr` (step 3a): the tool IMPLEMENTATION
+      // layer, holding the MCP server while cat-harness keeps the Tool
+      // definitions -- the bootstrap / bootstrap-tools split, on the owner's
+      // option-A ruling. It sorts after `cat-harness` ("cat-harness" <
+      // "cat-harness-tools").
+      "cat-harness-tools",
       // Alphabetical, and the ORDER moved with the rename: `folio-assist-sci`
       // sorted BEFORE `folio-assistant-core` ("assist-" < "assista"), and
       // `folio-assistant-sci` sorts after it. The list is the assertion, so
