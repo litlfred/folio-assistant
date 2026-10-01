@@ -355,13 +355,6 @@
                 "type": "string",
                 "minLength": 1
               },
-              "dependents": {
-                "type": "string",
-                "enum": [
-                  "reproduce",
-                  "skip"
-                ]
-              },
               "coverage": {
                 "type": "object",
                 "properties": {
@@ -566,8 +559,7 @@
             "required": [
               "id",
               "path",
-              "graphKinds",
-              "dependents"
+              "graphKinds"
             ]
           }
         },
@@ -875,8 +867,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/STAGING/claude-awesome-feynman-0rt8ra/cat-harness.jsonld",
   "staging": {
     "branch": "claude/awesome-feynman-0rt8ra",
-    "sha": "3d6d840e9c3be5a567cf3db09fba66cf5c2ae9f2",
-    "pr": "1727/merge",
-    "run": "36794157217"
+    "sha": "5d107e98717fe31f839a6a3b6c0a6950e623c471",
+    "pr": "1730/merge",
+    "run": "36795553742"
   }
 }
