@@ -52,7 +52,8 @@ import { createHash } from "node:crypto";
 import { parse as parseYaml } from "yaml";
 import { defaultGraphKinds } from "../schemas/graph-kind-registry.js";
 import { contractFile, contractRefProblem, skillContracts } from "./skill-contracts.js";
-import { checkTestRuns } from "./test-run-conformance.js";
+import { checkTestRuns, testRunFiles } from "./test-run-conformance.js";
+import { auditTestPlans, jsonFilesUnder } from "./test-plan-audit.js";
 import { processArrowFindings, schemaArrowFindings } from "./arrow-direction.js";
 import { contentCodeFindings, contentInstanceCode } from "./content-holds-code.js";
 import { classifyName, diagramProse, generalDeclarationProse, namedFiles } from "./prose-names.js";
@@ -1746,6 +1747,23 @@ function testRunCriteria(skills: Set<string>): Record<string, KgCriterionEntry> 
   };
 }
 
+/**
+ * The test process's four criteria (bean `3o5b`): plans, the runs that
+ * execute them and the reports they produce, followed to each other. The
+ * rules live in the schemas; `test-plan-audit.ts` follows the files.
+ */
+function testPlanCriteria(actors: LoadedActor[]): Record<string, KgCriterionEntry> {
+  return auditTestPlans({
+    root,
+    dmnBases: [WORKFLOW_DIR],
+    plans: jsonFilesUnder(instanceDirectoriesForGraph(root, "test-plan")),
+    // declared-path-literal: the conventional fallback when no declaration names the directory
+    runs: testRunFiles(ownDirectoryById(root, "qa", "test/results")),
+    reports: jsonFilesUnder(instanceDirectoriesForGraph(root, "test-report")),
+    actors,
+  });
+}
+
 /** One declared `satisfies` ref, and who declared it. */
 interface Satisfier {
   /** `req:<requirement>#<statement key>`. */
@@ -2325,6 +2343,7 @@ function auditGraph(
       "skill-graph-kinds-resolve": entry(unknownSkillGraphKinds()),
       "skill-contract-resolves": entry(brokenSkillContracts()),
       ...testRunCriteria(skills),
+      ...testPlanCriteria(actors),
       "arrow-direction": arrowDirection(),
       "prose-names-resolve": proseNamesResolve(),
       "skill-contract-claimed": entry(unclaimedSkillContracts()),
