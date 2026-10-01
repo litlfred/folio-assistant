@@ -5,7 +5,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-10-01T08:14:10Z
-updated_at: 2026-10-01T08:14:10Z
+updated_at: 2026-10-01T08:31:09Z
 parent: folio-assistant-vuip
 ---
 
@@ -16,3 +16,7 @@ Strategy adopted from sibling bean n3ni (smart-* -> litlfred/smart-*): push gene
 ## Done when
 - [ ] S0–S8 completed
 - [ ] status bars in the plan page reflect the final measurement
+
+
+## Owner ruling 2026-10-01: merge green PRs
+"yes you may merge green PRs". A PR in this arc may be merged when every CI job on its current head is green (read per job) and it is mergeable. Not before green.
