@@ -182,7 +182,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <ul class="subs">
 <li><a href="../folio-assistant-core-processes/">folio-assistant-core-processes</a> <span class="p">folio-assistant-core/processes</span> <span class="n">1</span></li>
 <li><a href="../large-datasets-processes/">large-datasets-processes</a> <span class="p">large-datasets/processes</span> <span class="n">4</span></li>
-<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">66</span></li>
+<li><strong>processes</strong> <span class="p">cat-harness/processes</span> <span class="n">67</span></li>
 <li><a href="../smart-base-processes/">smart-base-processes</a> <span class="p">smart-base/methodologies/processes</span> <span class="n">1</span></li>
 </ul>
 
@@ -329,6 +329,10 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/human-translation-workflow.bpmn"><code>Human Translation Workflow</code></a><br><span class="p">cat-harness/processes/human-translation-workflow.bpmn</span></td>
   <td>The human half of translation: a coordinator assigns a locale to a qualified translator, the translator works in their own tool, a subject-matter expert judges accuracy, and only then is the result official.<div class="f"><span class="k">activities</span> 16</div><div class="f"><span class="k">lanes</span> Translation Coordinator · Human Translator · Subject-Matter Expert / Reviewer · Automated Pipeline</div><div class="f"><span class="k">skills</span> translation-manager</div></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ig-ast-delta-review.bpmn"><code>Is the incremental IG AST what a full build would have produced?</code></a><br><span class="p">cat-harness/processes/ig-ast-delta-review.bpmn</span></td>
+  <td>THE REVIEW STEP OF AN INCREMENTAL IG BUILD, drawn as its own subprocess (bean <code>a9tx</code>, owner 2026-09-30: &quot;list and view differentials/deltas against AST ...<div class="f"><span class="k">activities</span> 4</div><div class="f"><span class="k">lanes</span> Incremental build (system) · QC reviewer · Work plan — beans (shared by humans and agents)</div><div class="f"><span class="k">skills</span> ig-ast-delta, todo-manager</div></td>
 </tr>
 <tr>
   <td><a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/processes/ig-incremental-build.bpmn"><code>Incremental IG build</code></a><br><span class="p">cat-harness/processes/ig-incremental-build.bpmn</span></td>

@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 542,
+      "count": 544,
       "unit": "beans"
     }
   },
@@ -1411,6 +1411,20 @@
       "file": "beans/defs/folio-assistant-61tg--topology-self-sovereign-own-infrastructure-inward.md"
     },
     {
+      "id": "folio-assistant-63es",
+      "title": "DEPLOY-ONLY CHECKS: a built-site check that runs only on main lets a PR stay green and break every publish",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T06:31:51Z",
+      "updatedAt": "2026-10-01T06:31:51Z",
+      "preview": "Follow-on to #1726 / #1730. Owner 2026-10-01: build the early catch.\n\ncheck:escaped-markup and check:maintained-artefacts ran only in docs-site.yml (the main deploy). A code span wrapped so a line began '<slide>' (introduced in #1615) broke every publish for ~6h while each PR's 'stage' stayed green.\n\n## Measured\n- Ran both checks on real staging trees from gh-pages: pass on this branch, #1615 and ",
+      "file": "beans/defs/folio-assistant-63es--deploy-only-checks-a-built-site-check-that-runs-on.md"
+    },
+    {
       "id": "folio-assistant-676g",
       "title": "kg:validate cannot own a NESTED instance's path, so 15 instances' committed QA sidecars are consumer-validated by nothing",
       "status": "todo",
@@ -1789,6 +1803,20 @@
       "updatedAt": "2026-09-20T16:14:51Z",
       "preview": "Owner, 2026-09-20, verbatim — three separate instructions in one message:\n\n> workflows/ is declared under the id cat-harness-workflows, content should be\n> at graph cat-harness/workflows except the bare minimum declarations (what is\n> bpmn, how use) under bootstrap/,\n> cat-harness/workflows is for more elboration on use of bpmn and such\n> cat-harness/workflows/state should describe beans and todos",
       "file": "beans/defs/folio-assistant-7po1--workflows-bootstrap-keeps-the-bare-minimum-cat-har.md"
+    },
+    {
+      "id": "folio-assistant-7pp6",
+      "title": "A column-0 pseudo-tag in a published markdown source is caught only AFTER merge — five hand-fixes and no gate",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T06:29:56Z",
+      "updatedAt": "2026-10-01T06:36:29Z",
+      "preview": "## The class, and why a sixth hand-fix is the wrong answer\n\nA markdown source line whose first character is `<` followed by a non-HTML name\nmakes kramdown open a **raw HTML block**. With no closing tag the rest of the\npage stays raw, so headings, lists and tables after it render as literal text.\nThe usual cause is an inline code span **wrapped across a line break**, leaving\nits continuation at col",
+      "file": "beans/defs/folio-assistant-7pp6--a-column-0-pseudo-tag-in-a-published-markdown-sour.md"
     },
     {
       "id": "folio-assistant-7ppv",
@@ -2374,7 +2402,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-09-30T17:45:00Z",
+      "updatedAt": "2026-10-01T02:00:00Z",
       "preview": "Requirements for an agent working a **local experimental fork** of the IG\nPublisher, and what the AST it emits must carry.\n\nScope this round: **requirements only, no Java.**\n\n## Why a fork rather than an upstream ask alone\n\nMeasured, from `nsbb`, using the Publisher's current metadata exports as an AST\nproxy across two real IGs:\n\n| export | smart-trust | smart-immunizations |\n|---|---|---|\n| `valu",
       "file": "beans/defs/folio-assistant-a9tx--ig-publisher-fork-requirements-for-an-agent-workin.md"
     },
@@ -4741,14 +4769,14 @@
     {
       "id": "folio-assistant-nvbr",
       "title": "Phase I.4 — LHS navbar section per node in the folio instance (#223)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T15:00:27Z",
-      "updatedAt": "2026-09-29T20:52:42Z",
+      "updatedAt": "2026-10-01T06:20:28Z",
       "preview": "From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):\n\"the lhs navbar should have sections for each node in the folio instance\".\n\n**A block was recorded here against bean `fsch`** — without a folio holding\n0..n content instances there is only ever one node to render. **NOT blocked\non `fsch`:**\nit was scrapped 2026-09-20 and the block is void — s",
       "file": "beans/defs/folio-assistant-nvbr--phase-i-4-lhs-navbar-section-per-node-in-the-folio-ins.md"
     },
