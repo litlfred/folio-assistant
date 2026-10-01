@@ -14,7 +14,7 @@ blocked_by:
 Mirrors n3ni. G6: litlfred/{folio-assistant-core,folio-assistant-sci,fhir-harness,large-datasets,agent-skills} not visible to this account. G7: litlfred/cat-harness and cat-harness-tools already carry commits (09-29, 09-30): read first.
 
 ## Done when
-- [ ] contents of litlfred/cat-harness and cat-harness-tools recorded
+- [x] contents of litlfred/cat-harness and cat-harness-tools recorded: both EMPTY (0 commits), 2026-10-01
 - [ ] owner authorisation (smbc)
 - [ ] seed PR per repo; fresh-clone QA (w1gy)
 - [ ] missing repos created by owner when reached
