@@ -220,7 +220,16 @@ export type QaResultState = "current" | "stale" | "absent" | "unreadable" | "unk
  * moves there is one line to change and a grep that proves it.
  */
 export function qaResultPath(root: string, stem: string): string {
-  return join(root, QA_RESULTS_DIR, `${stem}.qa-results.json`);
+  return qaResultsFile(root, `${stem}.qa-results.json`);
+}
+
+/**
+ * Any file under an instance's QA results directory, by its path inside it —
+ * for the QA records that are not `qa-results/v1` (`viewer-nav/viewer-nav.qa.json`).
+ * The same one composition as {@link qaResultPath}.
+ */
+export function qaResultsFile(root: string, rel: string): string {
+  return join(root, QA_RESULTS_DIR, rel);
 }
 
 /**
