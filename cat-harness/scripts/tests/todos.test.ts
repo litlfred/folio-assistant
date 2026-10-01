@@ -22,7 +22,8 @@ import { loadProcessModel } from "../../src/workflow/process-model.js";
 
 describe("the declaration and the directory agree", () => {
   test("`harness.json` declares a `todos` graph", () => {
-    const d = readDeclaration(ROOT);
+    // The checkout root declares it since cmsl step 2 (issue #1694).
+    const d = readDeclaration(repoRootFor(ROOT));
     const entry = d?.directories?.find((x) => x.graphKinds?.includes("todos"));
     expect(entry?.path).toBe("todos/");
   });

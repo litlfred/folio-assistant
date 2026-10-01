@@ -41,9 +41,10 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import { dirname, join, relative, resolve } from "node:path";
 
 import {
+  checkoutResolvedDirectories,
   artefactStub,
   readDeclaration,
-  resolveDirectories, repoRootFor } from "../schemas/cat-harness.js";
+  repoRootFor } from "../schemas/cat-harness.js";
 import { NS_PREFIXES, termIri } from "../schemas/namespaces.js";
 import { readFshGutsNode } from "../schemas/fsh-guts.js";
 
@@ -125,8 +126,8 @@ export interface FshGutsDir {
 /** Every declared `fsh-guts` directory — not the literal path. */
 export function fshGutsDirs(root: string): FshGutsDir[] {
   try {
-    return resolveDirectories([{ name: "(local)", root, own: true }])
-      .filter((d) => d.graphKinds.includes("fsh-guts"))
+    // Own, else the checkout's (cmsl step 2, issue #1694).
+    return checkoutResolvedDirectories(root, "fsh-guts")
       .map((d) => ({ absPath: d.absPath, path: d.path.replace(/\/+$/, "") }))
       .filter((d) => existsSync(d.absPath));
   } catch {
