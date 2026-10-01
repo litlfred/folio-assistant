@@ -5,7 +5,7 @@ status: todo
 type: task
 priority: normal
 created_at: 2026-09-21T19:10:00Z
-updated_at: 2026-10-01T11:26:38Z
+updated_at: 2026-10-01T11:39:18Z
 parent: folio-assistant-uhkv
 ---
 
@@ -446,3 +446,7 @@ The two defects are fixed in https://github.com/litlfred/smart-trust/pull/2 (dra
 - the feedback link now prepends `smart-`.
 
 SUSHI could not run in that session, because `packages.fhir.org` was unreachable. On the owner's choice, the fork's `fhirbuild` CI runs SUSHI and the IG Publisher on the PR, and nothing merges until it is green. Once it merges, re-ingest `menu.json` at the new fork commit so `/smart-trust/ig/` picks up the fix.
+
+## 2026-10-01: fork fix merged; staging re-pinned
+
+https://github.com/litlfred/smart-trust/pull/2 merged as `25771f6` after both IG builds went green. `menu.json` was re-ingested at `25771f6`, so `/smart-trust/ig/` now builds with both defects fixed.
