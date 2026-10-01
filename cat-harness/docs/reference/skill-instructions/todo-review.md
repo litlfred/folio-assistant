@@ -33,9 +33,9 @@ holds by reference or has materialized from somewhere else, the answer is not
 gives a reader nothing to annotate.
 
 The missing first step is
-[`copy-out-materialized`](copy-out-materialized.md)
+`copy-out-materialized` (a large-datasets skill — named, not linked, since cat-harness sits below it)
 (diagram:
-[`copy-out-materialized.bpmn`](../../processes/copy-out-materialized.html)).
+`large-datasets/processes/copy-out-materialized.bpmn`).
 The owner's framing, 2026-09-21:
 
 > *"this is first/early step of review process, checking out local copy to edit,
