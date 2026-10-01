@@ -3,6 +3,8 @@
  * Every declared kind has an avatar — and every gap is a finding.
  *
  * @module scripts/check-avatar-coverage
+ * @covers cat-harness — it reads the instance declaration's graph kinds and asks each for art; the
+ *   avatars themselves are code in `schemas/avatars.ts`, as `gen-avatars-css` records
  *
  * Owner, 2026-09-19: *"QA sidescares if avatar thems not fully done."*
  *

@@ -474,13 +474,13 @@ describe("check:avatar-coverage", () => {
   test("CORRUPTED: an instance whose avatars.css carries no trash rule → exit 1", () => {
     const root = tmp("avatars");
     try {
-      mkdirSync(join(root, "docs"), { recursive: true });
+      mkdirSync(join(root, "pages"), { recursive: true });
       writeFileSync(
         join(root, "thing.json"),
         JSON.stringify({
           name: "thing",
           description: "fixture",
-          directories: [{ id: "d", path: "docs/", graphKinds: ["docs"], description: "fixture" }],
+          directories: [{ id: "d", path: "pages/", graphKinds: ["docs"], description: "fixture" }],
         }),
       );
       const c = coverage(root);

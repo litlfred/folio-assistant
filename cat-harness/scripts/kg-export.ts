@@ -48,6 +48,9 @@
  * writer's flags and are refused.
  *
  * @module scripts/kg-export
+ * @covers cat-harness, schemas, skills, processes, tools — the declaration and the graphs its
+ *   collectors read; the judge form audits the EXPORT of them (its `@context` closure and keyword
+ *   use), not each node's own validity, which `kg:audit` and `check:kind-validators` own
  *
  * @conformsTo dcmi-terms
  * @conformsTo omg-bpmn-2.0
