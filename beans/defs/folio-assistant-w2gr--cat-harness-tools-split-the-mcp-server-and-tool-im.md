@@ -5,7 +5,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-01T06:28:35Z
+updated_at: 2026-10-01T07:12:18Z
 parent: folio-assistant-vuip
 ---
 
@@ -70,3 +70,19 @@ Entry points to repoint: package.json main/exports/files/scripts (start*, check-
 **sci's server parts go into a NAMED SUBGRAPH of folio-assistant-sci** — 'not big enough for full repo, at least not yet'. That covers PaperContentAdapter (a server wrapper over core's content plus tool registration) and tools/lean.ts (the Lean MCP tool registrar). So it is not cat-harness-tools, and not a separate sci-tools instance. The subgraph may depend on cat-harness-tools; sci's content does not.
 
 Steps landed: #1736 (types.ts split, ContentSource), #1738 (DocumentContent / server wrapper split, boundary test).
+
+
+## Handover 2026-10-01 (session pausing about a week)
+
+**Landed:** #1736 (step 1: content model split into src/content-types.ts, ContentSource), #1738 (step 2: DocumentContent / DocumentContentAdapter split, boundary test), #1742 (step 3a: cat-harness-tools instance created; adapters/mcp-server and its 3 tests moved in). The owner authorised merging #1742 before CI finished on its final head (77fdefd). Its earlier heads' failures were fixed in-branch (folio-root scan, Dockerfile path, server-path-sinks, jsonld-gen-check paths). **First thing next time: check CI on main after 4e11aa1** and fix anything red.
+
+**Next: step 3b.**
+- git mv the cat-harness/src server modules into cat-harness-tools/src/ (mirrored layout): src/{index,server,route-groups,tool-groups,types}.ts, src/tools/*, src/routes/*, src/core/{rbac,github-auth}.ts, src/auth/*, src/mcp/*. core/{git,feedback,cache,logging,anthropic,safe-path,...} STAY.
+- Core's server wrapper goes with them: folio-assistant-core/adapters/document/index.ts and tools/{audit,bib,qa,render,transform,validate}.ts, plus their 6 core tests and declared-adapter.test.
+- folio-assistant-core/scripts/sample-import-run.ts (+test) moves to cat-harness-tools: it drives the real workflow tool, and is the only staying non-test importer of a moving module (measured).
+- Move contentAdapters 'document' out of folio-assistant-core.json into cat-harness-tools.json, and update BUILTIN_ADAPTERS paths (src/builtin-adapters.ts stays: init-folio uses it).
+- Declare sci's server subgraph: re-describe sci-adapters (adapters/) as sci's server half (owner ruling). PaperContentAdapter extends DocumentContentAdapter, which then lives in tools.
+- Root package.json main/exports/start*/check-deps/mcp:capture, .mcp.json, tsconfig, partition rules, cat-harness-tools/package.json scripts.
+- Tools: scratchpad move-ts.py (git mv plus re-resolve imports and links). Beware HAND-BUILT paths (join(import.meta.dir, ...)) and paths filters: tests found them only in CI. Run bun run gates before merging.
+
+**Then:** the 9umr finale. Move the 5 tool skills left in folio-core (mcp-assembly, mcp-contract, mcp-projection, skills-and-tools, covered-is-not-reachable) to their home once the tools layer exists, then close 9umr.
