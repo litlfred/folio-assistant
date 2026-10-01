@@ -23,3 +23,9 @@ Failing on main cdb0a018 (gh api jobs): Repository gates #13 'workflow skill ref
 - who-iris IRIS code: a QA WARNING, not a failure ("QA warning. not failure.. ok b/c small # tools"). content-instance-holds-code is `minor` and still names the five files (bean eayu).
 - READMEs: "Each repo owns its README". readme:sync:all skips an instance that is a git submodule (bean kye5). LANDED ON MAIN via #1769 (`isSubmoduleRoot` in readme-sections.ts), so #1774 carries no copy of it; nothing pushed to bootstrap-tools from S0.
 - W3C library sources: "Add methodology citations". Three methodology nodes with `evidence:` (prov-o-provenance, odrl-policies, json-ld-serialisation), ported from #1769 (bean 6306). Supersedes bean f1qz's reading that no methodology relies on them.
+## Owner rulings 2026-10-01 (relayed to the S0 agent)
+Pins: restore PR0's bootstrap 7a91356 / bootstrap-tools c5e5e25. READMEs: each repo owns its own; folio-assistant stops regenerating and checking submodule READMEs. W3C sources: methodologies cite them (evidence:), reusing #1769; the test stays.
+
+
+## Upstream done 2026-10-01
+bootstrap f75a2167d226 (#1), bootstrap-tools 30464126ed93 (#4): READMEs reproducible (published-IRI term links) and each repo checks its own README in CI. S0 keeps PR0 pins; the pin bump to these is a follow-up after S0.
