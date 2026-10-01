@@ -1693,6 +1693,32 @@
         closeSearch(true);
       });
 
+      /* THE THEME'S SCROLL-TO-TOP, REFUSED WHILE OUR FIELD IS IN USE — #1732.
+       *
+       * just-the-docs, on EVERY keystroke in its search box, calls
+       * `window.scroll(0, -1)` and then, a tick later, `window.scroll(0, 0)` —
+       * an iOS Safari workaround for the full-screen overlay it draws search
+       * in. docs-ui does not draw that overlay. With the magnifier pinned
+       * (sticky) mid-page, each keystroke threw the reader back to the top of
+       * the page they were reading.
+       *
+       * REFUSED, EXACTLY: a call to `window.scroll` with two arguments, x = 0
+       * and y = 0 or -1, while the search is OPEN and focus is INSIDE it.
+       * Every other call passes through unchanged — any other coordinates,
+       * the one-argument options form, `scrollTo`, `scrollBy`, and every call
+       * while search is closed or focus is elsewhere. It wraps the function
+       * rather than editing the theme, because the theme is a pinned remote
+       * dependency this repository does not vendor. */
+      var nativeScroll = window.scroll;
+      window.scroll = function (x, y) {
+        if (arguments.length === 2 && x === 0 && (y === 0 || y === -1) &&
+            searchHome.getAttribute("data-open") === "true" &&
+            searchHome.contains(document.activeElement)) {
+          return undefined;
+        }
+        return nativeScroll.apply(window, arguments);
+      };
+
       searchHome.appendChild(searchToggle);
       searchHome.appendChild(searchHolder);
 

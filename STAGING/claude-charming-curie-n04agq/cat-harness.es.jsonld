@@ -301,14 +301,14 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-10-01T05:28:53.229Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/805e603dd49d83edcfb841bf1df5aba29422516c",
-  "sourceCommitSha": "805e603dd49d83edcfb841bf1df5aba29422516c",
-  "sourceCommitAt": "2026-10-01T05:25:35Z",
+  "generatedAt": "2026-10-01T06:43:03.485Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b0d715c818cf76dfe21ffcf274cb9c397b3db765",
+  "sourceCommitSha": "b0d715c818cf76dfe21ffcf274cb9c397b3db765",
+  "sourceCommitAt": "2026-10-01T06:38:24Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 288,
+    "Skill": 289,
     "Actor": 36,
     "Capability": 28,
     "SkillPackage": 31,
@@ -537,7 +537,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/authoring-core"
       ],
       "instructionsPath": "skills/authoring/authoring-core/content-profiles.md",
-      "instructionLines": 99,
+      "instructionLines": 109,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3113,7 +3113,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/library-ingestion.md",
-      "instructionLines": 795,
+      "instructionLines": 796,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3819,6 +3819,23 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/package-release"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/before-after-preview",
+      "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
+      "name": "before-after-preview",
+      "title": "/before-after-preview — show the reviewer the change, not a description of it",
+      "description": "Make a reviewer-facing BEFORE/AFTER preview of a change to anything that is rendered — a docs site, a paper's PDF, a FHIR IG, a slide deck, a website — and put it where the review and feedback processes expect it. Covers one build with one variable, stable capture, pairing every picture with a measured count and its method, the viewports and colour schemes to shoot, an honest status line, publishing with alt text, a section per content type naming this repository's own build and render tools, and how reviewer feedback on the preview becomes beans. Use before asking anyone to review a rendered change, at the HCI validation gate, and whenever a reviewer asks \"what did it look like before\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/sdlc-core"
+      ],
+      "instructionsPath": "skills/sdlc/sdlc-core/before-after-preview.md",
+      "instructionLines": 378,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness.jsonld#skill/before-after-preview"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/pickup",
       "@type": "https://litlfred.github.io/bootstrap/0.1.0/ns#Skill",
       "name": "pickup",
@@ -3895,7 +3912,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/staging-review.md",
-      "instructionLines": 593,
+      "instructionLines": 596,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4418,7 +4435,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/rendered-verification.md",
-      "instructionLines": 345,
+      "instructionLines": 351,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4520,7 +4537,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#package/sdlc-core"
       ],
       "instructionsPath": "skills/sdlc/sdlc-core/visual-diff.md",
-      "instructionLines": 128,
+      "instructionLines": 133,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6958,6 +6975,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/adjudication",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/bean-blocking",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/bean-coordination",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/before-after-preview",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/continual-progress",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/coordinate",
@@ -14291,7 +14309,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#process/Process_Editing/lane/Lane_Agent",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/content-author"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/content-author",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/before-after-preview"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -14684,7 +14703,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#process/Process_Editing/lane/Lane_Agent",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/content-author"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/content-author",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/before-after-preview"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -20534,7 +20554,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#process/Process_CodeChangeReview/lane/Lane_Agent",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/continual-progress"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/continual-progress",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/before-after-preview"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -31532,7 +31553,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#process/Process_ContentChangeReview/lane/Lane_Agent",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/prepare-merge-auto"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/prepare-merge-auto",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/before-after-preview"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -31555,7 +31577,8 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#role/authoring-agent",
       "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#process/Process_ContentChangeReview/lane/Lane_Agent",
       "implementedBy": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/content-author"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/content-author",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/before-after-preview"
       ],
       "touchesWorkPlan": false,
       "relaxable": true,
@@ -47343,6 +47366,7 @@
       "hasSkill": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/adopt-methodology-from-source",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/bean-coordination",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/before-after-preview",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/bpmn-authoring",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/ci-health",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-charming-curie-n04agq/cat-harness.jsonld#skill/confirmation-waiver",
