@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-sticky-summary/skills/content-author/input.schema.json",
+  "title": "Content Author Input",
+  "description": "Input schema for general content authoring.",
+  "type": "object",
+  "required": [
+    "contentType"
+  ],
+  "properties": {
+    "contentType": {
+      "type": "string",
+      "enum": [
+        "document",
+        "fhir-ig",
+        "lean-proof",
+        "bpmn",
+        "data-dictionary"
+      ],
+      "description": "Type of content to author."
+    },
+    "sourceRef": {
+      "type": "string",
+      "description": "Reference to source material."
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "Output directory for authored content."
+    }
+  },
+  "staging": {
+    "branch": "claude/quirky-hypatia-k3aoh4-sticky-summary",
+    "sha": "1541791f5b5fcc94f865fb682eb13ef32b1728d6",
+    "pr": "1807/merge",
+    "run": "36911163582"
+  }
+}

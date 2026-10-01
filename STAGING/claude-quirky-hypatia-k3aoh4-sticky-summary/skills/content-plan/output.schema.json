@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-sticky-summary/skills/content-plan/output.schema.json",
+  "title": "Content Plan Output",
+  "description": "Output schema for content planning.",
+  "type": "object",
+  "required": [
+    "plan"
+  ],
+  "properties": {
+    "plan": {
+      "type": "object",
+      "required": [
+        "projectName",
+        "sprints",
+        "team"
+      ],
+      "properties": {
+        "projectName": {
+          "type": "string"
+        },
+        "sprints": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "number": {
+                "type": "integer"
+              },
+              "startDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "endDate": {
+                "type": "string",
+                "format": "date"
+              },
+              "goals": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "team": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "actorId": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "responsibilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "staging": {
+    "branch": "claude/quirky-hypatia-k3aoh4-sticky-summary",
+    "sha": "1541791f5b5fcc94f865fb682eb13ef32b1728d6",
+    "pr": "1807/merge",
+    "run": "36911163582"
+  }
+}

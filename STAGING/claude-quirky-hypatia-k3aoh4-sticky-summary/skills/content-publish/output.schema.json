@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-sticky-summary/skills/content-publish/output.schema.json",
+  "title": "Content Publish Output",
+  "description": "Output schema for content publication.",
+  "type": "object",
+  "required": [
+    "version",
+    "status"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "published",
+        "failed"
+      ]
+    },
+    "publishedUrl": {
+      "type": "string"
+    },
+    "releaseTag": {
+      "type": "string"
+    }
+  },
+  "staging": {
+    "branch": "claude/quirky-hypatia-k3aoh4-sticky-summary",
+    "sha": "1541791f5b5fcc94f865fb682eb13ef32b1728d6",
+    "pr": "1807/merge",
+    "run": "36911163582"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-quirky-hypatia-k3aoh4-sticky-summary/skills/crdm-detect/input.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CRDM Detect Input",
+  "description": "One user request to classify: is it a feature request (a platform capability change, which enters the CRDM requirements workflow) or a content request?",
+  "type": "object",
+  "required": [
+    "text"
+  ],
+  "properties": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The request as the user wrote it — an issue title and body, or a chat turn."
+    }
+  },
+  "additionalProperties": false,
+  "staging": {
+    "branch": "claude/quirky-hypatia-k3aoh4-sticky-summary",
+    "sha": "1541791f5b5fcc94f865fb682eb13ef32b1728d6",
+    "pr": "1807/merge",
+    "run": "36911163582"
+  }
+}
