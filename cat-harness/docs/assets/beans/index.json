@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 542,
+      "count": 547,
       "unit": "beans"
     }
   },
@@ -931,7 +931,7 @@
       "blockedBy": [],
       "createdAt": "2026-09-26T17:25:05Z",
       "updatedAt": "2026-09-27T10:04:12Z",
-      "preview": "## The trap, measured 2026-09-26\n\n`cat-harness-tools/adapters/mcp-server/bun.lock` was stale against its own manifest, so\nfixing it means `bun install` **in that directory** — there is no other way to\nregenerate a lockfile. That install creates a 56 MB\n`cat-harness-tools/adapters/mcp-server/node_modules`, and from that moment the ROOT\n`bunx tsc --noEmit` reports **12 errors across 3 files under\n`cat-harness/a",
+      "preview": "## The trap, measured 2026-09-26\n\n`cat-harness/adapters/mcp-server/bun.lock` was stale against its own manifest, so\nfixing it means `bun install` **in that directory** — there is no other way to\nregenerate a lockfile. That install creates a 56 MB\n`cat-harness/adapters/mcp-server/node_modules`, and from that moment the ROOT\n`bunx tsc --noEmit` reports **12 errors across 3 files under\n`cat-harness/a",
       "file": "beans/defs/folio-assistant-3vc1--a-nested-bun-install-makes-root-tsc-report-12-erro.md"
     },
     {
@@ -1805,6 +1805,20 @@
       "file": "beans/defs/folio-assistant-7po1--workflows-bootstrap-keeps-the-bare-minimum-cat-har.md"
     },
     {
+      "id": "folio-assistant-7pp6",
+      "title": "A column-0 pseudo-tag in a published markdown source is caught only AFTER merge — five hand-fixes and no gate",
+      "status": "todo",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-o3xy",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T06:29:56Z",
+      "updatedAt": "2026-10-01T06:36:29Z",
+      "preview": "## The class, and why a sixth hand-fix is the wrong answer\n\nA markdown source line whose first character is `<` followed by a non-HTML name\nmakes kramdown open a **raw HTML block**. With no closing tag the rest of the\npage stays raw, so headings, lists and tables after it render as literal text.\nThe usual cause is an inline code span **wrapped across a line break**, leaving\nits continuation at col",
+      "file": "beans/defs/folio-assistant-7pp6--a-column-0-pseudo-tag-in-a-published-markdown-sour.md"
+    },
+    {
       "id": "folio-assistant-7ppv",
       "title": "resolveCanonicalLean is O(refs x tree) without a cache, and its two index builders walk .lake/ while listPackageLeanFiles excludes it",
       "status": "todo",
@@ -2388,8 +2402,8 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-22T19:07:23Z",
-      "updatedAt": "2026-10-01T02:00:00Z",
-      "preview": "Requirements for an agent working a **local experimental fork** of the IG\nPublisher, and what the AST it emits must carry.\n\nScope this round: **requirements only, no Java.**\n\n## Why a fork rather than an upstream ask alone\n\nMeasured, from `nsbb`, using the Publisher's current metadata exports as an AST\nproxy across two real IGs:\n\n| export | smart-trust | smart-immunizations |\n|---|---|---|\n| `valu",
+      "updatedAt": "2026-10-01T07:10:00Z",
+      "preview": "> **Taking this over? Start at §\"HANDOVER — start here (2026-10-01)\" at the end of this bean.** Earlier sections are history; the order list in §\"Prepared for the agent with network\" is superseded.\n\nRequirements for an agent working a **local experimental fork** of the IG\nPublisher, and what the AST it emits must carry.\n\nScope this round: **requirements only, no Java.**\n\n## Why a fork rather than ",
       "file": "beans/defs/folio-assistant-a9tx--ig-publisher-fork-requirements-for-an-agent-workin.md"
     },
     {
@@ -2885,14 +2899,14 @@
     {
       "id": "folio-assistant-cjvs",
       "title": "190 dangling refs in the KG: 137 ts-import, 28 md-link, 25 bpmn-skill",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-vke6",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-26T06:33:48Z",
-      "updatedAt": "2026-10-01T05:32:19Z",
+      "updatedAt": "2026-10-01T07:11:26Z",
       "preview": "`bun run kg:detangle`, measured 2026-09-26 on `main`:\n\n```\nDetangle — 697 nodes, 2828 edges, 190 dangling\n```\n\nBreakdown, from the tool's own JSON rather than from prose:\n\n| via | count |\n|---|---|\n| `ts-import` | 137 |\n| `md-link` | 28 |\n| `bpmn-skill` | 25 |\n\nA dangling ref is a link-shaped value that does not dereference — bean `blv9`\n— at scale, in the graph the whole separation effort is comp",
       "file": "beans/defs/folio-assistant-cjvs--190-dangling-refs-in-the-kg-137-ts-import-28-md-li.md"
     },
@@ -2906,7 +2920,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-21T19:18:36Z",
-      "updatedAt": "2026-09-30T16:02:22Z",
+      "updatedAt": "2026-10-01T01:54:43Z",
       "preview": "Owner asked 2026-09-21: *\"we need to dediplicate. options? auto stub prefix?\"*\nBoth options were put to them, both were chosen, and **both turned out to be\nmeasurably wrong**. Recorded here so the next agent does not re-derive it.\n\n## The measurement\n\n**63 declared entries across 52 distinct directories; 11 declared twice.**\nEvery duplicate has one shape: `cat-harness` declares another instance's\n",
       "file": "beans/defs/folio-assistant-cmsl--dedupe-11-directories-declared-twice-and-both-obvi.md"
     },
@@ -3331,6 +3345,20 @@
       "updatedAt": "2026-09-30T23:35:58Z",
       "preview": "Follow-on to `1swy` / `oxka`, which added the first `.gitattributes` and, more\nimportantly, the TEST for what may go in it. Nothing here revises that test —\nit applies it to a corpus that has moved.\n\n## Why re-measure at all\n\n`oxka` measured over three days ending 2026-09-24 and marked the three files it\nfound. Measured again 2026-09-30 over `origin/main`'s last 200 commits, **the\ntop of the table",
       "file": "beans/defs/folio-assistant-eqxp--merge-friction-one-week-on-the-top-churners-have-c.md"
+    },
+    {
+      "id": "folio-assistant-f1qz",
+      "title": "INGEST W3C ODRL 2.2, PROV-O, JSON-LD 1.1 into cat-harness/library (#1614 sources 4-6)",
+      "status": "completed",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-scfh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T06:40:55Z",
+      "updatedAt": "2026-10-01T06:46:40Z",
+      "preview": "Issue #1614 item 4: methodology literature the KG / folio-asst deck relies on and no library holds. ODRL Information Model 2.2 (REC 2018-02-15; actor permissions, before/after check), PROV-O (REC 2013-04-30; QA/QC reports as provenance, bun run prov:qaqc), JSON-LD 1.1 (REC 2020-07-16; every manifest is JSON-LD). w3.org is blocked from the container; the REC publication snapshots are in each WG's G",
+      "file": "beans/defs/folio-assistant-f1qz--ingest-w3c-odrl-22-prov-o-json-ld-11-into-cat-harn.md"
     },
     {
       "id": "folio-assistant-f327",
@@ -4161,6 +4189,20 @@
       "file": "beans/defs/folio-assistant-kfkh--a-clean-merge-produces-a-duplicate-front-matter-ke.md"
     },
     {
+      "id": "folio-assistant-kgho",
+      "title": "ci-health.yml fires WEEKLY, so a red main during active work waits up to seven days for the tracking issue",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-1xhc",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-09-30T23:20:08Z",
+      "updatedAt": "2026-09-30T23:21:14Z",
+      "preview": "Owner ruling 2026-09-30, after `1hjm` established that the merge queue cannot be\nenabled here: **\"Automate the response instead.\"**\n\n## Why the response and not prevention\n\n`nytj` argued that five merge-skew defect classes shared ONE remedy — the queue\ntests the combined state, so none needs its own guard. `1hjm` removed that\nremedy, leaving the argument without a conclusion and the class unguarde",
+      "file": "beans/defs/folio-assistant-kgho--ci-healthyml-fires-weekly-so-a-red-main-during-act.md"
+    },
+    {
       "id": "folio-assistant-kn0t",
       "title": "PHASED TRANSITION: IG Publisher reduced to AST + QA, in five phases with a stated exit criterion each",
       "status": "todo",
@@ -4571,6 +4613,20 @@
       "file": "beans/defs/folio-assistant-mkqf--queued-stream-c-what-the-reader-receives-deploymen.md"
     },
     {
+      "id": "folio-assistant-mwzd",
+      "title": "INGEST trust + origin sources (#1614 item 4): WHO SMART Trust IG, C2PA spec, DSpace 7 REST contract",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-scfh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T06:42:36Z",
+      "updatedAt": "2026-10-01T06:42:44Z",
+      "preview": "Issue #1614 item 4, slides 2 of the KG/folio-asst deck: signed assets and the trust network; IRIS (DSpace) as the L1 origin.\n\n## Done when\n\n- [ ] WHO SMART Trust IG narrative pages held as an L1 entry under the smart-trust instance, IG version recorded from sushi-config.yaml\n- [ ] C2PA Technical Specification (latest released version) held or referenced per its licence, version recorded\n- [ ] DSpa",
+      "file": "beans/defs/folio-assistant-mwzd--ingest-trust-origin-sources-1614-item-4-who-smart.md"
+    },
+    {
       "id": "folio-assistant-mylx",
       "title": "Raw Markdown backticks show in rendered text",
       "status": "completed",
@@ -4741,14 +4797,14 @@
     {
       "id": "folio-assistant-nvbr",
       "title": "Phase I.4 — LHS navbar section per node in the folio instance (#223)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-18T15:00:27Z",
-      "updatedAt": "2026-10-01T06:20:28Z",
+      "updatedAt": "2026-10-01T06:20:32Z",
       "preview": "From [issue #223 comment](https://github.com/litlfred/folio-assistant/issues/223#issuecomment-5726628913):\n\"the lhs navbar should have sections for each node in the folio instance\".\n\n**A block was recorded here against bean `fsch`** — without a folio holding\n0..n content instances there is only ever one node to render. **NOT blocked\non `fsch`:**\nit was scrapped 2026-09-20 and the block is void — s",
       "file": "beans/defs/folio-assistant-nvbr--phase-i-4-lhs-navbar-section-per-node-in-the-folio-ins.md"
     },
@@ -5494,7 +5550,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-20T14:45:12Z",
-      "updatedAt": "2026-09-30T19:17:49Z",
+      "updatedAt": "2026-09-30T22:09:25Z",
       "preview": "Owner, 2026-09-20, with an upload and a link:\n\n> `Agent_Skill_best_practices___Gemini_CLI.pdf` one-voice source for skills\n> <https://github.com/litlfred/folio-assistant/commit/467717508cf8ee3f8bb4cf1eaace91e769d92e16>\n>\n> for model specific sources, make those model specific voices. make sure .ts\n> skill data model accomodates all. (preference leave unstructured schema,\n> agentic review b/c of \"b",
       "file": "beans/defs/folio-assistant-rkqp--ingest-gemini-cli-agent-skill-best-practices-pdf-c.md"
     },
@@ -5951,14 +6007,14 @@
     {
       "id": "folio-assistant-tbdl",
       "title": "Jekyll pages' navbar shows no open-document index — only the injected rail supplies documentIndex",
-      "status": "in-progress",
+      "status": "scrapped",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-yj32",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T11:23:09Z",
-      "updatedAt": "2026-10-01T05:31:21Z",
+      "updatedAt": "2026-10-01T05:31:25Z",
       "preview": "Found closing `sjic`, 2026-09-29/30, session https://claude.ai/code/session_014nDNCRPYSuF4DiJUP7wMDq.\n\nThe owner's spec (in `sjic`): *\"when a document or other indexed object is opened, the document index/idices are shown in a navbar tab/menu.\"*\n\n## Measured\n\n- `NavbarModel.documentIndex` has ONE supplier: `harness-rail.ts:118`, which calls `documentIndexOf(html)` on a finished page. So mounted an",
       "file": "beans/defs/folio-assistant-tbdl--jekyll-pages-navbar-shows-no-open-document-index-o.md"
     },
@@ -6634,7 +6690,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-09-30T08:12:08Z",
-      "updatedAt": "2026-10-01T05:14:21Z",
+      "updatedAt": "2026-10-01T07:12:18Z",
       "preview": "Owner 2026-09-29/30: 'i want to split out cat-harness-tools too https://github.com/litlfred/cat-harness-tools' — 'see sibling work' (#1514, bootstrap-tools, bean 81tw). Direction ruled 2026-09-30: **tools depend on the harness** — cat-harness never imports the new instance.\n\nMeasured 2026-09-30: litlfred/cat-harness-tools is EMPTY (no commits). In scope: cat-harness/tools/ (8 files: discover, inde",
       "file": "beans/defs/folio-assistant-w2gr--cat-harness-tools-split-the-mcp-server-and-tool-im.md"
     },
@@ -7239,6 +7295,20 @@
       "updatedAt": "2026-09-30T22:53:46Z",
       "preview": "Owner request (issue #1710). Author skills/sdlc/sdlc-core/before-after-preview.md (moved from folio-core with the sdlc topic split, bean 9umr), point rendered-verification/visual-diff/staging-review at it, reference it from the review BPMN. Worked example: Folio tab overlap #1693 / PR #1709.\n\n## Done when\n- skill registered, BPMN references it, gates green, PR open.",
       "file": "beans/defs/folio-assistant-y2jh--beforeafter-preview-one-reviewer-facing-skill-acro.md"
+    },
+    {
+      "id": "folio-assistant-y4uj",
+      "title": "Ingest #1614 item 4 sources 7, 8, 11: FHIR TestPlan, ITB docs, CWA 16408, Gherkin ref, MCP spec, hmans/beans README",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-scfh",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-10-01T06:38:12Z",
+      "updatedAt": "2026-10-01T07:01:39Z",
+      "preview": "Issue #1614 item 4: methodology literature the KG/folio-asst deck relies on but no library holds. Sources 7 (FHIR R5 TestPlan, EC ITB docs, CEN CWA 16408 GITB, Cucumber Gherkin reference), 8 (MCP specification, latest dated version) and 11 (hmans/beans README). Each to the library of the instance that owns it, held where the licence permits, referenced otherwise, with exact repo@commit/path proven",
+      "file": "beans/defs/folio-assistant-y4uj--ingest-1614-item-4-sources-7-8-11-fhir-testplan-it.md"
     },
     {
       "id": "folio-assistant-y5si",

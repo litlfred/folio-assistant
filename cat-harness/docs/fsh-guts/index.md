@@ -25,7 +25,7 @@ generally: a scrapped item stops the next agent re-entering a dead end, while
 a deleted one cannot be told from an accident. Delete here means relocate, and
 relocate is reversible.
 
-**132 file(s)** across 5 group(s). Each links to the file itself —
+**138 file(s)** across 5 group(s). Each links to the file itself —
 this page indexes what is kept, it does not republish it.
 
 ## Does each file declare itself?
@@ -38,8 +38,8 @@ would make the format's limit and somebody's omission look the same.
 
 | state | files | what it means |
 |---|---|---|
-| <span class="fg-tag fg-ok">declared</span> | 73 | carries the tag itself |
-| <span class="fg-tag fg-side">via sidecar</span> | 52 | a script, described by a tagged `.md` sibling |
+| <span class="fg-tag fg-ok">declared</span> | 76 | carries the tag itself |
+| <span class="fg-tag fg-side">via sidecar</span> | 55 | a script, described by a tagged `.md` sibling |
 | <span class="fg-tag fg-gap">undeclared</span> | 7 | **neither** — a gap, not a format limit |
 
 The 7 undeclared are listed below with the rest rather than in a
@@ -114,7 +114,7 @@ summary count is the failure this table exists to avoid.
 
 ## uploads
 
-94 file(s).
+100 file(s).
 
 | file | what it is | declares itself |
 |---|---|---|
@@ -210,5 +210,11 @@ summary count is the failure this table exists to avoid.
 | [rfc8174-uppercase-vs-lowercase-2119-key-words.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/rfc8174-uppercase-vs-lowercase-2119-key-words.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [sammut-bonnici-galea-2015-swot-analysis.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.md) | `sammut-bonnici-galea-2015-swot-analysis.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [sammut-bonnici-galea-2015-swot-analysis.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/sammut-bonnici-galea-2015-swot-analysis.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [w3c-2013-prov-o.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/w3c-2013-prov-o.md) | `w3c-2013-prov-o.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [w3c-2013-prov-o.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/w3c-2013-prov-o.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [w3c-2018-odrl-model-2-2.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/w3c-2018-odrl-model-2-2.md) | `w3c-2018-odrl-model-2-2.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [w3c-2018-odrl-model-2-2.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/w3c-2018-odrl-model-2-2.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
+| [w3c-2020-json-ld-1-1.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/w3c-2020-json-ld-1-1.md) | `w3c-2020-json-ld-1-1.pdf` | <span class="fg-tag fg-ok">declared</span> |
+| [w3c-2020-json-ld-1-1.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/w3c-2020-json-ld-1-1.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |
 | [wang-rangaiah-2026-mcdm-aggregation.md](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.md) | `wang-rangaiah-2026-mcdm-aggregation.pdf` | <span class="fg-tag fg-ok">declared</span> |
 | [wang-rangaiah-2026-mcdm-aggregation.pdf](https://github.com/litlfred/folio-assistant/blob/main/fsh-guts/uploads/wang-rangaiah-2026-mcdm-aggregation.pdf) | — | <span class="fg-tag fg-side">via sidecar</span> |

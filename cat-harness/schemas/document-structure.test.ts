@@ -37,7 +37,7 @@ describe("structureOf reads every committed structure, each as its own variant",
     // (cells). A file that reads as neither, or with the other's locator, is
     // the misreading this base exists to prevent.
     const bad: string[] = [];
-    const want = { pdf: "pages", notebook: "cells" } as const;
+    const want = { pdf: "pages", notebook: "cells", text: "lines" } as const;
     for (const f of files) {
       const s = structureOf(JSON.parse(readFileSync(join(REPO, f), "utf-8")));
       if ("reason" in s) bad.push(`${f}: ${s.reason}`);
@@ -46,14 +46,14 @@ describe("structureOf reads every committed structure, each as its own variant",
     expect(bad).toEqual([]);
   });
 
-  test("both variants are present in the corpus, so neither half is vacuous", () => {
+  test("every variant is present in the corpus, so none is vacuous", () => {
     const variants = new Set(
       files.map((f) => {
         const s = structureOf(JSON.parse(readFileSync(join(REPO, f), "utf-8")));
         return "reason" in s ? "unreadable" : s.variant;
       }),
     );
-    expect([...variants].sort()).toEqual(["notebook", "pdf"]);
+    expect([...variants].sort()).toEqual(["notebook", "pdf", "text"]);
   });
 });
 
