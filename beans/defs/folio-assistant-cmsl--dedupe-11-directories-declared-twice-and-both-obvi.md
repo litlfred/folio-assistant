@@ -1,11 +1,11 @@
 ---
 # folio-assistant-cmsl
 title: 'DEDUPE: 11 directories declared twice — and both obvious fixes are measurably wrong'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-21T19:18:36Z
-updated_at: 2026-10-01T01:54:43Z
+updated_at: 2026-10-01T12:27:01Z
 parent: folio-assistant-zzmr
 ---
 
@@ -123,3 +123,21 @@ Step 3, tried and measured, not committed: there are **19** mirrors, not 16. Rem
 - **The blocker:** those consumers key pages and categories by DIRECTORY ID, and the mirror ids differ from the owners' own: core `core-skills`/`core-library`/`core-schemas`/`core-processes`/`core-methodologies`, sci `sci-methodologies`/`lean-skills`/`data-skills` vs `folio-assistant-core-skills`, `folio-assist-core-schemas`, `folio-assistant-sci-lean-skills`, … Whichever ids win decides published URLs (e.g. `/docs-auto/index/skills/folio-assistant-core-skills/`). Asked of the owner.
 - Second decision: the 6 kg-qa sidecars cat-harness wrote for other instances' subjects become orphans (each owner audits its own) — deleting them is the owner's call.
 The authored diff (3 files) is preserved; regen also measured ~2x slower `resolveSkillDirs` (41 → 89 ms/call, measured under load).
+
+
+## 2026-10-01 — consolidation (session session_01CVVoavPoCHMLA7AASxG8cH, PR #1769)
+- Step 3's DATA is placement PR0's 0a (ejye). It merged, then was undone by two merge resolutions (aab80f35 from #1744; 16c02d33 from this bean's #1747 branch). #1769 restores it: 20 mirrors out of cat-harness.json, root needs all 17 staged instances; check:instance-graph green.
+- 15 files on main held cmsl step 2's parallel reader while PR0's tests stayed; #1769 restores PR0's version of each (all were touched after PR0 ONLY by cmsl commits).
+- Owner, 2026-10-01: close #1747 once #1769 merges.
+## Remaining here
+- [ ] Owner's design question: overlay-and-warn along the dependency chain vs the <stub>/<dir> -> <dir>/<stub> rule (belongs with iirv)
+- [x] ~~Delete the 6 cross-instance kg-qa sidecars (approved)~~ — NOT APPLICABLE after PR0, see 2026-10-01 below
+- [ ] Skill docs keyed by owner directory id
+- [x] Remove the duplicate checkoutDirectories in schemas/cat-harness.ts (cmsl's), keeping harness-config.ts's (PR0's)
+
+_2026-10-01T12:25:43Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
+
+
+## 2026-10-01 (later) — two leftovers settled
+- **The cross-instance kg-qa sidecars are not orphans.** Under PR0 the auditor files a subject owned by another instance under its own `test/results/kg-qa/_external/<owner>/`; there are 7 (smart-base 1, folio-assistant-core 1, large-datasets 5). `bun run kg:audit` rewrites them byte-identically and reports no orphan, `kg:audit:check` is green with them, and kg-audit.ts cites the smart-base one as evidence. The step-3 premise ("cat-harness wrote them for subjects it no longer declares") predates PR0. Nothing deleted.
+- **Duplicate checkoutDirectories removed.** schemas/cat-harness.ts held checkoutResolvedDirectories / checkoutDirectories / checkoutDirectoriesForGraph (cmsl step 2's parallel version); all nine importers use schemas/harness-config.ts's (PR0's), and the three only called each other. 79 lines out; tsc, eslint clean; cat-harness, placement-pr0-mechanisms, subgraphs, instance-graph-isolation: 130 pass.

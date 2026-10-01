@@ -54,6 +54,32 @@ export interface IdEntry {
   url: string;
 }
 
+/**
+ * The three materialisation states, as a catalogue node records them. Restated
+ * here, deliberately, rather than imported: this instance sits BELOW the
+ * content layer that owns the full catalogue-node schema, and nothing may point
+ * up the dependency arrow (owner ruling 2026-10-01, bean `rfuq`). The content
+ * layer validates whole nodes in its own gates; this module reads three fields.
+ */
+export const CATALOGUE_MATERIALIZATION_STATES = ["unknown", "referenced", "materialized"] as const;
+
+/**
+ * The PART of a catalogue node the lookup reads — `id`, `title`, the node's own
+ * materialisation state and, for a referenced node, where upstream holds it.
+ * A projection, not the node: every other field is ignored rather than checked,
+ * because judging a whole node is the content layer's job and restating its
+ * schema here would be a second answer free to drift from the first.
+ */
+export const CatalogueNodeReadSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1),
+  materialization: z.object({
+    state: z.enum(CATALOGUE_MATERIALIZATION_STATES),
+    provenance: z.object({ upstream: z.string().min(1).optional() }).optional(),
+  }),
+});
+export type CatalogueNodeRead = z.infer<typeof CatalogueNodeReadSchema>;
+
 const NAMESPACE = /^[a-z0-9-]+$/;
 
 /** Split `kind/local`. Mirrors `splitId` in `id-lookup/lookup.js`. */

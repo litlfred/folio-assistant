@@ -3,8 +3,9 @@
 title: 'Separation stage 1a: stage cat-harness-tools/ as a sibling instance and git mv the unambiguous code'
 status: todo
 type: task
+priority: normal
 created_at: 2026-10-01T06:58:00Z
-updated_at: 2026-10-01T06:58:00Z
+updated_at: 2026-10-01T08:56:37Z
 parent: folio-assistant-iirv
 blocked_by:
     - folio-assistant-pyds
@@ -24,3 +25,17 @@ Plans (session scratchpad, 2026-10-01; to be committed with stage 0): `cat-harne
 - [ ] falsifier 3: `mcp:capture` tool list identical; the server starts over stdio from `cat-harness-tools/src/index.ts`
 - [ ] falsifier 4: `check:import-direction --all` green, and the planted `cat-harness → cat-harness-tools` import red
 - [ ] `bun run gates --all` green, or each failure shown pre-existing on the base SHA
+
+
+## 2026-10-01 — absorbs w2gr step 3b (separation arc 7x5n, gap G2)
+w2gr 3b and this stage are the same git mv. This bean survives. The move list from w2gr's handover:
+- cat-harness/src server modules -> cat-harness-tools/src/: entry points, src/tools/*, src/routes/*, core/{rbac,github-auth}, src/auth, src/mcp. core/{git,feedback,cache,logging,anthropic,safe-path} STAY (until D1 moves all code).
+- core's server wrapper + tool registrars, with tests; folio-assistant-core/scripts/sample-import-run.ts.
+- document content-adapter declaration -> cat-harness-tools.json; adapter paths in src/builtin-adapters.ts; sci-adapters re-described as sci's server half.
+- root package.json entries, .mcp.json, tsconfig, partition rules.
+- traps: join(import.meta.dir, ...) paths and workflow paths: filters only show in CI.
+NOTE cat-harness-tools/ already exists on main (#1742, w2gr step 3a).
+
+
+## Owner ruling C1, 2026-10-01 (separation arc 7x5n): cat-harness-tools sits BELOW core
+cat-harness-tools needs only cat-harness (+ bootstrap-tools); folio-assistant-core MAY depend on it. MCP-server / tool-implementation parts that need core move UP into folio-assistant-core. Supersedes the reading of the 2026-10-01 ruling 2 as 'core must not depend on cat-harness-tools': it now reads 'core must not depend on the MCP server'. Measured basis: 88 references from core into cat-harness code. Under D1 those would have formed a core<->tools cycle. Concretely: cat-harness-tools/cat-harness-tools.json drops needs: folio-assistant-core.

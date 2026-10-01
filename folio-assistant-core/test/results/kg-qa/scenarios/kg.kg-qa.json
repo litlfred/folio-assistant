@@ -145,12 +145,16 @@
           "detail": "not evaluated: `nested-instance-audited` is `repo`-scoped and this run is scoped to folio-assistant-core. `unreadNestedInstances()` walks from `repoRootFor(root)` to find declarations, so it asks a question ABOUT the repository's set of instances. MEASURED 2026-09-26: it fired 15 inside the bootstrap run, reporting bootstrap's siblings as unread from inside bootstrap — which is the root's question being asked in a place that cannot act on it."
         }
       ]
+    },
+    "content-instance-holds-code": {
+      "result": "n/a",
+      "findings": []
     }
   },
   "totals": {
     "pass": 9,
     "fail": 1,
-    "n/a": 11,
+    "n/a": 12,
     "unknown": 0
   }
 }

@@ -5,8 +5,10 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T08:12:08Z
-updated_at: 2026-10-01T07:12:18Z
+updated_at: 2026-10-01T08:56:37Z
 parent: folio-assistant-vuip
+blocked_by:
+    - folio-assistant-70lx
 ---
 
 Owner 2026-09-29/30: 'i want to split out cat-harness-tools too https://github.com/litlfred/cat-harness-tools' — 'see sibling work' (#1514, bootstrap-tools, bean 81tw). Direction ruled 2026-09-30: **tools depend on the harness** — cat-harness never imports the new instance.
@@ -86,3 +88,11 @@ Steps landed: #1736 (types.ts split, ContentSource), #1738 (DocumentContent / se
 - Tools: scratchpad move-ts.py (git mv plus re-resolve imports and links). Beware HAND-BUILT paths (join(import.meta.dir, ...)) and paths filters: tests found them only in CI. Run bun run gates before merging.
 
 **Then:** the 9umr finale. Move the 5 tool skills left in folio-core (mcp-assembly, mcp-contract, mcp-projection, skills-and-tools, covered-is-not-reachable) to their home once the tools layer exists, then close 9umr.
+
+
+## 2026-10-01 — step 3b folded into iirv 70lx (separation arc 7x5n, gap G2)
+Same move, two plans. 70lx carries the list now; this bean closes when 70lx does.
+
+
+## Owner ruling C1, 2026-10-01 (separation arc 7x5n): cat-harness-tools sits BELOW core
+cat-harness-tools needs only cat-harness (+ bootstrap-tools); folio-assistant-core MAY depend on it. MCP-server / tool-implementation parts that need core move UP into folio-assistant-core. Supersedes the reading of the 2026-10-01 ruling 2 as 'core must not depend on cat-harness-tools': it now reads 'core must not depend on the MCP server'. Measured basis: 88 references from core into cat-harness code. Under D1 those would have formed a core<->tools cycle. Concretely: cat-harness-tools/cat-harness-tools.json drops needs: folio-assistant-core.
