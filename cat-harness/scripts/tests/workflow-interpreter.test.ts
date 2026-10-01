@@ -59,7 +59,7 @@ describe("the model carries what the diagram already knew", () => {
   test("skills and work-plan marks come off the folio: extensions", async () => {
     const model = await loadProcessModel(bpmn("editing-hci-validation"));
     const draft = model.nodes.get("Task_DraftEdit")!;
-    expect(draft.skills).toEqual(["content-author"]);
+    expect(draft.skills).toEqual(["content-author", "before-after-preview"]);
     expect(draft.lane).toContain("Authoring agent");
     // The `[skill]` line is for the SVG reader; the model takes it from the
     // extension and trims the name back to the activity.

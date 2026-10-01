@@ -2,10 +2,10 @@
   "$schema": "kg-qa/v1",
   "subject": {
     "kind": "skill",
-    "id": "staging-review",
-    "path": "skills/sdlc/sdlc-core/staging-review.md"
+    "id": "before-after-preview",
+    "path": "skills/sdlc/sdlc-core/before-after-preview.md"
   },
-  "source_hash": "f7f7693db825",
+  "source_hash": "eb55182aba7b",
   "criteria": {
     "skill-is-a-stub": {
       "result": "pass",
@@ -15,19 +15,14 @@
       "result": "fail",
       "findings": [
         {
-          "where": "skills/sdlc/sdlc-core/staging-review.md",
-          "detail": "596 lines; p75 of the skill corpus is 279."
+          "where": "skills/sdlc/sdlc-core/before-after-preview.md",
+          "detail": "378 lines; p75 of the skill corpus is 279."
         }
       ]
     },
     "skill-not-a-document": {
-      "result": "fail",
-      "findings": [
-        {
-          "where": "skills/sdlc/sdlc-core/staging-review.md",
-          "detail": "596 lines; p90 is 391. At this length it is a document."
-        }
-      ]
+      "result": "pass",
+      "findings": []
     },
     "skill-no-repeated-heading": {
       "result": "pass",
@@ -47,8 +42,8 @@
     }
   },
   "totals": {
-    "pass": 2,
-    "fail": 2,
+    "pass": 3,
+    "fail": 1,
     "n/a": 3,
     "unknown": 0
   }

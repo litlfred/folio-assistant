@@ -5,7 +5,7 @@
     "id": "Process_Editing",
     "path": "processes/editing-hci-validation.bpmn"
   },
-  "source_hash": "sha256:93bf9b0f6a4e7b858f49630cf67eb616b213ed360ff9406ccc3db83a3484e7d2",
+  "source_hash": "sha256:b4b49741ee50386113f345f0e15c133c865bd8739695f9414dfb02f89c3c6faf",
   "criteria": {
     "raci-role-resolves": {
       "result": "n/a",
@@ -39,6 +39,10 @@
           "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
         {
+          "where": "Task_DraftEdit",
+          "detail": "names skill \"before-after-preview\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
           "where": "Task_AgentReview",
           "detail": "names skill \"content-review\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         },
@@ -49,6 +53,10 @@
         {
           "where": "Task_ReviseEdit",
           "detail": "names skill \"content-author\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_ReviseEdit",
+          "detail": "names skill \"before-after-preview\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
         }
       ]
     },

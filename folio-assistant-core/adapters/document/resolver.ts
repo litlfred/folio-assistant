@@ -21,7 +21,7 @@ import type {
   ResolvedDocument,
   ChapterDetail,
   SectionStub,
-} from "../../../cat-harness/src/types.js";
+} from "../../../cat-harness/src/content-types.js";
 import { resolveFormalRef } from "../../../cat-harness/schemas/formal-ref.js";
 import type { Block, Chapter, Folio, Paper, Section } from "../../../cat-harness/schemas/types.js";
 import { leanStatusBucket } from "../../../cat-harness/schemas/types.js";
