@@ -120,7 +120,7 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 ## cat-harness / skills
 
-**212** units · **5813** terms · k = **100** · retains **79.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
+**212** units · **5815** terms · k = **100** · retains **79.8 %** of the weighted matrix · weighting `log-entropy` · sidecar `cat-harness/test/results/lsi/cat-harness/skills.lsi.json`
 
 > Dimension 1 has **no negative pole**: it most likely measures unit length and term frequency (a margin), not a theme. Read the themes from dimension 2 on.
 
@@ -128,10 +128,10 @@ Each dimension is a **contrast** between two poles, shown by their highest-loadi
 
 | dim | σ | one pole | the other pole |
 |---|---|---|---|
-| 1 | 43.44 | instance, kind, harness, session, directory, graph, block, branch | *(none)* |
+| 1 | 43.45 | instance, kind, harness, session, directory, graph, block, branch | *(none)* |
 | 2 | 21.44 | watcher, slot, sibling, queue, backlog, prs, block, commits | harness, instance, declaration, directory, node, directories, graph, bootstrap |
 | 3 | 17.78 | session, beans, goals, store, branch, window, epic, sessions | slot, chapter, block, edges, formal, glossary, project, narrative |
-| 4 | 16.23 | ledger, subdirectory, sibling, items, renderable, queue, sushi, relocation | page, sections, block, section, chapter, manifest, blocks, forward |
+| 4 | 16.24 | ledger, subdirectory, sibling, items, queue, renderable, sushi, relocation | page, sections, block, section, chapter, manifest, blocks, forward |
 | 5 | 14.70 | translated, locale, translation, navbar, french, language, badge, page | edges, forward, edge, logical, backward, cross-chapter, energy, editorial |
 | 6 | 14.60 | lane, actor, role, requirements, task, phase, feature, process | queue, archive, sheet, arm, bytes, sidecar, window, zip |
 | 7 | 14.36 | edges, forward, preview, backward, edge, cross-chapter, energy, chapter | backlog, lane, actor, role, criterion, referee, rung, objection |

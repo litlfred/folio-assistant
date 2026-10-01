@@ -69,8 +69,8 @@ for serving the built site locally.
 
 The Publisher is **one step** in the WHO build, between six pre-processing
 invocations and eight post-processing ones
-([`dak-preprocessing`](dak-preprocessing.md),
-[`dak-postprocessing`](dak-postprocessing.md)). It is easy to credit it with
+(`dak-preprocessing` (smart-base),
+`dak-postprocessing` (smart-base)). It is easy to credit it with
 what the phases around it do, so this is what the run itself produces:
 
 | it produces | notes |

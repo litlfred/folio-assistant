@@ -139,7 +139,7 @@ when the session network allows the upstream host, use
 `openalex-paper-search` (alex-mcp; OpenAlex catalog) rather than
 `curl`/`WebFetch`. The MCP tools return canonical metadata and the
 PDF in one call, eliminating the OCR-then-extract-then-name dance.
-See [`paper-importer.md §Phase 1`](../../../../folio-assistant-sci/skills/content/folio-paper-adapter/paper-importer.md#phase-1-acquisition)
+See `paper-importer.md §Phase 1` (folio-assistant-sci)
 for the per-tool routing table. Sandboxed Claude-Code-on-the-web
 sessions (github-only allowlist) cannot reach those hosts; in
 those sessions, queue the fetch onto a normal-network machine

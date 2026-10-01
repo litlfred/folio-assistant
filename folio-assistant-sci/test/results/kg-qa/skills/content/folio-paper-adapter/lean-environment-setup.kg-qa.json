@@ -24,8 +24,13 @@
       "findings": []
     },
     "prose-reviewed-since-code-changed": {
-      "result": "pass",
-      "findings": []
+      "result": "fail",
+      "findings": [
+        {
+          "where": "folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.ts",
+          "detail": "folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.ts changed since folio-assistant-sci/skills/content/folio-paper-adapter/lean-environment-setup.md was last seen, and the prose did not. Re-read it; if it still holds, run pairs:attest with a reason."
+        }
+      ]
     },
     "prose-claims-resolve": {
       "result": "n/a",
@@ -37,8 +42,8 @@
     }
   },
   "totals": {
-    "pass": 5,
-    "fail": 0,
+    "pass": 4,
+    "fail": 1,
     "n/a": 2,
     "unknown": 0
   },
