@@ -1,11 +1,11 @@
 ---
 # folio-assistant-5qq3
 title: 'REGEN SCOPE: the browser jobs'' artefacts are outside regen''s fast set, and a stale one only surfaces in CI'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-09-30T18:53:17Z
-updated_at: 2026-09-30T18:53:36Z
+updated_at: 2026-10-01T12:36:11Z
 parent: folio-assistant-2upx
 ---
 
@@ -53,3 +53,10 @@ owner's.
 
 - [ ] a reader of regen's last line can tell how much of the gate set it
       covered, without reading the first line back
+
+
+## 2026-10-01 — two more measured instances (PR #1769)
+- render:bpmn: five bootstrap(-tools) SVGs stale after a submodule pin change; regen reported a clean fixed point; CI's E2E job failed at 'rendered BPMN SVGs are current'.
+- library:viz: 18 artefacts stale since #1744 added library entries; regen reported clean; the only signal was library-viewer-scope.e2e.ts failing in CI ('fhir-harness declares 3 library entries on disk and the viewer data holds none').
+
+_2026-10-01T12:36:11Z_ — Claimed by claude/fervent-brahmagupta-rbwhzm — pushed to main so sibling sessions see it before this branch has a PR (bean 35nj).
