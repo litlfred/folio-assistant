@@ -274,6 +274,66 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/jsonld-vocabularies",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ValueSet expansions → JSON-LD"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "JSON-LD vocabularies built from the ValueSet expansions in the published output."
+        }
+      ],
+      "skos:notation": "jsonld-vocabularies",
+      "dcterms:source": "fhir-harness/tools/index.ts#jsonld-vocabularies",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/logical-model-schemas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Logical models → JSON Schema"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A JSON Schema per logical model, from the published FHIR resources."
+        }
+      ],
+      "skos:notation": "logical-model-schemas",
+      "dcterms:source": "fhir-harness/tools/index.ts#logical-model-schemas",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/pin-ig-terminology",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Snapshot a published IG's terminology at its pinned version"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read every CodeSystem concept out of a FHIR IG clone checked out at its pinned tag and write a `folio-pinned-terminology/v1` snapshot: the offline, version-fixed answer `check:term-mapping` resolves its `fhir` target against. Which IG, which pin record and which snapshot path are the caller's (`--pin`, `--out`, `--source`); this layer names none (#1767, stage B′)."
+        }
+      ],
+      "skos:notation": "pin-ig-terminology",
+      "dcterms:source": "fhir-harness/tools/index.ts#pin-ig-terminology",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/strip-library-binaries",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -311,6 +371,26 @@
       ],
       "skos:notation": "strip-library-content",
       "dcterms:source": "fhir-harness/tools/index.ts#strip-library-content",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools/valueset-schemas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/ns#glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ValueSets → JSON Schema"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A JSON Schema per ValueSet, plus the enumeration-response schemas published at the IG root."
+        }
+      ],
+      "skos:notation": "valueset-schemas",
+      "dcterms:source": "fhir-harness/tools/index.ts#valueset-schemas",
       "skos:note": "candidate"
     }
   ]
