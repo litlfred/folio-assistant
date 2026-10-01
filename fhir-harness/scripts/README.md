@@ -17,6 +17,8 @@ Part of [FHIR IG Harness](../README.md) 0.1.0, declared as `fhir-ig-scripts`, ho
 | [`ig-ast.ts`](ig-ast.ts) | a file |  |
 | [`ig-site-data.test.ts`](ig-site-data.test.ts) | a file |  |
 | [`ig-site-data.ts`](ig-site-data.ts) | a file |  |
+| [`p2-refusals.test.ts`](p2-refusals.test.ts) | a file |  |
+| [`p2-refusals.ts`](p2-refusals.ts) | a file |  |
 | [`resource-views.test.ts`](resource-views.test.ts) | a file |  |
 | [`resource-views.ts`](resource-views.ts) | a file |  |
 | [`stage-ig-sites.test.ts`](stage-ig-sites.test.ts) | a file |  |
