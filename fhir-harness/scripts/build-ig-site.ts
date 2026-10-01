@@ -202,13 +202,17 @@ export interface IndexedArtifact {
 export const ELEMENT_KEYS = ["name", "title", "description", "purpose", "status", "version", "date", "publisher", "copyright", "experimental", "kind", "type"] as const;
 
 /** `<ResourceType>__<id with non-alphanumerics as _>`, the lifted script's own key rule. */
+/** Text safe inside a markdown link label. */
+const mdLabel = (s: string) => s.replace(/([\\[\]|])/g, "\\$1");
+
 export const variableKey = (a: { resourceType: string; id: string }) => `${a.resourceType}__${a.id.replace(/[^A-Za-z0-9]/g, "_")}`;
 
 export interface ArtifactVariables {
   /** `site.data.fhir.artifacts.<key>.{url,text,link,elements}` — one entry per artefact. */
   artifacts: Record<string, {
     url: { canonical?: string; page: string; json?: string; xml?: string; ttl?: string };
-    text: { display: string };
+    /** `display` as WHO computes it; `label` is the same text escaped for a markdown link label. */
+    text: { display: string; label: string };
     link: { html: string };
     elements: Partial<Record<(typeof ELEMENT_KEYS)[number], string>>;
     category?: string;
@@ -216,6 +220,8 @@ export interface ArtifactVariables {
   }>;
   /** Categories in index order, each naming its artefacts' keys — what a template iterates. Uncategorised artefacts (not on the Publisher's `artifacts.html`) are left out. */
   artifact_categories: Array<{ name: string; keys: string[] }>;
+  /** How many artefacts `artifact_categories` lists — counted here, so no template counts. */
+  artifacts_listed: number;
 }
 
 /**
@@ -257,7 +263,7 @@ export function artifactVariables(list: ReadonlyArray<IndexedArtifact>, pagesHre
     }
     artifacts[key] = {
       url: { canonical: a.canonical, page, json: a.published?.json?.url, xml: a.published?.xml?.url, ttl: a.published?.ttl?.url },
-      text: { display },
+      text: { display, label: mdLabel(display) },
       link: { html: `<a href="${page}">${display.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</a>` },
       elements,
       category: a.category,
@@ -272,11 +278,8 @@ export function artifactVariables(list: ReadonlyArray<IndexedArtifact>, pagesHre
     if (!g) order.push((g = { name: a.category, keys: [] }));
     g.keys.push(key);
   }
-  return { vars: { artifacts, artifact_categories: order }, notSourced: ELEMENT_KEYS.filter((k) => !held.has(k)) };
+  return { vars: { artifacts, artifact_categories: order, artifacts_listed: order.reduce((n, c) => n + c.keys.length, 0) }, notSourced: ELEMENT_KEYS.filter((k) => !held.has(k)) };
 }
-
-/** Text safe inside a markdown link label. */
-const mdLabel = (s: string) => s.replace(/([\\[\]|])/g, "\\$1");
 
 /**
  * The Publisher's `toc.html`: every page in `sushi-config.yaml` `pages:`, nested
@@ -306,21 +309,10 @@ export function tocPage(pages: unknown, has: (stem: string) => boolean): string 
  * `site.data.fhir` — Jekyll renders it, from the variables this same build
  * wrote (owner, 2026-10-01: "make use of jekyll/liquid templates"). No
  * artefact data is baked into the page; change the data and the page follows.
+ * The template is a file of this directory (`liquid-templates` §"Where a
+ * template lives"), found relative to this one.
  */
-export const ARTIFACTS_TEMPLATE = [
-  "# Artifacts Summary",
-  "",
-  "{% assign arts = site.data.fhir.artifacts %}",
-  "{% assign listed = 0 %}{% for cat in site.data.fhir.artifact_categories %}{% assign listed = listed | plus: cat.keys.size %}{% endfor %}This IG has {{ listed }} artefact(s).",
-  "",
-  "{% for cat in site.data.fhir.artifact_categories %}",
-  "## {{ cat.name }}",
-  "",
-  "{% for k in cat.keys %}{% assign a = arts[k] %}- [{{ a.text.display | replace: '[', '\\[' | replace: ']', '\\]' }}]({{ a.url.page }}) — `{{ a.reference }}`",
-  "{% endfor %}",
-  "{% endfor %}",
-  "",
-].join("\n");
+export const ARTIFACTS_TEMPLATE_PATH = resolve(import.meta.dir, "templates/ig-site/artifacts.liquid");
 
 /**
  * The four roles a theme palette carries (`ThemePaletteSchema` in
@@ -462,7 +454,7 @@ export function stageIgSite(igSrc: string, out: string, opts: StageOptions = {})
   const generated: string[] = [];
   if (opts.artifacts && !pages.includes("artifacts.md")) {
     const n = nav.get("artifacts") ?? { title: "Artifacts Summary", navOrder: 999, navExclude: true };
-    writeFileSync(join(out, "artifacts.md"), frontMatter(n) + ARTIFACTS_TEMPLATE);
+    writeFileSync(join(out, "artifacts.md"), frontMatter(n) + readFileSync(ARTIFACTS_TEMPLATE_PATH, "utf-8"));
     generated.push("artifacts.md");
   }
   if (!pages.includes("toc.md")) {

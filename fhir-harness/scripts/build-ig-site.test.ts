@@ -8,7 +8,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
 import { join } from "node:path";
-import { ARTIFACTS_TEMPLATE, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
+import { ARTIFACTS_TEMPLATE_PATH, artifactVariables, colourScheme, contrast, dedupeIds, includeTargets, pageNav, stageIgSite, tocPage, type StageResult } from "./build-ig-site";
 import { artifactPageName } from "../../folio-assistant-core/schemas/fhir-artifact-index.js";
 
 let dir: string;
@@ -193,6 +193,8 @@ describe("pages the Publisher generates, written from data the build holds (bean
     expect(v.url.canonical).toBe("http://x/ValueSet/a-b");
     expect(v.url.json).toBe("https://p/ValueSet-a-b.json");
     expect(v.text.display).toBe("A [b]");
+    expect(v.text.label).toBe("A \\[b\\]");
+    expect(vars.artifacts_listed).toBe(1);
     expect(v.link.html).toBe('<a href="../artifact/ValueSet-a-b.html">A [b]</a>');
     expect(v.elements).toEqual({ title: "A [b]", version: "1.0" });
     // Uncategorised = not on the Publisher's artifacts.html: variables written, not grouped.
@@ -207,11 +209,19 @@ describe("pages the Publisher generates, written from data the build holds (bean
   test.skipIf(!ruby)("the artifacts TEMPLATE renders the variables through real Liquid", () => {
     const { vars } = artifactVariables([{ resourceType: "ValueSet", id: "v", title: "V [x]", category: "T" }], "../artifact/");
     const script = 'require "liquid"; require "json"; d = JSON.parse(STDIN.read.force_encoding("UTF-8")); print Liquid::Template.parse(d["t"], error_mode: :strict).render("site" => { "data" => { "fhir" => d["v"] } })';
-    const r = spawnSync("ruby", ["-e", script], { input: JSON.stringify({ t: ARTIFACTS_TEMPLATE, v: vars }), encoding: "utf-8" });
+    const r = spawnSync("ruby", ["-e", script], { input: JSON.stringify({ t: readFileSync(ARTIFACTS_TEMPLATE_PATH, "utf-8"), v: vars }), encoding: "utf-8" });
     expect(r.stderr).toBe("");
     expect(r.stdout).toContain("This IG has 1 artefact(s).");
     expect(r.stdout).toContain("## T");
     expect(r.stdout).toContain("- [V \\[x\\]](../artifact/ValueSet-v.html) — `ValueSet/v`");
+  });
+
+  test("the artifacts template is a file that opens with the comment describing it", () => {
+    // `liquid-templates`: never an inline template in a .ts, and the leading
+    // comment is the file's description; computation stays in the generator.
+    const t = readFileSync(ARTIFACTS_TEMPLATE_PATH, "utf-8");
+    expect(t.startsWith("{%- comment -%}")).toBe(true);
+    expect(t).not.toMatch(/\|\s*(plus|minus|size|replace)\b/);
   });
 
   test("without an index there is no artifacts page, and the menu still reports it missing", () => {

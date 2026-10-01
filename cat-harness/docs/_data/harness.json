@@ -1207,12 +1207,12 @@
         {
           "id": "directories",
           "label": "declared directories",
-          "value": 4
+          "value": 5
         },
         {
           "id": "kinds",
           "label": "declared graph kinds",
-          "value": 4
+          "value": 5
         },
         {
           "id": "views",
@@ -1221,6 +1221,10 @@
         }
       ],
       "visualisations": [
+        {
+          "kind": "code",
+          "note": "no viewer yet"
+        },
         {
           "kind": "library",
           "path": "/cat-harness/library/fhir-harness/"
@@ -1239,7 +1243,7 @@
         }
       ],
       "findings": [
-        "fhir-harness: declares 2 graph(s) with no published viewer — qa, tools. Declared and not rendered is a gap, not a dead link.",
+        "fhir-harness: declares 3 graph(s) with no published viewer — code, qa, tools. Declared and not rendered is a gap, not a dead link.",
         "fhir-harness: no avatar declared for this instance — showing the generic mark.",
         "fhir-harness: has no docs/ of its own, so the tile opens a kind handler's viewer (/cat-harness/library/fhir-harness/) rather than the instance's own themed root."
       ],
@@ -2924,7 +2928,7 @@
           },
           {
             "key": "directories",
-            "summary": "4: library, fhir-ig-skills, fhir-ig-tools, qa"
+            "summary": "5: library, fhir-ig-skills, fhir-ig-tools, fhir-ig-scripts, qa"
           },
           {
             "key": "needs",
